@@ -379,6 +379,11 @@
 
   const HISTORY_STORAGE_KEY = "autogood.mobile.marketHistory.v2";
   const LEGACY_HISTORY_STORAGE_KEY = "autogood.mobile.marketHistory.v1";
+  // Favourites are also kept in their own small key (no offer lists), so a
+  // full storage, an unreadable history or a bad write cannot take them along.
+  const FAVORITES_BACKUP_KEY = "autogood.mobile.marketFavorites.v1";
+  // An unreadable history is copied here before anything new is written.
+  const BROKEN_HISTORY_KEY_PREFIX = "autogood.mobile.marketHistory.broken.";
   // Every Mobile.de search is logged automatically; only the last 20 unpinned
   // checks are kept, while pinned ones (e.g. a client's car) stay on top.
   const HISTORY_LIMIT = 20;
@@ -716,30 +721,72 @@
     },
   };
 
-  function loadMarketHistory() {
+  function normalizeHistoryEntry(entry, index) {
+    return {
+      id: String(entry.id || `legacy-${index}`),
+      filters: entry.filters,
+      signature: filterSignature(entry.filters),
+      listings: normalizeListings(entry.listings),
+      sourceFileName: String(entry.sourceFileName || ""),
+      searchUrl: String(entry.searchUrl || ""),
+      pinned: Boolean(entry.pinned),
+      // Entries saved before prices were dated count from their last update.
+      dataAt: String(entry.dataAt || (entry.listings?.length >= 3 ? entry.updatedAt || entry.createdAt || "" : "")),
+      priceLog: Array.isArray(entry.priceLog) ? entry.priceLog.filter((point) => point && point.at).slice(-PRICE_LOG_LIMIT) : [],
+      createdAt: String(entry.createdAt || entry.updatedAt || new Date().toISOString()),
+      updatedAt: String(entry.updatedAt || entry.createdAt || new Date().toISOString()),
+    };
+  }
+
+  function readStoredEntries(key) {
+    let raw = null;
     try {
-      const parsed = JSON.parse(localStorage.getItem(HISTORY_STORAGE_KEY) || localStorage.getItem(LEGACY_HISTORY_STORAGE_KEY) || "[]");
-      if (!Array.isArray(parsed)) return [];
-      return parsed
-        .filter((entry) => entry?.filters?.brand && entry?.filters?.model)
-        .map((entry, index) => ({
-          id: String(entry.id || `legacy-${index}`),
-          filters: entry.filters,
-          signature: filterSignature(entry.filters),
-          listings: normalizeListings(entry.listings),
-          sourceFileName: String(entry.sourceFileName || ""),
-          searchUrl: String(entry.searchUrl || ""),
-          pinned: Boolean(entry.pinned),
-          // Entries saved before prices were dated count from their last update.
-          dataAt: String(entry.dataAt || (entry.listings?.length >= 3 ? entry.updatedAt || entry.createdAt || "" : "")),
-          priceLog: Array.isArray(entry.priceLog) ? entry.priceLog.filter((point) => point && point.at).slice(-PRICE_LOG_LIMIT) : [],
-          createdAt: String(entry.createdAt || entry.updatedAt || new Date().toISOString()),
-          updatedAt: String(entry.updatedAt || entry.createdAt || new Date().toISOString()),
-        }));
-      return trimHistory(parsed);
+      raw = localStorage.getItem(key);
     } catch {
       return [];
     }
+    if (!raw) return [];
+    try {
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) throw new Error("not a list");
+      return parsed
+        .filter((entry) => entry?.filters?.brand && entry?.filters?.model)
+        .map((entry, index) => {
+          try {
+            return normalizeHistoryEntry(entry, index);
+          } catch {
+            return null;
+          }
+        })
+        .filter(Boolean);
+    } catch {
+      // Keep the unreadable text aside so the next write cannot destroy it.
+      try {
+        localStorage.setItem(`${BROKEN_HISTORY_KEY_PREFIX}${new Date().toISOString()}`, raw);
+        localStorage.removeItem(key);
+      } catch {
+        // Nothing more can be done in this browser.
+      }
+      return [];
+    }
+  }
+
+  // Reads the stored history (the current one or the legacy key) and puts back
+  // every favourite from the backup key that the history itself lost.
+  function loadMarketHistory() {
+    let entries = readStoredEntries(HISTORY_STORAGE_KEY);
+    if (!entries.length) entries = readStoredEntries(LEGACY_HISTORY_STORAGE_KEY);
+    const known = new Set(entries.map((entry) => entry.id));
+    const restored = readStoredEntries(FAVORITES_BACKUP_KEY)
+      .filter((entry) => !known.has(entry.id))
+      .map((entry) => ({ ...entry, pinned: true }));
+    return trimHistory([...entries, ...restored]);
+  }
+
+  // Other tabs of mobile.html write to the same storage; every change starts
+  // from what is stored now, never from a copy loaded when the tab opened.
+  function refreshMarketHistory() {
+    marketHistory = loadMarketHistory();
   }
 
   // Pinned entries first, then the newest checks; unpinned ones are capped.
@@ -753,16 +800,39 @@
     return [...pinned, ...recent];
   }
 
+  function storeFavoritesBackup(entries) {
+    const favorites = entries
+      .filter((entry) => entry.pinned)
+      .map(({ listings, signature, ...entry }) => entry);
+    localStorage.setItem(FAVORITES_BACKUP_KEY, JSON.stringify(favorites));
+  }
+
+  // When the storage is full, offer lists of the oldest unpinned checks go
+  // first, then those of every unpinned check; favourites are never dropped.
   function storeMarketHistory(entries) {
+    const trimmed = trimHistory(entries);
     try {
-      const trimmed = trimHistory(entries);
-      localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(trimmed));
-      marketHistory = trimmed;
-      return true;
+      storeFavoritesBackup(trimmed);
     } catch {
       setAnalysisStatus(copy().historyStorageError, true);
       return false;
     }
+    const attempts = [
+      trimmed,
+      trimmed.map((entry, index) => (!entry.pinned && index >= trimmed.length - HISTORY_LIMIT / 2 ? { ...entry, listings: [] } : entry)),
+      trimmed.map((entry) => (entry.pinned ? entry : { ...entry, listings: [] })),
+    ];
+    for (const attempt of attempts) {
+      try {
+        localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(attempt));
+        marketHistory = attempt;
+        return true;
+      } catch {
+        // Try again with less data.
+      }
+    }
+    setAnalysisStatus(copy().historyStorageError, true);
+    return false;
   }
 
   function historyEntryForFilters(filters) {
@@ -836,6 +906,7 @@
   }
 
   function createMarketSnapshot(filters, listings, sourceFileName = "", searchUrl = "", pinned = false) {
+    refreshMarketHistory();
     const now = new Date().toISOString();
     const entry = {
       id: `${Date.now()}-${seededNumber(`${filterSignature(filters)}|${now}`).toString(16)}`,
@@ -855,6 +926,7 @@
   }
 
   function updateMarketSnapshot(historyId, filters, listings, sourceFileName = "", searchUrl = "", pinned = null) {
+    refreshMarketHistory();
     const index = marketHistory.findIndex((entry) => entry.id === historyId);
     if (index < 0) return null;
     const existing = marketHistory[index];
@@ -1096,6 +1168,7 @@
   }
 
   function toggleCurrentHistoryFavorite() {
+    refreshMarketHistory();
     const c = copy();
     try {
       const filters = readManualFields();
@@ -1119,6 +1192,7 @@
   // Called when the user opens a marketplace search: log it, or refresh the
   // timestamp of the same search so it moves back to the top of the list.
   function logSearchToHistory(searchUrl = "") {
+    refreshMarketHistory();
     let filters;
     try {
       filters = readManualFields();
@@ -1140,6 +1214,7 @@
   }
 
   function setHistoryPinned(historyId, pinned) {
+    refreshMarketHistory();
     const entry = marketHistory.find((item) => item.id === historyId);
     if (!entry) return;
     if (!storeMarketHistory(marketHistory.map((item) => (
@@ -1150,6 +1225,7 @@
   }
 
   function deleteHistoryEntry(historyId) {
+    refreshMarketHistory();
     const entry = marketHistory.find((item) => item.id === historyId);
     if (!entry) return;
     if (!storeMarketHistory(marketHistory.filter((item) => item.id !== historyId))) return;
@@ -2837,5 +2913,11 @@
     });
 
   marketHistory = loadMarketHistory();
+  // A favourite starred or removed in another tab shows up here at once.
+  window.addEventListener("storage", (event) => {
+    if (event.key !== null && event.key !== HISTORY_STORAGE_KEY && event.key !== FAVORITES_BACKUP_KEY) return;
+    refreshMarketHistory();
+    renderHistory();
+  });
   renderMarketTranslations();
 })();
