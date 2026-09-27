@@ -2992,9 +2992,10 @@ function applyRecognizedManualFields(data) {
       normalizePlugin(data?.fuel, title) === "yes" ? "plugin" : "",
     ].filter(Boolean),
     body: normalizeBody(data?.bodyType),
-    // A fixed 30,000 km window keeps the first comparison reasonably close.
-    mileageFrom: mileageKm > 0 ? String(Math.max(0, mileageKm - 30000)) : "",
-    mileageTo: mileageKm > 0 ? String(mileageKm + 30000) : "",
+    // ±30,000 km, rounded to whole tens of thousands like the portals' own
+    // steps: 43,727 km → 10,000–70,000 km.
+    mileageFrom: mileageKm > 0 ? String(Math.max(0, Math.round((mileageKm - 30000) / 10000) * 10000)) : "",
+    mileageTo: mileageKm > 0 ? String(Math.max(10000, Math.round((mileageKm + 30000) / 10000) * 10000)) : "",
     yearFrom: registrationYear || "",
     yearTo: registrationYear || "",
     // The very same engine as in the ad: From = To.

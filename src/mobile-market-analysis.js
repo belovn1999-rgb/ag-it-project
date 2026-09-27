@@ -86,6 +86,9 @@
       axisMileage: "Oś pozioma: przebieg",
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
+      marketsHeading: "Rynki",
+      marketOtomoto: "Polska",
+      marketMobile: "Niemcy",
       sourcesLabel: "Źródła ofert",
       axisLabel: "Oś pozioma",
       axisRank: "Kolejność cen",
@@ -264,6 +267,9 @@
       axisMileage: "Горизонтальная ось: пробег",
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
+      marketsHeading: "Рынки",
+      marketOtomoto: "Польша",
+      marketMobile: "Германия",
       sourcesLabel: "Источники",
       axisLabel: "Горизонтальная ось",
       axisRank: "Порядок цен",
@@ -2110,12 +2116,12 @@
         ${statistics.min < statistics.median / 3 || statistics.max > statistics.median * 3 ? `<p class="mobileMarketCaution">${escapeMarketHtml(c.wideRangeWarning)}</p>` : ""}
         <div class="mobileMarketStatsTable${compared ? " isCompared" : ""}" role="table">
           <div class="mobileMarketStatsRow isHead" role="row">
-            ${compared ? `<span role="columnheader"></span>` : ""}
+            ${compared ? `<span role="columnheader">${escapeMarketHtml(c.marketsHeading)}</span>` : ""}
             ${statColumns.map((column) => `<span role="columnheader"${column.wide ? ' class="isWide"' : ""}>${escapeMarketHtml(column.label)}</span>`).join("")}
           </div>
           ${statRows.map((row) => `
             <div class="mobileMarketStatsRow" role="row">
-              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader"><img class="agBrandMark" src="${BRAND_MARKS[row.source]}" alt="" />${escapeMarketHtml(sourceName(row.source))}</span>` : ""}
+              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(sourceName(row.source))}">${escapeMarketHtml(row.source === "otomoto" ? c.marketOtomoto : c.marketMobile)}</span>` : ""}
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
