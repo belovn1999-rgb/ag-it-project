@@ -77,7 +77,7 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | Wersja (текст) | 4-й сегмент `ms` ✅ | ✗ | у otomoto нет свободного текста |
 | Nadwozie | `c` ✅ | `filter_enum_body_type` ✅ | limousine→`Limousine`/`sedan`, estate→`EstateCar`/`combi`, suv→`OffRoad`/`suv`, hatchback→`SmallCar`/`compact`, coupe→`SportsCar`/`coupe`, cabrio→`Cabrio`/`cabrio`, van→`Van`/`minivan`. **pickup** → mobile.de `OffRoad`, otomoto ✗; **other** → `OtherCar`, otomoto ✗ |
 | Liczba miejsc | `sc=от:до` ✅ | `filter_float_nr_seats:from/to` ✅ | |
-| Liczba drzwi | `door=TWO_OR_THREE / FOUR_OR_FIVE / SIX_OR_SEVEN` ✅ | `filter_enum_door_count` 2+3 / 4+5 / **6** ≈ | у otomoto нет значения 7, группа 6/7 → только 6. — Codex 27.09 |
+| Liczba drzwi (от/до, 2–7) | `door=TWO_OR_THREE / FOUR_OR_FIVE / SIX_OR_SEVEN` — только если диапазон целиком внутри **одной** группы ✅, иначе ✗ с предупреждением (`mobileDeDoorGroup`) | `filter_enum_door_count` — каждое число диапазона ✅ (весь 2–6 = без фильтра); **7 нет** на otomoto → предупреждение, только «7» → ошибка `doorsUnavailableOtomoto` | Codex 27.09 (`b568389` группы → `ac17a28` диапазон); старые групповые записи истории открываются как диапазон |
 
 ### 4.2 Цена, пробег, год, двигатель
 
@@ -212,4 +212,5 @@ MAN: ID марки 16500 (не 186).
 | 09-23 | Claude | Цена otomoto EUR→PLN | a66a599 |
 | 09-26 | Codex | Фильтры комфорта из распознанного оснащения | 467f6ce, cf726c9 |
 | 09-27 | Codex | Liczba drzwi: группы mobile.de, otomoto 2/3, 4/5, 6 | b568389 |
+| 09-27 | Codex | Liczba drzwi — диапазон от/до 2–7: otomoto точные числа, mobile.de одна группа или предупреждение | ac17a28 |
 | 09-27 | Claude | Этот справочник: всё знание о фильтрах собрано в одном файле | этот коммит |
