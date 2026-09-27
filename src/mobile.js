@@ -896,7 +896,8 @@ const otomotoBodyValues = {
   limousine: "sedan",
   estate: "combi",
   suv: "suv",
-  hatchback: "compact",
+  // otomoto splits small cars into "compact" and "city-car"; mobile.de has one Kleinwagen.
+  hatchback: ["compact", "city-car"],
   coupe: "coupe",
   cabrio: "cabrio",
   van_minibus: "minivan",
@@ -926,12 +927,14 @@ const otomotoInteriorMaterialValues = {
   full_leather: "leather-upholstery",
 };
 
+// "At least" this climate control, like mobile.de: "Automatyczna" is any
+// automatic one, "2 strefy" two zones or more.
 const otomotoAirConditioningValues = {
-  automatic: "automatic-climate-control",
-  manual: "air-conditioning",
-  automatic_2_zones: "dualzone-automatic-climate-control",
-  automatic_3_zones: "trizone-automatic-climate-control",
-  automatic_4_zones: "4-or-more-zone-automatic-climate-control",
+  automatic: ["automatic-climate-control", "dualzone-automatic-climate-control", "trizone-automatic-climate-control", "4-or-more-zone-automatic-climate-control"],
+  manual: ["air-conditioning", "automatic-climate-control", "dualzone-automatic-climate-control", "trizone-automatic-climate-control", "4-or-more-zone-automatic-climate-control"],
+  automatic_2_zones: ["dualzone-automatic-climate-control", "trizone-automatic-climate-control", "4-or-more-zone-automatic-climate-control"],
+  automatic_3_zones: ["trizone-automatic-climate-control", "4-or-more-zone-automatic-climate-control"],
+  automatic_4_zones: ["4-or-more-zone-automatic-climate-control"],
 };
 
 
@@ -2237,9 +2240,13 @@ function syncRangeEndValue(fromInput, toInput, allowSame = false) {
 }
 
 function mobileDeModelId(brand, model) {
+  const entries = Object.entries(mobileDeModelIdsByBrand[brand] || {});
+  // The exact name first: normalising drops "+" and would turn "Prius+" into "Prius".
+  const exact = String(model || "").trim().toLowerCase();
+  const exactMatch = entries.find(([label]) => label.trim().toLowerCase() === exact);
+  if (exactMatch) return exactMatch[1];
   const normalized = normalizeToken(model);
-  const match = Object.entries(mobileDeModelIdsByBrand[brand] || {})
-    .find(([label]) => normalizeToken(label) === normalized);
+  const match = entries.find(([label]) => normalizeToken(label) === normalized);
   return match?.[1] || "";
 }
 
@@ -2343,13 +2350,20 @@ function buildMobileDeSearchUrl(filters) {
   appendMobileDeRange(params, "ml", filters.mileageFrom, filters.mileageTo);
   appendMobileDeRange(params, "fr", filters.yearFrom, filters.yearTo);
   appendMobileDeRange(params, "cc", filters.displacementFrom, filters.displacementTo);
+  // mobile.de searches power in kW; PS → kW rounds, so the lower bound goes
+  // down and the upper one up, or "131–131 KM" would miss the ad's 97 kW.
   appendMobileDeRange(
     params,
     "pw",
     filters.powerFrom,
     filters.powerTo,
-    (powerPs) => Math.round(powerPs * 0.735499),
+    (powerPs) => Math.floor(powerPs * 0.735499),
   );
+  if (params.has("pw")) {
+    const [fromKw, toKw] = params.get("pw").split(":");
+    const toPs = Number(String(filters.powerTo || "").replace(/[^\d]/g, ""));
+    params.set("pw", `${fromKw}:${toKw && toPs ? Math.ceil(toPs * 0.735499) : toKw}`);
+  }
   appendMobileDeRange(params, "sc", filters.seatsFrom, filters.seatsTo);
   const doorGroup = mobileDeDoorGroup(filters);
   if (doorGroup) params.set("door", doorGroup.value);
@@ -2623,7 +2637,8 @@ function buildOtomotoSearchUrl(filters) {
     modelSelection.slugs.length || filters.model ? modelSelection.slugs : otomotoMakeModels[filters.brand],
   );
   const body = otomotoBodyValues[filters.body];
-  if (body) params.set("search[filter_enum_body_type]", body);
+  if (Array.isArray(body)) body.forEach((value, index) => params.set(`search[filter_enum_body_type][${index}]`, value));
+  else if (body) params.set("search[filter_enum_body_type]", body);
   appendOtomotoPriceRange(params, filters.priceFrom, String(filters.priceTo || "").trim().endsWith("+") ? "" : filters.priceTo);
   appendOtomotoRange(params, "filter_float_mileage", filters.mileageFrom, filters.mileageTo);
   appendOtomotoRange(params, "filter_float_year", filters.yearFrom, filters.yearTo);
@@ -2658,7 +2673,7 @@ function buildOtomotoSearchUrl(filters) {
   );
 
   const airConditioning = otomotoAirConditioningValues[filters.airConditioning];
-  if (airConditioning) params.set("search[filter_enum_air_conditioning_type]", airConditioning);
+  (airConditioning || []).forEach((value, index) => params.set(`search[filter_enum_air_conditioning_type][${index}]`, value));
   if (filters.trailerCoupling && filters.trailerCoupling !== "any") {
     params.set("search[filter_enum_towbar]", "1");
   }
@@ -2809,12 +2824,15 @@ function catalogModelAtStart(brand, text) {
 }
 
 function normalizeFuel(value, title = "") {
+  // The ad's own fuel decides; the title only when the ad leaves it out
+  // ("mHEV" in a name is a mild hybrid the portals list as petrol).
+  if (value && title && normalizeFuel(value)) return normalizeFuel(value);
   const normalized = normalizeToken(`${value} ${title}`);
   const hasPlugin = /plug in|plugin|phev/.test(normalized);
   const hasHybrid = /hybrid|hybryd|hev|phev/.test(normalized);
+  // Hybrids first: "Hybrid (Benzin/Elektro)" also names the electric motor.
+  if (hasHybrid) return /diesel|olej napedowy/.test(normalized) ? "hybrid_diesel" : "hybrid_petrol";
   if (/electric|elektro|elektryk|bev/.test(normalized)) return "electric";
-  if (/diesel|olej napedowy/.test(normalized) && hasHybrid) return "hybrid_diesel";
-  if (/(petrol|benzin|benzyna|gasoline)/.test(normalized) && hasHybrid) return "hybrid_petrol";
   if (/diesel|olej napedowy/.test(normalized)) return "diesel";
   if (/petrol|benzin|benzyna|gasoline/.test(normalized)) return "petrol";
   return "";
@@ -2827,14 +2845,18 @@ function normalizePlugin(value, title = "") {
 
 function normalizeBody(value) {
   const normalized = normalizeToken(value);
-  if (/kombi|estate|touring|avant|variant|wagon/.test(normalized)) return "estate";
-  if (/suv|teren|off road|offroad|gelande/.test(normalized)) return "suv";
-  if (/hatch|compact|small car|kleinwagen/.test(normalized)) return "hatchback";
-  if (/coupe|coup/.test(normalized)) return "coupe";
-  if (/cabrio|convertible|roadster/.test(normalized)) return "cabrio";
-  if (/van|minibus|bus|mpv/.test(normalized)) return "van_minibus";
-  if (/pickup|pick up/.test(normalized)) return "pickup";
-  if (/limousine|sedan|saloon/.test(normalized)) return "limousine";
+  // Spaces dropped too: mobile.de sends its own codes ("SmallCar", "SportsCar",
+  // "OffRoad", "EstateCar"), the labels come in German, Polish or English.
+  const joined = normalized.replace(/[\s/_-]+/g, "");
+  // mobile.de files SUVs and pick-ups together ("SUV/Geländewagen/Pickup").
+  if (/pickup/.test(joined) && !/suv|gelande|offroad/.test(joined)) return "pickup";
+  if (/kombi|estate|touring|avant|variant|wagon|combi/.test(joined)) return "estate";
+  if (/suv|offroad|gelande|terenow|crossover/.test(joined)) return "suv";
+  if (/smallcar|kleinwagen|hatch|compact|kompakt|citycar|miejsk|maly/.test(joined)) return "hatchback";
+  if (/sportscar|sportwagen|coupe|coupé|coup/.test(joined)) return "coupe";
+  if (/cabrio|convertible|roadster|kabriolet/.test(joined)) return "cabrio";
+  if (/van|minibus|bus|mpv|minivan/.test(joined)) return "van_minibus";
+  if (/limousine|sedan|saloon/.test(joined)) return "limousine";
   return value ? "other" : "";
 }
 
@@ -2877,13 +2899,15 @@ function recognizedEquipmentFilters(data) {
   if (has(/automatyczn.*parkowan|samopark|selbstpark|self parking|automatic parking/)) parkingSensors.push("AUTOMATIC_PARKING");
 
   let cruiseControl = "any";
-  if (has(/adaptacyjn.*tempomat|aktywn.*tempomat|abstandstempomat|abstandsregeltempomat|adaptive cruise|acc tempomat/)) cruiseControl = "ADAPTIVE_CRUISE_CONTROL";
+  // Either word order: mobile.de "Adaptiver Tempomat", otomoto "Tempomat adaptacyjny ACC".
+  if (has(/adaptacyjn.*tempomat|tempomat.*adaptacyjn|aktywn.*tempomat|tempomat.*aktywn|abstandstempomat|abstandsregeltempomat|adaptive[rs]? (?:cruise|tempomat)|acc tempomat|tempomat acc|tempomat przewidujac|pradiktiv|predictive cruise/)) cruiseControl = "ADAPTIVE_CRUISE_CONTROL";
   else if (has(/tempomat|geschwindigkeitsregelanlage|cruise control/)) cruiseControl = "CRUISE_CONTROL";
 
   let airConditioning = "";
-  if (has(/klimatyzacj.*4 stref|4 zonen klima|4 zone climate/)) airConditioning = "automatic_4_zones";
-  else if (has(/klimatyzacj.*3 stref|3 zonen klima|3 zone climate/)) airConditioning = "automatic_3_zones";
-  else if (has(/klimatyzacj.*2 stref|2 zonen klima|2 zone climate|dwustrefow.*klimatyzacj/)) airConditioning = "automatic_2_zones";
+  // otomoto writes "Klimatyzacja automatyczna: dwustrefowa", mobile.de "2-Zonen-Klimaautomatik".
+  if (has(/klimatyzacj.*(?:4 stref|czterostref|wielostref)|4 zonen klima|4 zone climate/)) airConditioning = "automatic_4_zones";
+  else if (has(/klimatyzacj.*(?:3 stref|trzystref)|trzystrefow.*klimatyzacj|3 zonen klima|3 zone climate/)) airConditioning = "automatic_3_zones";
+  else if (has(/klimatyzacj.*(?:2 stref|dwustref)|dwustrefow.*klimatyzacj|2 zonen klima|2 zone climate/)) airConditioning = "automatic_2_zones";
   else if (has(/klimatyzacj.*automat|klimaautomatik|automatic.*climate|automatic air conditioning/)) airConditioning = "automatic";
   else if (has(/klimatyzacj.*manual|manuelle klimaanlage|manual air conditioning/)) airConditioning = "manual";
 
@@ -2999,6 +3023,19 @@ function applyRecognizedManualFields(data) {
   els.powerTo.value = next.powerTo;
   setCheckedValue(els.drive, next.drive);
   setCheckedValue(els.gearbox, next.gearbox);
+  // mobile.de's "rtd" filter keeps only ads the seller marked "Fahrtauglich";
+  // most sellers do not, so it is set only when the ad says so.
+  if (els.roadworthy && data?.condition) {
+    const condition = String(data.condition);
+    els.roadworthy.checked = /fahrtauglich/i.test(condition) && !/nicht fahrtauglich/i.test(condition);
+  }
+  // A damaged car is hidden by the default "without damaged cars": show them,
+  // or it would miss its own market.
+  if (els.damagedVehicles) {
+    const damaged = /beschädigt|beschadigt|unfallfahrzeug|nicht fahrtauglich|uszkodzon|powypadkow/i.test(String(data?.condition || ""));
+    els.damagedVehicles.value = damaged ? "show" : "hide";
+    setSimpleSelectDisplays(readManualFields());
+  }
   // Only options of the Komfort card go into the search; equipment the ad
   // lists elsewhere stays out of the brief and of the filters.
   const comfort = document.querySelector('[aria-labelledby="mobile-filter-group-comfort"]');
@@ -3738,6 +3775,12 @@ async function loadOtomotoAd(sourceUrl) {
         country: "PL",
         sellerName: advert.seller?.name || "",
       },
+      // Equipment as otomoto names it ("Podgrzewany fotel kierowcy", "Tapicerka
+      // skórzana"): the same readers as for mobile.de pick the Komfort options.
+      equipment: (advert.equipment || []).flatMap((group) => (group.values || []).map((item) => item.label)).filter(Boolean),
+      sellerType: advert.seller?.type === "PRIVATE" ? "PRIVATE" : advert.seller?.type ? "DEALER" : "",
+      condition: [param("new_used").label, param("no_accident").value === "1" ? copy[state.lang].conditionWords?.Unfallfrei : "", param("damaged").value === "1" ? copy[state.lang].conditionWords?.Beschädigt : ""].filter(Boolean).join(", "),
+      drive: /all-wheel/.test(param("transmission").value || "") ? "awd" : param("transmission").value === "front-wheel" ? "fwd" : param("transmission").value === "rear-wheel" ? "rwd" : "",
       // The car is already in Poland: no transport from Germany.
       transportNettoPln: 0,
       inspectionNettoPln: 0,

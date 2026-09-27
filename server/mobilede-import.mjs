@@ -503,7 +503,9 @@ function extractGearbox(html, jsonData, text) {
 function normalizeFuel(value) {
   const normalized = String(value || "").toLowerCase();
   if (!normalized) return "";
-  if (normalized.includes("plug-in")) return "Plug-in-Hybrid";
+  // Hybrids first: "Hybrid (Benzin/Elektro)" also contains "benzin".
+  if (normalized.includes("plug-in")) return /diesel/.test(normalized) ? "Plug-in-Hybrid (Diesel/Elektro)" : "Plug-in-Hybrid (Benzin/Elektro)";
+  if (normalized.includes("hybrid") || normalized.includes("hybryd")) return /diesel/.test(normalized) ? "Hybrid (Diesel/Elektro)" : "Hybrid (Benzin/Elektro)";
   if (normalized.includes("diesel")) return "Diesel";
   if (normalized.includes("benzin") || normalized.includes("benzyn")) return "Benzin";
   if (normalized.includes("hybrid") || normalized.includes("hybryd")) return "Hybrid";
@@ -702,14 +704,16 @@ function technicalValue(html, key) {
   return match ? stripTags(match[1]).replace(/\s+/g, " ").trim() : "";
 }
 
-// mobile.de names the drive only when it is all-wheel (equipment
-// "Allradantrieb", or a 4x4 model name); anything else stays unknown.
+// mobile.de has no drive field: the equipment list names it when the seller
+// ticked it ("Allradantrieb", "Frontantrieb", "Heckantrieb"), or the model
+// name does (quattro, xDrive…); otherwise it stays unknown.
 function extractDrive(html, equipment, title) {
   const named = technicalValue(html, "driveType") || technicalValue(html, "drive");
   const text = `${named} ${(equipment || []).join(" ")} ${title}`.toLowerCase();
   if (/allrad|4x4|four.wheel|all.wheel|quattro|xdrive|4motion|4matic|awd/.test(text)) return "awd";
-  if (/front/.test(named.toLowerCase())) return "fwd";
-  if (/heck|rear/.test(named.toLowerCase())) return "rwd";
+  // The equipment list says "Frontantrieb" / "Heckantrieb" when the seller ticked it.
+  if (/frontantrieb|front.wheel.drive/.test(text)) return "fwd";
+  if (/heckantrieb|rear.wheel.drive/.test(text)) return "rwd";
   return "";
 }
 
@@ -1310,15 +1314,20 @@ export async function handleMobiledeImport(request, response) {
     const carBruttoEur = extractPrice(html, jsonData, text);
     const carNettoEur = extractNetPrice(html, jsonData, text, carBruttoEur);
     const purchaseType = extractPurchaseType(html, jsonData, text);
-    const displacementCcm = extractDisplacement(html, jsonData, text);
-    const powerHp = extractPowerHp(html, jsonData, text);
-    const gearbox = extractGearbox(html, jsonData, text);
-    const fuel = extractFuel(html, jsonData, text);
+    // The ad's own technical data first ("Kilometerstand 996 km"); reading
+    // numbers out of the page text only when the ad leaves a field out.
+    const tech = (key) => technicalValue(html, key);
+    const techNumber = (key) => Number(tech(key).replace(/[.\s\u00a0](?=\d{3}\b)/g, "").match(/\d+/)?.[0]) || 0;
+    const psFromPower = Number(tech("power").match(/\((\d+)\s*PS\)/i)?.[1]) || 0;
+    const displacementCcm = techNumber("cubicCapacity") || extractDisplacement(html, jsonData, text);
+    const powerHp = psFromPower || extractPowerHp(html, jsonData, text);
+    const gearbox = normalizeGearbox(tech("transmission")) || extractGearbox(html, jsonData, text);
+    const fuel = normalizeFuel(tech("fuel")) || extractFuel(html, jsonData, text);
     const engineTypeIndex = classifyEngine(fuel, displacementCcm);
     const title = extractTitle(html, jsonData, text);
-    const bodyType = extractBodyType(html, jsonData, text);
-    const mileageKm = extractMileage(html, jsonData, text);
-    const firstRegistration = extractFirstRegistration(html, jsonData, text);
+    const bodyType = tech("category") || extractBodyType(html, jsonData, text);
+    const mileageKm = techNumber("mileage") || extractMileage(html, jsonData, text);
+    const firstRegistration = (tech("firstRegistration").match(/\d{2}\/\d{4}/)?.[0]) || extractFirstRegistration(html, jsonData, text);
     const equipment = extractEquipment(html);
     const location = extractLocation(html, jsonData, text);
     const sellerType = extractSellerType(html, jsonData);

@@ -192,7 +192,10 @@ const expectedScalars = {
   "search[filter_enum_gearbox]": "automatic",
   "search[filter_enum_vat]": "1",
   "search[private_business]": "business",
-  "search[filter_enum_air_conditioning_type]": "dualzone-automatic-climate-control",
+  // Two zones or more, like mobile.de's climate filter.
+  "search[filter_enum_air_conditioning_type][0]": "dualzone-automatic-climate-control",
+  "search[filter_enum_air_conditioning_type][1]": "trizone-automatic-climate-control",
+  "search[filter_enum_air_conditioning_type][2]": "4-or-more-zone-automatic-climate-control",
   "search[filter_enum_towbar]": "1",
   "search[filter_enum_sunroof]": "glass-sunroof-fixed",
   "search[filter_enum_air_suspension]": "1",
