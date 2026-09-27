@@ -13,6 +13,10 @@ change log and the working rules. Before any change to `mobile.html` or
 After the change: add a line to its change log, update the backlog status,
 record new decisions, commit it together with the code.
 
+Search filters for both sites (form field → mobile.de / otomoto URL parameter,
+model matching, what is not sent, audits) are documented in
+**`docs/FILTERS-MOBILE-OTOMOTO.md`**. Any change to filter mapping updates it.
+
 ## Public App
 
 Public URL:
