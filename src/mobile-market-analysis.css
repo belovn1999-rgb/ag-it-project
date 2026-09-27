@@ -1089,11 +1089,12 @@
   font-weight: 800;
 }
 
-/* Chart by marketplace: Otomoto blue, Mobile.de orange. Market segments stay
-   as the tinted bands behind the dots. */
+/* Chart by marketplace: Otomoto blue, Mobile.de orange, Blocket red. Market
+   segments stay as the tinted bands behind the dots. */
 .mobileMarketAnalysisPanel {
   --market-otomoto: #1d5fd0;
   --market-mobile: #f56a00;
+  --market-blocket: #d0101a;
   --plot-left: 96px;
   --plot-right: 28px;
 }
@@ -1148,7 +1149,8 @@
 .mobileMarketSourceButton i,
 .mobileMarketSourceTag i,
 .mobileMarketLegend .isOtomoto i,
-.mobileMarketLegend .isMobile i {
+.mobileMarketLegend .isMobile i,
+.mobileMarketLegend .isBlocket i {
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -1158,6 +1160,12 @@
 .mobileMarketSourceTag.isOtomoto i,
 .mobileMarketLegend .isOtomoto i {
   background: var(--market-otomoto);
+}
+
+.mobileMarketSourceButton.isBlocket i,
+.mobileMarketSourceTag.isBlocket i,
+.mobileMarketLegend .isBlocket i {
+  background: var(--market-blocket);
 }
 
 .mobileMarketSourceButton.isMobile i,
@@ -1215,6 +1223,11 @@
   box-shadow: 0 0 0 1px var(--market-otomoto);
 }
 
+.mobileMarketPoint.isBlocket::before {
+  background: var(--market-blocket);
+  box-shadow: 0 0 0 1px var(--market-blocket);
+}
+
 .mobileMarketPoint.isMobile::before {
   background: var(--market-mobile);
   box-shadow: 0 0 0 1px var(--market-mobile);
@@ -1246,6 +1259,10 @@
 
 .mobileMarketPointTooltip b.isOtomoto {
   color: var(--market-otomoto);
+}
+
+.mobileMarketPointTooltip b.isBlocket {
+  color: var(--market-blocket);
 }
 
 .mobileMarketPointTooltip b.isMobile {
@@ -1366,6 +1383,10 @@
 
 .mobileMarketTrend.isCurve polyline.isMobile {
   stroke: var(--market-mobile);
+}
+
+.mobileMarketTrend.isCurve polyline.isBlocket {
+  stroke: var(--market-blocket);
 }
 
 .mobileMarketImportCopy .mobileBookmarkletRow {
@@ -1862,6 +1883,10 @@
 
 .mobileMarketSearchArrow.isOtomoto {
   color: #1d5fd0;
+}
+
+.mobileMarketSearchArrow.isBlocket {
+  color: #d0101a;
 }
 
 .mobileMarketSearchArrow:hover {

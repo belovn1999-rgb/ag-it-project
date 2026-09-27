@@ -67,6 +67,7 @@
       otomotoFetching: "Pobieram oferty z otomoto.pl…",
       otomotoFetched: "Wczytano {count} z {total} ofert otomoto.pl.",
       mobileFetched: "Wczytano {count} z {total} ofert mobile.de.",
+      blocketFetched: "Wczytano {count} z {total} ofert blocket.se.",
       otomotoFailed: "Nie udało się pobrać ofert z otomoto.pl.",
       otomotoLabel: "Dane: otomoto.pl",
       mixedLabel: "Dane: otomoto.pl + mobile.de",
@@ -86,9 +87,11 @@
       axisMileage: "Oś pozioma: przebieg",
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
+      sourceBlocket: "blocket.se",
       marketsHeading: "Rynki",
       marketOtomoto: "Polska",
       marketMobile: "Niemcy",
+      marketBlocket: "Szwecja",
       sourcesLabel: "Źródła ofert",
       axisLabel: "Oś pozioma",
       axisRank: "Kolejność cen",
@@ -155,6 +158,7 @@
       maximum: "Najdroższe ogłoszenie",
       openSearch: "Otwórz wyszukiwanie mobile.de ↗",
       openOtomoto: "Otwórz listę otomoto.pl ↗",
+      openBlocket: "Otwórz listę blocket.se ↗",
       pointHint: "Kliknij, aby otworzyć ogłoszenie",
       summaryVehicle: "Auto i sprzedawca",
       summaryParameters: "Parametry",
@@ -248,6 +252,7 @@
       otomotoFetching: "Загружаю объявления с otomoto.pl…",
       otomotoFetched: "Загружено {count} из {total} объявлений otomoto.pl.",
       mobileFetched: "Загружено {count} из {total} объявлений mobile.de.",
+      blocketFetched: "Загружено {count} из {total} объявлений blocket.se.",
       otomotoFailed: "Не удалось загрузить объявления с otomoto.pl.",
       otomotoLabel: "Данные: otomoto.pl",
       mixedLabel: "Данные: otomoto.pl + mobile.de",
@@ -267,9 +272,11 @@
       axisMileage: "Горизонтальная ось: пробег",
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
+      sourceBlocket: "blocket.se",
       marketsHeading: "Рынки",
       marketOtomoto: "Польша",
       marketMobile: "Германия",
+      marketBlocket: "Швеция",
       sourcesLabel: "Источники",
       axisLabel: "Горизонтальная ось",
       axisRank: "Порядок цен",
@@ -336,6 +343,7 @@
       maximum: "Самое дорогое объявление",
       openSearch: "Открыть поиск mobile.de ↗",
       openOtomoto: "Открыть список otomoto.pl ↗",
+      openBlocket: "Открыть список blocket.se ↗",
       pointHint: "Нажми, чтобы открыть объявление",
       summaryVehicle: "Авто и продавец",
       summaryParameters: "Параметры",
@@ -406,9 +414,14 @@
   let otomotoTotal = 0;
   let tableSort = { key: "price", direction: "asc" };
   // Chart view: which marketplaces are shown and what the horizontal axis carries.
-  const MARKET_SOURCES = ["otomoto", "mobile"];
+  const MARKET_SOURCES = ["otomoto", "mobile", "blocket"];
+  // Each marketplace's own currency: history and statistics keep it, the chart converts.
+  const SOURCE_CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK" };
+  const BLOCKET_PAGES = 8;
+  const BLOCKET_PAGE_SIZE = 50;
+  const BLOCKET_MAX_PAGES = 50;
   const EUR_PLN_FALLBACK_RATE = 4.3;
-  let chartSources = { otomoto: true, mobile: true };
+  let chartSources = { otomoto: true, mobile: true, blocket: true };
   let chartAxis = "rank";
   let displayCurrency = "EUR";
   // Mobile.de offers that arrived before the analysis was opened.
@@ -417,6 +430,33 @@
   function exchangeRate() {
     const rate = Number(window.AUTOGOOD_EXCHANGE_RATES?.rates?.EUR_PLN?.value);
     return Number.isFinite(rate) && rate > 0 ? rate : 0;
+  }
+
+  // One SEK in PLN (Walutomat, see blocket-search.js).
+  function sekPlnRate() {
+    return window.AUTOGOOD_BLOCKET?.sekPlnRate?.() || 0.385;
+  }
+
+  // Any offer price in PLN, and a PLN amount in any of the three currencies.
+  function priceInPln(value, currency) {
+    if (currency === "PLN") return value;
+    if (currency === "SEK") return value * sekPlnRate();
+    return value * (exchangeRate() || EUR_PLN_FALLBACK_RATE);
+  }
+
+  function plnIn(value, currency) {
+    if (currency === "PLN") return value;
+    if (currency === "SEK") return value / sekPlnRate();
+    return value / (exchangeRate() || EUR_PLN_FALLBACK_RATE);
+  }
+
+  function convertPrice(value, from, to) {
+    return from === to ? value : plnIn(priceInPln(value, from), to);
+  }
+
+  // CSS class part of a marketplace.
+  function sourceClass(source) {
+    return source === "otomoto" ? "Otomoto" : source === "blocket" ? "Blocket" : "Mobile";
   }
   let importedDataset = null;
   let marketHistory = [];
@@ -500,6 +540,10 @@
     return url.hostname.endsWith("otomoto.pl") && url.pathname.includes("/oferta/");
   }
 
+  function isDirectBlocketListingUrl(url) {
+    return url.hostname.endsWith("blocket.se") && /\/(?:mobility\/)?item\/\d+/.test(url.pathname);
+  }
+
   function isDirectMobileListingUrl(url) {
     const mobileHost = url.hostname === "mobile.de" || url.hostname.endsWith(".mobile.de");
     const canonicalListing = url.pathname.endsWith("/fahrzeuge/details.html")
@@ -514,7 +558,7 @@
     let url = "";
     try {
       const parsedUrl = new URL(String(urlValue || "").trim());
-      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl))) {
+      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl) || isDirectBlocketListingUrl(parsedUrl))) {
         url = parsedUrl.toString();
       }
     } catch {
@@ -525,7 +569,8 @@
     const mileage = parseMarketNumber(listingValue(row, ["mileage", "mileage_km", "km", "przebieg"]));
     const title = String(listingValue(row, ["title", "name", "model", "auto"]) || "").trim();
     const id = String(listingValue(row, ["id", "listing_id", "ad_id"]) || (url ? new URL(url).searchParams.get("id") : "") || `import-${index + 1}`);
-    const currency = String(listingValue(row, ["currency", "waluta"]) || "EUR").toUpperCase() === "PLN" ? "PLN" : "EUR";
+    const rawCurrency = String(listingValue(row, ["currency", "waluta"]) || "EUR").toUpperCase();
+    const currency = ["PLN", "SEK"].includes(rawCurrency) ? rawCurrency : "EUR";
     const listing = {
       id,
       title: title || `mobile.de · ${String(index + 1).padStart(2, "0")}`,
@@ -565,10 +610,12 @@
   // then its currency (Otomoto lists in PLN, Mobile.de in EUR).
   function listingSource(listing) {
     const tagged = String(listing?.source || "").toLowerCase();
-    if (tagged === "otomoto" || tagged === "mobile") return tagged;
+    if (tagged === "otomoto" || tagged === "mobile" || tagged === "blocket") return tagged;
     const url = String(listing?.url || "");
     if (url.includes("otomoto.pl")) return "otomoto";
     if (url.includes("mobile.de")) return "mobile";
+    if (url.includes("blocket.se")) return "blocket";
+    if (listing?.currency === "SEK") return "blocket";
     return listing?.currency === "PLN" ? "otomoto" : "mobile";
   }
 
@@ -687,6 +734,86 @@
     return { listings, total: first.total };
   }
 
+  // Blocket's API answers 50 offers a page, at most 50 pages in one sort
+  // order. Pages spread evenly over the price-sorted list; beyond 2 500 offers
+  // the dear half is read from the other end (sorted down), where an offer's
+  // place is total − position + 1.
+  function blocketListing(doc, rank, total) {
+    const price = Number(doc?.price?.amount);
+    if (!Number.isFinite(price) || price <= 0) return null;
+    const mileageMil = Number(doc.mileage);
+    const kmPerMil = window.AUTOGOOD_BLOCKET?.kmPerMil || 10;
+    return {
+      id: String(doc.id || doc.canonical_url || ""),
+      url: String(doc.canonical_url || (doc.id ? `https://www.blocket.se/mobility/item/${doc.id}` : "")),
+      title: String(doc.heading || [doc.make, doc.model].filter(Boolean).join(" ") || "blocket.se"),
+      subtitle: String(doc.model_specification || "").slice(0, 160),
+      source: "blocket",
+      price: Math.round(price),
+      currency: String(doc.price.currency_code || "SEK").toUpperCase(),
+      year: Number(doc.year) || "",
+      // Blocket counts in Swedish mil (10 km).
+      mileage: Number.isFinite(mileageMil) && mileageMil > 0 ? String(Math.round(mileageMil * kmPerMil)) : "",
+      fuel: String(doc.fuel || "").slice(0, 40),
+      city: String(doc.location || "").slice(0, 80),
+      country: "SE",
+      rank,
+      marketTotal: total,
+    };
+  }
+
+  async function fetchBlocketPage(filters, page, sort = "PRICE_ASC") {
+    const data = await window.AUTOGOOD_BLOCKET.fetchApi(window.AUTOGOOD_BLOCKET.buildApiUrl(filters, { page, sort }));
+    return {
+      total: Number(data?.metadata?.result_size?.match_count) || 0,
+      docs: Array.isArray(data?.docs) ? data.docs : [],
+    };
+  }
+
+  async function fetchBlocketListings(filters, onProgress) {
+    if (!window.AUTOGOOD_BLOCKET) return null;
+    await window.AUTOGOOD_BLOCKET.sekRateReady?.();
+    const first = await fetchBlocketPage(filters, 1);
+    const total = first.total;
+    if (!total) return { listings: [], total: 0 };
+    const pageCount = Math.ceil(total / BLOCKET_PAGE_SIZE);
+    // [page, sort] pairs: the whole list when short, else evenly spread pages,
+    // the upper half read from the dear end when it is out of reach.
+    const reachable = Math.min(pageCount, BLOCKET_MAX_PAGES);
+    const wanted = [];
+    if (pageCount <= BLOCKET_PAGES) {
+      for (let page = 2; page <= pageCount; page += 1) wanted.push([page, "PRICE_ASC"]);
+    } else {
+      const spots = Array.from({ length: BLOCKET_PAGES }, (_, index) => Math.round(1 + (index * (pageCount - 1)) / (BLOCKET_PAGES - 1)));
+      [...new Set(spots)].filter((page) => page > 1).forEach((page) => {
+        if (page <= reachable) wanted.push([page, "PRICE_ASC"]);
+        else wanted.push([Math.min(BLOCKET_MAX_PAGES, pageCount - page + 1), "PRICE_DESC"]);
+      });
+    }
+    const seen = new Set();
+    const listings = [];
+    const collect = (docs, page, sort) => docs.forEach((doc, index) => {
+      const position = (page - 1) * BLOCKET_PAGE_SIZE + index + 1;
+      const rank = sort === "PRICE_DESC" ? total - position + 1 : position;
+      const listing = blocketListing(doc, rank, total);
+      if (!listing || seen.has(listing.id)) return;
+      seen.add(listing.id);
+      listings.push(listing);
+    });
+    collect(first.docs, 1, "PRICE_ASC");
+    let done = 1;
+    for (let start = 0; start < wanted.length; start += OTOMOTO_PARALLEL) {
+      const batch = wanted.slice(start, start + OTOMOTO_PARALLEL);
+      const results = await Promise.allSettled(batch.map(([page, sort]) => fetchBlocketPage(filters, page, sort)));
+      results.forEach((result, index) => {
+        if (result.status === "fulfilled") collect(result.value.docs, batch[index][0], batch[index][1]);
+      });
+      done += batch.length;
+      onProgress?.(done, wanted.length + 1);
+    }
+    return { listings, total };
+  }
+
   // Mobile.de through the local importer (the user's own Chrome), when it
   // is reachable; otherwise the analysis simply goes on without it.
   async function fetchMobileDeSample(filters) {
@@ -703,17 +830,24 @@
     async getListings({ filters }) {
       const c = copy();
       setAnalysisStatus(c.otomotoFetching);
-      const [otomoto, mobile] = await Promise.allSettled([
+      const [otomoto, mobile, blocket] = await Promise.allSettled([
         fetchOtomotoListings(filters, (page, pages) => {
           setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
         }),
         fetchMobileDeSample(filters),
+        fetchBlocketListings(filters),
       ]);
       const otomotoListings = otomoto.status === "fulfilled" ? otomoto.value.listings : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const mobileListings = (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal }));
-      if (!otomotoListings.length && !mobileListings.length) throw new Error(c.otomotoFailed);
-      this.lastSources = [otomotoListings.length ? "otomoto" : "", mobileListings.length ? "mobile" : ""].filter(Boolean);
+      const blocketResult = blocket.status === "fulfilled" ? blocket.value : null;
+      const blocketListings = blocketResult?.listings || [];
+      if (!otomotoListings.length && !mobileListings.length && !blocketListings.length) throw new Error(c.otomotoFailed);
+      this.lastSources = [
+        otomotoListings.length ? "otomoto" : "",
+        mobileListings.length ? "mobile" : "",
+        blocketListings.length ? "blocket" : "",
+      ].filter(Boolean);
       const messages = [];
       if (otomotoListings.length) {
         otomotoTotal = otomoto.value.total;
@@ -722,8 +856,11 @@
       if (mobileListings.length) {
         messages.push(c.mobileFetched.replace("{count}", String(mobileListings.length)).replace("{total}", String(mobileResult.total || mobileListings.length)));
       }
+      if (blocketListings.length) {
+        messages.push(c.blocketFetched.replace("{count}", String(blocketListings.length)).replace("{total}", String(blocketResult.total || blocketListings.length)));
+      }
       setAnalysisStatus(messages.join(" "));
-      return [...otomotoListings, ...mobileListings];
+      return [...otomotoListings, ...mobileListings, ...blocketListings];
     },
   };
 
@@ -851,17 +988,13 @@
   // tracked car can be followed over weeks. Otomoto in PLN, Mobile.de in EUR,
   // so the exchange rate does not move the history.
   function marketPricePoint(listings, at) {
-    const rate = exchangeRate() || EUR_PLN_FALLBACK_RATE;
     const point = { at };
     MARKET_SOURCES.forEach((source) => {
-      const currency = source === "otomoto" ? "PLN" : "EUR";
-      const inCurrency = (listing) => {
-        if ((listing.currency || "EUR") === currency) return listing.price;
-        return currency === "PLN" ? listing.price * rate : listing.price / rate;
-      };
+      const currency = SOURCE_CURRENCY[source];
+      const inCurrency = (listing) => convertPrice(listing.price, listing.currency || "EUR", currency);
       // The same offers as the statistics: suspect ones left out.
       const own = listings.filter((listing) => listingSource(listing) === source);
-      const flagged = suspectOffers(own, (listing) => (listing.currency === "PLN" ? listing.price : listing.price * rate));
+      const flagged = suspectOffers(own, (listing) => priceInPln(listing.price, listing.currency || "EUR"));
       const kept = own.filter((listing) => !flagged.has(listing));
       if (kept.length < 3) return;
       const byPrice = [...kept].sort((left, right) => inCurrency(left) - inCurrency(right));
@@ -1462,7 +1595,7 @@
       middleCount: prices.filter((price) => price >= lowEnd && price <= highStart).length,
       lowCount: prices.filter((price) => price < lowEnd).length,
       highCount: prices.filter((price) => price > highStart).length,
-      step: displayCurrency === "PLN" ? 5000 : 1000,
+      step: displayCurrency === "SEK" ? 10000 : displayCurrency === "PLN" ? 5000 : 1000,
     };
   }
 
@@ -1519,7 +1652,7 @@
     const last = entry.priceLog?.[entry.priceLog.length - 1];
     if (!last) return "";
     return MARKET_SOURCES.filter((source) => last[source])
-      .map((source) => `${source === "otomoto" ? "otomoto" : "mobile.de"} ${formatPlainPrice(last[source].median, last[source].currency)}`)
+      .map((source) => `${source === "otomoto" ? "otomoto" : source === "blocket" ? "blocket" : "mobile.de"} ${formatPlainPrice(last[source].median, last[source].currency)}`)
       .join(" · ");
   }
 
@@ -1580,7 +1713,7 @@
         rows.push(`
           <tr>
             <td>${escapeMarketHtml(formatHistoryDate(point.at))}</td>
-            <td><span class="mobileMarketSourceTag is${source === "otomoto" ? "Otomoto" : "Mobile"}"><i aria-hidden="true"></i>${escapeMarketHtml(source === "otomoto" ? c.sourceOtomoto : c.sourceMobile)}</span></td>
+            <td><span class="mobileMarketSourceTag is${sourceClass(source)}"><i aria-hidden="true"></i>${escapeMarketHtml(source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile)}</span></td>
             <td>${current.count} ${previous ? change(current.count, previous.count) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
             <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}</td>
@@ -1657,7 +1790,7 @@
   function openFavorite(historyId) {
     const entry = marketHistory.find((item) => item.id === historyId);
     if (!entry) return;
-    chartSources = { otomoto: true, mobile: true };
+    chartSources = { otomoto: true, mobile: true, blocket: true };
     if (entry.listings.length >= 3) {
       openHistoryAnalysis(historyId);
       return;
@@ -1670,20 +1803,22 @@
   const BRAND_MARKS = {
     mobile: "./assets/brands/mobile-de-mark.svg",
     otomoto: "./assets/brands/otomoto-mark.svg",
+    blocket: "./assets/brands/blocket-mark.svg",
   };
   const BRAND_LOGOS = {
     mobile: "./assets/brands/mobile-de-logo.svg",
     otomoto: "./assets/brands/otomoto-logo.svg",
+    blocket: "./assets/brands/blocket-logo.svg",
   };
 
   // The marketplace's own logo as the link to its search.
   function brandLogoLink(source, url, label) {
-    return `<a class="agBrandLink agBrandSearch is${source === "otomoto" ? "Otomoto" : "Mobile"}" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /><i aria-hidden="true">↗</i></a>`;
+    return `<a class="agBrandLink agBrandSearch is${sourceClass(source)}" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /><i aria-hidden="true">↗</i></a>`;
   }
 
   // The marketplace's small mark as the link to one of its offers.
   function brandMarkLink(source, url, label) {
-    return `<a class="agBrandMarkLink" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_MARKS[source === "otomoto" ? "otomoto" : "mobile"]}" alt="" /></a>`;
+    return `<a class="agBrandMarkLink" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_MARKS[source] || BRAND_MARKS.mobile}" alt="" /></a>`;
   }
 
   // The searched market in the same four columns as a recognised car:
@@ -1720,6 +1855,7 @@
     const countries = [
       ...(sources.includes("mobile") && mobileCountries.length ? [`${mobileCountries.join(", ")} (mobile.de)`] : []),
       ...(sources.includes("otomoto") ? [`${t.countryNames?.PL || "Polska"} (otomoto.pl)`] : []),
+      ...(sources.includes("blocket") ? [`${copy().marketBlocket} (blocket.se)`] : []),
     ];
     const status = [
       filters.roadworthy ? labelOf("[data-mobile-roadworthy]") : "",
@@ -1759,6 +1895,8 @@
     "bez silnika", "silnik do (?:remontu|wymiany|naprawy)", "skrzynia do", "cesj", "odst[eę]pne", "przej[eę]cie (?:leasingu|najmu|umowy)", "wynajem d[lł]ugoterminowy", "abonament",
     "motorschaden", "getriebeschaden", "unfall(?!frei)", "defekt", "bastler", "ersatzteil", "teiletr[aä]ger", "leasing[uü]bernahme",
     "damaged", "for parts", "engine failure",
+    "motorfel", "motorhaveri", "v[aä]xell[aå]dsfel", "krockskad", "(?<!o)skadad", "reservdel", "renoveringsobjekt", "ej k[oö]rbar", "startar inte", "trasig",
+    "leasings?[oö]verl[aå]t", "[oö]verta leasing",
   ].join("|"), "i");
 
   function suspectOffers(listings, valueOf) {
@@ -1800,12 +1938,17 @@
     } catch {
       // Otomoto has no twin for this vehicle; its link is simply left out.
     }
+    let blocketUrl = "";
+    try {
+      blocketUrl = window.AUTOGOOD_BLOCKET?.buildSearchUrl(filters) || "";
+    } catch {
+      // Same for Blocket.
+    }
     const stored = providerId === "import" || providerId === "history";
     // Every valid offer remains in the sample, including unusually priced ones.
-    const bySource = { otomoto: [], mobile: [] };
+    const bySource = { otomoto: [], mobile: [], blocket: [] };
     listings.forEach((listing) => bySource[listingSource(listing)].push(listing));
-    const plnRateForChecks = exchangeRate() || EUR_PLN_FALLBACK_RATE;
-    const inPlnForChecks = (listing) => (listing.currency === "PLN" ? listing.price : listing.price * plnRateForChecks);
+    const inPlnForChecks = (listing) => priceInPln(listing.price, listing.currency || "EUR");
     const cleaned = {};
     const suspects = {};
     MARKET_SOURCES.forEach((source) => {
@@ -1816,13 +1959,11 @@
     const availableSources = MARKET_SOURCES.filter((source) => cleaned[source].length);
     const pickedSources = availableSources.filter((source) => chartSources[source]);
     const shownSources = pickedSources.length ? pickedSources : availableSources;
-    // One chart, one currency: PLN whenever Otomoto is on it, EUR for Mobile.de alone.
-    displayCurrency = shownSources.includes("otomoto") ? "PLN" : "EUR";
+    // One chart, one currency: a marketplace alone in its own currency,
+    // several together in PLN (the client pays in Poland).
+    displayCurrency = shownSources.length === 1 ? SOURCE_CURRENCY[shownSources[0]] : "PLN";
     const rate = exchangeRate() || EUR_PLN_FALLBACK_RATE;
-    const inDisplayCurrency = (listing) => {
-      if (listing.currency === displayCurrency) return listing.price;
-      return displayCurrency === "PLN" ? listing.price * rate : listing.price / rate;
-    };
+    const inDisplayCurrency = (listing) => convertPrice(listing.price, listing.currency || "EUR", displayCurrency);
     const marketListings = shownSources.flatMap((source) => cleaned[source]).map((listing) => ({
       ...listing,
       source: listingSource(listing),
@@ -1842,7 +1983,7 @@
     const onlyOtomoto = shownSources.length === 1 && shownSources[0] === "otomoto";
     const mixedSources = shownSources.length > 1;
     const summary = filterSummary(filters);
-    const sourceName = (source) => (source === "otomoto" ? c.sourceOtomoto : c.sourceMobile);
+    const sourceName = (source) => (source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile);
     const listingKey = (listing) => listing.url || `${listing.source}-${listing.id}`;
     let statsContent = "";
     let offersContent = "";
@@ -1941,7 +2082,7 @@
         const curves = shownSources.map((source) => {
           const curve = plotted.filter((point) => point.listing.source === source).sort((left, right) => left.x - right.x);
           return curve.length >= 2
-            ? `<polyline class="is${source === "otomoto" ? "Otomoto" : "Mobile"}" points="${curve.map((point) => `${(point.x * 100).toFixed(2)},${point.y.toFixed(2)}`).join(" ")}" />`
+            ? `<polyline class="is${sourceClass(source)}" points="${curve.map((point) => `${(point.x * 100).toFixed(2)},${point.y.toFixed(2)}`).join(" ")}" />`
             : "";
         }).join("");
         trendLine = `
@@ -1990,8 +2131,8 @@
         listing.mileage ? `${numbers.format(listing.mileage)} km` : "",
         listing.power || "",
       ].filter(Boolean).join(" · ");
-      // Placeholder names ("otomoto.pl", "mobile.de · 03") say nothing.
-      const fullTitle = (listing) => (/^(otomoto\.pl|mobile\.de · \d+)$/.test(listing.title || "") ? "" : listing.title || "");
+      // Placeholder names ("otomoto.pl", "blocket.se", "mobile.de · 03") say nothing.
+      const fullTitle = (listing) => (/^(otomoto\.pl|blocket\.se|mobile\.de · \d+)$/.test(listing.title || "") ? "" : listing.title || "");
       const renderPoint = ({ listing, x, y }) => {
           const tooltipClass = x > 0.72 ? " isTooltipLeft" : "";
           const details = describe(listing);
@@ -2006,9 +2147,9 @@
                 ${listing.subtitle ? `<i class="mobileMarketPointSubtitle">${escapeMarketHtml(listing.subtitle)}</i>` : ""}
                 <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
                 ${details ? `<em>${escapeMarketHtml(details)}</em>` : ""}
-                <b class="is${listing.source === "otomoto" ? "Otomoto" : "Mobile"}">${escapeMarketHtml(sourceName(listing.source))}${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
+                <b class="is${sourceClass(listing.source)}">${escapeMarketHtml(sourceName(listing.source))}${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
               </span>`;
-          const attributes = `class="mobileMarketPoint is${listing.source === "otomoto" ? "Otomoto" : "Mobile"}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
+          const attributes = `class="mobileMarketPoint is${sourceClass(listing.source)}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
           return listing.url
             ? `<a ${attributes} href="${escapeMarketHtml(listing.url)}" target="_blank" rel="noopener">${tooltip}</a>`
             : `<span ${attributes} role="img">${tooltip}</span>`;
@@ -2041,7 +2182,7 @@
       let carVerdict = "";
       let carLocalVerdict = "";
       if (sameCar) {
-        const carPrice = displayCurrency === "PLN" ? recognised.carBruttoEur * rate : recognised.carBruttoEur;
+        const carPrice = convertPrice(recognised.carBruttoEur, "EUR", displayCurrency);
         const carYear = Number((String(recognised.firstRegistration || "").match(/(?:19|20)\d{2}/) || [])[0]) || null;
         const carMileage = Number(recognised.mileageKm) || null;
         const cheaperThan = marketListings.filter((listing) => listing.price > carPrice).length;
@@ -2058,7 +2199,7 @@
         const diffPct = Math.round(((carPrice - statistics.median) / statistics.median) * 100);
         const diff = Math.abs(diffPct) < 1 ? c.atMedian
           : (diffPct < 0 ? c.belowMedian : c.aboveMedian).replace("{pct}", String(Math.abs(diffPct)));
-        const priceLabel = displayCurrency === "PLN"
+        const priceLabel = displayCurrency !== "EUR"
           ? `${formatMarketPrice(carPrice)} (${formatMarketPrice(recognised.carBruttoEur, "EUR")})`
           : formatMarketPrice(carPrice);
         if (canJudge) carVerdict = c.yourCarVerdict.replace(c.yourCar, carLabel).replace("{price}", priceLabel).replace("{share}", String(share)).replace("{diff}", diff);
@@ -2121,7 +2262,7 @@
           </div>
           ${statRows.map((row) => `
             <div class="mobileMarketStatsRow" role="row">
-              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(sourceName(row.source))}">${escapeMarketHtml(row.source === "otomoto" ? c.marketOtomoto : c.marketMobile)}</span>` : ""}
+              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(sourceName(row.source))}">${escapeMarketHtml(row.source === "otomoto" ? c.marketOtomoto : row.source === "blocket" ? c.marketBlocket : c.marketMobile)}</span>` : ""}
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
@@ -2150,7 +2291,7 @@
         </ul>` : ""}
 
         <div class="mobileMarketLegend">
-          ${shownSources.map((source) => `<span class="is${source === "otomoto" ? "Otomoto" : "Mobile"}"><i></i>${escapeMarketHtml(sourceName(source))}</span>`).join("")}
+          ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${escapeMarketHtml(sourceName(source))}</span>`).join("")}
           ${carMarker ? `<span class="isCar"><i></i>${escapeMarketHtml(c.yourCar)}</span>` : ""}
           ${trendLine ? `<span class="isTrend"><i></i>${escapeMarketHtml(chartAxis === "rank" ? c.curveLegend : c.trendLegend)}</span>` : ""}
           <span class="isBandLow"><i></i>${escapeMarketHtml(c.lowMarket)} · ${statistics.lowCount}</span>
@@ -2225,7 +2366,7 @@
                     <td class="isNum">${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
                     <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} km` : "—")}</td>
                     <td class="isNum"><b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b></td>
-                    <td><span class="mobileMarketSourceCell"><span class="mobileMarketSourceTag is${listing.source === "otomoto" ? "Otomoto" : "Mobile"}"><i aria-hidden="true"></i>${escapeMarketHtml(sourceName(listing.source))}</span>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : ""}</span></td>
+                    <td><span class="mobileMarketSourceCell"><span class="mobileMarketSourceTag is${sourceClass(listing.source)}"><i aria-hidden="true"></i>${escapeMarketHtml(sourceName(listing.source))}</span>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : ""}</span></td>
                   </tr>`).join("")}
               </tbody>
             </table>
@@ -2272,6 +2413,7 @@
             <span class="agBrandLinks">
               ${brandLogoLink("mobile", searchUrl, c.openSearch)}
               ${otomotoUrl ? brandLogoLink("otomoto", otomotoUrl, c.openOtomoto) : ""}
+              ${blocketUrl ? brandLogoLink("blocket", blocketUrl, c.openBlocket) : ""}
             </span>
             <button class="mobileMarketImportClear" type="button" data-mobile-market-refresh>${escapeMarketHtml(c.refresh)}</button>
             ${hasListings ? `
@@ -2547,7 +2689,7 @@
       // Otomoto samples saved before offers carried their place in the sorted
       // list cannot be laid out correctly, so those are fetched again.
       const savedUsable = savedEntry?.listings?.length >= 3 && savedEntry.listings
-        .every((listing) => listingSource(listing) !== "otomoto" || listing.rank);
+        .every((listing) => !["otomoto", "blocket"].includes(listingSource(listing)) || listing.rank);
       const savedListings = savedUsable ? savedEntry.listings : null;
       setAnalysisStatus(c.preparing);
       analysisOpens.forEach((button) => { button.disabled = true; });
@@ -2798,7 +2940,7 @@
     if (!clearButton || !activeAnalysis) return;
     importedDataset = null;
     // Removing the file drops only the Mobile.de offers it brought in.
-    const listings = activeAnalysis.listings.filter((listing) => listingSource(listing) === "otomoto");
+    const listings = activeAnalysis.listings.filter((listing) => listingSource(listing) !== "mobile");
     activeAnalysis = {
       ...activeAnalysis,
       listings,
