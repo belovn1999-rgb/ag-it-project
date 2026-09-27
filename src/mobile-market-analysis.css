@@ -2593,3 +2593,119 @@
     animation: none;
   }
 }
+
+/* ---- Audit fixes 2026-09-27 ------------------------------------------------ */
+
+/* The favourites card no longer touches the toolbar under it. */
+.mobileMarketAnalysisPanel > .mobileMarketFavorites {
+  margin-bottom: var(--space-md);
+}
+
+/* "Aktualne oferty · N" is a card heading like the others; the small grey
+   style belongs to the sort hint next to it only. */
+.mobileMarketTableHead .agBlockTitle span {
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Plain header cells (price history, "Źródło") get the padding and look of
+   the sortable ones, so every heading sits over its column. */
+.mobileMarketTable th {
+  padding: var(--space-xs) var(--space-sm);
+  color: var(--color-muted);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.mobileMarketTable th:has(> button) {
+  padding: 0;
+}
+
+/* Numbers flush right, so digits line up. */
+.mobileMarketTable th.isNum,
+.mobileMarketTable td.isNum {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.mobileMarketTable th.isNum button {
+  width: 100%;
+  text-align: right;
+}
+
+/* Source and the link to the ad in one cell. */
+.mobileMarketSourceCell {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+/* Offers kept out of the statistics: listed, but greyed. */
+.mobileMarketTable tr.isSuspect td,
+.mobileMarketTable tr.isSuspect td b {
+  color: var(--color-soft);
+}
+
+.mobileMarketSuspectTag {
+  display: inline-block;
+  margin-top: 2px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: 4px;
+  padding: 0 4px;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.mobileMarketStatsNote {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+/* "najdroższa" beside the dot when a label above it would leave the plot. */
+.mobileMarketExtreme.isSideLeft {
+  transform: translate(calc(-100% - 12px), -50%);
+}
+
+.mobileMarketExtreme.isSideRight {
+  transform: translate(12px, -50%);
+}
+
+/* The labels cover the end of their line, so no stub pokes out past them. */
+.mobileMarketKeyTick {
+  right: 14px;
+}
+
+/* Many offers: smaller dots, so the curve does not merge into one band. */
+.mobileMarketScale.isDense .mobileMarketPoint::before {
+  inset: 11px;
+  border-width: 1.5px;
+}
+
+/* History of searches on the main page: titled like the filter cards. */
+.mobileMarketHistoryHead .mobileMarketHistoryTitle {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: inherit;
+  font-size: calc(var(--text-base) + 1px);
+}
+
+/* Price order always ends top right with the dearest offer: the currency
+   goes to the empty top-left corner instead of under that dot. */
+.mobileMarketScale.isRankAxis::after {
+  right: auto;
+  left: calc(var(--plot-left, 96px) + var(--space-sm));
+}
+
+/* The axis caption sits under the middle of the axis, not at its start. */
+.mobileMarketXCaption {
+  margin-right: var(--plot-right, 18px);
+  text-align: center;
+}

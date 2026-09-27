@@ -5,12 +5,15 @@
   const currentUrl = new URL(window.location.href);
   const homePath = new URL(basePath, currentUrl).pathname;
   const sections = [
-    { href: "calculators.html", number: "01", label: "Калькулятор" },
-    { href: "umowy.html", number: "02", label: "Документы" },
-    { href: "auctions.html", number: "03", label: "Аукционы" },
+    { href: "calculators.html", number: "01", label: "Калькулятор", labelPl: "Kalkulator" },
+    { href: "umowy.html", number: "02", label: "Документы", labelPl: "Dokumenty" },
+    { href: "auctions.html", number: "03", label: "Аукционы", labelPl: "Aukcje" },
     { href: "partslink24.html", number: "04", label: "VIN" },
     { href: "mobile.html", number: "05", label: "Mobile.de" },
   ];
+  // Pages with their own PL/RU switch opt in (data-ag-nav-follow-lang): the
+  // bar then speaks the page's language. Every other page keeps it as it was.
+  const followsLang = Boolean(script?.hasAttribute("data-ag-nav-follow-lang"));
 
   const isSameSitePage = (url) => url.origin === currentUrl.origin && url.pathname.startsWith(new URL(basePath, currentUrl).pathname);
   const previousPath = sessionStorage.getItem(historyKey);
@@ -53,11 +56,29 @@
     link.href = basePath + section.href;
     if (target.pathname === currentUrl.pathname) link.setAttribute("aria-current", "page");
     link.innerHTML = `<b>${section.number}</b><span>${section.label}</span>`;
+    link.querySelector("span").dataset.labelRu = section.label;
+    link.querySelector("span").dataset.labelPl = section.labelPl || section.label;
     links.append(link);
   }
 
   inner.append(identity, links);
   document.body.prepend(navigation);
+
+  if (followsLang) {
+    const applyLang = () => {
+      const pl = document.documentElement.lang === "pl";
+      links.querySelectorAll("span[data-label-ru]").forEach((label) => {
+        label.textContent = pl ? label.dataset.labelPl : label.dataset.labelRu;
+      });
+      const backLabel = identity.querySelector(".agGlobalNavBack span");
+      if (backLabel) backLabel.textContent = pl ? "Wstecz" : "Назад";
+      identity.querySelector(".agGlobalNavBack")?.setAttribute("aria-label", pl ? "Wróć do poprzedniej strony" : "Вернуться на предыдущую страницу");
+      navigation.setAttribute("aria-label", pl ? "Nawigacja AUTOGOOD" : "Основная навигация AUTOGOOD");
+      links.setAttribute("aria-label", pl ? "Działy AUTOGOOD" : "Разделы AUTOGOOD");
+    };
+    applyLang();
+    new MutationObserver(applyLang).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
+  }
 
   document.addEventListener("click", (event) => {
     const link = event.target.closest("a[href]");

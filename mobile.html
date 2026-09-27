@@ -10,10 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=brief-doors-20260927b" />
-    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=cards3-20260926" />
+  <link rel="stylesheet" href="./src/mobile.css?v=audit-20260927" />
+    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=audit-20260927" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <script defer src="./src/global-navigation.js?v=global-navigation-20260923" data-ag-global-nav></script>
+    <script defer src="./src/global-navigation.js?v=nav-lang-20260927" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="mobileBody">
     <main class="mobileShell">
@@ -25,7 +25,7 @@
           <span>Mobile.de</span>
         </a>
         <div class="mobileTopActions">
-          <a class="mobileGhostLink" href="./calculators.html">Kalkulatory</a>
+          <a class="mobileGhostLink" href="./calculators.html" data-i18n="calculatorsLink">Kalkulatory</a>
           <div class="mobileLang" aria-label="Language">
             <button type="button" data-lang-button="pl" class="isActive">PL</button>
             <button type="button" data-lang-button="ru">RU</button>
@@ -500,7 +500,7 @@
           <div class="mobileSearchCountColumn">
             <aside class="mobileSearchCountPanel">
               <div class="mobileSearchCountHeader">
-                <p data-i18n="offerCountLabel">AKTUALNE OFERTY</p>
+                <p data-i18n="offerCountLabel">Aktualne oferty</p>
                 <button class="mobileSearchCountSaveButton" type="button" data-mobile-market-history-save aria-pressed="false" aria-label="Zapisz na stałe" title="Zapisz na stałe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
               </div>
               <div class="mobileSearchCountMarkets">
@@ -562,9 +562,9 @@
         <section class="mobileMarketHistory" data-mobile-market-history>
           <header class="mobileMarketHistoryHead">
             <div>
-              <h2 data-market-i18n="historyHeading">Historia wyszukiwania</h2>
+              <h2 class="mobileFilterCardTitle mobileMarketHistoryTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#calendar"></use></svg><span data-market-i18n="historyHeading">Historia wyszukiwania</span></h2>
             </div>
-            <span data-mobile-market-history-count>0 / 15</span>
+            <span data-mobile-market-history-count>0 / 20</span>
           </header>
           <div class="mobileMarketHistoryList" data-mobile-market-history-list></div>
         </section>
@@ -584,9 +584,9 @@
     </main>
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
-    <script src="./src/mobile.js?v=brief-doors-20260927b"></script>
+    <script src="./src/mobile.js?v=audit-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=cards3-20260926"></script>
-    <script src="./src/mobile-market-analysis.js?v=brief-doors-20260927b"></script>
+    <script src="./src/mobile-market-analysis.js?v=audit-20260927"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>

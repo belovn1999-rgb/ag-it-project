@@ -17,10 +17,13 @@ const copy = {
     ready: "Dane gotowe. Filtry analizy zostały uzupełnione.",
     error: "Nie udało się rozpoznać ogłoszenia. Sprawdź link albo backend.",
     listingEyebrow: "DANE Z OGŁOSZENIA",
-    manualEyebrow: "WPISZ DANE RĘCZNIE",
+    manualEyebrow: "Wpisz dane ręcznie",
     clearManualFilters: "Wyczyść filtry",
     selectedFiltersEmpty: "Brak wybranych parametrów",
-    offerCountLabel: "AKTUALNE OFERTY",
+    offerCountLabel: "Aktualne oferty",
+    calculatorsLink: "Kalkulatory",
+    offerCountNeedModel: "Wybierz markę i model, aby zobaczyć liczbę ofert.",
+    offerCountMobileOffline: "mobile.de: serwer importu nie odpowiada — liczba niedostępna. Oferty można pobrać zakładką AUTOGOOD.",
     vehicleDataLabel: "DANE PODSTAWOWE POJAZDU",
     drivetrainLabel: "NAPĘD I SKRZYNIA",
     conditionLabel: "WNĘTRZE I STAN",
@@ -280,10 +283,13 @@ const copy = {
     ready: "Данные готовы. Фильтры анализа заполнены.",
     error: "Не удалось распознать объявление. Проверь ссылку или backend.",
     listingEyebrow: "ДАННЫЕ ИЗ ОБЪЯВЛЕНИЯ",
-    manualEyebrow: "ВВЕСТИ ДАННЫЕ ВРУЧНУЮ",
+    manualEyebrow: "Ввести данные вручную",
     clearManualFilters: "Очистить фильтры",
     selectedFiltersEmpty: "Нет выбранных параметров",
-    offerCountLabel: "АКТУАЛЬНЫЕ ОБЪЯВЛЕНИЯ",
+    offerCountLabel: "Актуальные объявления",
+    calculatorsLink: "Калькуляторы",
+    offerCountNeedModel: "Выбери марку и модель, чтобы увидеть число объявлений.",
+    offerCountMobileOffline: "mobile.de: сервер импорта не отвечает — число недоступно. Объявления можно загрузить закладкой AUTOGOOD.",
     vehicleDataLabel: "ОСНОВНЫЕ ДАННЫЕ АВТОМОБИЛЯ",
     drivetrainLabel: "ПРИВОД И КОРОБКА ПЕРЕДАЧ",
     conditionLabel: "САЛОН И СОСТОЯНИЕ",
@@ -1754,7 +1760,8 @@ function setCheckedValues(inputs, values) {
 function updateCountrySummary() {
   if (!els.countrySummary) return;
   const selected = els.countries.filter((input) => input.checked)
-    .map((input) => input.closest("label")?.innerText.trim())
+    // textContent: inside the closed <details> innerText is empty.
+    .map((input) => input.closest("label")?.textContent.trim())
     .filter(Boolean);
   els.countrySummary.textContent = selected.length ? selected.join(", ") : copy[state.lang].selectEmpty;
 }
@@ -1788,11 +1795,13 @@ function setRangePlaceholders() {
     [els.yearFrom, c.fromPlaceholder],
     [els.displacementFrom, c.fromPlaceholder],
     [els.powerFrom, c.fromPlaceholder],
+    [els.seatsFrom, c.fromPlaceholder],
     [els.priceTo, c.toPlaceholder],
     [els.mileageTo, c.toPlaceholder],
     [els.yearTo, c.toPlaceholder],
     [els.displacementTo, c.toPlaceholder],
     [els.powerTo, c.toPlaceholder],
+    [els.seatsTo, c.toPlaceholder],
   ].forEach(([input, placeholder]) => {
     if (input) input.placeholder = placeholder;
   });
@@ -3342,31 +3351,37 @@ let mobileDeCountRequest = 0;
 async function refreshMobileDeCount(filters) {
   const target = document.querySelector("[data-mobile-search-count-mobilede]");
   if (!target) return;
+  // A dash alone says nothing: its tooltip tells why there is no number.
+  const show = (text, reason = "") => {
+    target.textContent = text;
+    if (reason) target.title = reason;
+    else target.removeAttribute("title");
+  };
   if (!filters?.brand || !filters?.model) {
-    target.textContent = "—";
+    show("—", copy[state.lang].offerCountNeedModel);
     return;
   }
   let key;
   try {
     key = buildMobileDeSearchUrl(filters);
   } catch {
-    target.textContent = "—";
+    show("—", copy[state.lang].offerCountNeedModel);
     return;
   }
   if (mobileDeCounts.has(key)) {
-    target.textContent = mobileDeCounts.get(key);
+    show(mobileDeCounts.get(key));
     return;
   }
   const request = ++mobileDeCountRequest;
-  target.textContent = copy[state.lang].offerCountLoading;
+  show(copy[state.lang].offerCountLoading);
   try {
     const { total } = await window.AUTOGOOD_MOBILEDE_SEARCH(key, { countOnly: true });
     const label = new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "pl-PL").format(Number(total) || 0);
     mobileDeCounts.set(key, label);
-    if (request === mobileDeCountRequest) target.textContent = label;
+    if (request === mobileDeCountRequest) show(label);
   } catch {
     // Importer not running: no number rather than a wrong one.
-    if (request === mobileDeCountRequest) target.textContent = "—";
+    if (request === mobileDeCountRequest) show("—", copy[state.lang].offerCountMobileOffline);
   }
 }
 

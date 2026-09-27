@@ -33,7 +33,7 @@
       sourceOff: "{source}: ukryte — kliknij, aby pokazać",
       sourceFetch: "Pobierz oferty z mobile.de",
       sourceNoData: "mobile.de: brak danych — otwórz wyszukiwanie mobile.de (logo u góry) i kliknij tam zakładkę AUTOGOOD.",
-      averagePrices: "Średnie ceny",
+      averagePrices: "Typowy zakres (P25–P75)",
       pdfButton: "Raport PDF",
       pdfWorking: "Przygotowuję raport PDF…",
       pdfReady: "Raport PDF zapisany: {file}",
@@ -74,7 +74,7 @@
       otomotoDescription: "Próbka aktualnych ofert otomoto.pl z całej listy wyników (ceny w PLN).",
       verdictHeading: "Co to znaczy",
       verdictMedian: "Mediana ceny ofert: {median}.",
-      verdictMiddle: "Typowy zakres: {low} – {high} ({count} ofert).",
+      verdictMiddle: "Typowy zakres: {low} – {high} ({count} {offers}).",
       verdictDeals: "Poniżej {low} jest {count} ofert — to dół rynku.",
       tableHeading: "Aktualne oferty",
       loadingHeading: "Pobieram aktualne oferty…",
@@ -98,12 +98,12 @@
       axisRankEnd: "najdroższa",
       trendLegend: "Mediana ceny",
       curveLegend: "Krzywa cen",
-      hiddenNoAxis: "{count} ofert bez tej wartości nie ma na wykresie.",
+      hiddenNoAxis: "Bez tej wartości, więc poza wykresem: {count} {offers}.",
       tableSource: "Źródło",
       sourceEmpty: "brak danych",
       fetchMobile: "Pobierz z mobile.de ↗",
       fetchMobileHint: "Lista mobile.de otwarta w nowej karcie — kliknij tam zakładkę „AUTOGOOD”. Oferty trafią na wykres.",
-      mobileAdded: "Dodano {count} ofert mobile.de (z {total}).",
+      mobileAdded: "Dodano {count} {offersAcc} mobile.de (z {total}).",
       mobilePending: "Oferty mobile.de ({count}) czekają — otwórz Analizę rynku dla tego auta.",
       bookmarkletInstall: "Zakładka do mobile.de:",
       bookmarkletInstallHint: "przeciągnij na pasek zakładek",
@@ -120,7 +120,7 @@
       historyPinnedBadge: "Zapisane",
       historyUnpin: "Usuń z zapisanych",
       historySaveHint: "{count} / {limit} ostatnich sprawdzeń",
-      historyReady: "{count} ofert · wykres gotowy",
+      historyReady: "{count} {offers} · wykres gotowy",
       historyWaiting: "Brak danych rynku",
       historyStorageError: "Nie udało się zapisać historii w tej przeglądarce.",
       backToFilters: "← Wróć do filtrów",
@@ -168,8 +168,11 @@
       refreshUnavailable: "Źródło danych nie jest jeszcze podłączone.",
       refreshInvalid: "Źródło nie zwróciło co najmniej 3 cen ofert.",
       snapshotSaved: "Nowa kontrola zapisana w historii cen ({date}).",
-      suspectsSkipped: "Poza statystyką: {count} ofert (uszkodzone, na części, cesja / leasing albo cena poza 1/3–3× mediany) — szare kółka na wykresie.",
+      suspectsSkipped: "Poza statystyką: {count} {offers} (uszkodzone, na części, cesja / leasing albo cena poza 1/3–3× mediany) — szare kółka na wykresie.",
       suspectTag: "poza statystyką",
+      suspectShort: "+{count} poza statystyką",
+      offerForms: ["oferta", "oferty", "ofert"],
+      offerFormsAcc: ["ofertę", "oferty", "ofert"],
       emptyHeading: "Brak realnych ofert do analizy",
       emptyDescription: "Kliknij „Odśwież dane”, aby pobrać ceny z otomoto.pl, albo pobierz oferty z mobile.de zakładką AUTOGOOD (zakładka jest na stronie głównej).",
       missingVehicle: "Wybierz markę i model przed uruchomieniem analizy rynku.",
@@ -208,7 +211,7 @@
       sourceOff: "{source}: скрыт — нажми, чтобы показать",
       sourceFetch: "Загрузить объявления с mobile.de",
       sourceNoData: "mobile.de: нет данных — открой поиск mobile.de (логотип вверху) и нажми там закладку AUTOGOOD.",
-      averagePrices: "Средние цены",
+      averagePrices: "Типичный диапазон (P25–P75)",
       pdfButton: "Отчёт PDF",
       pdfWorking: "Готовлю отчёт PDF…",
       pdfReady: "Отчёт PDF сохранён: {file}",
@@ -249,7 +252,7 @@
       otomotoDescription: "Выборка актуальных объявлений otomoto.pl по всему списку (цены в PLN).",
       verdictHeading: "Что это значит",
       verdictMedian: "Медиана цен объявлений: {median}.",
-      verdictMiddle: "Типичный диапазон: {low} – {high} ({count} объявлений).",
+      verdictMiddle: "Типичный диапазон: {low} – {high} ({count} {offers}).",
       verdictDeals: "Дешевле {low} — {count} объявлений, это низ рынка.",
       tableHeading: "Актуальные объявления",
       loadingHeading: "Загружаю актуальные объявления…",
@@ -295,7 +298,7 @@
       historyPinnedBadge: "Сохранено",
       historyUnpin: "Убрать из сохранённых",
       historySaveHint: "{count} / {limit} последних проверок",
-      historyReady: "Объявлений: {count} · график готов",
+      historyReady: "{count} {offers} · график готов",
       historyWaiting: "Нет данных рынка",
       historyStorageError: "Не удалось сохранить историю в этом браузере.",
       backToFilters: "← Вернуться к фильтрам",
@@ -343,8 +346,11 @@
       refreshUnavailable: "Источник данных ещё не подключён.",
       refreshInvalid: "Источник не вернул минимум 3 цен объявлений.",
       snapshotSaved: "Новая проверка сохранена в истории цен ({date}).",
-      suspectsSkipped: "Вне статистики: {count} объявл. (повреждённые, на запчасти, цессия / лизинг или цена вне 1/3–3× медианы) — серые кружки на графике.",
+      suspectsSkipped: "Вне статистики: {count} {offers} (повреждённые, на запчасти, цессия / лизинг или цена вне 1/3–3× медианы) — серые кружки на графике.",
       suspectTag: "вне статистики",
+      suspectShort: "+{count} вне статистики",
+      offerForms: ["объявление", "объявления", "объявлений"],
+      offerFormsAcc: ["объявление", "объявления", "объявлений"],
       emptyHeading: "Нет реальных объявлений для анализа",
       emptyDescription: "Нажми «Обновить данные», чтобы загрузить цены с otomoto.pl, или загрузи объявления с mobile.de закладкой AUTOGOOD (закладка на главной странице).",
       missingVehicle: "Выберите марку и модель перед запуском анализа рынка.",
@@ -411,6 +417,22 @@
 
   function copy() {
     return marketCopy[currentLanguage()];
+  }
+
+  // "1 oferta, 2 oferty, 5 ofert" (and the Russian three forms): {count},
+  // {offers} and {offersAcc} filled in one go.
+  function withCount(template, count) {
+    const c = copy();
+    const n = Math.abs(Number(count)) || 0;
+    const lastTwo = n % 100;
+    const last = n % 10;
+    const form = currentLanguage() === "ru"
+      ? (last === 1 && lastTwo !== 11 ? 0 : last >= 2 && last <= 4 && (lastTwo < 12 || lastTwo > 14) ? 1 : 2)
+      : (n === 1 ? 0 : last >= 2 && last <= 4 && (lastTwo < 12 || lastTwo > 14) ? 1 : 2);
+    return String(template)
+      .replace("{count}", numberFormat().format(n))
+      .replace("{offersAcc}", c.offerFormsAcc[form])
+      .replace("{offers}", c.offerForms[form]);
   }
 
   function filterSignature(filters) {
@@ -917,7 +939,7 @@
       const meta = historyMeta(entry.filters);
       const ready = entry.listings.length >= 3;
       const status = ready
-        ? c.historyReady.replace("{count}", String(entry.listings.length))
+        ? withCount(c.historyReady, entry.listings.length)
         : c.historyWaiting;
       return `
         <article class="mobileMarketHistoryItem${ready ? " isReady" : ""}${entry.pinned ? " isPinned" : ""}${editingHistoryId === entry.id ? " isSelected" : ""}">
@@ -1601,9 +1623,12 @@
       filters.matte ? labelOf("[data-mobile-matte]") : "",
       ...checkedLabels("[data-mobile-interior-color]").map((label) => `${t.interiorColorLabel || ""}: ${label}`),
     ].filter(Boolean);
+    // Each marketplace searches its own countries: say which is which, so
+    // "Polska" next to a Germany-only filter does not read as a mistake.
+    const mobileCountries = checkedLabels("[data-mobile-country]");
     const countries = [
-      ...(sources.includes("mobile") ? (checkedLabels("[data-mobile-country]").length ? checkedLabels("[data-mobile-country]") : []) : []),
-      ...(sources.includes("otomoto") ? [t.countryNames?.PL || "Polska"] : []),
+      ...(sources.includes("mobile") && mobileCountries.length ? [`${mobileCountries.join(", ")} (mobile.de)`] : []),
+      ...(sources.includes("otomoto") ? [`${t.countryNames?.PL || "Polska"} (otomoto.pl)`] : []),
     ];
     const status = [
       filters.roadworthy ? labelOf("[data-mobile-roadworthy]") : "",
@@ -1806,7 +1831,7 @@
             : (x === 0 ? `0% · ${c.axisRankStart}` : x === 1 ? `100% · ${c.axisRankEnd}` : `${x * 100}%`),
         }));
       } else if (axisSpan) {
-        const step = chartAxis === "year" ? Math.max(1, Math.ceil(axisSpan / 8)) : niceStep(axisSpan, 5);
+        const step = chartAxis === "year" ? Math.max(1, Math.ceil(axisSpan / 8)) : niceStep(axisSpan, 7);
         for (let value = Math.ceil(axisMin / step) * step; value <= axisMax; value += step) {
           xTicks.push({
             x: (value - axisMin) / axisSpan,
@@ -1862,7 +1887,8 @@
         }
       }
 
-      const sortedListings = [...marketListings].sort((left, right) => {
+      // The table lists every offer on the chart, the left-out ones greyed.
+      const sortedListings = [...marketListings, ...suspectListings].sort((left, right) => {
         const factor = tableSort.direction === "asc" ? 1 : -1;
         if (tableSort.key === "title") return String(left.title || "").localeCompare(String(right.title || ""), "pl") * factor;
         return ((Number(left[tableSort.key]) || 0) - (Number(right[tableSort.key]) || 0)) * factor;
@@ -2005,7 +2031,11 @@
           ${statRows.map((row) => `
             <div class="mobileMarketStatsRow" role="row">
               ${compared ? `<span class="mobileMarketStatsSource" role="rowheader"><img class="agBrandMark" src="${BRAND_MARKS[row.source]}" alt="" />${escapeMarketHtml(sourceName(row.source))}</span>` : ""}
-              ${statColumns.map((column) => `<b class="${column.wide ? "isWide" : ""}${tone(column, row)}" role="cell">${escapeMarketHtml(column.text(row.stats))}</b>`).join("")}
+              ${statColumns.map((column, index) => {
+                const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
+                const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
+                return `<b class="${column.wide ? "isWide" : ""}${tone(column, row)}" role="cell">${escapeMarketHtml(column.text(row.stats))}${note}</b>`;
+              }).join("")}
             </div>`).join("")}
         </div>
         </div>`;
@@ -2038,7 +2068,7 @@
         </div>
 
         <div
-          class="mobileMarketScale${chartAxis === "rank" ? " isRankAxis" : ""}"
+          class="mobileMarketScale${chartAxis === "rank" ? " isRankAxis" : ""}${plotted.length > 150 ? " isDense" : ""}"
           role="group"
           aria-label="${escapeMarketHtml(c.chartTitle)}"
           data-currency="${escapeMarketHtml(displayCurrency)}"
@@ -2058,7 +2088,10 @@
           ${carMarker}
           ${(() => {
             const top = [...plotted].sort((left, right) => right.listing.price - left.listing.price)[0];
-            return top ? `<span class="mobileMarketExtreme${top.x > 0.8 ? " isRight" : ""}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(c.priceMaxLabel)} · ${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : "";
+            // Above the dot, or beside it (towards the middle) when the dot sits
+            // at the top or right edge and a label above would leave the plot.
+            const side = top.y < 12 || top.x > 0.8 ? (top.x > 0.5 ? " isSideLeft" : " isSideRight") : "";
+            return top ? `<span class="mobileMarketExtreme${side}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(c.priceMaxLabel)} · ${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : "";
           })()}
           ${Math.abs(middleHighPosition - medianPosition) >= 4 ? `<span class="mobileMarketKeyTick" style="top:${middleHighPosition}%">P75 · ${escapeMarketHtml(formatMarketPrice(statistics.middleHigh))}</span>` : ""}
           <span class="mobileMarketKeyTick isMedian" style="top:${medianPosition}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(statistics.median))}</span>
@@ -2073,14 +2106,14 @@
           <span class="mobileMarketXCaption">${escapeMarketHtml(axisCaption)}</span>
         </div>
 
-          ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(c.suspectsSkipped.replace("{count}", String(suspectListings.length)))}</p>` : ""}
-          ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(c.hiddenNoAxis.replace("{count}", String(hiddenByAxis)))}</p>` : ""}
+          ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}
+          ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.hiddenNoAxis, hiddenByAxis))}</p>` : ""}
 
 `;
       offersContent = `
         <div class="mobileMarketTableBlock">
           <div class="mobileMarketTableHead">
-            ${blockTitle("list", `${c.tableHeading} · ${marketListings.length}`)}
+            ${blockTitle("list", `${c.tableHeading} · ${marketListings.length + suspectListings.length}`)}
             <span data-report-hide>${escapeMarketHtml(c.tableSortHint)}</span>
           </div>
           <div class="mobileMarketTableScroll">
@@ -2088,22 +2121,20 @@
               <thead>
                 <tr>
                   ${[["title", c.tableTitle], ["year", c.tableYear], ["mileage", c.tableMileage], ["price", c.tablePrice]].map(([key, label]) => `
-                    <th scope="col">
+                    <th scope="col"${key === "title" ? "" : ' class="isNum"'}>
                       <button type="button" data-mobile-market-sort="${key}">${escapeMarketHtml(label)}${tableSort.key === key ? (tableSort.direction === "asc" ? " ↑" : " ↓") : ""}</button>
                     </th>`).join("")}
                   <th scope="col">${escapeMarketHtml(c.tableSource)}</th>
-                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
                 ${sortedListings.map((listing) => `
-                  <tr class="${marketClass(listing.price, statistics)}" data-market-key="${escapeMarketHtml(listingKey(listing))}">
-                    <td class="mobileMarketTableTitle">${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}</td>
-                    <td>${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
-                    <td>${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} km` : "—")}</td>
-                    <td><b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b></td>
-                    <td><span class="mobileMarketSourceTag is${listing.source === "otomoto" ? "Otomoto" : "Mobile"}"><i aria-hidden="true"></i>${escapeMarketHtml(sourceName(listing.source))}</span></td>
-                    <td>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : ""}</td>
+                  <tr class="${listing.suspect ? "isSuspect" : marketClass(listing.price, statistics)}" data-market-key="${escapeMarketHtml(listingKey(listing))}">
+                    <td class="mobileMarketTableTitle">${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}</td>
+                    <td class="isNum">${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
+                    <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} km` : "—")}</td>
+                    <td class="isNum"><b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b></td>
+                    <td><span class="mobileMarketSourceCell"><span class="mobileMarketSourceTag is${listing.source === "otomoto" ? "Otomoto" : "Mobile"}"><i aria-hidden="true"></i>${escapeMarketHtml(sourceName(listing.source))}</span>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : ""}</span></td>
                   </tr>`).join("")}
               </tbody>
             </table>
@@ -2561,7 +2592,7 @@
     const c = copy();
     const listings = normalizeListings(rows).map((listing) => ({ ...listing, source: "mobile" }));
     if (!listings.length) return;
-    const message = c.mobileAdded.replace("{count}", String(listings.length)).replace("{total}", String(meta.total || listings.length));
+    const message = withCount(c.mobileAdded, listings.length).replace("{total}", String(meta.total || listings.length));
     if (!activeAnalysis || analysisView.hidden) {
       pendingMobile = { listings };
       setAnalysisStatus(c.mobilePending.replace("{count}", String(listings.length)));
@@ -2756,6 +2787,22 @@
       : document.getElementById("mobile-filter-group-vehicle")?.closest(".mobileFilterCard");
     requestAnimationFrame(() => target?.scrollIntoView({ behavior: "smooth", block: "start" }));
   }));
+
+  // The step the page is on: 3 while the analysis shows, otherwise 1 or 2 by
+  // whether the link card is still on screen.
+  const stepButtons = Array.from(document.querySelectorAll("[data-mobile-step]"));
+  const markCurrentStep = () => {
+    let current = "filters";
+    if (!analysisView.hidden) current = "analysis";
+    else if (listingFrame && listingFrame.getBoundingClientRect().bottom > window.innerHeight * 0.35) current = "link";
+    stepButtons.forEach((button) => {
+      if (button.dataset.mobileStep === current) button.setAttribute("aria-current", "step");
+      else button.removeAttribute("aria-current");
+    });
+  };
+  new MutationObserver(markCurrentStep).observe(analysisView, { attributes: true, attributeFilter: ["hidden"] });
+  window.addEventListener("scroll", () => requestAnimationFrame(markCurrentStep), { passive: true });
+  markCurrentStep();
 
   window.AUTOGOOD_MOBILE_LOG_SEARCH = logSearchToHistory;
   // Used by the sticky panel to show how many offers the filters match.
