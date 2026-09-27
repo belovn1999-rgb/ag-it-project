@@ -7,6 +7,16 @@ working and update it after every change (change log, backlog, decisions) in
 the same commit. It is shared with the Codex project "MOBILE.DE" and every
 other chat — keep it current and exact.
 
+**User data in the browser (favourites, search history) — never lose it.**
+Incident 2026-09-27: favourites vanished because a stale tab wrote its old
+in-memory copy over `localStorage`. Before touching anything that reads or
+writes `autogood.mobile.*` keys, read `docs/PROJECT-MOBILE.md` section 4.6.1.
+In short: every write re-reads storage first (`refreshMarketHistory()`);
+never rename a key without migrating it; never `clear()`/`removeItem` those
+keys; favourites are never dropped (also mirrored in
+`autogood.mobile.marketFavorites.v1`); new filter fields must not make old
+entries unreadable. The same applies to any other page that stores user data.
+
 **Filters (mobile.de ↔ otomoto)**: every form field → URL parameter mapping,
 rules and checks live in `docs/FILTERS-MOBILE-OTOMOTO.md`. Change a filter →
 update that file in the same commit.
