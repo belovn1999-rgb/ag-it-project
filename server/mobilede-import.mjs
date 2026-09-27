@@ -1055,7 +1055,59 @@ function onMobileDeOrigin(work) {
   });
 }
 
+// mobile.de's bot protection has to run now and then on a page that is really
+// shown; its cookie then lets the quiet background reads through for hours.
+// When mobile.de starts refusing, www.mobile.de is shown for a few seconds in
+// the importer Chrome's own window (never the user's browser) and closed.
+async function refreshMobileDeAccess() {
+  return inChromeQueue(async () => {
+    const browser = await connectChromeBrowser();
+    let targetId = "";
+    try {
+      ({ targetId } = await browser.send("Target.createTarget", { url: "https://www.mobile.de/", newWindow: true }));
+      const { windowId } = await browser.send("Browser.getWindowForTarget", { targetId });
+      await browser.send("Browser.setWindowBounds", { windowId, bounds: { windowState: "normal" } }).catch(() => {});
+      const { sessionId } = await browser.send("Target.attachToTarget", { targetId, flatten: true });
+      await browser.send("Page.bringToFront", {}, sessionId).catch(() => {});
+      for (let attempt = 1; attempt <= 15; attempt += 1) {
+        await delay(1500);
+        const state = await browser.send("Runtime.evaluate", {
+          expression: "document.title + ' ' + ((document.body && document.body.innerText) || '').slice(0, 300)",
+          returnByValue: true,
+        }, sessionId, 5000).catch(() => null);
+        const text = String(state?.result?.value || "");
+        if (/mobile\.de/i.test(text) && !/Zugriff verweigert|Access denied/i.test(text) && text.length > 60) {
+          await delay(2000);
+          return true;
+        }
+      }
+      return false;
+    } finally {
+      if (targetId) await browser.send("Target.closeTarget", { targetId }).catch(() => {});
+      browser.close();
+    }
+  });
+}
+
+function isRefusal(error) {
+  return /Access denied|no result list|incomplete listing page/i.test(error?.message || "");
+}
+
+async function withMobileDeAccess(read) {
+  try {
+    return await read();
+  } catch (error) {
+    if (!isRefusal(error)) throw error;
+    await refreshMobileDeAccess();
+    return read();
+  }
+}
+
 async function fetchListingWithChromeDevTools(url) {
+  return withMobileDeAccess(() => fetchListingOnce(url));
+}
+
+async function fetchListingOnce(url) {
   const html = await onMobileDeOrigin((evaluate) => evaluate(
     `fetch(${JSON.stringify(url)}, { credentials: "include" }).then((response) => response.text())`,
     30000,
@@ -1151,11 +1203,15 @@ async function searchMobileDe(searchUrl, { countOnly = false, pages = 8 } = {}) 
   const key = `${countOnly ? "count" : pages}|${searchUrl}`;
   const cached = searchCache.get(key);
   if (cached && Date.now() - cached.at < SEARCH_CACHE_MS) return cached.value;
-  const value = await onMobileDeOrigin((evaluate) => evaluate(
-    `${SEARCH_PAGE_SCRIPT}(${JSON.stringify(searchUrl)}, ${Number(pages) || 8}, ${countOnly ? "true" : "false"})`,
-    90000,
-  ));
-  if (value?.error) throw new Error(value.error);
+  const readOnce = async () => {
+    const result = await onMobileDeOrigin((evaluate) => evaluate(
+      `${SEARCH_PAGE_SCRIPT}(${JSON.stringify(searchUrl)}, ${Number(pages) || 8}, ${countOnly ? "true" : "false"})`,
+      90000,
+    ));
+    if (result?.error) throw new Error(result.error);
+    return result;
+  };
+  const value = await withMobileDeAccess(readOnce);
   searchCache.set(key, { at: Date.now(), value });
   return value;
 }

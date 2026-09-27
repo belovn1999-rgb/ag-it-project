@@ -1,4 +1,4 @@
-const DEFAULT_MOBILEDE_API_URL = "https://jay-hang-given-segment.trycloudflare.com/mobilede/import";
+const DEFAULT_MOBILEDE_API_URL = "https://albuquerque-centered-incentive-calendars.trycloudflare.com/mobilede/import";
 
 const copy = {
   pl: {
@@ -2982,7 +2982,6 @@ function renderData() {
     : `<b>${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</b>`;
   const equipment = Array.isArray(data.equipment) ? data.equipment.filter(Boolean) : [];
   els.listingDetails.innerHTML = specSheetHtml({
-    kicker: c.specVehicleKicker,
     title,
     aside: `<span class="agSpecPrice">${price}</span>`,
     columns: [

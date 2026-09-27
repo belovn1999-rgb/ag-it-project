@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=turnkey-20260926" />
+  <link rel="stylesheet" href="./src/mobile.css?v=favorite-link-card-20260927" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=cards3-20260926" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=global-navigation-20260923" data-ag-global-nav></script>
@@ -45,7 +45,7 @@
       <section class="mobileListingSearch">
         <section class="mobileFilterCard mobileListingLinkCard" aria-labelledby="mobile-listing-link-heading">
           <div class="mobileListingLinkHead">
-            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
+            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
             <div class="mobileLinkSource" role="radiogroup" aria-label="Portal">
               <label class="isMobile"><input type="radio" name="mobile-link-source" value="mobile" data-mobile-link-source checked /><span>mobile.de</span></label>
               <label class="isOtomoto"><input type="radio" name="mobile-link-source" value="otomoto" data-mobile-link-source /><span>otomoto.pl</span></label>
@@ -70,7 +70,8 @@
             </div>
             <p id="mobile-helper" class="mobileHelper" data-mobile-status></p>
             <div class="mobileListingBrief" data-mobile-listing-result aria-live="polite" hidden>
-              <h3 class="mobileListingBriefTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-mobile-title>—</span></h3>
+              <h3 class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="specVehicleKicker">Dane z ogłoszenia</span></h3>
+              <h3 class="mobileListingBriefTitle"><span data-mobile-title>—</span></h3>
               <div class="mobileListingDetails" data-mobile-listing-details></div>
             </div>
             <p class="mobileBookmarkletRow" data-mobile-bookmarklet-row><span data-i18n="bookmarkletInstall">Zakładka do mobile.de:</span> <a class="mobileBookmarkletLink" href="#" data-autogood-bookmarklet draggable="true">AUTOGOOD ↦ mobile.de</a> <em data-i18n="bookmarkletHint">Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.</em></p>
@@ -489,7 +490,7 @@
             <aside class="mobileSearchCountPanel">
               <div class="mobileSearchCountHeader">
                 <p data-i18n="offerCountLabel">AKTUALNE OFERTY</p>
-                <button class="mobileSearchCountSaveButton" type="button" data-mobile-market-history-save data-market-icon-label="saveButton" aria-label="Zapisz dane" title="Zapisz dane">★</button>
+                <button class="mobileSearchCountSaveButton" type="button" data-mobile-market-history-save aria-pressed="false" aria-label="Zapisz na stałe" title="Zapisz na stałe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
               </div>
               <div class="mobileSearchCountMarkets">
                 <div class="mobileSearchCountMarket">
@@ -572,9 +573,9 @@
     </main>
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
-    <script src="./src/mobile.js?v=mobilede-search2-20260926"></script>
+    <script src="./src/mobile.js?v=tunnel-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=cards3-20260926"></script>
-    <script src="./src/mobile-market-analysis.js?v=mobilede-search-20260926"></script>
+    <script src="./src/mobile-market-analysis.js?v=favorite-link-card-20260927"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>
