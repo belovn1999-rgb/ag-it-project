@@ -452,8 +452,21 @@ button {
   background: transparent;
   color: #b88900;
   cursor: pointer;
-  font-size: 23px;
-  line-height: 1;
+}
+
+.mobileSearchCountSaveButton svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.mobileSearchCountSaveButton:hover svg,
+.mobileSearchCountSaveButton:focus-visible svg,
+.mobileSearchCountSaveButton.isPinned svg {
+  fill: currentColor;
 }
 
 .mobileSearchCountSaveButton:focus-visible {
@@ -1728,13 +1741,13 @@ button {
   grid-template-columns: minmax(0, 1fr) 196px;
   column-gap: var(--space-lg);
   gap: var(--space-lg);
-  padding: 0 var(--space-xl);
+  padding: 0;
   margin-bottom: var(--space-xl);
   min-width: 0;
 }
 
 .mobileListingLinkCard {
-  grid-column: 1;
+  grid-column: 1 / -1;
 }
 
 .mobileListingBrief[hidden] {

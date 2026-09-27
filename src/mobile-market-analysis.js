@@ -899,6 +899,7 @@
 
   function renderHistory() {
     const c = copy();
+    updateHistorySaveButtons();
     const pinnedCount = marketHistory.filter((entry) => entry.pinned).length;
     const recentCount = marketHistory.length - pinnedCount;
     historyCount.textContent = pinnedCount
@@ -937,6 +938,24 @@
         </article>`;
     }).join("");
     updateHistoryConfirm();
+  }
+
+  function updateHistorySaveButtons() {
+    let entry = null;
+    try {
+      const filters = readManualFields();
+      if (filters.brand && filters.model) entry = historyEntryForFilters(filters);
+    } catch {
+      entry = null;
+    }
+    const pinned = Boolean(entry?.pinned);
+    const c = copy();
+    historySaves.forEach((button) => {
+      button.classList.toggle("isPinned", pinned);
+      button.setAttribute("aria-pressed", String(pinned));
+      button.setAttribute("aria-label", pinned ? c.historyUnpin : c.historyPin);
+      button.title = pinned ? c.historyUnpin : c.historyPin;
+    });
   }
 
   // The ✓ appears on the selected entry once the form no longer matches it.
@@ -1042,22 +1061,22 @@
     if (typeof renderManualOptions === "function") renderManualOptions(true);
   }
 
-  function saveCurrentHistory() {
+  function toggleCurrentHistoryFavorite() {
     const c = copy();
     try {
       const filters = readManualFields();
       if (!filters.brand || !filters.model) throw new Error(c.missingVehicle);
       const searchUrl = buildMobileDeSearchUrl(filters);
       const matchingImport = importedDataset?.filterKey === vehicleDataKey(filters) ? importedDataset : null;
-      const editedEntry = marketHistory.find((entry) => entry.id === editingHistoryId) || null;
-      const existing = editedEntry || historyEntryForFilters(filters);
+      const existing = historyEntryForFilters(filters);
       const matchingFilters = existing?.signature === filterSignature(filters);
       const listings = matchingImport?.listings || (matchingFilters ? existing?.listings || [] : []);
       const sourceFileName = matchingImport?.fileName || (matchingFilters ? existing?.sourceFileName || "" : "");
-      const snapshot = editedEntry
-        ? updateMarketSnapshot(editedEntry.id, filters, listings, sourceFileName, searchUrl, true)
+      const pinned = !Boolean(existing?.pinned);
+      const snapshot = existing
+        ? updateMarketSnapshot(existing.id, filters, listings, sourceFileName, searchUrl, pinned)
         : createMarketSnapshot(filters, listings, sourceFileName, searchUrl, true);
-      if (snapshot) setAnalysisStatus(editedEntry ? c.historyUpdateSuccess : c.saveSuccess);
+      if (snapshot) setAnalysisStatus(pinned ? c.historyPinned : c.historyUnpin);
     } catch (error) {
       setAnalysisStatus(error.message || c.missingVehicle, true);
     }
@@ -2664,13 +2683,18 @@
     if (row && !row.contains(event.relatedTarget)) highlightMarketPoint("", false);
   });
 
-  historySaves.forEach((button) => button.addEventListener("click", saveCurrentHistory));
+  historySaves.forEach((button) => button.addEventListener("click", toggleCurrentHistoryFavorite));
   document.querySelectorAll("[data-mobile-manual-reset]").forEach((button) => button.addEventListener("click", () => {
     editingHistoryId = "";
+    setTimeout(updateHistorySaveButtons);
   }));
   const manualForm = document.querySelector(".mobileManualForm");
-  manualForm?.addEventListener("input", () => setTimeout(updateHistoryConfirm));
-  manualForm?.addEventListener("change", () => setTimeout(updateHistoryConfirm));
+  const updateManualHistoryState = () => {
+    updateHistoryConfirm();
+    updateHistorySaveButtons();
+  };
+  manualForm?.addEventListener("input", () => setTimeout(updateManualHistoryState));
+  manualForm?.addEventListener("change", () => setTimeout(updateManualHistoryState));
   historyList.addEventListener("click", (event) => {
     const confirmButton = event.target.closest("[data-mobile-market-history-confirm]");
     if (confirmButton) {
