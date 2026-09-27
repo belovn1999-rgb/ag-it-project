@@ -2267,8 +2267,16 @@
   }
   async function captureReport(mode) {
     await loadScript("./vendor/html-to-image.js?v=1.11.11", "htmlToImage");
-    const root = analysisContent.querySelector(".mobileMarketAnalysisPanel");
-    analysisContent.classList.add("isReportCapture", mode === "copy" ? "isReportCopy" : "isReportPdf");
+    // The report is drawn from a copy placed off screen, so the page itself
+    // (favourites, buttons) never changes while it is prepared.
+    const live = analysisContent.querySelector(".mobileMarketAnalysisPanel");
+    const stage = document.createElement("div");
+    stage.className = `isReportCapture ${mode === "copy" ? "isReportCopy" : "isReportPdf"}`;
+    stage.setAttribute("aria-hidden", "true");
+    stage.style.cssText = `position:fixed;top:0;left:-100000px;width:${live.getBoundingClientRect().width}px;pointer-events:none;`;
+    const root = live.cloneNode(true);
+    stage.append(root);
+    analysisContent.parentElement.append(stage);
     try {
       // A moment for the hidden parts to leave the layout before measuring.
       await new Promise((resolve) => setTimeout(resolve, 60));
@@ -2306,7 +2314,7 @@
       });
       return { canvas, width: box.width, height: box.height, pixelRatio, links, breaks };
     } finally {
-      analysisContent.classList.remove("isReportCapture", "isReportCopy", "isReportPdf");
+      stage.remove();
     }
   }
 
