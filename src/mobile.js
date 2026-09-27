@@ -1,4 +1,4 @@
-const DEFAULT_MOBILEDE_API_URL = "https://albuquerque-centered-incentive-calendars.trycloudflare.com/mobilede/import";
+const DEFAULT_MOBILEDE_API_URL = "https://decor-tube-freely-named.trycloudflare.com/mobilede/import";
 
 const copy = {
   pl: {
