@@ -35,7 +35,7 @@ function functionSource(name) {
 
 const context = {
   URLSearchParams,
-  copy: { pl: { marketSearchInvalidRange: "invalid", marketSearchUnsupportedBrand: "invalid", marketSearchChooseBrand: "invalid" } },
+  copy: { pl: { marketSearchInvalidRange: "invalid", marketSearchUnsupportedBrand: "invalid", marketSearchChooseBrand: "invalid", doorsInvalidValue: "invalid doors", doorsLabel: "Liczba drzwi" } },
   state: { lang: "pl" },
   compactNumber: (value) => String(value || "").replace(/\s+/g, "").match(/\d+/)?.[0] || "",
   normalizeToken: (value) => String(value || "").trim().toLowerCase(),
@@ -54,6 +54,12 @@ const context = {
   mobileDeInteriorMaterialValues: {},
   mobileDeAirConditioningValues: {},
   mobileDeTrailerCouplingValues: {},
+  doorsOptions: ["2", "3", "4", "5", "6", "7"],
+  mobileDeDoorGroups: [
+    { from: 2, to: 3, value: "TWO_OR_THREE" },
+    { from: 4, to: 5, value: "FOUR_OR_FIVE" },
+    { from: 6, to: 7, value: "SIX_OR_SEVEN" },
+  ],
 };
 vm.createContext(context);
 [
@@ -63,6 +69,8 @@ vm.createContext(context);
   "mobileDeGroupId",
   "mobileDeModelSelection",
   "appendMobileDeRange",
+  "doorRangeBounds",
+  "mobileDeDoorGroup",
   "manualFuelValues",
   "buildMobileDeSearchUrl",
 ].forEach((name) => vm.runInContext(functionSource(name), context));
@@ -83,7 +91,8 @@ const baseFilters = {
   powerTo: "",
   seatsFrom: "",
   seatsTo: "",
-  doors: "",
+  doorsFrom: "",
+  doorsTo: "",
   drive: "any",
   gearbox: "any",
   vat: "",
@@ -149,13 +158,25 @@ const filterUrl = new URL(context.buildMobileDeSearchUrl({
   fuels: ["electric"],
   seatsFrom: "5",
   seatsTo: "7",
-  doors: "FOUR_OR_FIVE",
+  doorsFrom: "4",
+  doorsTo: "5",
   parkingSensors: ["REAR_VIEW_CAM", "FRONT_SENSORS"],
   cruiseControl: "ADAPTIVE_CRUISE_CONTROL",
   roadworthy: true,
 }));
 assert.equal(filterUrl.searchParams.get("sc"), "5:7", "seat range must use Mobile.de's sc parameter");
-assert.equal(filterUrl.searchParams.get("door"), "FOUR_OR_FIVE", "door group must use Mobile.de's door parameter");
+assert.equal(filterUrl.searchParams.get("door"), "FOUR_OR_FIVE", "4-5 doors map to Mobile.de's supported group");
+assert.equal(new URL(context.buildMobileDeSearchUrl({ ...baseFilters, doorsFrom: "4", doorsTo: "4" })).searchParams.get("door"), "FOUR_OR_FIVE", "a single door count uses the containing group");
+assert.equal(new URL(context.buildMobileDeSearchUrl({ ...baseFilters, doorsFrom: "3", doorsTo: "4" })).searchParams.get("door"), null, "a range spanning groups must not silently exclude matching cars");
+assert.equal(new URL(context.buildMobileDeSearchUrl({ ...baseFilters, doorsFrom: "6" })).searchParams.get("door"), "SIX_OR_SEVEN", "an open lower bound may use the last supported group");
+assert.throws(() => context.buildMobileDeSearchUrl({ ...baseFilters, doorsFrom: "5", doorsTo: "4" }), /invalid/, "reversed door bounds are rejected");
+assert.throws(() => context.buildMobileDeSearchUrl({ ...baseFilters, doorsFrom: "8" }), /invalid doors/, "unsupported door counts are rejected");
+context.els = { features: [] };
+context.mobileDeApproximateFeatures = new Set();
+vm.runInContext(functionSource("optionLabelText"), context);
+vm.runInContext(functionSource("mobileDeSkippedFilterLabels"), context);
+assert.deepEqual(Array.from(context.mobileDeSkippedFilterLabels({ ...baseFilters, doorsFrom: "3", doorsTo: "4" })), ["Liczba drzwi"], "cross-group range is reported as unsupported on Mobile.de");
+assert.deepEqual(Array.from(context.mobileDeSkippedFilterLabels({ ...baseFilters, doorsFrom: "4", doorsTo: "5" })), [], "an exact group needs no warning");
 assert.deepEqual(filterUrl.searchParams.getAll("ft"), ["ELECTRICITY"], "electric fuel must use Mobile.de's ELECTRICITY value");
 assert.deepEqual(filterUrl.searchParams.getAll("pa"), ["REAR_VIEW_CAM", "FRONT_SENSORS"], "parking assistants must use Mobile.de's pa parameter");
 assert.equal(filterUrl.searchParams.get("spc"), "ADAPTIVE_CRUISE_CONTROL", "cruise control must use Mobile.de's spc parameter");
@@ -189,7 +210,6 @@ const comfortInputs = [
   ["MASSAGE_SEATS", "Fotele z masażem"],
 ].map(([value, label]) => ({ value, closest: () => ({ textContent: label }) }));
 context.document = { querySelector: () => ({ querySelectorAll: () => comfortInputs }) };
-vm.runInContext(functionSource("optionLabelText"), context);
 vm.runInContext(functionSource("confirmedComfortEquipment"), context);
 const comfort = context.confirmedComfortEquipment({ equipment: [
   "Kamera 360", "LED headlights", "Harman Kardon", "Panoramadach",

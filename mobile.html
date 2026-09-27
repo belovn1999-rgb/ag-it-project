@@ -141,15 +141,17 @@
                       </div>
                     </div>
                   </div>
-                  <label class="mobileField mobileDoorsField">
+                  <div class="mobileField mobileRangeField mobileDoorsField">
                     <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="doorsLabel">Liczba drzwi</span></span>
-                    <select data-mobile-doors>
-                      <option value="" data-i18n="doorsAny">Dowolna</option>
-                      <option value="TWO_OR_THREE">2/3</option>
-                      <option value="FOUR_OR_FIVE">4/5</option>
-                      <option value="SIX_OR_SEVEN">6/7</option>
-                    </select>
-                  </label>
+                    <div class="mobileRangePair">
+                      <div class="mobileComboControl" data-mobile-options="doors" data-mobile-options-target="data-mobile-doors-from">
+                        <input data-mobile-doors-from inputmode="numeric" autocomplete="off" />
+                      </div>
+                      <div class="mobileComboControl" data-mobile-options="doorsTo" data-mobile-options-target="data-mobile-doors-to">
+                        <input data-mobile-doors-to inputmode="numeric" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </section>
@@ -584,9 +586,9 @@
     </main>
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
-    <script src="./src/mobile.js?v=brief-fixes3-20260927"></script>
+    <script src="./src/mobile.js?v=door-range-20260927-2"></script>
     <script src="./src/turnkey-estimate.js?v=cards3-20260926"></script>
-    <script src="./src/mobile-market-analysis.js?v=offscreen-capture-20260927"></script>
+    <script src="./src/mobile-market-analysis.js?v=door-range-20260927-2"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>

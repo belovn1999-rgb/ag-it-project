@@ -1028,6 +1028,14 @@
   }
 
   function restoreManualFilters(filters) {
+    const legacyDoorRange = {
+      TWO_OR_THREE: ["2", "3"],
+      FOUR_OR_FIVE: ["4", "5"],
+      SIX_OR_SEVEN: ["6", "7"],
+    }[filters.doors];
+    if (legacyDoorRange && !filters.doorsFrom && !filters.doorsTo) {
+      filters = { ...filters, doorsFrom: legacyDoorRange[0], doorsTo: legacyDoorRange[1] };
+    }
     const valueSelectors = {
       brand: "[data-mobile-brand]",
       model: "[data-mobile-model]",
@@ -1045,7 +1053,8 @@
       powerTo: "[data-mobile-power-to]",
       seatsFrom: "[data-mobile-seats-from]",
       seatsTo: "[data-mobile-seats-to]",
-      doors: "[data-mobile-doors]",
+      doorsFrom: "[data-mobile-doors-from]",
+      doorsTo: "[data-mobile-doors-to]",
       vat: "[data-mobile-vat]",
       seller: "[data-mobile-seller]",
       damagedVehicles: "[data-mobile-damaged-vehicles]",
@@ -1282,7 +1291,7 @@
     summary.push(rangeSummary(c.displacement, filters.displacementFrom, filters.displacementTo, "ccm"));
     summary.push(rangeSummary(c.power, filters.powerFrom, filters.powerTo, "KM"));
     summary.push(rangeSummary(c.seats, filters.seatsFrom, filters.seatsTo));
-    if (filters.doors) summary.push(`${c.doors}: ${document.querySelector("[data-mobile-doors]")?.selectedOptions[0]?.textContent.trim() || filters.doors}`);
+    summary.push(rangeSummary(c.doors, filters.doorsFrom, filters.doorsTo));
     if (filters.drive && filters.drive !== "any") summary.push(checkedLabel("[data-mobile-drive]"));
     if (filters.gearbox && filters.gearbox !== "any") summary.push(checkedLabel("[data-mobile-gearbox]"));
     const vat = selectedOptionText("[data-mobile-vat]");
@@ -1331,7 +1340,7 @@
       rangeSummary(c.displacement, filters.displacementFrom, filters.displacementTo, "ccm"),
       rangeSummary(c.power, filters.powerFrom, filters.powerTo, "KM"),
       rangeSummary(c.seats, filters.seatsFrom, filters.seatsTo),
-      filters.doors ? `${c.doors}: ${document.querySelector("[data-mobile-doors]")?.selectedOptions[0]?.textContent.trim() || filters.doors}` : "",
+      rangeSummary(c.doors, filters.doorsFrom, filters.doorsTo),
     );
     if (filters.drive && filters.drive !== "any") parameters.push(checkedLabel("[data-mobile-drive]"));
     if (filters.gearbox && filters.gearbox !== "any") parameters.push(checkedLabel("[data-mobile-gearbox]"));

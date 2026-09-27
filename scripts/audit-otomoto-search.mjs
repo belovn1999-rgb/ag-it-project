@@ -1,3 +1,4 @@
+import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
 import vm from "node:vm";
@@ -76,6 +77,7 @@ const literalNames = [
   "otomotoDriveValues",
   "otomotoGearboxValues",
   "otomotoSellerValues",
+  "doorsOptions",
   "otomotoInteriorMaterialValues",
   "otomotoAirConditioningValues",
   "otomotoExteriorColorValues",
@@ -85,7 +87,7 @@ const literalNames = [
 const context = {
   URLSearchParams,
   EUR_PLN_FALLBACK: 4.3,
-  copy: { pl: { marketSearchInvalidRange: "invalid range", marketSearchChooseBrand: "choose brand" } },
+  copy: { pl: { marketSearchInvalidRange: "invalid range", marketSearchChooseBrand: "choose brand", doorsUnavailableOtomoto: "unsupported doors" } },
   state: { lang: "pl" },
   window: {
     AUTOGOOD_OTOMOTO_CATALOG: vm.runInNewContext(
@@ -114,6 +116,7 @@ vm.createContext(context);
   "appendOtomotoPriceRange",
   "appendOtomotoValues",
   "appendOtomotoRange",
+  "doorRangeBounds",
   "buildOtomotoSearchUrl",
 ].forEach((name) => vm.runInContext(extractFunction(mobileSource, name), context));
 
@@ -137,7 +140,8 @@ const filters = {
   powerTo: "250",
   seatsFrom: "5",
   seatsTo: "7",
-  doors: "FOUR_OR_FIVE",
+  doorsFrom: "4",
+  doorsTo: "5",
   drive: "awd",
   gearbox: "automatic",
   vat: "reclaimable",
@@ -225,6 +229,16 @@ Object.entries(expectedMultiValues).forEach(([filterId, values]) => {
   });
 });
 
+const crossGroupDoors = new URL(context.buildOtomotoSearchUrl({ ...filters, doorsFrom: "3", doorsTo: "5" }));
+assert.deepEqual(
+  ["0", "1", "2"].map((index) => crossGroupDoors.searchParams.get(`search[filter_enum_door_count][${index}]`)),
+  ["3", "4", "5"],
+  "Otomoto receives every exact door count in a cross-group range",
+);
+const sixOrSevenDoors = new URL(context.buildOtomotoSearchUrl({ ...filters, doorsFrom: "6", doorsTo: "7" }));
+assert.equal(sixOrSevenDoors.searchParams.get("search[filter_enum_door_count]"), "6", "Otomoto keeps only its available six-door value");
+assert.throws(() => context.buildOtomotoSearchUrl({ ...filters, doorsFrom: "7", doorsTo: "7" }), /unsupported doors/, "seven-only search must not silently become unfiltered");
+
 if (url.href.includes("country_origin")) throw new Error("Seller country must not become Otomoto's import origin.");
 for (const unsupported of ["ROOF_RAILS", "REAR_TRAFFIC_ALERT"]) {
   if (url.href.includes(unsupported)) throw new Error(`${unsupported} must not leak into the Otomoto URL.`);
@@ -309,7 +323,7 @@ if (!mobileHtml.includes("Szukaj na otomoto.pl")) throw new Error("Missing Polis
 const mappedOrReportedFields = [
   "brand", "model", "version", "fuels", "fuel", "plugin", "body", "priceFrom", "priceTo", "mileageFrom", "mileageTo",
   "yearFrom", "yearTo", "displacementFrom", "displacementTo", "powerFrom", "powerTo", "seatsFrom",
-  "seatsTo", "doors", "drive", "gearbox", "vat", "seller", "countries", "interiorMaterials", "airConditioning",
+  "seatsTo", "doorsFrom", "doorsTo", "drive", "gearbox", "vat", "seller", "countries", "interiorMaterials", "airConditioning",
   "trailerCoupling", "features", "parkingSensors", "cruiseControl", "exteriorColors", "interiorColors",
   "matte", "metallic", "nonSmoking", "roadworthy", "damagedVehicles",
 ];

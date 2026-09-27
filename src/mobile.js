@@ -121,7 +121,8 @@ const copy = {
     electricTailgate: "Elektryczna klapa bagażnika",
     seatsRangeLabel: "Liczba miejsc",
     doorsLabel: "Liczba drzwi",
-    doorsAny: "Dowolna",
+    doorsInvalidValue: "Liczba drzwi: wpisz wartość od 2 do 7.",
+    doorsUnavailableOtomoto: "Otomoto nie obsługuje 7 drzwi.",
     featurePanoramicRoof: "Dach panoramiczny",
     featureRoofRails: "Relingi dachowe",
     featureAirSuspension: "Zawieszenie pneumatyczne",
@@ -388,7 +389,8 @@ const copy = {
     electricTailgate: "Электропривод крышки багажника",
     seatsRangeLabel: "Количество мест",
     doorsLabel: "Количество дверей",
-    doorsAny: "Любое",
+    doorsInvalidValue: "Количество дверей: укажи число от 2 до 7.",
+    doorsUnavailableOtomoto: "Otomoto не поддерживает 7 дверей.",
     featurePanoramicRoof: "Панорамная крыша",
     featureRoofRails: "Рейлинги на крыше",
     featureAirSuspension: "Пневмоподвеска",
@@ -615,6 +617,12 @@ const bodyOptions = [
 ];
 
 const seatsOptions = Array.from({ length: 9 }, (_, index) => String(index + 1));
+const doorsOptions = ["2", "3", "4", "5", "6", "7"];
+const mobileDeDoorGroups = [
+  { from: 2, to: 3, value: "TWO_OR_THREE" },
+  { from: 4, to: 5, value: "FOUR_OR_FIVE" },
+  { from: 6, to: 7, value: "SIX_OR_SEVEN" },
+];
 const priceOptions = [
   5000,
   ...Array.from({ length: 15 }, (_, index) => (index + 6) * 1000),
@@ -1256,7 +1264,8 @@ const els = {
   powerTo: document.querySelector("[data-mobile-power-to]"),
   seatsFrom: document.querySelector("[data-mobile-seats-from]"),
   seatsTo: document.querySelector("[data-mobile-seats-to]"),
-  doors: document.querySelector("[data-mobile-doors]"),
+  doorsFrom: document.querySelector("[data-mobile-doors-from]"),
+  doorsTo: document.querySelector("[data-mobile-doors-to]"),
   powerOptions: document.querySelector("[data-mobile-power-options]"),
   drive: Array.from(document.querySelectorAll("[data-mobile-drive]")),
   gearbox: Array.from(document.querySelectorAll("[data-mobile-gearbox]")),
@@ -1647,6 +1656,8 @@ function comboOptionSets() {
     })),
     seats: seatsOptions.map((value) => ({ value, label: value })),
     seatsTo: valuesAfter(seatsOptions, els.seatsFrom?.value, true).map((value) => ({ value, label: value })),
+    doors: doorsOptions.map((value) => ({ value, label: value })),
+    doorsTo: valuesAfter(doorsOptions, els.doorsFrom?.value, true).map((value) => ({ value, label: value })),
     body: [
       { value: "", label: c.selectEmpty },
       ...bodyOptions.map((body) => ({
@@ -1798,12 +1809,14 @@ function setRangePlaceholders() {
     [els.displacementFrom, c.fromPlaceholder],
     [els.powerFrom, c.fromPlaceholder],
     [els.seatsFrom, c.fromPlaceholder],
+    [els.doorsFrom, c.fromPlaceholder],
     [els.priceTo, c.toPlaceholder],
     [els.mileageTo, c.toPlaceholder],
     [els.yearTo, c.toPlaceholder],
     [els.displacementTo, c.toPlaceholder],
     [els.powerTo, c.toPlaceholder],
     [els.seatsTo, c.toPlaceholder],
+    [els.doorsTo, c.toPlaceholder],
   ].forEach(([input, placeholder]) => {
     if (input) input.placeholder = placeholder;
   });
@@ -1915,7 +1928,8 @@ function defaultManualFields() {
     powerTo: "",
     seatsFrom: "",
     seatsTo: "",
-    doors: "",
+    doorsFrom: "",
+    doorsTo: "",
     drive: "any",
     gearbox: "any",
     vat: "",
@@ -1980,7 +1994,8 @@ function renderManualOptions(keepValues = true) {
   els.powerTo.value = current.powerTo || "";
   els.seatsFrom.value = current.seatsFrom || "";
   els.seatsTo.value = current.seatsTo || "";
-  els.doors.value = current.doors || "";
+  els.doorsFrom.value = current.doorsFrom || "";
+  els.doorsTo.value = current.doorsTo || "";
   setCheckedValue(els.drive, current.drive || "any");
   setCheckedValue(els.gearbox, current.gearbox || "any");
   setCheckedValues(els.countries, current.countries?.length ? current.countries : ["DE"]);
@@ -2027,7 +2042,8 @@ function readManualFields() {
     powerTo: els.powerTo?.value || "",
     seatsFrom: els.seatsFrom?.value || "",
     seatsTo: els.seatsTo?.value || "",
-    doors: els.doors?.value || "",
+    doorsFrom: els.doorsFrom?.value || "",
+    doorsTo: els.doorsTo?.value || "",
     drive: checkedValue(els.drive),
     gearbox: checkedValue(els.gearbox),
     vat: els.vat?.value || "",
@@ -2136,7 +2152,7 @@ function updateSelectedFiltersSummary() {
     { value: rangeFilterSummary(c.displacementRangeLabel, filters.displacementFrom, filters.displacementTo, "ccm"), icon: "settings", target: els.displacementFrom },
     { value: rangeFilterSummary(c.powerRangeLabel, filters.powerFrom, filters.powerTo, "KM"), icon: "zap", target: els.powerFrom },
     { value: rangeFilterSummary(c.seatsRangeLabel, filters.seatsFrom, filters.seatsTo), icon: "armchair", target: els.seatsFrom },
-    { value: filters.doors ? `${c.doorsLabel}: ${els.doors.selectedOptions[0]?.textContent.trim()}` : "", icon: "car", target: els.doors },
+    { value: rangeFilterSummary(c.doorsLabel, filters.doorsFrom, filters.doorsTo), icon: "car", target: els.doorsFrom },
     selectedRadioSummaryPart(els.gearbox, filters.gearbox, "git-branch"),
     selectedRadioSummaryPart(els.drive, filters.drive, "route"),
     ...selectedInputSummaryParts(els.interiorMaterials, "armchair"),
@@ -2287,6 +2303,25 @@ function appendMobileDeRange(params, key, fromValue, toValue, transform = (value
   params.set(key, `${from === null ? "" : transform(from)}:${to === null ? "" : transform(to)}`);
 }
 
+function doorRangeBounds(filters) {
+  const fromValue = String(filters.doorsFrom || "").trim();
+  const toValue = String(filters.doorsTo || "").trim();
+  if ([fromValue, toValue].some((value) => value && !doorsOptions.includes(value))) {
+    throw new Error(copy[state.lang].doorsInvalidValue);
+  }
+  const from = fromValue ? Number(fromValue) : null;
+  const to = toValue ? Number(toValue) : null;
+  if (from !== null && to !== null && from > to) throw new Error(copy[state.lang].marketSearchInvalidRange);
+  return { from, to };
+}
+
+function mobileDeDoorGroup(filters) {
+  const { from, to } = doorRangeBounds(filters);
+  if (from === null && to === null) return null;
+  const groups = mobileDeDoorGroups.filter((group) => group.to >= (from ?? 2) && group.from <= (to ?? 7));
+  return groups.length === 1 ? groups[0] : null;
+}
+
 function buildMobileDeSearchUrl(filters) {
   const c = copy[state.lang];
   const params = new URLSearchParams();
@@ -2316,7 +2351,8 @@ function buildMobileDeSearchUrl(filters) {
     (powerPs) => Math.round(powerPs * 0.735499),
   );
   appendMobileDeRange(params, "sc", filters.seatsFrom, filters.seatsTo);
-  if (["TWO_OR_THREE", "FOUR_OR_FIVE", "SIX_OR_SEVEN"].includes(filters.doors)) params.set("door", filters.doors);
+  const doorGroup = mobileDeDoorGroup(filters);
+  if (doorGroup) params.set("door", doorGroup.value);
 
   const fuels = manualFuelValues(filters);
   fuels
@@ -2594,8 +2630,10 @@ function buildOtomotoSearchUrl(filters) {
   appendOtomotoRange(params, "filter_float_engine_capacity", filters.displacementFrom, filters.displacementTo);
   appendOtomotoRange(params, "filter_float_engine_power", filters.powerFrom, filters.powerTo);
   appendOtomotoRange(params, "filter_float_nr_seats", filters.seatsFrom, filters.seatsTo);
-  const otomotoDoorGroups = { TWO_OR_THREE: ["2", "3"], FOUR_OR_FIVE: ["4", "5"], SIX_OR_SEVEN: ["6"] };
-  appendOtomotoValues(params, "filter_enum_door_count", otomotoDoorGroups[filters.doors]);
+  const { from: doorsFrom, to: doorsTo } = doorRangeBounds(filters);
+  const otomotoDoors = doorsOptions.filter((value) => Number(value) <= 6 && Number(value) >= (doorsFrom ?? 2) && Number(value) <= (doorsTo ?? 7));
+  if ((doorsFrom !== null || doorsTo !== null) && !otomotoDoors.length) throw new Error(copy[state.lang].doorsUnavailableOtomoto);
+  appendOtomotoValues(params, "filter_enum_door_count", otomotoDoors.length === 5 ? [] : otomotoDoors);
 
   appendOtomotoValues(
     params,
@@ -2692,15 +2730,21 @@ function otomotoSkippedFilterLabels(filters) {
   if ((filters.interiorColors || []).length) add(c.interiorColorLabel);
   if (filters.nonSmoking) add(c.nonSmokingLabel);
   if (filters.roadworthy) add(c.roadworthyLabel);
+  if (filters.doorsTo === "7" || filters.doorsFrom === "7") add(c.doorsLabel);
   return labels;
 }
 
 function mobileDeSkippedFilterLabels(filters) {
-  return (filters.features || [])
+  const labels = (filters.features || [])
     .filter((feature) => mobileDeUnsupportedFeatures.has(feature) || mobileDeApproximateFeatures.has(feature))
     .map((feature) => els.features.find((input) => input.value === feature))
     .filter(Boolean)
     .map(optionLabelText);
+  const { from, to } = doorRangeBounds(filters);
+  const group = mobileDeDoorGroup(filters);
+  if ((from !== null || to !== null) && ((from ?? 2) !== 2 || (to ?? 7) !== 7)
+    && (!group || group.from < (from ?? 2) || group.to > (to ?? 7))) labels.push(copy[state.lang].doorsLabel);
+  return labels;
 }
 
 function setMarketSearchStatus(message, isError = false) {
@@ -3343,6 +3387,7 @@ const rangeEndsByStart = new Map([
   [els.displacementFrom, [els.displacementTo, false]],
   [els.powerFrom, [els.powerTo, false]],
   [els.seatsFrom, [els.seatsTo, true]],
+  [els.doorsFrom, [els.doorsTo, true]],
 ]);
 
 document.querySelectorAll(".mobileComboControl input").forEach((input) => {
