@@ -41,7 +41,7 @@
       distributionHeading: "Rozkład cen",
       screenshotButton: "Kopiuj raport",
       screenshotCopied: "Raport skopiowany do schowka — wklej go w wiadomości do klienta.",
-      screenshotOpened: "Przeglądarka nie pozwala kopiować obrazów — raport otwarto w nowej karcie.",
+      screenshotOpened: "Przeglądarka nie pozwala kopiować obrazów — raport zapisano jako plik PNG (Pobrane).",
       screenshotFailed: "Nie udało się zrobić zrzutu raportu.",
       screenshotWorking: "Przygotowuję raport…",
       reportTitle: "Analiza rynku",
@@ -144,7 +144,7 @@
       middleMarket: "Typowy zakres",
       highMarket: "Góra rynku",
       count: "Liczba ofert",
-      minimum: "Minimum",
+      minimum: "Najtańsze ogłoszenie",
       median: "Mediana",
       middleRange: "Typowy zakres (P25–P75)",
       middleOffers: "Oferty w zakresie",
@@ -152,7 +152,7 @@
       limitedSample: "Mała próba: typowa cena może być niestabilna. Do oceny auta potrzeba co najmniej 8 ofert.",
       priceFilterWarning: "Filtr ceny ogranicza porównanie. Usuń go, aby ocenić cały rynek.",
       wideRangeWarning: "Skrajne ceny mocno rozciągają skalę. Wszystkie oferty pozostają na wykresie.",
-      maximum: "Maksimum",
+      maximum: "Najdroższe ogłoszenie",
       openSearch: "Otwórz wyszukiwanie mobile.de ↗",
       openOtomoto: "Otwórz listę otomoto.pl ↗",
       pointHint: "Kliknij, aby otworzyć ogłoszenie",
@@ -222,7 +222,7 @@
       distributionHeading: "Распределение цен",
       screenshotButton: "Копировать отчёт",
       screenshotCopied: "Отчёт скопирован в буфер обмена — вставь его в сообщение клиенту.",
-      screenshotOpened: "Браузер не даёт копировать картинки — отчёт открыт в новой вкладке.",
+      screenshotOpened: "Браузер не даёт копировать картинки — отчёт сохранён файлом PNG (Загрузки).",
       screenshotFailed: "Не удалось сделать снимок отчёта.",
       screenshotWorking: "Готовлю отчёт…",
       reportTitle: "Анализ рынка",
@@ -325,7 +325,7 @@
       middleMarket: "Типичный диапазон",
       highMarket: "Верх рынка",
       count: "Объявлений",
-      minimum: "Минимум",
+      minimum: "Самое дешёвое объявление",
       median: "Медиана",
       middleRange: "Типичный диапазон (P25–P75)",
       middleOffers: "В диапазоне",
@@ -333,7 +333,7 @@
       limitedSample: "Маленькая выборка: типичная цена может быть нестабильной. Для оценки автомобиля нужно минимум 8 объявлений.",
       priceFilterWarning: "Фильтр цены ограничивает сравнение. Уберите его, чтобы оценить весь рынок.",
       wideRangeWarning: "Крайние цены сильно растягивают шкалу. Все объявления остаются на графике.",
-      maximum: "Максимум",
+      maximum: "Самое дорогое объявление",
       openSearch: "Открыть поиск mobile.de ↗",
       openOtomoto: "Открыть список otomoto.pl ↗",
       pointHint: "Нажми, чтобы открыть объявление",
@@ -2426,8 +2426,15 @@
           // Fall through to a new tab.
         }
       }
+      // No clipboard (e.g. an embedded browser): save the picture as a file.
+      // A new tab with the image is blocked in such browsers, a download is not.
       const url = URL.createObjectURL(blob);
-      window.open(url, "_blank", "noopener,noreferrer");
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `AUTOGOOD-analiza-rynku-${new Date().toISOString().slice(0, 10)}.png`;
+      document.body.append(link);
+      link.click();
+      link.remove();
       setTimeout(() => URL.revokeObjectURL(url), 30000);
       setAnalysisStatus(c.screenshotOpened);
     } catch {
