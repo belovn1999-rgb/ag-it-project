@@ -181,6 +181,7 @@
       displacement: "Pojemność",
       power: "Moc",
       seats: "Liczba miejsc",
+      doors: "Liczba drzwi",
       engine: "Silnik",
       gearbox: "Skrzynia",
       fuelPetrol: "Benzyna",
@@ -355,6 +356,7 @@
       displacement: "Объём",
       power: "Мощность",
       seats: "Количество мест",
+      doors: "Количество дверей",
       engine: "Двигатель",
       gearbox: "Коробка передач",
       fuelPetrol: "Бензин",
@@ -1021,6 +1023,7 @@
       powerTo: "[data-mobile-power-to]",
       seatsFrom: "[data-mobile-seats-from]",
       seatsTo: "[data-mobile-seats-to]",
+      doors: "[data-mobile-doors]",
       vat: "[data-mobile-vat]",
       seller: "[data-mobile-seller]",
       damagedVehicles: "[data-mobile-damaged-vehicles]",
@@ -1257,6 +1260,7 @@
     summary.push(rangeSummary(c.displacement, filters.displacementFrom, filters.displacementTo, "ccm"));
     summary.push(rangeSummary(c.power, filters.powerFrom, filters.powerTo, "KM"));
     summary.push(rangeSummary(c.seats, filters.seatsFrom, filters.seatsTo));
+    if (filters.doors) summary.push(`${c.doors}: ${document.querySelector("[data-mobile-doors]")?.selectedOptions[0]?.textContent.trim() || filters.doors}`);
     if (filters.drive && filters.drive !== "any") summary.push(checkedLabel("[data-mobile-drive]"));
     if (filters.gearbox && filters.gearbox !== "any") summary.push(checkedLabel("[data-mobile-gearbox]"));
     const vat = selectedOptionText("[data-mobile-vat]");
@@ -1305,6 +1309,7 @@
       rangeSummary(c.displacement, filters.displacementFrom, filters.displacementTo, "ccm"),
       rangeSummary(c.power, filters.powerFrom, filters.powerTo, "KM"),
       rangeSummary(c.seats, filters.seatsFrom, filters.seatsTo),
+      filters.doors ? `${c.doors}: ${document.querySelector("[data-mobile-doors]")?.selectedOptions[0]?.textContent.trim() || filters.doors}` : "",
     );
     if (filters.drive && filters.drive !== "any") parameters.push(checkedLabel("[data-mobile-drive]"));
     if (filters.gearbox && filters.gearbox !== "any") parameters.push(checkedLabel("[data-mobile-gearbox]"));

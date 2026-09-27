@@ -12,6 +12,11 @@ function functionSource(name) {
   let escaped = false;
   for (let index = source.indexOf("{", start); index < source.length; index += 1) {
     const character = source[index];
+    if (!quote && character === "/" && source[index + 1] === "/") {
+      index = source.indexOf("\n", index + 2);
+      if (index < 0) break;
+      continue;
+    }
     if (quote) {
       if (escaped) escaped = false;
       else if (character === "\\") escaped = true;
@@ -78,6 +83,7 @@ const baseFilters = {
   powerTo: "",
   seatsFrom: "",
   seatsTo: "",
+  doors: "",
   drive: "any",
   gearbox: "any",
   vat: "",
@@ -143,11 +149,13 @@ const filterUrl = new URL(context.buildMobileDeSearchUrl({
   fuels: ["electric"],
   seatsFrom: "5",
   seatsTo: "7",
+  doors: "FOUR_OR_FIVE",
   parkingSensors: ["REAR_VIEW_CAM", "FRONT_SENSORS"],
   cruiseControl: "ADAPTIVE_CRUISE_CONTROL",
   roadworthy: true,
 }));
 assert.equal(filterUrl.searchParams.get("sc"), "5:7", "seat range must use Mobile.de's sc parameter");
+assert.equal(filterUrl.searchParams.get("door"), "FOUR_OR_FIVE", "door group must use Mobile.de's door parameter");
 assert.deepEqual(filterUrl.searchParams.getAll("ft"), ["ELECTRICITY"], "electric fuel must use Mobile.de's ELECTRICITY value");
 assert.deepEqual(filterUrl.searchParams.getAll("pa"), ["REAR_VIEW_CAM", "FRONT_SENSORS"], "parking assistants must use Mobile.de's pa parameter");
 assert.equal(filterUrl.searchParams.get("spc"), "ADAPTIVE_CRUISE_CONTROL", "cruise control must use Mobile.de's spc parameter");
@@ -174,6 +182,21 @@ assert.equal(recognized.features.includes("MASSAGE_SEATS"), false, "an unmention
 assert.equal(recognized.features.includes("HALOGEN_HEADLIGHTS"), false, "an unmentioned halogen feature remains unknown");
 assert.equal(recognized.features.includes("LED_HEADLIGHTS"), true, "LED headlamps are recognized");
 assert.equal(recognized.features.includes("SOUND_SYSTEM"), true, "branded premium audio is recognized");
+
+const comfortInputs = [
+  ["CAM_360_DEGREES", "Kamera 360"],
+  ["LED_HEADLIGHTS", "LED"],
+  ["MASSAGE_SEATS", "Fotele z masażem"],
+].map(([value, label]) => ({ value, closest: () => ({ textContent: label }) }));
+context.document = { querySelector: () => ({ querySelectorAll: () => comfortInputs }) };
+vm.runInContext(functionSource("optionLabelText"), context);
+vm.runInContext(functionSource("confirmedComfortEquipment"), context);
+const comfort = context.confirmedComfortEquipment({ equipment: [
+  "Kamera 360", "LED headlights", "Harman Kardon", "Panoramadach",
+] });
+assert.deepEqual(Array.from(comfort), ["Kamera 360", "LED"], "listing brief shows confirmed Comfort fields only, not Options or unknown massage");
+assert.deepEqual(Array.from(context.confirmedComfortEquipment({ equipment: ["Kamera"] })), [], "generic camera does not prove a rear-view camera");
+assert.deepEqual(Array.from(context.confirmedComfortEquipment({ equipment: ["Brak masażu foteli", "No LED headlights"] })), [], "explicitly absent equipment must not appear as confirmed");
 
 const skylineUrl = new URL(context.buildMobileDeSearchUrl({
   ...baseFilters,

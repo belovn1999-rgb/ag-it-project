@@ -117,6 +117,8 @@ const copy = {
     trailerCouplingSwiveling: "Hak holowniczy odchylany",
     electricTailgate: "Elektryczna klapa bagażnika",
     seatsRangeLabel: "Liczba miejsc",
+    doorsLabel: "Liczba drzwi",
+    doorsAny: "Dowolna",
     featurePanoramicRoof: "Dach panoramiczny",
     featureRoofRails: "Relingi dachowe",
     featureAirSuspension: "Zawieszenie pneumatyczne",
@@ -378,6 +380,8 @@ const copy = {
     trailerCouplingSwiveling: "Поворотный фаркоп",
     electricTailgate: "Электропривод крышки багажника",
     seatsRangeLabel: "Количество мест",
+    doorsLabel: "Количество дверей",
+    doorsAny: "Любое",
     featurePanoramicRoof: "Панорамная крыша",
     featureRoofRails: "Рейлинги на крыше",
     featureAirSuspension: "Пневмоподвеска",
@@ -1244,6 +1248,7 @@ const els = {
   powerTo: document.querySelector("[data-mobile-power-to]"),
   seatsFrom: document.querySelector("[data-mobile-seats-from]"),
   seatsTo: document.querySelector("[data-mobile-seats-to]"),
+  doors: document.querySelector("[data-mobile-doors]"),
   powerOptions: document.querySelector("[data-mobile-power-options]"),
   drive: Array.from(document.querySelectorAll("[data-mobile-drive]")),
   gearbox: Array.from(document.querySelectorAll("[data-mobile-gearbox]")),
@@ -1897,6 +1902,7 @@ function defaultManualFields() {
     powerTo: "",
     seatsFrom: "",
     seatsTo: "",
+    doors: "",
     drive: "any",
     gearbox: "any",
     vat: "",
@@ -1961,6 +1967,7 @@ function renderManualOptions(keepValues = true) {
   els.powerTo.value = current.powerTo || "";
   els.seatsFrom.value = current.seatsFrom || "";
   els.seatsTo.value = current.seatsTo || "";
+  els.doors.value = current.doors || "";
   setCheckedValue(els.drive, current.drive || "any");
   setCheckedValue(els.gearbox, current.gearbox || "any");
   setCheckedValues(els.countries, current.countries?.length ? current.countries : ["DE"]);
@@ -2007,6 +2014,7 @@ function readManualFields() {
     powerTo: els.powerTo?.value || "",
     seatsFrom: els.seatsFrom?.value || "",
     seatsTo: els.seatsTo?.value || "",
+    doors: els.doors?.value || "",
     drive: checkedValue(els.drive),
     gearbox: checkedValue(els.gearbox),
     vat: els.vat?.value || "",
@@ -2103,6 +2111,7 @@ function updateSelectedFiltersSummary() {
     { value: rangeFilterSummary(c.displacementRangeLabel, filters.displacementFrom, filters.displacementTo, "ccm"), icon: "settings", target: els.displacementFrom },
     { value: rangeFilterSummary(c.powerRangeLabel, filters.powerFrom, filters.powerTo, "KM"), icon: "zap", target: els.powerFrom },
     { value: rangeFilterSummary(c.seatsRangeLabel, filters.seatsFrom, filters.seatsTo), icon: "armchair", target: els.seatsFrom },
+    { value: filters.doors ? `${c.doorsLabel}: ${els.doors.selectedOptions[0]?.textContent.trim()}` : "", icon: "car", target: els.doors },
     selectedRadioSummaryPart(els.gearbox, filters.gearbox, "git-branch"),
     selectedRadioSummaryPart(els.drive, filters.drive, "route"),
     ...selectedInputSummaryParts(els.interiorMaterials, "armchair"),
@@ -2282,6 +2291,7 @@ function buildMobileDeSearchUrl(filters) {
     (powerPs) => Math.round(powerPs * 0.735499),
   );
   appendMobileDeRange(params, "sc", filters.seatsFrom, filters.seatsTo);
+  if (["TWO_OR_THREE", "FOUR_OR_FIVE", "SIX_OR_SEVEN"].includes(filters.doors)) params.set("door", filters.doors);
 
   const fuels = manualFuelValues(filters);
   fuels
@@ -2559,6 +2569,8 @@ function buildOtomotoSearchUrl(filters) {
   appendOtomotoRange(params, "filter_float_engine_capacity", filters.displacementFrom, filters.displacementTo);
   appendOtomotoRange(params, "filter_float_engine_power", filters.powerFrom, filters.powerTo);
   appendOtomotoRange(params, "filter_float_nr_seats", filters.seatsFrom, filters.seatsTo);
+  const otomotoDoorGroups = { TWO_OR_THREE: ["2", "3"], FOUR_OR_FIVE: ["4", "5"], SIX_OR_SEVEN: ["6"] };
+  appendOtomotoValues(params, "filter_enum_door_count", otomotoDoorGroups[filters.doors]);
 
   appendOtomotoValues(
     params,
@@ -2761,10 +2773,16 @@ function recognizedEquipmentFilters(data) {
   const normalizeEquipment = (value) => normalizeToken(String(value || "").replace(/[łŁ]/g, "l").replace(/ß/g, "ss"));
   const items = [...(Array.isArray(data?.equipment) ? data.equipment : []), data?.title]
     .map(normalizeEquipment).filter(Boolean);
-  const has = (pattern) => items.some((item) => pattern.test(item));
+  const positiveMatch = (item, pattern) => {
+    const match = pattern.exec(item);
+    if (!match) return false;
+    const prefix = item.slice(Math.max(0, match.index - 28), match.index);
+    return !/(?:^|[\s,;|/])(?:brak|bez|ohne|without|no|nie ma)\s+(?:\w+\s+){0,2}$/.test(prefix);
+  };
+  const has = (pattern) => items.some((item) => positiveMatch(item, pattern));
   const interior = normalizeEquipment(data?.interiorMaterial || "");
   const upholstery = [interior, ...items.filter((item) => /tapicer|polster|upholster|seats|sitze|fotele/.test(item))];
-  const material = (pattern) => upholstery.some((item) => pattern.test(item));
+  const material = (pattern) => upholstery.some((item) => positiveMatch(item, pattern));
   const interiorMaterials = [];
   if (material(/alcantara/)) interiorMaterials.push("alcantara");
   if (material(/czesciow.*skor|teil.*leder|part.*leather/)) interiorMaterials.push("part_leather");
@@ -2774,8 +2792,7 @@ function recognizedEquipmentFilters(data) {
   const parkingSensors = [];
   const camera360 = has(/kamera 360|360 grad kamera|360 degree camera|surround view/);
   if (camera360) parkingSensors.push("CAM_360_DEGREES");
-  if (has(/kamera cofania|kamera wsteczna|ruckfahrkamera|rear view cam|reversing camera|back up camera/)
-    || (!camera360 && has(/\bkamera\b|\bcamera\b/))) parkingSensors.push("REAR_VIEW_CAM");
+  if (has(/kamera cofania|kamera wsteczna|ruckfahrkamera|rear view cam|reversing camera|back up camera/)) parkingSensors.push("REAR_VIEW_CAM");
   if (has(/czujnik.*parkowania.*przod|parksensor.*vorn|front parking sensor|front park assist/)) parkingSensors.push("FRONT_SENSORS");
   if (has(/czujnik.*parkowania.*tyl|parksensor.*hinten|rear parking sensor|rear park assist/)) parkingSensors.push("REAR_SENSORS");
   if (has(/czujnik.*parkowania.*przod.*tyl|parksensor.*vorn.*hinten|front and rear parking sensor|pdc vorn.*hinten/)) {
@@ -2956,6 +2973,22 @@ function renderScenarios() {
   }).join("");
 }
 
+function confirmedComfortEquipment(data) {
+  const comfort = document.querySelector('[aria-labelledby="mobile-filter-group-comfort"]');
+  if (!comfort) return [];
+  const recognized = recognizedEquipmentFilters(data);
+  const confirmed = new Set([
+    ...recognized.interiorMaterials,
+    ...recognized.parkingSensors,
+    recognized.cruiseControl,
+    recognized.airConditioning,
+    ...recognized.features,
+  ]);
+  return Array.from(comfort.querySelectorAll("[data-mobile-interior-material], [data-mobile-parking-sensor], [data-mobile-cruise-control], [data-mobile-air-conditioning], [data-mobile-feature]"))
+    .filter((input) => input.value && input.value !== "any" && confirmed.has(input.value))
+    .map(optionLabelText);
+}
+
 function renderData() {
   const c = copy[state.lang];
   const data = state.data || {};
@@ -2980,7 +3013,7 @@ function renderData() {
   const price = data.pricePln
     ? `<b>${escapeHtml(formatAmount(data.pricePln, "PLN"))}</b><small>≈ ${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</small>`
     : `<b>${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</b>`;
-  const equipment = Array.isArray(data.equipment) ? data.equipment.filter(Boolean) : [];
+  const equipment = confirmedComfortEquipment(data);
   els.listingDetails.innerHTML = specSheetHtml({
     title,
     aside: `<span class="agSpecPrice">${price}</span>`,

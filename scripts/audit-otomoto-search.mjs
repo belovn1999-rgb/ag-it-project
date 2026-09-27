@@ -137,6 +137,7 @@ const filters = {
   powerTo: "250",
   seatsFrom: "5",
   seatsTo: "7",
+  doors: "FOUR_OR_FIVE",
   drive: "awd",
   gearbox: "automatic",
   vat: "reclaimable",
@@ -213,6 +214,7 @@ const expectedMultiValues = {
   filter_enum_transmission: ["all-wheel-auto", "all-wheel-lock", "all-wheel-permanent"],
   filter_enum_upholstery_type: ["alcantara-upholstery", "leather-upholstery"],
   filter_enum_cruisecontrol_type: ["adaptive-cruise-control", "adaptive-cruise-control-predictive"],
+  filter_enum_door_count: ["4", "5"],
   filter_enum_color: ["black", "blue"],
   filter_enum_colour_type: ["matt", "metallic"],
 };
@@ -307,7 +309,7 @@ if (!mobileHtml.includes("Szukaj na otomoto.pl")) throw new Error("Missing Polis
 const mappedOrReportedFields = [
   "brand", "model", "version", "fuels", "fuel", "plugin", "body", "priceFrom", "priceTo", "mileageFrom", "mileageTo",
   "yearFrom", "yearTo", "displacementFrom", "displacementTo", "powerFrom", "powerTo", "seatsFrom",
-  "seatsTo", "drive", "gearbox", "vat", "seller", "countries", "interiorMaterials", "airConditioning",
+  "seatsTo", "doors", "drive", "gearbox", "vat", "seller", "countries", "interiorMaterials", "airConditioning",
   "trailerCoupling", "features", "parkingSensors", "cruiseControl", "exteriorColors", "interiorColors",
   "matte", "metallic", "nonSmoking", "roadworthy", "damagedVehicles",
 ];

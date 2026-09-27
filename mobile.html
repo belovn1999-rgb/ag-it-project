@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=favorite-link-card-20260927b" />
+  <link rel="stylesheet" href="./src/mobile.css?v=brief-doors-20260927b" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=cards3-20260926" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=global-navigation-20260923" data-ag-global-nav></script>
@@ -129,16 +129,27 @@
                   <div class="mobileChoiceGroup mobileInlineChoiceGroup" data-mobile-body-choices></div>
                   <input data-mobile-body type="hidden" />
                 </fieldset>
-                <div class="mobileField mobileRangeField mobileSeatsField">
-                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="seatsRangeLabel">Liczba miejsc</span></span>
-                  <div class="mobileRangePair">
-                    <div class="mobileComboControl" data-mobile-options="seats" data-mobile-options-target="data-mobile-seats-from">
-                      <input data-mobile-seats-from inputmode="numeric" autocomplete="off" />
-                    </div>
-                    <div class="mobileComboControl" data-mobile-options="seatsTo" data-mobile-options-target="data-mobile-seats-to">
-                      <input data-mobile-seats-to inputmode="numeric" autocomplete="off" />
+                <div class="mobileVehicleCapacityRow mobileWideField">
+                  <div class="mobileField mobileRangeField mobileSeatsField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="seatsRangeLabel">Liczba miejsc</span></span>
+                    <div class="mobileRangePair">
+                      <div class="mobileComboControl" data-mobile-options="seats" data-mobile-options-target="data-mobile-seats-from">
+                        <input data-mobile-seats-from inputmode="numeric" autocomplete="off" />
+                      </div>
+                      <div class="mobileComboControl" data-mobile-options="seatsTo" data-mobile-options-target="data-mobile-seats-to">
+                        <input data-mobile-seats-to inputmode="numeric" autocomplete="off" />
+                      </div>
                     </div>
                   </div>
+                  <label class="mobileField mobileDoorsField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="doorsLabel">Liczba drzwi</span></span>
+                    <select data-mobile-doors>
+                      <option value="" data-i18n="doorsAny">Dowolna</option>
+                      <option value="TWO_OR_THREE">2/3</option>
+                      <option value="FOUR_OR_FIVE">4/5</option>
+                      <option value="SIX_OR_SEVEN">6/7</option>
+                    </select>
+                  </label>
                 </div>
               </div>
             </section>
@@ -573,9 +584,9 @@
     </main>
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
-    <script src="./src/mobile.js?v=tunnel-20260927"></script>
+    <script src="./src/mobile.js?v=brief-doors-20260927b"></script>
     <script src="./src/turnkey-estimate.js?v=cards3-20260926"></script>
-    <script src="./src/mobile-market-analysis.js?v=favorite-link-card-20260927b"></script>
+    <script src="./src/mobile-market-analysis.js?v=brief-doors-20260927b"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>
