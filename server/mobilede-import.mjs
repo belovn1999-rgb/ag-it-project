@@ -1108,8 +1108,12 @@ async function fetchListingWithChromeDevTools(url) {
 }
 
 async function fetchListingOnce(url) {
+  // Always the German page: the readers know its labels, and mobile.de
+  // otherwise answers in whatever language its cookie last remembered.
+  const germanUrl = new URL(url);
+  germanUrl.searchParams.set("lang", "de");
   const html = await onMobileDeOrigin((evaluate) => evaluate(
-    `fetch(${JSON.stringify(url)}, { credentials: "include" }).then((response) => response.text())`,
+    `fetch(${JSON.stringify(germanUrl.toString())}, { credentials: "include" }).then((response) => response.text())`,
     30000,
   ));
   const text = stripTags(html);
