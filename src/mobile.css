@@ -2502,6 +2502,7 @@ button {
   height: 16px;
 }
 
+<<<<<<< Updated upstream
 /* ---- Audit fixes 2026-09-27 ------------------------------------------------ */
 
 /* The step the page is on. */
@@ -2521,4 +2522,33 @@ button {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-sm);
   }
+=======
+/* Recognised ad: the price in the figures' face, a step smaller than the
+   car's name and clearly apart from it. */
+.agSpecHead {
+  column-gap: var(--space-2xl, 40px);
+  row-gap: var(--space-sm);
+}
+
+.agSpecPrice b {
+  font-family: var(--font-tabular);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Long values wrap inside their column instead of pushing it wider. */
+.agSpecColumn dd {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* The option a summary chip leads to lights up for a moment. */
+.mobileChoiceOption.isSummaryFocus,
+label.isSummaryFocus {
+  outline: 2px solid var(--color-primary-rule);
+  outline-offset: 2px;
+  transition: outline-color 0.6s ease-out;
+>>>>>>> Stashed changes
 }

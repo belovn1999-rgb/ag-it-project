@@ -684,6 +684,35 @@ function ldCarSeller(jsonData) {
   return seller;
 }
 
+// Dealer or private seller: the page data says "sellerType", the JSON-LD
+// seller is an AutoDealer or a Person.
+function extractSellerType(html, jsonData) {
+  const flight = html.match(/\\"sellerType\\":\\"([A-Z_]+)\\"|"sellerType":"([A-Z_]+)"/);
+  const value = flight?.[1] || flight?.[2] || "";
+  if (value) return value === "PRIVATE" || value === "FSBO" ? "PRIVATE" : "DEALER";
+  const type = String(ldCarSeller(jsonData)?.["@type"] || "");
+  if (/Person/i.test(type)) return "PRIVATE";
+  if (/Dealer|Organization|AutomotiveBusiness/i.test(type)) return "DEALER";
+  return "";
+}
+
+// A technical-data value by its data-testid ("damageCondition" → "Unfallfrei").
+function technicalValue(html, key) {
+  const match = html.match(new RegExp(`data-testid="${key}-item"[^>]*>[\\s\\S]*?</dt>\\s*<dd[^>]*>([\\s\\S]*?)</dd>`));
+  return match ? stripTags(match[1]).replace(/\s+/g, " ").trim() : "";
+}
+
+// mobile.de names the drive only when it is all-wheel (equipment
+// "Allradantrieb", or a 4x4 model name); anything else stays unknown.
+function extractDrive(html, equipment, title) {
+  const named = technicalValue(html, "driveType") || technicalValue(html, "drive");
+  const text = `${named} ${(equipment || []).join(" ")} ${title}`.toLowerCase();
+  if (/allrad|4x4|four.wheel|all.wheel|quattro|xdrive|4motion|4matic|awd/.test(text)) return "awd";
+  if (/front/.test(named.toLowerCase())) return "fwd";
+  if (/heck|rear/.test(named.toLowerCase())) return "rwd";
+  return "";
+}
+
 function extractLocation(html, jsonData, text) {
   const ldSeller = ldCarSeller(jsonData);
   const ldAddress = ldSeller?.address || {};
@@ -1292,6 +1321,9 @@ export async function handleMobiledeImport(request, response) {
     const firstRegistration = extractFirstRegistration(html, jsonData, text);
     const equipment = extractEquipment(html);
     const location = extractLocation(html, jsonData, text);
+    const sellerType = extractSellerType(html, jsonData);
+    const condition = technicalValue(html, "damageCondition");
+    const drive = extractDrive(html, equipment, title);
     const deliveryInspectionEstimate = estimateDeliveryAndInspectionNettoPln(bodyType, location);
 
     if (!carBruttoEur) throw new Error("Price not found");
@@ -1314,6 +1346,9 @@ export async function handleMobiledeImport(request, response) {
       firstRegistration,
       equipment,
       location,
+      sellerType,
+      condition,
+      drive,
       transportNettoPln: deliveryInspectionEstimate?.transport || null,
       inspectionNettoPln: deliveryInspectionEstimate?.inspection || null,
       transportEstimate: deliveryInspectionEstimate,

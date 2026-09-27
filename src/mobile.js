@@ -241,8 +241,9 @@ const copy = {
     specFrom: "od",
     specTo: "do",
     countryNames: { DE: "Niemcy", PL: "Polska", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", CH: "Szwajcaria", LU: "Luksemburg", DK: "Dania", SE: "Szwecja" },
-    sellerPrivate: "osoba prywatna",
-    sellerDealer: "dealer",
+    briefSellerPrivate: "Osoba prywatna",
+    briefSellerDealer: "Komis / dealer",
+    conditionWords: { Gebrauchtfahrzeug: "Używany", Neufahrzeug: "Nowy", Jahreswagen: "Roczny", "Vorführfahrzeug": "Demonstracyjny", Unfallfrei: "Bezwypadkowy", Unfallfahrzeug: "Powypadkowy", "Nicht fahrtauglich": "Niesprawny", Fahrtauglich: "Sprawny", Beschädigt: "Uszkodzony" },
     searchOnMobile: "Szukaj na mobile.de",
     searchOnOtomoto: "Szukaj na otomoto.pl",
     price: "Cena z ogłoszenia",
@@ -507,8 +508,9 @@ const copy = {
     specFrom: "от",
     specTo: "до",
     countryNames: { DE: "Германия", PL: "Польша", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", CH: "Швейцария", LU: "Люксембург", DK: "Дания", SE: "Швеция" },
-    sellerPrivate: "частное лицо",
-    sellerDealer: "дилер",
+    briefSellerPrivate: "Частное лицо",
+    briefSellerDealer: "Автосалон / дилер",
+    conditionWords: { Gebrauchtfahrzeug: "С пробегом", Neufahrzeug: "Новый", Jahreswagen: "Годовалый", "Vorführfahrzeug": "Демонстрационный", Unfallfrei: "Без ДТП", Unfallfahrzeug: "После ДТП", "Nicht fahrtauglich": "Не на ходу", Fahrtauglich: "На ходу", Beschädigt: "Повреждённый" },
     searchOnMobile: "Искать на mobile.de",
     searchOnOtomoto: "Искать на otomoto.pl",
     price: "Цена из объявления",
@@ -1887,9 +1889,11 @@ function normalizeGearboxChoice(value) {
 }
 
 function listingRegistration(value) {
-  const year = extractYear(value);
-  if (year && String(value).trim() !== year) return `${year} (${String(value).trim()})`;
-  return text(value || year);
+  const raw = String(value || "").trim();
+  const year = extractYear(raw);
+  // "03/2022" is shown as it is; a bare year is not repeated ("2018 (2018)").
+  if (year && raw !== year && /\d{1,2}\s*[./-]\s*\d{4}/.test(raw)) return raw.replace(/\s+/g, "");
+  return text(year || raw);
 }
 
 function defaultManualFields() {
@@ -2085,8 +2089,20 @@ function summaryTargetFor(target) {
 function focusManualFilter(selector) {
   const target = selector ? document.querySelector(selector) : null;
   if (!target) return;
+  // Options live in folded cards: unfold the card first, or there is nothing to scroll to.
+  const card = target.closest("[data-mobile-collapsible]");
+  if (card && !card.classList.contains("isOpen")) {
+    card.classList.add("isOpen");
+    updateCollapsibleCard(card);
+  }
   const multiSelect = target.closest(".mobileMultiSelect");
   if (multiSelect) multiSelect.open = true;
+  const option = target.closest(".mobileChoiceOption, label");
+  if (option) {
+    option.classList.remove("isSummaryFocus");
+    requestAnimationFrame(() => option.classList.add("isSummaryFocus"));
+    window.setTimeout(() => option.classList.remove("isSummaryFocus"), 1800);
+  }
   const scrollTarget = target.closest(".mobileField, .mobileChoiceField, .mobileMultiSelect") || target;
   scrollTarget.scrollIntoView({ behavior: "smooth", block: "center" });
   if (typeof target.focus === "function") target.focus({ preventScroll: true });
@@ -2913,10 +2929,12 @@ function applyRecognizedManualFields(data) {
     mileageTo: mileageKm > 0 ? String(mileageKm + 30000) : "",
     yearFrom: registrationYear || "",
     yearTo: registrationYear || "",
-    displacementFrom: displacementCcm ? String(Math.max(0, Number(displacementCcm) - 100)) : "",
-    displacementTo: displacementCcm ? String(Number(displacementCcm) + 100) : "",
-    powerFrom: powerHp ? String(Math.floor(Number(powerHp) * 0.9)) : "",
-    powerTo: powerHp ? String(Math.ceil(Number(powerHp) * 1.1)) : "",
+    // The very same engine as in the ad: From = To.
+    displacementFrom: displacementCcm ? String(Number(displacementCcm)) : "",
+    displacementTo: displacementCcm ? String(Number(displacementCcm)) : "",
+    powerFrom: powerHp ? String(Number(powerHp)) : "",
+    powerTo: powerHp ? String(Number(powerHp)) : "",
+    drive: ["awd", "fwd", "rwd"].includes(data?.drive) ? data.drive : "any",
     gearbox: normalizeGearboxChoice(data?.gearbox),
   };
 
@@ -2935,14 +2953,21 @@ function applyRecognizedManualFields(data) {
   els.displacementTo.value = next.displacementTo;
   els.powerFrom.value = next.powerFrom;
   els.powerTo.value = next.powerTo;
-  setCheckedValue(els.drive, "any");
+  setCheckedValue(els.drive, next.drive);
   setCheckedValue(els.gearbox, next.gearbox);
-  setCheckedValues(els.interiorMaterials, equipment.interiorMaterials);
-  setCheckedValues(els.parkingSensors, equipment.parkingSensors);
-  setCheckedValue(els.cruiseControl, equipment.cruiseControl);
-  setCheckedValue(els.airConditioning, equipment.airConditioning);
-  setCheckedValue(els.trailerCoupling, equipment.trailerCoupling);
-  setCheckedValues(els.features, equipment.features);
+  // Only options of the Komfort card go into the search; equipment the ad
+  // lists elsewhere stays out of the brief and of the filters.
+  const comfort = document.querySelector('[aria-labelledby="mobile-filter-group-comfort"]');
+  const inComfort = (inputs) => inputs.filter((input) => comfort?.contains(input));
+  const outsideComfort = (inputs) => inputs.filter((input) => !comfort?.contains(input));
+  setCheckedValues(inComfort(els.interiorMaterials), equipment.interiorMaterials);
+  setCheckedValues(inComfort(els.parkingSensors), equipment.parkingSensors);
+  setCheckedValues(inComfort(els.features), equipment.features);
+  [els.interiorMaterials, els.parkingSensors, els.features].forEach((inputs) => setCheckedValues(outsideComfort(inputs), []));
+  const radioInComfort = (inputs, value) => (inputs.some((input) => comfort?.contains(input)) ? value : "any");
+  setCheckedValue(els.cruiseControl, radioInComfort(els.cruiseControl, equipment.cruiseControl));
+  setCheckedValue(els.airConditioning, els.airConditioning.some((input) => comfort?.contains(input)) ? equipment.airConditioning : "");
+  setCheckedValue(els.trailerCoupling, radioInComfort(els.trailerCoupling, equipment.trailerCoupling));
 
   renderModelOptions(next.model);
   updateFuelSummary();
@@ -2998,6 +3023,21 @@ function confirmedComfortEquipment(data) {
     .map(optionLabelText);
 }
 
+// "awd" → the label of the matching drive option on the form.
+function driveLabelOf(value) {
+  if (!value || value === "any") return "";
+  const input = els.drive.find((radio) => radio.value === value);
+  return input ? optionLabelText(input) : String(value);
+}
+
+// mobile.de states the condition in German ("Gebrauchtfahrzeug, Unfallfrei").
+function conditionLabel(value) {
+  const words = copy[state.lang].conditionWords || {};
+  return String(value || "").split(/\s*,\s*/).filter(Boolean)
+    .map((part) => words[part] || part)
+    .join(", ");
+}
+
 function renderData() {
   const c = copy[state.lang];
   const data = state.data || {};
@@ -3016,7 +3056,7 @@ function renderData() {
   const countryCode = String(location.country || "").toUpperCase();
   const country = [c.countryNames[countryCode] || location.country || "", location.city || ""].filter(Boolean).join(", ");
   const seller = [
-    data.sellerType === "PRIVATE" ? c.sellerPrivate : data.sellerType ? c.sellerDealer : "",
+    data.sellerType === "PRIVATE" ? c.briefSellerPrivate : data.sellerType ? c.briefSellerDealer : "",
     location.sellerName || "",
   ].filter(Boolean).join(" · ");
   const price = data.pricePln
@@ -3037,12 +3077,12 @@ function renderData() {
         [c.specMileage, formatNumberWithUnit(data.mileageKm, "km"), "gauge"],
         [c.specRegistration, listingRegistration(data.firstRegistration), "calendar"],
         [c.specGearbox, listingGearboxLabel(data.gearbox), "git-branch"],
-        [c.specDrive, data.drive || "", "route"],
+        [c.specDrive, driveLabelOf(data.drive), "route"],
       ] },
       ...(equipment.length ? [{ heading: c.specEquipmentHeading, text: equipment.join(" - ") }] : []),
       { heading: c.specOtherHeading, rows: [
         [c.specCountry, country, "map-pin"],
-        [c.specStatus, data.condition || "", "check"],
+        [c.specStatus, conditionLabel(data.condition), "check"],
         [c.specVat, purchaseTypeLabel(data), "percent"],
         [c.specSeller, seller, "store"],
       ] },
