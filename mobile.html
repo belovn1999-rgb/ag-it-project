@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=markets-20260927" />
+  <link rel="stylesheet" href="./src/mobile.css?v=blocket-20260927" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=markets-20260927" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-lang-20260927" data-ag-global-nav data-ag-nav-follow-lang></script>
@@ -514,6 +514,10 @@
                   <span>otomoto.pl</span>
                   <strong data-mobile-search-count aria-live="polite">—</strong>
                 </div>
+                <div class="mobileSearchCountMarket">
+                  <span>blocket.se</span>
+                  <strong data-mobile-search-count-blocket aria-live="polite">—</strong>
+                </div>
               </div>
               <div class="mobileSearchCountActions">
                 <div class="mobileSearchCountLogos">
@@ -522,6 +526,9 @@
                   </a>
                   <a class="agBrandLink isOtomoto" href="#" target="_blank" rel="noopener" data-mobile-otomoto-search aria-label="Szukaj na otomoto.pl" title="Szukaj na otomoto.pl">
                     <img src="./assets/brands/otomoto-logo.svg" alt="" />
+                  </a>
+                  <a class="agBrandLink isBlocket" href="#" target="_blank" rel="noopener" data-mobile-blocket-search aria-label="Szukaj na blocket.se" title="Szukaj na blocket.se">
+                    <img src="./assets/brands/blocket-logo.svg" alt="" />
                   </a>
                 </div>
                 <button class="mobileSearchCountButton mobileSearchCountButtonAnalysis" type="button" data-mobile-market-analysis-open>
@@ -537,6 +544,16 @@
                 <span data-market-i18n="analysisButton">Analiza rynku</span>
                 <i aria-hidden="true">&#8594;</i>
               </button>
+              <a
+                class="mobileMarketSearchButton mobileMarketSearchButtonSecondary"
+                href="#"
+                target="_blank"
+                rel="noopener"
+                data-mobile-blocket-search
+              >
+                <img class="agBrandMark" src="./assets/brands/blocket-mark.svg" alt="" />
+                <span data-blocket-i18n="blocketSearchButton">Szukaj na blocket.se</span>
+              </a>
               <a
                 class="mobileMarketSearchButton mobileMarketSearchButtonSecondary"
                 href="#"
@@ -586,7 +603,9 @@
     </main>
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
-    <script src="./src/mobile.js?v=markets-20260927"></script>
+    <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
+    <script src="./src/mobile.js?v=blocket-20260927"></script>
+    <script src="./src/blocket-search.js?v=blocket-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=cards3-20260926"></script>
     <script src="./src/mobile-market-analysis.js?v=labels-20260927"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>

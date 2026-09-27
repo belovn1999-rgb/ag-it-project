@@ -3517,6 +3517,7 @@ async function refreshOfferCount() {
     return;
   }
   refreshMobileDeCount(filters);
+  window.AUTOGOOD_BLOCKET_REFRESH_COUNT?.(filters);
   if (!filters.brand || !filters.model) {
     renderOfferCount("—");
     return;

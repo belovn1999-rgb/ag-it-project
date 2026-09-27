@@ -1,4 +1,4 @@
-# AUTOGOOD · Фильтры mobile.de ↔ otomoto.pl — единый справочник
+# AUTOGOOD · Фильтры mobile.de ↔ otomoto.pl ↔ blocket.se — единый справочник
 
 > **Единственное место**, где описано, как один набор фильтров формы
 > `mobile.html` превращается в правильный поиск на **mobile.de** и **otomoto.pl**.
@@ -190,6 +190,87 @@ mobile.de: серия (BMW «3», Mercedes «C») = ID группы; BMW «8» =
 ручная модель вне каталога = поиск по тексту внутри марки (фильтры сохраняются).
 MAN: ID марки 16500 (не 186).
 
+## 5b. Blocket.se (Швеция) — третья площадка (с 2026-09-27)
+
+Код: `src/blocket-search.js` (подключён после `mobile.js`), каталог
+`src/blocket-catalog.generated.js` (`python3 scripts/generate-blocket-catalog.py`),
+аудит `python3 scripts/audit-blocket-search.py` (Node не нужен).
+
+**Как устроен Blocket.** Страница поиска `https://www.blocket.se/mobility/search/car?…`
+и JSON-API `…/mobility/search/api/search/SEARCH_ID_CAR_USED?…` принимают **одни и те же
+параметры**. API в ответе перечисляет применённые фильтры (`metadata.selected_filters`),
+**неизвестный параметр или значение молча игнорирует** (как mobile.de). Поэтому
+проверка = параметр есть в `selected_filters` и число объявлений изменилось.
+API не отдаёт CORS-заголовок → из браузера читается через прокси `r.jina.ai`
+(JSON приходит внутри `<pre>`). Страниц максимум 50 по 50 объявлений.
+
+**Правила Blocket:**
+- Марка/модель — числовые `variant`: марка `0.749`, серия `1.749.2132`, модель
+  `2.749.2132.2001255`. Несколько `variant` = «или».
+- **Пробег в шведских милях: 1 mil = 10 км.** «от» округляется вниз, «до» вверх.
+- Цена в **SEK**: EUR × (EURPLN / SEKPLN), оба курса Walutomat (как в калькуляторе),
+  запасной SEKPLN 0.385. Сверено с NBP (26.09: 11.28 SEK/EUR).
+- Мощность: наши KM = шведские hk (`engine_effect_from/to`).
+- Год: у Blocket «Modellår» (модельный год) — может отличаться от года
+  регистрации на ±1.
+- `sales_form=1&sales_form=2` (продажа б/у и новых) **всегда**: у лизинговых
+  объявлений цена месячная и испортила бы статистику.
+- Несколько опций `car_equipment` = «все сразу» (как у нас); топливо/цвет/кузов = «или».
+- Сортировка `sort=PRICE_ASC`.
+
+| Поле формы | blocket.se | Примечание |
+|---|---|---|
+| Марка / модель | `variant` ✅/≈ | см. «Модели» ниже; нет марки → ✗ «Marka», поиск текстом |
+| Wersja | `q` (текстовый поиск) ✅ | не видно в `selected_filters`, но сужает выдачу |
+| Nadwozie | `body_type` ✅ | limousine 3, estate 4, suv 9, hatchback 1+2, coupe 6, cabrio 7, van 5 (Familjebuss), **pickup 8**, other 11 |
+| Cena | `price_from/to` SEK ✅ | |
+| Przebieg | `mileage_from/to` в mil ✅ | км / 10 |
+| Rok | `year_from/to` ✅ | модельный год |
+| Moc | `engine_effect_from/to` ✅ | |
+| Pojemność, Liczba miejsc, Liczba drzwi | ✗ | нет фильтров |
+| Paliwo | `fuel` ✅ | petrol 1, diesel 2, electric 4, hybrid petrol 6, hybrid diesel 8, plug-in 1352+1356 |
+| Napęd | `wheel_drive` ✅ | awd 2, fwd 3, rwd 1 |
+| Skrzynia | `transmission` ✅ | automatic 2, manual 1 |
+| VAT odliczany | `vat_deductible=true` ✅ | VAT marża ✗ |
+| Sprzedawca | `dealer_segment` private 3 ✅, dealer/firma 2 ≈ | «Företag» = дилер и фирма |
+| Kraj | ✗ | все объявления в Швеции |
+| Tapicerka | только кожа: `car_equipment=12` ≈ | «кожа или частично кожа»; точно только если выбраны обе кожи |
+| Klimatyzacja | `car_equipment=9` ≈ | «AC или климат», тип не различается |
+| Hak | `car_equipment=23` ≈ | тип не различается |
+| Tempomat | `car_equipment=11` ✅; адаптивный ≈ | |
+| CarPlay | `car_equipment=1588` ✅ | |
+| Panorama | `car_equipment=1` ≈ | «люк или стеклянная крыша» |
+| Kamera cofania, czujniki tył | `car_equipment=67`, `49` ✅ | передние/360°/автопарковка ✗; «przód+tył» → только задние ≈ |
+| Остальные опции (38 шт.) | ✗ | у Blocket 11 пунктов оснащения |
+| Kolor nadwozia | `exterior_colour` ✅ | beige 1, blue 2, brown 4, green 5, grey 6, yellow 7, gold 8, white 9, purple 10, orange 11, red 13, black 14, silver 15 |
+| Kolor wnętrza, matowy, metallic, niepalący, sprawny, uszkodzone | ✗ | нет фильтров; «Uszkodzone: nie pokazuj» по умолчанию → всегда в списке неточных |
+
+Всё ✗ и ≈ перечисляется пользователю: «Blocket nie ma dokładnego odpowiednika dla: …»
+(`blocketSkippedFilterLabels`).
+
+**Модели** (`blocketModelSelection`), по порядку:
+1. Семейство: то же имя, поколение/комплектация после него («Golf» → Golf I…VIII,
+   «Cayenne» → Cayenne S/Turbo/GTS…), те же слова в другом порядке («Countryman S (Cooper)» =
+   «Countryman Cooper S»), буква двигателя после полного номера («320» → 320d/320i,
+   «C 200» → C200/C200 d). Исключаются модели, которые в нашей форме отдельные
+   («Golf Plus», «X5 M», «Focus C-MAX» = наш «C-Max»). Mercedes «… AMG» = без AMG.
+   Варианты через «/» («cee'd / Ceed») проверяются по отдельности. «+» не теряется (Prius+ ≠ Prius).
+2. Серия целиком: «3» → 3-Serie, «C» → C-Klass, «T-Class» → T-Klass.
+3. ≈ Семьи под другим именем: Porsche 991/992… → 911-Serie, Mercedes CE → E-Klass,
+   ML → M-Klass, VW T4–T7 → Transporter/Caravelle/Multivan/California, Mini … Cabrio → Cabrio.
+4. ≈ Кузов-серия Mini («One D Clubman» → «Clubman One»), иначе вся серия.
+5. ≈ Более широкая модель по первым словам («220 Active Tourer» → 220d/220i, «X5 M50» → X5).
+6. ≈ Нет на Blocket → текстовый поиск `q` внутри марки.
+
+Итог 27.09 по 2715 моделям формы: 1595 точно, 320 ≈, 588 текстом (моделей сейчас
+нет в продаже в Швеции), 212 — марок нет на Blocket.
+
+Проверка 27.09: 126 вариантов формы (каждое значение каждого поля) собраны кодом
+страницы и проверены по живому API — все отправленные параметры применены
+Blocket, все неотправленные названы пользователю. Пример: Volvo XC60, от 2020,
+до 100 000 км, дизель, автомат, CarPlay → 38 объявлений и на странице Blocket,
+и в API.
+
 ## 6. Известные открытые вопросы
 
 - Курс цены для otomoto — файл, а не живой курс (B12 в PROJECT-MOBILE.md).
@@ -214,3 +295,4 @@ MAN: ID марки 16500 (не 186).
 | 09-27 | Codex | Liczba drzwi: группы mobile.de, otomoto 2/3, 4/5, 6 | b568389 |
 | 09-27 | Codex | Liczba drzwi — диапазон от/до 2–7: otomoto точные числа, mobile.de одна группа или предупреждение | ac17a28 |
 | 09-27 | Claude | Этот справочник: всё знание о фильтрах собрано в одном файле | этот коммит |
+| 09-27 | Claude | blocket.se: третья площадка — каталог, перенос всех фильтров, предупреждения, живой счётчик, логотипы, аудит | этот коммит |
