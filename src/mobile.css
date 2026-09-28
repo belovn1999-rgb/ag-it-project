@@ -2927,3 +2927,8 @@ label.isSummaryFocus {
 .mobileMethodView[data-mobile-method-view="manual"] > .mobileMarketHistory {
   margin-top: var(--space-xl);
 }
+
+/* Four equal columns, as in the analysis' "Parametry poszukiwania". */
+.mobileSearchSummary .agSpecColumns {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}

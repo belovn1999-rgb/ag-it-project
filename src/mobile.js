@@ -2087,6 +2087,9 @@ function readManualFields() {
     nonSmoking: els.nonSmoking?.checked || false,
     roadworthy: els.roadworthy?.checked || false,
     damagedVehicles: els.damagedVehicles?.value || "hide",
+    // The compared markets (logos above the manual search) belong to the
+    // search: a favourite remembers them.
+    markets: typeof window !== "undefined" && typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : undefined,
   };
 }
 

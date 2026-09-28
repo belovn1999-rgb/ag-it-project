@@ -570,6 +570,13 @@
     return JSON.stringify(filters || {});
   }
 
+  // The search itself, without the compared markets: changing the markets
+  // keeps the same entry and its collected prices.
+  function searchSignature(filters) {
+    const { markets, ...search } = filters || {};
+    return JSON.stringify(search);
+  }
+
   function vehicleDataKey(filters) {
     return [filters?.brand, filters?.model, filters?.version]
       .map((value) => String(value || "").trim())
@@ -1059,8 +1066,8 @@
   }
 
   function historyEntryForFilters(filters) {
-    const signature = filterSignature(filters);
-    return marketHistory.find((entry) => entry.signature === signature) || null;
+    const signature = searchSignature(filters);
+    return marketHistory.find((entry) => searchSignature(entry.filters) === signature) || null;
   }
 
   // Price history: every time an entry gets new prices, the typical price of
@@ -1242,13 +1249,13 @@
       ? `★ ${pinnedCount} · ${recentCount} / ${HISTORY_LIMIT}`
       : `${recentCount} / ${HISTORY_LIMIT}`;
     historyCounts.forEach((element) => { element.textContent = countText; });
-    if (!marketHistory.length) {
+    if (!marketHistory.some((entry) => !entry.pinned)) {
       historyLists.forEach((list) => { list.innerHTML = `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(c.historyEmpty)}</p>`; });
       updateHistoryConfirm();
       return;
     }
 
-    const listHtml = marketHistory.map((entry) => {
+    const listHtml = marketHistory.filter((entry) => !entry.pinned).map((entry) => {
       const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
       const meta = historyMeta(entry.filters);
       const ready = entry.listings.length >= 3;
@@ -1299,11 +1306,15 @@
   }
 
   // The ✓ appears on the selected entry once the form no longer matches it.
+  // Compared with the form as it stood right after the entry was loaded (or
+  // last saved), not with the stored filters: older entries lack newer
+  // fields, which would show "Gotowe" before anything was changed.
+  let editingBaseline = "";
   function updateHistoryConfirm() {
     const entry = marketHistory.find((item) => item.id === editingHistoryId);
     let changed = false;
     try {
-      changed = Boolean(entry) && filterSignature(readManualFields()) !== filterSignature(entry.filters);
+      changed = Boolean(entry) && filterSignature(readManualFields()) !== editingBaseline;
     } catch {
       changed = false;
     }
@@ -1319,11 +1330,13 @@
     try {
       const filters = readManualFields();
       if (!filters.brand || !filters.model) throw new Error(c.missingVehicle);
-      // Prices collected for the old filters no longer describe the new ones.
-      const same = filterSignature(filters) === filterSignature(entry.filters);
+      // Prices collected for the old filters no longer describe the new ones
+      // (the compared markets do not change them).
+      const same = searchSignature(filters) === searchSignature(entry.filters);
       const snapshot = updateMarketSnapshot(entry.id, filters, same ? entry.listings : [], same ? entry.sourceFileName : "", buildMobileDeSearchUrl(filters));
       if (!snapshot) return;
       editingHistoryId = snapshot.id;
+      editingBaseline = filterSignature(readManualFields());
       renderHistory();
       setAnalysisStatus(c.historyUpdateSuccess);
     } catch (error) {
@@ -1409,6 +1422,10 @@
       if (input) input.checked = key === "roadworthy" ? filters[key] !== false : Boolean(filters[key]);
     });
     if (typeof renderManualOptions === "function") renderManualOptions(true);
+    // An entry remembers the markets it was compared on.
+    if (Array.isArray(filters.markets) && filters.markets.length) {
+      setChartSources(Object.fromEntries(MARKET_SOURCES.map((source) => [source, filters.markets.includes(source)])));
+    }
   }
 
   function toggleCurrentHistoryFavorite() {
@@ -1490,6 +1507,7 @@
     if (!entry) return;
     restoreManualFilters(entry.filters);
     editingHistoryId = entry.id;
+    editingBaseline = filterSignature(readManualFields());
     analysisView.hidden = true;
     setManualViewHidden(false);
     setAnalysisStatus("");
@@ -3552,8 +3570,11 @@
     }
     setChartSources(next);
     if (activeAnalysis) renderAnalysis();
+    updateHistoryConfirm();
+    updateSelectedFiltersSummary?.();
   });
 
+  window.AUTOGOOD_SELECTED_MARKETS = () => MARKET_SOURCES.filter((source) => chartSources[source]);
   window.AUTOGOOD_MOBILE_LOG_SEARCH = logSearchToHistory;
 
   // Entering filters writes the search into the history by itself (a few
