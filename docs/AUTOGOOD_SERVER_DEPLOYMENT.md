@@ -1,5 +1,30 @@
 # AUTOGOOD Server Deployment
 
+## User-owned history and saved data
+
+When AUTOGOOD moves browser histories to the server, every history-bearing
+page must store user-created records under the authenticated user's stable
+account ID. A user's searches, favourites, calculations, generated documents,
+and VIN results must remain private to that account and load on that user's
+other devices after sign-in. They must never be keyed only by browser profile,
+email text supplied by the client, or a shared global collection.
+
+Keep records typed by feature/page (for example `mobile-search`, `calculator`,
+`vin-check`, `document`, and `auto1`) so each page can present its own history;
+the shared identity is the ownership boundary, not a merged cross-page feed.
+Every read, create, update, and delete must enforce ownership on the server.
+Unauthenticated requests must not be able to read or mutate user history.
+
+Until authentication and a durable database are deployed, existing browser
+storage remains the active source and must not be cleared or silently replaced.
+Migration must be an explicit, recoverable import after sign-in: preserve the
+original local copy, merge rather than overwrite, deduplicate without dropping
+records, and report conflicts or failures. Existing page-specific limits and
+favourite-retention guarantees remain in force unless the owner approves a
+separate retention policy. The identity provider, account recovery, database,
+retention period, and migration UX are still architecture decisions; this
+document does not select them.
+
 This repo now contains one server entrypoint for the backend workflows used by the GitHub Pages tools:
 
 - `GET /mobilede/import?url=...` - imports data from a mobile.de listing.
