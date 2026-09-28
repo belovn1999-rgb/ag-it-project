@@ -3,26 +3,26 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AUTOGOOD Mobile.de</title>
+    <title>AUTOGOOD Wyszukiwanie i analiza</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=blocket-20260927" />
-    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=blocket-analysis-20260927" />
+  <link rel="stylesheet" href="./src/mobile.css?v=pages-20260928" />
+    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=pages-20260928" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <script defer src="./src/global-navigation.js?v=nav-lang-20260927" data-ag-global-nav data-ag-nav-follow-lang></script>
+    <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="mobileBody">
     <main class="mobileShell">
-      <h1 class="srOnly" data-i18n="pageHeading">Mobile.de — wyszukiwanie auta</h1>
+      <h1 class="srOnly" data-i18n="pageHeading">Wyszukiwanie i analiza aut</h1>
       <header class="mobileTopbar">
         <a class="mobileBrand" href="./" aria-label="AUTOGOOD Tools">
           <img src="./assets/autogood-logo.png" alt="AUTOGOOD" />
           <span class="mobileBrandDivider" aria-hidden="true"></span>
-          <span>Mobile.de</span>
+          <span data-i18n="appName">Wyszukiwanie i analiza</span>
         </a>
         <div class="mobileTopActions">
           <a class="mobileGhostLink" href="./calculators.html" data-i18n="calculatorsLink">Kalkulatory</a>
@@ -35,17 +35,23 @@
 
       <section class="mobilePageIntro">
         <p class="mobilePageTitle" data-i18n="pageTitle">Wyszukiwanie i analiza cen</p>
-        <ol class="mobilePageSteps">
-          <li><button type="button" data-mobile-step="link"><b>1</b><span data-i18n="stepLink">Link</span></button></li>
-          <li><button type="button" data-mobile-step="filters"><b>2</b><span data-i18n="stepFilters">Filtry</span></button></li>
-          <li><button type="button" data-mobile-step="analysis"><b>3</b><span data-i18n="stepAnalysis">Analiza</span></button></li>
-        </ol>
       </section>
+
+      <!-- Favourite cars, pinned above every page. -->
+      <div class="mobileFavoritesBar" data-mobile-favorites-bar></div>
+
+      <!-- The four pages of the tool. -->
+      <nav class="mobilePageTabs" aria-label="Strony" data-mobile-page-tabs>
+        <button type="button" data-mobile-page-tab="search"><b>1</b><span data-i18n="pageSearch">Wyszukiwanie</span></button>
+        <button type="button" data-mobile-page-tab="analysis"><b>2</b><span data-i18n="pageAnalysis">Analiza</span></button>
+        <button type="button" data-mobile-page-tab="history"><b>3</b><span data-i18n="pageHistory">Historia</span></button>
+        <button type="button" data-mobile-page-tab="favorites"><b>4</b><span data-i18n="pageFavorites">Wyszukiwanie ulubionych</span></button>
+      </nav>
 
       <section class="mobileListingSearch">
         <section class="mobileFilterCard mobileListingLinkCard" aria-labelledby="mobile-listing-link-heading">
           <div class="mobileListingLinkHead">
-            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
+            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><b class="mobileBlockNumber">1.</b><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
             <div class="mobileLinkSource" role="radiogroup" aria-label="Portal">
               <label class="isMobile"><input type="radio" name="mobile-link-source" value="mobile" data-mobile-link-source checked /><span>mobile.de</span></label>
               <label class="isOtomoto"><input type="radio" name="mobile-link-source" value="otomoto" data-mobile-link-source /><span>otomoto.pl</span></label>
@@ -83,7 +89,8 @@
         <article class="mobilePanel mobileManualPanel">
           <div class="mobilePanelHead">
             <div class="mobileManualPanelHeadRow">
-              <h2 class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="manualEyebrow">WPISZ DANE RĘCZNIE</span></h2>
+              <h2 class="mobileFilterCardTitle mobileManualPanelTitle"><b class="mobileBlockNumber">2.</b><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="manualEyebrow">WPISZ DANE RĘCZNIE</span></h2>
+              <div class="mobileMarketPicker" role="group" aria-label="Porównywane rynki" data-mobile-market-picker></div>
               <button class="mobileManualIconButton" type="button" data-mobile-manual-reset aria-label="Wyczyść filtry" title="Wyczyść filtry">
                 <svg aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-filter-navigation-20260831#rotate-ccw"></use></svg>
               </button>
@@ -578,6 +585,9 @@
           </div>
         </article>
 
+      </section>
+
+      <section class="mobileMethodView mobilePageView" data-mobile-page-view="history" hidden>
         <section class="mobileMarketHistory" data-mobile-market-history>
           <header class="mobileMarketHistoryHead">
             <div>
@@ -587,6 +597,10 @@
           </header>
           <div class="mobileMarketHistoryList" data-mobile-market-history-list></div>
         </section>
+      </section>
+
+      <section class="mobileMethodView mobilePageView" data-mobile-page-view="favorites" hidden>
+        <div data-mobile-favorites-page></div>
       </section>
 
       <section class="mobileMethodView mobileMarketAnalysisView" data-mobile-market-analysis-view hidden>
@@ -604,10 +618,10 @@
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
-    <script src="./src/mobile.js?v=blocket-20260927"></script>
+    <script src="./src/mobile.js?v=pages-20260928"></script>
     <script src="./src/blocket-search.js?v=blocket-analysis-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=cards3-20260926"></script>
-    <script src="./src/mobile-market-analysis.js?v=blocket-analysis-20260927"></script>
+    <script src="./src/mobile-market-analysis.js?v=pages-20260928"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>

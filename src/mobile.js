@@ -2,7 +2,12 @@ const DEFAULT_MOBILEDE_API_URL = "https://decor-tube-freely-named.trycloudflare.
 
 const copy = {
   pl: {
-    pageHeading: "Mobile.de — wyszukiwanie auta",
+    pageHeading: "Wyszukiwanie i analiza aut",
+    appName: "Wyszukiwanie i analiza",
+    pageSearch: "Wyszukiwanie",
+    pageAnalysis: "Analiza",
+    pageHistory: "Historia",
+    pageFavorites: "Wyszukiwanie ulubionych",
     eyebrow: "LINK MOBILE.DE",
     lead: "Wklej link, sprawdź dane auta i wybierz scenariusz zakupu. Kalkulator dostanie cenę, transport, oględziny i akcyzę.",
     methodPrompt: "WYBIERZ METODĘ",
@@ -270,7 +275,12 @@ const copy = {
     ],
   },
   ru: {
-    pageHeading: "Mobile.de — поиск автомобиля",
+    pageHeading: "Поиск и анализ автомобилей",
+    appName: "Поиск и анализ",
+    pageSearch: "Поиск",
+    pageAnalysis: "Анализ",
+    pageHistory: "История",
+    pageFavorites: "Поиск по избранным",
     eyebrow: "ССЫЛКА MOBILE.DE",
     lead: "Вставь ссылку, проверь данные авто и выбери сценарий покупки. Калькулятор получит цену, доставку, осмотр и акциз.",
     methodPrompt: "ВЫБЕРИ СПОСОБ",

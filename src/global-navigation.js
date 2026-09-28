@@ -9,7 +9,7 @@
     { href: "umowy.html", number: "02", label: "Документы", labelPl: "Dokumenty" },
     { href: "auctions.html", number: "03", label: "Аукционы", labelPl: "Aukcje" },
     { href: "partslink24.html", number: "04", label: "VIN" },
-    { href: "mobile.html", number: "05", label: "Mobile.de" },
+    { href: "mobile.html", number: "05", label: "Поиск и анализ", labelPl: "Wyszukiwanie i analiza" },
   ];
   // Pages with their own PL/RU switch opt in (data-ag-nav-follow-lang): the
   // bar then speaks the page's language. Every other page keeps it as it was.

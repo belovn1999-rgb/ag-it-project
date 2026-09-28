@@ -7,10 +7,19 @@
   const analysisContent = document.querySelector("[data-mobile-market-analysis-content]");
   const manualView = document.querySelector('[data-mobile-method-view="manual"]');
   const listingFrame = document.querySelector(".mobileListingSearch");
-  // The market analysis replaces the whole search area: link frame and manual form.
+  // Four pages: search (link card + manual form), analysis, history and the
+  // favourites' search. Showing the analysis hides the search page and the
+  // two other pages.
+  const historyView = document.querySelector('[data-mobile-page-view="history"]');
+  const favoritesView = document.querySelector('[data-mobile-page-view="favorites"]');
+  const favoritesPage = document.querySelector("[data-mobile-favorites-page]");
+  const favoritesBar = document.querySelector("[data-mobile-favorites-bar]");
+  const marketPicker = document.querySelector("[data-mobile-market-picker]");
   const setManualViewHidden = (hidden) => {
     manualView.hidden = hidden;
     if (listingFrame) listingFrame.hidden = hidden;
+    if (historyView) historyView.hidden = true;
+    if (favoritesView) favoritesView.hidden = true;
   };
   const historySaves = Array.from(document.querySelectorAll("[data-mobile-market-history-save]"));
   const historyList = document.querySelector("[data-mobile-market-history-list]");
@@ -26,6 +35,13 @@
       historyUpdateSuccess: "Dane wpisu zostały zaktualizowane.",
       historyConfirm: "Zapisz zmiany w tym wpisie",
       favoritesHeading: "Ulubione auta",
+      favoritesSearchHeading: "Wyszukiwanie ulubionych",
+      favoritesSearchNote: "Wkrótce: automatyczne śledzenie nowych ofert dla każdego ulubionego auta.",
+      favoritesSearchAnalysis: "Analiza rynku",
+      favoritesSearchFilters: "Pokaż filtry",
+      favoritesSearchEmpty: "Nie masz jeszcze ulubionych aut. Oznacz wyszukiwanie gwiazdką ★ w panelu „Aktualne oferty” albo w historii.",
+      marketPickerLabel: "Porównywane rynki",
+      marketPickerLast: "Co najmniej jeden rynek musi zostać wybrany.",
       favoriteRemove: "Usuń z ulubionych",
       statsHeading: "Statystyki",
       sourcesPicker: "Analiza cen z portali:",
@@ -211,6 +227,13 @@
       historyUpdateSuccess: "Данные записи обновлены.",
       historyConfirm: "Сохранить изменения в этой записи",
       favoritesHeading: "Избранные авто",
+      favoritesSearchHeading: "Поиск по избранным",
+      favoritesSearchNote: "Скоро: автоматическое отслеживание новых предложений для каждого избранного авто.",
+      favoritesSearchAnalysis: "Анализ рынка",
+      favoritesSearchFilters: "Показать фильтры",
+      favoritesSearchEmpty: "Избранных авто пока нет. Отметь поиск звёздочкой ★ в панели «Актуальные предложения» или в истории.",
+      marketPickerLabel: "Сравниваемые рынки",
+      marketPickerLast: "Должен остаться выбран хотя бы один рынок.",
       favoriteRemove: "Убрать из избранного",
       statsHeading: "Статистика",
       sourcesPicker: "Анализ цен на порталах:",
@@ -421,7 +444,20 @@
   const BLOCKET_PAGE_SIZE = 50;
   const BLOCKET_MAX_PAGES = 50;
   const EUR_PLN_FALLBACK_RATE = 4.3;
-  let chartSources = { otomoto: true, mobile: true, blocket: true };
+  // The markets being compared: picked by the logos on the search page and
+  // on the chart alike, remembered in this browser.
+  const MARKETS_STORAGE_KEY = "autogood.mobile.markets.v1";
+  let chartSources = (() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(MARKETS_STORAGE_KEY) || "null");
+      if (saved && ["otomoto", "mobile", "blocket"].some((source) => saved[source])) {
+        return { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), blocket: Boolean(saved.blocket) };
+      }
+    } catch {
+      // Unreadable storage: all markets.
+    }
+    return { otomoto: true, mobile: true, blocket: true };
+  })();
   let chartAxis = "rank";
   let displayCurrency = "EUR";
   // Mobile.de offers that arrived before the analysis was opened.
@@ -1135,6 +1171,8 @@
   function renderHistory() {
     const c = copy();
     updateHistorySaveButtons();
+    renderFavoritesBar();
+    if (favoritesView && !favoritesView.hidden) renderFavoritesSearchPage();
     const pinnedCount = marketHistory.filter((entry) => entry.pinned).length;
     const recentCount = marketHistory.length - pinnedCount;
     historyCount.textContent = pinnedCount
@@ -1681,6 +1719,70 @@
       </section>`;
   }
 
+  // Pinned above every page; the car of the open analysis is highlighted.
+  function renderFavoritesBar() {
+    if (!favoritesBar) return;
+    const active = activeAnalysis ? marketHistory.find((entry) => entry.id === activeAnalysis.historyId && entry.pinned) : null;
+    favoritesBar.innerHTML = favoritesHtml(active?.id || "");
+  }
+
+  // Page 4: the favourite cars, each with its analysis and its filters.
+  // Tracking new offers for them comes later.
+  function renderFavoritesSearchPage() {
+    if (!favoritesPage) return;
+    const c = copy();
+    const favorites = marketHistory.filter((entry) => entry.pinned);
+    favoritesPage.innerHTML = `
+      <section class="mobileMarketHistory mobileFavoritesSearch">
+        <header class="mobileMarketHistoryHead">
+          <h2 class="mobileFilterCardTitle mobileMarketHistoryTitle"><i aria-hidden="true">★</i><span>${escapeMarketHtml(c.favoritesSearchHeading)}</span></h2>
+        </header>
+        <p class="mobileFavoritesSearchNote">${escapeMarketHtml(c.favoritesSearchNote)}</p>
+        ${favorites.length ? `<div class="mobileFavoritesSearchList">${favorites.map((entry) => {
+          const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
+          const meta = historyMeta(entry.filters).join(" · ");
+          const price = latestPriceLabel(entry);
+          const date = entry.dataAt ? formatHistoryDate(entry.dataAt) : "";
+          return `<article class="mobileFavoritesSearchItem">
+            <div>
+              <b>${escapeMarketHtml(title)}</b>
+              ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
+              <span>${escapeMarketHtml(price || c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
+            </div>
+            <div class="mobileFavoritesSearchActions">
+              <button class="mobileMarketImportClear" type="button" data-mobile-favorite-filters="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.favoritesSearchFilters)}</button>
+              <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-favorite="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.favoritesSearchAnalysis)} →</button>
+            </div>
+          </article>`;
+        }).join("")}</div>` : `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(c.favoritesSearchEmpty)}</p>`}
+      </section>`;
+  }
+
+  // The logos above the manual search: which markets are compared.
+  function renderMarketPicker() {
+    if (!marketPicker) return;
+    const c = copy();
+    marketPicker.setAttribute("aria-label", c.marketPickerLabel);
+    marketPicker.innerHTML = MARKET_SOURCES.map((source) => {
+      const on = Boolean(chartSources[source]);
+      const label = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile;
+      return `<button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-mobile-market-pick="${source}" aria-pressed="${on ? "true" : "false"}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
+    }).join("");
+    // The offer counts of markets left out are dimmed.
+    [["mobile", "[data-mobile-search-count-mobilede]"], ["otomoto", "[data-mobile-search-count]"], ["blocket", "[data-mobile-search-count-blocket]"]]
+      .forEach(([source, selector]) => document.querySelector(selector)?.closest(".mobileSearchCountMarket")?.classList.toggle("isOff", !chartSources[source]));
+  }
+
+  function setChartSources(next) {
+    chartSources = { otomoto: Boolean(next.otomoto), mobile: Boolean(next.mobile), blocket: Boolean(next.blocket) };
+    try {
+      localStorage.setItem(MARKETS_STORAGE_KEY, JSON.stringify(chartSources));
+    } catch {
+      // Not remembered, still applied.
+    }
+    renderMarketPicker();
+  }
+
   // Every measurement of this search, newest first, one row per marketplace,
   // each value compared with the previous measurement of that marketplace.
   function priceHistoryHtml(entry, sources = MARKET_SOURCES) {
@@ -1754,7 +1856,6 @@
       </section>`;
     analysisContent.innerHTML = `
       <article class="mobileMarketAnalysisPanel" aria-busy="true">
-        ${favoritesHtml()}
         <section class="mobileMarketCard">
           <h2 class="agBlockTitle">${escapeMarketHtml(title)}</h2>
           <p class="mobileMarketLoadingHeading">${escapeMarketHtml(c.loadingHeading)}</p>
@@ -1774,7 +1875,6 @@
     activeAnalysis = null;
     analysisContent.innerHTML = `
       <article class="mobileMarketAnalysisPanel">
-        ${favoritesHtml()}
         <header class="mobileMarketAnalysisHead">
           <div>
             <h1>${escapeMarketHtml(c.heading)}</h1>
@@ -1790,7 +1890,6 @@
   function openFavorite(historyId) {
     const entry = marketHistory.find((item) => item.id === historyId);
     if (!entry) return;
-    chartSources = { otomoto: true, mobile: true, blocket: true };
     if (entry.listings.length >= 3) {
       openHistoryAnalysis(historyId);
       return;
@@ -1927,6 +2026,11 @@
   }
 
   function renderAnalysis() {
+    renderAnalysisContent();
+    renderFavoritesBar();
+  }
+
+  function renderAnalysisContent() {
     if (!activeAnalysis) return;
     const c = copy();
     const { filters, listings, searchUrl, providerId, sourceFileName } = activeAnalysis;
@@ -2407,7 +2511,7 @@
           <img src="./assets/autogood-logo.png" alt="AUTOGOOD" />
           <span>${escapeMarketHtml(c.reportTitle)} · ${escapeMarketHtml(formatHistoryDate(new Date().toISOString()))}</span>
         </div>
-        ${favoritesHtml(historyEntry?.pinned ? historyEntry.id : "")}
+
         <div class="mobileMarketToolbar" data-report-hide>
           <div class="mobileMarketToolbarActions">
             <span class="agBrandLinks">
@@ -2762,7 +2866,9 @@
       button.title = value;
     });
     renderHistory();
+    renderMarketPicker();
     renderAnalysis();
+    renderFavoritesBar();
   }
 
   analysisContent.addEventListener("change", async (event) => {
@@ -2911,7 +3017,7 @@
       const stillShown = MARKET_SOURCES.some((item) => next[item]
         && analysisContent.querySelector(`[data-mobile-market-source="${item}"]:not([disabled])`));
       if (stillShown) {
-        chartSources = next;
+        setChartSources(next);
         renderAnalysis();
       }
       return;
@@ -3011,11 +3117,33 @@
     button.addEventListener("click", () => requestAnimationFrame(renderMarketTranslations));
   });
 
-  // The steps under the page title jump to the link card, the vehicle
-  // filters or the market analysis (the favourites when no car is chosen).
-  document.querySelectorAll("[data-mobile-step]").forEach((button) => button.addEventListener("click", () => {
-    const step = button.dataset.mobileStep;
-    if (step === "analysis") {
+  // ---- Pages -----------------------------------------------------------
+  // 1 search, 2 analysis, 3 history, 4 favourites' search. The page is kept
+  // in the address (#analiza…) so a reload stays on it.
+  const PAGE_HASHES = { search: "", analysis: "#analiza", history: "#historia", favorites: "#ulubione" };
+  const pageTabs = Array.from(document.querySelectorAll("[data-mobile-page-tab]"));
+
+  function currentPage() {
+    if (!analysisView.hidden) return "analysis";
+    if (historyView && !historyView.hidden) return "history";
+    if (favoritesView && !favoritesView.hidden) return "favorites";
+    return "search";
+  }
+
+  function markCurrentPage() {
+    const page = currentPage();
+    pageTabs.forEach((tab) => {
+      if (tab.dataset.mobilePageTab === page) tab.setAttribute("aria-current", "page");
+      else tab.removeAttribute("aria-current");
+    });
+    const hash = PAGE_HASHES[page];
+    if ((location.hash || "") !== hash && !/^#autogood-import=/.test(location.hash)) {
+      history.replaceState(null, "", `${location.pathname}${location.search}${hash}`);
+    }
+  }
+
+  function showPage(page) {
+    if (page === "analysis") {
       let filters = {};
       try {
         filters = readManualFields();
@@ -3029,28 +3157,54 @@
       }
       return;
     }
-    if (!analysisView.hidden) closeAnalysis();
-    const target = step === "link"
-      ? document.querySelector(".mobileListingLinkCard")
-      : document.getElementById("mobile-filter-group-vehicle")?.closest(".mobileFilterCard");
-    requestAnimationFrame(() => target?.scrollIntoView({ behavior: "smooth", block: "start" }));
-  }));
+    analysisView.hidden = true;
+    manualView.hidden = page !== "search";
+    if (listingFrame) listingFrame.hidden = page !== "search";
+    if (historyView) historyView.hidden = page !== "history";
+    if (favoritesView) favoritesView.hidden = page !== "favorites";
+    if (page === "favorites") renderFavoritesSearchPage();
+    markCurrentPage();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
-  // The step the page is on: 3 while the analysis shows, otherwise 1 or 2 by
-  // whether the link card is still on screen.
-  const stepButtons = Array.from(document.querySelectorAll("[data-mobile-step]"));
-  const markCurrentStep = () => {
-    let current = "filters";
-    if (!analysisView.hidden) current = "analysis";
-    else if (listingFrame && listingFrame.getBoundingClientRect().bottom > window.innerHeight * 0.35) current = "link";
-    stepButtons.forEach((button) => {
-      if (button.dataset.mobileStep === current) button.setAttribute("aria-current", "step");
-      else button.removeAttribute("aria-current");
-    });
+  pageTabs.forEach((tab) => tab.addEventListener("click", () => showPage(tab.dataset.mobilePageTab)));
+  [analysisView, historyView, favoritesView].filter(Boolean)
+    .forEach((view) => new MutationObserver(markCurrentPage).observe(view, { attributes: true, attributeFilter: ["hidden"] }));
+
+  // Favourites bar and page 4: open a car's analysis, show its filters, unpin it.
+  const handleFavoriteClick = (event) => {
+    const removeFavorite = event.target.closest("[data-mobile-market-favorite-remove]");
+    if (removeFavorite) {
+      setHistoryPinned(removeFavorite.dataset.mobileMarketFavoriteRemove, false);
+      return;
+    }
+    const filtersButton = event.target.closest("[data-mobile-favorite-filters]");
+    if (filtersButton) {
+      const entry = marketHistory.find((item) => item.id === filtersButton.dataset.mobileFavoriteFilters);
+      if (entry) {
+        restoreManualFilters(entry.filters);
+        showPage("search");
+      }
+      return;
+    }
+    const favorite = event.target.closest("[data-mobile-market-favorite]");
+    if (favorite) openFavorite(favorite.dataset.mobileMarketFavorite);
   };
-  new MutationObserver(markCurrentStep).observe(analysisView, { attributes: true, attributeFilter: ["hidden"] });
-  window.addEventListener("scroll", () => requestAnimationFrame(markCurrentStep), { passive: true });
-  markCurrentStep();
+  favoritesBar?.addEventListener("click", handleFavoriteClick);
+  favoritesPage?.addEventListener("click", handleFavoriteClick);
+
+  marketPicker?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-mobile-market-pick]");
+    if (!button) return;
+    const source = button.dataset.mobileMarketPick;
+    const next = { ...chartSources, [source]: !chartSources[source] };
+    if (!MARKET_SOURCES.some((item) => next[item])) {
+      setMarketSearchStatus?.(copy().marketPickerLast, true);
+      return;
+    }
+    setChartSources(next);
+    if (activeAnalysis) renderAnalysis();
+  });
 
   window.AUTOGOOD_MOBILE_LOG_SEARCH = logSearchToHistory;
   // Used by the sticky panel to show how many offers the filters match.
@@ -3075,4 +3229,8 @@
     renderHistory();
   });
   renderMarketTranslations();
+  // A reload stays on the page it was on (#historia, #ulubione, #analiza).
+  const startPage = Object.keys(PAGE_HASHES).find((page) => PAGE_HASHES[page] && PAGE_HASHES[page] === location.hash);
+  if (startPage) showPage(startPage);
+  else markCurrentPage();
 })();

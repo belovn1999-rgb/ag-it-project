@@ -2557,3 +2557,155 @@ label.isSummaryFocus {
 .agSpecPrice b {
   color: var(--color-brand);
 }
+
+/* ---- Pages: favourites pinned on top, four page buttons under them ---- */
+.mobileFavoritesBar:empty {
+  display: none;
+}
+
+.mobileFavoritesBar .mobileMarketFavorites {
+  margin: 0 0 var(--space-md);
+}
+
+.mobilePageTabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-sm);
+  margin-bottom: var(--space-xl);
+}
+
+.mobilePageTabs button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  min-height: 52px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: 0 1px 2px rgba(22, 43, 72, 0.05), 0 6px 16px -8px rgba(22, 43, 72, 0.12);
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--text-base);
+  font-weight: 800;
+  cursor: pointer;
+  transition: border-color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+}
+
+.mobilePageTabs button b {
+  display: inline-grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-brand) 12%, var(--color-surface));
+  color: var(--color-brand-pressed);
+  font-size: var(--text-sm);
+}
+
+.mobilePageTabs button:hover {
+  border-color: var(--color-primary-rule);
+}
+
+.mobilePageTabs button[aria-current="page"] {
+  border-color: var(--color-brand);
+  background: var(--color-brand);
+  color: #fff;
+}
+
+.mobilePageTabs button[aria-current="page"] b {
+  background: #fff;
+  color: var(--color-brand);
+}
+
+.mobilePageTabs button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+/* "1." / "2." before the search blocks' titles. */
+.mobileBlockNumber {
+  margin-right: 2px;
+  color: var(--color-brand);
+  font-weight: 800;
+}
+
+/* Markets compared, picked by their logos (same toggles as on the chart). */
+.mobileManualPanelHeadRow {
+  flex-wrap: wrap;
+}
+
+.mobileMarketPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin-left: auto;
+  padding-top: 8px;
+}
+
+.mobileMarketPicker .agSourceToggle {
+  min-width: 96px;
+  min-height: 36px;
+}
+
+.mobileSearchCountMarket.isOff {
+  opacity: 0.35;
+}
+
+/* Page 4: favourites' search. */
+.mobileFavoritesSearchNote {
+  margin: var(--space-md) 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.mobileFavoritesSearchList {
+  display: grid;
+  gap: var(--space-sm);
+}
+
+.mobileFavoritesSearchItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-lg);
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+}
+
+.mobileFavoritesSearchItem > div:first-child {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.mobileFavoritesSearchItem b {
+  font-size: var(--text-base);
+}
+
+.mobileFavoritesSearchItem small,
+.mobileFavoritesSearchItem span {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.mobileFavoritesSearchActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+@media (max-width: 60rem) {
+  .mobilePageTabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.mobileFavoritesSearchActions .mobileMarketImportClear.isPrimary {
+  border-color: var(--color-brand);
+  background: var(--color-brand);
+  color: #fff;
+}
