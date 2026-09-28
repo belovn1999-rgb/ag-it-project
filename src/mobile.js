@@ -1,4 +1,4 @@
-const DEFAULT_MOBILEDE_API_URL = "https://similar-elliott-gmt-injured.trycloudflare.com/mobilede/import";
+const DEFAULT_MOBILEDE_API_URL = "https://keeps-cheers-empirical-invalid.trycloudflare.com/mobilede/import";
 
 const copy = {
   pl: {
@@ -2148,7 +2148,18 @@ function focusManualFilter(selector) {
     window.setTimeout(() => option.classList.remove("isSummaryFocus"), 1800);
   }
   const scrollTarget = target.closest(".mobileField, .mobileChoiceField, .mobileMultiSelect") || target;
-  scrollTarget.scrollIntoView({ behavior: "smooth", block: "center" });
+  const heading = target.closest(".mobileFilterCard")?.querySelector(".mobileFilterCardTitle");
+  const stickyHead = document.querySelector(".mobileManualPanel .mobilePanelHead");
+  const stickyStyle = stickyHead && getComputedStyle(stickyHead);
+  const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 0;
+  const coveredHeight = stickyStyle?.position === "sticky"
+    ? (parseFloat(stickyStyle.top) || navHeight) + stickyHead.offsetHeight
+    : navHeight;
+  const visibleTop = coveredHeight + 4;
+  const anchor = heading && scrollTarget.getBoundingClientRect().top - heading.getBoundingClientRect().top <= window.innerHeight - visibleTop - 16
+    ? heading
+    : scrollTarget;
+  window.scrollTo({ top: window.scrollY + anchor.getBoundingClientRect().top - visibleTop, behavior: "smooth" });
   if (typeof target.focus === "function") target.focus({ preventScroll: true });
 }
 
