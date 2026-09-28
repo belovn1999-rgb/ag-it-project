@@ -2734,3 +2734,104 @@
   margin-right: var(--plot-right, 18px);
   text-align: center;
 }
+
+/* ---- Turnkey comparison (2026-09-28) --------------------------------------- */
+/* One median per market in its colour; dashed = the market's "pod klucz". */
+.mobileMarketMedian.isOtomoto { border-top-color: var(--market-otomoto); }
+.mobileMarketMedian.isMobile { border-top-color: var(--market-mobile); }
+.mobileMarketMedian.isBlocket { border-top-color: var(--market-blocket); }
+
+.mobileMarketMedian.isTurnkey {
+  border-top-style: dashed;
+}
+
+.mobileMarketKeyTick.isMedian.isOtomoto { color: var(--market-otomoto); }
+.mobileMarketKeyTick.isMedian.isMobile { color: var(--market-mobile); }
+.mobileMarketKeyTick.isMedian.isBlocket { color: var(--market-blocket); }
+
+.mobileMarketKeyTick.isTurnkey {
+  font-style: italic;
+}
+
+/* "~ 71 200 zł pod klucz*" under a foreign price. */
+.mobileMarketTurnkeyNote {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-style: normal;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mobileMarketStatsRow b .mobileMarketTurnkeyNote {
+  color: var(--color-muted);
+}
+
+.mobileMarketRates {
+  margin: var(--space-sm) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  line-height: 1.5;
+}
+
+/* Footnote and conclusion under the chart. */
+.mobileMarketSummaryCard {
+  display: grid;
+  gap: var(--space-md);
+}
+
+.mobileMarketFootnote {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  line-height: 1.55;
+}
+
+.mobileMarketConclusion {
+  display: grid;
+  gap: 4px;
+  border-left: 4px solid var(--color-brand);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-tint);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.mobileMarketConclusion strong {
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mobileMarketConclusion p {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+/* List report buttons beside the table title. */
+.mobileMarketTableTools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-xs) var(--space-sm);
+}
+
+.mobileMarketTableTools > span {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.mobileMarketTableTools .mobileMarketImportClear {
+  min-height: 32px;
+  padding: 0 var(--space-sm);
+  font-size: var(--text-xs);
+}
+
+.isReportList [data-report-list-hide] {
+  display: none !important;
+}

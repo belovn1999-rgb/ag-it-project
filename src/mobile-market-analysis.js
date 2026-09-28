@@ -44,6 +44,17 @@
       marketPickerLast: "Co najmniej jeden rynek musi zostać wybrany.",
       favoriteRemove: "Usuń z ulubionych",
       statsHeading: "Statystyki",
+      turnkeyShort: "pod klucz*",
+      ratesLine: "Kurs jak w kalkulatorze AUTOGOOD: {rates}.",
+      colorsTurnkey: "Kolory porównują to, co klient płaci w Polsce: cenę pod klucz* dla aut z zagranicy i cenę ogłoszenia dla aut z Polski.",
+      turnkeyFootnote: "Cena „pod klucz” jest orientacyjna: cena brutto z ogłoszenia + średni koszt transportu ({transport} netto) i oględzin ({inspection} netto), akcyza według rodzaju i pojemności silnika oraz usługa AUTOGOOD (2 250 zł + 1% wartości auta, z VAT), jak w naszym kalkulatorze. Dokładną wycenę konkretnego auta przygotuje Twój opiekun AUTOGOOD.",
+      conclusionHeading: "Wniosek",
+      conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce — przy mniejszym ryzyku, zwykle lepszym stanie i udokumentowanej historii serwisowej.",
+      conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce — w zamian zwykle mniejsze ryzyko, lepszy stan i udokumentowana historia serwisowa.",
+      countryGermany: "z Niemiec",
+      countrySweden: "ze Szwecji",
+      listScreenshotButton: "Kopiuj listę",
+      listPdfButton: "Lista PDF",
       sourcesPicker: "Analiza cen z portali:",
       sourceOn: "{source}: widoczne na wykresie — kliknij, aby ukryć",
       sourceOff: "{source}: ukryte — kliknij, aby pokazać",
@@ -236,6 +247,17 @@
       marketPickerLast: "Должен остаться выбран хотя бы один рынок.",
       favoriteRemove: "Убрать из избранного",
       statsHeading: "Статистика",
+      turnkeyShort: "под ключ*",
+      ratesLine: "Курс как в калькуляторе AUTOGOOD: {rates}.",
+      colorsTurnkey: "Цвета сравнивают то, что клиент платит в Польше: цену под ключ* для авто из-за границы и цену объявления для авто из Польши.",
+      turnkeyFootnote: "Цена «под ключ» ориентировочная: брутто-цена объявления + средняя доставка ({transport} нетто) и осмотр ({inspection} нетто), акциз по типу и объёму двигателя и услуга AUTOGOOD (2 250 zł + 1% стоимости авто, с VAT), как в нашем калькуляторе. Точный расчёт конкретного авто подготовит ваш менеджер AUTOGOOD.",
+      conclusionHeading: "Вывод",
+      conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше, — при меньших рисках, обычно лучшем состоянии и подтверждённой сервисной истории.",
+      conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше, — зато обычно меньше рисков, лучше состояние и есть подтверждённая сервисная история.",
+      countryGermany: "из Германии",
+      countrySweden: "из Швеции",
+      listScreenshotButton: "Копировать список",
+      listPdfButton: "Список PDF",
       sourcesPicker: "Анализ цен на порталах:",
       sourceOn: "{source}: показан на графике — нажми, чтобы скрыть",
       sourceOff: "{source}: скрыт — нажми, чтобы показать",
@@ -470,7 +492,8 @@
 
   // One SEK in PLN (Walutomat, see blocket-search.js).
   function sekPlnRate() {
-    return window.AUTOGOOD_BLOCKET?.sekPlnRate?.() || 0.385;
+    // The calculator's margin applies to SEK too (turnkey-estimate.js).
+    return window.AUTOGOOD_TURNKEY?.currentRates?.().sek || window.AUTOGOOD_BLOCKET?.sekPlnRate?.() || 0.385;
   }
 
   // Any offer price in PLN, and a PLN amount in any of the three currencies.
@@ -2084,6 +2107,26 @@
       price: Math.round(inDisplayCurrency(listing)),
       suspect: true,
     }));
+    // "~ pod klucz" of every foreign offer: calculator formula, average
+    // transport and inspection, excise by the offer's engine (turnkey-estimate.js).
+    const turnkey = window.AUTOGOOD_TURNKEY;
+    const rates = turnkey?.currentRates?.() || { eur: exchangeRate() || EUR_PLN_FALLBACK_RATE, sek: sekPlnRate() };
+    [...marketListings, ...suspectListings].forEach((listing) => {
+      if (listing.source === "otomoto" || !turnkey) return;
+      listing.turnkeyPln = turnkey.turnkeyAverage({
+        price: listing.originalPrice,
+        currency: listing.originalCurrency || SOURCE_CURRENCY[listing.source],
+        fuel: listing.fuel,
+        title: listing.title,
+        displacementCcm: listing.displacementCcm,
+      }, filters, rates).total;
+    });
+    // A price as the marketplace shows it: PLN, EUR, or SEK with its EUR value.
+    const nativePrice = (value, source) => {
+      const currency = SOURCE_CURRENCY[source] || "EUR";
+      const text = formatMarketPrice(value, currency);
+      return currency === "SEK" ? `${text} · ${formatMarketPrice(convertPrice(value, "SEK", "EUR"), "EUR")}` : text;
+    };
     const hasListings = marketListings.length >= 3;
     const onlyOtomoto = shownSources.length === 1 && shownSources[0] === "otomoto";
     const mixedSources = shownSources.length > 1;
@@ -2092,6 +2135,7 @@
     const listingKey = (listing) => listing.url || `${listing.source}-${listing.id}`;
     let statsContent = "";
     let offersContent = "";
+    let summaryContent = "";
     let marketContent = `
       <section class="mobileMarketEmpty">
         <strong>${escapeMarketHtml(c.emptyHeading)}</strong>
@@ -2101,6 +2145,31 @@
 
     if (hasListings) {
       const statistics = marketStatistics(marketListings);
+      // Several markets: one median per market in its own colour, and for a
+      // foreign market also its median "pod klucz" (dashed).
+      const marketMedians = [];
+      if (shownSources.length > 1) {
+        const scaleMin = Math.min(...marketListings.map((listing) => listing.price));
+        const scaleMax = Math.max(...marketListings.map((listing) => listing.price));
+        shownSources.forEach((source) => {
+          const own = marketListings.filter((listing) => listing.source === source);
+          if (!own.length) return;
+          const name = source === "otomoto" ? c.marketOtomoto : source === "blocket" ? c.marketBlocket : c.marketMobile;
+          marketMedians.push({ source, value: marketStatistics(own).median, label: `${c.median} ${name}` });
+          const turnkeyPrices = own.map((listing) => listing.turnkeyPln).filter(Boolean);
+          if (turnkeyPrices.length >= 3) {
+            const turnkeyMedian = convertPrice(percentile([...turnkeyPrices].sort((left, right) => left - right), 0.5), "PLN", displayCurrency);
+            if (turnkeyMedian <= scaleMax * 1.001) marketMedians.push({ source, value: turnkeyMedian, turnkey: true, label: `${name} ${c.turnkeyShort}` });
+          }
+        });
+        marketMedians.forEach((line) => {
+          line.position = verticalMarketPosition(Math.min(Math.max(line.value, scaleMin), scaleMax), scaleMin, scaleMax);
+        });
+        // Labels a little apart when two medians are close.
+        [...marketMedians].sort((left, right) => left.position - right.position).forEach((line, index, sorted) => {
+          line.labelPosition = index && line.position - sorted[index - 1].labelPosition < 4.5 ? sorted[index - 1].labelPosition + 4.5 : line.position;
+        });
+      }
       const domainMinimum = statistics.min;
       const domainMaximum = statistics.max;
       const middleHighPosition = verticalMarketPosition(statistics.middleHigh, domainMinimum, domainMaximum);
@@ -2252,6 +2321,7 @@
                 ${listing.subtitle ? `<i class="mobileMarketPointSubtitle">${escapeMarketHtml(listing.subtitle)}</i>` : ""}
                 <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
                 ${details ? `<em>${escapeMarketHtml(details)}</em>` : ""}
+                ${listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</em>` : ""}
                 <b class="is${sourceClass(listing.source)}">${escapeMarketHtml(sourceName(listing.source))}${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
               </span>`;
           const attributes = `class="mobileMarketPoint is${sourceClass(listing.source)}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
@@ -2332,30 +2402,78 @@
       const sourceCount = (source) => cleaned[source].length;
       const axisCaption = chartAxis === "mileage" ? c.axisMileageCaption : chartAxis === "year" ? c.axisYearCaption : c.axisRankCaption;
 
-      // One row per marketplace shown; with several, each value is coloured
-      // against the other rows (higher green, lower red).
-      const statRows = shownSources.length > 1
-        ? shownSources.map((source) => ({ source, stats: marketStatistics(marketListings.filter((listing) => listing.source === source)) }))
-          .filter((row) => row.stats.count)
-        : [{ source: shownSources[0] || "", stats: statistics }];
+      // One row per marketplace shown. Foreign markets show their own
+      // currency with "~ pod klucz" in PLN under it; with several markets the
+      // colours compare what the client pays in Poland (turnkey for foreign
+      // offers, the price itself for Polish ones): higher green, lower red.
+      const statsOf = (list, priceOf) => marketStatistics(list.map((listing) => ({ ...listing, price: priceOf(listing) })));
+      const statRows = (shownSources.length > 1 ? shownSources : [shownSources[0] || ""]).map((source) => {
+        const own = marketListings.filter((listing) => !source || listing.source === source);
+        const currency = SOURCE_CURRENCY[source] || displayCurrency;
+        const foreign = source && source !== "otomoto" && own.some((listing) => listing.turnkeyPln);
+        const native = statsOf(own, (listing) => convertPrice(listing.originalPrice, listing.originalCurrency || currency, currency));
+        const turnkeyStats = foreign ? statsOf(own, (listing) => listing.turnkeyPln) : null;
+        const inPln = turnkeyStats || statsOf(own, (listing) => priceInPln(listing.originalPrice, listing.originalCurrency || currency));
+        return { source, stats: native, turnkeyStats, inPln };
+      }).filter((row) => row.stats.count);
+      const priceCell = (row, key) => {
+        const main = nativePrice(row.stats[key], row.source);
+        return row.turnkeyStats
+          ? `${escapeMarketHtml(main)}<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>`
+          : escapeMarketHtml(main);
+      };
+      const rangeCell = (row) => {
+        const main = `${nativePrice(row.stats.middleLow, row.source)} – ${nativePrice(row.stats.middleHigh, row.source)}`;
+        return row.turnkeyStats
+          ? `${escapeMarketHtml(main)}<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, "PLN"))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>`
+          : escapeMarketHtml(main);
+      };
       const statColumns = [
-        { label: c.count, value: (row) => row.count, text: (row) => String(row.count) },
-        { label: c.minimum, value: (row) => row.min, text: (row) => formatMarketPrice(row.min) },
-        { label: c.maximum, value: (row) => row.max, text: (row) => formatMarketPrice(row.max) },
-        { label: c.median, value: (row) => row.median, text: (row) => formatMarketPrice(row.median) },
-        { label: c.averagePrices, value: (row) => (row.middleLow + row.middleHigh) / 2, text: (row) => `${formatMarketPrice(row.middleLow)} – ${formatMarketPrice(row.middleHigh)}`, wide: true },
-        { label: c.middleOffers, value: (row) => row.middleCount, text: (row) => String(row.middleCount) },
+        { label: c.count, value: (row) => row.stats.count, html: (row) => escapeMarketHtml(String(row.stats.count)) },
+        { label: c.minimum, value: (row) => row.inPln.min, html: (row) => priceCell(row, "min") },
+        { label: c.maximum, value: (row) => row.inPln.max, html: (row) => priceCell(row, "max") },
+        { label: c.median, value: (row) => row.inPln.median, html: (row) => priceCell(row, "median") },
+        { label: c.averagePrices, value: (row) => (row.inPln.middleLow + row.inPln.middleHigh) / 2, html: rangeCell, wide: true },
+        { label: c.middleOffers, value: (row) => row.stats.middleCount, html: (row) => escapeMarketHtml(String(row.stats.middleCount)) },
       ];
       const compared = statRows.length > 1;
       const tone = (column, row) => {
         if (!compared) return "";
-        const values = statRows.map((item) => column.value(item.stats));
-        const value = column.value(row.stats);
+        const values = statRows.map((item) => column.value(item));
+        const value = column.value(row);
         if (Math.max(...values) === Math.min(...values)) return "";
         if (value === Math.max(...values)) return " isHigher";
         if (value === Math.min(...values)) return " isLower";
         return "";
       };
+      // Footnote and the conclusion for the client, from the numbers above:
+      // a foreign market's median "pod klucz" against the Polish median.
+      const polish = statRows.find((row) => row.source === "otomoto");
+      const foreignRows = statRows.filter((row) => row.turnkeyStats);
+      const conclusions = polish ? foreignRows.map((row) => {
+        const difference = polish.inPln.median - row.turnkeyStats.median;
+        const percent = Math.round((Math.abs(difference) / polish.inPln.median) * 100);
+        const country = row.source === "blocket" ? c.countrySweden : c.countryGermany;
+        return (difference > 0 ? c.conclusionCheaper : c.conclusionDearer)
+          .replace("{country}", country)
+          .replace("{amount}", formatMarketPrice(Math.abs(difference), "PLN"))
+          .replace("{percent}", String(percent));
+      }) : [];
+      if (foreignRows.length) {
+        summaryContent = `
+          <section class="mobileMarketCard mobileMarketSummaryCard" aria-label="${escapeMarketHtml(c.conclusionHeading)}" data-report-list-hide>
+            <p class="mobileMarketFootnote">* ${escapeMarketHtml(c.turnkeyFootnote
+              .replace("{transport}", formatMarketPrice(turnkey?.AVERAGE_TRANSPORT_NETTO || 2500, "PLN"))
+              .replace("{inspection}", formatMarketPrice(turnkey?.AVERAGE_INSPECTION_NETTO || 1500, "PLN")))}</p>
+            ${conclusions.length ? `<div class="mobileMarketConclusion"><strong>${escapeMarketHtml(c.conclusionHeading)}</strong>${conclusions.map((text) => `<p>${escapeMarketHtml(text)}</p>`).join("")}</div>` : ""}
+          </section>`;
+      }
+
+      // The rates used, only for the currencies being compared.
+      const rateParts = [
+        shownSources.some((source) => SOURCE_CURRENCY[source] === "EUR" || source === "blocket") ? `1 EUR = ${rates.eur.toFixed(2).replace(".", ",")} zł` : "",
+        shownSources.includes("blocket") ? `1 SEK = ${rates.sek.toFixed(4).replace(".", ",")} zł` : "",
+      ].filter(Boolean);
       statsContent = `
         <div class="mobileMarketStatsBody">
         ${filters.priceFrom || filters.priceTo ? `<p class="mobileMarketCaution">${escapeMarketHtml(c.priceFilterWarning)}</p>` : ""}
@@ -2371,10 +2489,14 @@
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
-                return `<b class="${column.wide ? "isWide" : ""}${tone(column, row)}" role="cell">${escapeMarketHtml(column.text(row.stats))}${note}</b>`;
+                return `<b class="${column.wide ? "isWide" : ""}${tone(column, row)}" role="cell">${column.html(row)}${note}</b>`;
               }).join("")}
             </div>`).join("")}
         </div>
+        ${rateParts.length || compared ? `<p class="mobileMarketRates">${escapeMarketHtml([
+          rateParts.length ? c.ratesLine.replace("{rates}", rateParts.join(" · ")) : "",
+          compared && statRows.some((row) => row.turnkeyStats) ? c.colorsTurnkey : "",
+        ].filter(Boolean).join(" "))}</p>` : ""}
         </div>`;
       marketContent = `
         <div class="mobileMarketChartHead">
@@ -2413,7 +2535,8 @@
         >
           <div class="mobileMarketAxis"></div>
           <div class="mobileMarketBoundary" style="top:${middleHighPosition}%"></div>
-          <div class="mobileMarketMedian" style="top:${medianPosition}%" aria-hidden="true"></div>
+          ${marketMedians.length ? "" : `<div class="mobileMarketMedian" style="top:${medianPosition}%" aria-hidden="true"></div>`}
+          ${marketMedians.map((line) => `<div class="mobileMarketMedian is${sourceClass(line.source)}${line.turnkey ? " isTurnkey" : ""}" style="top:${line.position}%" aria-hidden="true"></div>`).join("")}
           <div class="mobileMarketBoundary" style="top:${middleLowPosition}%"></div>
           ${scaleTicks.map((price) => {
             const position = verticalMarketPosition(price, domainMinimum, domainMaximum);
@@ -2431,7 +2554,9 @@
             return top ? `<span class="mobileMarketExtreme${side}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(c.priceMaxLabel)} · ${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : "";
           })()}
           ${Math.abs(middleHighPosition - medianPosition) >= 4 ? `<span class="mobileMarketKeyTick" style="top:${middleHighPosition}%">P75 · ${escapeMarketHtml(formatMarketPrice(statistics.middleHigh))}</span>` : ""}
-          <span class="mobileMarketKeyTick isMedian" style="top:${medianPosition}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(statistics.median))}</span>
+          ${marketMedians.length
+            ? marketMedians.map((line) => `<span class="mobileMarketKeyTick isMedian is${sourceClass(line.source)}${line.turnkey ? " isTurnkey" : ""}" style="top:${line.labelPosition}%">${escapeMarketHtml(line.label)} · ${escapeMarketHtml(formatMarketPrice(line.value))}</span>`).join("")
+            : `<span class="mobileMarketKeyTick isMedian" style="top:${medianPosition}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(statistics.median))}</span>`}
           ${Math.abs(middleLowPosition - medianPosition) >= 4 ? `<span class="mobileMarketKeyTick" style="top:${middleLowPosition}%">P25 · ${escapeMarketHtml(formatMarketPrice(statistics.middleLow))}</span>` : ""}
           <span class="mobileMarketTick isLimit" style="top:5%">${escapeMarketHtml(formatMarketPrice(domainMaximum))}</span>
           <span class="mobileMarketTick isLimit" style="top:95%">${escapeMarketHtml(formatMarketPrice(domainMinimum))}</span>
@@ -2451,7 +2576,11 @@
         <div class="mobileMarketTableBlock">
           <div class="mobileMarketTableHead">
             ${blockTitle("list", `${c.tableHeading} · ${marketListings.length + suspectListings.length}`)}
-            <span data-report-hide>${escapeMarketHtml(c.tableSortHint)}</span>
+            <div class="mobileMarketTableTools" data-report-hide>
+              <span>${escapeMarketHtml(c.tableSortHint)}</span>
+              <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-list-screenshot>${escapeMarketHtml(c.listScreenshotButton)}</button>
+              <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-list-pdf>${escapeMarketHtml(c.listPdfButton)}</button>
+            </div>
           </div>
           <div class="mobileMarketTableScroll">
             <table class="mobileMarketTable">
@@ -2470,7 +2599,7 @@
                     <td class="mobileMarketTableTitle">${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}</td>
                     <td class="isNum">${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
                     <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} km` : "—")}</td>
-                    <td class="isNum"><b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b></td>
+                    <td class="isNum"><b>${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</b>${listing.turnkeyPln ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
                     <td><span class="mobileMarketSourceCell"><span class="mobileMarketSourceTag is${sourceClass(listing.source)}"><i aria-hidden="true"></i>${escapeMarketHtml(sourceName(listing.source))}</span>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : ""}</span></td>
                   </tr>`).join("")}
               </tbody>
@@ -2533,22 +2662,24 @@
         </section>
 
         ${statsContent ? `
-          <section class="mobileMarketCard mobileMarketStatsCard" aria-label="${escapeMarketHtml(c.statsHeading)}">
+          <section class="mobileMarketCard mobileMarketStatsCard" aria-label="${escapeMarketHtml(c.statsHeading)}" data-report-list-hide>
             ${blockTitle("percent", c.statsHeading)}
             ${statsContent}
           </section>` : ""}
 
-        <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}">
+        <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
           ${hasListings ? blockTitle("gauge", c.distributionHeading) : ""}
           ${marketContent}
         </section>
+
+        ${summaryContent}
 
         ${offersContent ? `
           <section class="mobileMarketCard mobileMarketOffersCard" aria-label="${escapeMarketHtml(c.tableHeading)}" data-report-hide-copy>
             ${offersContent}
           </section>` : ""}
 
-        <div data-report-hide-copy>${priceHistoryHtml(historyEntry, reportSources)}</div>
+        <div data-report-hide-copy data-report-list-hide>${priceHistoryHtml(historyEntry, reportSources)}</div>
       </article>`;
     window.AUTOGOOD_PREPARE_BOOKMARKLETS?.();
   }
@@ -2609,7 +2740,9 @@
     // (favourites, buttons) never changes while it is prepared.
     const live = analysisContent.querySelector(".mobileMarketAnalysisPanel");
     const stage = document.createElement("div");
-    stage.className = `isReportCapture ${mode === "copy" ? "isReportCopy" : "isReportPdf"}`;
+    const listMode = mode.startsWith("list");
+    // The list report: the search (which car) and the offer table only.
+    stage.className = `isReportCapture ${mode === "copy" ? "isReportCopy" : "isReportPdf"}${listMode ? " isReportList" : ""}`;
     stage.setAttribute("aria-hidden", "true");
     stage.style.cssText = `position:fixed;top:0;left:-100000px;width:${live.getBoundingClientRect().width}px;pointer-events:none;`;
     const root = live.cloneNode(true);
@@ -2636,17 +2769,22 @@
           return [rect.top, rect.bottom];
         });
       reportFontCss ??= await pageFontCss();
-      const pixelRatio = Math.min(2, Math.max(1.5, window.devicePixelRatio || 1));
+      // A long list as one picture: kept within the browser's canvas size.
+      // Never below 1:1 (readable); sharper when the page is not too tall.
+      const pixelRatio = Math.max(1, Math.min(2, Math.max(1.5, window.devicePixelRatio || 1), 30000 / Math.max(1, box.height)));
       const canvas = await window.htmlToImage.toCanvas(root, {
         pixelRatio,
         backgroundColor: "#ffffff",
         fontEmbedCSS: reportFontCss || undefined,
+        // html-to-image would shrink a tall list to 16 384 px; Chrome draws more.
+        skipAutoScale: true,
         width: Math.ceil(box.width),
         height: Math.ceil(box.height),
         // Hidden parts are not copied at all: that is most of the work.
         filter: (node) => !(node instanceof Element) || !(
           node.hasAttribute("data-report-hide")
           || (mode === "copy" && node.hasAttribute("data-report-hide-copy"))
+          || (listMode && node.hasAttribute("data-report-list-hide"))
           || node.classList.contains("mobileMarketPointTooltip")
         ),
       });
@@ -2656,12 +2794,12 @@
     }
   }
 
-  async function copyReportScreenshot(button) {
+  async function copyReportScreenshot(button, mode = "copy") {
     const c = copy();
     button.disabled = true;
     setAnalysisStatus(c.screenshotWorking);
     try {
-      const { canvas } = await captureReport("copy");
+      const { canvas } = await captureReport(mode);
       const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
       if (!blob) throw new Error("png");
       if (navigator.clipboard?.write && window.ClipboardItem) {
@@ -2693,13 +2831,13 @@
 
   // The whole analysis as an A4 PDF: blocks one after another, cut between
   // blocks or table rows, every offer (dot, table row) a clickable link.
-  async function downloadReportPdf(button) {
+  async function downloadReportPdf(button, mode = "pdf") {
     const c = copy();
     button.disabled = true;
     setAnalysisStatus(c.pdfWorking);
     try {
       await loadScript("./vendor/pdf-lib.min.js", "PDFLib");
-      const { canvas, width, height, pixelRatio, links, breaks } = await captureReport("pdf");
+      const { canvas, width, height, pixelRatio, links, breaks } = await captureReport(mode);
       const { PDFDocument, PDFName, PDFString } = window.PDFLib;
       const pdf = await PDFDocument.create();
       const pageWidth = 595.28;
@@ -2745,7 +2883,7 @@
       }
       const bytes = await pdf.save();
       const vehicle = [activeAnalysis?.filters?.brand, activeAnalysis?.filters?.model].filter(Boolean).join(" ");
-      const fileName = `AUTOGOOD analiza rynku ${vehicle} ${new Date().toISOString().slice(0, 10)}.pdf`
+      const fileName = `AUTOGOOD ${mode === "list-pdf" ? "lista ofert" : "analiza rynku"} ${vehicle} ${new Date().toISOString().slice(0, 10)}.pdf`
         .replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
       const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
       const anchor = document.createElement("a");
@@ -2980,6 +3118,16 @@
       setHistoryPinned(removeFavorite.dataset.mobileMarketFavoriteRemove, false);
       if (activeAnalysis) renderAnalysis();
       else renderFavoritesPage();
+      return;
+    }
+    const listShot = event.target.closest("[data-mobile-market-list-screenshot]");
+    if (listShot) {
+      copyReportScreenshot(listShot, "list-copy");
+      return;
+    }
+    const listPdf = event.target.closest("[data-mobile-market-list-pdf]");
+    if (listPdf) {
+      downloadReportPdf(listPdf, "list-pdf");
       return;
     }
     const pdfButton = event.target.closest("[data-mobile-market-pdf]");
@@ -3257,7 +3405,7 @@
     .then((response) => (response.ok ? response.json() : null))
     .then((rates) => {
       // The calculator's live rate (turnkey-estimate.js) wins over the file.
-      if (rates && !window.AUTOGOOD_EXCHANGE_RATES?.live) window.AUTOGOOD_EXCHANGE_RATES = rates;
+      if (rates && !window.AUTOGOOD_EXCHANGE_RATES?.calculator) window.AUTOGOOD_EXCHANGE_RATES = rates;
     })
     .catch(() => {
       // Without a rate the budget line is simply not shown.
