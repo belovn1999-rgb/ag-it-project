@@ -57,10 +57,7 @@
       trendTitle: "Mediana ceny w czasie",
       trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
       adPrice: "cena w ogłoszeniu",
-      turnkeyAxisNote: "Auta z zagranicy są na wykresie w cenie na gotowo* (z transportem, oględzinami, akcyzą i usługą AUTOGOOD), auta z Polski — w cenie ogłoszenia.",
-      ratesLine: "Kurs jak w kalkulatorze AUTOGOOD: {rates}.",
-      colorsTurnkey: "Kolory porównują to, co klient płaci w Polsce: cenę na gotowo* dla aut z zagranicy i cenę ogłoszenia dla aut z Polski.",
-      turnkeyFootnote: "Cena „na gotowo” jest orientacyjna: cena brutto z ogłoszenia + średni koszt transportu ({transport} netto) i oględzin ({inspection} netto), akcyza według rodzaju i pojemności silnika oraz usługa AUTOGOOD (2 250 zł + 1% wartości auta, z VAT), jak w naszym kalkulatorze. Dokładną wycenę konkretnego auta przygotuje Twój opiekun AUTOGOOD.",
+      turnkeyFootnote: "Cena „na gotowo” składa się z: ceny brutto z ogłoszenia + średniego kosztu transportu, oględzin, akcyzy według rodzaju i pojemności silnika oraz usługi AUTOGOOD. Żeby poznać dokładną wycenę Twojej oferty, skontaktuj się z nami bezpośrednio.",
       conclusionHeading: "Wniosek",
       conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce — przy mniejszym ryzyku, zwykle lepszym stanie i udokumentowanej historii serwisowej.",
       conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce — w zamian zwykle mniejsze ryzyko, lepszy stan i udokumentowana historia serwisowa.",
@@ -145,7 +142,7 @@
       trendLegend: "Mediana ceny",
       curveLegend: "Krzywa cen",
       hiddenNoAxis: "Bez tej wartości, więc poza wykresem: {count} {offers}.",
-      tableSource: "Źródło",
+      tableSource: "Rynek",
       tableLink: "Link ogłoszenia",
       sourceEmpty: "brak danych",
       fetchMobile: "Pobierz z mobile.de ↗",
@@ -204,7 +201,7 @@
       summaryVehicle: "Auto i sprzedawca",
       summaryParameters: "Parametry",
       summaryEquipment: "Wyposażenie",
-      priceHistorySource: "Źródło",
+      priceHistorySource: "Rynek",
       searchHeading: "Parametry poszukiwania",
       analysisCardHeading: "Analiza i rozkład cen",
       openSearches: "Otwórz wyszukiwania",
@@ -222,9 +219,9 @@
       offerForms: ["oferta", "oferty", "ofert"],
       offerFormsAcc: ["ofertę", "oferty", "ofert"],
       emptyHeading: "Brak realnych ofert do analizy",
-      emptyDescription: "Kliknij „Odśwież dane”, aby pobrać ceny z otomoto.pl, albo pobierz oferty z mobile.de zakładką AUTOGOOD (zakładka jest na stronie głównej).",
+      emptyDescription: "Kliknij „Odśwież dane”, aby pobrać oferty z wybranych portali.",
       missingVehicle: "Wybierz markę i model przed uruchomieniem analizy rynku.",
-      invalidData: "Źródło nie zwróciło co najmniej 3 poprawnych ogłoszeń mobile.de.",
+      invalidData: "Wybrane portale nie zwróciły co najmniej 3 poprawnych ogłoszeń.",
       preparing: "Przygotowuję analizę rynku…",
       mileage: "Przebieg",
       price: "Cena",
@@ -269,10 +266,7 @@
       trendTitle: "Медиана цены во времени",
       trendNeedsTwo: "График появится после второго замера цен.",
       adPrice: "цена в объявлении",
-      turnkeyAxisNote: "Авто из-за границы стоят на графике по цене под ключ* (с доставкой, осмотром, акцизом и услугой AUTOGOOD), авто из Польши — по цене объявления.",
-      ratesLine: "Курс как в калькуляторе AUTOGOOD: {rates}.",
-      colorsTurnkey: "Цвета сравнивают то, что клиент платит в Польше: цену под ключ* для авто из-за границы и цену объявления для авто из Польши.",
-      turnkeyFootnote: "Цена «под ключ» ориентировочная: брутто-цена объявления + средняя доставка ({transport} нетто) и осмотр ({inspection} нетто), акциз по типу и объёму двигателя и услуга AUTOGOOD (2 250 zł + 1% стоимости авто, с VAT), как в нашем калькуляторе. Точный расчёт конкретного авто подготовит ваш менеджер AUTOGOOD.",
+      turnkeyFootnote: "Цена «под ключ» складывается из цены брутто в объявлении, средней стоимости доставки и осмотра, акциза по типу и объёму двигателя, а также услуги AUTOGOOD. Чтобы узнать точную стоимость вашего предложения, свяжитесь с нами напрямую.",
       conclusionHeading: "Вывод",
       conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше, — при меньших рисках, обычно лучшем состоянии и подтверждённой сервисной истории.",
       conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше, — зато обычно меньше рисков, лучше состояние и есть подтверждённая сервисная история.",
@@ -357,7 +351,7 @@
       trendLegend: "Медиана цены",
       curveLegend: "Кривая цен",
       hiddenNoAxis: "Объявлений без этого значения нет на графике: {count}.",
-      tableSource: "Источник",
+      tableSource: "Рынок",
       tableLink: "Ссылка",
       sourceEmpty: "нет данных",
       fetchMobile: "Загрузить с mobile.de ↗",
@@ -416,7 +410,7 @@
       summaryVehicle: "Авто и продавец",
       summaryParameters: "Параметры",
       summaryEquipment: "Оснащение",
-      priceHistorySource: "Источник",
+      priceHistorySource: "Рынок",
       searchHeading: "Параметры поиска",
       analysisCardHeading: "Анализ и распределение цен",
       openSearches: "Открыть поиск",
@@ -434,9 +428,9 @@
       offerForms: ["объявление", "объявления", "объявлений"],
       offerFormsAcc: ["объявление", "объявления", "объявлений"],
       emptyHeading: "Нет реальных объявлений для анализа",
-      emptyDescription: "Нажми «Обновить данные», чтобы загрузить цены с otomoto.pl, или загрузи объявления с mobile.de закладкой AUTOGOOD (закладка на главной странице).",
+      emptyDescription: "Нажми «Обновить данные», чтобы загрузить объявления с выбранных порталов.",
       missingVehicle: "Выберите марку и модель перед запуском анализа рынка.",
-      invalidData: "Источник не вернул минимум 3 корректных объявления mobile.de.",
+      invalidData: "Выбранные порталы не вернули минимум 3 корректных объявления.",
       preparing: "Подготавливаю анализ рынка…",
       mileage: "Пробег",
       price: "Цена",
@@ -911,22 +905,22 @@
     return result?.listings?.length ? result : null;
   }
 
-  // Both marketplaces at once: Otomoto through the reader proxy, Mobile.de
-  // through the importer. Either one may fail without stopping the other.
+  // Fetch only selected markets; one failing market does not stop the others.
   const otomotoProvider = {
     id: "otomoto",
     lastSources: ["otomoto"],
     async getListings({ filters }) {
       const c = copy();
-      setAnalysisStatus(c.otomotoFetching);
+      setAnalysisStatus(c.preparing);
+      const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
       const [otomoto, mobile, blocket] = await Promise.allSettled([
-        fetchOtomotoListings(filters, (page, pages) => {
+        selected.includes("otomoto") ? fetchOtomotoListings(filters, (page, pages) => {
           setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
-        }),
-        fetchMobileDeSample(filters),
-        fetchBlocketListings(filters),
+        }) : null,
+        selected.includes("mobile") ? fetchMobileDeSample(filters) : null,
+        selected.includes("blocket") ? fetchBlocketListings(filters) : null,
       ]);
-      const otomotoListings = otomoto.status === "fulfilled" ? otomoto.value.listings : [];
+      const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const mobileListings = (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal }));
       const blocketResult = blocket.status === "fulfilled" ? blocket.value : null;
@@ -1260,9 +1254,10 @@
     const listHtml = marketHistory.filter((entry) => !entry.pinned).map((entry) => {
       const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
       const meta = historyMeta(entry.filters);
-      const ready = entry.listings.length >= 3;
+      const selectedCount = entry.listings.filter((listing) => chartSources[listingSource(listing)]).length;
+      const ready = selectedCount >= 3;
       const status = ready
-        ? withCount(c.historyReady, entry.listings.length)
+        ? withCount(c.historyReady, selectedCount)
         : c.historyWaiting;
       return `
         <article class="mobileMarketHistoryItem${ready ? " isReady" : ""}${entry.pinned ? " isPinned" : ""}${editingHistoryId === entry.id ? " isSelected" : ""}">
@@ -1424,10 +1419,7 @@
       if (input) input.checked = key === "roadworthy" ? filters[key] !== false : Boolean(filters[key]);
     });
     if (typeof renderManualOptions === "function") renderManualOptions(true);
-    // An entry remembers the markets it was compared on.
-    if (Array.isArray(filters.markets) && filters.markets.length) {
-      setChartSources(Object.fromEntries(MARKET_SOURCES.map((source) => [source, filters.markets.includes(source)])));
-    }
+    // The current choice on page 1 governs saved searches too.
   }
 
   function toggleCurrentHistoryFavorite() {
@@ -1533,7 +1525,7 @@
       filterKey: vehicleDataKey(entry.filters),
     } : null;
     activeAnalysis = {
-      filters: entry.filters,
+      filters: { ...entry.filters, markets: MARKET_SOURCES.filter((source) => chartSources[source]) },
       listings: entry.listings,
       searchUrl,
       providerId: entry.listings.length >= 3 ? "history" : "empty",
@@ -1789,10 +1781,11 @@
 
   // HTML: flag + latest median per market.
   function latestPriceLabel(entry) {
-    const last = entry.priceLog?.[entry.priceLog.length - 1];
-    if (!last) return "";
-    return MARKET_SOURCES.filter((source) => last[source])
-      .map((source) => `${marketBadge(source, "flagOnly")} ${escapeMarketHtml(formatPlainPrice(last[source].median, last[source].currency))}`)
+    const log = entry.priceLog || [];
+    return MARKET_SOURCES.filter((source) => chartSources[source])
+      .map((source) => ({ source, data: [...log].reverse().find((point) => point[source])?.[source] }))
+      .filter(({ data }) => data)
+      .map(({ source, data }) => `${marketBadge(source, "flagOnly")} ${escapeMarketHtml(formatPlainPrice(data.median, data.currency))}`)
       .join(" · ");
   }
 
@@ -1894,6 +1887,10 @@
 
   function setChartSources(next) {
     chartSources = { otomoto: Boolean(next.otomoto), mobile: Boolean(next.mobile), blocket: Boolean(next.blocket) };
+    if (activeAnalysis) activeAnalysis.filters = {
+      ...activeAnalysis.filters,
+      markets: MARKET_SOURCES.filter((source) => chartSources[source]),
+    };
     try {
       localStorage.setItem(MARKETS_STORAGE_KEY, JSON.stringify(chartSources));
     } catch {
@@ -1904,7 +1901,7 @@
 
   // Every measurement of this search, newest first, one row per marketplace,
   // each value compared with the previous measurement of that marketplace.
-  function priceHistoryHtml(entry, sources = MARKET_SOURCES) {
+  function priceHistoryHtml(entry, sources = MARKET_SOURCES.filter((source) => chartSources[source])) {
     const c = copy();
     const log = entry?.priceLog || [];
     if (!log.length) return "";
@@ -1946,11 +1943,12 @@
           </tr>`);
       });
     });
+    if (!groups.some((rows) => rows.length)) return "";
     return `
       <section class="mobileMarketCard mobileMarketPriceHistory" aria-label="${escapeMarketHtml(c.priceHistoryHeading)}">
         ${blockTitle("calendar", c.priceHistoryHeading)}
         <div class="mobileMarketTableScroll">
-          <table class="mobileMarketTable">
+          <table class="mobileMarketTable mobileMarketHistoryTable">
             <thead><tr>
               <th scope="col">${escapeMarketHtml(c.priceHistoryDate)}</th>
               <th scope="col">${escapeMarketHtml(c.priceHistorySource)}</th>
@@ -1977,7 +1975,8 @@
 
   function medianTrendHtml(entry) {
     const c = copy();
-    const log = (entry.priceLog || []).filter((point) => MARKET_SOURCES.some((source) => point[source]));
+    const selected = MARKET_SOURCES.filter((source) => chartSources[source]);
+    const log = (entry.priceLog || []).filter((point) => selected.some((source) => point[source]));
     if (log.length < 2) return `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.trendNeedsTwo)}</p>`;
     const valueOf = (point, source) => {
       const item = point[source];
@@ -1989,7 +1988,7 @@
       }
       return priceInPln(item.median, item.currency || SOURCE_CURRENCY[source]);
     };
-    const series = MARKET_SOURCES.map((source) => ({
+    const series = selected.map((source) => ({
       source,
       points: log.map((point, index) => ({ index, value: valueOf(point, source) })).filter((item) => Number.isFinite(item.value)),
     })).filter((line) => line.points.length);
@@ -2037,7 +2036,7 @@
         <p>${escapeMarketHtml(c.priceHistoryIntro)}</p>
         ${favorites.length ? `
           <div class="mobileMarketPriceHistoryPicker" role="group" aria-label="${escapeMarketHtml(c.favoritesHeading)}">
-            ${favorites.map((item) => `<button class="mobileMarketImportClear${item.id === priceHistoryId ? " isPrimary" : ""}" type="button" data-price-history-pick="${escapeMarketHtml(item.id)}" aria-pressed="${item.id === priceHistoryId ? "true" : "false"}">★ ${escapeMarketHtml(title(item))} · ${(item.priceLog || []).length}</button>`).join("")}
+            ${favorites.map((item) => `<button class="mobileMarketImportClear${item.id === priceHistoryId ? " isPrimary" : ""}" type="button" data-price-history-pick="${escapeMarketHtml(item.id)}" aria-pressed="${item.id === priceHistoryId ? "true" : "false"}">★ ${escapeMarketHtml(title(item))} · ${(item.priceLog || []).filter((point) => MARKET_SOURCES.some((source) => chartSources[source] && point[source])).length}</button>`).join("")}
           </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.priceHistoryNoFavorites)}</p>`}
       </section>
       ${entry ? `
@@ -2303,7 +2302,7 @@
     });
     const availableSources = MARKET_SOURCES.filter((source) => cleaned[source].length);
     const pickedSources = availableSources.filter((source) => chartSources[source]);
-    const shownSources = pickedSources.length ? pickedSources : availableSources;
+    const shownSources = pickedSources;
     // One chart, one currency: a marketplace alone in its own currency,
     // several together in PLN (the client pays in Poland).
     // Always PLN: Polish offers at their price, foreign ones "na gotowo"
@@ -2362,7 +2361,7 @@
       <section class="mobileMarketEmpty">
         <strong>${escapeMarketHtml(c.emptyHeading)}</strong>
         <p>${escapeMarketHtml(c.emptyDescription)}</p>
-        <button class="mobileMarketSourceButton isMobile isFetch" type="button" data-mobile-market-fetch-mobile><img class="agBrandMark" src="${BRAND_MARKS.mobile}" alt="" />${escapeMarketHtml(c.fetchMobile)}</button>
+        ${chartSources.mobile ? `<button class="mobileMarketSourceButton isMobile isFetch" type="button" data-mobile-market-fetch-mobile><img class="agBrandMark" src="${BRAND_MARKS.mobile}" alt="" />${escapeMarketHtml(c.fetchMobile)}</button>` : ""}
       </section>`;
 
     if (hasListings) {
@@ -2686,21 +2685,12 @@
           .replace("{amount}", formatMarketPrice(Math.abs(difference), "PLN"))
           .replace("{percent}", String(percent));
       }) : [];
-      if (foreignRows.length) {
+      if (conclusions.length) {
         summaryContent = `
           <section class="mobileMarketCard mobileMarketSummaryCard" aria-label="${escapeMarketHtml(c.conclusionHeading)}" data-report-list-hide>
-            <p class="mobileMarketFootnote">* ${escapeMarketHtml(c.turnkeyFootnote
-              .replace("{transport}", formatMarketPrice(turnkey?.AVERAGE_TRANSPORT_NETTO || 2500, "PLN"))
-              .replace("{inspection}", formatMarketPrice(turnkey?.AVERAGE_INSPECTION_NETTO || 1500, "PLN")))}</p>
-            ${conclusions.length ? `<div class="mobileMarketConclusion"><strong>${escapeMarketHtml(c.conclusionHeading)}</strong>${conclusions.map((text) => `<p>${escapeMarketHtml(text)}</p>`).join("")}</div>` : ""}
+            <div class="mobileMarketConclusion"><strong>${escapeMarketHtml(c.conclusionHeading)}</strong>${conclusions.map((text) => `<p>${escapeMarketHtml(text)}</p>`).join("")}</div>
           </section>`;
       }
-
-      // The rates used, only for the currencies being compared.
-      const rateParts = [
-        shownSources.some((source) => SOURCE_CURRENCY[source] === "EUR" || source === "blocket") ? `1 EUR = ${rates.eur.toFixed(2).replace(".", ",")} zł` : "",
-        shownSources.includes("blocket") ? `1 SEK = ${rates.sek.toFixed(4).replace(".", ",")} zł` : "",
-      ].filter(Boolean);
       statsContent = `
         <div class="mobileMarketStatsBody">
         ${filters.priceFrom || filters.priceTo ? `<p class="mobileMarketCaution">${escapeMarketHtml(c.priceFilterWarning)}</p>` : ""}
@@ -2720,10 +2710,6 @@
               }).join("")}
             </div>`).join("")}
         </div>
-        ${rateParts.length || compared ? `<p class="mobileMarketRates">${escapeMarketHtml([
-          rateParts.length ? c.ratesLine.replace("{rates}", rateParts.join(" · ")) : "",
-          compared && statRows.some((row) => row.turnkeyStats) ? c.colorsTurnkey : "",
-        ].filter(Boolean).join(" "))}</p>` : ""}
         </div>`;
       marketContent = `
         <div class="mobileMarketChartHead">
@@ -2795,7 +2781,7 @@
           <span class="mobileMarketXCaption">${escapeMarketHtml(axisCaption)}</span>
         </div>
 
-          ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">${escapeMarketHtml(c.turnkeyAxisNote)}</p>` : ""}
+          ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">* ${escapeMarketHtml(c.turnkeyFootnote)}</p>` : ""}
           ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}
           ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.hiddenNoAxis, hiddenByAxis))}</p>` : ""}
 
@@ -2811,7 +2797,7 @@
             </div>
           </div>
           <div class="mobileMarketTableScroll">
-            <table class="mobileMarketTable">
+            <table class="mobileMarketTable mobileMarketOffersTable">
               <thead>
                 <tr>
                   <th scope="col" class="isNum mobileMarketRowNumber">#</th>
@@ -2834,7 +2820,7 @@
                       ? `<b class="mobileMarketTurnkeyPrice">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
                       : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`}</td>
                     <td>${marketBadge(listing.source)}</td>
-                    <td>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : "—"}</td>
+                    <td class="mobileMarketTableLink">${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : "—"}</td>
                   </tr>`).join("")}
               </tbody>
             </table>
@@ -2844,21 +2830,16 @@
 
     const dataDate = historyEntry?.dataAt || activeAnalysis.fetchedAt || "";
     const reportSources = shownSources.length ? shownSources : MARKET_SOURCES.filter((source) => chartSources[source]);
-    // Marketplaces the analysis compares: their logos switch them on and
-    // off on the chart and in the statistics.
+    // Only page 1 changes the compared markets.
     const sourcesPicker = `
       <div class="mobileMarketSources">
         <span>${escapeMarketHtml(c.sourcesPicker)}</span>
         <div class="mobileMarketSourcesList">
-          ${MARKET_SOURCES.map((source) => {
+          ${MARKET_SOURCES.filter((source) => chartSources[source]).map((source) => {
             const count = cleaned[source].length;
             const name = sourceName(source);
-            if (!count && source === "mobile") {
-              return `<button class="agSourceToggle" type="button" disabled data-report-hide title="${escapeMarketHtml(c.sourceNoData)}" aria-label="${escapeMarketHtml(c.sourceNoData)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
-            }
-            const on = count > 0 && shownSources.includes(source);
-            const label = (on ? c.sourceOn : c.sourceOff).replace("{source}", `${name} (${count})`);
-            return `<button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-mobile-market-source="${source}" aria-pressed="${on ? "true" : "false"}"${count ? "" : " disabled"}${on ? "" : " data-report-hide"} title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
+            const label = `${name} (${count})`;
+            return `<span class="agSourceToggle isOn" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></span>`;
           }).join("")}
         </div>
       </div>`;
@@ -2879,9 +2860,9 @@
         <div class="mobileMarketToolbar" data-report-hide>
           <div class="mobileMarketToolbarActions">
             <span class="agBrandLinks">
-              ${brandLogoLink("mobile", searchUrl, c.openSearch)}
-              ${otomotoUrl ? brandLogoLink("otomoto", otomotoUrl, c.openOtomoto) : ""}
-              ${blocketUrl ? brandLogoLink("blocket", blocketUrl, c.openBlocket) : ""}
+              ${chartSources.mobile ? brandLogoLink("mobile", searchUrl, c.openSearch) : ""}
+              ${chartSources.otomoto && otomotoUrl ? brandLogoLink("otomoto", otomotoUrl, c.openOtomoto) : ""}
+              ${chartSources.blocket && blocketUrl ? brandLogoLink("blocket", blocketUrl, c.openBlocket) : ""}
             </span>
             <button class="mobileMarketImportClear" type="button" data-mobile-market-refresh>${escapeMarketHtml(c.refresh)}</button>
             ${hasListings ? `
@@ -3165,8 +3146,10 @@
       const savedEntry = historyEntryForFilters(filters);
       // Otomoto samples saved before offers carried their place in the sorted
       // list cannot be laid out correctly, so those are fetched again.
-      const savedUsable = savedEntry?.listings?.length >= 3 && savedEntry.listings
-        .every((listing) => !["otomoto", "blocket"].includes(listingSource(listing)) || listing.rank);
+      const previouslySelected = savedEntry?.filters?.markets || MARKET_SOURCES;
+      const savedUsable = savedEntry?.listings?.length >= 3
+        && filters.markets.every((source) => previouslySelected.includes(source))
+        && savedEntry.listings.every((listing) => !["otomoto", "blocket"].includes(listingSource(listing)) || listing.rank);
       const savedListings = savedUsable ? savedEntry.listings : null;
       setAnalysisStatus(c.preparing);
       analysisOpens.forEach((button) => { button.disabled = true; });
@@ -3184,12 +3167,14 @@
         }
       }
       const normalizedListings = normalizeListings(rawListings);
-      let listings = normalizedListings;
+      let listings = provider && savedEntry?.listings?.length
+        ? mergeBySource(savedEntry.listings, normalizedListings)
+        : normalizedListings;
       if (pendingMobile?.listings?.length) {
         listings = mergeBySource(listings, pendingMobile.listings);
         pendingMobile = null;
       }
-      const fetchedFromProvider = Boolean(provider) && listings.length >= 3;
+      const fetchedFromProvider = Boolean(provider) && normalizedListings.length >= 3;
       // A fetched price sample belongs to the saved search, so the history row
       // shows how many offers it is based on.
       if (fetchedFromProvider) measureNextSnapshot(provider.lastSources || ["otomoto"], true);
@@ -3331,7 +3316,6 @@
       ? updateMarketSnapshot(activeAnalysis.historyId, activeAnalysis.filters, merged, "mobile.de", activeAnalysis.searchUrl)
       : createMarketSnapshot(activeAnalysis.filters, merged, "mobile.de", activeAnalysis.searchUrl);
     activeAnalysis = { ...activeAnalysis, listings: merged, historyId: snapshot?.id || activeAnalysis.historyId };
-    chartSources = { ...chartSources, mobile: true };
     renderAnalysis();
     setAnalysisStatus(message);
     window.focus();
@@ -3390,19 +3374,6 @@
     if (bookmarklet) {
       event.preventDefault();
       window.AUTOGOOD_BRIDGE_HINT?.();
-      return;
-    }
-    const sourceButton = event.target.closest("[data-mobile-market-source]");
-    if (sourceButton && !sourceButton.disabled) {
-      const source = sourceButton.dataset.mobileMarketSource;
-      const next = { ...chartSources, [source]: !chartSources[source] };
-      // Hiding the last visible marketplace would leave an empty chart.
-      const stillShown = MARKET_SOURCES.some((item) => next[item]
-        && analysisContent.querySelector(`[data-mobile-market-source="${item}"]:not([disabled])`));
-      if (stillShown) {
-        setChartSources(next);
-        renderAnalysis();
-      }
       return;
     }
     const axisButton = event.target.closest("[data-mobile-market-axis]");
@@ -3620,6 +3591,7 @@
     }
     setChartSources(next);
     if (activeAnalysis) renderAnalysis();
+    renderHistory();
     updateHistoryConfirm();
     updateSelectedFiltersSummary?.();
   });

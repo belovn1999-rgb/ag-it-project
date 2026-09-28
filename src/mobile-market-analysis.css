@@ -540,7 +540,7 @@
 
 .mobileMarketMedian {
   height: 0;
-  border-top: 2px solid var(--color-brand);
+  border-top: 2px dashed var(--color-brand);
   background: transparent;
 }
 
@@ -2340,12 +2340,12 @@
 
 .mobileMarketStatsRow {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr)) minmax(0, 1.7fr) minmax(0, 1fr);
+  grid-template-columns: minmax(85px, 0.7fr) repeat(3, minmax(155px, 1.45fr)) minmax(165px, 1.4fr) minmax(95px, 0.75fr);
   align-items: center;
 }
 
 .mobileMarketStatsTable.isCompared .mobileMarketStatsRow {
-  grid-template-columns: minmax(0, 1.1fr) repeat(4, minmax(0, 1fr)) minmax(0, 1.7fr) minmax(0, 1fr);
+  grid-template-columns: minmax(100px, 0.8fr) minmax(85px, 0.7fr) repeat(3, minmax(155px, 1.45fr)) minmax(165px, 1.4fr) minmax(95px, 0.75fr);
 }
 
 .mobileMarketStatsRow > * {
@@ -2736,20 +2736,16 @@
 }
 
 /* ---- Turnkey comparison (2026-09-28) --------------------------------------- */
-/* One median per market in its colour; dashed = the market's "pod klucz". */
+/* Every market's median uses its own colour and a dashed line. */
 .mobileMarketMedian.isOtomoto { border-top-color: var(--market-otomoto); }
 .mobileMarketMedian.isMobile { border-top-color: var(--market-mobile); }
 .mobileMarketMedian.isBlocket { border-top-color: var(--market-blocket); }
-
-.mobileMarketMedian.isTurnkey {
-  border-top-style: dashed;
-}
 
 .mobileMarketKeyTick.isMedian.isOtomoto { color: var(--market-otomoto); }
 .mobileMarketKeyTick.isMedian.isMobile { color: var(--market-mobile); }
 .mobileMarketKeyTick.isMedian.isBlocket { color: var(--market-blocket); }
 
-.mobileMarketKeyTick.isTurnkey {
+.mobileMarketKeyTick.isMedian {
   font-style: italic;
 }
 
@@ -2766,13 +2762,7 @@
 
 .mobileMarketStatsRow b .mobileMarketTurnkeyNote {
   color: var(--color-muted);
-}
-
-.mobileMarketRates {
-  margin: var(--space-sm) 0 0;
-  color: var(--color-muted);
-  font-size: var(--text-xs);
-  line-height: 1.5;
+  white-space: normal;
 }
 
 /* Footnote and conclusion under the chart. */
@@ -2948,6 +2938,41 @@
 /* "Aktualne oferty": more rows visible, numbered. */
 .mobileMarketOffersCard .mobileMarketTableScroll {
   max-block-size: min(72vh, 760px);
+}
+
+.mobileMarketOffersTable,
+.mobileMarketHistoryTable {
+  table-layout: fixed;
+  min-width: 980px;
+}
+
+.mobileMarketOffersTable th:nth-child(1) { width: 4%; }
+.mobileMarketOffersTable th:nth-child(2) { width: 31%; }
+.mobileMarketOffersTable th:nth-child(3) { width: 9%; }
+.mobileMarketOffersTable th:nth-child(4) { width: 15%; }
+.mobileMarketOffersTable th:nth-child(5) { width: 19%; }
+.mobileMarketOffersTable th:nth-child(6) { width: 14%; }
+.mobileMarketOffersTable th:nth-child(7) { width: 8%; }
+
+.mobileMarketHistoryTable th:nth-child(1) { width: 13%; }
+.mobileMarketHistoryTable th:nth-child(2) { width: 10%; }
+.mobileMarketHistoryTable th:nth-child(3) { width: 9%; }
+.mobileMarketHistoryTable th:nth-child(4),
+.mobileMarketHistoryTable th:nth-child(5),
+.mobileMarketHistoryTable th:nth-child(6) { width: 14%; }
+.mobileMarketHistoryTable th:nth-child(7) { width: 18%; }
+.mobileMarketHistoryTable th:nth-child(8) { width: 8%; }
+
+.mobileMarketOffersTable .mobileMarketTableLink {
+  text-align: center;
+}
+
+.mobileMarketSourcesList .agSourceToggle:not(button) {
+  cursor: default;
+}
+
+.mobileMarketTrendChart polyline {
+  stroke-dasharray: 7 5;
 }
 
 .mobileMarketTable .mobileMarketRowNumber {
