@@ -3354,6 +3354,10 @@ async function loadMobileDeData(sourceUrl) {
     const unreachable = error instanceof TypeError || /failed to fetch|networkerror/i.test(error.message || "");
     if (state.data) return;
     const viaBookmarklet = unreachable && /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(sourceUrl);
+    // Only now is the bookmark worth showing: the importer cannot be reached.
+    state.importerDown = unreachable;
+    const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
+    if (bookmarkletRow) bookmarkletRow.hidden = !viaBookmarklet;
     // Waiting for the bookmark is a next step, not an error.
     setStatus(
       viaBookmarklet ? "waiting" : "error",
@@ -3747,9 +3751,9 @@ function setLinkSource(source) {
     input.checked = input.value === source;
   });
   els.url.placeholder = source === "otomoto" ? "https://www.otomoto.pl/osobowe/oferta/..." : "https://suchen.mobile.de/...";
-  // The bookmark only works on mobile.de.
+  // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
-  if (bookmarkletRow) bookmarkletRow.hidden = source === "otomoto";
+  if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
 }
 
 document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
