@@ -22,8 +22,12 @@
     if (favoritesView) favoritesView.hidden = true;
   };
   const historySaves = Array.from(document.querySelectorAll("[data-mobile-market-history-save]"));
-  const historyList = document.querySelector("[data-mobile-market-history-list]");
-  const historyCount = document.querySelector("[data-mobile-market-history-count]");
+  // The history is shown at the bottom of the search page and on page 3.
+  const historyLists = Array.from(document.querySelectorAll("[data-mobile-market-history-list]"));
+  const historyCounts = Array.from(document.querySelectorAll("[data-mobile-market-history-count]"));
+  const historyList = historyLists[0];
+  const historyCount = historyCounts[0];
+  const historyDone = document.querySelector("[data-mobile-history-done]");
 
   if (!analysisOpen || !analysisBack || !analysisView || !analysisContent || !manualView || !historySaves.length || !historyList || !historyCount) return;
 
@@ -34,6 +38,7 @@
       saveSuccess: "Dane zapisane w historii.",
       historyUpdateSuccess: "Dane wpisu zostały zaktualizowane.",
       historyConfirm: "Zapisz zmiany w tym wpisie",
+      historyDone: "Gotowe",
       favoritesHeading: "Ulubione auta",
       favoritesSearchHeading: "Wyszukiwanie ulubionych",
       favoritesSearchNote: "Wkrótce: automatyczne śledzenie nowych ofert dla każdego ulubionego auta.",
@@ -237,6 +242,7 @@
       saveSuccess: "Данные сохранены в истории.",
       historyUpdateSuccess: "Данные записи обновлены.",
       historyConfirm: "Сохранить изменения в этой записи",
+      historyDone: "Готово",
       favoritesHeading: "Избранные авто",
       favoritesSearchHeading: "Поиск по избранным",
       favoritesSearchNote: "Скоро: автоматическое отслеживание новых предложений для каждого избранного авто.",
@@ -1198,15 +1204,17 @@
     if (favoritesView && !favoritesView.hidden) renderFavoritesSearchPage();
     const pinnedCount = marketHistory.filter((entry) => entry.pinned).length;
     const recentCount = marketHistory.length - pinnedCount;
-    historyCount.textContent = pinnedCount
+    const countText = pinnedCount
       ? `★ ${pinnedCount} · ${recentCount} / ${HISTORY_LIMIT}`
       : `${recentCount} / ${HISTORY_LIMIT}`;
+    historyCounts.forEach((element) => { element.textContent = countText; });
     if (!marketHistory.length) {
-      historyList.innerHTML = `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(c.historyEmpty)}</p>`;
+      historyLists.forEach((list) => { list.innerHTML = `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(c.historyEmpty)}</p>`; });
+      updateHistoryConfirm();
       return;
     }
 
-    historyList.innerHTML = marketHistory.map((entry) => {
+    const listHtml = marketHistory.map((entry) => {
       const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
       const meta = historyMeta(entry.filters);
       const ready = entry.listings.length >= 3;
@@ -1233,6 +1241,7 @@
           </div>
         </article>`;
     }).join("");
+    historyLists.forEach((list) => { list.innerHTML = listHtml; });
     updateHistoryConfirm();
   }
 
@@ -1244,7 +1253,8 @@
     } catch {
       entry = null;
     }
-    const pinned = Boolean(entry?.pinned);
+    const edited = editingHistoryId ? marketHistory.find((item) => item.id === editingHistoryId) : null;
+    const pinned = Boolean(entry?.pinned || edited?.pinned);
     const c = copy();
     historySaves.forEach((button) => {
       button.classList.toggle("isPinned", pinned);
@@ -1256,8 +1266,6 @@
 
   // The ✓ appears on the selected entry once the form no longer matches it.
   function updateHistoryConfirm() {
-    const button = historyList.querySelector("[data-mobile-market-history-confirm]");
-    if (!button) return;
     const entry = marketHistory.find((item) => item.id === editingHistoryId);
     let changed = false;
     try {
@@ -1265,7 +1273,9 @@
     } catch {
       changed = false;
     }
-    button.hidden = !changed;
+    historyLists.forEach((list) => list.querySelectorAll("[data-mobile-market-history-confirm]").forEach((button) => { button.hidden = !changed; }));
+    // "Gotowe" in the chosen filters saves the edited entry (e.g. a favourite).
+    if (historyDone) historyDone.hidden = !changed;
   }
 
   function confirmHistoryChanges(historyId) {
@@ -1370,6 +1380,13 @@
   function toggleCurrentHistoryFavorite() {
     refreshMarketHistory();
     const c = copy();
+    // A favourite opened for editing: its star takes it off the favourites,
+    // even while its filters are being changed.
+    const edited = editingHistoryId ? marketHistory.find((item) => item.id === editingHistoryId) : null;
+    if (edited?.pinned) {
+      setHistoryPinned(edited.id, false);
+      return;
+    }
     try {
       const filters = readManualFields();
       if (!filters.brand || !filters.model) throw new Error(c.missingVehicle);
@@ -1735,7 +1752,7 @@
                 ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
                 <span>${escapeMarketHtml(price || c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
               </button>
-              <button class="mobileMarketFavoriteRemove" type="button" data-mobile-market-favorite-remove="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(`${c.favoriteRemove}: ${title}`)}" title="${escapeMarketHtml(c.favoriteRemove)}">×</button>
+              <button class="mobileMarketFavoriteRemove isStar" type="button" data-mobile-market-favorite-remove="${escapeMarketHtml(entry.id)}" aria-pressed="true" aria-label="${escapeMarketHtml(`${c.favoriteRemove}: ${title}`)}" title="${escapeMarketHtml(c.favoriteRemove)}">★</button>
             </div>`;
           }).join("")}
         </div>` : `<p>${escapeMarketHtml(c.favoritesEmpty)}</p>`}
@@ -1745,7 +1762,8 @@
   // Pinned above every page; the car of the open analysis is highlighted.
   function renderFavoritesBar() {
     if (!favoritesBar) return;
-    const active = activeAnalysis ? marketHistory.find((entry) => entry.id === activeAnalysis.historyId && entry.pinned) : null;
+    const activeId = !analysisView.hidden && activeAnalysis ? activeAnalysis.historyId : editingHistoryId;
+    const active = marketHistory.find((entry) => entry.id === activeId && entry.pinned) || null;
     favoritesBar.innerHTML = favoritesHtml(active?.id || "");
   }
 
@@ -3234,7 +3252,10 @@
   };
   manualForm?.addEventListener("input", () => setTimeout(updateManualHistoryState));
   manualForm?.addEventListener("change", () => setTimeout(updateManualHistoryState));
-  historyList.addEventListener("click", (event) => {
+  historyDone?.addEventListener("click", () => {
+    if (editingHistoryId) confirmHistoryChanges(editingHistoryId);
+  });
+  const handleHistoryClick = (event) => {
     const confirmButton = event.target.closest("[data-mobile-market-history-confirm]");
     if (confirmButton) {
       confirmHistoryChanges(confirmButton.dataset.mobileMarketHistoryConfirm);
@@ -3259,7 +3280,8 @@
     }
     const button = event.target.closest("[data-mobile-market-history-analysis]");
     if (button) openHistoryAnalysis(button.dataset.mobileMarketHistoryAnalysis);
-  });
+  };
+  historyLists.forEach((list) => list.addEventListener("click", handleHistoryClick));
   analysisOpens.forEach((button) => button.addEventListener("click", openAnalysis));
   analysisBack.addEventListener("click", closeAnalysis);
   document.querySelectorAll("[data-lang-button]").forEach((button) => {
@@ -3337,7 +3359,15 @@
       return;
     }
     const favorite = event.target.closest("[data-mobile-market-favorite]");
-    if (favorite) openFavorite(favorite.dataset.mobileMarketFavorite);
+    if (!favorite) return;
+    // On the search page a favourite fills the form to be refined there
+    // ("Gotowe" saves it); on the other pages it opens its analysis.
+    if (event.currentTarget === favoritesBar && currentPage() === "search") {
+      selectHistoryEntry(favorite.dataset.mobileMarketFavorite);
+      renderFavoritesBar();
+      return;
+    }
+    openFavorite(favorite.dataset.mobileMarketFavorite);
   };
   favoritesBar?.addEventListener("click", handleFavoriteClick);
   favoritesPage?.addEventListener("click", handleFavoriteClick);

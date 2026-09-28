@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=summary2-20260928" />
-    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=turnkey-compare-20260928" />
+  <link rel="stylesheet" href="./src/mobile.css?v=fav-edit-20260928" />
+    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=fav-edit-20260928" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
@@ -102,6 +102,10 @@
               <div class="mobileSelectedFilters mobileSearchSummaryBody" data-mobile-selected-filters aria-live="polite"></div>
               <div class="mobileSearchSummaryFoot">
                 <span class="mobileSearchSummaryFootLabel" data-i18n="offerCountLabel">Aktualne oferty</span>
+                <div class="mobileSearchSummaryActions">
+                  <button class="mobileSearchSummaryDone" type="button" data-mobile-history-done hidden><span data-market-i18n="historyDone">Gotowe</span> ✓</button>
+                  <button class="mobileSearchSummaryAnalysis" type="button" data-mobile-market-analysis-open><span data-market-i18n="analysisButton">Analiza rynku</span> <i aria-hidden="true">&#8594;</i></button>
+                </div>
                 <div class="mobileSearchCountMarket" data-market="mobile">
                   <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
                   <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de"><img src="./assets/brands/mobile-de-logo.svg" alt="" /></a>
@@ -494,7 +498,7 @@
                     </div>
                   </label>
                   <fieldset class="mobileField mobileCountryField">
-                    <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#map-pin"></use></svg><span data-i18n="countryLabel">Kraj</span></legend>
+                    <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#map-pin"></use></svg><span data-i18n="countryLabel">Kraj</span> <small class="mobileFieldNote" data-i18n="countryMobileNote">(dotyczy mobile.de)</small></legend>
                     <details class="mobileMultiSelect" data-mobile-country-select>
                       <summary data-mobile-country-summary></summary>
                       <div class="mobileMultiSelectMenu">
@@ -567,6 +571,15 @@
           </div>
         </article>
 
+        <section class="mobileMarketHistory" data-mobile-market-history>
+          <header class="mobileMarketHistoryHead">
+            <div>
+              <h2 class="mobileFilterCardTitle mobileMarketHistoryTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#calendar"></use></svg><span data-market-i18n="historyHeading">Historia wyszukiwania</span></h2>
+            </div>
+            <span data-mobile-market-history-count>0 / 20</span>
+          </header>
+          <div class="mobileMarketHistoryList" data-mobile-market-history-list></div>
+        </section>
       </section>
 
       <section class="mobileMethodView mobilePageView" data-mobile-page-view="history" hidden>
@@ -600,10 +613,10 @@
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
-    <script src="./src/mobile.js?v=turnkey-compare-20260928"></script>
+    <script src="./src/mobile.js?v=fav-edit-20260928"></script>
     <script src="./src/blocket-search.js?v=blocket-analysis-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=turnkey-compare-20260928"></script>
-    <script src="./src/mobile-market-analysis.js?v=turnkey-compare2-20260928"></script>
+    <script src="./src/mobile-market-analysis.js?v=fav-edit-20260928"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>
