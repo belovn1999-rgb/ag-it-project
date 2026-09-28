@@ -146,6 +146,7 @@
       curveLegend: "Krzywa cen",
       hiddenNoAxis: "Bez tej wartości, więc poza wykresem: {count} {offers}.",
       tableSource: "Źródło",
+      tableLink: "Link ogłoszenia",
       sourceEmpty: "brak danych",
       fetchMobile: "Pobierz z mobile.de ↗",
       fetchMobileHint: "Lista mobile.de otwarta w nowej karcie — kliknij tam zakładkę „AUTOGOOD”. Oferty trafią na wykres.",
@@ -357,6 +358,7 @@
       curveLegend: "Кривая цен",
       hiddenNoAxis: "Объявлений без этого значения нет на графике: {count}.",
       tableSource: "Источник",
+      tableLink: "Ссылка",
       sourceEmpty: "нет данных",
       fetchMobile: "Загрузить с mobile.de ↗",
       fetchMobileHint: "Список mobile.de открыт в новой вкладке — нажми там закладку «AUTOGOOD». Объявления появятся на графике.",
@@ -1778,11 +1780,19 @@
   }
 
   // Latest typical price of an entry, in the marketplace's own currency.
+  // Markets compared are named by country with its flag (logos are for
+  // acting on a portal) — see src/market-badges.js.
+  function marketBadge(source, variant = "flag") {
+    const fallback = source === "otomoto" ? "Polska" : source === "blocket" ? "Szwecja" : "Niemcy";
+    return window.AUTOGOOD_MARKET_BADGE?.(source, variant) || escapeMarketHtml(fallback);
+  }
+
+  // HTML: flag + latest median per market.
   function latestPriceLabel(entry) {
     const last = entry.priceLog?.[entry.priceLog.length - 1];
     if (!last) return "";
     return MARKET_SOURCES.filter((source) => last[source])
-      .map((source) => `${source === "otomoto" ? "otomoto" : source === "blocket" ? "blocket" : "mobile.de"} ${formatPlainPrice(last[source].median, last[source].currency)}`)
+      .map((source) => `${marketBadge(source, "flagOnly")} ${escapeMarketHtml(formatPlainPrice(last[source].median, last[source].currency))}`)
       .join(" · ");
   }
 
@@ -1802,7 +1812,7 @@
               <button class="mobileMarketFavorite${entry.id === activeId ? " isActive" : ""}" type="button" data-mobile-market-favorite="${escapeMarketHtml(entry.id)}"${entry.id === activeId ? ' aria-current="true"' : ""}>
                 <b>${escapeMarketHtml(title)}</b>
                 ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
-                <span>${escapeMarketHtml(price || c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
+                <span>${price || escapeMarketHtml(c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
               </button>
               <button class="mobileMarketFavoriteRemove isStar" type="button" data-mobile-market-favorite-remove="${escapeMarketHtml(entry.id)}" aria-pressed="true" aria-label="${escapeMarketHtml(`${c.favoriteRemove}: ${title}`)}" title="${escapeMarketHtml(c.favoriteRemove)}">★</button>
             </div>`;
@@ -1811,10 +1821,20 @@
       </section>`;
   }
 
-  // Pinned above every page; the car of the open analysis is highlighted.
+  // Pinned above every page; the car shown on the current page is highlighted.
+  let favoritesSelectedId = "";
+  function scrollToPageContent(element) {
+    if (!element) return;
+    const top = element.getBoundingClientRect().top + window.scrollY - (Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 60) - 12;
+    window.scrollTo({ top, behavior: "smooth" });
+  }
   function renderFavoritesBar() {
     if (!favoritesBar) return;
-    const activeId = !analysisView.hidden && activeAnalysis ? activeAnalysis.historyId : editingHistoryId;
+    const page = typeof currentPage === "function" ? currentPage() : "search";
+    const activeId = page === "analysis" && activeAnalysis ? activeAnalysis.historyId
+      : page === "history" ? priceHistoryId
+        : page === "favorites" ? favoritesSelectedId
+          : editingHistoryId;
     const active = marketHistory.find((entry) => entry.id === activeId && entry.pinned) || null;
     favoritesBar.innerHTML = favoritesHtml(active?.id || "");
   }
@@ -1824,7 +1844,12 @@
   function renderFavoritesSearchPage() {
     if (!favoritesPage) return;
     const c = copy();
-    const favorites = marketHistory.filter((entry) => entry.pinned);
+    const pinned = marketHistory.filter((entry) => entry.pinned);
+    if (!pinned.some((entry) => entry.id === favoritesSelectedId)) favoritesSelectedId = "";
+    // The car picked in the pinned bar comes first, highlighted.
+    const favorites = favoritesSelectedId
+      ? [...pinned.filter((entry) => entry.id === favoritesSelectedId), ...pinned.filter((entry) => entry.id !== favoritesSelectedId)]
+      : pinned;
     favoritesPage.innerHTML = `
       <section class="mobileMarketHistory mobileFavoritesSearch">
         <header class="mobileMarketHistoryHead">
@@ -1836,11 +1861,11 @@
           const meta = historyMeta(entry.filters).join(" · ");
           const price = latestPriceLabel(entry);
           const date = entry.dataAt ? formatHistoryDate(entry.dataAt) : "";
-          return `<article class="mobileFavoritesSearchItem">
+          return `<article class="mobileFavoritesSearchItem${entry.id === favoritesSelectedId ? " isSelected" : ""}">
             <div>
               <b>${escapeMarketHtml(title)}</b>
               ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
-              <span>${escapeMarketHtml(price || c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
+              <span>${price || escapeMarketHtml(c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
             </div>
             <div class="mobileFavoritesSearchActions">
               <button class="mobileMarketImportClear" type="button" data-mobile-favorite-filters="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.favoritesSearchFilters)}</button>
@@ -1913,7 +1938,7 @@
         rows.push(`
           <tr>
             <td>${escapeMarketHtml(formatHistoryDate(point.at))}</td>
-            <td><span class="mobileMarketSourceTag is${sourceClass(source)}"><i aria-hidden="true"></i>${escapeMarketHtml(source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile)}</span></td>
+            <td>${marketBadge(source)}</td>
             <td>${current.count} ${previous ? change(current.count, previous.count) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
             <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${current.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey.p25, "PLN")} – ${price(current.turnkey.p75, "PLN")} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
@@ -1992,7 +2017,7 @@
           ${line.points.map((item) => `<circle cx="${x(item.index)}" cy="${y(item.value)}" r="4" fill="${colors[line.source]}"><title>${escapeMarketHtml(`${formatHistoryDate(log[item.index].at)} · ${formatMarketPrice(item.value, "PLN")}`)}</title></circle>`).join("")}`).join("")}
       </svg>
       <div class="mobileMarketLegend">
-        ${series.map((line) => `<span class="is${sourceClass(line.source)}"><i></i>${escapeMarketHtml(line.source === "otomoto" ? c.marketOtomoto : line.source === "blocket" ? c.marketBlocket : c.marketMobile)}${line.source === "otomoto" ? "" : ` · ${escapeMarketHtml(c.turnkeyShort)}`}</span>`).join("")}
+        ${series.map((line) => `<span class="is${sourceClass(line.source)}"><i></i>${marketBadge(line.source)}${line.source === "otomoto" ? "" : ` · ${escapeMarketHtml(c.turnkeyShort)}`}</span>`).join("")}
       </div>`;
   }
 
@@ -2037,6 +2062,7 @@
     const pick = event.target.closest("[data-price-history-pick]");
     if (pick) {
       priceHistoryId = pick.dataset.priceHistoryPick;
+      renderFavoritesBar();
       renderPriceHistoryPage();
       return;
     }
@@ -2514,7 +2540,7 @@
                 <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${listing.turnkeyPln ? ` <small>${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
                 ${details ? `<em>${escapeMarketHtml(details)}</em>` : ""}
                 ${listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(listing.originalPrice, listing.source))}</em>` : ""}
-                <b class="is${sourceClass(listing.source)}">${escapeMarketHtml(sourceName(listing.source))}${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
+                <b class="is${sourceClass(listing.source)}">${marketBadge(listing.source)} <small>${escapeMarketHtml(sourceName(listing.source))}</small>${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
               </span>`;
           const attributes = `class="mobileMarketPoint is${sourceClass(listing.source)}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
           return listing.url
@@ -2686,7 +2712,7 @@
           </div>
           ${statRows.map((row) => `
             <div class="mobileMarketStatsRow" role="row">
-              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(sourceName(row.source))}">${escapeMarketHtml(row.source === "otomoto" ? c.marketOtomoto : row.source === "blocket" ? c.marketBlocket : c.marketMobile)}</span>` : ""}
+              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(sourceName(row.source))}">${marketBadge(row.source)}</span>` : ""}
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
@@ -2719,7 +2745,7 @@
         </ul>` : ""}
 
         <div class="mobileMarketLegend">
-          ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${escapeMarketHtml(sourceName(source))}${source !== "otomoto" && marketListings.some((listing) => listing.source === source && listing.turnkeyPln) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
+          ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${marketBadge(source)}${source !== "otomoto" && marketListings.some((listing) => listing.source === source && listing.turnkeyPln) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
           ${carMarker ? `<span class="isCar"><i></i>${escapeMarketHtml(c.yourCar)}</span>` : ""}
           ${trendLine ? `<span class="isTrend"><i></i>${escapeMarketHtml(chartAxis === "rank" ? c.curveLegend : c.trendLegend)}</span>` : ""}
           <span class="isBandLow"><i></i>${escapeMarketHtml(c.lowMarket)} · ${statistics.lowCount}</span>
@@ -2788,23 +2814,27 @@
             <table class="mobileMarketTable">
               <thead>
                 <tr>
+                  <th scope="col" class="isNum mobileMarketRowNumber">#</th>
                   ${[["title", c.tableTitle], ["year", c.tableYear], ["mileage", c.tableMileage], ["price", c.tablePrice]].map(([key, label]) => `
                     <th scope="col"${key === "title" ? "" : ' class="isNum"'}>
                       <button type="button" data-mobile-market-sort="${key}">${escapeMarketHtml(label)}${tableSort.key === key ? (tableSort.direction === "asc" ? " ↑" : " ↓") : ""}</button>
                     </th>`).join("")}
                   <th scope="col">${escapeMarketHtml(c.tableSource)}</th>
+                  <th scope="col">${escapeMarketHtml(c.tableLink)}</th>
                 </tr>
               </thead>
               <tbody>
-                ${sortedListings.map((listing) => `
+                ${sortedListings.map((listing, index) => `
                   <tr class="${listing.suspect ? "isSuspect" : marketClass(listing.price, statistics)}" data-market-key="${escapeMarketHtml(listingKey(listing))}">
+                    <td class="isNum mobileMarketRowNumber">${index + 1}</td>
                     <td class="mobileMarketTableTitle">${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}</td>
                     <td class="isNum">${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
                     <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} km` : "—")}</td>
                     <td class="isNum">${listing.turnkeyPln
                       ? `<b class="mobileMarketTurnkeyPrice">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
                       : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`}</td>
-                    <td><span class="mobileMarketSourceCell"><span class="mobileMarketSourceTag is${sourceClass(listing.source)}"><i aria-hidden="true"></i>${escapeMarketHtml(sourceName(listing.source))}</span>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : ""}</span></td>
+                    <td>${marketBadge(listing.source)}</td>
+                    <td>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : "—"}</td>
                   </tr>`).join("")}
               </tbody>
             </table>
@@ -3522,6 +3552,7 @@
     if (page === "favorites") renderFavoritesSearchPage();
     if (page === "history") renderPriceHistoryPage();
     markCurrentPage();
+    renderFavoritesBar();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
@@ -3547,14 +3578,33 @@
     }
     const favorite = event.target.closest("[data-mobile-market-favorite]");
     if (!favorite) return;
-    // On the search page a favourite fills the form to be refined there
-    // ("Gotowe" saves it); on the other pages it opens its analysis.
-    if (event.currentTarget === favoritesBar && currentPage() === "search") {
-      selectHistoryEntry(favorite.dataset.mobileMarketFavorite);
-      renderFavoritesBar();
-      return;
+    const id = favorite.dataset.mobileMarketFavorite;
+    // A favourite in the pinned bar keeps the page and shows this car there:
+    // 1 fills the form to be refined ("Gotowe" saves it), 2 its analysis,
+    // 3 its price history, 4 its card in the favourites' search.
+    if (event.currentTarget === favoritesBar) {
+      const page = currentPage();
+      if (page === "search") {
+        selectHistoryEntry(id);
+        renderFavoritesBar();
+        return;
+      }
+      if (page === "history") {
+        priceHistoryId = id;
+        renderPriceHistoryPage();
+        renderFavoritesBar();
+        scrollToPageContent(historyView);
+        return;
+      }
+      if (page === "favorites") {
+        favoritesSelectedId = id;
+        renderFavoritesSearchPage();
+        renderFavoritesBar();
+        scrollToPageContent(favoritesPage?.querySelector(".isSelected"));
+        return;
+      }
     }
-    openFavorite(favorite.dataset.mobileMarketFavorite);
+    openFavorite(id);
   };
   favoritesBar?.addEventListener("click", handleFavoriteClick);
   favoritesPage?.addEventListener("click", handleFavoriteClick);
