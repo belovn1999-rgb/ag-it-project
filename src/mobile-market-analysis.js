@@ -22,7 +22,8 @@
     if (favoritesView) favoritesView.hidden = true;
   };
   const historySaves = Array.from(document.querySelectorAll("[data-mobile-market-history-save]"));
-  // The history is shown at the bottom of the search page and on page 3.
+  // The search history sits at the bottom of the search page (page 3 is the
+  // price history of favourites).
   const historyLists = Array.from(document.querySelectorAll("[data-mobile-market-history-list]"));
   const historyCounts = Array.from(document.querySelectorAll("[data-mobile-market-history-count]"));
   const historyList = historyLists[0];
@@ -49,10 +50,17 @@
       marketPickerLast: "Co najmniej jeden rynek musi zostać wybrany.",
       favoriteRemove: "Usuń z ulubionych",
       statsHeading: "Statystyki",
-      turnkeyShort: "pod klucz*",
+      turnkeyShort: "na gotowo*",
+      priceHistoryIntro: "Historia cen ulubionych aut: każde „Analiza rynku” i „Odśwież dane” zapisuje nowy pomiar z datą. Wybierz auto, aby zobaczyć, jak zmieniają się ceny na portalach.",
+      priceHistoryNoFavorites: "Dodaj auto do ulubionych ★ — tutaj pojawi się historia jego cen.",
+      priceHistoryEmptyEntry: "To auto nie ma jeszcze pomiarów cen. Kliknij „Odśwież dane”.",
+      trendTitle: "Mediana ceny w czasie",
+      trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
+      adPrice: "cena w ogłoszeniu",
+      turnkeyAxisNote: "Auta z zagranicy są na wykresie w cenie na gotowo* (z transportem, oględzinami, akcyzą i usługą AUTOGOOD), auta z Polski — w cenie ogłoszenia.",
       ratesLine: "Kurs jak w kalkulatorze AUTOGOOD: {rates}.",
-      colorsTurnkey: "Kolory porównują to, co klient płaci w Polsce: cenę pod klucz* dla aut z zagranicy i cenę ogłoszenia dla aut z Polski.",
-      turnkeyFootnote: "Cena „pod klucz” jest orientacyjna: cena brutto z ogłoszenia + średni koszt transportu ({transport} netto) i oględzin ({inspection} netto), akcyza według rodzaju i pojemności silnika oraz usługa AUTOGOOD (2 250 zł + 1% wartości auta, z VAT), jak w naszym kalkulatorze. Dokładną wycenę konkretnego auta przygotuje Twój opiekun AUTOGOOD.",
+      colorsTurnkey: "Kolory porównują to, co klient płaci w Polsce: cenę na gotowo* dla aut z zagranicy i cenę ogłoszenia dla aut z Polski.",
+      turnkeyFootnote: "Cena „na gotowo” jest orientacyjna: cena brutto z ogłoszenia + średni koszt transportu ({transport} netto) i oględzin ({inspection} netto), akcyza według rodzaju i pojemności silnika oraz usługa AUTOGOOD (2 250 zł + 1% wartości auta, z VAT), jak w naszym kalkulatorze. Dokładną wycenę konkretnego auta przygotuje Twój opiekun AUTOGOOD.",
       conclusionHeading: "Wniosek",
       conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce — przy mniejszym ryzyku, zwykle lepszym stanie i udokumentowanej historii serwisowej.",
       conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce — w zamian zwykle mniejsze ryzyko, lepszy stan i udokumentowana historia serwisowa.",
@@ -65,7 +73,7 @@
       sourceOff: "{source}: ukryte — kliknij, aby pokazać",
       sourceFetch: "Pobierz oferty z mobile.de",
       sourceNoData: "mobile.de: brak danych — otwórz wyszukiwanie mobile.de (logo u góry) i kliknij tam zakładkę AUTOGOOD.",
-      averagePrices: "Typowy zakres (P25–P75)",
+      averagePrices: "Średnie ceny (P25–P75)",
       pdfButton: "Raport PDF",
       pdfWorking: "Przygotowuję raport PDF…",
       pdfReady: "Raport PDF zapisany: {file}",
@@ -107,7 +115,7 @@
       otomotoDescription: "Próbka aktualnych ofert otomoto.pl z całej listy wyników (ceny w PLN).",
       verdictHeading: "Co to znaczy",
       verdictMedian: "Mediana ceny ofert: {median}.",
-      verdictMiddle: "Typowy zakres: {low} – {high} ({count} {offers}).",
+      verdictMiddle: "Średnie ceny: {low} – {high} ({count} {offers}).",
       verdictDeals: "Poniżej {low} jest {count} ofert — to dół rynku.",
       tableHeading: "Aktualne oferty",
       loadingHeading: "Pobieram aktualne oferty…",
@@ -176,12 +184,12 @@
       importReadError: "Nie udało się odczytać pliku JSON / CSV.",
       chartTitle: "Rozkład cen ofert",
       lowMarket: "Dół rynku",
-      middleMarket: "Typowy zakres",
+      middleMarket: "Średnie ceny",
       highMarket: "Góra rynku",
       count: "Liczba ofert",
       minimum: "Najtańsze ogłoszenie",
       median: "Mediana",
-      middleRange: "Typowy zakres (P25–P75)",
+      middleRange: "Średnie ceny (P25–P75)",
       middleOffers: "Oferty w zakresie",
       sampleDate: "Ceny ofert · stan na {date}",
       limitedSample: "Mała próba: typowa cena może być niestabilna. Do oceny auta potrzeba co najmniej 8 ofert.",
@@ -254,6 +262,13 @@
       favoriteRemove: "Убрать из избранного",
       statsHeading: "Статистика",
       turnkeyShort: "под ключ*",
+      priceHistoryIntro: "История цен избранных авто: каждый «Анализ рынка» и «Обновить данные» сохраняет новый замер с датой. Выбери авто, чтобы увидеть, как меняются цены на порталах.",
+      priceHistoryNoFavorites: "Добавь авто в избранное ★ — здесь появится история его цен.",
+      priceHistoryEmptyEntry: "У этого авто ещё нет замеров цен. Нажми «Обновить данные».",
+      trendTitle: "Медиана цены во времени",
+      trendNeedsTwo: "График появится после второго замера цен.",
+      adPrice: "цена в объявлении",
+      turnkeyAxisNote: "Авто из-за границы стоят на графике по цене под ключ* (с доставкой, осмотром, акцизом и услугой AUTOGOOD), авто из Польши — по цене объявления.",
       ratesLine: "Курс как в калькуляторе AUTOGOOD: {rates}.",
       colorsTurnkey: "Цвета сравнивают то, что клиент платит в Польше: цену под ключ* для авто из-за границы и цену объявления для авто из Польши.",
       turnkeyFootnote: "Цена «под ключ» ориентировочная: брутто-цена объявления + средняя доставка ({transport} нетто) и осмотр ({inspection} нетто), акциз по типу и объёму двигателя и услуга AUTOGOOD (2 250 zł + 1% стоимости авто, с VAT), как в нашем калькуляторе. Точный расчёт конкретного авто подготовит ваш менеджер AUTOGOOD.",
@@ -1052,7 +1067,7 @@
   // each marketplace is written down with the date, so price changes of a
   // tracked car can be followed over weeks. Otomoto in PLN, Mobile.de in EUR,
   // so the exchange rate does not move the history.
-  function marketPricePoint(listings, at) {
+  function marketPricePoint(listings, at, filters = {}) {
     const point = { at };
     MARKET_SOURCES.forEach((source) => {
       const currency = SOURCE_CURRENCY[source];
@@ -1076,6 +1091,24 @@
         minUrl: byPrice[0].url || "",
         maxUrl: byPrice[byPrice.length - 1].url || "",
       };
+      // Foreign markets: also what the client pays in Poland ("na gotowo").
+      const turnkey = window.AUTOGOOD_TURNKEY;
+      if (source !== "otomoto" && turnkey) {
+        const turnkeyPrices = kept.map((listing) => turnkey.turnkeyAverage({
+          price: listing.price,
+          currency: listing.currency || currency,
+          fuel: listing.fuel,
+          title: listing.title,
+          displacementCcm: listing.displacementCcm,
+        }, filters).total).sort((left, right) => left - right);
+        point[source].turnkey = {
+          median: Math.round(percentile(turnkeyPrices, 0.5)),
+          p25: Math.round(percentile(turnkeyPrices, 0.25)),
+          p75: Math.round(percentile(turnkeyPrices, 0.75)),
+          min: turnkeyPrices[0],
+          max: turnkeyPrices[turnkeyPrices.length - 1],
+        };
+      }
     });
     return MARKET_SOURCES.some((source) => point[source]) ? point : null;
   }
@@ -1095,7 +1128,7 @@
     const log = sameMarket ? [...(previous?.priceLog || [])] : [];
     const dataAt = sameMarket ? previous?.dataAt || "" : "";
     const now = new Date().toISOString();
-    const point = measurement && entry.listings.length >= 3 ? marketPricePoint(entry.listings, now) : null;
+    const point = measurement && entry.listings.length >= 3 ? marketPricePoint(entry.listings, now, entry.filters) : null;
     const fresh = point ? Object.fromEntries(measurement.sources.filter((source) => point[source]).map((source) => [source, point[source]])) : {};
     if (!Object.keys(fresh).length) return { ...entry, priceLog: log, dataAt: entry.listings.length >= 3 ? dataAt : "" };
     const last = log[log.length - 1];
@@ -1202,6 +1235,7 @@
     updateHistorySaveButtons();
     renderFavoritesBar();
     if (favoritesView && !favoritesView.hidden) renderFavoritesSearchPage();
+    if (historyView && !historyView.hidden) renderPriceHistoryPage();
     const pinnedCount = marketHistory.filter((entry) => entry.pinned).length;
     const recentCount = marketHistory.length - pinnedCount;
     const countText = pinnedCount
@@ -1852,7 +1886,11 @@
           const value = url
             ? `<a class="agPriceLink" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener">${price(current[key], current.currency)}<img class="agBrandMark" src="${BRAND_MARKS[source]}" alt="" /></a>`
             : price(current[key], current.currency);
-          return `<td>${value} ${previous ? change(current[key], previous[key]) : ""}</td>`;
+          // Foreign markets: what it comes to "na gotowo" under the ad price.
+          const turnkeyNote = current.turnkey && Number.isFinite(current.turnkey[key])
+            ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey[key], "PLN")} ${escapeMarketHtml(c.turnkeyShort)} ${previous?.turnkey ? change(current.turnkey[key], previous.turnkey[key]) : ""}</small>`
+            : "";
+          return `<td>${value} ${previous ? change(current[key], previous[key]) : ""}${turnkeyNote}</td>`;
         };
         rows.push(`
           <tr>
@@ -1860,7 +1898,7 @@
             <td><span class="mobileMarketSourceTag is${sourceClass(source)}"><i aria-hidden="true"></i>${escapeMarketHtml(source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile)}</span></td>
             <td>${current.count} ${previous ? change(current.count, previous.count) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
-            <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}</td>
+            <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${current.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey.p25, "PLN")} – ${price(current.turnkey.p75, "PLN")} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
             <td>${Number.isFinite(current.middleCount) ? current.middleCount : "—"} ${previous && Number.isFinite(previous.middleCount) ? change(current.middleCount, previous.middleCount) : ""}</td>
           </tr>`);
       });
@@ -1885,6 +1923,123 @@
         </div>
       </section>`;
   }
+
+  // ---- Page 3: price history of a favourite car ----------------------------
+  // Every "Analiza rynku" / "Odśwież dane" of a search adds a dated check;
+  // this page shows them for one favourite at a time: the medians over time
+  // (a line per market, foreign ones "na gotowo") and the full table.
+  const priceHistoryPage = document.querySelector("[data-mobile-price-history-page]");
+  // var: renderHistory() may redraw this page before this line has run.
+  var priceHistoryId = "";
+
+  function medianTrendHtml(entry) {
+    const c = copy();
+    const log = (entry.priceLog || []).filter((point) => MARKET_SOURCES.some((source) => point[source]));
+    if (log.length < 2) return `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.trendNeedsTwo)}</p>`;
+    const valueOf = (point, source) => {
+      const item = point[source];
+      if (!item) return null;
+      if (item.turnkey?.median) return item.turnkey.median;
+      // Checks saved before "na gotowo" was recorded: estimated from their median.
+      if (source !== "otomoto" && window.AUTOGOOD_TURNKEY) {
+        return window.AUTOGOOD_TURNKEY.turnkeyAverage({ price: item.median, currency: item.currency || SOURCE_CURRENCY[source] }, entry.filters).total;
+      }
+      return priceInPln(item.median, item.currency || SOURCE_CURRENCY[source]);
+    };
+    const series = MARKET_SOURCES.map((source) => ({
+      source,
+      points: log.map((point, index) => ({ index, value: valueOf(point, source) })).filter((item) => Number.isFinite(item.value)),
+    })).filter((line) => line.points.length);
+    const values = series.flatMap((line) => line.points.map((item) => item.value));
+    const low = Math.min(...values) * 0.97;
+    const high = Math.max(...values) * 1.03;
+    const width = 900;
+    const height = 240;
+    const left = 70;
+    const right = 20;
+    const top = 16;
+    const bottom = 34;
+    const x = (index) => left + (index / Math.max(1, log.length - 1)) * (width - left - right);
+    const y = (value) => top + ((high - value) / Math.max(1, high - low)) * (height - top - bottom);
+    const colors = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a" };
+    const ticks = [low, (low + high) / 2, high];
+    const labelEvery = Math.max(1, Math.ceil(log.length / 6));
+    return `
+      <svg class="mobileMarketTrendChart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeMarketHtml(c.trendTitle)}">
+        ${ticks.map((value) => `<line x1="${left}" x2="${width - right}" y1="${y(value)}" y2="${y(value)}" class="isGrid" /><text x="${left - 8}" y="${y(value) + 4}" text-anchor="end">${escapeMarketHtml(formatMarketPrice(value, "PLN"))}</text>`).join("")}
+        ${log.map((point, index) => (index % labelEvery === 0 || index === log.length - 1)
+          ? `<text x="${x(index)}" y="${height - 10}" text-anchor="middle">${escapeMarketHtml(formatHistoryDate(point.at).split(",")[0])}</text>` : "").join("")}
+        ${series.map((line) => `
+          <polyline fill="none" stroke="${colors[line.source]}" stroke-width="2.5" points="${line.points.map((item) => `${x(item.index)},${y(item.value)}`).join(" ")}" />
+          ${line.points.map((item) => `<circle cx="${x(item.index)}" cy="${y(item.value)}" r="4" fill="${colors[line.source]}"><title>${escapeMarketHtml(`${formatHistoryDate(log[item.index].at)} · ${formatMarketPrice(item.value, "PLN")}`)}</title></circle>`).join("")}`).join("")}
+      </svg>
+      <div class="mobileMarketLegend">
+        ${series.map((line) => `<span class="is${sourceClass(line.source)}"><i></i>${escapeMarketHtml(line.source === "otomoto" ? c.marketOtomoto : line.source === "blocket" ? c.marketBlocket : c.marketMobile)}${line.source === "otomoto" ? "" : ` · ${escapeMarketHtml(c.turnkeyShort)}`}</span>`).join("")}
+      </div>`;
+  }
+
+  function renderPriceHistoryPage() {
+    const priceHistoryPage = document.querySelector("[data-mobile-price-history-page]");
+    if (!priceHistoryPage) return;
+    const c = copy();
+    const favorites = marketHistory.filter((entry) => entry.pinned);
+    if (!favorites.some((entry) => entry.id === priceHistoryId)) {
+      priceHistoryId = favorites.find((entry) => entry.id === activeAnalysis?.historyId)?.id || favorites[0]?.id || "";
+    }
+    const entry = favorites.find((item) => item.id === priceHistoryId);
+    const title = (item) => [item.filters.brand, item.filters.model, item.filters.version].filter(Boolean).join(" ");
+    priceHistoryPage.innerHTML = `
+      <section class="mobileMarketCard mobileMarketPriceHistoryIntro">
+        ${blockTitle("calendar", c.priceHistoryHeading)}
+        <p>${escapeMarketHtml(c.priceHistoryIntro)}</p>
+        ${favorites.length ? `
+          <div class="mobileMarketPriceHistoryPicker" role="group" aria-label="${escapeMarketHtml(c.favoritesHeading)}">
+            ${favorites.map((item) => `<button class="mobileMarketImportClear${item.id === priceHistoryId ? " isPrimary" : ""}" type="button" data-price-history-pick="${escapeMarketHtml(item.id)}" aria-pressed="${item.id === priceHistoryId ? "true" : "false"}">★ ${escapeMarketHtml(title(item))} · ${(item.priceLog || []).length}</button>`).join("")}
+          </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.priceHistoryNoFavorites)}</p>`}
+      </section>
+      ${entry ? `
+        <section class="mobileMarketCard">
+          <div class="mobileMarketPriceHistoryHead">
+            <div>
+              <strong>${escapeMarketHtml(title(entry))}</strong>
+              <small>${escapeMarketHtml(historyMeta(entry.filters).join(" · "))}</small>
+            </div>
+            <div class="mobileMarketToolbarActions">
+              <button class="mobileMarketImportClear" type="button" data-price-history-open="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.analysisButton)} →</button>
+              <button class="mobileMarketImportClear isPrimary" type="button" data-price-history-refresh="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.refresh)}</button>
+            </div>
+          </div>
+          ${blockTitle("gauge", c.trendTitle)}
+          ${medianTrendHtml(entry)}
+        </section>
+        ${priceHistoryHtml(entry) || `<section class="mobileMarketCard"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.priceHistoryEmptyEntry)}</p></section>`}` : ""}`;
+  }
+
+  priceHistoryPage?.addEventListener("click", (event) => {
+    const pick = event.target.closest("[data-price-history-pick]");
+    if (pick) {
+      priceHistoryId = pick.dataset.priceHistoryPick;
+      renderPriceHistoryPage();
+      return;
+    }
+    const open = event.target.closest("[data-price-history-open]");
+    if (open) {
+      openFavorite(open.dataset.priceHistoryOpen);
+      return;
+    }
+    const refresh = event.target.closest("[data-price-history-refresh]");
+    if (refresh) {
+      // Fresh prices = a new check in this history (the analysis opens).
+      const entry = marketHistory.find((item) => item.id === refresh.dataset.priceHistoryRefresh);
+      if (!entry) return;
+      if (entry.listings.length >= 3) {
+        openHistoryAnalysis(entry.id);
+        refreshActiveAnalysis();
+      } else {
+        openFavorite(entry.id);
+      }
+    }
+  });
 
   // While the offers load: the analysis page with its cards drawn empty, and
   // the progress in its status line.
@@ -2107,7 +2262,9 @@
     const shownSources = pickedSources.length ? pickedSources : availableSources;
     // One chart, one currency: a marketplace alone in its own currency,
     // several together in PLN (the client pays in Poland).
-    displayCurrency = shownSources.length === 1 ? SOURCE_CURRENCY[shownSources[0]] : "PLN";
+    // Always PLN: Polish offers at their price, foreign ones "na gotowo"
+    // (what the client pays in Poland), so the dots compare like for like.
+    displayCurrency = "PLN";
     const rate = exchangeRate() || EUR_PLN_FALLBACK_RATE;
     const inDisplayCurrency = (listing) => convertPrice(listing.price, listing.currency || "EUR", displayCurrency);
     const marketListings = shownSources.flatMap((source) => cleaned[source]).map((listing) => ({
@@ -2138,6 +2295,9 @@
         title: listing.title,
         displacementCcm: listing.displacementCcm,
       }, filters, rates).total;
+      // The dot, the statistics of the chart and the table use this price.
+      listing.bruttoPln = listing.price;
+      listing.price = Math.round(listing.turnkeyPln);
     });
     // A price as the marketplace shows it: PLN, EUR, or SEK with its EUR value.
     const nativePrice = (value, source) => {
@@ -2163,8 +2323,8 @@
 
     if (hasListings) {
       const statistics = marketStatistics(marketListings);
-      // Several markets: one median per market in its own colour, and for a
-      // foreign market also its median "pod klucz" (dashed).
+      // Several markets: one median per market in its own colour (a foreign
+      // market's is "na gotowo", like its dots).
       const marketMedians = [];
       if (shownSources.length > 1) {
         const scaleMin = Math.min(...marketListings.map((listing) => listing.price));
@@ -2173,12 +2333,8 @@
           const own = marketListings.filter((listing) => listing.source === source);
           if (!own.length) return;
           const name = source === "otomoto" ? c.marketOtomoto : source === "blocket" ? c.marketBlocket : c.marketMobile;
-          marketMedians.push({ source, value: marketStatistics(own).median, label: `${c.median} ${name}` });
-          const turnkeyPrices = own.map((listing) => listing.turnkeyPln).filter(Boolean);
-          if (turnkeyPrices.length >= 3) {
-            const turnkeyMedian = convertPrice(percentile([...turnkeyPrices].sort((left, right) => left - right), 0.5), "PLN", displayCurrency);
-            if (turnkeyMedian <= scaleMax * 1.001) marketMedians.push({ source, value: turnkeyMedian, turnkey: true, label: `${name} ${c.turnkeyShort}` });
-          }
+          const foreign = own.some((listing) => listing.turnkeyPln);
+          marketMedians.push({ source, value: marketStatistics(own).median, turnkey: foreign, label: `${c.median} ${name}${foreign ? ` ${c.turnkeyShort}` : ""}` });
         });
         marketMedians.forEach((line) => {
           line.position = verticalMarketPosition(Math.min(Math.max(line.value, scaleMin), scaleMax), scaleMin, scaleMax);
@@ -2328,7 +2484,7 @@
       const renderPoint = ({ listing, x, y }) => {
           const tooltipClass = x > 0.72 ? " isTooltipLeft" : "";
           const details = describe(listing);
-          const original = listing.originalCurrency !== displayCurrency
+          const original = !listing.turnkeyPln && listing.originalCurrency !== displayCurrency
             ? formatMarketPrice(listing.originalPrice, listing.originalCurrency)
             : "";
           const title = fullTitle(listing);
@@ -2337,9 +2493,9 @@
               <span class="mobileMarketPointTooltip" aria-hidden="true">
                 ${title ? `<i class="mobileMarketPointTitle">${escapeMarketHtml(title)}</i>` : ""}
                 ${listing.subtitle ? `<i class="mobileMarketPointSubtitle">${escapeMarketHtml(listing.subtitle)}</i>` : ""}
-                <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
+                <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${listing.turnkeyPln ? ` <small>${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
                 ${details ? `<em>${escapeMarketHtml(details)}</em>` : ""}
-                ${listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</em>` : ""}
+                ${listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(listing.originalPrice, listing.source))}</em>` : ""}
                 <b class="is${sourceClass(listing.source)}">${escapeMarketHtml(sourceName(listing.source))}${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
               </span>`;
           const attributes = `class="mobileMarketPoint is${sourceClass(listing.source)}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
@@ -2375,7 +2531,16 @@
       let carVerdict = "";
       let carLocalVerdict = "";
       if (sameCar) {
-        const carPrice = convertPrice(recognised.carBruttoEur, "EUR", displayCurrency);
+        // A Polish ad at its price, any other car "na gotowo", like the dots.
+        const carPrice = recognised.pricePln
+          ? recognised.pricePln
+          : (window.AUTOGOOD_TURNKEY?.turnkeyAverage({
+            price: recognised.carBruttoEur,
+            currency: "EUR",
+            fuel: recognised.fuel,
+            title: recognised.title,
+            displacementCcm: recognised.displacementCcm,
+          }, filters).total || convertPrice(recognised.carBruttoEur, "EUR", displayCurrency));
         const carYear = Number((String(recognised.firstRegistration || "").match(/(?:19|20)\d{2}/) || [])[0]) || null;
         const carMileage = Number(recognised.mileageKm) || null;
         const cheaperThan = marketListings.filter((listing) => listing.price > carPrice).length;
@@ -2392,9 +2557,9 @@
         const diffPct = Math.round(((carPrice - statistics.median) / statistics.median) * 100);
         const diff = Math.abs(diffPct) < 1 ? c.atMedian
           : (diffPct < 0 ? c.belowMedian : c.aboveMedian).replace("{pct}", String(Math.abs(diffPct)));
-        const priceLabel = displayCurrency !== "EUR"
-          ? `${formatMarketPrice(carPrice)} (${formatMarketPrice(recognised.carBruttoEur, "EUR")})`
-          : formatMarketPrice(carPrice);
+        const priceLabel = recognised.pricePln
+          ? formatMarketPrice(carPrice)
+          : `${formatMarketPrice(carPrice)} ${c.turnkeyShort} (${c.adPrice}: ${formatMarketPrice(recognised.carBruttoEur, "EUR")})`;
         if (canJudge) carVerdict = c.yourCarVerdict.replace(c.yourCar, carLabel).replace("{price}", priceLabel).replace("{share}", String(share)).replace("{diff}", diff);
         // Against offers like it: the median price at its own mileage or year.
         const carValue = chartAxis === "mileage" ? carMileage : chartAxis === "year" ? carYear : null;
@@ -2536,7 +2701,7 @@
         </ul>` : ""}
 
         <div class="mobileMarketLegend">
-          ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${escapeMarketHtml(sourceName(source))}</span>`).join("")}
+          ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${escapeMarketHtml(sourceName(source))}${source !== "otomoto" && marketListings.some((listing) => listing.source === source && listing.turnkeyPln) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
           ${carMarker ? `<span class="isCar"><i></i>${escapeMarketHtml(c.yourCar)}</span>` : ""}
           ${trendLine ? `<span class="isTrend"><i></i>${escapeMarketHtml(chartAxis === "rank" ? c.curveLegend : c.trendLegend)}</span>` : ""}
           <span class="isBandLow"><i></i>${escapeMarketHtml(c.lowMarket)} · ${statistics.lowCount}</span>
@@ -2586,6 +2751,7 @@
           <span class="mobileMarketXCaption">${escapeMarketHtml(axisCaption)}</span>
         </div>
 
+          ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">${escapeMarketHtml(c.turnkeyAxisNote)}</p>` : ""}
           ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}
           ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.hiddenNoAxis, hiddenByAxis))}</p>` : ""}
 
@@ -2617,7 +2783,9 @@
                     <td class="mobileMarketTableTitle">${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}</td>
                     <td class="isNum">${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
                     <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} km` : "—")}</td>
-                    <td class="isNum"><b>${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</b>${listing.turnkeyPln ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
+                    <td class="isNum">${listing.turnkeyPln
+                      ? `<b class="mobileMarketTurnkeyPrice">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
+                      : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`}</td>
                     <td><span class="mobileMarketSourceCell"><span class="mobileMarketSourceTag is${sourceClass(listing.source)}"><i aria-hidden="true"></i>${escapeMarketHtml(sourceName(listing.source))}</span>${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : ""}</span></td>
                   </tr>`).join("")}
               </tbody>
@@ -2697,7 +2865,7 @@
             ${offersContent}
           </section>` : ""}
 
-        <div data-report-hide-copy data-report-list-hide>${priceHistoryHtml(historyEntry, reportSources)}</div>
+
       </article>`;
     window.AUTOGOOD_PREPARE_BOOKMARKLETS?.();
   }
@@ -3334,6 +3502,7 @@
     if (historyView) historyView.hidden = page !== "history";
     if (favoritesView) favoritesView.hidden = page !== "favorites";
     if (page === "favorites") renderFavoritesSearchPage();
+    if (page === "history") renderPriceHistoryPage();
     markCurrentPage();
     window.scrollTo({ top: 0, behavior: "smooth" });
   }

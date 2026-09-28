@@ -2835,3 +2835,87 @@
 .isReportList [data-report-list-hide] {
   display: none !important;
 }
+
+/* ---- "Na gotowo" on the chart, page 3 price history (2026-09-28) ---------- */
+.mobileMarketTurnkeyPrice {
+  display: block;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.mobileMarketStatsRow b .mobileMarketTurnkeyNote,
+.mobileMarketTable .mobileMarketTurnkeyNote {
+  color: var(--color-brand-pressed);
+}
+
+.mobileMarketAxisNote.isTurnkey {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.mobileMarketPriceHistoryIntro p {
+  margin: 0 0 var(--space-md);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.mobileMarketPriceHistoryPicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.mobileMarketPriceHistoryHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.mobileMarketPriceHistoryHead > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+
+.mobileMarketPriceHistoryHead strong {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 800;
+}
+
+.mobileMarketPriceHistoryHead small {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.mobileMarketTrendChart {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 280px;
+}
+
+.mobileMarketTrendChart line.isGrid {
+  stroke: var(--color-rule);
+  stroke-dasharray: 3 4;
+}
+
+.mobileMarketTrendChart text {
+  fill: var(--color-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mobileMarketTrendEmpty {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+[data-mobile-price-history-page] > .mobileMarketCard:first-child {
+  margin-top: 0;
+}
