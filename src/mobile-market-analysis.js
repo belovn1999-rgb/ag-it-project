@@ -1768,9 +1768,10 @@
       const label = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile;
       return `<button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-mobile-market-pick="${source}" aria-pressed="${on ? "true" : "false"}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
     }).join("");
-    // The offer counts of markets left out are dimmed.
-    [["mobile", "[data-mobile-search-count-mobilede]"], ["otomoto", "[data-mobile-search-count]"], ["blocket", "[data-mobile-search-count-blocket]"]]
-      .forEach(([source, selector]) => document.querySelector(selector)?.closest(".mobileSearchCountMarket")?.classList.toggle("isOff", !chartSources[source]));
+    // Only the compared markets keep their count and link under the filters.
+    document.querySelectorAll(".mobileSearchCountMarket[data-market]").forEach((item) => {
+      item.hidden = !chartSources[item.dataset.market];
+    });
   }
 
   function setChartSources(next) {
@@ -3207,6 +3208,47 @@
   });
 
   window.AUTOGOOD_MOBILE_LOG_SEARCH = logSearchToHistory;
+
+  // Entering filters writes the search into the history by itself (a few
+  // seconds after the last change). While the same car is being refined, one
+  // entry follows the changes instead of a new entry per click; an entry
+  // opened from the history for editing is left alone.
+  let autoLogTimer = 0;
+  let autoLogId = "";
+  function autoLogSearch() {
+    if (editingHistoryId) return;
+    let filters;
+    try {
+      filters = readManualFields();
+    } catch {
+      return;
+    }
+    if (!filters.brand || !filters.model) return;
+    let searchUrl;
+    try {
+      searchUrl = buildMobileDeSearchUrl(filters);
+    } catch {
+      return;
+    }
+    refreshMarketHistory();
+    const same = historyEntryForFilters(filters);
+    if (same) {
+      autoLogId = same.pinned ? "" : same.id;
+      return;
+    }
+    const draft = autoLogId && marketHistory.find((entry) => entry.id === autoLogId && !entry.pinned);
+    if (draft && draft.filters.brand === filters.brand && draft.filters.model === filters.model) {
+      updateMarketSnapshot(draft.id, filters, [], "", searchUrl);
+    } else {
+      autoLogId = createMarketSnapshot(filters, [], "", searchUrl)?.id || "";
+    }
+  }
+  const scheduleAutoLog = () => {
+    window.clearTimeout(autoLogTimer);
+    autoLogTimer = window.setTimeout(autoLogSearch, 2500);
+  };
+  document.querySelector(".mobileManualForm")?.addEventListener("input", scheduleAutoLog);
+  document.querySelector(".mobileManualForm")?.addEventListener("change", scheduleAutoLog);
   // Used by the sticky panel to show how many offers the filters match.
   window.AUTOGOOD_MOBILE_OTOMOTO_COUNT = async (filters) => (await fetchOtomotoPage(buildOtomotoSearchUrl(filters), 1)).total;
   if (!window.AUTOGOOD_MOBILE_MARKET_PROVIDER) window.AUTOGOOD_MOBILE_MARKET_PROVIDER = otomotoProvider;

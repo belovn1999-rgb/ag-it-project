@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=pages-20260928" />
-    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=pages-20260928" />
+  <link rel="stylesheet" href="./src/mobile.css?v=summary2-20260928" />
+    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=summary2-20260928" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
@@ -95,7 +95,27 @@
                 <svg aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-filter-navigation-20260831#rotate-ccw"></use></svg>
               </button>
             </div>
-            <div class="mobileSelectedFilters" data-mobile-selected-filters aria-live="polite"></div>
+            <!-- The chosen filters in the analysis' layout, the favourite star and
+                 the live offer count with a link per compared market. -->
+            <section class="mobileSearchSummary">
+              <button class="mobileSearchCountSaveButton mobileSearchSummaryStar" type="button" data-mobile-market-history-save aria-pressed="false" aria-label="Zapisz na stałe" title="Zapisz na stałe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
+              <div class="mobileSelectedFilters mobileSearchSummaryBody" data-mobile-selected-filters aria-live="polite"></div>
+              <div class="mobileSearchSummaryFoot">
+                <span class="mobileSearchSummaryFootLabel" data-i18n="offerCountLabel">Aktualne oferty</span>
+                <div class="mobileSearchCountMarket" data-market="mobile">
+                  <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
+                  <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de"><img src="./assets/brands/mobile-de-logo.svg" alt="" /></a>
+                </div>
+                <div class="mobileSearchCountMarket" data-market="otomoto">
+                  <strong data-mobile-search-count aria-live="polite">—</strong>
+                  <a class="agBrandLink isOtomoto" href="#" target="_blank" rel="noopener" data-mobile-otomoto-search aria-label="Szukaj na otomoto.pl" title="Szukaj na otomoto.pl"><img src="./assets/brands/otomoto-logo.svg" alt="" /></a>
+                </div>
+                <div class="mobileSearchCountMarket" data-market="blocket">
+                  <strong data-mobile-search-count-blocket aria-live="polite">—</strong>
+                  <a class="agBrandLink isBlocket" href="#" target="_blank" rel="noopener" data-mobile-blocket-search aria-label="Szukaj na blocket.se" title="Szukaj na blocket.se"><img src="./assets/brands/blocket-logo.svg" alt="" /></a>
+                </div>
+              </div>
+            </section>
           </div>
           <div class="mobileManualForm">
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-vehicle">
@@ -506,44 +526,6 @@
               </div>
             </section>
           </div>
-          <div class="mobileSearchCountColumn">
-            <aside class="mobileSearchCountPanel">
-              <div class="mobileSearchCountHeader">
-                <p data-i18n="offerCountLabel">Aktualne oferty</p>
-                <button class="mobileSearchCountSaveButton" type="button" data-mobile-market-history-save aria-pressed="false" aria-label="Zapisz na stałe" title="Zapisz na stałe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
-              </div>
-              <div class="mobileSearchCountMarkets">
-                <div class="mobileSearchCountMarket">
-                  <span>mobile.de</span>
-                  <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
-                </div>
-                <div class="mobileSearchCountMarket">
-                  <span>otomoto.pl</span>
-                  <strong data-mobile-search-count aria-live="polite">—</strong>
-                </div>
-                <div class="mobileSearchCountMarket">
-                  <span>blocket.se</span>
-                  <strong data-mobile-search-count-blocket aria-live="polite">—</strong>
-                </div>
-              </div>
-              <div class="mobileSearchCountActions">
-                <div class="mobileSearchCountLogos">
-                  <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de">
-                    <img src="./assets/brands/mobile-de-logo.svg" alt="" />
-                  </a>
-                  <a class="agBrandLink isOtomoto" href="#" target="_blank" rel="noopener" data-mobile-otomoto-search aria-label="Szukaj na otomoto.pl" title="Szukaj na otomoto.pl">
-                    <img src="./assets/brands/otomoto-logo.svg" alt="" />
-                  </a>
-                  <a class="agBrandLink isBlocket" href="#" target="_blank" rel="noopener" data-mobile-blocket-search aria-label="Szukaj na blocket.se" title="Szukaj na blocket.se">
-                    <img src="./assets/brands/blocket-logo.svg" alt="" />
-                  </a>
-                </div>
-                <button class="mobileSearchCountButton mobileSearchCountButtonAnalysis" type="button" data-mobile-market-analysis-open>
-                  <span data-market-i18n="analysisButton">Analiza rynku</span> <i aria-hidden="true">&#8594;</i>
-                </button>
-              </div>
-            </aside>
-          </div>
           <div class="mobileManualSearchActions">
             <p class="mobileMarketSearchStatus" aria-live="polite" data-mobile-market-search-status></p>
             <div class="mobileManualSearchButtons">
@@ -618,10 +600,10 @@
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
-    <script src="./src/mobile.js?v=pages-20260928"></script>
+    <script src="./src/mobile.js?v=summary2-20260928"></script>
     <script src="./src/blocket-search.js?v=blocket-analysis-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=cards3-20260926"></script>
-    <script src="./src/mobile-market-analysis.js?v=pages-20260928"></script>
+    <script src="./src/mobile-market-analysis.js?v=summary2-20260928"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>

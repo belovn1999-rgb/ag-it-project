@@ -1407,14 +1407,24 @@ window.AUTOGOOD_INLINE_ICON = inlineIconHtml;
 // a title line, then four columns — body and engine, mileage and drive,
 // equipment, other information. Columns are {heading, rows: [[label, value]]}
 // or {heading, text}; rows without a value are left out.
-function specSheetHtml({ kicker = "", title = "", meta = "", aside = "", columns = [] }) {
+// Rows may carry a 4th item and items a target: a selector of the form field
+// they come from, so a click takes the user to that field.
+function specSheetHtml({ kicker = "", title = "", titleTarget = "", meta = "", aside = "", columns = [] }) {
+  const targetAttr = (target) => (target ? ` data-mobile-summary-target="${escapeHtml(target)}" role="button" tabindex="0"` : "");
   const columnHtml = columns.map((column) => {
     const rows = (column.rows || []).filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "");
     const headingIcon = column.icon ? inlineIconHtml(column.icon) : "";
     const long = column.text !== undefined && column.text.length > 180;
-    const body = column.text !== undefined
-      ? `<p class="agSpecText${column.muted ? " isMuted" : ""}${long ? " isClamped" : ""}">${escapeHtml(column.text)}</p>${long ? `<button class="agSpecMore" type="button" data-spec-expand>${escapeHtml(copy[state.lang].specShowAll)}</button>` : ""}`
-      : `<dl>${rows.map(([label, value, icon]) => `<div><dt>${icon ? inlineIconHtml(icon) : ""}<span>${escapeHtml(label)}</span></dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>`;
+    let body;
+    if (column.items) {
+      body = column.items.length
+        ? `<p class="agSpecText agSpecItems">${column.items.map((item) => `<span${targetAttr(item.target)}>${escapeHtml(item.text)}</span>`).join('<i aria-hidden="true"> - </i>')}</p>`
+        : `<p class="agSpecText isMuted">${escapeHtml(column.empty || "")}</p>`;
+    } else if (column.text !== undefined) {
+      body = `<p class="agSpecText${column.muted ? " isMuted" : ""}${long ? " isClamped" : ""}">${escapeHtml(column.text)}</p>${long ? `<button class="agSpecMore" type="button" data-spec-expand>${escapeHtml(copy[state.lang].specShowAll)}</button>` : ""}`;
+    } else {
+      body = `<dl>${rows.map(([label, value, icon, target]) => `<div${targetAttr(target)}><dt>${icon ? inlineIconHtml(icon) : ""}<span>${escapeHtml(label)}</span></dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>`;
+    }
     return `<section class="agSpecColumn"><h4>${headingIcon}${escapeHtml(column.heading)}</h4>${body}</section>`;
   }).join("");
   return `
@@ -1422,11 +1432,11 @@ function specSheetHtml({ kicker = "", title = "", meta = "", aside = "", columns
       <div class="agSpecHead">
         <div class="agSpecTitle">
           ${kicker ? `<span class="agSpecKicker">${escapeHtml(kicker)}</span>` : ""}
-          <div class="agSpecTitleLine"><strong>${escapeHtml(title)}</strong>${meta ? `<span class="agSpecDate">${escapeHtml(meta)}</span>` : ""}</div>
+          <div class="agSpecTitleLine"><strong${targetAttr(titleTarget)}>${escapeHtml(title)}</strong>${meta ? `<span class="agSpecDate">${escapeHtml(meta)}</span>` : ""}</div>
         </div>
         ${aside ? `<div class="agSpecAside">${aside}</div>` : ""}
       </div>
-      <div class="agSpecColumns" style="grid-template-columns:${columns.map((column) => (column.text !== undefined ? "minmax(0, 1.6fr)" : "minmax(0, 1fr)")).join(" ")}">${columnHtml}</div>
+      <div class="agSpecColumns" style="grid-template-columns:${columns.map((column) => (column.text !== undefined || column.items ? "minmax(0, 1.6fr)" : "minmax(0, 1fr)")).join(" ")}">${columnHtml}</div>
     </div>`;
 }
 
@@ -2150,72 +2160,79 @@ function priceFilterSummary(from, to) {
   return `${copy[state.lang].priceRangeLabel}: ${fromLabel} - ${toLabel} EUR`;
 }
 
+// The chosen filters laid out like "Parametry poszukiwania" in the analysis,
+// smaller; every value leads to its field on the form.
 function updateSelectedFiltersSummary() {
   if (!els.selectedFilters) return;
   const c = copy[state.lang];
   const filters = readManualFields();
-  const parts = [
-    { value: [filters.brand, filters.model].filter(Boolean).join(" - "), icon: "", primary: true, target: els.brand },
-    { value: filters.version, icon: "list", target: els.version },
-    ...selectedInputSummaryParts(els.fuels, "fuel"),
-    { value: filters.body ? optionLabel(bodyOptions, filters.body) : "", icon: "car", target: els.bodyChoices },
-    { value: priceFilterSummary(filters.priceFrom, filters.priceTo), icon: "tag", target: els.priceFrom },
-    { value: rangeFilterSummary(c.mileageRangeLabel, filters.mileageFrom, filters.mileageTo, "km"), icon: "gauge", target: els.mileageFrom },
-    { value: rangeFilterSummary(c.yearRangeLabel, filters.yearFrom, filters.yearTo), icon: "calendar", target: els.yearFrom },
-    { value: rangeFilterSummary(c.displacementRangeLabel, filters.displacementFrom, filters.displacementTo, "ccm"), icon: "settings", target: els.displacementFrom },
-    { value: rangeFilterSummary(c.powerRangeLabel, filters.powerFrom, filters.powerTo, "KM"), icon: "zap", target: els.powerFrom },
-    { value: rangeFilterSummary(c.seatsRangeLabel, filters.seatsFrom, filters.seatsTo), icon: "armchair", target: els.seatsFrom },
-    { value: rangeFilterSummary(c.doorsLabel, filters.doorsFrom, filters.doorsTo), icon: "car", target: els.doorsFrom },
-    selectedRadioSummaryPart(els.gearbox, filters.gearbox, "git-branch"),
-    selectedRadioSummaryPart(els.drive, filters.drive, "route"),
-    ...selectedInputSummaryParts(els.interiorMaterials, "armchair"),
-    selectedRadioSummaryPart(els.airConditioning, filters.airConditioning, "settings"),
-    selectedRadioSummaryPart(els.trailerCoupling, filters.trailerCoupling, "route"),
-    ...selectedInputSummaryParts(els.features, "settings"),
-    ...selectedInputSummaryParts(els.parkingSensors, "car"),
-    selectedRadioSummaryPart(els.cruiseControl, filters.cruiseControl, "gauge"),
-    ...selectedInputSummaryParts(els.exteriorColors, "palette"),
-    ...selectedInputSummaryParts(els.interiorColors, "palette"),
-    { value: filters.matte ? c.matteLabel : "", icon: "palette", target: els.matte },
-    { value: filters.metallic ? c.metallicLabel : "", icon: "palette", target: els.metallic },
-    { value: filters.nonSmoking ? c.nonSmokingLabel : "", icon: "settings", target: els.nonSmoking },
-    { value: filters.roadworthy ? c.roadworthyLabel : "", icon: "check", target: els.roadworthy },
-    { value: els.vatLabel?.value, icon: "percent", target: els.vatLabel },
-    ...selectedInputSummaryParts(els.countries, "map-pin"),
-    { value: els.sellerLabel?.value, icon: "store", target: els.sellerLabel },
-    { value: filters.damagedVehicles === "show" ? els.damagedVehiclesLabel?.value : "", icon: "alert", target: els.damagedVehiclesLabel },
-  ].filter((part) => part?.value);
-
-  els.selectedFilters.replaceChildren();
-  if (!parts.length) {
-    els.selectedFilters.textContent = c.selectedFiltersEmpty;
-    return;
-  }
-
-  parts.forEach((part, index) => {
-    if (index) {
-      const separator = document.createElement("span");
-      separator.className = "mobileSelectedFilterSeparator";
-      separator.textContent = "-";
-      els.selectedFilters.append(separator);
-    }
-
-    const item = document.createElement("button");
-    item.type = "button";
-    item.className = `mobileSelectedFilterItem${part.primary ? " isVehicle" : ""}`;
-    const target = summaryTargetFor(part.target);
-    if (target) item.dataset.mobileSummaryTarget = target;
-    item.title = part.value;
-    if (part.icon) {
-      const icon = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      icon.setAttribute("aria-hidden", "true");
-      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-      use.setAttribute("href", `./src/mobile-icons.svg?v=manual-seats-roadworthy-20260902#${part.icon}`);
-      icon.append(use);
-      item.append(icon);
-    }
-    item.append(document.createTextNode(part.value));
-    els.selectedFilters.append(item);
+  const numbers = new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "pl-PL");
+  const any = c.specAny;
+  const range = (from, to, unit = "", plain = false) => {
+    const format = (value) => (plain || !/^\d+$/.test(String(value)) ? String(value) : numbers.format(Number(value)));
+    const suffix = unit ? ` ${unit}` : "";
+    if (from && to) return from === to ? `${format(from)}${suffix}` : `${format(from)} – ${format(to)}${suffix}`;
+    if (from) return `${c.specFrom} ${format(from)}${suffix}`;
+    if (to) return `${c.specTo} ${format(to)}${suffix}`;
+    return any;
+  };
+  const target = (element) => summaryTargetFor(Array.isArray(element) ? element[0] : element);
+  const checked = (inputs) => inputs.filter((input) => input.checked);
+  const labelOfRadio = (inputs, value) => (value && value !== "any" ? optionLabelText(inputs.find((input) => input.value === value) || inputs[0]) : "");
+  const fuels = checked(els.fuels);
+  const items = (inputs) => checked(inputs).map((input) => ({ text: optionLabelText(input), target: summaryTargetFor(input) }));
+  const radioItem = (inputs, value) => {
+    const input = value && value !== "any" ? inputs.find((candidate) => candidate.value === value) : null;
+    return input ? [{ text: optionLabelText(input), target: summaryTargetFor(input) }] : [];
+  };
+  const flagItem = (input, on) => (on && input ? [{ text: optionLabelText(input), target: summaryTargetFor(input) }] : []);
+  const equipment = [
+    ...items(els.interiorMaterials),
+    ...radioItem(els.airConditioning, filters.airConditioning),
+    ...items(els.parkingSensors),
+    ...radioItem(els.cruiseControl, filters.cruiseControl),
+    ...radioItem(els.trailerCoupling, filters.trailerCoupling),
+    ...items(els.features),
+    ...items(els.exteriorColors),
+    ...flagItem(els.metallic, filters.metallic),
+    ...flagItem(els.matte, filters.matte),
+    ...checked(els.interiorColors).map((input) => ({ text: `${c.interiorColorLabel}: ${optionLabelText(input)}`, target: summaryTargetFor(input) })),
+  ];
+  const countries = checked(els.countries).map(optionLabelText);
+  const status = [
+    filters.roadworthy ? optionLabelText(els.roadworthy) : "",
+    filters.nonSmoking ? optionLabelText(els.nonSmoking) : "",
+    filters.damagedVehicles === "show" ? els.damagedVehiclesLabel?.value : "",
+  ].filter(Boolean);
+  const title = [filters.brand, filters.model, filters.version].filter(Boolean).join(" ");
+  els.selectedFilters.innerHTML = specSheetHtml({
+    kicker: c.specSearchKicker,
+    title: title || c.selectedFiltersEmpty,
+    titleTarget: summaryTargetFor(els.brand),
+    columns: [
+      { heading: c.specEngineHeading, rows: [
+        [c.specBody, filters.body ? optionLabel(bodyOptions, filters.body) : any, "car", target(els.bodyChoices)],
+        [c.specEngineType, fuels.length ? fuels.map(optionLabelText).join(", ") : any, "fuel", target(els.fuels)],
+        [c.specDisplacement, range(filters.displacementFrom, filters.displacementTo, "ccm"), "settings", target(els.displacementFrom)],
+        [c.specPower, range(filters.powerFrom, filters.powerTo, "KM"), "zap", target(els.powerFrom)],
+        ...(filters.seatsFrom || filters.seatsTo ? [[c.seatsRangeLabel, range(filters.seatsFrom, filters.seatsTo, "", true), "armchair", target(els.seatsFrom)]] : []),
+        ...(filters.doorsFrom || filters.doorsTo ? [[c.doorsLabel, range(filters.doorsFrom, filters.doorsTo, "", true), "car", target(els.doorsFrom)]] : []),
+      ] },
+      { heading: c.specUsageHeading, rows: [
+        [c.specMileage, range(filters.mileageFrom, filters.mileageTo, "km"), "gauge", target(els.mileageFrom)],
+        [c.specRegistration, range(filters.yearFrom, filters.yearTo, "", true), "calendar", target(els.yearFrom)],
+        [c.specGearbox, labelOfRadio(els.gearbox, filters.gearbox) || any, "git-branch", target(els.gearbox)],
+        [c.specDrive, labelOfRadio(els.drive, filters.drive) || any, "route", target(els.drive)],
+      ] },
+      { heading: c.specEquipmentHeading, items: equipment, empty: c.specNoEquipment },
+      { heading: c.specOtherHeading, rows: [
+        [c.specCountry, countries.length ? countries.join(", ") : any, "map-pin", target(els.countries)],
+        [c.specStatus, status.length ? status.join(", ") : any, "check", target(els.roadworthy)],
+        [c.specVat, filters.vat ? els.vatLabel?.value || any : any, "percent", target(els.vatLabel)],
+        [c.specSeller, filters.seller ? els.sellerLabel?.value || any : any, "store", target(els.sellerLabel)],
+        [c.specPrice, range(filters.priceFrom, filters.priceTo, "EUR"), "tag", target(els.priceFrom)],
+      ] },
+    ],
   });
 }
 
@@ -3064,6 +3081,8 @@ function applyRecognizedManualFields(data) {
   renderModelOptions(next.model);
   updateFuelSummary();
   updateSelectedFiltersSummary();
+  // Counts, folded cards and the history follow like after a manual change.
+  document.querySelector(".mobileManualForm")?.dispatchEvent(new Event("change", { bubbles: true }));
 }
 
 function calculatorUrl(scenario) {
@@ -3412,6 +3431,13 @@ document.addEventListener("click", (event) => {
 });
 
 document.addEventListener("keydown", (event) => {
+  // The summary's values are buttons for the keyboard too.
+  const summaryTarget = (event.key === "Enter" || event.key === " ") && event.target.closest?.("[data-mobile-summary-target]");
+  if (summaryTarget) {
+    event.preventDefault();
+    focusManualFilter(summaryTarget.dataset.mobileSummaryTarget);
+    return;
+  }
   if (event.key === "Enter") {
     const input = event.target.closest?.(".mobileComboControl[data-mobile-options] input:not([readonly])");
     const control = input?.closest(".mobileComboControl[data-mobile-options]");
