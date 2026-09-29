@@ -99,7 +99,7 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 |---|---|---|---|
 | VAT odliczany | `vat=1` ✅ | `filter_enum_vat=1` (Faktura VAT) ✅ | |
 | VAT marża | `vat=0` ✅ | `filter_enum_vat_discount=1` ✅ | |
-| Sprzedawca | `st`: dealer `DEALER`, private `FSBO`, company `COMM_FSBO` ✅ | `private_business`: `private` / `business` ≈ | dealer и firma у otomoto одно `business` |
+| Sprzedawca | `st`: dealer `DEALER`, private `FSBO`, company `COMM_FSBO` ✅ | `private_business`: `private` / `business` ≈ | по умолчанию `dealer` (дилер/комис, без частных); dealer и firma у otomoto одно `business` |
 | Kraj | `cn` (можно несколько) ✅ | ✗ | правило 5 |
 | Uszkodzone | `dam=false` (по умолчанию скрыть) ✅ | `filter_enum_damaged=0` ✅ | |
 | Na chodzie | `rtd=true` ✅ | ✗ | |
@@ -297,3 +297,4 @@ Blocket, все неотправленные названы пользовате
 | 09-27 | Claude | Этот справочник: всё знание о фильтрах собрано в одном файле | этот коммит |
 | 09-27 | Claude | blocket.se: третья площадка — каталог, перенос всех фильтров, предупреждения, живой счётчик, логотипы, аудит | этот коммит |
 | 09-27 | Claude | blocket.se в анализе рынка (выборка, места, SEK, шведские стоп-слова) | этот коммит |
+| 09-29 | Codex | Значение продавца по умолчанию — `dealer` («Dealer / komis»): mobile.de `st=DEALER`, otomoto `private_business=business`, blocket `dealer_segment=2`; явный выбор пользователя и старые сохранённые фильтры не меняются | этот коммит |
