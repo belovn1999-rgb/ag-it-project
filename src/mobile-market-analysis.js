@@ -2647,8 +2647,9 @@
       }).filter((row) => row.stats.count);
       const priceCell = (row, key) => {
         const main = nativePrice(row.stats[key], row.source);
+        // A foreign ad's price is gross ("brutto"); under it the price ready in Poland.
         return row.turnkeyStats
-          ? `${escapeMarketHtml(main)}<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>`
+          ? `${escapeMarketHtml(main)} <small class="mobileMarketGrossNote">brutto</small><small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>`
           : escapeMarketHtml(main);
       };
       const rangeCell = (row) => {
