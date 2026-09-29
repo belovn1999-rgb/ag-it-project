@@ -2956,3 +2956,8 @@ label.isSummaryFocus {
   box-shadow: inset 0 0 0 1px #b88900;
   background: color-mix(in srgb, #f6c343 7%, var(--color-surface));
 }
+
+.mobileLinkSource .isBlocket input:checked + span {
+  background: #d0101a;
+  color: #fff;
+}

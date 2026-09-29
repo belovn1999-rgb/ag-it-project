@@ -498,13 +498,17 @@
   let chartSources = (() => {
     try {
       const saved = JSON.parse(localStorage.getItem(MARKETS_STORAGE_KEY) || "null");
+      // Blocket starts switched off (owner, 2026-09-29): once for choices saved earlier.
+      const blocketReset = localStorage.getItem("autogood.mobile.markets.blocketOff") !== "1";
+      if (blocketReset) localStorage.setItem("autogood.mobile.markets.blocketOff", "1");
       if (saved && ["otomoto", "mobile", "blocket"].some((source) => saved[source])) {
-        return { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), blocket: Boolean(saved.blocket) };
+        const picked = { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), blocket: blocketReset ? false : Boolean(saved.blocket) };
+        if (picked.otomoto || picked.mobile || picked.blocket) return picked;
       }
     } catch {
       // Unreadable storage: all markets.
     }
-    return { otomoto: true, mobile: true, blocket: true };
+    return { otomoto: true, mobile: true, blocket: false };
   })();
   let chartAxis = "rank";
   let displayCurrency = "EUR";
@@ -2901,7 +2905,8 @@
       kicker: window.AUTOGOOD_SPEC_COPY?.().specSearchKicker || c.searchHeading,
       title: [filters.brand, filters.model, filters.version].filter(Boolean).join(" "),
       meta: dataDate && hasListings ? c.checkedAt.replace("{date}", formatHistoryDate(dataDate)) : "",
-      aside: sourcesPicker,
+      // The same favourite star as on the search page.
+      aside: `<button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${sourcesPicker}`,
       columns: searchSpecColumns(filters, reportSources),
     }) || "";
     analysisContent.innerHTML = `
@@ -3385,6 +3390,19 @@
   });
 
   analysisContent.addEventListener("click", (event) => {
+    const analysisStar = event.target.closest("[data-mobile-market-analysis-star]");
+    if (analysisStar && activeAnalysis) {
+      refreshMarketHistory();
+      const entry = marketHistory.find((item) => item.id === activeAnalysis.historyId) || historyEntryForFilters(activeAnalysis.filters);
+      if (entry) setHistoryPinned(entry.id, !entry.pinned);
+      else {
+        const snapshot = createMarketSnapshot(activeAnalysis.filters, activeAnalysis.listings, activeAnalysis.sourceFileName || "", activeAnalysis.searchUrl, true);
+        if (snapshot) activeAnalysis = { ...activeAnalysis, historyId: snapshot.id };
+      }
+      renderAnalysis();
+      updateHistorySaveButtons();
+      return;
+    }
     const removeFavorite = event.target.closest("[data-mobile-market-favorite-remove]");
     if (removeFavorite) {
       setHistoryPinned(removeFavorite.dataset.mobileMarketFavoriteRemove, false);

@@ -63,6 +63,9 @@ const copy = {
     recognitionViaBookmarklet: "Ogłoszenie otwarte w nowej karcie — kliknij tam zakładkę „AUTOGOOD”, a dane wpiszą się same.",
     recognitionFromBookmarklet: "Dane pobrane z mobile.de przez zakładkę AUTOGOOD.",
     recognitionFromOtomoto: "Dane pobrane z ogłoszenia otomoto.pl.",
+    recognitionFromBlocket: "Dane pobrane z ogłoszenia blocket.se.",
+    blocketAdFailed: "Nie udało się odczytać ogłoszenia blocket.se. Sprawdź link i spróbuj ponownie.",
+    blocketLinkExpected: "To nie jest link do ogłoszenia blocket.se.",
     otomotoAdFailed: "Nie udało się odczytać ogłoszenia otomoto.pl. Sprawdź link i spróbuj ponownie.",
     otomotoLinkExpected: "To nie jest link do ogłoszenia otomoto.pl.",
     bookmarkletHint: "Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.",
@@ -337,6 +340,9 @@ const copy = {
     recognitionViaBookmarklet: "Объявление открыто в новой вкладке — нажми там закладку «AUTOGOOD», и данные заполнятся сами.",
     recognitionFromBookmarklet: "Данные получены с mobile.de через закладку AUTOGOOD.",
     recognitionFromOtomoto: "Данные получены из объявления otomoto.pl.",
+    recognitionFromBlocket: "Данные получены из объявления blocket.se.",
+    blocketAdFailed: "Не удалось прочитать объявление blocket.se. Проверь ссылку и попробуй ещё раз.",
+    blocketLinkExpected: "Это не ссылка на объявление blocket.se.",
     otomotoAdFailed: "Не удалось прочитать объявление otomoto.pl. Проверь ссылку и попробуй ещё раз.",
     otomotoLinkExpected: "Это не ссылка на объявление otomoto.pl.",
     bookmarkletHint: "Перетащи эту кнопку на панель закладок. Потом нажимай её на странице объявления или списка mobile.de.",
@@ -3781,7 +3787,8 @@ function setLinkSource(source) {
   document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
     input.checked = input.value === source;
   });
-  els.url.placeholder = source === "otomoto" ? "https://www.otomoto.pl/osobowe/oferta/..." : "https://suchen.mobile.de/...";
+  els.url.placeholder = source === "otomoto" ? "https://www.otomoto.pl/osobowe/oferta/..."
+    : source === "blocket" ? "https://www.blocket.se/mobility/item/..." : "https://suchen.mobile.de/...";
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
   if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
@@ -3794,8 +3801,100 @@ document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
 els.url.addEventListener("input", () => {
   const value = els.url.value.trim();
   if (isOtomotoUrl(value)) setLinkSource("otomoto");
+  else if (isBlocketUrl(value)) setLinkSource("blocket");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
 });
+
+// ---- Blocket.se ad links -----------------------------------------------------
+// The ad page (through the reader proxy) carries a schema.org Product with the
+// price in SEK and the specs as label/value pairs ("Modellår|2018|Miltal|…").
+function isBlocketUrl(value) {
+  return /^https:\/\/(www\.)?blocket\.se\/(mobility\/item|annons)\//.test(String(value || "").trim());
+}
+
+const BLOCKET_BODY_TYPES = { kombi: "estate", halvkombi: "hatchback", sedan: "sedan", suv: "suv", "coupé": "coupe", coupe: "coupe", cab: "cabrio", "småbil": "small car", familjebuss: "van", minibuss: "van", pickup: "pickup" };
+const BLOCKET_FUELS = [[/plug-in/i, "plug-in hybrid"], [/el(?!.*hybrid)/i, "electric"], [/hybrid/i, "hybrid"], [/diesel/i, "diesel"], [/bensin|etanol|gas/i, "petrol"]];
+
+async function loadBlocketAd(sourceUrl) {
+  const c = copy[state.lang];
+  setStatus("loading");
+  state.data = null;
+  renderData();
+  try {
+    const proxy = window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+    const response = await fetch(`${proxy}${sourceUrl}`, { headers: { "x-respond-with": "html" } });
+    if (!response.ok) throw new Error(String(response.status));
+    const html = await response.text();
+    const product = [...html.matchAll(/<script type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+      .map((match) => { try { return JSON.parse(match[1]); } catch { return null; } })
+      .find((item) => item?.["@type"] === "Product");
+    const priceSek = Number(product?.offers?.price) || 0;
+    if (!priceSek) throw new Error(c.blocketAdFailed);
+    // Page text as "label|value|label|value…".
+    const text = html.replace(/<script[\s\S]*?<\/script>/g, "").replace(/<style[\s\S]*?<\/style>/g, "")
+      .replace(/<[^>]+>/g, "|").replace(/&#160;|&nbsp;/g, " ").replace(/\s*\|[\s|]*/g, "|");
+    const field = (...labels) => {
+      for (const label of labels) {
+        const match = text.match(new RegExp(`\\|${label}\\|([^|]{1,60})\\|`, "i"));
+        if (match) return match[1].trim();
+      }
+      return "";
+    };
+    const make = field("Märke");
+    const model = field("Modell");
+    const name = String(product.name || [make, model].filter(Boolean).join(" "));
+    const subtitleMatch = text.indexOf(`|${name}|`);
+    const subtitle = subtitleMatch >= 0 ? (text.slice(subtitleMatch + name.length + 2).split("|")[0] || "") : "";
+    const title = [name, subtitle && !/^Modellår$/i.test(subtitle) ? subtitle : ""].filter(Boolean).join(" ");
+    // Swedish "mil" = 10 km.
+    const mil = Number(field("Miltal").replace(/[^\d]/g, "")) || 0;
+    const fuelLabel = field("Drivmedel");
+    const fuelWord = (BLOCKET_FUELS.find(([pattern]) => pattern.test(fuelLabel)) || [])[1] || "";
+    const bodyLabel = field("Biltyp");
+    const powerHp = Number(field("Hästkrafter", "Effekt", "Motoreffekt").replace(/[^\d]/g, "")) || null;
+    const displacementCcm = Number(field("Motorstorlek", "Motorvolym", "Slagvolym").replace(/[^\d]/g, "")) || null;
+    const driveLabel = field("Drivhjul");
+    const sekPln = typeof sekPlnRate === "function" ? sekPlnRate() : 0.4;
+    const pricePln = Math.round(priceSek * sekPln);
+    const engineTypeIndex = classifyEngineType(`${fuelWord} ${title}`, displacementCcm);
+    state.data = {
+      sourceUrl,
+      adId: (sourceUrl.match(/(\d{5,})/) || [])[1] || "",
+      importMode: "blocket",
+      carBruttoEur: Math.round(pricePln / eurPlnRate()),
+      pricePln,
+      priceSek,
+      purchaseType: "Marża",
+      title,
+      model,
+      bodyType: BLOCKET_BODY_TYPES[bodyLabel.toLowerCase()] || bodyLabel,
+      fuel: fuelLabel,
+      displacementCcm,
+      powerHp,
+      gearbox: /automat/i.test(field("Växellåda")) ? "automatic" : /manuell/i.test(field("Växellåda")) ? "manual" : "",
+      mileageKm: mil ? mil * 10 : null,
+      firstRegistration: field("Modellår"),
+      drive: /fyrhjul|4wd|awd/i.test(driveLabel) ? "awd" : /framhjul/i.test(driveLabel) ? "fwd" : /bakhjul/i.test(driveLabel) ? "rwd" : "",
+      location: { country: "SE", city: "", postalCode: "", address: "", sellerName: "" },
+      // Transport from Sweden is priced by the calculator's other-Europe tariff.
+      ...(() => {
+        const estimate = estimateDeliveryInspection(bodyLabel, { country: "SE" });
+        return { transportNettoPln: estimate.transport, inspectionNettoPln: estimate.inspection };
+      })(),
+      engineTypeIndex,
+      engineTypeLabel: ENGINE_TYPE_LABELS[engineTypeIndex],
+    };
+    setStatus("ready", c.recognitionFromBlocket, true);
+    const forForm = { ...state.data, fuel: fuelWord || fuelLabel };
+    applyRecognizedManualFields(forForm);
+    state.data.matchedFilters = forForm.matchedFilters;
+    renderData();
+  } catch (error) {
+    state.data = null;
+    setStatus("error", error.message && !/^\d+$/.test(error.message) ? error.message : c.blocketAdFailed, true);
+    renderData();
+  }
+}
 
 async function loadOtomotoAd(sourceUrl) {
   const c = copy[state.lang];
@@ -3886,8 +3985,13 @@ els.form.addEventListener("submit", (event) => {
     loadOtomotoAd(sourceUrl);
     return;
   }
-  if (linkSource() === "otomoto") {
-    setStatus("error", copy[state.lang].otomotoLinkExpected, true);
+  if (isBlocketUrl(sourceUrl)) {
+    setLinkSource("blocket");
+    loadBlocketAd(sourceUrl);
+    return;
+  }
+  if (linkSource() === "otomoto" || linkSource() === "blocket") {
+    setStatus("error", copy[state.lang][linkSource() === "otomoto" ? "otomotoLinkExpected" : "blocketLinkExpected"], true);
     return;
   }
   loadMobileDeData(sourceUrl);
