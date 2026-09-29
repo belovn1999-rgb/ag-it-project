@@ -1792,11 +1792,36 @@
   white-space: normal;
 }
 
-.mobileMarketHistoryTable tbody + tbody {
-  border-top: 2px solid var(--color-rule);
+/* One table per compared market, stacked; the market in its title. */
+.mobileMarketPriceHistoryMarket {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
 }
 
-.mobileMarketHistoryTable th[scope="rowgroup"] {
+.mobileMarketPriceHistoryMarket small {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: none;
+}
+
+.mobileMarketCompared {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+}
+
+.mobileMarketCompared small {
+  font-size: var(--text-xs);
+}
+
+.mobileMarketHistoryTable th[scope="row"] {
   vertical-align: top;
   text-align: left;
   color: var(--color-ink);
@@ -2967,14 +2992,13 @@
 .mobileMarketOffersTable th:nth-child(6) { width: 14%; }
 .mobileMarketOffersTable th:nth-child(7) { width: 8%; }
 
-.mobileMarketHistoryTable th:nth-child(1) { width: 13%; }
-.mobileMarketHistoryTable th:nth-child(2) { width: 10%; }
-.mobileMarketHistoryTable th:nth-child(3) { width: 9%; }
+.mobileMarketHistoryTable th:nth-child(1) { width: 14%; }
+.mobileMarketHistoryTable th:nth-child(2) { width: 9%; }
+.mobileMarketHistoryTable th:nth-child(3),
 .mobileMarketHistoryTable th:nth-child(4),
-.mobileMarketHistoryTable th:nth-child(5),
-.mobileMarketHistoryTable th:nth-child(6) { width: 14%; }
-.mobileMarketHistoryTable th:nth-child(7) { width: 18%; }
-.mobileMarketHistoryTable th:nth-child(8) { width: 8%; }
+.mobileMarketHistoryTable th:nth-child(5) { width: 16%; }
+.mobileMarketHistoryTable th:nth-child(6) { width: 20%; }
+.mobileMarketHistoryTable th:nth-child(7) { width: 9%; }
 
 .mobileMarketOffersTable .mobileMarketTableLink {
   text-align: center;

@@ -53,6 +53,8 @@
       turnkeyShort: "na gotowo*",
       priceHistoryIntro: "Każde „Analiza rynku” i „Odśwież dane” dopisuje nowy wiersz z datą; wcześniejsze pomiary zostają na zawsze. Auto wybierasz na pasku ulubionych u góry.",
       priceHistoryFiltersChanged: "Od tego pomiaru zmienione filtry: {filters}",
+      priceHistoryComparedHint: "wybór rynków na stronie 1 „Wyszukiwanie”",
+      priceHistoryMarketEmpty: "Brak pomiarów dla tego rynku. Kliknij „Odśwież dane”, aby dodać pierwszy.",
       autoRefreshLabel: "Automatyczna aktualizacja",
       autoRefreshDaily: "codziennie",
       autoRefresh3Days: "co 3 dni",
@@ -267,6 +269,8 @@
       turnkeyShort: "под ключ*",
       priceHistoryIntro: "Каждый «Анализ рынка» и «Обновить данные» добавляет новую строку с датой; прошлые замеры остаются навсегда. Авто выбирается в полосе избранного сверху.",
       priceHistoryFiltersChanged: "С этого замера изменены фильтры: {filters}",
+      priceHistoryComparedHint: "выбор рынков на странице 1 «Поиск»",
+      priceHistoryMarketEmpty: "По этому рынку ещё нет замеров. Нажми «Обновить данные», чтобы добавить первый.",
       autoRefreshLabel: "Автоматическое обновление",
       autoRefreshDaily: "каждый день",
       autoRefresh3Days: "раз в 3 дня",
@@ -1946,14 +1950,14 @@
     renderMarketPicker();
   }
 
-  // Every measurement of this search, newest first: one block per date with a
-  // row per marketplace, each value compared with the previous measurement of
-  // that marketplace. Prices falling are good for the buyer (green), more
-  // offers too. A change of filters is marked and not compared across.
+  // Every measurement of this search, newest first: a table of its own for
+  // each compared marketplace (chosen on page 1), one under the other, each
+  // value compared with the previous measurement of that marketplace. Prices
+  // falling are good for the buyer (green), more offers too. A change of
+  // filters is marked and not compared across.
   function priceHistoryHtml(entry, sources = MARKET_SOURCES.filter((source) => chartSources[source])) {
     const c = copy();
     const log = entry?.priceLog || [];
-    if (!log.length) return "";
     const numbers = numberFormat();
     const change = (current, previous, goodWhenUp = false) => {
       if (!Number.isFinite(current) || !Number.isFinite(previous) || !previous) return "";
@@ -1963,7 +1967,6 @@
       return `<em class="${good ? "isGood" : "isBad"}">${pct > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.round(Math.abs(pct) * 10) / 10))}%</em>`;
     };
     const price = (value, currency) => (Number.isFinite(value) ? escapeMarketHtml(formatPlainPrice(value, currency)) : "—");
-    const shown = MARKET_SOURCES.filter((source) => sources.includes(source));
     const previousOf = (index, source) => {
       for (let at = index - 1; at >= 0; at -= 1) {
         if (log[at].filtersChange) return null;
@@ -1971,17 +1974,20 @@
       }
       return null;
     };
-    const blocks = [];
-    log.forEach((point, index) => {
-      if (point.filtersChange) {
-        const filters = point.filters ? historyMeta(point.filters).join(" · ") : "";
-        blocks.push(`<tbody class="mobileMarketHistoryFilters"><tr><td colspan="8">${escapeMarketHtml(formatHistoryDate(point.at))} · ${escapeMarketHtml(c.priceHistoryFiltersChanged.replace("{filters}", filters || "—"))}</td></tr></tbody>`);
-        return;
-      }
-      const markets = shown.filter((source) => point[source]);
-      if (!markets.length) return;
-      const rows = markets.map((source, row) => {
+    const marketTable = (source) => {
+      const rows = [];
+      log.forEach((point, index) => {
+        if (point.filtersChange) {
+          // Only between measurements of this market.
+          const before = log.slice(0, index).some((item) => item[source]);
+          const after = log.slice(index + 1).some((item) => item[source]);
+          if (!before || !after) return;
+          const filters = point.filters ? historyMeta(point.filters).join(" · ") : "";
+          rows.push(`<tr class="mobileMarketHistoryFilters"><td colspan="7">${escapeMarketHtml(formatHistoryDate(point.at))} · ${escapeMarketHtml(c.priceHistoryFiltersChanged.replace("{filters}", filters || "—"))}</td></tr>`);
+          return;
+        }
         const current = point[source];
+        if (!current) return;
         const previous = previousOf(index, source);
         const cell = (key) => {
           const url = current[`${key}Url`];
@@ -1994,38 +2000,37 @@
             : "";
           return `<td>${value} ${previous ? change(current[key], previous[key]) : ""}${turnkeyNote}</td>`;
         };
-        return `
+        rows.push(`
           <tr>
-            ${row === 0 ? `<th scope="rowgroup" rowspan="${markets.length}">${escapeMarketHtml(formatHistoryDate(point.at))}</th>` : ""}
-            <td>${marketBadge(source)}</td>
+            <th scope="row">${escapeMarketHtml(formatHistoryDate(point.at))}</th>
             <td>${current.count} ${previous ? change(current.count, previous.count, true) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
             <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${current.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey.p25, "PLN")} – ${price(current.turnkey.p75, "PLN")} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
             <td>${Number.isFinite(current.middleCount) ? current.middleCount : "—"} ${previous && Number.isFinite(previous.middleCount) ? change(current.middleCount, previous.middleCount, true) : ""}</td>
-          </tr>`;
+          </tr>`);
       });
-      blocks.push(`<tbody class="mobileMarketHistoryCheck">${rows.join("")}</tbody>`);
-    });
-    if (!blocks.some((block) => block.includes("mobileMarketHistoryCheck"))) return "";
-    return `
-      <section class="mobileMarketCard mobileMarketPriceHistory" aria-label="${escapeMarketHtml(c.priceHistoryHeading)}">
-        ${blockTitle("calendar", c.priceHistoryHeading)}
-        <div class="mobileMarketTableScroll">
-          <table class="mobileMarketTable mobileMarketHistoryTable">
-            <thead><tr>
-              <th scope="col">${escapeMarketHtml(c.priceHistoryDate)}</th>
-              <th scope="col">${escapeMarketHtml(c.priceHistorySource)}</th>
-              <th scope="col">${escapeMarketHtml(c.priceHistoryOffers)}</th>
-              <th scope="col">${escapeMarketHtml(c.minimum)}</th>
-              <th scope="col">${escapeMarketHtml(c.maximum)}</th>
-              <th scope="col">${escapeMarketHtml(c.median)}</th>
-              <th scope="col">${escapeMarketHtml(c.averagePrices)}</th>
-              <th scope="col">${escapeMarketHtml(c.middleOffers)}</th>
-            </tr></thead>
-            ${blocks.reverse().join("")}
-          </table>
-        </div>
-      </section>`;
+      const portal = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile;
+      return `
+        <section class="mobileMarketCard mobileMarketPriceHistory is${sourceClass(source)}" aria-label="${escapeMarketHtml(`${c.priceHistoryHeading}: ${portal}`)}">
+          <h2 class="agBlockTitle mobileMarketPriceHistoryMarket">${escapeMarketHtml(c.priceHistoryHeading)} · ${marketBadge(source)} <small>${escapeMarketHtml(portal)} · ${escapeMarketHtml(SOURCE_CURRENCY[source])}</small></h2>
+          ${rows.length ? `
+          <div class="mobileMarketTableScroll">
+            <table class="mobileMarketTable mobileMarketHistoryTable">
+              <thead><tr>
+                <th scope="col">${escapeMarketHtml(c.priceHistoryDate)}</th>
+                <th scope="col">${escapeMarketHtml(c.priceHistoryOffers)}</th>
+                <th scope="col">${escapeMarketHtml(c.minimum)}</th>
+                <th scope="col">${escapeMarketHtml(c.maximum)}</th>
+                <th scope="col">${escapeMarketHtml(c.median)}</th>
+                <th scope="col">${escapeMarketHtml(c.averagePrices)}</th>
+                <th scope="col">${escapeMarketHtml(c.middleOffers)}</th>
+              </tr></thead>
+              <tbody>${rows.reverse().join("")}</tbody>
+            </table>
+          </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.priceHistoryMarketEmpty)}</p>`}
+        </section>`;
+    };
+    return MARKET_SOURCES.filter((source) => sources.includes(source)).map(marketTable).join("");
   }
 
   // ---- Page 3: price history of a favourite car ----------------------------
@@ -2106,6 +2111,7 @@
             <div>
               <strong>★ ${escapeMarketHtml(title(entry))}</strong>
               <small>${escapeMarketHtml(historyMeta(entry.filters).join(" · "))}</small>
+              <span class="mobileMarketCompared"><b>${escapeMarketHtml(c.marketPickerLabel)}:</b> ${MARKET_SOURCES.filter((source) => chartSources[source]).map((source) => marketBadge(source)).join(" + ")} <small>(${escapeMarketHtml(c.priceHistoryComparedHint)})</small></span>
             </div>
             <div class="mobileMarketToolbarActions">
               <button class="mobileMarketImportClear" type="button" data-price-history-open="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.analysisButton)} →</button>
@@ -2122,7 +2128,7 @@
           ${blockTitle("gauge", c.trendTitle)}
           ${medianTrendHtml(entry)}
         </section>
-        ${priceHistoryHtml(entry) || `<section class="mobileMarketCard"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.priceHistoryEmptyEntry)}</p></section>`}` : ""}`;
+        ${priceHistoryHtml(entry)}` : ""}`;
   }
 
   // Scheduled checks are a setting of the favourite, stored with it (the
