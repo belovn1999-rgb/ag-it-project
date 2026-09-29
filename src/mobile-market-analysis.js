@@ -1803,13 +1803,11 @@
           ${favorites.map((entry) => {
             const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
             const meta = historyMeta(entry.filters).slice(0, 2).join(" · ");
-            const price = latestPriceLabel(entry);
-            const date = entry.dataAt ? formatHistoryDate(entry.dataAt) : "";
+            // No prices on favourites: the car and its filters only.
             return `<div class="mobileMarketFavoriteItem">
               <button class="mobileMarketFavorite${entry.id === activeId ? " isActive" : ""}" type="button" data-mobile-market-favorite="${escapeMarketHtml(entry.id)}"${entry.id === activeId ? ' aria-current="true"' : ""}>
                 <b>${escapeMarketHtml(title)}</b>
                 ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
-                <span>${price || escapeMarketHtml(c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
               </button>
               <button class="mobileMarketFavoriteRemove isStar" type="button" data-mobile-market-favorite-remove="${escapeMarketHtml(entry.id)}" aria-pressed="true" aria-label="${escapeMarketHtml(`${c.favoriteRemove}: ${title}`)}" title="${escapeMarketHtml(c.favoriteRemove)}">★</button>
             </div>`;
@@ -1856,13 +1854,10 @@
         ${favorites.length ? `<div class="mobileFavoritesSearchList">${favorites.map((entry) => {
           const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
           const meta = historyMeta(entry.filters).join(" · ");
-          const price = latestPriceLabel(entry);
-          const date = entry.dataAt ? formatHistoryDate(entry.dataAt) : "";
           return `<article class="mobileFavoritesSearchItem${entry.id === favoritesSelectedId ? " isSelected" : ""}">
             <div>
               <b>${escapeMarketHtml(title)}</b>
               ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
-              <span>${price || escapeMarketHtml(c.favoritesNoData)}${date ? ` · ${escapeMarketHtml(date)}` : ""}</span>
             </div>
             <div class="mobileFavoritesSearchActions">
               <button class="mobileMarketImportClear" type="button" data-mobile-favorite-filters="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.favoritesSearchFilters)}</button>
