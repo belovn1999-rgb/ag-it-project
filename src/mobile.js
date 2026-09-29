@@ -2147,26 +2147,35 @@ function focusManualFilter(selector) {
   }
   const multiSelect = target.closest(".mobileMultiSelect");
   if (multiSelect) multiSelect.open = true;
-  const option = target.closest(".mobileChoiceOption, label");
-  if (option) {
-    option.classList.remove("isSummaryFocus");
-    requestAnimationFrame(() => option.classList.add("isSummaryFocus"));
-    window.setTimeout(() => option.classList.remove("isSummaryFocus"), 1800);
-  }
-  const scrollTarget = target.closest(".mobileField, .mobileChoiceField, .mobileMultiSelect") || target;
-  const heading = target.closest(".mobileFilterCard")?.querySelector(".mobileFilterCardTitle");
-  const stickyHead = document.querySelector(".mobileManualPanel .mobilePanelHead");
-  const stickyStyle = stickyHead && getComputedStyle(stickyHead);
-  const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 0;
-  const coveredHeight = stickyStyle?.position === "sticky"
-    ? (parseFloat(stickyStyle.top) || navHeight) + stickyHead.offsetHeight
-    : navHeight;
-  const visibleTop = coveredHeight + 4;
-  const anchor = heading && scrollTarget.getBoundingClientRect().top - heading.getBoundingClientRect().top <= window.innerHeight - visibleTop - 16
-    ? heading
-    : scrollTarget;
-  window.scrollTo({ top: window.scrollY + anchor.getBoundingClientRect().top - visibleTop, behavior: "smooth" });
-  if (typeof target.focus === "function") target.focus({ preventScroll: true });
+  // The fields are below the pinned head: show the filter summary there now
+  // and keep it during the scroll, so nothing changes height mid-way.
+  const panel = document.querySelector(".mobileManualPanel");
+  if (panel?.classList.contains("hasRecognizedListing")) panel.classList.add("isSummaryMode");
+  pinnedModeFrozenUntil = performance.now() + 1200;
+  // Measure after the unfolded card and the head have settled, then one
+  // smooth scroll.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const option = target.closest(".mobileChoiceOption, label");
+    if (option) {
+      option.classList.remove("isSummaryFocus");
+      option.classList.add("isSummaryFocus");
+      window.setTimeout(() => option.classList.remove("isSummaryFocus"), 1800);
+    }
+    const scrollTarget = target.closest(".mobileField, .mobileChoiceField, .mobileMultiSelect") || target;
+    const heading = target.closest(".mobileFilterCard")?.querySelector(".mobileFilterCardTitle");
+    const stickyHead = document.querySelector(".mobileManualPanel .mobilePanelHead");
+    const stickyStyle = stickyHead && getComputedStyle(stickyHead);
+    const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 0;
+    const coveredHeight = stickyStyle?.position === "sticky"
+      ? (parseFloat(stickyStyle.top) || navHeight) + stickyHead.offsetHeight
+      : navHeight;
+    const visibleTop = coveredHeight + 4;
+    const anchor = heading && scrollTarget.getBoundingClientRect().top - heading.getBoundingClientRect().top <= window.innerHeight - visibleTop - 16
+      ? heading
+      : scrollTarget;
+    window.scrollTo({ top: window.scrollY + anchor.getBoundingClientRect().top - visibleTop, behavior: "smooth" });
+    if (typeof target.focus === "function") target.focus({ preventScroll: true });
+  }));
 }
 
 function rangeFilterSummary(label, from, to, unit = "") {
@@ -2186,12 +2195,18 @@ function priceFilterSummary(from, to) {
 // smaller; every value leads to its field on the form.
 function updateSelectedFiltersSummary() {
   if (!els.selectedFilters) return;
+  const saveButton = document.querySelector("[data-mobile-market-history-save]");
   const c = copy[state.lang];
   const filters = readManualFields();
   const numbers = new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "pl-PL");
   const any = c.specAny;
   const range = (from, to, unit = "", plain = false) => {
-    const format = (value) => (plain || !/^\d+$/.test(String(value)) ? String(value) : numbers.format(Number(value)));
+    const format = (value) => {
+      const raw = String(value).trim();
+      if (plain) return raw;
+      const amount = Number(raw.replace(/\s/g, "").replace(/\+$/, ""));
+      return Number.isFinite(amount) ? `${numbers.format(amount)}${raw.endsWith("+") ? "+" : ""}` : raw;
+    };
     const suffix = unit ? ` ${unit}` : "";
     if (from && to) return from === to ? `${format(from)}${suffix}` : `${format(from)} – ${format(to)}${suffix}`;
     if (from) return `${c.specFrom} ${format(from)}${suffix}`;
@@ -2227,10 +2242,12 @@ function updateSelectedFiltersSummary() {
     filters.damagedVehicles === "show" ? els.damagedVehiclesLabel?.value : "",
   ].filter(Boolean);
   const title = [filters.brand, filters.model, filters.version].filter(Boolean).join(" ");
+  const priceRange = filters.priceFrom || filters.priceTo ? range(filters.priceFrom, filters.priceTo, "EUR") : "";
   els.selectedFilters.innerHTML = specSheetHtml({
     kicker: c.specSearchKicker,
     title: title || c.selectedFiltersEmpty,
     titleTarget: summaryTargetFor(els.brand),
+    aside: `<span data-mobile-summary-star-slot></span>${priceRange ? `<span class="agSpecPrice" data-mobile-summary-target="${escapeHtml(target(els.priceFrom))}" role="button" tabindex="0"><b>${escapeHtml(priceRange)}</b></span>` : ""}`,
     columns: [
       { heading: c.specEngineHeading, rows: [
         [c.specBody, filters.body ? optionLabel(bodyOptions, filters.body) : any, "car", target(els.bodyChoices)],
@@ -2252,10 +2269,10 @@ function updateSelectedFiltersSummary() {
         [c.specStatus, status.length ? status.join(", ") : any, "check", target(els.roadworthy)],
         [c.specVat, filters.vat ? els.vatLabel?.value || any : any, "percent", target(els.vatLabel)],
         [c.specSeller, filters.seller ? els.sellerLabel?.value || any : any, "store", target(els.sellerLabel)],
-        [c.specPrice, range(filters.priceFrom, filters.priceTo, "EUR"), "tag", target(els.priceFrom)],
       ] },
     ],
   });
+  if (saveButton) els.selectedFilters.querySelector("[data-mobile-summary-star-slot]")?.replaceWith(saveButton);
 }
 
 function mobileDeNumber(value) {
@@ -3234,11 +3251,20 @@ function renderData() {
   renderScenarios();
 }
 
+// The pinned head shows the recognised ad at the top and the filter summary
+// once scrolled past it. The two differ in height, so without a margin the
+// switch moved the page, which switched it back — the screen shook. It now
+// switches back only 80 px later, and holds still while a jump to a field runs.
+let pinnedModeFrozenUntil = 0;
 function updatePinnedListingMode() {
   const panel = document.querySelector(".mobileManualPanel");
   if (!panel || !state.data || !panel.getClientRects().length) return;
+  if (performance.now() < pinnedModeFrozenUntil) return;
   const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 0;
-  panel.classList.toggle("isSummaryMode", panel.getBoundingClientRect().top + recognizedHeadHeight <= navHeight);
+  const top = panel.getBoundingClientRect().top + recognizedHeadHeight;
+  const summary = panel.classList.contains("isSummaryMode");
+  if (!summary && top <= navHeight) panel.classList.add("isSummaryMode");
+  else if (summary && top > navHeight + 80) panel.classList.remove("isSummaryMode");
 }
 
 window.addEventListener("scroll", updatePinnedListingMode, { passive: true });
@@ -3484,8 +3510,25 @@ document.addEventListener("keydown", (event) => {
     focusManualFilter(summaryTarget.dataset.mobileSummaryTarget);
     return;
   }
+  // Arrow keys move through the list of any field with a list; Enter picks.
+  if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+    const control = event.target.closest?.(".mobileComboControl[data-mobile-options]");
+    if (control && event.target.matches("input")) {
+      event.preventDefault();
+      if (!control.classList.contains("isOpen")) openComboMenu(control);
+      const options = [...control.querySelectorAll(".mobileComboMenu button[data-mobile-option-value]")].filter((option) => option.offsetParent !== null);
+      if (!options.length) return;
+      const current = options.findIndex((option) => option.classList.contains("isKeyboardActive"));
+      const next = current < 0
+        ? (event.key === "ArrowDown" ? 0 : options.length - 1)
+        : Math.min(options.length - 1, Math.max(0, current + (event.key === "ArrowDown" ? 1 : -1)));
+      options.forEach((option, index) => option.classList.toggle("isKeyboardActive", index === next));
+      options[next].scrollIntoView({ block: "nearest" });
+      return;
+    }
+  }
   if (event.key === "Enter") {
-    const input = event.target.closest?.(".mobileComboControl[data-mobile-options] input:not([readonly])");
+    const input = event.target.closest?.(".mobileComboControl[data-mobile-options] input");
     const control = input?.closest(".mobileComboControl[data-mobile-options]");
     const activeOption = control?.querySelector(".mobileComboMenu button.isKeyboardActive");
     if (control?.classList.contains("isOpen") && activeOption) {

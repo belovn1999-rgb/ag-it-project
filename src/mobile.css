@@ -2756,9 +2756,17 @@ label.isSummaryFocus {
   z-index: 1;
 }
 
+.mobileSearchSummary .mobileSearchSummaryStar {
+  position: static;
+}
+
 .mobileSearchSummary .agSpecHead {
-  padding-right: 48px;
+  padding-right: 0;
   margin-bottom: 4px;
+}
+
+.mobileSearchSummary .agSpecAside {
+  justify-content: flex-end;
 }
 
 .mobileSearchSummary .agSpecKicker {
@@ -2960,4 +2968,9 @@ label.isSummaryFocus {
 .mobileLinkSource .isBlocket input:checked + span {
   background: #d0101a;
   color: #fff;
+}
+
+/* No scroll anchoring on this page: the pinned head changes height. */
+.mobileShell {
+  overflow-anchor: none;
 }

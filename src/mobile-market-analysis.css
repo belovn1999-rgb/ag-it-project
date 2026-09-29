@@ -2094,6 +2094,14 @@
   gap: var(--space-lg);
 }
 
+.mobileMarketSearchCard .mobileMarketAnalysisStar {
+  position: static;
+}
+
+.mobileMarketSearchCard .agSpecAside {
+  justify-content: flex-end;
+}
+
 .mobileMarketSearchCard .agSpecTitle strong {
   font-size: 1.625rem;
 }
@@ -3034,4 +3042,82 @@
   color: var(--color-muted);
   font-size: 0.6875rem;
   font-weight: 700;
+}
+
+/* One look for both parameter blocks (chosen filters on page 1, parameters
+   in the analysis): same layout, type sizes and gaps. */
+.mobileSearchSummary,
+.mobileMarketSearchCard {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.mobileSearchSummary .agSpec,
+.mobileMarketSearchCard .agSpec {
+  gap: var(--space-sm);
+}
+
+.mobileSearchSummary .agSpecHead,
+.mobileMarketSearchCard .agSpecHead {
+  margin-bottom: 0;
+}
+
+.mobileSearchSummary .agSpecKicker,
+.mobileMarketSearchCard .agSpecKicker {
+  font-size: var(--text-xs);
+}
+
+.mobileSearchSummary .agSpecTitle strong,
+.mobileMarketSearchCard .agSpecTitle strong {
+  font-size: var(--text-lg);
+}
+
+.mobileSearchSummary .agSpecColumns,
+.mobileMarketSearchCard .agSpecColumns {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+  padding-top: var(--space-sm);
+}
+
+.mobileSearchSummary .agSpecColumn,
+.mobileMarketSearchCard .agSpecColumn {
+  padding: 0 var(--space-md);
+}
+
+.mobileSearchSummary .agSpecColumn:first-child,
+.mobileMarketSearchCard .agSpecColumn:first-child {
+  padding-left: 0;
+}
+
+.mobileSearchSummary .agSpecColumn h4,
+.mobileMarketSearchCard .agSpecColumn h4 {
+  margin-bottom: 6px;
+  font-size: var(--text-xs);
+}
+
+.mobileSearchSummary .agSpecColumn dl,
+.mobileMarketSearchCard .agSpecColumn dl {
+  gap: 4px;
+}
+
+.mobileSearchSummary .agSpecColumn dt,
+.mobileMarketSearchCard .agSpecColumn dt,
+.mobileSearchSummary .agSpecText,
+.mobileMarketSearchCard .agSpecText {
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.mobileSearchSummary .agSpecColumn dd,
+.mobileMarketSearchCard .agSpecColumn dd {
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+.mobileSearchSummary .agSpecColumn dt svg,
+.mobileMarketSearchCard .agSpecColumn dt svg {
+  width: 13px;
+  height: 13px;
+}
+
+.mobileMarketSearchCard .mobileSearchSummaryFoot {
+  margin-top: var(--space-sm);
 }

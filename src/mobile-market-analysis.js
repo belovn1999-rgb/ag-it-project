@@ -2249,23 +2249,27 @@
 
   // The searched market in the same four columns as a recognised car:
   // body and engine, mileage and drive, equipment, other information.
-  function searchSpecColumns(filters, sources) {
+  function searchSpecRange(from, to, unit = "", plain = false) {
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
     const numbers = numberFormat();
     const any = t.specAny || "—";
-    const range = (from, to, unit = "", plain = false) => {
-      const format = (value) => {
-        const raw = String(value).trim();
-        if (plain) return raw;
-        const amount = Number(raw.replace(/\s/g, "").replace(/\+$/, ""));
-        return Number.isFinite(amount) ? `${numbers.format(amount)}${raw.endsWith("+") ? "+" : ""}` : raw;
-      };
-      const suffix = unit ? ` ${unit}` : "";
-      if (from && to) return from === to ? `${format(from)}${suffix}` : `${format(from)} – ${format(to)}${suffix}`;
-      if (from) return `${t.specFrom} ${format(from)}${suffix}`;
-      if (to) return `${t.specTo} ${format(to)}${suffix}`;
-      return any;
+    const format = (value) => {
+      const raw = String(value).trim();
+      if (plain) return raw;
+      const amount = Number(raw.replace(/\s/g, "").replace(/\+$/, ""));
+      return Number.isFinite(amount) ? `${numbers.format(amount)}${raw.endsWith("+") ? "+" : ""}` : raw;
     };
+    const suffix = unit ? ` ${unit}` : "";
+    if (from && to) return from === to ? `${format(from)}${suffix}` : `${format(from)} – ${format(to)}${suffix}`;
+    if (from) return `${t.specFrom} ${format(from)}${suffix}`;
+    if (to) return `${t.specTo} ${format(to)}${suffix}`;
+    return any;
+  }
+
+  function searchSpecColumns(filters, sources) {
+    const t = window.AUTOGOOD_SPEC_COPY?.() || {};
+    const any = t.specAny || "—";
+    const range = searchSpecRange;
     const labelOf = (selector) => document.querySelector(selector)?.closest("label")?.textContent.trim();
     const fuels = checkedLabels("[data-mobile-fuel]");
     const equipment = [
@@ -2312,7 +2316,6 @@
         [t.specStatus, status.length ? status.join(", ") : any, "check"],
         [t.specVat, selectedOptionText("[data-mobile-vat]") || any, "percent"],
         [t.specSeller, selectedOptionText("[data-mobile-seller]") || any, "store"],
-        ...(filters.priceFrom || filters.priceTo ? [[t.specPrice, range(filters.priceFrom, filters.priceTo, "EUR"), "tag"]] : []),
       ] },
     ];
   }
@@ -2933,9 +2936,28 @@
       title: [filters.brand, filters.model, filters.version].filter(Boolean).join(" "),
       meta: dataDate && hasListings ? c.checkedAt.replace("{date}", formatHistoryDate(dataDate)) : "",
       // The same favourite star as on the search page.
-      aside: `<button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${sourcesPicker}`,
+      aside: `<button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${sourcesPicker}${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
       columns: searchSpecColumns(filters, reportSources),
     }) || "";
+    // The same bottom row as the chosen filters on page 1: "Gotowe" (when the
+    // form holds unsaved changes), "Analiza rynku" and the offer count with a
+    // link per compared market.
+    const t = window.AUTOGOOD_SPEC_COPY?.() || {};
+    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]" }[source])?.textContent.trim() || "—";
+    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl };
+    const specFoot = `
+      <div class="mobileSearchSummaryFoot" data-report-hide>
+        <span class="mobileSearchSummaryFootLabel">${escapeMarketHtml(t.offerCountLabel || "")}</span>
+        <div class="mobileSearchSummaryActions">
+          ${historyDone && !historyDone.hidden ? `<button class="mobileSearchSummaryDone" type="button" data-mobile-analysis-done>${escapeMarketHtml(c.historyDone)} ✓</button>` : ""}
+          <button class="mobileSearchSummaryAnalysis" type="button" data-mobile-analysis-rerun>${escapeMarketHtml(c.analysisButton)} <i aria-hidden="true">&#8594;</i></button>
+        </div>
+        ${MARKET_SOURCES.filter((source) => chartSources[source] && marketLinks[source]).map((source) => `
+          <div class="mobileSearchCountMarket">
+            <strong>${escapeMarketHtml(liveCount(source))}</strong>
+            <a class="agBrandLink is${sourceClass(source)}" href="${escapeMarketHtml(marketLinks[source])}" target="_blank" rel="noopener" title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></a>
+          </div>`).join("")}
+      </div>`;
     analysisContent.innerHTML = `
       <article class="mobileMarketAnalysisPanel">
         <div class="mobileMarketReportBrand">
@@ -2960,6 +2982,7 @@
 
         <section class="mobileMarketCard mobileMarketSearchCard" aria-label="${escapeMarketHtml(c.searchHeading)}">
           ${spec}
+          ${specFoot}
         </section>
 
         ${statsContent ? `
@@ -3417,6 +3440,15 @@
   });
 
   analysisContent.addEventListener("click", (event) => {
+    if (event.target.closest("[data-mobile-analysis-done]")) {
+      historyDone?.click();
+      renderAnalysis();
+      return;
+    }
+    if (event.target.closest("[data-mobile-analysis-rerun]")) {
+      openAnalysis();
+      return;
+    }
     const analysisStar = event.target.closest("[data-mobile-market-analysis-star]");
     if (analysisStar && activeAnalysis) {
       refreshMarketHistory();
