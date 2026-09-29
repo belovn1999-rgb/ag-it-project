@@ -1513,6 +1513,7 @@
     if (!storeMarketHistory(marketHistory.map((item) => (
       item.id === historyId ? { ...item, pinned } : item
     )))) return;
+    if (!pinned && selectedFavoriteId === historyId) setSelectedFavorite("");
     renderHistory();
     setAnalysisStatus(pinned ? copy().historyPinned : copy().historyUnpin);
   }
@@ -1532,6 +1533,8 @@
     if (!entry) return;
     restoreManualFilters(entry.filters);
     editingHistoryId = entry.id;
+    // A favourite becomes the picked one; an ordinary search lets it go.
+    setSelectedFavorite(entry.pinned ? entry.id : "");
     editingBaseline = filterSignature(readManualFields());
     analysisView.hidden = true;
     setManualViewHidden(false);
@@ -1845,6 +1848,29 @@
 
   // Pinned above every page; the car shown on the current page is highlighted.
   let favoritesSelectedId = "";
+  // The favourite picked in the pinned bar stays picked across all four
+  // pages until another one is picked (or it is unpinned / the form is
+  // cleared); each page shows this car. Remembered in this browser tab.
+  const SELECTED_FAVORITE_KEY = "autogood.mobile.selectedFavorite.v1";
+  let selectedFavoriteId = (() => {
+    try {
+      return sessionStorage.getItem(SELECTED_FAVORITE_KEY) || "";
+    } catch {
+      return "";
+    }
+  })();
+  function setSelectedFavorite(id) {
+    selectedFavoriteId = id || "";
+    try {
+      if (selectedFavoriteId) sessionStorage.setItem(SELECTED_FAVORITE_KEY, selectedFavoriteId);
+      else sessionStorage.removeItem(SELECTED_FAVORITE_KEY);
+    } catch {
+      // Kept for this page only.
+    }
+  }
+  function selectedFavorite() {
+    return marketHistory.find((entry) => entry.id === selectedFavoriteId && entry.pinned) || null;
+  }
   function scrollToPageContent(element) {
     if (!element) return;
     const top = element.getBoundingClientRect().top + window.scrollY - (Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 60) - 12;
@@ -1852,12 +1878,7 @@
   }
   function renderFavoritesBar() {
     if (!favoritesBar) return;
-    const page = typeof currentPage === "function" ? currentPage() : "search";
-    const activeId = page === "analysis" && activeAnalysis ? activeAnalysis.historyId
-      : page === "history" ? priceHistoryId
-        : page === "favorites" ? favoritesSelectedId
-          : editingHistoryId;
-    const active = marketHistory.find((entry) => entry.id === activeId && entry.pinned) || null;
+    const active = selectedFavorite();
     favoritesBar.innerHTML = favoritesHtml(active?.id || "");
   }
 
@@ -3502,6 +3523,9 @@
   historySaves.forEach((button) => button.addEventListener("click", toggleCurrentHistoryFavorite));
   document.querySelectorAll("[data-mobile-manual-reset]").forEach((button) => button.addEventListener("click", () => {
     editingHistoryId = "";
+    // Clearing the form lets go of the picked favourite.
+    setSelectedFavorite("");
+    renderFavoritesBar();
     setTimeout(updateHistorySaveButtons);
   }));
   const manualForm = document.querySelector(".mobileManualForm");
@@ -3572,7 +3596,29 @@
     }
   }
 
+  // The picked favourite shown on a page: form (1), analysis (2), price
+  // history (3), its card first (4). Nothing is reloaded if it already shows.
+  function showSelectedFavoriteOn(page) {
+    const entry = selectedFavorite();
+    if (!entry) return false;
+    if (page === "search") {
+      if (editingHistoryId !== entry.id) selectHistoryEntry(entry.id);
+      return false;
+    }
+    if (page === "analysis") {
+      // The form holds this favourite (maybe with unsaved changes): analyse
+      // what the form says; otherwise the favourite as saved.
+      if (editingHistoryId === entry.id) openAnalysis();
+      else openFavorite(entry.id);
+      return true;
+    }
+    if (page === "history") priceHistoryId = entry.id;
+    if (page === "favorites") favoritesSelectedId = entry.id;
+    return false;
+  }
+
   function showPage(page) {
+    if (showSelectedFavoriteOn(page)) return;
     if (page === "analysis") {
       let filters = {};
       try {
@@ -3614,7 +3660,7 @@
     if (filtersButton) {
       const entry = marketHistory.find((item) => item.id === filtersButton.dataset.mobileFavoriteFilters);
       if (entry) {
-        restoreManualFilters(entry.filters);
+        setSelectedFavorite(entry.id);
         showPage("search");
       }
       return;
@@ -3622,6 +3668,7 @@
     const favorite = event.target.closest("[data-mobile-market-favorite]");
     if (!favorite) return;
     const id = favorite.dataset.mobileMarketFavorite;
+    setSelectedFavorite(id);
     // A favourite in the pinned bar keeps the page and shows this car there:
     // 1 fills the form to be refined ("Gotowe" saves it), 2 its analysis,
     // 3 its price history, 4 its card in the favourites' search.
