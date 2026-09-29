@@ -2966,7 +2966,7 @@
 }
 
 .mobileMarketStatsRow b .mobileMarketTurnkeyNote {
-  font-size: 0.6875rem;
+  font-size: calc(var(--text-xs) + 1px);
   white-space: normal;
   overflow-wrap: anywhere;
 }
