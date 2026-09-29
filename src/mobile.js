@@ -3198,11 +3198,12 @@ function renderData() {
     location.sellerName || "",
   ].filter(Boolean).join(" · ");
   const price = data.pricePln
-    ? `${formatAmount(data.pricePln, "PLN")} (≈ ${formatAmount(data.carBruttoEur, "EUR")})`
-    : formatAmount(data.carBruttoEur, "EUR");
+    ? `<b>${escapeHtml(formatAmount(data.pricePln, "PLN"))}</b><small>≈ ${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</small>`
+    : `<b>${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</b>`;
   const equipment = confirmedComfortEquipment(data);
   els.listingDetails.innerHTML = specSheetHtml({
     title,
+    aside: `<span class="agSpecPrice">${price}</span>`,
     columns: [
       { heading: c.specEngineHeading, rows: [
         [c.specBody, bodyLabelOf(data.bodyType), "car"],
@@ -3222,7 +3223,6 @@ function renderData() {
         [c.specStatus, conditionLabel(data.condition), "check"],
         [c.specVat, purchaseTypeLabel(data), "percent"],
         [c.specSeller, seller, "store"],
-        [c.specPrice, price, "tag"],
       ] },
     ],
   });
