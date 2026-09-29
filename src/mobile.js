@@ -1,4 +1,4 @@
-const DEFAULT_MOBILEDE_API_URL = "https://keeps-cheers-empirical-invalid.trycloudflare.com/mobilede/import";
+const DEFAULT_MOBILEDE_API_URL = "https://closing-evidence-thick-fastest.trycloudflare.com/mobilede/import";
 
 const copy = {
   pl: {
