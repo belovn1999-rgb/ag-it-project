@@ -83,7 +83,6 @@
       screenshotWorking: "Przygotowuję raport…",
       reportTitle: "Analiza rynku",
       tableTitle: "Ogłoszenie",
-      priceMaxLabel: "najdroższa",
       favoritesEmpty: "Oznacz wpis w historii gwiazdką ★ — pojawi się tutaj.",
       favoritesPick: "Wybierz auto z ulubionych albo wpisz markę i model w formularzu.",
       favoritesNoData: "brak cen",
@@ -292,7 +291,6 @@
       screenshotWorking: "Готовлю отчёт…",
       reportTitle: "Анализ рынка",
       tableTitle: "Объявление",
-      priceMaxLabel: "самое дорогое",
       favoritesEmpty: "Отметьте запись в истории звёздочкой ★ — она появится здесь.",
       favoritesPick: "Выберите авто из избранного или укажите марку и модель в форме.",
       favoritesNoData: "нет цен",
@@ -1419,7 +1417,13 @@
       if (input) input.checked = key === "roadworthy" ? filters[key] !== false : Boolean(filters[key]);
     });
     if (typeof renderManualOptions === "function") renderManualOptions(true);
-    // The current choice on page 1 governs saved searches too.
+    // The choice on page 1 governs every page (B31). A saved search that
+    // remembers its markets (saved with "Gotowe") becomes that choice when it
+    // is opened, so page 1 and the analysis always show the same markets;
+    // one without saved markets keeps the current choice.
+    if (Array.isArray(filters.markets) && filters.markets.length) {
+      setChartSources(Object.fromEntries(MARKET_SOURCES.map((source) => [source, filters.markets.includes(source)])));
+    }
   }
 
   function toggleCurrentHistoryFavorite() {
@@ -2375,9 +2379,8 @@
         shownSources.forEach((source) => {
           const own = marketListings.filter((listing) => listing.source === source);
           if (!own.length) return;
-          const name = source === "otomoto" ? c.marketOtomoto : source === "blocket" ? c.marketBlocket : c.marketMobile;
           const foreign = own.some((listing) => listing.turnkeyPln);
-          marketMedians.push({ source, value: marketStatistics(own).median, turnkey: foreign, label: `${c.median} ${name}${foreign ? ` ${c.turnkeyShort}` : ""}` });
+          marketMedians.push({ source, value: marketStatistics(own).median, turnkey: foreign });
         });
         marketMedians.forEach((line) => {
           line.position = verticalMarketPosition(Math.min(Math.max(line.value, scaleMin), scaleMax), scaleMin, scaleMax);
@@ -2663,8 +2666,8 @@
         { label: c.middleOffers, value: (row) => row.stats.middleCount, html: (row) => escapeMarketHtml(String(row.stats.middleCount)) },
       ];
       const compared = statRows.length > 1;
-      const tone = (column, row) => {
-        if (!compared) return "";
+      const tone = (column, row, index) => {
+        if (!compared || index === 0 || index === 5) return "";
         const values = statRows.map((item) => column.value(item));
         const value = column.value(row);
         if (Math.max(...values) === Math.min(...values)) return "";
@@ -2706,7 +2709,7 @@
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
-                return `<b class="${column.wide ? "isWide" : ""}${tone(column, row)}" role="cell">${column.html(row)}${note}</b>`;
+                return `<b class="${column.wide ? "isWide" : ""}${tone(column, row, index)}" role="cell">${column.html(row)}${note}</b>`;
               }).join("")}
             </div>`).join("")}
         </div>
@@ -2759,18 +2762,11 @@
           <div class="mobileMarketPlot">${trendLine}</div>
           ${points}
           ${carMarker}
-          ${(() => {
-            const top = [...plotted].sort((left, right) => right.listing.price - left.listing.price)[0];
-            // Above the dot, or beside it (towards the middle) when the dot sits
-            // at the top or right edge and a label above would leave the plot.
-            const side = top.y < 12 || top.x > 0.8 ? (top.x > 0.5 ? " isSideLeft" : " isSideRight") : "";
-            return top ? `<span class="mobileMarketExtreme${side}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(c.priceMaxLabel)} · ${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : "";
-          })()}
-          ${Math.abs(middleHighPosition - medianPosition) >= 4 ? `<span class="mobileMarketKeyTick" style="top:${middleHighPosition}%">P75 · ${escapeMarketHtml(formatMarketPrice(statistics.middleHigh))}</span>` : ""}
+          ${Math.abs(middleHighPosition - medianPosition) >= 4 ? `<span class="mobileMarketKeyTick" style="top:${middleHighPosition}%">${escapeMarketHtml(formatMarketPrice(statistics.middleHigh))}</span>` : ""}
           ${marketMedians.length
-            ? marketMedians.map((line) => `<span class="mobileMarketKeyTick isMedian is${sourceClass(line.source)}${line.turnkey ? " isTurnkey" : ""}" style="top:${line.labelPosition}%">${escapeMarketHtml(line.label)} · ${escapeMarketHtml(formatMarketPrice(line.value))}</span>`).join("")
-            : `<span class="mobileMarketKeyTick isMedian" style="top:${medianPosition}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(statistics.median))}</span>`}
-          ${Math.abs(middleLowPosition - medianPosition) >= 4 ? `<span class="mobileMarketKeyTick" style="top:${middleLowPosition}%">P25 · ${escapeMarketHtml(formatMarketPrice(statistics.middleLow))}</span>` : ""}
+            ? marketMedians.map((line) => `<span class="mobileMarketKeyTick isMedian is${sourceClass(line.source)}${line.turnkey ? " isTurnkey" : ""}" style="top:${line.labelPosition}%">${escapeMarketHtml(formatMarketPrice(line.value))}</span>`).join("")
+            : `<span class="mobileMarketKeyTick isMedian" style="top:${medianPosition}%">${escapeMarketHtml(formatMarketPrice(statistics.median))}</span>`}
+          ${Math.abs(middleLowPosition - medianPosition) >= 4 ? `<span class="mobileMarketKeyTick" style="top:${middleLowPosition}%">${escapeMarketHtml(formatMarketPrice(statistics.middleLow))}</span>` : ""}
           <span class="mobileMarketTick isLimit" style="top:5%">${escapeMarketHtml(formatMarketPrice(domainMaximum))}</span>
           <span class="mobileMarketTick isLimit" style="top:95%">${escapeMarketHtml(formatMarketPrice(domainMinimum))}</span>
         </div>

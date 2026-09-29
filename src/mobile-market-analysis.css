@@ -2126,26 +2126,6 @@
   color: var(--color-error);
 }
 
-/* "najdroższa" above the dearest dot. */
-.mobileMarketExtreme {
-  position: absolute;
-  z-index: 3;
-  left: calc(var(--plot-left) + (100% - var(--plot-left) - var(--plot-right)) * var(--x));
-  transform: translate(-50%, calc(-100% - 12px));
-  border-radius: 4px;
-  background: var(--color-ink);
-  padding: 2px 6px;
-  color: #fff;
-  font-size: var(--text-xs);
-  font-weight: 800;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-.mobileMarketExtreme.isRight {
-  transform: translate(calc(-100% + 10px), calc(-100% - 12px));
-}
-
 /* Offer table: the offer's name first. */
 .mobileMarketTableTitle {
   min-width: 220px;
@@ -2381,11 +2361,11 @@
 }
 
 .mobileMarketStatsRow b.isHigher {
-  color: var(--color-success);
+  color: var(--color-error);
 }
 
 .mobileMarketStatsRow b.isLower {
-  color: var(--color-error);
+  color: var(--color-success);
 }
 
 .mobileMarketStatsSource {
@@ -2693,15 +2673,6 @@
   font-weight: 600;
 }
 
-/* "najdroższa" beside the dot when a label above it would leave the plot. */
-.mobileMarketExtreme.isSideLeft {
-  transform: translate(calc(-100% - 12px), -50%);
-}
-
-.mobileMarketExtreme.isSideRight {
-  transform: translate(12px, -50%);
-}
-
 /* The labels cover the end of their line, so no stub pokes out past them. */
 .mobileMarketKeyTick {
   right: 14px;
@@ -2761,7 +2732,7 @@
 }
 
 .mobileMarketStatsRow b .mobileMarketTurnkeyNote {
-  color: var(--color-muted);
+  font-size: calc(var(--text-xs) + 1px);
   white-space: normal;
 }
 
@@ -2833,9 +2804,16 @@
   white-space: nowrap;
 }
 
-.mobileMarketStatsRow b .mobileMarketTurnkeyNote,
 .mobileMarketTable .mobileMarketTurnkeyNote {
   color: var(--color-brand-pressed);
+}
+
+.mobileMarketStatsRow b.isHigher .mobileMarketTurnkeyNote {
+  color: var(--color-error);
+}
+
+.mobileMarketStatsRow b.isLower .mobileMarketTurnkeyNote {
+  color: var(--color-success);
 }
 
 .mobileMarketAxisNote.isTurnkey {
@@ -2979,4 +2957,22 @@
   width: 1%;
   color: var(--color-muted);
   font-weight: 600;
+}
+
+/* Statistics: one size smaller so the prices and their "na gotowo" line fit
+   the cells (the average-prices column is already smaller). */
+.mobileMarketStatsRow b {
+  font-size: var(--text-base);
+}
+
+.mobileMarketStatsRow b .mobileMarketTurnkeyNote {
+  font-size: 0.6875rem;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.mobileMarketGrossNote {
+  color: var(--color-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
 }
