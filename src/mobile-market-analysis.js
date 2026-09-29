@@ -51,7 +51,13 @@
       favoriteRemove: "Usuń z ulubionych",
       statsHeading: "Statystyki",
       turnkeyShort: "na gotowo*",
-      priceHistoryIntro: "Historia cen ulubionych aut: każde „Analiza rynku” i „Odśwież dane” zapisuje nowy pomiar z datą. Wybierz auto, aby zobaczyć, jak zmieniają się ceny na portalach.",
+      priceHistoryIntro: "Każde „Analiza rynku” i „Odśwież dane” dopisuje nowy wiersz z datą; wcześniejsze pomiary zostają na zawsze. Auto wybierasz na pasku ulubionych u góry.",
+      priceHistoryFiltersChanged: "Od tego pomiaru zmienione filtry: {filters}",
+      autoRefreshLabel: "Automatyczna aktualizacja",
+      autoRefreshDaily: "codziennie",
+      autoRefresh3Days: "co 3 dni",
+      autoRefreshWeekly: "co tydzień",
+      autoRefreshPending: "Ustawienie zapisane. Automatyczne pomiary zaczną się po podłączeniu serwera automatyzacji; do tego czasu nowy wiersz dodaje „Odśwież dane”.",
       priceHistoryNoFavorites: "Dodaj auto do ulubionych ★ — tutaj pojawi się historia jego cen.",
       priceHistoryEmptyEntry: "To auto nie ma jeszcze pomiarów cen. Kliknij „Odśwież dane”.",
       trendTitle: "Mediana ceny w czasie",
@@ -259,7 +265,13 @@
       favoriteRemove: "Убрать из избранного",
       statsHeading: "Статистика",
       turnkeyShort: "под ключ*",
-      priceHistoryIntro: "История цен избранных авто: каждый «Анализ рынка» и «Обновить данные» сохраняет новый замер с датой. Выбери авто, чтобы увидеть, как меняются цены на порталах.",
+      priceHistoryIntro: "Каждый «Анализ рынка» и «Обновить данные» добавляет новую строку с датой; прошлые замеры остаются навсегда. Авто выбирается в полосе избранного сверху.",
+      priceHistoryFiltersChanged: "С этого замера изменены фильтры: {filters}",
+      autoRefreshLabel: "Автоматическое обновление",
+      autoRefreshDaily: "каждый день",
+      autoRefresh3Days: "раз в 3 дня",
+      autoRefreshWeekly: "раз в неделю",
+      autoRefreshPending: "Настройка сохранена. Автоматические замеры начнутся после подключения сервера автоматизации; до этого новую строку добавляет «Обновить данные».",
       priceHistoryNoFavorites: "Добавь авто в избранное ★ — здесь появится история его цен.",
       priceHistoryEmptyEntry: "У этого авто ещё нет замеров цен. Нажми «Обновить данные».",
       trendTitle: "Медиана цены во времени",
@@ -461,7 +473,6 @@
   // Every Mobile.de search is logged automatically; only the last 20 unpinned
   // checks are kept, while pinned ones (e.g. a client's car) stay on top.
   const HISTORY_LIMIT = 20;
-  const PRICE_LOG_LIMIT = 120;
   const PRICE_POINT_MERGE_MS = 2 * 60 * 60 * 1000;
 
   // Otomoto blocks cross-origin reads, so its result pages come through a
@@ -956,7 +967,10 @@
       pinned: Boolean(entry.pinned),
       // Entries saved before prices were dated count from their last update.
       dataAt: String(entry.dataAt || (entry.listings?.length >= 3 ? entry.updatedAt || entry.createdAt || "" : "")),
-      priceLog: Array.isArray(entry.priceLog) ? entry.priceLog.filter((point) => point && point.at).slice(-PRICE_LOG_LIMIT) : [],
+      // The whole price history is kept, never cut.
+      priceLog: Array.isArray(entry.priceLog) ? entry.priceLog.filter((point) => point && point.at) : [],
+      // Scheduled checks of a favourite (run by the automation server, B5).
+      autoRefresh: entry.autoRefresh?.enabled ? { enabled: true, every: String(entry.autoRefresh.every || "daily") } : null,
       createdAt: String(entry.createdAt || entry.updatedAt || new Date().toISOString()),
       updatedAt: String(entry.updatedAt || entry.createdAt || new Date().toISOString()),
     };
@@ -1125,22 +1139,31 @@
   function withPriceLog(entry, previous) {
     const measurement = nextMeasurement;
     nextMeasurement = null;
-    const sameMarket = !previous || previous.signature === entry.signature;
-    const log = sameMarket ? [...(previous?.priceLog || [])] : [];
-    const dataAt = sameMarket ? previous?.dataAt || "" : "";
+    // The price history is never dropped. Changed filters (not just the
+    // compared markets) are marked in it, so later checks are not compared
+    // with the ones before.
+    const sameSearch = !previous || searchSignature(previous.filters) === searchSignature(entry.filters);
+    const log = [...(previous?.priceLog || [])];
+    const dataAt = sameSearch ? previous?.dataAt || "" : "";
     const now = new Date().toISOString();
+    if (!sameSearch && log.some((point) => MARKET_SOURCES.some((source) => point[source]))) {
+      const marker = { at: now, filtersChange: true, filters: entry.filters };
+      // Changed again before any new check: one mark with the latest filters.
+      if (log[log.length - 1]?.filtersChange) log[log.length - 1] = marker;
+      else log.push(marker);
+    }
     const point = measurement && entry.listings.length >= 3 ? marketPricePoint(entry.listings, now, entry.filters) : null;
     const fresh = point ? Object.fromEntries(measurement.sources.filter((source) => point[source]).map((source) => [source, point[source]])) : {};
     if (!Object.keys(fresh).length) return { ...entry, priceLog: log, dataAt: entry.listings.length >= 3 ? dataAt : "" };
     const last = log[log.length - 1];
-    if (measurement.isNewCheck || !last || Date.parse(now) - Date.parse(last.at) >= PRICE_POINT_MERGE_MS) {
+    if (measurement.isNewCheck || !last || last.filtersChange || Date.parse(now) - Date.parse(last.at) >= PRICE_POINT_MERGE_MS) {
       // Every check is its own row, stamped with its time.
       log.push({ at: now, ...fresh });
     } else {
       // Offers of another marketplace fetched soon after belong to that check.
       log[log.length - 1] = { ...last, ...fresh };
     }
-    return { ...entry, priceLog: log.slice(-PRICE_LOG_LIMIT), dataAt: now };
+    return { ...entry, priceLog: log, dataAt: now };
   }
 
   function createMarketSnapshot(filters, listings, sourceFileName = "", searchUrl = "", pinned = false) {
@@ -1898,28 +1921,43 @@
     renderMarketPicker();
   }
 
-  // Every measurement of this search, newest first, one row per marketplace,
-  // each value compared with the previous measurement of that marketplace.
+  // Every measurement of this search, newest first: one block per date with a
+  // row per marketplace, each value compared with the previous measurement of
+  // that marketplace. Prices falling are good for the buyer (green), more
+  // offers too. A change of filters is marked and not compared across.
   function priceHistoryHtml(entry, sources = MARKET_SOURCES.filter((source) => chartSources[source])) {
     const c = copy();
     const log = entry?.priceLog || [];
     if (!log.length) return "";
     const numbers = numberFormat();
-    const change = (current, previous) => {
+    const change = (current, previous, goodWhenUp = false) => {
       if (!Number.isFinite(current) || !Number.isFinite(previous) || !previous) return "";
       const pct = ((current - previous) / previous) * 100;
       if (Math.abs(pct) < 0.5) return `<em class="isFlat">=</em>`;
-      return `<em class="${pct < 0 ? "isDown" : "isUp"}">${pct > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.round(Math.abs(pct) * 10) / 10))}%</em>`;
+      const good = goodWhenUp ? pct > 0 : pct < 0;
+      return `<em class="${good ? "isGood" : "isBad"}">${pct > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.round(Math.abs(pct) * 10) / 10))}%</em>`;
     };
     const price = (value, currency) => (Number.isFinite(value) ? escapeMarketHtml(formatPlainPrice(value, currency)) : "—");
-    const groups = [];
+    const shown = MARKET_SOURCES.filter((source) => sources.includes(source));
+    const previousOf = (index, source) => {
+      for (let at = index - 1; at >= 0; at -= 1) {
+        if (log[at].filtersChange) return null;
+        if (log[at][source]) return log[at][source];
+      }
+      return null;
+    };
+    const blocks = [];
     log.forEach((point, index) => {
-      const rows = [];
-      groups.push(rows);
-      MARKET_SOURCES.filter((source) => sources.includes(source)).forEach((source) => {
+      if (point.filtersChange) {
+        const filters = point.filters ? historyMeta(point.filters).join(" · ") : "";
+        blocks.push(`<tbody class="mobileMarketHistoryFilters"><tr><td colspan="8">${escapeMarketHtml(formatHistoryDate(point.at))} · ${escapeMarketHtml(c.priceHistoryFiltersChanged.replace("{filters}", filters || "—"))}</td></tr></tbody>`);
+        return;
+      }
+      const markets = shown.filter((source) => point[source]);
+      if (!markets.length) return;
+      const rows = markets.map((source, row) => {
         const current = point[source];
-        if (!current) return;
-        const previous = log.slice(0, index).reverse().find((item) => item[source])?.[source];
+        const previous = previousOf(index, source);
         const cell = (key) => {
           const url = current[`${key}Url`];
           const value = url
@@ -1931,18 +1969,19 @@
             : "";
           return `<td>${value} ${previous ? change(current[key], previous[key]) : ""}${turnkeyNote}</td>`;
         };
-        rows.push(`
+        return `
           <tr>
-            <td>${escapeMarketHtml(formatHistoryDate(point.at))}</td>
+            ${row === 0 ? `<th scope="rowgroup" rowspan="${markets.length}">${escapeMarketHtml(formatHistoryDate(point.at))}</th>` : ""}
             <td>${marketBadge(source)}</td>
-            <td>${current.count} ${previous ? change(current.count, previous.count) : ""}</td>
+            <td>${current.count} ${previous ? change(current.count, previous.count, true) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
             <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${current.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey.p25, "PLN")} – ${price(current.turnkey.p75, "PLN")} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
-            <td>${Number.isFinite(current.middleCount) ? current.middleCount : "—"} ${previous && Number.isFinite(previous.middleCount) ? change(current.middleCount, previous.middleCount) : ""}</td>
-          </tr>`);
+            <td>${Number.isFinite(current.middleCount) ? current.middleCount : "—"} ${previous && Number.isFinite(previous.middleCount) ? change(current.middleCount, previous.middleCount, true) : ""}</td>
+          </tr>`;
       });
+      blocks.push(`<tbody class="mobileMarketHistoryCheck">${rows.join("")}</tbody>`);
     });
-    if (!groups.some((rows) => rows.length)) return "";
+    if (!blocks.some((block) => block.includes("mobileMarketHistoryCheck"))) return "";
     return `
       <section class="mobileMarketCard mobileMarketPriceHistory" aria-label="${escapeMarketHtml(c.priceHistoryHeading)}">
         ${blockTitle("calendar", c.priceHistoryHeading)}
@@ -1958,7 +1997,7 @@
               <th scope="col">${escapeMarketHtml(c.averagePrices)}</th>
               <th scope="col">${escapeMarketHtml(c.middleOffers)}</th>
             </tr></thead>
-            <tbody>${groups.reverse().flat().join("")}</tbody>
+            ${blocks.reverse().join("")}
           </table>
         </div>
       </section>`;
@@ -2029,20 +2068,18 @@
     }
     const entry = favorites.find((item) => item.id === priceHistoryId);
     const title = (item) => [item.filters.brand, item.filters.model, item.filters.version].filter(Boolean).join(" ");
+    const auto = entry?.autoRefresh;
+    const every = [["daily", c.autoRefreshDaily], ["3days", c.autoRefresh3Days], ["weekly", c.autoRefreshWeekly]];
     priceHistoryPage.innerHTML = `
       <section class="mobileMarketCard mobileMarketPriceHistoryIntro">
         ${blockTitle("calendar", c.priceHistoryHeading)}
-        <p>${escapeMarketHtml(c.priceHistoryIntro)}</p>
-        ${favorites.length ? `
-          <div class="mobileMarketPriceHistoryPicker" role="group" aria-label="${escapeMarketHtml(c.favoritesHeading)}">
-            ${favorites.map((item) => `<button class="mobileMarketImportClear${item.id === priceHistoryId ? " isPrimary" : ""}" type="button" data-price-history-pick="${escapeMarketHtml(item.id)}" aria-pressed="${item.id === priceHistoryId ? "true" : "false"}">★ ${escapeMarketHtml(title(item))} · ${(item.priceLog || []).filter((point) => MARKET_SOURCES.some((source) => chartSources[source] && point[source])).length}</button>`).join("")}
-          </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.priceHistoryNoFavorites)}</p>`}
+        <p>${escapeMarketHtml(favorites.length ? c.priceHistoryIntro : c.priceHistoryNoFavorites)}</p>
       </section>
       ${entry ? `
         <section class="mobileMarketCard">
           <div class="mobileMarketPriceHistoryHead">
             <div>
-              <strong>${escapeMarketHtml(title(entry))}</strong>
+              <strong>★ ${escapeMarketHtml(title(entry))}</strong>
               <small>${escapeMarketHtml(historyMeta(entry.filters).join(" · "))}</small>
             </div>
             <div class="mobileMarketToolbarActions">
@@ -2050,20 +2087,40 @@
               <button class="mobileMarketImportClear isPrimary" type="button" data-price-history-refresh="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.refresh)}</button>
             </div>
           </div>
+          <div class="mobileMarketAutoRefresh${auto ? " isOn" : ""}">
+            <label><input type="checkbox" data-price-history-auto="${escapeMarketHtml(entry.id)}"${auto ? " checked" : ""} /> <b>${escapeMarketHtml(c.autoRefreshLabel)}</b></label>
+            <select data-price-history-auto-every="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(c.autoRefreshLabel)}"${auto ? "" : " disabled"}>
+              ${every.map(([value, label]) => `<option value="${value}"${(auto?.every || "daily") === value ? " selected" : ""}>${escapeMarketHtml(label)}</option>`).join("")}
+            </select>
+            ${auto ? `<small>${escapeMarketHtml(c.autoRefreshPending)}</small>` : ""}
+          </div>
           ${blockTitle("gauge", c.trendTitle)}
           ${medianTrendHtml(entry)}
         </section>
         ${priceHistoryHtml(entry) || `<section class="mobileMarketCard"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.priceHistoryEmptyEntry)}</p></section>`}` : ""}`;
   }
 
-  priceHistoryPage?.addEventListener("click", (event) => {
-    const pick = event.target.closest("[data-price-history-pick]");
-    if (pick) {
-      priceHistoryId = pick.dataset.priceHistoryPick;
-      renderFavoritesBar();
-      renderPriceHistoryPage();
+  // Scheduled checks are a setting of the favourite, stored with it (the
+  // stored history is re-read first, see 4.6.1 in docs/PROJECT-MOBILE.md).
+  function setAutoRefresh(historyId, autoRefresh) {
+    refreshMarketHistory();
+    if (!marketHistory.some((item) => item.id === historyId)) return;
+    if (!storeMarketHistory(marketHistory.map((item) => (item.id === historyId ? { ...item, autoRefresh } : item)))) return;
+    renderPriceHistoryPage();
+  }
+
+  priceHistoryPage?.addEventListener("change", (event) => {
+    const toggle = event.target.closest("[data-price-history-auto]");
+    if (toggle) {
+      const every = priceHistoryPage.querySelector("[data-price-history-auto-every]")?.value || "daily";
+      setAutoRefresh(toggle.dataset.priceHistoryAuto, toggle.checked ? { enabled: true, every } : null);
       return;
     }
+    const select = event.target.closest("[data-price-history-auto-every]");
+    if (select) setAutoRefresh(select.dataset.priceHistoryAutoEvery, { enabled: true, every: select.value });
+  });
+
+  priceHistoryPage?.addEventListener("click", (event) => {
     const open = event.target.closest("[data-price-history-open]");
     if (open) {
       openFavorite(open.dataset.priceHistoryOpen);

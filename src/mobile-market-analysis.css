@@ -1588,11 +1588,11 @@
   font-weight: 800;
 }
 
-.mobileMarketPriceHistory em.isDown {
+.mobileMarketPriceHistory em.isGood {
   color: var(--color-success);
 }
 
-.mobileMarketPriceHistory em.isUp {
+.mobileMarketPriceHistory em.isBad {
   color: var(--color-error);
 }
 
@@ -1778,7 +1778,8 @@
   max-width: 280px;
 }
 
-/* Price history: rises green, falls red. */
+/* Price history: cheaper and more offers green, dearer and fewer red
+   (isGood / isBad above); one block per check date. */
 .mobileMarketCard.mobileMarketPriceHistory {
   margin-top: var(--space-lg);
 }
@@ -1787,12 +1788,52 @@
   white-space: nowrap;
 }
 
-.mobileMarketPriceHistory em.isUp {
-  color: var(--color-success);
+.mobileMarketPriceHistory td .mobileMarketTurnkeyNote {
+  white-space: normal;
 }
 
-.mobileMarketPriceHistory em.isDown {
-  color: var(--color-error);
+.mobileMarketHistoryTable tbody + tbody {
+  border-top: 2px solid var(--color-rule);
+}
+
+.mobileMarketHistoryTable th[scope="rowgroup"] {
+  vertical-align: top;
+  text-align: left;
+  color: var(--color-ink);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.mobileMarketHistoryFilters td {
+  background: rgba(22, 43, 72, 0.05);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  white-space: normal;
+}
+
+.mobileMarketAutoRefresh {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-sm);
+  margin-bottom: var(--space-lg);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: 10px;
+}
+
+.mobileMarketAutoRefresh label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.mobileMarketAutoRefresh small {
+  flex-basis: 100%;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
 }
 
 @media (max-width: 60rem) {
@@ -2822,16 +2863,10 @@
 }
 
 .mobileMarketPriceHistoryIntro p {
-  margin: 0 0 var(--space-md);
+  margin: 0;
   color: var(--color-muted);
   font-size: var(--text-sm);
   line-height: 1.5;
-}
-
-.mobileMarketPriceHistoryPicker {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
 }
 
 .mobileMarketPriceHistoryHead {
