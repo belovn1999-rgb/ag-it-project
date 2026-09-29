@@ -3866,12 +3866,29 @@ function setLinkSource(source) {
   if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
 }
 
+// The portal of the link is the one market compared in step 2 (more can be
+// added there by hand afterwards).
+function mirrorLinkSource(source) {
+  window.AUTOGOOD_SET_ONLY_MARKET?.(source);
+}
+
 document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
-  input.addEventListener("change", () => setLinkSource(linkSource()));
+  input.addEventListener("change", () => {
+    setLinkSource(linkSource());
+    mirrorLinkSource(linkSource());
+  });
 });
-// A pasted link picks its portal by itself.
+// A pasted link picks its portal by itself. Only a new link mirrors the
+// market: what was added in step 2 stays while the same link is recognised.
+let mirroredLink = "";
 els.url.addEventListener("input", () => {
   const value = els.url.value.trim();
+  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket"
+    : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
+  if (source && value !== mirroredLink) {
+    mirroredLink = value;
+    mirrorLinkSource(source);
+  }
   if (isOtomotoUrl(value)) setLinkSource("otomoto");
   else if (isBlocketUrl(value)) setLinkSource("blocket");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
