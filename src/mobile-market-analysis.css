@@ -3121,3 +3121,60 @@
 .mobileMarketSearchCard .mobileSearchSummaryFoot {
   margin-top: var(--space-sm);
 }
+
+/* Page 1: the chosen filters in exactly the recognised ad's look (sizes,
+   type, gaps, element places), both with equal columns — whatever their
+   number. The analysis parameters follow the same measures. */
+.mobileListingBrief .agSpecColumns,
+.mobileSearchSummary .agSpecColumns,
+.mobileMarketSearchCard .agSpecColumns {
+  grid-template-columns: none !important;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+}
+
+.mobileSearchSummary,
+.mobileMarketSearchCard {
+  padding: var(--space-md);
+}
+
+.mobileSearchSummary .agSpecTitle strong,
+.mobileMarketSearchCard .agSpecTitle strong {
+  font-size: var(--text-xl);
+}
+
+.mobileSearchSummary .agSpecKicker,
+.mobileMarketSearchCard .agSpecKicker,
+.mobileSearchSummary .agSpecColumn h4,
+.mobileMarketSearchCard .agSpecColumn h4 {
+  font-size: 0.6875rem;
+}
+
+.mobileSearchSummary .agSpecColumn dt,
+.mobileMarketSearchCard .agSpecColumn dt,
+.mobileSearchSummary .agSpecText,
+.mobileMarketSearchCard .agSpecText {
+  font-size: 0.71875rem;
+  line-height: 1.3;
+}
+
+.mobileSearchSummary .agSpecColumn dd,
+.mobileMarketSearchCard .agSpecColumn dd {
+  font-size: 0.78125rem;
+  line-height: 1.3;
+}
+
+.mobileSearchSummary .agSpecColumn dl,
+.mobileMarketSearchCard .agSpecColumn dl {
+  gap: 3px;
+}
+
+.mobileSearchSummary .agSpecColumn,
+.mobileMarketSearchCard .agSpecColumn {
+  padding: 0 var(--space-md) 0 0;
+}
+
+/* The bottom row inside the recognised ad's card. */
+.mobileListingBrief .mobileSearchSummaryFoot {
+  margin-top: var(--space-sm);
+}

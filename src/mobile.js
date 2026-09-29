@@ -2150,7 +2150,10 @@ function focusManualFilter(selector) {
   // The fields are below the pinned head: show the filter summary there now
   // and keep it during the scroll, so nothing changes height mid-way.
   const panel = document.querySelector(".mobileManualPanel");
-  if (panel?.classList.contains("hasRecognizedListing")) panel.classList.add("isSummaryMode");
+  if (panel?.classList.contains("hasRecognizedListing")) {
+    panel.classList.add("isSummaryMode");
+    placePinnedControls();
+  }
   pinnedModeFrozenUntil = performance.now() + 1200;
   // Measure after the unfolded card and the head have settled, then one
   // smooth scroll.
@@ -2273,6 +2276,29 @@ function updateSelectedFiltersSummary() {
     ],
   });
   if (saveButton) els.selectedFilters.querySelector("[data-mobile-summary-star-slot]")?.replaceWith(saveButton);
+  placePinnedControls();
+}
+
+// The star and the bottom row (Gotowe, Analiza rynku, counts and links) stay
+// visible in the pinned head whichever block it shows: the recognised ad or
+// the chosen filters.
+function placePinnedControls() {
+  const panel = document.querySelector(".mobileManualPanel");
+  const summary = document.querySelector(".mobileSearchSummary");
+  const brief = els.listingResult;
+  const foot = document.querySelector(".mobileSearchSummaryFoot");
+  const star = document.querySelector("[data-mobile-market-history-save]");
+  if (!panel || !summary || !foot) return;
+  const inBrief = Boolean(state.data) && brief && !brief.hidden && !panel.classList.contains("isSummaryMode");
+  if (inBrief) {
+    brief.append(foot);
+    const aside = brief.querySelector(".agSpecAside");
+    if (star && aside && star.parentElement !== aside) aside.prepend(star);
+  } else {
+    if (foot.parentElement !== summary) summary.append(foot);
+    const slotAside = summary.querySelector(".agSpecAside");
+    if (star && slotAside && star.parentElement !== slotAside) slotAside.prepend(star);
+  }
 }
 
 function mobileDeNumber(value) {
@@ -3203,6 +3229,7 @@ function renderData() {
   manualPanel?.classList.toggle("hasRecognizedListing", Boolean(state.data));
   if (!state.data) {
     manualPanel?.classList.remove("isSummaryMode");
+    placePinnedControls();
     els.listingDetails.innerHTML = "";
     renderScenarios();
     return;
@@ -3244,6 +3271,7 @@ function renderData() {
     ],
   });
 
+  placePinnedControls();
   if (!manualPanel?.classList.contains("isSummaryMode")) {
     recognizedHeadHeight = manualPanel?.querySelector(".mobilePanelHead")?.offsetHeight || 0;
   }
@@ -3265,6 +3293,7 @@ function updatePinnedListingMode() {
   const summary = panel.classList.contains("isSummaryMode");
   if (!summary && top <= navHeight) panel.classList.add("isSummaryMode");
   else if (summary && top > navHeight + 80) panel.classList.remove("isSummaryMode");
+  if (summary !== panel.classList.contains("isSummaryMode")) placePinnedControls();
 }
 
 window.addEventListener("scroll", updatePinnedListingMode, { passive: true });
