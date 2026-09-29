@@ -2171,7 +2171,12 @@
     const numbers = numberFormat();
     const any = t.specAny || "—";
     const range = (from, to, unit = "", plain = false) => {
-      const format = (value) => (plain ? String(value) : numbers.format(Number(value)));
+      const format = (value) => {
+        const raw = String(value).trim();
+        if (plain) return raw;
+        const amount = Number(raw.replace(/\s/g, "").replace(/\+$/, ""));
+        return Number.isFinite(amount) ? `${numbers.format(amount)}${raw.endsWith("+") ? "+" : ""}` : raw;
+      };
       const suffix = unit ? ` ${unit}` : "";
       if (from && to) return from === to ? `${format(from)}${suffix}` : `${format(from)} – ${format(to)}${suffix}`;
       if (from) return `${t.specFrom} ${format(from)}${suffix}`;

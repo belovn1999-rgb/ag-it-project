@@ -2734,6 +2734,11 @@ label.isSummaryFocus {
   padding: var(--space-sm) var(--space-md);
 }
 
+.mobileManualPanel.hasRecognizedListing:not(.isSummaryMode) .mobileSearchSummary,
+.mobileManualPanel.hasRecognizedListing.isSummaryMode .mobileListingBrief {
+  display: none;
+}
+
 .mobileSearchSummary .mobileSearchSummaryBody {
   display: block;
   min-height: 0;
@@ -2931,6 +2936,18 @@ label.isSummaryFocus {
 /* Four equal columns, as in the analysis' "Parametry poszukiwania". */
 .mobileSearchSummary .agSpecColumns {
   grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+@media (max-width: 60rem) {
+  .mobileSearchSummary .agSpecColumns {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 36rem) {
+  .mobileSearchSummary .agSpecColumns {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
 }
 
 /* Page 4: the favourite picked in the pinned bar. */

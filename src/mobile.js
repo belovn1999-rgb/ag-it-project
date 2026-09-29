@@ -3165,6 +3165,8 @@ function conditionLabel(value) {
     .join(", ");
 }
 
+let recognizedHeadHeight = 0;
+
 function renderData() {
   const c = copy[state.lang];
   const data = state.data || {};
@@ -3174,7 +3176,10 @@ function renderData() {
   els.title.textContent = title;
   // Listing data and purchase paths appear only once a link has been recognised.
   if (els.listingResult) els.listingResult.hidden = !state.data;
+  const manualPanel = document.querySelector(".mobileManualPanel");
+  manualPanel?.classList.toggle("hasRecognizedListing", Boolean(state.data));
   if (!state.data) {
+    manualPanel?.classList.remove("isSummaryMode");
     els.listingDetails.innerHTML = "";
     renderScenarios();
     return;
@@ -3187,12 +3192,11 @@ function renderData() {
     location.sellerName || "",
   ].filter(Boolean).join(" · ");
   const price = data.pricePln
-    ? `<b>${escapeHtml(formatAmount(data.pricePln, "PLN"))}</b><small>≈ ${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</small>`
-    : `<b>${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</b>`;
+    ? `${formatAmount(data.pricePln, "PLN")} (≈ ${formatAmount(data.carBruttoEur, "EUR")})`
+    : formatAmount(data.carBruttoEur, "EUR");
   const equipment = confirmedComfortEquipment(data);
   els.listingDetails.innerHTML = specSheetHtml({
     title,
-    aside: `<span class="agSpecPrice">${price}</span>`,
     columns: [
       { heading: c.specEngineHeading, rows: [
         [c.specBody, bodyLabelOf(data.bodyType), "car"],
@@ -3212,12 +3216,28 @@ function renderData() {
         [c.specStatus, conditionLabel(data.condition), "check"],
         [c.specVat, purchaseTypeLabel(data), "percent"],
         [c.specSeller, seller, "store"],
+        [c.specPrice, price, "tag"],
       ] },
     ],
   });
 
+  if (!manualPanel?.classList.contains("isSummaryMode")) {
+    recognizedHeadHeight = manualPanel?.querySelector(".mobilePanelHead")?.offsetHeight || 0;
+  }
+  updatePinnedListingMode();
   renderScenarios();
 }
+
+function updatePinnedListingMode() {
+  const panel = document.querySelector(".mobileManualPanel");
+  if (!panel || !state.data || !panel.getClientRects().length) return;
+  const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 0;
+  panel.classList.toggle("isSummaryMode", panel.getBoundingClientRect().top + recognizedHeadHeight <= navHeight);
+}
+
+window.addEventListener("scroll", updatePinnedListingMode, { passive: true });
+window.addEventListener("resize", updatePinnedListingMode);
+window.addEventListener("hashchange", () => requestAnimationFrame(updatePinnedListingMode));
 
 function setStatus(status, message = "", replacesError = false) {
   const c = copy[state.lang];

@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=fav-pages-20260928" />
+  <link rel="stylesheet" href="./src/mobile.css?v=listing-summary-20260929" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=stats-sync2-20260929" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
@@ -75,11 +75,6 @@
               </button>
             </div>
             <p id="mobile-helper" class="mobileHelper" data-mobile-status></p>
-            <div class="mobileListingBrief" data-mobile-listing-result aria-live="polite" hidden>
-              <h3 class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="specVehicleKicker">Dane z ogłoszenia</span></h3>
-              <h3 class="mobileListingBriefTitle"><span data-mobile-title>—</span></h3>
-              <div class="mobileListingDetails" data-mobile-listing-details></div>
-            </div>
             <p class="mobileBookmarkletRow" data-mobile-bookmarklet-row hidden><span data-i18n="bookmarkletInstall">Zakładka do mobile.de:</span> <a class="mobileBookmarkletLink" href="#" data-autogood-bookmarklet draggable="true">AUTOGOOD ↦ mobile.de</a> <em data-i18n="bookmarkletHint">Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.</em></p>
           </form>
         </section>
@@ -97,6 +92,11 @@
             </div>
             <!-- The chosen filters in the analysis' layout, the favourite star and
                  the live offer count with a link per compared market. -->
+            <div class="mobileListingBrief" data-mobile-listing-result aria-live="polite" hidden>
+              <h3 class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="specVehicleKicker">Dane z ogłoszenia</span></h3>
+              <h3 class="mobileListingBriefTitle"><span data-mobile-title>—</span></h3>
+              <div class="mobileListingDetails" data-mobile-listing-details></div>
+            </div>
             <section class="mobileSearchSummary">
               <button class="mobileSearchCountSaveButton mobileSearchSummaryStar" type="button" data-mobile-market-history-save aria-pressed="false" aria-label="Zapisz na stałe" title="Zapisz na stałe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
               <div class="mobileSelectedFilters mobileSearchSummaryBody" data-mobile-selected-filters aria-live="polite"></div>
@@ -607,10 +607,10 @@
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/market-badges.js?v=badges-20260928"></script>
-    <script src="./src/mobile.js?v=mobile-scroll-tunnel-20260928g"></script>
+    <script src="./src/mobile.js?v=listing-summary-20260929"></script>
     <script src="./src/blocket-search.js?v=blocket-analysis-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=turnkey-compare-20260928"></script>
-    <script src="./src/mobile-market-analysis.js?v=stats-sync2-20260929"></script>
+    <script src="./src/mobile-market-analysis.js?v=listing-summary-20260929"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>
