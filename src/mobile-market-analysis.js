@@ -88,6 +88,8 @@
       screenshotCopied: "Raport skopiowany do schowka — wklej go w wiadomości do klienta.",
       screenshotOpened: "Przeglądarka nie pozwala kopiować obrazów — raport zapisano jako plik PNG (Pobrane).",
       screenshotFailed: "Nie udało się zrobić zrzutu raportu.",
+      screenshotRetry: "Przeglądarka nie pozwoliła skopiować obrazu — kliknij przycisk jeszcze raz, obraz jest gotowy.",
+      screenshotNoClipboard: "Ta przeglądarka nie pozwala kopiować obrazów. Użyj Chrome albo pobierz PDF.",
       screenshotWorking: "Przygotowuję raport…",
       reportTitle: "Analiza rynku",
       tableTitle: "Ogłoszenie",
@@ -304,6 +306,8 @@
       screenshotCopied: "Отчёт скопирован в буфер обмена — вставь его в сообщение клиенту.",
       screenshotOpened: "Браузер не даёт копировать картинки — отчёт сохранён файлом PNG (Загрузки).",
       screenshotFailed: "Не удалось сделать снимок отчёта.",
+      screenshotRetry: "Браузер не дал скопировать картинку — нажми кнопку ещё раз, картинка уже готова.",
+      screenshotNoClipboard: "Этот браузер не умеет копировать картинки. Используй Chrome или скачай PDF.",
       screenshotWorking: "Готовлю отчёт…",
       reportTitle: "Анализ рынка",
       tableTitle: "Объявление",
@@ -3118,36 +3122,37 @@
     }
   }
 
+  // Copy = clipboard only, never a download. Browsers accept a clipboard
+  // write only right after the click, and drawing takes a few seconds, so
+  // the clipboard is asked at once and gets the picture as a promise.
+  let lastReportImage = null;
   async function copyReportScreenshot(button, mode = "copy") {
     const c = copy();
+    if (!navigator.clipboard?.write || !window.ClipboardItem) {
+      setAnalysisStatus(c.screenshotNoClipboard, true);
+      return;
+    }
+    // A picture drawn a moment ago (the first try was refused): copy it now.
+    const recent = lastReportImage && lastReportImage.mode === mode && Date.now() - lastReportImage.at < 120000
+      ? lastReportImage.blob : null;
     button.disabled = true;
     setAnalysisStatus(c.screenshotWorking);
+    const blobPromise = recent
+      ? Promise.resolve(recent)
+      : captureReport(mode).then(({ canvas }) => new Promise((resolve, reject) => {
+        canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png"))), "image/png");
+      }));
     try {
-      const { canvas } = await captureReport(mode);
-      const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
-      if (!blob) throw new Error("png");
-      if (navigator.clipboard?.write && window.ClipboardItem) {
-        try {
-          await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
-          setAnalysisStatus(c.screenshotCopied);
-          return;
-        } catch {
-          // Fall through to a new tab.
-        }
-      }
-      // No clipboard (e.g. an embedded browser): save the picture as a file.
-      // A new tab with the image is blocked in such browsers, a download is not.
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = `AUTOGOOD-analiza-rynku-${new Date().toISOString().slice(0, 10)}.png`;
-      document.body.append(link);
-      link.click();
-      link.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 30000);
-      setAnalysisStatus(c.screenshotOpened);
+      await navigator.clipboard.write([new ClipboardItem({ "image/png": blobPromise })]);
+      lastReportImage = null;
+      setAnalysisStatus(c.screenshotCopied);
     } catch {
-      setAnalysisStatus(c.screenshotFailed, true);
+      try {
+        lastReportImage = { mode, blob: await blobPromise, at: Date.now() };
+        setAnalysisStatus(c.screenshotRetry, true);
+      } catch {
+        setAnalysisStatus(c.screenshotFailed, true);
+      }
     } finally {
       button.disabled = false;
     }
