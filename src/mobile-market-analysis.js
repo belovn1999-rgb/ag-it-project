@@ -54,6 +54,38 @@
       priceHistoryIntro: "Każde „Analiza rynku” i „Odśwież dane” dopisuje nowy wiersz z datą; wcześniejsze pomiary zostają na zawsze. Auto wybierasz na pasku ulubionych u góry.",
       priceHistoryFiltersChanged: "Od tego pomiaru zmienione filtry: {filters}",
       priceHistoryComparedHint: "wybór rynków na stronie 1 „Wyszukiwanie”",
+      offerHistoryHeading: "Rynek w wybranym dniu",
+      offerHistoryIntro: "Wybierz datę pomiaru: wykres i lista pokazują ogłoszenia z tego dnia. „Porównaj z” nakłada drugą datę (szare kółka) i pokazuje, co się zmieniło.",
+      offerHistoryNone: "Ogłoszenia z każdego pomiaru zapisujemy od 30.09.2026. Po następnym „Odśwież dane” pojawi się tu wykres i lista ogłoszeń z tego dnia.",
+      offerHistoryNoOffers: "z tego dnia są tylko statystyki (bez listy ogłoszeń)",
+      offerLoading: "Wczytuję ogłoszenia…",
+      offerCompareWith: "Porównaj z",
+      offerCompareNone: "bez porównania",
+      offerFiltersBetween: "Między tymi datami zmieniono filtry — porównanie jest orientacyjne.",
+      offerAxis: "miejsce w liście od najtańszej do najdroższej",
+      offerLegendCurrent: "wybrany dzień",
+      offerLegendCompare: "porównanie",
+      offerListComplete: "pełna lista: {count} z {total}",
+      offerListSample: "próbka: {count} z {total} — nowe i zniknięte niepewne",
+      offerNoMarket: "Brak ogłoszeń tego rynku w wybranym dniu.",
+      offerChangesHeading: "Ogłoszenia i zmiany",
+      offerStatus: "Status",
+      offerAd: "Ogłoszenie",
+      offerYear: "Rok",
+      offerMileage: "Przebieg",
+      offerPrice: "Cena",
+      offerBefore: "Wcześniej",
+      offerChange: "Zmiana",
+      offerAll: "Wszystkie",
+      offerNew: "Nowe",
+      offerFirstSeen: "Pierwszy raz w próbce",
+      offerGone: "Zniknęło",
+      offerGoneGroup: "Zniknęły",
+      offerOutside: "Poza próbką",
+      offerCheaper: "Taniej",
+      offerDearer: "Drożej",
+      offerSame: "Bez zmian",
+      offerCheaperAvg: "śr. {pct}",
       priceHistoryMarketEmpty: "Brak pomiarów dla tego rynku. Kliknij „Odśwież dane”, aby dodać pierwszy.",
       autoRefreshLabel: "Automatyczna aktualizacja",
       autoRefreshDaily: "codziennie",
@@ -279,6 +311,38 @@
       priceHistoryIntro: "Каждый «Анализ рынка» и «Обновить данные» добавляет новую строку с датой; прошлые замеры остаются навсегда. Авто выбирается в полосе избранного сверху.",
       priceHistoryFiltersChanged: "С этого замера изменены фильтры: {filters}",
       priceHistoryComparedHint: "выбор рынков на странице 1 «Поиск»",
+      offerHistoryHeading: "Рынок в выбранный день",
+      offerHistoryIntro: "Выбери дату замера: график и список показывают объявления этого дня. «Сравнить с» накладывает вторую дату (серые кружки) и показывает, что изменилось.",
+      offerHistoryNone: "Объявления каждого замера сохраняются с 30.09.2026. После следующего «Обновить данные» здесь появятся график и список объявлений этого дня.",
+      offerHistoryNoOffers: "за этот день есть только статистика (без списка объявлений)",
+      offerLoading: "Загружаю объявления…",
+      offerCompareWith: "Сравнить с",
+      offerCompareNone: "без сравнения",
+      offerFiltersBetween: "Между этими датами менялись фильтры — сравнение приблизительное.",
+      offerAxis: "место в списке от самого дешёвого к самому дорогому",
+      offerLegendCurrent: "выбранный день",
+      offerLegendCompare: "сравнение",
+      offerListComplete: "полный список: {count} из {total}",
+      offerListSample: "выборка: {count} из {total} — новые и исчезнувшие неточно",
+      offerNoMarket: "В выбранный день нет объявлений этого рынка.",
+      offerChangesHeading: "Объявления и изменения",
+      offerStatus: "Статус",
+      offerAd: "Объявление",
+      offerYear: "Год",
+      offerMileage: "Пробег",
+      offerPrice: "Цена",
+      offerBefore: "Раньше",
+      offerChange: "Изменение",
+      offerAll: "Все",
+      offerNew: "Новое",
+      offerFirstSeen: "Впервые в выборке",
+      offerGone: "Исчезло",
+      offerGoneGroup: "Исчезли",
+      offerOutside: "Вне выборки",
+      offerCheaper: "Дешевле",
+      offerDearer: "Дороже",
+      offerSame: "Без изменений",
+      offerCheaperAvg: "в ср. {pct}",
       priceHistoryMarketEmpty: "По этому рынку ещё нет замеров. Нажми «Обновить данные», чтобы добавить первый.",
       autoRefreshLabel: "Автоматическое обновление",
       autoRefreshDaily: "каждый день",
@@ -501,6 +565,9 @@
   // reader proxy. Point AUTOGOOD_MARKET_PROXY at your own one to replace it.
   const MARKET_PROXY = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
   const OTOMOTO_PAGES = 8;
+  // A favourite is read whole up to this many offers, so its price history
+  // can tell new and gone offers apart; longer lists stay a sample.
+  const FULL_LIST_LIMIT = 1000;
   const OTOMOTO_PARALLEL = 3;
 
   let activeAnalysis = null;
@@ -803,18 +870,18 @@
 
   // The search is sorted by price, so pages taken at even distances across the
   // whole result list describe the market far better than the first pages only.
-  function otomotoSamplePages(total, pageSize) {
+  function otomotoSamplePages(total, pageSize, whole = false) {
     const pageCount = Math.max(1, Math.min(Math.ceil(total / pageSize), 500));
     if (pageCount === 1) return [];
     // A short list is taken whole: no sampling needed.
-    if (pageCount <= OTOMOTO_PAGES) return Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
+    if (pageCount <= OTOMOTO_PAGES || (whole && total <= FULL_LIST_LIMIT)) return Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
     const wanted = Array.from({ length: OTOMOTO_PAGES }, (_, index) => (
       Math.round(1 + (index * (pageCount - 1)) / (OTOMOTO_PAGES - 1))
     ));
     return [...new Set(wanted)].filter((page) => page > 1);
   }
 
-  async function fetchOtomotoListings(filters, onProgress) {
+  async function fetchOtomotoListings(filters, onProgress, whole = false) {
     const searchUrl = buildOtomotoSearchUrl(filters);
     const seen = new Set();
     const listings = [];
@@ -836,7 +903,7 @@
       marketTotal: first.total,
     }));
     collect(ranked(first.listings, 1));
-    const pages = otomotoSamplePages(first.total, pageSize);
+    const pages = otomotoSamplePages(first.total, pageSize, whole);
     let done = 1;
     // A few pages at a time: quicker than one by one, gentle on the proxy.
     for (let start = 0; start < pages.length; start += OTOMOTO_PARALLEL) {
@@ -888,7 +955,7 @@
     };
   }
 
-  async function fetchBlocketListings(filters, onProgress) {
+  async function fetchBlocketListings(filters, onProgress, whole = false) {
     if (!window.AUTOGOOD_BLOCKET) return null;
     await window.AUTOGOOD_BLOCKET.sekRateReady?.();
     const first = await fetchBlocketPage(filters, 1);
@@ -899,7 +966,7 @@
     // the upper half read from the dear end when it is out of reach.
     const reachable = Math.min(pageCount, BLOCKET_MAX_PAGES);
     const wanted = [];
-    if (pageCount <= BLOCKET_PAGES) {
+    if (pageCount <= BLOCKET_PAGES || (whole && total <= FULL_LIST_LIMIT)) {
       for (let page = 2; page <= pageCount; page += 1) wanted.push([page, "PRICE_ASC"]);
     } else {
       const spots = Array.from({ length: BLOCKET_PAGES }, (_, index) => Math.round(1 + (index * (pageCount - 1)) / (BLOCKET_PAGES - 1)));
@@ -934,9 +1001,10 @@
 
   // Mobile.de through the local importer (the user's own Chrome), when it
   // is reachable; otherwise the analysis simply goes on without it.
-  async function fetchMobileDeSample(filters) {
+  async function fetchMobileDeSample(filters, whole = false) {
     if (typeof window.AUTOGOOD_MOBILEDE_SEARCH !== "function") return null;
-    const result = await window.AUTOGOOD_MOBILEDE_SEARCH(buildMobileDeSearchUrl(filters));
+    // The importer reads at most 12 pages of 20: whole lists up to 240 offers.
+    const result = await window.AUTOGOOD_MOBILEDE_SEARCH(buildMobileDeSearchUrl(filters), whole ? { pages: 12 } : {});
     return result?.listings?.length ? result : null;
   }
 
@@ -944,16 +1012,18 @@
   const otomotoProvider = {
     id: "otomoto",
     lastSources: ["otomoto"],
-    async getListings({ filters }) {
+    async getListings({ filters, pinned = null }) {
       const c = copy();
       setAnalysisStatus(c.preparing);
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
+      // Favourites: whole lists where short enough (page 3 compares offers).
+      const whole = pinned ?? Boolean(historyEntryForFilters(filters)?.pinned);
       const [otomoto, mobile, blocket] = await Promise.allSettled([
         selected.includes("otomoto") ? fetchOtomotoListings(filters, (page, pages) => {
           setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
-        }) : null,
-        selected.includes("mobile") ? fetchMobileDeSample(filters) : null,
-        selected.includes("blocket") ? fetchBlocketListings(filters) : null,
+        }, whole) : null,
+        selected.includes("mobile") ? fetchMobileDeSample(filters, whole) : null,
+        selected.includes("blocket") ? fetchBlocketListings(filters, null, whole) : null,
       ]);
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
@@ -1162,6 +1232,121 @@
     nextMeasurement = { sources, isNewCheck };
   }
 
+  // ---- Offers of every check (IndexedDB) ---------------------------------
+  // Each dated check also keeps its offers, so page 3 can draw the market of
+  // any date and tell which offers are new, gone or repriced. localStorage is
+  // far too small for this, IndexedDB of the same browser holds it. Records
+  // are only ever added or merged, never deleted.
+  const CHECK_OFFERS_DB = "autogood-mobile-check-offers";
+  const CHECK_OFFERS_STORE = "checks";
+  // A list read to at least this share of its total counts as complete: only
+  // then "new" and "gone" are certain (a sample misses offers).
+  const COMPLETE_SHARE = 0.95;
+  let checkOffersDbPromise = null;
+  const checkOffersCache = new Map();
+
+  function openCheckOffersDb() {
+    if (!checkOffersDbPromise) {
+      checkOffersDbPromise = new Promise((resolve, reject) => {
+        if (!window.indexedDB) {
+          reject(new Error("IndexedDB unavailable"));
+          return;
+        }
+        const request = indexedDB.open(CHECK_OFFERS_DB, 1);
+        request.onupgradeneeded = () => {
+          const store = request.result.createObjectStore(CHECK_OFFERS_STORE, { keyPath: "key" });
+          store.createIndex("historyId", "historyId");
+        };
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      }).catch((error) => {
+        checkOffersDbPromise = null;
+        throw error;
+      });
+    }
+    return checkOffersDbPromise;
+  }
+
+  // The same offer on two dates: the portal's own ad number.
+  function offerKey(listing) {
+    try {
+      const url = new URL(listing.url);
+      const mobileId = url.searchParams.get("id") || url.pathname.match(/\/(\d+)\.html$/)?.[1];
+      if (url.hostname.endsWith("mobile.de") && mobileId) return `mobile:${mobileId}`;
+      return `${url.hostname.replace(/^www\./, "")}${url.pathname.replace(/\/$/, "")}`;
+    } catch {
+      return `id:${listing.id || `${listing.price}|${listing.year}|${listing.mileage}`}`;
+    }
+  }
+
+  function compactOffers(listings, source, filters) {
+    const own = listings.filter((listing) => listingSource(listing) === source);
+    const flagged = suspectOffers(own, (listing) => priceInPln(listing.price, listing.currency || SOURCE_CURRENCY[source]));
+    const turnkey = window.AUTOGOOD_TURNKEY;
+    const offers = own.map((listing) => ({
+      key: offerKey(listing),
+      url: listing.url || "",
+      title: String(listing.title || "").slice(0, 90),
+      price: listing.price,
+      currency: listing.currency || SOURCE_CURRENCY[source],
+      year: listing.year || null,
+      mileage: Number(listing.mileage) || null,
+      rank: listing.rank || null,
+      turnkey: source !== "otomoto" && turnkey ? Math.round(turnkey.turnkeyAverage({
+        price: listing.price,
+        currency: listing.currency || SOURCE_CURRENCY[source],
+        fuel: listing.fuel,
+        title: listing.title,
+        displacementCcm: listing.displacementCcm,
+      }, filters).total) : null,
+      suspect: flagged.has(listing) || undefined,
+    }));
+    const total = Math.max(offers.length, ...own.map((listing) => Number(listing.marketTotal) || 0));
+    return { total, complete: offers.length >= total * COMPLETE_SHARE, offers };
+  }
+
+  // Adds the offers of the given markets to the check of that date.
+  async function saveCheckOffers(historyId, at, sources, listings, filters) {
+    const markets = {};
+    sources.forEach((source) => {
+      const market = compactOffers(listings, source, filters);
+      if (market.offers.length) markets[source] = market;
+    });
+    if (!Object.keys(markets).length) return;
+    try {
+      const db = await openCheckOffersDb();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(CHECK_OFFERS_STORE, "readwrite");
+        const store = tx.objectStore(CHECK_OFFERS_STORE);
+        const key = `${historyId}|${at}`;
+        const read = store.get(key);
+        read.onsuccess = () => {
+          const record = read.result || { key, historyId, at, markets: {} };
+          store.put({ ...record, markets: { ...record.markets, ...markets } });
+        };
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+      checkOffersCache.delete(historyId);
+      if (priceHistoryId === historyId && currentPage?.() === "history") renderPriceHistoryPage();
+    } catch {
+      // Not kept in this browser: the dated statistics still are.
+    }
+  }
+
+  // Every saved check of a search, by its date.
+  async function loadCheckOffers(historyId) {
+    if (checkOffersCache.has(historyId)) return checkOffersCache.get(historyId);
+    const records = await openCheckOffersDb().then((db) => new Promise((resolve, reject) => {
+      const request = db.transaction(CHECK_OFFERS_STORE).objectStore(CHECK_OFFERS_STORE).index("historyId").getAll(historyId);
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    })).catch(() => []);
+    const byDate = new Map(records.map((record) => [record.at, record]));
+    checkOffersCache.set(historyId, byDate);
+    return byDate;
+  }
+
   function withPriceLog(entry, previous) {
     const measurement = nextMeasurement;
     nextMeasurement = null;
@@ -1185,9 +1370,11 @@
     if (measurement.isNewCheck || !last || last.filtersChange || Date.parse(now) - Date.parse(last.at) >= PRICE_POINT_MERGE_MS) {
       // Every check is its own row, stamped with its time.
       log.push({ at: now, ...fresh });
+      saveCheckOffers(entry.id, now, Object.keys(fresh), entry.listings, entry.filters);
     } else {
       // Offers of another marketplace fetched soon after belong to that check.
       log[log.length - 1] = { ...last, ...fresh };
+      saveCheckOffers(entry.id, last.at, Object.keys(fresh), entry.listings, entry.filters);
     }
     return { ...entry, priceLog: log, dataAt: now };
   }
@@ -2020,7 +2207,7 @@
         };
         rows.push(`
           <tr>
-            <th scope="row">${escapeMarketHtml(formatHistoryDate(point.at))}</th>
+            <th scope="row"><button class="mobileMarketDateLink" type="button" data-offer-date="${escapeMarketHtml(point.at)}">${escapeMarketHtml(formatHistoryDate(point.at))}</button></th>
             <td>${current.count} ${previous ? change(current.count, previous.count, true) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
             <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${current.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey.p25, "PLN")} – ${price(current.turnkey.p75, "PLN")} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
@@ -2106,6 +2293,216 @@
       </div>`;
   }
 
+  // ---- Page 3: the market of one date, compared with another --------------
+  // One chart per compared market: the offers of the picked date in colour,
+  // those of the compared date as grey rings, each at its place in the list
+  // from cheapest to dearest; a repriced offer is joined to where it was.
+  // Below: the offers of that date with what changed since the other one.
+  const offerHistoryState = { id: "", at: "", compareAt: null, filter: "all" };
+  const OFFER_COLORS = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a" };
+  const OFFER_GROUP_ORDER = ["new", "cheaper", "dearer", "gone", "same"];
+
+  function offerPositions(market) {
+    const kept = (market?.offers || []).filter((offer) => !offer.suspect);
+    const byPrice = [...kept].sort((left, right) => left.price - right.price);
+    const total = Math.max(market?.total || 0, byPrice.length);
+    return byPrice.map((offer, index) => ({
+      offer,
+      x: offer.rank && total > 1 ? (offer.rank - 1) / (total - 1) : byPrice.length > 1 ? index / (byPrice.length - 1) : 0.5,
+    }));
+  }
+
+  function offerChartHtml(source, current, compared) {
+    const c = copy();
+    const now = offerPositions(current);
+    const then = offerPositions(compared);
+    const all = [...now, ...then].map((item) => item.offer.price);
+    if (!all.length) return `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerNoMarket)}</p>`;
+    const currency = current?.offers[0]?.currency || compared?.offers[0]?.currency || SOURCE_CURRENCY[source];
+    const low = Math.min(...all) * 0.96;
+    const high = Math.max(...all) * 1.04;
+    const width = 900;
+    const height = 300;
+    const left = 84;
+    const right = 16;
+    const top = 14;
+    const bottom = 30;
+    const x = (value) => left + value * (width - left - right);
+    const y = (value) => top + ((high - value) / Math.max(1, high - low)) * (height - top - bottom);
+    const color = OFFER_COLORS[source];
+    const median = (items) => (items.length ? percentile(items.map((item) => item.offer.price).sort((a, b) => a - b), 0.5) : null);
+    const nowMedian = median(now);
+    const thenMedian = median(then);
+    const thenByKey = new Map(then.map((item) => [item.offer.key, item]));
+    const tip = (offer, date) => escapeMarketHtml(`${date} · ${formatPlainPrice(offer.price, offer.currency)}${offer.turnkey ? ` (~ ${formatPlainPrice(offer.turnkey, "PLN")} ${c.turnkeyShort})` : ""} · ${[offer.year, offer.mileage ? `${numberFormat().format(offer.mileage)} km` : ""].filter(Boolean).join(" · ")} · ${offer.title}`);
+    const dot = (item, date, compare) => {
+      const circle = compare
+        ? `<circle cx="${x(item.x)}" cy="${y(item.offer.price)}" r="3.6" class="isCompare"><title>${tip(item.offer, date)}</title></circle>`
+        : `<circle cx="${x(item.x)}" cy="${y(item.offer.price)}" r="4" fill="${color}"><title>${tip(item.offer, date)}</title></circle>`;
+      return item.offer.url ? `<a href="${escapeMarketHtml(item.offer.url)}" target="_blank" rel="noopener">${circle}</a>` : circle;
+    };
+    const moves = now.map((item) => {
+      const before = thenByKey.get(item.offer.key);
+      if (!before || before.offer.price === item.offer.price) return "";
+      return `<line x1="${x(before.x)}" y1="${y(before.offer.price)}" x2="${x(item.x)}" y2="${y(item.offer.price)}" class="${item.offer.price < before.offer.price ? "isGood" : "isBad"}" />`;
+    }).join("");
+    const ticks = [low, (low + high) / 2, high];
+    const atDate = formatHistoryDate(offerHistoryState.at);
+    const compareDate = offerHistoryState.compareAt ? formatHistoryDate(offerHistoryState.compareAt) : "";
+    return `
+      <svg class="mobileMarketOfferChart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeMarketHtml(`${c.offerHistoryHeading}: ${source}`)}">
+        ${ticks.map((value) => `<line x1="${left}" x2="${width - right}" y1="${y(value)}" y2="${y(value)}" class="isGrid" /><text x="${left - 8}" y="${y(value) + 4}" text-anchor="end">${escapeMarketHtml(formatPlainPrice(value, currency))}</text>`).join("")}
+        <text x="${left}" y="${height - 8}">0%</text>
+        <text x="${(left + width - right) / 2}" y="${height - 8}" text-anchor="middle">${escapeMarketHtml(c.offerAxis)}</text>
+        <text x="${width - right}" y="${height - 8}" text-anchor="end">100%</text>
+        ${Number.isFinite(thenMedian) ? `<line x1="${left}" x2="${width - right}" y1="${y(thenMedian)}" y2="${y(thenMedian)}" class="isMedian isCompare"><title>${escapeMarketHtml(`${compareDate} · ${c.median}: ${formatPlainPrice(thenMedian, currency)}`)}</title></line>` : ""}
+        ${then.map((item) => dot(item, compareDate, true)).join("")}
+        ${moves}
+        ${Number.isFinite(nowMedian) ? `<line x1="${left}" x2="${width - right}" y1="${y(nowMedian)}" y2="${y(nowMedian)}" class="isMedian" stroke="${color}"><title>${escapeMarketHtml(`${atDate} · ${c.median}: ${formatPlainPrice(nowMedian, currency)}`)}</title></line>` : ""}
+        ${now.map((item) => dot(item, atDate, false)).join("")}
+      </svg>`;
+  }
+
+  // What happened to each offer between the compared date and the picked one.
+  function offerChanges(source, current, compared) {
+    const certain = Boolean(current?.complete && compared?.complete);
+    const before = new Map((compared?.offers || []).map((offer) => [offer.key, offer]));
+    const seen = new Set();
+    const rows = (current?.offers || []).map((offer) => {
+      seen.add(offer.key);
+      const previous = before.get(offer.key);
+      if (!compared) return { source, offer, group: "same", status: "" };
+      if (!previous) return { source, offer, group: "new", status: certain ? "new" : "firstSeen" };
+      const group = offer.price < previous.price ? "cheaper" : offer.price > previous.price ? "dearer" : "same";
+      return { source, offer, previous, group, status: group };
+    });
+    (compared?.offers || []).forEach((offer) => {
+      if (!seen.has(offer.key)) rows.push({ source, offer, gone: true, group: "gone", status: certain ? "gone" : "outside" });
+    });
+    return rows;
+  }
+
+  function offerHistoryBodyHtml(entry, byDate) {
+    const c = copy();
+    const numbers = numberFormat();
+    const checks = (entry.priceLog || []).filter((point) => !point.filtersChange && MARKET_SOURCES.some((source) => point[source]));
+    const withOffers = checks.filter((point) => byDate.has(point.at));
+    if (!withOffers.length) return `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerHistoryNone)}</p>`;
+    if (offerHistoryState.id !== entry.id) Object.assign(offerHistoryState, { id: entry.id, at: "", compareAt: null, filter: "all" });
+    if (!byDate.has(offerHistoryState.at)) offerHistoryState.at = withOffers[withOffers.length - 1].at;
+    const at = offerHistoryState.at;
+    if (offerHistoryState.compareAt === null || (offerHistoryState.compareAt && (!byDate.has(offerHistoryState.compareAt) || offerHistoryState.compareAt === at))) {
+      // By default: the check just before the picked one.
+      offerHistoryState.compareAt = [...withOffers].reverse().find((point) => point.at < at)?.at || "";
+    }
+    const compareAt = offerHistoryState.compareAt;
+    const record = byDate.get(at);
+    const compareRecord = compareAt ? byDate.get(compareAt) : null;
+    const [from, to] = [compareAt, at].sort();
+    const filtersBetween = compareAt && (entry.priceLog || []).some((point) => point.filtersChange && point.at > from && point.at < to);
+    const sources = MARKET_SOURCES.filter((source) => chartSources[source]);
+    const chips = checks.map((point) => {
+      const has = byDate.has(point.at);
+      const state = point.at === at ? " isPrimary" : point.at === compareAt ? " isCompare" : "";
+      return `<button class="mobileMarketImportClear mobileMarketDateChip${state}" type="button" data-offer-date="${escapeMarketHtml(point.at)}"${has ? "" : ` disabled title="${escapeMarketHtml(c.offerHistoryNoOffers)}"`} aria-pressed="${point.at === at ? "true" : "false"}">${escapeMarketHtml(formatHistoryDate(point.at))}</button>`;
+    }).join("");
+    const pct = (value) => `${value > 0 ? "+" : ""}${numbers.format(Math.round(value * 10) / 10)}%`;
+    const allRows = [];
+    const markets = sources.map((source) => {
+      const current = record.markets[source];
+      const compared = compareRecord?.markets[source];
+      const rows = offerChanges(source, current, compareRecord ? (compared || { offers: [], complete: false }) : null);
+      allRows.push(...rows);
+      const count = (group) => rows.filter((row) => row.group === group).length;
+      const cheaper = rows.filter((row) => row.group === "cheaper");
+      const avgDrop = cheaper.length ? cheaper.reduce((sum, row) => sum + ((row.offer.price - row.previous.price) / row.previous.price) * 100, 0) / cheaper.length : 0;
+      const listNote = current ? (current.complete ? c.offerListComplete : c.offerListSample)
+        .replace("{count}", numbers.format(current.offers.length)).replace("{total}", numbers.format(current.total)) : "";
+      const summary = compareRecord ? [
+        `${c.offerNew}: ${count("new")}`,
+        `${c.offerGoneGroup}: ${count("gone")}`,
+        `${c.offerCheaper}: ${cheaper.length}${cheaper.length ? ` (${c.offerCheaperAvg.replace("{pct}", pct(avgDrop))})` : ""}`,
+        `${c.offerDearer}: ${count("dearer")}`,
+      ].join(" · ") : "";
+      return `
+        <div class="mobileMarketOfferMarket">
+          <h3>${marketBadge(source)} <small>${escapeMarketHtml(listNote)}</small></h3>
+          ${summary ? `<p class="mobileMarketOfferSummary">${escapeMarketHtml(summary)}</p>` : ""}
+          ${offerChartHtml(source, current, compareRecord ? compared : null)}
+        </div>`;
+    }).join("");
+    const groups = compareRecord ? OFFER_GROUP_ORDER.filter((group) => allRows.some((row) => row.group === group)) : [];
+    if (offerHistoryState.filter !== "all" && !groups.includes(offerHistoryState.filter)) offerHistoryState.filter = "all";
+    const groupLabel = { new: c.offerNew, cheaper: c.offerCheaper, dearer: c.offerDearer, gone: c.offerGoneGroup, same: c.offerSame };
+    const statusLabel = { new: c.offerNew, firstSeen: c.offerFirstSeen, gone: c.offerGone, outside: c.offerOutside, cheaper: c.offerCheaper, dearer: c.offerDearer, same: c.offerSame };
+    const shown = allRows
+      .filter((row) => offerHistoryState.filter === "all" || row.group === offerHistoryState.filter)
+      .sort((left, right) => OFFER_GROUP_ORDER.indexOf(left.group) - OFFER_GROUP_ORDER.indexOf(right.group) || left.offer.price - right.offer.price);
+    const price = (offer) => `${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
+    const table = `
+      <div class="mobileMarketTableScroll mobileMarketOfferChanges">
+        <table class="mobileMarketTable">
+          <thead><tr>
+            ${compareRecord ? `<th scope="col">${escapeMarketHtml(c.offerStatus)}</th>` : ""}
+            <th scope="col">${escapeMarketHtml(c.priceHistorySource)}</th>
+            <th scope="col">${escapeMarketHtml(c.offerAd)}</th>
+            <th scope="col">${escapeMarketHtml(c.offerYear)}</th>
+            <th scope="col">${escapeMarketHtml(c.offerMileage)}</th>
+            <th scope="col">${escapeMarketHtml(c.offerPrice)}</th>
+            ${compareRecord ? `<th scope="col">${escapeMarketHtml(c.offerBefore)}</th><th scope="col">${escapeMarketHtml(c.offerChange)}</th>` : ""}
+          </tr></thead>
+          <tbody>${shown.map((row) => {
+            const change = row.previous && row.previous.price !== row.offer.price ? ((row.offer.price - row.previous.price) / row.previous.price) * 100 : null;
+            return `<tr class="${row.gone ? "isGone" : ""}">
+              ${compareRecord ? `<td><span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status] || "")}</span></td>` : ""}
+              <td>${marketBadge(row.source)}</td>
+              <td class="mobileMarketOfferTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener">${escapeMarketHtml(row.offer.title || "—")}</a>` : escapeMarketHtml(row.offer.title || "—")}</td>
+              <td>${escapeMarketHtml(row.offer.year || "—")}</td>
+              <td>${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} km` : "—"}</td>
+              <td>${row.gone ? "—" : price(row.offer)}</td>
+              ${compareRecord ? `<td>${row.gone ? price(row.offer) : row.previous ? price(row.previous) : "—"}</td>
+              <td>${change === null ? "" : `<em class="${change < 0 ? "isGood" : "isBad"}">${change > 0 ? "▲" : "▼"} ${escapeMarketHtml(pct(change))}</em>`}</td>` : ""}
+            </tr>`;
+          }).join("")}</tbody>
+        </table>
+      </div>`;
+    return `
+      <p class="mobileMarketOfferIntro">${escapeMarketHtml(c.offerHistoryIntro)}</p>
+      <div class="mobileMarketDateChips" role="group" aria-label="${escapeMarketHtml(c.priceHistoryDate)}">${chips}</div>
+      <label class="mobileMarketOfferCompare">${escapeMarketHtml(c.offerCompareWith)}:
+        <select data-offer-compare>
+          <option value="">${escapeMarketHtml(c.offerCompareNone)}</option>
+          ${withOffers.filter((point) => point.at !== at).reverse().map((point) => `<option value="${escapeMarketHtml(point.at)}"${point.at === compareAt ? " selected" : ""}>${escapeMarketHtml(formatHistoryDate(point.at))}</option>`).join("")}
+        </select>
+      </label>
+      <div class="mobileMarketOfferLegend">
+        <span><i class="isCurrent"></i>${escapeMarketHtml(`${c.offerLegendCurrent}: ${formatHistoryDate(at)}`)}</span>
+        ${compareAt ? `<span><i class="isCompare"></i>${escapeMarketHtml(`${c.offerLegendCompare}: ${formatHistoryDate(compareAt)}`)}</span>` : ""}
+      </div>
+      ${filtersBetween ? `<p class="mobileMarketOfferWarning">${escapeMarketHtml(c.offerFiltersBetween)}</p>` : ""}
+      ${markets}
+      <h3 class="mobileMarketOfferChangesTitle">${escapeMarketHtml(c.offerChangesHeading)}</h3>
+      ${groups.length ? `<div class="mobileMarketOfferFilters" role="group">
+        ${["all", ...groups].map((group) => `<button class="mobileMarketImportClear${offerHistoryState.filter === group ? " isPrimary" : ""}" type="button" data-offer-filter="${group}">${escapeMarketHtml(group === "all" ? c.offerAll : groupLabel[group])} · ${group === "all" ? allRows.length : allRows.filter((row) => row.group === group).length}</button>`).join("")}
+      </div>` : ""}
+      ${table}`;
+  }
+
+  async function fillOfferHistory(entry) {
+    const byDate = await loadCheckOffers(entry.id);
+    const card = document.querySelector(`[data-offer-history="${CSS.escape(entry.id)}"]`);
+    if (!card) return;
+    card.innerHTML = `${blockTitle("gauge", copy().offerHistoryHeading)}${offerHistoryBodyHtml(entry, byDate)}`;
+  }
+
+  function redrawOfferHistory(scroll = false) {
+    const entry = marketHistory.find((item) => item.id === priceHistoryId);
+    if (!entry) return;
+    fillOfferHistory(entry).then(() => {
+      if (scroll) scrollToPageContent(document.querySelector("[data-offer-history]"));
+    });
+  }
+
   function renderPriceHistoryPage() {
     const priceHistoryPage = document.querySelector("[data-mobile-price-history-page]");
     if (!priceHistoryPage) return;
@@ -2147,7 +2544,12 @@
           ${blockTitle("gauge", c.trendTitle)}
           ${medianTrendHtml(entry)}
         </section>
+        <section class="mobileMarketCard mobileMarketOfferHistory" data-offer-history="${escapeMarketHtml(entry.id)}">
+          ${blockTitle("gauge", c.offerHistoryHeading)}
+          <p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p>
+        </section>
         ${priceHistoryHtml(entry)}` : ""}`;
+    if (entry) fillOfferHistory(entry);
   }
 
   // Scheduled checks are a setting of the favourite, stored with it (the
@@ -2160,6 +2562,12 @@
   }
 
   priceHistoryPage?.addEventListener("change", (event) => {
+    const compare = event.target.closest("[data-offer-compare]");
+    if (compare) {
+      offerHistoryState.compareAt = compare.value;
+      redrawOfferHistory();
+      return;
+    }
     const toggle = event.target.closest("[data-price-history-auto]");
     if (toggle) {
       const every = priceHistoryPage.querySelector("[data-price-history-auto-every]")?.value || "daily";
@@ -2171,6 +2579,21 @@
   });
 
   priceHistoryPage?.addEventListener("click", (event) => {
+    const date = event.target.closest("[data-offer-date]");
+    if (date) {
+      // A date in the history tables or the strip: the market of that day.
+      offerHistoryState.at = date.dataset.offerDate;
+      // Compared again with the check just before it.
+      offerHistoryState.compareAt = null;
+      redrawOfferHistory(Boolean(date.closest("table")));
+      return;
+    }
+    const filter = event.target.closest("[data-offer-filter]");
+    if (filter) {
+      offerHistoryState.filter = filter.dataset.offerFilter;
+      redrawOfferHistory();
+      return;
+    }
     const open = event.target.closest("[data-price-history-open]");
     if (open) {
       openFavorite(open.dataset.priceHistoryOpen);
@@ -3386,7 +3809,7 @@
       if (provider) {
         renderLoadingPage(filters);
         try {
-          rawListings = await provider.getListings({ filters, searchUrl });
+          rawListings = await provider.getListings({ filters, searchUrl, pinned: Boolean(savedEntry?.pinned) });
         } catch (error) {
           providerError = error.message || c.invalidData;
         }
@@ -3500,6 +3923,7 @@
       const fetched = normalizeListings(await provider.getListings({
         filters: activeAnalysis.filters,
         searchUrl: activeAnalysis.searchUrl,
+        pinned: Boolean(marketHistory.find((entry) => entry.id === activeAnalysis.historyId)?.pinned),
       }));
       if (fetched.length < 3) throw new Error(c.refreshInvalid);
       // Refreshing Otomoto keeps any Mobile.de offers already in the analysis.

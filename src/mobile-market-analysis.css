@@ -3387,3 +3387,202 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* Page 3: the market of a picked date, compared with another. */
+.mobileMarketOfferIntro {
+  margin: 0 0 var(--space-md);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.mobileMarketDateChips,
+.mobileMarketOfferFilters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.mobileMarketDateChip.isCompare {
+  border-style: dashed;
+  border-color: #8a94a3;
+}
+
+.mobileMarketDateChip:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.mobileMarketOfferCompare {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: var(--space-sm);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.mobileMarketOfferLegend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-sm);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.mobileMarketOfferLegend i {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 50%;
+  vertical-align: -1px;
+}
+
+.mobileMarketOfferLegend i.isCurrent {
+  background: var(--color-ink);
+}
+
+.mobileMarketOfferLegend i.isCompare {
+  border: 2px solid #8a94a3;
+}
+
+.mobileMarketOfferWarning {
+  margin: 0 0 var(--space-sm);
+  color: var(--color-error);
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.mobileMarketOfferMarket {
+  margin-top: var(--space-lg);
+}
+
+.mobileMarketOfferMarket h3,
+.mobileMarketOfferChangesTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+}
+
+.mobileMarketOfferMarket h3 small {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.mobileMarketOfferSummary {
+  margin: 0 0 var(--space-xs);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+}
+
+.mobileMarketOfferChart {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+}
+
+.mobileMarketOfferChart line.isGrid {
+  stroke: var(--color-rule);
+  stroke-dasharray: 3 4;
+}
+
+.mobileMarketOfferChart text {
+  fill: var(--color-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.mobileMarketOfferChart circle.isCompare {
+  fill: none;
+  stroke: #8a94a3;
+  stroke-width: 1.5;
+}
+
+.mobileMarketOfferChart line.isMedian {
+  stroke-width: 2;
+  stroke-dasharray: 7 5;
+}
+
+.mobileMarketOfferChart line.isMedian.isCompare {
+  stroke: #8a94a3;
+}
+
+.mobileMarketOfferChart line.isGood {
+  stroke: var(--color-success);
+  stroke-width: 1.2;
+  opacity: 0.55;
+}
+
+.mobileMarketOfferChart line.isBad {
+  stroke: var(--color-error);
+  stroke-width: 1.2;
+  opacity: 0.55;
+}
+
+.mobileMarketOfferChart a circle {
+  cursor: pointer;
+}
+
+.mobileMarketOfferChangesTitle {
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-sm);
+}
+
+.mobileMarketOfferChanges {
+  max-block-size: min(70vh, 720px);
+}
+
+.mobileMarketOfferChanges em {
+  font-style: normal;
+  font-weight: 800;
+  font-size: var(--text-xs);
+}
+
+.mobileMarketOfferChanges em.isGood { color: var(--color-success); }
+.mobileMarketOfferChanges em.isBad { color: var(--color-error); }
+
+.mobileMarketOfferChanges tr.isGone td {
+  color: var(--color-muted);
+}
+
+.mobileMarketOfferTitle {
+  max-width: 360px;
+  white-space: normal;
+}
+
+.mobileMarketOfferStatus {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(22, 43, 72, 0.07);
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.mobileMarketOfferStatus.isNew { background: rgba(29, 95, 208, 0.12); color: #1d5fd0; }
+.mobileMarketOfferStatus.isCheaper { background: rgba(22, 150, 80, 0.12); color: var(--color-success); }
+.mobileMarketOfferStatus.isDearer,
+.mobileMarketOfferStatus.isGone { background: rgba(200, 30, 30, 0.1); color: var(--color-error); }
+
+.mobileMarketDateLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: underline dotted;
+  cursor: pointer;
+}

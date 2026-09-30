@@ -3615,8 +3615,8 @@ function mobileDeApiBase() {
   return readMobileDeApiUrl().replace(/\/mobilede\/import\/?$/, "");
 }
 
-window.AUTOGOOD_MOBILEDE_SEARCH = async (searchUrl, { countOnly = false } = {}) => {
-  const response = await fetch(`${mobileDeApiBase()}/mobilede/search?${countOnly ? "count=1&" : ""}url=${encodeURIComponent(searchUrl)}`);
+window.AUTOGOOD_MOBILEDE_SEARCH = async (searchUrl, { countOnly = false, pages = 0 } = {}) => {
+  const response = await fetch(`${mobileDeApiBase()}/mobilede/search?${countOnly ? "count=1&" : ""}${pages ? `pages=${pages}&` : ""}url=${encodeURIComponent(searchUrl)}`);
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.detail || payload.error || "Mobile.de search failed");
   return payload;
