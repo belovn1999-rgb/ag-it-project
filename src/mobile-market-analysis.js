@@ -41,10 +41,6 @@
       historyConfirm: "Zapisz zmiany w tym wpisie",
       historyDone: "Gotowe",
       favoritesHeading: "Ulubione auta",
-      favoritesSearchHeading: "Wyszukiwanie ulubionych",
-      favoritesSearchNote: "Wkrótce: automatyczne śledzenie nowych ofert dla każdego ulubionego auta.",
-      favoritesSearchAnalysis: "Analiza rynku",
-      favoritesSearchFilters: "Pokaż filtry",
       favoritesSearchEmpty: "Nie masz jeszcze ulubionych aut. Oznacz wyszukiwanie gwiazdką ★ w panelu „Aktualne oferty” albo w historii.",
       marketPickerLabel: "Porównywane rynki",
       marketPickerLast: "Co najmniej jeden rynek musi zostać wybrany.",
@@ -298,10 +294,6 @@
       historyConfirm: "Сохранить изменения в этой записи",
       historyDone: "Готово",
       favoritesHeading: "Избранные авто",
-      favoritesSearchHeading: "Поиск по избранным",
-      favoritesSearchNote: "Скоро: автоматическое отслеживание новых предложений для каждого избранного авто.",
-      favoritesSearchAnalysis: "Анализ рынка",
-      favoritesSearchFilters: "Показать фильтры",
       favoritesSearchEmpty: "Избранных авто пока нет. Отметь поиск звёздочкой ★ в панели «Актуальные предложения» или в истории.",
       marketPickerLabel: "Сравниваемые рынки",
       marketPickerLast: "Должен остаться выбран хотя бы один рынок.",
@@ -2091,38 +2083,20 @@
     favoritesBar.innerHTML = favoritesHtml(active?.id || "");
   }
 
-  // Page 4: the favourite cars, each with its analysis and its filters.
-  // Tracking new offers for them comes later.
+  // Page 4: what is new for the favourite picked in the pinned bar (checked
+  // on every compared portal by src/mobile-favorites-watch.js). Favourites
+  // are not listed here: the bar above is the one place to pick them.
   function renderFavoritesSearchPage() {
     if (!favoritesPage) return;
-    const c = copy();
     const pinned = marketHistory.filter((entry) => entry.pinned);
     if (!pinned.some((entry) => entry.id === favoritesSelectedId)) favoritesSelectedId = "";
-    // The car picked in the pinned bar comes first, highlighted.
-    const favorites = favoritesSelectedId
-      ? [...pinned.filter((entry) => entry.id === favoritesSelectedId), ...pinned.filter((entry) => entry.id !== favoritesSelectedId)]
-      : pinned;
-    favoritesPage.innerHTML = `
-      <section class="mobileMarketHistory mobileFavoritesSearch">
-        <header class="mobileMarketHistoryHead">
-          <h2 class="mobileFilterCardTitle mobileMarketHistoryTitle"><i aria-hidden="true">★</i><span>${escapeMarketHtml(c.favoritesSearchHeading)}</span></h2>
-        </header>
-        <p class="mobileFavoritesSearchNote">${escapeMarketHtml(c.favoritesSearchNote)}</p>
-        ${favorites.length ? `<div class="mobileFavoritesSearchList">${favorites.map((entry) => {
-          const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
-          const meta = historyMeta(entry.filters).join(" · ");
-          return `<article class="mobileFavoritesSearchItem${entry.id === favoritesSelectedId ? " isSelected" : ""}">
-            <div>
-              <b>${escapeMarketHtml(title)}</b>
-              ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
-            </div>
-            <div class="mobileFavoritesSearchActions">
-              <button class="mobileMarketImportClear" type="button" data-mobile-favorite-filters="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.favoritesSearchFilters)}</button>
-              <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-favorite="${escapeMarketHtml(entry.id)}">${escapeMarketHtml(c.favoritesSearchAnalysis)} →</button>
-            </div>
-          </article>`;
-        }).join("")}</div>` : `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(c.favoritesSearchEmpty)}</p>`}
-      </section>`;
+    const entry = pinned.find((item) => item.id === favoritesSelectedId) || null;
+    if (window.AUTOGOOD_FAVORITES_WATCH) {
+      window.AUTOGOOD_FAVORITES_WATCH.show(favoritesPage, entry);
+      return;
+    }
+    const c = copy();
+    favoritesPage.innerHTML = `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(pinned.length ? c.favoritesPick : c.favoritesSearchEmpty)}</p>`;
   }
 
   // The logos above the manual search: which markets are compared.
@@ -4400,6 +4374,18 @@
     .catch(() => {
       // Without a rate the budget line is simply not shown.
     });
+
+  // Page 4 (src/mobile-favorites-watch.js) draws with the same helpers.
+  window.AUTOGOOD_MARKET_HELPERS = {
+    language: currentLanguage,
+    marketBadge,
+    historyMeta,
+    priceInPln,
+    selectedMarkets: () => MARKET_SOURCES.filter((source) => chartSources[source]),
+    brandLogo: (source) => BRAND_LOGOS[source],
+    brandMark: (source) => BRAND_MARKS[source],
+    hasFavorites: () => marketHistory.some((entry) => entry.pinned),
+  };
 
   marketHistory = loadMarketHistory();
   // A favourite starred or removed in another tab shows up here at once.

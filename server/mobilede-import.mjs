@@ -1159,7 +1159,7 @@ async function fetchListingOnce(url) {
 // reads the price-sorted list the way the AUTOGOOD bookmark does. The result
 // page itself is never rendered: its scripts freeze a background tab, so the
 // pages are fetched from mobile.de's plain robots.txt instead.
-const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY) => {
+const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY, NEWEST) => {
   const digits = (value) => { const m = String(value ?? "").replace(/[.,\s  ](?=\d{3}\b)/g, "").match(/\d+/); return m ? Number(m[0]) : null; };
   const yearOf = (value) => { const m = String(value || "").match(/(?:19|20)\d{2}/); return m ? Number(m[0]) : null; };
   const searchResults = (html) => {
@@ -1178,33 +1178,47 @@ const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY) => 
     return null;
   };
   const titles = new Map();
+  // The card also shows the photo and "Inserat online seit 30.9.2026, 09:45".
+  const cards = new Map();
   const readTitles = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     doc.querySelectorAll('a[data-testid^="base-result-listing-"][href*="id="]').forEach((link) => {
       const heading = link.querySelector("h2");
       const id = new URL(link.getAttribute("href"), SEARCH_URL).searchParams.get("id");
-      if (!heading || !id) return;
+      if (!id) return;
+      const image = link.querySelector("img")?.getAttribute("src") || "";
+      const online = link.textContent.match(/online seit\s*(\d{1,2})\.(\d{1,2})\.(\d{4}),?\s*(\d{1,2}):(\d{2})/);
+      cards.set(id, {
+        image: /^https:\/\/img\.classistatic\.de\//.test(image) ? image.replace(/rule=mo-\d+/, "rule=mo-360") : "",
+        createdAt: online ? new Date(+online[3], +online[2] - 1, +online[1], +online[4], +online[5]).toISOString() : "",
+      });
+      if (!heading) return;
       const text = [...heading.childNodes].map((n) => n.textContent.trim()).filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
-      if (text) titles.set(id, text.slice(0, 160));
+      // "NEU" is mobile.de's badge of a fresh ad, not part of the name.
+      if (text) titles.set(id, text.replace(/^NEU\s+/, "").slice(0, 160));
     });
   };
   const base = new URL(SEARCH_URL);
-  base.searchParams.set("sb", "p");
+  // Newest first (the favourites' new offers) or by price (market sample).
+  base.searchParams.set("sb", NEWEST ? "doc" : "p");
+  if (NEWEST) base.searchParams.set("lang", "de");
   base.searchParams.delete("pageNumber");
   const pageUrl = (page, order) => { const u = new URL(base); u.searchParams.set("od", order); if (page > 1) u.searchParams.set("pageNumber", String(page)); return u.toString(); };
   const ordered = (r) => (r?.listings || []).filter((i) => i.type === "regular" || i.type === "eyecatcher");
   const load = async (page, order) => { const html = await (await fetch(pageUrl(page, order), { credentials: "include" })).text(); readTitles(html); return searchResults(html); };
-  const first = await load(1, "up");
+  const first = await load(1, NEWEST ? "down" : "up");
   if (!first) return { error: "Mobile.de returned no result list (Access denied?)" };
   const total = Number(first.numResultsTotal) || 0;
   if (COUNT_ONLY) return { total, listings: [] };
   const pageSize = ordered(first).length || 20;
   const pageCount = Math.max(1, Math.ceil(total / pageSize));
   const MAX_PAGE = 100;
-  const wanted = pageCount <= PAGES
+  const wanted = NEWEST
+    ? Array.from({ length: Math.min(PAGES, pageCount) - 1 }, (_, i) => i + 2)
+    : pageCount <= PAGES
     ? Array.from({ length: pageCount - 1 }, (_, i) => i + 2)
     : [...new Set(Array.from({ length: PAGES }, (_, i) => Math.round(1 + (i * (pageCount - 1)) / (PAGES - 1))))].filter((p) => p > 1);
-  const requests = wanted.map((page) => page <= MAX_PAGE ? { page, order: "up" } : (pageCount - page + 1 <= MAX_PAGE ? { page: pageCount - page + 1, order: "down" } : null)).filter(Boolean);
+  const requests = NEWEST ? wanted.map((page) => ({ page, order: "down", newest: true })) : wanted.map((page) => page <= MAX_PAGE ? { page, order: "up" } : (pageCount - page + 1 <= MAX_PAGE ? { page: pageCount - page + 1, order: "down" } : null)).filter(Boolean);
   const offers = [];
   const seen = new Set();
   const collect = (results, request) => ordered(results).forEach((item, index) => {
@@ -1220,11 +1234,17 @@ const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY) => 
       price, currency: "EUR",
       year: yearOf(item.attr?.fr), mileage: digits(item.attr?.ml),
       power: item.attr?.pw || "", fuel: item.attr?.ft || "",
-      rank: request.order === "up" ? position + 1 : total - position,
+      rank: request.newest ? undefined : request.order === "up" ? position + 1 : total - position,
       marketTotal: total, source: "mobile",
+      // What a dealer looks at in a new offer.
+      image: cards.get(String(item.id))?.image || "",
+      createdAt: cards.get(String(item.id))?.createdAt || "",
+      gearbox: item.attr?.tr || "", city: item.attr?.loc || "", postalCode: item.attr?.z || "", country: item.attr?.cn || "",
+      seller: item.contact?.enumType === "DEALER" ? "dealer" : item.contact?.enumType ? "private" : "",
+      priceRating: item.priceRating?.rating || "", numImages: Number(item.numImages) || 0,
     });
   });
-  collect(first, { page: 1, order: "up" });
+  collect(first, { page: 1, order: NEWEST ? "down" : "up", newest: Boolean(NEWEST) });
   for (let i = 0; i < requests.length; i += 3) {
     const batch = requests.slice(i, i + 3);
     const results = await Promise.allSettled(batch.map((r) => load(r.page, r.order)));
@@ -1236,13 +1256,13 @@ const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY) => 
 const searchCache = new Map();
 const SEARCH_CACHE_MS = 10 * 60 * 1000;
 
-async function searchMobileDe(searchUrl, { countOnly = false, pages = 8 } = {}) {
-  const key = `${countOnly ? "count" : pages}|${searchUrl}`;
+async function searchMobileDe(searchUrl, { countOnly = false, pages = 8, newest = false } = {}) {
+  const key = `${countOnly ? "count" : pages}|${newest ? "newest" : "price"}|${searchUrl}`;
   const cached = searchCache.get(key);
   if (cached && Date.now() - cached.at < SEARCH_CACHE_MS) return cached.value;
   const readOnce = async () => {
     const result = await onMobileDeOrigin((evaluate) => evaluate(
-      `${SEARCH_PAGE_SCRIPT}(${JSON.stringify(searchUrl)}, ${Number(pages) || 8}, ${countOnly ? "true" : "false"})`,
+      `${SEARCH_PAGE_SCRIPT}(${JSON.stringify(searchUrl)}, ${Number(pages) || 8}, ${countOnly ? "true" : "false"}, ${newest ? "true" : "false"})`,
       90000,
     ));
     if (result?.error) throw new Error(result.error);
@@ -1289,6 +1309,8 @@ export async function handleMobiledeImport(request, response) {
       const result = await searchMobileDe(searchUrl, {
         countOnly: requestUrl.searchParams.get("count") === "1",
         pages: Math.min(12, Math.max(1, Number(requestUrl.searchParams.get("pages")) || 8)),
+        // sort=newest: the latest offers first, with photo and publication time.
+        newest: requestUrl.searchParams.get("sort") === "newest",
       });
       return sendJson(response, 200, { searchUrl, ...result });
     } catch (error) {

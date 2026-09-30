@@ -1,0 +1,599 @@
+/* Page 4 "Wyszukiwanie ulubionych": new offers of one favourite car
+   (src/mobile-favorites-watch.js). Portal colours as in the analysis:
+   Otomoto blue, Mobile.de orange, Blocket red. */
+[data-mobile-favorites-page] {
+  --watch-otomoto: #1d5fd0;
+  --watch-mobile: #f56a00;
+  --watch-blocket: #d0101a;
+  --watch-good: #13803b;
+  --watch-bad: #c2261d;
+}
+
+[data-mobile-favorites-page] .isotomoto { --watch-color: var(--watch-otomoto); }
+[data-mobile-favorites-page] .ismobile { --watch-color: var(--watch-mobile); }
+[data-mobile-favorites-page] .isblocket { --watch-color: var(--watch-blocket); }
+
+.agWatchIntro p,
+.agWatchEmpty,
+.agWatchFootnote {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: 1.5;
+}
+
+.agWatchIntro .agBlockTitle i {
+  color: #f5a400;
+  font-style: normal;
+}
+
+.agWatchHead .mobileMarketPriceHistoryHead {
+  margin-bottom: var(--space-md);
+}
+
+.agWatchHead .mobileMarketToolbarActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+}
+
+.agWatchHead .mobileMarketImportClear[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+
+.agWatchLastCheck {
+  color: var(--color-muted);
+  font-size: var(--text-xs) !important;
+}
+
+/* Price per portal */
+.agWatchPrices {
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--color-rule);
+  border-radius: 10px;
+}
+
+.agWatchPricesHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px var(--space-sm);
+  margin: 0 0 var(--space-xs);
+  font-size: var(--text-sm);
+}
+
+.agWatchPricesHead small {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.agWatchPriceRows {
+  display: grid;
+  gap: 6px;
+}
+
+.agWatchPriceRow {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 150px) minmax(0, 150px) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-sm);
+  padding-left: 10px;
+  border-left: 3px solid var(--watch-color);
+}
+
+.agWatchPriceLogo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.agWatchPriceRow label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  font-size: var(--text-sm);
+}
+
+.agWatchPriceRow label span {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.agWatchPriceRow input {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  padding: 0 8px;
+  border: 1px solid var(--color-field, var(--color-rule));
+  border-radius: 8px;
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  font-weight: 700;
+  text-align: right;
+}
+
+.agWatchPriceRow input::placeholder {
+  color: var(--color-muted);
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.agWatchPriceRow input:focus-visible {
+  outline: 2px solid var(--watch-color);
+  outline-offset: 1px;
+}
+
+.agWatchPriceRow label i {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-style: normal;
+}
+
+.agWatchPriceRow small {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.agWatchPriceRow.isOwn small {
+  text-decoration: line-through;
+}
+
+.agWatchNotice {
+  margin: var(--space-xs) 0 0;
+  color: var(--color-brand-pressed, var(--color-ink));
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.agWatchNotice.isError {
+  color: var(--watch-bad);
+}
+
+/* One tile per portal: how many new offers */
+.agWatchTiles {
+  display: grid;
+  grid-template-columns: repeat(var(--tiles, 3), minmax(0, 1fr));
+  gap: var(--space-sm);
+}
+
+.agWatchTile {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-width: 0;
+  border: 1px solid var(--color-rule);
+  border-top: 4px solid var(--watch-color);
+  border-radius: 12px;
+  background: var(--color-surface);
+  overflow: hidden;
+}
+
+.agWatchTile.isActive {
+  box-shadow: 0 0 0 2px var(--watch-color);
+}
+
+.agWatchTileMain {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  padding: var(--space-sm) var(--space-md);
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.agWatchTileMain:hover {
+  background: color-mix(in srgb, var(--watch-color) 5%, transparent);
+}
+
+.agWatchTileHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-xs);
+  font-size: var(--text-xs);
+}
+
+.agWatchLogo {
+  display: block;
+  height: 18px;
+  width: auto;
+  max-width: 100px;
+}
+
+.agWatchMark {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.agWatchTileNumber {
+  margin: 4px 0 0;
+  color: var(--watch-color);
+  font-family: var(--font-display);
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.agWatchTileNumber.isLoading {
+  animation: agWatchPulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes agWatchPulse {
+  from { opacity: 0.3; }
+  to { opacity: 1; }
+}
+
+.agWatchTileLabel {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.agWatchTileStats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px var(--space-sm);
+  margin: 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.agWatchTileStats b {
+  color: var(--color-ink);
+}
+
+.agWatchTileStats em,
+.agWatchHistory em {
+  font-style: normal;
+  font-weight: 800;
+}
+
+.agWatchTileStats em.isGood { color: var(--watch-good); }
+.agWatchTileStats em.isBad { color: var(--watch-bad); }
+
+.agWatchTileLink {
+  padding: 8px var(--space-md);
+  border-top: 1px solid var(--color-rule);
+  color: var(--watch-color);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.agWatchTileLink:hover {
+  text-decoration: underline;
+}
+
+/* The new offers */
+.agWatchList .agBlockTitle {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.agWatchClearFilter {
+  border: 1px solid var(--color-rule);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-muted);
+  padding: 2px 10px;
+  font: inherit;
+  font-size: var(--text-xs);
+  cursor: pointer;
+}
+
+.agWatchOffers {
+  display: grid;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
+.agWatchOffer {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--space-md);
+  padding: var(--space-sm);
+  border: 1px solid var(--color-rule);
+  border-left: 4px solid var(--watch-color);
+  border-radius: 12px;
+  background: var(--color-surface);
+}
+
+.agWatchPhotos {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  color: inherit;
+  text-decoration: none;
+}
+
+.agWatchPhotos > img,
+.agWatchNoPhoto {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 8px;
+  object-fit: cover;
+  background: rgba(22, 43, 72, 0.06);
+}
+
+.agWatchNoPhoto {
+  display: grid;
+  place-items: center;
+}
+
+.agWatchThumbs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.agWatchThumbs img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.agWatchPhotoCount {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(10, 20, 35, 0.72);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.agWatchOfferBody {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.agWatchOfferHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-md);
+}
+
+.agWatchOfferHead > div:first-child {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.agWatchOfferTitle {
+  color: var(--color-ink);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.agWatchOfferTitle:hover {
+  color: var(--watch-color);
+  text-decoration: underline;
+}
+
+.agWatchOfferHead small {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.agWatchPrice {
+  display: grid;
+  justify-items: end;
+  gap: 1px;
+  white-space: nowrap;
+  text-align: right;
+}
+
+.agWatchPrice b {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-lg, 1.15rem);
+  font-weight: 800;
+}
+
+.agWatchPrice small {
+  color: var(--color-muted);
+  font-size: 11px;
+}
+
+.agWatchPrice em {
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.agWatchSpecs,
+.agWatchMeta,
+.agWatchTags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px var(--space-sm);
+  margin: 0;
+  font-size: var(--text-sm);
+}
+
+.agWatchSpecs {
+  color: var(--color-ink);
+}
+
+.agWatchMeta {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.agWatchMeta time {
+  margin-left: auto;
+  color: var(--watch-color);
+  font-weight: 800;
+}
+
+.agWatchTag {
+  padding: 1px 8px;
+  border: 1px solid var(--color-rule);
+  border-radius: 999px;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.agWatchTag.isGood {
+  border-color: color-mix(in srgb, var(--watch-good) 40%, transparent);
+  background: color-mix(in srgb, var(--watch-good) 8%, transparent);
+  color: var(--watch-good);
+}
+
+.agWatchTag.isBad {
+  border-color: color-mix(in srgb, var(--watch-bad) 40%, transparent);
+  background: color-mix(in srgb, var(--watch-bad) 7%, transparent);
+  color: var(--watch-bad);
+}
+
+.agWatchEarlier {
+  margin-top: var(--space-md);
+}
+
+.agWatchEarlier summary {
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.agWatchFootnote {
+  margin-top: var(--space-md);
+  font-size: var(--text-xs);
+}
+
+/* History of checks */
+.agWatchHistory th[scope="row"] {
+  text-align: left;
+  white-space: nowrap;
+}
+
+.agWatchHistory thead th .agWatchLogo {
+  height: 14px;
+}
+
+.agWatchHistory td small {
+  color: var(--color-muted);
+}
+
+.agWatchHistory td.isError {
+  color: var(--watch-bad);
+}
+
+@media (max-width: 48rem) {
+  .agWatchTiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .agWatchPriceRow {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .agWatchPriceLogo,
+  .agWatchPriceRow small {
+    grid-column: 1 / -1;
+  }
+
+  .agWatchOffer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .agWatchOfferHead {
+    flex-direction: column;
+  }
+
+  .agWatchPrice {
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+/* New offers grouped by portal, two cards a row on wide screens. */
+.agWatchGroup + .agWatchGroup {
+  margin-top: var(--space-lg);
+}
+
+.agWatchGroupHead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0 0;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--watch-color);
+  color: var(--watch-color);
+  font-size: var(--text-base);
+}
+
+.agWatchGroup .agWatchOffers,
+.agWatchEarlier .agWatchOffers {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 30rem), 1fr));
+}
+
+.agWatchGroup .agWatchOffer,
+.agWatchEarlier .agWatchOffer {
+  grid-template-columns: 150px minmax(0, 1fr);
+}
+
+.agWatchMore {
+  margin-top: var(--space-sm);
+  border: 1px solid var(--watch-color);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--watch-color);
+  padding: 6px 14px;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+@media (max-width: 48rem) {
+  .agWatchGroup .agWatchOffer,
+  .agWatchEarlier .agWatchOffer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Long ad titles wrap instead of pushing the price out of the card. */
+.agWatchOfferHead {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.agWatchOfferTitle,
+.agWatchOfferHead small {
+  overflow-wrap: anywhere;
+}
+
+.agWatchOfferBody,
+.agWatchOffer {
+  overflow: hidden;
+}
+
+@media (max-width: 48rem) {
+  .agWatchOfferHead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
