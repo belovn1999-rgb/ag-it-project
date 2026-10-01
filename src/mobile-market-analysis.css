@@ -3586,3 +3586,16 @@
   text-decoration: underline dotted;
   cursor: pointer;
 }
+
+/* "Kopiuj raport" / "Raport PDF" sit above the chart's axis switch. */
+.mobileMarketChartHead .mobileMarketControls {
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.mobileMarketReportActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-sm);
+}
