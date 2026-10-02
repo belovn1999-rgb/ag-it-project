@@ -3174,7 +3174,6 @@
         const low = verticalMarketPosition(panelStats.middleLow, domainMinimum, domainMaximum);
         const middle = verticalMarketPosition(panelStats.median, domainMinimum, domainMaximum);
         const top = [...panelPlotted].sort((left, right) => right.listing.price - left.listing.price)[0];
-        const side = top && (top.y < 12 || top.x > 0.8) ? (top.x > 0.5 ? " isSideLeft" : " isSideRight") : "";
         const colour = source ? ` is${sourceClass(source)}` : "";
         const dots = [...panelSuspects, ...[...panelPlotted].sort((left, right) => right.listing.price - left.listing.price)]
           .map(renderPoint).join("");
@@ -3199,7 +3198,6 @@
           <div class="mobileMarketPlot">${trendHtml}</div>
           ${dots}
           ${car || ""}
-          ${top ? `<span class="mobileMarketExtreme${side}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(c.priceMaxLabel)} · ${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : ""}
           ${guides.map((guide) => {
             const position = verticalMarketPosition(Math.min(Math.max(guide.value, domainMinimum), domainMaximum), domainMinimum, domainMaximum);
             return Math.abs(position - middle) >= 2.6 && Math.abs(position - high) >= 2.6 && Math.abs(position - low) >= 2.6 ? `<span class="mobileMarketKeyTick isGuide is${sourceClass(guide.source)}" style="top:${position}%">${escapeMarketHtml(marketName(guide.source))} · ${escapeMarketHtml(formatMarketPrice(guide.value))}</span>` : "";
@@ -3208,6 +3206,7 @@
           <span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>
           ${Math.abs(low - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${low}%">P25 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleLow))}</span>` : ""}
           <span class="mobileMarketTick isLimit" style="top:95%">${escapeMarketHtml(formatMarketPrice(domainMinimum))}</span>
+          ${top ? `<span class="mobileMarketTick isLimit isPeak${top.x > 0.85 ? " isPeakRight" : ""}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : ""}
         </div>
         <div class="mobileMarketXAxis">
           <div class="mobileMarketXTicks">

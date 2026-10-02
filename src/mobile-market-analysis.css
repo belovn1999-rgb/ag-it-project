@@ -3707,3 +3707,20 @@
 .mobileMarketLegend .isTrend i {
   border-top-style: dashed;
 }
+
+/* The dearest offer's price above its dot (same type as the cheapest). */
+.mobileMarketTick.isPeak {
+  left: calc(var(--plot-left) + (100% - var(--plot-left) - var(--plot-right)) * var(--x, 1));
+  z-index: 3;
+  width: auto;
+  transform: translate(-50%, calc(-100% - 10px));
+}
+
+.mobileMarketTick.isPeak.isPeakRight {
+  transform: translate(calc(-100% + 8px), calc(-100% - 10px));
+}
+
+/* A little more room between the axis caption and the "na gotowo" note. */
+.mobileMarketAxisNote.isTurnkey {
+  margin-top: calc(var(--space-xs) + 0.5em);
+}
