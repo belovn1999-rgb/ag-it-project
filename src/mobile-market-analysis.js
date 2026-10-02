@@ -120,6 +120,7 @@
       screenshotRetry: "Przeglądarka nie pozwoliła skopiować obrazu — kliknij przycisk jeszcze raz, obraz jest gotowy.",
       screenshotNoClipboard: "Ta przeglądarka nie pozwala kopiować obrazów. Użyj Chrome albo pobierz PDF.",
       screenshotWorking: "Przygotowuję raport…",
+      screenshotPreparing: "Przygotowuję obraz… za chwilę można kopiować",
       reportTitle: "Analiza rynku",
       fileReport: "analiza rynku",
       fileList: "lista ofert",
@@ -379,6 +380,7 @@
       screenshotRetry: "Браузер не дал скопировать картинку — нажми кнопку ещё раз, картинка уже готова.",
       screenshotNoClipboard: "Этот браузер не умеет копировать картинки. Используй Chrome или скачай PDF.",
       screenshotWorking: "Готовлю отчёт…",
+      screenshotPreparing: "Готовлю картинку… через секунду можно копировать",
       reportTitle: "Анализ рынка",
       fileReport: "анализ рынка",
       fileList: "список объявлений",
@@ -3803,21 +3805,46 @@
   const toPngBlob = (canvas) => new Promise((resolve, reject) => {
     canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png"))), "image/png");
   });
+  // A copy button waits (disabled, "Przygotowuję obraz…") until its picture
+  // is ready: a click then always writes a finished image, which Chrome
+  // accepts; a write waiting for the drawing is what it refused.
+  const COPY_BUTTONS = { copy: "[data-mobile-market-screenshot]", "list-copy": "[data-mobile-market-list-screenshot]" };
+  function markCopyButtons(mode, ready) {
+    analysisContent.querySelectorAll(COPY_BUTTONS[mode]).forEach((button) => {
+      button.classList.toggle("isPreparing", !ready);
+      button.disabled = !ready;
+      if (!ready) button.title = copy().screenshotPreparing;
+      else button.removeAttribute("title");
+    });
+  }
   async function prepareReportImage(mode = "copy") {
     const version = reportVersion;
-    if (analysisView.hidden || !analysisContent.querySelector("[data-mobile-market-screenshot]")) return;
+    if (!analysisContent.querySelector(COPY_BUTTONS[mode])) return;
+    // Drawn only while the report is on screen; tried again when it is.
+    if (analysisView.hidden) {
+      prepareTimer = setTimeout(() => version === reportVersion && prepareReportImage(mode), 700);
+      return;
+    }
     try {
       const blob = await toPngBlob((await captureReport(mode)).canvas);
-      if (version === reportVersion) preparedReports[mode] = blob;
+      if (version !== reportVersion) return;
+      preparedReports[mode] = blob;
     } catch {
       // Drawn on the click instead.
     }
+    if (version === reportVersion) markCopyButtons(mode, true);
   }
   function reportChanged() {
     reportVersion += 1;
     preparedReports = {};
     clearTimeout(prepareTimer);
-    prepareTimer = setTimeout(() => prepareReportImage("copy"), 1500);
+    markCopyButtons("copy", false);
+    markCopyButtons("list-copy", false);
+    const version = reportVersion;
+    prepareTimer = setTimeout(async () => {
+      await prepareReportImage("copy");
+      if (version === reportVersion) prepareReportImage("list-copy");
+    }, 300);
   }
   new MutationObserver((records) => {
     const changed = records.some((record) => {
@@ -3826,12 +3853,6 @@
     });
     if (changed) reportChanged();
   }).observe(analysisContent, { childList: true, subtree: true, characterData: true });
-  // The list picture only when its button is about to be used.
-  analysisContent.addEventListener("pointerover", (event) => {
-    if (!event.target.closest?.("[data-mobile-market-list-screenshot]")) return;
-    if (preparedReports["list-copy"]) return;
-    prepareReportImage("list-copy");
-  });
 
   async function copyReportScreenshot(button, mode = "copy") {
     const c = copy();
@@ -3850,7 +3871,9 @@
       await navigator.clipboard.write([new ClipboardItem({ "image/png": recent || blobPromise })]);
       lastReportImage = null;
       setAnalysisStatus(c.screenshotCopied);
-    } catch {
+    } catch (error) {
+      // The browser's own reason, for diagnosis (e.g. "Document is not focused").
+      console.warn("AUTOGOOD copy refused:", error?.name, error?.message, recent ? "(ready image)" : "(image still drawing)");
       try {
         lastReportImage = { mode, blob: await blobPromise, at: Date.now() };
         setAnalysisStatus(c.screenshotRetry, true);

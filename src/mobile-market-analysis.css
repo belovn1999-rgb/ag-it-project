@@ -3776,3 +3776,9 @@
 .mobileMarketAsideRefresh {
   order: -1;
 }
+
+/* A copy button while its picture is still being drawn. */
+.mobileMarketImportClear.isPreparing {
+  cursor: progress;
+  opacity: 0.55;
+}
