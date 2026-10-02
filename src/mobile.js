@@ -76,7 +76,7 @@ const copy = {
     hideMoreFilters: "Ukryj",
     filterGroupMileage: "Przebieg i rok",
     filterGroupPrice: "Cena",
-    filterGroupEngine: "Silnik, skrzynia i napęd",
+    filterGroupEngine: "Silnik",
     filterGroupComfort: "Komfort",
     filterGroupColors: "Kolory",
     gearboxAutomatic: "Automatyczna",
@@ -207,6 +207,20 @@ const copy = {
     damagedVehiclesLabel: "Uszkodzone pojazdy",
     damagedVehiclesHide: "Nie pokazuj",
     damagedVehiclesShow: "Pokazuj",
+    fuelTypeLabel: "Typ",
+    filterGroupGearbox: "Skrzynia biegów i napęd",
+    doorsAny: "Dowolna",
+    slidingDoorLabel: "Drzwi przesuwne",
+    slidingDoorAny: "Dowolne",
+    slidingDoorRight: "Drzwi przesuwne z prawej",
+    slidingDoorLeft: "Drzwi przesuwne z lewej",
+    slidingDoorBoth: "Drzwi przesuwne z obu stron",
+    newUsedLabel: "Nowy / używany",
+    newUsedAny: "Dowolny",
+    newUsedNew: "Nowy",
+    newUsedUsed: "Używany",
+    warrantyLabel: "Gwarancja",
+    serviceHistoryLabel: "Pełna historia serwisowa",
     vehicleConditionLabel: "Stan pojazdu",
     otomotoSearchButton: "Szukaj na otomoto.pl",
     otomotoSearchOpening: "Otwieram Otomoto: od najniższej ceny.",
@@ -353,7 +367,7 @@ const copy = {
     hideMoreFilters: "Скрыть",
     filterGroupMileage: "Пробег и год",
     filterGroupPrice: "Цена",
-    filterGroupEngine: "Двигатель, коробка и привод",
+    filterGroupEngine: "Двигатель",
     filterGroupComfort: "Комфорт",
     filterGroupColors: "Цвета",
     gearboxAutomatic: "Автоматическая",
@@ -484,6 +498,20 @@ const copy = {
     damagedVehiclesLabel: "Повреждённые автомобили",
     damagedVehiclesHide: "Не показывать",
     damagedVehiclesShow: "Показывать",
+    fuelTypeLabel: "Тип",
+    filterGroupGearbox: "Коробка передач и привод",
+    doorsAny: "Любое",
+    slidingDoorLabel: "Сдвижная дверь",
+    slidingDoorAny: "Любая",
+    slidingDoorRight: "Сдвижная дверь справа",
+    slidingDoorLeft: "Сдвижная дверь слева",
+    slidingDoorBoth: "Сдвижные двери с обеих сторон",
+    newUsedLabel: "Новый / б/у",
+    newUsedAny: "Любой",
+    newUsedNew: "Новый",
+    newUsedUsed: "Б/у",
+    warrantyLabel: "Гарантия",
+    serviceHistoryLabel: "Полная сервисная история",
     vehicleConditionLabel: "Состояние автомобиля",
     otomotoSearchButton: "Найти на otomoto.pl",
     otomotoSearchOpening: "Открываю Otomoto: сначала самые дешёвые.",
@@ -1298,7 +1326,15 @@ const els = {
   nonSmoking: document.querySelector("[data-mobile-non-smoking]"),
   roadworthy: document.querySelector("[data-mobile-roadworthy]"),
   damagedVehicles: document.querySelector("[data-mobile-damaged-vehicles]"),
-  damagedVehiclesLabel: document.querySelector("[data-mobile-damaged-label]"),
+  damagedCheck: document.querySelector("[data-mobile-damaged-check]"),
+  doorsGroup: document.querySelector("[data-mobile-doors-group]"),
+  doorsLabel: document.querySelector("[data-mobile-doors-label]"),
+  slidingDoor: document.querySelector("[data-mobile-sliding-door]"),
+  slidingDoorLabel: document.querySelector("[data-mobile-sliding-door-label]"),
+  newUsed: document.querySelector("[data-mobile-new-used]"),
+  newUsedLabel: document.querySelector("[data-mobile-new-used-label]"),
+  warranty: document.querySelector("[data-mobile-warranty]"),
+  serviceHistory: document.querySelector("[data-mobile-service-history]"),
   modelHint: document.querySelector("[data-mobile-model-hint]"),
   searchCount: document.querySelector("[data-mobile-search-count]"),
   otomotoSearches: Array.from(document.querySelectorAll("[data-mobile-otomoto-search]")),
@@ -1640,8 +1676,9 @@ function comboOptionSets() {
     })),
     seats: seatsOptions.map((value) => ({ value, label: value })),
     seatsTo: valuesAfter(seatsOptions, els.seatsFrom?.value, true).map((value) => ({ value, label: value })),
-    doors: doorsOptions.map((value) => ({ value, label: value })),
-    doorsTo: valuesAfter(doorsOptions, els.doorsFrom?.value, true).map((value) => ({ value, label: value })),
+    doorsGroup: [{ value: "", label: c.doorsAny }, ...doorGroupOptions.map(({ value, label }) => ({ value, label }))],
+    slidingDoor: slidingDoorOptions(c),
+    newUsed: newUsedOptions(c),
     body: [
       { value: "", label: c.selectEmpty },
       ...bodyOptions.map((body) => ({
@@ -1660,11 +1697,40 @@ function comboOptionSets() {
       { value: "private", label: c.sellerPrivate },
       { value: "company", label: c.sellerCompany },
     ],
-    damaged: [
-      { value: "hide", label: c.damagedVehiclesHide },
-      { value: "show", label: c.damagedVehiclesShow },
-    ],
   };
+}
+
+// Doors as on mobile.de: one choice of 2/3, 4/5 or 6/7; the range it stands
+// for stays in the hidden "od / do" fields every search reads.
+const doorGroupOptions = [
+  { value: "2-3", label: "2/3", from: "2", to: "3" },
+  { value: "4-5", label: "4/5", from: "4", to: "5" },
+  { value: "6-7", label: "6/7", from: "6", to: "7" },
+];
+
+// The group of a saved range ("4"–"5" → 4/5); a range across groups takes
+// the group of its lower end.
+function doorGroupOf(from, to) {
+  const first = Number(from || to);
+  if (!first) return "";
+  return doorGroupOptions.find((group) => first >= Number(group.from) && first <= Number(group.to))?.value || "";
+}
+
+function slidingDoorOptions(c) {
+  return [
+    { value: "", label: c.slidingDoorAny },
+    { value: "right", label: c.slidingDoorRight },
+    { value: "left", label: c.slidingDoorLeft },
+    { value: "both", label: c.slidingDoorBoth },
+  ];
+}
+
+function newUsedOptions(c) {
+  return [
+    { value: "", label: c.newUsedAny },
+    { value: "new", label: c.newUsedNew },
+    { value: "used", label: c.newUsedUsed },
+  ];
 }
 
 function closeComboMenus(exceptControl = null) {
@@ -1860,10 +1926,10 @@ function setSimpleSelectDisplays(values) {
     { value: "private", [state.lang]: c.sellerPrivate },
     { value: "company", [state.lang]: c.sellerCompany },
   ], c.sellerAny);
-  setComboDisplay(els.damagedVehiclesLabel, values.damagedVehicles, [
-    { value: "hide", [state.lang]: c.damagedVehiclesHide },
-    { value: "show", [state.lang]: c.damagedVehiclesShow },
-  ], c.damagedVehiclesHide);
+  const asLang = (options) => options.map(({ value, label }) => ({ value, [state.lang]: label }));
+  setComboDisplay(els.doorsLabel, values.doorsGroup, asLang(doorGroupOptions), c.doorsAny);
+  setComboDisplay(els.slidingDoorLabel, values.slidingDoor, asLang(slidingDoorOptions(c)), c.slidingDoorAny);
+  setComboDisplay(els.newUsedLabel, values.newUsed, asLang(newUsedOptions(c)), c.newUsedAny);
 }
 
 function listingBodyLabel(value) {
@@ -1917,6 +1983,10 @@ function defaultManualFields() {
     nonSmoking: false,
     roadworthy: true,
     damagedVehicles: "hide",
+    slidingDoor: "",
+    newUsed: "",
+    warranty: false,
+    serviceHistory: false,
   };
 }
 
@@ -1936,11 +2006,23 @@ function renderManualOptions(keepValues = true) {
 
   els.vat.value = current.vat || "";
   els.seller.value = current.seller || "";
-  els.damagedVehicles.value = current.damagedVehicles || "hide";
+  els.damagedVehicles.value = current.damagedVehicles === "show" ? "show" : "hide";
+  if (els.damagedCheck) els.damagedCheck.checked = current.damagedVehicles === "show";
+  const doorsGroup = doorGroupOf(current.doorsFrom, current.doorsTo);
+  const doorRange = doorGroupOptions.find((group) => group.value === doorsGroup);
+  current.doorsFrom = doorRange?.from || "";
+  current.doorsTo = doorRange?.to || "";
+  if (els.doorsGroup) els.doorsGroup.value = doorsGroup;
+  if (els.slidingDoor) els.slidingDoor.value = current.slidingDoor || "";
+  if (els.newUsed) els.newUsed.value = current.newUsed || "";
+  if (els.warranty) els.warranty.checked = Boolean(current.warranty);
+  if (els.serviceHistory) els.serviceHistory.checked = Boolean(current.serviceHistory);
   setSimpleSelectDisplays({
     vat: current.vat,
     seller: current.seller,
-    damagedVehicles: current.damagedVehicles || "hide",
+    doorsGroup,
+    slidingDoor: current.slidingDoor || "",
+    newUsed: current.newUsed || "",
   });
 
   els.model.value = current.model || "";
@@ -2031,6 +2113,10 @@ function readManualFields() {
     nonSmoking: els.nonSmoking?.checked || false,
     roadworthy: els.roadworthy?.checked || false,
     damagedVehicles: els.damagedVehicles?.value || "hide",
+    slidingDoor: els.slidingDoor?.value || "",
+    newUsed: els.newUsed?.value || "",
+    warranty: els.warranty?.checked || false,
+    serviceHistory: els.serviceHistory?.checked || false,
     // The compared markets (logos above the manual search) belong to the
     // search: a favourite remembers them.
     markets: typeof window !== "undefined" && typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : undefined,
@@ -2187,7 +2273,10 @@ function updateSelectedFiltersSummary() {
   const status = [
     filters.roadworthy ? optionLabelText(els.roadworthy) : "",
     filters.nonSmoking ? optionLabelText(els.nonSmoking) : "",
-    filters.damagedVehicles === "show" ? els.damagedVehiclesLabel?.value : "",
+    filters.newUsed ? optionLabel(newUsedOptions(c).map(({ value, label }) => ({ value, [state.lang]: label })), filters.newUsed) : "",
+    filters.warranty ? c.warrantyLabel : "",
+    filters.serviceHistory ? c.serviceHistoryLabel : "",
+    filters.damagedVehicles === "show" ? c.damagedVehiclesLabel : "",
   ].filter(Boolean);
   const title = [filters.brand, filters.model, filters.version].filter(Boolean).join(" ");
   const priceRange = filters.priceFrom || filters.priceTo ? range(filters.priceFrom, filters.priceTo, "EUR") : "";
@@ -2203,7 +2292,8 @@ function updateSelectedFiltersSummary() {
         [c.specDisplacement, range(filters.displacementFrom, filters.displacementTo, "ccm"), "settings", target(els.displacementFrom)],
         [c.specPower, range(filters.powerFrom, filters.powerTo, "KM"), "zap", target(els.powerFrom)],
         ...(filters.seatsFrom || filters.seatsTo ? [[c.seatsRangeLabel, range(filters.seatsFrom, filters.seatsTo, "", true), "armchair", target(els.seatsFrom)]] : []),
-        ...(filters.doorsFrom || filters.doorsTo ? [[c.doorsLabel, range(filters.doorsFrom, filters.doorsTo, "", true), "car", target(els.doorsFrom)]] : []),
+        ...(filters.doorsFrom || filters.doorsTo ? [[c.doorsLabel, doorGroupOptions.find((group) => group.value === doorGroupOf(filters.doorsFrom, filters.doorsTo))?.label || range(filters.doorsFrom, filters.doorsTo, "", true), "car", target(els.doorsLabel)]] : []),
+        ...(filters.slidingDoor ? [[c.slidingDoorLabel, slidingDoorOptions(c).find((option) => option.value === filters.slidingDoor)?.label || "", "car", target(els.slidingDoorLabel)]] : []),
       ] },
       { heading: c.specUsageHeading, rows: [
         [c.specMileage, range(filters.mileageFrom, filters.mileageTo, "km"), "gauge", target(els.mileageFrom)],
@@ -2442,6 +2532,12 @@ function buildMobileDeSearchUrl(filters) {
   // Mobile.de treats plug-in hybrids as a feature (fe), not a fuel type: ft=HYBRID_PLUGIN is ignored.
   if (fuels.includes("plugin")) params.append("fe", "HYBRID_PLUGIN");
   if (filters.roadworthy) params.set("rtd", "true");
+  if (filters.newUsed === "new") params.set("con", "NEW");
+  if (filters.newUsed === "used") params.set("con", "USED");
+  const slidingDoor = { right: "SLIDING_DOOR_RIGHT", left: "SLIDING_DOOR_LEFT", both: "SLIDING_DOOR_BOTH_SIDED" }[filters.slidingDoor];
+  if (slidingDoor) params.set("sld", slidingDoor);
+  if (filters.warranty) params.append("fe", "WARRANTY");
+  if (filters.serviceHistory) params.append("fe", "FULL_SERVICE_HISTORY");
 
   params.set("sb", "p");
   params.set("od", "up");
@@ -2739,6 +2835,9 @@ function buildOtomotoSearchUrl(filters) {
   if (filters.metallic) colourTypes.push("metallic");
   appendOtomotoValues(params, "filter_enum_colour_type", colourTypes);
   if (filters.damagedVehicles !== "show") params.set("search[filter_enum_damaged]", "0");
+  if (filters.newUsed === "new" || filters.newUsed === "used") params.set("search[new_used]", filters.newUsed);
+  // otomoto knows "Serwisowany w ASO" only: the closest to a full history.
+  if (filters.serviceHistory) params.set("search[filter_enum_service_record]", "1");
 
   params.set("search[order]", "filter_float_price:asc");
   return `${pathParts.join("/")}?${params.toString()}`;
@@ -2772,6 +2871,8 @@ function otomotoSkippedFilterLabels(filters) {
   if ((filters.interiorColors || []).length) add(c.interiorColorLabel);
   if (filters.nonSmoking) add(c.nonSmokingLabel);
   if (filters.roadworthy) add(c.roadworthyLabel);
+  if (filters.slidingDoor) add(c.slidingDoorLabel);
+  if (filters.warranty) add(c.warrantyLabel);
   if (filters.doorsTo === "7" || filters.doorsFrom === "7") add(c.doorsLabel);
   return labels;
 }
@@ -3314,6 +3415,8 @@ function selectComboOption(optionButton) {
   if (valueTarget && valueTarget !== input) {
     input.value = value ? optionButton.dataset.mobileOptionLabel || value : "";
     valueTarget.value = value;
+    // Counts, the auto-history and linked fields (doors) follow the choice.
+    valueTarget.dispatchEvent(new Event("change", { bubbles: true }));
   } else {
     input.value = value;
     input.dispatchEvent(new Event("input", { bubbles: true }));
@@ -3998,3 +4101,16 @@ if (initialUrl) {
   observer.observe(head);
   measure();
 })();
+
+// The doors choice (2/3, 4/5, 6/7) fills the hidden range every search reads;
+// "Uszkodzone pojazdy" ticked = damaged cars shown too (the saved value stays
+// "show" / "hide", so older searches open unchanged).
+els.doorsGroup?.addEventListener("change", () => {
+  const group = doorGroupOptions.find((option) => option.value === els.doorsGroup.value);
+  els.doorsFrom.value = group?.from || "";
+  els.doorsTo.value = group?.to || "";
+  updateSelectedFiltersSummary();
+});
+els.damagedCheck?.addEventListener("change", () => {
+  els.damagedVehicles.value = els.damagedCheck.checked ? "show" : "hide";
+});

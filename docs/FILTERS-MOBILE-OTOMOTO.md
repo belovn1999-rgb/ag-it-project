@@ -77,7 +77,8 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | Wersja (текст) | 4-й сегмент `ms` ✅ | ✗ | у otomoto нет свободного текста |
 | Nadwozie | `c` ✅ | `filter_enum_body_type` ✅ | limousine→`Limousine`/`sedan`, estate→`EstateCar`/`combi`, suv→`OffRoad`/`suv`, hatchback→`SmallCar`/`compact`, coupe→`SportsCar`/`coupe`, cabrio→`Cabrio`/`cabrio`, van→`Van`/`minivan`. **pickup** → mobile.de `OffRoad`, otomoto ✗; **other** → `OtherCar`, otomoto ✗ |
 | Liczba miejsc | `sc=от:до` ✅ | `filter_float_nr_seats:from/to` ✅ | |
-| Liczba drzwi (от/до, 2–7) | `door=TWO_OR_THREE / FOUR_OR_FIVE / SIX_OR_SEVEN` — только если диапазон целиком внутри **одной** группы ✅, иначе ✗ с предупреждением (`mobileDeDoorGroup`) | `filter_enum_door_count` — каждое число диапазона ✅ (весь 2–6 = без фильтра); **7 нет** на otomoto → предупреждение, только «7» → ошибка `doorsUnavailableOtomoto` | Codex 27.09 (`b568389` группы → `ac17a28` диапазон); старые групповые записи истории открываются как диапазон |
+| Liczba drzwi (с 10-02 — один выбор **Dowolna / 2/3 / 4/5 / 6/7**, как на mobile.de) | `door=TWO_OR_THREE / FOUR_OR_FIVE / SIX_OR_SEVEN` ✅ | `filter_enum_door_count` — оба числа группы ✅; **7 нет** на otomoto → у 6/7 только 6 + предупреждение | Выбор (`data-mobile-doors-group`) пишет диапазон в скрытые `doorsFrom/doorsTo` — их читают все поиски и история, формат записей не менялся. Старая запись с диапазоном через группы открывается группой нижней границы (`doorGroupOf`) |
+| Drzwi przesuwne (Dowolne / z prawej / z lewej / z obu stron) | `sld=SLIDING_DOOR_RIGHT / _LEFT / _BOTH_SIDED` ✅ (проверено 10-02: VW 246 019 → right 26 221, both 14 017) | ✗ → предупреждение | поле `slidingDoor`: `right` / `left` / `both` |
 
 ### 4.2 Цена, пробег, год, двигатель
 
@@ -101,7 +102,10 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | VAT marża | `vat=0` ✅ | `filter_enum_vat_discount=1` ✅ | |
 | Sprzedawca | `st`: dealer `DEALER`, private `FSBO`, company `COMM_FSBO` ✅ | `private_business`: `private` / `business` ≈ | по умолчанию `dealer` (дилер/комис, без частных); dealer и firma у otomoto одно `business` |
 | Kraj | `cn` (можно несколько) ✅ | ✗ | правило 5 |
-| Uszkodzone | `dam=false` (по умолчанию скрыть) ✅ | `filter_enum_damaged=0` ✅ | |
+| Uszkodzone (с 10-02 — галочка «Uszkodzone pojazdy»: отмечена = показывать и повреждённые) | `dam=false` (по умолчанию скрыть) ✅ | `filter_enum_damaged=0` ✅ | значение в записи прежнее: `damagedVehicles` = `hide` / `show` |
+| Nowy / używany | `con=NEW / USED` ✅ (VW: 14 437 / 231 582) | `search[new_used]=new / used` ✅ (Caddy: 821 → 232 new) | поле `newUsed`: `new` / `used` / пусто |
+| Gwarancja | `fe=WARRANTY` ✅ (VW 119 066) | ✗ → предупреждение (фильтра нет) | поле `warranty` |
+| Pełna historia serwisowa | `fe=FULL_SERVICE_HISTORY` ✅ (VW 155 385) | ≈ `search[filter_enum_service_record]=1` «Serwisowany w ASO» (Caddy 282) — уже, чем полная история | поле `serviceHistory` |
 | Na chodzie | `rtd=true` ✅ | ✗ | |
 | Niepalący | `fe=NONSMOKER_VEHICLE` ✅ | ✗ | |
 
@@ -228,6 +232,7 @@ API не отдаёт CORS-заголовок → из браузера чита
 | Rok | `year_from/to` ✅ | модельный год |
 | Moc | `engine_effect_from/to` ✅ | |
 | Pojemność, Liczba miejsc, Liczba drzwi | ✗ | нет фильтров |
+| Nowy / używany, Drzwi przesuwne, Gwarancja, Pełna historia serwisowa | ✗ | нет фильтров → предупреждение |
 | Paliwo | `fuel` ✅ | petrol 1, diesel 2, electric 4, hybrid petrol 6, hybrid diesel 8, plug-in 1352+1356 |
 | Napęd | `wheel_drive` ✅ | awd 2, fwd 3, rwd 1 |
 | Skrzynia | `transmission` ✅ | automatic 2, manual 1 |

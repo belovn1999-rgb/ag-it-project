@@ -655,14 +655,25 @@
       .replace("{offers}", c.offerForms[form]);
   }
 
+  // Empty values are left out, so a field added later (missing in older
+  // entries, empty in the form) does not make the same search look new.
+  // "roadworthy" stays: missing there means ticked.
+  function compactFilters(filters) {
+    return Object.fromEntries(Object.entries(filters || {}).filter(([key, value]) => !(
+      value === undefined || value === null || value === ""
+      || (value === false && key !== "roadworthy")
+      || (Array.isArray(value) && !value.length)
+    )));
+  }
+
   function filterSignature(filters) {
-    return JSON.stringify(filters || {});
+    return JSON.stringify(compactFilters(filters));
   }
 
   // The search itself, without the compared markets: changing the markets
   // keeps the same entry and its collected prices.
   function searchSignature(filters) {
-    const { markets, ...search } = filters || {};
+    const { markets, ...search } = compactFilters(filters);
     return JSON.stringify(search);
   }
 
@@ -1609,6 +1620,8 @@
       vat: "[data-mobile-vat]",
       seller: "[data-mobile-seller]",
       damagedVehicles: "[data-mobile-damaged-vehicles]",
+      slidingDoor: "[data-mobile-sliding-door]",
+      newUsed: "[data-mobile-new-used]",
     };
     Object.entries(valueSelectors).forEach(([key, selector]) => setElementValue(selector, filters[key]));
     document.querySelectorAll("[data-mobile-drive]").forEach((input) => {
@@ -1638,6 +1651,8 @@
       metallic: "[data-mobile-metallic]",
       nonSmoking: "[data-mobile-non-smoking]",
       roadworthy: "[data-mobile-roadworthy]",
+      warranty: "[data-mobile-warranty]",
+      serviceHistory: "[data-mobile-service-history]",
     };
     Object.entries(booleanSelectors).forEach(([key, selector]) => {
       const input = document.querySelector(selector);
@@ -1828,6 +1843,9 @@
     const displaySelectors = {
       "[data-mobile-vat]": "[data-mobile-vat-label]",
       "[data-mobile-seller]": "[data-mobile-seller-label]",
+      "[data-mobile-new-used]": "[data-mobile-new-used-label]",
+      "[data-mobile-sliding-door]": "[data-mobile-sliding-door-label]",
+      "[data-mobile-doors-group]": "[data-mobile-doors-label]",
     };
     const value = document.querySelector(selector)?.value;
     return value ? document.querySelector(displaySelectors[selector])?.value.trim() || "" : "";
@@ -1901,6 +1919,10 @@
     vehicle.push(selectedOptionText("[data-mobile-vat]"), selectedOptionText("[data-mobile-seller]"));
     if (filters.nonSmoking) vehicle.push(labelOf("[data-mobile-non-smoking]"));
     if (filters.roadworthy) vehicle.push(labelOf("[data-mobile-roadworthy]"));
+    if (filters.newUsed) vehicle.push(selectedOptionText("[data-mobile-new-used]"));
+    if (filters.warranty) vehicle.push(labelOf("[data-mobile-warranty]"));
+    if (filters.serviceHistory) vehicle.push(labelOf("[data-mobile-service-history]"));
+    if (filters.slidingDoor) vehicle.push(selectedOptionText("[data-mobile-sliding-door]"));
 
     const parameters = [];
     const fuelLabels = checkedLabels("[data-mobile-fuel]");
@@ -2712,7 +2734,10 @@
     const status = [
       filters.roadworthy ? labelOf("[data-mobile-roadworthy]") : "",
       filters.nonSmoking ? labelOf("[data-mobile-non-smoking]") : "",
-      filters.damagedVehicles ? selectedOptionText("[data-mobile-damaged-vehicles]") : "",
+      filters.newUsed ? selectedOptionText("[data-mobile-new-used]") : "",
+      filters.warranty ? labelOf("[data-mobile-warranty]") : "",
+      filters.serviceHistory ? labelOf("[data-mobile-service-history]") : "",
+      filters.damagedVehicles === "show" ? labelOf("[data-mobile-damaged-check]") : "",
     ].filter(Boolean);
     return [
       { heading: t.specEngineHeading, rows: [

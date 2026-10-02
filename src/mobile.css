@@ -3040,3 +3040,53 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   color: var(--color-brand);
   text-decoration: underline;
 }
+
+/* "Pojazd": seats (od / do) twice as wide as doors and sliding door, as on
+   mobile.de; "Stan pojazdu": new/used beside five ticks. */
+.mobileVehicleCapacityRow {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-lg);
+}
+
+.mobileFilterCard .mobileVehicleConditionGrid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.mobileVehicleConditionGrid .mobileNewUsedField {
+  max-width: calc((100% - 2 * var(--space-sm)) / 3);
+}
+
+.mobileVehicleConditionGrid .mobileVehicleChecks {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-self: start;
+}
+
+/* Every tick in "Stan pojazdu" framed alike. */
+.mobileVehicleChecks .mobileCheckOption {
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  min-height: 42px;
+  border: var(--rule-thin) solid var(--color-field);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-sm);
+}
+
+@media (max-width: 760px) {
+  .mobileVehicleCapacityRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mobileVehicleCapacityRow .mobileSeatsField {
+    grid-column: 1 / -1;
+  }
+
+  .mobileVehicleConditionGrid .mobileVehicleChecks {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .mobileVehicleConditionGrid .mobileNewUsedField {
+    max-width: none;
+  }
+}

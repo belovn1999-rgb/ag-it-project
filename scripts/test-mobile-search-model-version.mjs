@@ -204,19 +204,22 @@ assert.equal(recognized.features.includes("HALOGEN_HEADLIGHTS"), false, "an unme
 assert.equal(recognized.features.includes("LED_HEADLIGHTS"), true, "LED headlamps are recognized");
 assert.equal(recognized.features.includes("SOUND_SYSTEM"), true, "branded premium audio is recognized");
 
-const comfortInputs = [
-  ["CAM_360_DEGREES", "Kamera 360"],
-  ["LED_HEADLIGHTS", "LED"],
-  ["MASSAGE_SEATS", "Fotele z masażem"],
-].map(([value, label]) => ({ value, closest: () => ({ textContent: label }) }));
-context.document = { querySelector: () => ({ querySelectorAll: () => comfortInputs }) };
-vm.runInContext(functionSource("confirmedComfortEquipment"), context);
-const comfort = context.confirmedComfortEquipment({ equipment: [
-  "Kamera 360", "LED headlights", "Harman Kardon", "Panoramadach",
-] });
-assert.deepEqual(Array.from(comfort), ["Kamera 360", "LED"], "listing brief shows confirmed Comfort fields only, not Options or unknown massage");
-assert.deepEqual(Array.from(context.confirmedComfortEquipment({ equipment: ["Kamera"] })), [], "generic camera does not prove a rear-view camera");
-assert.deepEqual(Array.from(context.confirmedComfortEquipment({ equipment: ["Brak masażu foteli", "No LED headlights"] })), [], "explicitly absent equipment must not appear as confirmed");
+// Vehicle state and body filters added 10-02 (mobile.de names checked live).
+const stateUrl = new URL(context.buildMobileDeSearchUrl({
+  ...baseFilters,
+  doorsFrom: "4",
+  doorsTo: "5",
+  slidingDoor: "both",
+  newUsed: "used",
+  warranty: true,
+  serviceHistory: true,
+  damagedVehicles: "show",
+}));
+assert.equal(stateUrl.searchParams.get("door"), "FOUR_OR_FIVE", "doors 4/5 map to one mobile.de group");
+assert.equal(stateUrl.searchParams.get("sld"), "SLIDING_DOOR_BOTH_SIDED", "sliding door both sides");
+assert.equal(stateUrl.searchParams.get("con"), "USED", "used cars only");
+assert.deepEqual(stateUrl.searchParams.getAll("fe").filter((value) => ["WARRANTY", "FULL_SERVICE_HISTORY"].includes(value)), ["WARRANTY", "FULL_SERVICE_HISTORY"], "warranty and full service history are mobile.de features");
+assert.equal(stateUrl.searchParams.has("dam"), false, "damaged cars ticked = no dam=false");
 
 const skylineUrl = new URL(context.buildMobileDeSearchUrl({
   ...baseFilters,

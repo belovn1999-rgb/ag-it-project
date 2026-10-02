@@ -407,6 +407,10 @@ function blocketSkippedFilterLabels(filters) {
   if (filters.nonSmoking) add(c.nonSmokingLabel);
   if (filters.roadworthy) add(c.roadworthyLabel);
   if (filters.damagedVehicles !== "show") add(c.damagedVehiclesLabel);
+  if (filters.newUsed) add(c.newUsedLabel);
+  if (filters.slidingDoor) add(c.slidingDoorLabel);
+  if (filters.warranty) add(c.warrantyLabel);
+  if (filters.serviceHistory) add(c.serviceHistoryLabel);
   return labels;
 }
 
