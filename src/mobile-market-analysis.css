@@ -3635,3 +3635,70 @@
     grid-template-columns: minmax(0, 1fr) !important;
   }
 }
+
+/* "Analiza rynków" on the right of "Statystyki": flag + country code; a
+   dropped market grey, with "+" on hover (same squares as on page 1). */
+.mobileMarketStatsHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.mobileMarketStatsHead .mobileMarketBlockTitle {
+  margin-bottom: 0;
+}
+
+.mobileMarketStatsHead .mobileMarketSources {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.mobileMarketChip {
+  position: relative;
+  display: inline-flex;
+}
+
+.mobileMarketChipBody {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  border: 1.5px solid var(--color-rule);
+  border-radius: 8px;
+  background: var(--color-paper, #fff);
+  padding: 0 10px;
+  color: var(--color-ink);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.mobileMarketChipBody b {
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.mobileMarketChip.isOff .mobileMarketChipBody {
+  cursor: pointer;
+  color: var(--color-muted);
+}
+
+.mobileMarketChip.isOff .agFlag {
+  filter: grayscale(1);
+  opacity: 0.5;
+}
+
+.mobileMarketChip .agMarketToggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  grid-row: auto;
+  grid-column: auto;
+}
+
+.mobileMarketChip:hover .agMarketToggle {
+  opacity: 1;
+}

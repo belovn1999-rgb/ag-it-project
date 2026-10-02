@@ -100,7 +100,7 @@
       countrySweden: "ze Szwecji",
       listScreenshotButton: "Kopiuj listę",
       listPdfButton: "Lista PDF",
-      sourcesPicker: "Analiza cen z portali:",
+      sourcesPicker: "Analiza rynków:",
       marketPickOn: "kliknij, aby porównać",
       marketPickOff: "kliknij, aby ukryć",
       sourceOn: "{source}: widoczne na wykresie — kliknij, aby ukryć",
@@ -353,7 +353,7 @@
       countrySweden: "из Швеции",
       listScreenshotButton: "Копировать список",
       listPdfButton: "Список PDF",
-      sourcesPicker: "Анализ цен на порталах:",
+      sourcesPicker: "Анализ рынков:",
       marketPickOn: "нажми, чтобы сравнить",
       marketPickOff: "нажми, чтобы скрыть",
       sourceOn: "{source}: показан на графике — нажми, чтобы скрыть",
@@ -2659,11 +2659,6 @@
     blocket: "./assets/brands/blocket-logo.svg",
   };
 
-  // The marketplace's own logo as the link to its search.
-  function brandLogoLink(source, url, label) {
-    return `<a class="agBrandLink agBrandSearch is${sourceClass(source)}" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /><i aria-hidden="true">↗</i></a>`;
-  }
-
   // The marketplace's small mark as the link to one of its offers.
   function brandMarkLink(source, url, label) {
     return `<a class="agBrandMarkLink" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_MARKS[source] || BRAND_MARKS.mobile}" alt="" /></a>`;
@@ -3445,13 +3440,27 @@
     // The portals drawn on the chart (a picked one without offers is left
     // out); they are switched under the filters, in "Aktualne oferty".
     const reportSources = hasListings ? shownSources : MARKET_SOURCES.filter((source) => chartSources[source]);
+    // "Analiza rynków": the countries drawn on the chart, flag + code, on the
+    // right of "Statystyki". As on page 1: "−" on hover drops a market, a grey
+    // one gets "+"; a picked market without offers is grey too, its "+"
+    // fetches the offers again.
     const sourcesPicker = `
       <div class="mobileMarketSources">
         <span>${escapeMarketHtml(c.sourcesPicker)}</span>
         <div class="mobileMarketSourcesList">
-          ${reportSources.map((source) => {
-            const label = `${sourceName(source)} (${cleaned[source].length})`;
-            return `<span class="agSourceToggle isOn" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></span>`;
+          ${MARKET_SOURCES.map((source) => {
+            const drawn = reportSources.includes(source);
+            const attribute = chartSources[source] ? "data-mobile-analysis-fetch" : "data-mobile-analysis-market";
+            const country = window.AUTOGOOD_MARKET_COUNTRY?.[source] || "";
+            const name = window.AUTOGOOD_COUNTRY_NAME?.(country) || country;
+            const label = drawn ? `${name} (${cleaned[source].length})` : `${name} — ${c.marketPickOn}`;
+            const inner = `${window.AUTOGOOD_FLAG?.(country) || ""}<b>${escapeMarketHtml(country)}</b>`;
+            return `<span class="mobileMarketChip${drawn ? "" : " isOff"}"${drawn ? "" : " data-report-hide"}>
+              ${drawn
+                ? `<span class="mobileMarketChipBody" title="${escapeMarketHtml(label)}">${inner}</span>`
+                : `<button class="mobileMarketChipBody" type="button" ${attribute}="${source}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">${inner}</button>`}
+              ${drawn ? marketToggleHtml(source, true, "data-mobile-analysis-market") : marketToggleHtml(source, false, attribute)}
+            </span>`;
           }).join("")}
         </div>
       </div>`;
@@ -3460,7 +3469,7 @@
       title: [filters.brand, filters.model, filters.version].filter(Boolean).join(" "),
       meta: dataDate && hasListings ? c.checkedAt.replace("{date}", formatHistoryDate(dataDate)) : "",
       // The same favourite star as on the search page.
-      aside: `<button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${sourcesPicker}${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
+      aside: `<button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
       columns: searchSpecColumns(filters, reportSources),
     }) || "";
     // The same bottom row as the chosen filters on page 1: "Gotowe" (when the
@@ -3498,11 +3507,6 @@
 
         <div class="mobileMarketToolbar" data-report-hide>
           <div class="mobileMarketToolbarActions">
-            <span class="agBrandLinks">
-              ${chartSources.otomoto && otomotoUrl ? brandLogoLink("otomoto", otomotoUrl, c.openOtomoto) : ""}
-              ${chartSources.mobile ? brandLogoLink("mobile", searchUrl, c.openSearch) : ""}
-              ${chartSources.blocket && blocketUrl ? brandLogoLink("blocket", blocketUrl, c.openBlocket) : ""}
-            </span>
             <button class="mobileMarketImportClear" type="button" data-mobile-market-refresh>${escapeMarketHtml(c.refresh)}</button>
           </div>
         </div>
@@ -3515,7 +3519,7 @@
 
         ${statsContent ? `
           <section class="mobileMarketCard mobileMarketStatsCard" aria-label="${escapeMarketHtml(c.statsHeading)}" data-report-list-hide>
-            ${blockTitle("percent", c.statsHeading)}
+            <div class="mobileMarketStatsHead">${blockTitle("percent", c.statsHeading)}${sourcesPicker}</div>
             ${statsContent}
           </section>` : ""}
 
@@ -4049,6 +4053,10 @@
     const listPdf = event.target.closest("[data-mobile-market-list-pdf]");
     if (listPdf) {
       downloadReportPdf(listPdf, "list-pdf");
+      return;
+    }
+    if (event.target.closest("[data-mobile-analysis-fetch]") && activeAnalysis) {
+      refreshActiveAnalysis();
       return;
     }
     const marketButton = event.target.closest("[data-mobile-analysis-market]");
