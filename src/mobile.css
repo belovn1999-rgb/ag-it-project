@@ -3015,3 +3015,13 @@ label.isSummaryFocus {
   align-self: flex-start;
   margin-top: -3px;
 }
+
+/* Block 2 ends with its last filter card (the duplicate search buttons under
+   it are gone); portal messages show under the chosen filters. */
+.mobilePanelHead .mobileMarketSearchStatus {
+  margin: var(--space-xs) 0 0;
+}
+
+.mobilePanelHead .mobileMarketSearchStatus:empty {
+  display: none;
+}

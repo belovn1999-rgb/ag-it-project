@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=block2-title-20261002" />
+  <link rel="stylesheet" href="./src/mobile.css?v=no-dup-buttons-20261002" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=markets-chips-20261002" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
@@ -121,6 +121,7 @@
                 </div>
               </div>
             </section>
+            <p class="mobileMarketSearchStatus" aria-live="polite" data-mobile-market-search-status></p>
           </div>
           <div class="mobileManualForm">
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-vehicle">
@@ -530,45 +531,6 @@
                 </div>
               </div>
             </section>
-          </div>
-          <div class="mobileManualSearchActions">
-            <p class="mobileMarketSearchStatus" aria-live="polite" data-mobile-market-search-status></p>
-            <div class="mobileManualSearchButtons">
-              <button class="mobileMarketAnalysisButton" type="button" data-mobile-market-analysis-open>
-                <span data-market-i18n="analysisButton">Analiza rynku</span>
-                <i aria-hidden="true">&#8594;</i>
-              </button>
-              <a
-                class="mobileMarketSearchButton mobileMarketSearchButtonSecondary"
-                href="#"
-                target="_blank"
-                rel="noopener"
-                data-mobile-blocket-search
-              >
-                <img class="agBrandMark" src="./assets/brands/blocket-mark.svg" alt="" />
-                <span data-blocket-i18n="blocketSearchButton">Szukaj na blocket.se</span>
-              </a>
-              <a
-                class="mobileMarketSearchButton mobileMarketSearchButtonSecondary"
-                href="#"
-                target="_blank"
-                rel="noopener"
-                data-mobile-otomoto-search
-              >
-                <img class="agBrandMark" src="./assets/brands/otomoto-mark.svg" alt="" />
-                <span data-i18n="otomotoSearchButton">Szukaj na otomoto.pl</span>
-              </a>
-              <a
-                class="mobileMarketSearchButton"
-                href="#"
-                target="_blank"
-                rel="noopener"
-                data-mobile-market-search
-              >
-                <img class="agBrandMark" src="./assets/brands/mobile-de-mark.svg" alt="" />
-                <span data-i18n="marketSearchButton">Szukaj na mobile.de</span>
-              </a>
-            </div>
           </div>
         </article>
 
