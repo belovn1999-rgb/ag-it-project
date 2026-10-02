@@ -4137,3 +4137,22 @@ fetch("./tools/partslink24/brand-routes.json?v=20260720-5")
 if (initialUrl) {
   loadMobileDeData(initialUrl);
 }
+
+// Block 2's title row scrolls away under the navigation; the pinned head keeps
+// only the chosen filters (or the recognised ad) with a little of the frame.
+(() => {
+  const head = document.querySelector(".mobileManualPanel > .mobilePanelHead");
+  const row = head?.querySelector(".mobileManualPanelHeadRow");
+  if (!head || !row) return;
+  // Everything above the first block under the title, less a strip of 8px.
+  const measure = () => {
+    const below = [...head.children].find((element) => element !== row && element.offsetParent);
+    if (!below) return;
+    const hide = below.getBoundingClientRect().top - head.getBoundingClientRect().top - 8;
+    head.style.setProperty("--manual-title-hide", `${Math.max(0, Math.round(hide))}px`);
+  };
+  const observer = new ResizeObserver(measure);
+  observer.observe(row);
+  observer.observe(head);
+  measure();
+})();

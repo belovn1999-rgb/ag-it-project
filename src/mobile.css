@@ -2986,3 +2986,14 @@ label.isSummaryFocus {
   grid-row: 2;
   grid-column: 1;
 }
+
+/* Block 2: the reset button right after the title. Scrolling down, the
+   title row goes under the navigation and only the block's frame and the
+   chosen filters stay pinned (--manual-title-hide is measured in mobile.js). */
+.mobileManualPanel .mobileManualPanelHeadRow {
+  justify-content: flex-start;
+}
+
+.mobileManualPanel .mobilePanelHead {
+  top: calc(var(--ag-nav-height, 59px) - var(--manual-title-hide, 0px));
+}
