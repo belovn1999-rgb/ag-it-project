@@ -44,7 +44,7 @@ const copy = {
     mileageRangeLabel: "Przebieg",
     yearRangeLabel: "Rok",
     displacementRangeLabel: "Pojemność",
-    powerRangeLabel: "Moc (KM)",
+    powerRangeLabel: "Moc",
     driveLabel: "Napęd",
     driveAny: "Dowolny",
     driveAwd: "AWD",
@@ -336,7 +336,7 @@ const copy = {
     mileageRangeLabel: "Пробег",
     yearRangeLabel: "Год",
     displacementRangeLabel: "Объём",
-    powerRangeLabel: "Мощность (л.с.)",
+    powerRangeLabel: "Мощность",
     driveLabel: "Привод",
     driveAny: "Любой",
     driveAwd: "Полный",
@@ -1053,6 +1053,9 @@ const otomotoUnsupportedFeatures = new Set([
 
 const displacementOptions = ["1000", "1200", "1400", "1600", "1800", "2000", "2600", "3000", "> 5000", "< 5000"];
 const powerOptions = ["75", "90", "101", "118", "131", "150", "200", "252", "303", "358", "402", "452"];
+// mobile.de's own kW steps, offered when "Moc" is switched to kW.
+const powerKwOptions = ["25", "37", "44", "55", "66", "74", "87", "96", "110", "147", "185", "223", "263", "296", "334"];
+const KW_PER_KM = 0.735499;
 
 const modelGroupsByBrand = {
   BMW: [
@@ -1302,6 +1305,7 @@ const els = {
   displacementOptions: document.querySelector("[data-mobile-displacement-options]"),
   powerFrom: document.querySelector("[data-mobile-power-from]"),
   powerTo: document.querySelector("[data-mobile-power-to]"),
+  powerUnit: document.querySelector("[data-mobile-power-unit]"),
   seatsFrom: document.querySelector("[data-mobile-seats-from]"),
   seatsTo: document.querySelector("[data-mobile-seats-to]"),
   doorsFrom: document.querySelector("[data-mobile-doors-from]"),
@@ -1638,7 +1642,9 @@ function comboOptionSets() {
   const mileage = mileageOptions();
   const years = yearOptions();
   const displacement = displacementOptions;
-  const power = powerOptions;
+  const powerKw = els.powerUnit?.value === "kw";
+  const power = powerKw ? powerKwOptions : powerOptions;
+  const powerUnitLabel = powerKw ? "kW" : "KM";
   return {
     brand: brandCatalogOptions(),
     model: models,
@@ -1670,11 +1676,11 @@ function comboOptionSets() {
     })),
     power: power.map((value) => ({
       value,
-      label: `${value} KM`,
+      label: `${value} ${powerUnitLabel}`,
     })),
     powerTo: valuesAfter(power, els.powerFrom?.value).map((value) => ({
       value,
-      label: `${value} KM`,
+      label: `${value} ${powerUnitLabel}`,
     })),
     seats: seatsOptions.map((value) => ({ value, label: value })),
     seatsTo: valuesAfter(seatsOptions, els.seatsFrom?.value, true).map((value) => ({ value, label: value })),
@@ -1963,6 +1969,9 @@ function defaultManualFields() {
     displacementTo: "",
     powerFrom: "",
     powerTo: "",
+    powerUnit: "",
+    powerKwFrom: "",
+    powerKwTo: "",
     seatsFrom: "",
     seatsTo: "",
     doorsFrom: "",
@@ -2043,8 +2052,9 @@ function renderManualOptions(keepValues = true) {
   els.yearTo.value = current.yearTo || "";
   els.displacementFrom.value = current.displacementFrom || "";
   els.displacementTo.value = current.displacementTo || "";
-  els.powerFrom.value = current.powerFrom || "";
-  els.powerTo.value = current.powerTo || "";
+  showPowerUnit(current.powerUnit === "kw" ? "kw" : "");
+  els.powerFrom.value = (current.powerUnit === "kw" ? current.powerKwFrom : current.powerFrom) || "";
+  els.powerTo.value = (current.powerUnit === "kw" ? current.powerKwTo : current.powerTo) || "";
   els.seatsFrom.value = current.seatsFrom || "";
   els.seatsTo.value = current.seatsTo || "";
   els.doorsFrom.value = current.doorsFrom || "";
@@ -2091,8 +2101,13 @@ function readManualFields() {
     yearTo: els.yearTo?.value || "",
     displacementFrom: els.displacementFrom?.value || "",
     displacementTo: els.displacementTo?.value || "",
-    powerFrom: els.powerFrom?.value || "",
-    powerTo: els.powerTo?.value || "",
+    // Power is kept in KM for every portal; in kW mode the typed kW go to
+    // mobile.de as they are (powerKwFrom/To) and as KM to the others.
+    powerFrom: els.powerUnit?.value === "kw" ? kwToKm(els.powerFrom?.value) : els.powerFrom?.value || "",
+    powerTo: els.powerUnit?.value === "kw" ? kwToKm(els.powerTo?.value) : els.powerTo?.value || "",
+    powerUnit: els.powerUnit?.value === "kw" ? "kw" : "",
+    powerKwFrom: els.powerUnit?.value === "kw" ? els.powerFrom?.value || "" : "",
+    powerKwTo: els.powerUnit?.value === "kw" ? els.powerTo?.value || "" : "",
     seatsFrom: els.seatsFrom?.value || "",
     seatsTo: els.seatsTo?.value || "",
     doorsFrom: els.doorsFrom?.value || "",
@@ -2292,7 +2307,7 @@ function updateSelectedFiltersSummary() {
         [c.specBody, filters.body ? optionLabel(bodyOptions, filters.body) : any, "car", target(els.bodyChoices)],
         [c.specEngineType, fuels.length ? fuels.map(optionLabelText).join(", ") : any, "fuel", target(els.fuels)],
         [c.specDisplacement, range(filters.displacementFrom, filters.displacementTo, "ccm"), "settings", target(els.displacementFrom)],
-        [c.specPower, range(filters.powerFrom, filters.powerTo, "KM"), "zap", target(els.powerFrom)],
+        [c.specPower, filters.powerUnit === "kw" ? range(filters.powerKwFrom, filters.powerKwTo, "kW") : range(filters.powerFrom, filters.powerTo, "KM"), "zap", target(els.powerFrom)],
         ...(filters.seatsFrom || filters.seatsTo ? [[c.seatsRangeLabel, range(filters.seatsFrom, filters.seatsTo, "", true), "armchair", target(els.seatsFrom)]] : []),
         ...(filters.doorsFrom || filters.doorsTo ? [[c.doorsLabel, doorGroupOptions.find((group) => group.value === doorGroupOf(filters.doorsFrom, filters.doorsTo))?.label || range(filters.doorsFrom, filters.doorsTo, "", true), "car", target(els.doorsLabel)]] : []),
         ...(filters.slidingDoor ? [[c.slidingDoorLabel, slidingDoorOptions(c).find((option) => option.value === filters.slidingDoor)?.label || "", "car", target(els.slidingDoorLabel)]] : []),
@@ -2471,14 +2486,15 @@ function buildMobileDeSearchUrl(filters) {
   appendMobileDeRange(params, "cc", filters.displacementFrom, filters.displacementTo);
   // mobile.de searches power in kW; PS → kW rounds, so the lower bound goes
   // down and the upper one up, or "131–131 KM" would miss the ad's 97 kW.
-  appendMobileDeRange(
+  if (filters.powerUnit === "kw") appendMobileDeRange(params, "pw", filters.powerKwFrom, filters.powerKwTo);
+  else appendMobileDeRange(
     params,
     "pw",
     filters.powerFrom,
     filters.powerTo,
     (powerPs) => Math.floor(powerPs * 0.735499),
   );
-  if (params.has("pw")) {
+  if (params.has("pw") && filters.powerUnit !== "kw") {
     const [fromKw, toKw] = params.get("pw").split(":");
     const toPs = Number(String(filters.powerTo || "").replace(/[^\d]/g, ""));
     params.set("pw", `${fromKw}:${toKw && toPs ? Math.ceil(toPs * 0.735499) : toKw}`);
@@ -3150,6 +3166,8 @@ function applyRecognizedManualFields(data) {
   els.yearTo.value = next.yearTo;
   els.displacementFrom.value = next.displacementFrom;
   els.displacementTo.value = next.displacementTo;
+  // The ad's power is in KM.
+  showPowerUnit("");
   els.powerFrom.value = next.powerFrom;
   els.powerTo.value = next.powerTo;
   setCheckedValue(els.drive, next.drive);
@@ -4115,4 +4133,41 @@ els.doorsGroup?.addEventListener("change", () => {
 });
 els.damagedCheck?.addEventListener("change", () => {
   els.damagedVehicles.value = els.damagedCheck.checked ? "show" : "hide";
+});
+
+// "Moc" in KM (default) or kW, as on mobile.de. Switching converts what is
+// typed, so the search stays the same.
+function kwToKm(value) {
+  const number = Number(String(value || "").replace(/[^\d]/g, ""));
+  return number ? String(Math.round(number / KW_PER_KM)) : "";
+}
+
+function kmToKw(value) {
+  const number = Number(String(value || "").replace(/[^\d]/g, ""));
+  return number ? String(Math.round(number * KW_PER_KM)) : "";
+}
+
+function showPowerUnit(unit) {
+  if (!els.powerUnit) return;
+  els.powerUnit.value = unit === "kw" ? "kw" : "";
+  document.querySelectorAll("[data-mobile-power-unit-choice]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.mobilePowerUnitChoice === els.powerUnit.value));
+  });
+  document.querySelectorAll("[data-mobile-power-unit-label]").forEach((label) => {
+    label.textContent = els.powerUnit.value === "kw" ? "kW" : "KM";
+  });
+}
+
+document.querySelectorAll("[data-mobile-power-unit-choice]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const unit = button.dataset.mobilePowerUnitChoice === "kw" ? "kw" : "";
+    if (unit === (els.powerUnit?.value || "")) return;
+    const convert = unit === "kw" ? kmToKw : kwToKm;
+    els.powerFrom.value = convert(els.powerFrom.value);
+    els.powerTo.value = convert(els.powerTo.value);
+    showPowerUnit(unit);
+    closeComboMenus();
+    els.powerFrom.dispatchEvent(new Event("change", { bubbles: true }));
+    updateSelectedFiltersSummary();
+  });
 });

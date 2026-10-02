@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=doors-row-20261002" />
-    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=form-groups-20261002" />
+  <link rel="stylesheet" href="./src/mobile.css?v=power-unit-20261002" />
+    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=power-unit-20261002" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
@@ -208,15 +208,21 @@
                   </div>
                 </div>
                 <div class="mobileField mobileRangeField mobileWideField">
-                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#zap"></use></svg><span data-i18n="powerRangeLabel">Moc (KM)</span></span>
+                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#zap"></use></svg><span data-i18n="powerRangeLabel">Moc</span>
+                    <span class="mobileUnitToggle" role="group" aria-label="KM / kW">
+                      <button type="button" data-mobile-power-unit-choice="" aria-pressed="true">KM</button>
+                      <button type="button" data-mobile-power-unit-choice="kw" aria-pressed="false">kW</button>
+                    </span>
+                    <input data-mobile-power-unit type="hidden" />
+                  </span>
                   <div class="mobileRangePair">
                     <div class="mobileComboControl" data-mobile-options="power" data-mobile-options-target="data-mobile-power-from">
                       <input data-mobile-power-from inputmode="numeric" autocomplete="off" />
-                      <em>KM</em>
+                      <em data-mobile-power-unit-label>KM</em>
                     </div>
                     <div class="mobileComboControl" data-mobile-options="powerTo" data-mobile-options-target="data-mobile-power-to">
                       <input data-mobile-power-to inputmode="numeric" autocomplete="off" />
-                      <em>KM</em>
+                      <em data-mobile-power-unit-label>KM</em>
                     </div>
                   </div>
                 </div>
@@ -594,10 +600,10 @@
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/market-badges.js?v=badges-20260928"></script>
-    <script src="./src/mobile.js?v=aso-warranty-20261002"></script>
+    <script src="./src/mobile.js?v=power-unit-20261002"></script>
     <script src="./src/blocket-search.js?v=form-groups-20261002"></script>
     <script src="./src/turnkey-estimate.js?v=turnkey-compare-20260928"></script>
-    <script src="./src/mobile-market-analysis.js?v=form-groups-20261002"></script>
+    <script src="./src/mobile-market-analysis.js?v=power-unit-20261002"></script>
     <script src="./src/mobile-favorites-watch.js?v=fav-watch-20260930"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>

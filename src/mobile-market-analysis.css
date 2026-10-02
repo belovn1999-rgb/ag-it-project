@@ -3702,3 +3702,8 @@
 .mobileMarketChip:hover .agMarketToggle {
   opacity: 1;
 }
+
+/* The legend's price curve drawn dashed. */
+.mobileMarketLegend .isTrend i {
+  border-top-style: dashed;
+}

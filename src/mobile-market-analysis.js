@@ -1598,7 +1598,10 @@
     if (legacyDoorRange && !filters.doorsFrom && !filters.doorsTo) {
       filters = { ...filters, doorsFrom: legacyDoorRange[0], doorsTo: legacyDoorRange[1] };
     }
+    // Power saved in kW mode is put back as the kW that were typed.
+    if (filters.powerUnit === "kw") filters = { ...filters, powerFrom: filters.powerKwFrom, powerTo: filters.powerKwTo };
     const valueSelectors = {
+      powerUnit: "[data-mobile-power-unit]",
       brand: "[data-mobile-brand]",
       model: "[data-mobile-model]",
       version: "[data-mobile-version]",
@@ -3204,7 +3207,6 @@
           ${Math.abs(high - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${high}%">P75 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleHigh))}</span>` : ""}
           <span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>
           ${Math.abs(low - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${low}%">P25 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleLow))}</span>` : ""}
-          <span class="mobileMarketTick isLimit" style="top:5%">${escapeMarketHtml(formatMarketPrice(domainMaximum))}</span>
           <span class="mobileMarketTick isLimit" style="top:95%">${escapeMarketHtml(formatMarketPrice(domainMinimum))}</span>
         </div>
         <div class="mobileMarketXAxis">
@@ -4495,5 +4497,13 @@
   // A reload stays on the page it was on (#historia, #ulubione, #analiza).
   const startPage = Object.keys(PAGE_HASHES).find((page) => PAGE_HASHES[page] && PAGE_HASHES[page] === location.hash);
   if (startPage) showPage(startPage);
-  else markCurrentPage();
+  else {
+    // Page 1 after a reload: the favourite still picked in the bar fills the
+    // form again and is edited as itself ("Gotowe" updates it), instead of a
+    // highlighted favourite over an empty form, whose filters typed by hand
+    // would make a second card of the same car.
+    const picked = selectedFavorite();
+    if (picked && !/^#autogood-import=/.test(location.hash)) selectHistoryEntry(picked.id);
+    markCurrentPage();
+  }
 })();

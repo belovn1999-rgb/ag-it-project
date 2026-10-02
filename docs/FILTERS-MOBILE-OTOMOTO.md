@@ -88,7 +88,7 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | Przebieg | `ml` ✅ | `filter_float_mileage` ✅ | |
 | Rok | `fr` ✅ | `filter_float_year` ✅ | |
 | Pojemność | `cc` ✅ | `filter_float_engine_capacity` ✅ | «< 5000»/«> 5000» — правило 9 |
-| Moc (KM) | `pw` в **kW** (KM×0.735499) ✅ | `filter_float_engine_power` в KM ✅ | |
+| Moc (переключатель **KM / kW**, по умолчанию KM; с 10-02) | KM: `pw` в **kW** (KM×0.735499, нижняя граница вниз, верхняя вверх) ✅; kW: `pw` = введённые kW как есть ✅ (список шагов mobile.de 25…334 kW) | `filter_float_engine_power` в KM ✅ (kW → KM, округление) | в записи всегда `powerFrom/To` в KM; в режиме kW ещё `powerUnit: "kw"` и `powerKwFrom/To` — запись открывается в kW |
 | Paliwo | `ft` ✅ | `filter_enum_fuel_type` ✅/≈ | petrol `PETROL`/`petrol`, diesel `DIESEL`/`diesel`, electric `ELECTRICITY`/`electric`; hybrid diesel `HYBRID_DIESEL` / hybrid petrol `HYBRID` → otomoto оба `hybrid` ≈ |
 | Plug-in | **`fe=HYBRID_PLUGIN`** (не `ft`! `ft=HYBRID_PLUGIN` игнорируется) ✅ | `plugin-hybrid` ✅ | исправлено Claude `1aad552` |
 | Napęd | `dt` ✅ | `filter_enum_transmission` ✅ | awd→`ALL_WHEEL` / `all-wheel-auto,-lock,-permanent`; fwd `FRONT`/`front-wheel`; rwd `REAR`/`rear-wheel` |
