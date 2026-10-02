@@ -1095,6 +1095,7 @@
   --market-otomoto: #1d5fd0;
   --market-mobile: #f56a00;
   --market-blocket: #d0101a;
+  --market-avby: #13804a;
   --plot-left: 96px;
   --plot-right: 28px;
 }
@@ -1156,6 +1157,12 @@
   border-radius: 50%;
 }
 
+.mobileMarketLegend .isAvby i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
 .mobileMarketSourceButton.isOtomoto i,
 .mobileMarketSourceTag.isOtomoto i,
 .mobileMarketLegend .isOtomoto i {
@@ -1166,6 +1173,12 @@
 .mobileMarketSourceTag.isBlocket i,
 .mobileMarketLegend .isBlocket i {
   background: var(--market-blocket);
+}
+
+.mobileMarketSourceButton.isAvby i,
+.mobileMarketSourceTag.isAvby i,
+.mobileMarketLegend .isAvby i {
+  background: var(--market-avby);
 }
 
 .mobileMarketSourceButton.isMobile i,
@@ -1228,6 +1241,11 @@
   box-shadow: 0 0 0 1px var(--market-blocket);
 }
 
+.mobileMarketPoint.isAvby::before {
+  background: var(--market-avby);
+  box-shadow: 0 0 0 1px var(--market-avby);
+}
+
 .mobileMarketPoint.isMobile::before {
   background: var(--market-mobile);
   box-shadow: 0 0 0 1px var(--market-mobile);
@@ -1263,6 +1281,10 @@
 
 .mobileMarketPointTooltip b.isBlocket {
   color: var(--market-blocket);
+}
+
+.mobileMarketPointTooltip b.isAvby {
+  color: var(--market-avby);
 }
 
 .mobileMarketPointTooltip b.isMobile {
@@ -1387,6 +1409,10 @@
 
 .mobileMarketTrend.isCurve polyline.isBlocket {
   stroke: var(--market-blocket);
+}
+
+.mobileMarketTrend.isCurve polyline.isAvby {
+  stroke: var(--market-avby);
 }
 
 .mobileMarketImportCopy .mobileBookmarkletRow {
@@ -1953,6 +1979,10 @@
 
 .mobileMarketSearchArrow.isBlocket {
   color: #d0101a;
+}
+
+.mobileMarketSearchArrow.isAvby {
+  color: #13804a;
 }
 
 .mobileMarketSearchArrow:hover {
@@ -2786,9 +2816,13 @@
 .mobileMarketMedian.isMobile { border-top-color: var(--market-mobile); }
 .mobileMarketMedian.isBlocket { border-top-color: var(--market-blocket); }
 
+.mobileMarketMedian.isAvby { border-top-color: var(--market-avby); }
+
 .mobileMarketKeyTick.isMedian.isOtomoto { color: var(--market-otomoto); }
 .mobileMarketKeyTick.isMedian.isMobile { color: var(--market-mobile); }
 .mobileMarketKeyTick.isMedian.isBlocket { color: var(--market-blocket); }
+
+.mobileMarketKeyTick.isMedian.isAvby { color: var(--market-avby); }
 
 .mobileMarketKeyTick.isMedian {
   font-style: italic;
@@ -3255,6 +3289,8 @@
 .mobileMarketCompareRow.isMobile { --row: var(--market-mobile); }
 .mobileMarketCompareRow.isBlocket { --row: var(--market-blocket); }
 
+.mobileMarketCompareRow.isAvby { --row: var(--market-avby); }
+
 .mobileMarketCompareRow .mobileMarketCompareTrack {
   height: 40px;
   margin: 0;
@@ -3343,6 +3379,8 @@
 .mobileMarketPanel.isMobile .mobileMarketPanelHead b { color: var(--market-mobile); }
 .mobileMarketPanel.isBlocket .mobileMarketPanelHead b { color: var(--market-blocket); }
 
+.mobileMarketPanel.isAvby .mobileMarketPanelHead b { color: var(--market-avby); }
+
 .mobileMarketPanelHead small {
   color: var(--color-muted);
   font-size: var(--text-xs);
@@ -3373,6 +3411,8 @@
 .mobileMarketKeyTick.isGuide.isOtomoto { color: var(--market-otomoto); }
 .mobileMarketKeyTick.isGuide.isMobile { color: var(--market-mobile); }
 .mobileMarketKeyTick.isGuide.isBlocket { color: var(--market-blocket); }
+
+.mobileMarketKeyTick.isGuide.isAvby { color: var(--market-avby); }
 
 .mobileMarketLegend .isGuide i {
   display: inline-block;

@@ -1,4 +1,4 @@
-# AUTOGOOD · Фильтры mobile.de ↔ otomoto.pl ↔ blocket.se — единый справочник
+# AUTOGOOD · Фильтры mobile.de ↔ otomoto.pl ↔ blocket.se ↔ av.by — единый справочник
 
 > **Единственное место**, где описано, как один набор фильтров формы
 > `mobile.html` превращается в правильный поиск на **mobile.de** и **otomoto.pl**.
@@ -276,6 +276,57 @@ Blocket, все неотправленные названы пользовате
 до 100 000 км, дизель, автомат, CarPlay → 38 объявлений и на странице Blocket,
 и в API.
 
+## 5c. av.by (Беларусь) — четвёртая площадка (с 2026-10-02)
+
+Код: `src/avby-search.js` (после `blocket-search.js`, использует его подбор моделей),
+каталог `src/avby-catalog.generated.js` (`python3 scripts/generate-avby-catalog.py`),
+аудит `python3 scripts/audit-avby-search.py` (~1,5 мин: av.by пускает 1 запрос/с).
+
+**Как устроен av.by.** Открытый API `https://api.av.by/offer-types/cars/filters/main/apply`
+(POST, CORS `*` — браузер читает напрямую, без прокси): `{page, properties:[{name,value}], sorting}`.
+Ответ: `count`, `pageCount` (по 25), `adverts`, `initialValue` — **принятые** фильтры,
+`seo.currentPage.url` — ссылка, которую для этого поиска пишет сам сайт.
+Неизвестное свойство или формат молча игнорируются (неверный диапазон `{from,to}`
+вместо `{min,max}` — тоже). Сортировки: 2 дешёвые, 3 дорогие, 4 новые объявления.
+Пачка запросов → **429**: очередь, ≥ 0,7 с между запросами, повтор с паузой.
+Сайт cars.av.by роботам показывает «Confirm You Are Human» — только API.
+
+**Правило «1 в 1»:** наша ссылка `cars.av.by/filter?…` должна совпадать с
+`seo.currentPage.url` параметр в параметр. Проверено 02.10 на 138 вариантах
+(каждое значение каждого поля + модели): **совпали все 138**, все фильтры приняты,
+каждый переносимый фильтр меняет число. Пример: VW Passat, дизель, от 2015,
+до 250 000 км, дилер → 72 объявления у нас и у av.by, ссылка байт в байт.
+
+| Поле формы | av.by | Примечание |
+|---|---|---|
+| Марка / модель | `brands[i][brand]`, `brands[i][model]` ✅/≈ | несколько моделей = «или». Модели av.by — уровень серии: BMW 320 → «3 серия» ≈, Mercedes C 200 → «C-Класс» ≈, C 63 AMG → «C-Класс AMG» ≈, Lexus RX 450h → RX ≈, MINI Cooper S → Hatch ≈, VW T6 Multivan → Multivan ≈, Porsche 991 → 911 ≈. Точно: «3» → 3 серия, Golf (+GTI, R… — у нас нет отдельно), A4, X5, Sportage и т.п. Нет марки → ✗ «Marka», текстом |
+| Wersja | `description` (слова в объявлении) ✅ | |
+| Nadwozie | `body_type` ✅ | sedan 5, kombi 2, SUV 6+23, hatchback 3+24, coupe 1, cabrio 7+18, van 4+11, pickup 8, other 19 |
+| Cena | `price_usd{min,max}` ✅ | EUR → USD по Walutomat |
+| Przebieg, Rok, Pojemność, Moc (KM = л.с.) | `mileage_km`, `year`, `engine_capacity` (см³), `engine_power_hp` ✅ | любые значения, не только шаги списка |
+| Liczba miejsc | `number_of_seats` ✅ только 6–9 | диапазон ниже 6 → ✗ |
+| Liczba drzwi, Drzwi przesuwne | ✗ | |
+| Paliwo | `engine_type` ✅ | petrol 1, diesel 5, hybrid petrol 4, hybrid diesel 6, electric 7; plug-in → 4+6 ≈ |
+| Skrzynia | `transmission_type` ✅ | automatic = автомат 1 + робот 3 + вариатор 4; manual 2 |
+| Napęd | `drive_type` ✅ | fwd 1, rwd 2, awd 3+4 |
+| VAT | odliczany → `has_nds` ≈ («цена с НДС»); marża ✗ | |
+| Sprzedawca | `seller_type`: private 1 ✅; dealer/firma 2 ≈ («Компания») | |
+| Kraj | ✗ | все в Беларуси |
+| Nowy / używany, Uszkodzone | `condition` ✅ | new 5, used 2, аварийный 3, на запчасти 4; «nie pokazuj uszkodzonych» = только 5+2 |
+| Sprawny technicznie | ✅ при скрытых повреждённых; иначе ✗ | |
+| Tapicerka | `interior_material` ✅ | skóra 1, tkanina 3, alcantara 5; częściowa skóra → «комбинированные» 6 ≈ |
+| Kolor nadwozia | `color` ✅ | без бежевого и золотого: если выбран любой из них — цвет не отправляется вовсе (иначе пропали бы машины) и называется пользователю |
+| Kolor wnętrza, matowy, metallic, niepalący, gwarancja, ASO | ✗ | |
+| Klimatyzacja | `options` ✅ | ręczna 22, automat 21, 2 strefy → многозонный 71; 3/4 strefy → 71 ≈ |
+| Hak | `options` 15 ≈ | тип не различается |
+| Tempomat | `options` 35, адаптивный 58 ✅ | |
+| Parkowanie | `options` ✅ | камера 10, 360° 47, автопарковка 48; датчики (перед/зад) → «Парктроники» 11 ≈; rear traffic alert ✗ |
+| Opcje | `options` ✅ ~28 из 41 | несколько = «все сразу», как у нас. Нет: спортпакет, спортивные/комфортные сиденья, поясница, аудио, подсветка салона, шины, галоген, LED ДХО, спорт-подвеска |
+
+Всё ✗ и ≈ называется: «av.by nie ma dokładnego odpowiednika dla: …» (`avbySkippedFilterLabels`).
+Итог по 2 715 моделям формы (02.10): ~1 250 точно, ~680 ≈, ~490 текстом (нет в продаже
+в Беларуси), 299 — марок нет на av.by.
+
 ## 6. Известные открытые вопросы
 
 - Курс цены для otomoto — файл, а не живой курс (B12 в PROJECT-MOBILE.md).
@@ -303,3 +354,4 @@ Blocket, все неотправленные названы пользовате
 | 09-27 | Claude | blocket.se: третья площадка — каталог, перенос всех фильтров, предупреждения, живой счётчик, логотипы, аудит | этот коммит |
 | 09-27 | Claude | blocket.se в анализе рынка (выборка, места, SEK, шведские стоп-слова) | этот коммит |
 | 09-29 | Codex | Значение продавца по умолчанию — `dealer` («Dealer / komis»): mobile.de `st=DEALER`, otomoto `private_business=business`, blocket `dealer_segment=2`; явный выбор пользователя и старые сохранённые фильтры не меняются | этот коммит |
+| 10-02 | Claude | av.by: четвёртая площадка — каталог, перенос всех фильтров (138 вариантов = ссылке самого av.by), предупреждения, счётчик, объявления, анализ, стр. 4, аудит | этот коммит |

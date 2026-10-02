@@ -2217,6 +2217,11 @@ button {
   box-shadow: 0 0 0 1px #f71414;
 }
 
+.agBrandLink.isAvby:hover {
+  border-color: #0b4da2;
+  box-shadow: 0 0 0 1px #0b4da2;
+}
+
 .agBrandMarkLink {
   display: inline-flex;
   align-items: center;
@@ -2904,6 +2909,11 @@ label.isSummaryFocus {
 
 .mobileLinkSource .isBlocket input:checked + span {
   background: #d0101a;
+  color: #fff;
+}
+
+.mobileLinkSource .isAvby input:checked + span {
+  background: #0b4da2;
   color: #fff;
 }
 

@@ -66,6 +66,9 @@ const copy = {
     recognitionFromBlocket: "Dane pobrane z ogłoszenia blocket.se.",
     blocketAdFailed: "Nie udało się odczytać ogłoszenia blocket.se. Sprawdź link i spróbuj ponownie.",
     blocketLinkExpected: "To nie jest link do ogłoszenia blocket.se.",
+    recognitionFromAvby: "Dane pobrane z ogłoszenia av.by.",
+    avbyAdFailed: "Nie udało się odczytać ogłoszenia av.by. Sprawdź link i spróbuj ponownie.",
+    avbyLinkExpected: "To nie jest link do ogłoszenia av.by.",
     otomotoAdFailed: "Nie udało się odczytać ogłoszenia otomoto.pl. Sprawdź link i spróbuj ponownie.",
     otomotoLinkExpected: "To nie jest link do ogłoszenia otomoto.pl.",
     bookmarkletHint: "Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.",
@@ -358,6 +361,9 @@ const copy = {
     recognitionFromBlocket: "Данные получены из объявления blocket.se.",
     blocketAdFailed: "Не удалось прочитать объявление blocket.se. Проверь ссылку и попробуй ещё раз.",
     blocketLinkExpected: "Это не ссылка на объявление blocket.se.",
+    recognitionFromAvby: "Данные получены из объявления av.by.",
+    avbyAdFailed: "Не удалось прочитать объявление av.by. Проверь ссылку и попробуй ещё раз.",
+    avbyLinkExpected: "Это не ссылка на объявление av.by.",
     otomotoAdFailed: "Не удалось прочитать объявление otomoto.pl. Проверь ссылку и попробуй ещё раз.",
     otomotoLinkExpected: "Это не ссылка на объявление otomoto.pl.",
     bookmarkletHint: "Перетащи эту кнопку на панель закладок. Потом нажимай её на странице объявления или списка mobile.de.",
@@ -3629,6 +3635,7 @@ async function refreshOfferCount() {
   }
   refreshMobileDeCount(filters);
   window.AUTOGOOD_BLOCKET_REFRESH_COUNT?.(filters);
+  window.AUTOGOOD_AVBY_REFRESH_COUNT?.(filters);
   if (!filters.brand || !filters.model) {
     renderOfferCount("—");
     return;
@@ -3825,7 +3832,8 @@ function setLinkSource(source) {
     input.checked = input.value === source;
   });
   els.url.placeholder = source === "otomoto" ? "https://www.otomoto.pl/osobowe/oferta/..."
-    : source === "blocket" ? "https://www.blocket.se/mobility/item/..." : "https://suchen.mobile.de/...";
+    : source === "blocket" ? "https://www.blocket.se/mobility/item/..."
+      : source === "avby" ? "https://cars.av.by/..." : "https://suchen.mobile.de/...";
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
   if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
@@ -3848,7 +3856,7 @@ document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
 let mirroredLink = "";
 els.url.addEventListener("input", () => {
   const value = els.url.value.trim();
-  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket"
+  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby"
     : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
   if (source && value !== mirroredLink) {
     mirroredLink = value;
@@ -3856,6 +3864,7 @@ els.url.addEventListener("input", () => {
   }
   if (isOtomotoUrl(value)) setLinkSource("otomoto");
   else if (isBlocketUrl(value)) setLinkSource("blocket");
+  else if (isAvbyUrl(value)) setLinkSource("avby");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
 });
 
@@ -3946,6 +3955,75 @@ async function loadBlocketAd(sourceUrl) {
   } catch (error) {
     state.data = null;
     setStatus("error", error.message && !/^\d+$/.test(error.message) ? error.message : c.blocketAdFailed, true);
+    renderData();
+  }
+}
+
+// ---- av.by ad links -------------------------------------------------------------
+// The ad is read from av.by's own API (open to browsers): price in USD, BYN and
+// EUR as av.by states it, the specs as named properties. Only the ad's own
+// price is taken (owner, 2026-10-02): no delivery or turnkey estimate for Belarus.
+function isAvbyUrl(value) {
+  return /^https:\/\/(cars\.|www\.)?av\.by\/.*\/\d{5,}\/?(?:[?#].*)?$/.test(String(value || "").trim());
+}
+
+const AVBY_BODY_TYPES = [[/седан/i, "sedan"], [/универсал/i, "estate"], [/внедорожник/i, "suv"], [/хэтчбек|лифтбек/i, "hatchback"],
+  [/купе/i, "coupe"], [/кабриолет|родстер/i, "cabrio"], [/минивэн|микроавтобус/i, "van"], [/пикап/i, "pickup"]];
+const AVBY_FUELS = [[/электро/i, "electric"], [/гибрид/i, "hybrid"], [/дизель/i, "diesel"], [/бензин/i, "petrol"]];
+
+async function loadAvbyAd(sourceUrl) {
+  const c = copy[state.lang];
+  setStatus("loading");
+  state.data = null;
+  renderData();
+  try {
+    const id = (sourceUrl.match(/\/(\d{5,})\/?(?:[?#].*)?$/) || [])[1];
+    const offer = id && window.AUTOGOOD_AVBY ? await window.AUTOGOOD_AVBY.offer(id) : null;
+    const priceEur = Number(offer?.price?.eur?.amount) || 0;
+    if (!priceEur) throw new Error(c.avbyAdFailed);
+    const property = (name) => {
+      const value = (offer.properties || []).find((item) => item.name === name)?.value;
+      return value === undefined || value === null ? "" : String(value);
+    };
+    const make = property("brand");
+    const model = property("model");
+    const generation = property("generation");
+    const fuelLabel = property("engine_type");
+    const fuelWord = (AVBY_FUELS.find(([pattern]) => pattern.test(fuelLabel)) || [])[1] || "";
+    const bodyLabel = property("body_type");
+    const gearboxLabel = property("transmission_type");
+    const driveLabel = property("drive_type");
+    const displacementCcm = Math.round(Number(property("engine_capacity").replace(",", ".")) * 1000) || null;
+    const engineTypeIndex = classifyEngineType(`${fuelWord} ${make} ${model}`, displacementCcm);
+    state.data = {
+      sourceUrl,
+      adId: id,
+      importMode: "avby",
+      carBruttoEur: Math.round(priceEur),
+      priceUsd: Number(offer.price?.usd?.amount) || null,
+      purchaseType: "Marża",
+      title: [make, model, generation].filter(Boolean).join(" "),
+      model,
+      bodyType: (AVBY_BODY_TYPES.find(([pattern]) => pattern.test(bodyLabel)) || [])[1] || bodyLabel,
+      fuel: fuelLabel,
+      displacementCcm,
+      powerHp: Number(property("engine_power")) || null,
+      gearbox: /механ/i.test(gearboxLabel) ? "manual" : gearboxLabel ? "automatic" : "",
+      mileageKm: Number(property("mileage_km")) || null,
+      firstRegistration: property("year"),
+      drive: /полный/i.test(driveLabel) ? "awd" : /передний/i.test(driveLabel) ? "fwd" : /задний/i.test(driveLabel) ? "rwd" : "",
+      location: { country: "BY", city: String(offer.locationName || ""), postalCode: "", address: "", sellerName: String(offer.sellerName || "") },
+      engineTypeIndex,
+      engineTypeLabel: ENGINE_TYPE_LABELS[engineTypeIndex],
+    };
+    setStatus("ready", c.recognitionFromAvby, true);
+    const forForm = { ...state.data, fuel: fuelWord || fuelLabel };
+    applyRecognizedManualFields(forForm);
+    state.data.matchedFilters = forForm.matchedFilters;
+    renderData();
+  } catch (error) {
+    state.data = null;
+    setStatus("error", error.message && !/^\d+$/.test(error.message) ? error.message : c.avbyAdFailed, true);
     renderData();
   }
 }
@@ -4044,8 +4122,13 @@ els.form.addEventListener("submit", (event) => {
     loadBlocketAd(sourceUrl);
     return;
   }
-  if (linkSource() === "otomoto" || linkSource() === "blocket") {
-    setStatus("error", copy[state.lang][linkSource() === "otomoto" ? "otomotoLinkExpected" : "blocketLinkExpected"], true);
+  if (isAvbyUrl(sourceUrl)) {
+    setLinkSource("avby");
+    loadAvbyAd(sourceUrl);
+    return;
+  }
+  if (["otomoto", "blocket", "avby"].includes(linkSource())) {
+    setStatus("error", copy[state.lang][`${linkSource()}LinkExpected`], true);
     return;
   }
   loadMobileDeData(sourceUrl);

@@ -145,6 +145,7 @@
       otomotoFetched: "Wczytano {count} z {total} ofert otomoto.pl.",
       mobileFetched: "Wczytano {count} z {total} ofert mobile.de.",
       blocketFetched: "Wczytano {count} z {total} ofert blocket.se.",
+      avbyFetched: "Wczytano {count} z {total} ofert av.by.",
       otomotoFailed: "Nie udało się pobrać ofert z otomoto.pl.",
       otomotoLabel: "Dane: otomoto.pl",
       mixedLabel: "Dane: otomoto.pl + mobile.de",
@@ -165,6 +166,7 @@
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
       sourceBlocket: "blocket.se",
+      sourceAvby: "av.by",
       marketsHeading: "Rynki",
       marketOtomoto: "Polska",
       compareHeading: "Porównanie rynków",
@@ -174,6 +176,7 @@
       guideLegend: "mediana innego rynku (dla porównania)",
       marketMobile: "Niemcy",
       marketBlocket: "Szwecja",
+      marketAvby: "Białoruś",
       sourcesLabel: "Źródła ofert",
       axisLabel: "Oś pozioma",
       axisRank: "Kolejność cen",
@@ -242,6 +245,7 @@
       openSearch: "Otwórz wyszukiwanie mobile.de ↗",
       openOtomoto: "Otwórz listę otomoto.pl ↗",
       openBlocket: "Otwórz listę blocket.se ↗",
+      openAvby: "Otwórz listę av.by ↗",
       pointHint: "Kliknij, aby otworzyć ogłoszenie",
       summaryVehicle: "Auto i sprzedawca",
       summaryParameters: "Parametry",
@@ -400,6 +404,7 @@
       otomotoFetched: "Загружено {count} из {total} объявлений otomoto.pl.",
       mobileFetched: "Загружено {count} из {total} объявлений mobile.de.",
       blocketFetched: "Загружено {count} из {total} объявлений blocket.se.",
+      avbyFetched: "Загружено {count} из {total} объявлений av.by.",
       otomotoFailed: "Не удалось загрузить объявления с otomoto.pl.",
       otomotoLabel: "Данные: otomoto.pl",
       mixedLabel: "Данные: otomoto.pl + mobile.de",
@@ -420,6 +425,7 @@
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
       sourceBlocket: "blocket.se",
+      sourceAvby: "av.by",
       marketsHeading: "Рынки",
       marketOtomoto: "Польша",
       compareHeading: "Сравнение рынков",
@@ -429,6 +435,7 @@
       guideLegend: "медиана другого рынка (для сравнения)",
       marketMobile: "Германия",
       marketBlocket: "Швеция",
+      marketAvby: "Беларусь",
       sourcesLabel: "Источники",
       axisLabel: "Горизонтальная ось",
       axisRank: "Порядок цен",
@@ -497,6 +504,7 @@
       openSearch: "Открыть поиск mobile.de ↗",
       openOtomoto: "Открыть список otomoto.pl ↗",
       openBlocket: "Открыть список blocket.se ↗",
+      openAvby: "Открыть список av.by ↗",
       pointHint: "Нажми, чтобы открыть объявление",
       summaryVehicle: "Авто и продавец",
       summaryParameters: "Параметры",
@@ -569,9 +577,14 @@
   let otomotoTotal = 0;
   let tableSort = { key: "price", direction: "asc" };
   // Chart view: which marketplaces are shown and what the horizontal axis carries.
-  const MARKET_SOURCES = ["otomoto", "mobile", "blocket"];
+  const MARKET_SOURCES = ["otomoto", "mobile", "blocket", "avby"];
   // Each marketplace's own currency: history and statistics keep it, the chart converts.
-  const SOURCE_CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK" };
+  const SOURCE_CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK", avby: "USD" };
+  // Markets whose offers are also shown "pod klucz" in Poland. av.by shows
+  // only its own price (owner, 2026-10-02).
+  const TURNKEY_SOURCES = ["mobile", "blocket"];
+  const AVBY_PAGES = 8;
+  const AVBY_PAGE_SIZE = 25;
   const BLOCKET_PAGES = 8;
   const BLOCKET_PAGE_SIZE = 50;
   const BLOCKET_MAX_PAGES = 50;
@@ -585,14 +598,15 @@
       // Blocket starts switched off (owner, 2026-09-29): once for choices saved earlier.
       const blocketReset = localStorage.getItem("autogood.mobile.markets.blocketOff") !== "1";
       if (blocketReset) localStorage.setItem("autogood.mobile.markets.blocketOff", "1");
-      if (saved && ["otomoto", "mobile", "blocket"].some((source) => saved[source])) {
-        const picked = { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), blocket: blocketReset ? false : Boolean(saved.blocket) };
-        if (picked.otomoto || picked.mobile || picked.blocket) return picked;
+      if (saved && ["otomoto", "mobile", "blocket", "avby"].some((source) => saved[source])) {
+        const picked = { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), blocket: blocketReset ? false : Boolean(saved.blocket), avby: Boolean(saved.avby) };
+        if (picked.otomoto || picked.mobile || picked.blocket || picked.avby) return picked;
       }
     } catch {
       // Unreadable storage: all markets.
     }
-    return { otomoto: true, mobile: true, blocket: false };
+    // av.by starts switched off, like Blocket: added by its "+".
+    return { otomoto: true, mobile: true, blocket: false, avby: false };
   })();
   let chartAxis = "rank";
   let displayCurrency = "EUR";
@@ -610,16 +624,23 @@
     return window.AUTOGOOD_TURNKEY?.currentRates?.().sek || window.AUTOGOOD_BLOCKET?.sekPlnRate?.() || 0.385;
   }
 
-  // Any offer price in PLN, and a PLN amount in any of the three currencies.
+  // One USD in PLN (Walutomat, see avby-search.js).
+  function usdPlnRate() {
+    return window.AUTOGOOD_AVBY?.usdPlnRate?.() || 3.65;
+  }
+
+  // Any offer price in PLN, and a PLN amount in any of the four currencies.
   function priceInPln(value, currency) {
     if (currency === "PLN") return value;
     if (currency === "SEK") return value * sekPlnRate();
+    if (currency === "USD") return value * usdPlnRate();
     return value * (exchangeRate() || EUR_PLN_FALLBACK_RATE);
   }
 
   function plnIn(value, currency) {
     if (currency === "PLN") return value;
     if (currency === "SEK") return value / sekPlnRate();
+    if (currency === "USD") return value / usdPlnRate();
     return value / (exchangeRate() || EUR_PLN_FALLBACK_RATE);
   }
 
@@ -629,7 +650,7 @@
 
   // CSS class part of a marketplace.
   function sourceClass(source) {
-    return source === "otomoto" ? "Otomoto" : source === "blocket" ? "Blocket" : "Mobile";
+    return source === "otomoto" ? "Otomoto" : source === "blocket" ? "Blocket" : source === "avby" ? "Avby" : "Mobile";
   }
   let importedDataset = null;
   let marketHistory = [];
@@ -731,6 +752,10 @@
     return url.hostname.endsWith("otomoto.pl") && url.pathname.includes("/oferta/");
   }
 
+  function isDirectAvbyListingUrl(url) {
+    return /(^|\.)av\.by$/.test(url.hostname) && /\/\d{5,}\/?$/.test(url.pathname);
+  }
+
   function isDirectBlocketListingUrl(url) {
     return url.hostname.endsWith("blocket.se") && /\/(?:mobility\/)?item\/\d+/.test(url.pathname);
   }
@@ -749,7 +774,7 @@
     let url = "";
     try {
       const parsedUrl = new URL(String(urlValue || "").trim());
-      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl) || isDirectBlocketListingUrl(parsedUrl))) {
+      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl) || isDirectBlocketListingUrl(parsedUrl) || isDirectAvbyListingUrl(parsedUrl))) {
         url = parsedUrl.toString();
       }
     } catch {
@@ -761,7 +786,7 @@
     const title = String(listingValue(row, ["title", "name", "model", "auto"]) || "").trim();
     const id = String(listingValue(row, ["id", "listing_id", "ad_id"]) || (url ? new URL(url).searchParams.get("id") : "") || `import-${index + 1}`);
     const rawCurrency = String(listingValue(row, ["currency", "waluta"]) || "EUR").toUpperCase();
-    const currency = ["PLN", "SEK"].includes(rawCurrency) ? rawCurrency : "EUR";
+    const currency = ["PLN", "SEK", "USD"].includes(rawCurrency) ? rawCurrency : "EUR";
     const listing = {
       id,
       title: title || `mobile.de · ${String(index + 1).padStart(2, "0")}`,
@@ -801,12 +826,14 @@
   // then its currency (Otomoto lists in PLN, Mobile.de in EUR).
   function listingSource(listing) {
     const tagged = String(listing?.source || "").toLowerCase();
-    if (tagged === "otomoto" || tagged === "mobile" || tagged === "blocket") return tagged;
+    if (tagged === "otomoto" || tagged === "mobile" || tagged === "blocket" || tagged === "avby") return tagged;
     const url = String(listing?.url || "");
     if (url.includes("otomoto.pl")) return "otomoto";
     if (url.includes("mobile.de")) return "mobile";
     if (url.includes("blocket.se")) return "blocket";
+    if (/(^|\/\/|\.)av\.by\//.test(url)) return "avby";
     if (listing?.currency === "SEK") return "blocket";
+    if (listing?.currency === "USD") return "avby";
     return listing?.currency === "PLN" ? "otomoto" : "mobile";
   }
 
@@ -1014,6 +1041,68 @@
     return result?.listings?.length ? result : null;
   }
 
+  // av.by: 25 offers a page; pages spread evenly over the list sorted from the
+  // cheapest, read one after another (av.by refuses bursts, see avby-search.js).
+  function avbyListing(advert, rank, total) {
+    const price = Number(advert?.price?.usd?.amount);
+    if (!Number.isFinite(price) || price <= 0) return null;
+    const property = (name) => (advert.properties || []).find((item) => item.name === name)?.value;
+    const capacity = Number(String(property("engine_capacity") || "").replace(",", "."));
+    return {
+      id: String(advert.id || ""),
+      url: String(advert.publicUrl || ""),
+      title: [property("brand"), property("model"), property("generation")].filter(Boolean).join(" ") || "av.by",
+      subtitle: [property("engine_capacity") ? `${property("engine_capacity")} л` : "", property("engine_type"), property("transmission_type")].filter(Boolean).join(", ").slice(0, 160),
+      source: "avby",
+      // The seller's own price, in USD as av.by shows it first.
+      price: Math.round(price),
+      currency: "USD",
+      year: Number(advert.year || property("year")) || "",
+      mileage: Number(property("mileage_km")) > 0 ? String(property("mileage_km")) : "",
+      power: property("engine_power") ? `${property("engine_power")} KM` : "",
+      fuel: String(property("engine_type") || "").slice(0, 40),
+      displacementCcm: Number.isFinite(capacity) && capacity > 0 ? Math.round(capacity * 1000) : null,
+      city: String(advert.locationName || "").slice(0, 80),
+      country: "BY",
+      rank,
+      marketTotal: total,
+    };
+  }
+
+  async function fetchAvbyListings(filters, whole = false) {
+    const avby = window.AUTOGOOD_AVBY;
+    if (!avby) return null;
+    await avby.usdRateReady?.();
+    const first = await avby.search(filters, { page: 1 });
+    const total = Number(first?.count) || 0;
+    if (!total) return { listings: [], total: 0 };
+    const pageCount = Number(first.pageCount) || Math.ceil(total / AVBY_PAGE_SIZE);
+    let pages;
+    if (pageCount <= AVBY_PAGES || (whole && total <= FULL_LIST_LIMIT)) {
+      pages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
+    } else {
+      const spots = Array.from({ length: AVBY_PAGES }, (_, index) => Math.round(1 + (index * (pageCount - 1)) / (AVBY_PAGES - 1)));
+      pages = [...new Set(spots)].filter((page) => page > 1);
+    }
+    const seen = new Set();
+    const listings = [];
+    const collect = (adverts, page) => (adverts || []).forEach((advert, index) => {
+      const listing = avbyListing(advert, (page - 1) * AVBY_PAGE_SIZE + index + 1, total);
+      if (!listing || seen.has(listing.id)) return;
+      seen.add(listing.id);
+      listings.push(listing);
+    });
+    collect(first.adverts, 1);
+    for (const page of pages) {
+      try {
+        collect((await avby.search(filters, { page })).adverts, page);
+      } catch {
+        // One unreachable page still leaves a usable sample.
+      }
+    }
+    return { listings, total };
+  }
+
   // Fetch only selected markets; one failing market does not stop the others.
   const otomotoProvider = {
     id: "otomoto",
@@ -1024,23 +1113,27 @@
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
       // Favourites: whole lists where short enough (page 3 compares offers).
       const whole = pinned ?? Boolean(historyEntryForFilters(filters)?.pinned);
-      const [otomoto, mobile, blocket] = await Promise.allSettled([
+      const [otomoto, mobile, blocket, avby] = await Promise.allSettled([
         selected.includes("otomoto") ? fetchOtomotoListings(filters, (page, pages) => {
           setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
         }, whole) : null,
         selected.includes("mobile") ? fetchMobileDeSample(filters, whole) : null,
         selected.includes("blocket") ? fetchBlocketListings(filters, null, whole) : null,
+        selected.includes("avby") ? fetchAvbyListings(filters, whole) : null,
       ]);
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const mobileListings = (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal }));
       const blocketResult = blocket.status === "fulfilled" ? blocket.value : null;
       const blocketListings = blocketResult?.listings || [];
-      if (!otomotoListings.length && !mobileListings.length && !blocketListings.length) throw new Error(c.otomotoFailed);
+      const avbyResult = avby.status === "fulfilled" ? avby.value : null;
+      const avbyListings = avbyResult?.listings || [];
+      if (!otomotoListings.length && !mobileListings.length && !blocketListings.length && !avbyListings.length) throw new Error(c.otomotoFailed);
       this.lastSources = [
         otomotoListings.length ? "otomoto" : "",
         mobileListings.length ? "mobile" : "",
         blocketListings.length ? "blocket" : "",
+        avbyListings.length ? "avby" : "",
       ].filter(Boolean);
       const messages = [];
       if (otomotoListings.length) {
@@ -1053,8 +1146,11 @@
       if (blocketListings.length) {
         messages.push(c.blocketFetched.replace("{count}", String(blocketListings.length)).replace("{total}", String(blocketResult.total || blocketListings.length)));
       }
+      if (avbyListings.length) {
+        messages.push(c.avbyFetched.replace("{count}", String(avbyListings.length)).replace("{total}", String(avbyResult.total || avbyListings.length)));
+      }
       setAnalysisStatus(messages.join(" "));
-      return [...otomotoListings, ...mobileListings, ...blocketListings];
+      return [...otomotoListings, ...mobileListings, ...blocketListings, ...avbyListings];
     },
   };
 
@@ -1210,7 +1306,7 @@
       };
       // Foreign markets: also what the client pays in Poland ("na gotowo").
       const turnkey = window.AUTOGOOD_TURNKEY;
-      if (source !== "otomoto" && turnkey) {
+      if (TURNKEY_SOURCES.includes(source) && turnkey) {
         const turnkeyPrices = kept.map((listing) => turnkey.turnkeyAverage({
           price: listing.price,
           currency: listing.currency || currency,
@@ -1298,7 +1394,7 @@
       year: listing.year || null,
       mileage: Number(listing.mileage) || null,
       rank: listing.rank || null,
-      turnkey: source !== "otomoto" && turnkey ? Math.round(turnkey.turnkeyAverage({
+      turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage({
         price: listing.price,
         currency: listing.currency || SOURCE_CURRENCY[source],
         fuel: listing.fuel,
@@ -2038,7 +2134,7 @@
   // Markets compared are named by country with its flag (logos are for
   // acting on a portal) — see src/market-badges.js.
   function marketBadge(source, variant = "flag") {
-    const fallback = source === "otomoto" ? "Polska" : source === "blocket" ? "Szwecja" : "Niemcy";
+    const fallback = source === "otomoto" ? "Polska" : source === "blocket" ? "Szwecja" : source === "avby" ? "Białoruś" : "Niemcy";
     return window.AUTOGOOD_MARKET_BADGE?.(source, variant) || escapeMarketHtml(fallback);
   }
 
@@ -2133,7 +2229,7 @@
   function marketToggleHtml(source, on, attribute) {
     const c = copy();
     if (on && MARKET_SOURCES.filter((item) => chartSources[item]).length === 1) return "";
-    const name = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile;
+    const name = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : source === "avby" ? c.sourceAvby : c.sourceMobile;
     const label = `${name} — ${on ? c.marketPickOff : c.marketPickOn}`;
     return `<button class="agMarketToggle${on ? "" : " isAdd"}" type="button" ${attribute}="${source}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">${on ? "−" : "+"}</button>`;
   }
@@ -2151,7 +2247,7 @@
   }
 
   function setChartSources(next) {
-    chartSources = { otomoto: Boolean(next.otomoto), mobile: Boolean(next.mobile), blocket: Boolean(next.blocket) };
+    chartSources = { otomoto: Boolean(next.otomoto), mobile: Boolean(next.mobile), blocket: Boolean(next.blocket), avby: Boolean(next.avby) };
     if (activeAnalysis) activeAnalysis.filters = {
       ...activeAnalysis.filters,
       markets: MARKET_SOURCES.filter((source) => chartSources[source]),
@@ -2223,7 +2319,7 @@
             <td>${Number.isFinite(current.middleCount) ? current.middleCount : "—"} ${previous && Number.isFinite(previous.middleCount) ? change(current.middleCount, previous.middleCount, true) : ""}</td>
           </tr>`);
       });
-      const portal = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile;
+      const portal = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : source === "avby" ? c.sourceAvby : c.sourceMobile;
       return `
         <section class="mobileMarketCard mobileMarketPriceHistory is${sourceClass(source)}" aria-label="${escapeMarketHtml(`${c.priceHistoryHeading}: ${portal}`)}">
           <h2 class="agBlockTitle mobileMarketPriceHistoryMarket">${escapeMarketHtml(c.priceHistoryHeading)} · ${marketBadge(source)} <small>${escapeMarketHtml(portal)} · ${escapeMarketHtml(SOURCE_CURRENCY[source])}</small></h2>
@@ -2265,7 +2361,7 @@
       if (!item) return null;
       if (item.turnkey?.median) return item.turnkey.median;
       // Checks saved before "na gotowo" was recorded: estimated from their median.
-      if (source !== "otomoto" && window.AUTOGOOD_TURNKEY) {
+      if (TURNKEY_SOURCES.includes(source) && window.AUTOGOOD_TURNKEY) {
         return window.AUTOGOOD_TURNKEY.turnkeyAverage({ price: item.median, currency: item.currency || SOURCE_CURRENCY[source] }, entry.filters).total;
       }
       return priceInPln(item.median, item.currency || SOURCE_CURRENCY[source]);
@@ -2285,7 +2381,7 @@
     const bottom = 34;
     const x = (index) => left + (index / Math.max(1, log.length - 1)) * (width - left - right);
     const y = (value) => top + ((high - value) / Math.max(1, high - low)) * (height - top - bottom);
-    const colors = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a" };
+    const colors = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a", avby: "#13804a" };
     const ticks = [low, (low + high) / 2, high];
     const labelEvery = Math.max(1, Math.ceil(log.length / 6));
     return `
@@ -2298,7 +2394,7 @@
           ${line.points.map((item) => `<circle cx="${x(item.index)}" cy="${y(item.value)}" r="4" fill="${colors[line.source]}"><title>${escapeMarketHtml(`${formatHistoryDate(log[item.index].at)} · ${formatMarketPrice(item.value, "PLN")}`)}</title></circle>`).join("")}`).join("")}
       </svg>
       <div class="mobileMarketLegend">
-        ${series.map((line) => `<span class="is${sourceClass(line.source)}"><i></i>${marketBadge(line.source)}${line.source === "otomoto" ? "" : ` · ${escapeMarketHtml(c.turnkeyShort)}`}</span>`).join("")}
+        ${series.map((line) => `<span class="is${sourceClass(line.source)}"><i></i>${marketBadge(line.source)}${TURNKEY_SOURCES.includes(line.source) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
       </div>`;
   }
 
@@ -2308,7 +2404,7 @@
   // from cheapest to dearest; a repriced offer is joined to where it was.
   // Below: the offers of that date with what changed since the other one.
   const offerHistoryState = { id: "", at: "", compareAt: null, filter: "all" };
-  const OFFER_COLORS = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a" };
+  const OFFER_COLORS = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a", avby: "#13804a" };
   const OFFER_GROUP_ORDER = ["new", "cheaper", "dearer", "gone", "same"];
 
   function offerPositions(market) {
@@ -2681,11 +2777,13 @@
     mobile: "./assets/brands/mobile-de-mark.svg",
     otomoto: "./assets/brands/otomoto-mark.svg",
     blocket: "./assets/brands/blocket-mark.svg",
+    avby: "./assets/brands/avby-mark.svg",
   };
   const BRAND_LOGOS = {
     mobile: "./assets/brands/mobile-de-logo.svg",
     otomoto: "./assets/brands/otomoto-logo.svg",
     blocket: "./assets/brands/blocket-logo.svg",
+    avby: "./assets/brands/avby-logo.svg",
   };
 
   // The marketplace's small mark as the link to one of its offers.
@@ -2737,6 +2835,7 @@
       ...(sources.includes("mobile") && mobileCountries.length ? [`${mobileCountries.join(", ")} (mobile.de)`] : []),
       ...(sources.includes("otomoto") ? [`${t.countryNames?.PL || "Polska"} (otomoto.pl)`] : []),
       ...(sources.includes("blocket") ? [`${copy().marketBlocket} (blocket.se)`] : []),
+      ...(sources.includes("avby") ? [`${copy().marketAvby} (av.by)`] : []),
     ];
     const status = [
       filters.roadworthy ? labelOf("[data-mobile-roadworthy]") : "",
@@ -2832,9 +2931,15 @@
     } catch {
       // Same for Blocket.
     }
+    let avbyUrl = "";
+    try {
+      avbyUrl = window.AUTOGOOD_AVBY?.buildSearchUrl(filters) || "";
+    } catch {
+      // Same for av.by.
+    }
     const stored = providerId === "import" || providerId === "history";
     // Every valid offer remains in the sample, including unusually priced ones.
-    const bySource = { otomoto: [], mobile: [], blocket: [] };
+    const bySource = { otomoto: [], mobile: [], blocket: [], avby: [] };
     listings.forEach((listing) => bySource[listingSource(listing)].push(listing));
     const inPlnForChecks = (listing) => priceInPln(listing.price, listing.currency || "EUR");
     const cleaned = {};
@@ -2874,7 +2979,7 @@
     const turnkey = window.AUTOGOOD_TURNKEY;
     const rates = turnkey?.currentRates?.() || { eur: exchangeRate() || EUR_PLN_FALLBACK_RATE, sek: sekPlnRate() };
     [...marketListings, ...suspectListings].forEach((listing) => {
-      if (listing.source === "otomoto" || !turnkey) return;
+      if (!TURNKEY_SOURCES.includes(listing.source) || !turnkey) return;
       listing.turnkeyPln = turnkey.turnkeyAverage({
         price: listing.originalPrice,
         currency: listing.originalCurrency || SOURCE_CURRENCY[listing.source],
@@ -2890,13 +2995,13 @@
     const nativePrice = (value, source) => {
       const currency = SOURCE_CURRENCY[source] || "EUR";
       const text = formatMarketPrice(value, currency);
-      return currency === "SEK" ? `${text} · ${formatMarketPrice(convertPrice(value, "SEK", "EUR"), "EUR")}` : text;
+      return currency === "SEK" || currency === "USD" ? `${text} · ${formatMarketPrice(convertPrice(value, currency, "EUR"), "EUR")}` : text;
     };
     const hasListings = marketListings.length >= 3;
     const onlyOtomoto = shownSources.length === 1 && shownSources[0] === "otomoto";
     const mixedSources = shownSources.length > 1;
     const summary = filterSummary(filters);
-    const sourceName = (source) => (source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile);
+    const sourceName = (source) => (source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : source === "avby" ? c.sourceAvby : c.sourceMobile);
     const listingKey = (listing) => listing.url || `${listing.source}-${listing.id}`;
     let statsContent = "";
     let offersContent = "";
@@ -3053,7 +3158,7 @@
         listing.power || "",
       ].filter(Boolean).join(" · ");
       // Placeholder names ("otomoto.pl", "blocket.se", "mobile.de · 03") say nothing.
-      const fullTitle = (listing) => (/^(otomoto\.pl|blocket\.se|mobile\.de · \d+)$/.test(listing.title || "") ? "" : listing.title || "");
+      const fullTitle = (listing) => (/^(otomoto\.pl|blocket\.se|av\.by|mobile\.de · \d+)$/.test(listing.title || "") ? "" : listing.title || "");
       const renderPoint = ({ listing, x, y }) => {
           const tooltipClass = x > 0.72 ? " isTooltipLeft" : "";
           const details = describe(listing);
@@ -3106,7 +3211,9 @@
       // Several markets: the car is judged against, and drawn on, its own market.
       const compareMarkets = shownSources.length > 1;
       reportActionsInTitle = compareMarkets;
-      const carSource = recognised?.pricePln
+      const carSource = recognised?.importMode === "avby" && shownSources.includes("avby")
+        ? "avby"
+        : recognised?.pricePln
         ? "otomoto"
         : (shownSources.find((source) => source !== "otomoto") || shownSources[0]);
       const carPool = compareMarkets ? marketListings.filter((listing) => listing.source === carSource) : marketListings;
@@ -3168,7 +3275,7 @@
       }
       const sourceCount = (source) => cleaned[source].length;
       const axisCaption = chartAxis === "mileage" ? c.axisMileageCaption : chartAxis === "year" ? c.axisYearCaption : c.axisRankCaption;
-      const marketName = (source) => (source === "otomoto" ? c.marketOtomoto : source === "blocket" ? c.marketBlocket : c.marketMobile);
+      const marketName = (source) => (source === "otomoto" ? c.marketOtomoto : source === "blocket" ? c.marketBlocket : source === "avby" ? c.marketAvby : c.marketMobile);
 
       // One chart: its own P25, median and P75 (labelled), the dots given, and
       // other markets' medians as thin dashed guides. Every chart shares the
@@ -3310,7 +3417,7 @@
       const statRows = (shownSources.length > 1 ? shownSources : [shownSources[0] || ""]).map((source) => {
         const own = marketListings.filter((listing) => !source || listing.source === source);
         const currency = SOURCE_CURRENCY[source] || displayCurrency;
-        const foreign = source && source !== "otomoto" && own.some((listing) => listing.turnkeyPln);
+        const foreign = source && TURNKEY_SOURCES.includes(source) && own.some((listing) => listing.turnkeyPln);
         const native = statsOf(own, (listing) => convertPrice(listing.originalPrice, listing.originalCurrency || currency, currency));
         const turnkeyStats = foreign ? statsOf(own, (listing) => listing.turnkeyPln) : null;
         const inPln = turnkeyStats || statsOf(own, (listing) => priceInPln(listing.originalPrice, listing.originalCurrency || currency));
@@ -3408,7 +3515,7 @@
         </ul>` : ""}
 
         <div class="mobileMarketLegend">
-          ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${marketBadge(source)}${source !== "otomoto" && marketListings.some((listing) => listing.source === source && listing.turnkeyPln) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
+          ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${marketBadge(source)}${TURNKEY_SOURCES.includes(source) && marketListings.some((listing) => listing.source === source && listing.turnkeyPln) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
           ${carMarker ? `<span class="isCar"><i></i>${escapeMarketHtml(c.yourCar)}</span>` : ""}
           ${trendLine ? `<span class="isTrend"><i></i>${escapeMarketHtml(chartAxis === "rank" ? c.curveLegend : c.trendLegend)}</span>` : ""}
           <span class="isBandLow"><i></i>${escapeMarketHtml(c.lowMarket)}${compareMarkets ? "" : ` · ${statistics.lowCount}`}</span>
@@ -3508,8 +3615,8 @@
     // form holds unsaved changes), "Analiza rynku" and the offer count with a
     // link per compared market.
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
-    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]" }[source])?.textContent.trim() || "—";
-    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl };
+    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]" }[source])?.textContent.trim() || "—";
+    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl };
     const specFoot = `
       <div class="mobileSearchSummaryFoot" data-report-hide>
         <span class="mobileSearchSummaryFootLabel">${escapeMarketHtml(t.offerCountLabel || "")}</span>
@@ -3861,7 +3968,7 @@
       const previouslySelected = savedEntry?.filters?.markets || MARKET_SOURCES;
       const savedUsable = savedEntry?.listings?.length >= 3
         && filters.markets.every((source) => previouslySelected.includes(source))
-        && savedEntry.listings.every((listing) => !["otomoto", "blocket"].includes(listingSource(listing)) || listing.rank);
+        && savedEntry.listings.every((listing) => !["otomoto", "blocket", "avby"].includes(listingSource(listing)) || listing.rank);
       const savedListings = savedUsable ? savedEntry.listings : null;
       setAnalysisStatus(c.preparing);
       analysisOpens.forEach((button) => { button.disabled = true; });

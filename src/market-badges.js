@@ -7,10 +7,10 @@
  * vanish from the report image.
  */
 (() => {
-  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE" };
+  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE", avby: "BY" };
   const COUNTRY_NAMES = {
-    pl: { PL: "Polska", DE: "Niemcy", SE: "Szwecja", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", DK: "Dania", LU: "Luksemburg", CH: "Szwajcaria" },
-    ru: { PL: "Польша", DE: "Германия", SE: "Швеция", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", DK: "Дания", LU: "Люксембург", CH: "Швейцария" },
+    pl: { BY: "Białoruś", PL: "Polska", DE: "Niemcy", SE: "Szwecja", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", DK: "Dania", LU: "Luksemburg", CH: "Szwajcaria" },
+    ru: { BY: "Беларусь", PL: "Польша", DE: "Германия", SE: "Швеция", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", DK: "Дания", LU: "Люксембург", CH: "Швейцария" },
   };
   const stripes = (colors, vertical = false) => colors.map((color, index) => (vertical
     ? `<rect x="${(index * 12) / colors.length}" y="0" width="${12 / colors.length}" height="8" fill="${color}"/>`
@@ -28,6 +28,8 @@
     SE: '<rect width="12" height="8" fill="#006aa7"/><rect x="3.5" width="1.6" height="8" fill="#fecc00"/><rect y="3.2" width="12" height="1.6" fill="#fecc00"/>',
     DK: '<rect width="12" height="8" fill="#c8102e"/><rect x="3.5" width="1.4" height="8" fill="#fff"/><rect y="3.3" width="12" height="1.4" fill="#fff"/>',
     CH: '<rect width="12" height="8" fill="#d52b1e"/><rect x="5.2" y="1.8" width="1.6" height="4.4" fill="#fff"/><rect x="3.8" y="3.2" width="4.4" height="1.6" fill="#fff"/>',
+    // Belarus: red over green, the white ornament band at the hoist.
+    BY: '<rect width="12" height="8" fill="#c8313e"/><rect y="5.3" width="12" height="2.7" fill="#4aa657"/><rect width="1.6" height="8" fill="#fff"/>',
     CZ: '<rect width="12" height="4" fill="#fff"/><rect y="4" width="12" height="4" fill="#d7141a"/><path d="M0 0 6 4 0 8z" fill="#11457e"/>',
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");

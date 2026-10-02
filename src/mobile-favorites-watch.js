@@ -12,11 +12,13 @@
 (() => {
   const STORAGE_KEY = "autogood.mobile.favoriteWatch.v1";
   const BROKEN_KEY_PREFIX = "autogood.mobile.favoriteWatch.broken.";
-  const SOURCES = ["otomoto", "mobile", "blocket"];
-  const CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK" };
-  const COLORS = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a" };
+  const SOURCES = ["otomoto", "mobile", "blocket", "avby"];
+  const CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK", avby: "USD" };
+  const COLORS = { otomoto: "#1d5fd0", mobile: "#f56a00", blocket: "#d0101a", avby: "#13804a" };
+  // "Na gotowo" is shown for these; av.by shows only its own price (owner, 2026-10-02).
+  const TURNKEY_SOURCES = ["mobile", "blocket"];
   // How deep each portal is read, newest first.
-  const MAX_PAGES = { otomoto: 3, blocket: 2, mobile: 3 };
+  const MAX_PAGES = { otomoto: 3, blocket: 2, mobile: 3, avby: 3 };
   const FIRST_CHECK_DAYS = 7;
   const KEEP_OFFERS_DAYS = 14;
   // Found offers kept per portal and favourite (localStorage is small).
@@ -171,10 +173,10 @@
   const number = (value) => new Intl.NumberFormat(locale()).format(Math.round(value));
   const money = (value, currency) => {
     if (!Number.isFinite(value)) return "—";
-    const unit = currency === "PLN" ? "zł" : currency === "SEK" ? "kr" : "€";
+    const unit = currency === "PLN" ? "zł" : currency === "SEK" ? "kr" : currency === "USD" ? "$" : "€";
     return `${number(value)} ${unit}`;
   };
-  const portalName = (source) => (source === "otomoto" ? "otomoto.pl" : source === "blocket" ? "blocket.se" : "mobile.de");
+  const portalName = (source) => (source === "otomoto" ? "otomoto.pl" : source === "blocket" ? "blocket.se" : source === "avby" ? "av.by" : "mobile.de");
 
   function dateLabel(value) {
     const date = new Date(value);
@@ -303,10 +305,21 @@
     return url.toString();
   }
 
+  // av.by: the same search with the favourite's own USD price, newest first.
+  function avbyFilters(filters, price) {
+    return price ? { ...withoutPrice(filters), avbyPriceUsd: price } : filters;
+  }
+
+  function avbyUrl(filters, price) {
+    const avby = window.AUTOGOOD_AVBY;
+    return avby.buildSearchUrl(avbyFilters(filters, price), { sorting: avby.sortNewest });
+  }
+
   function portalSearchUrl(source, filters, price) {
     try {
       if (source === "otomoto") return otomotoUrl(filters, price);
       if (source === "mobile") return mobileUrl(filters, price);
+      if (source === "avby") return avbyUrl(filters, price);
       return blocketUrl(filters, price);
     } catch {
       return "";
@@ -322,6 +335,7 @@
       if (eur === null) return null;
       if (source === "mobile") return eur;
       if (source === "blocket") return eur * (window.AUTOGOOD_BLOCKET?.eurSekRate?.() || 11);
+      if (source === "avby") return eur * (window.AUTOGOOD_AVBY?.eurUsdRate?.() || 1.17);
       return helpers()?.priceInPln?.(eur, "EUR") ?? eur * 4.3;
     };
     return { from: convert(from), to: convert(to) };
@@ -413,6 +427,35 @@
     };
   }
 
+  function avbyOffer(advert) {
+    const price = Number(advert?.price?.usd?.amount);
+    if (!Number.isFinite(price) || price <= 0) return null;
+    const property = (name) => (advert.properties || []).find((item) => item.name === name)?.value;
+    const capacity = Number(String(property("engine_capacity") || "").replace(",", "."));
+    const images = (advert.photos || []).map((photo) => photo?.medium?.url || photo?.small?.url).filter(Boolean);
+    return {
+      key: `avby:${advert.id}`,
+      source: "avby",
+      url: String(advert.publicUrl || ""),
+      title: [property("brand"), property("model"), property("generation")].filter(Boolean).join(" ").slice(0, 120),
+      subtitle: [property("engine_capacity") ? `${property("engine_capacity")} л` : "", property("body_type")].filter(Boolean).join(", ").slice(0, 140),
+      price,
+      currency: "USD",
+      year: Number(advert.year || property("year")) || null,
+      mileage: Number(property("mileage_km")) > 0 ? Number(property("mileage_km")) : null,
+      power: property("engine_power") ? `${property("engine_power")} KM` : "",
+      fuel: String(property("engine_type") || ""),
+      gearbox: String(property("transmission_type") || ""),
+      displacementCcm: Number.isFinite(capacity) && capacity > 0 ? Math.round(capacity * 1000) : null,
+      city: String(advert.locationName || ""),
+      country: "BY",
+      rating: "",
+      images: images.slice(0, 3),
+      imageCount: images.length,
+      createdAt: advert.publishedAt ? new Date(String(advert.publishedAt).replace(/\+0000$/, "Z")).toISOString() : "",
+    };
+  }
+
   function mobileOffer(listing) {
     return {
       key: `mobile:${listing.id}`,
@@ -478,6 +521,26 @@
     return { total, offers, complete };
   }
 
+  async function readAvby(filters, price, cutoff) {
+    const avby = window.AUTOGOOD_AVBY;
+    if (!avby) throw new Error("av.by unavailable");
+    const offers = [];
+    let total = 0;
+    let complete = false;
+    for (let page = 1; page <= MAX_PAGES.avby; page += 1) {
+      const data = await avby.search(avbyFilters(filters, price), { page, sorting: avby.sortNewest });
+      const adverts = Array.isArray(data?.adverts) ? data.adverts : [];
+      if (page === 1) total = Number(data?.count) || 0;
+      const pageOffers = adverts.map(avbyOffer).filter(Boolean);
+      offers.push(...pageOffers);
+      if (adverts.length < 25 || reachedCutoff(pageOffers, cutoff)) {
+        complete = true;
+        break;
+      }
+    }
+    return { total, offers, complete };
+  }
+
   async function readMobile(filters, price) {
     if (typeof mobileDeApiBase !== "function") throw new Error("offline");
     const response = await fetch(`${mobileDeApiBase()}/mobilede/search?sort=newest&pages=${MAX_PAGES.mobile}&url=${encodeURIComponent(mobileUrl(filters, price))}`);
@@ -524,12 +587,14 @@
     const readers = {
       otomoto: () => readOtomoto(entry.filters, portalPrice(before, "otomoto"), readUntil),
       blocket: () => readBlocket(entry.filters, portalPrice(before, "blocket"), readUntil),
+      avby: () => readAvby(entry.filters, portalPrice(before, "avby"), readUntil),
       mobile: () => readMobile(entry.filters, portalPrice(before, "mobile")),
     };
     const results = {};
     await Promise.all(sources.map(async (source) => {
       try {
         if (source === "blocket") await window.AUTOGOOD_BLOCKET?.sekRateReady?.();
+        if (source === "avby") await window.AUTOGOOD_AVBY?.usdRateReady?.();
         results[source] = await readers[source]();
         state.progress[source] = "done";
       } catch (error) {
@@ -588,7 +653,7 @@
         seen[source] = [...new Set([...result.offers.map((offer) => offer.key), ...(seen[source] || [])])].slice(0, KEEP_SEEN);
       });
       const keepFrom = now - KEEP_OFFERS_DAYS * DAY;
-      const kept = { otomoto: 0, mobile: 0, blocket: 0 };
+      const kept = { otomoto: 0, mobile: 0, blocket: 0, avby: 0 };
       const offers = [...fresh.sort((left, right) => String(right.createdAt).localeCompare(String(left.createdAt))), ...watch.offers]
         .filter((offer) => Date.parse(offer.foundAt) >= keepFrom)
         .filter((offer) => {
@@ -637,7 +702,7 @@
 
   function offerHtml(offer, entry) {
     const c = t();
-    const foreign = offer.source !== "otomoto";
+    const foreign = TURNKEY_SOURCES.includes(offer.source);
     const turnkey = foreign && window.AUTOGOOD_TURNKEY
       ? window.AUTOGOOD_TURNKEY.turnkeyAverage({
         price: offer.price,
@@ -740,7 +805,7 @@
 
   function pricesHtml(entry, watch, sources) {
     const c = t();
-    const unit = (source) => (CURRENCY[source] === "PLN" ? "zł" : CURRENCY[source] === "SEK" ? "kr" : "€");
+    const unit = (source) => (CURRENCY[source] === "PLN" ? "zł" : CURRENCY[source] === "SEK" ? "kr" : CURRENCY[source] === "USD" ? "$" : "€");
     return `
       <div class="agWatchPrices">
         <p class="agWatchPricesHead"><b>${esc(c.pricesHeading)}</b> <small>${esc(c.pricesHint)}</small></p>
@@ -843,7 +908,7 @@
           </div>`;
         }).join("") : `<p class="agWatchEmpty">${esc(c.noNew)}</p>`}
         ${earlierShown.length ? `<details class="agWatchEarlier"><summary>${esc(fill(c.earlier, { count: earlierShown.length, days: KEEP_OFFERS_DAYS }))}</summary><div class="agWatchOffers">${earlierShown.map((offer) => offerHtml(offer, entry)).join("")}</div></details>` : ""}
-        <p class="agWatchFootnote">${esc(c.medianNote)} ${sources.some((source) => source !== "otomoto") ? esc(c.turnkeyNote) : ""}</p>
+        <p class="agWatchFootnote">${esc(c.medianNote)} ${sources.some((source) => TURNKEY_SOURCES.includes(source)) ? esc(c.turnkeyNote) : ""}</p>
       </section>` : ""}
       <section class="mobileMarketCard agWatchChecks">
         <h2 class="agBlockTitle">${esc(c.historyHeading)}</h2>
