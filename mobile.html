@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=no-dup-buttons-20261002" />
+  <link rel="stylesheet" href="./src/mobile.css?v=one-card-20261002" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=markets-chips-20261002" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
@@ -91,13 +91,9 @@
                 <svg aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-filter-navigation-20260831#rotate-ccw"></use></svg>
               </button>
             </div>
-            <!-- The chosen filters in the analysis' layout, the favourite star and
-                 the live offer count with a link per compared market. -->
-            <div class="mobileListingBrief" data-mobile-listing-result aria-live="polite" hidden>
-              <h3 class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="specVehicleKicker">Dane z ogłoszenia</span></h3>
-              <h3 class="mobileListingBriefTitle"><span data-mobile-title>—</span></h3>
-              <div class="mobileListingDetails" data-mobile-listing-details></div>
-            </div>
+            <!-- The chosen filters (or the recognised ad's, with its price) in the
+                 analysis' layout, the favourite star and the live offer count
+                 with a link per compared market. -->
             <section class="mobileSearchSummary">
               <button class="mobileSearchCountSaveButton mobileSearchSummaryStar" type="button" data-mobile-market-history-save aria-pressed="false" aria-label="Zapisz na stałe" title="Zapisz na stałe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
               <div class="mobileSelectedFilters mobileSearchSummaryBody" data-mobile-selected-filters aria-live="polite"></div>
@@ -570,7 +566,7 @@
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/market-badges.js?v=badges-20260928"></script>
-    <script src="./src/mobile.js?v=price-fold-20261002"></script>
+    <script src="./src/mobile.js?v=one-card-20261002"></script>
     <script src="./src/blocket-search.js?v=blocket-analysis-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=turnkey-compare-20260928"></script>
     <script src="./src/mobile-market-analysis.js?v=markets-chips-20261002"></script>

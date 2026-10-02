@@ -2683,11 +2683,6 @@ label.isSummaryFocus {
   padding: var(--space-sm) var(--space-md);
 }
 
-.mobileManualPanel.hasRecognizedListing:not(.isSummaryMode) .mobileSearchSummary,
-.mobileManualPanel.hasRecognizedListing.isSummaryMode .mobileListingBrief {
-  display: none;
-}
-
 .mobileSearchSummary .mobileSearchSummaryBody {
   display: block;
   min-height: 0;
@@ -3024,4 +3019,24 @@ label.isSummaryFocus {
 
 .mobilePanelHead .mobileMarketSearchStatus:empty {
   display: none;
+}
+
+/* The recognised ad's price in the parameters card: a link to the ad. */
+.agSpecAdPrice {
+  display: grid;
+  justify-items: end;
+  gap: 1px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.agSpecAdPrice .agSpecAdLabel {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+a.agSpecAdPrice:hover .agSpecAdLabel {
+  color: var(--color-brand);
+  text-decoration: underline;
 }

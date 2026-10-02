@@ -226,7 +226,6 @@ const copy = {
     emptyTitle: "—",
     emptyValue: "—",
     specSearchKicker: "Parametry poszukiwania",
-    specVehicleKicker: "Dane z ogłoszenia",
     specEngineHeading: "Nadwozie i silnik",
     specUsageHeading: "Przebieg i napęd",
     specEquipmentHeading: "Wyposażenie",
@@ -252,6 +251,7 @@ const copy = {
     specTo: "do",
     countryNames: { DE: "Niemcy", PL: "Polska", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", CH: "Szwajcaria", LU: "Luksemburg", DK: "Dania", SE: "Szwecja" },
     briefSellerPrivate: "Osoba prywatna",
+    adPriceLabel: "cena z ogłoszenia",
     briefSellerDealer: "Komis / dealer",
     conditionWords: { Gebrauchtfahrzeug: "Używany", Neufahrzeug: "Nowy", Jahreswagen: "Roczny", "Vorführfahrzeug": "Demonstracyjny", Unfallfrei: "Bezwypadkowy", Unfallfahrzeug: "Powypadkowy", "Nicht fahrtauglich": "Niesprawny", Fahrtauglich: "Sprawny", Beschädigt: "Uszkodzony" },
     searchOnMobile: "Szukaj na mobile.de",
@@ -503,7 +503,6 @@ const copy = {
     emptyTitle: "—",
     emptyValue: "—",
     specSearchKicker: "Параметры поиска",
-    specVehicleKicker: "Данные объявления",
     specEngineHeading: "Кузов и двигатель",
     specUsageHeading: "Пробег и привод",
     specEquipmentHeading: "Оснащение",
@@ -529,6 +528,7 @@ const copy = {
     specTo: "до",
     countryNames: { DE: "Германия", PL: "Польша", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", CH: "Швейцария", LU: "Люксембург", DK: "Дания", SE: "Швеция" },
     briefSellerPrivate: "Частное лицо",
+    adPriceLabel: "цена объявления",
     briefSellerDealer: "Автосалон / дилер",
     conditionWords: { Gebrauchtfahrzeug: "С пробегом", Neufahrzeug: "Новый", Jahreswagen: "Годовалый", "Vorführfahrzeug": "Демонстрационный", Unfallfrei: "Без ДТП", Unfallfahrzeug: "После ДТП", "Nicht fahrtauglich": "Не на ходу", Fahrtauglich: "На ходу", Beschädigt: "Повреждённый" },
     searchOnMobile: "Искать на mobile.de",
@@ -612,15 +612,6 @@ const brandAliases = {
   Volkswagen: ["VW", "Vw"],
   "Vw Nutzfahrzeuge": ["Volkswagen Nutzfahrzeuge", "VW Nutzfahrzeuge", "Vw Nutzfahrzeuge"],
 };
-
-const fuelOptions = [
-  { value: "petrol", pl: "Benzyna", ru: "Бензин" },
-  { value: "diesel", pl: "Diesel", ru: "Дизель" },
-  { value: "hybrid_diesel", pl: "Hybryda diesel", ru: "Гибрид дизель" },
-  { value: "hybrid_petrol", pl: "Hybryda benzyna", ru: "Гибрид бензин" },
-  { value: "electric", pl: "Elektryk", ru: "Электрик" },
-  { value: "plugin", pl: "Plug-in", ru: "Plug-in" },
-];
 
 const bodyOptions = [
   { value: "limousine", pl: "Sedan", ru: "Седан" },
@@ -1258,8 +1249,6 @@ const els = {
   url: document.querySelector("[data-mobile-url]"),
   submit: document.querySelector("[data-mobile-submit]"),
   status: document.querySelector("[data-mobile-status]"),
-  listingDetails: document.querySelector("[data-mobile-listing-details]"),
-  title: document.querySelector("[data-mobile-title]"),
   scenarios: document.querySelector("[data-mobile-scenarios]"),
   brand: document.querySelector("[data-mobile-brand]"),
   brandOptions: document.querySelector("[data-mobile-brand-options]"),
@@ -1317,7 +1306,6 @@ const els = {
   marketSearchStatus: document.querySelector("[data-mobile-market-search-status]"),
   manualResets: Array.from(document.querySelectorAll("[data-mobile-manual-reset]")),
   selectedFilters: document.querySelector("[data-mobile-selected-filters]"),
-  listingResult: document.querySelector("[data-mobile-listing-result]"),
 };
 
 function readMobileDeApiUrl() {
@@ -1331,12 +1319,6 @@ function formatAmount(value, currency) {
   const amount = Number(value);
   if (!Number.isFinite(amount) || amount <= 0) return copy[state.lang].emptyValue;
   return `${Math.round(amount).toLocaleString("pl-PL")} ${currency}`;
-}
-
-function formatNumberWithUnit(value, unit) {
-  const amount = Number(value);
-  if (!Number.isFinite(amount) || amount <= 0) return copy[state.lang].emptyValue;
-  return `${Math.round(amount).toLocaleString("pl-PL")} ${unit}`;
 }
 
 function text(value) {
@@ -1459,35 +1441,6 @@ document.addEventListener("click", (event) => {
   button.textContent = open ? copy[state.lang].specShowLess : copy[state.lang].specShowAll;
 });
 window.AUTOGOOD_SPEC_COPY = () => copy[state.lang];
-
-function fuelLabelOf(value, title = "") {
-  const key = normalizeFuel(value, title);
-  const option = fuelOptions.find((item) => item.value === key);
-  return option ? option[state.lang] : text(value);
-}
-
-function bodyLabelOf(value) {
-  const key = normalizeBody(value);
-  const option = bodyOptions.find((item) => item.value === key);
-  return option && key !== "other" ? option[state.lang] : (value ? String(value) : "");
-}
-
-function purchaseTypeLabel(data) {
-  const rawValue = [
-    data?.purchaseType,
-    data?.taxType,
-    data?.vatType,
-    data?.priceType,
-    data?.priceTaxType,
-    data?.price?.type,
-    data?.price?.taxType,
-    data?.price?.vatType,
-  ].find((value) => value !== null && value !== undefined && String(value).trim() !== "");
-  const normalized = String(rawValue || "").toLowerCase();
-  if (/marża|marza|margin|marge|differenz/.test(normalized)) return "Marża";
-  if (/vat|mwst|ust|tax|netto|deduct/.test(normalized)) return "VAT";
-  return rawValue ? String(rawValue) : copy[state.lang].emptyValue;
-}
 
 function brandDisplayOptions() {
   const favoriteValues = new Set(favoriteBrands.map((brand) => brand.value));
@@ -1918,26 +1871,11 @@ function listingBodyLabel(value) {
   return optionLabel(bodyOptions, normalized) || text(value);
 }
 
-function listingGearboxLabel(value) {
-  const normalized = String(value || "").toLowerCase();
-  if (/auto|automat|automatic|automatyczna/.test(normalized)) return copy[state.lang].gearboxAutomatic;
-  if (/manual|schalt|manualna|ręczna|reczna/.test(normalized)) return copy[state.lang].gearboxManual;
-  return text(value);
-}
-
 function normalizeGearboxChoice(value) {
   const normalized = String(value || "").toLowerCase();
   if (/auto|automat|automatic|automatyczna/.test(normalized)) return "automatic";
   if (/manual|schalt|manualna|ręczna|reczna/.test(normalized)) return "manual";
   return "any";
-}
-
-function listingRegistration(value) {
-  const raw = String(value || "").trim();
-  const year = extractYear(raw);
-  // "03/2022" is shown as it is; a bare year is not repeated ("2018 (2018)").
-  if (year && raw !== year && /\d{1,2}\s*[./-]\s*\d{4}/.test(raw)) return raw.replace(/\s+/g, "");
-  return text(year || raw);
 }
 
 function defaultManualFields() {
@@ -2147,14 +2085,6 @@ function focusManualFilter(selector) {
   }
   const multiSelect = target.closest(".mobileMultiSelect");
   if (multiSelect) multiSelect.open = true;
-  // The fields are below the pinned head: show the filter summary there now
-  // and keep it during the scroll, so nothing changes height mid-way.
-  const panel = document.querySelector(".mobileManualPanel");
-  if (panel?.classList.contains("hasRecognizedListing")) {
-    panel.classList.add("isSummaryMode");
-    placePinnedControls();
-  }
-  pinnedModeFrozenUntil = performance.now() + 1200;
   // Measure after the unfolded card and the head have settled, then one
   // smooth scroll.
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -2196,6 +2126,21 @@ function priceFilterSummary(from, to) {
 
 // The chosen filters laid out like "Parametry poszukiwania" in the analysis,
 // smaller; every value leads to its field on the form.
+// The recognised ad's price, linking to the ad, in the parameters card.
+function recognizedAdPriceHtml() {
+  const ad = state.data;
+  if (!ad?.carBruttoEur) return "";
+  const c = copy[state.lang];
+  const url = String(ad.sourceUrl || els.url?.value || "").trim();
+  const price = ad.pricePln
+    ? `<b>${escapeHtml(formatAmount(ad.pricePln, "PLN"))}</b><small>≈ ${escapeHtml(formatAmount(ad.carBruttoEur, "EUR"))}</small>`
+    : `<b>${escapeHtml(formatAmount(ad.carBruttoEur, "EUR"))}</b>`;
+  const label = `<small class="agSpecAdLabel">${escapeHtml(c.adPriceLabel)}${/^https:\/\//.test(url) ? " ↗" : ""}</small>`;
+  return /^https:\/\//.test(url)
+    ? `<a class="agSpecPrice agSpecAdPrice" href="${escapeHtml(url)}" target="_blank" rel="noopener" title="${escapeHtml(c.adPriceLabel)}">${price}${label}</a>`
+    : `<span class="agSpecPrice agSpecAdPrice">${price}${label}</span>`;
+}
+
 function updateSelectedFiltersSummary() {
   if (!els.selectedFilters) return;
   const saveButton = document.querySelector("[data-mobile-market-history-save]");
@@ -2250,7 +2195,7 @@ function updateSelectedFiltersSummary() {
   els.selectedFilters.innerHTML = specSheetHtml({
     title: title || c.selectedFiltersEmpty,
     titleTarget: summaryTargetFor(els.brand),
-    aside: `<span data-mobile-summary-star-slot></span>${priceRange ? `<span class="agSpecPrice" data-mobile-summary-target="${escapeHtml(target(els.priceFrom))}" role="button" tabindex="0"><b>${escapeHtml(priceRange)}</b></span>` : ""}`,
+    aside: `<span data-mobile-summary-star-slot></span>${recognizedAdPriceHtml()}${priceRange ? `<span class="agSpecPrice" data-mobile-summary-target="${escapeHtml(target(els.priceFrom))}" role="button" tabindex="0"><b>${escapeHtml(priceRange)}</b></span>` : ""}`,
     columns: [
       { heading: c.specEngineHeading, rows: [
         [c.specBody, filters.body ? optionLabel(bodyOptions, filters.body) : any, "car", target(els.bodyChoices)],
@@ -2279,26 +2224,16 @@ function updateSelectedFiltersSummary() {
   placePinnedControls();
 }
 
-// The star and the bottom row (Gotowe, Analiza rynku, counts and links) stay
-// visible in the pinned head whichever block it shows: the recognised ad or
-// the chosen filters.
+// The star sits in the card's corner and the bottom row (Gotowe, Analiza
+// rynku, counts and links) under it.
 function placePinnedControls() {
-  const panel = document.querySelector(".mobileManualPanel");
   const summary = document.querySelector(".mobileSearchSummary");
-  const brief = els.listingResult;
   const foot = document.querySelector(".mobileSearchSummaryFoot");
   const star = document.querySelector("[data-mobile-market-history-save]");
-  if (!panel || !summary || !foot) return;
-  const inBrief = Boolean(state.data) && brief && !brief.hidden && !panel.classList.contains("isSummaryMode");
-  if (inBrief) {
-    brief.append(foot);
-    const aside = brief.querySelector(".agSpecAside");
-    if (star && aside && star.parentElement !== aside) aside.prepend(star);
-  } else {
-    if (foot.parentElement !== summary) summary.append(foot);
-    const slotAside = summary.querySelector(".agSpecAside");
-    if (star && slotAside && star.parentElement !== slotAside) slotAside.prepend(star);
-  }
+  if (!summary || !foot) return;
+  if (foot.parentElement !== summary) summary.append(foot);
+  const aside = summary.querySelector(".agSpecAside");
+  if (star && aside && star.parentElement !== aside) aside.prepend(star);
 }
 
 function mobileDeNumber(value) {
@@ -3183,29 +3118,6 @@ function renderScenarios() {
   }).join("");
 }
 
-function confirmedComfortEquipment(data) {
-  const comfort = document.querySelector('[aria-labelledby="mobile-filter-group-comfort"]');
-  if (!comfort) return [];
-  const recognized = recognizedEquipmentFilters(data);
-  const confirmed = new Set([
-    ...recognized.interiorMaterials,
-    ...recognized.parkingSensors,
-    recognized.cruiseControl,
-    recognized.airConditioning,
-    ...recognized.features,
-  ]);
-  return Array.from(comfort.querySelectorAll("[data-mobile-interior-material], [data-mobile-parking-sensor], [data-mobile-cruise-control], [data-mobile-air-conditioning], [data-mobile-feature]"))
-    .filter((input) => input.value && input.value !== "any" && confirmed.has(input.value))
-    .map(optionLabelText);
-}
-
-// "awd" → the label of the matching drive option on the form.
-function driveLabelOf(value) {
-  if (!value || value === "any") return "";
-  const input = els.drive.find((radio) => radio.value === value);
-  return input ? optionLabelText(input) : String(value);
-}
-
 // mobile.de states the condition in German ("Gebrauchtfahrzeug, Unfallfrei").
 function conditionLabel(value) {
   const words = copy[state.lang].conditionWords || {};
@@ -3214,91 +3126,13 @@ function conditionLabel(value) {
     .join(", ");
 }
 
-let recognizedHeadHeight = 0;
-
+// A recognised ad fills the form (applyRecognizedManualFields) and shows in
+// the one "Parametry poszukiwania" card with its price and link: no second
+// card for the ad, nothing switches while scrolling.
 function renderData() {
-  const c = copy[state.lang];
-  const data = state.data || {};
-  const title = text(data.title);
-  const powerValue = data.powerHp ?? data.horsepower ?? data.powerPs;
-
-  els.title.textContent = title;
-  // Listing data and purchase paths appear only once a link has been recognised.
-  if (els.listingResult) els.listingResult.hidden = !state.data;
-  const manualPanel = document.querySelector(".mobileManualPanel");
-  manualPanel?.classList.toggle("hasRecognizedListing", Boolean(state.data));
-  if (!state.data) {
-    manualPanel?.classList.remove("isSummaryMode");
-    placePinnedControls();
-    els.listingDetails.innerHTML = "";
-    renderScenarios();
-    return;
-  }
-  const location = data.location || {};
-  const countryCode = String(location.country || "").toUpperCase();
-  const country = [c.countryNames[countryCode] || location.country || "", location.city || ""].filter(Boolean).join(", ");
-  const seller = [
-    data.sellerType === "PRIVATE" ? c.briefSellerPrivate : data.sellerType ? c.briefSellerDealer : "",
-    location.sellerName || "",
-  ].filter(Boolean).join(" · ");
-  const price = data.pricePln
-    ? `<b>${escapeHtml(formatAmount(data.pricePln, "PLN"))}</b><small>≈ ${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</small>`
-    : `<b>${escapeHtml(formatAmount(data.carBruttoEur, "EUR"))}</b>`;
-  const equipment = confirmedComfortEquipment(data);
-  els.listingDetails.innerHTML = specSheetHtml({
-    title,
-    aside: `<span class="agSpecPrice">${price}</span>`,
-    columns: [
-      { heading: c.specEngineHeading, rows: [
-        [c.specBody, bodyLabelOf(data.bodyType), "car"],
-        [c.specEngineType, fuelLabelOf(data.fuel, title), "fuel"],
-        [c.specDisplacement, formatNumberWithUnit(data.displacementCcm, "ccm"), "settings"],
-        [c.specPower, formatNumberWithUnit(powerValue, "KM"), "zap"],
-      ] },
-      { heading: c.specUsageHeading, rows: [
-        [c.specMileage, formatNumberWithUnit(data.mileageKm, "km"), "gauge"],
-        [c.specRegistration, listingRegistration(data.firstRegistration), "calendar"],
-        [c.specGearbox, listingGearboxLabel(data.gearbox), "git-branch"],
-        [c.specDrive, driveLabelOf(data.drive), "route"],
-      ] },
-      ...(equipment.length ? [{ heading: c.specEquipmentHeading, text: equipment.join(" - ") }] : []),
-      { heading: c.specOtherHeading, rows: [
-        [c.specCountry, country, "map-pin"],
-        [c.specStatus, conditionLabel(data.condition), "check"],
-        [c.specVat, purchaseTypeLabel(data), "percent"],
-        [c.specSeller, seller, "store"],
-      ] },
-    ],
-  });
-
-  placePinnedControls();
-  if (!manualPanel?.classList.contains("isSummaryMode")) {
-    recognizedHeadHeight = manualPanel?.querySelector(".mobilePanelHead")?.offsetHeight || 0;
-  }
-  updatePinnedListingMode();
+  updateSelectedFiltersSummary();
   renderScenarios();
 }
-
-// The pinned head shows the recognised ad at the top and the filter summary
-// once scrolled past it. The two differ in height, so without a margin the
-// switch moved the page, which switched it back — the screen shook. It now
-// switches back only 80 px later, and holds still while a jump to a field runs.
-let pinnedModeFrozenUntil = 0;
-function updatePinnedListingMode() {
-  const panel = document.querySelector(".mobileManualPanel");
-  if (!panel || !state.data || !panel.getClientRects().length) return;
-  if (performance.now() < pinnedModeFrozenUntil) return;
-  const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 0;
-  const top = panel.getBoundingClientRect().top + recognizedHeadHeight;
-  const summary = panel.classList.contains("isSummaryMode");
-  if (!summary && top <= navHeight) panel.classList.add("isSummaryMode");
-  else if (summary && top > navHeight + 80) panel.classList.remove("isSummaryMode");
-  if (summary !== panel.classList.contains("isSummaryMode")) placePinnedControls();
-}
-
-window.addEventListener("scroll", updatePinnedListingMode, { passive: true });
-window.addEventListener("resize", updatePinnedListingMode);
-window.addEventListener("hashchange", () => requestAnimationFrame(updatePinnedListingMode));
 
 function setStatus(status, message = "", replacesError = false) {
   const c = copy[state.lang];
@@ -3767,6 +3601,12 @@ document.querySelector(".mobileManualForm")?.addEventListener("change", () => {
 
 els.manualResets.forEach((button) => {
   button.addEventListener("click", () => {
+    // Clearing the data also lets go of the recognised ad.
+    if (state.data) {
+      state.data = null;
+      els.url.value = "";
+      renderData();
+    }
     closeComboMenus();
     closeMultiSelects();
     renderManualOptions(false);
