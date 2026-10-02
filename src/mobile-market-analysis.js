@@ -121,6 +121,8 @@
       screenshotNoClipboard: "Ta przeglądarka nie pozwala kopiować obrazów. Użyj Chrome albo pobierz PDF.",
       screenshotWorking: "Przygotowuję raport…",
       reportTitle: "Analiza rynku",
+      fileReport: "analiza rynku",
+      fileList: "lista ofert",
       tableTitle: "Ogłoszenie",
       favoritesEmpty: "Oznacz wpis w historii gwiazdką ★ — pojawi się tutaj.",
       favoritesPick: "Wybierz auto z ulubionych albo wpisz markę i model w formularzu.",
@@ -374,6 +376,8 @@
       screenshotNoClipboard: "Этот браузер не умеет копировать картинки. Используй Chrome или скачай PDF.",
       screenshotWorking: "Готовлю отчёт…",
       reportTitle: "Анализ рынка",
+      fileReport: "анализ рынка",
+      fileList: "список объявлений",
       tableTitle: "Объявление",
       favoritesEmpty: "Отметьте запись в истории звёздочкой ★ — она появится здесь.",
       favoritesPick: "Выберите авто из избранного или укажите марку и модель в форме.",
@@ -3493,7 +3497,8 @@
     const spec = window.AUTOGOOD_SPEC_SHEET?.({
       kicker: window.AUTOGOOD_SPEC_COPY?.().specSearchKicker || c.searchHeading,
       title: [filters.brand, filters.model, filters.version].filter(Boolean).join(" "),
-      meta: dataDate && hasListings ? c.checkedAt.replace("{date}", formatHistoryDate(dataDate)) : "",
+      // The date stands once, top right of the report (the data's date).
+      meta: "",
       // The same favourite star as on the search page.
       aside: `<button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
       columns: searchSpecColumns(filters, reportSources),
@@ -3528,7 +3533,7 @@
       <article class="mobileMarketAnalysisPanel">
         <div class="mobileMarketReportBrand">
           <img src="./assets/autogood-logo.png" alt="AUTOGOOD" />
-          <span>${escapeMarketHtml(c.reportTitle)} · ${escapeMarketHtml(formatHistoryDate(new Date().toISOString()))}</span>
+          <span>${escapeMarketHtml(c.reportTitle)} · ${escapeMarketHtml(formatHistoryDate(dataDate || new Date().toISOString()))}</span>
         </div>
 
         <div class="mobileMarketToolbar" data-report-hide>
@@ -3808,7 +3813,8 @@
       }
       const bytes = await pdf.save();
       const vehicle = [activeAnalysis?.filters?.brand, activeAnalysis?.filters?.model].filter(Boolean).join(" ");
-      const fileName = `AUTOGOOD ${mode === "list-pdf" ? "lista ofert" : "analiza rynku"} ${vehicle} ${new Date().toISOString().slice(0, 10)}.pdf`
+      // Named in the program's language.
+      const fileName = `AUTOGOOD ${mode === "list-pdf" ? c.fileList : c.fileReport} ${vehicle} ${new Date().toISOString().slice(0, 10)}.pdf`
         .replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
       const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
       const anchor = document.createElement("a");
