@@ -92,7 +92,7 @@
       trendTitle: "Mediana ceny w czasie",
       trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
       adPrice: "cena w ogłoszeniu",
-      turnkeyFootnote: "Cena „na gotowo” składa się z: ceny brutto z ogłoszenia + średniego kosztu transportu, oględzin, akcyzy według rodzaju i pojemności silnika oraz usługi AUTOGOOD. Żeby poznać dokładną wycenę Twojej oferty, skontaktuj się z nami bezpośrednio.",
+      turnkeyFootnote: "Cena „na gotowo” składa się z: ceny brutto z ogłoszenia + przeciętnego kosztu transportu, oględzin, akcyzy według rodzaju i pojemności silnika, tłumaczeń dokumentów, przeglądu technicznego oraz wynagrodzenia AUTOGOOD. Żeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
       conclusionHeading: "Wniosek",
       conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce — przy mniejszym ryzyku, zwykle lepszym stanie i udokumentowanej historii serwisowej.",
       conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce — w zamian zwykle mniejsze ryzyko, lepszy stan i udokumentowana historia serwisowa.",
@@ -352,7 +352,7 @@
       trendTitle: "Медиана цены во времени",
       trendNeedsTwo: "График появится после второго замера цен.",
       adPrice: "цена в объявлении",
-      turnkeyFootnote: "Цена «под ключ» складывается из цены брутто в объявлении, средней стоимости доставки и осмотра, акциза по типу и объёму двигателя, а также услуги AUTOGOOD. Чтобы узнать точную стоимость вашего предложения, свяжитесь с нами напрямую.",
+      turnkeyFootnote: "Цена «под ключ» складывается из цены брутто в объявлении + средней стоимости доставки, осмотра, акциза по типу и объёму двигателя, переводов документов, техосмотра и вознаграждения AUTOGOOD. Чтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
       conclusionHeading: "Вывод",
       conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше, — при меньших рисках, обычно лучшем состоянии и подтверждённой сервисной истории.",
       conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше, — зато обычно меньше рисков, лучше состояние и есть подтверждённая сервисная история.",
@@ -3212,7 +3212,7 @@
       let carLocalVerdict = "";
       // Several markets: the car is judged against, and drawn on, its own market.
       const compareMarkets = shownSources.length > 1;
-      reportActionsInTitle = compareMarkets;
+      reportActionsInTitle = true;
       const carSource = recognised?.importMode === "avby" && shownSources.includes("avby")
         ? "avby"
         : recognised?.pricePln
@@ -3503,7 +3503,6 @@
             <input type="text" inputmode="numeric" autocomplete="off" data-mobile-market-compare-price placeholder="${escapeMarketHtml(c.comparePlaceholder)}" value="${escapeMarketHtml(activeAnalysis.comparePrice || "")}" />
           </label>
           <div class="mobileMarketControls" data-report-hide>
-            ${compareMarkets ? "" : reportActions}
             <div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.axisLabel)}">
               ${[["rank", c.axisRank], ["mileage", c.axisMileageShort], ["year", c.axisYearShort]].map(([axis, label]) => `
                 <button class="mobileMarketAxisButton" type="button" data-mobile-market-axis="${axis}" aria-pressed="${chartAxis === axis ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
@@ -3538,9 +3537,9 @@
           <div class="mobileMarketTableHead">
             ${blockTitle("list", `${c.tableHeading} · ${marketListings.length + suspectListings.length}`)}
             <div class="mobileMarketTableTools" data-report-hide>
-              <span>${escapeMarketHtml(c.tableSortHint)}</span>
               <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-list-screenshot>${escapeMarketHtml(c.listScreenshotButton)}</button>
               <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-list-pdf>${escapeMarketHtml(c.listPdfButton)}</button>
+              <span class="mobileMarketSortHint">${escapeMarketHtml(c.tableSortHint)}</span>
             </div>
           </div>
           <div class="mobileMarketTableScroll">

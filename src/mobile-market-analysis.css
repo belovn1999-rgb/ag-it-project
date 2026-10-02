@@ -3782,3 +3782,26 @@
   cursor: progress;
   opacity: 0.55;
 }
+
+/* "Rozkład cen" and "Aktualne oferty · N": their copy / PDF buttons right
+   after the title, on the same line; the sort hint at the far right. */
+.mobileMarketChartTitleRow,
+.mobileMarketTableHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-sm) var(--space-md);
+}
+
+.mobileMarketTableHead .mobileMarketTableTools {
+  display: flex;
+  flex: 1 1 auto;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.mobileMarketTableHead .mobileMarketSortHint {
+  margin-left: auto;
+}
