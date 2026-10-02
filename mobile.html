@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=form-groups-20261002" />
+  <link rel="stylesheet" href="./src/mobile.css?v=doors-hook-20261002" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=form-groups-20261002" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
@@ -159,22 +159,6 @@
                       </div>
                     </div>
                   </div>
-                  <label class="mobileField mobileDoorsField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="doorsLabel">Liczba drzwi</span></span>
-                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="doorsGroup" data-mobile-options-target="data-mobile-doors-label" data-mobile-value-target="data-mobile-doors-group">
-                      <input data-mobile-doors-label type="text" autocomplete="off" readonly />
-                      <input data-mobile-doors-group type="hidden" />
-                    </div>
-                    <input data-mobile-doors-from type="hidden" />
-                    <input data-mobile-doors-to type="hidden" />
-                  </label>
-                  <label class="mobileField mobileSlidingDoorField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="slidingDoorLabel">Drzwi przesuwne</span></span>
-                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="slidingDoor" data-mobile-options-target="data-mobile-sliding-door-label" data-mobile-value-target="data-mobile-sliding-door">
-                      <input data-mobile-sliding-door-label type="text" autocomplete="off" readonly />
-                      <input data-mobile-sliding-door type="hidden" />
-                    </div>
-                  </label>
                 </div>
               </div>
             </section>
@@ -290,6 +274,36 @@
                       <input data-mobile-drive name="mobile-drive" type="radio" value="rwd" />
                       <span data-i18n="driveRwd">RWD</span>
                     </label>
+                  </div>
+                </fieldset>
+              </div>
+            </section>
+            <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-doors">
+              <h2 id="mobile-filter-group-doors" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="filterGroupDoors">Drzwi i hak</span></h2>
+              <div class="mobileFilterCardBody isTwoColumn">
+                  <label class="mobileField mobileDoorsField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="doorsLabel">Liczba drzwi</span></span>
+                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="doorsGroup" data-mobile-options-target="data-mobile-doors-label" data-mobile-value-target="data-mobile-doors-group">
+                      <input data-mobile-doors-label type="text" autocomplete="off" readonly />
+                      <input data-mobile-doors-group type="hidden" />
+                    </div>
+                    <input data-mobile-doors-from type="hidden" />
+                    <input data-mobile-doors-to type="hidden" />
+                  </label>
+                  <label class="mobileField mobileSlidingDoorField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="slidingDoorLabel">Drzwi przesuwne</span></span>
+                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="slidingDoor" data-mobile-options-target="data-mobile-sliding-door-label" data-mobile-value-target="data-mobile-sliding-door">
+                      <input data-mobile-sliding-door-label type="text" autocomplete="off" readonly />
+                      <input data-mobile-sliding-door type="hidden" />
+                    </div>
+                  </label>
+                <fieldset class="mobileField mobileChoiceField mobileWideField">
+                  <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#route"></use></svg><span data-i18n="trailerCouplingLabel">Hak holowniczy</span></legend>
+                  <div class="mobileOpenChoiceRow">
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="any" checked /> <span data-i18n="trailerCouplingAny">Dowolny</span></label>
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="all" /> <span data-i18n="trailerCouplingAll">Stały, odpinany lub odchylany</span></label>
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="detachable_or_swiveling" /> <span data-i18n="trailerCouplingDetachableOrSwiveling">Odpinany lub odchylany</span></label>
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="swiveling" /> <span data-i18n="trailerCouplingSwiveling">Hak holowniczy odchylany</span></label>
                   </div>
                 </fieldset>
               </div>
@@ -422,15 +436,6 @@
                 <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-feature type="checkbox" value="WINTER_TIRES" /> <span data-i18n="featureWinterTyres">Opony zimowe</span></label>
                 <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-feature type="checkbox" value="SUMMER_TIRES" /> <span data-i18n="featureSummerTyres">Opony letnie</span></label>
                 </div>
-                <fieldset class="mobileField mobileChoiceField">
-                  <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#route"></use></svg><span data-i18n="trailerCouplingLabel">Hak holowniczy</span></legend>
-                  <div class="mobileOpenChoiceRow">
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="any" checked /> <span data-i18n="trailerCouplingAny">Dowolny</span></label>
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="all" /> <span data-i18n="trailerCouplingAll">Stały, odpinany lub odchylany</span></label>
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="detachable_or_swiveling" /> <span data-i18n="trailerCouplingDetachableOrSwiveling">Odpinany lub odchylany</span></label>
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="swiveling" /> <span data-i18n="trailerCouplingSwiveling">Hak holowniczy odchylany</span></label>
-                  </div>
-                </fieldset>
               </div>
             </section>
             <section class="mobileFilterCard mobileFilterCardCollapsible" data-mobile-collapsible aria-labelledby="mobile-filter-group-colors">
@@ -589,7 +594,7 @@
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/market-badges.js?v=badges-20260928"></script>
-    <script src="./src/mobile.js?v=engine-labels-20261002"></script>
+    <script src="./src/mobile.js?v=doors-hook-20261002"></script>
     <script src="./src/blocket-search.js?v=form-groups-20261002"></script>
     <script src="./src/turnkey-estimate.js?v=turnkey-compare-20260928"></script>
     <script src="./src/mobile-market-analysis.js?v=form-groups-20261002"></script>

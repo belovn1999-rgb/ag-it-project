@@ -3090,3 +3090,18 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
     max-width: none;
   }
 }
+
+/* "Pojazd" keeps only the seats in its last row. */
+.mobileVehicleCapacityRow {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.mobileVehicleCapacityRow .mobileSeatsField {
+  max-width: calc(50% - var(--space-lg) / 2);
+}
+
+@media (max-width: 760px) {
+  .mobileVehicleCapacityRow .mobileSeatsField {
+    max-width: none;
+  }
+}
