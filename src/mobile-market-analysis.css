@@ -3724,3 +3724,15 @@
 .mobileMarketAxisNote.isTurnkey {
   margin-top: calc(var(--space-xs) + 0.5em);
 }
+
+/* Analysis: "Odśwież dane" beside the star, top right of the parameters. */
+.mobileMarketSearchCard .agSpecAside {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.mobileMarketAsideRefresh {
+  order: -1;
+}
