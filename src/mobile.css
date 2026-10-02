@@ -3105,3 +3105,37 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
     max-width: none;
   }
 }
+
+/* "Drzwi i hak": seats (od / do), doors and sliding door in one row; the
+   tow-hook choices in one row of four. */
+.mobileVehicleCapacityRow {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.mobileVehicleCapacityRow .mobileSeatsField {
+  max-width: none;
+}
+
+[aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 760px) {
+  .mobileVehicleCapacityRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  [aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+[aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow .mobileChoiceOption,
+[aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow .mobileChoiceOption span {
+  min-width: 0;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  line-height: 1.2;
+}

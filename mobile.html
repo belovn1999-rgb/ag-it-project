@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=doors-hook-20261002" />
+  <link rel="stylesheet" href="./src/mobile.css?v=doors-row-20261002" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=form-groups-20261002" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
@@ -147,19 +147,6 @@
                   <div class="mobileChoiceGroup mobileInlineChoiceGroup" data-mobile-body-choices></div>
                   <input data-mobile-body type="hidden" />
                 </fieldset>
-                <div class="mobileVehicleCapacityRow mobileWideField">
-                  <div class="mobileField mobileRangeField mobileSeatsField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="seatsRangeLabel">Liczba miejsc</span></span>
-                    <div class="mobileRangePair">
-                      <div class="mobileComboControl" data-mobile-options="seats" data-mobile-options-target="data-mobile-seats-from">
-                        <input data-mobile-seats-from inputmode="numeric" autocomplete="off" />
-                      </div>
-                      <div class="mobileComboControl" data-mobile-options="seatsTo" data-mobile-options-target="data-mobile-seats-to">
-                        <input data-mobile-seats-to inputmode="numeric" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </div>
             </section>
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-mileage">
@@ -281,7 +268,19 @@
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-doors">
               <h2 id="mobile-filter-group-doors" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="filterGroupDoors">Drzwi i hak</span></h2>
               <div class="mobileFilterCardBody isTwoColumn">
-                  <label class="mobileField mobileDoorsField">
+                <div class="mobileVehicleCapacityRow mobileWideField">
+                  <div class="mobileField mobileRangeField mobileSeatsField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="seatsRangeLabel">Liczba miejsc</span></span>
+                    <div class="mobileRangePair">
+                      <div class="mobileComboControl" data-mobile-options="seats" data-mobile-options-target="data-mobile-seats-from">
+                        <input data-mobile-seats-from inputmode="numeric" autocomplete="off" />
+                      </div>
+                      <div class="mobileComboControl" data-mobile-options="seatsTo" data-mobile-options-target="data-mobile-seats-to">
+                        <input data-mobile-seats-to inputmode="numeric" autocomplete="off" />
+                      </div>
+                    </div>
+                  </div>
+                                  <label class="mobileField mobileDoorsField">
                     <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="doorsLabel">Liczba drzwi</span></span>
                     <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="doorsGroup" data-mobile-options-target="data-mobile-doors-label" data-mobile-value-target="data-mobile-doors-group">
                       <input data-mobile-doors-label type="text" autocomplete="off" readonly />
@@ -297,6 +296,7 @@
                       <input data-mobile-sliding-door type="hidden" />
                     </div>
                   </label>
+                </div>
                 <fieldset class="mobileField mobileChoiceField mobileWideField">
                   <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#route"></use></svg><span data-i18n="trailerCouplingLabel">Hak holowniczy</span></legend>
                   <div class="mobileOpenChoiceRow">
