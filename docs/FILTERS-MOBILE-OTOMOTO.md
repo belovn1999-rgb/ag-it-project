@@ -104,8 +104,8 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | Kraj | `cn` (можно несколько) ✅ | ✗ | правило 5 |
 | Uszkodzone (с 10-02 — галочка «Uszkodzone pojazdy»: отмечена = показывать и повреждённые) | `dam=false` (по умолчанию скрыть) ✅ | `filter_enum_damaged=0` ✅ | значение в записи прежнее: `damagedVehicles` = `hide` / `show` |
 | Nowy / używany | `con=NEW / USED` ✅ (VW: 14 437 / 231 582) | `search[new_used]=new / used` ✅ (Caddy: 821 → 232 new) | поле `newUsed`: `new` / `used` / пусто |
-| Gwarancja | `fe=WARRANTY` ✅ (VW 119 066) | ✗ → предупреждение (фильтра нет) | поле `warranty` |
-| Pełna historia serwisowa | `fe=FULL_SERVICE_HISTORY` ✅ (VW 155 385) | ≈ `search[filter_enum_service_record]=1` «Serwisowany w ASO» (Caddy 282) — уже, чем полная история | поле `serviceHistory` |
+| Gwarancja (подпись «dotyczy mobile.de») | `fe=WARRANTY` ✅ (VW 119 066) | ✗ → предупреждение (фильтра нет) | поле `warranty` |
+| Serwisowany w ASO (до 10-02 «Pełna historia serwisowa») | `fe=FULL_SERVICE_HISTORY` ✅ (VW 155 385) | ≈ `search[filter_enum_service_record]=1` «Serwisowany w ASO» (Caddy 282) — уже, чем полная история | поле `serviceHistory` |
 | Na chodzie | `rtd=true` ✅ | ✗ | |
 | Niepalący | `fe=NONSMOKER_VEHICLE` ✅ | ✗ | |
 

@@ -506,6 +506,7 @@
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-02 | Claude | «Stan pojazdu»: «Pełna historia serwisowa» → **«Serwisowany w ASO»** (RU «Обслуживался у дилера (ASO)»), как фильтр otomoto; mobile.de по-прежнему `fe=FULL_SERVICE_HISTORY`. У «Gwarancja» пометка «(dotyczy mobile.de)» | этот коммит |
 | 10-02 | Claude | «Drzwi i hak»: «Liczba miejsc» (od/do) перенесена сюда — одна строка Liczba miejsc · Liczba drzwi · Drzwi przesuwne, как было; «Hak holowniczy» — 4 варианта в одну строку (длинные подписи переносятся). «Pojazd» = Marka, Model, Wersja, Nadwozie | этот коммит |
 | 10-02 | Claude | Новая карточка **«Drzwi i hak»** (RU «Двери и фаркоп») под «Skrzynia biegów i napęd»: Liczba drzwi, Drzwi przesuwne и «Hak holowniczy» (перенесён из «Komfort»). В «Pojazd» в последней строке осталась только «Liczba miejsc». Параметры поиска не менялись | этот коммит |
 | 10-02 | Claude | Карточка «Silnik»: подписи «Pojemność silnika» → «Pojemność», «Moc silnika (KM)» → «Moc (KM)» (RU «Объём», «Мощность (л.с.)») | этот коммит |
