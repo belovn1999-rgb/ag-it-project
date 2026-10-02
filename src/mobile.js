@@ -76,7 +76,7 @@ const copy = {
     hideMoreFilters: "Ukryj",
     filterGroupMileage: "Przebieg i rok",
     filterGroupPrice: "Cena",
-    filterGroupEngine: "Silnik i napęd",
+    filterGroupEngine: "Silnik, skrzynia i napęd",
     filterGroupComfort: "Komfort",
     filterGroupColors: "Kolory",
     gearboxAutomatic: "Automatyczna",
@@ -353,7 +353,7 @@ const copy = {
     hideMoreFilters: "Скрыть",
     filterGroupMileage: "Пробег и год",
     filterGroupPrice: "Цена",
-    filterGroupEngine: "Двигатель и привод",
+    filterGroupEngine: "Двигатель, коробка и привод",
     filterGroupComfort: "Комфорт",
     filterGroupColors: "Цвета",
     gearboxAutomatic: "Автоматическая",
@@ -3710,7 +3710,9 @@ function updateCollapsibleCard(card) {
   const toggle = card.querySelector("[data-mobile-collapse-toggle]");
   if (!body || !toggle) return;
   const open = card.classList.contains("isOpen");
-  const selected = card.querySelectorAll("input:checked:not([value='any']):not([value=''])").length;
+  // Ticked options plus filled text fields (the price "od / do").
+  const selected = card.querySelectorAll("input:checked:not([value='any']):not([value=''])").length
+    + [...card.querySelectorAll("input:not([type='checkbox']):not([type='radio'])")].filter((input) => input.value.trim()).length;
   body.hidden = !open;
   toggle.setAttribute("aria-expanded", open ? "true" : "false");
   toggle.querySelector("span").textContent = open
