@@ -22,7 +22,7 @@ const copy = {
     ready: "Dane gotowe. Filtry analizy zostały uzupełnione.",
     error: "Nie udało się rozpoznać ogłoszenia. Sprawdź link albo backend.",
     listingEyebrow: "DANE Z OGŁOSZENIA",
-    manualEyebrow: "Wpisz dane ręcznie",
+    manualEyebrow: "Parametry poszukiwania",
     clearManualFilters: "Wyczyść filtry",
     selectedFiltersEmpty: "Brak wybranych parametrów",
     offerCountLabel: "Aktualne oferty",
@@ -299,7 +299,7 @@ const copy = {
     ready: "Данные готовы. Фильтры анализа заполнены.",
     error: "Не удалось распознать объявление. Проверь ссылку или backend.",
     listingEyebrow: "ДАННЫЕ ИЗ ОБЪЯВЛЕНИЯ",
-    manualEyebrow: "Ввести данные вручную",
+    manualEyebrow: "Параметры поиска",
     clearManualFilters: "Очистить фильтры",
     selectedFiltersEmpty: "Нет выбранных параметров",
     offerCountLabel: "Актуальные объявления",
@@ -2246,8 +2246,8 @@ function updateSelectedFiltersSummary() {
   ].filter(Boolean);
   const title = [filters.brand, filters.model, filters.version].filter(Boolean).join(" ");
   const priceRange = filters.priceFrom || filters.priceTo ? range(filters.priceFrom, filters.priceTo, "EUR") : "";
+  // The block itself is titled "Parametry poszukiwania": no kicker here.
   els.selectedFilters.innerHTML = specSheetHtml({
-    kicker: c.specSearchKicker,
     title: title || c.selectedFiltersEmpty,
     titleTarget: summaryTargetFor(els.brand),
     aside: `<span data-mobile-summary-star-slot></span>${priceRange ? `<span class="agSpecPrice" data-mobile-summary-target="${escapeHtml(target(els.priceFrom))}" role="button" tabindex="0"><b>${escapeHtml(priceRange)}</b></span>` : ""}`,

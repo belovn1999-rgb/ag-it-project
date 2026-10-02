@@ -2997,3 +2997,21 @@ label.isSummaryFocus {
 .mobileManualPanel .mobilePanelHead {
   top: calc(var(--ag-nav-height, 59px) - var(--manual-title-hide, 0px));
 }
+
+/* Block 2 title "Parametry poszukiwania": the reset button level with the
+   title text, the chosen filters right under it. */
+.mobileManualPanel .mobileManualPanelHeadRow .mobileManualPanelTitle {
+  margin: 0;
+}
+
+.mobileManualPanel .mobileManualPanelHeadRow {
+  align-items: center;
+  margin-bottom: var(--space-xs);
+}
+
+/* The title box has room for its underline below the text: the button is
+   set to the text line instead of the box's middle. */
+.mobileManualPanel .mobileManualPanelHeadRow [data-mobile-manual-reset] {
+  align-self: flex-start;
+  margin-top: -3px;
+}
