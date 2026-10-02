@@ -2916,3 +2916,73 @@ label.isSummaryFocus {
 .mobileShell {
   overflow-anchor: none;
 }
+
+/* Compared portals are switched on their logos in "Aktualne oferty" (page 1
+   and the analysis): a grey logo is out of the search and analysis; hovering
+   shows a small square, "−" on a compared portal, "+" on a grey one. */
+.mobileSearchSummaryFoot .mobileSearchCountMarket {
+  position: relative;
+}
+
+.mobileSearchCountMarket.isOff {
+  opacity: 1;
+}
+
+.mobileSearchCountMarket.isOff strong {
+  visibility: hidden;
+}
+
+.mobileSearchCountMarket.isOff .agBrandLink {
+  filter: grayscale(1);
+  opacity: 0.45;
+  cursor: pointer;
+}
+
+.mobileSearchCountMarket.isOff:hover .agBrandLink {
+  opacity: 0.7;
+}
+
+.agMarketToggle {
+  /* In the logo's cell, on its top-right corner. */
+  grid-row: 2;
+  grid-column: 1;
+  justify-self: end;
+  align-self: start;
+  position: relative;
+  z-index: 1;
+  transform: translate(45%, -45%);
+  display: grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--color-rule);
+  border-radius: 5px;
+  background: var(--color-paper, #fff);
+  padding: 0;
+  color: var(--color-muted);
+  font: 700 15px/1 var(--font-sans, system-ui);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.mobileSearchCountMarket:hover .agMarketToggle,
+.agMarketToggle:focus-visible {
+  opacity: 1;
+}
+
+.agMarketToggle:hover {
+  border-color: var(--color-muted);
+  color: var(--color-ink);
+}
+
+@media (hover: none) {
+  .agMarketToggle {
+    opacity: 1;
+  }
+}
+
+.mobileSearchSummaryFoot .mobileSearchCountMarket > .agBrandLink {
+  grid-row: 2;
+  grid-column: 1;
+}

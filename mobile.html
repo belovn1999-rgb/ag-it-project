@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=fav-watch-20260930" />
-    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=report-btns-20261001" />
+  <link rel="stylesheet" href="./src/mobile.css?v=portals-20261002" />
+    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=portals-20261002" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
@@ -54,8 +54,8 @@
           <div class="mobileListingLinkHead">
             <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><b class="mobileBlockNumber">1.</b><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
             <div class="mobileLinkSource" role="radiogroup" aria-label="Portal">
-              <label class="isMobile"><input type="radio" name="mobile-link-source" value="mobile" data-mobile-link-source checked /><span>mobile.de</span></label>
               <label class="isOtomoto"><input type="radio" name="mobile-link-source" value="otomoto" data-mobile-link-source /><span>otomoto.pl</span></label>
+              <label class="isMobile"><input type="radio" name="mobile-link-source" value="mobile" data-mobile-link-source checked /><span>mobile.de</span></label>
               <label class="isBlocket"><input type="radio" name="mobile-link-source" value="blocket" data-mobile-link-source /><span>blocket.se</span></label>
             </div>
           </div>
@@ -87,7 +87,6 @@
           <div class="mobilePanelHead">
             <div class="mobileManualPanelHeadRow">
               <h2 class="mobileFilterCardTitle mobileManualPanelTitle"><b class="mobileBlockNumber">2.</b><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="manualEyebrow">WPISZ DANE RĘCZNIE</span></h2>
-              <div class="mobileMarketPicker" role="group" aria-label="Porównywane rynki" data-mobile-market-picker></div>
               <button class="mobileManualIconButton" type="button" data-mobile-manual-reset aria-label="Wyczyść filtry" title="Wyczyść filtry">
                 <svg aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-filter-navigation-20260831#rotate-ccw"></use></svg>
               </button>
@@ -108,13 +107,13 @@
                   <button class="mobileSearchSummaryDone" type="button" data-mobile-history-done hidden><span data-market-i18n="historyDone">Gotowe</span> ✓</button>
                   <button class="mobileSearchSummaryAnalysis" type="button" data-mobile-market-analysis-open><span data-market-i18n="analysisButton">Analiza rynku</span> <i aria-hidden="true">&#8594;</i></button>
                 </div>
-                <div class="mobileSearchCountMarket" data-market="mobile">
-                  <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
-                  <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de"><img src="./assets/brands/mobile-de-logo.svg" alt="" /></a>
-                </div>
                 <div class="mobileSearchCountMarket" data-market="otomoto">
                   <strong data-mobile-search-count aria-live="polite">—</strong>
                   <a class="agBrandLink isOtomoto" href="#" target="_blank" rel="noopener" data-mobile-otomoto-search aria-label="Szukaj na otomoto.pl" title="Szukaj na otomoto.pl"><img src="./assets/brands/otomoto-logo.svg" alt="" /></a>
+                </div>
+                <div class="mobileSearchCountMarket" data-market="mobile">
+                  <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
+                  <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de"><img src="./assets/brands/mobile-de-logo.svg" alt="" /></a>
                 </div>
                 <div class="mobileSearchCountMarket" data-market="blocket">
                   <strong data-mobile-search-count-blocket aria-live="polite">—</strong>
@@ -612,7 +611,7 @@
     <script src="./src/mobile.js?v=offer-history-20260930"></script>
     <script src="./src/blocket-search.js?v=blocket-analysis-20260927"></script>
     <script src="./src/turnkey-estimate.js?v=turnkey-compare-20260928"></script>
-    <script src="./src/mobile-market-analysis.js?v=report-btns-20261001"></script>
+    <script src="./src/mobile-market-analysis.js?v=portals-20261002"></script>
     <script src="./src/mobile-favorites-watch.js?v=fav-watch-20260930"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>

@@ -14,7 +14,6 @@
   const favoritesView = document.querySelector('[data-mobile-page-view="favorites"]');
   const favoritesPage = document.querySelector("[data-mobile-favorites-page]");
   const favoritesBar = document.querySelector("[data-mobile-favorites-bar]");
-  const marketPicker = document.querySelector("[data-mobile-market-picker]");
   const setManualViewHidden = (hidden) => {
     manualView.hidden = hidden;
     if (listingFrame) listingFrame.hidden = hidden;
@@ -2099,19 +2098,26 @@
     favoritesPage.innerHTML = `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(pinned.length ? c.favoritesPick : c.favoritesSearchEmpty)}</p>`;
   }
 
-  // The logos above the manual search: which markets are compared.
-  function renderMarketPicker() {
-    if (!marketPicker) return;
+  // The small square on a portal's logo in "Aktualne oferty": "−" takes a
+  // compared portal out of the search and analysis (the logo turns grey),
+  // "+" brings a grey one back. The last compared portal cannot be removed.
+  function marketToggleHtml(source, on, attribute) {
     const c = copy();
-    marketPicker.setAttribute("aria-label", c.marketPickerLabel);
-    marketPicker.innerHTML = MARKET_SOURCES.map((source) => {
+    if (on && MARKET_SOURCES.filter((item) => chartSources[item]).length === 1) return "";
+    const name = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile;
+    const label = `${name} — ${on ? c.marketPickOff : c.marketPickOn}`;
+    return `<button class="agMarketToggle${on ? "" : " isAdd"}" type="button" ${attribute}="${source}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">${on ? "−" : "+"}</button>`;
+  }
+
+  // Page 1: every portal's count and logo stays; the compared ones in colour.
+  function renderMarketPicker() {
+    document.querySelectorAll(".mobileManualPanel .mobileSearchCountMarket[data-market]").forEach((item) => {
+      const source = item.dataset.market;
       const on = Boolean(chartSources[source]);
-      const label = source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : c.sourceMobile;
-      return `<button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-mobile-market-pick="${source}" aria-pressed="${on ? "true" : "false"}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
-    }).join("");
-    // Only the compared markets keep their count and link under the filters.
-    document.querySelectorAll(".mobileSearchCountMarket[data-market]").forEach((item) => {
-      item.hidden = !chartSources[item.dataset.market];
+      item.hidden = false;
+      item.classList.toggle("isOff", !on);
+      item.querySelector(".agMarketToggle")?.remove();
+      item.insertAdjacentHTML("beforeend", marketToggleHtml(source, on, "data-mobile-market-pick"));
     });
   }
 
@@ -2875,6 +2881,14 @@
         ${chartSources.mobile ? `<button class="mobileMarketSourceButton isMobile isFetch" type="button" data-mobile-market-fetch-mobile><img class="agBrandMark" src="${BRAND_MARKS.mobile}" alt="" />${escapeMarketHtml(c.fetchMobile)}</button>` : ""}
       </section>`;
 
+    // "Kopiuj raport" / "Raport PDF": above the axis switch with one chart,
+    // on the right of the "Rozkład cen" title when markets are side by side.
+    const reportActions = `
+      <div class="mobileMarketReportActions" data-report-hide>
+        <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot>${escapeMarketHtml(c.screenshotButton)}</button>
+        <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-pdf>${escapeMarketHtml(c.pdfButton)}</button>
+      </div>`;
+    let reportActionsInTitle = false;
     if (hasListings) {
       const statistics = marketStatistics(marketListings);
       const domainMinimum = statistics.min;
@@ -3064,6 +3078,7 @@
       let carLocalVerdict = "";
       // Several markets: the car is judged against, and drawn on, its own market.
       const compareMarkets = shownSources.length > 1;
+      reportActionsInTitle = compareMarkets;
       const carSource = recognised?.pricePln
         ? "otomoto"
         : (shownSources.find((source) => source !== "otomoto") || shownSources[0]);
@@ -3354,10 +3369,7 @@
             <input type="text" inputmode="numeric" autocomplete="off" data-mobile-market-compare-price placeholder="${escapeMarketHtml(c.comparePlaceholder)}" value="${escapeMarketHtml(activeAnalysis.comparePrice || "")}" />
           </label>
           <div class="mobileMarketControls" data-report-hide>
-            <div class="mobileMarketReportActions">
-              <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot>${escapeMarketHtml(c.screenshotButton)}</button>
-              <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-pdf>${escapeMarketHtml(c.pdfButton)}</button>
-            </div>
+            ${compareMarkets ? "" : reportActions}
             <div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.axisLabel)}">
               ${[["rank", c.axisRank], ["mileage", c.axisMileageShort], ["year", c.axisYearShort]].map(([axis, label]) => `
                 <button class="mobileMarketAxisButton" type="button" data-mobile-market-axis="${axis}" aria-pressed="${chartAxis === axis ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
@@ -3430,18 +3442,16 @@
     }
 
     const dataDate = historyEntry?.dataAt || activeAnalysis.fetchedAt || "";
-    const reportSources = shownSources.length ? shownSources : MARKET_SOURCES.filter((source) => chartSources[source]);
-    // The compared markets: the same choice as on page 1, changeable here too
-    // (a market switched on without prices yet gets them fetched).
+    // The portals drawn on the chart (a picked one without offers is left
+    // out); they are switched under the filters, in "Aktualne oferty".
+    const reportSources = hasListings ? shownSources : MARKET_SOURCES.filter((source) => chartSources[source]);
     const sourcesPicker = `
       <div class="mobileMarketSources">
         <span>${escapeMarketHtml(c.sourcesPicker)}</span>
         <div class="mobileMarketSourcesList">
-          ${MARKET_SOURCES.map((source) => {
-            const on = Boolean(chartSources[source]);
-            const count = cleaned[source].length;
-            const label = `${sourceName(source)}${on ? ` (${count})` : ""} — ${on ? c.marketPickOff : c.marketPickOn}`;
-            return `<button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-mobile-analysis-market="${source}" aria-pressed="${on ? "true" : "false"}"${on ? "" : " data-report-hide"} title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
+          ${reportSources.map((source) => {
+            const label = `${sourceName(source)} (${cleaned[source].length})`;
+            return `<span class="agSourceToggle isOn" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></span>`;
           }).join("")}
         </div>
       </div>`;
@@ -3466,11 +3476,18 @@
           ${historyDone && !historyDone.hidden ? `<button class="mobileSearchSummaryDone" type="button" data-mobile-analysis-done>${escapeMarketHtml(c.historyDone)} ✓</button>` : ""}
           <button class="mobileSearchSummaryAnalysis" type="button" data-mobile-analysis-rerun>${escapeMarketHtml(c.analysisButton)} <i aria-hidden="true">&#8594;</i></button>
         </div>
-        ${MARKET_SOURCES.filter((source) => chartSources[source] && marketLinks[source]).map((source) => `
-          <div class="mobileSearchCountMarket">
+        ${MARKET_SOURCES.map((source) => {
+          const on = Boolean(chartSources[source]);
+          const logo = on && marketLinks[source]
+            ? `<a class="agBrandLink is${sourceClass(source)}" href="${escapeMarketHtml(marketLinks[source])}" target="_blank" rel="noopener" title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></a>`
+            : `<button class="agBrandLink is${sourceClass(source)}" type="button"${on ? "" : ` data-mobile-analysis-market="${source}"`} title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
+          return `
+          <div class="mobileSearchCountMarket${on ? "" : " isOff"}">
             <strong>${escapeMarketHtml(liveCount(source))}</strong>
-            <a class="agBrandLink is${sourceClass(source)}" href="${escapeMarketHtml(marketLinks[source])}" target="_blank" rel="noopener" title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></a>
-          </div>`).join("")}
+            ${logo}
+            ${marketToggleHtml(source, on, "data-mobile-analysis-market")}
+          </div>`;
+        }).join("")}
       </div>`;
     analysisContent.innerHTML = `
       <article class="mobileMarketAnalysisPanel">
@@ -3482,8 +3499,8 @@
         <div class="mobileMarketToolbar" data-report-hide>
           <div class="mobileMarketToolbarActions">
             <span class="agBrandLinks">
-              ${chartSources.mobile ? brandLogoLink("mobile", searchUrl, c.openSearch) : ""}
               ${chartSources.otomoto && otomotoUrl ? brandLogoLink("otomoto", otomotoUrl, c.openOtomoto) : ""}
+              ${chartSources.mobile ? brandLogoLink("mobile", searchUrl, c.openSearch) : ""}
               ${chartSources.blocket && blocketUrl ? brandLogoLink("blocket", blocketUrl, c.openBlocket) : ""}
             </span>
             <button class="mobileMarketImportClear" type="button" data-mobile-market-refresh>${escapeMarketHtml(c.refresh)}</button>
@@ -3503,7 +3520,9 @@
           </section>` : ""}
 
         <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
-          ${hasListings ? blockTitle("gauge", c.distributionHeading) : ""}
+          ${hasListings ? (reportActionsInTitle
+            ? `<div class="mobileMarketChartTitleRow">${blockTitle("gauge", c.distributionHeading)}${reportActions}</div>`
+            : blockTitle("gauge", c.distributionHeading)) : ""}
           ${marketContent}
         </section>
 
@@ -3635,24 +3654,62 @@
   // write only right after the click, and drawing takes a few seconds, so
   // the clipboard is asked at once and gets the picture as a promise.
   let lastReportImage = null;
+
+  // Chrome refuses a clipboard write that waits seconds for its picture, so
+  // the report's picture is drawn ahead, once the report is still for a
+  // moment; a click then copies a finished image at once. Any change of the
+  // report (not of its hidden buttons or status) draws it again.
+  let preparedReports = {};
+  let reportVersion = 0;
+  let prepareTimer = 0;
+  const toPngBlob = (canvas) => new Promise((resolve, reject) => {
+    canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png"))), "image/png");
+  });
+  async function prepareReportImage(mode = "copy") {
+    const version = reportVersion;
+    if (analysisView.hidden || !analysisContent.querySelector("[data-mobile-market-screenshot]")) return;
+    try {
+      const blob = await toPngBlob((await captureReport(mode)).canvas);
+      if (version === reportVersion) preparedReports[mode] = blob;
+    } catch {
+      // Drawn on the click instead.
+    }
+  }
+  function reportChanged() {
+    reportVersion += 1;
+    preparedReports = {};
+    clearTimeout(prepareTimer);
+    prepareTimer = setTimeout(() => prepareReportImage("copy"), 1500);
+  }
+  new MutationObserver((records) => {
+    const changed = records.some((record) => {
+      const element = record.target instanceof Element ? record.target : record.target.parentElement;
+      return !element?.closest("[data-report-hide], .mobileMarketPointTooltip");
+    });
+    if (changed) reportChanged();
+  }).observe(analysisContent, { childList: true, subtree: true, characterData: true });
+  // The list picture only when its button is about to be used.
+  analysisContent.addEventListener("pointerover", (event) => {
+    if (!event.target.closest?.("[data-mobile-market-list-screenshot]")) return;
+    if (preparedReports["list-copy"]) return;
+    prepareReportImage("list-copy");
+  });
+
   async function copyReportScreenshot(button, mode = "copy") {
     const c = copy();
     if (!navigator.clipboard?.write || !window.ClipboardItem) {
       setAnalysisStatus(c.screenshotNoClipboard, true);
       return;
     }
-    // A picture drawn a moment ago (the first try was refused): copy it now.
-    const recent = lastReportImage && lastReportImage.mode === mode && Date.now() - lastReportImage.at < 120000
-      ? lastReportImage.blob : null;
+    // The picture drawn ahead, or one drawn a moment ago (the first try was
+    // refused): copied at once, as a finished image.
+    const recent = preparedReports[mode]
+      || (lastReportImage && lastReportImage.mode === mode && Date.now() - lastReportImage.at < 120000 ? lastReportImage.blob : null);
     button.disabled = true;
     setAnalysisStatus(c.screenshotWorking);
-    const blobPromise = recent
-      ? Promise.resolve(recent)
-      : captureReport(mode).then(({ canvas }) => new Promise((resolve, reject) => {
-        canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png"))), "image/png");
-      }));
+    const blobPromise = recent ? Promise.resolve(recent) : captureReport(mode).then(({ canvas }) => toPngBlob(canvas));
     try {
-      await navigator.clipboard.write([new ClipboardItem({ "image/png": blobPromise })]);
+      await navigator.clipboard.write([new ClipboardItem({ "image/png": recent || blobPromise })]);
       lastReportImage = null;
       setAnalysisStatus(c.screenshotCopied);
     } catch {
@@ -4292,17 +4349,23 @@
   favoritesBar?.addEventListener("click", handleFavoriteClick);
   favoritesPage?.addEventListener("click", handleFavoriteClick);
 
-  marketPicker?.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-mobile-market-pick]");
-    if (!button) return;
-    const source = button.dataset.mobileMarketPick;
+  // A grey logo is not a link: clicking it brings the portal back, like "+".
+  document.addEventListener("click", (event) => {
+    const item = event.target.closest(".mobileManualPanel .mobileSearchCountMarket[data-market]");
+    if (!item) return;
+    const toggle = event.target.closest("[data-mobile-market-pick]");
+    const greyLogo = item.classList.contains("isOff") && event.target.closest(".agBrandLink");
+    if (!toggle && !greyLogo) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const source = item.dataset.market;
     const next = { ...chartSources, [source]: !chartSources[source] };
     if (!MARKET_SOURCES.some((item) => next[item])) {
       setMarketSearchStatus?.(copy().marketPickerLast, true);
       return;
     }
     applyChartSources(next);
-  });
+  }, true);
 
   function applyChartSources(next) {
     setChartSources(next);

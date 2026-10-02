@@ -3599,3 +3599,39 @@
   justify-content: flex-end;
   gap: var(--space-sm);
 }
+
+/* Several markets side by side: the report buttons on the right of the
+   "Rozkład cen" title. */
+.mobileMarketChartTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm) var(--space-md);
+}
+
+.mobileMarketChartTitleRow .mobileMarketBlockTitle {
+  margin-bottom: 0;
+}
+
+.mobileMarketChartTitleRow + * {
+  margin-top: var(--space-md);
+}
+
+/* Narrow screens: the four equal spec columns become two, then one. */
+@media (max-width: 760px) {
+  .mobileListingBrief .agSpecColumns,
+  .mobileSearchSummary .agSpecColumns,
+  .mobileMarketSearchCard .agSpecColumns {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobileListingBrief .agSpecColumns,
+  .mobileSearchSummary .agSpecColumns,
+  .mobileMarketSearchCard .agSpecColumns {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+}
