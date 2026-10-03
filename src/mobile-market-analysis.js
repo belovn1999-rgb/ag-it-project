@@ -1930,6 +1930,24 @@
           max: turnkeyPrices[turnkeyPrices.length - 1],
         };
       }
+      // German offers: also turnkey with customs in Minsk, USD (Belarus mode).
+      if ((source === "mobile" || source === "autoscout") && window.AUTOGOOD_TURNKEY_BY) {
+        const byPrices = kept
+          .map((listing) => turnkeyByFor({ ...listing, originalPrice: listing.price, originalCurrency: listing.currency || currency }, filters)?.totalUsd)
+          .filter((value) => Number.isFinite(value))
+          .sort((left, right) => left - right);
+        if (byPrices.length >= 3) {
+          point[source].turnkeyBy = {
+            currency: "USD",
+            count: byPrices.length,
+            median: Math.round(percentile(byPrices, 0.5)),
+            p25: Math.round(percentile(byPrices, 0.25)),
+            p75: Math.round(percentile(byPrices, 0.75)),
+            min: Math.round(byPrices[0]),
+            max: Math.round(byPrices[byPrices.length - 1]),
+          };
+        }
+      }
     });
     return MARKET_SOURCES.some((source) => point[source]) ? point : null;
   }
@@ -2962,6 +2980,12 @@
       }
       return null;
     };
+    // Belarus compared (av.by with mobile.de / AutoScout24): German rows show
+    // turnkey with customs in Minsk (USD) instead of the Polish "na gotowo".
+    const byHistory = chartSources.avby && (chartSources.mobile || chartSources.autoscout);
+    const turnkeyOf = (item) => (byHistory ? item?.turnkeyBy : item?.turnkey);
+    const turnkeyMoney = byHistory ? "USD" : "PLN";
+    const turnkeyName = byHistory ? `${c.byTurnkey}*` : c.turnkeyShort;
     const marketTable = (source) => {
       const rows = [];
       log.forEach((point, index) => {
@@ -2983,8 +3007,10 @@
             ? `<a class="agPriceLink" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener">${price(current[key], current.currency)}<img class="agBrandMark" src="${BRAND_MARKS[source]}" alt="" /></a>`
             : price(current[key], current.currency);
           // Foreign markets: what it comes to "na gotowo" under the ad price.
-          const turnkeyNote = current.turnkey && Number.isFinite(current.turnkey[key])
-            ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey[key], "PLN")} ${escapeMarketHtml(c.turnkeyShort)} ${previous?.turnkey ? change(current.turnkey[key], previous.turnkey[key]) : ""}</small>`
+          const turnkeyNow = turnkeyOf(current);
+          const turnkeyBefore = turnkeyOf(previous);
+          const turnkeyNote = turnkeyNow && Number.isFinite(turnkeyNow[key])
+            ? `<small class="mobileMarketTurnkeyNote">~ ${price(turnkeyNow[key], turnkeyMoney)} ${escapeMarketHtml(turnkeyName)} ${turnkeyBefore ? change(turnkeyNow[key], turnkeyBefore[key]) : ""}</small>`
             : "";
           return `<td>${value} ${previous ? change(current[key], previous[key]) : ""}${turnkeyNote}</td>`;
         };
@@ -2993,7 +3019,7 @@
             <th scope="row"><button class="mobileMarketDateLink" type="button" data-offer-date="${escapeMarketHtml(point.at)}">${escapeMarketHtml(formatHistoryDate(point.at))}</button></th>
             <td>${current.count} ${previous ? change(current.count, previous.count, true) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
-            <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${current.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${price(current.turnkey.p25, "PLN")} – ${price(current.turnkey.p75, "PLN")} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}</td>
+            <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${turnkeyOf(current) ? `<small class="mobileMarketTurnkeyNote">~ ${price(turnkeyOf(current).p25, turnkeyMoney)} – ${price(turnkeyOf(current).p75, turnkeyMoney)} ${escapeMarketHtml(turnkeyName)}</small>` : ""}</td>
             <td>${Number.isFinite(current.middleCount) ? current.middleCount : "—"} ${previous && Number.isFinite(previous.middleCount) ? change(current.middleCount, previous.middleCount, true) : ""}</td>
           </tr>`);
       });
@@ -3034,9 +3060,16 @@
     const selected = MARKET_SOURCES.filter((source) => chartSources[source]);
     const log = (entry.priceLog || []).filter((point) => selected.some((source) => point[source]));
     if (log.length < 2) return `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.trendNeedsTwo)}</p>`;
+    const byTrend = chartSources.avby && (chartSources.mobile || chartSources.autoscout);
+    const trendMoney = byTrend ? "USD" : "PLN";
     const valueOf = (point, source) => {
       const item = point[source];
       if (!item) return null;
+      if (byTrend) {
+        // German markets: turnkey with customs in Minsk; the others at their price in USD.
+        if (source === "mobile" || source === "autoscout") return item.turnkeyBy?.median ?? null;
+        return plnIn(priceInPln(item.median, item.currency || SOURCE_CURRENCY[source]), "USD");
+      }
       if (item.turnkey?.median) return item.turnkey.median;
       // Checks saved before "na gotowo" was recorded: estimated from their median.
       if (TURNKEY_SOURCES.includes(source) && window.AUTOGOOD_TURNKEY) {
@@ -3064,15 +3097,15 @@
     const labelEvery = Math.max(1, Math.ceil(log.length / 6));
     return `
       <svg class="mobileMarketTrendChart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeMarketHtml(c.trendTitle)}">
-        ${ticks.map((value) => `<line x1="${left}" x2="${width - right}" y1="${y(value)}" y2="${y(value)}" class="isGrid" /><text x="${left - 8}" y="${y(value) + 4}" text-anchor="end">${escapeMarketHtml(formatMarketPrice(value, "PLN"))}</text>`).join("")}
+        ${ticks.map((value) => `<line x1="${left}" x2="${width - right}" y1="${y(value)}" y2="${y(value)}" class="isGrid" /><text x="${left - 8}" y="${y(value) + 4}" text-anchor="end">${escapeMarketHtml(formatMarketPrice(value, trendMoney))}</text>`).join("")}
         ${log.map((point, index) => (index % labelEvery === 0 || index === log.length - 1)
           ? `<text x="${x(index)}" y="${height - 10}" text-anchor="middle">${escapeMarketHtml(formatHistoryDate(point.at).split(",")[0])}</text>` : "").join("")}
         ${series.map((line) => `
           <polyline fill="none" stroke="${colors[line.source]}" stroke-width="2.5" points="${line.points.map((item) => `${x(item.index)},${y(item.value)}`).join(" ")}" />
-          ${line.points.map((item) => `<circle cx="${x(item.index)}" cy="${y(item.value)}" r="4" fill="${colors[line.source]}"><title>${escapeMarketHtml(`${formatHistoryDate(log[item.index].at)} · ${formatMarketPrice(item.value, "PLN")}`)}</title></circle>`).join("")}`).join("")}
+          ${line.points.map((item) => `<circle cx="${x(item.index)}" cy="${y(item.value)}" r="4" fill="${colors[line.source]}"><title>${escapeMarketHtml(`${formatHistoryDate(log[item.index].at)} · ${formatMarketPrice(item.value, trendMoney)}`)}</title></circle>`).join("")}`).join("")}
       </svg>
       <div class="mobileMarketLegend">
-        ${series.map((line) => `<span class="is${sourceClass(line.source)}"><i></i>${marketBadge(line.source)}${TURNKEY_SOURCES.includes(line.source) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
+        ${series.map((line) => `<span class="is${sourceClass(line.source)}"><i></i>${marketBadge(line.source)}${byTrend ? (line.source === "mobile" || line.source === "autoscout" ? ` · ${escapeMarketHtml(c.byTurnkey)}*` : "") : TURNKEY_SOURCES.includes(line.source) ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</span>`).join("")}
       </div>`;
   }
 
@@ -4863,7 +4896,11 @@
       for (let index = list.length - 1; index >= 0; index -= 1) if (byMissing.has(list[index])) list.splice(index, 1);
     });
     if (byMode) {
-      const unread = listings.filter((listing) => listingSource(listing) === "mobile" && !window.AUTOGOOD_AD_DETAILS?.get(listing.id));
+      // The importer passes engine size and first registration from the result
+      // list; only offers without them (an older importer) are read one by one.
+      const unread = listings.filter((listing) => listingSource(listing) === "mobile"
+        && !(Number(listing.displacementCcm) && /\d{1,2}\/\d{4}/.test(listing.firstRegistration || ""))
+        && !window.AUTOGOOD_AD_DETAILS?.get(listing.id));
       setTimeout(() => startByDetails(unread.map((listing) => listing.id)), 0);
     }
     // Excise without the engine size: mobile.de ads are read one by one and

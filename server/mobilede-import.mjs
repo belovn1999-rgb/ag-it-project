@@ -1246,6 +1246,8 @@ const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY, NEW
       // Engine size ("1.968 cm³") and body: the excise class and the transport
       // tariff of the turnkey price, without opening the ad.
       displacementCcm: digits(item.attr?.cc), bodyType: item.attr?.c || "",
+      // "12/2020": month and year of first registration, the car's age for customs in Belarus.
+      firstRegistration: (String(item.attr?.fr || "").match(/\b(\d{1,2})\/((?:19|20)\d{2})\b/) || []).slice(1).join("/"),
       seller: item.contact?.enumType === "DEALER" ? "dealer" : item.contact?.enumType ? "private" : "",
       priceRating: item.priceRating?.rating || "", numImages: Number(item.numImages) || 0,
       // VAT deductible ("¹" on the result card): the dealer invoices with VAT.
