@@ -98,15 +98,25 @@
     const deliveryPolandPln = options.deliveryPolandPln ?? window.AUTOGOOD_TURNKEY?.AVERAGE_TRANSPORT_NETTO ?? 2500;
     const deliveryEur = options.deliveryEur ?? conv(deliveryPolandPln, "PLN", "EUR") + COSTS.warsawMinskEur;
     const recyclingByn = age === "under3" ? RECYCLING_BYN.under3 : RECYCLING_BYN.over3;
-    const feesByn = recyclingByn + (electric ? 0 : COSTS.customsFeeByn) + COSTS.declarantByn
-      + COSTS.storageByn + COSTS.eptsByn + (options.autogoodByn ?? COSTS.autogoodByn);
-    const totalEur = carEur + deliveryEur + duty + conv(feesByn, "BYN", "EUR");
+    const serviceByn = options.autogoodByn ?? COSTS.autogoodByn;
+    // Customs clearance in Minsk: everything paid at the customs.
+    const customsByn = recyclingByn + (electric ? 0 : COSTS.customsFeeByn) + COSTS.declarantByn
+      + COSTS.storageByn + COSTS.eptsByn;
+    const feesByn = customsByn + serviceByn;
+    // Three prices shown with every offer (owner, 2026-10-03): the car (net or
+    // gross), the car in Minsk (delivery + AUTOGOOD service) and turnkey
+    // (+ duty and every customs payment).
+    const deliveredEur = carEur + deliveryEur + conv(serviceByn, "BYN", "EUR");
+    const totalEur = deliveredEur + duty + conv(customsByn, "BYN", "EUR");
     const totalUsd = conv(totalEur, "EUR", "USD");
     // The same car with the 50% benefit (shown as a footnote).
     const benefitSavingUsd = options.benefit ? 0 : conv(fullDuty / 2, "EUR", "USD");
     return {
       totalEur,
       totalUsd,
+      carUsd: conv(carEur, "EUR", "USD"),
+      deliveredEur,
+      deliveredUsd: conv(deliveredEur, "EUR", "USD"),
       base: net ? "netto" : "brutto",
       age,
       electric,
@@ -116,6 +126,8 @@
         deliveryEur,
         dutyEur: duty,
         recyclingByn,
+        serviceByn,
+        customsByn,
         feesByn,
       },
       rates: { ...table },

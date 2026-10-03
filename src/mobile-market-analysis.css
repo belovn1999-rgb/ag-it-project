@@ -4365,3 +4365,36 @@
 .mobileMarketCompareRow.isAutoscout { --row: var(--market-autoscout); }
 .mobileMarketPanel.isAutoscout .mobileMarketPanelHead b { color: var(--market-autoscout); }
 .mobileMarketKeyTick.isGuide.isAutoscout { color: var(--market-autoscout); }
+
+/* Belarus: three prices with every German offer (car, in Minsk, turnkey). */
+.mobileMarketByPrices {
+  display: grid;
+  gap: 1px;
+  justify-items: end;
+  text-align: right;
+}
+
+.mobileMarketPointTooltip .mobileMarketByPrices {
+  justify-items: start;
+  text-align: left;
+  margin-top: 4px;
+}
+
+.mobileMarketByPrices small {
+  color: var(--color-muted, #5b6472);
+  font-size: 0.75rem;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.mobileMarketByPrices b,
+.mobileMarketTurnkeyNote.isStrong {
+  font-weight: 800;
+  color: var(--color-ink, #12233f);
+}
+
+/* The offers table gives the price column room for the three prices. */
+.mobileMarketOffersTable.isByPrices th:nth-child(2) { width: 25%; }
+.mobileMarketOffersTable.isByPrices th:nth-child(4) { width: 12%; }
+.mobileMarketOffersTable.isByPrices th:nth-child(5) { width: 28%; }
+.mobileMarketOffersTable.isByPrices th:nth-child(6) { width: 13%; }

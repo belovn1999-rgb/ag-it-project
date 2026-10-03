@@ -89,6 +89,10 @@
         price,
         currency: "EUR",
         year: Number(String(item.tracking?.firstRegistration || detail("calendar")).match(/(19|20)\d{2}/)?.[0]) || "",
+        // "10-2019" / "10/2019": the month decides the car's age for customs (Belarus).
+        firstRegistration: (String(item.tracking?.firstRegistration || detail("calendar")).match(/(\d{1,2})[-/]((?:19|20)\d{2})/) || []).slice(1).join("/"),
+        // "1.968 cm³" in the result list itself: the engine size for the duty.
+        displacementCcm: Number(digits(item.vehicle?.engineDisplacementInCCM)) || null,
         mileage: Number(item.tracking?.mileage) || Number(digits(item.vehicle?.mileageInKm)) || "",
         power: detail("speedometer"),
         fuel: String(item.vehicle?.fuel || "").slice(0, 40),

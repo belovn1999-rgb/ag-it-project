@@ -46,12 +46,18 @@
       favoriteRemove: "Usuń z ulubionych",
       statsHeading: "Statystyki",
       turnkeyShort: "na gotowo*",
-      turnkeyShortBy: "pod klucz BY*",
-      turnkeyFootnoteBy: "Cena „pod klucz BY” (Mińsk) jest orientacyjna: cena auta z ogłoszenia mobile.de (netto, gdy sprzedawca wykazuje VAT — przy wywozie z UE VAT jest zwracany; w innym razie brutto) + transport do Polski (średnio ok. 2 500 PLN) + transport Warszawa–Mińsk 600 € + cło + opłata utylizacyjna (624,92 BYN dla aut do 3 lat, 1 282,02 BYN dla starszych) + opłata celna 120 BYN + agencja celna 350 BYN + skład celny ok. 110 BYN (zwykle 3 dni) + EPTS 170 BYN + usługa AUTOGOOD 825 BYN. Cło zależy od wieku i pojemności silnika: auta do 3 lat — 48–54% wartości, ale nie mniej niż 2,5–20 €/cm³ (zależnie od ceny); 3–5 lat — od 1,5 €/cm³ (do 1000 cm³) do 3,6 €/cm³ (powyżej 3000 cm³); starsze niż 5 lat — od 3,0 do 5,7 €/cm³. Auta elektryczne — bez cła. Pojemność, cena netto i data rejestracji brane są z każdego ogłoszenia. Kwoty przeliczone na USD po oficjalnym kursie NBRB z {date}. Z ulgą celną 50% (Dekret nr 140: rodziny wielodzietne, osoby z niepełnosprawnością I–II grupy) cło jest o połowę niższe — średnio o {saving} taniej. Dla aut w wieku 3–5 lat stawkę i prawo do ulgowego oclenia trzeba sprawdzić po dokładnej dacie produkcji konkretnego auta. Dokładną kwotę przygotuje menedżer AUTOGOOD.",
+      turnkeyShortBy: "pod klucz z ocleniem*",
+      turnkeyFootnoteBy: "Ceny aut z Niemiec (mobile.de i AutoScout24) są orientacyjne. „Cena auta” — netto, gdy sprzedawca wykazuje VAT (przy wywozie z UE VAT jest zwracany: cenę brutto z oznaczeniem „¹” dzieli się przez 1 + stawkę VAT kraju, w Niemczech przez 1,19), w innym razie brutto. „Z dostawą do Mińska” — cena auta + transport do Polski (średnio ok. 2 500 PLN) + transport Warszawa — Mińsk 600 € + usługa AUTOGOOD 825 BYN. „Pod klucz z ocleniem” — do tego cło, opłata utylizacyjna (624,92 BYN dla aut do 3 lat, 1 282,02 BYN dla starszych), opłata celna 120 BYN, agencja celna 350 BYN, skład celny ok. 110 BYN (zwykle 3 dni) i EPTS 170 BYN. Cło zależy od wieku i pojemności silnika: do 3 lat — 48–54% wartości, ale nie mniej niż 2,5–20 € za 1 cm³ (zależnie od ceny); 3–5 lat — od 1,5 € za 1 cm³ (do 1000 cm³) do 3,6 € za 1 cm³ (powyżej 3000 cm³); powyżej 5 lat — od 3,0 do 5,7 € za 1 cm³. Auta elektryczne są zwolnione z cła. Pojemność silnika, cena netto i data rejestracji pochodzą z każdego ogłoszenia. Kwoty przeliczone na USD po oficjalnym kursie NBRB z {date}. Z ulgą celną 50% (Dekret nr 140: rodziny wielodzietne, osoby z niepełnosprawnością I i II grupy) cło jest o połowę niższe — średnio o {saving} taniej. Dla aut w wieku 3–5 lat stawkę i prawo do ulgowego oclenia trzeba sprawdzić po dokładnej dacie produkcji konkretnego auta. Dokładną kwotę przygotuje menedżer AUTOGOOD.",
+      byCarPrice: "Cena auta",
+      byNet: "netto",
+      byGross: "brutto",
+      byNetGross: "netto / brutto",
+      byDelivered: "z dostawą do Mińska",
+      byTurnkey: "pod klucz z ocleniem",
       byDetailsProgress: "Sprawdzam pojemność silnika, cenę netto i datę rejestracji w ogłoszeniach mobile.de: {done} z {total}.",
-      byDetailsMissing: "Ogłoszenia mobile.de bez znanej pojemności silnika nie są pokazane: {missing}. Uruchom importer mobile.de, aby je sprawdzić.",
-      conclusionByCheaper: "Po doliczeniu transportu, oclenia i wszystkich opłat auto z Niemiec „pod klucz” w Mińsku wychodzi średnio o {amount} ({percent}%) taniej niż podobne na av.by.",
-      conclusionByDearer: "Po doliczeniu transportu, oclenia i wszystkich opłat auto z Niemiec „pod klucz” w Mińsku wychodzi średnio o {amount} ({percent}%) drożej niż podobne na av.by.",
+      byDetailsMissing: "Nie pokazano ogłoszeń bez znanej pojemności silnika: {missing}. Aby sprawdzić ogłoszenia mobile.de, uruchom importer mobile.de.",
+      conclusionByCheaper: "Po doliczeniu transportu, oclenia i wszystkich opłat auto z Niemiec ({portal}) „pod klucz” w Mińsku wychodzi średnio o {amount} ({percent}%) taniej niż podobne na av.by.",
+      conclusionByDearer: "Po doliczeniu transportu, oclenia i wszystkich opłat auto z Niemiec ({portal}) „pod klucz” w Mińsku wychodzi średnio o {amount} ({percent}%) drożej niż podobne na av.by.",
       priceHistoryIntro: "Każde „Analiza rynku” i „Odśwież dane” dopisuje nowy wiersz z datą; wcześniejsze pomiary zostają na zawsze. Auto wybierasz na pasku ulubionych u góry.",
       priceHistoryFiltersChanged: "Od tego pomiaru zmienione filtry: {filters}",
       priceHistoryPricesChanged: "Od tego pomiaru zmieniona cena na portalach",
@@ -249,6 +255,7 @@
       marketOtomoto: "Polska",
       compareHeading: "Porównanie rynków",
       compareHint: "ceny na gotowo*, zł — ta sama skala co wykresy poniżej",
+      compareHintBy: "Niemcy: ceny pod klucz z ocleniem*, Białoruś: ceny z ogłoszeń; USD — ta sama skala co wykresy poniżej",
       compareLegend: "Prostokąt — średnie ceny (P25–P75), kreska — mediana, linia — od najtańszej do najdroższej oferty.",
       panelOffers: "{count} {offers}",
       guideLegend: "mediana innego rynku (dla porównania)",
@@ -384,12 +391,18 @@
       favoriteRemove: "Убрать из избранного",
       statsHeading: "Статистика",
       turnkeyShort: "под ключ*",
-      turnkeyShortBy: "под ключ РБ*",
-      turnkeyFootnoteBy: "Цена «под ключ РБ» (Минск) — ориентировочная: цена авто в объявлении mobile.de (нетто, если продавец выделяет НДС — при вывозе из ЕС НДС возвращается; иначе брутто) + доставка до Польши (в среднем ~2 500 PLN) + доставка Варшава–Минск 600 € + таможенная пошлина + утилизационный сбор (624,92 BYN для авто до 3 лет, 1 282,02 BYN — старше) + таможенный сбор 120 BYN + услуги таможенного декларанта 350 BYN + услуги склада ~110 BYN (как правило 3 дня) + оформление ЭПТС 170 BYN + услуги AUTOGOOD 825 BYN. Пошлина зависит от возраста и объёма двигателя: авто до 3 лет — 48–54% стоимости, но не менее 2,5–20 €/см³ (в зависимости от цены); 3–5 лет — от 1,5 €/см³ (до 1000 см³) до 3,6 €/см³ (свыше 3000 см³); старше 5 лет — от 3,0 до 5,7 €/см³. Электромобили — без пошлины. Объём двигателя, цена нетто и дата регистрации берутся из каждого объявления. Суммы пересчитаны в доллары по официальному курсу НБРБ на {date}. С таможенной льготой 50% (Указ №140: многодетные семьи, инвалиды I–II группы) пошлина вдвое ниже — в среднем на {saving} дешевле. Для авто от 3 до 5 лет ставку и право на льготную растаможку нужно проверять по точной дате производства конкретного авто. Точную стоимость рассчитает менеджер AUTOGOOD.",
-      byDetailsProgress: "Уточняю объём двигателя, цену нетто и дату регистрации в объявлениях mobile.de: {done} из {total}.",
-      byDetailsMissing: "Объявления mobile.de без известного объёма двигателя не показаны: {missing}. Запустите импортер mobile.de, чтобы уточнить их.",
-      conclusionByCheaper: "С учётом доставки, растаможки и всех сборов авто из Германии под ключ в Минске выходит в среднем на {amount} ({percent}%) дешевле, чем аналогичное на av.by.",
-      conclusionByDearer: "С учётом доставки, растаможки и всех сборов авто из Германии под ключ в Минске выходит в среднем на {amount} ({percent}%) дороже, чем аналогичное на av.by.",
+      turnkeyShortBy: "под ключ с растаможкой*",
+      turnkeyFootnoteBy: "Цены у авто из Германии (mobile.de и AutoScout24) ориентировочные. «Цена авто» — нетто, если продавец выделяет НДС (при вывозе из ЕС НДС возвращается: цена брутто с пометкой «¹» делится на 1 + ставку НДС страны, в Германии на 1,19), иначе брутто. «С доставкой до Минска» — цена авто + доставка до Польши (в среднем ~2 500 PLN) + доставка Варшава — Минск 600 € + услуги AUTOGOOD 825 BYN. «Под ключ с растаможкой» — плюс таможенная пошлина, утилизационный сбор (624,92 BYN для авто до 3 лет, 1 282,02 BYN для более старых), таможенный сбор 120 BYN, услуги таможенного декларанта 350 BYN, услуги склада ~110 BYN (как правило, 3 дня) и оформление ЭПТС 170 BYN. Пошлина зависит от возраста и объёма двигателя: до 3 лет — 48–54 % стоимости, но не менее 2,5–20 € за 1 см³ (в зависимости от цены); от 3 до 5 лет — от 1,5 € за 1 см³ (до 1000 см³) до 3,6 € за 1 см³ (свыше 3000 см³); старше 5 лет — от 3,0 до 5,7 € за 1 см³. Электромобили пошлиной не облагаются. Объём двигателя, цена нетто и дата регистрации берутся из каждого объявления. Суммы пересчитаны в доллары по официальному курсу НБРБ на {date}. С таможенной льготой 50 % (Указ № 140: многодетные семьи, инвалиды I и II группы) пошлина вдвое ниже — в среднем на {saving} дешевле. Для авто в возрасте от 3 до 5 лет ставку и право на льготную растаможку нужно проверять по точной дате производства конкретного авто. Точную стоимость рассчитает менеджер AUTOGOOD.",
+      byCarPrice: "Цена авто",
+      byNet: "нетто",
+      byGross: "брутто",
+      byNetGross: "нетто / брутто",
+      byDelivered: "с доставкой до Минска",
+      byTurnkey: "под ключ с растаможкой",
+      byDetailsProgress: "Уточняю объём двигателя, цену нетто и дату регистрации в объявлениях mobile.de: {done} из {total}…",
+      byDetailsMissing: "Не показаны объявления без известного объёма двигателя: {missing}. Чтобы уточнить объявления mobile.de, запустите импортер mobile.de.",
+      conclusionByCheaper: "С учётом доставки, растаможки и всех сборов авто из Германии ({portal}) под ключ в Минске обходится в среднем на {amount} ({percent} %) дешевле, чем аналогичное авто на av.by.",
+      conclusionByDearer: "С учётом доставки, растаможки и всех сборов авто из Германии ({portal}) под ключ в Минске обходится в среднем на {amount} ({percent} %) дороже, чем аналогичное авто на av.by.",
       priceHistoryIntro: "Каждый «Анализ рынка» и «Обновить данные» добавляет новую строку с датой; прошлые замеры остаются навсегда. Авто выбирается в полосе избранного сверху.",
       priceHistoryFiltersChanged: "С этого замера изменены фильтры: {filters}",
       priceHistoryPricesChanged: "С этого замера изменена цена на порталах",
@@ -587,6 +600,7 @@
       marketOtomoto: "Польша",
       compareHeading: "Сравнение рынков",
       compareHint: "цены под ключ*, zł — та же шкала, что у графиков ниже",
+      compareHintBy: "Германия — цены под ключ с растаможкой*, Беларусь — цены в объявлениях; $, та же шкала, что у графиков ниже",
       compareLegend: "Прямоугольник — средние цены (P25–P75), черта — медиана, линия — от самого дешёвого до самого дорогого объявления.",
       panelOffers: "{count} {offers}",
       guideLegend: "медиана другого рынка (для сравнения)",
@@ -677,7 +691,7 @@
       refresh: "Обновить данные",
       refreshing: "Обновляю рыночные данные…",
       refreshUnavailable: "Источник данных ещё не подключён.",
-      refreshInvalid: "Источник не вернул минимум 3 цен объявлений.",
+      refreshInvalid: "Источник не вернул хотя бы 3 цены объявлений.",
       snapshotSaved: "Новая проверка сохранена в истории цен ({date}).",
       suspectsSkipped: "Вне статистики: {count} {offers} (повреждённые, на запчасти, цессия / лизинг или цена вне 1/3–3× медианы) — серые кружки на графике.",
       suspectTag: "вне статистики",
@@ -702,7 +716,7 @@
       fuelDiesel: "Дизель",
       fuelHybridDiesel: "Гибрид дизель",
       fuelHybridPetrol: "Гибрид бензин",
-      fuelElectric: "Электрик",
+      fuelElectric: "Электро",
       fuelPlugin: "Гибрид plug-in",
       gearboxAny: "Любая",
       gearboxAutomatic: "Автоматическая",
@@ -826,6 +840,17 @@
 
   function currentLanguage() {
     return document.documentElement.lang === "ru" ? "ru" : "pl";
+  }
+
+  // Kilometres as each language writes them.
+  function kmUnit() {
+    return currentLanguage() === "ru" ? "км" : "km";
+  }
+
+  // Power "150 KM" (Polish) reads "150 л. с." in Russian.
+  function powerText(value) {
+    const text = String(value || "");
+    return currentLanguage() === "ru" ? text.replace(/\bKM\b/g, "л. с.") : text;
   }
 
   function copy() {
@@ -979,6 +1004,8 @@
       seller: String(listingValue(row, ["seller"]) || "").slice(0, 12),
       netPrice: parseMarketNumber(listingValue(row, ["netprice"])) || 0,
       priceByn: parseMarketNumber(listingValue(row, ["pricebyn"])) || null,
+      // "MM/YYYY": the month of first registration (age for customs in Belarus).
+      firstRegistration: String(listingValue(row, ["firstregistration"]) || "").slice(0, 10),
       priceType: String(listingValue(row, ["pricetype"]) || "").slice(0, 12),
       vatDeductible: listingValue(row, ["vatdeductible"]) === true || listingValue(row, ["vatdeductible"]) === "true",
     };
@@ -1759,6 +1786,10 @@
       netPrice: listing.netPrice || 0,
       seller: listing.seller || "",
       country: String(listing.country || "").slice(0, 4),
+      // For the turnkey price in Belarus: engine size, first registration, fuel.
+      ccm: Number(listing.displacementCcm) || undefined,
+      reg: listing.firstRegistration || undefined,
+      fuel: String(listing.fuel || "").slice(0, 20) || undefined,
       turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage({
         price: listing.price,
         currency: listing.currency || SOURCE_CURRENCY[source],
@@ -1930,7 +1961,7 @@
     return [
       rangeSummary(c.price, filters.priceFrom, filters.priceTo, "EUR"),
       rangeSummary(c.year, filters.yearFrom, filters.yearTo),
-      rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, "km"),
+      rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, kmUnit()),
       engine ? `${c.engine}: ${engine}` : "",
       `${c.gearbox}: ${gearbox}`,
     ].filter(Boolean);
@@ -2360,7 +2391,7 @@
     if (body) summary.push(body);
     summary.push(rangeSummary(c.price, filters.priceFrom, filters.priceTo, "EUR"));
     summary.push(rangeSummary(c.year, filters.yearFrom, filters.yearTo));
-    summary.push(rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, "km"));
+    summary.push(rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, kmUnit()));
     summary.push(rangeSummary(c.displacement, filters.displacementFrom, filters.displacementTo, "ccm"));
     summary.push(rangeSummary(c.power, filters.powerFrom, filters.powerTo, "KM"));
     summary.push(rangeSummary(c.seats, filters.seatsFrom, filters.seatsTo));
@@ -2413,7 +2444,7 @@
     parameters.push(
       rangeSummary(c.price, filters.priceFrom, filters.priceTo, "EUR"),
       rangeSummary(c.year, filters.yearFrom, filters.yearTo),
-      rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, "km"),
+      rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, kmUnit()),
       rangeSummary(c.displacement, filters.displacementFrom, filters.displacementTo, "ccm"),
       rangeSummary(c.power, filters.powerFrom, filters.powerTo, "KM"),
       rangeSummary(c.seats, filters.seatsFrom, filters.seatsTo),
@@ -2831,7 +2862,7 @@
     const nowMedian = median(now);
     const thenMedian = median(then);
     const thenByKey = new Map(then.map((item) => [item.offer.key, item]));
-    const tip = (offer, date) => escapeMarketHtml(`${date} · ${formatPlainPrice(offer.price, offer.currency)}${offer.turnkey ? ` (~ ${formatPlainPrice(offer.turnkey, "PLN")} ${c.turnkeyShort})` : ""} · ${[offer.year, offer.mileage ? `${numberFormat().format(offer.mileage)} km` : ""].filter(Boolean).join(" · ")} · ${offer.title}`);
+    const tip = (offer, date) => escapeMarketHtml(`${date} · ${formatPlainPrice(offer.price, offer.currency)}${offer.turnkey ? ` (~ ${formatPlainPrice(offer.turnkey, "PLN")} ${c.turnkeyShort})` : ""} · ${[offer.year, offer.mileage ? `${numberFormat().format(offer.mileage)} ${kmUnit()}` : ""].filter(Boolean).join(" · ")} · ${offer.title}`);
     const dot = (item, date, compare) => {
       const circle = compare
         ? `<circle cx="${x(item.x)}" cy="${y(item.offer.price)}" r="3.6" class="isCompare"><title>${tip(item.offer, date)}</title></circle>`
@@ -2955,7 +2986,7 @@
               <td>${marketBadge(row.source)}</td>
               <td class="mobileMarketOfferTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener">${escapeMarketHtml(row.offer.title || "—")}</a>` : escapeMarketHtml(row.offer.title || "—")}</td>
               <td>${escapeMarketHtml(row.offer.year || "—")}</td>
-              <td>${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} km` : "—"}</td>
+              <td>${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} ${kmUnit()}` : "—"}</td>
               <td>${row.gone ? "—" : price(row.offer)}</td>
               ${compareRecord ? `<td>${row.gone ? price(row.offer) : row.previous ? price(row.previous) : "—"}</td>
               <td>${change === null ? "" : `<em class="${change < 0 ? "isGood" : "isBad"}">${change > 0 ? "▲" : "▼"} ${escapeMarketHtml(pct(change))}</em>`}</td>` : ""}
@@ -3462,7 +3493,40 @@
     const view = monitoringState.view;
     const statusLabel = { new: c.offerNew, firstSeen: c.offerFirstSeen, gone: c.offerGone, outside: c.offerOutside, cheaper: c.offerCheaper, dearer: c.offerDearer, same: c.offerSame };
     const rows = [...viewRows[view]].sort((left, right) => (left.offer.turnkey || priceInPln(left.offer.price, left.offer.currency)) - (right.offer.turnkey || priceInPln(right.offer.price, right.offer.currency)));
-    const priceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
+    // Belarus (av.by compared with mobile.de / AutoScout24): German offers with
+    // the car's price, the price in Minsk and turnkey with customs, in USD.
+    const byCompare = Boolean(window.AUTOGOOD_TURNKEY_BY) && chartSources.avby && (chartSources.mobile || chartSources.autoscout);
+    const byOfferPrices = (offer, source) => {
+      if (!byCompare || (source !== "mobile" && source !== "autoscout")) return null;
+      const id = String(offer.key || "").startsWith("mobile:") ? offer.key.slice(7) : "";
+      return turnkeyByFor({
+        id,
+        originalPrice: offer.price,
+        originalCurrency: offer.currency || "EUR",
+        netPrice: offer.priceType === "vat" ? offer.netPrice : 0,
+        displacementCcm: offer.ccm,
+        firstRegistration: offer.reg,
+        year: offer.year,
+        fuel: offer.fuel,
+      }, entry.filters);
+    };
+    const byPriceCell = (prices) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatMarketPrice(prices.parts.carEur, "EUR"))}</b>`
+      + `<small class="mobileMonitoringVat is${prices.base === "netto" ? "Vat" : "Gross"}">${escapeMarketHtml(prices.base === "netto" ? c.byNet : c.byGross)} · ${escapeMarketHtml(formatMarketPrice(prices.carUsd, "USD"))}</small>`
+      + `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(prices.deliveredUsd, "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
+      + `<small class="mobileMarketTurnkeyNote isStrong">~ ${escapeMarketHtml(formatMarketPrice(prices.totalUsd, "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
+    const priceCell = (offer, source) => {
+      const prices = byOfferPrices(offer, source);
+      return prices ? byPriceCell(prices) : plainPriceCell(offer);
+    };
+    // The same footnote as in the analysis under a list with Belarus prices.
+    const bySavings = byCompare ? viewRows[view].map((row) => byOfferPrices(row.offer, row.source)?.benefitSavingUsd).filter((value) => value > 0).sort((a, b) => a - b) : [];
+    const byRatesNow = byCompare ? window.AUTOGOOD_TURNKEY_BY.rates() : null;
+    const byFootnote = bySavings.length
+      ? `<p class="mobileMarketAxisNote isTurnkey">* ${escapeMarketHtml(c.turnkeyFootnoteBy
+        .replace("{date}", byRatesNow.date ? byRatesNow.date.split("-").reverse().join(".") : "—")
+        .replace("{saving}", formatMarketPrice(percentile(bySavings, 0.5), "USD")))}</p>`
+      : "";
+    const plainPriceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
     const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isPrimary" : ""}" type="button" data-monitoring-view="${key}"${(key === "new" || key === "gone") && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${viewRows[key].length}</button>`;
     const withStatus = view === "all" && before;
     const columns = 8 + (withStatus ? 1 : 0);
@@ -3499,14 +3563,14 @@
               <td class="mobileMonitoringStarCell"><button class="mobileMonitoringStar${isSaved ? " isOn" : ""}" type="button" data-monitoring-save="${escapeMarketHtml(row.offer.key)}" aria-pressed="${isSaved ? "true" : "false"}" title="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}" aria-label="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}">${isSaved ? "★" : "☆"}</button></td>
               <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}<button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button></td>
               <td class="isNum">${escapeMarketHtml(row.offer.year || "—")}</td>
-              <td class="isNum">${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} km` : "—"}</td>
-              <td class="isNum">${escapeMarketHtml(row.offer.power || "—")}</td>
-              <td class="isNum">${priceCell(row.offer)}</td>
+              <td class="isNum">${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} ${kmUnit()}` : "—"}</td>
+              <td class="isNum">${escapeMarketHtml(powerText(row.offer.power) || "—")}</td>
+              <td class="isNum">${priceCell(row.offer, row.source)}</td>
               <td>${offerCountryBadge(row.source, row.offer.country)}</td>
             </tr>${detailsOpen ? offerDetailsHtml(row, columns) : ""}`;
           }).join("")}</tbody>
         </table>
-      </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.monitoringEmptyList)}</p>`}`;
+      </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.monitoringEmptyList)}</p>`}${byFootnote}`;
   }
 
   // One check of a favourite, in place: its portals read (whole lists where
@@ -3921,7 +3985,7 @@
         [t.specPower, range(filters.powerFrom, filters.powerTo, "KM"), "zap"],
       ] },
       { heading: t.specUsageHeading, rows: [
-        [t.specMileage, range(filters.mileageFrom, filters.mileageTo, "km"), "gauge"],
+        [t.specMileage, range(filters.mileageFrom, filters.mileageTo, kmUnit()), "gauge"],
         [t.specRegistration, range(filters.yearFrom, filters.yearTo, "", true), "calendar"],
         [t.specGearbox, filters.gearbox && filters.gearbox !== "any" ? checkedLabel("[data-mobile-gearbox]") : any, "git-branch"],
         [t.specDrive, filters.drive && filters.drive !== "any" ? checkedLabel("[data-mobile-drive]") : any, "route"],
@@ -3990,7 +4054,7 @@
 
   function turnkeyByFor(listing, filters) {
     const details = window.AUTOGOOD_AD_DETAILS?.get(listing.id) || null;
-    const registered = String(details?.reg || "").match(/(\d{1,2})\/(\d{4})/);
+    const registered = String(details?.reg || listing.firstRegistration || "").match(/(\d{1,2})\/(\d{4})/);
     return window.AUTOGOOD_TURNKEY_BY.calc({
       priceEur: convertPrice(listing.originalPrice, listing.originalCurrency || "EUR", "EUR"),
       netEur: details?.net || listing.netPrice || null,
@@ -4081,10 +4145,10 @@
     // Belarus: with av.by and mobile.de together, mobile.de "pod klucz" in
     // Minsk against av.by, everything in USD at the NBRB rate.
     const byTurnkey = window.AUTOGOOD_TURNKEY_BY;
-    const byMode = Boolean(byTurnkey) && shownSources.includes("avby") && shownSources.includes("mobile");
+    const byMode = Boolean(byTurnkey) && shownSources.includes("avby") && (shownSources.includes("mobile") || shownSources.includes("autoscout"));
     if (byMode) displayCurrency = "USD";
     const turnkeyCurrency = byMode ? "USD" : "PLN";
-    const turnkeySources = byMode ? ["mobile"] : TURNKEY_SOURCES;
+    const turnkeySources = byMode ? ["mobile", "autoscout"] : TURNKEY_SOURCES;
     const turnkeyLabel = byMode ? c.turnkeyShortBy : c.turnkeyShort;
     const rate = exchangeRate() || EUR_PLN_FALLBACK_RATE;
     const inDisplayCurrency = (listing) => (byMode && listingSource(listing) === "avby" && Number(listing.priceByn) > 0
@@ -4113,7 +4177,7 @@
     const bySavings = [];
     [...marketListings, ...suspectListings].forEach((listing) => {
       if (byMode) {
-        if (listing.source !== "mobile") return;
+        if (listing.source !== "mobile" && listing.source !== "autoscout") return;
         const result = turnkeyByFor(listing, filters);
         if (!result) {
           byMissing.add(listing);
@@ -4122,6 +4186,7 @@
         // "turnkeyPln" holds the turnkey price in turnkeyCurrency (USD here).
         listing.turnkeyPln = result.totalUsd;
         listing.turnkeyBase = result.base;
+        listing.byPrices = result;
         bySavings.push(result.benefitSavingUsd);
         listing.bruttoPln = listing.price;
         listing.price = Math.round(result.totalUsd);
@@ -4149,6 +4214,16 @@
       setTimeout(() => startByDetails(unread.map((listing) => listing.id)), 0);
     }
     const bySaving = bySavings.length ? percentile([...bySavings].sort((left, right) => left - right), 0.5) : 0;
+    // Belarus: three prices with every German offer — the car (net or gross),
+    // the car in Minsk, and turnkey with customs clearance.
+    const byBaseLabel = (base) => (base === "netto" ? c.byNet : base === "brutto" ? c.byGross : c.byNetGross);
+    const capital = (text) => String(text).charAt(0).toUpperCase() + String(text).slice(1);
+    const byPriceLines = (prices) => `
+      <span class="mobileMarketByPrices">
+        <small>${escapeMarketHtml(c.byCarPrice)}: ${escapeMarketHtml(formatMarketPrice(prices.parts.carEur, "EUR"))} ${escapeMarketHtml(byBaseLabel(prices.base))} · ${escapeMarketHtml(formatMarketPrice(prices.carUsd, "USD"))}</small>
+        <small>${escapeMarketHtml(capital(c.byDelivered))}*: ~ ${escapeMarketHtml(formatMarketPrice(prices.deliveredUsd, "USD"))}</small>
+        <b>${escapeMarketHtml(capital(c.byTurnkey))}*: ~ ${escapeMarketHtml(formatMarketPrice(prices.totalUsd, "USD"))}</b>
+      </span>`;
     const byRates = byMode ? byTurnkey.rates() : null;
     // A price as the marketplace shows it: PLN, EUR, or SEK with its EUR value.
     const nativePrice = (value, source) => {
@@ -4250,11 +4325,11 @@
         for (let value = Math.ceil(axisMin / step) * step; value <= axisMax; value += step) {
           xTicks.push({
             x: (value - axisMin) / axisSpan,
-            label: chartAxis === "mileage" ? `${numbers.format(value)} km` : String(value),
+            label: chartAxis === "mileage" ? `${numbers.format(value)} ${kmUnit()}` : String(value),
           });
         }
       } else if (axisValues.length) {
-        xTicks = [{ x: 0.5, label: chartAxis === "mileage" ? `${numbers.format(axisMin)} km` : String(axisMin) }];
+        xTicks = [{ x: 0.5, label: chartAxis === "mileage" ? `${numbers.format(axisMin)} ${kmUnit()}` : String(axisMin) }];
       }
 
       // Median price along mileage or year: offers under the line are cheap
@@ -4313,8 +4388,8 @@
 
       const describe = (listing) => [
         listing.year ? String(listing.year) : "",
-        listing.mileage ? `${numbers.format(listing.mileage)} km` : "",
-        listing.power || "",
+        listing.mileage ? `${numbers.format(listing.mileage)} ${kmUnit()}` : "",
+        powerText(listing.power),
       ].filter(Boolean).join(" · ");
       // Placeholder names ("otomoto.pl", "blocket.se", "mobile.de · 03") say nothing.
       const fullTitle = (listing) => (/^(otomoto\.pl|blocket\.se|av\.by|mobile\.de · \d+)$/.test(listing.title || "") ? "" : listing.title || "");
@@ -4332,7 +4407,7 @@
                 ${listing.subtitle ? `<i class="mobileMarketPointSubtitle">${escapeMarketHtml(listing.subtitle)}</i>` : ""}
                 <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${listing.turnkeyPln ? ` <small>${escapeMarketHtml(turnkeyLabel)}</small>` : ""}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
                 ${details ? `<em>${escapeMarketHtml(details)}</em>` : ""}
-                ${listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(listing.originalPrice, listing.source))}</em>` : ""}
+                ${listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(listing.originalPrice, listing.source))}</em>` : ""}
                 <b class="is${sourceClass(listing.source)}">${marketBadge(listing.source)} <small>${escapeMarketHtml(sourceName(listing.source))}</small>${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
               </span>`;
           const attributes = `class="mobileMarketPoint is${sourceClass(listing.source)}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
@@ -4381,8 +4456,22 @@
         trendMedians = buildTrend(plotted.filter((point) => point.listing.source === carSource), [carSource]).medians;
       }
       if (sameCar && carPool.length) {
+        // Belarus: an av.by ad at its price, a German one turnkey in Minsk.
+        const registeredCar = String(recognised.firstRegistration || "").match(/(\d{1,2})\/((?:19|20)\d{2})/);
+        const byCar = byMode && recognised.importMode !== "avby" ? byTurnkey.calc({
+          priceEur: Number(recognised.carBruttoEur) || 0,
+          netEur: Number(recognised.carNettoEur) || null,
+          ccm: Number(recognised.displacementCcm) || byFilterCcm(filters),
+          year: registeredCar ? Number(registeredCar[2]) : Number((String(recognised.firstRegistration || "").match(/(?:19|20)\d{2}/) || [])[0]) || null,
+          month: registeredCar ? Number(registeredCar[1]) : 0,
+          electric: /electr|elektr/i.test(String(recognised.fuel || "")),
+        }) : null;
         // A Polish ad at its price, any other car "na gotowo", like the dots.
-        const carPrice = recognised.pricePln
+        const carPrice = byMode
+          ? (recognised.importMode === "avby"
+            ? Number(recognised.priceUsd) || convertPrice(recognised.carBruttoEur, "EUR", "USD")
+            : byCar?.totalUsd || convertPrice(recognised.carBruttoEur, "EUR", "USD"))
+          : recognised.pricePln
           ? recognised.pricePln
           : (window.AUTOGOOD_TURNKEY?.turnkeyAverage({
             price: recognised.carBruttoEur,
@@ -4407,7 +4496,11 @@
         const diffPct = Math.round(((carPrice - carStats.median) / carStats.median) * 100);
         const diff = Math.abs(diffPct) < 1 ? c.atMedian
           : (diffPct < 0 ? c.belowMedian : c.aboveMedian).replace("{pct}", String(Math.abs(diffPct)));
-        const priceLabel = recognised.pricePln
+        const priceLabel = byMode
+          ? (byCar
+            ? `${formatMarketPrice(carPrice)} ${c.byTurnkey}* (${c.byCarPrice}: ${formatMarketPrice(byCar.parts.carEur, "EUR")} ${byCar.base === "netto" ? c.byNet : c.byGross})`
+            : formatMarketPrice(carPrice))
+          : recognised.pricePln
           ? formatMarketPrice(carPrice)
           : `${formatMarketPrice(carPrice)} ${c.turnkeyShort} (${c.adPrice}: ${formatMarketPrice(recognised.carBruttoEur, "EUR")})`;
         if (canJudge) carVerdict = c.yourCarVerdict.replace(c.yourCar, carLabel).replace("{price}", priceLabel).replace("{share}", String(share)).replace("{diff}", diff);
@@ -4533,7 +4626,7 @@
             ${panels.map((panel) => `
               <section class="mobileMarketPanel is${sourceClass(panel.source)}">
                 <header class="mobileMarketPanelHead">
-                  <b>${marketBadge(panel.source)}${panel.foreign ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</b>
+                  <b>${marketBadge(panel.source)}${panel.foreign ? ` · ${escapeMarketHtml(turnkeyLabel)}` : ""}</b>
                   <small>${escapeMarketHtml(withCount(c.panelOffers, panel.panelStats.count))} · ${escapeMarketHtml(c.averagePrices)}: ${escapeMarketHtml(formatMarketPrice(panel.panelStats.middleLow))} – ${escapeMarketHtml(formatMarketPrice(panel.panelStats.middleHigh))}</small>
                 </header>
                 ${panel.html}
@@ -4548,14 +4641,14 @@
           <section class="mobileMarketCompareStrip" aria-label="${escapeMarketHtml(c.compareHeading)}">
             <div class="mobileMarketCompareHead">
               <strong>${escapeMarketHtml(c.compareHeading)}</strong>
-              <small>${escapeMarketHtml(c.compareHint)}</small>
+              <small>${escapeMarketHtml(byMode ? c.compareHintBy : c.compareHint)}</small>
             </div>
             <div class="mobileMarketCompareAxis">
               ${scaleTicks.filter((price) => price % labelStep === 0).map((price) => `<em style="left:${at(price)}">${escapeMarketHtml(formatMarketPrice(price))}</em>`).join("")}
             </div>
             ${panels.map((panel) => `
               <div class="mobileMarketCompareRow is${sourceClass(panel.source)}">
-                <span class="mobileMarketCompareName">${marketBadge(panel.source)}<small>${escapeMarketHtml(withCount(c.panelOffers, panel.panelStats.count))}${panel.foreign ? ` · ${escapeMarketHtml(c.turnkeyShort)}` : ""}</small></span>
+                <span class="mobileMarketCompareName">${marketBadge(panel.source)}<small>${escapeMarketHtml(withCount(c.panelOffers, panel.panelStats.count))}${panel.foreign ? ` · ${escapeMarketHtml(turnkeyLabel)}` : ""}</small></span>
                 <span class="mobileMarketCompareTrack">
                   ${scaleTicks.filter((price) => price % labelStep === 0).map((price) => `<i class="isGrid" style="left:${at(price)}"></i>`).join("")}
                   <i class="isWhisker" style="left:${at(panel.panelStats.min)};right:calc(100% - ${at(panel.panelStats.max)})"></i>
@@ -4577,21 +4670,44 @@
         const own = marketListings.filter((listing) => !source || listing.source === source);
         const currency = SOURCE_CURRENCY[source] || displayCurrency;
         const foreign = source && turnkeySources.includes(source) && own.some((listing) => listing.turnkeyPln);
-        const native = statsOf(own, (listing) => convertPrice(listing.originalPrice, listing.originalCurrency || currency, currency));
+        // Belarus: German rows show the car's price (net/gross) with the price in
+        // Minsk and turnkey; av.by its BYN price at the NBRB rate, in USD only.
+        const byRow = byMode && own.some((listing) => listing.byPrices);
+        const avbyUsd = byMode && source === "avby";
+        const native = byRow
+          ? statsOf(own, (listing) => listing.byPrices.parts.carEur)
+          : avbyUsd
+          ? statsOf(own, (listing) => listing.price)
+          : statsOf(own, (listing) => convertPrice(listing.originalPrice, listing.originalCurrency || currency, currency));
         const turnkeyStats = foreign ? statsOf(own, (listing) => listing.turnkeyPln) : null;
+        const deliveredStats = byRow ? statsOf(own, (listing) => listing.byPrices.deliveredUsd) : null;
+        const bases = byRow ? new Set(own.map((listing) => listing.byPrices.base)) : null;
+        const baseLabel = byRow ? byBaseLabel(bases.size === 1 ? [...bases][0] : "mixed") : "";
         // Compared in what the client pays: PLN, or USD for Belarus.
         const inPln = turnkeyStats || statsOf(own, (listing) => (byMode ? listing.price : priceInPln(listing.originalPrice, listing.originalCurrency || currency)));
-        return { source, stats: native, turnkeyStats, inPln };
+        return { source, stats: native, turnkeyStats, inPln, deliveredStats, baseLabel, avbyUsd };
       }).filter((row) => row.stats.count);
       const priceCell = (row, key) => {
-        const main = nativePrice(row.stats[key], row.source);
+        if (row.deliveredStats) {
+          return `${escapeMarketHtml(formatMarketPrice(row.stats[key], "EUR"))} <small class="mobileMarketGrossNote">${escapeMarketHtml(row.baseLabel)}</small>`
+            + `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.deliveredStats[key], "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
+            + `<small class="mobileMarketTurnkeyNote isStrong">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
+        }
+        const main = row.avbyUsd ? formatMarketPrice(row.stats[key], "USD") : nativePrice(row.stats[key], row.source);
         // A foreign ad's price is gross ("brutto"); under it the price ready in Poland.
         return row.turnkeyStats
           ? `${escapeMarketHtml(main)} <small class="mobileMarketGrossNote">brutto</small><small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</small>`
           : escapeMarketHtml(main);
       };
       const rangeCell = (row) => {
-        const main = `${nativePrice(row.stats.middleLow, row.source)} – ${nativePrice(row.stats.middleHigh, row.source)}`;
+        if (row.deliveredStats) {
+          return `${escapeMarketHtml(formatMarketPrice(row.stats.middleLow, "EUR"))} – ${escapeMarketHtml(formatMarketPrice(row.stats.middleHigh, "EUR"))} <small class="mobileMarketGrossNote">${escapeMarketHtml(row.baseLabel)}</small>`
+            + `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.deliveredStats.middleLow, "USD"))} – ${escapeMarketHtml(formatMarketPrice(row.deliveredStats.middleHigh, "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
+            + `<small class="mobileMarketTurnkeyNote isStrong">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, "USD"))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
+        }
+        const main = row.avbyUsd
+          ? `${formatMarketPrice(row.stats.middleLow, "USD")} – ${formatMarketPrice(row.stats.middleHigh, "USD")}`
+          : `${nativePrice(row.stats.middleLow, row.source)} – ${nativePrice(row.stats.middleHigh, row.source)}`;
         return row.turnkeyStats
           ? `${escapeMarketHtml(main)}<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, turnkeyCurrency))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</small>`
           : escapeMarketHtml(main);
@@ -4622,6 +4738,7 @@
         const difference = polish.inPln.median - row.turnkeyStats.median;
         const percent = Math.round((Math.abs(difference) / polish.inPln.median) * 100);
         return (difference > 0 ? c.conclusionByCheaper : c.conclusionByDearer)
+          .replace("{portal}", portalName(row.source))
           .replace("{amount}", formatMarketPrice(Math.abs(difference), "USD"))
           .replace("{percent}", String(percent));
       }) : polish ? foreignRows.map((row) => {
@@ -4711,7 +4828,7 @@
             </div>
           </div>
           <div class="mobileMarketTableScroll">
-            <table class="mobileMarketTable mobileMarketOffersTable">
+            <table class="mobileMarketTable mobileMarketOffersTable${byMode ? " isByPrices" : ""}">
               <thead>
                 <tr>
                   <th scope="col" class="isNum mobileMarketRowNumber">#</th>
@@ -4729,8 +4846,8 @@
                     <td class="isNum mobileMarketRowNumber">${index + 1}</td>
                     <td class="mobileMarketTableTitle">${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}</td>
                     <td class="isNum">${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
-                    <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} km` : "—")}</td>
-                    <td class="isNum">${listing.turnkeyPln
+                    <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} ${kmUnit()}` : "—")}</td>
+                    <td class="isNum">${listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln
                       ? `<b class="mobileMarketTurnkeyPrice">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
                       : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`}</td>
                     <td>${marketBadge(listing.source)}</td>
@@ -5247,6 +5364,8 @@
     renderHistory();
     renderMarketPicker();
     renderAnalysis();
+    // The "pick a car" page has no analysis to redraw: drawn again in the new language.
+    if (!activeAnalysis && !analysisView.hidden) renderFavoritesPage();
     renderFavoritesBar();
   }
 
@@ -5733,6 +5852,10 @@
   };
 
   window.AUTOGOOD_SELECTED_MARKETS = () => MARKET_SOURCES.filter((source) => chartSources[source]);
+  // av.by compared (Belarus): the page opens in Russian, as when av.by is picked.
+  if (chartSources.avby && document.documentElement.lang !== "ru") {
+    setTimeout(() => document.querySelector('[data-lang-button="ru"]')?.click(), 0);
+  }
   window.AUTOGOOD_MOBILE_LOG_SEARCH = logSearchToHistory;
 
   // Entering filters writes the search into the history by itself (a few
