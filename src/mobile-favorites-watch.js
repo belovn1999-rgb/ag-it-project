@@ -988,5 +988,26 @@
     if (event.key === STORAGE_KEY && shownEntry) render();
   });
 
-  window.AUTOGOOD_FAVORITES_WATCH = { show, render };
+  // The favourite's own price per portal, shared with page 3 "Monitoring"
+  // (its checks search with it too).
+  function setPortalPrice(id, source, side, rawValue) {
+    const value = cleanPrice(rawValue);
+    updateWatch(id, (watch) => {
+      const current = { ...(watch.prices?.[source] || {}) };
+      if (value === null) delete current[side];
+      else current[side] = value;
+      const prices = { ...watch.prices };
+      if (current.from === undefined && current.to === undefined) delete prices[source];
+      else prices[source] = current;
+      return { ...watch, prices, pricesChanged: true };
+    });
+  }
+
+  window.AUTOGOOD_FAVORITES_WATCH = {
+    show,
+    render,
+    portalPrice: (id, source) => portalPrice(watchOf(id), source),
+    setPortalPrice,
+    filtersPriceIn,
+  };
 })();
