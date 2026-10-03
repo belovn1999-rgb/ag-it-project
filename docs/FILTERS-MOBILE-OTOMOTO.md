@@ -74,7 +74,7 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 |---|---|---|---|
 | Марка | `ms` (числовой ID) ✅ | путь `/osobowe/<make>` ✅ | otomoto-алиасы: KGM→`ssangyong`, ORA→`gwm` (только `ora-03`,`ora-07`), Corvette→`chevrolet`+`corvette`, Asia Motors→`asia`, DS→`ds-automobiles`, Mercedes/VW коммерческие → основная марка. Нет в каталоге otomoto → ✗ «Marka» |
 | Модель | `ms` ID модели или группы ✅ | `search[filter_enum_model]` ✅/≈ | см. §5 |
-| Wersja (текст) | 4-й сегмент `ms` ✅ | ✗ | у otomoto нет свободного текста |
+| Wersja (текст) | 4-й сегмент `ms` ✅ | ≈ подмодель / ✗ | у otomoto нет свободного текста. С 10-03: если слово версии (≥ 3 букв) совпадает с частью подмодели otomoto этой модели — ищутся только они (Sportback → `a3-sportback`, Limousine → `a3-limousine`, Variant → `golf-variant`), и «Wersja» не считается пропущенной (`otomotoVersionSlugs`, `src/mobile.js`); иначе ✗ |
 | Nadwozie | `c` ✅ | `filter_enum_body_type` ✅ | limousine→`Limousine`/`sedan`, estate→`EstateCar`/`combi`, suv→`OffRoad`/`suv`, hatchback→`SmallCar`/`compact`, coupe→`SportsCar`/`coupe`, cabrio→`Cabrio`/`cabrio`, van→`Van`/`minivan`. **pickup** → mobile.de `OffRoad`, otomoto ✗; **other** → `OtherCar`, otomoto ✗ |
 | Liczba miejsc | `sc=от:до` ✅ | `filter_float_nr_seats:from/to` ✅ | |
 | Liczba drzwi (с 10-02 — один выбор **Dowolna / 2/3 / 4/5 / 6/7**, как на mobile.de) | `door=TWO_OR_THREE / FOUR_OR_FIVE / SIX_OR_SEVEN` ✅ | `filter_enum_door_count` — оба числа группы ✅; **7 нет** на otomoto → у 6/7 только 6 + предупреждение | Выбор (`data-mobile-doors-group`) пишет диапазон в скрытые `doorsFrom/doorsTo` — их читают все поиски и история, формат записей не менялся. Старая запись с диапазоном через группы открывается группой нижней границы (`doorGroupOf`) |

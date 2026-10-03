@@ -2784,6 +2784,18 @@ function appendOtomotoRange(params, filterId, fromValue, toValue) {
   if (to !== null) params.set(`search[${filterId}:to]`, String(to));
 }
 
+// "Wersja" is free text (a mobile.de field). When it names some of otomoto's
+// sub-models of the model ("Sportback" -> a3-sportback, "Variant" ->
+// golf-variant), otomoto searches only those, so both markets compare the
+// same body (audit 2026-10-03: "A3 Sportback" took in A3 Cabrio in Poland).
+function otomotoVersionSlugs(brand, model, version) {
+  const slugs = otomotoModelSelection(brand, model).slugs || [];
+  const words = String(version || "").toLowerCase().split(/[^a-z0-9]+/).filter((word) => word.length >= 3);
+  if (slugs.length < 2 || !words.length) return null;
+  const narrowed = slugs.filter((slug) => slug.split("-").slice(1).some((part) => words.includes(part)));
+  return narrowed.length && narrowed.length < slugs.length ? narrowed : null;
+}
+
 function buildOtomotoSearchUrl(filters) {
   const makeSlug = otomotoMakeSelection(filters.brand).slug;
   if (filters.model && !filters.brand) throw new Error(copy[state.lang].marketSearchChooseBrand);
@@ -2795,7 +2807,8 @@ function buildOtomotoSearchUrl(filters) {
   appendOtomotoValues(
     params,
     "filter_enum_model",
-    modelSelection.slugs.length || filters.model ? modelSelection.slugs : otomotoMakeModels[filters.brand],
+    otomotoVersionSlugs(filters.brand, filters.model, filters.version)
+      || (modelSelection.slugs.length || filters.model ? modelSelection.slugs : otomotoMakeModels[filters.brand]),
   );
   const body = otomotoBodyValues[filters.body];
   if (Array.isArray(body)) body.forEach((value, index) => params.set(`search[filter_enum_body_type][${index}]`, value));
@@ -2889,7 +2902,7 @@ function otomotoSkippedFilterLabels(filters) {
   };
 
   if (otomotoMakeSelection(filters.brand).unsupported) add(c.brandLabel);
-  if (filters.version) add(c.versionLabel);
+  if (filters.version && !otomotoVersionSlugs(filters.brand, filters.model, filters.version)) add(c.versionLabel);
   const modelSelection = otomotoModelSelection(filters.brand, filters.model);
   if (modelSelection.broad || modelSelection.unsupported) add(c.modelLabel);
   if (manualFuelValues(filters).some((fuel) => ["hybrid_diesel", "hybrid_petrol"].includes(fuel))) {
@@ -3371,9 +3384,15 @@ function estimateDeliveryInspection(bodyType, location) {
 function classifyEngineType(fuel, displacementCcm) {
   const normalized = String(fuel || "").toLowerCase();
   const isOver2000 = (Number(displacementCcm) || 0) > 2000;
-  const isPlugIn = /plug|phev/.test(normalized);
-  const isElectric = /elect|elektro|elektry|bev/.test(normalized);
-  const isHybrid = /hybrid|hybryd|hev/.test(normalized);
+  const isPlugIn = /plug|\bphev\b|laddhybrid|e-hybrid/.test(normalized);
+  const burnsFuel = /benzin|benzyna|bensin|petrol|diesel|\b(?:tdi|tsi|tfsi|crdi|gdi|hdi|dci)\b/.test(normalized);
+  // "Elektro/Benzin" (AutoScout24) is a hybrid, an "Elektro-Paket" in a
+  // diesel's title is not an electric car.
+  const isElectric = /elect|elektro|elektry|\bbev\b/.test(normalized) && !burnsFuel;
+  // Any hybrid, mild ones too (MHEV, 48V, eTSI, EQ Boost), takes the reduced
+  // excise (owner, 2026-10-03). "\bhev" keeps "Chevrolet" out.
+  const isHybrid = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b/.test(normalized)
+    || /(elektro|electric)\s*\/\s*(benzin|diesel|petrol)|(benzin|diesel|petrol)\s*\/\s*(elektro|electric)/.test(normalized);
   if (isElectric && !isHybrid) return 0;
   if (isPlugIn) return isOver2000 ? 1 : 0;
   if (isHybrid) return isOver2000 ? 1 : 2;

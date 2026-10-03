@@ -174,10 +174,47 @@
       adPrice: "cena w ogłoszeniu",
       turnkeyFootnote: "Cena „na gotowo” składa się z: ceny brutto z ogłoszenia + przeciętnego kosztu transportu, oględzin, akcyzy według rodzaju i pojemności silnika, tłumaczeń dokumentów, przeglądu technicznego oraz wynagrodzenia AUTOGOOD. Żeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
       conclusionHeading: "Wniosek",
-      conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce — przy mniejszym ryzyku, zwykle lepszym stanie i udokumentowanej historii serwisowej.",
-      conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce — w zamian zwykle mniejsze ryzyko, lepszy stan i udokumentowana historia serwisowa.",
+      conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce.",
+      conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce.",
       countryGermany: "z Niemiec",
       countrySweden: "ze Szwecji",
+      countryNetherlands: "z Holandii",
+      countryBelgium: "z Belgii",
+      countryAustria: "z Austrii",
+      countryLuxembourg: "z Luksemburga",
+      countryAbroad: "z zagranicy",
+      averageMileage: "Średni przebieg",
+      cepikShare: "Historia CEPiK",
+      importedShare: "Auta sprowadzone",
+      shareOf: "{count} z {total}",
+      briefPrice: "Cena",
+      briefMileage: "Przebieg",
+      briefSafety: "Bezpieczeństwo",
+      briefHistory: "Historia",
+      briefOrigin: "Pochodzenie",
+      conclusionTooFew: "Za mało ofert, żeby rzetelnie porównać rynki: Polska — {pl}, {portal} — {foreign} (potrzeba co najmniej {min} na każdym rynku). Poszerz filtry, np. rocznik albo przebieg.",
+      conclusionSameCarCheaper: "Takie samo auto ({year} r., {mileage}) {from} kosztuje na gotowo ok. {foreign}, w Polsce ok. {pl} — o {amount} ({percent}%) taniej.",
+      conclusionSameCarDearer: "Takie samo auto ({year} r., {mileage}) {from} kosztuje na gotowo ok. {foreign}, w Polsce ok. {pl} — o {amount} ({percent}%) drożej.",
+      sameCarNote: "„Takie samo auto”: cena liczona osobno na każdym rynku z cen ofert, zależnie od rocznika i przebiegu (wyposażenie i stan nie są uwzględnione). Mediany wszystkich ofert: Polska {pl}, na gotowo {foreign}.",
+      mediansNote: "Porównanie median wszystkich ofert. Do porównania aut z tym samym rocznikiem i przebiegiem potrzeba co najmniej {min} ofert na każdym rynku.",
+      mileageLower: "Auta {from} mają średnio {foreign} przebiegu, w Polsce {pl} — o {diff} ({percent}%) mniej. Mniejszy przebieg to mniejsze zużycie, mniejsze ryzyko przebytych szkód i lepszy stan techniczny, a przy odsprzedaży takie auto lepiej trzyma wartość.",
+      mileageHigher: "Auta {from} mają średnio {foreign} przebiegu, w Polsce {pl} — o {diff} ({percent}%) więcej.",
+      conclusionBenefits: "Do tego zwykle mniejsze ryzyko, lepszy stan i udokumentowana historia serwisowa — każde auto sprawdzamy przed zakupem.",
+      polishCepik: "Tylko {percent}% ogłoszeń ({count} z {total}) ma historię pojazdu potwierdzoną w CEPiK. W pozostałych przebieg i historia to wyłącznie deklaracja sprzedającego.",
+      polishImported: "{percent}% aut z podanym krajem pochodzenia ({count} z {total}) to auta sprowadzone z zagranicy. Komis sprowadził je wcześniej i dolicza do ceny swoją marżę.",
+      polishImportedFrom: "{percent}% aut z podanym krajem pochodzenia ({count} z {total}) to auta sprowadzone, najczęściej {from}. Komis sprowadził je wcześniej i dolicza do ceny swoją marżę.",
+      polishOffer: "Z AUTOGOOD sprowadzasz auto bezpośrednio od sprzedającego za granicą: sprawdzone przed zakupem, z udokumentowaną historią i bez marży komisu.",
+      originFrom: { d: "z Niemiec", b: "z Belgii", nl: "z Holandii", f: "z Francji", i: "z Włoch", a: "z Austrii", ch: "ze Szwajcarii", s: "ze Szwecji", dk: "z Danii", cz: "z Czech", usa: "z USA", cdn: "z Kanady", gb: "z Wielkiej Brytanii", l: "z Luksemburga", e: "z Hiszpanii", kr: "z Korei", n: "z Norwegii", fin: "z Finlandii", sk: "ze Słowacji", h: "z Węgier", lt: "z Litwy" },
+      ccmProgress: "Sprawdzam pojemność silnika w ogłoszeniach mobile.de (akcyza): {done} z {total}…",
+      ccmUnknown: "Bez pojemności silnika w ogłoszeniu: {count} {offers} — akcyza liczona jak dla silnika do 2000 cm³.",
+      breakdownTitle: "Z czego składa się cena na gotowo* — przykład: auto {from} ze środka rynku (najbliżej mediany)",
+      partCar: "Auto: {price} brutto × kurs {rate}",
+      partTransport: "Transport (średnio, z VAT)",
+      partInspection: "Oględziny (średnio, z VAT)",
+      partExcise: "Akcyza {rate}%",
+      partCommission: "Usługa AUTOGOOD (z VAT)",
+      partFees: "Przegląd techniczny i tłumaczenia",
+      partTotal: "Razem na gotowo",
       listScreenshotButton: "Kopiuj listę",
       listPdfButton: "Lista PDF",
       sourcesPicker: "Analiza rynków:",
@@ -519,10 +556,47 @@
       adPrice: "цена в объявлении",
       turnkeyFootnote: "Цена «под ключ» складывается из цены брутто в объявлении + средней стоимости доставки, осмотра, акциза по типу и объёму двигателя, переводов документов, техосмотра и вознаграждения AUTOGOOD. Чтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
       conclusionHeading: "Вывод",
-      conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше, — при меньших рисках, обычно лучшем состоянии и подтверждённой сервисной истории.",
-      conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше, — зато обычно меньше рисков, лучше состояние и есть подтверждённая сервисная история.",
+      conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше.",
+      conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше.",
       countryGermany: "из Германии",
       countrySweden: "из Швеции",
+      countryNetherlands: "из Нидерландов",
+      countryBelgium: "из Бельгии",
+      countryAustria: "из Австрии",
+      countryLuxembourg: "из Люксембурга",
+      countryAbroad: "из-за границы",
+      averageMileage: "Средний пробег",
+      cepikShare: "История CEPiK",
+      importedShare: "Пригнанные авто",
+      shareOf: "{count} из {total}",
+      briefPrice: "Цена",
+      briefMileage: "Пробег",
+      briefSafety: "Надёжность",
+      briefHistory: "История",
+      briefOrigin: "Происхождение",
+      conclusionTooFew: "Слишком мало предложений для надёжного сравнения рынков: Польша — {pl}, {portal} — {foreign} (нужно не меньше {min} на каждом рынке). Расширьте фильтры, например год или пробег.",
+      conclusionSameCarCheaper: "Такое же авто ({year} г., {mileage}) {from} под ключ стоит около {foreign}, в Польше — около {pl}: на {amount} ({percent}%) дешевле.",
+      conclusionSameCarDearer: "Такое же авто ({year} г., {mileage}) {from} под ключ стоит около {foreign}, в Польше — около {pl}: на {amount} ({percent}%) дороже.",
+      sameCarNote: "«Такое же авто»: цена считается отдельно на каждом рынке по ценам предложений в зависимости от года и пробега (комплектация и состояние не учитываются). Медианы всех предложений: Польша {pl}, под ключ {foreign}.",
+      mediansNote: "Сравнение медиан всех предложений. Чтобы сравнить авто того же года и пробега, нужно не меньше {min} предложений на каждом рынке.",
+      mileageLower: "У авто {from} средний пробег {foreign}, в Польше {pl} — на {diff} ({percent}%) меньше. Меньший пробег — это меньший износ, меньше риск пережитых ДТП и лучше техническое состояние, а при перепродаже такое авто лучше держит цену.",
+      mileageHigher: "У авто {from} средний пробег {foreign}, в Польше {pl} — на {diff} ({percent}%) больше.",
+      conclusionBenefits: "Кроме того, обычно меньше рисков, лучше состояние и подтверждённая сервисная история — каждое авто мы проверяем перед покупкой.",
+      polishCepik: "Только у {percent}% объявлений ({count} из {total}) история авто подтверждена в CEPiK. В остальных пробег и история — только слова продавца.",
+      polishImported: "{percent}% авто с указанной страной происхождения ({count} из {total}) пригнаны из-за границы. Комис уже привёз их и добавляет к цене свою наценку.",
+      polishImportedFrom: "{percent}% авто с указанной страной происхождения ({count} из {total}) пригнаны, чаще всего {from}. Комис уже привёз их и добавляет к цене свою наценку.",
+      polishOffer: "С AUTOGOOD вы привозите авто напрямую от продавца за границей: проверенное перед покупкой, с подтверждённой историей и без наценки комиса.",
+      originFrom: { d: "из Германии", b: "из Бельгии", nl: "из Нидерландов", f: "из Франции", i: "из Италии", a: "из Австрии", ch: "из Швейцарии", s: "из Швеции", dk: "из Дании", cz: "из Чехии", usa: "из США", cdn: "из Канады", gb: "из Великобритании", l: "из Люксембурга", e: "из Испании", kr: "из Кореи", n: "из Норвегии", fin: "из Финляндии", sk: "из Словакии", h: "из Венгрии", lt: "из Литвы" },
+      ccmProgress: "Уточняю объём двигателя в объявлениях mobile.de (акциз): {done} из {total}…",
+      ccmUnknown: "Без объёма двигателя в объявлении: {count} {offers} — акциз считается как для двигателя до 2000 см³.",
+      breakdownTitle: "Из чего складывается цена под ключ* — пример: авто {from} из середины рынка (ближе всего к медиане)",
+      partCar: "Авто: {price} брутто × курс {rate}",
+      partTransport: "Доставка (в среднем, с VAT)",
+      partInspection: "Осмотр (в среднем, с VAT)",
+      partExcise: "Акциз {rate}%",
+      partCommission: "Услуга AUTOGOOD (с VAT)",
+      partFees: "Техосмотр и переводы",
+      partTotal: "Итого под ключ",
       listScreenshotButton: "Копировать список",
       listPdfButton: "Список PDF",
       sourcesPicker: "Анализ рынков:",
@@ -1697,13 +1771,7 @@
       // Foreign markets: also what the client pays in Poland ("na gotowo").
       const turnkey = window.AUTOGOOD_TURNKEY;
       if (TURNKEY_SOURCES.includes(source) && turnkey) {
-        const turnkeyPrices = kept.map((listing) => turnkey.turnkeyAverage({
-          price: listing.price,
-          currency: listing.currency || currency,
-          fuel: listing.fuel,
-          title: listing.title,
-          displacementCcm: listing.displacementCcm,
-        }, filters).total).sort((left, right) => left - right);
+        const turnkeyPrices = kept.map((listing) => turnkey.turnkeyAverage(turnkeyInput(listing, listing.price, listing.currency || currency), filters).total).sort((left, right) => left - right);
         point[source].turnkey = {
           median: Math.round(percentile(turnkeyPrices, 0.5)),
           p25: Math.round(percentile(turnkeyPrices, 0.25)),
@@ -1782,6 +1850,21 @@
     return plain ? `${plain[1]} KM` : text.slice(0, 30);
   }
 
+  // What the turnkey estimate needs of an offer: price, fuel, name and the
+  // engine size — from the result list, else from its ad once read
+  // (mobile-ad-details.js), which decides the excise class.
+  function turnkeyInput(listing, price = listing.price, currency = listing.currency) {
+    const details = listingSource(listing) === "mobile" ? window.AUTOGOOD_AD_DETAILS?.get(listing.id) : null;
+    return {
+      price,
+      currency: currency || SOURCE_CURRENCY[listingSource(listing)],
+      fuel: listing.fuel || details?.fuel || "",
+      title: listing.title,
+      subtitle: listing.subtitle,
+      displacementCcm: Number(listing.displacementCcm) || Number(details?.ccm) || null,
+    };
+  }
+
   function compactOffers(listings, source, filters) {
     const own = listings.filter((listing) => listingSource(listing) === source);
     const flagged = suspectOffers(own, (listing) => priceInPln(listing.price, listing.currency || SOURCE_CURRENCY[source]));
@@ -1804,13 +1887,7 @@
       ccm: Number(listing.displacementCcm) || undefined,
       reg: listing.firstRegistration || undefined,
       fuel: String(listing.fuel || "").slice(0, 20) || undefined,
-      turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage({
-        price: listing.price,
-        currency: listing.currency || SOURCE_CURRENCY[source],
-        fuel: listing.fuel,
-        title: listing.title,
-        displacementCcm: listing.displacementCcm,
-      }, filters).total) : null,
+      turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage(turnkeyInput(listing, listing.price, listing.currency || SOURCE_CURRENCY[source]), filters).total) : null,
       suspect: flagged.has(listing) || undefined,
     }));
     const total = Math.max(offers.length, ...own.map((listing) => Number(listing.marketTotal) || 0));
@@ -4029,6 +4106,90 @@
     "leasings?[oö]verl[aå]t", "[oö]verta leasing",
   ].join("|"), "i");
 
+  // ---- Comparing markets for the client ---------------------------------
+  // A conclusion needs this many offers on each market; "the same car" needs
+  // SAME_CAR_MIN (a fit of price on year and mileage per market).
+  const COMPARE_MIN = 8;
+  const SAME_CAR_MIN = 20;
+
+  // Mean mileage of offers that state one (arithmetic mean, owner 2026-10-03).
+  function meanMileage(list) {
+    const values = list.map((listing) => Number(listing.mileage)).filter((value) => value > 0 && value < 1500000);
+    return values.length ? { mean: Math.round(values.reduce((sum, value) => sum + value, 0) / values.length), count: values.length } : null;
+  }
+
+  // Least squares (normal equations, Gauss with pivoting); null if singular.
+  function leastSquares(rows, targets) {
+    const size = rows[0].length;
+    const matrix = Array.from({ length: size }, () => Array(size + 1).fill(0));
+    rows.forEach((row, index) => {
+      for (let i = 0; i < size; i += 1) {
+        matrix[i][size] += row[i] * targets[index];
+        for (let j = 0; j < size; j += 1) matrix[i][j] += row[i] * row[j];
+      }
+    });
+    for (let column = 0; column < size; column += 1) {
+      let pivot = column;
+      for (let row = column + 1; row < size; row += 1) if (Math.abs(matrix[row][column]) > Math.abs(matrix[pivot][column])) pivot = row;
+      if (Math.abs(matrix[pivot][column]) < 1e-9) return null;
+      [matrix[column], matrix[pivot]] = [matrix[pivot], matrix[column]];
+      for (let row = 0; row < size; row += 1) {
+        if (row === column) continue;
+        const factor = matrix[row][column] / matrix[column][column];
+        for (let j = column; j <= size; j += 1) matrix[row][j] -= factor * matrix[column][j];
+      }
+    }
+    return matrix.map((row, index) => row[size] / row[index]);
+  }
+
+  // "The same car" on two markets: on each market ln(price) is fitted on the
+  // year and the mileage, then both are priced for one reference car (the
+  // median year and mileage of both markets together). Null when a market
+  // has too few offers, the reference lies outside its offers, or the fit
+  // makes no sense (a newer car cheaper, more kilometres dearer).
+  function sameCarPrices(markets) {
+    const usable = markets.map((list) => list
+      .map((listing) => ({ year: Number(listing.year), km: Number(listing.mileage), price: Number(listing.price) }))
+      .filter((point) => point.year > 1980 && point.km > 0 && point.km < 1500000 && point.price > 0));
+    if (usable.some((points) => points.length < SAME_CAR_MIN)) return null;
+    const middle = (values) => percentile([...values].sort((left, right) => left - right), 0.5);
+    const all = usable.flat();
+    const year = Math.round(middle(all.map((point) => point.year)));
+    const km = Math.round(middle(all.map((point) => point.km)) / 1000) * 1000;
+    const prices = [];
+    for (const points of usable) {
+      const years = points.map((point) => point.year);
+      const kms = points.map((point) => point.km);
+      if (year < Math.min(...years) || year > Math.max(...years) || km < Math.min(...kms) || km > Math.max(...kms)) return null;
+      const withYear = new Set(years).size > 1;
+      const withKm = Math.max(...kms) - Math.min(...kms) >= 10000;
+      const rows = points.map((point) => [1, ...(withYear ? [point.year - year] : []), ...(withKm ? [(point.km - km) / 100000] : [])]);
+      const fit = leastSquares(rows, points.map((point) => Math.log(point.price)));
+      if (!fit) return null;
+      if (withYear && fit[1] < 0) return null;
+      if (withKm && fit[fit.length - 1] > 0) return null;
+      prices.push(Math.round(Math.exp(fit[0]) / 100) * 100);
+    }
+    return { year, km, prices };
+  }
+
+  // Otomoto alone: how many ads have their history confirmed in CEPiK and
+  // how many cars were imported (stated country of origin other than Poland).
+  function polishMarketShares(list) {
+    const checked = list.filter((listing) => listing.cepik === "1" || listing.cepik === "0");
+    const stated = list.filter((listing) => listing.origin);
+    const imported = stated.filter((listing) => listing.origin !== "pl");
+    const counts = {};
+    imported.forEach((listing) => {
+      if (listing.origin !== "others") counts[listing.origin] = (counts[listing.origin] || 0) + 1;
+    });
+    const top = Object.entries(counts).sort((left, right) => right[1] - left[1])[0] || null;
+    return {
+      cepik: checked.length >= COMPARE_MIN ? { count: checked.filter((listing) => listing.cepik === "1").length, total: checked.length } : null,
+      imported: stated.length >= COMPARE_MIN ? { count: imported.length, total: stated.length, top: top ? top[0] : "" } : null,
+    };
+  }
+
   function suspectOffers(listings, valueOf) {
     const medianOf = (items) => (items.length >= 5 ? percentile(items.map(valueOf).sort((left, right) => left - right), 0.5) : 0);
     const overall = medianOf(listings);
@@ -4078,6 +4239,35 @@
       year: registered ? Number(registered[2]) : listing.year,
       month: registered ? Number(registered[1]) : 0,
       electric: /electr|elektr/i.test(`${details?.fuel || ""} ${listing.fuel || ""}`),
+    });
+  }
+
+  // Engine sizes for the excise (Poland): mobile.de ads whose result card has
+  // none are read one by one; each id once per page, so an unreachable
+  // importer is not asked again and again.
+  const ccmTried = new Set();
+  let ccmProgress = null;
+  function startCcmDetails(ids) {
+    const details = window.AUTOGOOD_AD_DETAILS;
+    if (!details || details.isRunning() || !ids.length) return;
+    ids.forEach((id) => ccmTried.add(id));
+    const analysis = activeAnalysis;
+    // The progress line shows at once (each id is tried once, so no loop).
+    ccmProgress = { done: 0, total: ids.length };
+    renderAnalysis();
+    details.enrich(ids, {
+      keepGoing: () => activeAnalysis === analysis,
+      onProgress: (done, total) => {
+        ccmProgress = done < total ? { done, total } : null;
+        if (activeAnalysis !== analysis) return;
+        if (done === total || done % 10 === 0) renderAnalysis();
+        else document.querySelectorAll("[data-ccm-progress]").forEach((node) => {
+          node.textContent = copy().ccmProgress.replace("{done}", String(done)).replace("{total}", String(total));
+        });
+      },
+    }).then(() => {
+      ccmProgress = null;
+      if (activeAnalysis === analysis) renderAnalysis();
     });
   }
 
@@ -4209,13 +4399,10 @@
         return;
       }
       if (!TURNKEY_SOURCES.includes(listing.source) || !turnkey) return;
-      listing.turnkeyPln = turnkey.turnkeyAverage({
-        price: listing.originalPrice,
-        currency: listing.originalCurrency || SOURCE_CURRENCY[listing.source],
-        fuel: listing.fuel,
-        title: listing.title,
-        displacementCcm: listing.displacementCcm,
-      }, filters, rates).total;
+      const input = turnkeyInput(listing, listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source]);
+      listing.turnkeyPln = turnkey.turnkeyAverage(input, filters, rates).total;
+      // Where the engine size of the excise came from (ad, name, filters, unknown).
+      listing.engine = turnkey.engineInfo?.(input, filters) || null;
       // The dot, the statistics of the chart and the table use this price.
       listing.bruttoPln = listing.price;
       listing.price = Math.round(listing.turnkeyPln);
@@ -4229,6 +4416,11 @@
       const unread = listings.filter((listing) => listingSource(listing) === "mobile" && !window.AUTOGOOD_AD_DETAILS?.get(listing.id));
       setTimeout(() => startByDetails(unread.map((listing) => listing.id)), 0);
     }
+    // Excise without the engine size: mobile.de ads are read one by one and
+    // the chart fills in; the rest are counted as up to 2000 cm³ (footnote).
+    const unknownEngine = byMode ? [] : marketListings.filter((listing) => listing.engine?.source === "unknown");
+    const engineToRead = unknownEngine.filter((listing) => listing.source === "mobile" && !ccmTried.has(String(listing.id)));
+    if (engineToRead.length) setTimeout(() => startCcmDetails(engineToRead.map((listing) => String(listing.id))), 0);
     const bySaving = bySavings.length ? percentile([...bySavings].sort((left, right) => left - right), 0.5) : 0;
     // Belarus: three prices with every German offer — the car (net or gross),
     // the car in Minsk, and turnkey with customs clearance.
@@ -4701,8 +4893,11 @@
         const baseLabel = byRow ? byBaseLabel(bases.size === 1 ? [...bases][0] : "mixed") : "";
         // Compared in what the client pays: PLN, or USD for Belarus.
         const inPln = turnkeyStats || statsOf(own, (listing) => (byMode ? listing.price : priceInPln(listing.originalPrice, listing.originalCurrency || currency)));
-        return { source, stats: native, turnkeyStats, inPln, deliveredStats, baseLabel, avbyUsd };
+        return { source, stats: native, turnkeyStats, inPln, deliveredStats, baseLabel, avbyUsd, own, mileage: meanMileage(own) };
       }).filter((row) => row.stats.count);
+      // Otomoto alone: CEPiK history and imported cars, in the table and the conclusion.
+      const polishShares = onlyOtomoto && statRows[0] ? polishMarketShares(statRows[0].own) : null;
+      const shareHtml = (share) => (share ? `${Math.round((share.count / share.total) * 100)}%<small class="mobileMarketStatsNote">${escapeMarketHtml(c.shareOf.replace("{count}", String(share.count)).replace("{total}", String(share.total)))}</small>` : "—");
       const priceCell = (row, key) => {
         if (row.deliveredStats) {
           return `${escapeMarketHtml(formatMarketPrice(row.stats[key], "EUR"))} <small class="mobileMarketGrossNote">${escapeMarketHtml(row.baseLabel)}</small>`
@@ -4735,6 +4930,12 @@
         { label: c.median, value: (row) => row.inPln.median, html: (row) => priceCell(row, "median") },
         { label: c.averagePrices, value: (row) => (row.inPln.middleLow + row.inPln.middleHigh) / 2, html: rangeCell, wide: true },
         { label: c.middleOffers, value: (row) => row.stats.middleCount, html: (row) => escapeMarketHtml(String(row.stats.middleCount)) },
+        // Mileage moves the price: shown for every market (lower = green).
+        { label: c.averageMileage, cls: "isKm", value: (row) => (row.mileage ? row.mileage.mean : NaN), html: (row) => (row.mileage ? escapeMarketHtml(`${numberFormat().format(row.mileage.mean)} km`) : "—") },
+        ...(polishShares && (polishShares.cepik || polishShares.imported) ? [
+          { label: c.cepikShare, value: () => NaN, html: () => shareHtml(polishShares.cepik) },
+          { label: c.importedShare, value: () => NaN, html: () => shareHtml(polishShares.imported) },
+        ] : []),
       ];
       const compared = statRows.length > 1;
       const tone = (column, row, index) => {
@@ -4750,6 +4951,94 @@
       // a foreign market's median "pod klucz" against the Polish median.
       const polish = statRows.find((row) => row.source === (byMode ? "avby" : "otomoto"));
       const foreignRows = statRows.filter((row) => row.turnkeyStats);
+      // "z Niemiec" from the searched country; mobile.de and AutoScout24
+      // together are told apart by the portal.
+      const fromCountry = { DE: c.countryGermany, SE: c.countrySweden, NL: c.countryNetherlands, BE: c.countryBelgium, AT: c.countryAustria, LU: c.countryLuxembourg };
+      const fromLabel = (source) => {
+        if (source === "blocket") return c.countrySweden;
+        const countries = (filters.countries || []).filter(Boolean);
+        const base = countries.length === 1 ? (fromCountry[countries[0]] || c.countryAbroad) : c.countryAbroad;
+        return foreignRows.some((other) => other.source !== source && other.source !== "blocket") ? `${base} (${portalName(source)})` : base;
+      };
+      const plnText = (value) => formatMarketPrice(value, "PLN");
+      const kmText = (value) => `${numberFormat().format(value)} km`;
+      // One foreign market against Poland: price (the same car when both
+      // markets have enough offers, else the medians), then mileage.
+      const importConclusion = (row) => {
+        const from = fromLabel(row.source);
+        if (polish.stats.count < COMPARE_MIN || row.stats.count < COMPARE_MIN) {
+          return [{ label: c.briefPrice, text: c.conclusionTooFew.replace("{pl}", String(polish.stats.count)).replace("{portal}", portalName(row.source)).replace("{foreign}", String(row.stats.count)).replace("{min}", String(COMPARE_MIN)) }];
+        }
+        const lines = [];
+        const same = sameCarPrices([polish.own, row.own]);
+        if (same) {
+          const [polishPrice, foreignPrice] = same.prices;
+          const difference = polishPrice - foreignPrice;
+          lines.push({
+            label: c.briefPrice,
+            compared: true,
+            text: (difference > 0 ? c.conclusionSameCarCheaper : c.conclusionSameCarDearer)
+              .replace("{year}", String(same.year)).replace("{mileage}", kmText(same.km)).replace("{from}", from)
+              .replace("{foreign}", plnText(foreignPrice)).replace("{pl}", plnText(polishPrice))
+              .replace("{amount}", plnText(Math.abs(difference))).replace("{percent}", String(Math.round((Math.abs(difference) / polishPrice) * 100))),
+            note: c.sameCarNote.replace("{pl}", plnText(polish.inPln.median)).replace("{foreign}", plnText(row.turnkeyStats.median)),
+          });
+        } else {
+          const difference = polish.inPln.median - row.turnkeyStats.median;
+          lines.push({
+            label: c.briefPrice,
+            compared: true,
+            text: (difference > 0 ? c.conclusionCheaper : c.conclusionDearer)
+              .replace("{country}", from)
+              .replace("{amount}", plnText(Math.abs(difference)))
+              .replace("{percent}", String(Math.round((Math.abs(difference) / polish.inPln.median) * 100))),
+            note: c.mediansNote.replace("{min}", String(SAME_CAR_MIN)),
+          });
+        }
+        if (polish.mileage && row.mileage) {
+          const difference = polish.mileage.mean - row.mileage.mean;
+          const percent = Math.round((Math.abs(difference) / polish.mileage.mean) * 100);
+          if (percent >= 1) {
+            lines.push({
+              label: c.briefMileage,
+              text: (difference > 0 ? c.mileageLower : c.mileageHigher)
+                .replace("{from}", from).replace("{foreign}", kmText(row.mileage.mean)).replace("{pl}", kmText(polish.mileage.mean))
+                .replace("{diff}", kmText(Math.abs(difference))).replace("{percent}", String(percent)),
+            });
+          }
+        }
+        return lines;
+      };
+      // What "na gotowo" is made of, for the car in the middle of each foreign
+      // market (the offer closest to its median), like the calculator shows it.
+      const percentText = (value) => value.toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { maximumFractionDigits: 2 });
+      const breakdownHtml = byMode || !turnkey ? "" : foreignRows.map((row) => {
+        const median = row.turnkeyStats.median;
+        const example = row.own.filter((listing) => listing.turnkeyPln)
+          .sort((left, right) => Math.abs(left.turnkeyPln - median) - Math.abs(right.turnkeyPln - median))[0];
+        if (!example) return "";
+        const currency = example.originalCurrency || SOURCE_CURRENCY[example.source];
+        const result = turnkey.turnkeyAverage(turnkeyInput(example, example.originalPrice, currency), filters, rates);
+        const exciseRate = (turnkey.EXCISE_RATES?.[example.engine?.index] ?? 0) * 100;
+        const rateValue = currency === "SEK" ? rates.sek : rates.eur;
+        const parts = [
+          ["Car", c.partCar.replace("{price}", formatMarketPrice(example.originalPrice, currency)).replace("{rate}", rateValue.toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { minimumFractionDigits: 2, maximumFractionDigits: currency === "SEK" ? 4 : 2 })), result.parts.car],
+          ["Transport", c.partTransport, result.parts.transport],
+          ["Inspection", c.partInspection, result.parts.inspection],
+          ["Excise", c.partExcise.replace("{rate}", percentText(exciseRate)), result.parts.excise],
+          ["Commission", c.partCommission, result.parts.commission],
+          ["Fees", c.partFees, result.parts.fees],
+        ].filter((part) => part[2] > 0);
+        return `
+          <section class="mobileMarketBreakdown">
+            <p class="mobileMarketBreakdownTitle">${escapeMarketHtml(c.breakdownTitle.replace("{from}", fromLabel(row.source)))}</p>
+            <div class="mobileMarketBreakdownBar" aria-hidden="true">${parts.map(([key, label, value]) => `<i class="is${key}" style="flex:${value} 1 0" title="${escapeMarketHtml(`${label}: ${plnText(value)}`)}"></i>`).join("")}</div>
+            <ul class="mobileMarketBreakdownList">
+              ${parts.map(([key, label, value]) => `<li><i class="is${key}"></i><span>${escapeMarketHtml(label)}</span><b>${escapeMarketHtml(plnText(value))}</b></li>`).join("")}
+              <li class="isTotal"><span>${escapeMarketHtml(c.partTotal)}</span><b>${escapeMarketHtml(plnText(result.total))}</b></li>
+            </ul>
+          </section>`;
+      }).join("");
       const conclusions = polish && byMode ? foreignRows.map((row) => {
         const difference = polish.inPln.median - row.turnkeyStats.median;
         const percent = Math.round((Math.abs(difference) / polish.inPln.median) * 100);
@@ -4757,26 +5046,33 @@
           .replace("{portal}", portalName(row.source))
           .replace("{amount}", formatMarketPrice(Math.abs(difference), "USD"))
           .replace("{percent}", String(percent));
-      }) : polish ? foreignRows.map((row) => {
-        const difference = polish.inPln.median - row.turnkeyStats.median;
-        const percent = Math.round((Math.abs(difference) / polish.inPln.median) * 100);
-        const country = row.source === "blocket" ? c.countrySweden : c.countryGermany;
-        return (difference > 0 ? c.conclusionCheaper : c.conclusionDearer)
-          .replace("{country}", country)
-          .replace("{amount}", formatMarketPrice(Math.abs(difference), "PLN"))
-          .replace("{percent}", String(percent));
-      }) : [];
+      }) : polish ? foreignRows.flatMap((row) => importConclusion(row)) : [];
+      // The brief ends with what buying through AUTOGOOD gives (owner 2026-10-03).
+      if (!byMode && polish && conclusions.some((item) => item.compared)) conclusions.push({ label: c.briefSafety, text: c.conclusionBenefits });
+      // Otomoto alone: how much of the Polish market is unverified or imported.
+      if (polishShares && (polishShares.cepik || polishShares.imported)) {
+        const percentOf = (share) => String(Math.round((share.count / share.total) * 100));
+        if (polishShares.cepik) conclusions.push({ label: c.briefHistory, text: c.polishCepik.replace("{percent}", percentOf(polishShares.cepik)).replace("{count}", String(polishShares.cepik.count)).replace("{total}", String(polishShares.cepik.total)) });
+        if (polishShares.imported) {
+          const from = c.originFrom[polishShares.imported.top] || "";
+          conclusions.push({ label: c.briefOrigin, text: (from ? c.polishImportedFrom : c.polishImported).replace("{percent}", percentOf(polishShares.imported)).replace("{count}", String(polishShares.imported.count)).replace("{total}", String(polishShares.imported.total)).replace("{from}", from) });
+        }
+        conclusions.push({ label: c.briefSafety, text: c.polishOffer });
+      }
       if (conclusions.length) {
+        const conclusionLine = (item) => (typeof item === "string"
+          ? `<p>${escapeMarketHtml(item)}</p>`
+          : `<p>${item.label ? `<b>${escapeMarketHtml(item.label)}.</b> ` : ""}${escapeMarketHtml(item.text)}${item.note ? `<small class="mobileMarketConclusionNote">${escapeMarketHtml(item.note)}</small>` : ""}</p>`);
         summaryContent = `
           <section class="mobileMarketCard mobileMarketSummaryCard" aria-label="${escapeMarketHtml(c.conclusionHeading)}" data-report-list-hide>
-            <div class="mobileMarketConclusion"><strong>${escapeMarketHtml(c.conclusionHeading)}</strong>${conclusions.map((text) => `<p>${escapeMarketHtml(text)}</p>`).join("")}</div>
+            <div class="mobileMarketConclusion"><strong>${escapeMarketHtml(c.conclusionHeading)}</strong>${conclusions.map(conclusionLine).join("")}</div>
           </section>`;
       }
       statsContent = `
         <div class="mobileMarketStatsBody">
         ${filters.priceFrom || filters.priceTo ? `<p class="mobileMarketCaution">${escapeMarketHtml(c.priceFilterWarning)}</p>` : ""}
         ${statistics.min < statistics.median / 3 || statistics.max > statistics.median * 3 ? `<p class="mobileMarketCaution">${escapeMarketHtml(c.wideRangeWarning)}</p>` : ""}
-        <div class="mobileMarketStatsTable${compared ? " isCompared" : ""}" role="table">
+        <div class="mobileMarketStatsTable${compared ? " isCompared" : ""}${statColumns.length > 7 ? " hasPolishShares" : ""}" role="table">
           <div class="mobileMarketStatsRow isHead" role="row">
             ${compared ? `<span role="columnheader">${escapeMarketHtml(c.marketsHeading)}</span>` : ""}
             ${statColumns.map((column) => `<span role="columnheader"${column.wide ? ' class="isWide"' : ""}>${escapeMarketHtml(column.label)}</span>`).join("")}
@@ -4787,7 +5083,7 @@
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
-                return `<b class="${column.wide ? "isWide" : ""}${tone(column, row, index)}" role="cell">${column.html(row)}${note}</b>`;
+                return `<b class="${column.wide ? "isWide" : ""}${column.cls ? ` ${column.cls}` : ""}${tone(column, row, index)}" role="cell">${column.html(row)}${note}</b>`;
               }).join("")}
             </div>`).join("")}
         </div>
@@ -4829,6 +5125,9 @@
           ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">* ${escapeMarketHtml(byMode
             ? c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD"))
             : c.turnkeyFootnote)}</p>` : ""}
+          ${ccmProgress ? `<p class="mobileMarketAxisNote" data-ccm-progress>${escapeMarketHtml(c.ccmProgress.replace("{done}", String(ccmProgress.done)).replace("{total}", String(ccmProgress.total)))}</p>` : ""}
+          ${unknownEngine.length && !ccmProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.ccmUnknown, unknownEngine.length))}</p>` : ""}
+          ${breakdownHtml}
           ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}
           ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.hiddenNoAxis, hiddenByAxis))}</p>` : ""}
 
@@ -5672,6 +5971,11 @@
     if (button) openHistoryAnalysis(button.dataset.mobileMarketHistoryAnalysis);
   };
   historyLists.forEach((list) => list.addEventListener("click", handleHistoryClick));
+  // The calculator's rate arrives after the page: an open analysis counts
+  // "na gotowo" again with it (before, it kept the old rates-file rate).
+  window.addEventListener("autogood:rates", () => {
+    if (activeAnalysis) renderAnalysis();
+  });
   analysisOpens.forEach((button) => button.addEventListener("click", openAnalysis));
   analysisBack.addEventListener("click", closeAnalysis);
   document.querySelectorAll("[data-lang-button]").forEach((button) => {

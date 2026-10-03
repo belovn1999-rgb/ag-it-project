@@ -89,20 +89,52 @@
     });
   }
 
-  // Engine class for the excise: the offer's own fuel and engine size, else
-  // what the search asks for (fuels, engine size range).
-  function engineClassFor(listing = {}, filters = {}) {
+  // Any hybrid named anywhere (mild ones too: MHEV, 48V, eTSI, EQ Boost)
+  // takes the reduced excise (owner, 2026-10-03). Plug-ins only when named.
+  const HYBRID_WORDS = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b/;
+  const PLUGIN_WORDS = /plug|\bphev\b|laddhybrid|e-hybrid/;
+  // Engine size written in the name: "2.0 TDI", "1,5 T-GDI", "Diesel 1.9".
+  function litresInText(text) {
+    const match = String(text || "").match(/(?:^|[\s(/])([0-7])[.,]([0-9])(?=$|[\s)/a-z-])/i);
+    if (!match) return 0;
+    const ccm = Number(match[1]) * 1000 + Number(match[2]) * 100;
+    return ccm >= 600 && ccm <= 7000 ? ccm : 0;
+  }
+
+  // Engine class for the excise and where its engine size came from:
+  // the ad ("ad"), the name ("title"), the search range ("filter") or nothing
+  // ("unknown", counted as up to 2000 cm³). The fuel is the offer's own fuel
+  // field (a title "el. Sitze" is no electric car); a hybrid named in the
+  // title counts.
+  function engineInfo(listing = {}, filters = {}) {
     const fuelsWanted = typeof manualFuelValues === "function" ? manualFuelValues(filters) : (filters.fuels || []);
-    const own = `${listing.fuel || ""} ${listing.title || ""}`.toLowerCase()
+    const own = String(listing.fuel || "").toLowerCase()
       // Blocket (Swedish): plug-in hybrid, electric, petrol.
       .replace(/laddhybrid/g, "plug-in hybrid")
-      .replace(/\bel\b/g, "electric")
+      .replace(/^el$|\bel\b(?=\s*\/|$)/g, "electric")
       .replace(/bensin/g, "petrol");
-    const fuelText = /petrol|diesel|hybrid|electric|elektr|plug|benzin|benzyna|lpg|cng/.test(own) ? own : fuelsWanted.join(" ");
+    // AutoScout24 "Elektro/Benzin", Blocket "el/bensin": a hybrid.
+    const mixed = /(elektro|electric|el)\s*\/\s*(benzin|petrol|diesel)|(benzin|petrol|diesel)\s*\/\s*(elektro|electric|el)\b/.test(own);
+    const name = `${listing.title || ""} ${listing.subtitle || ""}`.toLowerCase();
+    let fuelText = /petrol|diesel|hybrid|electric|elektr|plug|benzin|benzyna|lpg|cng|gas/.test(own) ? own : fuelsWanted.join(" ");
+    if (mixed || HYBRID_WORDS.test(name) || HYBRID_WORDS.test(own)) fuelText += " hybrid";
+    if (PLUGIN_WORDS.test(name)) fuelText += " plug-in";
     const from = Number(filters.displacementFrom) || 0;
     const to = Number(filters.displacementTo) || 0;
-    const ccm = Number(listing.displacementCcm) || (from > 2000 ? from : to && to <= 2000 ? to : 0);
-    return typeof classifyEngineType === "function" ? classifyEngineType(fuelText, ccm) : 3;
+    let ccm = Number(listing.displacementCcm) || 0;
+    let source = ccm ? "ad" : "";
+    if (!ccm && (ccm = litresInText(name))) source = "title";
+    if (!ccm && (from > 2000 || (to && to <= 2000))) {
+      ccm = from > 2000 ? from : to;
+      source = "filter";
+    }
+    const index = typeof classifyEngineType === "function" ? classifyEngineType(fuelText, ccm) : 3;
+    // Electric cars pay no excise whatever the size.
+    return { index, ccm, source: source || (index === 0 && !/plug/.test(fuelText) ? "ad" : "unknown") };
+  }
+
+  function engineClassFor(listing = {}, filters = {}) {
+    return engineInfo(listing, filters).index;
   }
 
   // "~ pod klucz" of a foreign offer in the market analysis: the calculator's
@@ -121,8 +153,11 @@
 
   // The calculator's rates (with its margin) as known right now.
   function currentRates() {
-    const eurRaw = Number(window.AUTOGOOD_EUR_PLN_RAW) || DEFAULT_RATE;
-    const eur = Number(window.AUTOGOOD_EXCHANGE_RATES?.rates?.EUR_PLN?.value) || Math.round((eurRaw + RATE_MARGIN) * 100) / 100;
+    const known = window.AUTOGOOD_EXCHANGE_RATES;
+    // Before Walutomat answers, the rates file (raw, may be months old) plus
+    // the margin; "autogood:rates" then makes the pages count again.
+    const eurRaw = Number(window.AUTOGOOD_EUR_PLN_RAW) || Number(known?.rates?.EUR_PLN?.value) || DEFAULT_RATE;
+    const eur = (known?.calculator && Number(known.rates?.EUR_PLN?.value)) || Math.round((eurRaw + RATE_MARGIN) * 100) / 100;
     const sekRaw = Number(window.AUTOGOOD_SEK_PLN_RATE) || 0.385;
     const sek = Math.round(sekRaw * (eur / eurRaw) * 10000) / 10000;
     return { eur, sek, eurRaw, sekRaw };
@@ -165,6 +200,7 @@
       updatedAt: rate.updatedAt,
       rates: { EUR_PLN: { label: "EUR - PLN", value: rate.value, unit: "PLN" } },
     };
+    window.dispatchEvent(new CustomEvent("autogood:rates", { detail: rate }));
   });
 
   window.AUTOGOOD_TURNKEY = {
@@ -172,6 +208,8 @@
     turnkeyForListing,
     turnkeyAverage,
     engineClassFor,
+    engineInfo,
+    EXCISE_RATES,
     currentRates,
     calculatorRate,
     AVERAGE_TRANSPORT_NETTO,
