@@ -3182,3 +3182,14 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   background: var(--color-brand);
   color: #fff;
 }
+
+/* No matching option: no list at all. */
+.mobileComboControl.isOpen .mobileComboMenu[hidden] {
+  display: none;
+}
+
+/* "Aktualne oferty": the offer counts a little bigger and bolder. */
+.mobileSearchSummaryFoot .mobileSearchCountMarket strong {
+  font-size: calc(var(--text-base) * 1.2);
+  font-weight: 900;
+}

@@ -59,6 +59,7 @@ const copy = {
     stepFilters: "Filtry",
     stepAnalysis: "Analiza",
     modelOutsideCatalog: "Model spoza katalogu — szukamy po nazwie",
+    modelNotInCatalog: "Nie znalazłem modelu „{model}” na liście — wpisałem go tak, jak w ogłoszeniu. Sprawdź pole Model.",
     recognitionUnavailable: "Serwis rozpoznawania jest niedostępny — wpisz dane ręcznie.",
     recognitionViaBookmarklet: "Ogłoszenie otwarte w nowej karcie — kliknij tam zakładkę „AUTOGOOD”, a dane wpiszą się same.",
     recognitionFromBookmarklet: "Dane pobrane z mobile.de przez zakładkę AUTOGOOD.",
@@ -124,7 +125,7 @@ const copy = {
     airConditioningAutomatic2Zones: "Automatyczna, 2 strefy",
     airConditioningAutomatic3Zones: "Automatyczna, 3 strefy",
     airConditioningAutomatic4Zones: "Automatyczna, 4 strefy",
-    airConditioningManual: "Manualna lub automatyczna",
+    airConditioningAny: "Dowolna",
     trailerCouplingLabel: "Hak holowniczy",
     trailerCouplingAny: "Dowolny",
     trailerCouplingAll: "Stały, odpinany lub odchylany",
@@ -354,6 +355,7 @@ const copy = {
     stepFilters: "Фильтры",
     stepAnalysis: "Анализ",
     modelOutsideCatalog: "Модель вне каталога — ищем по названию",
+    modelNotInCatalog: "Модель «{model}» не найдена в списке — вписал её, как в объявлении. Проверьте поле «Модель».",
     recognitionUnavailable: "Сервис распознавания недоступен — введи данные вручную.",
     recognitionViaBookmarklet: "Объявление открыто в новой вкладке — нажми там закладку «AUTOGOOD», и данные заполнятся сами.",
     recognitionFromBookmarklet: "Данные получены с mobile.de через закладку AUTOGOOD.",
@@ -419,7 +421,7 @@ const copy = {
     airConditioningAutomatic2Zones: "Автоматический, 2 зоны",
     airConditioningAutomatic3Zones: "Автоматический, 3 зоны",
     airConditioningAutomatic4Zones: "Автоматический, 4 зоны",
-    airConditioningManual: "Ручной или автоматический",
+    airConditioningAny: "Любой",
     trailerCouplingLabel: "Фаркоп",
     trailerCouplingAny: "Любой",
     trailerCouplingAll: "Фиксированный, съёмный или поворотный",
@@ -1771,9 +1773,9 @@ function renderComboMenus(filterControl = null) {
     const matchingOptions = filter
       ? options.filter((option) => normalizeToken(`${option.label} ${option.value}`).includes(filter))
       : options;
-    const visibleOptions = filter && matchingOptions.some((option) => !option.isCurrentInput)
-      ? matchingOptions.filter((option) => !option.isCurrentInput)
-      : matchingOptions;
+    // While typing, the typed text itself is not repeated as an option; with
+    // nothing matching, no list (not an empty frame) shows.
+    const visibleOptions = filter ? matchingOptions.filter((option) => !option.isCurrentInput) : matchingOptions;
     const keyboardActiveOption = filter && visibleOptions.length === 1 ? visibleOptions[0] : null;
     let menu = control.querySelector(".mobileComboMenu");
     if (!menu) {
@@ -1781,7 +1783,8 @@ function renderComboMenus(filterControl = null) {
       menu.className = "mobileComboMenu";
       control.append(menu);
     }
-    control.setAttribute("aria-expanded", control.classList.contains("isOpen") ? "true" : "false");
+    menu.hidden = !visibleOptions.length;
+    control.setAttribute("aria-expanded", control.classList.contains("isOpen") && visibleOptions.length ? "true" : "false");
     const menuType = control.dataset.mobileOptions;
     let previousGroup = null;
     let previousPopular = null;
@@ -2934,7 +2937,8 @@ function matchBrand(title) {
   return options[0] || null;
 }
 
-function extractModel(title, brandMatch) {
+// The title without its brand ("BMW 320d Touring" → "320d Touring").
+function titleWithoutBrand(title, brandMatch) {
   let model = String(title || "").trim();
   if (!model || !brandMatch) return model;
   const aliases = [brandMatch.value, ...(brandAliases[brandMatch.value] || [])]
@@ -2946,7 +2950,12 @@ function extractModel(title, brandMatch) {
       break;
     }
   }
-  model = model.replace(/\s{2,}/g, " ");
+  return model.replace(/\s{2,}/g, " ");
+}
+
+function extractModel(title, brandMatch) {
+  const model = titleWithoutBrand(title, brandMatch);
+  if (!model || !brandMatch) return model;
   // Listing titles carry engine and trim after the model ("i40 1.7 CRDi Kombi Style").
   // Keep the longest catalog model the title opens with, so searches use its ID.
   const catalogModel = catalogModelAtStart(brandMatch.value, model);
@@ -2957,13 +2966,20 @@ function extractModel(title, brandMatch) {
 // either half counts, and apostrophes are ignored.
 function catalogModelAtStart(brand, text) {
   const plain = (value) => String(value || "").toLowerCase().replace(/['’`]/g, "").replace(/\s{2,}/g, " ").trim();
-  const lowerTitle = plain(text);
+  // "Klasa S 500", "S-Klasse", "Class S" → "S 500", "S" (the catalog's names).
+  const classless = String(text || "").trim()
+    .replace(/^(?:klasa|klasse|class)\s+([a-z]{1,3})\b/i, "$1")
+    .replace(/^([a-z]{1,3})[\s-](?:klasa|klasse|class)\b/i, "$1");
+  const lowerTitle = plain(classless);
   if (!lowerTitle) return "";
   return modelGroupsForBrand(brand)
     .flatMap((group) => group.models)
     .filter((candidate) => candidate && candidate !== "Other")
     .map((candidate) => {
-      const length = [candidate, ...candidate.split(" / ")].map(plain).filter((lowerCandidate) => {
+      // "Crossland (X)": the part in brackets may be there or not.
+      const spellings = [candidate, ...candidate.split(" / ")]
+        .flatMap((name) => [name, name.replace(/\s*\(([^)]*)\)/g, " $1"), name.replace(/\s*\([^)]*\)/g, "")]);
+      const length = spellings.map(plain).filter((lowerCandidate) => {
         if (!lowerCandidate || !lowerTitle.startsWith(lowerCandidate)) return false;
         const next = lowerTitle.charAt(lowerCandidate.length);
         // "320d", "220i": a trim letter may follow a numeric model directly.
@@ -3061,7 +3077,8 @@ function recognizedEquipmentFilters(data) {
   else if (has(/klimatyzacj.*(?:3 stref|trzystref)|trzystrefow.*klimatyzacj|3 zonen klima|3 zone climate/)) airConditioning = "automatic_3_zones";
   else if (has(/klimatyzacj.*(?:2 stref|dwustref)|dwustrefow.*klimatyzacj|2 zonen klima|2 zone climate/)) airConditioning = "automatic_2_zones";
   else if (has(/klimatyzacj.*automat|klimaautomatik|automatic.*climate|automatic air conditioning/)) airConditioning = "automatic";
-  else if (has(/klimatyzacj.*manual|manuelle klimaanlage|manual air conditioning/)) airConditioning = "manual";
+  // Manual air conditioning: no filter ("Dowolna"), any car has at least that.
+  else if (has(/klimatyzacj.*manual|manuelle klimaanlage|manual air conditioning/)) airConditioning = "";
 
   let trailerCoupling = "any";
   if (has(/odchylan.*hak|(?:schwenkbar.*anhangerkupplung|anhangerkupplung.*schwenkbar)|swiveling tow/)) trailerCoupling = "swiveling";
@@ -3130,7 +3147,19 @@ function applyRecognizedManualFields(data) {
   const title = data?.title || "";
   const brandMatch = matchBrand(title);
   // The ad's own model field (bookmarklet) names the model exactly as the catalog does.
-  const model = (brandMatch && catalogModelAtStart(brandMatch.value, data?.model)) || extractModel(title, brandMatch);
+  // Then the longest catalog model the title opens with; none in the catalog:
+  // the model as the ad names it (whole, not its first word), with a notice.
+  const adModel = String(data?.model || "").replace(/\s{2,}/g, " ").trim();
+  // The title may be more exact than the ad's model field ("Klasa S" in the
+  // field, "S 500" in the title): the longer match of the same model wins.
+  const fieldModel = brandMatch ? catalogModelAtStart(brandMatch.value, adModel) : "";
+  const titleModel = brandMatch ? catalogModelAtStart(brandMatch.value, titleWithoutBrand(title, brandMatch)) : "";
+  const sameModel = fieldModel && titleModel && normalizeToken(titleModel).startsWith(normalizeToken(fieldModel));
+  const catalogModel = sameModel && titleModel.length > fieldModel.length ? titleModel : fieldModel || titleModel;
+  const model = catalogModel || adModel || extractModel(title, brandMatch);
+  if (brandMatch && model && !catalogModel) {
+    setTimeout(() => setMarketSearchStatus(copy[state.lang].modelNotInCatalog.replace("{model}", model), true));
+  }
   const registrationYear = extractYear(data?.firstRegistration);
   const displacementCcm = compactNumber(data?.displacementCcm);
   const powerHp = compactNumber(data?.powerHp ?? data?.horsepower ?? data?.powerPs);
@@ -3526,6 +3555,14 @@ document.addEventListener("keydown", (event) => {
     if (control?.classList.contains("isOpen") && activeOption) {
       event.preventDefault();
       selectComboOption(activeOption);
+      return;
+    }
+    // Enter confirms what was typed: the list closes and the search follows.
+    if (input && !input.readOnly) {
+      event.preventDefault();
+      closeComboMenus();
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+      updateSelectedFiltersSummary();
       return;
     }
   }
@@ -4253,4 +4290,21 @@ document.querySelectorAll("[data-mobile-power-unit-choice]").forEach((button) =>
     els.powerFrom.dispatchEvent(new Event("change", { bubbles: true }));
     updateSelectedFiltersSummary();
   });
+});
+
+// A one-choice option clicked again lets go of it: the group goes back to its
+// "Dowolny" (the option with value "any" or empty), e.g. Tempomat, Hak.
+document.querySelector(".mobileManualForm")?.addEventListener("pointerdown", (event) => {
+  const radio = event.target.closest?.("label")?.querySelector("input[type='radio']") || event.target.closest?.("input[type='radio']");
+  if (radio) radio.dataset.wasChecked = radio.checked ? "true" : "";
+}, true);
+document.querySelector(".mobileManualForm")?.addEventListener("click", (event) => {
+  const radio = event.target.closest?.("input[type='radio']");
+  if (!radio || radio.dataset.wasChecked !== "true") return;
+  radio.dataset.wasChecked = "";
+  const group = [...document.querySelectorAll(`input[type='radio'][name='${CSS.escape(radio.name)}']`)];
+  const fallback = group.find((input) => input.value === "any" || input.value === "");
+  if (!fallback || fallback === radio) return;
+  fallback.checked = true;
+  fallback.dispatchEvent(new Event("change", { bubbles: true }));
 });

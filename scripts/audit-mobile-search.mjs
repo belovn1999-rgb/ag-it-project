@@ -247,7 +247,8 @@ requireSource('damagedVehiclesShow: "Pokazuj"', "pokazanie uszkodzonych pojazdó
 requireSource('function selectComboOption(optionButton)', "wybór pozycji z listy");
 requireSource('document.addEventListener("pointerdown", (event) => {', "wybór po pierwszym kliknięciu");
 requireSource('visibleOptions.length === 1 ? visibleOptions[0] : null', "automatyczne wyróżnienie jednego wyniku");
-requireSource('matchingOptions.some((option) => !option.isCurrentInput)', "pominięcie niepełnego tekstu przy rzeczywistym dopasowaniu");
+requireSource('matchingOptions.filter((option) => !option.isCurrentInput)', "wpisany tekst nie powtarza się jako opcja listy");
+requireSource('menu.hidden = !visibleOptions.length', "brak pustej listy, gdy nic nie pasuje");
 requireSource('event.key === "Enter"', "wybór klawiszem Enter");
 requireSource('selectComboOption(activeOption)', "zatwierdzenie wyróżnionej opcji");
 requireSource('const searchUrl = buildOtomotoSearchUrl(filters);', "adres wyszukiwania Otomoto");
