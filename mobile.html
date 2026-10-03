@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <link rel="stylesheet" href="./src/mobile-page1.css?v=page1-audit-20261003" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=monitoring-audit-20261003d" />
+    <link rel="stylesheet" href="./src/mobile-page2.css?v=page2-audit-20261003" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="mobileBody">
@@ -592,7 +593,9 @@
       </section>
 
       <section class="mobileMethodView mobileMarketAnalysisView" data-mobile-market-analysis-view hidden>
-        <button class="mobileBackButton" type="button" data-mobile-market-analysis-back>
+        <!-- Hidden: tab 1 above does the same. The element stays, the
+             analysis script looks it up when it starts. -->
+        <button class="mobileBackButton" type="button" data-mobile-market-analysis-back hidden>
           <span data-market-i18n="backToFilters">&#8592; Wróć do filtrów</span>
         </button>
         <div data-mobile-market-analysis-content></div>
@@ -608,16 +611,17 @@
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
     <script src="./src/market-badges.js?v=autoscout2-20261003"></script>
-    <script src="./src/mobile.js?v=page1-audit-20261003"></script>
+    <script src="./src/mobile.js?v=page2-audit-20261003"></script>
     <script src="./src/blocket-search.js?v=form-groups-20261002"></script>
     <script src="./src/avby-search.js?v=avby-20261002"></script>
     <script src="./src/autoscout-search.js?v=by-prices-20261003"></script>
     <script src="./src/turnkey-estimate.js?v=audit3-20261003"></script>
     <script src="./src/turnkey-belarus.js?v=by-prices-20261003"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=by-history-20261003b"></script>
+    <script src="./src/mobile-market-analysis.js?v=page2-audit2-20261003"></script>
     <script src="./src/mobile-favorites-watch.js?v=autoscout2-20261003"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
     <script src="./src/mobile-page1.js?v=page1-audit-20261003"></script>
+    <script src="./src/mobile-page2.js?v=page2-audit-20261003"></script>
   </body>
 </html>

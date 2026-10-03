@@ -1,0 +1,143 @@
+/* Page 2 "Analiza" — design audit of 03.10.2026 (items 17–28, see
+   docs/PROJECT-MOBILE.md). Loaded after the other stylesheets, so these rules
+   win on source order. Page 3 "Monitoring" is not touched. */
+
+/* 17. Readable grey text (4.5:1 even on the page background) and nothing
+   under 12px, as on page 1. */
+.mobileMarketAnalysisView {
+  --color-soft: oklch(52% 0.03 248);
+  --text-xs: 0.75rem;
+}
+
+/* 17. Market colours as text: mobile.de orange and AutoScout24 olive were
+   3:1; their text is a shade darker (5:1). Dots and lines keep the colours. */
+.mobileMarketAnalysisView .mobileMarketKeyTick.isMobile,
+.mobileMarketAnalysisView .mobileMarketPanel.isMobile .mobileMarketPanelHead b,
+.mobileMarketAnalysisView .mobileMarketPointTooltip b.isMobile {
+  color: #b84f00;
+}
+
+.mobileMarketAnalysisView .mobileMarketKeyTick.isAutoscout,
+.mobileMarketAnalysisView .mobileMarketPanel.isAutoscout .mobileMarketPanelHead b,
+.mobileMarketAnalysisView .mobileMarketPointTooltip b.isAutoscout {
+  color: #7a6600;
+}
+
+/* Other markets' medians: full strength, the dashed line says "guide". */
+.mobileMarketAnalysisView .mobileMarketKeyTick.isGuide {
+  opacity: 1;
+}
+
+/* The comparison strip's medians in their row's colour, a shade darker. */
+.mobileMarketAnalysisView .mobileMarketCompareTrack b {
+  color: color-mix(in srgb, var(--row) 70%, #000);
+}
+
+/* "Kopiuj raport / listę" while the picture is drawn: full contrast, the
+   waiting is shown by the cursor and three dots, not by a faded button. */
+.mobileMarketAnalysisView .mobileMarketImportClear.isPreparing {
+  opacity: 1;
+}
+
+.mobileMarketAnalysisView .mobileMarketImportClear.isPreparing::after {
+  content: " …";
+}
+
+/* 19. Chart labels: 12px, not 10–11px. */
+.mobileMarketAnalysisView .mobileMarketPanel .mobileMarketKeyTick,
+.mobileMarketAnalysisView .mobileMarketCompareAxis em,
+.mobileMarketAnalysisView .mobileMarketCompareTrack b,
+.mobileMarketAnalysisView .mobileMarketGrossNote {
+  font-size: 0.75rem;
+}
+
+.mobileMarketSearchCard .agSpecKicker,
+.mobileMarketSearchCard .agSpecColumn h4,
+.mobileMarketSearchCard .agSpecColumn dt,
+.mobileMarketSearchCard .agSpecText {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 720px) {
+  .mobileMarketAnalysisView .mobileMarketKeyTick {
+    font-size: 0.75rem;
+  }
+}
+
+/* 21. Highest / lowest: an arrow as well as the colour. */
+.mobileMarketToneMark {
+  margin-right: 4px;
+  font-size: 0.8em;
+  vertical-align: 0.1em;
+}
+
+.mobileMarketToneLegend {
+  margin: var(--space-xs) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+/* 24. Złoty first: the price in Poland is the cell's main line (its colour
+   is the comparison's), the ad's euro price under it. */
+.mobileMarketStatsRow b .mobileMarketStatsTurnkey {
+  display: block;
+}
+
+.mobileMarketStatsRow b .mobileMarketStatsTurnkey small {
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.mobileMarketStatsRow b .mobileMarketStatsAdPrice {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  white-space: normal;
+}
+
+/* 27. The market's name has room in the first column, and the whole table
+   still fits its card at 1024px (the columns' minimums add up to ~900px). */
+.mobileMarketStatsTable.isCompared .mobileMarketStatsRow {
+  grid-template-columns: minmax(120px, 0.85fr) minmax(64px, 0.55fr) repeat(3, minmax(122px, 1.4fr)) minmax(150px, 1.4fr) minmax(76px, 0.65fr) minmax(104px, 0.85fr);
+}
+
+.mobileMarketStatsTable.isCompared .mobileMarketStatsRow > * {
+  padding-inline: 10px;
+}
+
+.mobileMarketStatsSource {
+  white-space: nowrap;
+}
+
+@media (max-width: 72rem) {
+  .mobileMarketStatsTable.isCompared .mobileMarketStatsRow b {
+    font-size: var(--text-base);
+  }
+}
+
+/* 20. "Aktualne oferty" fits its card: the columns keep their shares of the
+   card's width (no 980px minimum), long names and the ad's own price wrap,
+   the link column is just its icon (header "Link"). Narrow screens scroll. */
+.mobileMarketAnalysisView .mobileMarketOffersTable {
+  min-width: 0;
+}
+
+@media (max-width: 60rem) {
+  .mobileMarketAnalysisView .mobileMarketOffersTable {
+    min-width: 760px;
+  }
+}
+
+.mobileMarketAnalysisView .mobileMarketOffersTable .mobileMarketTableTitle b,
+.mobileMarketAnalysisView .mobileMarketOffersTable .mobileMarketTableTitle small,
+.mobileMarketAnalysisView .mobileMarketOffersTable td.isNum small {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+/* Row numbers up to 999 fit their column. */
+.mobileMarketAnalysisView .mobileMarketOffersTable th:nth-child(1) { width: 5.5%; }
+.mobileMarketAnalysisView .mobileMarketOffersTable th:nth-child(2) { width: 29.5%; }

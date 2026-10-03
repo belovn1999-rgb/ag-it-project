@@ -343,6 +343,9 @@
       sourceAutoscout: "AutoScout24",
       sourceAvby: "av.by",
       marketsHeading: "Rynki",
+      toneHigher: "najwyżej",
+      toneLower: "najniżej",
+      toneLegend: "▲ najwyżej · ▼ najniżej spośród porównywanych rynków (cena w Polsce: na gotowo albo z ogłoszenia; przebieg)",
       marketOtomoto: "Polska",
       compareHeading: "Porównanie rynków",
       compareHint: "ceny na gotowo*, zł — ta sama skala co wykresy poniżej",
@@ -368,7 +371,7 @@
       curveLegend: "Krzywa cen",
       hiddenNoAxis: "Bez tej wartości, więc poza wykresem: {count} {offers}.",
       tableSource: "Rynek",
-      tableLink: "Link ogłoszenia",
+      tableLink: "Link",
       sourceEmpty: "brak danych",
       fetchMobile: "Pobierz z mobile.de ↗",
       fetchMobileHint: "Lista mobile.de otwarta w nowej karcie — kliknij tam zakładkę „AUTOGOOD”. Oferty trafią na wykres.",
@@ -714,7 +717,7 @@
       sourceOff: "{source}: скрыт — нажми, чтобы показать",
       sourceFetch: "Загрузить объявления с mobile.de",
       sourceNoData: "mobile.de: нет данных — открой поиск mobile.de (логотип вверху) и нажми там закладку AUTOGOOD.",
-      averagePrices: "Типичный диапазон (P25–P75)",
+      averagePrices: "Средние цены (P25–P75)",
       pdfButton: "Отчёт PDF",
       pdfWorking: "Готовлю отчёт PDF…",
       pdfReady: "Отчёт PDF сохранён: {file}",
@@ -763,7 +766,7 @@
       otomotoDescription: "Выборка актуальных объявлений otomoto.pl по всему списку (цены в PLN).",
       verdictHeading: "Что это значит",
       verdictMedian: "Медиана цен объявлений: {median}.",
-      verdictMiddle: "Типичный диапазон: {low} – {high} ({count} {offers}).",
+      verdictMiddle: "Средние цены: {low} – {high} ({count} {offers}).",
       verdictDeals: "Дешевле {low} — {count} объявлений, это низ рынка.",
       tableHeading: "Актуальные объявления",
       loadingHeading: "Загружаю актуальные объявления…",
@@ -779,6 +782,9 @@
       sourceAutoscout: "AutoScout24",
       sourceAvby: "av.by",
       marketsHeading: "Рынки",
+      toneHigher: "выше всех",
+      toneLower: "ниже всех",
+      toneLegend: "▲ выше всех · ▼ ниже всех среди сравниваемых рынков (цена в Польше: под ключ или из объявления; пробег)",
       marketOtomoto: "Польша",
       compareHeading: "Сравнение рынков",
       compareHint: "цены под ключ*, zł — та же шкала, что у графиков ниже",
@@ -843,12 +849,12 @@
       importReadError: "Не удалось прочитать файл JSON / CSV.",
       chartTitle: "Распределение цен объявлений",
       lowMarket: "Низ рынка",
-      middleMarket: "Типичный диапазон",
+      middleMarket: "Средние цены",
       highMarket: "Верх рынка",
       count: "Объявлений",
       minimum: "Самое дешёвое объявление",
       median: "Медиана",
-      middleRange: "Типичный диапазон (P25–P75)",
+      middleRange: "Средние цены (P25–P75)",
       middleOffers: "В диапазоне",
       sampleDate: "Цены объявлений · данные на {date}",
       limitedSample: "Маленькая выборка: типичная цена может быть нестабильной. Для оценки автомобиля нужно минимум 8 объявлений.",
@@ -5258,7 +5264,8 @@
           ${car || ""}
           ${guides.map((guide) => {
             const position = verticalMarketPosition(Math.min(Math.max(guide.value, domainMinimum), domainMaximum), domainMinimum, domainMaximum);
-            return Math.abs(position - middle) >= 2.6 && Math.abs(position - high) >= 2.6 && Math.abs(position - low) >= 2.6 ? `<span class="mobileMarketKeyTick isGuide is${sourceClass(guide.source)}" style="top:${position}%">${escapeMarketHtml(marketName(guide.source))} · ${escapeMarketHtml(formatMarketPrice(guide.value))}</span>` : "";
+            const guideName = guide.source === "autoscout" ? portalName(guide.source) : marketName(guide.source);
+            return Math.abs(position - middle) >= 2.6 && Math.abs(position - high) >= 2.6 && Math.abs(position - low) >= 2.6 ? `<span class="mobileMarketKeyTick isGuide is${sourceClass(guide.source)}" style="top:${position}%">${escapeMarketHtml(guideName)} · ${escapeMarketHtml(formatMarketPrice(guide.value))}</span>` : "";
           }).join("")}
           ${Math.abs(high - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${high}%">P75 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleHigh))}</span>` : ""}
           <span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>
@@ -5392,9 +5399,10 @@
             + `<small class="mobileMarketTurnkeyNote isStrong">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
         }
         const main = row.avbyUsd ? formatMarketPrice(row.stats[key], "USD") : nativePrice(row.stats[key], row.source);
-        // A foreign ad's price is gross ("brutto"); under it the price ready in Poland.
+        // Złoty first ("na gotowo", what the client pays in Poland), under it
+        // the ad's own gross price — the same order as "Aktualne oferty".
         return row.turnkeyStats
-          ? `${escapeMarketHtml(main)} <small class="mobileMarketGrossNote">brutto</small><small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</small>`
+          ? `<span class="mobileMarketStatsTurnkey">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], turnkeyCurrency))}<small> ${escapeMarketHtml(turnkeyLabel)}</small></span><small class="mobileMarketStatsAdPrice">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(main)} ${escapeMarketHtml(c.byGross)}</small>`
           : escapeMarketHtml(main);
       };
       const rangeCell = (row) => {
@@ -5407,7 +5415,7 @@
           ? `${formatMarketPrice(row.stats.middleLow, "USD")} – ${formatMarketPrice(row.stats.middleHigh, "USD")}`
           : `${nativePrice(row.stats.middleLow, row.source)} – ${nativePrice(row.stats.middleHigh, row.source)}`;
         return row.turnkeyStats
-          ? `${escapeMarketHtml(main)}<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, turnkeyCurrency))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</small>`
+          ? `<span class="mobileMarketStatsTurnkey">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, turnkeyCurrency))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, turnkeyCurrency))}<small> ${escapeMarketHtml(turnkeyLabel)}</small></span><small class="mobileMarketStatsAdPrice">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(main)}</small>`
           : escapeMarketHtml(main);
       };
       const statColumns = [
@@ -5578,10 +5586,18 @@
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
-                return `<b class="${column.wide ? "isWide" : ""}${column.cls ? ` ${column.cls}` : ""}${tone(column, row, index)}" role="cell">${column.html(row)}${note}</b>`;
+                const toneClass = tone(column, row, index);
+                const arrow = toneClass === " isHigher" ? ["▲", c.toneHigher] : toneClass === " isLower" ? ["▼", c.toneLower] : null;
+                const mark = arrow ? `<span class="mobileMarketToneMark" title="${escapeMarketHtml(arrow[1])}"><span aria-hidden="true">${arrow[0]}</span><span class="srOnly">${escapeMarketHtml(arrow[1])}</span></span>` : "";
+                // The arrow goes on the cell's first line (inside the "na gotowo" line when there is one).
+                const cellHtml = column.html(row);
+                const opener = '<span class="mobileMarketStatsTurnkey">';
+                const marked = mark && cellHtml.startsWith(opener) ? `${opener}${mark}${cellHtml.slice(opener.length)}` : `${mark}${cellHtml}`;
+                return `<b class="${column.wide ? "isWide" : ""}${column.cls ? ` ${column.cls}` : ""}${toneClass}" role="cell">${marked}${note}</b>`;
               }).join("")}
             </div>`).join("")}
         </div>
+        ${compared ? `<p class="mobileMarketToneLegend">${escapeMarketHtml(c.toneLegend)}</p>` : ""}
         </div>`;
       marketContent = `
         ${comparisonHtml}
@@ -5719,7 +5735,6 @@
         <span class="mobileSearchSummaryFootLabel">${escapeMarketHtml(t.offerCountLabel || "")}</span>
         <div class="mobileSearchSummaryActions">
           ${historyDone && !historyDone.hidden ? `<button class="mobileSearchSummaryDone" type="button" data-mobile-analysis-done>${escapeMarketHtml(c.historyDone)} ✓</button>` : ""}
-          <button class="mobileSearchSummaryAnalysis" type="button" data-mobile-analysis-rerun>${escapeMarketHtml(c.analysisButton)} <i aria-hidden="true">&#8594;</i></button>
         </div>
         ${MARKET_SOURCES.map((source) => {
           const on = Boolean(chartSources[source]);

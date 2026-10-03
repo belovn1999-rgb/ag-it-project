@@ -1474,7 +1474,7 @@ function specSheetHtml({ kicker = "", title = "", titleTarget = "", meta = "", a
       <div class="agSpecHead">
         <div class="agSpecTitle">
           ${kicker ? `<span class="agSpecKicker">${escapeHtml(kicker)}</span>` : ""}
-          <div class="agSpecTitleLine"><strong${targetAttr(titleTarget)}>${escapeHtml(title)}</strong>${meta ? `<span class="agSpecDate">${escapeHtml(meta)}</span>` : ""}</div>
+          <div class="agSpecTitleLine"><strong${titleTarget ? targetAttr(titleTarget) : ' role="heading" aria-level="2"'}>${escapeHtml(title)}</strong>${meta ? `<span class="agSpecDate">${escapeHtml(meta)}</span>` : ""}</div>
         </div>
         ${aside ? `<div class="agSpecAside">${aside}</div>` : ""}
       </div>
