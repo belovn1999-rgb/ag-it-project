@@ -58,47 +58,47 @@
       byDetailsMissing: "Nie pokazano ogłoszeń bez znanej pojemności silnika: {missing}. Aby sprawdzić ogłoszenia mobile.de, uruchom importer mobile.de.",
       conclusionByCheaper: "Po doliczeniu transportu, oclenia i wszystkich opłat auto z Niemiec ({portal}) „pod klucz” w Mińsku wychodzi średnio o {amount} ({percent}%) taniej niż podobne na av.by.",
       conclusionByDearer: "Po doliczeniu transportu, oclenia i wszystkich opłat auto z Niemiec ({portal}) „pod klucz” w Mińsku wychodzi średnio o {amount} ({percent}%) drożej niż podobne na av.by.",
-      priceHistoryIntro: "Każde „Analiza rynku” i „Odśwież dane” dopisuje nowy wiersz z datą; wcześniejsze pomiary zostają na zawsze. Auto wybierasz na pasku ulubionych u góry.",
-      priceHistoryFiltersChanged: "Od tego pomiaru zmienione filtry: {filters}",
-      priceHistoryPricesChanged: "Od tego pomiaru zmieniona cena na portalach",
+      priceHistoryIntro: "Każdy monitoring i „Analiza rynku” dopisuje nowy wiersz z datą; wcześniejsze zostają na zawsze. Auto wybierasz na pasku ulubionych u góry.",
+      priceHistoryFiltersChanged: "Od tego monitoringu zmienione filtry: {filters}",
+      priceHistoryPricesChanged: "Od tego monitoringu zmieniona cena na portalach",
       monitoringHeading: "Monitoring",
-      monitoringIntro: "Wybierz auto na pasku ulubionych u góry: zobaczysz jego parametry, portale z ceną, nowe i zniknięte ogłoszenia od poprzedniej kontroli.",
+      monitoringIntro: "Wybierz auto na pasku ulubionych u góry: zobaczysz nowe i zniknięte ogłoszenia od poprzedniego monitoringu.",
       monitoringNoFavorites: "Nie masz jeszcze ulubionych aut. Oznacz wyszukiwanie gwiazdką ★ na stronie 1 — tutaj pojawi się jego monitoring.",
       monitoringSwitch: "Włącz monitoring",
-      monitoringOn: "Monitoring włączony: kontrola codziennie. Do czasu uruchomienia serwera automatyzacji codzienna kontrola rusza sama przy otwartym programie (raz dziennie na auto).",
-      monitoringOff: "Monitoring wyłączony: kontrola tylko po kliknięciu „Sprawdź teraz”.",
+      monitoringOn: "Codziennie o 9:00. Dopóki serwer automatyzacji nie działa, monitoring rusza, gdy program jest otwarty: o 9:00 albo przy pierwszym otwarciu po 9:00.",
+      monitoringOff: "Monitoring tylko po kliknięciu „Uruchom monitoring”.",
       monitoringParams: "Parametry wyszukiwania",
       monitoringEditParams: "Zmień parametry",
       monitoringPortals: "Portale i cena auta (brutto)",
-      monitoringPortalsHint: "Włącz portale do monitoringu. Puste pola = cena z filtrów (strona 1); wpisana cena działa tylko na tym portalu, we wszystkich kontrolach tego auta.",
-      monitoringPriceChanged: "Cena zmieniona — kliknij „Sprawdź teraz”.",
+      monitoringPortalsHint: "Puste pola = cena z filtrów (strona 1); wpisana cena działa tylko na tym portalu, w każdym monitoringu tego auta. Wybór portali działa w całym programie (strona 1 i analiza).",
+      monitoringPriceChanged: "Zmienione — zadziała przy następnym monitoringu.",
       monitoringFrom: "od",
       monitoringTo: "do",
       monitoringConverter: "Przelicznik walut",
       monitoringAvgRate: "Średni kurs (Walutomat)",
       monitoringCalcRate: "Kurs do wyliczeń",
-      monitoringCheck: "Sprawdź teraz",
-      monitoringChecking: "Sprawdzam rynki…",
-      monitoringLastCheck: "Ostatnia kontrola: {date}",
-      monitoringComparedWith: "porównanie z: {date}",
-      monitoringNeverChecked: "To auto nie ma jeszcze kontroli z listą ogłoszeń. Kliknij „Sprawdź teraz” — pierwsza kontrola to baza, następne pokażą nowe i zniknięte ogłoszenia.",
-      monitoringBaseline: "Pierwsza kontrola = baza ({count} ogłoszeń). Nowe i zniknięte pokaże następna kontrola.",
+      monitoringCheck: "Uruchom monitoring",
+      monitoringChecking: "Monitoring w toku…",
+      monitoringLastCheck: "Ostatni monitoring: {date}",
+      monitoringComparedWith: "porównanie z monitoringiem z {date}",
+      monitoringNeverChecked: "To auto nie ma jeszcze monitoringu z listą ogłoszeń. Pierwszy monitoring to baza, następne pokażą nowe i zniknięte ogłoszenia.",
+      monitoringBaseline: "Pierwszy monitoring = baza ({count} ogłoszeń). Nowe i zniknięte pokaże następny monitoring.",
       monitoringOffers: "Ogłoszeń",
       monitoringNew: "Nowe",
       monitoringGone: "Zniknęły",
       monitoringGoneHint: "sprzedane lub zdjęte",
-      monitoringSample: "próbka — nowe i zniknięte niepewne",
+      monitoringSample: "≈ lista niepełna",
       monitoringAllPortals: "Wszystkie portale",
       monitoringViewNew: "Nowe",
       monitoringViewGone: "Zniknęły",
       monitoringViewAll: "Pełna lista",
       monitoringPower: "Moc",
-      monitoringEmptyList: "Brak ogłoszeń w tym widoku.",
+      monitoringEmptyList: "Brak ogłoszeń spełniających filtry listy.",
       monitoringExtended: "Rozszerzony monitoring: historia dzień po dniu",
       monitoringExtendedHide: "Ukryj rozszerzony monitoring",
-      monitoringFailed: "Kontrola nie powiodła się: {error}",
-      monitoringAutoRunning: "Codzienna kontrola: {car}…",
-      monitoringNewBase: "Parametry, cena, portale lub kraje zmienione od poprzedniej kontroli: ta kontrola to nowa baza ({count} ogłoszeń). Nowe i zniknięte pokaże następna kontrola.",
+      monitoringFailed: "{error}",
+      monitoringAutoRunning: "Monitoring: {car}…",
+      monitoringNewBase: "Parametry, cena, portale lub kraje zmienione od poprzedniego monitoringu: ten monitoring to nowa baza ({count} ogłoszeń). Nowe i zniknięte pokaże następny monitoring.",
       monitoringVatDeductible: "brutto · netto {net} (VAT do odliczenia)",
       monitoringVatNet: "netto + VAT 23% = {gross} brutto",
       monitoringVatDeductibleOnly: "brutto · VAT do odliczenia",
@@ -125,9 +125,59 @@
       monitoringAutoscout: "AutoScout24 — tylko ogłoszenia, których nie ma na mobile.de (ta sama cena i przebieg = duplikat)",
       monitoringAutoscoutNeedsMobile: "AutoScout24 działa w parze z mobile.de — włącz mobile.de.",
       monitoringDuplicates: "{count} duplikatów z mobile.de pominięto",
-      monitoringNoScopeCheck: "Brak kontroli z tymi portalami i krajami. Kliknij „Sprawdź teraz” — ta kontrola będzie bazą do porównań.",
-      monitoringAllCountries: "z {count} na mobile.de we wszystkich krajach (próbka, wybrane kraje)",
-      monitoringMissing: "Bez danych z: {portals} (portal niedostępny) — ta kontrola nie obejmuje tego rynku.",
+      monitoringNoScopeCheck: "Brak monitoringu z tymi portalami i krajami. Następny monitoring będzie bazą do porównań.",
+      monitoringAllCountries: "{count} na mobile.de we wszystkich krajach",
+      monitoringMissing: "Bez danych z: {portals} — portal nie odpowiedział, ten monitoring go nie obejmuje. Spróbuj ponownie za kilka minut.",
+      monitoringSwitchOn: "Monitoring włączony",
+      monitoringSettings: "Ustawienia monitoringu: portale, ceny, kraje, przelicznik walut",
+      monitoringSince: "Monitoring od {date} · {days} · zapisanych monitoringów: {count}",
+      monitoringNext: "Następny monitoring: {date}",
+      monitoringNextNow: "zaraz (program jest otwarty)",
+      monitoringToday9: "dziś o 9:00",
+      monitoringTomorrow9: "jutro o 9:00",
+      monitoringDay0: "od dziś",
+      monitoringDay1: "dzień",
+      monitoringDay2: "dni",
+      monitoringDay5: "dni",
+      monitoringProgressTitle: "Monitoring w toku:",
+      monitoringProgressPages: "{done}/{total} stron",
+      monitoringProgressCountries: "{done}/{total} krajów",
+      monitoringProgressRun: "czytam…",
+      monitoringProgressDone: "✓ {count} ogłoszeń",
+      monitoringProgressFail: "✕ brak odpowiedzi",
+      monitoringErrorModel: "{portal} nie znalazł tego modelu — sprawdź nazwę modelu na stronie 1.",
+      monitoringErrorNone: "Żaden portal nie zwrócił ogłoszeń — sprawdź internet i spróbuj ponownie za kilka minut.",
+      monitoringErrorTooFew: "Portale zwróciły mniej niż 3 ogłoszenia — poszerz parametry na stronie 1.",
+      monitoringErrorGeneric: "Monitoring się nie udał — spróbuj ponownie. Jeśli to się powtarza, przekaż szczegóły: {detail}",
+      monitoringApproxTitle: "Portal ma więcej ogłoszeń, niż program czyta naraz — liczby nowych i zniknętych są przybliżone.",
+      monitoringReadOf: "przeczytano {read} z {total}",
+      monitoringSort: "Sortuj:",
+      monitoringSortPrice: "cena",
+      monitoringSortYear: "rok",
+      monitoringSortMileage: "przebieg",
+      monitoringSortListed: "data pojawienia się",
+      monitoringSortDir: "Zmień kierunek sortowania",
+      monitoringOnlyVat: "tylko VAT do odliczenia",
+      monitoringOnlyDealers: "tylko dealerzy",
+      monitoringListedSince: "w ofercie od {date} · {days}",
+      monitoringSeenSince: "w monitoringu od {date} · {days}",
+      monitoringSeenBefore: "w ofercie co najmniej od {date} · {days}",
+      monitoringListedTitle: "Data z portalu: kiedy wystawiono ogłoszenie.",
+      monitoringSeenTitle: "Portal nie podaje daty: to dzień monitoringu, w którym auto pojawiło się po raz pierwszy.",
+      monitoringSeenBeforeTitle: "Auto było już w pierwszym monitoringu — wystawione wcześniej, dokładnej daty portal nie podaje.",
+      monitoringEmptyNew: "Brak nowych ogłoszeń od {date}. {next}.",
+      monitoringEmptyGone: "Nic nie zniknęło od {date}. {next}.",
+      monitoringEmptySaved: "Nic tu jeszcze nie ma — gwiazdka ☆ przy ogłoszeniu zapisuje auto tutaj, a z tej listy powstaje PDF dla klienta.",
+      monitoringPdf: "PDF dla klienta",
+      monitoringPdfEmpty: "Najpierw zapisz auta gwiazdką ☆ — PDF powstaje z listy „Zapisane”.",
+      monitoringPdfTitle: "Wybrane auta: {car}",
+      monitoringPdfSub: "AUTOGOOD · {date} · {count} aut · ceny z portali w dniu przygotowania",
+      monitoringPdfWorking: "Przygotowuję PDF…",
+      monitoringPdfReady: "PDF zapisany: {file}",
+      monitoringPdfFailed: "Nie udało się zrobić PDF — spróbuj ponownie.",
+      monitoringPdfFile: "Wybrane auta",
+      monitoringPdfOpen: "Otwórz ogłoszenie",
+      monitoringOfferLink: "{title} — otwórz ogłoszenie",
       priceHistoryComparedHint: "wybór rynków na stronie 1 „Wyszukiwanie”",
       offerHistoryHeading: "Rynek w wybranym dniu",
       offerHistoryIntro: "Wybierz datę pomiaru: wykres i lista pokazują ogłoszenia z tego dnia. „Porównaj z” nakłada drugą datę (szare kółka) i pokazuje, co się zmieniło.",
@@ -444,47 +494,47 @@
       byDetailsMissing: "Не показаны объявления без известного объёма двигателя: {missing}. Чтобы уточнить объявления mobile.de, запустите импортер mobile.de.",
       conclusionByCheaper: "С учётом доставки, растаможки и всех сборов авто из Германии ({portal}) под ключ в Минске обходится в среднем на {amount} ({percent} %) дешевле, чем аналогичное авто на av.by.",
       conclusionByDearer: "С учётом доставки, растаможки и всех сборов авто из Германии ({portal}) под ключ в Минске обходится в среднем на {amount} ({percent} %) дороже, чем аналогичное авто на av.by.",
-      priceHistoryIntro: "Каждый «Анализ рынка» и «Обновить данные» добавляет новую строку с датой; прошлые замеры остаются навсегда. Авто выбирается в полосе избранного сверху.",
-      priceHistoryFiltersChanged: "С этого замера изменены фильтры: {filters}",
-      priceHistoryPricesChanged: "С этого замера изменена цена на порталах",
+      priceHistoryIntro: "Каждый мониторинг и «Анализ рынка» добавляет новую строку с датой; прошлые остаются навсегда. Авто выбирается в полосе избранного сверху.",
+      priceHistoryFiltersChanged: "С этого мониторинга изменены фильтры: {filters}",
+      priceHistoryPricesChanged: "С этого мониторинга изменена цена на порталах",
       monitoringHeading: "Мониторинг",
-      monitoringIntro: "Выбери авто в полосе избранного сверху: увидишь его параметры, порталы с ценой, новые и исчезнувшие объявления с прошлой проверки.",
+      monitoringIntro: "Выбери авто в полосе избранного сверху: увидишь новые и исчезнувшие объявления с прошлого мониторинга.",
       monitoringNoFavorites: "Избранных авто пока нет. Отметь поиск звёздочкой ★ на странице 1 — здесь появится его мониторинг.",
       monitoringSwitch: "Включить мониторинг",
-      monitoringOn: "Мониторинг включён: проверка каждый день. Пока сервер автоматизации не запущен, ежедневная проверка запускается сама, когда программа открыта (раз в день на авто).",
-      monitoringOff: "Мониторинг выключен: проверка только по кнопке «Проверить сейчас».",
+      monitoringOn: "Каждый день в 9:00. Пока сервер автоматизации не запущен, мониторинг запускается, когда программа открыта: в 9:00 или при первом открытии после 9:00.",
+      monitoringOff: "Мониторинг только по кнопке «Запустить мониторинг».",
       monitoringParams: "Параметры поиска",
       monitoringEditParams: "Изменить параметры",
       monitoringPortals: "Порталы и цена авто (брутто)",
-      monitoringPortalsHint: "Включи порталы для мониторинга. Пустые поля = цена из фильтров (страница 1); введённая цена действует только на этом портале, во всех проверках этого авто.",
-      monitoringPriceChanged: "Цена изменена — нажми «Проверить сейчас».",
+      monitoringPortalsHint: "Пустые поля = цена из фильтров (страница 1); введённая цена действует только на этом портале, в каждом мониторинге этого авто. Выбор порталов действует во всей программе (страница 1 и анализ).",
+      monitoringPriceChanged: "Изменено — сработает при следующем мониторинге.",
       monitoringFrom: "от",
       monitoringTo: "до",
       monitoringConverter: "Конвертер валют",
       monitoringAvgRate: "Средний курс (Walutomat)",
       monitoringCalcRate: "Курс для расчётов",
-      monitoringCheck: "Проверить сейчас",
-      monitoringChecking: "Проверяю рынки…",
-      monitoringLastCheck: "Последняя проверка: {date}",
-      monitoringComparedWith: "сравнение с: {date}",
-      monitoringNeverChecked: "У этого авто ещё нет проверки со списком объявлений. Нажми «Проверить сейчас» — первая проверка станет базой, следующие покажут новые и исчезнувшие объявления.",
-      monitoringBaseline: "Первая проверка = база ({count} объявлений). Новые и исчезнувшие покажет следующая проверка.",
+      monitoringCheck: "Запустить мониторинг",
+      monitoringChecking: "Мониторинг идёт…",
+      monitoringLastCheck: "Последний мониторинг: {date}",
+      monitoringComparedWith: "сравнение с мониторингом от {date}",
+      monitoringNeverChecked: "У этого авто ещё нет мониторинга со списком объявлений. Первый мониторинг — база, следующие покажут новые и исчезнувшие объявления.",
+      monitoringBaseline: "Первый мониторинг = база ({count} объявлений). Новые и исчезнувшие покажет следующий мониторинг.",
       monitoringOffers: "Объявлений",
       monitoringNew: "Новые",
       monitoringGone: "Исчезли",
       monitoringGoneHint: "проданы или сняты",
-      monitoringSample: "выборка — новые и исчезнувшие неточно",
+      monitoringSample: "≈ список неполный",
       monitoringAllPortals: "Все порталы",
       monitoringViewNew: "Новые",
       monitoringViewGone: "Исчезли",
       monitoringViewAll: "Весь список",
       monitoringPower: "Мощность",
-      monitoringEmptyList: "В этом виде объявлений нет.",
+      monitoringEmptyList: "Нет объявлений под фильтры списка.",
       monitoringExtended: "Расширенный мониторинг: история по дням",
       monitoringExtendedHide: "Скрыть расширенный мониторинг",
-      monitoringFailed: "Проверка не удалась: {error}",
-      monitoringAutoRunning: "Ежедневная проверка: {car}…",
-      monitoringNewBase: "С прошлой проверки изменены параметры, цена, порталы или страны: эта проверка — новая база ({count} объявлений). Новые и исчезнувшие покажет следующая проверка.",
+      monitoringFailed: "{error}",
+      monitoringAutoRunning: "Мониторинг: {car}…",
+      monitoringNewBase: "С прошлого мониторинга изменены параметры, цена, порталы или страны: этот мониторинг — новая база ({count} объявлений). Новые и исчезнувшие покажет следующий мониторинг.",
       monitoringVatDeductible: "брутто · нетто {net} (НДС к вычету)",
       monitoringVatNet: "нетто + VAT 23% = {gross} брутто",
       monitoringVatDeductibleOnly: "брутто · НДС к вычету",
@@ -511,9 +561,59 @@
       monitoringAutoscout: "AutoScout24 — только объявления, которых нет на mobile.de (та же цена и пробег = дубликат)",
       monitoringAutoscoutNeedsMobile: "AutoScout24 работает в паре с mobile.de — включи mobile.de.",
       monitoringDuplicates: "пропущено дубликатов с mobile.de: {count}",
-      monitoringNoScopeCheck: "Нет проверки с этими порталами и странами. Нажми «Проверить сейчас» — она станет базой для сравнения.",
-      monitoringAllCountries: "из {count} на mobile.de во всех странах (выборка, выбранные страны)",
-      monitoringMissing: "Нет данных с: {portals} (портал недоступен) — эта проверка не включает этот рынок.",
+      monitoringNoScopeCheck: "Нет мониторинга с этими порталами и странами. Следующий мониторинг станет базой для сравнения.",
+      monitoringAllCountries: "{count} на mobile.de во всех странах",
+      monitoringMissing: "Нет данных с: {portals} — портал не ответил, этот мониторинг его не включает. Попробуй ещё раз через несколько минут.",
+      monitoringSwitchOn: "Мониторинг включён",
+      monitoringSettings: "Настройки мониторинга: порталы, цены, страны, конвертер валют",
+      monitoringSince: "Мониторинг с {date} · {days} · сохранено мониторингов: {count}",
+      monitoringNext: "Следующий мониторинг: {date}",
+      monitoringNextNow: "сейчас (программа открыта)",
+      monitoringToday9: "сегодня в 9:00",
+      monitoringTomorrow9: "завтра в 9:00",
+      monitoringDay0: "с сегодня",
+      monitoringDay1: "день",
+      monitoringDay2: "дня",
+      monitoringDay5: "дней",
+      monitoringProgressTitle: "Мониторинг идёт:",
+      monitoringProgressPages: "{done}/{total} стр.",
+      monitoringProgressCountries: "{done}/{total} стран",
+      monitoringProgressRun: "читаю…",
+      monitoringProgressDone: "✓ {count} объявлений",
+      monitoringProgressFail: "✕ нет ответа",
+      monitoringErrorModel: "{portal} не нашёл эту модель — проверь название модели на странице 1.",
+      monitoringErrorNone: "Ни один портал не вернул объявления — проверь интернет и попробуй ещё раз через несколько минут.",
+      monitoringErrorTooFew: "Порталы вернули меньше 3 объявлений — расширь параметры на странице 1.",
+      monitoringErrorGeneric: "Мониторинг не удался — попробуй ещё раз. Если повторяется, передай подробности: {detail}",
+      monitoringApproxTitle: "На портале больше объявлений, чем программа читает за раз, — числа новых и исчезнувших примерные.",
+      monitoringReadOf: "прочитано {read} из {total}",
+      monitoringSort: "Сортировка:",
+      monitoringSortPrice: "цена",
+      monitoringSortYear: "год",
+      monitoringSortMileage: "пробег",
+      monitoringSortListed: "дата появления",
+      monitoringSortDir: "Сменить направление сортировки",
+      monitoringOnlyVat: "только НДС к вычету",
+      monitoringOnlyDealers: "только дилеры",
+      monitoringListedSince: "в продаже с {date} · {days}",
+      monitoringSeenSince: "в мониторинге с {date} · {days}",
+      monitoringSeenBefore: "в продаже минимум с {date} · {days}",
+      monitoringListedTitle: "Дата с портала: когда выставлено объявление.",
+      monitoringSeenTitle: "Портал не даёт дату: это день мониторинга, когда авто появилось впервые.",
+      monitoringSeenBeforeTitle: "Авто было уже в первом мониторинге — выставлено раньше, точную дату портал не даёт.",
+      monitoringEmptyNew: "Нет новых объявлений с {date}. {next}.",
+      monitoringEmptyGone: "Ничего не исчезло с {date}. {next}.",
+      monitoringEmptySaved: "Здесь пока пусто — звёздочка ☆ у объявления сохраняет авто сюда, из этого списка делается PDF для клиента.",
+      monitoringPdf: "PDF для клиента",
+      monitoringPdfEmpty: "Сначала сохрани авто звёздочкой ☆ — PDF делается из списка «Сохранённые».",
+      monitoringPdfTitle: "Подобранные авто: {car}",
+      monitoringPdfSub: "AUTOGOOD · {date} · авто: {count} · цены с порталов на дату подготовки",
+      monitoringPdfWorking: "Готовлю PDF…",
+      monitoringPdfReady: "PDF сохранён: {file}",
+      monitoringPdfFailed: "Не удалось сделать PDF — попробуй ещё раз.",
+      monitoringPdfFile: "Подборка авто",
+      monitoringPdfOpen: "Открыть объявление",
+      monitoringOfferLink: "{title} — открыть объявление",
       priceHistoryComparedHint: "выбор рынков на странице 1 «Поиск»",
       offerHistoryHeading: "Рынок в выбранный день",
       offerHistoryIntro: "Выбери дату замера: график и список показывают объявления этого дня. «Сравнить с» накладывает вторую дату (серые кружки) и показывает, что изменилось.",
@@ -1090,6 +1190,8 @@
       firstRegistration: String(listingValue(row, ["firstregistration"]) || "").slice(0, 10),
       priceType: String(listingValue(row, ["pricetype"]) || "").slice(0, 12),
       vatDeductible: listingValue(row, ["vatdeductible"]) === true || listingValue(row, ["vatdeductible"]) === "true",
+      // The portal's own date of the ad (otomoto, blocket), when it gives one.
+      listedAt: String(listingValue(row, ["listedat"]) || "").slice(0, 30),
       // Otomoto: "1" history confirmed in CEPiK, "0" not; origin "pl" or the
       // country the car was imported from.
       cepik: String(listingValue(row, ["cepik"]) || "").slice(0, 1),
@@ -1205,6 +1307,8 @@
         // 132 offers 2026-10-03, the ads say "49.999 zł brutto, 40.649 netto").
         priceType: node.price?.isGross === false ? ((node.price?.badges || []).includes("INCLUDE_VAT") ? "vat" : "net") : "",
         seller: node.sellerLink ? "dealer" : "private",
+        // When the ad was put up (Monitoring: "w ofercie od").
+        listedAt: String(node.createdAt || ""),
         // History confirmed in CEPiK by otomoto, and where the car came from
         // ("Kraj pochodzenia": pl = bought new in Poland, else imported).
         cepik: node.cepikVerified === true ? "1" : node.cepikVerified === false ? "0" : "",
@@ -1329,6 +1433,9 @@
       fuel: String(doc.fuel || "").slice(0, 40),
       city: String(doc.location || "").slice(0, 80),
       country: "SE",
+      // "Företag" = a company (dealer); the ad's date (ms) for "w ofercie od".
+      seller: /f[öo]retag/i.test(String(doc.dealer_segment || "")) ? "dealer" : doc.dealer_segment ? "private" : "",
+      listedAt: Number(doc.timestamp) > 0 ? new Date(Number(doc.timestamp)).toISOString() : "",
       rank,
       marketTotal: total,
     };
@@ -1391,7 +1498,7 @@
 
   // AutoScout24 through the reader proxy, sorted by price; a whole list when
   // short enough, else pages spread evenly over it (as otomoto).
-  async function fetchAutoscoutListings(filters, { countries, price = null, whole = false } = {}) {
+  async function fetchAutoscoutListings(filters, { countries, price = null, whole = false, onProgress = null } = {}) {
     const autoscout = window.AUTOGOOD_AUTOSCOUT;
     if (!autoscout) return null;
     const read = async (page) => {
@@ -1425,6 +1532,7 @@
         if (result.status === "fulfilled") collect(autoscout.parseSearchPage(result.value, { page: batch[index], total: first.total }).listings);
         else failed.push(batch[index]);
       });
+      onProgress?.(Math.min(pages.length, start + OTOMOTO_PARALLEL) + 1, pages.length + 1);
     }
     for (const page of failed) {
       await new Promise((resolve) => setTimeout(resolve, 1200));
@@ -1456,11 +1564,12 @@
   // (the small foreign lists whole) and the lists are merged; an offer's
   // place in the merged price order = its place in its own list + the
   // cheaper offers of the other lists.
-  async function fetchMobileDeSample(filters, whole = false, price = null) {
+  async function fetchMobileDeSample(filters, whole = false, price = null, onProgress = null) {
     const countries = (filters.countries || []).filter(Boolean);
     if (countries.length <= 1) return fetchMobileDeCountry(filters, whole, price);
     const lists = [];
     for (const country of countries) {
+      onProgress?.(lists.length, countries.length, "countries");
       try {
         const result = await fetchMobileDeCountry({ ...filters, countries: [country] }, country === "DE" ? whole : true, price);
         if (result) lists.push({ country, ...result });
@@ -1561,7 +1670,7 @@
   const otomotoProvider = {
     id: "otomoto",
     lastSources: ["otomoto"],
-    async getListings({ filters, pinned = null, historyId = "" }) {
+    async getListings({ filters, pinned = null, historyId = "", progress = null }) {
       const c = copy();
       setAnalysisStatus(c.preparing);
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
@@ -1571,19 +1680,36 @@
       // ... and their own price per portal (set on page 3 "Monitoring").
       const prices = Object.fromEntries(MARKET_SOURCES.map((source) => [source, whole && favorite ? window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(favorite.id, source) || null : null]));
       this.lastPrices = JSON.stringify(Object.fromEntries(Object.entries(prices).filter(([, price]) => price)));
+      // Each portal says how far it got (page 3 shows it while it checks).
+      const step = (source) => (done, total, unit = "pages") => progress?.(source, { state: "run", done, total, unit });
+      const track = (source, promise) => {
+        if (!promise) return null;
+        progress?.(source, { state: "run" });
+        return promise.then((value) => {
+          progress?.(source, { state: "ok", count: value?.listings?.length || 0 });
+          return value;
+        }, (error) => {
+          progress?.(source, { state: "fail" });
+          throw error;
+        });
+      };
       const [otomoto, mobile, blocket, avby, autoscout] = await Promise.allSettled([
-        selected.includes("otomoto") ? fetchOtomotoListings(filters, (page, pages) => {
+        selected.includes("otomoto") ? track("otomoto", fetchOtomotoListings(filters, (page, pages) => {
           setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
-        }, whole, prices.otomoto) : null,
-        selected.includes("mobile") ? fetchMobileDeSample(filters, whole, prices.mobile) : null,
-        selected.includes("blocket") ? fetchBlocketListings(filters, null, whole, prices.blocket) : null,
-        selected.includes("avby") ? fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole) : null,
-        selected.includes("autoscout") ? fetchAutoscoutListings(filters, {
+          step("otomoto")(page, pages);
+        }, whole, prices.otomoto)) : null,
+        selected.includes("mobile") ? track("mobile", fetchMobileDeSample(filters, whole, prices.mobile, step("mobile"))) : null,
+        selected.includes("blocket") ? track("blocket", fetchBlocketListings(filters, step("blocket"), whole, prices.blocket)) : null,
+        selected.includes("avby") ? track("avby", fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole)) : null,
+        selected.includes("autoscout") ? track("autoscout", fetchAutoscoutListings(filters, {
           countries: (filters.countries || []).length ? filters.countries : ["DE"],
           price: prices.autoscout || prices.mobile || null,
           whole,
-        }) : null,
+          onProgress: step("autoscout"),
+        })) : null,
       ]);
+      this.lastErrors = Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout]]
+        .filter(([, result]) => result.status === "rejected").map(([source, result]) => [source, String(result.reason?.message || result.reason || "")]));
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const mobileListings = (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal }));
@@ -1907,6 +2033,7 @@
       netPrice: listing.netPrice || 0,
       seller: listing.seller || "",
       country: String(listing.country || "").slice(0, 4),
+      listedAt: listing.listedAt || undefined,
       // For the turnkey price in Belarus: engine size, first registration, fuel.
       ccm: Number(listing.displacementCcm) || undefined,
       reg: listing.firstRegistration || undefined,
@@ -2995,7 +3122,9 @@
       const circle = compare
         ? `<circle cx="${x(item.x)}" cy="${y(item.offer.price)}" r="3.6" class="isCompare"><title>${tip(item.offer, date)}</title></circle>`
         : `<circle cx="${x(item.x)}" cy="${y(item.offer.price)}" r="4" fill="${color}"><title>${tip(item.offer, date)}</title></circle>`;
-      return item.offer.url ? `<a href="${escapeMarketHtml(item.offer.url)}" target="_blank" rel="noopener">${circle}</a>` : circle;
+      // A 24 px target around the small dot, and a name for screen readers.
+      const target = `<circle cx="${x(item.x)}" cy="${y(item.offer.price)}" r="12" fill="transparent" />`;
+      return item.offer.url ? `<a href="${escapeMarketHtml(item.offer.url)}" target="_blank" rel="noopener" aria-label="${escapeMarketHtml(copy().monitoringOfferLink.replace("{title}", `${item.offer.title || ""} ${formatPlainPrice(item.offer.price, item.offer.currency)}`.trim()))}">${target}${circle}</a>` : circle;
     };
     const moves = now.map((item) => {
       const before = thenByKey.get(item.offer.key);
@@ -3165,6 +3294,24 @@
   // teraz" that reads the portals and compares with the previous check (new
   // and gone offers per portal), and the day-by-day history below, folded.
   const monitoringState = { id: "", view: "new", portal: "", busy: "", status: "", statusError: false };
+  // How the manager likes the list (sort, filters) and whether the settings
+  // are open: conveniences of this browser, not user data.
+  const MONITORING_PREFS_KEY = "autogood.mobile.monitoringListPrefs";
+  const monitoringPrefs = { sort: "price", dir: "asc", onlyVat: false, onlyDealers: false, settingsOpen: false };
+  try {
+    Object.assign(monitoringPrefs, JSON.parse(localStorage.getItem(MONITORING_PREFS_KEY) || "{}"));
+  } catch {
+    // Defaults.
+  }
+  const saveMonitoringPrefs = () => {
+    try {
+      localStorage.setItem(MONITORING_PREFS_KEY, JSON.stringify(monitoringPrefs));
+    } catch {
+      // Kept for this page only.
+    }
+  };
+  // What each portal has read while a monitoring runs.
+  const monitoringProgress = {};
   let monitoringExtended = false;
   try {
     monitoringExtended = localStorage.getItem("autogood.mobile.monitoringExtended") === "1";
@@ -3341,29 +3488,30 @@
           <h2 class="agBlockTitle">★ ${escapeMarketHtml(monitoringTitle(entry))}</h2>
           <label class="mobileMonitoringSwitch${monitored ? " isOn" : ""}">
             <input type="checkbox" role="switch" data-monitoring-switch="${escapeMarketHtml(entry.id)}"${monitored ? " checked" : ""} />
-            <i aria-hidden="true"></i><b>${escapeMarketHtml(c.monitoringSwitch)}</b>
+            <i aria-hidden="true"></i><b>${escapeMarketHtml(monitored ? c.monitoringSwitchOn : c.monitoringSwitch)}</b>
           </label>
         </div>
-        <p class="mobileMonitoringNote">${escapeMarketHtml(monitored ? c.monitoringOn : c.monitoringOff)}</p>
-        <div class="mobileMonitoringBlockHead">
-          ${blockTitle("list", c.monitoringParams)}
-          <button class="mobileMarketImportClear" type="button" data-monitoring-edit>${escapeMarketHtml(c.monitoringEditParams)} →</button>
-        </div>
-        <section class="mobileSearchSummary mobileMonitoringParams">
-          <div class="mobileSelectedFilters mobileSearchSummaryBody" data-monitoring-params>${monitoringParamsHtml()}</div>
-        </section>
+        <p class="mobileMonitoringNote">${escapeMarketHtml(monitored ? c.monitoringOn : c.monitoringOff)}${monitored ? ` <b>${escapeMarketHtml(c.monitoringNext.replace("{date}", nextMonitoringText(entry)))}</b>` : ""}</p>
+        <button class="mobileMonitoringParamsLine" type="button" data-monitoring-edit title="${escapeMarketHtml(c.monitoringEditParams)}">
+          <span>${escapeMarketHtml([monitoringTitle(entry), ...historyMeta(entry.filters)].join(" · "))}</span>
+          <b>${escapeMarketHtml(c.monitoringEditParams)} →</b>
+        </button>
+        <p class="mobileMonitoringSince" data-monitoring-since></p>
       </section>
-      <div class="mobileMonitoringColumns">
-        <section class="mobileMarketCard mobileMonitoringPortalsCard">
-          ${blockTitle("percent", c.monitoringPortals)}
-          <p class="mobileMonitoringHint">${escapeMarketHtml(c.monitoringPortalsHint)}</p>
-          <div class="mobileMonitoringPortals">${monitoringPortalsHtml(entry)}</div>
-        </section>
-        <section class="mobileMarketCard mobileMonitoringConverterCard">
-          ${blockTitle("percent", c.monitoringConverter)}
-          ${monitoringConverterHtml()}
-        </section>
-      </div>
+      <details class="mobileMonitoringSettings" data-monitoring-settings${monitoringPrefs.settingsOpen ? " open" : ""}>
+        <summary>${escapeMarketHtml(c.monitoringSettings)}</summary>
+        <div class="mobileMonitoringColumns">
+          <section class="mobileMarketCard mobileMonitoringPortalsCard">
+            ${blockTitle("percent", c.monitoringPortals)}
+            <p class="mobileMonitoringHint">${escapeMarketHtml(c.monitoringPortalsHint)}</p>
+            <div class="mobileMonitoringPortals">${monitoringPortalsHtml(entry)}</div>
+          </section>
+          <section class="mobileMarketCard mobileMonitoringConverterCard">
+            ${blockTitle("percent", c.monitoringConverter)}
+            ${monitoringConverterHtml()}
+          </section>
+        </div>
+      </details>
       <section class="mobileMarketCard mobileMonitoringResults">
         <div class="mobileMonitoringBlockHead">
           <div class="mobileMonitoringCheckInfo" data-monitoring-check-info></div>
@@ -3372,6 +3520,7 @@
             <button class="mobileMarketImportClear isPrimary" type="button" data-monitoring-check="${escapeMarketHtml(entry.id)}"${busy ? " disabled" : ""}>${escapeMarketHtml(busy ? c.monitoringChecking : c.monitoringCheck)}</button>
           </div>
         </div>
+        <div class="mobileMonitoringProgress" data-monitoring-progress aria-live="polite"${monitoringState.busy ? "" : " hidden"}>${monitoringProgressHtml()}</div>
         ${otherCar ? `<p class="mobileMonitoringStatus">${escapeMarketHtml(c.monitoringAutoRunning.replace("{car}", monitoringTitle(otherCar)))}</p>` : ""}
         ${monitoringState.status ? `<p class="mobileMonitoringStatus${monitoringState.statusError ? " isError" : ""}">${escapeMarketHtml(monitoringState.status)}</p>` : ""}
         <div data-monitoring-results="${escapeMarketHtml(entry.id)}"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></div>
@@ -3394,6 +3543,67 @@
     if (!entry) return;
     fillMonitoringResults(entry);
     if (monitoringExtended) fillOfferHistory(entry);
+  }
+
+  // Monitoring runs every day at 9:00 (while the program is open, until a
+  // server runs it): due when no Monitoring check exists since today's 9:00.
+  const MONITORING_HOUR = 9;
+  const todayAtNine = () => {
+    const at = new Date();
+    at.setHours(MONITORING_HOUR, 0, 0, 0);
+    return at;
+  };
+  function nextMonitoringText(entry) {
+    const c = copy();
+    const nine = todayAtNine();
+    if (Date.now() < nine.getTime()) return c.monitoringToday9;
+    const doneToday = (entry.priceLog || []).some((point) => !point.filtersChange && Date.parse(point.at) >= nine.getTime());
+    return doneToday ? c.monitoringTomorrow9 : c.monitoringNextNow;
+  }
+  function daysText(days) {
+    const c = copy();
+    const n = Math.max(0, Math.floor(days));
+    if (n === 0) return c.monitoringDay0;
+    if (currentLanguage() === "ru") {
+      const word = n % 10 === 1 && n % 100 !== 11 ? c.monitoringDay1 : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? c.monitoringDay2 : c.monitoringDay5;
+      return `${n} ${word}`;
+    }
+    return `${n} ${n === 1 ? c.monitoringDay1 : c.monitoringDay5}`;
+  }
+  const daysSince = (iso) => (Date.now() - Date.parse(iso)) / 86400000;
+  const shortDate = (iso) => formatHistoryDate(iso).split(",")[0];
+
+  function monitoringProgressHtml() {
+    const c = copy();
+    const parts = MARKET_SOURCES.filter((source) => monitoringProgress[source]).map((source) => {
+      const info = monitoringProgress[source];
+      const text = info.state === "ok" ? c.monitoringProgressDone.replace("{count}", numberFormat().format(info.count || 0))
+        : info.state === "fail" ? c.monitoringProgressFail
+          : Number.isFinite(info.done) && Number.isFinite(info.total)
+            ? (info.unit === "countries" ? c.monitoringProgressCountries : c.monitoringProgressPages).replace("{done}", info.done).replace("{total}", info.total)
+            : c.monitoringProgressRun;
+      return `<span class="is${info.state === "ok" ? "Done" : info.state === "fail" ? "Fail" : "Run"}"><b>${escapeMarketHtml(portalName(source))}</b> ${escapeMarketHtml(text)}</span>`;
+    });
+    return `<b>${escapeMarketHtml(c.monitoringProgressTitle)}</b> ${parts.length ? parts.join("") : `<span>${escapeMarketHtml(c.monitoringProgressRun)}</span>`}`;
+  }
+  function updateMonitoringProgress(source, info) {
+    monitoringProgress[source] = { ...(monitoringProgress[source] || {}), ...info };
+    const box = document.querySelector("[data-monitoring-progress]");
+    if (!box) return;
+    box.hidden = false;
+    box.innerHTML = monitoringProgressHtml();
+  }
+
+  // What went wrong, in the manager's words (the technical text only as a
+  // detail of the generic message).
+  function monitoringErrorText(error, source = "") {
+    const c = copy();
+    const detail = String(error?.message || error || "");
+    if (/model not found/i.test(detail)) return c.monitoringErrorModel.replace("{portal}", portalName(source || "autoscout"));
+    if (detail === c.refreshInvalid) return c.monitoringErrorTooFew;
+    if (detail === c.otomotoFailed) return c.monitoringErrorNone;
+    if (/failed to fetch|network|load failed|^\d{3}$/i.test(detail)) return c.monitoringErrorNone;
+    return c.monitoringErrorGeneric.replace("{detail}", detail || "—");
   }
 
   // ---- Offers saved by hand on page 3 (per favourite) -----------------------
@@ -3571,13 +3781,38 @@
     }
     const record = byDate.get(latest.at);
     const before = previous ? byDate.get(previous.at) : null;
+    // Since when this car is monitored, and when each offer first showed up
+    // in any of its checks (the portal's own date wins where it gives one).
+    const monitoringChecks = [...byDate.values()].filter((item) => item.scope).sort((left, right) => left.at.localeCompare(right.at));
+    const firstSeen = new Map();
+    [...byDate.values()].sort((left, right) => left.at.localeCompare(right.at)).forEach((item) => {
+      Object.values(item.markets || {}).forEach((market) => (market.offers || []).forEach((offer) => {
+        if (!firstSeen.has(offer.key)) firstSeen.set(offer.key, item.at);
+      }));
+    });
+    const firstCheckAt = [...byDate.keys()].sort()[0];
+    const since = document.querySelector("[data-monitoring-since]");
+    if (since && monitoringChecks.length) {
+      since.textContent = c.monitoringSince
+        .replace("{date}", shortDate(monitoringChecks[0].at))
+        .replace("{days}", daysText(daysSince(monitoringChecks[0].at)))
+        .replace("{count}", String(monitoringChecks.length));
+    }
+    const appearance = (offer) => {
+      if (offer.listedAt && Number.isFinite(Date.parse(offer.listedAt))) return { at: offer.listedAt, kind: "listed" };
+      const at = firstSeen.get(offer.key);
+      if (!at) return null;
+      return { at, kind: at === firstCheckAt ? "before" : "seen" };
+    };
     const changedBetween = false;
     const newBase = !previous && (checks.length > 1 || otherChecks);
     const sources = MARKET_SOURCES.filter((source) => chartSources[source] && (record.markets[source] || before?.markets[source]));
     const numbers = numberFormat();
     const perSource = sources.map((source) => {
       const current = record.markets[source];
-      const compared = before ? (before.markets[source] || { offers: [], complete: false, total: 0 }) : null;
+      // A portal missing from the previous monitoring (it did not answer):
+      // nothing to compare with, this one is its base.
+      const compared = before && before.markets[source] ? before.markets[source] : null;
       const rows = offerChanges(source, current, compared);
       return { source, current, compared, rows };
     });
@@ -3595,10 +3830,10 @@
           <span class="mobileMonitoringTileHead">${monitoringPortalBadge(source, current?.countries || record.markets.mobile?.countries || [])}</span>
           <span class="mobileMonitoringTileStats">
             <span><small>${escapeMarketHtml(c.monitoringOffers)}</small><b>${escapeMarketHtml(numbers.format(total))}</b>${delta ? `<em class="${delta > 0 ? "isGood" : "isBad"}">${delta > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.abs(delta)))}</em>` : ""}</span>
-            <span><small>${escapeMarketHtml(c.monitoringNew)}</small><b class="${certain ? "isNew" : "isUnsure"}">${compared ? `+${count("new")}${certain ? "" : "?"}` : "—"}</b></span>
-            <span><small>${escapeMarketHtml(c.monitoringGone)}</small><b class="${certain ? "isGone" : "isUnsure"}">${compared ? `−${count("gone")}${certain ? "" : "?"}` : "—"}</b></span>
+            <span><small>${escapeMarketHtml(c.monitoringNew)}</small><b class="${certain ? "isNew" : "isUnsure"}">${compared ? `${certain ? "" : "≈ "}+${count("new")}` : "—"}</b></span>
+            <span><small>${escapeMarketHtml(c.monitoringGone)}</small><b class="${certain ? "isGone" : "isUnsure"}">${compared ? `${certain ? "" : "≈ "}−${count("gone")}` : "—"}</b></span>
           </span>
-          ${compared && !certain ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringSample)}</small>` : ""}
+          ${compared && !certain ? `<small class="mobileMonitoringTileNote" title="${escapeMarketHtml(c.monitoringApproxTitle)}">${escapeMarketHtml(c.monitoringSample)} · ${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current?.offers.length || 0)).replace("{total}", numbers.format(current?.read && source === "autoscout" ? current.total : current?.total || 0)))}</small>` : ""}
           ${current?.allCountriesTotal ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringAllCountries.replace("{count}", numbers.format(current.allCountriesTotal)))}</small>` : ""}
           ${current?.duplicates ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringDuplicates.replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
         </button>`;
@@ -3622,7 +3857,19 @@
     if (!before && (monitoringState.view === "new" || monitoringState.view === "gone")) monitoringState.view = "all";
     const view = monitoringState.view;
     const statusLabel = { new: c.offerNew, firstSeen: c.offerFirstSeen, gone: c.offerGone, outside: c.offerOutside, cheaper: c.offerCheaper, dearer: c.offerDearer, same: c.offerSame };
-    const rows = [...viewRows[view]].sort((left, right) => (left.offer.turnkey || priceInPln(left.offer.price, left.offer.currency)) - (right.offer.turnkey || priceInPln(right.offer.price, right.offer.currency)));
+    // The list as the manager wants it: only VAT-deductible / dealers, sorted
+    // by price, year, mileage or the day the ad appeared.
+    const isVat = (offer) => offer.priceType === "vat" || (offer.priceType === "net" && offer.currency === "PLN");
+    const sortValue = {
+      price: (row) => row.offer.turnkey || priceInPln(row.offer.price, row.offer.currency),
+      year: (row) => Number(row.offer.year) || 0,
+      mileage: (row) => Number(row.offer.mileage) || 0,
+      listed: (row) => Date.parse(appearance(row.offer)?.at || "") || 0,
+    }[monitoringPrefs.sort] || ((row) => row.offer.price);
+    const direction = monitoringPrefs.dir === "desc" ? -1 : 1;
+    const rows = viewRows[view]
+      .filter((row) => (!monitoringPrefs.onlyVat || isVat(row.offer)) && (!monitoringPrefs.onlyDealers || row.offer.seller === "dealer"))
+      .sort((left, right) => (sortValue(left) - sortValue(right)) * direction || left.offer.price - right.offer.price);
     // Belarus (av.by compared with mobile.de / AutoScout24): German offers with
     // the car's price, the price in Minsk and turnkey with customs, in USD.
     const byCompare = Boolean(window.AUTOGOOD_TURNKEY_BY) && chartSources.avby && (chartSources.mobile || chartSources.autoscout);
@@ -3659,7 +3906,24 @@
     const plainPriceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
     const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isPrimary" : ""}" type="button" data-monitoring-view="${key}"${(key === "new" || key === "gone") && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${viewRows[key].length}</button>`;
     const withStatus = view === "all" && before;
-    const columns = 8 + (withStatus ? 1 : 0);
+    const columns = 5 + (withStatus ? 1 : 0);
+    const dateLine = (offer) => {
+      const info = appearance(offer);
+      if (!info) return "";
+      const text = { listed: c.monitoringListedSince, seen: c.monitoringSeenSince, before: c.monitoringSeenBefore }[info.kind]
+        .replace("{date}", shortDate(info.at)).replace("{days}", daysText(daysSince(info.at)));
+      const title = { listed: c.monitoringListedTitle, seen: c.monitoringSeenTitle, before: c.monitoringSeenBeforeTitle }[info.kind];
+      return `<small class="mobileMonitoringDate is${info.kind.charAt(0).toUpperCase()}${info.kind.slice(1)}" title="${escapeMarketHtml(title)}">${escapeMarketHtml(text)}</small>`;
+    };
+    const metaLine = (offer) => [offer.year, offer.mileage ? `${numbers.format(offer.mileage)} ${kmUnit()}` : "", powerText(offer.power)].filter(Boolean).join(" · ");
+    const nextText = c.monitoringNext.replace("{date}", nextMonitoringText(entry));
+    const emptyText = {
+      new: c.monitoringEmptyNew.replace("{date}", formatHistoryDate(latest.at)).replace("{next}", nextText),
+      gone: c.monitoringEmptyGone.replace("{date}", formatHistoryDate(latest.at)).replace("{next}", nextText),
+      saved: c.monitoringEmptySaved,
+    }[view] || c.monitoringEmptyList;
+    const sortOptions = [["price", c.monitoringSortPrice], ["year", c.monitoringSortYear], ["mileage", c.monitoringSortMileage], ["listed", c.monitoringSortListed]];
+    const savedCount = viewRows.saved.length;
     rowsForDetails = new Map(rows.map((row) => [row.offer.key, row]));
     target.innerHTML = `
       ${changedBetween ? `<p class="mobileMarketOfferWarning">${escapeMarketHtml(c.offerFiltersBetween)}</p>` : ""}
@@ -3668,6 +3932,15 @@
       <div class="mobileMonitoringViews" role="group">
         ${viewButton("new", c.monitoringViewNew)}${viewButton("gone", `${c.monitoringViewGone} (${c.monitoringGoneHint})`)}${viewButton("all", c.monitoringViewAll)}${viewButton("saved", c.monitoringViewSaved)}
         ${monitoringState.portal ? `<button class="mobileMarketImportClear" type="button" data-monitoring-portal="">${escapeMarketHtml(c.monitoringAllPortals)} ✕</button>` : ""}
+        <button class="mobileMarketImportClear mobileMonitoringPdfButton" type="button" data-monitoring-pdf${savedCount ? "" : ` aria-disabled="true" title="${escapeMarketHtml(c.monitoringPdfEmpty)}"`}>${escapeMarketHtml(c.monitoringPdf)} · ${savedCount}</button>
+      </div>
+      <div class="mobileMonitoringListTools">
+        <label>${escapeMarketHtml(c.monitoringSort)}
+          <select data-monitoring-sort>${sortOptions.map(([key, label]) => `<option value="${key}"${monitoringPrefs.sort === key ? " selected" : ""}>${escapeMarketHtml(label)}</option>`).join("")}</select>
+        </label>
+        <button class="mobileMonitoringSortDir" type="button" data-monitoring-sort-dir aria-label="${escapeMarketHtml(c.monitoringSortDir)}" title="${escapeMarketHtml(c.monitoringSortDir)}">${monitoringPrefs.dir === "desc" ? "↓" : "↑"}</button>
+        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyVat"${monitoringPrefs.onlyVat ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyVat)}</label>
+        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyDealers"${monitoringPrefs.onlyDealers ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyDealers)}</label>
       </div>
       ${rows.length ? `
       <div class="mobileMarketTableScroll mobileMonitoringList">
@@ -3677,9 +3950,6 @@
             ${withStatus ? `<th scope="col">${escapeMarketHtml(c.offerStatus)}</th>` : ""}
             <th scope="col" class="mobileMonitoringStarCell"><span class="agVisuallyHidden">★</span></th>
             <th scope="col">${escapeMarketHtml(c.offerAd)}</th>
-            <th scope="col" class="isNum">${escapeMarketHtml(c.offerYear)}</th>
-            <th scope="col" class="isNum">${escapeMarketHtml(c.offerMileage)}</th>
-            <th scope="col" class="isNum">${escapeMarketHtml(c.monitoringPower)}</th>
             <th scope="col" class="isNum">${escapeMarketHtml(c.offerPrice)}</th>
             <th scope="col">${escapeMarketHtml(c.priceHistorySource)}</th>
           </tr></thead>
@@ -3691,16 +3961,63 @@
               <td class="isNum mobileMarketRowNumber">${index + 1}</td>
               ${withStatus ? `<td><span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status] || "")}</span></td>` : ""}
               <td class="mobileMonitoringStarCell"><button class="mobileMonitoringStar${isSaved ? " isOn" : ""}" type="button" data-monitoring-save="${escapeMarketHtml(row.offer.key)}" aria-pressed="${isSaved ? "true" : "false"}" title="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}" aria-label="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}">${isSaved ? "★" : "☆"}</button></td>
-              <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}<button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button></td>
-              <td class="isNum">${escapeMarketHtml(row.offer.year || "—")}</td>
-              <td class="isNum">${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} ${kmUnit()}` : "—"}</td>
-              <td class="isNum">${escapeMarketHtml(powerText(row.offer.power) || "—")}</td>
+              <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}<small class="mobileMonitoringMeta">${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}<button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button></td>
               <td class="isNum">${priceCell(row.offer, row.source)}</td>
               <td>${offerCountryBadge(row.source, row.offer.country)}</td>
             </tr>${detailsOpen ? offerDetailsHtml(row, columns) : ""}`;
           }).join("")}</tbody>
         </table>
-      </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.monitoringEmptyList)}</p>`}${byFootnote}`;
+      </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(emptyText)}</p>`}${byFootnote}`;
+    monitoringPdfRows = { entry, rows: viewRows.saved, priceCell, metaLine, dateLine };
+  }
+
+  // ---- PDF for the client: the cars saved (★) for this favourite ---------
+  var monitoringPdfRows = null;
+  async function downloadClientPdf(button) {
+    const c = copy();
+    const data = monitoringPdfRows;
+    if (!data || !data.rows.length) {
+      Object.assign(monitoringState, { status: c.monitoringPdfEmpty, statusError: true });
+      renderPriceHistoryPage();
+      return;
+    }
+    const rows = [...data.rows].filter((row) => !row.gone).sort((left, right) => (left.offer.turnkey || priceInPln(left.offer.price, left.offer.currency)) - (right.offer.turnkey || priceInPln(right.offer.price, right.offer.currency)));
+    const title = monitoringTitle(data.entry);
+    const today = new Date();
+    const report = document.createElement("article");
+    report.className = "mobileMarketAnalysisPanel mobileMonitoringClientReport";
+    report.innerHTML = `
+      <header class="mobileMonitoringClientHead">
+        <img src="./assets/autogood-logo.png" alt="AUTOGOOD" />
+        <div>
+          <h1>${escapeMarketHtml(c.monitoringPdfTitle.replace("{car}", title))}</h1>
+          <p>${escapeMarketHtml(c.monitoringPdfSub.replace("{date}", formatHistoryDate(today.toISOString()).split(",")[0]).replace("{count}", String(rows.length)))}</p>
+        </div>
+      </header>
+      <table class="mobileMarketTable mobileMonitoringClientTable">
+        <thead><tr><th>#</th><th>${escapeMarketHtml(c.offerAd)}</th><th class="isNum">${escapeMarketHtml(c.offerPrice)}</th></tr></thead>
+        <tbody>${rows.map((row, index) => `
+          <tr>
+            <td class="isNum">${index + 1}</td>
+            <td><b>${escapeMarketHtml(row.offer.title || "—")}</b><small>${escapeMarketHtml(data.metaLine(row.offer))}</small><small>${offerCountryBadge(row.source, row.offer.country)}</small>${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}">${escapeMarketHtml(c.monitoringPdfOpen)} ↗</a>` : ""}</td>
+            <td class="isNum">${data.priceCell(row.offer, row.source)}</td>
+          </tr>`).join("")}</tbody>
+      </table>
+      <p class="mobileMarketAxisNote isTurnkey">* ${escapeMarketHtml(c.turnkeyFootnote || "")}</p>`;
+    const fileName = `AUTOGOOD ${c.monitoringPdfFile} ${title} ${today.toISOString().slice(0, 10)}.pdf`.replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
+    await downloadReportPdf(button, "pdf", {
+      live: report,
+      fileName,
+      onStatus: (text, isError = false) => {
+        Object.assign(monitoringState, { status: text, statusError: isError });
+        const box = document.querySelector(".mobileMonitoringResults .mobileMonitoringStatus[data-monitoring-pdf-status]");
+        if (box) box.textContent = text;
+      },
+      working: c.monitoringPdfWorking,
+      ready: c.monitoringPdfReady,
+      failed: c.monitoringPdfFailed,
+    });
+    renderPriceHistoryPage();
   }
 
   // One check of a favourite, in place: its portals read (whole lists where
@@ -3739,11 +4056,57 @@
       // the statistics stay with page 1's countries (Germany by default).
       const scope = monitoringScopeOf(entry.id);
       const withCountries = markets.includes("mobile") || markets.includes("autoscout");
-      const fetched = normalizeListings(await provider.getListings({
-        filters: withCountries ? { ...searchFilters, countries: scope.countries } : searchFilters,
+      Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
+      const readMarkets = (only) => provider.getListings({
+        filters: { ...(withCountries ? { ...searchFilters, countries: scope.countries } : searchFilters), markets: only },
         pinned: true,
         historyId: entry.id,
-      }));
+        // Shown whichever car is open: the line says which car runs.
+        progress: (source, info) => updateMonitoringProgress(source, info),
+      });
+      const pause = () => new Promise((resolve) => setTimeout(resolve, 5000));
+      // otomoto, blocket and AutoScout24 share a free reader proxy that now
+      // and then refuses a burst: a portal that gave nothing is asked once
+      // more, alone, when the others are done.
+      let raw;
+      try {
+        raw = await readMarkets(markets);
+      } catch {
+        await pause();
+        raw = await readMarkets(markets);
+      }
+      let sourcesOk = [...(provider.lastSources || [])];
+      let errors = { ...(provider.lastErrors || {}) };
+      let autoscoutMeta = provider.lastAutoscout || null;
+      const pricesKey = provider.lastPrices ?? null;
+      const retry = markets.filter((source) => !sourcesOk.includes(source) && !/model not found/i.test(errors[source] || ""));
+      if (retry.length) {
+        await pause();
+        try {
+          let more = await readMarkets(retry);
+          const nowOk = provider.lastSources || [];
+          // AutoScout24 asked again alone: mobile.de's duplicates dropped here.
+          if (nowOk.includes("autoscout") && !retry.includes("mobile") && sourcesOk.includes("mobile")) {
+            const mobileRaw = raw.filter((listing) => listingSource(listing) === "mobile");
+            const autoscoutRaw = more.filter((listing) => listingSource(listing) === "autoscout");
+            const { unique, duplicates } = dropMobileDuplicates(autoscoutRaw, mobileRaw);
+            more = [...more.filter((listing) => listingSource(listing) !== "autoscout"), ...unique];
+            if (provider.lastAutoscout) provider.lastAutoscout = { ...provider.lastAutoscout, duplicates, deduplicated: true };
+          }
+          raw = [...raw, ...more];
+          sourcesOk = [...sourcesOk, ...nowOk];
+          nowOk.forEach((source) => delete errors[source]);
+          errors = { ...errors, ...(provider.lastErrors || {}) };
+          if (nowOk.includes("autoscout")) autoscoutMeta = provider.lastAutoscout || autoscoutMeta;
+        } catch {
+          // Still nothing: said in the status below.
+        }
+      }
+      provider.lastSources = sourcesOk;
+      provider.lastErrors = errors;
+      provider.lastAutoscout = autoscoutMeta;
+      provider.lastPrices = pricesKey;
+      const fetched = normalizeListings(raw);
       if (fetched.length < 3) throw new Error(c.refreshInvalid);
       const analysisCountries = (entry.filters.countries || []).filter(Boolean);
       const countryBound = (listing) => ["mobile", "autoscout"].includes(listingSource(listing));
@@ -3768,12 +4131,19 @@
       ok = true;
       const missing = markets.filter((source) => !(provider.lastSources || []).includes(source));
       if (missing.length && monitoringState.id === entry.id) {
-        Object.assign(monitoringState, { status: c.monitoringMissing.replace("{portals}", missing.map((source) => (portalName(source))).join(", ")), statusError: true });
+        // A portal that answered "no such model" is said so; others did not answer.
+        const reasons = missing.map((source) => (/model not found/i.test(provider.lastErrors?.[source] || "") ? monitoringErrorText(provider.lastErrors[source], source) : "")).filter(Boolean);
+        const silent = missing.filter((source) => !/model not found/i.test(provider.lastErrors?.[source] || ""));
+        Object.assign(monitoringState, {
+          status: [...reasons, silent.length ? c.monitoringMissing.replace("{portals}", silent.map(portalName).join(", ")) : ""].filter(Boolean).join(" "),
+          statusError: true,
+        });
       }
     } catch (error) {
-      if (monitoringState.id === entry.id) Object.assign(monitoringState, { status: c.monitoringFailed.replace("{error}", error.message || c.invalidData), statusError: true });
+      if (monitoringState.id === entry.id) Object.assign(monitoringState, { status: monitoringErrorText(error), statusError: true });
     } finally {
       monitoringState.busy = "";
+      Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
       if (currentPage() === "history") renderPriceHistoryPage();
     }
     if (queuedCheck) {
@@ -3786,13 +4156,15 @@
 
   // Monitored favourites are checked once a day by themselves while the
   // program is open (until the automation server runs them, B5).
-  const todayKey = () => new Date().toLocaleDateString("sv-SE");
   async function runDueMonitoring() {
+    const nine = todayAtNine().getTime();
+    if (Date.now() < nine) return;
     refreshMarketHistory();
-    const due = marketHistory.filter((entry) => entry.pinned && entry.autoRefresh?.enabled && !(entry.priceLog || [])
-      .some((point) => !point.filtersChange && new Date(point.at).toLocaleDateString("sv-SE") === todayKey()));
-    for (const entry of due) {
+    for (const entry of marketHistory.filter((item) => item.pinned && item.autoRefresh?.enabled)) {
       if (monitoringState.busy) return;
+      const byDate = await loadCheckOffers(entry.id);
+      const doneToday = [...byDate.values()].some((record) => record.scope && Date.parse(record.at) >= nine);
+      if (doneToday) continue;
       const markets = (entry.filters.markets || []).filter((source) => MARKET_SOURCES.includes(source));
       await runMonitoringCheck(entry, markets.length ? markets : MARKET_SOURCES.filter((source) => chartSources[source]));
     }
@@ -3803,7 +4175,8 @@
     const out = document.querySelector("[data-monitoring-convert-out]");
     if (out && currentPage() === "history" && !document.activeElement?.closest?.("[data-mobile-price-history-page]")) renderPriceHistoryPage();
   }).catch(() => {});
-  setInterval(runDueMonitoring, 60 * 60 * 1000);
+  // Looked at every 5 minutes, so 9:00 is met while the program is open.
+  setInterval(runDueMonitoring, 5 * 60 * 1000);
 
   // Scheduled checks are a setting of the favourite, stored with it (the
   // stored history is re-read first, see 4.6.1 in docs/PROJECT-MOBILE.md).
@@ -3822,7 +4195,32 @@
     if (out) out.innerHTML = converterOutputHtml();
   });
 
+  priceHistoryPage?.addEventListener("toggle", (event) => {
+    if (!event.target.matches?.("[data-monitoring-settings]")) return;
+    monitoringPrefs.settingsOpen = event.target.open;
+    saveMonitoringPrefs();
+  }, true);
+
   priceHistoryPage?.addEventListener("change", (event) => {
+    const sort = event.target.closest("[data-monitoring-sort]");
+    if (sort) {
+      monitoringPrefs.sort = sort.value;
+      // Newest first and the youngest first read naturally; price and
+      // mileage from the lowest.
+      monitoringPrefs.dir = sort.value === "listed" || sort.value === "year" ? "desc" : "asc";
+      saveMonitoringPrefs();
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    const only = event.target.closest("[data-monitoring-only]");
+    if (only) {
+      monitoringPrefs[only.dataset.monitoringOnly] = only.checked;
+      saveMonitoringPrefs();
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
     const monitoringSwitch = event.target.closest("[data-monitoring-switch]");
     if (monitoringSwitch) {
       setAutoRefresh(monitoringSwitch.dataset.monitoringSwitch, monitoringSwitch.checked ? { enabled: true, every: "daily" } : null);
@@ -3852,6 +4250,18 @@
   });
 
   priceHistoryPage?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-monitoring-sort-dir]")) {
+      monitoringPrefs.dir = monitoringPrefs.dir === "desc" ? "asc" : "desc";
+      saveMonitoringPrefs();
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    const pdf = event.target.closest("[data-monitoring-pdf]");
+    if (pdf) {
+      downloadClientPdf(pdf);
+      return;
+    }
     const check = event.target.closest("[data-monitoring-check]");
     if (check) {
       const entry = marketHistory.find((item) => item.id === check.dataset.monitoringCheck);
@@ -3934,12 +4344,9 @@
       renderPriceHistoryPage();
       return;
     }
-    // The search, as on page 1: any line (or the button) edits it there.
-    const paramTarget = event.target.closest("[data-monitoring-params] [data-mobile-summary-target]");
-    if (paramTarget || event.target.closest("[data-monitoring-edit]")) {
-      const targetKey = paramTarget?.dataset.mobileSummaryTarget;
+    // The search, in one line: edited on page 1.
+    if (event.target.closest("[data-monitoring-edit]")) {
       showPage("search");
-      if (targetKey) document.querySelector(`[data-mobile-selected-filters] [data-mobile-summary-target="${CSS.escape(targetKey)}"]`)?.click();
       return;
     }
     const date = event.target.closest("[data-offer-date]");
@@ -5379,11 +5786,12 @@
       return "";
     }
   }
-  async function captureReport(mode) {
+  async function captureReport(mode, other = null) {
     await loadScript("./vendor/html-to-image.js?v=1.11.11", "htmlToImage");
     // The report is drawn from a copy placed off screen, so the page itself
-    // (favourites, buttons) never changes while it is prepared.
-    const live = analysisContent.querySelector(".mobileMarketAnalysisPanel");
+    // (favourites, buttons) never changes while it is prepared. Page 3 passes
+    // its own report (the cars saved for the client).
+    const live = other || analysisContent.querySelector(".mobileMarketAnalysisPanel");
     const stage = document.createElement("div");
     const listMode = mode.startsWith("list");
     // The list report: the search (which car) and the offer table only.
@@ -5394,7 +5802,8 @@
     stage.style.cssText = `position:fixed;top:0;left:-100000px;width:${Math.max(1100, live.getBoundingClientRect().width)}px;pointer-events:none;`;
     const root = live.cloneNode(true);
     stage.append(root);
-    analysisContent.parentElement.append(stage);
+    // Page 3's report: the analysis view is hidden there, the page holds it.
+    (other ? document.body : analysisContent.parentElement).append(stage);
     try {
       // A moment for the hidden parts to leave the layout before measuring.
       await new Promise((resolve) => setTimeout(resolve, 60));
@@ -5549,13 +5958,14 @@
 
   // The whole analysis as an A4 PDF: blocks one after another, cut between
   // blocks or table rows, every offer (dot, table row) a clickable link.
-  async function downloadReportPdf(button, mode = "pdf") {
+  async function downloadReportPdf(button, mode = "pdf", options = {}) {
     const c = copy();
+    const say = options.onStatus || setAnalysisStatus;
     button.disabled = true;
-    setAnalysisStatus(c.pdfWorking);
+    say(options.working || c.pdfWorking);
     try {
       await loadScript("./vendor/pdf-lib.min.js", "PDFLib");
-      const { canvas, width, height, pixelRatio, links, breaks } = await captureReport(mode);
+      const { canvas, width, height, pixelRatio, links, breaks } = await captureReport(mode, options.live || null);
       const { PDFDocument, PDFName, PDFString } = window.PDFLib;
       const pdf = await PDFDocument.create();
       const pageWidth = 595.28;
@@ -5602,7 +6012,7 @@
       const bytes = await pdf.save();
       const vehicle = [activeAnalysis?.filters?.brand, activeAnalysis?.filters?.model].filter(Boolean).join(" ");
       // Named in the program's language.
-      const fileName = `AUTOGOOD ${mode === "list-pdf" ? c.fileList : c.fileReport} ${vehicle} ${new Date().toISOString().slice(0, 10)}.pdf`
+      const fileName = options.fileName || `AUTOGOOD ${mode === "list-pdf" ? c.fileList : c.fileReport} ${vehicle} ${new Date().toISOString().slice(0, 10)}.pdf`
         .replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
       const url = URL.createObjectURL(new Blob([bytes], { type: "application/pdf" }));
       const anchor = document.createElement("a");
@@ -5612,9 +6022,9 @@
       anchor.click();
       anchor.remove();
       setTimeout(() => URL.revokeObjectURL(url), 30000);
-      setAnalysisStatus(c.pdfReady.replace("{file}", fileName));
+      say((options.ready || c.pdfReady).replace("{file}", fileName));
     } catch {
-      setAnalysisStatus(c.pdfFailed, true);
+      say(options.failed || c.pdfFailed, true);
     } finally {
       button.disabled = false;
     }
