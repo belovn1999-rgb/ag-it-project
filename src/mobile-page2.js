@@ -61,7 +61,8 @@
   const clearLeftLabels = (scale) => {
     const steps = [...scale.querySelectorAll(".mobileMarketTick.isGrid")];
     steps.forEach((step) => { step.style.visibility = ""; });
-    const limits = [...scale.querySelectorAll(".mobileMarketTick.isLimit"), ...scale.querySelectorAll(".mobileMarketKeyTick")].filter(shown);
+    const limits = [...scale.querySelectorAll(".mobileMarketTick.isLimit"), ...scale.querySelectorAll(".mobileMarketKeyTick")]
+      .filter((label) => shown(label) && label.style.visibility !== "hidden");
     steps.filter(shown).forEach((step) => {
       if (limits.some((limit) => overlaps(step, limit, GAP))) step.style.visibility = "hidden";
     });
@@ -107,23 +108,42 @@
     });
   };
 
-  // The dearest offer's price sits above its dot; when the dot is at the very
-  // top, above would leave the chart — then it goes beside the dot, towards
-  // the middle.
+  // The dearest offer's price sits above its dot. When that leaves the chart
+  // or touches another label (the medians on the right), it tries beside the
+  // dot (towards the middle first), the other side, then under the dot.
   const placePeak = (scale) => {
     const peak = scale.querySelector(".mobileMarketTick.isPeak");
     if (!peak) return;
     peak.style.transform = "";
-    if (peak.getBoundingClientRect().top >= scale.getBoundingClientRect().top) return;
+    peak.style.visibility = "";
+    const box = scale.getBoundingClientRect();
+    const others = [...scale.querySelectorAll(".mobileMarketKeyTick, .mobileMarketTick.isLimit:not(.isPeak), .mobileMarketCar b")].filter(shown);
+    const fits = () => {
+      const rect = peak.getBoundingClientRect();
+      return rect.top >= box.top && rect.bottom <= box.bottom && rect.left >= box.left && rect.right <= box.right
+        && !others.some((other) => overlaps(peak, other, GAP));
+    };
+    if (fits()) return;
     const onRight = Number.parseFloat(peak.style.getPropertyValue("--x")) > 0.5;
-    peak.style.transform = onRight ? "translate(calc(-100% - 12px), -50%)" : "translate(12px, -50%)";
+    const left = "translate(calc(-100% - 12px), -50%)";
+    const right = "translate(12px, -50%)";
+    const below = "translate(-50%, 12px)";
+    const tries = onRight ? [left, right, below] : [right, left, below];
+    for (const transform of tries) {
+      peak.style.transform = transform;
+      if (fits()) return;
+    }
+    // No free spot (the dot sits under the medians' labels): the label goes;
+    // the price stays in the dot's tooltip and in "Statystyki".
+    peak.style.transform = "";
+    peak.style.visibility = "hidden";
   };
 
   const declutter = () => {
     if (view.hidden) return;
     content.querySelectorAll(".mobileMarketScale").forEach((scale) => {
-      placePeak(scale);
       spreadRightLabels(scale);
+      placePeak(scale);
       clearLeftLabels(scale);
     });
     content.querySelectorAll(".mobileMarketXTicks, .mobileMarketCompareAxis").forEach(thinAxis);
