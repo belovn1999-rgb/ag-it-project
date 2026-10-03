@@ -2010,7 +2010,7 @@ function calculateMarginAuction(values, rate, exciseRate, financed, lang, state)
   const rows = [
     ...(include("car") ? [marginAuctionRow("car", t.car, carPln, "", "", false, false, conversionPrefix(n(values.car)))] : []),
     ...(include("auctionFee") ? [marginAuctionRow("auctionFee", t.auctionFee, feePln, "", vatEnabled ? `${money(feePln * vatMultiplier)} brutto` : "", false, false, conversionPrefix(n(values.fee)), feePln * vatMultiplier, vatMultiplier)] : []),
-    ...(include("transport") ? [marginAuctionRow("transport", t.transport, transportNetto, "", vatEnabled ? `${money(transportNetto * vatMultiplier)} brutto` : "", false, false, "", transportNetto * vatMultiplier, vatMultiplier)] : []),
+    ...(include("transport") ? [marginAuctionRow("transport", t.transport, transportNetto, "", "", false, false, "", transportNetto * vatMultiplier, vatMultiplier)] : []),
     ...(include("excise") ? [marginAuctionRow("excise", t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(base)}`, false, false, "", excise * vatMultiplier, vatMultiplier)] : []),
     ...(include("commission") ? [marginAuctionRow("commission", t.commission, commissionNetto, "", commissionFormula(finFix, finPct, base), false, false, "", commissionNetto * vatMultiplier, vatMultiplier)] : []),
     ...(include("technical") ? [marginAuctionRow("technical", t.to, technicalNetto, "", "", false, true, "", technicalNetto * vatMultiplier, vatMultiplier)] : []),
@@ -2075,8 +2075,8 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
       },
       rows: [
         row(t.directCarBrutto, carPln, "", "", false, false, conversionPrefix(car)),
-        row(t.inspection, inspection, "", `${money(inspectionBrutto)} brutto`, false, false, "", inspectionBrutto, 1.23),
-        row(t.transport, transport, "", `${money(transportBrutto)} brutto`, false, false, "", transportBrutto, 1.23),
+        row(t.inspection, inspection, "", "", false, false, "", inspectionBrutto, 1.23),
+        row(t.transport, transport, "", "", false, false, "", transportBrutto, 1.23),
         row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`),
         row(t.commission, commissionNetto, "", commissionFormula(STD_FIX, 0.01, carPln, discountText), false, false, "", commissionBrutto, 1.23),
         row(t.to, TO_FEE, "", "", false, true),
@@ -2111,7 +2111,7 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
       rows: [
         row(t.carNetto, carPln, "", "", false, false, conversionPrefix(car)),
         row(t.auctionFee, feePln, "", `${money(feePln * 1.23)} brutto`, false, false, conversionPrefix(fee)),
-        row(t.transport, transPln, "", `${money(transPln * 1.23)} brutto`),
+        row(t.transport, transPln, "", ""),
         row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(base)}`),
         row(t.commission, commissionNetto, "", commissionFormula(finFix, finPct, commissionBase)),
         row(t.to, TO_FEE, "", "", false, true),
@@ -2141,8 +2141,8 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
     const rows = [
       row(t.carNetto, carPln, "", "", false, false, conversionPrefix(car)),
       ...(values.germanCommissionEnabled ? [row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission))] : []),
-      row(t.inspection, inspection, "", `${money(inspectionBrutto)} brutto`),
-      row(t.transport, transport, "", `${money(transport * 1.23)} brutto`),
+      row(t.inspection, inspection, "", ""),
+      row(t.transport, transport, "", ""),
       row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`),
       ...(values.customsDutyEnabled ? [row(t.customsDuty, customsDuty, "", `10% × ${money(carPln)}`)] : []),
       row(t.commission, commissionNetto, "", commissionFormula(dealerDirect ? STD_FIX : finFix, commissionPct, commissionBase, discountText)),
@@ -2181,8 +2181,8 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
   const rows = [
     row(t.car, carPln, "", "", false, false, conversionPrefix(car)),
     ...(values.germanCommissionEnabled ? [row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission))] : []),
-    row(t.inspection, inspection, "", `${money(inspectionBrutto)} brutto`, false, false, "", inspectionBrutto, 1.23),
-    row(t.transport, transport, "", `${money(transportBrutto)} brutto`, false, false, "", transportBrutto, 1.23),
+    row(t.inspection, inspection, "", "", false, false, "", inspectionBrutto, 1.23),
+    row(t.transport, transport, "", "", false, false, "", transportBrutto, 1.23),
     row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`, false, false, "", exciseBrutto, 1.23),
     row(t.commission, commissionNetto, "", commissionFormula(finFix, finPct, carPln, discountText), false, false, "", commissionBrutto, 1.23),
     row(t.to, TO_FEE, "", "", false, true, "", technicalBrutto, 1.23),
