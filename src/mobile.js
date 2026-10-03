@@ -90,7 +90,8 @@ const copy = {
     vatReclaimable: "VAT zwrotny",
     vatNonReclaimable: "VAT niezwrotny",
     countryLabel: "Kraj",
-    countryMobileNote: "(dotyczy mobile.de)",
+    countryMobileNote: "(mobile.de i AutoScout24)",
+    mobileOneCountry: "mobile.de filtruje tylko jeden kraj naraz — otwieram bez filtra kraju (w analizie każdy kraj jest sprawdzany osobno).",
     countryGermany: "Niemcy",
     countryBelgium: "Belgia",
     countryNetherlands: "Holandia",
@@ -386,7 +387,8 @@ const copy = {
     vatReclaimable: "VAT возвратный",
     vatNonReclaimable: "VAT невозвратный",
     countryLabel: "Страна",
-    countryMobileNote: "(относится к mobile.de)",
+    countryMobileNote: "(mobile.de и AutoScout24)",
+    mobileOneCountry: "mobile.de фильтрует только одну страну за раз — открываю без фильтра страны (в анализе каждая страна проверяется отдельно).",
     countryGermany: "Германия",
     countryBelgium: "Бельгия",
     countryNetherlands: "Нидерланды",
@@ -2299,9 +2301,9 @@ function updateSelectedFiltersSummary() {
   // "Kraj" in the summary: the country of every compared portal; for
   // mobile.de the countries ticked in its own filter.
   const pickedMarkets = window.AUTOGOOD_SELECTED_MARKETS?.() || ["mobile"];
-  const portalCountries = pickedMarkets.flatMap((market) => (market === "mobile"
+  const portalCountries = [...new Set(pickedMarkets.flatMap((market) => (market === "mobile" || market === "autoscout"
     ? countries
-    : [window.AUTOGOOD_COUNTRY_NAME?.(window.AUTOGOOD_MARKET_COUNTRY?.[market]) || ""])).filter(Boolean);
+    : [window.AUTOGOOD_COUNTRY_NAME?.(window.AUTOGOOD_MARKET_COUNTRY?.[market]) || ""])).filter(Boolean))];
   const status = [
     filters.roadworthy ? optionLabelText(els.roadworthy) : "",
     filters.nonSmoking ? optionLabelText(els.nonSmoking) : "",
@@ -2534,7 +2536,10 @@ function buildMobileDeSearchUrl(filters) {
   const seller = mobileDeSellerValues[filters.seller];
   if (seller) params.set("st", seller);
 
-  filters.countries.forEach((country) => params.append("cn", country));
+  // mobile.de takes one country per search (checked 2026-10-03: several "cn"
+  // give Germany alone). More countries: no filter here; the analysis and the
+  // count search each country on its own.
+  if (filters.countries.length === 1) params.set("cn", filters.countries[0]);
   filters.interiorMaterials.forEach((material) => {
     const value = mobileDeInteriorMaterialValues[material];
     if (value) params.append("it", value);
@@ -3667,7 +3672,12 @@ async function refreshMobileDeCount(filters) {
   const request = ++mobileDeCountRequest;
   show(copy[state.lang].offerCountLoading);
   try {
-    const { total } = await window.AUTOGOOD_MOBILEDE_SEARCH(key, { countOnly: true });
+    // Several countries: one count per country, added up.
+    const countries = filters.countries || [];
+    const totals = countries.length > 1
+      ? await Promise.all(countries.map((country) => window.AUTOGOOD_MOBILEDE_SEARCH(buildMobileDeSearchUrl({ ...filters, countries: [country] }), { countOnly: true })))
+      : [await window.AUTOGOOD_MOBILEDE_SEARCH(key, { countOnly: true })];
+    const total = totals.reduce((sum, item) => sum + (Number(item?.total) || 0), 0);
     const label = new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "pl-PL").format(Number(total) || 0);
     mobileDeCounts.set(key, label);
     if (request === mobileDeCountRequest) show(label);
@@ -3688,6 +3698,7 @@ async function refreshOfferCount() {
   refreshMobileDeCount(filters);
   window.AUTOGOOD_BLOCKET_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_AVBY_REFRESH_COUNT?.(filters);
+  window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(filters);
   if (!filters.brand || !filters.model) {
     renderOfferCount("—");
     return;
@@ -3835,9 +3846,9 @@ els.marketSearches.forEach((link) => link.addEventListener("click", (event) => {
     link.href = searchUrl;
     window.AUTOGOOD_MOBILE_LOG_SEARCH?.(searchUrl);
     const skipped = mobileDeSkippedFilterLabels(filters);
-    setMarketSearchStatus(skipped.length
+    setMarketSearchStatus((skipped.length
       ? copy[state.lang].mobileSearchSkipped.replace("{filters}", skipped.join(", "))
-      : copy[state.lang].marketSearchOpening);
+      : copy[state.lang].marketSearchOpening) + (filters.countries.length > 1 ? ` ${copy[state.lang].mobileOneCountry}` : ""));
   } catch (error) {
     event.preventDefault();
     link.href = "#";
@@ -4330,16 +4341,18 @@ document.querySelector(".mobileManualForm")?.addEventListener("click", (event) =
 // Russian, taking it off switches back to Polish.
 function defaultCountries() {
   const markets = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : ["mobile"];
-  return markets.includes("mobile") ? ["DE"] : [];
+  return markets.includes("mobile") || markets.includes("autoscout") ? ["DE"] : [];
 }
 
 window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {
   const ticked = checkedValues(els.countries);
   let countriesChanged = false;
-  if (next.mobile && !ticked.length) {
+  // The countries apply to mobile.de and AutoScout24: Germany by default.
+  const withCountries = next.mobile || next.autoscout;
+  if (withCountries && !ticked.length) {
     setCheckedValues(els.countries, ["DE"]);
     countriesChanged = true;
-  } else if (!next.mobile && ticked.length) {
+  } else if (!withCountries && ticked.length) {
     setCheckedValues(els.countries, []);
     countriesChanged = true;
   }

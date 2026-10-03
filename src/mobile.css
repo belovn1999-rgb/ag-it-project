@@ -3193,3 +3193,8 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   font-size: calc(var(--text-base) * 1.2);
   font-weight: 900;
 }
+
+.agBrandLink.isAutoscout:hover {
+  border-color: #333a40;
+  box-shadow: 0 0 0 1px #333a40;
+}

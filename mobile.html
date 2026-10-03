@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=lists-enter-20261003" />
-    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=autoscout-20261003" />
+  <link rel="stylesheet" href="./src/mobile.css?v=autoscout2-20261003" />
+    <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=autoscout2-20261003" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
@@ -110,6 +110,10 @@
                 <div class="mobileSearchCountMarket" data-market="mobile">
                   <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
                   <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de"><img src="./assets/brands/mobile-de-logo.svg" alt="" /></a>
+                </div>
+                <div class="mobileSearchCountMarket" data-market="autoscout">
+                  <strong data-mobile-search-count-autoscout aria-live="polite">—</strong>
+                  <a class="agBrandLink isAutoscout" href="#" target="_blank" rel="noopener" data-mobile-autoscout-search aria-label="Szukaj na AutoScout24" title="Szukaj na AutoScout24"><img src="./assets/brands/autoscout24-logo.svg?v=2" alt="" /></a>
                 </div>
                 <div class="mobileSearchCountMarket" data-market="blocket">
                   <strong data-mobile-search-count-blocket aria-live="polite">—</strong>
@@ -538,20 +542,13 @@
                     <details class="mobileMultiSelect" data-mobile-country-select>
                       <summary data-mobile-country-summary></summary>
                       <div class="mobileMultiSelectMenu">
+                        <!-- mobile.de + AutoScout24 countries (owner, 2026-10-03); other
+                             countries come with their own portals later. -->
                         <label><input data-mobile-country type="checkbox" value="DE" checked /> <span data-i18n="countryGermany">Niemcy</span></label>
-                        <label><input data-mobile-country type="checkbox" value="BE" /> <span data-i18n="countryBelgium">Belgia</span></label>
                         <label><input data-mobile-country type="checkbox" value="NL" /> <span data-i18n="countryNetherlands">Holandia</span></label>
-                        <label><input data-mobile-country type="checkbox" value="FR" /> <span data-i18n="countryFrance">Francja</span></label>
+                        <label><input data-mobile-country type="checkbox" value="BE" /> <span data-i18n="countryBelgium">Belgia</span></label>
                         <label><input data-mobile-country type="checkbox" value="AT" /> <span data-i18n="countryAustria">Austria</span></label>
                         <label><input data-mobile-country type="checkbox" value="LU" /> <span data-i18n="countryLuxembourg">Luksemburg</span></label>
-                        <label><input data-mobile-country type="checkbox" value="SE" /> <span data-i18n="countrySweden">Szwecja</span></label>
-                        <label><input data-mobile-country type="checkbox" value="IT" /> <span data-i18n="countryItaly">Włochy</span></label>
-                        <label><input data-mobile-country type="checkbox" value="DK" /> <span data-i18n="countryDenmark">Dania</span></label>
-                        <label><input data-mobile-country type="checkbox" value="CZ" /> <span data-i18n="countryCzechia">Czechy</span></label>
-                        <label><input data-mobile-country type="checkbox" value="LT" /> <span data-i18n="countryLithuania">Litwa</span></label>
-                        <label><input data-mobile-country type="checkbox" value="LV" /> <span data-i18n="countryLatvia">Łotwa</span></label>
-                        <label><input data-mobile-country type="checkbox" value="EE" /> <span data-i18n="countryEstonia">Estonia</span></label>
-                        <label><input data-mobile-country type="checkbox" value="SK" /> <span data-i18n="countrySlovakia">Słowacja</span></label>
                       </div>
                     </details>
                   </fieldset>
@@ -605,16 +602,16 @@
     <script src="./src/otomoto-catalog.generated.js?v=otomoto-catalog-20260921"></script>
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
-    <script src="./src/market-badges.js?v=avby-20261002"></script>
-    <script src="./src/mobile.js?v=monitoring2-20261003"></script>
+    <script src="./src/market-badges.js?v=autoscout2-20261003"></script>
+    <script src="./src/mobile.js?v=autoscout2-20261003"></script>
     <script src="./src/blocket-search.js?v=form-groups-20261002"></script>
     <script src="./src/avby-search.js?v=avby-20261002"></script>
-    <script src="./src/autoscout-search.js?v=autoscout-20261003"></script>
+    <script src="./src/autoscout-search.js?v=autoscout2-20261003"></script>
     <script src="./src/turnkey-estimate.js?v=turnkey-compare-20260928"></script>
     <script src="./src/turnkey-belarus.js?v=turnkey-by-20261003"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-favorites-watch.js?v=monitoring-20261003"></script>
+    <script src="./src/mobile-market-analysis.js?v=autoscout2-20261003"></script>
+    <script src="./src/mobile-favorites-watch.js?v=autoscout2-20261003"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
   </body>
 </html>

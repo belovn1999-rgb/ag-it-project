@@ -4335,3 +4335,33 @@
 .mobileMonitoringCountry:not(.isOn) .agFlag {
   opacity: 0.4;
 }
+
+/* AutoScout24 as a market (analysis, page 1, page 3). */
+.mobileMarketAnalysisPanel,
+.mobileMarketAnalysisView,
+:root {
+  --market-autoscout: #a68a00;
+}
+
+.mobileMarketSourceButton.isAutoscout i,
+.mobileMarketSourceTag.isAutoscout i,
+.mobileMarketLegend .isAutoscout i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--market-autoscout);
+}
+
+.mobileMarketPoint.isAutoscout::before {
+  background: var(--market-autoscout);
+  box-shadow: 0 0 0 1px var(--market-autoscout);
+}
+
+.mobileMarketPointTooltip b.isAutoscout { color: var(--market-autoscout); }
+.mobileMarketTrend.isCurve polyline.isAutoscout { stroke: var(--market-autoscout); }
+.mobileMarketSearchArrow.isAutoscout { color: #a68a00; }
+.mobileMarketMedian.isAutoscout { border-top-color: var(--market-autoscout); }
+.mobileMarketKeyTick.isMedian.isAutoscout { color: var(--market-autoscout); }
+.mobileMarketCompareRow.isAutoscout { --row: var(--market-autoscout); }
+.mobileMarketPanel.isAutoscout .mobileMarketPanelHead b { color: var(--market-autoscout); }
+.mobileMarketKeyTick.isGuide.isAutoscout { color: var(--market-autoscout); }

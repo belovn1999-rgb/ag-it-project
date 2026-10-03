@@ -108,6 +108,63 @@
     return { total, pages: Number(props.numberOfPages) || Math.ceil(total / PAGE_SIZE), listings };
   }
 
+  // ---- Page 1: live count and the search link -----------------------------
+  const TEXT = {
+    pl: { search: "Szukaj na AutoScout24", opening: "Otwieram AutoScout24 (wszystkie ogłoszenia; w analizie — tylko te, których nie ma na mobile.de).", skipped: "AutoScout24 nie przyjmie filtrów: {filters}.", countTitle: "Wszystkie ogłoszenia na AutoScout24 (razem z tymi, które są też na mobile.de)" },
+    ru: { search: "Искать на AutoScout24", opening: "Открываю AutoScout24 (все объявления; в анализе — только те, которых нет на mobile.de).", skipped: "AutoScout24 не примет фильтры: {filters}.", countTitle: "Все объявления на AutoScout24 (вместе с теми, что есть и на mobile.de)" },
+  };
+  const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
+  const countries = (filters) => (filters.countries && filters.countries.length ? filters.countries : ["DE"]);
+  const proxy = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+  const counts = new Map();
+  let countRequest = 0;
+
+  async function refreshCount(filters) {
+    const target = document.querySelector("[data-mobile-search-count-autoscout]");
+    if (!target) return;
+    target.title = TEXT[lang()].countTitle;
+    if (!filters?.brand || !filters?.model) {
+      target.textContent = "—";
+      return;
+    }
+    const url = buildSearchUrl(filters, { countries: countries(filters) });
+    if (counts.has(url)) {
+      target.textContent = counts.get(url);
+      return;
+    }
+    const request = ++countRequest;
+    target.textContent = "…";
+    try {
+      const response = await fetch(`${proxy()}${url}`, { headers: { "x-respond-with": "html" } });
+      if (!response.ok) throw new Error(String(response.status));
+      const label = new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(parseSearchPage(await response.text()).total);
+      counts.set(url, label);
+      if (request === countRequest) target.textContent = label;
+    } catch {
+      if (request === countRequest) target.textContent = "—";
+    }
+  }
+
+  document.querySelectorAll("[data-mobile-autoscout-search]").forEach((link) => link.addEventListener("click", (event) => {
+    try {
+      const filters = readManualFields();
+      const url = buildSearchUrl(filters, { countries: countries(filters) });
+      link.href = url;
+      window.AUTOGOOD_MOBILE_LOG_SEARCH?.(url);
+      const skipped = unsupported(filters);
+      setMarketSearchStatus(skipped.length ? TEXT[lang()].skipped.replace("{filters}", skipped.join(", ")) : TEXT[lang()].opening);
+    } catch (error) {
+      event.preventDefault();
+      link.href = "#";
+      setMarketSearchStatus(error.message || "AutoScout24", true);
+    }
+  }));
+  document.querySelectorAll("[data-mobile-autoscout-search]").forEach((node) => {
+    node.setAttribute("aria-label", TEXT[lang()].search);
+    node.title = TEXT[lang()].search;
+  });
+  window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT = refreshCount;
+
   window.AUTOGOOD_AUTOSCOUT = {
     BASE,
     PAGE_SIZE,

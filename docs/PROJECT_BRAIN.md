@@ -13,7 +13,7 @@
 
 | Область | Страницы | Файл | О чём |
 |---|---|---|---|
-| Mobile.de / Otomoto / Blocket | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | Цель, механизмы, решения, бэклог, журнал. **Главный документ этой области.** |
+| Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | Цель, механизмы, решения, бэклог, журнал. **Главный документ этой области.** |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
@@ -63,4 +63,5 @@
 ## 8. Журнал
 
 <!-- Новые сверху. Подробный журнал mobile.html ведётся в PROJECT-MOBILE.md §7. -->
+- 2026-10-03 — mobile.html: AutoScout24 стал пятым порталом (стр. 1, анализ, Monitoring; только объявления, которых нет на mobile.de); фильтр «Kraj» = DE/NL/BE/AT/LU для mobile.de и AutoScout24 (Claude).
 - 2026-10-03 — создан индекс мозга проекта, подключён к `CLAUDE.md` и `AGENTS.md` (Claude).

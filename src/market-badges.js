@@ -7,7 +7,7 @@
  * vanish from the report image.
  */
 (() => {
-  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE", avby: "BY" };
+  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE", avby: "BY", autoscout: "DE" };
   const COUNTRY_NAMES = {
     pl: { BY: "Białoruś", PL: "Polska", DE: "Niemcy", SE: "Szwecja", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", DK: "Dania", LU: "Luksemburg", CH: "Szwajcaria" },
     ru: { BY: "Беларусь", PL: "Польша", DE: "Германия", SE: "Швеция", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", DK: "Дания", LU: "Люксембург", CH: "Швейцария" },
@@ -50,7 +50,9 @@
   // variant "flag": flag + country name; "flagOnly": flag with the name as tooltip.
   function marketBadge(source, variant = "flag") {
     const country = MARKET_COUNTRY[source] || source;
-    const name = countryName(country);
+    // Two portals of the same countries: AutoScout24 is named, mobile.de
+    // keeps the country (it was the only one there before).
+    const name = source === "autoscout" ? "AutoScout24" : countryName(country);
     if (variant === "flagOnly") return `<span class="agMarketBadge isFlagOnly" title="${escape(name)}">${flagSvg(country)}<span class="agVisuallyHidden">${escape(name)}</span></span>`;
     return `<span class="agMarketBadge">${flagSvg(country)}<span>${escape(name)}</span></span>`;
   }
