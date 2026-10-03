@@ -17,7 +17,10 @@ change log and the working rules. Before any change to `mobile.html` or
 `src/mobile*.js`, `src/mobile*.css`, `src/autogood-bookmarklet.js`,
 `src/turnkey-estimate.js`: `git pull --rebase origin main`, read that file.
 After the change: add a line to its change log, update the backlog status,
-record new decisions, commit it together with the code.
+record new decisions, commit it together with the code. Start with §0 (current
+situation and plan) and §2 (rules for parallel chats: foreign uncommitted
+changes → work in a `git worktree`); the file is too big for one read, read it
+by sections.
 
 **User data in the browser (favourites, search history) — never lose it.**
 Incident 2026-09-27: favourites vanished because a stale tab wrote its old

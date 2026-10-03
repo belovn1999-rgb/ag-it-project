@@ -13,7 +13,7 @@
 
 | Область | Страницы | Файл | О чём |
 |---|---|---|---|
-| Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | Цель, механизмы, решения, бэклог, журнал. **Главный документ этой области.** |
+| Поиск и анализ рынка: Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | **§0 — текущая ситуация и план**, правила для параллельных чатов (§2), механизмы, решения, бэклог, журнал. Главный документ этой области. |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
@@ -54,6 +54,7 @@
 | Дата | Решение | Статус |
 |---|---|---|
 | 2026-10-03 | Единый мозг проекта = этот индекс + тематические файлы из карты; подключён в `CLAUDE.md` и `AGENTS.md` | CONFIRMED |
+| 2026-10-03 | Мозг живёт только в репозитории (GitHub). Личная память Claude/Codex хранит лишь ссылки на файлы мозга (для mobile.html; владелец) | CONFIRMED |
 
 ## 7. Открытые вопросы
 
@@ -63,6 +64,7 @@
 ## 8. Журнал
 
 <!-- Новые сверху. Подробный журнал mobile.html ведётся в PROJECT-MOBILE.md §7. -->
+- 2026-10-03 — mobile.html, мозг: в PROJECT-MOBILE.md новый §0 «Текущая ситуация и план», правила параллельных чатов (§2 п. 11–13), знания из памяти Claude перенесены в docs (Claude).
 - 2026-10-03 — mobile.html, аудит данных анализа: средний пробег у каждого рынка, вывод «takie samo auto» (год + пробег) с минимумом предложений, разбивка «na gotowo», CEPiK и пригнанные для otomoto; акциз по объёму из объявления, любой гибрид = льготная ставка; otomoto «isGross:false» = брутто; пересчёт после живого курса (Claude).
 - 2026-10-03 — mobile.html: AutoScout24 стал пятым порталом (стр. 1, анализ, Monitoring; только объявления, которых нет на mobile.de); фильтр «Kraj» = DE/NL/BE/AT/LU для mobile.de и AutoScout24 (Claude).
 - 2026-10-03 — создан индекс мозга проекта, подключён к `CLAUDE.md` и `AGENTS.md` (Claude).
