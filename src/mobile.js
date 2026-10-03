@@ -4318,7 +4318,7 @@ document.querySelector(".mobileManualForm")?.addEventListener("click", (event) =
 // The "Kraj" filter belongs to mobile.de (its offers come from many
 // countries; we compare Germany): Niemcy is ticked only while mobile.de is
 // compared and cleared when it is not. Adding av.by switches the page to
-// Russian.
+// Russian, taking it off switches back to Polish.
 function defaultCountries() {
   const markets = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : ["mobile"];
   return markets.includes("mobile") ? ["DE"] : [];
@@ -4340,6 +4340,10 @@ window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {
   }
   if (next.avby && !previous.avby && state.lang !== "ru") {
     document.querySelector('[data-lang-button="ru"]')?.click();
+  }
+  // av.by taken off: back to Polish.
+  if (!next.avby && previous.avby && state.lang !== "pl") {
+    document.querySelector('[data-lang-button="pl"]')?.click();
   }
   updateSelectedFiltersSummary();
 };
