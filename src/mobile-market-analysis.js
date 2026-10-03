@@ -2249,6 +2249,7 @@
   }
 
   function setChartSources(next) {
+    const previous = chartSources;
     chartSources = { otomoto: Boolean(next.otomoto), mobile: Boolean(next.mobile), blocket: Boolean(next.blocket), avby: Boolean(next.avby) };
     if (activeAnalysis) activeAnalysis.filters = {
       ...activeAnalysis.filters,
@@ -2260,6 +2261,7 @@
       // Not remembered, still applied.
     }
     renderMarketPicker();
+    window.AUTOGOOD_MARKETS_PICKED?.(previous, chartSources);
   }
 
   // Every measurement of this search, newest first: a table of its own for

@@ -1989,7 +1989,7 @@ function defaultManualFields() {
     gearbox: "any",
     vat: "",
     seller: "dealer",
-    countries: ["DE"],
+    countries: defaultCountries(),
     interiorMaterials: [],
     airConditioning: "",
     trailerCoupling: "any",
@@ -2070,7 +2070,7 @@ function renderManualOptions(keepValues = true) {
   els.doorsTo.value = current.doorsTo || "";
   setCheckedValue(els.drive, current.drive || "any");
   setCheckedValue(els.gearbox, current.gearbox || "any");
-  setCheckedValues(els.countries, current.countries?.length ? current.countries : ["DE"]);
+  setCheckedValues(els.countries, current.countries?.length ? current.countries : defaultCountries());
   setCheckedValues(els.interiorMaterials, current.interiorMaterials);
   setCheckedValue(els.airConditioning, current.airConditioning || "");
   setCheckedValue(els.trailerCoupling, current.trailerCoupling || "any");
@@ -2296,6 +2296,12 @@ function updateSelectedFiltersSummary() {
     ...checked(els.interiorColors).map((input) => ({ text: `${c.interiorColorLabel}: ${optionLabelText(input)}`, target: summaryTargetFor(input) })),
   ];
   const countries = checked(els.countries).map(optionLabelText);
+  // "Kraj" in the summary: the country of every compared portal; for
+  // mobile.de the countries ticked in its own filter.
+  const pickedMarkets = window.AUTOGOOD_SELECTED_MARKETS?.() || ["mobile"];
+  const portalCountries = pickedMarkets.flatMap((market) => (market === "mobile"
+    ? countries
+    : [window.AUTOGOOD_COUNTRY_NAME?.(window.AUTOGOOD_MARKET_COUNTRY?.[market]) || ""])).filter(Boolean);
   const status = [
     filters.roadworthy ? optionLabelText(els.roadworthy) : "",
     filters.nonSmoking ? optionLabelText(els.nonSmoking) : "",
@@ -2329,7 +2335,7 @@ function updateSelectedFiltersSummary() {
       ] },
       { heading: c.specEquipmentHeading, items: equipment, empty: c.specNoEquipment },
       { heading: c.specOtherHeading, rows: [
-        [c.specCountry, countries.length ? countries.join(", ") : any, "map-pin", target(els.countries)],
+        [c.specCountry, portalCountries.length ? portalCountries.join(", ") : any, "map-pin", target(els.countries)],
         [c.specStatus, status.length ? status.join(", ") : any, "check", target(els.roadworthy)],
         [c.specVat, filters.vat ? els.vatLabel?.value || any : any, "percent", target(els.vatLabel)],
         [c.specSeller, filters.seller ? els.sellerLabel?.value || any : any, "store", target(els.sellerLabel)],
@@ -4308,3 +4314,32 @@ document.querySelector(".mobileManualForm")?.addEventListener("click", (event) =
   fallback.checked = true;
   fallback.dispatchEvent(new Event("change", { bubbles: true }));
 });
+
+// The "Kraj" filter belongs to mobile.de (its offers come from many
+// countries; we compare Germany): Niemcy is ticked only while mobile.de is
+// compared and cleared when it is not. Adding av.by switches the page to
+// Russian.
+function defaultCountries() {
+  const markets = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : ["mobile"];
+  return markets.includes("mobile") ? ["DE"] : [];
+}
+
+window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {
+  const ticked = checkedValues(els.countries);
+  let countriesChanged = false;
+  if (next.mobile && !ticked.length) {
+    setCheckedValues(els.countries, ["DE"]);
+    countriesChanged = true;
+  } else if (!next.mobile && ticked.length) {
+    setCheckedValues(els.countries, []);
+    countriesChanged = true;
+  }
+  if (countriesChanged) {
+    updateCountrySummary();
+    els.countries[0]?.dispatchEvent(new Event("change", { bubbles: true }));
+  }
+  if (next.avby && !previous.avby && state.lang !== "ru") {
+    document.querySelector('[data-lang-button="ru"]')?.click();
+  }
+  updateSelectedFiltersSummary();
+};
