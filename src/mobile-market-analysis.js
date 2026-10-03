@@ -187,6 +187,10 @@
       cepikShare: "Historia CEPiK",
       importedShare: "Auta sprowadzone",
       shareOf: "{count} z {total}",
+      accidentShare: "Bezwypadkowe",
+      afterAccidentShort: "po wypadku: {percent}%",
+      briefAccidents: "Wypadki",
+      polishAccidents: "Tylko {percent}% sprzedających ({count} z {total}) deklaruje auto jako bezwypadkowe, {after}% przyznaje, że auto miało wypadek, a w {silent}% ogłoszeń nie ma tej informacji. To tylko deklaracja sprzedającego — otomoto jej nie sprawdza.",
       briefPrice: "Cena",
       briefMileage: "Przebieg",
       briefSafety: "Bezpieczeństwo",
@@ -569,6 +573,10 @@
       cepikShare: "История CEPiK",
       importedShare: "Пригнанные авто",
       shareOf: "{count} из {total}",
+      accidentShare: "Без аварий",
+      afterAccidentShort: "после аварии: {percent}%",
+      briefAccidents: "Аварии",
+      polishAccidents: "Только {percent}% продавцов ({count} из {total}) указывают, что авто без аварий, {after}% признают, что авто было в аварии, а в {silent}% объявлений этой информации нет. Это лишь слова продавца — otomoto их не проверяет.",
       briefPrice: "Цена",
       briefMileage: "Пробег",
       briefSafety: "Надёжность",
@@ -1107,6 +1115,14 @@
       listing.rank = rank;
       listing.marketTotal = marketTotal;
     }
+    // Otomoto: how many offers of the whole search the sellers mark
+    // accident-free and how many after an accident.
+    const noAccident = listingValue(row, ["noaccident"]);
+    const afterAccident = listingValue(row, ["afteraccident"]);
+    if (noAccident !== "" && afterAccident !== "" && Number.isFinite(Number(noAccident)) && Number.isFinite(Number(afterAccident))) {
+      listing.noAccident = Number(noAccident);
+      listing.afterAccident = Number(afterAccident);
+    }
     return listing;
   }
 
@@ -1246,6 +1262,11 @@
     onProgress?.(1, "…");
     const first = await fetchOtomotoPage(searchUrl, 1);
     const pageSize = first.listings.length || 32;
+    // "Bezwypadkowy" is not in the result list: the same search counted with
+    // the seller's "accident-free: yes" and "no" (the rest state nothing).
+    const accidentCounts = Promise.all(["1", "0"].map((value) => fetchOtomotoPage(`${searchUrl}&search%5Bfilter_enum_no_accident%5D=${value}`, 1)
+      .then((page) => page.total)
+      .catch(() => null)));
     // The search is sorted by price, so page and position give each offer its
     // real place in the whole result list — the chart puts it exactly there.
     const ranked = (pageListings, page) => pageListings.map((listing, index) => ({
@@ -1279,6 +1300,9 @@
         // Still missing: the list is marked as a sample.
       }
     }
+    const [noAccident, afterAccident] = await accidentCounts;
+    // Kept on every offer, like marketTotal, so a saved check has them too.
+    if (Number.isFinite(noAccident) && Number.isFinite(afterAccident)) listings.forEach((listing) => Object.assign(listing, { noAccident, afterAccident }));
     return { listings, total: first.total };
   }
 
@@ -4184,7 +4208,13 @@
       if (listing.origin !== "others") counts[listing.origin] = (counts[listing.origin] || 0) + 1;
     });
     const top = Object.entries(counts).sort((left, right) => right[1] - left[1])[0] || null;
+    // Counted on the whole search (not the sample): declared accident-free,
+    // declared after an accident, nothing stated.
+    const counted = list.find((listing) => Number.isFinite(listing.noAccident) && listing.marketTotal >= COMPARE_MIN);
     return {
+      accident: counted && counted.noAccident + counted.afterAccident <= counted.marketTotal
+        ? { count: counted.noAccident, after: counted.afterAccident, total: counted.marketTotal }
+        : null,
       cepik: checked.length >= COMPARE_MIN ? { count: checked.filter((listing) => listing.cepik === "1").length, total: checked.length } : null,
       imported: stated.length >= COMPARE_MIN ? { count: imported.length, total: stated.length, top: top ? top[0] : "" } : null,
     };
@@ -4932,8 +4962,11 @@
         { label: c.middleOffers, value: (row) => row.stats.middleCount, html: (row) => escapeMarketHtml(String(row.stats.middleCount)) },
         // Mileage moves the price: shown for every market (lower = green).
         { label: c.averageMileage, cls: "isKm", value: (row) => (row.mileage ? row.mileage.mean : NaN), html: (row) => (row.mileage ? escapeMarketHtml(`${numberFormat().format(row.mileage.mean)} km`) : "—") },
-        ...(polishShares && (polishShares.cepik || polishShares.imported) ? [
+        ...(polishShares && (polishShares.cepik || polishShares.imported || polishShares.accident) ? [
           { label: c.cepikShare, value: () => NaN, html: () => shareHtml(polishShares.cepik) },
+          { label: c.accidentShare, value: () => NaN, html: () => (polishShares.accident
+            ? `${shareHtml(polishShares.accident)}<small class="mobileMarketStatsNote">${escapeMarketHtml(c.afterAccidentShort.replace("{percent}", String(Math.round((polishShares.accident.after / polishShares.accident.total) * 100))))}</small>`
+            : "—") },
           { label: c.importedShare, value: () => NaN, html: () => shareHtml(polishShares.imported) },
         ] : []),
       ];
@@ -5050,9 +5083,14 @@
       // The brief ends with what buying through AUTOGOOD gives (owner 2026-10-03).
       if (!byMode && polish && conclusions.some((item) => item.compared)) conclusions.push({ label: c.briefSafety, text: c.conclusionBenefits });
       // Otomoto alone: how much of the Polish market is unverified or imported.
-      if (polishShares && (polishShares.cepik || polishShares.imported)) {
+      if (polishShares && (polishShares.cepik || polishShares.imported || polishShares.accident)) {
         const percentOf = (share) => String(Math.round((share.count / share.total) * 100));
         if (polishShares.cepik) conclusions.push({ label: c.briefHistory, text: c.polishCepik.replace("{percent}", percentOf(polishShares.cepik)).replace("{count}", String(polishShares.cepik.count)).replace("{total}", String(polishShares.cepik.total)) });
+        if (polishShares.accident) {
+          const { count, after, total } = polishShares.accident;
+          const share = (value) => String(Math.round((value / total) * 100));
+          conclusions.push({ label: c.briefAccidents, text: c.polishAccidents.replace("{percent}", share(count)).replace("{count}", String(count)).replace("{total}", String(total)).replace("{after}", share(after)).replace("{silent}", share(total - count - after)) });
+        }
         if (polishShares.imported) {
           const from = c.originFrom[polishShares.imported.top] || "";
           conclusions.push({ label: c.briefOrigin, text: (from ? c.polishImportedFrom : c.polishImported).replace("{percent}", percentOf(polishShares.imported)).replace("{count}", String(polishShares.imported.count)).replace("{total}", String(polishShares.imported.total)).replace("{from}", from) });
