@@ -175,6 +175,8 @@ night vision, диски, распознавание знаков, ambient, ци
    «X3 M40» → `x3` ≈ (но «X3 M» — своя модель).
 2. **Mercedes:** «C 200», «GLC 300» → `klasa-c`, `glc` ≈ (A/B/C/E/G/R/S/V → `klasa-x`, X → `x-klasa`).
 3. **Ручные алиасы** `otomotoModelAliases[brand][model]` (`[]` = нет аналога).
+   С 10-03: Mercedes `A/C/E/G/S/V` (класс целиком) → `klasa-a`…`klasa-v`; раньше префикс
+   давал чужие модели (`C` → citan, cl, cla, clk, cls…; `E` → eqa…eqv; `A` → amg-gt).
 4. Марки-модели `otomotoMakeModels` (Corvette, ORA).
 5. **Точное совпадение** id/названия; затем **потомки** (Audi A4 → `a4-allroad`, `a4-avant`, `a4-cabrio`, `a4-limousine`).
 6. **По словам** ≈: «Cooper SE» → `cooper`, «e-2008» → `2008`, «595 Competizione» → `595` (не `595c`).
@@ -345,6 +347,11 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
 - **Путь:** `/lst/<марка>/<модель>` (slug: нижний регистр, не буквы → «-»).
   Если больше половины первой страницы — другая модель, поиск отклоняется
   («model not found on AutoScout24»).
+  Целая серия/класс (базовая модель стр. 1) — свой slug (`MODEL_SLUG`, с 10-03;
+  простой slug давал 404): BMW `1`…`8` → `1er`…`8er`, Mercedes `A/B/C/E/G/S/V`
+  → `a-klasse`… `v-klasse`, Toyota `RAV 4` → `rav4`; VW `T5/T6/T7` →
+  `t6-alle` — **приблизительно**: группа AutoScout «T6 (alle)» содержит и T5, и T7
+  (своей группы только T6 у AutoScout нет).
 - **Параметры (каждый проверен по изменению счёта, VW Golf, 5 стран):**
   `cy=D,NL,B,A,L` (страны: DE→D, BE→B, AT→A, LU→L, FR→F, IT→I, SE→S),
   `atype=C`, `damaged_listing=exclude`, `sort=price&desc=0|1`,

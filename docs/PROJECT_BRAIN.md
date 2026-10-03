@@ -15,6 +15,7 @@
 |---|---|---|---|
 | Поиск и анализ рынка: Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | **§0 — текущая ситуация и план**, правила для параллельных чатов (§2), механизмы, решения, бэклог, журнал. Главный документ этой области. |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
+| Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), MODEL-ENGINES.md | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): модель → поколение → двигатель → комплектация. Crawl-delay сайта 30 с |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
 | Проверка VIN | `partslink24.html` | [PARTSLINK24_VIN_CHECK.md](PARTSLINK24_VIN_CHECK.md) | Поля, марки, логика отчёта |
@@ -64,6 +65,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, стр. 1 (B61, выкачено): 10 закреплённых марок (+Skoda), у каждой 6–7 закреплённых моделей в «Model»; otomoto Mercedes-классы → `klasa-*`, AutoScout24 серии BMW/классы Mercedes/T6 без 404; таблица поколений с 2010 (`docs/MODEL-GENERATIONS.md`) (Claude).
 - 2026-10-04 — mobile.html, стр. 1 (B62): порядок фильтров = порядок сужения — Marka · Model · Rok, кузов с дверьми и местами, Silnik, Skrzynia, Wersja, «Cena i przebieg», одно свёрнутое «Wyposażenie» (фаркоп в Opcje); смена марки снимает чужие модель и «Wersja» (Claude).
 - 2026-10-03 — mobile.html, Беларусь этап 3 (B52): история цен и медиана во времени «под ключ с растаможкой» в USD; месяц регистрации mobile.de из выдачи, нетто = брутто ÷ НДС по «¹» (Claude).
 - 2026-10-03 — mobile.html, Monitoring (стр. 3) после аудита дизайна (B60): мониторинг каждый день в 9:00, результаты первым экраном, прогресс, сортировка и фильтры, дата появления, PDF для клиента; шрифт 12+ px и на стр. 2 (Claude).

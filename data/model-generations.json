@@ -1,0 +1,5159 @@
+{
+ "source": "https://www.ultimatespecs.com",
+ "generatedAt": "2026-10-03",
+ "since": 2010,
+ "models": [
+  {
+   "brand": "Audi",
+   "model": "A3",
+   "label": "A3",
+   "generations": [
+    {
+     "generation": "Type 8Y - 2025 Facelift",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "A3 (8Y 2025) allstreet",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M14562/A3-(8Y-2025)-allstreet"
+      },
+      {
+       "name": "A3 (8Y 2025) Limousine",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M14564/A3-(8Y-2025)-Limousine"
+      },
+      {
+       "name": "A3 (8Y 2025) Sportback",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M14523/A3-(8Y-2025)-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A3"
+    },
+    {
+     "generation": "Type 8Y",
+     "from": 2020,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "A3 (8Y) Sedan",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10772/A3-(8Y)-Sedan"
+      },
+      {
+       "name": "A3 (8Y) Sportback",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10741/A3-(8Y)-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A3"
+    },
+    {
+     "generation": "Type 8V 2016 - 2016 Facelift",
+     "from": 2016,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "A3 (8V 2016)",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8849/A3-(8V-2016)"
+      },
+      {
+       "name": "A3 Cabrio (8V 2016)",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8850/A3-Cabrio-(8V-2016)"
+      },
+      {
+       "name": "A3 Sedan (8V 2016)",
+       "versions": 48,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8851/A3-Sedan-(8V-2016)"
+      },
+      {
+       "name": "A3 Sportback (8V 2016)",
+       "versions": 55,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8840/A3-Sportback-(8V-2016)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A3"
+    },
+    {
+     "generation": "Type 8V",
+     "from": 2012,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "A3 (8V)",
+       "versions": 86,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M6385/A3-(8V)"
+      },
+      {
+       "name": "A3 (8V) Cabrio",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7108/A3-(8V)-Cabrio"
+      },
+      {
+       "name": "A3 (8V) Sedan",
+       "versions": 63,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M6959/A3-(8V)-Sedan"
+      },
+      {
+       "name": "A3 (8V) Sportback",
+       "versions": 126,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M6532/A3-(8V)-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A3"
+    },
+    {
+     "generation": "Type 8P",
+     "from": 2003,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "A3 (8P)",
+       "versions": 136,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M216/A3-(8P)"
+      },
+      {
+       "name": "A3 (8P) Cabrio",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M4848/A3-(8P)-Cabrio"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A3"
+    }
+   ]
+  },
+  {
+   "brand": "Audi",
+   "model": "A4",
+   "label": "A4",
+   "generations": [
+    {
+     "generation": "Type B9 - 2020 Facelift",
+     "from": 2020,
+     "to": 2025,
+     "bodies": [
+      {
+       "name": "A4 (B9 2020)",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10653/A4-(B9-2020)"
+      },
+      {
+       "name": "A4 (B9 2020) Allroad",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M11705/A4-(B9-2020)-Allroad"
+      },
+      {
+       "name": "A4 (B9 2020) Avant",
+       "versions": 40,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10654/A4-(B9-2020)-Avant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A4"
+    },
+    {
+     "generation": "Type B9 - 2019 Facelift",
+     "from": 2018,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "A4 (B9 2019)",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10201/A4-(B9-2019)"
+      },
+      {
+       "name": "A4 (B9 2019) Allroad",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M14290/A4-(B9-2019)-Allroad"
+      },
+      {
+       "name": "A4 (B9 2019) Avant",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10652/A4-(B9-2019)-Avant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A4"
+    },
+    {
+     "generation": "Type B9",
+     "from": 2015,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "A4 (B9)",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8309/A4-(B9)"
+      },
+      {
+       "name": "A4 (B9) Allroad",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8590/A4-(B9)-Allroad"
+      },
+      {
+       "name": "A4 (B9) Avant",
+       "versions": 22,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8450/A4-(B9)-Avant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A4"
+    },
+    {
+     "generation": "Type B8",
+     "from": 2007,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "A4 (B8)",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M1428/A4-(B8)"
+      },
+      {
+       "name": "A4 (B8) Allroad",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M4850/A4-(B8)-Allroad"
+      },
+      {
+       "name": "A4 (B8) Allroad Restyling",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7920/A4-(B8)-Allroad-Restyling"
+      },
+      {
+       "name": "A4 (B8) Avant",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M4849/A4-(B8)-Avant"
+      },
+      {
+       "name": "A4 (B8) Avant Restyling",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7919/A4-(B8)-Avant-Restyling"
+      },
+      {
+       "name": "A4 (B8) Restyling",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7918/A4-(B8)-Restyling"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A4"
+    }
+   ]
+  },
+  {
+   "brand": "Audi",
+   "model": "A5",
+   "label": "A5",
+   "generations": [
+    {
+     "generation": "A5 Type B10 - 2025 New Model",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "A5 Avant 2025",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M14484/A5-Avant-2025"
+      },
+      {
+       "name": "A5 Limousine 2025",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M14486/A5-Limousine-2025"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A5"
+    },
+    {
+     "generation": "A5 Type F5 - 2020 Facelift",
+     "from": 2020,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "A5 Cabriolet 2020",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10679/A5-Cabriolet-2020"
+      },
+      {
+       "name": "A5 Coupe 2020",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10680/A5-Coupe-2020"
+      },
+      {
+       "name": "A5 Sportback 2020",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10472/A5-Sportback-2020"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A5"
+    },
+    {
+     "generation": "A5 Type F5 - 2016 New Model",
+     "from": 2016,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "A5 (F5)",
+       "versions": 45,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M8865/A5-(F5)"
+      },
+      {
+       "name": "A5 (F5) Cabrio",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M9301/A5-(F5)-Cabrio"
+      },
+      {
+       "name": "A5 (F5) Sportback",
+       "versions": 51,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M9044/A5-(F5)-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A5"
+    },
+    {
+     "generation": "Type 8T",
+     "from": 2007,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "A5 Cabrio",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M5917/A5-Cabrio"
+      },
+      {
+       "name": "A5 Coupe",
+       "versions": 37,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M617/A5-Coupe"
+      },
+      {
+       "name": "A5 Sportback",
+       "versions": 34,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M5918/A5-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A5"
+    }
+   ]
+  },
+  {
+   "brand": "Audi",
+   "model": "A6",
+   "label": "A6",
+   "generations": [
+    {
+     "generation": "Type C9 - 2025 New Model",
+     "from": 2025,
+     "to": null,
+     "bodies": [
+      {
+       "name": "A6 (C9)",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M16051/A6-(C9)"
+      },
+      {
+       "name": "A6 (C9) Avant",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M15017/A6-(C9)-Avant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A6"
+    },
+    {
+     "generation": "Type C8 - 2023 Facelift",
+     "from": 2023,
+     "to": 2025,
+     "bodies": [
+      {
+       "name": "A6 (C8 2023)",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M13598/A6-(C8-2023)"
+      },
+      {
+       "name": "A6 (C8 2023) Allroad",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M13698/A6-(C8-2023)-Allroad"
+      },
+      {
+       "name": "A6 (C8 2023) Avant",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M13599/A6-(C8-2023)-Avant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A6"
+    },
+    {
+     "generation": "Type C8",
+     "from": 2018,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "A6 (C8)",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M9918/A6-(C8)"
+      },
+      {
+       "name": "A6 (C8) Allroad",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10511/A6-(C8)-Allroad"
+      },
+      {
+       "name": "A6 (C8) Avant",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10066/A6-(C8)-Avant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A6"
+    },
+    {
+     "generation": "Type C7",
+     "from": 2011,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "(C7 2015) A6",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7683/(C7-2015)-A6"
+      },
+      {
+       "name": "(C7 2015) A6 Allroad",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7764/(C7-2015)-A6-Allroad"
+      },
+      {
+       "name": "(C7 2015) A6 Avant",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7765/(C7-2015)-A6-Avant"
+      },
+      {
+       "name": "A6 (C7)",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M5915/A6-(C7)"
+      },
+      {
+       "name": "A6 (C7) Allroad",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M6331/A6-(C7)-Allroad"
+      },
+      {
+       "name": "A6 (C7) Avant",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M11/A6-(C7)-Avant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A6"
+    },
+    {
+     "generation": "Type C6",
+     "from": 2004,
+     "to": 2011,
+     "bodies": [
+      {
+       "name": "A6 (C6)",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M218/A6-(C6)"
+      },
+      {
+       "name": "A6 (C6) Allroad Quattro",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M621/A6-(C6)-Allroad-Quattro"
+      },
+      {
+       "name": "A6 (C6) Avant",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M5916/A6-(C6)-Avant"
+      },
+      {
+       "name": "A6L (C6)",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M4308/A6L-(C6)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A6"
+    }
+   ]
+  },
+  {
+   "brand": "Audi",
+   "model": "Q3",
+   "label": "Q3",
+   "generations": [
+    {
+     "generation": "Type FJ - 2026 New Model",
+     "from": 2025,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Q3 2026",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M15432/Q3-2026"
+      },
+      {
+       "name": "Q3 2026 Sportback",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M16047/Q3-2026-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q3"
+    },
+    {
+     "generation": "Type F3 - 2018 New Model",
+     "from": 2018,
+     "to": 2025,
+     "bodies": [
+      {
+       "name": "Q3 (F3)",
+       "versions": 27,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10216/Q3-(F3)"
+      },
+      {
+       "name": "Q3 Sportback",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10490/Q3-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q3"
+    },
+    {
+     "generation": "Type 8U - 2012 New Model",
+     "from": 2011,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "Q3",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M3608/Q3"
+      },
+      {
+       "name": "Q3 2015",
+       "versions": 41,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7719/Q3-2015"
+      },
+      {
+       "name": "Q3 2017",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M9546/Q3-2017"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q3"
+    }
+   ]
+  },
+  {
+   "brand": "Audi",
+   "model": "Q5",
+   "label": "Q5",
+   "generations": [
+    {
+     "generation": "Q5 (GU Gen.) - 2025 New Model",
+     "from": 2025,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Q5 2025",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M13987/Q5-2025"
+      },
+      {
+       "name": "Q5 2025 Sportback",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M16045/Q5-2025-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q5"
+    },
+    {
+     "generation": "Q5 (FY Gen.) - 2021 Facelift",
+     "from": 2021,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "Q5 (FY 2021)",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M11662/Q5-(FY-2021)"
+      },
+      {
+       "name": "Q5 Sportback",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M11706/Q5-Sportback"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q5"
+    },
+    {
+     "generation": "Q5 (FY Gen.) - 2017 New Model",
+     "from": 2017,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "Q5 (FY)",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M9061/Q5-(FY)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q5"
+    },
+    {
+     "generation": "Type 8R",
+     "from": 2008,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "Q5",
+       "versions": 54,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M1345/Q5"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q5"
+    }
+   ]
+  },
+  {
+   "brand": "Audi",
+   "model": "Q7",
+   "label": "Q7",
+   "generations": [
+    {
+     "generation": "Q7 3rd Generation",
+     "from": 2026,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Q7 3rd Generation",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M27111/Q7-3rd-Generation"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q7"
+    },
+    {
+     "generation": "Q7 II",
+     "from": 2015,
+     "to": 2025,
+     "bodies": [
+      {
+       "name": "Q7 2020",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M10502/Q7-2020"
+      },
+      {
+       "name": "Q7 2025",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M16438/Q7-2025"
+      },
+      {
+       "name": "Q7 II",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M7781/Q7-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q7"
+    },
+    {
+     "generation": "Type 4L",
+     "from": 2005,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "Q7",
+       "versions": 59,
+       "url": "https://www.ultimatespecs.com/car-specs/Audi/M220/Q7"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q7"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "model": "1",
+   "label": "Seria 1",
+   "generations": [
+    {
+     "generation": "F7x 1 Series",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "F70 1 Series",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13828/F70-1-Series"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-1-Series"
+    },
+    {
+     "generation": "F40 1 Series",
+     "from": 2019,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "F40 1 Series",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10398/F40-1-Series"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-1-Series"
+    },
+    {
+     "generation": "F2x",
+     "from": 2011,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "F20 1 Series 5 Doors",
+       "versions": 41,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M3640/F20-1-Series-5-Doors"
+      },
+      {
+       "name": "F20 LCI 1 Series 5 Doors",
+       "versions": 29,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M7819/F20-LCI-1-Series-5-Doors"
+      },
+      {
+       "name": "F21 1 Series 3 Doors",
+       "versions": 34,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6351/F21-1-Series-3-Doors"
+      },
+      {
+       "name": "F21 LCI 1 Series 3 Doors",
+       "versions": 29,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M7841/F21-LCI-1-Series-3-Doors"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-1-Series"
+    },
+    {
+     "generation": "E8x",
+     "from": 2004,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "E81 1 Series 3 door",
+       "versions": 22,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M803/E81-1-Series-3-door"
+      },
+      {
+       "name": "E82 1 Series Coupe",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M5860/E82-1-Series-Coupe"
+      },
+      {
+       "name": "E87 1 Series 5 door",
+       "versions": 33,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M802/E87-1-Series-5-door"
+      },
+      {
+       "name": "E88 1 Series Cabrio",
+       "versions": 50,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M5861/E88-1-Series-Cabrio"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-1-Series"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "model": "3",
+   "label": "Seria 3",
+   "generations": [
+    {
+     "generation": "G20 / G80 LCI - 2023 Update",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "G20 3 Series Sedan LCI",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13624/G20-3-Series-Sedan-LCI"
+      },
+      {
+       "name": "G21 3 Series Touring LCI",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13627/G21-3-Series-Touring-LCI"
+      },
+      {
+       "name": "G80 M3 LCI",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13305/G80-M3-LCI"
+      },
+      {
+       "name": "G81 M3 Touring LCI",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M15286/G81-M3-Touring-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-3-Series"
+    },
+    {
+     "generation": "G20 / G80",
+     "from": 2019,
+     "to": 2022,
+     "bodies": [
+      {
+       "name": "G20 3 Series",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10409/G20-3-Series"
+      },
+      {
+       "name": "G21 3 Series Touring",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10218/G21-3-Series-Touring"
+      },
+      {
+       "name": "G80 M3",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13803/G80-M3"
+      },
+      {
+       "name": "G81 M3 Touring",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13804/G81-M3-Touring"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-3-Series"
+    },
+    {
+     "generation": "F30 / F80 LCI",
+     "from": 2015,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "F30 3 Series Sedan LCI",
+       "versions": 32,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M8103/F30-3-Series-Sedan-LCI"
+      },
+      {
+       "name": "F31 3 Series Touring LCI",
+       "versions": 29,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M8053/F31-3-Series-Touring-LCI"
+      },
+      {
+       "name": "F34 3 Series GT Gran Turismo LCI",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M8867/F34-3-Series-GT-Gran-Turismo-LCI"
+      },
+      {
+       "name": "F80 LCI",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M27121/F80-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-3-Series"
+    },
+    {
+     "generation": "F30 / F80",
+     "from": 2012,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "F30 3 Series Sedan",
+       "versions": 48,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M1516/F30-3-Series-Sedan"
+      },
+      {
+       "name": "F31 3 Series Touring",
+       "versions": 29,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6354/F31-3-Series-Touring"
+      },
+      {
+       "name": "F34 3 Series GT Gran Turismo",
+       "versions": 27,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6675/F34-3-Series-GT-Gran-Turismo"
+      },
+      {
+       "name": "F80",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M27120/F80"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-3-Series"
+    },
+    {
+     "generation": "E90 LCI - 2009 Update",
+     "from": 2008,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "E90 3 Series LCI",
+       "versions": 49,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M12981/E90-3-Series-LCI"
+      },
+      {
+       "name": "E91 3 Series Touring LCI",
+       "versions": 42,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M12979/E91-3-Series-Touring-LCI"
+      },
+      {
+       "name": "E92 3 Series Coupe LCI",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M12986/E92-3-Series-Coupe-LCI"
+      },
+      {
+       "name": "E93 3 Series Cabrio LCI",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M1379/E93-3-Series-Cabrio-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-3-Series"
+    },
+    {
+     "generation": "E90",
+     "from": 2005,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "E90 3 Series",
+       "versions": 45,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M809/E90-3-Series"
+      },
+      {
+       "name": "E91 3 Series Touring",
+       "versions": 42,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M812/E91-3-Series-Touring"
+      },
+      {
+       "name": "E92 3 Series Coupe",
+       "versions": 36,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M811/E92-3-Series-Coupe"
+      },
+      {
+       "name": "E93 3 Series Cabrio",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M810/E93-3-Series-Cabrio"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-3-Series"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "model": "4",
+   "label": "Seria 4",
+   "generations": [
+    {
+     "generation": "G2x / G8x LCI",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "G22 4 Series Coupe LCI",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13787/G22-4-Series-Coupe-LCI"
+      },
+      {
+       "name": "G23 4 Series Cabrio LCI",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13788/G23-4-Series-Cabrio-LCI"
+      },
+      {
+       "name": "G26 4 Series Gran Coupe LCI",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M15203/G26-4-Series-Gran-Coupe-LCI"
+      },
+      {
+       "name": "G82 M4 Coupe LCI",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13789/G82-M4-Coupe-LCI"
+      },
+      {
+       "name": "G83 M4 Cabrio LCI",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13790/G83-M4-Cabrio-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-4-Series"
+    },
+    {
+     "generation": "G2x",
+     "from": 2020,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "CSL",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13786/CSL"
+      },
+      {
+       "name": "G22 4 Series Coupe",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10934/G22-4-Series-Coupe"
+      },
+      {
+       "name": "G23 4 Series Cabrio",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M11279/G23-4-Series-Cabrio"
+      },
+      {
+       "name": "G26 4 Series Gran Coupe",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M12025/G26-4-Series-Gran-Coupe"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-4-Series"
+    },
+    {
+     "generation": "F3x LCI",
+     "from": 2017,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "F32 LCI 4 Series Coupe",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M9182/F32-LCI-4-Series-Coupe"
+      },
+      {
+       "name": "F33 LCI 4 Series Cabrio",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M9167/F33-LCI-4-Series-Cabrio"
+      },
+      {
+       "name": "F36 LCI 4 Series Gran Coupe",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M9181/F36-LCI-4-Series-Gran-Coupe"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-4-Series"
+    },
+    {
+     "generation": "F3x",
+     "from": 2013,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "F32 4 Series Coupe",
+       "versions": 40,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6817/F32-4-Series-Coupe"
+      },
+      {
+       "name": "F33 4 Series Cabrio",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M7026/F33-4-Series-Cabrio"
+      },
+      {
+       "name": "F36 4 Series Gran Coupe",
+       "versions": 35,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M7226/F36-4-Series-Gran-Coupe"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-4-Series"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "model": "5",
+   "label": "Seria 5",
+   "generations": [
+    {
+     "generation": "G60",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "G60 5 Series Sedan",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13360/G60-5-Series-Sedan"
+      },
+      {
+       "name": "G61 5 Series Touring",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M14264/G61-5-Series-Touring"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-5-Series"
+    },
+    {
+     "generation": "G30 LCI",
+     "from": 2020,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "G30 5 Series Sedan LCI",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10806/G30-5-Series-Sedan-LCI"
+      },
+      {
+       "name": "G31 5 Series Touring LCI",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10805/G31-5-Series-Touring-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-5-Series"
+    },
+    {
+     "generation": "G30 / F90",
+     "from": 2016,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "F90 5 Series Sedan",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M27125/F90-5-Series-Sedan"
+      },
+      {
+       "name": "G30 5 Series Sedan",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M9029/G30-5-Series-Sedan"
+      },
+      {
+       "name": "G31 5 Series Touring",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M9233/G31-5-Series-Touring"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-5-Series"
+    },
+    {
+     "generation": "F10 LCI",
+     "from": 2013,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "F07 5 Series GT Gran Turismo LCI",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6904/F07-5-Series-GT-Gran-Turismo-LCI"
+      },
+      {
+       "name": "F10 5 Series Sedan LCI",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6961/F10-5-Series-Sedan-LCI"
+      },
+      {
+       "name": "F11 5 Series Touring LCI",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6905/F11-5-Series-Touring-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-5-Series"
+    },
+    {
+     "generation": "F10",
+     "from": 2010,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "F07 5 Series GT Gran Turismo",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M1406/F07-5-Series-GT-Gran-Turismo"
+      },
+      {
+       "name": "F10 5 Series Sedan",
+       "versions": 61,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M1419/F10-5-Series-Sedan"
+      },
+      {
+       "name": "F11 5 Series Touring",
+       "versions": 53,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M5862/F11-5-Series-Touring"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-5-Series"
+    },
+    {
+     "generation": "E60",
+     "from": 2003,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "E60 5 Series",
+       "versions": 32,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M813/E60-5-Series"
+      },
+      {
+       "name": "E61 5 Series Touring",
+       "versions": 55,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6403/E61-5-Series-Touring"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-5-Series"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "model": "X1",
+   "label": "X1",
+   "generations": [
+    {
+     "generation": "U11",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "U11 X1",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13098/U11-X1"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X1"
+    },
+    {
+     "generation": "F48",
+     "from": 2015,
+     "to": 2022,
+     "bodies": [
+      {
+       "name": "F48 X1",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M8116/F48-X1"
+      },
+      {
+       "name": "F48 X1 LCI",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10378/F48-X1-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X1"
+    },
+    {
+     "generation": "E84",
+     "from": 2009,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "X1 (E84)",
+       "versions": 29,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M1342/X1-(E84)"
+      },
+      {
+       "name": "X1 (E84) LCI",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6350/X1-(E84)-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X1"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "model": "X3",
+   "label": "X3",
+   "generations": [
+    {
+     "generation": "G45 - 2025 New Model",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "G45 X3",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M14269/G45-X3"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X3"
+    },
+    {
+     "generation": "G01 LCI - 2022 Update",
+     "from": 2021,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "G01 X3 LCI",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M11968/G01-X3-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X3"
+    },
+    {
+     "generation": "G01 - 2018 New Model",
+     "from": 2018,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "G01 X3",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M9515/G01-X3"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X3"
+    },
+    {
+     "generation": "F25",
+     "from": 2010,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "F25 X3",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M5859/F25-X3"
+      },
+      {
+       "name": "F25 X3 LCI",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M7235/F25-X3-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X3"
+    },
+    {
+     "generation": "E83",
+     "from": 2003,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "E83 X3",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M818/E83-X3"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X3"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "model": "X5",
+   "label": "X5",
+   "generations": [
+    {
+     "generation": "G05 LCI - 2024 Update",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "F95 X5 M LCI",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13279/F95-X5-M-LCI"
+      },
+      {
+       "name": "G05 X5 LCI",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M13262/G05-X5-LCI"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X5"
+    },
+    {
+     "generation": "G05",
+     "from": 2018,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "G05 X5",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M10034/G05-X5"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X5"
+    },
+    {
+     "generation": "F15",
+     "from": 2013,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "F15 X5",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M6947/F15-X5"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X5"
+    },
+    {
+     "generation": "E70",
+     "from": 2006,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "E70 X5",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/BMW/M820/E70-X5"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/BMW-models/BMW-X5"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "model": "C-Max",
+   "label": "C-Max",
+   "generations": [
+    {
+     "generation": "C Max 2",
+     "from": 2010,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "C MAX II",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M1484/C-MAX-II"
+      },
+      {
+       "name": "C MAX II 2015",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8024/C-MAX-II-2015"
+      },
+      {
+       "name": "Grand C MAX",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M1485/Grand-C-MAX"
+      },
+      {
+       "name": "Grand C MAX 2015",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M7822/Grand-C-MAX-2015"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-C-Max"
+    },
+    {
+     "generation": "C Max 1",
+     "from": 2003,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "C MAX",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M1200/C-MAX"
+      },
+      {
+       "name": "Focus C MAX",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M245/Focus-C-MAX"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-C-Max"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "model": "Fiesta",
+   "label": "Fiesta",
+   "generations": [
+    {
+     "generation": "Fiesta 8 - 2022 Update",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Fiesta 2022",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M12323/Fiesta-2022"
+      },
+      {
+       "name": "Fiesta 2022 Active",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M12393/Fiesta-2022-Active"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Fiesta"
+    },
+    {
+     "generation": "Fiesta 8 - 2017 New Model",
+     "from": 2017,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Fiesta 2018 Active",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M9972/Fiesta-2018-Active"
+      },
+      {
+       "name": "Fiesta 8",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M9439/Fiesta-8"
+      },
+      {
+       "name": "Fiesta 8 3-doors",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M9538/Fiesta-8-3-doors"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Fiesta"
+    },
+    {
+     "generation": "Fiesta 7",
+     "from": 2008,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "Fiesta 7",
+       "versions": 26,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M1421/Fiesta-7"
+      },
+      {
+       "name": "Fiesta 7 2012 Facelift",
+       "versions": 50,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M6355/Fiesta-7-2012-Facelift"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Fiesta"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "model": "Focus",
+   "label": "Focus",
+   "generations": [
+    {
+     "generation": "Focus 4 - 2022 Update",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Focus 2022",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M12334/Focus-2022"
+      },
+      {
+       "name": "Focus 2022 Active",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M12395/Focus-2022-Active"
+      },
+      {
+       "name": "Focus 2022 Active Wagon",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M12396/Focus-2022-Active-Wagon"
+      },
+      {
+       "name": "Focus 2022 Wagon",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M12394/Focus-2022-Wagon"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Focus-(Europe)"
+    },
+    {
+     "generation": "Focus 4 - 2019 New Model",
+     "from": 2018,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Focus 4",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M9967/Focus-4"
+      },
+      {
+       "name": "Focus 4 Wagon",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M9968/Focus-4-Wagon"
+      },
+      {
+       "name": "Focus 4 Wagon Active",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M10861/Focus-4-Wagon-Active"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Focus-(Europe)"
+    },
+    {
+     "generation": "Focus 3",
+     "from": 2010,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "Focus 3 (EU Market)",
+       "versions": 35,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M3545/Focus-3-(EU-Market)"
+      },
+      {
+       "name": "Focus 3 2014",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M7637/Focus-3-2014"
+      },
+      {
+       "name": "Focus 3 2014 Sportbreak",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M7674/Focus-3-2014-Sportbreak"
+      },
+      {
+       "name": "Focus 3 Sedan (EU Market)",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M6356/Focus-3-Sedan-(EU-Market)"
+      },
+      {
+       "name": "Focus 3 Sportbreak (EU Market)",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M6357/Focus-3-Sportbreak-(EU-Market)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Focus-(Europe)"
+    },
+    {
+     "generation": "Focus 2",
+     "from": 2004,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "Focus 2",
+       "versions": 32,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M244/Focus-2"
+      },
+      {
+       "name": "Focus 2 3-door",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8330/Focus-2-3-door"
+      },
+      {
+       "name": "Focus 2 3-door Facelift",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8335/Focus-2-3-door-Facelift"
+      },
+      {
+       "name": "Focus 2 CC",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M1183/Focus-2-CC"
+      },
+      {
+       "name": "Focus 2 Facelift",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8334/Focus-2-Facelift"
+      },
+      {
+       "name": "Focus 2 Sedan",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M6966/Focus-2-Sedan"
+      },
+      {
+       "name": "Focus 2 Sedan Facelift",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8337/Focus-2-Sedan-Facelift"
+      },
+      {
+       "name": "Focus 2 Wagon",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8332/Focus-2-Wagon"
+      },
+      {
+       "name": "Focus 2 Wagon Facelift",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8333/Focus-2-Wagon-Facelift"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Focus-(Europe)"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "model": "Kuga",
+   "label": "Kuga",
+   "generations": [
+    {
+     "generation": "Kuga 2024 Facelift",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Kuga 2024",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M13779/Kuga-2024"
+      },
+      {
+       "name": "Kuga Active",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M13780/Kuga-Active"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Kuga"
+    },
+    {
+     "generation": "Kuga 2020",
+     "from": 2020,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Kuga 2020",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M10541/Kuga-2020"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Kuga"
+    },
+    {
+     "generation": "Kuga 2017",
+     "from": 2017,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "Kuga III",
+       "versions": 26,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M9031/Kuga-III"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Kuga"
+    },
+    {
+     "generation": "Kuga 2",
+     "from": 2012,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "Kuga II",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M7708/Kuga-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Kuga"
+    },
+    {
+     "generation": "Kuga 1",
+     "from": 2007,
+     "to": 2012,
+     "bodies": [
+      {
+       "name": "Kuga",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M1422/Kuga"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Kuga"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "model": "Mondeo",
+   "label": "Mondeo",
+   "generations": [
+    {
+     "generation": "Mondeo 5",
+     "from": 2014,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Mondeo 5",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M7274/Mondeo-5"
+      },
+      {
+       "name": "Mondeo 5 Estate",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M7275/Mondeo-5-Estate"
+      },
+      {
+       "name": "Mondeo 5 Sedan",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M6858/Mondeo-5-Sedan"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Mondeo"
+    },
+    {
+     "generation": "Mondeo 4",
+     "from": 2007,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "Mondeo 4",
+       "versions": 39,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M1190/Mondeo-4"
+      },
+      {
+       "name": "Mondeo 4 Estate",
+       "versions": 56,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M6506/Mondeo-4-Estate"
+      },
+      {
+       "name": "Mondeo 4 Sedan",
+       "versions": 33,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8340/Mondeo-4-Sedan"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-Mondeo"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "model": "S-Max",
+   "label": "S-Max",
+   "generations": [
+    {
+     "generation": "S Max 2",
+     "from": 2015,
+     "to": null,
+     "bodies": [
+      {
+       "name": "S-Max 2015",
+       "versions": 43,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M8027/S-Max-2015"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-S-Max"
+    },
+    {
+     "generation": "S Max 1",
+     "from": 2006,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "S-Max",
+       "versions": 63,
+       "url": "https://www.ultimatespecs.com/car-specs/Ford/M247/S-Max"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Ford-models/Ford-S-Max"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "A",
+   "label": "Klasa A",
+   "generations": [
+    {
+     "generation": "W177 Facelift",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Class A (W177 2023)",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13038/Class-A-(W177-2023)"
+      },
+      {
+       "name": "Class A Sedan (V177 2023)",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13040/Class-A-Sedan-(V177-2023)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-A-Class"
+    },
+    {
+     "generation": "W177",
+     "from": 2018,
+     "to": 2022,
+     "bodies": [
+      {
+       "name": "Class A Sedan (V177)",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10137/Class-A-Sedan-(V177)"
+      },
+      {
+       "name": "W177 Class A",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9883/W177-Class-A"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-A-Class"
+    },
+    {
+     "generation": "W176",
+     "from": 2012,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "A Class (W176)",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M6383/A-Class-(W176)"
+      },
+      {
+       "name": "Class A (W176 2016)",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8152/Class-A-(W176-2016)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-A-Class"
+    },
+    {
+     "generation": "W169",
+     "from": 2004,
+     "to": 2012,
+     "bodies": [
+      {
+       "name": "A Class (W169)",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M351/A-Class-(W169)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-A-Class"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "C",
+   "label": "Klasa C",
+   "generations": [
+    {
+     "generation": "W206 - 2022 New Model",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Class C (W206)",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M11849/Class-C-(W206)"
+      },
+      {
+       "name": "Class C All-Terrain (S206)",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M12390/Class-C-All-Terrain-(S206)"
+      },
+      {
+       "name": "Class C Station (S206)",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M11884/Class-C-Station-(S206)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-C-Class"
+    },
+    {
+     "generation": "W205 Facelift",
+     "from": 2018,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Class C (W205 2019)",
+       "versions": 26,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9956/Class-C-(W205-2019)"
+      },
+      {
+       "name": "Class C Cabrio (A205 2019)",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10018/Class-C-Cabrio-(A205-2019)"
+      },
+      {
+       "name": "Class C Coupe (C205 2019)",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10053/Class-C-Coupe-(C205-2019)"
+      },
+      {
+       "name": "Class C Station (S205 2019)",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9965/Class-C-Station-(S205-2019)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-C-Class"
+    },
+    {
+     "generation": "W205",
+     "from": 2014,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "A205 Class C Cabrio",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8690/A205-Class-C-Cabrio"
+      },
+      {
+       "name": "C205 Class C Coupe",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8406/C205-Class-C-Coupe"
+      },
+      {
+       "name": "S205 Estate Class C",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7531/S205-Estate-Class-C"
+      },
+      {
+       "name": "W205 Class C",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7349/W205-Class-C"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-C-Class"
+    },
+    {
+     "generation": "W204",
+     "from": 2007,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "C Class (W204 2011) Estate",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M5869/C-Class-(W204-2011)-Estate"
+      },
+      {
+       "name": "C Class (W204 2011) Sedan",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M3552/C-Class-(W204-2011)-Sedan"
+      },
+      {
+       "name": "C Class Coupe (C204)",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M5864/C-Class-Coupe-(C204)-"
+      },
+      {
+       "name": "W204 Class C",
+       "versions": 76,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M484/W204-Class-C"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-C-Class"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "E",
+   "label": "Klasa E",
+   "generations": [
+    {
+     "generation": "W214 - New Model",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "E Class All Terrain S214",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13712/E-Class-All-Terrain-S214"
+      },
+      {
+       "name": "E Class Estate S214",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13577/E-Class-Estate-S214"
+      },
+      {
+       "name": "E Class W214",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13607/E-Class-W214"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-E-Class"
+    },
+    {
+     "generation": "W213 - 2021 Facelift",
+     "from": 2020,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "E Class (W213 2021)",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10937/E-Class-(W213-2021)"
+      },
+      {
+       "name": "E Class All Terrain (W213 2021)",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10943/E-Class-All-Terrain-(W213-2021)"
+      },
+      {
+       "name": "E Class Cabriolet (A238 2021)",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10942/E-Class-Cabriolet-(A238-2021)"
+      },
+      {
+       "name": "E Class Coupe (C238 2021)",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10941/E-Class-Coupe-(C238-2021)"
+      },
+      {
+       "name": "E Class Estate (W213 2021)",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10940/E-Class-Estate-(W213-2021)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-E-Class"
+    },
+    {
+     "generation": "W213",
+     "from": 2016,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "E Class (W213)",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8588/E-Class-(W213)-"
+      },
+      {
+       "name": "E Class All Terrain (W213)",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8993/E-Class-All-Terrain-(W213)"
+      },
+      {
+       "name": "E Class Cabriolet",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9319/E-Class-Cabriolet"
+      },
+      {
+       "name": "E Class Coupe (C238)",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9118/E-Class-Coupe-(C238)"
+      },
+      {
+       "name": "E Class Estate (W213)",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8873/E-Class-Estate-(W213)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-E-Class"
+    },
+    {
+     "generation": "W212",
+     "from": 2009,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "E Class (W212 2013)",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7186/E-Class-(W212-2013)"
+      },
+      {
+       "name": "E Class (W212)",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M1338/E-Class-(W212)"
+      },
+      {
+       "name": "E Class Cabrio (A207 2013)",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7268/E-Class-Cabrio-(A207-2013)"
+      },
+      {
+       "name": "E Class Cabrio (A207)",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M1433/E-Class-Cabrio-(A207)"
+      },
+      {
+       "name": "E Class Coupe (C207 2013)",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7079/E-Class-Coupe-(C207-2013)"
+      },
+      {
+       "name": "E Class Coupe (C207)",
+       "versions": 22,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M5867/E-Class-Coupe-(C207)"
+      },
+      {
+       "name": "E Class Estate (W212 2013)",
+       "versions": 27,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7269/E-Class-Estate-(W212-2013)"
+      },
+      {
+       "name": "E Class Estate (W212)",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M14512/E-Class-Estate-(W212)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-E-Class"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "S",
+   "label": "Klasa S",
+   "generations": [
+    {
+     "generation": "W223 - 2026 Facelift",
+     "from": 2026,
+     "to": null,
+     "bodies": [
+      {
+       "name": "V223 Class S Long 2026",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M16253/V223-Class-S-Long-2026"
+      },
+      {
+       "name": "W223 Class S 2026",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M16243/W223-Class-S-2026"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-S-Class"
+    },
+    {
+     "generation": "W223",
+     "from": 2021,
+     "to": 2025,
+     "bodies": [
+      {
+       "name": "W223 Class S",
+       "versions": 51,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M11042/W223-Class-S"
+      },
+      {
+       "name": "Z223 Maybach S",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M12710/Z223-Maybach-S"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-S-Class"
+    },
+    {
+     "generation": "W222 Restyling",
+     "from": 2018,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "2018 S Class Cabriolet",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9897/2018-S-Class-Cabriolet"
+      },
+      {
+       "name": "C217 2018 Class S Coupe",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9896/C217-2018-Class-S-Coupe"
+      },
+      {
+       "name": "W222 2018 Class S",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9395/W222-2018-Class-S"
+      },
+      {
+       "name": "X222 2018 Mercedes-Maybach",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9692/X222-2018-Mercedes-Maybach"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-S-Class"
+    },
+    {
+     "generation": "W222",
+     "from": 2013,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "C217 Class S Coupe",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7350/C217-Class-S-Coupe"
+      },
+      {
+       "name": "Mercedes-Maybach S Cabriolet",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M9078/Mercedes-Maybach-S-Cabriolet"
+      },
+      {
+       "name": "S Class Cabriolet",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8282/S-Class-Cabriolet"
+      },
+      {
+       "name": "W222 Class S",
+       "versions": 37,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M6823/W222-Class-S"
+      },
+      {
+       "name": "X222 Mercedes-Maybach",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7788/X222-Mercedes-Maybach"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-S-Class"
+    },
+    {
+     "generation": "W221",
+     "from": 2005,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "W221 Class S",
+       "versions": 62,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M350/W221-Class-S"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-S-Class"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "CLA",
+   "label": "CLA",
+   "generations": [
+    {
+     "generation": "CLA (C178/174) - 2026 New Model",
+     "from": 2025,
+     "to": null,
+     "bodies": [
+      {
+       "name": "CLA Coupe (C174)",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M15551/CLA-Coupe-(C174)"
+      },
+      {
+       "name": "CLA Shooting Brake (X174)",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M15505/CLA-Shooting-Brake-(X174)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-CLA"
+    },
+    {
+     "generation": "C118 2023 Facelift",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "C118 CLA 2023",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13458/C118-CLA-2023"
+      },
+      {
+       "name": "X118 CLA Shooting Brake 2023",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13460/X118-CLA-Shooting-Brake-2023"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-CLA"
+    },
+    {
+     "generation": "C118",
+     "from": 2019,
+     "to": null,
+     "bodies": [
+      {
+       "name": "C118 CLA",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10334/C118-CLA"
+      },
+      {
+       "name": "X118 CLA Shooting Brake",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10414/X118-CLA-Shooting-Brake"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-CLA"
+    },
+    {
+     "generation": "C117 2017 Facelift",
+     "from": 2016,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "2017 C117 CLA",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8782/2017-C117-CLA"
+      },
+      {
+       "name": "2017 X117 CLA Shooting Brake",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8723/2017-X117-CLA-Shooting-Brake"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-CLA"
+    },
+    {
+     "generation": "C117",
+     "from": 2013,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "C117 CLA",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M6665/C117-CLA"
+      },
+      {
+       "name": "X117 CLA Shooting Brake",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7748/X117-CLA-Shooting-Brake"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-CLA"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "GLC",
+   "label": "GLC",
+   "generations": [
+    {
+     "generation": "X540 GLC EQ - 2026 New Model",
+     "from": 2026,
+     "to": null,
+     "bodies": [
+      {
+       "name": "X540 GLC EQ",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M16135/X540-GLC-EQ"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLC"
+    },
+    {
+     "generation": "C254",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "GLC Coupé (C254)",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13402/GLC-CoupÃ©-(C254)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLC-Coupe"
+    },
+    {
+     "generation": "X254",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "X254 GLC",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M12991/X254-GLC"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLC"
+    },
+    {
+     "generation": "C253",
+     "from": 2016,
+     "to": 2022,
+     "bodies": [
+      {
+       "name": "GLC Coupe (C253 2020)",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10669/GLC-Coupe-(C253-2020)"
+      },
+      {
+       "name": "GLC Coupe (C253)",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8737/GLC-Coupe-(C253)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLC-Coupe"
+    },
+    {
+     "generation": "X253",
+     "from": 2015,
+     "to": 2022,
+     "bodies": [
+      {
+       "name": "GLC (X253 2020)",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10507/GLC-(X253-2020)"
+      },
+      {
+       "name": "X253 GLC",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8134/X253-GLC"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLC"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "GLE",
+   "label": "GLE",
+   "generations": [
+    {
+     "generation": "V167 GLE - 2024 Facelift",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "GLE (V167 2024)",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13269/GLE-(V167-2024)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLE-Class"
+    },
+    {
+     "generation": "C167 GLE Coupe - 2024 Update",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "GLE Coupe (C167 2024)",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M13270/GLE-Coupe-(C167-2024)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLE-Coupe"
+    },
+    {
+     "generation": "C167",
+     "from": 2019,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "C167 GLE Coupe",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10789/C167-GLE-Coupe"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLE-Coupe"
+    },
+    {
+     "generation": "V167 GLE - 2019 New Model",
+     "from": 2018,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "V167 GLE",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M10492/V167-GLE"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLE-Class"
+    },
+    {
+     "generation": "C292",
+     "from": 2015,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "GLE Coupe (C292)",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M7723/GLE-Coupe-(C292)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLE-Coupe"
+    },
+    {
+     "generation": "W166 GLE",
+     "from": 2015,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "GLE (W166)",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/M8000/GLE-(W166)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Mercedes-Benz-models/Mercedes-Benz-GLE-Class"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "model": "208",
+   "label": "208",
+   "generations": [
+    {
+     "generation": "208 II - 2023 Facelift",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "208 II (2023)",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M13378/208-II-(2023)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-208"
+    },
+    {
+     "generation": "208 II",
+     "from": 2019,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "208 II",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M10435/208-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-208"
+    },
+    {
+     "generation": "208 Phase 2",
+     "from": 2015,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "208 3-door (Facelift 2015)",
+       "versions": 26,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7954/208-3-door-(Facelift-2015)"
+      },
+      {
+       "name": "208 5-door (Facelift 2015)",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7938/208-5-door-(Facelift-2015)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-208"
+    },
+    {
+     "generation": "208 Phase 1",
+     "from": 2012,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "208",
+       "versions": 69,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M5875/208"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-208"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "model": "308",
+   "label": "308",
+   "generations": [
+    {
+     "generation": "308 3 (P51) - 2022 New Model",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "308 2022",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M11954/308-2022"
+      },
+      {
+       "name": "308 SW 2022",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M12012/308-SW-2022"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308"
+    },
+    {
+     "generation": "308 2 (T10) - 2018 Restyling",
+     "from": 2017,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "308 2018",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M9471/308-2018"
+      },
+      {
+       "name": "308 2018 SW",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M9467/308-2018-SW"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308"
+    },
+    {
+     "generation": "308 2 (T9) - 2014 New Model",
+     "from": 2013,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "308 II",
+       "versions": 52,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7017/308-II"
+      },
+      {
+       "name": "308 II SW",
+       "versions": 42,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7187/308-II-SW"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308"
+    },
+    {
+     "generation": "308 1 (T7) - 2008 New Model",
+     "from": 2007,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "308",
+       "versions": 121,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M1395/308"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "model": "508",
+   "label": "508",
+   "generations": [
+    {
+     "generation": "508 II - 2024 Update",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "508 2024",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M13281/508-2024"
+      },
+      {
+       "name": "508 SW 2024",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M13282/508-SW-2024"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-508"
+    },
+    {
+     "generation": "508 II - 2019 New Model",
+     "from": 2018,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "508 II",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M9934/508-II"
+      },
+      {
+       "name": "508 II SW",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M10413/508-II-SW"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-508"
+    },
+    {
+     "generation": "508 I Restyling",
+     "from": 2014,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "508 2014",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7642/508-2014"
+      },
+      {
+       "name": "508 RXH",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7346/508-RXH"
+      },
+      {
+       "name": "508 SW 2014",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7673/508-SW-2014"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-508"
+    },
+    {
+     "generation": "508 I",
+     "from": 2010,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "508",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M1489/508"
+      },
+      {
+       "name": "508 SW",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7532/508-SW"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-508"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "model": "2008",
+   "label": "2008",
+   "generations": [
+    {
+     "generation": "2008 II - 2023 Facelift",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "2008 II (2023)",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M13379/2008-II-(2023)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-2008"
+    },
+    {
+     "generation": "2008 II",
+     "from": 2019,
+     "to": null,
+     "bodies": [
+      {
+       "name": "2008 II",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M10432/2008-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-2008"
+    },
+    {
+     "generation": "2008 I",
+     "from": 2013,
+     "to": null,
+     "bodies": [
+      {
+       "name": "2008",
+       "versions": 33,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M6855/2008"
+      },
+      {
+       "name": "2008 Facelift",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M9015/2008-Facelift"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-2008"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "model": "3008",
+   "label": "3008",
+   "generations": [
+    {
+     "generation": "3008 III - New Model",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "3008 2024",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M13368/3008-2024"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-3008"
+    },
+    {
+     "generation": "3008 2 - 2021 Facelift",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "3008 2021",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M11079/3008-2021"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-3008"
+    },
+    {
+     "generation": "3008 2",
+     "from": 2016,
+     "to": null,
+     "bodies": [
+      {
+       "name": "3008 II",
+       "versions": 26,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M8842/3008-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-3008"
+    },
+    {
+     "generation": "3008 1",
+     "from": 2009,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "3008",
+       "versions": 56,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M1355/3008"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-3008"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "model": "5008",
+   "label": "5008",
+   "generations": [
+    {
+     "generation": "5008 III - New Model",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "5008 III",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M14048/5008-III"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-5008"
+    },
+    {
+     "generation": "5008 2 - 2021 Facelift",
+     "from": 2021,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "5008 2021",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M11078/5008-2021"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-5008"
+    },
+    {
+     "generation": "5008 II",
+     "from": 2017,
+     "to": null,
+     "bodies": [
+      {
+       "name": "5008 II",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M8967/5008-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-5008"
+    },
+    {
+     "generation": "5008",
+     "from": 2009,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "5008",
+       "versions": 35,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M1385/5008"
+      },
+      {
+       "name": "5008 Facelift",
+       "versions": 41,
+       "url": "https://www.ultimatespecs.com/car-specs/Peugeot/M7162/5008-Facelift"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-5008"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "Captur",
+   "label": "Captur",
+   "generations": [
+    {
+     "generation": "Captur 2 Phase 2 (JB/JE) - 2024 Facelift",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Captur 2024",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M14655/Captur-2024"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Captur"
+    },
+    {
+     "generation": "Captur 2 Phase 1 (JB/JE) - 2020 New Model",
+     "from": 2019,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "Captur 2",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M10431/Captur-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Captur"
+    },
+    {
+     "generation": "Captur 1",
+     "from": 2013,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "Captur 1 Phase 1",
+       "versions": 33,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6822/Captur-1-Phase-1"
+      },
+      {
+       "name": "Captur 1 Phase 2",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M9445/Captur-1-Phase-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Captur"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "Clio",
+   "label": "Clio",
+   "generations": [
+    {
+     "generation": "Clio 6 (R03) - 2026 New Model",
+     "from": 2026,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Clio 6",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M15847/Clio-6"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Clio"
+    },
+    {
+     "generation": "Clio 5",
+     "from": 2019,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Clio 5",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M10368/Clio-5"
+      },
+      {
+       "name": "Clio 5 Phase 2",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M13359/Clio-5-Phase-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Clio"
+    },
+    {
+     "generation": "Clio 4",
+     "from": 2012,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "Clio 4",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6727/Clio-4"
+      },
+      {
+       "name": "Clio 4 Ph2",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M8914/Clio-4-Ph2"
+      },
+      {
+       "name": "Clio 4 Ph2 Sport Tourer",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M8922/Clio-4-Ph2-Sport-Tourer"
+      },
+      {
+       "name": "Clio 4 Sport Tourer",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6726/Clio-4-Sport-Tourer"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Clio"
+    },
+    {
+     "generation": "Clio 3",
+     "from": 2005,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "Clio 3 Phase 1 3Doors",
+       "versions": 45,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6501/Clio-3-Phase-1-3Doors"
+      },
+      {
+       "name": "Clio 3 Phase 1 5Doors",
+       "versions": 40,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6427/Clio-3-Phase-1-5Doors"
+      },
+      {
+       "name": "Clio 3 Phase 1 Grand Tour",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6429/Clio-3-Phase-1-Grand-Tour"
+      },
+      {
+       "name": "Clio 3 Phase 2",
+       "versions": 42,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M279/Clio-3-Phase-2"
+      },
+      {
+       "name": "Clio 3 Phase 2 Grand Tour",
+       "versions": 40,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6430/Clio-3-Phase-2-Grand-Tour"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Clio"
+    },
+    {
+     "generation": "Clio 2",
+     "from": 1998,
+     "to": 2012,
+     "bodies": [
+      {
+       "name": "Clio 2 Campus/Storia",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6428/Clio-2-Campus-Storia"
+      },
+      {
+       "name": "Clio 2 Phase 1 3 Doors",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6499/Clio-2-Phase-1-3-Doors"
+      },
+      {
+       "name": "Clio 2 Phase 1 5 Doors",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M1062/Clio-2-Phase-1-5-Doors"
+      },
+      {
+       "name": "Clio 2 Phase 2 3 Doors",
+       "versions": 68,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6500/Clio-2-Phase-2-3-Doors"
+      },
+      {
+       "name": "Clio 2 Phase 2 5 Doors",
+       "versions": 69,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M278/Clio-2-Phase-2-5-Doors"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Clio"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "Kadjar",
+   "label": "Kadjar",
+   "generations": [
+    {
+     "generation": "Kadjar 1 Phase 2 - 2019 Facelift",
+     "from": 2018,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Kadjar 1 Phase 2",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M11487/Kadjar-1-Phase-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Kadjar"
+    },
+    {
+     "generation": "Kadjar 1 Phase 1 - 2016 New Model",
+     "from": 2015,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "Kadjar 1 Phase 1",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M8117/Kadjar-1-Phase-1"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Kadjar"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "Megane",
+   "label": "Megane",
+   "generations": [
+    {
+     "generation": "Megane 4 Phase 2",
+     "from": 2020,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "Megane 4 Phase 2",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M10912/Megane-4-Phase-2"
+      },
+      {
+       "name": "Megane 4 Phase 2 Sport Tourer",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M10944/Megane-4-Phase-2-Sport-Tourer"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Megane"
+    },
+    {
+     "generation": "Megane 4",
+     "from": 2016,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "Megane 4 Phase 1",
+       "versions": 44,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M8467/Megane-4-Phase-1"
+      },
+      {
+       "name": "Megane 4 Phase 1 Sport Tourer",
+       "versions": 26,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M9049/Megane-4-Phase-1-Sport-Tourer"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Megane"
+    },
+    {
+     "generation": "Megane 3",
+     "from": 2008,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "Megane 3 Cabriolet",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6426/Megane-3-Cabriolet"
+      },
+      {
+       "name": "Megane 3 Phase 1",
+       "versions": 32,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6486/Megane-3-Phase-1"
+      },
+      {
+       "name": "Megane 3 Phase 1 Break Sport Tourer",
+       "versions": 31,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6482/Megane-3-Phase-1-Break-Sport-Tourer"
+      },
+      {
+       "name": "Megane 3 Phase 1 Coupe",
+       "versions": 42,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6424/Megane-3-Phase-1-Coupe"
+      },
+      {
+       "name": "Megane 3 Phase 2",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6484/Megane-3-Phase-2"
+      },
+      {
+       "name": "Megane 3 Phase 2 Break Sport Tourer",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6425/Megane-3-Phase-2-Break-Sport-Tourer"
+      },
+      {
+       "name": "Megane 3 Phase 2 Coupe",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6483/Megane-3-Phase-2-Coupe"
+      },
+      {
+       "name": "Megane 3 Phase 3",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M7835/Megane-3-Phase-3"
+      },
+      {
+       "name": "Megane 3 Phase 3 Break Sport Tourer",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M7839/Megane-3-Phase-3-Break-Sport-Tourer"
+      },
+      {
+       "name": "Megane 3 Phase 3 Coupe",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M7840/Megane-3-Phase-3-Coupe"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Megane"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "Scenic",
+   "label": "Scenic",
+   "generations": [
+    {
+     "generation": "Scénic 5",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Scénic 5",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M13655/ScÃ©nic-5"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Scenic"
+    },
+    {
+     "generation": "Scénic 4",
+     "from": 2017,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "Grand Scenic 4",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M9073/Grand-Scenic-4"
+      },
+      {
+       "name": "Scenic 4",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M9069/Scenic-4"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Scenic"
+    },
+    {
+     "generation": "Scénic 3",
+     "from": 2009,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "Grand Scenic 3 Phase 1",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M3523/Grand-Scenic-3-Phase-1"
+      },
+      {
+       "name": "Grand Scenic 3 Phase 2",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6447/Grand-Scenic-3-Phase-2"
+      },
+      {
+       "name": "Grand Scenic 3 Phase 3",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M8195/Grand-Scenic-3-Phase-3"
+      },
+      {
+       "name": "Scenic 3 Phase 1",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6415/Scenic-3-Phase-1"
+      },
+      {
+       "name": "Scenic 3 Phase 2",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6479/Scenic-3-Phase-2"
+      },
+      {
+       "name": "Scénic 3 Phase 3",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M14665/ScÃ©nic-3-Phase-3"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Scenic"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "Trafic",
+   "label": "Trafic",
+   "generations": [
+    {
+     "generation": "Trafic 3 (X82) Phase 3",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Trafic 3 Phase 3 Combi L1H1",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M14638/Trafic-3-Phase-3-Combi-L1H1"
+      },
+      {
+       "name": "Trafic 3 Phase 3 Grand Combi L2H1",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M13862/Trafic-3-Phase-3-Grand-Combi-L2H1"
+      },
+      {
+       "name": "Trafic 3 Phase 3 Grand Passenger L2H1",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M13068/Trafic-3-Phase-3-Grand-Passenger-L2H1"
+      },
+      {
+       "name": "Trafic 3 Phase 3 Passenger L1H1",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M13176/Trafic-3-Phase-3-Passenger-L1H1"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Trafic"
+    },
+    {
+     "generation": "Trafic 3 (X82) Phase 2",
+     "from": 2019,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Trafic 3 Phase 2 Grand Passenger",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M10699/Trafic-3-Phase-2-Grand-Passenger"
+      },
+      {
+       "name": "Trafic 3 Phase 2 Passenger",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M10698/Trafic-3-Phase-2-Passenger"
+      },
+      {
+       "name": "Trafic 3 Phase 2 Van",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M10354/Trafic-3-Phase-2-Van"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Trafic"
+    },
+    {
+     "generation": "Trafic 3 (X82) Phase 1",
+     "from": 2014,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "Trafic 3 Phase 1",
+       "versions": 36,
+       "url": "https://www.ultimatespecs.com/car-specs/Renault/M6700/Trafic-3-Phase-1"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Renault-models/Renault-Trafic"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "model": "Fabia",
+   "label": "Fabia",
+   "generations": [
+    {
+     "generation": "Fabia 4 - 2022 New Model",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Fabia 2022",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M12017/Fabia-2022"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Fabia"
+    },
+    {
+     "generation": "Fabia 3 (2019 Restyling)",
+     "from": 2018,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Fabia 2019",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M10073/Fabia-2019"
+      },
+      {
+       "name": "Fabia 2019 Combi",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M10140/Fabia-2019-Combi"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Fabia"
+    },
+    {
+     "generation": "Fabia 3",
+     "from": 2014,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "Fabia 3",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M7689/Fabia-3"
+      },
+      {
+       "name": "Fabia 3 Combi",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M7815/Fabia-3-Combi"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Fabia"
+    },
+    {
+     "generation": "Fabia 2",
+     "from": 2007,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "Fabia II",
+       "versions": 41,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M939/Fabia-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Fabia"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "model": "Kamiq",
+   "label": "Kamiq",
+   "generations": [
+    {
+     "generation": "Kamiq 1 - 2024 Facelift",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Kamiq 2024",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M13791/Kamiq-2024"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Kamiq"
+    },
+    {
+     "generation": "Kamiq 1",
+     "from": 2019,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "Kamiq",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M10417/Kamiq"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Kamiq"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "model": "Karoq",
+   "label": "Karoq",
+   "generations": [
+    {
+     "generation": "Karoq 1 - 2022 facelift",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Karoq 2022",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M14257/Karoq-2022"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Karoq"
+    },
+    {
+     "generation": "Karoq 1 - 2018 New Model",
+     "from": 2017,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Karoq",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M9447/Karoq"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Karoq"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "model": "Kodiaq",
+   "label": "Kodiaq",
+   "generations": [
+    {
+     "generation": "Kodiaq 2",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Kodiaq 2",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M13811/Kodiaq-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Kodiaq"
+    },
+    {
+     "generation": "Kodiaq 1 - 2021 Update",
+     "from": 2021,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "Kodiaq 2021",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M11939/Kodiaq-2021"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Kodiaq"
+    },
+    {
+     "generation": "Kodiaq 1 - 2017 New Model",
+     "from": 2016,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Kodiaq",
+       "versions": 36,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M8959/Kodiaq"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Kodiaq"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "model": "Octavia",
+   "label": "Octavia",
+   "generations": [
+    {
+     "generation": "Octavia 4 - 2024 Facelift",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Octavia 4 2024",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M13793/Octavia-4-2024"
+      },
+      {
+       "name": "Octavia 4 Combi 2024",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M13794/Octavia-4-Combi-2024"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Octavia"
+    },
+    {
+     "generation": "Octavia 4",
+     "from": 2020,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "Octavia 4",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M10756/Octavia-4"
+      },
+      {
+       "name": "Octavia 4 Combi",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M10771/Octavia-4-Combi"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Octavia"
+    },
+    {
+     "generation": "Octavia 3 Facelift",
+     "from": 2017,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "Octavia 2017",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M9183/Octavia-2017"
+      },
+      {
+       "name": "Octavia Combi 2017",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M9161/Octavia-Combi-2017"
+      },
+      {
+       "name": "Octavia Scout 2017",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M9388/Octavia-Scout-2017"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Octavia"
+    },
+    {
+     "generation": "Octavia 3",
+     "from": 2013,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "Octavia 3",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M6694/Octavia-3"
+      },
+      {
+       "name": "Octavia 3 Combi",
+       "versions": 33,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M6729/Octavia-3-Combi"
+      },
+      {
+       "name": "Octavia 3 Scout",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M7566/Octavia-3-Scout"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Octavia"
+    },
+    {
+     "generation": "Octavia 2",
+     "from": 2004,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "Octavia 2",
+       "versions": 77,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M402/Octavia-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Octavia"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "model": "Superb",
+   "label": "Superb",
+   "generations": [
+    {
+     "generation": "Superb 4",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Superb 4",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M13798/Superb-4"
+      },
+      {
+       "name": "Superb 4 Combi",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M13799/Superb-4-Combi"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Superb"
+    },
+    {
+     "generation": "Superb 3 Facelift",
+     "from": 2020,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "Superb 2020",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M10509/Superb-2020"
+      },
+      {
+       "name": "Superb 2020 Combi",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M10676/Superb-2020-Combi"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Superb"
+    },
+    {
+     "generation": "Superb 3",
+     "from": 2015,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "Superb 3",
+       "versions": 40,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M7933/Superb-3"
+      },
+      {
+       "name": "Superb 3 Combi",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M8344/Superb-3-Combi"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Superb"
+    },
+    {
+     "generation": "Superb 2",
+     "from": 2008,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "Superb 2",
+       "versions": 106,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M1384/Superb-2"
+      },
+      {
+       "name": "Superb 2 Combi Facelift",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M7009/Superb-2-Combi-Facelift"
+      },
+      {
+       "name": "Superb 2 Facelift",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Skoda/M6832/Superb-2-Facelift"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Superb"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "Auris",
+   "label": "Auris",
+   "generations": [
+    {
+     "generation": "Auris 2",
+     "from": 2012,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Auris 2",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M6600/Auris-2"
+      },
+      {
+       "name": "Auris 2 (2015 Restyling)",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M7971/Auris-2-(2015-Restyling)"
+      },
+      {
+       "name": "Auris Touring Sports",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M6908/Auris-Touring-Sports"
+      },
+      {
+       "name": "Auris Touring Sports 2015",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M8112/Auris-Touring-Sports-2015"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Auris"
+    },
+    {
+     "generation": "Auris",
+     "from": 2006,
+     "to": 2012,
+     "bodies": [
+      {
+       "name": "Auris",
+       "versions": 58,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M824/Auris"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Auris"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "Avensis",
+   "label": "Avensis",
+   "generations": [
+    {
+     "generation": "Avensis 3",
+     "from": 2009,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "Avensis 3rd Gen (2015 Restyling)",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M7975/Avensis-3rd-Gen-(2015-Restyling)"
+      },
+      {
+       "name": "Avensis III",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M1415/Avensis-III"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Avensis"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "C-HR",
+   "label": "C-HR",
+   "generations": [
+    {
+     "generation": "C-HR (AX20)",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "C-HR II",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M13770/C-HR-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-C-HR"
+    },
+    {
+     "generation": "C-HR (AX10 Facelift)",
+     "from": 2019,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "C-HR 2020",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M10580/C-HR-2020"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-C-HR"
+    },
+    {
+     "generation": "C-HR (AX10)",
+     "from": 2016,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "C-HR",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M9077/C-HR"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-C-HR"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "Camry",
+   "label": "Camry",
+   "generations": [
+    {
+     "generation": "Camry 8 (XV70) - 2021 EU Update",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Camry 2021 (XV70 EU)",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M11817/Camry-2021-(XV70-EU)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Camry"
+    },
+    {
+     "generation": "Camry 8 (XV70)",
+     "from": 2017,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Camry XV70",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M10357/Camry-XV70"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Camry"
+    },
+    {
+     "generation": "Camry 7",
+     "from": 2011,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Camry XV50",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M5932/Camry-XV50"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Camry"
+    },
+    {
+     "generation": "Camry 6",
+     "from": 2006,
+     "to": 2011,
+     "bodies": [
+      {
+       "name": "Camry Solara II",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M5934/Camry-Solara-II"
+      },
+      {
+       "name": "Camry XV40",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M5933/Camry-XV40"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Camry"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "Corolla",
+   "label": "Corolla",
+   "generations": [
+    {
+     "generation": "Corolla E210 - Facelift 2023",
+     "from": 2023,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Corolla E210 Hatchback 2023",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M13295/Corolla-E210-Hatchback-2023"
+      },
+      {
+       "name": "Corolla E210 Touring Sports 2023",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M13296/Corolla-E210-Touring-Sports-2023"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Corolla"
+    },
+    {
+     "generation": "Corolla E210",
+     "from": 2018,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "Corolla E210 Hatchback",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M10223/Corolla-E210-Hatchback"
+      },
+      {
+       "name": "Corolla E210 Sedan",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M10683/Corolla-E210-Sedan"
+      },
+      {
+       "name": "Corolla E210 Touring Sports",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M10682/Corolla-E210-Touring-Sports"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Corolla"
+    },
+    {
+     "generation": "Corolla E140",
+     "from": 2006,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "E140 Corolla",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M1349/E140-Corolla"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Corolla"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "RAV 4",
+   "label": "RAV 4",
+   "generations": [
+    {
+     "generation": "RAV4 XA50",
+     "from": 2018,
+     "to": 2025,
+     "bodies": [
+      {
+       "name": "RAV4 (XA50)",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M10220/RAV4-(XA50)"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-RAV4"
+    },
+    {
+     "generation": "RAV4 XA40",
+     "from": 2013,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "RAV4 (XA40)",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M8012/RAV4-(XA40)"
+      },
+      {
+       "name": "RAV4 2016",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M8322/RAV4-2016"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-RAV4"
+    },
+    {
+     "generation": "RAV4 XA30",
+     "from": 2005,
+     "to": 2012,
+     "bodies": [
+      {
+       "name": "RAV4 III",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M366/RAV4-III"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-RAV4"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "Yaris",
+   "label": "Yaris",
+   "generations": [
+    {
+     "generation": "Yaris XP21",
+     "from": 2020,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Yaris (XP21)",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M10776/Yaris-(XP21)"
+      },
+      {
+       "name": "Yaris GR",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M13758/Yaris-GR"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Yaris"
+    },
+    {
+     "generation": "Yaris 3",
+     "from": 2011,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "Yaris 2017",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M9240/Yaris-2017"
+      },
+      {
+       "name": "Yaris 3",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M3895/Yaris-3"
+      },
+      {
+       "name": "Yaris 3 2014",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M7572/Yaris-3-2014"
+      },
+      {
+       "name": "Yaris Hybrid",
+       "versions": 1,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M7418/Yaris-Hybrid"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Yaris"
+    },
+    {
+     "generation": "Yaris 2",
+     "from": 2005,
+     "to": 2013,
+     "bodies": [
+      {
+       "name": "Yaris 2",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Toyota/M361/Yaris-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Yaris"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "S60",
+   "label": "S60",
+   "generations": [
+    {
+     "generation": "3rd Generation",
+     "from": 2019,
+     "to": null,
+     "bodies": [
+      {
+       "name": "S60 III",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M10190/S60-III"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-S60"
+    },
+    {
+     "generation": "2nd Generation",
+     "from": 2010,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "S60 Cross Country",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M8104/S60-Cross-Country"
+      },
+      {
+       "name": "S60 II",
+       "versions": 56,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M1447/S60-II"
+      },
+      {
+       "name": "S60 II Restyling",
+       "versions": 95,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M6881/S60-II-Restyling"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-S60"
+    },
+    {
+     "generation": "1st Generation",
+     "from": 2000,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "S60",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M389/S60"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-S60"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "V40",
+   "label": "V40",
+   "generations": [
+    {
+     "generation": "2nd Generation",
+     "from": 2012,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "V40 Cross Country",
+       "versions": 32,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M6728/V40-Cross-Country"
+      },
+      {
+       "name": "V40 Cross Country Restyling",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M8673/V40-Cross-Country-Restyling"
+      },
+      {
+       "name": "V40 II",
+       "versions": 58,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M6330/V40-II"
+      },
+      {
+       "name": "V40 II Restyling",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M8678/V40-II-Restyling"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-V40"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "V60",
+   "label": "V60",
+   "generations": [
+    {
+     "generation": "2nd Generation",
+     "from": 2018,
+     "to": null,
+     "bodies": [
+      {
+       "name": "V60 II",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M9868/V60-II"
+      },
+      {
+       "name": "V60 II Cross Country",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M10124/V60-II-Cross-Country"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-V60"
+    },
+    {
+     "generation": "1st Generation",
+     "from": 2010,
+     "to": 2018,
+     "bodies": [
+      {
+       "name": "V60",
+       "versions": 52,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M1500/V60"
+      },
+      {
+       "name": "V60 Cross Country",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M8105/V60-Cross-Country"
+      },
+      {
+       "name": "V60 Restyling",
+       "versions": 79,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M6895/V60-Restyling"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-V60"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC40",
+   "label": "XC40",
+   "generations": [
+    {
+     "generation": "XC40 1st Gen - 2023 Update",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "XC40 2023",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M12613/XC40-2023"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC40"
+    },
+    {
+     "generation": "XC40 1st Gen. - 2018 New Model",
+     "from": 2018,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "XC40 2018",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M9815/XC40-2018"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC40"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC60",
+   "label": "XC60",
+   "generations": [
+    {
+     "generation": "2nd Generation - 2026 Facelift",
+     "from": 2025,
+     "to": null,
+     "bodies": [
+      {
+       "name": "XC60 2026",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M14933/XC60-2026"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC60"
+    },
+    {
+     "generation": "2nd Generation - 2022 Update",
+     "from": 2021,
+     "to": 2025,
+     "bodies": [
+      {
+       "name": "XC60 2022",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M11833/XC60-2022"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC60"
+    },
+    {
+     "generation": "2nd Generation",
+     "from": 2018,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "XC60 2018",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M9328/XC60-2018"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC60"
+    },
+    {
+     "generation": "1st Generation",
+     "from": 2008,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "XC60",
+       "versions": 77,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M1502/XC60"
+      },
+      {
+       "name": "XC60 Restyling",
+       "versions": 80,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M6872/XC60-Restyling"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC60"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC90",
+   "label": "XC90",
+   "generations": [
+    {
+     "generation": "2nd Generation - 2025 Update",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "XC90 2025",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M13979/XC90-2025"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC90"
+    },
+    {
+     "generation": "2nd Generation - 2020 Update",
+     "from": 2019,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "XC90 2020",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M13980/XC90-2020"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC90"
+    },
+    {
+     "generation": "2nd Generation - 2016 New Model",
+     "from": 2015,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "XC90 II",
+       "versions": 27,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M7613/XC90-II"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC90"
+    },
+    {
+     "generation": "1st Generation",
+     "from": 2002,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "XC90",
+       "versions": 34,
+       "url": "https://www.ultimatespecs.com/car-specs/Volvo/M730/XC90"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volvo-models/Volvo-XC90"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Golf",
+   "label": "Golf",
+   "generations": [
+    {
+     "generation": "Golf 8 Facelift",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Golf 8 2024",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16191/Golf-8-2024"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Golf"
+    },
+    {
+     "generation": "Golf 8",
+     "from": 2020,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "Golf 8",
+       "versions": 16,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M10528/Golf-8"
+      },
+      {
+       "name": "Golf 8 Variant",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M11204/Golf-8-Variant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Golf"
+    },
+    {
+     "generation": "Golf 7 Facelift",
+     "from": 2017,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "Golf 2017",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9140/Golf-2017"
+      },
+      {
+       "name": "Golf 2017 3-doors",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9139/Golf-2017-3-doors"
+      },
+      {
+       "name": "Golf 2017 Alltrack",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9231/Golf-2017-Alltrack"
+      },
+      {
+       "name": "Golf 2017 Variant",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9121/Golf-2017-Variant"
+      },
+      {
+       "name": "Golf Sportsvan 2018",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9717/Golf-Sportsvan-2018"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Golf"
+    },
+    {
+     "generation": "Golf 7",
+     "from": 2012,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "Golf 7",
+       "versions": 67,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6523/Golf-7"
+      },
+      {
+       "name": "Golf 7 3-doors",
+       "versions": 50,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6730/Golf-7-3-doors"
+      },
+      {
+       "name": "Golf 7 Variant",
+       "versions": 30,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6960/Golf-7-Variant"
+      },
+      {
+       "name": "Golf Alltrack",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8001/Golf-Alltrack"
+      },
+      {
+       "name": "Golf Sportsvan",
+       "versions": 22,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M7320/Golf-Sportsvan"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Golf"
+    },
+    {
+     "generation": "Golf 6",
+     "from": 2008,
+     "to": 2012,
+     "bodies": [
+      {
+       "name": "Golf 6",
+       "versions": 79,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M1352/Golf-6"
+      },
+      {
+       "name": "Golf 6 Cabrio",
+       "versions": 15,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6389/Golf-6-Cabrio"
+      },
+      {
+       "name": "Golf 6 Variant",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6390/Golf-6-Variant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Golf"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Passat",
+   "label": "Passat",
+   "generations": [
+    {
+     "generation": "Passat B9",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Passat B9 Variant",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M13632/Passat-B9-Variant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Passat"
+    },
+    {
+     "generation": "Passat B8 Facelift",
+     "from": 2020,
+     "to": 2023,
+     "bodies": [
+      {
+       "name": "Passat 2020",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M10460/Passat-2020"
+      },
+      {
+       "name": "Passat 2020 Variant",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M10665/Passat-2020-Variant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Passat"
+    },
+    {
+     "generation": "Passat B8",
+     "from": 2014,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "Passat B8",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M7553/Passat-B8"
+      },
+      {
+       "name": "Passat B8 Alltrack",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8775/Passat-B8-Alltrack"
+      },
+      {
+       "name": "Passat B8 Variant",
+       "versions": 22,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M7557/Passat-B8-Variant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Passat"
+    },
+    {
+     "generation": "Passat B7",
+     "from": 2010,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "Passat B7",
+       "versions": 36,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M1513/Passat-B7"
+      },
+      {
+       "name": "Passat B7 Alltrack",
+       "versions": 3,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6335/Passat-B7-Alltrack"
+      },
+      {
+       "name": "Passat B7 Variant",
+       "versions": 28,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6391/Passat-B7-Variant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Passat"
+    },
+    {
+     "generation": "Passat B6",
+     "from": 2005,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "Passat B6",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M465/Passat-B6"
+      },
+      {
+       "name": "Passat B6 Variant",
+       "versions": 52,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M7512/Passat-B6-Variant"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Passat"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Polo",
+   "label": "Polo",
+   "generations": [
+    {
+     "generation": "Polo 6 - 2022 Update",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Polo 2022",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M11991/Polo-2022"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Polo"
+    },
+    {
+     "generation": "Polo 6 - 2018 New Model",
+     "from": 2017,
+     "to": 2021,
+     "bodies": [
+      {
+       "name": "Polo 6",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9640/Polo-6"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Polo"
+    },
+    {
+     "generation": "Polo 5 (Typ 6C)",
+     "from": 2014,
+     "to": 2017,
+     "bodies": [
+      {
+       "name": "CrossPolo (6C)",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M7965/CrossPolo-(6C)"
+      },
+      {
+       "name": "Polo 5 (6C)",
+       "versions": 18,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M7362/Polo-5-(6C)"
+      },
+      {
+       "name": "Polo 5 (6C) 3-doors",
+       "versions": 19,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8776/Polo-5-(6C)-3-doors"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Polo"
+    },
+    {
+     "generation": "Polo 5 (Typ 6R)",
+     "from": 2009,
+     "to": 2014,
+     "bodies": [
+      {
+       "name": "CrossPolo (6R)",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M1454/CrossPolo-(6R)"
+      },
+      {
+       "name": "Polo 5 (6R)",
+       "versions": 65,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8777/Polo-5-(6R)"
+      },
+      {
+       "name": "Polo 5 (6R) 3-doors",
+       "versions": 75,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M1343/Polo-5-(6R)-3-doors"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Polo"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T-Roc",
+   "label": "T-Roc",
+   "generations": [
+    {
+     "generation": "T-Roc (A1) - 2022 Update",
+     "from": 2022,
+     "to": null,
+     "bodies": [
+      {
+       "name": "T-Roc 2022",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M12683/T-Roc-2022"
+      },
+      {
+       "name": "T-Roc 2022 Cabriolet",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M13159/T-Roc-2022-Cabriolet"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-T-Roc"
+    },
+    {
+     "generation": "T-Roc (A1)",
+     "from": 2017,
+     "to": null,
+     "bodies": [
+      {
+       "name": "T-Roc",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9804/T-Roc"
+      },
+      {
+       "name": "T-Roc Cabrio",
+       "versions": 2,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M10751/T-Roc-Cabrio"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-T-Roc"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T6",
+   "label": "T6 (Multivan, Transporter)",
+   "generations": [
+    {
+     "generation": "Transporter T7 - 2025 New Model",
+     "from": 2025,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Transporter T7 Kombi LWB",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14558/Transporter-T7-Kombi-LWB"
+      },
+      {
+       "name": "Transporter T7 Kombi LWB PanAmericana",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14560/Transporter-T7-Kombi-LWB-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 Kombi SWB",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14239/Transporter-T7-Kombi-SWB"
+      },
+      {
+       "name": "Transporter T7 Kombi SWB PanAmericana",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14559/Transporter-T7-Kombi-SWB-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 L-Partition LWB",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14553/Transporter-T7-L-Partition-LWB"
+      },
+      {
+       "name": "Transporter T7 L-Partition LWB PanAmericana",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14281/Transporter-T7-L-Partition-LWB-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 L-Partition SWB",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14552/Transporter-T7-L-Partition-SWB"
+      },
+      {
+       "name": "Transporter T7 L-Partition SWB PanAmericana",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14278/Transporter-T7-L-Partition-SWB-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 Plus LWB",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14551/Transporter-T7-Plus-LWB"
+      },
+      {
+       "name": "Transporter T7 Plus LWB PanAmericana",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14282/Transporter-T7-Plus-LWB-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 Plus SWB",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14550/Transporter-T7-Plus-SWB"
+      },
+      {
+       "name": "Transporter T7 Plus SWB PanAmericana",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14279/Transporter-T7-Plus-SWB-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 Van LWB",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14549/Transporter-T7-Van-LWB"
+      },
+      {
+       "name": "Transporter T7 Van LWB High-Roof",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M13930/Transporter-T7-Van-LWB-High-Roof"
+      },
+      {
+       "name": "Transporter T7 Van LWB High-Roof PanAmericana",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14280/Transporter-T7-Van-LWB-High-Roof-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 Van LWB PanAmericana",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14276/Transporter-T7-Van-LWB-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 Van SWB",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14548/Transporter-T7-Van-SWB"
+      },
+      {
+       "name": "Transporter T7 Van SWB High-Roof",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14554/Transporter-T7-Van-SWB-High-Roof"
+      },
+      {
+       "name": "Transporter T7 Van SWB High-Roof PanAmericana",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14277/Transporter-T7-Van-SWB-High-Roof-PanAmericana"
+      },
+      {
+       "name": "Transporter T7 Van SWB PanAmericana",
+       "versions": 8,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14275/Transporter-T7-Van-SWB-PanAmericana"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Transporter"
+    },
+    {
+     "generation": "Multivan T7 - 2022 New Model",
+     "from": 2021,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Multivan T7 LWB",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M14561/Multivan-T7-LWB"
+      },
+      {
+       "name": "Multivan T7 SWB",
+       "versions": 5,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M12366/Multivan-T7-SWB"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Multivan"
+    },
+    {
+     "generation": "T6.1",
+     "from": 2019,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Transporter T6.1",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M10573/Transporter-T61"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Transporter"
+    },
+    {
+     "generation": "Multivan T6.1",
+     "from": 2019,
+     "to": 2022,
+     "bodies": [
+      {
+       "name": "Multivan T6.1",
+       "versions": 14,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M10263/Multivan-T61"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Multivan"
+    },
+    {
+     "generation": "Transporter T6",
+     "from": 2015,
+     "to": 2019,
+     "bodies": [
+      {
+       "name": "T6 Transporter / Multivan / Caravelle",
+       "versions": 26,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8156/T6-Transporter---Multivan---Caravelle"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Transporter"
+    },
+    {
+     "generation": "Transporter T5.2 - 2010 Facelift",
+     "from": 2009,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "Transporter T5.2 Kombi LWB",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16116/Transporter-T52-Kombi-LWB"
+      },
+      {
+       "name": "Transporter T5.2 Kombi LWB High Roof",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16120/Transporter-T52-Kombi-LWB-High-Roof"
+      },
+      {
+       "name": "Transporter T5.2 Kombi LWB Medium-High Roof",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16119/Transporter-T52-Kombi-LWB-Medium-High-Roof"
+      },
+      {
+       "name": "Transporter T5.2 Kombi Rockton",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16118/Transporter-T52-Kombi-Rockton"
+      },
+      {
+       "name": "Transporter T5.2 Kombi SWB",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16098/Transporter-T52-Kombi-SWB"
+      },
+      {
+       "name": "Transporter T5.2 Kombi SWB Medium-High Roof",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16117/Transporter-T52-Kombi-SWB-Medium-High-Roof"
+      },
+      {
+       "name": "Transporter T5.2 LWB",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16089/Transporter-T52-LWB"
+      },
+      {
+       "name": "Transporter T5.2 LWB High Roof",
+       "versions": 21,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16094/Transporter-T52-LWB-High-Roof"
+      },
+      {
+       "name": "Transporter T5.2 LWB Medium-High Roof",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16093/Transporter-T52-LWB-Medium-High-Roof"
+      },
+      {
+       "name": "Transporter T5.2 SWB",
+       "versions": 25,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16092/Transporter-T52-SWB"
+      },
+      {
+       "name": "Transporter T5.2 SWB Medium-High Roof",
+       "versions": 22,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16091/Transporter-T52-SWB-Medium-High-Roof"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Transporter"
+    },
+    {
+     "generation": "Multivan T5.2 - 2010 Facelift",
+     "from": 2009,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "Multivan T5.2 LWB",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16106/Multivan-T52-LWB"
+      },
+      {
+       "name": "Multivan T5.2 SWB Business",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16109/Multivan-T52-SWB-Business"
+      },
+      {
+       "name": "Multivan T5.2 SWB Comfortline",
+       "versions": 23,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M6682/Multivan-T52-SWB-Comfortline"
+      },
+      {
+       "name": "Multivan T5.2 SWB Highline",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16113/Multivan-T52-SWB-Highline"
+      },
+      {
+       "name": "Multivan T5.2 SWB Outdoor Edition",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16111/Multivan-T52-SWB-Outdoor-Edition"
+      },
+      {
+       "name": "Multivan T5.2 SWB PanAmericana",
+       "versions": 7,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16107/Multivan-T52-SWB-PanAmericana"
+      },
+      {
+       "name": "Multivan T5.2 SWB StartLine",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M16108/Multivan-T52-SWB-StartLine"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Multivan"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Tiguan",
+   "label": "Tiguan",
+   "generations": [
+    {
+     "generation": "Tiguan 3 - 2025 New Model",
+     "from": 2024,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Tiguan 2025",
+       "versions": 9,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M13965/Tiguan-2025"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Tiguan"
+    },
+    {
+     "generation": "Tiguan 2 - 2021 Facelift",
+     "from": 2020,
+     "to": 2024,
+     "bodies": [
+      {
+       "name": "Tiguan 2021",
+       "versions": 10,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M10997/Tiguan-2021"
+      },
+      {
+       "name": "Tiguan Allspace 2022",
+       "versions": 13,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M12002/Tiguan-Allspace-2022"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Tiguan"
+    },
+    {
+     "generation": "Tiguan 2",
+     "from": 2016,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "Tiguan 2016",
+       "versions": 17,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8611/Tiguan-2016"
+      },
+      {
+       "name": "Tiguan Allspace",
+       "versions": 12,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M9876/Tiguan-Allspace"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Tiguan"
+    },
+    {
+     "generation": "Tiguan 1",
+     "from": 2007,
+     "to": 2016,
+     "bodies": [
+      {
+       "name": "Tiguan",
+       "versions": 107,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M1401/Tiguan"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Tiguan"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Touran",
+   "label": "Touran",
+   "generations": [
+    {
+     "generation": "Touran 2 (Type 5T) - 2021 Update",
+     "from": 2020,
+     "to": null,
+     "bodies": [
+      {
+       "name": "Touran 2021",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M13161/Touran-2021"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Touran"
+    },
+    {
+     "generation": "Touran 2 (Type 5T) - 2016 New Model",
+     "from": 2015,
+     "to": 2020,
+     "bodies": [
+      {
+       "name": "Touran 2",
+       "versions": 24,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8058/Touran-2"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Touran"
+    },
+    {
+     "generation": "Touran 1 (2010 Restyling)",
+     "from": 2010,
+     "to": 2015,
+     "bodies": [
+      {
+       "name": "CrossTouran 2010",
+       "versions": 4,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8182/CrossTouran-2010"
+      },
+      {
+       "name": "Touran 2010",
+       "versions": 20,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M1480/Touran-2010"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Touran"
+    },
+    {
+     "generation": "Touran 1 (2006 Restyling)",
+     "from": 2006,
+     "to": 2010,
+     "bodies": [
+      {
+       "name": "CrossTouran",
+       "versions": 6,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M502/CrossTouran"
+      },
+      {
+       "name": "Touran 2006",
+       "versions": 11,
+       "url": "https://www.ultimatespecs.com/car-specs/Volkswagen/M8183/Touran-2006"
+      }
+     ],
+     "source": "https://www.ultimatespecs.com/car-specs/Volkswagen-models/Volkswagen-Touran"
+    }
+   ]
+  }
+ ]
+}

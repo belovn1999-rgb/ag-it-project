@@ -23,6 +23,21 @@
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
   const digits = (value) => String(value ?? "").replace(/[^\d]/g, "");
+  // Whole series/classes (page-1 base models "3", "C", "T6") have their own
+  // AutoScout slugs; the plain slug is a 404 (checked 2026-10-03). AutoScout's
+  // "T6 (alle)" line also holds T5 and T7 vans: an approximate match.
+  const MODEL_SLUG = {
+    bmw: { 1: "1er", 2: "2er", 3: "3er", 4: "4er", 5: "5er", 6: "6er", 7: "7er", 8: "8er" },
+    "mercedes-benz": {
+      a: "a-klasse", b: "b-klasse", c: "c-klasse", e: "e-klasse", g: "g-klasse", s: "s-klasse", v: "v-klasse",
+    },
+    toyota: { "rav-4": "rav4" },
+    volkswagen: { t5: "t6-alle", t6: "t6-alle", t7: "t6-alle" },
+  };
+  const modelSlug = (brand, model) => {
+    const value = slug(model);
+    return MODEL_SLUG[slug(brand)]?.[value] || value;
+  };
 
   // What the search cannot carry over (shown as "not transferred").
   function unsupported(filters = {}) {
@@ -36,7 +51,7 @@
   // filters: the page-1 form; countries: ISO codes; price: {from, to} in EUR
   // replacing the page-1 price; sort by price, cheapest first unless desc.
   function buildSearchUrl(filters = {}, { countries = ["DE"], price = null, desc = false, page = 1 } = {}) {
-    const path = ["lst", slug(filters.brand), slug(filters.model)].filter(Boolean).join("/");
+    const path = ["lst", slug(filters.brand), modelSlug(filters.brand, filters.model)].filter(Boolean).join("/");
     const url = new URL(`${BASE}/${path}`);
     const params = url.searchParams;
     params.set("atype", "C");

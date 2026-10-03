@@ -645,10 +645,51 @@ const favoriteBrands = [
   { value: "Mercedes-Benz", label: "Mercedes-Benz" },
   { value: "Peugeot", label: "Peugeot" },
   { value: "Renault", label: "Renault" },
+  { value: "Skoda", label: "Skoda" },
   { value: "Toyota", label: "Toyota" },
   { value: "Volvo", label: "Volvo" },
   { value: "Volkswagen", label: "Volkswagen" },
 ];
+
+// Pinned at the top of "Model" (bold, alphabetical), chosen 2026-10-03 from
+// otomoto listing counts per model family. Values are the catalog's own
+// models; a whole series/class is its base model ("3" = 3 Series, "C" = C-Class).
+const popularModelsByBrand = {
+  Audi: ["A3", "A4", "A5", "A6", "Q3", "Q5", "Q7"],
+  BMW: [
+    { value: "1", pl: "Seria 1", ru: "1 серия" },
+    { value: "3", pl: "Seria 3", ru: "3 серия" },
+    { value: "4", pl: "Seria 4", ru: "4 серия" },
+    { value: "5", pl: "Seria 5", ru: "5 серия" },
+    "X1",
+    "X3",
+    "X5",
+  ],
+  Ford: ["C-Max", "Fiesta", "Focus", "Kuga", "Mondeo", "S-Max"],
+  "Mercedes-Benz": [
+    { value: "A", pl: "Klasa A", ru: "A-класс" },
+    { value: "C", pl: "Klasa C", ru: "C-класс" },
+    { value: "E", pl: "Klasa E", ru: "E-класс" },
+    { value: "S", pl: "Klasa S", ru: "S-класс" },
+    "CLA",
+    "GLC",
+    "GLE",
+  ],
+  Peugeot: ["208", "308", "508", "2008", "3008", "5008"],
+  Renault: ["Captur", "Clio", "Kadjar", "Megane", "Scenic", "Trafic"],
+  Skoda: ["Fabia", "Kamiq", "Karoq", "Kodiaq", "Octavia", "Superb"],
+  Toyota: ["Auris", "Avensis", "C-HR", "Camry", "Corolla", "RAV 4", "Yaris"],
+  Volvo: ["S60", "V40", "V60", "XC40", "XC60", "XC90"],
+  Volkswagen: [
+    "Golf",
+    "Passat",
+    "Polo",
+    "T-Roc",
+    { value: "T6", pl: "T6 (Multivan, Transporter)", ru: "T6 (Multivan, Transporter)" },
+    "Tiguan",
+    "Touran",
+  ],
+};
 
 const brandAliases = {
   Citroen: ["Citroën"],
@@ -896,7 +937,13 @@ const otomotoModelAliases = {
   },
   "Mercedes-Benz": {
     190: "w201-190",
+    A: "klasa-a",
     B: "klasa-b",
+    C: "klasa-c",
+    E: "klasa-e",
+    G: "klasa-g",
+    S: "klasa-s",
+    V: "klasa-v",
     "B Electric Drive": { slugs: "klasa-b", broad: true },
     CE: "klasa-e",
     R: "klasa-r",
@@ -1622,6 +1669,19 @@ function modelGroupsForBrand(brand) {
   return withSeriesBaseModels(groups);
 }
 
+// Pinned copies of models the brand's list already has; they also stay in
+// their own group, so typing a filter shows only the regular entry.
+function popularModelOptions(brand, catalogModels) {
+  const entries = popularModelsByBrand[canonicalBrand(brand)] || [];
+  return entries
+    .map((entry) => (typeof entry === "string"
+      ? { value: entry, label: entry }
+      : { value: entry.value, label: entry[state.lang] || entry.pl }))
+    .filter((option) => catalogModels.has(normalizeToken(option.value)))
+    .sort((left, right) => left.label.localeCompare(right.label, "pl", { numeric: true }))
+    .map((option) => ({ ...option, isPopular: true, isPinnedCopy: true }));
+}
+
 function renderModelOptions(extraModel = "") {
   if (!els.modelOptions) return;
   const groups = modelGroupsForBrand(els.brand?.value || "");
@@ -1647,6 +1707,7 @@ function comboOptionSets() {
     seenModels.add(normalized);
     return [{ value: model, label: model, group: group.group }];
   }));
+  models.unshift(...popularModelOptions(els.brand?.value || "", seenModels));
   const currentModel = String(els.model?.value || "").trim();
   if (currentModel && !seenModels.has(normalizeToken(currentModel))) {
     models.unshift({ value: currentModel, label: currentModel, isCurrentInput: true });
@@ -1781,7 +1842,9 @@ function renderComboMenus(filterControl = null) {
       : options;
     // While typing, the typed text itself is not repeated as an option; with
     // nothing matching, no list (not an empty frame) shows.
-    const visibleOptions = filter ? matchingOptions.filter((option) => !option.isCurrentInput) : matchingOptions;
+    const visibleOptions = filter
+      ? matchingOptions.filter((option) => !option.isCurrentInput && !option.isPinnedCopy)
+      : matchingOptions;
     const keyboardActiveOption = filter && visibleOptions.length === 1 ? visibleOptions[0] : null;
     let menu = control.querySelector(".mobileComboMenu");
     if (!menu) {
@@ -1796,7 +1859,7 @@ function renderComboMenus(filterControl = null) {
     let previousPopular = null;
     menu.innerHTML = visibleOptions.flatMap((option) => {
       const items = [];
-      if (menuType === "brand" && previousPopular === true && !option.isPopular) {
+      if ((menuType === "brand" || menuType === "model") && previousPopular === true && !option.isPopular) {
         items.push('<div class="mobileComboMenuDivider" aria-hidden="true"></div>');
       }
       if (menuType === "model" && option.group && option.group !== previousGroup) {
