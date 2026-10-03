@@ -10,8 +10,8 @@ Follow `AGENTS.md` (deploy workflow for this repo).
 
 **Mobile.de / Otomoto (`mobile.html`)**: read `docs/PROJECT-MOBILE.md` before
 working and update it after every change (change log, backlog, decisions) in
-the same commit. It is shared with the Codex project "MOBILE.DE" and every
-other chat — keep it current and exact. Start with §0 (current situation and
+the same commit. It is shared by every chat; the curator is the Claude Code
+chat "мозг проекта" (Codex no longer works on it) — keep it current and exact. Start with §0 (current situation and
 plan) and §2 (rules for parallel chats: foreign uncommitted changes → work in a
 `git worktree`); the file is too big for one read, read it by sections.
 

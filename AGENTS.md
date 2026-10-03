@@ -10,6 +10,10 @@ This project is the live AUTOGOOD Tools site.
 
 ## Mobile.de / Otomoto project — READ FIRST
 
+Since 2026-10-03 Codex no longer maintains this area; the curator is the Claude
+Code chat "мозг проекта". If you are asked to work on it anyway, follow the
+same document and rules.
+
 Work on `mobile.html` (search, link recognition, market analysis, turnkey
 prices) follows **`docs/PROJECT-MOBILE.md`** — the single source of truth
 shared by every Claude and Codex chat: goal, mechanisms, decisions, backlog,
