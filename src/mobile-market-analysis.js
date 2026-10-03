@@ -1008,8 +1008,16 @@
       firstRegistration: String(listingValue(row, ["firstregistration"]) || "").slice(0, 10),
       priceType: String(listingValue(row, ["pricetype"]) || "").slice(0, 12),
       vatDeductible: listingValue(row, ["vatdeductible"]) === true || listingValue(row, ["vatdeductible"]) === "true",
+      // Otomoto: "1" history confirmed in CEPiK, "0" not; origin "pl" or the
+      // country the car was imported from.
+      cepik: String(listingValue(row, ["cepik"]) || "").slice(0, 1),
+      origin: String(listingValue(row, ["origin"]) || "").slice(0, 8),
     };
     listing.source = listingSource({ ...listing, source: listingValue(row, ["source", "zrodlo"]) });
+    // Otomoto's "net" was read wrongly before 2026-10-03: those prices are
+    // gross with VAT deductible (see parseOtomotoPage).
+    if (listing.source === "otomoto" && listing.priceType === "net") listing.priceType = "vat";
+    if (listing.source === "otomoto" && listing.priceType === "vat" && !listing.netPrice) listing.netPrice = Math.round(listing.price / 1.23);
     // mobile.de: a net price beside the gross one = VAT deductible; a dealer
     // without it sells on the margin scheme; a private seller has no VAT.
     if (!listing.priceType && (listing.source === "mobile" || listing.source === "autoscout")) {
@@ -1102,9 +1110,15 @@
         mileage: parameters.mileage || "",
         year: parameters.year || "",
         power: parameters.engine_power ? `${parameters.engine_power} KM` : "",
-        // A dealer may list the net price (+ VAT 23%).
-        priceType: node.price?.isGross === false ? "net" : "",
+        // "isGross: false" comes with "INCLUDE_VAT": the price is gross and
+        // a company may deduct the VAT ("Możliwość odliczenia VAT"; checked on
+        // 132 offers 2026-10-03, the ads say "49.999 zł brutto, 40.649 netto").
+        priceType: node.price?.isGross === false ? ((node.price?.badges || []).includes("INCLUDE_VAT") ? "vat" : "net") : "",
         seller: node.sellerLink ? "dealer" : "private",
+        // History confirmed in CEPiK by otomoto, and where the car came from
+        // ("Kraj pochodzenia": pl = bought new in Poland, else imported).
+        cepik: node.cepikVerified === true ? "1" : node.cepikVerified === false ? "0" : "",
+        origin: String(parameters.country_origin || "").slice(0, 8),
       };
     }).filter(Boolean);
     return { total: Number(search.totalCount) || listings.length, listings };
@@ -3381,6 +3395,8 @@
 
   function vatLabel(offer) {
     const c = copy();
+    // Otomoto offers saved before 2026-10-03 as "net" are gross, VAT deductible.
+    if (offer.priceType === "net" && offer.currency === "PLN") return c.monitoringVatDeductible.replace("{net}", formatPlainPrice(Math.round(offer.price / 1.23), offer.currency));
     if (offer.priceType === "vat") return offer.netPrice ? c.monitoringVatDeductible.replace("{net}", formatPlainPrice(offer.netPrice, offer.currency)) : c.monitoringVatDeductibleOnly;
     if (offer.priceType === "net") return c.monitoringVatNet.replace("{gross}", formatPlainPrice(Math.round(offer.price * 1.23), offer.currency));
     if (offer.priceType === "margin") return c.monitoringVatMargin;

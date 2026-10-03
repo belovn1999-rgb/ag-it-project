@@ -1243,6 +1243,9 @@ const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY, NEW
       image: cards.get(String(item.id))?.image || "",
       createdAt: cards.get(String(item.id))?.createdAt || "",
       gearbox: item.attr?.tr || "", city: item.attr?.loc || "", postalCode: item.attr?.z || "", country: item.attr?.cn || "",
+      // Engine size ("1.968 cm³") and body: the excise class and the transport
+      // tariff of the turnkey price, without opening the ad.
+      displacementCcm: digits(item.attr?.cc), bodyType: item.attr?.c || "",
       seller: item.contact?.enumType === "DEALER" ? "dealer" : item.contact?.enumType ? "private" : "",
       priceRating: item.priceRating?.rating || "", numImages: Number(item.numImages) || 0,
       // VAT deductible ("¹" on the result card): the dealer invoices with VAT.
