@@ -327,6 +327,47 @@ Blocket, все неотправленные названы пользовате
 Итог по 2 715 моделям формы (02.10): ~1 250 точно, ~680 ≈, ~490 текстом (нет в продаже
 в Беларуси), 299 — марок нет на av.by.
 
+## 5d. AutoScout24 — пара mobile.de в Monitoring (с 2026-10-03)
+
+Код: `src/autoscout-search.js` (`AUTOGOOD_AUTOSCOUT.buildSearchUrl /
+parseSearchPage`), чтение — `fetchAutoscoutListings` в
+`src/mobile-market-analysis.js` через `r.jina.ai` (`x-respond-with: html`).
+Только страница 3 «Monitoring»; в анализе (стр. 2) и в поиске стр. 1 пока нет.
+
+- **Домены:** одна база. Та же страна на .de и на своём домене даёт тот же
+  счёт (BE 209/209, AT 187/187, LU 5/5; NL на .de 528, на .nl 525), поэтому
+  один поиск на autoscout24.de с `cy` покрывает .de/.nl/.be/.at/.lu.
+- **Путь:** `/lst/<марка>/<модель>` (slug: нижний регистр, не буквы → «-»).
+  Если больше половины первой страницы — другая модель, поиск отклоняется
+  («model not found on AutoScout24»).
+- **Параметры (каждый проверен по изменению счёта, VW Golf, 5 стран):**
+  `cy=D,NL,B,A,L` (страны: DE→D, BE→B, AT→A, LU→L, FR→F, IT→I, SE→S),
+  `atype=C`, `damaged_listing=exclude`, `sort=price&desc=0|1`,
+  `ustate=N,U|N|U`, `fregfrom/fregto` (год), `kmfrom/kmto`,
+  `pricefrom/priceto` (EUR), `powerfrom/powerto` + `powertype=kw|hp`,
+  `fuel=B,D,2,3,E` (запятая = ИЛИ; plug-in → `2` приблизительно),
+  `gear=A|M`, `body=1 Kleinwagen,2 Cabrio,3 Coupé,4 SUV/Pickup,5 Kombi,
+  6 Limousine,12 Van,7 Sonstige`, `custtype=D|P`. Коды — из `taxonomy`
+  в `__NEXT_DATA__`.
+- **Не переносится:** привод (ни `drivetrain`, `dt`, `drive`… не меняют
+  счёт), версия, опции, цвета.
+- **Страницы:** ~20 на страницу, доступны и после 20-й (проверено 30-я);
+  избранное читается целиком до 1000, иначе 8 страниц равномерно.
+- **Поля:** цена `price.priceRaw`, «inkl. MwSt.» + сноска «1» = НДС к вычету
+  (у всех результатов `vatded=true`), пробег/год `tracking`, мощность
+  `vehicleDetails` (speedometer), страна `location.countryCode`, продавец
+  `seller.type` Dealer/PrivateSeller.
+- **Дубликаты:** объявление AutoScout24 с той же ценой и тем же пробегом, что
+  у объявления mobile.de (из всех прочитанных стран) = дубликат, не
+  показывается; их число пишется в проверку (`duplicates`). mobile.de часто
+  выборка → часть дубликатов может остаться.
+
+**mobile.de и страны (проверено 2026-10-03):** `cn=DE` работает (C-HR от 2022:
+1722 из 2079 без фильтра), но `cn=FR/SK/AT` дают 0, `cn=BE` 1, хотя дилеры из
+FR/SK есть в общей выдаче; несколько `cn` = только Германия. Поэтому Monitoring
+при нескольких странах ищет mobile.de **без** `cn` и оставляет продавцов из
+выбранных стран (поле `country` объявления).
+
 ## 6. Известные открытые вопросы
 
 - Курс цены для otomoto — файл, а не живой курс (B12 в PROJECT-MOBILE.md).

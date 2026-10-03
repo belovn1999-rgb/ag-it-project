@@ -86,7 +86,7 @@
       monitoringExtendedHide: "Ukryj rozszerzony monitoring",
       monitoringFailed: "Kontrola nie powiodła się: {error}",
       monitoringAutoRunning: "Codzienna kontrola: {car}…",
-      monitoringNewBase: "Parametry lub cena zmienione od poprzedniej kontroli: ta kontrola to nowa baza ({count} ogłoszeń). Nowe i zniknięte pokaże następna kontrola.",
+      monitoringNewBase: "Parametry, cena, portale lub kraje zmienione od poprzedniej kontroli: ta kontrola to nowa baza ({count} ogłoszeń). Nowe i zniknięte pokaże następna kontrola.",
       monitoringVatDeductible: "brutto · netto {net} (VAT do odliczenia)",
       monitoringVatNet: "netto + VAT 23% = {gross} brutto",
       monitoringVatDeductibleOnly: "brutto · VAT do odliczenia",
@@ -108,6 +108,13 @@
       monitoringViewSaved: "★ Zapisane",
       monitoringSavedGone: "zniknęło z listy",
       monitoringSavedAt: "zapisane {date}",
+      monitoringCountries: "Kraje (mobile.de + AutoScout24)",
+      monitoringCountriesHint: "Wyszukiwanie i monitoring w tych krajach; statystyki i analiza — według krajów ze strony 1.",
+      monitoringAutoscout: "AutoScout24 — tylko ogłoszenia, których nie ma na mobile.de (ta sama cena i przebieg = duplikat)",
+      monitoringAutoscoutNeedsMobile: "AutoScout24 działa w parze z mobile.de — włącz mobile.de.",
+      monitoringDuplicates: "{count} duplikatów z mobile.de pominięto",
+      monitoringNoScopeCheck: "Brak kontroli z tymi portalami i krajami. Kliknij „Sprawdź teraz” — ta kontrola będzie bazą do porównań.",
+      monitoringAllCountries: "z {count} na mobile.de we wszystkich krajach (próbka, wybrane kraje)",
       monitoringMissing: "Bez danych z: {portals} (portal niedostępny) — ta kontrola nie obejmuje tego rynku.",
       priceHistoryComparedHint: "wybór rynków na stronie 1 „Wyszukiwanie”",
       offerHistoryHeading: "Rynek w wybranym dniu",
@@ -407,7 +414,7 @@
       monitoringExtendedHide: "Скрыть расширенный мониторинг",
       monitoringFailed: "Проверка не удалась: {error}",
       monitoringAutoRunning: "Ежедневная проверка: {car}…",
-      monitoringNewBase: "С прошлой проверки изменены параметры или цена: эта проверка — новая база ({count} объявлений). Новые и исчезнувшие покажет следующая проверка.",
+      monitoringNewBase: "С прошлой проверки изменены параметры, цена, порталы или страны: эта проверка — новая база ({count} объявлений). Новые и исчезнувшие покажет следующая проверка.",
       monitoringVatDeductible: "брутто · нетто {net} (НДС к вычету)",
       monitoringVatNet: "нетто + VAT 23% = {gross} брутто",
       monitoringVatDeductibleOnly: "брутто · НДС к вычету",
@@ -429,6 +436,13 @@
       monitoringViewSaved: "★ Сохранённые",
       monitoringSavedGone: "исчезло из списка",
       monitoringSavedAt: "сохранено {date}",
+      monitoringCountries: "Страны (mobile.de + AutoScout24)",
+      monitoringCountriesHint: "Поиск и мониторинг в этих странах; статистика и анализ — по странам со страницы 1.",
+      monitoringAutoscout: "AutoScout24 — только объявления, которых нет на mobile.de (та же цена и пробег = дубликат)",
+      monitoringAutoscoutNeedsMobile: "AutoScout24 работает в паре с mobile.de — включи mobile.de.",
+      monitoringDuplicates: "пропущено дубликатов с mobile.de: {count}",
+      monitoringNoScopeCheck: "Нет проверки с этими порталами и странами. Нажми «Проверить сейчас» — она станет базой для сравнения.",
+      monitoringAllCountries: "из {count} на mobile.de во всех странах (выборка, выбранные страны)",
       monitoringMissing: "Нет данных с: {portals} (портал недоступен) — эта проверка не включает этот рынок.",
       priceHistoryComparedHint: "выбор рынков на странице 1 «Поиск»",
       offerHistoryHeading: "Рынок в выбранный день",
@@ -703,10 +717,11 @@
   // Chart view: which marketplaces are shown and what the horizontal axis carries.
   const MARKET_SOURCES = ["otomoto", "mobile", "blocket", "avby"];
   // Each marketplace's own currency: history and statistics keep it, the chart converts.
-  const SOURCE_CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK", avby: "USD" };
+  const SOURCE_CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK", avby: "USD", autoscout: "EUR" };
   // Markets whose offers are also shown "pod klucz" in Poland. av.by shows
   // only its own price (owner, 2026-10-02).
-  const TURNKEY_SOURCES = ["mobile", "blocket"];
+  // AutoScout24 is only on page 3 (with mobile.de), never in the analysis.
+  const TURNKEY_SOURCES = ["mobile", "blocket", "autoscout"];
   const AVBY_PAGES = 8;
   const AVBY_PAGE_SIZE = 25;
   const BLOCKET_PAGES = 8;
@@ -774,7 +789,7 @@
 
   // CSS class part of a marketplace.
   function sourceClass(source) {
-    return source === "otomoto" ? "Otomoto" : source === "blocket" ? "Blocket" : source === "avby" ? "Avby" : "Mobile";
+    return source === "otomoto" ? "Otomoto" : source === "blocket" ? "Blocket" : source === "avby" ? "Avby" : source === "autoscout" ? "Autoscout" : "Mobile";
   }
   let importedDataset = null;
   let marketHistory = [];
@@ -880,6 +895,10 @@
     return /(^|\.)av\.by$/.test(url.hostname) && /\/\d{5,}\/?$/.test(url.pathname);
   }
 
+  function isDirectAutoscoutListingUrl(url) {
+    return /(^|\.)autoscout24\.[a-z.]+$/.test(url.hostname) && /\/(?:angebote|offerte|offres|aanbod|offers|annonces)\//.test(url.pathname);
+  }
+
   function isDirectBlocketListingUrl(url) {
     return url.hostname.endsWith("blocket.se") && /\/(?:mobility\/)?item\/\d+/.test(url.pathname);
   }
@@ -898,7 +917,7 @@
     let url = "";
     try {
       const parsedUrl = new URL(String(urlValue || "").trim());
-      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl) || isDirectBlocketListingUrl(parsedUrl) || isDirectAvbyListingUrl(parsedUrl))) {
+      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl) || isDirectBlocketListingUrl(parsedUrl) || isDirectAvbyListingUrl(parsedUrl) || isDirectAutoscoutListingUrl(parsedUrl))) {
         url = parsedUrl.toString();
       }
     } catch {
@@ -936,7 +955,7 @@
     listing.source = listingSource({ ...listing, source: listingValue(row, ["source", "zrodlo"]) });
     // mobile.de: a net price beside the gross one = VAT deductible; a dealer
     // without it sells on the margin scheme; a private seller has no VAT.
-    if (!listing.priceType && listing.source === "mobile") {
+    if (!listing.priceType && (listing.source === "mobile" || listing.source === "autoscout")) {
       listing.priceType = listing.vatDeductible || listing.netPrice ? "vat" : listing.seller === "dealer" ? "margin" : listing.seller === "private" ? "private" : "";
       // Net by the VAT of the seller's country, when known.
       const vatRate = { DE: 0.19, AT: 0.2, FR: 0.2, SK: 0.23, CZ: 0.21, NL: 0.21, BE: 0.21, ES: 0.21, IT: 0.22, LU: 0.17, DK: 0.25, SE: 0.25, PL: 0.23, SI: 0.22, HR: 0.25, HU: 0.27 }[String(listing.country || "").toUpperCase()];
@@ -962,8 +981,9 @@
   // then its currency (Otomoto lists in PLN, Mobile.de in EUR).
   function listingSource(listing) {
     const tagged = String(listing?.source || "").toLowerCase();
-    if (tagged === "otomoto" || tagged === "mobile" || tagged === "blocket" || tagged === "avby") return tagged;
+    if (tagged === "otomoto" || tagged === "mobile" || tagged === "blocket" || tagged === "avby" || tagged === "autoscout") return tagged;
     const url = String(listing?.url || "");
+    if (/autoscout24\./.test(url)) return "autoscout";
     if (url.includes("otomoto.pl")) return "otomoto";
     if (url.includes("mobile.de")) return "mobile";
     if (url.includes("blocket.se")) return "blocket";
@@ -1198,6 +1218,66 @@
       onProgress?.(done, wanted.length + 1);
     }
     return { listings, total };
+  }
+
+  // AutoScout24 through the reader proxy, sorted by price; a whole list when
+  // short enough, else pages spread evenly over it (as otomoto).
+  async function fetchAutoscoutListings(filters, { countries, price = null, whole = false } = {}) {
+    const autoscout = window.AUTOGOOD_AUTOSCOUT;
+    if (!autoscout) return null;
+    const read = async (page) => {
+      const response = await fetch(`${MARKET_PROXY()}${autoscout.buildSearchUrl(filters, { countries, price, page })}`, { headers: { "x-respond-with": "html" } });
+      if (!response.ok) throw new Error(String(response.status));
+      return response.text();
+    };
+    const first = autoscout.parseSearchPage(await read(1), { page: 1 });
+    if (!first.total) return { listings: [], total: 0, read: 0 };
+    // The search must have found this car, not a whole make.
+    const wanted = (value) => autoscout.slug(value);
+    const matches = first.listings.filter((listing) => wanted(listing.model).startsWith(wanted(filters.model)) || wanted(filters.model).startsWith(wanted(listing.model)));
+    if (filters.model && first.listings.length && matches.length < first.listings.length / 2) throw new Error("model not found on AutoScout24");
+    const pageCount = Math.max(1, first.pages);
+    let pages;
+    if (pageCount <= OTOMOTO_PAGES || (whole && first.total <= FULL_LIST_LIMIT)) pages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
+    else pages = [...new Set(Array.from({ length: OTOMOTO_PAGES }, (_, index) => Math.round(1 + (index * (pageCount - 1)) / (OTOMOTO_PAGES - 1))))].filter((page) => page > 1);
+    const seen = new Set();
+    const listings = [];
+    const collect = (items) => items.forEach((listing) => {
+      if (!listing.id || seen.has(listing.id)) return;
+      seen.add(listing.id);
+      listings.push(listing);
+    });
+    collect(first.listings);
+    const failed = [];
+    for (let start = 0; start < pages.length; start += OTOMOTO_PARALLEL) {
+      const batch = pages.slice(start, start + OTOMOTO_PARALLEL);
+      const results = await Promise.allSettled(batch.map(read));
+      results.forEach((result, index) => {
+        if (result.status === "fulfilled") collect(autoscout.parseSearchPage(result.value, { page: batch[index], total: first.total }).listings);
+        else failed.push(batch[index]);
+      });
+    }
+    for (const page of failed) {
+      await new Promise((resolve) => setTimeout(resolve, 1200));
+      try {
+        collect(autoscout.parseSearchPage(await read(page), { page, total: first.total }).listings);
+      } catch {
+        // Still missing: the list counts as a sample.
+      }
+    }
+    return { listings, total: first.total, read: listings.length };
+  }
+
+  // The same car on both portals: same price and same mileage. AutoScout24
+  // keeps only what mobile.de does not have.
+  function dropMobileDuplicates(autoscoutListings, mobileListings) {
+    const keyOf = (listing) => {
+      const mileage = Number(listing.mileage) || 0;
+      return mileage ? `${Math.round(Number(listing.price))}|${mileage}` : "";
+    };
+    const onMobile = new Set(mobileListings.map(keyOf).filter(Boolean));
+    const unique = autoscoutListings.filter((listing) => !onMobile.has(keyOf(listing)));
+    return { unique, duplicates: autoscoutListings.length - unique.length };
   }
 
   // Mobile.de through the local importer (the user's own Chrome), when it
@@ -1514,8 +1594,8 @@
   // just now, and whether it is a check of its own (Odśwież dane / opening a
   // search) or offers joining the latest check (Mobile.de bookmark, a file).
   let nextMeasurement = null;
-  function measureNextSnapshot(sources, isNewCheck, prices = null) {
-    nextMeasurement = { sources, isNewCheck, prices };
+  function measureNextSnapshot(sources, isNewCheck, prices = null, offers = null) {
+    nextMeasurement = { sources, isNewCheck, prices, offers };
   }
 
   // ---- Offers of every check (IndexedDB) ---------------------------------
@@ -1593,6 +1673,7 @@
       priceType: listing.priceType || "",
       netPrice: listing.netPrice || 0,
       seller: listing.seller || "",
+      country: String(listing.country || "").slice(0, 4),
       turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage({
         price: listing.price,
         currency: listing.currency || SOURCE_CURRENCY[source],
@@ -1607,10 +1688,13 @@
   }
 
   // Adds the offers of the given markets to the check of that date.
-  async function saveCheckOffers(historyId, at, sources, listings, filters) {
+  async function saveCheckOffers(historyId, at, sources, listings, filters, notes = {}) {
     const markets = {};
     sources.forEach((source) => {
-      const market = compactOffers(listings, source, filters);
+      if (source === "scope") return;
+      // notes: what the list alone cannot tell (AutoScout24's duplicates of
+      // mobile.de, its completeness before they were dropped, countries).
+      const market = { ...compactOffers(listings, source, filters), ...(notes?.[source] || {}) };
       if (market.offers.length) markets[source] = market;
     });
     if (!Object.keys(markets).length) return;
@@ -1623,7 +1707,9 @@
         const read = store.get(key);
         read.onsuccess = () => {
           const record = read.result || { key, historyId, at, markets: {} };
-          store.put({ ...record, markets: { ...record.markets, ...markets } });
+          // A Monitoring check is marked with its countries and portals, so
+          // it is compared only with checks of the same scope.
+          store.put({ ...record, ...(notes?.scope ? { scope: notes.scope } : {}), markets: { ...record.markets, ...markets } });
         };
         tx.oncomplete = resolve;
         tx.onerror = () => reject(tx.error);
@@ -1677,11 +1763,11 @@
     if (measurement.isNewCheck || !last || log[log.length - 1].filtersChange || Date.parse(now) - Date.parse(last.at) >= PRICE_POINT_MERGE_MS) {
       // Every check is its own row, stamped with its time.
       log.push({ at: now, ...priceKey, ...fresh });
-      saveCheckOffers(entry.id, now, Object.keys(fresh), entry.listings, entry.filters);
+      saveCheckOffers(entry.id, now, measurement.offers?.sources || Object.keys(fresh), measurement.offers?.listings || entry.listings, entry.filters, measurement.offers?.notes);
     } else {
       // Offers of another marketplace fetched soon after belong to that check.
       log[log.length - 1] = { ...last, ...fresh };
-      saveCheckOffers(entry.id, last.at, Object.keys(fresh), entry.listings, entry.filters);
+      saveCheckOffers(entry.id, last.at, measurement.offers?.sources || Object.keys(fresh), measurement.offers?.listings || entry.listings, entry.filters, measurement.offers?.notes);
     }
     return { ...entry, priceLog: log, dataAt: now };
   }
@@ -2855,11 +2941,42 @@
     return summary ? summary.innerHTML : "";
   }
 
+  // Page 3: portal name with the flags of the countries it is searched in.
+  function monitoringPortalBadge(source, countries = []) {
+    if (source !== "mobile" && source !== "autoscout") return marketBadge(source);
+    const flags = countries.map((code) => window.AUTOGOOD_FLAG?.(code) || code).join("");
+    return `<span class="agMarketBadge">${flags}<span>${source === "autoscout" ? "AutoScout24" : "mobile.de"}</span></span>`;
+  }
+  function offerCountryBadge(source, country) {
+    if (source !== "mobile" && source !== "autoscout") return marketBadge(source);
+    const name = window.AUTOGOOD_COUNTRY_NAME?.(country) || country;
+    return `<span class="agMarketBadge" title="${escapeMarketHtml(name)}">${window.AUTOGOOD_FLAG?.(country) || ""}<span>${source === "autoscout" ? "AutoScout24" : "mobile.de"}${country ? ` · ${escapeMarketHtml(country)}` : ""}</span></span>`;
+  }
+
   function monitoringPortalsHtml(entry) {
     const c = copy();
     const watch = window.AUTOGOOD_FAVORITES_WATCH;
     const numbers = numberFormat();
     const symbol = { PLN: "zł", EUR: "€", SEK: "kr", USD: "$" };
+    const scope = monitoringScopeOf(entry.id);
+    // AutoScout24 goes with mobile.de, searched in the same countries.
+    const autoscoutRow = (mobileOn) => {
+      const on = mobileOn && scope.autoscout;
+      const own = watch?.portalPrice?.(entry.id, "autoscout") || null;
+      const fallback = watch?.portalPrice?.(entry.id, "mobile") || watch?.filtersPriceIn?.("mobile", entry.filters) || {};
+      const field = (side) => `<label><span>${escapeMarketHtml(side === "from" ? c.monitoringFrom : c.monitoringTo)}</span><input type="text" inputmode="numeric" data-monitoring-price="autoscout" data-side="${side}" value="${own?.[side] === null || own?.[side] === undefined ? "" : escapeMarketHtml(numbers.format(own[side]))}" placeholder="${Number.isFinite(fallback[side]) ? escapeMarketHtml(numbers.format(Math.round(fallback[side]))) : "—"}"${on ? "" : " disabled"} /><b>€</b></label>`;
+      return `
+        <div class="mobileMonitoringPortal isPartner${on ? " isOn" : ""}">
+          <button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-monitoring-autoscout aria-pressed="${on ? "true" : "false"}" title="AutoScout24" aria-label="AutoScout24"${mobileOn ? "" : " disabled"}><img src="${BRAND_LOGOS.autoscout}" alt="" /></button>
+          <span class="mobileMonitoringPortalName">${monitoringPortalBadge("autoscout", scope.countries)}<small>${escapeMarketHtml(mobileOn ? c.monitoringAutoscout : c.monitoringAutoscoutNeedsMobile)}</small></span>
+          <div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>
+        </div>
+        <div class="mobileMonitoringCountries${mobileOn ? "" : " isOff"}" role="group" aria-label="${escapeMarketHtml(c.monitoringCountries)}">
+          <b>${escapeMarketHtml(c.monitoringCountries)}:</b>
+          ${MONITORING_COUNTRY_CHOICES.map((code) => `<button class="mobileMonitoringCountry${scope.countries.includes(code) ? " isOn" : ""}" type="button" data-monitoring-country="${code}" aria-pressed="${scope.countries.includes(code) ? "true" : "false"}"${mobileOn ? "" : " disabled"} title="${escapeMarketHtml(window.AUTOGOOD_COUNTRY_NAME?.(code) || code)}">${window.AUTOGOOD_FLAG?.(code) || ""}${code}</button>`).join("")}
+          <small>${escapeMarketHtml(c.monitoringCountriesHint)}</small>
+        </div>`;
+    };
     return MARKET_SOURCES.map((source) => {
       const on = Boolean(chartSources[source]);
       const own = watch?.portalPrice?.(entry.id, source) || null;
@@ -2874,10 +2991,58 @@
       return `
         <div class="mobileMonitoringPortal${on ? " isOn" : ""}">
           <button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-monitoring-market="${source}" aria-pressed="${on ? "true" : "false"}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>
-          <span class="mobileMonitoringPortalName">${marketBadge(source)}</span>
+          <span class="mobileMonitoringPortalName">${source === "mobile" ? monitoringPortalBadge("mobile", scope.countries) : marketBadge(source)}</span>
           <div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>
-        </div>`;
+        </div>${source === "mobile" ? autoscoutRow(on) : ""}`;
     }).join("");
+  }
+
+  // Where mobile.de and AutoScout24 are searched for one favourite (page 3).
+  // Default (owner, 2026-10-03): Germany, the Netherlands, Belgium, Austria,
+  // Luxembourg, AutoScout24 on. Same storage rules as the history (4.6.1).
+  const MONITORING_SCOPE_KEY = "autogood.mobile.monitoringScope.v1";
+  const MONITORING_COUNTRIES = ["DE", "NL", "BE", "AT", "LU"];
+  const MONITORING_COUNTRY_CHOICES = ["DE", "NL", "BE", "AT", "LU", "FR", "IT", "DK", "CZ", "SE"];
+  function readMonitoringScopes() {
+    let raw = null;
+    try {
+      raw = localStorage.getItem(MONITORING_SCOPE_KEY);
+    } catch {
+      return {};
+    }
+    if (!raw) return {};
+    try {
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("not a map");
+      return parsed;
+    } catch {
+      try {
+        localStorage.setItem(`${MONITORING_SCOPE_KEY}.broken.${new Date().toISOString()}`, raw);
+      } catch {
+        // Nothing more can be done.
+      }
+      return {};
+    }
+  }
+  // Which portals and countries a Monitoring check covered.
+  function monitoringScopeKey(scope, markets) {
+    const withMobile = markets.includes("mobile");
+    return [...markets].sort().join(",") + (withMobile ? `|${[...scope.countries].sort().join(",")}${scope.autoscout ? "|autoscout" : ""}` : "");
+  }
+
+  function monitoringScopeOf(favoriteId) {
+    const scope = readMonitoringScopes()[favoriteId] || {};
+    const countries = Array.isArray(scope.countries) && scope.countries.length ? scope.countries.filter((code) => MONITORING_COUNTRY_CHOICES.includes(code)) : MONITORING_COUNTRIES;
+    return { countries: countries.length ? countries : MONITORING_COUNTRIES, autoscout: scope.autoscout !== false };
+  }
+  function setMonitoringScope(favoriteId, change) {
+    const all = readMonitoringScopes();
+    all[favoriteId] = { ...monitoringScopeOf(favoriteId), ...change };
+    try {
+      localStorage.setItem(MONITORING_SCOPE_KEY, JSON.stringify(all));
+    } catch {
+      Object.assign(monitoringState, { status: copy().historyStorageError, statusError: true });
+    }
   }
 
   const converterState = { amount: "10000", currency: "EUR" };
@@ -3141,7 +3306,11 @@
     const info = document.querySelector("[data-monitoring-check-info]");
     if (!target) return;
     const log = entry.priceLog || [];
-    const checks = log.filter((point) => !point.filtersChange && byDate.has(point.at));
+    const scopeKey = monitoringScopeKey(monitoringScopeOf(entry.id), MARKET_SOURCES.filter((source) => chartSources[source]));
+    // Monitoring compares its own checks of the same portals and countries
+    // (checks made from the analysis, page 2, cover other countries).
+    const checks = log.filter((point) => !point.filtersChange && byDate.get(point.at)?.scope === scopeKey);
+    const otherChecks = log.some((point) => !point.filtersChange && byDate.has(point.at) && byDate.get(point.at)?.scope !== scopeKey);
     const latest = checks[checks.length - 1];
     // Compared only with a check of the same search and prices: after a
     // change the latest check is a new base (not "gone" for the old budget).
@@ -3154,14 +3323,15 @@
         : "";
     }
     if (!latest) {
-      target.innerHTML = `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.monitoringNeverChecked)}</p>`;
+      target.innerHTML = `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(otherChecks ? c.monitoringNoScopeCheck : c.monitoringNeverChecked)}</p>`;
       return;
     }
     const record = byDate.get(latest.at);
     const before = previous ? byDate.get(previous.at) : null;
     const changedBetween = false;
-    const newBase = !previous && checks.length > 1;
-    const sources = MARKET_SOURCES.filter((source) => chartSources[source] && (record.markets[source] || before?.markets[source]));
+    const newBase = !previous && (checks.length > 1 || otherChecks);
+    const sources = [...MARKET_SOURCES, "autoscout"].filter((source) => (source === "autoscout" ? chartSources.mobile : chartSources[source]) && (record.markets[source] || before?.markets[source]))
+      .sort((left, right) => ["otomoto", "mobile", "autoscout", "blocket", "avby"].indexOf(left) - ["otomoto", "mobile", "autoscout", "blocket", "avby"].indexOf(right));
     const numbers = numberFormat();
     const perSource = sources.map((source) => {
       const current = record.markets[source];
@@ -3172,19 +3342,23 @@
     if (monitoringState.portal && !sources.includes(monitoringState.portal)) monitoringState.portal = "";
     const tiles = perSource.map(({ source, current, compared, rows }) => {
       const count = (group) => rows.filter((row) => row.group === group).length;
-      const total = current?.total || 0;
-      const delta = compared && compared.total ? total - compared.total : null;
+      // AutoScout24 counts its unique offers (duplicates of mobile.de left out).
+      const total = source === "autoscout" ? current?.offers.length || 0 : current?.total || 0;
+      const comparedTotal = source === "autoscout" ? compared?.offers.length || 0 : compared?.total || 0;
+      const delta = compared && comparedTotal ? total - comparedTotal : null;
       const certain = Boolean(current?.complete && compared?.complete);
       const active = monitoringState.portal === source;
       return `
         <button class="mobileMonitoringTile is${sourceClass(source)}${active ? " isActive" : ""}" type="button" data-monitoring-portal="${source}" aria-pressed="${active ? "true" : "false"}">
-          <span class="mobileMonitoringTileHead">${marketBadge(source)}</span>
+          <span class="mobileMonitoringTileHead">${monitoringPortalBadge(source, current?.countries || record.markets.mobile?.countries || [])}</span>
           <span class="mobileMonitoringTileStats">
             <span><small>${escapeMarketHtml(c.monitoringOffers)}</small><b>${escapeMarketHtml(numbers.format(total))}</b>${delta ? `<em class="${delta > 0 ? "isGood" : "isBad"}">${delta > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.abs(delta)))}</em>` : ""}</span>
             <span><small>${escapeMarketHtml(c.monitoringNew)}</small><b class="${certain ? "isNew" : "isUnsure"}">${compared ? `+${count("new")}${certain ? "" : "?"}` : "—"}</b></span>
             <span><small>${escapeMarketHtml(c.monitoringGone)}</small><b class="${certain ? "isGone" : "isUnsure"}">${compared ? `−${count("gone")}${certain ? "" : "?"}` : "—"}</b></span>
           </span>
           ${compared && !certain ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringSample)}</small>` : ""}
+          ${current?.allCountriesTotal ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringAllCountries.replace("{count}", numbers.format(current.allCountriesTotal)))}</small>` : ""}
+          ${current?.duplicates ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringDuplicates.replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
         </button>`;
     }).join("");
     const allRows = perSource.flatMap((item) => item.rows).filter((row) => !monitoringState.portal || row.source === monitoringState.portal);
@@ -3247,7 +3421,7 @@
               <td class="isNum">${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} km` : "—"}</td>
               <td class="isNum">${escapeMarketHtml(row.offer.power || "—")}</td>
               <td class="isNum">${priceCell(row.offer)}</td>
-              <td>${marketBadge(row.source)}</td>
+              <td>${offerCountryBadge(row.source, row.offer.country)}</td>
             </tr>${detailsOpen ? offerDetailsHtml(row, columns) : ""}`;
           }).join("")}</tbody>
         </table>
@@ -3268,6 +3442,7 @@
 
   // A check asked for while another one runs waits for it.
   var queuedCheck = null;
+  var monitoringMissingExtra = [];
   async function runMonitoringCheck(entry, markets = MARKET_SOURCES.filter((source) => chartSources[source])) {
     const c = copy();
     const provider = window.AUTOGOOD_MOBILE_MARKET_PROVIDER;
@@ -3285,22 +3460,65 @@
       const filters = { ...entry.filters, markets };
       // A favourite saved before a newer form field existed: the search gets
       // that field empty; the history keeps the filters as saved.
-      const fetched = normalizeListings(await provider.getListings({ filters: { ...blankFilters(), ...filters }, pinned: true, historyId: entry.id }));
+      const searchFilters = { ...blankFilters(), ...filters };
+      // mobile.de and AutoScout24 are searched in the monitoring countries;
+      // the statistics stay with page 1's countries (Germany by default).
+      const scope = monitoringScopeOf(entry.id);
+      const withMobile = markets.includes("mobile");
+      const [fetchedResult, autoscoutResult] = await Promise.allSettled([
+        // mobile.de's country filter works for one country only (2026-10-03:
+        // cn=DE 1722, cn=FR/SK/AT 0 although their dealers are listed, several
+        // cn = Germany alone): more countries = no filter, kept by seller country.
+        provider.getListings({ filters: withMobile ? { ...searchFilters, countries: scope.countries.length === 1 ? scope.countries : [] } : searchFilters, pinned: true, historyId: entry.id }),
+        withMobile && scope.autoscout ? fetchAutoscoutListings(searchFilters, {
+          countries: scope.countries,
+          price: window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, "autoscout") || window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, "mobile") || null,
+          whole: true,
+        }) : null,
+      ]);
+      if (fetchedResult.status !== "fulfilled") throw fetchedResult.reason;
+      const fetched = normalizeListings(fetchedResult.value);
       if (fetched.length < 3) throw new Error(c.refreshInvalid);
+      const analysisCountries = (entry.filters.countries || []).filter(Boolean);
+      const inAnalysis = (listing) => listingSource(listing) !== "mobile" || !analysisCountries.length || !listing.country || analysisCountries.includes(listing.country);
+      const mobileAll = fetched.filter((listing) => listingSource(listing) === "mobile");
+      const inScope = (listing) => !listing.country || scope.countries.includes(listing.country);
+      const mobileTotal = Math.max(0, ...mobileAll.map((listing) => Number(listing.marketTotal) || 0));
+      const notes = {};
+      let autoscoutUnique = [];
+      if (autoscoutResult.status === "fulfilled" && autoscoutResult.value) {
+        const all = normalizeListings(autoscoutResult.value.listings.map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible })));
+        const { unique, duplicates } = dropMobileDuplicates(all, mobileAll);
+        autoscoutUnique = unique;
+        notes.autoscout = { total: autoscoutResult.value.total, complete: all.length >= autoscoutResult.value.total * COMPLETE_SHARE, duplicates, read: all.length };
+      } else if (withMobile && scope.autoscout) {
+        monitoringMissingExtra = ["autoscout"];
+      }
+      notes.scope = monitoringScopeKey(scope, markets);
+      if (withMobile && mobileAll.length) {
+        const kept = mobileAll.filter(inScope);
+        const complete = mobileAll.length >= mobileTotal * COMPLETE_SHARE;
+        notes.mobile = { countries: scope.countries, total: complete ? kept.length : mobileTotal, complete, allCountriesTotal: scope.countries.length === 1 ? 0 : mobileTotal };
+      }
       refreshMarketHistory();
       const current = marketHistory.find((item) => item.id === entry.id) || entry;
-      measureNextSnapshot(provider.lastSources || markets, true, provider.lastPrices ?? null);
+      measureNextSnapshot(provider.lastSources || markets, true, provider.lastPrices ?? null, {
+        sources: [...(provider.lastSources || markets), ...(autoscoutUnique.length ? ["autoscout"] : [])],
+        listings: [...fetched.filter((listing) => listingSource(listing) !== "mobile" || inScope(listing)), ...autoscoutUnique],
+        notes,
+      });
       let searchUrl = current.searchUrl;
       try {
         searchUrl = searchUrl || buildMobileDeSearchUrl({ ...blankFilters(), ...filters });
       } catch {
         searchUrl = searchUrl || "";
       }
-      updateMarketSnapshot(entry.id, filters, mergeBySource(current.listings, fetched), "API", searchUrl || "-");
+      updateMarketSnapshot(entry.id, filters, mergeBySource(current.listings, fetched.filter(inAnalysis)), "API", searchUrl || "-");
       ok = true;
-      const missing = markets.filter((source) => !(provider.lastSources || []).includes(source));
+      const missing = [...markets.filter((source) => !(provider.lastSources || []).includes(source)), ...monitoringMissingExtra];
+      monitoringMissingExtra = [];
       if (missing.length && monitoringState.id === entry.id) {
-        Object.assign(monitoringState, { status: c.monitoringMissing.replace("{portals}", missing.map((source) => (source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : source === "avby" ? c.sourceAvby : c.sourceMobile)).join(", ")), statusError: true });
+        Object.assign(monitoringState, { status: c.monitoringMissing.replace("{portals}", missing.map((source) => (source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : source === "avby" ? c.sourceAvby : source === "autoscout" ? "AutoScout24" : c.sourceMobile)).join(", ")), statusError: true });
       }
     } catch (error) {
       if (monitoringState.id === entry.id) Object.assign(monitoringState, { status: c.monitoringFailed.replace("{error}", error.message || c.invalidData), statusError: true });
@@ -3399,6 +3617,22 @@
       renderHistory();
       updateHistoryConfirm();
       updateSelectedFiltersSummary?.();
+      renderPriceHistoryPage();
+      return;
+    }
+    const autoscoutToggle = event.target.closest("[data-monitoring-autoscout]");
+    if (autoscoutToggle && priceHistoryId) {
+      setMonitoringScope(priceHistoryId, { autoscout: !monitoringScopeOf(priceHistoryId).autoscout });
+      renderPriceHistoryPage();
+      return;
+    }
+    const country = event.target.closest("[data-monitoring-country]");
+    if (country && priceHistoryId) {
+      const code = country.dataset.monitoringCountry;
+      const current = monitoringScopeOf(priceHistoryId).countries;
+      const next = current.includes(code) ? current.filter((item) => item !== code) : [...current, code];
+      if (next.length) setMonitoringScope(priceHistoryId, { countries: next });
+      Object.assign(monitoringState, { status: copy().monitoringPriceChanged, statusError: false });
       renderPriceHistoryPage();
       return;
     }
@@ -3564,6 +3798,7 @@
     otomoto: "./assets/brands/otomoto-logo.svg",
     blocket: "./assets/brands/blocket-logo.svg",
     avby: "./assets/brands/avby-logo.svg",
+    autoscout: "./assets/brands/autoscout24-logo.svg",
   };
 
   // The marketplace's small mark as the link to one of its offers.

@@ -4272,3 +4272,66 @@
 .mobileMonitoringTable .mobileMarketTableTitle small {
   display: block;
 }
+
+/* AutoScout24 (with mobile.de) and the monitoring countries. */
+.mobileMonitoringTile.isAutoscout { --tile: #8a7f00; }
+
+.mobileMonitoringPortal.isPartner {
+  margin-left: 18px;
+  border-style: dashed;
+}
+
+.mobileMonitoringPortalName small {
+  display: block;
+  margin-top: 2px;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  line-height: 1.35;
+}
+
+.mobileMonitoringPortalName .agMarketBadge .agFlag + .agFlag {
+  margin-left: -2px;
+}
+
+.mobileMonitoringCountries {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-left: 18px;
+  padding: 6px 10px;
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+}
+
+.mobileMonitoringCountries.isOff {
+  opacity: 0.5;
+}
+
+.mobileMonitoringCountries small {
+  flex-basis: 100%;
+  color: var(--color-muted);
+}
+
+.mobileMonitoringCountry {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border: 1px solid var(--color-rule);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-muted);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mobileMonitoringCountry.isOn {
+  border-color: var(--color-ink);
+  color: var(--color-ink);
+}
+
+.mobileMonitoringCountry:not(.isOn) .agFlag {
+  opacity: 0.4;
+}
