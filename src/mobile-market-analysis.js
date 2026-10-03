@@ -1284,6 +1284,7 @@
       sourceFileName: String(entry.sourceFileName || ""),
       searchUrl: String(entry.searchUrl || ""),
       pinned: Boolean(entry.pinned),
+      pinnedAt: entry.pinned ? String(entry.pinnedAt || "") : "",
       // Entries saved before prices were dated count from their last update.
       dataAt: String(entry.dataAt || (entry.listings?.length >= 3 ? entry.updatedAt || entry.createdAt || "" : "")),
       // The whole price history is kept, never cut.
@@ -1367,7 +1368,12 @@
   // When the storage is full, offer lists of the oldest unpinned checks go
   // first, then those of every unpinned check; favourites are never dropped.
   function storeMarketHistory(entries) {
-    const trimmed = trimHistory(entries);
+    // A favourite keeps the moment it was starred: the favourites keep their
+    // order whatever is updated later (the history itself goes newest first).
+    const now = new Date().toISOString();
+    const trimmed = trimHistory(entries).map((entry) => (entry.pinned
+      ? (entry.pinnedAt ? entry : { ...entry, pinnedAt: now })
+      : (entry.pinnedAt ? { ...entry, pinnedAt: "" } : entry)));
     try {
       storeFavoritesBackup(trimmed);
     } catch {
@@ -2276,9 +2282,20 @@
       .join(" · ");
   }
 
+  // Favourites in the order they were starred (older ones without that
+  // moment by when they were created); a new favourite comes last.
+  function pinnedFavorites() {
+    const order = (entry) => [entry.pinnedAt || "", entry.createdAt || ""];
+    return marketHistory.filter((entry) => entry.pinned).sort((left, right) => {
+      const [leftPinned, leftCreated] = order(left);
+      const [rightPinned, rightCreated] = order(right);
+      return leftPinned.localeCompare(rightPinned) || leftCreated.localeCompare(rightCreated);
+    });
+  }
+
   function favoritesHtml(activeId = "") {
     const c = copy();
-    const favorites = marketHistory.filter((entry) => entry.pinned);
+    const favorites = pinnedFavorites();
     return `
       <section class="mobileMarketFavorites" data-report-hide aria-label="${escapeMarketHtml(c.favoritesHeading)}">
         <strong class="mobileMarketFavoritesTitle"><i aria-hidden="true">★</i>${escapeMarketHtml(c.favoritesHeading)}</strong>
@@ -2340,7 +2357,7 @@
   // are not listed here: the bar above is the one place to pick them.
   function renderFavoritesSearchPage() {
     if (!favoritesPage) return;
-    const pinned = marketHistory.filter((entry) => entry.pinned);
+    const pinned = pinnedFavorites();
     if (!pinned.some((entry) => entry.id === favoritesSelectedId)) favoritesSelectedId = "";
     const entry = pinned.find((item) => item.id === favoritesSelectedId) || null;
     if (window.AUTOGOOD_FAVORITES_WATCH) {
@@ -2829,7 +2846,7 @@
     const priceHistoryPage = document.querySelector("[data-mobile-price-history-page]");
     if (!priceHistoryPage) return;
     const c = copy();
-    const favorites = marketHistory.filter((entry) => entry.pinned);
+    const favorites = pinnedFavorites();
     // null: the favourite was unpicked here on purpose, nothing is shown.
     if (priceHistoryId !== null && !favorites.some((entry) => entry.id === priceHistoryId)) {
       priceHistoryId = favorites.find((entry) => entry.id === activeAnalysis?.historyId)?.id || favorites[0]?.id || "";
@@ -4299,10 +4316,8 @@
   }
   async function prepareReportImage(mode = "copy") {
     const version = reportVersion;
-    if (!analysisContent.querySelector(COPY_BUTTONS[mode])) return;
-    // Drawn only while the report is on screen; tried again when it is.
-    if (analysisView.hidden) {
-      prepareTimer = setTimeout(() => version === reportVersion && prepareReportImage(mode), 700);
+    if (!analysisContent.querySelector(COPY_BUTTONS[mode]) || analysisView.hidden) {
+      preparing[mode] = null;
       return;
     }
     try {
@@ -4320,12 +4335,25 @@
     clearTimeout(prepareTimer);
     markCopyButtons("copy", false);
     markCopyButtons("list-copy", false);
-    const version = reportVersion;
-    prepareTimer = setTimeout(async () => {
-      await prepareReportImage("copy");
-      if (version === reportVersion) prepareReportImage("list-copy");
-    }, 300);
   }
+  // Drawing a picture holds the page for up to a second or two, so it is
+  // drawn only when the pointer (or keyboard) comes to its buttons, not after
+  // every change: switching favourites or markets stays instant.
+  const preparing = {};
+  function ensureReportImage(mode) {
+    if (preparedReports[mode] || preparing[mode] === reportVersion) return;
+    preparing[mode] = reportVersion;
+    clearTimeout(prepareTimer);
+    prepareTimer = setTimeout(() => prepareReportImage(mode), 120);
+  }
+  const prepareOnIntent = (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    if (target.closest(".mobileMarketChartTitleRow, [data-mobile-market-screenshot], [data-mobile-market-pdf]")) ensureReportImage("copy");
+    else if (target.closest(".mobileMarketTableHead, [data-mobile-market-list-screenshot]")) ensureReportImage("list-copy");
+  };
+  analysisContent.addEventListener("pointerover", prepareOnIntent);
+  analysisContent.addEventListener("focusin", prepareOnIntent);
   new MutationObserver((records) => {
     const changed = records.some((record) => {
       const element = record.target instanceof Element ? record.target : record.target.parentElement;
