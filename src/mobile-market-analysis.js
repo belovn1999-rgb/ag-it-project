@@ -87,6 +87,27 @@
       monitoringFailed: "Kontrola nie powiodła się: {error}",
       monitoringAutoRunning: "Codzienna kontrola: {car}…",
       monitoringNewBase: "Parametry lub cena zmienione od poprzedniej kontroli: ta kontrola to nowa baza ({count} ogłoszeń). Nowe i zniknięte pokaże następna kontrola.",
+      monitoringVatDeductible: "brutto · netto {net} (VAT do odliczenia)",
+      monitoringVatNet: "netto + VAT 23% = {gross} brutto",
+      monitoringVatDeductibleOnly: "brutto · VAT do odliczenia",
+      monitoringVatInvoice: "Faktura VAT",
+      monitoringFromDescription: "z opisu",
+      monitoringVatMargin: "VAT marża",
+      monitoringVatPrivate: "osoba prywatna · bez VAT",
+      monitoringVatGross: "brutto",
+      monitoringDetails: "Wyposażenie…",
+      monitoringDetailsHide: "Zwiń",
+      monitoringDetailsLoading: "Wczytuję ogłoszenie…",
+      monitoringDetailsFailed: "Nie udało się wczytać ogłoszenia.",
+      monitoringDetailsUnavailable: "Ten portal nie podaje wyposażenia w liście — otwórz ogłoszenie.",
+      monitoringDetailsNone: "Ogłoszenie nie podaje wyposażenia.",
+      monitoringMore: "dalej… (+{count})",
+      monitoringLess: "mniej",
+      monitoringSave: "Zapisz to auto",
+      monitoringUnsave: "Usuń z zapisanych",
+      monitoringViewSaved: "★ Zapisane",
+      monitoringSavedGone: "zniknęło z listy",
+      monitoringSavedAt: "zapisane {date}",
       monitoringMissing: "Bez danych z: {portals} (portal niedostępny) — ta kontrola nie obejmuje tego rynku.",
       priceHistoryComparedHint: "wybór rynków na stronie 1 „Wyszukiwanie”",
       offerHistoryHeading: "Rynek w wybranym dniu",
@@ -387,6 +408,27 @@
       monitoringFailed: "Проверка не удалась: {error}",
       monitoringAutoRunning: "Ежедневная проверка: {car}…",
       monitoringNewBase: "С прошлой проверки изменены параметры или цена: эта проверка — новая база ({count} объявлений). Новые и исчезнувшие покажет следующая проверка.",
+      monitoringVatDeductible: "брутто · нетто {net} (НДС к вычету)",
+      monitoringVatNet: "нетто + VAT 23% = {gross} брутто",
+      monitoringVatDeductibleOnly: "брутто · НДС к вычету",
+      monitoringVatInvoice: "Faktura VAT (счёт с НДС)",
+      monitoringFromDescription: "из описания",
+      monitoringVatMargin: "VAT marża (маржа)",
+      monitoringVatPrivate: "частное лицо · без НДС",
+      monitoringVatGross: "брутто",
+      monitoringDetails: "Оснащение…",
+      monitoringDetailsHide: "Свернуть",
+      monitoringDetailsLoading: "Загружаю объявление…",
+      monitoringDetailsFailed: "Не удалось загрузить объявление.",
+      monitoringDetailsUnavailable: "Этот портал не даёт оснащение в списке — открой объявление.",
+      monitoringDetailsNone: "В объявлении нет оснащения.",
+      monitoringMore: "дальше… (+{count})",
+      monitoringLess: "меньше",
+      monitoringSave: "Сохранить это авто",
+      monitoringUnsave: "Убрать из сохранённых",
+      monitoringViewSaved: "★ Сохранённые",
+      monitoringSavedGone: "исчезло из списка",
+      monitoringSavedAt: "сохранено {date}",
       monitoringMissing: "Нет данных с: {portals} (портал недоступен) — эта проверка не включает этот рынок.",
       priceHistoryComparedHint: "выбор рынков на странице 1 «Поиск»",
       offerHistoryHeading: "Рынок в выбранный день",
@@ -886,8 +928,20 @@
       city: String(listingValue(row, ["city"]) || "").slice(0, 80),
       bodyType: String(listingValue(row, ["bodytype"]) || "").slice(0, 40),
       displacementCcm: parseMarketNumber(listingValue(row, ["displacementccm"])) || null,
+      seller: String(listingValue(row, ["seller"]) || "").slice(0, 12),
+      netPrice: parseMarketNumber(listingValue(row, ["netprice"])) || 0,
+      priceType: String(listingValue(row, ["pricetype"]) || "").slice(0, 12),
+      vatDeductible: listingValue(row, ["vatdeductible"]) === true || listingValue(row, ["vatdeductible"]) === "true",
     };
     listing.source = listingSource({ ...listing, source: listingValue(row, ["source", "zrodlo"]) });
+    // mobile.de: a net price beside the gross one = VAT deductible; a dealer
+    // without it sells on the margin scheme; a private seller has no VAT.
+    if (!listing.priceType && listing.source === "mobile") {
+      listing.priceType = listing.vatDeductible || listing.netPrice ? "vat" : listing.seller === "dealer" ? "margin" : listing.seller === "private" ? "private" : "";
+      // Net by the VAT of the seller's country, when known.
+      const vatRate = { DE: 0.19, AT: 0.2, FR: 0.2, SK: 0.23, CZ: 0.21, NL: 0.21, BE: 0.21, ES: 0.21, IT: 0.22, LU: 0.17, DK: 0.25, SE: 0.25, PL: 0.23, SI: 0.22, HR: 0.25, HU: 0.27 }[String(listing.country || "").toUpperCase()];
+      if (listing.priceType === "vat" && !listing.netPrice && vatRate) listing.netPrice = Math.round(listing.price / (1 + vatRate));
+    }
     // Position in the marketplace's own price-sorted result list, when known.
     const rank = Number(listingValue(row, ["rank"]));
     const marketTotal = Number(listingValue(row, ["markettotal"]));
@@ -971,6 +1025,9 @@
         mileage: parameters.mileage || "",
         year: parameters.year || "",
         power: parameters.engine_power ? `${parameters.engine_power} KM` : "",
+        // A dealer may list the net price (+ VAT 23%).
+        priceType: node.price?.isGross === false ? "net" : "",
+        seller: node.sellerLink ? "dealer" : "private",
       };
     }).filter(Boolean);
     return { total: Number(search.totalCount) || listings.length, listings };
@@ -1508,6 +1565,17 @@
     }
   }
 
+  // Power as KM whatever the portal writes ("110 kW (150 PS)", "150 hk").
+  function powerInKm(value) {
+    const text = String(value || "");
+    const hp = text.match(/(\d+)\s*(?:PS|KM|hk|HP|л\.?\s?с)/i);
+    if (hp) return `${hp[1]} KM`;
+    const kw = text.match(/(\d+)\s*kW/i);
+    if (kw) return `${Math.round(Number(kw[1]) * 1.35962)} KM`;
+    const plain = text.match(/^\s*(\d+)\s*$/);
+    return plain ? `${plain[1]} KM` : text.slice(0, 30);
+  }
+
   function compactOffers(listings, source, filters) {
     const own = listings.filter((listing) => listingSource(listing) === source);
     const flagged = suspectOffers(own, (listing) => priceInPln(listing.price, listing.currency || SOURCE_CURRENCY[source]));
@@ -1521,7 +1589,10 @@
       year: listing.year || null,
       mileage: Number(listing.mileage) || null,
       rank: listing.rank || null,
-      power: String(listing.power || "").slice(0, 30),
+      power: powerInKm(listing.power),
+      priceType: listing.priceType || "",
+      netPrice: listing.netPrice || 0,
+      seller: listing.seller || "",
       turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage({
         price: listing.price,
         currency: listing.currency || SOURCE_CURRENCY[source],
@@ -2875,18 +2946,18 @@
         <section class="mobileSearchSummary mobileMonitoringParams">
           <div class="mobileSelectedFilters mobileSearchSummaryBody" data-monitoring-params>${monitoringParamsHtml()}</div>
         </section>
-        <div class="mobileMonitoringColumns">
-          <div>
-            ${blockTitle("percent", c.monitoringPortals)}
-            <p class="mobileMonitoringHint">${escapeMarketHtml(c.monitoringPortalsHint)}</p>
-            <div class="mobileMonitoringPortals">${monitoringPortalsHtml(entry)}</div>
-          </div>
-          <div>
-            ${blockTitle("percent", c.monitoringConverter)}
-            ${monitoringConverterHtml()}
-          </div>
-        </div>
       </section>
+      <div class="mobileMonitoringColumns">
+        <section class="mobileMarketCard mobileMonitoringPortalsCard">
+          ${blockTitle("percent", c.monitoringPortals)}
+          <p class="mobileMonitoringHint">${escapeMarketHtml(c.monitoringPortalsHint)}</p>
+          <div class="mobileMonitoringPortals">${monitoringPortalsHtml(entry)}</div>
+        </section>
+        <section class="mobileMarketCard mobileMonitoringConverterCard">
+          ${blockTitle("percent", c.monitoringConverter)}
+          ${monitoringConverterHtml()}
+        </section>
+      </div>
       <section class="mobileMarketCard mobileMonitoringResults">
         <div class="mobileMonitoringBlockHead">
           <div class="mobileMonitoringCheckInfo" data-monitoring-check-info></div>
@@ -2917,6 +2988,149 @@
     if (!entry) return;
     fillMonitoringResults(entry);
     if (monitoringExtended) fillOfferHistory(entry);
+  }
+
+  // ---- Offers saved by hand on page 3 (per favourite) -----------------------
+  // Same rules as the history (4.6.1): read before every write, never
+  // cleared, unreadable data kept aside.
+  const SAVED_CARS_KEY = "autogood.mobile.savedCars.v1";
+  function readSavedCars() {
+    let raw = null;
+    try {
+      raw = localStorage.getItem(SAVED_CARS_KEY);
+    } catch {
+      return {};
+    }
+    if (!raw) return {};
+    try {
+      const parsed = JSON.parse(raw);
+      if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) throw new Error("not a map");
+      return parsed;
+    } catch {
+      try {
+        localStorage.setItem(`${SAVED_CARS_KEY}.broken.${new Date().toISOString()}`, raw);
+      } catch {
+        // Nothing more can be done in this browser.
+      }
+      return {};
+    }
+  }
+  function savedCarsOf(favoriteId) {
+    const list = readSavedCars()[favoriteId];
+    return Array.isArray(list) ? list : [];
+  }
+  function toggleSavedCar(favoriteId, source, offer) {
+    const all = readSavedCars();
+    const list = Array.isArray(all[favoriteId]) ? all[favoriteId] : [];
+    const at = list.findIndex((item) => item.offer?.key === offer.key);
+    all[favoriteId] = at >= 0 ? list.filter((_, index) => index !== at) : [...list, { source, offer, savedAt: new Date().toISOString() }];
+    try {
+      localStorage.setItem(SAVED_CARS_KEY, JSON.stringify(all));
+    } catch {
+      Object.assign(monitoringState, { status: copy().historyStorageError, statusError: true });
+    }
+  }
+
+  // ---- Details of one offer, read on demand ("Wyposażenie…") ---------------
+  // The equipment the seller lists, with what sells a car first.
+  const KEY_OPTIONS = [
+    /automat|automatic|automatik|dsg|s.?tronic|cvt/i,
+    /nawigac|navi/i,
+    /\bled\b|matrix|laser/i,
+    /adaptac|aktywny tempomat|abstandstempomat|\bacc\b|adaptive cruise|adaptiver tempomat/i,
+    /podgrzew|sitzheiz|heated seat/i,
+    /kamer|camera|kamera|360/i,
+    /\bhak\b|anhängerkupplung|anhaengerkupplung|tow ?bar|dragkrok/i,
+    /panoram|szyberdach|schiebedach|sunroof/i,
+    /skór|leder|leather|skinn/i,
+    /4x4|allrad|napęd na (?:cztery|wszystkie)|\b4wd\b|\bawd\b|4motion|quattro|xdrive/i,
+  ];
+  const offerDetails = new Map();
+  var rowsForDetails = new Map();
+  const openDetails = new Set();
+  const allOptionsShown = new Set();
+
+  function vatFromDescription(html) {
+    const c = copy();
+    const text = String(html || "").replace(/<[^>]+>/g, " ").toLowerCase();
+    if (/vat[\s-]*marż|marża[\s-]*vat|vat-?marża|faktura vat[\s-]*marża/.test(text)) return `${c.monitoringVatMargin} (${c.monitoringFromDescription})`;
+    if (/faktur\w*\s+vat|\bfv\s*23|vat\s*23\s*%|netto\s*\+\s*vat|do odliczenia/.test(text)) return `${c.monitoringVatInvoice} (${c.monitoringFromDescription})`;
+    return "";
+  }
+
+  async function loadOfferDetails(source, offer) {
+    const key = offer.key;
+    offerDetails.set(key, { status: "loading" });
+    try {
+      let details;
+      if (source === "otomoto") {
+        const response = await fetch(`${MARKET_PROXY()}${offer.url}`, { headers: { "x-respond-with": "html" } });
+        if (!response.ok) throw new Error(String(response.status));
+        const raw = (await response.text()).match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+        const advert = raw ? JSON.parse(raw[1])?.props?.pageProps?.advert : null;
+        if (!advert) throw new Error("no advert");
+        const dict = advert.parametersDict || {};
+        const label = (name) => dict[name]?.values?.[0]?.label || "";
+        details = {
+          equipment: (advert.equipment || []).flatMap((group) => (group.values || []).map((value) => value.label)).filter(Boolean),
+          power: label("engine_power"),
+          // otomoto has no VAT field: the seller's own description says it.
+          vat: vatFromDescription(advert.description),
+          seller: advert.seller?.type === "PRIVATE" ? "private" : advert.seller?.type ? "dealer" : "",
+        };
+      } else if (source === "mobile") {
+        if (typeof window.AUTOGOOD_MOBILEDE_IMPORT !== "function") throw new Error("no importer");
+        const data = await window.AUTOGOOD_MOBILEDE_IMPORT(offer.url);
+        const equipment = Array.isArray(data.equipment) ? data.equipment : Object.values(data.equipment || {}).flat();
+        details = {
+          equipment: equipment.map((item) => (typeof item === "string" ? item : item?.label || item?.name || "")).filter(Boolean),
+          power: data.powerHp ? `${data.powerHp} KM` : "",
+          // The result list's VAT mark is the checked one (vat=1 search);
+          // the ad reader's purchase type is only a fallback.
+          vat: offer.priceType ? "" : data.purchaseType || "",
+          netPrice: data.carNettoEur || 0,
+          seller: data.sellerType || "",
+        };
+      } else {
+        offerDetails.set(key, { status: "unavailable" });
+        return;
+      }
+      offerDetails.set(key, { status: "ok", details });
+    } catch {
+      offerDetails.set(key, { status: "error" });
+    }
+  }
+
+  function vatLabel(offer) {
+    const c = copy();
+    if (offer.priceType === "vat") return offer.netPrice ? c.monitoringVatDeductible.replace("{net}", formatPlainPrice(offer.netPrice, offer.currency)) : c.monitoringVatDeductibleOnly;
+    if (offer.priceType === "net") return c.monitoringVatNet.replace("{gross}", formatPlainPrice(Math.round(offer.price * 1.23), offer.currency));
+    if (offer.priceType === "margin") return c.monitoringVatMargin;
+    if (offer.priceType === "private") return c.monitoringVatPrivate;
+    return c.monitoringVatGross;
+  }
+
+  function offerDetailsHtml(row, columns) {
+    const c = copy();
+    const state = offerDetails.get(row.offer.key);
+    let body;
+    if (!state || state.status === "loading") body = `<span class="mobileMonitoringMuted">${escapeMarketHtml(c.monitoringDetailsLoading)}</span>`;
+    else if (state.status === "unavailable") body = `<span class="mobileMonitoringMuted">${escapeMarketHtml(c.monitoringDetailsUnavailable)}</span>`;
+    else if (state.status === "error") body = `<span class="mobileMonitoringMuted">${escapeMarketHtml(c.monitoringDetailsFailed)}</span>`;
+    else {
+      const { equipment = [], vat = "", power = "" } = state.details;
+      const keyed = equipment.filter((item) => KEY_OPTIONS.some((pattern) => pattern.test(item)));
+      const ordered = [...keyed, ...equipment.filter((item) => !keyed.includes(item))];
+      const showAll = allOptionsShown.has(row.offer.key);
+      const shown = showAll ? ordered : ordered.slice(0, 6);
+      const extra = [power ? `${c.monitoringPower}: ${power}` : "", vat].filter(Boolean);
+      body = ordered.length || extra.length ? `
+        ${extra.map((item) => `<span class="mobileMonitoringChip isInfo">${escapeMarketHtml(item)}</span>`).join("")}
+        ${shown.map((item) => `<span class="mobileMonitoringChip${keyed.includes(item) ? " isKey" : ""}">${escapeMarketHtml(item)}</span>`).join("")}
+        ${ordered.length > 6 ? `<button class="mobileMonitoringMore" type="button" data-monitoring-more="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(showAll ? c.monitoringLess : c.monitoringMore.replace("{count}", String(ordered.length - 6)))}</button>` : ""}`
+        : `<span class="mobileMonitoringMuted">${escapeMarketHtml(c.monitoringDetailsNone)}</span>`;
+    }
+    return `<tr class="mobileMonitoringDetailsRow"><td colspan="${columns}"><div class="mobileMonitoringChips">${body}</div></td></tr>`;
   }
 
   // The latest check with offers against the one before it.
@@ -2974,31 +3188,45 @@
         </button>`;
     }).join("");
     const allRows = perSource.flatMap((item) => item.rows).filter((row) => !monitoringState.portal || row.source === monitoringState.portal);
+    // Saved by hand: as listed now, or as saved when no longer listed.
+    const saved = savedCarsOf(entry.id).filter((item) => !monitoringState.portal || item.source === monitoringState.portal);
+    const savedKeys = new Set(savedCarsOf(entry.id).map((item) => item.offer?.key));
+    const currentByKey = new Map(perSource.flatMap(({ source, current }) => (current?.offers || []).map((offer) => [offer.key, { source, offer }])));
     const viewRows = {
       new: allRows.filter((row) => row.group === "new"),
       gone: allRows.filter((row) => row.group === "gone"),
       all: allRows.filter((row) => !row.gone),
+      saved: saved.map((item) => {
+        const now = currentByKey.get(item.offer.key);
+        return now
+          ? { source: now.source, offer: now.offer, previous: now.offer.price !== item.offer.price ? item.offer : null, savedAt: item.savedAt }
+          : { source: item.source, offer: item.offer, gone: true, savedAt: item.savedAt };
+      }),
     };
-    if (!before && monitoringState.view !== "all") monitoringState.view = "all";
+    if (!before && (monitoringState.view === "new" || monitoringState.view === "gone")) monitoringState.view = "all";
     const view = monitoringState.view;
     const statusLabel = { new: c.offerNew, firstSeen: c.offerFirstSeen, gone: c.offerGone, outside: c.offerOutside, cheaper: c.offerCheaper, dearer: c.offerDearer, same: c.offerSame };
     const rows = [...viewRows[view]].sort((left, right) => (left.offer.turnkey || priceInPln(left.offer.price, left.offer.currency)) - (right.offer.turnkey || priceInPln(right.offer.price, right.offer.currency)));
-    const priceCell = (offer) => `<b>${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
-    const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isPrimary" : ""}" type="button" data-monitoring-view="${key}"${key !== "all" && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${viewRows[key].length}</button>`;
+    const priceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
+    const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isPrimary" : ""}" type="button" data-monitoring-view="${key}"${(key === "new" || key === "gone") && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${viewRows[key].length}</button>`;
+    const withStatus = view === "all" && before;
+    const columns = 8 + (withStatus ? 1 : 0);
+    rowsForDetails = new Map(rows.map((row) => [row.offer.key, row]));
     target.innerHTML = `
       ${changedBetween ? `<p class="mobileMarketOfferWarning">${escapeMarketHtml(c.offerFiltersBetween)}</p>` : ""}
       ${!before ? `<p class="mobileMonitoringNote">${escapeMarketHtml((newBase ? c.monitoringNewBase : c.monitoringBaseline).replace("{count}", numbers.format(perSource.reduce((sum, item) => sum + (item.current?.offers.length || 0), 0))))}</p>` : ""}
       <div class="mobileMonitoringTiles">${tiles}</div>
       <div class="mobileMonitoringViews" role="group">
-        ${viewButton("new", c.monitoringViewNew)}${viewButton("gone", `${c.monitoringViewGone} (${c.monitoringGoneHint})`)}${viewButton("all", c.monitoringViewAll)}
+        ${viewButton("new", c.monitoringViewNew)}${viewButton("gone", `${c.monitoringViewGone} (${c.monitoringGoneHint})`)}${viewButton("all", c.monitoringViewAll)}${viewButton("saved", c.monitoringViewSaved)}
         ${monitoringState.portal ? `<button class="mobileMarketImportClear" type="button" data-monitoring-portal="">${escapeMarketHtml(c.monitoringAllPortals)} ✕</button>` : ""}
       </div>
       ${rows.length ? `
       <div class="mobileMarketTableScroll mobileMonitoringList">
-        <table class="mobileMarketTable mobileMarketOffersTable mobileMonitoringTable">
+        <table class="mobileMarketTable mobileMonitoringTable">
           <thead><tr>
             <th scope="col" class="isNum mobileMarketRowNumber">#</th>
-            ${view === "all" && before ? `<th scope="col">${escapeMarketHtml(c.offerStatus)}</th>` : ""}
+            ${withStatus ? `<th scope="col">${escapeMarketHtml(c.offerStatus)}</th>` : ""}
+            <th scope="col" class="mobileMonitoringStarCell"><span class="agVisuallyHidden">★</span></th>
             <th scope="col">${escapeMarketHtml(c.offerAd)}</th>
             <th scope="col" class="isNum">${escapeMarketHtml(c.offerYear)}</th>
             <th scope="col" class="isNum">${escapeMarketHtml(c.offerMileage)}</th>
@@ -3006,17 +3234,22 @@
             <th scope="col" class="isNum">${escapeMarketHtml(c.offerPrice)}</th>
             <th scope="col">${escapeMarketHtml(c.priceHistorySource)}</th>
           </tr></thead>
-          <tbody>${rows.map((row, index) => `
+          <tbody>${rows.map((row, index) => {
+            const isSaved = savedKeys.has(row.offer.key);
+            const detailsOpen = openDetails.has(row.offer.key);
+            return `
             <tr class="${row.gone ? "isGone" : ""}">
               <td class="isNum mobileMarketRowNumber">${index + 1}</td>
-              ${view === "all" && before ? `<td><span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status] || "")}</span></td>` : ""}
-              <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}</td>
+              ${withStatus ? `<td><span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status] || "")}</span></td>` : ""}
+              <td class="mobileMonitoringStarCell"><button class="mobileMonitoringStar${isSaved ? " isOn" : ""}" type="button" data-monitoring-save="${escapeMarketHtml(row.offer.key)}" aria-pressed="${isSaved ? "true" : "false"}" title="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}" aria-label="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}">${isSaved ? "★" : "☆"}</button></td>
+              <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}<button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button></td>
               <td class="isNum">${escapeMarketHtml(row.offer.year || "—")}</td>
               <td class="isNum">${row.offer.mileage ? `${escapeMarketHtml(numbers.format(row.offer.mileage))} km` : "—"}</td>
               <td class="isNum">${escapeMarketHtml(row.offer.power || "—")}</td>
               <td class="isNum">${priceCell(row.offer)}</td>
               <td>${marketBadge(row.source)}</td>
-            </tr>`).join("")}</tbody>
+            </tr>${detailsOpen ? offerDetailsHtml(row, columns) : ""}`;
+          }).join("")}</tbody>
         </table>
       </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.monitoringEmptyList)}</p>`}`;
   }
@@ -3024,6 +3257,15 @@
   // One check of a favourite, in place: its portals read (whole lists where
   // short enough, with its own prices), a new dated row in its history with
   // the offers kept, then the comparison above is drawn again.
+  // Every field of the page-1 form, empty.
+  function blankFilters() {
+    try {
+      return Object.fromEntries(Object.entries(readManualFields()).map(([key, value]) => [key, Array.isArray(value) ? [] : typeof value === "boolean" ? false : ""]));
+    } catch {
+      return {};
+    }
+  }
+
   // A check asked for while another one runs waits for it.
   var queuedCheck = null;
   async function runMonitoringCheck(entry, markets = MARKET_SOURCES.filter((source) => chartSources[source])) {
@@ -3041,12 +3283,20 @@
     let ok = false;
     try {
       const filters = { ...entry.filters, markets };
-      const fetched = normalizeListings(await provider.getListings({ filters, pinned: true, historyId: entry.id }));
+      // A favourite saved before a newer form field existed: the search gets
+      // that field empty; the history keeps the filters as saved.
+      const fetched = normalizeListings(await provider.getListings({ filters: { ...blankFilters(), ...filters }, pinned: true, historyId: entry.id }));
       if (fetched.length < 3) throw new Error(c.refreshInvalid);
       refreshMarketHistory();
       const current = marketHistory.find((item) => item.id === entry.id) || entry;
       measureNextSnapshot(provider.lastSources || markets, true, provider.lastPrices ?? null);
-      updateMarketSnapshot(entry.id, filters, mergeBySource(current.listings, fetched), "API", current.searchUrl);
+      let searchUrl = current.searchUrl;
+      try {
+        searchUrl = searchUrl || buildMobileDeSearchUrl({ ...blankFilters(), ...filters });
+      } catch {
+        searchUrl = searchUrl || "";
+      }
+      updateMarketSnapshot(entry.id, filters, mergeBySource(current.listings, fetched), "API", searchUrl || "-");
       ok = true;
       const missing = markets.filter((source) => !(provider.lastSources || []).includes(source));
       if (missing.length && monitoringState.id === entry.id) {
@@ -3155,6 +3405,36 @@
     const portal = event.target.closest("[data-monitoring-portal]");
     if (portal) {
       monitoringState.portal = monitoringState.portal === portal.dataset.monitoringPortal ? "" : portal.dataset.monitoringPortal;
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    const save = event.target.closest("[data-monitoring-save]");
+    if (save && priceHistoryId) {
+      const row = rowsForDetails.get(save.dataset.monitoringSave);
+      if (row) toggleSavedCar(priceHistoryId, row.source, row.offer);
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    const detailsButton = event.target.closest("[data-monitoring-details]");
+    if (detailsButton) {
+      const key = detailsButton.dataset.monitoringDetails;
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (openDetails.has(key)) openDetails.delete(key);
+      else {
+        openDetails.add(key);
+        const row = rowsForDetails.get(key);
+        if (row && !offerDetails.has(key)) loadOfferDetails(row.source, row.offer).then(() => entry && fillMonitoringResults(entry));
+      }
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    const more = event.target.closest("[data-monitoring-more]");
+    if (more) {
+      const key = more.dataset.monitoringMore;
+      if (allOptionsShown.has(key)) allOptionsShown.delete(key);
+      else allOptionsShown.add(key);
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
       if (entry) fillMonitoringResults(entry);
       return;

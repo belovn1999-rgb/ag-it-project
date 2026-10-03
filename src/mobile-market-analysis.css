@@ -4148,3 +4148,127 @@
 .mobileMonitoringParams [data-mobile-summary-star-slot] {
   display: none;
 }
+
+/* Monitoring, stage 2: separate cards, price with VAT, star, details. */
+.mobileMonitoringColumns {
+  align-items: stretch;
+  margin-top: var(--space-lg);
+}
+
+.mobileMonitoringColumns > .mobileMarketCard {
+  margin: 0;
+}
+
+.mobileMonitoringAdPrice {
+  font-size: var(--text-lg);
+  font-weight: 900;
+}
+
+.mobileMonitoringVat {
+  display: block;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  white-space: normal;
+}
+
+.mobileMonitoringVat.isVat { color: var(--color-success); }
+.mobileMonitoringVat.isNet { color: #1d5fd0; }
+.mobileMonitoringVat.isMargin { color: #8a5a00; }
+
+.mobileMonitoringStarCell {
+  width: 1%;
+  text-align: center;
+}
+
+.mobileMonitoringStar {
+  padding: 2px 6px;
+  border: 0;
+  background: none;
+  color: #b88a00;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mobileMonitoringStar:not(.isOn) {
+  color: #a7b0bc;
+}
+
+.mobileMonitoringDetailsToggle,
+.mobileMonitoringMore {
+  display: inline-block;
+  margin-top: 4px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #1d5fd0;
+  font: inherit;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-decoration: underline dotted;
+  cursor: pointer;
+}
+
+.mobileMonitoringDetailsRow td {
+  background: rgba(22, 43, 72, 0.03);
+  white-space: normal;
+}
+
+.mobileMonitoringChips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.mobileMonitoringChip {
+  padding: 3px 9px;
+  border: 1px solid var(--color-rule);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--color-ink);
+  font-size: var(--text-xs);
+}
+
+.mobileMonitoringChip.isKey {
+  border-color: #1d5fd0;
+  color: #1d5fd0;
+  font-weight: 700;
+}
+
+.mobileMonitoringChip.isInfo {
+  background: rgba(22, 43, 72, 0.06);
+  font-weight: 700;
+}
+
+.mobileMonitoringMuted {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+/* Monitoring list: its own columns (not "Aktualne oferty"'s widths). */
+.mobileMonitoringTable {
+  table-layout: auto;
+  width: 100%;
+  min-width: 920px;
+}
+
+.mobileMonitoringTable .mobileMarketTableTitle {
+  min-width: 260px;
+  white-space: normal;
+}
+
+.mobileMonitoringTable td.isNum,
+.mobileMonitoringTable th.isNum {
+  white-space: nowrap;
+}
+
+.mobileMonitoringTable td.isNum:has(.mobileMonitoringAdPrice) {
+  min-width: 170px;
+  white-space: normal;
+}
+
+.mobileMonitoringTable .mobileMarketTableTitle small {
+  display: block;
+}

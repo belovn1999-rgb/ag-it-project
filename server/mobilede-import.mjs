@@ -1191,6 +1191,9 @@ const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY, NEW
       cards.set(id, {
         image: /^https:\/\/img\.classistatic\.de\//.test(image) ? image.replace(/rule=mo-\d+/, "rule=mo-360") : "",
         createdAt: online ? new Date(+online[3], +online[2] - 1, +online[1], +online[4], +online[5]).toISOString() : "",
+        // "€8,900¹": mobile.de's footnote mark of a VAT-deductible price
+        // (checked 2026-10-03: every result of the vat=1 search has it).
+        vatDeductible: /\d\s*¹/.test(link.textContent),
       });
       if (!heading) return;
       const text = [...heading.childNodes].map((n) => n.textContent.trim()).filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
@@ -1242,6 +1245,8 @@ const SEARCH_PAGE_SCRIPT = String.raw`(async (SEARCH_URL, PAGES, COUNT_ONLY, NEW
       gearbox: item.attr?.tr || "", city: item.attr?.loc || "", postalCode: item.attr?.z || "", country: item.attr?.cn || "",
       seller: item.contact?.enumType === "DEALER" ? "dealer" : item.contact?.enumType ? "private" : "",
       priceRating: item.priceRating?.rating || "", numImages: Number(item.numImages) || 0,
+      // VAT deductible ("¹" on the result card): the dealer invoices with VAT.
+      vatDeductible: Boolean(cards.get(String(item.id))?.vatDeductible),
     });
   });
   collect(first, { page: 1, order: NEWEST ? "down" : "up", newest: Boolean(NEWEST) });

@@ -3621,6 +3621,15 @@ function mobileDeApiBase() {
   return readMobileDeApiUrl().replace(/\/mobilede\/import\/?$/, "");
 }
 
+// One mobile.de ad read by the importer (price net/gross, VAT, equipment,
+// power, transport estimate) — page 3 "Monitoring" uses it per offer.
+window.AUTOGOOD_MOBILEDE_IMPORT = async (adUrl) => {
+  const response = await fetch(`${readMobileDeApiUrl()}?url=${encodeURIComponent(adUrl)}`);
+  const payload = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(payload.detail || payload.error || "Mobile.de import failed");
+  return payload;
+};
+
 window.AUTOGOOD_MOBILEDE_SEARCH = async (searchUrl, { countOnly = false, pages = 0 } = {}) => {
   const response = await fetch(`${mobileDeApiBase()}/mobilede/search?${countOnly ? "count=1&" : ""}${pages ? `pages=${pages}&` : ""}url=${encodeURIComponent(searchUrl)}`);
   const payload = await response.json().catch(() => ({}));
