@@ -24,7 +24,7 @@ const copy = {
     listingEyebrow: "DANE Z OGŁOSZENIA",
     manualEyebrow: "Parametry poszukiwania",
     clearManualFilters: "Wyczyść filtry",
-    selectedFiltersEmpty: "Brak wybranych parametrów",
+    selectedFiltersEmpty: "Wybierz markę i model",
     offerCountLabel: "Aktualne oferty",
     calculatorsLink: "Kalkulatory",
     offerCountNeedModel: "Wybierz markę i model, aby zobaczyć liczbę ofert.",
@@ -242,7 +242,7 @@ const copy = {
     toPlaceholder: "do",
     sourceEyebrow: "SPRZEDAWCA",
     actionsTitle: "Wybierz ścieżkę zakupu",
-    footer: "Mobile.de → kalkulatory operacyjne",
+    footer: "otomoto.pl · mobile.de · AutoScout24 · blocket.se · av.by",
     emptyTitle: "—",
     emptyValue: "—",
     specSearchKicker: "Parametry poszukiwania",
@@ -321,7 +321,7 @@ const copy = {
     listingEyebrow: "ДАННЫЕ ИЗ ОБЪЯВЛЕНИЯ",
     manualEyebrow: "Параметры поиска",
     clearManualFilters: "Очистить фильтры",
-    selectedFiltersEmpty: "Нет выбранных параметров",
+    selectedFiltersEmpty: "Выбери марку и модель",
     offerCountLabel: "Актуальные объявления",
     calculatorsLink: "Калькуляторы",
     offerCountNeedModel: "Выбери марку и модель, чтобы увидеть число объявлений.",
@@ -539,7 +539,7 @@ const copy = {
     toPlaceholder: "до",
     sourceEyebrow: "ПРОДАВЕЦ",
     actionsTitle: "Выбери путь покупки",
-    footer: "Mobile.de → рабочие калькуляторы",
+    footer: "otomoto.pl · mobile.de · AutoScout24 · blocket.se · av.by",
     emptyTitle: "—",
     emptyValue: "—",
     specSearchKicker: "Параметры поиска",
@@ -1467,7 +1467,7 @@ function specSheetHtml({ kicker = "", title = "", titleTarget = "", meta = "", a
     } else {
       body = `<dl>${rows.map(([label, value, icon, target]) => `<div${targetAttr(target)}><dt>${icon ? inlineIconHtml(icon) : ""}<span>${escapeHtml(label)}</span></dt><dd>${escapeHtml(value)}</dd></div>`).join("")}</dl>`;
     }
-    return `<section class="agSpecColumn"><h4>${headingIcon}${escapeHtml(column.heading)}</h4>${body}</section>`;
+    return `<section class="agSpecColumn"><h4 aria-level="3">${headingIcon}${escapeHtml(column.heading)}</h4>${body}</section>`;
   }).join("");
   return `
     <div class="agSpec">
@@ -2213,9 +2213,12 @@ function focusManualFilter(selector) {
     const stickyHead = document.querySelector(".mobileManualPanel .mobilePanelHead");
     const stickyStyle = stickyHead && getComputedStyle(stickyHead);
     const navHeight = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--ag-nav-height")) || 0;
+    // Below the chosen filters the slim bar (mobile-page1.js) covers the top
+    // too; it may still be hidden at the moment of measuring.
+    const compactBar = document.querySelector("[data-mobile-compact-bar]");
     const coveredHeight = stickyStyle?.position === "sticky"
       ? (parseFloat(stickyStyle.top) || navHeight) + stickyHead.offsetHeight
-      : navHeight;
+      : navHeight + (compactBar ? Math.max(compactBar.offsetHeight, 52) : 0);
     const visibleTop = coveredHeight + 4;
     const anchor = heading && scrollTarget.getBoundingClientRect().top - heading.getBoundingClientRect().top <= window.innerHeight - visibleTop - 16
       ? heading
@@ -3781,7 +3784,17 @@ document.querySelectorAll("[data-mobile-collapsible]").forEach((card) => {
   toggle.dataset.mobileCollapseToggle = "";
   toggle.className = "mobileFilterCardToggle";
   toggle.innerHTML = "<span></span>";
-  title.append(counter, toggle);
+  const body = card.querySelector(".mobileFilterCardBody");
+  if (body) {
+    body.id ||= `${title.id || "mobile-filter-group"}-body`;
+    toggle.setAttribute("aria-controls", body.id);
+  }
+  // Next to the heading, not inside it: the heading reads "Komfort",
+  // not "Komfort Pokaż".
+  const head = document.createElement("div");
+  head.className = "mobileFilterCardHead";
+  title.before(head);
+  head.append(title, counter, toggle);
   toggle.addEventListener("click", () => {
     card.classList.toggle("isOpen");
     updateCollapsibleCard(card);

@@ -14,29 +14,22 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=accident-20261003" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=page1-audit-20261003" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="mobileBody">
     <main class="mobileShell">
-      <h1 class="srOnly" data-i18n="pageHeading">Wyszukiwanie i analiza aut</h1>
+      <!-- The page name once (the logo and the calculators link are in the
+           navigation bar above), with the language switch. -->
       <header class="mobileTopbar">
-        <a class="mobileBrand" href="./" aria-label="AUTOGOOD Tools">
-          <img src="./assets/autogood-logo.png" alt="AUTOGOOD" />
-          <span class="mobileBrandDivider" aria-hidden="true"></span>
-          <span data-i18n="appName">Wyszukiwanie i analiza</span>
-        </a>
+        <h1 class="mobileTopbarTitle" data-i18n="appName">Wyszukiwanie i analiza</h1>
         <div class="mobileTopActions">
-          <a class="mobileGhostLink" href="./calculators.html" data-i18n="calculatorsLink">Kalkulatory</a>
           <div class="mobileLang" aria-label="Language">
             <button type="button" data-lang-button="pl" class="isActive">PL</button>
             <button type="button" data-lang-button="ru">RU</button>
           </div>
         </div>
       </header>
-
-      <section class="mobilePageIntro">
-        <p class="mobilePageTitle" data-i18n="pageTitle">Wyszukiwanie i analiza cen</p>
-      </section>
 
       <!-- Favourite cars, pinned above every page. -->
       <div class="mobileFavoritesBar" data-mobile-favorites-bar></div>
@@ -51,7 +44,7 @@
       <section class="mobileListingSearch">
         <section class="mobileFilterCard mobileListingLinkCard" aria-labelledby="mobile-listing-link-heading">
           <div class="mobileListingLinkHead">
-            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><b class="mobileBlockNumber">1.</b><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
+            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
             <div class="mobileLinkSource" role="radiogroup" aria-label="Portal">
               <label class="isOtomoto"><input type="radio" name="mobile-link-source" value="otomoto" data-mobile-link-source /><span>otomoto.pl</span></label>
               <label class="isMobile"><input type="radio" name="mobile-link-source" value="mobile" data-mobile-link-source checked /><span>mobile.de</span></label>
@@ -86,7 +79,7 @@
         <article class="mobilePanel mobileManualPanel">
           <div class="mobilePanelHead">
             <div class="mobileManualPanelHeadRow">
-              <h2 class="mobileFilterCardTitle mobileManualPanelTitle"><b class="mobileBlockNumber">2.</b><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="manualEyebrow">PARAMETRY POSZUKIWANIA</span></h2>
+              <h2 class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="manualEyebrow">PARAMETRY POSZUKIWANIA</span></h2>
               <button class="mobileManualIconButton" type="button" data-mobile-manual-reset aria-label="Wyczyść filtry" title="Wyczyść filtry">
                 <svg aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-filter-navigation-20260831#rotate-ccw"></use></svg>
               </button>
@@ -322,7 +315,7 @@
                 </fieldset>
               </div>
             </section>
-            <section class="mobileFilterCard mobileFilterCardCollapsible" data-mobile-collapsible aria-labelledby="mobile-filter-group-price">
+            <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-price">
               <h2 id="mobile-filter-group-price" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#tag"></use></svg><span data-i18n="filterGroupPrice">Cena</span></h2>
               <div class="mobileFilterCardBody">
                 <div class="mobileField mobileRangeField mobileWideField">
@@ -573,7 +566,18 @@
             <span data-mobile-market-history-count>0 / 20</span>
           </header>
           <div class="mobileMarketHistoryList" data-mobile-market-history-list></div>
+          <button class="mobileHistoryMore" type="button" data-mobile-history-more aria-expanded="false" hidden></button>
         </section>
+
+        <!-- Scrolled past the chosen filters: one slim line with the car, the
+             set filters, the offer counts and "Analiza rynku" (mobile-page1.js). -->
+        <div class="mobileCompactBar" data-mobile-compact-bar hidden>
+          <button class="mobileCompactStar" type="button" data-compact-star aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
+          <button class="mobileCompactSummary" type="button" data-compact-summary><strong data-compact-name></strong><span data-compact-filters></span></button>
+          <div class="mobileCompactMarkets" data-compact-markets></div>
+          <button class="mobileCompactDone" type="button" data-compact-done hidden></button>
+          <button class="mobileCompactAnalysis" type="button" data-compact-analysis></button>
+        </div>
       </section>
 
       <section class="mobileMethodView mobilePageView" data-mobile-page-view="history" hidden>
@@ -603,15 +607,16 @@
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
     <script src="./src/market-badges.js?v=autoscout2-20261003"></script>
-    <script src="./src/mobile.js?v=audit3-20261003"></script>
+    <script src="./src/mobile.js?v=page1-audit-20261003"></script>
     <script src="./src/blocket-search.js?v=form-groups-20261002"></script>
     <script src="./src/avby-search.js?v=avby-20261002"></script>
     <script src="./src/autoscout-search.js?v=by-prices-20261003"></script>
     <script src="./src/turnkey-estimate.js?v=audit3-20261003"></script>
     <script src="./src/turnkey-belarus.js?v=by-prices-20261003"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=accident-20261003"></script>
+    <script src="./src/mobile-market-analysis.js?v=page1-audit2-20261003"></script>
     <script src="./src/mobile-favorites-watch.js?v=autoscout2-20261003"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
+    <script src="./src/mobile-page1.js?v=page1-audit-20261003"></script>
   </body>
 </html>

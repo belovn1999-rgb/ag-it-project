@@ -2490,10 +2490,23 @@
       .filter(Boolean);
   }
 
+  // "Przebieg: do 130 000 km", "Rok: od 2018", "Rok: 2024" — not "—–130000".
+  // Amounts with a unit get thousands spaces; years and seats stay as typed.
   function rangeSummary(label, from, to, unit = "") {
     if (!from && !to) return "";
-    const range = [from || "—", to || "—"].join("–");
-    return `${label}: ${range}${unit ? ` ${unit}` : ""}`;
+    const t = window.AUTOGOOD_SPEC_COPY?.() || {};
+    const numbers = numberFormat();
+    const format = (value) => {
+      const raw = String(value).trim();
+      const amount = Number(raw.replace(/\s/g, "").replace(/\+$/, ""));
+      return unit && Number.isFinite(amount) ? `${numbers.format(amount)}${raw.endsWith("+") ? "+" : ""}` : raw;
+    };
+    const suffix = unit ? ` ${unit}` : "";
+    let range;
+    if (from && to) range = String(from) === String(to) ? format(from) : `${format(from)}–${format(to)}`;
+    else if (from) range = `${t.specFrom || "od"} ${format(from)}`;
+    else range = `${t.specTo || "do"} ${format(to)}`;
+    return `${label}: ${range}${suffix}`;
   }
 
   function filterSummary(filters) {

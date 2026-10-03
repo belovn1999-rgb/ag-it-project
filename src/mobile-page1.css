@@ -1,0 +1,392 @@
+/* Page 1 "Wyszukiwanie" — design audit of 03.10.2026 (items 1–16, see
+   docs/PROJECT-MOBILE.md). Loaded after the other stylesheets, so these
+   rules win on source order. Page 2 "Analiza" keeps its own styles. */
+
+/* Readable small text: the pale grey reaches WCAG AA (4.5:1 even on the
+   page background) and the smallest size is 12px. Scoped to page 1's
+   blocks and the favourites bar above every page. */
+.mobileTopbar,
+.mobileFavoritesBar,
+.mobilePageTabs,
+.mobileListingSearch,
+.mobileMethodView[data-mobile-method-view="manual"],
+.mobileFooter {
+  --color-soft: oklch(52% 0.03 248);
+  --text-xs: 0.75rem;
+}
+
+.mobileSearchSummary .agSpecColumn h4,
+.mobileSearchSummary .agSpecColumn dt,
+.mobileSearchSummary .agSpecText,
+.mobileSearchSummaryFootLabel,
+.mobileSearchSummary .agSpecKicker {
+  font-size: 0.75rem;
+}
+
+/* A history row's empty star was washed out to 2.5:1; it stays lighter than
+   a saved one but readable. */
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryFavoriteButton:not(.isPinned) {
+  opacity: 0.8;
+}
+
+/* White on the mobile.de orange was 3:1; this darker orange is 5:1. */
+.mobileLinkSource .isMobile input:checked + span {
+  background: #b84f00;
+}
+
+/* ---- Header: the page name once, with the language switch ---- */
+.mobileTopbar {
+  margin-bottom: var(--space-lg);
+}
+
+.mobileTopbarTitle {
+  margin: 0;
+  color: var(--color-brand-pressed);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* ---- One width for every block of the page ---- */
+.mobileManualPanel > .mobileManualForm {
+  width: auto;
+  max-width: none;
+  margin-inline: 0;
+}
+
+/* ---- The chosen filters scroll with the page; the slim bar below takes
+   over once they are gone (mobile-page1.js). ---- */
+.mobileManualPanel .mobilePanelHead {
+  position: static;
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.mobileCompactBar {
+  position: fixed;
+  z-index: 900;
+  top: var(--ag-nav-height, 59px);
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  width: min(1200px, calc(100% - 40px));
+  min-height: 52px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-top: 0;
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: 0 10px 24px -14px rgba(22, 43, 72, 0.35);
+  padding: 6px var(--space-md);
+}
+
+.mobileCompactBar[hidden],
+.mobileCompactBar [hidden] {
+  display: none;
+}
+
+.mobileCompactStar {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  padding: 0;
+  color: #b88900;
+  cursor: pointer;
+}
+
+.mobileCompactStar svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+
+.mobileCompactStar[aria-pressed="true"] svg,
+.mobileCompactStar:hover svg {
+  fill: currentColor;
+}
+
+.mobileCompactSummary {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: baseline;
+  gap: var(--space-sm);
+  min-width: 0;
+  min-height: 36px;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  padding: 0 var(--space-xs);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.mobileCompactSummary:hover {
+  background: color-mix(in srgb, var(--color-brand) 6%, transparent);
+}
+
+.mobileCompactSummary strong {
+  flex: 0 0 auto;
+  align-self: center;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.mobileCompactSummary span {
+  align-self: center;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobileCompactMarkets {
+  display: flex;
+  flex: 0 0 auto;
+  gap: var(--space-xs);
+}
+
+.mobileCompactMarket {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  padding: 0 8px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.mobileCompactMarket:hover {
+  border-color: var(--color-primary-rule);
+  background: var(--color-surface-tint);
+}
+
+.mobileCompactMarket img {
+  display: block;
+  width: auto;
+  height: 15px;
+}
+
+.mobileCompactMarket b {
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.mobileCompactDone,
+.mobileCompactAnalysis {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  min-height: 36px;
+  border: var(--rule-thin) solid var(--color-brand);
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-md);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.mobileCompactAnalysis {
+  background: var(--color-brand);
+  color: #fff;
+}
+
+.mobileCompactDone {
+  border-color: var(--color-success);
+  background: color-mix(in srgb, var(--color-success) 12%, var(--color-surface));
+  color: var(--color-success);
+}
+
+.mobileCompactBar button:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 60rem) {
+  .mobileCompactSummary span {
+    display: none;
+  }
+}
+
+@media (max-width: 40rem) {
+  .mobileCompactBar {
+    width: min(100% - 28px, 1200px);
+  }
+
+  .mobileCompactMarkets {
+    display: none;
+  }
+}
+
+/* ---- Market switches on the logos: always visible, 24 px ---- */
+.mobileSearchSummaryFoot .agMarketToggle {
+  width: 24px;
+  height: 24px;
+  font-size: 16px;
+  opacity: 1;
+}
+
+/* ---- Filter cards: "Pokaż" and the counter beside the heading ---- */
+.mobileFilterCardHead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 var(--space-lg);
+  border-bottom: var(--rule-thin) solid var(--color-rule-soft);
+  padding-bottom: var(--space-sm);
+}
+
+.mobileFilterCardHead > .mobileFilterCardTitle {
+  flex: 0 1 auto;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.mobileFilterCardCollapsible:not(.isOpen) .mobileFilterCardHead {
+  margin-bottom: 0;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* ---- Targets of at least 24 px ---- */
+.mobileUnitToggle button {
+  min-height: 24px;
+  padding: 3px 10px;
+}
+
+.mobileSearchSummary .agSpecColumn dl > div[data-mobile-summary-target] {
+  min-height: 24px;
+  align-items: center;
+}
+
+/* ---- A 2 px focus ring on page 1's fields ---- */
+.mobileListingSearch .mobileSearchControl input:focus-visible,
+.mobileMethodView[data-mobile-method-view="manual"] .mobileField > input:not([type="checkbox"]):not([type="radio"]):focus-visible,
+.mobileMethodView[data-mobile-method-view="manual"] .mobileChoiceOption:focus-within {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileComboControl:focus-within {
+  border-color: var(--color-focus);
+  box-shadow: 0 0 0 2px var(--color-focus);
+}
+
+/* A range field's name puts the cursor in its "od" box. */
+.mobileManualForm .mobileRangeField > .mobileFieldLabel {
+  cursor: pointer;
+}
+
+/* ---- Favourites: four whole cards in view, the rest one swipe away ---- */
+.mobileFavoritesBar .mobileMarketFavoritesList {
+  display: grid;
+  grid-auto-columns: calc((100% - 3 * var(--space-sm)) / 4);
+  grid-auto-flow: column;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+}
+
+.mobileFavoritesBar .mobileMarketFavoriteItem {
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.mobileFavoritesBar .mobileMarketFavorite {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  height: 100%;
+}
+
+.mobileFavoritesBar .mobileMarketFavorite b,
+.mobileFavoritesBar .mobileMarketFavorite small {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 72rem) {
+  .mobileFavoritesBar .mobileMarketFavoritesList {
+    grid-auto-columns: calc((100% - 2 * var(--space-sm)) / 3);
+  }
+}
+
+@media (max-width: 60rem) {
+  .mobileFavoritesBar .mobileMarketFavoritesList {
+    grid-auto-columns: calc((100% - var(--space-sm)) / 2);
+  }
+}
+
+@media (max-width: 36rem) {
+  .mobileFavoritesBar .mobileMarketFavoritesList {
+    grid-auto-columns: 85%;
+  }
+}
+
+/* ---- Search history: the page scrolls, not the list; 8 rows, then
+   "Pokaż wszystkie" (the selected row always stays in view) ---- */
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryList {
+  max-block-size: none;
+  overflow: visible;
+}
+
+.mobileMarketHistoryList:not(.isExpanded) > .mobileMarketHistoryItem:nth-child(n + 9):not(.isSelected) {
+  display: none;
+}
+
+.mobileHistoryMore {
+  display: block;
+  width: 100%;
+  min-height: 40px;
+  margin-top: var(--space-sm);
+  border: var(--rule-thin) dashed var(--color-field);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-brand-pressed);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mobileHistoryMore:hover {
+  border-style: solid;
+  background: var(--color-surface-tint);
+}
+
+.mobileHistoryMore:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.mobileHistoryMore[hidden] {
+  display: none;
+}
