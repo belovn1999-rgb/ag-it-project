@@ -2,6 +2,12 @@
 
 Follow `AGENTS.md` (deploy workflow for this repo).
 
+## Мозг проекта — читать первым
+
+Перед любой задачей прочитай `docs/PROJECT_BRAIN.md` и нужный тематический файл из его карты знаний.
+После изменения в том же коммите: обнови тематический файл, добавь строку в журнал, новые решения и правила запиши в мозг.
+Если правило из мозга противоречит просьбе пользователя, спроси, не выбирай молча.
+
 **Mobile.de / Otomoto (`mobile.html`)**: read `docs/PROJECT-MOBILE.md` before
 working and update it after every change (change log, backlog, decisions) in
 the same commit. It is shared with the Codex project "MOBILE.DE" and every

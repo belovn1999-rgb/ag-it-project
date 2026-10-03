@@ -2,6 +2,12 @@
 
 This project is the live AUTOGOOD Tools site.
 
+## Мозг проекта — читать первым
+
+Перед любой задачей прочитай `docs/PROJECT_BRAIN.md` и нужный тематический файл из его карты знаний.
+После изменения в том же коммите: обнови тематический файл, добавь строку в журнал, новые решения и правила запиши в мозг.
+Если правило из мозга противоречит просьбе пользователя, спроси, не выбирай молча.
+
 ## Mobile.de / Otomoto project — READ FIRST
 
 Work on `mobile.html` (search, link recognition, market analysis, turnkey
