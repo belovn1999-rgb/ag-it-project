@@ -1324,3 +1324,23 @@
 .mobileMoreFiltersCard .isMarketUnavailable:has(input:checked) {
   opacity: 0.75;
 }
+
+/* ---- 04.10: no frame around "Parametry poszukiwania" and the filter cards;
+   every card on page 1 is one width (the link card's, the history's) ---- */
+.mobileMethodView[data-mobile-method-view="manual"] .mobileManualPanel {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+
+/* Without the frame its dividers had nothing to divide: no short line under
+   "Parametry poszukiwania", none between the summary and "Pojazd". */
+.mobileMethodView[data-mobile-method-view="manual"] .mobileManualPanel > .mobilePanelHead {
+  border-bottom: 0;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileManualPanel .mobileManualPanelTitle {
+  border-bottom: 0;
+}
