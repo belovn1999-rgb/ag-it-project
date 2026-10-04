@@ -30,6 +30,7 @@
     // AutoScout24 in France takes the same filters as in Germany.
     ["autoscoutfr", "AutoScout24 FR", (filters) => (window.AUTOGOOD_AUTOSCOUT?.unsupported?.(filters) || [])
       .map((item) => TEXT[lang()].autoscoutKeys[item] || item)],
+    ["kleinanzeigen", "Kleinanzeigen", (filters) => (window.AUTOGOOD_KLEINANZEIGEN?.skippedFilterLabels?.(filters) || [])],
     ["marktplaats", "Marktplaats", (filters) => (window.AUTOGOOD_MARKTPLAATS?.skippedFilterLabels?.(filters) || [])],
     ["dehands", "2dehands", (filters) => (window.AUTOGOOD_MARKTPLAATS?.skippedFilterLabels?.(filters) || [])],
     ["blocket", "blocket.se", (filters) => (typeof blocketSkippedFilterLabels === "function" ? blocketSkippedFilterLabels(filters) : [])],

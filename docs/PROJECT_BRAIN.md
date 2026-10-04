@@ -69,6 +69,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, B47: Kleinanzeigen — второй портал Германии (частники; строка «Niemcy» = mobile.de + AutoScout24 + Kleinanzeigen без дубликатов; ссылка на объявление; все фильтры проверены по числу объявлений) (Claude).
 - 2026-10-04 — mobile.html, B68: «Aktualne oferty» в колонках стран — Niemcy (mobile.de, AutoScout24), Holandia · Belgia (главный AutoScout24 — больше всего объявлений NL+BE, плюс Marktplaats, 2dehands), Polska, Szwecja, Francja, Białoruś; переключатель страны вместо «−/+» порталов; флаги стран в фильтрах; категории сводки по центру; следующий шаг — строки анализа по странам (B69) (Claude).
 - 2026-10-04 — все ссылки переведены на новый адрес `…/ag-it-project/` (документы, скрипты выкладки, smoke-тесты, git remote, `~/cloude/CLAUDE.md`); закладки сотрудников — обновить вручную (Claude).
 - 2026-10-04 — mobile.html: курсы в шапке только на стр. 3 «Monitoring»; жёлтое «!» больше не пишет «otomoto: Paliwo» для гибрида (топливо уходит, предупреждение только для «Hybryda diesel») (Claude).

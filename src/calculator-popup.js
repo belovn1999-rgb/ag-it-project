@@ -79,7 +79,7 @@
 
   // Is this offer bought abroad (the calculators' case)?
   function importable(source) {
-    return ["mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands", "blocket"].includes(source);
+    return ["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands", "blocket"].includes(source);
   }
 
   function rates() {
@@ -141,7 +141,7 @@
   // Page 1: the ad read from a link (state.data of src/mobile.js).
   function fromRecognizedAd(ad) {
     if (!ad?.carBruttoEur) return null;
-    const source = ["blocket", "otomoto", "avby", "autoscout", "marktplaats", "dehands"].includes(ad.importMode) ? ad.importMode : "mobile";
+    const source = ["blocket", "otomoto", "avby", "autoscout", "marktplaats", "dehands", "kleinanzeigen"].includes(ad.importMode) ? ad.importMode : "mobile";
     if (!importable(source)) return null;
     const country = String(ad.location?.country || (source === "blocket" ? "SE" : "DE")).toUpperCase().slice(0, 2);
     const vat = ad.purchaseType === "VAT" || Boolean(ad.carNettoEur);

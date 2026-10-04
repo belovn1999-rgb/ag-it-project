@@ -77,6 +77,9 @@ const copy = {
     recognitionFromMarktplaats: "Dane pobrane z ogłoszenia Marktplaats / 2dehands.",
     marktplaatsAdFailed: "Nie udało się odczytać ogłoszenia Marktplaats / 2dehands (albo nie ma w nim stałej ceny). Sprawdź link.",
     marktplaatsLinkExpected: "To nie jest link do ogłoszenia Marktplaats / 2dehands.",
+    recognitionFromKleinanzeigen: "Dane pobrane z ogłoszenia Kleinanzeigen.",
+    kleinanzeigenAdFailed: "Nie udało się odczytać ogłoszenia Kleinanzeigen (albo nie ma w nim ceny). Sprawdź link.",
+    kleinanzeigenLinkExpected: "To nie jest link do ogłoszenia Kleinanzeigen.",
     otomotoAdFailed: "Nie udało się odczytać ogłoszenia otomoto.pl. Sprawdź link i spróbuj ponownie.",
     otomotoLinkExpected: "To nie jest link do ogłoszenia otomoto.pl.",
     bookmarkletHint: "Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.",
@@ -413,6 +416,9 @@ const copy = {
     recognitionFromMarktplaats: "Данные получены из объявления Marktplaats / 2dehands.",
     marktplaatsAdFailed: "Не удалось прочитать объявление Marktplaats / 2dehands (или в нём нет фиксированной цены). Проверь ссылку.",
     marktplaatsLinkExpected: "Это не ссылка на объявление Marktplaats / 2dehands.",
+    recognitionFromKleinanzeigen: "Данные получены из объявления Kleinanzeigen.",
+    kleinanzeigenAdFailed: "Не удалось прочитать объявление Kleinanzeigen (или в нём нет цены). Проверь ссылку.",
+    kleinanzeigenLinkExpected: "Это не ссылка на объявление Kleinanzeigen.",
     otomotoAdFailed: "Не удалось прочитать объявление otomoto.pl. Проверь ссылку и попробуй ещё раз.",
     otomotoLinkExpected: "Это не ссылка на объявление otomoto.pl.",
     bookmarkletHint: "Перетащи эту кнопку на панель закладок. Потом нажимай её на странице объявления или списка mobile.de.",
@@ -3956,6 +3962,7 @@ async function refreshOfferCount() {
   window.AUTOGOOD_AVBY_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(filters);
+  window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT?.(filters);
   if (!filters.brand || !filters.model) {
     renderOfferCount("—");
     return;
@@ -4165,7 +4172,8 @@ function setLinkSource(source) {
     : source === "blocket" ? "https://www.blocket.se/mobility/item/..."
       : source === "avby" ? "https://cars.av.by/..."
         : source === "autoscout" ? "https://www.autoscout24.de/angebote/..."
-          : source === "marktplaats" ? "https://www.marktplaats.nl/v/auto-s/..." : "https://suchen.mobile.de/...";
+          : source === "marktplaats" ? "https://www.marktplaats.nl/v/auto-s/..."
+            : source === "kleinanzeigen" ? "https://www.kleinanzeigen.de/s-anzeige/..." : "https://suchen.mobile.de/...";
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
   if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
@@ -4191,6 +4199,7 @@ els.url.addEventListener("input", () => {
   const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby"
     : isAutoscoutUrl(value) ? (/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout")
     : isMarktplaatsUrl(value) ? (/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands")
+    : isKleinanzeigenUrl(value) ? "kleinanzeigen"
     : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
   if (source && value !== mirroredLink) {
     mirroredLink = value;
@@ -4201,6 +4210,7 @@ els.url.addEventListener("input", () => {
   else if (isAvbyUrl(value)) setLinkSource("avby");
   else if (isAutoscoutUrl(value)) setLinkSource("autoscout");
   else if (isMarktplaatsUrl(value)) setLinkSource("marktplaats");
+  else if (isKleinanzeigenUrl(value)) setLinkSource("kleinanzeigen");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
 });
 
@@ -4564,6 +4574,80 @@ async function loadMarktplaatsAd(sourceUrl) {
   }
 }
 
+// ---- Kleinanzeigen ad links ---------------------------------------------------------
+// The ad page (through the reader proxy): price, title, the details list
+// ("Marke", "Modell", "Kilometerstand", "Erstzulassung", "Kraftstoffart",
+// "Leistung", "Getriebe", "Fahrzeugtyp"…), the equipment tags in German (the
+// same readers as for mobile.de pick the options) and the seller type.
+function isKleinanzeigenUrl(value) {
+  return /^https:\/\/(www\.)?kleinanzeigen\.de\/s-anzeige\/[^?#]*\/\d{6,}/i.test(String(value || "").trim());
+}
+
+const KLEINANZEIGEN_MONTHS = { januar: 1, februar: 2, märz: 3, maerz: 3, april: 4, mai: 5, juni: 6, juli: 7, august: 8, september: 9, oktober: 10, november: 11, dezember: 12 };
+
+async function loadKleinanzeigenAd(sourceUrl) {
+  const c = copy[state.lang];
+  setStatus("loading");
+  state.data = null;
+  renderData();
+  try {
+    const proxy = window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+    const response = await fetch(`${proxy}${sourceUrl}`, { headers: { "x-respond-with": "html" } });
+    if (!response.ok) throw new Error(String(response.status));
+    const html = await response.text();
+    const text = (value) => String(value || "").replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&").replace(/\s+/g, " ").trim();
+    const priceText = text((html.match(/id="viewad-price"[^>]*>([\s\S]*?)<\/h2>/) || html.match(/id="viewad-price"[^>]*>([^<]+)/) || [])[1]);
+    const carBruttoEur = Number((priceText.match(/([\d.]+)\s*€/) || [])[1]?.replace(/\./g, "")) || 0;
+    if (carBruttoEur < 300) throw new Error(c.kleinanzeigenAdFailed);
+    const details = Object.fromEntries([...html.matchAll(/<li class="addetailslist--detail">([\s\S]*?)<span class="addetailslist--detail--value"[^>]*>([\s\S]*?)<\/span>/g)]
+      .map((match) => [text(match[1]), text(match[2])]));
+    const title = text((html.match(/id="viewad-title"[^>]*>([\s\S]*?)<\/h1>/) || [])[1]).slice(0, 160);
+    const equipment = [...html.matchAll(/checktag[^>]*>([^<]+)</g)].map((match) => text(match[1])).filter(Boolean);
+    const registration = String(details.Erstzulassung || "").toLowerCase().match(/([a-zäö]+)\s+((?:19|20)\d{2})/);
+    const month = registration ? KLEINANZEIGEN_MONTHS[registration[1]] : 0;
+    const fuelLabel = details.Kraftstoffart || "";
+    const fuel = /elektro/i.test(fuelLabel) ? "Elektro" : /hybrid/i.test(fuelLabel) ? "Hybrid (Benzin/Elektro)" : /diesel/i.test(fuelLabel) ? "Diesel" : /benzin|lpg|cng/i.test(fuelLabel) ? "Benzin" : fuelLabel;
+    const locality = text((html.match(/id="viewad-locality"[^>]*>([^<]+)/) || [])[1]);
+    const model = String(details.Modell || "").replace(/^Weitere\s+/i, "");
+    const bodyType = details.Fahrzeugtyp || "";
+    const engineTypeIndex = classifyEngineType(`${fuel} ${title}`, null);
+    const estimate = estimateDeliveryInspection(bodyType, { country: "DE", postalCode: locality.slice(0, 5), city: locality.replace(/^\d{5}\s*/, "") });
+    state.data = {
+      sourceUrl,
+      adId: (sourceUrl.match(/\/(\d{6,})/) || [])[1] || "",
+      importMode: "kleinanzeigen",
+      carBruttoEur,
+      carNettoEur: null,
+      purchaseType: "Marża",
+      title,
+      model,
+      bodyType,
+      fuel,
+      displacementCcm: null,
+      powerHp: Number(String(details.Leistung || "").replace(/[^\d]/g, "")) || null,
+      gearbox: /automatik/i.test(details.Getriebe || "") ? "Automatyczna" : /manuell|schalt/i.test(details.Getriebe || "") ? "Manualna" : "",
+      mileageKm: Number(String(details.Kilometerstand || "").replace(/[^\d]/g, "")) || null,
+      firstRegistration: registration ? (month ? `${String(month).padStart(2, "0")}/${registration[2]}` : registration[2]) : "",
+      equipment,
+      condition: /unbesch/i.test(details.Fahrzeugzustand || "") ? "Gebrauchtfahrzeug, Unfallfrei" : "Gebrauchtfahrzeug",
+      sellerType: /Gewerblicher (Nutzer|Anbieter)/.test(html) ? "DEALER" : /Privater (Nutzer|Anbieter)/.test(html) ? "PRIVATE" : "",
+      location: { address: "", city: locality.replace(/^\d{5}\s*/, ""), postalCode: locality.slice(0, 5), country: "DE", sellerName: "" },
+      transportNettoPln: estimate.transport,
+      inspectionNettoPln: estimate.inspection,
+      engineTypeIndex,
+      engineTypeLabel: ENGINE_TYPE_LABELS[engineTypeIndex],
+    };
+    setStatus("ready", c.recognitionFromKleinanzeigen, true);
+    applyRecognizedManualFields(state.data);
+    window.AUTOGOOD_SET_ONLY_MARKET?.("kleinanzeigen");
+    renderData();
+  } catch (error) {
+    state.data = null;
+    setStatus("error", error.message && !/^\d+$/.test(error.message) ? error.message : c.kleinanzeigenAdFailed, true);
+    renderData();
+  }
+}
+
 async function loadOtomotoAd(sourceUrl) {
   const c = copy[state.lang];
   setStatus("loading");
@@ -4673,7 +4757,12 @@ els.form.addEventListener("submit", (event) => {
     loadMarktplaatsAd(sourceUrl);
     return;
   }
-  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats"].includes(linkSource())) {
+  if (isKleinanzeigenUrl(sourceUrl)) {
+    setLinkSource("kleinanzeigen");
+    loadKleinanzeigenAd(sourceUrl);
+    return;
+  }
+  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats", "kleinanzeigen"].includes(linkSource())) {
     setStatus("error", copy[state.lang][`${linkSource()}LinkExpected`], true);
     return;
   }
@@ -4886,6 +4975,7 @@ window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {
   if (next.autoscoutfr && !previous.autoscoutfr) window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(readManualFields());
   // The Netherlands / Belgium switched on: their counts (only while compared).
   if ((next.marktplaats && !previous.marktplaats) || (next.dehands && !previous.dehands)) window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(readManualFields());
+  if (next.kleinanzeigen && !previous.kleinanzeigen) window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT?.(readManualFields());
   if (next.avby && !previous.avby && state.lang !== "ru") {
     document.querySelector('[data-lang-button="ru"]')?.click();
   }

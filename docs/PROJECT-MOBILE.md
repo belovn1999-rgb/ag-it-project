@@ -71,7 +71,7 @@ autogood.by, USD).
 4. **B3 / B55 — конкретное авто против Польши** по полной оценке «na gotowo».
 5. ~~B48 — AutoScout24~~ ✅ 10-04: ссылка, полный список в Monitoring, все фильтры формы, одна строка «Niemcy» (mobile.de + AutoScout24).
 6. ~~B52 — Беларусь, этап 3~~ ✅ 10-03 (импортер перезапущен 10-04).
-6b. **B11 → B47 — новые порталы стран** (AutoScout24 FR ✅, Marktplaats + 2dehands ✅ 10-04; дальше Kleinanzeigen) (исследование 10-04, `docs/PORTALS-EXPANSION.md`):
+6b. **B11 → B47 — новые порталы стран** (AutoScout24 FR, Marktplaats + 2dehands, Kleinanzeigen ✅ 10-04; дальше приоритет 2: luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu) (исследование 10-04, `docs/PORTALS-EXPANSION.md`):
    сначала свой прокси, затем willhaben.at, Marktplaats + 2dehands, Kleinanzeigen,
    AutoScout24 FR; порядок утверждает владелец.
 7. **B61 — зависимые фильтры стр. 1 по базе ultimatespecs.com** (цель владельца
@@ -296,6 +296,19 @@ autogood.by, USD).
   объём в литрах, мощность, кузов, привод, продавец) и переключает сравнение на страну
   машины.
 - Фильтры и проверки — FILTERS-MOBILE-OTOMOTO.md §5f.
+
+### 4.2f Германия — Kleinanzeigen (с 10-04, B47)
+- Рынок `kleinanzeigen` — второй портал Германии (в основном частные продавцы): стр. 1
+  (логотип, счётчик только пока включён, ссылка 1 в 1 — Golf дизель 2019–2021, дилеры:
+  у нас 22, на сайте 22), анализ (свой график, но статистика и вывод — в общей строке
+  «Niemcy · mobile.de + AutoScout24 + Kleinanzeigen»), Monitoring (до 50 страниц),
+  распознавание ссылки на объявление. Дубликаты с mobile.de / AutoScout24 Германии (та же
+  цена и пробег) не показываются. По умолчанию выключен («+»).
+- В колонке «Niemcy» (B68) — третья строка; переключатель страны включает и выключает все
+  три портала Германии, серый логотип включает один.
+- Фильтр «Sprzedawca» по умолчанию «Dealer / komis» — тогда Kleinanzeigen добавляет мало
+  (Golf: 1 323 дилерских из 9 975); его сила — частники: выбери «Prywatny» или «Dowolny».
+- Фильтры и проверки — FILTERS-MOBILE-OTOMOTO.md §5g.
 
 ### 4.3 Распознавание ссылки
 - **mobile.de:** «Rozpoznaj» обрабатывает ссылку **внутри текущей страницы**.
@@ -1204,7 +1217,7 @@ mobile.de и AutoScout24 показывают под каждой ценой «~
 | B44 | Monitoring: на больших рынках (> 1000) «Nowe» по дате публикации (чтение «от новых» со стр. 4), фото/продавец/оценка портала в карточках; отметки «przejrzane / wysłane klientowi»; «+N» в полосе избранного | ⏳ | — |
 | B45 | Monitoring: страны DE/NL/BE/AT/LU для mobile.de + AutoScout24 (уникальные, без дубликатов mobile.de по цене и пробегу), выбор стран, анализ по странам стр. 1 | ✅ 03.10 | Claude |
 | B46 | AutoScout24 на стр. 1 (логотип, счётчик, ссылка) и в анализе (уникальные объявления), «Kraj» = DE/NL/BE/AT/LU для mobile.de и AutoScout24 | ✅ 03.10 | Claude |
-| B47 | Новые порталы стран (владелец 03.10 и 10-04): исследование 10-04 — `docs/PORTALS-EXPANSION.md` (замеры доступа, данных и объёма по VW Golf). Порядок: B11 (свой прокси) → willhaben.at → Marktplaats + 2dehands/2ememain → Kleinanzeigen → AutoScout24 FR → luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu → La Centrale и Leboncoin через свой Chrome (DataDome, после B6). Агрегаторы, аукционы, heycar, GoCar — не добавляем **Шаг 1 ✅ 10-04: AutoScout24 FR — рынок «Francja»** (§4.2d). **Шаг 2 ✅ 10-04: Marktplaats (NL) + 2dehands/2ememain (BE)** (§4.2e). | 🔄 AS24 FR ✅, Marktplaats + 2dehands ✅; дальше Kleinanzeigen | Claude |
+| B47 | Новые порталы стран (владелец 03.10 и 10-04): исследование 10-04 — `docs/PORTALS-EXPANSION.md` (замеры доступа, данных и объёма по VW Golf). Порядок: B11 (свой прокси) → willhaben.at → Marktplaats + 2dehands/2ememain → Kleinanzeigen → AutoScout24 FR → luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu → La Centrale и Leboncoin через свой Chrome (DataDome, после B6). Агрегаторы, аукционы, heycar, GoCar — не добавляем **Шаг 1 ✅ 10-04: AutoScout24 FR — рынок «Francja»** (§4.2d). **Шаг 2 ✅ 10-04: Marktplaats (NL) + 2dehands/2ememain (BE)** (§4.2e). **Шаг 3 ✅ 10-04: Kleinanzeigen (DE)** (§4.2f). | 🔄 AS24 FR, Marktplaats + 2dehands, Kleinanzeigen ✅; дальше luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu | Claude |
 | B48 | AutoScout24: распознавание ссылки на объявление, полный список в Monitoring, мощность л. с. → кВт; с 10-04 переносятся все фильтры формы, которые есть у AutoScout24 (оснащение `eq`, привод, объём, двери, места, версия, цвета, обивка, металлик, НДС, новый/б/у `offer`, повреждённые); статистика: mobile.de + AutoScout24 = одна строка «Niemcy» | ✅ | Claude |
 | B49 | Выбор рынков только на первой странице (с 09-29 — и логотипами на стр. 2, синхронно со стр. 1, решение владельца) управляет анализом, ссылками, избранным и историей; ширина статистики и выравнивание таблиц; единый пунктир медианы | ✅ | Codex |
 | B50 | Этап 1: модуль «под ключ РБ» + курсы НБРБ, сверка с autogood.by (99/99) | ✅ | Claude |
@@ -1231,6 +1244,7 @@ mobile.de и AutoScout24 показывают под каждой ценой «~
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-04 | Claude | **B47, шаг 3: Kleinanzeigen (DE)** — второй портал Германии: новый `src/kleinanzeigen-search.js` + справочник (`scripts/generate-kleinanzeigen-catalog.py`, 64 марки, 1 635 моделей; BMW/Mercedes — серия = серия + все её моторы); стр. 1 (логотип, счётчик, ссылка 1 в 1: Golf дизель 2019–2021, дилеры — 22 у нас и на сайте), анализ (общая строка «Niemcy · mobile.de + AutoScout24 + Kleinanzeigen», дубликаты с mobile.de / AutoScout24 отсеиваются: 20 своих из 22), Monitoring, распознавание ссылки, жёлтое «!». Длинные списки «лесенкой» по цене (50 страниц на поиск, нет сортировки от дорогих): Golf, все продавцы — выборка 409 из 8 199 по всему списку. Фильтры проверены по числу объявлений (FILTERS §5g) | этот коммит |
 | 10-04 | Claude | **B68 — «Aktualne oferty» в колонках стран.** (1) `mobile.html`: шесть колонок `[data-market-group]` (de, nlbe, pl, se, fr, by), строки порталов `[data-market-row]` с прежними `data-*`-счётчиками и ссылками; новая строка AutoScout24 NL·BE (`data-mobile-search-count-autoscoutnlbe`, `data-mobile-autoscoutnlbe-search`). (2) `mobile-market-analysis.js`: `MARKET_GROUPS`, `rowOn`, `groupOn`, `marketsWithGroup` (рынки + страны «Kraj»), голова колонки (флаги, страны, переключатель `role="switch"`); клик по выключенной колонке включает её, серый логотип во включённой — возвращает портал; тот же блок на стр. 2 (`applyMarketsOnAnalysis`: новые страны → данные читаются заново). (3) Счётчики: mobile.de и AutoScout24 колонки «Niemcy» — страны «Kraj» без NL/BE (`germanColumnFilters`, `countries()` в `autoscout-search.js`), AutoScout24 NL·BE — `cy=NL,B`, считается только пока колонка включена. (4) Флаги стран: метки полей «Więcej filtrów» (≈ — приблизительно; порталы в подсказке), ряды «Kraj i pochodzenie» («Niemcy · Holandia · Belgia — mobile.de, AutoScout24», «Polska — otomoto»), жёлтая полоса (флаг + портал), компактная строка (флаги включённых стран + число главного портала). (5) Названия категорий сводки стр. 1 и 2 — по центру. Замер главного портала NL·BE — см. §5. Проверки CI локально ✅ | этот коммит |
 | 10-04 | Claude | Репозиторий `ag-it-project` (владелец подтвердил): все адреса сайта и репозитория в документах, `AGENTS.md`, `README`, `publish.sh`, smoke-тестах, `partslink24-api.mjs` → `…/ag-it-project/`; `git remote` основной копии; `~/cloude/CLAUDE.md` и ссылки в памяти Claude. Старые снимки тестов `outputs/` не тронуты | этот коммит |
 | 10-04 | Claude | **Курсы только на стр. 3; «Paliwo» для otomoto.** (1) `mobile-rates.js`: строка курсов видна, только пока вкладка «Monitoring» отмечена текущей (`aria-current`, наблюдатель за вкладками), на стр. 1–2 скрыта. (2) «otomoto: Paliwo» в жёлтой полосе при «Hybryda benzyna» читалось как «топливо не уходит», хотя `filter_enum_fuel_type=hybrid` уходит (проверено 10-04: Corolla 2 406 → 1 543 с `hybrid`, E-Klasa 18 026 → 190, XC60 2 755 → 44). Теперь `otomotoSkippedFilterLabels` пишет только «Hybryda diesel — otomoto pokaże każdą hybrydę», если выбран дизельный гибрид без бензинового; заголовок полосы «Portale nie przyjmą dokładnie wszystkich filtrów» / «Не все фильтры порталы примут точно». Проверки CI локально: `check-js`, `test-mobile-search-model-version`, `audit-mobile-search --offline` ✅ | этот коммит |

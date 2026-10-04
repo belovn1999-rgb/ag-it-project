@@ -8,7 +8,7 @@
  */
 (() => {
   // AutoScout24 FR: AutoScout24 searched in France alone, the market "Francja".
-  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE", avby: "BY", autoscout: "DE", autoscoutfr: "FR", marktplaats: "NL", dehands: "BE" };
+  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE", avby: "BY", autoscout: "DE", autoscoutfr: "FR", marktplaats: "NL", dehands: "BE", kleinanzeigen: "DE" };
   const COUNTRY_NAMES = {
     pl: { BY: "Białoruś", PL: "Polska", DE: "Niemcy", SE: "Szwecja", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", DK: "Dania", LU: "Luksemburg", CH: "Szwajcaria" },
     ru: { BY: "Беларусь", PL: "Польша", DE: "Германия", SE: "Швеция", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", DK: "Дания", LU: "Люксембург", CH: "Швейцария" },
@@ -59,7 +59,7 @@
     const country = MARKET_COUNTRY[source] || source;
     // Two portals of the same countries: AutoScout24 is named, mobile.de
     // keeps the country (it was the only one there before).
-    const name = source === "autoscout" ? "AutoScout24" : countryName(country);
+    const name = source === "autoscout" ? "AutoScout24" : source === "kleinanzeigen" ? "Kleinanzeigen" : countryName(country);
     if (variant === "flagOnly") return `<span class="agMarketBadge isFlagOnly" title="${escape(name)}">${flagSvg(country)}<span class="agVisuallyHidden">${escape(name)}</span></span>`;
     return `<span class="agMarketBadge">${flagSvg(country)}<span>${escape(name)}</span></span>`;
   }

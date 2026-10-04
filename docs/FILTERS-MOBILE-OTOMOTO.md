@@ -531,6 +531,58 @@ keyless 11913 (1334), ночное видение 443379 (88), диски 11557 
 сиденья, поясница, галоген, пневмоподвеска, спортподвеска, ambient, зимние/летние шины,
 Rear traffic alert, матовый, «niepalący», «Bezwypadkowy», «Pierwszy właściciel».
 
+## 5g. Германия — Kleinanzeigen (с 2026-10-04, B47)
+
+Код: `src/kleinanzeigen-search.js` (`AUTOGOOD_KLEINANZEIGEN`), справочник
+`src/kleinanzeigen-catalog.generated.js` (`scripts/generate-kleinanzeigen-catalog.py`,
+64 марки, 1 635 моделей), чтение — `fetchKleinanzeigenListings` в
+`src/mobile-market-analysis.js`. Рынок `kleinanzeigen` — **второй портал Германии**:
+в анализе и Monitoring только объявления, которых нет на mobile.de / AutoScout24 (та же
+цена и пробег), статистика — в общей строке «Niemcy» (mobile.de + AutoScout24 +
+Kleinanzeigen). В основном частные продавцы: VW Golf — 9 975 объявлений, из них
+дилерских 1 323, частных 8 654.
+
+- **Поиск — в адресе:** `/s-autos/<марка>/[anbieter:gewerblich|privat/][preis:от:до/]
+  sortierung:preis/[seite:N/][<слова>/k0]c216+autos.marke_s:<марка>+autos.model_s:<модель>,<модель>
+  +<атрибут>:<значение>,<значение>`. Значения одного атрибута через запятую — «или»
+  (Golf + Golf Plus: 9 972 + 1 841 = 11 813), атрибуты и опции `autos.<опция>_b:true` —
+  «и» (подогрев сидений 4 470, + навигация 2 553). Читается через прокси (без CORS;
+  частые прямые запросы блокируются).
+- **Страницы:** 25 на страницу, не больше 50 страниц (51-я — переадресация), сортировки
+  «сначала дорогие» нет. Длинный список читается «лесенкой»: окно из 50 страниц, затем
+  `preis:<последняя цена>:` — новое окно; место объявления = всего − в новом окне +
+  позиция. Проверено: Golf, все продавцы, 8 199 объявлений — выборка 409 по всему
+  списку (места 2…8 199, цены 1 400–65 000 €) за 65 с.
+- **Цена:** «11.799 €», «16.999 € VB» (торг) — цена; одно «VB», «Zu verschenken» и
+  < 300 € — нет. TOP-объявления стоят первыми при любой сортировке: место в списке у
+  них не считается (берётся из их обычного места, если оно прочитано).
+- **Модели:** у BMW и Mercedes по моторам («320», «C 220») и отдельно серия («3er»,
+  «C-Klasse»): серия формы «3» / «C» = серия + все её моторы; «320» = только 320.
+- **Ссылка на объявление** (`/s-anzeige/…/<номер>`) распознаётся: цена, марка, модель,
+  пробег, месяц регистрации, топливо, мощность, коробка, кузов, оснащение (немецкие
+  названия, как у mobile.de), продавец.
+
+| Поле формы | Kleinanzeigen | Проверка (VW Golf, база 9 975) |
+|---|---|---|
+| Rok | `autos.ez_i:2019,2021` | 424 |
+| Przebieg | `autos.km_i:,100000` | 1 498 |
+| Cena | `preis:5000:15000` (в пути) | 2 712 |
+| Moc (л. с.) | `autos.power_i:110,150` | 2 585 |
+| Paliwo | `autos.fuel_s`: benzin 7 234, diesel 2 318, hybrid 36 (оба гибрида; plug-in ≈), elektro 7 | |
+| Skrzynia | `autos.shift_s`: automatik 2 079, manuell 7 426 | |
+| Nadwozie | `autos.typ_s`: kleinwagen (hatchback) 2 591, kombi 1 597, limousine 3 027, cabrio 494, coupe, suv (и pickup ≈), bus (van), andere | |
+| Liczba drzwi | `autos.anzahl_tueren_s`: 2_3 — 2 458, 4_5 — 6 596, 6_7 | |
+| Tapicerka | `autos.material_innenausstattung_s`: volleder 688, teilleder + alcantara 755, stoff, velours | |
+| Kolor nadwozia | `global.farbe`: schwarz 2 227, weiß 867, grau + silber 2 866, blau, rot, grün, braun, beige, gelb, orange, gold, violet | |
+| Sprzedawca | `anbieter:gewerblich` 1 323 / `anbieter:privat` 8 654 | |
+| Uszkodzone (скрыть) | `autos.schaden_s:nein` 8 196 (повреждённые `ja` 1 776; сумма = все) | |
+| Wersja | слова в пути `/<слова>/k0c216…` | «gti» 688 |
+| Opcje | `_b:true`: подогрев сидений `seat_heating` 4 470, навигация `navi`, диски `alluminium_rims` 4 694, Xenon/LED `xenon_led_light` 2 160 (≈ для LED, Xenon, Bi-Xenon), панорама `sunroof` 1 404 (≈ с люком), фаркоп `trailer_coupling` 1 888 (тип ≈), парковка `park_assistant` 3 756 (≈ любая), климат `air_conditioning` 6 618 (≈ без автомата/зон), круиз `speed_control` 3 616 (≈ адаптивный), некурящий `non_smoking` 5 041, сервисная книжка `full_service_history` 3 039 | |
+
+**Нет на Kleinanzeigen (предупреждение):** привод, объём, места, цвет салона, сдвижные
+двери, металлик, матовый, НДС, новый/б/у, гарантия, «Bezwypadkowy», «Pierwszy
+właściciel», остальные опции.
+
 ## 6. Известные открытые вопросы
 
 - Курс цены для otomoto — файл, а не живой курс (B12 в PROJECT-MOBILE.md).

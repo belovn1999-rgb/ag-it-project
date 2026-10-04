@@ -53,10 +53,10 @@ LU 322 · **FR 1 884** · SE 0.
    `r.jina.ai` пропускает ~20 страниц в минуту на всё сразу. Без своего прокси каждый
    новый портал замедляет и ломает остальные. Нужен бесплатный аккаунт Cloudflare
    владельца.
-1. **willhaben.at (AT)** — самый крупный в Австрии, всё в JSON, фильтры богатые.
-2. **Marktplaats (NL) + 2dehands/2ememain (BE)** — одна интеграция на две страны.
-3. **Kleinanzeigen (DE)** — частные продавцы, которых нет на mobile.de.
-4. **Франция, шаг 1: AutoScout24 FR** — добавить FR в «Kraj» (почти бесплатно).
+1. **willhaben.at (AT)** — самый крупный в Австрии, всё в JSON, фильтры богатые. (Порядок владельца 10-04: сначала AutoScout24 FR, Marktplaats + 2dehands, Kleinanzeigen — ✅ сделаны 10-04.)
+2. ✅ **Marktplaats (NL) + 2dehands/2ememain (BE)** — сделано 10-04 (FILTERS §5f).
+3. ✅ **Kleinanzeigen (DE)** — сделано 10-04 (FILTERS §5g).
+4. ✅ **Франция, шаг 1: AutoScout24 FR** — сделано 10-04 отдельным рынком «Francja» (FILTERS §5e).
 5. luxauto.lu (LU), AutoTrack (NL), AutoVlan (BE), Bytbil (SE), ParuVendu (FR).
 6. **Франция, шаг 3: La Centrale и Leboncoin** — только через собственный Chrome на
    сервере (B6), сначала проверить, пропускает ли DataDome.

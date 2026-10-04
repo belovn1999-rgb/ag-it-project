@@ -3222,3 +3222,14 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   background: #0b6e86;
   color: #fff;
 }
+
+/* Kleinanzeigen: dark green logo with the German flag (B47). */
+.agBrandLink.isKleinanzeigen:hover {
+  border-color: #1d4b00;
+  box-shadow: 0 0 0 1px #1d4b00;
+}
+
+.mobileLinkSource .isKleinanzeigen input:checked + span {
+  background: #1d4b00;
+  color: #fff;
+}

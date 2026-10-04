@@ -386,6 +386,7 @@
       autoscoutUnchecked: "AutoScout24: {count} z {total} ogłoszeń — bez mobile.de duplikatów nie da się odrzucić.",
       autoscoutFrFetched: "AutoScout24 FR: {count} z {total} ogłoszeń z Francji.",
       marktplaatsFetched: "{portal}: {count} z {total} ogłoszeń (pominięto {duplicates} duplikatów z mobile.de / AutoScout24).",
+      kleinanzeigenFetched: "Kleinanzeigen: {count} ogłoszeń, których nie ma na mobile.de / AutoScout24 (z {total}; pominięto {duplicates} duplikatów).",
       avbyFetched: "Wczytano {count} z {total} ofert av.by.",
       otomotoFailed: "Nie udało się pobrać ofert z otomoto.pl.",
       otomotoLabel: "Dane: otomoto.pl",
@@ -445,6 +446,7 @@
       sourceAutoscoutFr: "AutoScout24 FR",
       sourceMarktplaats: "Marktplaats",
       sourceDehands: "2dehands",
+      sourceKleinanzeigen: "Kleinanzeigen",
       sourceAvby: "av.by",
       marketsHeading: "Rynki",
       toneHigher: "najwyżej",
@@ -463,6 +465,7 @@
       marketAutoscoutFr: "Francja",
       marketMarktplaats: "Holandia",
       marketDehands: "Belgia",
+      marketKleinanzeigen: "Kleinanzeigen (Niemcy)",
       marketAvby: "Białoruś",
       sourcesLabel: "Źródła ofert",
       axisLabel: "Oś pozioma",
@@ -937,6 +940,7 @@
       autoscoutUnchecked: "AutoScout24: {count} из {total} объявлений — без mobile.de дубликаты не отсеять.",
       autoscoutFrFetched: "AutoScout24 FR: {count} из {total} объявлений из Франции.",
       marktplaatsFetched: "{portal}: {count} из {total} объявлений (пропущено дубликатов с mobile.de / AutoScout24: {duplicates}).",
+      kleinanzeigenFetched: "Kleinanzeigen: {count} объявлений, которых нет на mobile.de / AutoScout24 (из {total}; пропущено дубликатов: {duplicates}).",
       avbyFetched: "Загружено {count} из {total} объявлений av.by.",
       otomotoFailed: "Не удалось загрузить объявления с otomoto.pl.",
       otomotoLabel: "Данные: otomoto.pl",
@@ -996,6 +1000,7 @@
       sourceAutoscoutFr: "AutoScout24 FR",
       sourceMarktplaats: "Marktplaats",
       sourceDehands: "2dehands",
+      sourceKleinanzeigen: "Kleinanzeigen",
       sourceAvby: "av.by",
       marketsHeading: "Рынки",
       toneHigher: "выше всех",
@@ -1014,6 +1019,7 @@
       marketAutoscoutFr: "Франция",
       marketMarktplaats: "Нидерланды",
       marketDehands: "Бельгия",
+      marketKleinanzeigen: "Kleinanzeigen (Германия)",
       marketAvby: "Беларусь",
       sourcesLabel: "Источники",
       axisLabel: "Горизонтальная ось",
@@ -1181,17 +1187,21 @@
   // 2dehands/2ememain, one platform (src/marktplaats-search.js), each a market
   // of its own country; offers mobile.de / AutoScout24 already have there
   // (same price and mileage) are dropped.
-  const MARKET_SOURCES = ["otomoto", "mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands", "blocket", "avby"];
+  // Kleinanzeigen (2026-10-04, B47): Germany's classifieds, mostly private
+  // sellers; only what mobile.de / AutoScout24 do not have, in the row "Niemcy".
+  const MARKET_SOURCES = ["otomoto", "mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands", "blocket", "avby"];
+  // The portals of Germany: one statistics row "Niemcy" (B48).
+  const GERMAN_SOURCES = ["mobile", "autoscout", "kleinanzeigen"];
   // EU markets that are also priced turnkey in Minsk (Belarus mode).
-  const BY_EU_SOURCES = ["mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands"];
+  const BY_EU_SOURCES = ["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands"];
   const byEuSource = (source) => BY_EU_SOURCES.includes(source);
   const byEuCompared = () => BY_EU_SOURCES.some((source) => chartSources[source]);
   // Each marketplace's own currency: history and statistics keep it, the chart converts.
-  const SOURCE_CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK", avby: "USD", autoscout: "EUR", autoscoutfr: "EUR", marktplaats: "EUR", dehands: "EUR" };
+  const SOURCE_CURRENCY = { otomoto: "PLN", mobile: "EUR", blocket: "SEK", avby: "USD", autoscout: "EUR", autoscoutfr: "EUR", marktplaats: "EUR", dehands: "EUR", kleinanzeigen: "EUR" };
   // Markets whose offers are also shown "pod klucz" in Poland. av.by shows
   // only its own price (owner, 2026-10-02).
   // AutoScout24 is only on page 3 (with mobile.de), never in the analysis.
-  const TURNKEY_SOURCES = ["mobile", "blocket", "autoscout", "autoscoutfr", "marktplaats", "dehands"];
+  const TURNKEY_SOURCES = ["mobile", "blocket", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands"];
   const AVBY_PAGES = 8;
   const AVBY_PAGE_SIZE = 25;
   const BLOCKET_PAGES = 8;
@@ -1207,9 +1217,9 @@
       // Blocket starts switched off (owner, 2026-09-29): once for choices saved earlier.
       const blocketReset = localStorage.getItem("autogood.mobile.markets.blocketOff") !== "1";
       if (blocketReset) localStorage.setItem("autogood.mobile.markets.blocketOff", "1");
-      if (saved && ["otomoto", "mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands", "blocket", "avby"].some((source) => saved[source])) {
+      if (saved && ["otomoto", "mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands", "blocket", "avby"].some((source) => saved[source])) {
         // AutoScout24 goes with mobile.de for choices saved before it existed.
-        const picked = { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), autoscout: "autoscout" in saved ? Boolean(saved.autoscout) : Boolean(saved.mobile), blocket: blocketReset ? false : Boolean(saved.blocket), avby: Boolean(saved.avby), autoscoutfr: Boolean(saved.autoscoutfr), marktplaats: Boolean(saved.marktplaats), dehands: Boolean(saved.dehands) };
+        const picked = { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), autoscout: "autoscout" in saved ? Boolean(saved.autoscout) : Boolean(saved.mobile), blocket: blocketReset ? false : Boolean(saved.blocket), avby: Boolean(saved.avby), autoscoutfr: Boolean(saved.autoscoutfr), marktplaats: Boolean(saved.marktplaats), dehands: Boolean(saved.dehands), kleinanzeigen: Boolean(saved.kleinanzeigen) };
         if (Object.values(picked).some(Boolean)) return picked;
       }
     } catch {
@@ -1217,7 +1227,7 @@
     }
     // av.by starts switched off, like Blocket: added by its "+".
     // France starts switched off too.
-    return { otomoto: true, mobile: true, autoscout: true, autoscoutfr: false, marktplaats: false, dehands: false, blocket: false, avby: false };
+    return { otomoto: true, mobile: true, autoscout: true, autoscoutfr: false, marktplaats: false, dehands: false, kleinanzeigen: false, blocket: false, avby: false };
   })();
   // B68 (owner 2026-10-04): "Aktualne oferty" in country columns. A market is
   // picked by its country: the column's switch takes all its portals into the
@@ -1230,7 +1240,7 @@
   // DE (Austria, Luxembourg only in the filter itself) and NL + BE. A row is
   // a portal in its column; a new portal goes into its country's column here.
   const MARKET_GROUPS = [
-    { key: "de", countries: ["DE"], rows: ["mobile", "autoscout"] },
+    { key: "de", countries: ["DE"], rows: ["mobile", "autoscout", "kleinanzeigen"] },
     { key: "nlbe", countries: ["NL", "BE"], rows: ["autoscoutnlbe", "marktplaats", "dehands"] },
     { key: "pl", countries: ["PL"], rows: ["otomoto"] },
     { key: "se", countries: ["SE"], rows: ["blocket"] },
@@ -1278,11 +1288,14 @@
     if (key === "de") {
       if (on) {
         markets.mobile = false;
+        markets.kleinanzeigen = false;
         nextCountries = nlbe;
         markets.autoscout = Boolean(chartSources.autoscout) && nlbe.length > 0;
       } else {
         if (!onlyRow || onlyRow === "mobile") markets.mobile = true;
         if (!onlyRow || onlyRow === "autoscout") markets.autoscout = true;
+        // Kleinanzeigen (B47): Germany's third portal, on with the column.
+        if (!onlyRow || onlyRow === "kleinanzeigen") markets.kleinanzeigen = true;
         nextCountries = [...(german.length ? german : ["DE"]), ...nlbe];
       }
     } else if (key === "nlbe") {
@@ -1380,11 +1393,11 @@
   // The portal's own name (mobile.de, AutoScout24, …).
   function portalName(source) {
     const c = copy();
-    return source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : source === "avby" ? c.sourceAvby : source === "autoscout" ? c.sourceAutoscout : source === "autoscoutfr" ? c.sourceAutoscoutFr : source === "marktplaats" ? c.sourceMarktplaats : source === "dehands" ? c.sourceDehands : c.sourceMobile;
+    return source === "otomoto" ? c.sourceOtomoto : source === "blocket" ? c.sourceBlocket : source === "avby" ? c.sourceAvby : source === "autoscout" ? c.sourceAutoscout : source === "autoscoutfr" ? c.sourceAutoscoutFr : source === "marktplaats" ? c.sourceMarktplaats : source === "dehands" ? c.sourceDehands : source === "kleinanzeigen" ? c.sourceKleinanzeigen : c.sourceMobile;
   }
 
   function sourceClass(source) {
-    return source === "otomoto" ? "Otomoto" : source === "blocket" ? "Blocket" : source === "avby" ? "Avby" : source === "autoscout" ? "Autoscout" : source === "autoscoutfr" ? "AutoscoutFr" : source === "marktplaats" ? "Marktplaats" : source === "dehands" ? "Dehands" : "Mobile";
+    return source === "otomoto" ? "Otomoto" : source === "blocket" ? "Blocket" : source === "avby" ? "Avby" : source === "autoscout" ? "Autoscout" : source === "autoscoutfr" ? "AutoscoutFr" : source === "marktplaats" ? "Marktplaats" : source === "dehands" ? "Dehands" : source === "kleinanzeigen" ? "Kleinanzeigen" : "Mobile";
   }
   let importedDataset = null;
   let marketHistory = [];
@@ -1578,7 +1591,7 @@
     if (listing.source === "otomoto" && listing.priceType === "vat" && !listing.netPrice) listing.netPrice = Math.round(listing.price / 1.23);
     // mobile.de: a net price beside the gross one = VAT deductible; a dealer
     // without it sells on the margin scheme; a private seller has no VAT.
-    if (!listing.priceType && ["mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands"].includes(listing.source)) {
+    if (!listing.priceType && ["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands"].includes(listing.source)) {
       listing.priceType = listing.vatDeductible || listing.netPrice ? "vat" : listing.seller === "dealer" ? "margin" : listing.seller === "private" ? "private" : "";
       // Net by the VAT of the seller's country, when known.
       const vatRate = { DE: 0.19, AT: 0.2, FR: 0.2, SK: 0.23, CZ: 0.21, NL: 0.21, BE: 0.21, ES: 0.21, IT: 0.22, LU: 0.17, DK: 0.25, SE: 0.25, PL: 0.23, SI: 0.22, HR: 0.25, HU: 0.27 }[String(listing.country || "").toUpperCase()];
@@ -1612,7 +1625,8 @@
   // then its currency (Otomoto lists in PLN, Mobile.de in EUR).
   function listingSource(listing) {
     const tagged = String(listing?.source || "").toLowerCase();
-    if (tagged === "otomoto" || tagged === "mobile" || tagged === "blocket" || tagged === "avby" || tagged === "autoscout" || tagged === "autoscoutfr" || tagged === "marktplaats" || tagged === "dehands") return tagged;
+    if (tagged === "otomoto" || tagged === "mobile" || tagged === "blocket" || tagged === "avby" || tagged === "autoscout" || tagged === "autoscoutfr" || tagged === "marktplaats" || tagged === "dehands" || tagged === "kleinanzeigen") return tagged;
+    if (String(listing?.url || "").includes("kleinanzeigen.de")) return "kleinanzeigen";
     const url = String(listing?.url || "");
     if (url.includes("marktplaats.nl")) return "marktplaats";
     if (/2dehands\.be|2ememain\.be/.test(url)) return "dehands";
@@ -1989,6 +2003,75 @@
     return { listings, total };
   }
 
+  // Kleinanzeigen through the reader proxy, 25 a page, cheapest first, at most
+  // 50 pages a search and no "dearest first": a longer list is read on from
+  // the last price seen ("preis:<last>:" — the cheaper offers before it are
+  // then total − the new total). Sample: up to OTOMOTO_PAGES pages spread over
+  // the list; whole lists for favourites up to 250 offers, Monitoring
+  // (everyPage) up to 50 pages.
+  async function fetchKleinanzeigenListings(filters, { price = null, whole = false, everyPage = false, onProgress = null } = {}) {
+    const api = window.AUTOGOOD_KLEINANZEIGEN;
+    if (!api) return null;
+    const read = (page, priceFrom = null) => api.fetchPage(api.buildSearchUrl(filters, { page, price, priceFrom }));
+    const first = api.parsePage(await read(1));
+    const total = first.total;
+    if (!total) return { listings: [], total: 0 };
+    const pageCount = Math.ceil(total / api.PAGE_SIZE);
+    let wanted;
+    if (pageCount <= OTOMOTO_PAGES || (whole && total <= 250) || (everyPage && whole)) wanted = Array.from({ length: Math.min(pageCount, everyPage ? api.MAX_PAGES : pageCount) - 1 }, (_, index) => index + 2);
+    else wanted = [...new Set(Array.from({ length: OTOMOTO_PAGES }, (_, index) => Math.round(1 + (index * (pageCount - 1)) / (OTOMOTO_PAGES - 1))))].filter((page) => page > 1);
+    const seen = new Map();
+    const collect = (items) => items.forEach((listing) => {
+      const before = seen.get(listing.id);
+      // A TOP ad (no rank) gives way to the same ad at its place in the list.
+      if (!before || (!before.rank && listing.rank)) seen.set(listing.id, { ...listing, marketTotal: total });
+    });
+    collect(first.listings);
+    // Pages within the first 50 straight; beyond them, step on by price.
+    const direct = wanted.filter((page) => page <= api.MAX_PAGES);
+    const beyond = wanted.filter((page) => page > api.MAX_PAGES);
+    let done = 0;
+    for (let start = 0; start < direct.length; start += OTOMOTO_PARALLEL) {
+      const batch = direct.slice(start, start + OTOMOTO_PARALLEL);
+      const results = await Promise.allSettled(batch.map(async (page) => api.parsePage(await read(page), { page }).listings));
+      results.forEach((result) => {
+        if (result.status === "fulfilled") collect(result.value);
+      });
+      done += batch.length;
+      onProgress?.(done + 1, wanted.length + 1);
+    }
+    if (beyond.length) {
+      // Each step: the last page of a 50-page window, its last price opens the next window.
+      let base = 0;
+      let priceFrom = null;
+      let windowLast = await read(api.MAX_PAGES).then((html) => api.parsePage(html, { page: api.MAX_PAGES }));
+      collect(windowLast.listings);
+      for (let step = 0; step < 12 && beyond.some((page) => page * api.PAGE_SIZE > base + api.MAX_PAGES * api.PAGE_SIZE); step += 1) {
+        const lastPrice = Math.max(0, ...windowLast.listings.filter((listing) => listing.rank).map((listing) => listing.price));
+        if (!lastPrice || lastPrice === priceFrom) break;
+        priceFrom = lastPrice;
+        const opening = api.parsePage(await read(1, priceFrom));
+        base = Math.max(0, total - opening.total);
+        const rebase = (items) => items.map((listing) => (listing.rank ? { ...listing, rank: listing.rank + base } : listing));
+        collect(rebase(opening.listings));
+        const windowPages = beyond.map((page) => page - Math.floor(base / api.PAGE_SIZE)).filter((page) => page > 1 && page <= api.MAX_PAGES);
+        for (const page of windowPages) {
+          try {
+            collect(rebase(api.parsePage(await read(page, priceFrom), { page }).listings));
+          } catch {
+            // A missing page leaves a smaller sample.
+          }
+        }
+        done += windowPages.length + 1;
+        onProgress?.(Math.min(done + 1, wanted.length + 1), wanted.length + 1);
+        if (base + api.MAX_PAGES * api.PAGE_SIZE >= total) break;
+        windowLast = { listings: rebase(api.parsePage(await read(api.MAX_PAGES, priceFrom), { page: api.MAX_PAGES }).listings) };
+        collect(windowLast.listings);
+      }
+    }
+    return { listings: [...seen.values()], total };
+  }
+
   // The same car on both portals: same price and same mileage. AutoScout24
   // keeps only what mobile.de does not have.
   function dropMobileDuplicates(autoscoutListings, mobileListings) {
@@ -2170,6 +2253,7 @@
           everyPage: typeof progress === "function",
           onProgress: step("autoscoutfr"),
         }).then((result) => (result ? { ...result, listings: result.listings.map((listing) => ({ ...listing, source: "autoscoutfr" })) } : result)),
+        kleinanzeigen: () => fetchKleinanzeigenListings(filters, { price: prices.kleinanzeigen || null, whole, everyPage: typeof progress === "function", onProgress: step("kleinanzeigen") }),
         marktplaats: () => fetchMarktplaatsListings("marktplaats", filters, { price: prices.marktplaats || null, whole, everyPage: typeof progress === "function", onProgress: step("marktplaats") }),
         dehands: () => fetchMarktplaatsListings("dehands", filters, { price: prices.dehands || null, whole, everyPage: typeof progress === "function", onProgress: step("dehands") }),
       };
@@ -2185,12 +2269,12 @@
       };
       const run = (source) => {
         if (!selected.includes(source)) return null;
-        if (sequential && ["otomoto", "autoscout", "autoscoutfr", "marktplaats", "dehands", "blocket"].includes(source)) return inTurn(source);
+        if (sequential && ["otomoto", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands", "blocket"].includes(source)) return inTurn(source);
         return track(source, read[source]());
       };
-      const started = { otomoto: run("otomoto"), mobile: run("mobile"), autoscout: run("autoscout"), autoscoutfr: run("autoscoutfr"), marktplaats: run("marktplaats"), dehands: run("dehands"), blocket: run("blocket"), avby: run("avby") };
-      const [otomoto, mobile, blocket, avby, autoscout, autoscoutfr, marktplaats, dehands] = await Promise.allSettled([started.otomoto, started.mobile, started.blocket, started.avby, started.autoscout, started.autoscoutfr, started.marktplaats, started.dehands]);
-      this.lastErrors = Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout], ["autoscoutfr", autoscoutfr], ["marktplaats", marktplaats], ["dehands", dehands]]
+      const started = { otomoto: run("otomoto"), mobile: run("mobile"), autoscout: run("autoscout"), autoscoutfr: run("autoscoutfr"), marktplaats: run("marktplaats"), dehands: run("dehands"), kleinanzeigen: run("kleinanzeigen"), blocket: run("blocket"), avby: run("avby") };
+      const [otomoto, mobile, blocket, avby, autoscout, autoscoutfr, marktplaats, dehands, kleinanzeigen] = await Promise.allSettled([started.otomoto, started.mobile, started.blocket, started.avby, started.autoscout, started.autoscoutfr, started.marktplaats, started.dehands, started.kleinanzeigen]);
+      this.lastErrors = Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout], ["autoscoutfr", autoscoutfr], ["marktplaats", marktplaats], ["dehands", dehands], ["kleinanzeigen", kleinanzeigen]]
         .filter(([, result]) => result.status === "rejected").map(([source, result]) => [source, String(result.reason?.message || result.reason || "")]));
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
@@ -2224,8 +2308,14 @@
         const { unique, duplicates: dropped } = there.length ? dropMobileDuplicates(all, there) : { unique: all, duplicates: 0 };
         return [market, { result, listings: unique, duplicates: dropped }];
       }));
+      // Kleinanzeigen: what mobile.de or AutoScout24 already has in Germany
+      // (same price and mileage) counts once, on them.
+      const kleinanzeigenResult = kleinanzeigen.status === "fulfilled" ? kleinanzeigen.value : null;
+      const kleinanzeigenAll = (kleinanzeigenResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal }));
+      const germanOthers = [...mobileListings, ...autoscoutAll].filter((listing) => !listing.country || String(listing.country).toUpperCase() === "DE");
+      const { unique: kleinanzeigenListings, duplicates: kleinanzeigenDuplicates } = germanOthers.length ? dropMobileDuplicates(kleinanzeigenAll, germanOthers) : { unique: kleinanzeigenAll, duplicates: 0 };
       if (!otomotoListings.length && !mobileListings.length && !blocketListings.length && !avbyListings.length && !autoscoutListings.length && !autoscoutFrListings.length
-        && !local.marktplaats.listings.length && !local.dehands.listings.length) throw new Error(c.otomotoFailed);
+        && !local.marktplaats.listings.length && !local.dehands.listings.length && !kleinanzeigenListings.length) throw new Error(c.otomotoFailed);
       this.lastSources = [
         otomotoListings.length ? "otomoto" : "",
         mobileListings.length ? "mobile" : "",
@@ -2235,6 +2325,7 @@
         autoscoutFrListings.length ? "autoscoutfr" : "",
         local.marktplaats.listings.length ? "marktplaats" : "",
         local.dehands.listings.length ? "dehands" : "",
+        kleinanzeigenListings.length ? "kleinanzeigen" : "",
       ].filter(Boolean);
       const messages = [];
       if (otomotoListings.length) {
@@ -2265,8 +2356,12 @@
         messages.push(c.marktplaatsFetched.replace("{portal}", portalName(market)).replace("{count}", String(listings.length))
           .replace("{total}", String(result.total || listings.length)).replace("{duplicates}", String(dropped)));
       });
+      if (kleinanzeigenResult) {
+        messages.push(c.kleinanzeigenFetched.replace("{count}", String(kleinanzeigenListings.length))
+          .replace("{total}", String(kleinanzeigenResult.total || kleinanzeigenAll.length)).replace("{duplicates}", String(kleinanzeigenDuplicates)));
+      }
       setAnalysisStatus(messages.join(" "));
-      return [...otomotoListings, ...mobileListings, ...autoscoutListings, ...autoscoutFrListings, ...local.marktplaats.listings, ...local.dehands.listings, ...blocketListings, ...avbyListings];
+      return [...otomotoListings, ...mobileListings, ...autoscoutListings, ...kleinanzeigenListings, ...autoscoutFrListings, ...local.marktplaats.listings, ...local.dehands.listings, ...blocketListings, ...avbyListings];
     },
   };
 
@@ -3543,7 +3638,7 @@
   // Markets compared are named by country with its flag (logos are for
   // acting on a portal) — see src/market-badges.js.
   function marketBadge(source, variant = "flag") {
-    const fallback = source === "otomoto" ? "Polska" : source === "blocket" ? "Szwecja" : source === "avby" ? "Białoruś" : source === "autoscout" ? "AutoScout24" : source === "autoscoutfr" ? "Francja" : source === "marktplaats" ? "Holandia" : source === "dehands" ? "Belgia" : "Niemcy";
+    const fallback = source === "otomoto" ? "Polska" : source === "blocket" ? "Szwecja" : source === "avby" ? "Białoruś" : source === "autoscout" ? "AutoScout24" : source === "autoscoutfr" ? "Francja" : source === "marktplaats" ? "Holandia" : source === "dehands" ? "Belgia" : source === "kleinanzeigen" ? "Kleinanzeigen" : "Niemcy";
     return window.AUTOGOOD_MARKET_BADGE?.(source, variant) || escapeMarketHtml(fallback);
   }
 
@@ -3826,7 +3921,7 @@
     const bottom = 34;
     const x = (index) => left + (index / Math.max(1, log.length - 1)) * (width - left - right);
     const y = (value) => top + ((high - value) / Math.max(1, high - low)) * (height - top - bottom);
-    const colors = { otomoto: "#1d5fd0", mobile: "#f56a00", autoscout: "#a68a00", autoscoutfr: "#6b3fb8", marktplaats: "#0d8aa8", dehands: "#c2185b", blocket: "#d0101a", avby: "#13804a" };
+    const colors = { otomoto: "#1d5fd0", mobile: "#f56a00", autoscout: "#a68a00", autoscoutfr: "#6b3fb8", marktplaats: "#0d8aa8", dehands: "#c2185b", kleinanzeigen: "#4f7a00", blocket: "#d0101a", avby: "#13804a" };
     const ticks = [low, (low + high) / 2, high];
     const labelEvery = Math.max(1, Math.ceil(log.length / 6));
     return `
@@ -3849,7 +3944,7 @@
   // from cheapest to dearest; a repriced offer is joined to where it was.
   // Below: the offers of that date with what changed since the other one.
   const offerHistoryState = { id: "", at: "", compareAt: null, filter: "all" };
-  const OFFER_COLORS = { otomoto: "#1d5fd0", mobile: "#f56a00", autoscout: "#a68a00", autoscoutfr: "#6b3fb8", marktplaats: "#0d8aa8", dehands: "#c2185b", blocket: "#d0101a", avby: "#13804a" };
+  const OFFER_COLORS = { otomoto: "#1d5fd0", mobile: "#f56a00", autoscout: "#a68a00", autoscoutfr: "#6b3fb8", marktplaats: "#0d8aa8", dehands: "#c2185b", kleinanzeigen: "#4f7a00", blocket: "#d0101a", avby: "#13804a" };
   const OFFER_GROUP_ORDER = ["new", "cheaper", "dearer", "gone", "same"];
 
   function offerPositions(market) {
@@ -4114,7 +4209,7 @@
   // Page 3: portal name with the flags of the countries it is searched in.
   function monitoringPortalBadge(source, countries = []) {
     // A portal of one country (France, the Netherlands, Belgium): its flag and name.
-    if (["autoscoutfr", "marktplaats", "dehands"].includes(source)) {
+    if (["autoscoutfr", "marktplaats", "dehands", "kleinanzeigen"].includes(source)) {
       return `<span class="agMarketBadge">${window.AUTOGOOD_FLAG?.(window.AUTOGOOD_MARKET_COUNTRY?.[source]) || ""}<span>${source === "autoscoutfr" ? "AutoScout24" : escapeMarketHtml(portalName(source))}</span></span>`;
     }
     if (source !== "mobile" && source !== "autoscout") return marketBadge(source);
@@ -4122,7 +4217,7 @@
     return `<span class="agMarketBadge">${flags}<span>${source === "autoscout" ? "AutoScout24" : "mobile.de"}</span></span>`;
   }
   function offerCountryBadge(source, country) {
-    if (["autoscoutfr", "marktplaats", "dehands"].includes(source)) return monitoringPortalBadge(source);
+    if (["autoscoutfr", "marktplaats", "dehands", "kleinanzeigen"].includes(source)) return monitoringPortalBadge(source);
     if (source !== "mobile" && source !== "autoscout") return marketBadge(source);
     const name = window.AUTOGOOD_COUNTRY_NAME?.(country) || country;
     return `<span class="agMarketBadge" title="${escapeMarketHtml(name)}">${window.AUTOGOOD_FLAG?.(country) || ""}<span>${source === "autoscout" ? "AutoScout24" : "mobile.de"}${country ? ` · ${escapeMarketHtml(country)}` : ""}</span></span>`;
@@ -4159,7 +4254,7 @@
       return `
         <div class="mobileMonitoringPortal${on ? " isOn" : ""}">
           <button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-monitoring-market="${source}" aria-pressed="${on ? "true" : "false"}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>
-          <span class="mobileMonitoringPortalName">${["mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands"].includes(source) ? monitoringPortalBadge(source, scope.countries) : marketBadge(source)}${source === "autoscout" ? `<small>${escapeMarketHtml(c.monitoringAutoscout)}</small>` : ""}</span>
+          <span class="mobileMonitoringPortalName">${["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands"].includes(source) ? monitoringPortalBadge(source, scope.countries) : marketBadge(source)}${source === "autoscout" ? `<small>${escapeMarketHtml(c.monitoringAutoscout)}</small>` : ""}</span>
           <div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>
         </div>${source === "autoscout" ? countriesRow() : ""}`;
     }).join("");
@@ -5943,6 +6038,7 @@
     autoscoutfr: "./assets/brands/autoscout24-fr-mark.svg",
     marktplaats: "./assets/brands/marktplaats-mark.svg",
     dehands: "./assets/brands/2dehands-mark.svg",
+    kleinanzeigen: "./assets/brands/kleinanzeigen-mark.svg",
   };
   const BRAND_LOGOS = {
     mobile: "./assets/brands/mobile-de-logo.svg",
@@ -5953,6 +6049,7 @@
     autoscoutfr: "./assets/brands/autoscout24-fr-logo.svg",
     marktplaats: "./assets/brands/marktplaats-logo.svg",
     dehands: "./assets/brands/2dehands-logo.svg",
+    kleinanzeigen: "./assets/brands/kleinanzeigen-logo.svg",
   };
 
   // The marketplace's small mark as the link to one of its offers.
@@ -6006,6 +6103,7 @@
         ? [`${mobileCountries.join(", ")} (${["mobile", "autoscout"].filter((source) => sources.includes(source)).map(portalName).join(", ")})`] : []),
       ...(sources.includes("otomoto") ? [`${t.countryNames?.PL || "Polska"} (otomoto.pl)`] : []),
       ...(sources.includes("autoscoutfr") ? [`${copy().marketAutoscoutFr} (AutoScout24)`] : []),
+      ...(sources.includes("kleinanzeigen") ? [`${copy().marketKleinanzeigen}`] : []),
       ...(sources.includes("marktplaats") ? [`${copy().marketMarktplaats} (Marktplaats)`] : []),
       ...(sources.includes("dehands") ? [`${copy().marketDehands} (2dehands)`] : []),
       ...(sources.includes("blocket") ? [`${copy().marketBlocket} (blocket.se)`] : []),
@@ -6301,6 +6399,11 @@
       // Same for AutoScout24 in France.
     }
     const localUrls = {};
+    try {
+      localUrls.kleinanzeigen = window.AUTOGOOD_KLEINANZEIGEN?.buildSearchUrl(filters) || "";
+    } catch {
+      localUrls.kleinanzeigen = "";
+    }
     ["marktplaats", "dehands"].forEach((market) => {
       try {
         localUrls[market] = window.AUTOGOOD_MARKTPLAATS?.buildSearchUrl(market, filters) || "";
@@ -6659,7 +6762,7 @@
       reportActionsInTitle = true;
       const carSource = recognised?.importMode === "avby" && shownSources.includes("avby")
         ? "avby"
-        : ["marktplaats", "dehands"].includes(recognised?.importMode) && shownSources.includes(recognised.importMode)
+        : ["marktplaats", "dehands", "kleinanzeigen"].includes(recognised?.importMode) && shownSources.includes(recognised.importMode)
         ? recognised.importMode
         : recognised?.importMode === "autoscout" && recognised.location?.country === "FR" && shownSources.includes("autoscoutfr")
         ? "autoscoutfr"
@@ -6749,7 +6852,7 @@
       }
       const sourceCount = (source) => cleaned[source].length;
       const axisCaption = chartAxis === "mileage" ? c.axisMileageCaption : chartAxis === "year" ? c.axisYearCaption : c.axisRankCaption;
-      const marketName = (source) => (source === "otomoto" ? c.marketOtomoto : source === "blocket" ? c.marketBlocket : source === "avby" ? c.marketAvby : source === "autoscout" ? c.marketAutoscout : source === "autoscoutfr" ? c.marketAutoscoutFr : source === "marktplaats" ? c.marketMarktplaats : source === "dehands" ? c.marketDehands : c.marketMobile);
+      const marketName = (source) => (source === "otomoto" ? c.marketOtomoto : source === "blocket" ? c.marketBlocket : source === "avby" ? c.marketAvby : source === "autoscout" ? c.marketAutoscout : source === "autoscoutfr" ? c.marketAutoscoutFr : source === "marktplaats" ? c.marketMarktplaats : source === "dehands" ? c.marketDehands : source === "kleinanzeigen" ? c.marketKleinanzeigen : c.marketMobile);
 
       // One chart: its own P25, median and P75 (labelled), the dots given, and
       // other markets' medians as thin dashed guides. Every chart shares the
@@ -6906,13 +7009,15 @@
       // mobile.de and AutoScout24 are one market, Germany's dealers (owner
       // 2026-10-04, B48): one row, one median, one conclusion "z Niemiec".
       // AutoScout24 holds only what mobile.de does not have, so nothing counts twice.
-      const germanyJoined = shownSources.includes("mobile") && shownSources.includes("autoscout")
-        && marketListings.some((listing) => listing.source === "mobile") && marketListings.some((listing) => listing.source === "autoscout");
+      // Kleinanzeigen joins them (B47): only its offers mobile.de / AutoScout24 do not have.
+      const germanPresent = GERMAN_SOURCES.filter((source) => shownSources.includes(source) && marketListings.some((listing) => listing.source === source));
+      const germanyJoined = germanPresent.length > 1;
+      const germanyLead = germanPresent[0];
       const rowSources = (shownSources.length > 1 ? shownSources : [shownSources[0] || ""])
-        .filter((source) => !(germanyJoined && source === "autoscout"));
+        .filter((source) => !(germanyJoined && germanPresent.includes(source) && source !== germanyLead));
       const statRows = rowSources.map((source) => {
-        const joined = germanyJoined && source === "mobile";
-        const own = marketListings.filter((listing) => !source || listing.source === source || (joined && listing.source === "autoscout"));
+        const joined = germanyJoined && source === germanyLead;
+        const own = marketListings.filter((listing) => !source || listing.source === source || (joined && germanPresent.includes(listing.source)));
         const currency = SOURCE_CURRENCY[source] || displayCurrency;
         const foreign = source && turnkeySources.includes(source) && own.some((listing) => listing.turnkeyPln);
         // Belarus: German rows show the car's price (net/gross) with the price in
@@ -6932,8 +7037,8 @@
         const inPln = turnkeyStats || statsOf(own, (listing) => (byMode ? listing.price : priceInPln(listing.originalPrice, listing.originalCurrency || currency)));
         return {
           source,
-          sources: joined ? ["mobile", "autoscout"] : [source],
-          portal: joined ? `${portalName("mobile")} + ${portalName("autoscout")}` : portalName(source),
+          sources: joined ? germanPresent : [source],
+          portal: joined ? germanPresent.map(portalName).join(" + ") : portalName(source),
           stats: native, turnkeyStats, inPln, deliveredStats, baseLabel, avbyUsd, own, mileage: meanMileage(own),
         };
       }).filter((row) => row.stats.count);
@@ -7005,10 +7110,11 @@
         if (source === "autoscoutfr") return c.countryFrance;
         if (source === "marktplaats") return c.countryNetherlands;
         if (source === "dehands") return c.countryBelgium;
+        if (source === "kleinanzeigen") return c.countryGermany;
         const countries = (filters.countries || []).filter(Boolean);
         const base = countries.length === 1 ? (fromCountry[countries[0]] || c.countryAbroad) : c.countryAbroad;
         // mobile.de and AutoScout24 in the same countries are told apart by the portal.
-        return foreignRows.some((other) => other.source !== source && ["mobile", "autoscout"].includes(other.source)) ? `${base} (${portalName(source)})` : base;
+        return foreignRows.some((other) => other.source !== source && GERMAN_SOURCES.includes(other.source)) ? `${base} (${portalName(source)})` : base;
       };
       const plnText = (value) => formatMarketPrice(value, "PLN");
       const kmText = (value) => `${numberFormat().format(value)} km`;
@@ -7499,9 +7605,9 @@
             const attribute = chartSources[source] ? "data-mobile-analysis-fetch" : "data-mobile-analysis-market";
             const country = window.AUTOGOOD_MARKET_COUNTRY?.[source] || "";
             // AutoScout24 shares Germany with mobile.de: named, not "DE" twice.
-            const name = source === "autoscout" ? portalName(source) : window.AUTOGOOD_COUNTRY_NAME?.(country) || country;
+            const name = source === "autoscout" || source === "kleinanzeigen" ? portalName(source) : window.AUTOGOOD_COUNTRY_NAME?.(country) || country;
             const label = drawn ? `${name} (${cleaned[source].length})` : `${name} — ${c.marketPickOn}`;
-            const inner = `${window.AUTOGOOD_FLAG?.(country) || ""}<b>${escapeMarketHtml(source === "autoscout" ? "AS24" : country)}</b>`;
+            const inner = `${window.AUTOGOOD_FLAG?.(country) || ""}<b>${escapeMarketHtml(source === "autoscout" ? "AS24" : source === "kleinanzeigen" ? "KA" : country)}</b>`;
             return `<span class="mobileMarketChip${drawn ? "" : " isOff"}"${drawn ? "" : " data-report-hide"}>
               ${drawn
                 ? `<span class="mobileMarketChipBody" title="${escapeMarketHtml(label)}">${inner}</span>`
@@ -7525,8 +7631,8 @@
     // form holds unsaved changes), "Analiza rynku" and the offer count with a
     // link per compared market.
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
-    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnlbe: "[data-mobile-search-count-autoscoutnlbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
-    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, autoscoutnlbe: autoscoutNlBeUrl, autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
+    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", kleinanzeigen: "[data-mobile-search-count-kleinanzeigen]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnlbe: "[data-mobile-search-count-autoscoutnlbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
+    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, kleinanzeigen: localUrls.kleinanzeigen, autoscoutnlbe: autoscoutNlBeUrl, autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
     const specFoot = `
       <div class="mobileSearchSummaryFoot" data-report-hide>
         <span class="mobileSearchSummaryFootLabel">${escapeMarketHtml(t.offerCountLabel || "")}</span>
@@ -7924,7 +8030,7 @@
       const previouslySelected = savedEntry?.filters?.markets || MARKET_SOURCES;
       const savedUsable = savedEntry?.listings?.length >= 3
         && filters.markets.every((source) => previouslySelected.includes(source))
-        && savedEntry.listings.every((listing) => !["otomoto", "blocket", "avby", "autoscout", "autoscoutfr", "marktplaats", "dehands"].includes(listingSource(listing)) || listing.rank);
+        && savedEntry.listings.every((listing) => !["otomoto", "blocket", "avby", "autoscout", "autoscoutfr", "marktplaats", "dehands", "kleinanzeigen"].includes(listingSource(listing)) || listing.rank);
       const savedListings = savedUsable ? savedEntry.listings : null;
       setAnalysisStatus(c.preparing);
       analysisOpens.forEach((button) => { button.disabled = true; });

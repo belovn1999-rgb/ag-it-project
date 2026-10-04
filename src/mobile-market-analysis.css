@@ -4610,3 +4610,34 @@
 .mobileMarketPanel.isDehands .mobileMarketPanelHead b { color: var(--market-dehands); }
 .mobileMarketKeyTick.isGuide.isDehands { color: var(--market-dehands); }
 .mobileMonitoringTile.isDehands { --tile: var(--market-dehands); }
+
+/* Kleinanzeigen as a German portal (B47): its own chart colour. */
+.mobileMarketAnalysisPanel,
+.mobileMarketAnalysisView,
+:root {
+  --market-kleinanzeigen: #4f7a00;
+}
+
+.mobileMarketSourceButton.isKleinanzeigen i,
+.mobileMarketSourceTag.isKleinanzeigen i,
+.mobileMarketLegend .isKleinanzeigen i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--market-kleinanzeigen);
+}
+
+.mobileMarketPoint.isKleinanzeigen::before {
+  background: var(--market-kleinanzeigen);
+  box-shadow: 0 0 0 1px var(--market-kleinanzeigen);
+}
+
+.mobileMarketPointTooltip b.isKleinanzeigen { color: var(--market-kleinanzeigen); }
+.mobileMarketTrend.isCurve polyline.isKleinanzeigen { stroke: var(--market-kleinanzeigen); }
+.mobileMarketSearchArrow.isKleinanzeigen { color: var(--market-kleinanzeigen); }
+.mobileMarketMedian.isKleinanzeigen { border-top-color: var(--market-kleinanzeigen); }
+.mobileMarketKeyTick.isMedian.isKleinanzeigen { color: var(--market-kleinanzeigen); }
+.mobileMarketCompareRow.isKleinanzeigen { --row: var(--market-kleinanzeigen); }
+.mobileMarketPanel.isKleinanzeigen .mobileMarketPanelHead b { color: var(--market-kleinanzeigen); }
+.mobileMarketKeyTick.isGuide.isKleinanzeigen { color: var(--market-kleinanzeigen); }
+.mobileMonitoringTile.isKleinanzeigen { --tile: var(--market-kleinanzeigen); }
