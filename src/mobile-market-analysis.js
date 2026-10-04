@@ -2113,6 +2113,26 @@
 
   // The same car on both portals: same price and same mileage. AutoScout24
   // keeps only what mobile.de does not have.
+  // Main and second portals of one country (owner 2026-10-04): a second
+  // portal shows only the cars its country's main portal(s) do not have —
+  // the same price and mileage = the same car. Germany: mobile.de, then
+  // AutoScout24, then Kleinanzeigen; the Netherlands / Belgium: AutoScout24
+  // (and mobile.de there), then Marktplaats / 2dehands. Used on every check
+  // and again when Monitoring asks a portal once more on its own.
+  const SECOND_PORTALS = {
+    autoscout: { against: ["mobile"], country: "" },
+    kleinanzeigen: { against: ["mobile", "autoscout"], country: "DE" },
+    marktplaats: { against: ["mobile", "autoscout"], country: "NL" },
+    dehands: { against: ["mobile", "autoscout"], country: "BE" },
+  };
+  function dropCountryDuplicates(source, listings, others) {
+    const rule = SECOND_PORTALS[source];
+    if (!rule) return { unique: listings, duplicates: 0 };
+    const mains = others.filter((listing) => rule.against.includes(listingSource(listing))
+      && (!rule.country || !listing.country || String(listing.country).toUpperCase() === rule.country));
+    return mains.length ? dropMobileDuplicates(listings, mains) : { unique: listings, duplicates: 0 };
+  }
+
   function dropMobileDuplicates(autoscoutListings, mobileListings) {
     const keyOf = (listing) => {
       const mileage = Number(listing.mileage) || 0;
@@ -5447,14 +5467,17 @@
       try {
         let more = await readMarkets(retry);
         const nowOk = provider.lastSources || [];
-        // AutoScout24 asked again alone: mobile.de's duplicates dropped here.
-        if (nowOk.includes("autoscout") && !retry.includes("mobile") && sourcesOk.includes("mobile")) {
-          const mobileRaw = raw.filter((listing) => listingSource(listing) === "mobile");
-          const autoscoutRaw = more.filter((listing) => listingSource(listing) === "autoscout");
-          const { unique, duplicates } = dropMobileDuplicates(autoscoutRaw, mobileRaw);
-          more = [...more.filter((listing) => listingSource(listing) !== "autoscout"), ...unique];
-          if (provider.lastAutoscout) provider.lastAutoscout = { ...provider.lastAutoscout, duplicates, deduplicated: true };
-        }
+        // A second portal asked again alone (AutoScout24, Kleinanzeigen,
+        // Marktplaats, 2dehands): its country's main portals read in the first
+        // round are in "raw", their duplicates are dropped here too.
+        Object.keys(SECOND_PORTALS).filter((source) => nowOk.includes(source)).forEach((source) => {
+          const mainsBefore = raw.filter((listing) => SECOND_PORTALS[source].against.includes(listingSource(listing)));
+          if (!mainsBefore.length) return;
+          const own = more.filter((listing) => listingSource(listing) === source);
+          const { unique, duplicates } = dropCountryDuplicates(source, own, mainsBefore);
+          more = [...more.filter((listing) => listingSource(listing) !== source), ...unique];
+          if (source === "autoscout" && provider.lastAutoscout) provider.lastAutoscout = { ...provider.lastAutoscout, duplicates, deduplicated: true };
+        });
         raw = [...raw, ...more];
         sourcesOk = [...sourcesOk, ...nowOk];
         nowOk.forEach((source) => delete errors[source]);
