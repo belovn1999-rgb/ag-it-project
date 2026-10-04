@@ -52,6 +52,35 @@ function equalObject(actual, expected, label) {
   }
 }
 
+// Incident 2026-10-04 (B68): two stray closing tags pushed the filter form and
+// the search history out of page 1, so they showed on Analiza and Monitoring
+// too. Every container tag must close in order, and the form must stay inside
+// page 1 (`data-mobile-method-view="manual"`).
+function checkHtmlNesting(html) {
+  const voidTags = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
+  const body = html.replace(/<!--[\s\S]*?-->/g, (m) => m.replace(/[^\n]/g, " ")).replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/gi, (m) => m.replace(/[^\n]/g, " "));
+  const stack = [];
+  let formParents = null;
+  for (const match of body.matchAll(/<(\/?)([a-zA-Z][\w-]*)([^>]*)>/g)) {
+    const [, closing, rawTag, attrs] = match;
+    const tag = rawTag.toLowerCase();
+    if (voidTags.has(tag) || attrs.trim().endsWith("/")) continue;
+    const line = body.slice(0, match.index).split("\n").length;
+    if (!closing) {
+      if (!formParents && /class="[^"]*\bmobileManualForm\b/.test(attrs)) formParents = stack.map((entry) => entry.attrs);
+      stack.push({ tag, attrs, line });
+      continue;
+    }
+    const top = stack.pop();
+    if (!top || top.tag !== tag) throw new Error(`mobile.html: </${tag}> w linii ${line} nie zamyka <${top ? top.tag : "—"}> z linii ${top ? top.line : "—"}.`);
+  }
+  if (stack.length) throw new Error(`mobile.html: niezamknięty <${stack.at(-1).tag}> z linii ${stack.at(-1).line}.`);
+  if (!formParents?.some((attrs) => attrs.includes('data-mobile-method-view="manual"'))) {
+    throw new Error("mobile.html: formularz filtrów (.mobileManualForm) jest poza stroną 1.");
+  }
+}
+checkHtmlNesting(mobileHtml);
+
 function requireHtml(fragment, label) {
   if (!mobileHtml.includes(fragment)) throw new Error(`Brak kontraktu HTML: ${label}.`);
 }

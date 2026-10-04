@@ -69,6 +69,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, авария исправлена: после B68 стр. 2 и 3 показывали форму стр. 1 (лишние закрывающие теги); CI теперь проверяет вложенность тегов `mobile.html` (Claude).
 - 2026-10-04 — mobile.html, B69: анализ по странам продавца — mobile.de/AutoScout24 из NL и BE в строках «Holandia»/«Belgia» вместе с Marktplaats/2dehands, порталы под названием строки; AutoScout24 читается двумя выборками (DE и NL+BE); «Kraj» следует за включёнными колонками (Claude).
 - 2026-10-04 — mobile.html, B47: Kleinanzeigen — второй портал Германии (частники; строка «Niemcy» = mobile.de + AutoScout24 + Kleinanzeigen без дубликатов; ссылка на объявление; все фильтры проверены по числу объявлений) (Claude).
 - 2026-10-04 — mobile.html, B68: «Aktualne oferty» в колонках стран — Niemcy (mobile.de, AutoScout24), Holandia · Belgia (главный AutoScout24 — больше всего объявлений NL+BE, плюс Marktplaats, 2dehands), Polska, Szwecja, Francja, Białoruś; переключатель страны вместо «−/+» порталов; флаги стран в фильтрах; категории сводки по центру; следующий шаг — строки анализа по странам (B69) (Claude).
