@@ -411,6 +411,8 @@ function blocketSkippedFilterLabels(filters) {
   if (filters.slidingDoor) add(c.slidingDoorLabel);
   if (filters.warranty) add(c.warrantyLabel);
   if (filters.serviceHistory) add(c.serviceHistoryLabel);
+  if (filters.accidentFree) add(c.accidentFreeLabel);
+  if (filters.firstOwner) add(c.firstOwnerLabel);
   return labels;
 }
 

@@ -106,6 +106,8 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | Nowy / używany | `con=NEW / USED` ✅ (VW: 14 437 / 231 582) | `search[new_used]=new / used` ✅ (Caddy: 821 → 232 new) | поле `newUsed`: `new` / `used` / пусто |
 | Gwarancja (подпись «dotyczy mobile.de») | `fe=WARRANTY` ✅ (VW 119 066) | ✗ → предупреждение (фильтра нет) | поле `warranty` |
 | Serwisowany w ASO (до 10-02 «Pełna historia serwisowa») | `fe=FULL_SERVICE_HISTORY` ✅ (VW 155 385) | ≈ `search[filter_enum_service_record]=1` «Serwisowany w ASO» (Caddy 282) — уже, чем полная история | поле `serviceHistory` |
+| Bezwypadkowy (с 10-04, подпись «dotyczy otomoto») | ✗ — фильтра нет (в контракте поиска нет ни одного параметра «без ДТП»; `dam=false` = «повреждённые не показывать» — отправляется всегда) → предупреждение | `search[filter_enum_no_accident]=1` ✅ (Golf 3671 → 1602) | поле `accidentFree`; AutoScout24 — тоже нет (только `damaged_listing=exclude`, всегда), blocket и av.by — нет |
+| Pierwszy właściciel (с 10-04) | `pvo=1` ✅ «Vorbesitzer: bis zu 1» (Corrado 96 → 4) | `search[filter_enum_original_owner]=1` ✅ (Golf 3671 → 638) | поле `firstOwner`; AutoScout24 `prevownersid=1` ✅ (Golf DE 29 988 → 14 039); blocket и av.by — нет фильтра → предупреждение |
 | Na chodzie | `rtd=true` ✅ | ✗ | |
 | Niepalący | `fe=NONSMOKER_VEHICLE` ✅ | ✗ | |
 
@@ -359,7 +361,7 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   `pricefrom/priceto` (EUR), `powerfrom/powerto` + `powertype=kw|hp`,
   `fuel=B,D,2,3,E` (запятая = ИЛИ; plug-in → `2` приблизительно),
   `gear=A|M`, `body=1 Kleinwagen,2 Cabrio,3 Coupé,4 SUV/Pickup,5 Kombi,
-  6 Limousine,12 Van,7 Sonstige`, `custtype=D|P`. Коды — из `taxonomy`
+  6 Limousine,12 Van,7 Sonstige`, `custtype=D|P`, `prevownersid=1` (≤ 1 владелец, с 10-04). Коды — из `taxonomy`
   в `__NEXT_DATA__`.
 - **Не переносится:** привод (ни `drivetrain`, `dt`, `drive`… не меняют
   счёт), версия, опции, цвета.
@@ -389,8 +391,12 @@ LU 346, FR 7; у C-HR в NL/AT просто 0), но **несколько `cn` �
 
 - Курс цены для otomoto — файл, а не живой курс (B12 в PROJECT-MOBILE.md).
 - `audit-otomoto-search.mjs` не в `npm run verify`.
-- Бэклог фильтров (B24): радиус/индекс mobile.de, bezwypadkowy, pierwszy właściciel,
-  «dodane w ostatnich N dniach», Euro, цена в PLN, фильтры в hash-ссылке.
+- Бэклог фильтров (B24): радиус/индекс mobile.de, «dodane w ostatnich N dniach»
+  (mobile.de `doc=1|3|7|14`), Euro, цена в PLN, фильтры в hash-ссылке.
+  «Bezwypadkowy» и «Pierwszy właściciel» сделаны 10-04.
+- Контракт параметров mobile.de читается во **встроенном браузере** (страница поиска
+  открывается как у обычного пользователя): собрать `self.__next_f`, найти
+  объект с `"blt":{"type"` — 72 параметра (10-04). curl с сервера получает 403.
 - Codex (сессия 26.09) предлагал расширить «Комфорт» (Matrix LED, пассажирское сиденье,
   поясничная поддержка отдельно и др.) — не решено.
 
@@ -413,3 +419,4 @@ LU 346, FR 7; у C-HR в NL/AT просто 0), но **несколько `cn` �
 | 09-27 | Claude | blocket.se в анализе рынка (выборка, места, SEK, шведские стоп-слова) | этот коммит |
 | 09-29 | Codex | Значение продавца по умолчанию — `dealer` («Dealer / komis»): mobile.de `st=DEALER`, otomoto `private_business=business`, blocket `dealer_segment=2`; явный выбор пользователя и старые сохранённые фильтры не меняются | этот коммит |
 | 10-02 | Claude | av.by: четвёртая площадка — каталог, перенос всех фильтров (138 вариантов = ссылке самого av.by), предупреждения, счётчик, объявления, анализ, стр. 4, аудит | этот коммит |
+| 10-04 | Claude | «Bezwypadkowy» (otomoto `filter_enum_no_accident`; mobile.de, AutoScout24, blocket, av.by — нет, предупреждение) и «Pierwszy właściciel» (mobile.de `pvo=1`, otomoto `filter_enum_original_owner`, AutoScout24 `prevownersid=1`; blocket, av.by — нет); каждый параметр проверен по изменению числа | этот коммит |

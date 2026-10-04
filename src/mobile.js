@@ -33,6 +33,7 @@ const copy = {
     drivetrainLabel: "NAPĘD I SKRZYNIA",
     conditionLabel: "WNĘTRZE I STAN",
     tradeConditionsLabel: "Warunki zakupu",
+    filterGroupMore: "Więcej filtrów",
     calculatorDataEyebrow: "DANE DO KALKULATORA",
     brandLabel: "Marka",
     modelLabel: "Model",
@@ -229,6 +230,9 @@ const copy = {
     newUsedUsed: "Używany",
     warrantyLabel: "Gwarancja",
     serviceHistoryLabel: "Serwisowany w ASO",
+    accidentFreeLabel: "Bezwypadkowy",
+    accidentFreeNote: "(dotyczy otomoto)",
+    firstOwnerLabel: "Pierwszy właściciel",
     vehicleConditionLabel: "Stan pojazdu",
     otomotoSearchButton: "Szukaj na otomoto.pl",
     otomotoSearchOpening: "Otwieram Otomoto: od najniższej ceny.",
@@ -332,6 +336,7 @@ const copy = {
     drivetrainLabel: "ПРИВОД И КОРОБКА ПЕРЕДАЧ",
     conditionLabel: "САЛОН И СОСТОЯНИЕ",
     tradeConditionsLabel: "Условия сделки",
+    filterGroupMore: "Ещё фильтры",
     calculatorDataEyebrow: "ДАННЫЕ ДЛЯ КАЛЬКУЛЯТОРА",
     brandLabel: "Марка",
     modelLabel: "Модель",
@@ -528,6 +533,9 @@ const copy = {
     newUsedUsed: "Б/у",
     warrantyLabel: "Гарантия",
     serviceHistoryLabel: "Обслуживался у дилера (ASO)",
+    accidentFreeLabel: "Без ДТП",
+    accidentFreeNote: "(только otomoto)",
+    firstOwnerLabel: "Первый владелец",
     vehicleConditionLabel: "Состояние автомобиля",
     otomotoSearchButton: "Найти на otomoto.pl",
     otomotoSearchOpening: "Открываю Otomoto: сначала самые дешёвые.",
@@ -1402,6 +1410,8 @@ const els = {
   newUsedLabel: document.querySelector("[data-mobile-new-used-label]"),
   warranty: document.querySelector("[data-mobile-warranty]"),
   serviceHistory: document.querySelector("[data-mobile-service-history]"),
+  accidentFree: document.querySelector("[data-mobile-accident-free]"),
+  firstOwner: document.querySelector("[data-mobile-first-owner]"),
   modelHint: document.querySelector("[data-mobile-model-hint]"),
   searchCount: document.querySelector("[data-mobile-search-count]"),
   otomotoSearches: Array.from(document.querySelectorAll("[data-mobile-otomoto-search]")),
@@ -2076,6 +2086,8 @@ function defaultManualFields() {
     newUsed: "",
     warranty: false,
     serviceHistory: false,
+    accidentFree: false,
+    firstOwner: false,
   };
 }
 
@@ -2106,6 +2118,8 @@ function renderManualOptions(keepValues = true) {
   if (els.newUsed) els.newUsed.value = current.newUsed || "";
   if (els.warranty) els.warranty.checked = Boolean(current.warranty);
   if (els.serviceHistory) els.serviceHistory.checked = Boolean(current.serviceHistory);
+  if (els.accidentFree) els.accidentFree.checked = Boolean(current.accidentFree);
+  if (els.firstOwner) els.firstOwner.checked = Boolean(current.firstOwner);
   setSimpleSelectDisplays({
     vat: current.vat,
     seller: current.seller,
@@ -2212,6 +2226,8 @@ function readManualFields() {
     newUsed: els.newUsed?.value || "",
     warranty: els.warranty?.checked || false,
     serviceHistory: els.serviceHistory?.checked || false,
+    accidentFree: els.accidentFree?.checked || false,
+    firstOwner: els.firstOwner?.checked || false,
     // The compared markets (logos above the manual search) belong to the
     // search: a favourite remembers them.
     markets: typeof window !== "undefined" && typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : undefined,
@@ -2380,6 +2396,8 @@ function updateSelectedFiltersSummary() {
     filters.newUsed ? optionLabel(newUsedOptions(c).map(({ value, label }) => ({ value, [state.lang]: label })), filters.newUsed) : "",
     filters.warranty ? c.warrantyLabel : "",
     filters.serviceHistory ? c.serviceHistoryLabel : "",
+    filters.accidentFree ? c.accidentFreeLabel : "",
+    filters.firstOwner ? c.firstOwnerLabel : "",
     filters.damagedVehicles === "show" ? c.damagedVehiclesLabel : "",
   ].filter(Boolean);
   const title = [filters.brand, filters.model, filters.version].filter(Boolean).join(" ");
@@ -2646,6 +2664,7 @@ function buildMobileDeSearchUrl(filters) {
   if (slidingDoor) params.set("sld", slidingDoor);
   if (filters.warranty) params.append("fe", "WARRANTY");
   if (filters.serviceHistory) params.append("fe", "FULL_SERVICE_HISTORY");
+  if (filters.firstOwner) params.set("pvo", "1");
 
   params.set("sb", "p");
   params.set("od", "up");
@@ -2959,6 +2978,8 @@ function buildOtomotoSearchUrl(filters) {
   if (filters.newUsed === "new" || filters.newUsed === "used") params.set("search[new_used]", filters.newUsed);
   // otomoto knows "Serwisowany w ASO" only: the closest to a full history.
   if (filters.serviceHistory) params.set("search[filter_enum_service_record]", "1");
+  if (filters.accidentFree) params.set("search[filter_enum_no_accident]", "1");
+  if (filters.firstOwner) params.set("search[filter_enum_original_owner]", "1");
 
   params.set("search[order]", "filter_float_price:asc");
   return `${pathParts.join("/")}?${params.toString()}`;
@@ -3004,6 +3025,8 @@ function mobileDeSkippedFilterLabels(filters) {
     .map((feature) => els.features.find((input) => input.value === feature))
     .filter(Boolean)
     .map(optionLabelText);
+  // mobile.de has no accident-free filter (only "damaged: hide", always sent).
+  if (filters.accidentFree) labels.push(copy[state.lang].accidentFreeLabel);
   const { from, to } = doorRangeBounds(filters);
   const group = mobileDeDoorGroup(filters);
   if ((from !== null || to !== null) && ((from ?? 2) !== 2 || (to ?? 7) !== 7)

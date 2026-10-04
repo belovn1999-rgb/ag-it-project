@@ -5,8 +5,8 @@
 // only reads their DOM; every action goes through their own buttons.
 (() => {
   const TEXT = {
-    pl: { from: "od", to: "do", showAll: "Pokaż wszystkie ({count})", showLess: "Zwiń", toFilters: "Pokaż wybrane parametry" },
-    ru: { from: "от", to: "до", showAll: "Показать все ({count})", showLess: "Свернуть", toFilters: "Показать выбранные параметры" },
+    pl: { from: "od", to: "do", showAll: "Pokaż wszystkie ({count})", showLess: "Zwiń", toFilters: "Pokaż wybrane parametry", removeFilter: "Usuń filtr: {name}", chipsLabel: "Wybrane filtry" },
+    ru: { from: "от", to: "до", showAll: "Показать все ({count})", showLess: "Свернуть", toFilters: "Показать выбранные параметры", removeFilter: "Убрать фильтр: {name}", chipsLabel: "Выбранные фильтры" },
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
   const text = () => TEXT[lang()];
@@ -36,6 +36,188 @@
     label.parentElement.querySelector(".mobileRangePair input")?.focus();
   });
 
+  // ---- B18. The values set, as chips with × ----------------------------------
+  // Read from the chosen-filters block (its first three columns and the price):
+  // each chip clears its field on the form, the form then redraws everything.
+  const summaryBlock = document.querySelector(".mobileSearchSummary");
+  const chipItems = () => {
+    if (!summaryBlock) return [];
+    const any = window.AUTOGOOD_SPEC_COPY?.()?.specAny || "";
+    const items = [];
+    [...summaryBlock.querySelectorAll(".agSpecColumn")].slice(0, 3).forEach((column) => {
+      column.querySelectorAll("dl > div[data-mobile-summary-target]").forEach((row) => {
+        const value = row.querySelector("dd")?.textContent.trim();
+        if (!value || value === any) return;
+        const label = row.querySelector("dt")?.textContent.trim() || "";
+        // A bare number ("5", "2020") says little: the field's name goes first.
+        const text = /\p{L}/u.test(value) ? value : `${label}: ${value}`;
+        items.push({ text, title: `${label}: ${value}`, target: row.dataset.mobileSummaryTarget, whole: true });
+      });
+      column.querySelectorAll(".agSpecItems > span[data-mobile-summary-target]").forEach((item) => {
+        const value = item.textContent.trim();
+        if (value) items.push({ text: value, title: value, target: item.dataset.mobileSummaryTarget, whole: false });
+      });
+    });
+    const price = summaryBlock.querySelector(".agSpecPrice[data-mobile-summary-target]");
+    const priceText = price?.querySelector("b")?.textContent.trim();
+    if (price && priceText) items.push({ text: priceText, title: priceText, target: price.dataset.mobileSummaryTarget, whole: true });
+    return items;
+  };
+
+  // Clears one field: the whole field ("od / do", a group of options) or just
+  // the one option of an equipment chip. Every changed box fires input and
+  // change, as typing would.
+  const clearFilter = (selector, whole) => {
+    let target = null;
+    try {
+      target = document.querySelector(selector);
+    } catch {
+      target = null;
+    }
+    if (!target) return;
+    const scope = whole
+      ? target.closest(".mobileRangeField, fieldset, .mobileField, .mobileCheckOption") || target
+      : target;
+    const inputs = scope.matches("input") ? [scope] : [...scope.querySelectorAll("input")];
+    const changed = [];
+    const set = (input, checked) => {
+      if (input.checked !== checked) { input.checked = checked; changed.push(input); }
+    };
+    // Radio groups go back to their "any" choice (or to none when they have none).
+    const groups = new Set(inputs.filter((input) => input.type === "radio").map((input) => input.name));
+    groups.forEach((name) => {
+      if (!name) return;
+      const radios = [...document.querySelectorAll(`input[type="radio"][name="${CSS.escape(name)}"]`)];
+      const blank = radios.find((radio) => radio.value === "any" || radio.value === "");
+      radios.forEach((radio) => set(radio, radio === blank));
+    });
+    inputs.forEach((input) => {
+      if (input.type === "checkbox") set(input, false);
+      else if (input.type !== "radio" && input.value) {
+        input.value = "";
+        changed.push(input);
+      }
+    });
+    [...new Set(changed)].forEach((input) => {
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+      input.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  };
+
+  const chipsKeys = new WeakMap();
+  function renderChips(container) {
+    if (!container) return;
+    const items = chipItems();
+    const key = `${lang()}|${items.map((item) => `${item.target}=${item.text}`).join("|")}`;
+    if (chipsKeys.get(container) === key) return;
+    chipsKeys.set(container, key);
+    container.setAttribute("role", "list");
+    container.setAttribute("aria-label", text().chipsLabel);
+    container.replaceChildren(...items.map((item) => {
+      const chip = document.createElement("span");
+      chip.className = "mobileFilterChip";
+      chip.setAttribute("role", "listitem");
+      chip.title = item.title;
+      const label = document.createElement("span");
+      label.textContent = item.text;
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.textContent = "×";
+      remove.setAttribute("aria-label", text().removeFilter.replace("{name}", item.title));
+      remove.addEventListener("click", () => clearFilter(item.target, item.whole));
+      chip.append(label, remove);
+      return chip;
+    }));
+    if (container.matches("[data-mobile-filter-chips]")) container.hidden = !items.length;
+  }
+
+  const summaryChips = document.querySelector("[data-mobile-filter-chips]");
+  if (summaryBlock && summaryChips) {
+    let chipsTimer = 0;
+    const scheduleChips = () => {
+      if (chipsTimer) return;
+      chipsTimer = window.setTimeout(() => {
+        chipsTimer = 0;
+        renderChips(summaryChips);
+      }, 30);
+    };
+    // Only the chosen-filters body is watched: the chips' own redraw must not
+    // trigger another one.
+    const body = summaryBlock.querySelector("[data-mobile-selected-filters]");
+    if (body) new MutationObserver(scheduleChips).observe(body, { subtree: true, childList: true, characterData: true });
+    onLanguage.push(scheduleChips);
+    scheduleChips();
+  }
+
+  // ---- 9. "od" above "do" is said at once ------------------------------------
+  // The portals' links refused such a range without a word on the form; the
+  // field is now marked and told.
+  const checkRanges = () => {
+    form?.querySelectorAll(".mobileRangeField").forEach((field) => {
+      const inputs = field.querySelectorAll(".mobileRangePair input");
+      if (inputs.length !== 2) return;
+      const number = (input) => {
+        const raw = String(input.value || "").trim();
+        if (!raw || /[<>+]/.test(raw)) return null;
+        const value = Number(raw.replace(/[\s.]/g, "").replace(",", "."));
+        return Number.isFinite(value) ? value : null;
+      };
+      const from = number(inputs[0]);
+      const to = number(inputs[1]);
+      const wrong = from !== null && to !== null && from > to;
+      field.classList.toggle("isRangeInvalid", wrong);
+      inputs.forEach((input) => input.setAttribute("aria-invalid", wrong ? "true" : "false"));
+      let note = field.querySelector(".mobileRangeError");
+      if (wrong && !note) {
+        note = document.createElement("small");
+        note.className = "mobileRangeError";
+        note.setAttribute("role", "alert");
+        field.append(note);
+      }
+      if (note) {
+        note.hidden = !wrong;
+        note.textContent = wrong ? (copy?.[state.lang]?.marketSearchInvalidRange || "") : "";
+      }
+    });
+  };
+  form?.addEventListener("input", checkRanges);
+  form?.addEventListener("change", checkRanges);
+  onLanguage.push(checkRanges);
+  checkRanges();
+
+  // ---- B18. "Więcej filtrów": its counter tells only what differs from the
+  // defaults ("Sprawny technicznie", "Niemcy", "Dealer / komis" are not a
+  // choice the user made); the generic counter counted them and the hidden
+  // halves of the selects twice.
+  const moreCard = document.querySelector(".mobileMoreFiltersCard");
+  const MORE_KEYS = ["newUsed", "nonSmoking", "roadworthy", "warranty", "serviceHistory", "accidentFree", "firstOwner", "damagedVehicles", "vat", "seller", "countries"];
+  const moreCount = () => {
+    if (typeof readManualFields !== "function" || typeof defaultManualFields !== "function") return null;
+    let current;
+    try {
+      current = readManualFields();
+    } catch {
+      return null;
+    }
+    const defaults = defaultManualFields();
+    const norm = (value) => JSON.stringify(Array.isArray(value) ? [...value].sort() : value ?? "");
+    return MORE_KEYS.filter((key) => norm(current[key]) !== norm(defaults[key])).length;
+  };
+  const fixMoreCounter = () => {
+    const counter = moreCard?.querySelector("[data-mobile-collapse-count]");
+    const count = moreCount();
+    if (!counter || count === null) return;
+    const textValue = count ? String(count) : "";
+    if (counter.textContent !== textValue) counter.textContent = textValue;
+    if (counter.hidden !== !count) counter.hidden = !count;
+  };
+  if (moreCard) {
+    const counter = moreCard.querySelector("[data-mobile-collapse-count]");
+    if (counter) new MutationObserver(fixMoreCounter).observe(counter, { childList: true, characterData: true, subtree: true, attributes: true, attributeFilter: ["hidden"] });
+    form?.addEventListener("change", () => window.setTimeout(fixMoreCounter));
+    fixMoreCounter();
+  }
+
   // ---- 3. The slim bar ------------------------------------------------------
   // The full block of chosen filters scrolls away with the page; once it is
   // out of view, a fixed one-line bar shows the car, the set filters, the
@@ -60,18 +242,6 @@
     };
     const navBottom = () => Math.max(0, document.querySelector(".agGlobalNav")?.getBoundingClientRect().bottom || 0);
 
-    // The values set in the first three columns (car, mileage and year,
-    // equipment) and the price; "dowolne" and the empty equipment are left out.
-    const chosenFilters = () => {
-      const any = window.AUTOGOOD_SPEC_COPY?.()?.specAny || "";
-      const columns = [...summary.querySelectorAll(".agSpecColumn")].slice(0, 3);
-      const values = columns.flatMap((column) => [
-        ...[...column.querySelectorAll("dl > div > dd")].map((dd) => dd.textContent.trim()).filter((value) => value && value !== any),
-        ...[...column.querySelectorAll(".agSpecItems > span")].map((item) => item.textContent.trim()),
-      ]);
-      const price = summary.querySelector(".agSpecPrice b")?.textContent.trim();
-      return [...values, price].filter(Boolean);
-    };
 
     let marketsKey = "";
     const renderMarkets = () => {
@@ -101,7 +271,7 @@
 
     const sync = () => {
       nameEl.textContent = summary.querySelector(".agSpecTitle strong")?.textContent.trim() || "";
-      filtersEl.textContent = chosenFilters().join(" · ");
+      renderChips(filtersEl);
       summaryButton.setAttribute("aria-label", `${nameEl.textContent} — ${text().toFilters}`);
       summaryButton.title = text().toFilters;
       const starButton = original.star();

@@ -359,6 +359,11 @@
       marketAvby: "Białoruś",
       sourcesLabel: "Źródła ofert",
       axisLabel: "Oś pozioma",
+      scaleLabel: "Skala cen",
+      scaleShared: "Wspólna skala",
+      scaleOwn: "Osobna skala",
+      compareHintOwn: "ceny na gotowo*, zł — wykresy poniżej mają osobne skale",
+      compareHintByOwn: "Niemcy: ceny pod klucz z ocleniem*, Białoruś: ceny z ogłoszeń; USD — wykresy poniżej mają osobne skale",
       axisRank: "Kolejność cen",
       axisMileageShort: "Przebieg",
       axisYearShort: "Rok",
@@ -798,6 +803,11 @@
       marketAvby: "Беларусь",
       sourcesLabel: "Источники",
       axisLabel: "Горизонтальная ось",
+      scaleLabel: "Шкала цен",
+      scaleShared: "Общая шкала",
+      scaleOwn: "Своя шкала",
+      compareHintOwn: "цены под ключ*, zł — у графиков ниже свои шкалы",
+      compareHintByOwn: "Германия — цены под ключ с растаможкой*, Беларусь — цены в объявлениях; $, у графиков ниже свои шкалы",
       axisRank: "Порядок цен",
       axisMileageShort: "Пробег",
       axisYearShort: "Год",
@@ -973,6 +983,17 @@
     return { otomoto: true, mobile: true, autoscout: true, blocket: false, avby: false };
   })();
   let chartAxis = "rank";
+  // Several markets: one price scale for all charts ("shared", the default —
+  // compares markets) or each chart its own ("own" — shows the spread inside
+  // a market). A viewer's preference, remembered in this browser.
+  const CHART_SCALE_KEY = "autogood.mobile.chartScale";
+  let chartScale = (() => {
+    try {
+      return localStorage.getItem(CHART_SCALE_KEY) === "own" ? "own" : "shared";
+    } catch {
+      return "shared";
+    }
+  })();
   let displayCurrency = "EUR";
   // Mobile.de offers that arrived before the analysis was opened.
   let pendingMobile = null;
@@ -2429,6 +2450,8 @@
       roadworthy: "[data-mobile-roadworthy]",
       warranty: "[data-mobile-warranty]",
       serviceHistory: "[data-mobile-service-history]",
+      accidentFree: "[data-mobile-accident-free]",
+      firstOwner: "[data-mobile-first-owner]",
     };
     Object.entries(booleanSelectors).forEach(([key, selector]) => {
       const input = document.querySelector(selector);
@@ -2714,6 +2737,8 @@
     if (filters.newUsed) vehicle.push(selectedOptionText("[data-mobile-new-used]"));
     if (filters.warranty) vehicle.push(labelOf("[data-mobile-warranty]"));
     if (filters.serviceHistory) vehicle.push(labelOf("[data-mobile-service-history]"));
+    if (filters.accidentFree) vehicle.push(labelOf("[data-mobile-accident-free]"));
+    if (filters.firstOwner) vehicle.push(labelOf("[data-mobile-first-owner]"));
     if (filters.slidingDoor) vehicle.push(selectedOptionText("[data-mobile-sliding-door]"));
 
     const parameters = [];
@@ -4551,6 +4576,8 @@
       filters.newUsed ? selectedOptionText("[data-mobile-new-used]") : "",
       filters.warranty ? labelOf("[data-mobile-warranty]") : "",
       filters.serviceHistory ? labelOf("[data-mobile-service-history]") : "",
+      filters.accidentFree ? labelOf("[data-mobile-accident-free]") : "",
+      filters.firstOwner ? labelOf("[data-mobile-first-owner]") : "",
       filters.damagedVehicles === "show" ? labelOf("[data-mobile-damaged-check]") : "",
     ].filter(Boolean);
     return [
@@ -4960,8 +4987,12 @@
       const statistics = marketStatistics(marketListings);
       const domainMinimum = statistics.min;
       const domainMaximum = statistics.max;
+      const sharedMinimum = domainMinimum;
+      const sharedMaximum = domainMaximum;
       const scaleTicks = marketScaleTicks(domainMinimum, domainMaximum, statistics.step);
       const labelStep = marketTickLabelStep(domainMinimum, domainMaximum, statistics.step);
+      const sharedTicks = scaleTicks;
+      const sharedLabelStep = labelStep;
       const canJudge = statistics.count >= 8 && !filters.priceFrom && !filters.priceTo;
       const numbers = numberFormat();
 
@@ -5036,7 +5067,9 @@
       // Median price along mileage or year: offers under the line are cheap
       // for what they are, not only cheap overall. On the list-place axis: each
       // market's price curve. Built for any set of dots (one chart per market).
-      const buildTrend = (panelPlotted, panelSources) => {
+      const buildTrend = (panelPlotted, panelSources, scale = null) => {
+        const domainMinimum = scale ? scale.min : sharedMinimum;
+        const domainMaximum = scale ? scale.max : sharedMaximum;
         if (chartAxis === "rank") {
           if (panelPlotted.length < 3) return { html: "", medians: [] };
           const curves = panelSources.map((source) => {
@@ -5141,6 +5174,8 @@
         && normalizeToken(recognised.matchedFilters?.brand || "") === normalizeToken(filters.brand || "")
         && normalizeToken(recognised.matchedFilters?.model || "") === normalizeToken(filters.model || "");
       let carMarker = "";
+      // The same marker on a chart with its own price scale.
+      let carMarkerFor = null;
       let carVerdict = "";
       let carLocalVerdict = "";
       // Several markets: the car is judged against, and drawn on, its own market.
@@ -5190,9 +5225,13 @@
         if (chartAxis === "rank") carX = cheaperShare;
         else if (chartAxis === "mileage" && carMileage && axisSpan) carX = (carMileage - axisMin) / axisSpan;
         else if (chartAxis === "year" && carYear && axisSpan) carX = (carYear - axisMin) / axisSpan;
-        const clampedY = verticalMarketPosition(Math.min(Math.max(carPrice, domainMinimum), domainMaximum), domainMinimum, domainMaximum);
+        const carMarkerOn = (minimum, maximum) => {
+          const clampedY = verticalMarketPosition(Math.min(Math.max(carPrice, minimum), maximum), minimum, maximum);
+          return `<span class="mobileMarketCar" style="--x:${Math.min(1, Math.max(0, carX)).toFixed(4)};top:${clampedY}%" role="img" aria-label="${escapeMarketHtml(`${carLabel}: ${formatMarketPrice(carPrice)}`)}"><i aria-hidden="true"></i><b>${escapeMarketHtml(carLabel)} · ${escapeMarketHtml(formatMarketPrice(carPrice))}</b></span>`;
+        };
         if (carX !== null) {
-          carMarker = `<span class="mobileMarketCar" style="--x:${Math.min(1, Math.max(0, carX)).toFixed(4)};top:${clampedY}%" role="img" aria-label="${escapeMarketHtml(`${carLabel}: ${formatMarketPrice(carPrice)}`)}"><i aria-hidden="true"></i><b>${escapeMarketHtml(carLabel)} · ${escapeMarketHtml(formatMarketPrice(carPrice))}</b></span>`;
+          carMarker = carMarkerOn(domainMinimum, domainMaximum);
+          carMarkerFor = carMarkerOn;
         }
         const diffPct = Math.round(((carPrice - carStats.median) / carStats.median) * 100);
         const diff = Math.abs(diffPct) < 1 ? c.atMedian
@@ -5233,7 +5272,11 @@
       // One chart: its own P25, median and P75 (labelled), the dots given, and
       // other markets' medians as thin dashed guides. Every chart shares the
       // price scale, so two markets side by side compare at a glance.
-      const chartBody = ({ panelStats, panelPlotted, panelSuspects, trendHtml, car, source = "", guides = [], ticks = xTicks }) => {
+      const chartBody = ({ panelStats, panelPlotted, panelSuspects, trendHtml, car, source = "", guides = [], ticks = xTicks, scale = null }) => {
+        const domainMinimum = scale ? scale.min : sharedMinimum;
+        const domainMaximum = scale ? scale.max : sharedMaximum;
+        const scaleTicks = scale ? scale.ticks : sharedTicks;
+        const labelStep = scale ? scale.labelStep : sharedLabelStep;
         const high = verticalMarketPosition(panelStats.middleHigh, domainMinimum, domainMaximum);
         const low = verticalMarketPosition(panelStats.middleLow, domainMinimum, domainMaximum);
         const middle = verticalMarketPosition(panelStats.median, domainMinimum, domainMaximum);
@@ -5291,7 +5334,16 @@
           const own = marketListings.filter((listing) => listing.source === source);
           if (!own.length) return null;
           const panelStats = marketStatistics(own);
-          const panelPlotted = plotted.filter((point) => point.listing.source === source);
+          const scale = chartScale === "own" && panelStats.max > panelStats.min ? {
+            min: panelStats.min,
+            max: panelStats.max,
+            ticks: marketScaleTicks(panelStats.min, panelStats.max, panelStats.step),
+            labelStep: marketTickLabelStep(panelStats.min, panelStats.max, panelStats.step),
+          } : null;
+          const onScale = (points) => (scale
+            ? points.map((point) => ({ ...point, y: verticalMarketPosition(Math.min(Math.max(point.listing.price, scale.min), scale.max), scale.min, scale.max) }))
+            : points);
+          const panelPlotted = onScale(plotted.filter((point) => point.listing.source === source));
           const ranked = own.every((listing) => listing.rank && listing.marketTotal > 1);
           const total = ranked ? Math.max(...own.map((listing) => listing.marketTotal)) : 0;
           const ticks = chartAxis === "rank" && total
@@ -5309,17 +5361,18 @@
             html: chartBody({
               panelStats,
               panelPlotted,
-              panelSuspects: suspectPlotted.filter((point) => point.listing.source === source),
-              trendHtml: buildTrend(panelPlotted, [source]).html,
-              car: source === carSource ? carMarker : "",
+              panelSuspects: onScale(suspectPlotted.filter((point) => point.listing.source === source)),
+              trendHtml: buildTrend(panelPlotted, [source], scale).html,
+              car: source === carSource ? (scale && carMarkerFor ? carMarkerFor(scale.min, scale.max) : carMarker) : "",
               source,
               ticks,
+              scale,
               guides: shownSources.filter((other) => other !== source)
                 .map((other) => {
                   const others = marketListings.filter((listing) => listing.source === other);
                   return others.length ? { source: other, value: marketStatistics(others).median } : null;
                 })
-                .filter(Boolean),
+                .filter((guide) => guide && (!scale || (guide.value >= scale.min && guide.value <= scale.max))),
             }),
           };
         }).filter(Boolean);
@@ -5343,7 +5396,7 @@
           <section class="mobileMarketCompareStrip" aria-label="${escapeMarketHtml(c.compareHeading)}">
             <div class="mobileMarketCompareHead">
               <strong>${escapeMarketHtml(c.compareHeading)}</strong>
-              <small>${escapeMarketHtml(byMode ? c.compareHintBy : c.compareHint)}</small>
+              <small>${escapeMarketHtml(chartScale === "own" ? (byMode ? c.compareHintByOwn : c.compareHintOwn) : (byMode ? c.compareHintBy : c.compareHint))}</small>
             </div>
             <div class="mobileMarketCompareAxis">
               ${scaleTicks.filter((price) => price % labelStep === 0).map((price) => `<em style="left:${at(price)}">${escapeMarketHtml(formatMarketPrice(price))}</em>`).join("")}
@@ -5611,6 +5664,10 @@
               ${[["rank", c.axisRank], ["mileage", c.axisMileageShort], ["year", c.axisYearShort]].map(([axis, label]) => `
                 <button class="mobileMarketAxisButton" type="button" data-mobile-market-axis="${axis}" aria-pressed="${chartAxis === axis ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
             </div>
+            ${compareMarkets ? `<div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.scaleLabel)}">
+              ${[["shared", c.scaleShared], ["own", c.scaleOwn]].map(([scale, label]) => `
+                <button class="mobileMarketAxisButton" type="button" data-mobile-market-scale="${scale}" aria-pressed="${chartScale === scale ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
+            </div>` : ""}
           </div>
         </div>
 
@@ -6391,6 +6448,17 @@
     const axisButton = event.target.closest("[data-mobile-market-axis]");
     if (axisButton) {
       chartAxis = axisButton.dataset.mobileMarketAxis;
+      renderAnalysis();
+      return;
+    }
+    const scaleButton = event.target.closest("[data-mobile-market-scale]");
+    if (scaleButton) {
+      chartScale = scaleButton.dataset.mobileMarketScale === "own" ? "own" : "shared";
+      try {
+        localStorage.setItem(CHART_SCALE_KEY, chartScale);
+      } catch {
+        // Not remembered; the switch still works on this page.
+      }
       renderAnalysis();
       return;
     }

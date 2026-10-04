@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=accident-20261003" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=narrowing-order-20261004" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=b18-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=monitoring-audit-20261003d" />
-    <link rel="stylesheet" href="./src/mobile-page2.css?v=page2-audit-20261003" />
+    <link rel="stylesheet" href="./src/mobile-page2.css?v=b18-20261004" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="mobileBody">
@@ -92,6 +92,8 @@
             <section class="mobileSearchSummary">
               <button class="mobileSearchCountSaveButton mobileSearchSummaryStar" type="button" data-mobile-market-history-save aria-pressed="false" aria-label="Zapisz na stałe" title="Zapisz na stałe"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
               <div class="mobileSelectedFilters mobileSearchSummaryBody" data-mobile-selected-filters aria-live="polite"></div>
+              <!-- The values set, each with × to clear it (mobile-page1.js). -->
+              <div class="mobileFilterChips" data-mobile-filter-chips hidden></div>
               <div class="mobileSearchSummaryFoot">
                 <span class="mobileSearchSummaryFootLabel" data-i18n="offerCountLabel">Aktualne oferty</span>
                 <div class="mobileSearchSummaryActions">
@@ -479,9 +481,13 @@
                 </div>
               </div>
             </section>
-            <section class="mobileFilterCard mobileVehicleConditionSection" aria-labelledby="mobile-filter-group-condition">
-              <h2 id="mobile-filter-group-condition" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#alert"></use></svg><span data-i18n="vehicleConditionLabel">Stan pojazdu</span></h2>
+            <!-- Rarely changed: vehicle condition and purchase terms, folded in one
+                 card (owner 2026-10-04, B18). Their own headings stay (h3). -->
+            <section class="mobileFilterCard mobileFilterCardCollapsible mobileMoreFiltersCard" data-mobile-collapsible aria-labelledby="mobile-filter-group-more">
+              <h2 id="mobile-filter-group-more" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="filterGroupMore">Więcej filtrów</span></h2>
               <div class="mobileFilterCardBody">
+                <div class="mobileEquipmentPart mobileVehicleConditionSection" role="group" aria-labelledby="mobile-filter-group-condition">
+                  <h3 id="mobile-filter-group-condition" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#alert"></use></svg><span data-i18n="vehicleConditionLabel">Stan pojazdu</span></h3>
                 <div class="mobileVehicleConditionGrid">
                   <label class="mobileField mobileNewUsedField">
                     <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="newUsedLabel">Nowy / używany</span></span>
@@ -508,17 +514,23 @@
                       <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="serviceHistoryLabel">Serwisowany w ASO</span>
                     </label>
                     <label class="mobileCheckOption">
+                      <input data-mobile-accident-free type="checkbox" />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="accidentFreeLabel">Bezwypadkowy</span> <small class="mobileFieldNote" data-i18n="accidentFreeNote">(dotyczy otomoto)</small>
+                    </label>
+                    <label class="mobileCheckOption">
+                      <input data-mobile-first-owner type="checkbox" />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="firstOwnerLabel">Pierwszy właściciel</span>
+                    </label>
+                    <label class="mobileCheckOption">
                       <input data-mobile-damaged-check type="checkbox" />
                       <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#alert"></use></svg><span data-i18n="damagedVehiclesLabel">Uszkodzone pojazdy</span>
                       <input data-mobile-damaged-vehicles type="hidden" />
                     </label>
                   </div>
                 </div>
-              </div>
-            </section>
-            <section class="mobileFilterCard mobileTradeSection" aria-labelledby="mobile-filter-group-trade">
-              <h2 id="mobile-filter-group-trade" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg><span data-i18n="tradeConditionsLabel">Warunki zakupu</span></h2>
-              <div class="mobileFilterCardBody">
+                </div>
+                <div class="mobileEquipmentPart mobileTradeSection" role="group" aria-labelledby="mobile-filter-group-trade">
+                  <h3 id="mobile-filter-group-trade" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg><span data-i18n="tradeConditionsLabel">Warunki zakupu</span></h3>
                 <div class="mobileTradeGrid">
                   <label class="mobileField">
                     <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#percent"></use></svg><span data-i18n="vatLabel">VAT</span></span>
@@ -550,6 +562,7 @@
                     </div>
                   </label>
                 </div>
+                </div>
               </div>
             </section>
           </div>
@@ -570,7 +583,7 @@
              set filters, the offer counts and "Analiza rynku" (mobile-page1.js). -->
         <div class="mobileCompactBar" data-mobile-compact-bar hidden>
           <button class="mobileCompactStar" type="button" data-compact-star aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>
-          <button class="mobileCompactSummary" type="button" data-compact-summary><strong data-compact-name></strong><span data-compact-filters></span></button>
+          <div class="mobileCompactSummary"><button class="mobileCompactName" type="button" data-compact-summary><strong data-compact-name></strong></button><span class="mobileFilterChips isCompact" data-compact-filters></span></div>
           <div class="mobileCompactMarkets" data-compact-markets></div>
           <button class="mobileCompactDone" type="button" data-compact-done hidden></button>
           <button class="mobileCompactAnalysis" type="button" data-compact-analysis></button>
@@ -606,17 +619,17 @@
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
     <script src="./src/market-badges.js?v=autoscout2-20261003"></script>
-    <script src="./src/mobile.js?v=popular-models2-20261004"></script>
-    <script src="./src/blocket-search.js?v=form-groups-20261002"></script>
-    <script src="./src/avby-search.js?v=avby-20261002"></script>
-    <script src="./src/autoscout-search.js?v=series-slugs-20261003"></script>
+    <script src="./src/mobile.js?v=b18-20261004"></script>
+    <script src="./src/blocket-search.js?v=b18-20261004"></script>
+    <script src="./src/avby-search.js?v=b18-20261004"></script>
+    <script src="./src/autoscout-search.js?v=b18-20261004"></script>
     <script src="./src/turnkey-estimate.js?v=audit3-20261003"></script>
     <script src="./src/turnkey-belarus.js?v=by-prices-20261003"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=page2-audit2-20261003"></script>
+    <script src="./src/mobile-market-analysis.js?v=b18-20261004"></script>
     <script src="./src/mobile-favorites-watch.js?v=autoscout2-20261003"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
-    <script src="./src/mobile-page1.js?v=page1-audit-20261003"></script>
+    <script src="./src/mobile-page1.js?v=b18-20261004"></script>
     <script src="./src/mobile-page2.js?v=page2-audit2-20261003"></script>
   </body>
 </html>

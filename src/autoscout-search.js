@@ -45,6 +45,8 @@
     if (filters.drive && filters.drive !== "any") missing.push("drive");
     if (filters.version) missing.push("version");
     if ((filters.fuels || []).includes("plugin")) missing.push("plugin≈hybrid");
+    // No accident-free filter (only "damaged: exclude", always sent).
+    if (filters.accidentFree) missing.push(window.AUTOGOOD_SPEC_COPY?.()?.accidentFreeLabel || "accident-free");
     return missing;
   }
 
@@ -57,6 +59,7 @@
     params.set("atype", "C");
     params.set("cy", countries.map((code) => COUNTRY[code] || code).join(","));
     params.set("damaged_listing", "exclude");
+    if (filters.firstOwner) params.set("prevownersid", "1");
     params.set("sort", "price");
     params.set("desc", desc ? "1" : "0");
     params.set("ustate", filters.newUsed === "new" ? "N" : filters.newUsed === "used" ? "U" : "N,U");

@@ -141,3 +141,16 @@
 /* Row numbers up to 999 fit their column. */
 .mobileMarketAnalysisView .mobileMarketOffersTable th:nth-child(1) { width: 5.5%; }
 .mobileMarketAnalysisView .mobileMarketOffersTable th:nth-child(2) { width: 29.5%; }
+
+/* "Analiza rynków": the "− / +" on every country chip is always visible
+   (it was shown only on hover), 22px, with room between the chips. */
+.mobileMarketAnalysisView .mobileMarketChip .agMarketToggle {
+  width: 22px;
+  height: 22px;
+  font-size: 15px;
+  opacity: 1;
+}
+
+.mobileMarketAnalysisView .mobileMarketSourcesList {
+  column-gap: 14px;
+}
