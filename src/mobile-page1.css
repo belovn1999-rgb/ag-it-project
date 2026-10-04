@@ -348,7 +348,8 @@
   overflow: visible;
 }
 
-.mobileMarketHistoryList:not(.isExpanded) > .mobileMarketHistoryItem:nth-child(n + 9):not(.isSelected) {
+.mobileMarketHistoryList:not(.isExpanded):not(.isFiltering) > .mobileMarketHistoryItem:nth-child(n + 9):not(.isSelected),
+.mobileMarketHistoryList > .mobileMarketHistoryItem.isFilteredOut {
   display: none;
 }
 
@@ -517,4 +518,194 @@
 /* ---- "Więcej filtrów": condition and purchase terms in one folded card ---- */
 .mobileMoreFiltersCard .mobileEquipmentPart + .mobileEquipmentPart {
   margin-top: var(--space-lg);
+}
+
+/* ---- B19 (04.10): compact history rows — the search, the client's note
+   under it, "Analiza →" beside the star and the cross; a search box from
+   6 searches; a pencil on a favourite edits its note. ---- */
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem {
+  grid-template-areas:
+    "main actions"
+    "note actions";
+  row-gap: 6px;
+  column-gap: var(--space-lg);
+  padding-top: var(--space-md);
+  padding-bottom: var(--space-md);
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistorySelect {
+  grid-area: main;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryMain {
+  gap: 2px;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryActions {
+  grid-area: actions;
+  gap: 6px;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button {
+  min-height: 36px;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.mobileMarketHistoryIconButton {
+  width: 36px;
+  font-size: var(--text-lg);
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryFavoriteButton {
+  font-size: 19px !important;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.isDelete {
+  margin-left: 0;
+}
+
+.mobileMarketHistoryItem button.mobileMarketHistoryOpen {
+  padding: 0 var(--space-md);
+  background: color-mix(in srgb, var(--color-brand) 9%, var(--color-surface));
+}
+
+.mobileMarketHistoryNote {
+  grid-area: note;
+  box-sizing: border-box;
+  width: min(100%, 420px);
+  min-height: 30px;
+  margin-left: calc(18px + var(--space-md));
+  border: var(--rule-thin) dashed var(--color-field);
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--color-ink);
+  padding: 0 var(--space-sm);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.mobileMarketHistoryNote:not(:placeholder-shown) {
+  border-style: solid;
+  border-color: var(--color-rule);
+  background: var(--color-surface);
+  font-weight: 700;
+}
+
+.mobileMarketHistoryNote::placeholder {
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.mobileMarketHistoryNote:hover {
+  border-color: var(--color-brand);
+}
+
+.mobileMarketHistoryNote:focus-visible,
+.mobileHistorySearch:focus-visible,
+.mobileMarketFavoriteNoteInput:focus-visible,
+.mobileMarketFavoriteNoteEdit:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.mobileMarketHistoryHead {
+  align-items: center;
+}
+
+.mobileHistorySearch {
+  box-sizing: border-box;
+  flex: 1 1 240px;
+  max-width: 340px;
+  min-height: 36px;
+  margin-left: auto;
+  border: var(--rule-thin) solid var(--color-field);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  padding: 0 var(--space-sm);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.mobileHistorySearch[hidden],
+.mobileHistoryNoMatch[hidden] {
+  display: none;
+}
+
+.mobileHistoryNoMatch {
+  margin: 0;
+  padding: var(--space-lg) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 48rem) {
+  .mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem {
+    grid-template-areas:
+      "main"
+      "note"
+      "actions";
+  }
+
+  .mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryActions {
+    justify-content: flex-start;
+  }
+
+  .mobileMarketHistoryNote {
+    width: calc(100% - 18px - var(--space-md));
+  }
+
+  .mobileHistorySearch {
+    flex-basis: 100%;
+    width: 100%;
+    max-width: none;
+    margin-left: 0;
+  }
+
+  .mobileMarketHistoryHead {
+    flex-wrap: wrap;
+  }
+}
+
+.mobileMarketFavoriteNote {
+  color: var(--color-brand-pressed) !important;
+  font-weight: 700;
+}
+
+.mobileMarketFavoriteNoteEdit {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: var(--rule-thin) solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.mobileMarketFavoriteNoteEdit:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand-pressed);
+}
+
+.mobileMarketFavoriteNoteInput {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  left: 4px;
+  z-index: 1;
+  box-sizing: border-box;
+  min-height: 30px;
+  border: var(--rule-thin) solid var(--color-brand);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  padding: 0 var(--space-sm);
+  font: inherit;
+  font-size: var(--text-sm);
 }

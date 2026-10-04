@@ -313,6 +313,11 @@
       historyAnalysis: "Analiza rynku",
       historyOpenList: "Otwórz listę",
       historyDelete: "Usuń",
+      historyNotePlaceholder: "Klient / notatka",
+      historyNoteLabel: "Klient albo notatka do tego wyszukiwania",
+      historyOpenAnalysis: "Analiza →",
+      historyOpenAnalysisLabel: "Otwórz analizę rynku dla tego wyszukiwania",
+      favoriteNoteEdit: "Klient / notatka",
       otomotoFetching: "Pobieram oferty z otomoto.pl…",
       otomotoFetched: "Wczytano {count} z {total} ofert otomoto.pl.",
       mobileFetched: "Wczytano {count} z {total} ofert mobile.de.",
@@ -757,6 +762,11 @@
       historyAnalysis: "Анализ рынка",
       historyOpenList: "Открыть список",
       historyDelete: "Удалить",
+      historyNotePlaceholder: "Клиент / заметка",
+      historyNoteLabel: "Клиент или заметка к этому поиску",
+      historyOpenAnalysis: "Анализ →",
+      historyOpenAnalysisLabel: "Открыть анализ рынка для этого поиска",
+      favoriteNoteEdit: "Клиент / заметка",
       otomotoFetching: "Загружаю объявления с otomoto.pl…",
       otomotoFetched: "Загружено {count} из {total} объявлений otomoto.pl.",
       mobileFetched: "Загружено {count} из {total} объявлений mobile.de.",
@@ -1799,6 +1809,9 @@
       searchUrl: String(entry.searchUrl || ""),
       pinned: Boolean(entry.pinned),
       pinnedAt: entry.pinned ? String(entry.pinnedAt || "") : "",
+      // Who the search is for ("Kowalski — Golf do 80 tys."), typed in the
+      // history (B19, 04.10). Older entries have none.
+      note: String(entry.note || "").slice(0, 200),
       // Entries saved before prices were dated count from their last update.
       dataAt: String(entry.dataAt || (entry.listings?.length >= 3 ? entry.updatedAt || entry.createdAt || "" : "")),
       // The whole price history is kept, never cut.
@@ -2302,14 +2315,30 @@
               <span class="mobileMarketHistoryStatus">${escapeMarketHtml(status)}</span>
             </span>
           </label>
+          <input class="mobileMarketHistoryNote" type="text" maxlength="200" autocomplete="off" data-mobile-market-history-note="${escapeMarketHtml(entry.id)}" value="${escapeMarketHtml(entry.note || "")}" placeholder="${escapeMarketHtml(c.historyNotePlaceholder)}" aria-label="${escapeMarketHtml(`${c.historyNoteLabel}: ${title}`)}" />
           <div class="mobileMarketHistoryActions">
+            <button class="mobileMarketHistoryOpen" type="button" data-mobile-market-history-analysis="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(`${c.historyOpenAnalysisLabel}: ${title}`)}" title="${escapeMarketHtml(c.historyOpenAnalysisLabel)}">${escapeMarketHtml(c.historyOpenAnalysis)}</button>
             ${editingHistoryId === entry.id ? `<button class="mobileMarketHistoryIconButton mobileMarketHistoryConfirmButton" type="button" data-mobile-market-history-confirm="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(c.historyConfirm)}" title="${escapeMarketHtml(c.historyConfirm)}" hidden>✓</button>` : ""}
             <button class="mobileMarketHistoryIconButton mobileMarketHistoryFavoriteButton${entry.pinned ? " isPinned" : ""}" type="button" data-mobile-market-history-pin="${escapeMarketHtml(entry.id)}" data-mobile-market-history-pinned="${entry.pinned ? "true" : "false"}" aria-pressed="${entry.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(entry.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(entry.pinned ? c.historyUnpin : c.historyPin)}">★</button>
             <button class="isDelete mobileMarketHistoryIconButton" type="button" data-mobile-market-history-delete="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(c.historyDelete)}" title="${escapeMarketHtml(c.historyDelete)}">×</button>
           </div>
         </article>`;
     }).join("");
+    const typing = document.activeElement?.closest?.("[data-mobile-market-history-note]");
+    const kept = typing ? { id: typing.dataset.mobileMarketHistoryNote, value: typing.value, start: typing.selectionStart, end: typing.selectionEnd } : null;
     historyLists.forEach((list) => { list.innerHTML = listHtml; });
+    if (kept) {
+      const again = [...document.querySelectorAll("[data-mobile-market-history-note]")].find((input) => input.dataset.mobileMarketHistoryNote === kept.id);
+      if (again) {
+        again.value = kept.value;
+        again.focus();
+        try {
+          again.setSelectionRange(kept.start, kept.end);
+        } catch {
+          // The caret goes to the end.
+        }
+      }
+    }
     updateHistoryConfirm();
   }
 
@@ -2533,6 +2562,16 @@
     if (!pinned && selectedFavoriteId === historyId) setSelectedFavorite("");
     renderHistory();
     setAnalysisStatus(pinned ? copy().historyPinned : copy().historyUnpin);
+  }
+
+  function setHistoryNote(historyId, note) {
+    refreshMarketHistory();
+    const entry = marketHistory.find((item) => item.id === historyId);
+    const clean = String(note || "").trim().slice(0, 200);
+    if (!entry || (entry.note || "") === clean) return;
+    if (!storeMarketHistory(marketHistory.map((item) => (item.id === historyId ? { ...item, note: clean } : item)))) return;
+    // The list keeps its inputs (and the focus); the favourites show the note.
+    renderFavoritesBar();
   }
 
   function deleteHistoryEntry(historyId) {
@@ -2888,8 +2927,10 @@
               <button class="mobileMarketFavorite${entry.id === activeId ? " isActive" : ""}" type="button" data-mobile-market-favorite="${escapeMarketHtml(entry.id)}"${entry.id === activeId ? ' aria-current="true"' : ""}>
                 <b>${escapeMarketHtml(title)}</b>
                 ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
+                ${entry.note ? `<small class="mobileMarketFavoriteNote">${escapeMarketHtml(entry.note)}</small>` : ""}
               </button>
               <button class="mobileMarketFavoriteRemove isStar" type="button" data-mobile-market-favorite-remove="${escapeMarketHtml(entry.id)}" aria-pressed="true" aria-label="${escapeMarketHtml(`${c.favoriteRemove}: ${title}`)}" title="${escapeMarketHtml(c.favoriteRemove)}">★</button>
+              <button class="mobileMarketFavoriteNoteEdit" type="button" data-mobile-market-favorite-note="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(`${c.favoriteNoteEdit}: ${title}`)}" title="${escapeMarketHtml(c.favoriteNoteEdit)}">✎</button>
             </div>`;
           }).join("")}
         </div>` : `<p>${escapeMarketHtml(c.favoritesEmpty)}</p>`}
@@ -6552,6 +6593,19 @@
     if (button) openHistoryAnalysis(button.dataset.mobileMarketHistoryAnalysis);
   };
   historyLists.forEach((list) => list.addEventListener("click", handleHistoryClick));
+  historyLists.forEach((list) => {
+    list.addEventListener("change", (event) => {
+      const note = event.target.closest("[data-mobile-market-history-note]");
+      if (note) setHistoryNote(note.dataset.mobileMarketHistoryNote, note.value);
+    });
+    list.addEventListener("keydown", (event) => {
+      const note = event.target.closest("[data-mobile-market-history-note]");
+      if (note && event.key === "Enter") {
+        event.preventDefault();
+        note.blur();
+      }
+    });
+  });
   // The calculator's rate arrives after the page: an open analysis counts
   // "na gotowo" again with it (before, it kept the old rates-file rate).
   window.addEventListener("autogood:rates", () => {
@@ -6665,7 +6719,50 @@
     renderFavoritesBar();
   }
 
+  // The note of a favourite: a box over the card, saved on Enter or on
+  // leaving it, Escape keeps the old one.
+  function editFavoriteNote(button) {
+    refreshMarketHistory();
+    const id = button.dataset.mobileMarketFavoriteNote;
+    const entry = marketHistory.find((item) => item.id === id);
+    const item = button.closest(".mobileMarketFavoriteItem");
+    if (!entry || !item || item.querySelector(".mobileMarketFavoriteNoteInput")) return;
+    const c = copy();
+    const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
+    const input = document.createElement("input");
+    input.type = "text";
+    input.maxLength = 200;
+    input.autocomplete = "off";
+    input.className = "mobileMarketFavoriteNoteInput";
+    input.value = entry.note || "";
+    input.placeholder = c.historyNotePlaceholder;
+    input.setAttribute("aria-label", `${c.historyNoteLabel}: ${title}`);
+    let done = false;
+    const finish = (save) => {
+      if (done) return;
+      done = true;
+      if (save) setHistoryNote(id, input.value);
+      renderFavoritesBar();
+      favoritesBar?.querySelector(`[data-mobile-market-favorite-note="${CSS.escape(id)}"]`)?.focus();
+    };
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === "Escape") {
+        event.preventDefault();
+        finish(event.key === "Enter");
+      }
+    });
+    input.addEventListener("blur", () => finish(true));
+    item.append(input);
+    input.focus();
+  }
+
   const handleFavoriteClick = (event) => {
+    const noteButton = event.target.closest("[data-mobile-market-favorite-note]");
+    if (noteButton) {
+      editFavoriteNote(noteButton);
+      return;
+    }
+    if (event.target.closest(".mobileMarketFavoriteNoteInput")) return;
     const removeFavorite = event.target.closest("[data-mobile-market-favorite-remove]");
     if (removeFavorite) {
       setHistoryPinned(removeFavorite.dataset.mobileMarketFavoriteRemove, false);

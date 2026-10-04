@@ -5,8 +5,8 @@
 // only reads their DOM; every action goes through their own buttons.
 (() => {
   const TEXT = {
-    pl: { from: "od", to: "do", showAll: "Pokaż wszystkie ({count})", showLess: "Zwiń", toFilters: "Pokaż wybrane parametry", removeFilter: "Usuń filtr: {name}", chipsLabel: "Wybrane filtry" },
-    ru: { from: "от", to: "до", showAll: "Показать все ({count})", showLess: "Свернуть", toFilters: "Показать выбранные параметры", removeFilter: "Убрать фильтр: {name}", chipsLabel: "Выбранные фильтры" },
+    pl: { from: "od", to: "do", showAll: "Pokaż wszystkie ({count})", showLess: "Zwiń", toFilters: "Pokaż wybrane parametry", removeFilter: "Usuń filtr: {name}", chipsLabel: "Wybrane filtry", historySearch: "Szukaj: marka, model, klient…", historySearchLabel: "Szukaj w historii wyszukiwania", historyNoMatch: "Brak wyszukiwań pasujących do „{query}”." },
+    ru: { from: "от", to: "до", showAll: "Показать все ({count})", showLess: "Свернуть", toFilters: "Показать выбранные параметры", removeFilter: "Убрать фильтр: {name}", chipsLabel: "Выбранные фильтры", historySearch: "Поиск: марка, модель, клиент…", historySearchLabel: "Поиск по истории поиска", historyNoMatch: "Нет поисков по запросу «{query}»." },
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
   const text = () => TEXT[lang()];
@@ -340,18 +340,59 @@
   }
 
   // ---- 12. Search history: 8 rows, then "show all" --------------------------
+  // B19: from 6 searches a search box (car, filters, client's note); while
+  // it holds text every matching row shows.
   const list = document.querySelector("[data-mobile-market-history-list]");
   const more = document.querySelector("[data-mobile-history-more]");
+  const search = document.querySelector("[data-mobile-history-search]");
+  const noMatch = document.querySelector("[data-mobile-history-nomatch]");
   const VISIBLE_ROWS = 8;
+  const SEARCH_FROM = 6;
   let expanded = false;
+  const fold = (value) => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ł/g, "l").replace(/Ł/g, "L").toLowerCase();
+  const filterRows = (rows) => {
+    if (!search || !list) return 0;
+    if (rows.length < SEARCH_FROM && !search.value) search.hidden = true;
+    else search.hidden = false;
+    search.placeholder = text().historySearch;
+    search.setAttribute("aria-label", text().historySearchLabel);
+    const words = fold(search.value).split(/\s+/).filter(Boolean);
+    let shown = 0;
+    rows.forEach((row) => {
+      const haystack = fold([
+        row.querySelector(".mobileMarketHistoryTitleRow strong")?.textContent,
+        row.querySelector(".mobileMarketHistoryMeta")?.textContent,
+        row.querySelector(".mobileMarketHistoryNote")?.value,
+      ].join(" "));
+      const match = words.every((word) => haystack.includes(word));
+      row.classList.toggle("isFilteredOut", !match);
+      if (match) shown += 1;
+    });
+    list.classList.toggle("isFiltering", words.length > 0);
+    if (noMatch) {
+      noMatch.hidden = !words.length || shown > 0;
+      noMatch.textContent = noMatch.hidden ? "" : text().historyNoMatch.replace("{query}", search.value.trim());
+    }
+    return words.length;
+  };
   const updateMore = () => {
     if (!list || !more) return;
-    const count = list.querySelectorAll(":scope > .mobileMarketHistoryItem").length;
+    const rows = [...list.querySelectorAll(":scope > .mobileMarketHistoryItem")];
+    const count = rows.length;
+    const filtering = filterRows(rows) > 0;
     list.classList.toggle("isExpanded", expanded);
-    more.hidden = count <= VISIBLE_ROWS;
+    more.hidden = filtering || count <= VISIBLE_ROWS;
     more.setAttribute("aria-expanded", String(expanded));
     more.textContent = expanded ? text().showLess : text().showAll.replace("{count}", String(count));
   };
+  search?.addEventListener("input", updateMore);
+  search?.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && search.value) {
+      event.preventDefault();
+      search.value = "";
+      updateMore();
+    }
+  });
   if (list && more) {
     more.addEventListener("click", () => {
       expanded = !expanded;
