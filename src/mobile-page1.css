@@ -1344,3 +1344,22 @@
 .mobileMethodView[data-mobile-method-view="manual"] .mobileManualPanel .mobileManualPanelTitle {
   border-bottom: 0;
 }
+
+/* Three pages, three equal tabs across the whole width (the grid kept a
+   fourth, empty column from when there were four pages). */
+.mobilePageTabs,
+.mobilePageTabs[data-mobile-page-tabs] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+/* A phone: the names fit their third without the number circle. */
+@media (max-width: 36rem) {
+  .mobilePageTabs button {
+    gap: 0;
+    padding-inline: 4px;
+  }
+
+  .mobilePageTabs button b {
+    display: none;
+  }
+}
