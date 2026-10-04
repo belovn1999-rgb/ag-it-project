@@ -257,33 +257,42 @@ def engine_found(engine, rows, brand=""):
 # Generations autocentrum has and ultimatespecs has not: (brand, label, autocentrum name) -> our code.
 NEW_GENERATIONS = {
     ("Toyota", "Corolla", "XI"): "E170",
+    ("Renault", "Trafic", "II"): "Trafic II",
+    ("Skoda", "Octavia", "I"): "Octavia I",
+    ("BMW", "X5", "G65"): "G65",
+    ("Toyota", "RAV 4", "VI"): "XA60",
+    ("Volkswagen", "T-Roc", "II"): "T-Roc II",
 }
-# Facelift year for generations whose facelift bodies carry no year ("2008 Facelift", "A4 (B8) Restyling").
-LIFT_MODELS = {("Peugeot", "2008")}
 OUR_FUEL_TEXT = {"petrol": "бензин", "lpg": "газ (LPG)", "diesel": "дизель", "electric": "электро",
                  "hybrid": "гибрид", "hybrid_diesel": "гибрид (дизель)", "plugin": "плагин-гибрид"}
-BODY_WORDS = [(r"\bLimuzyna\b", "Sedan"), (r"\bKabriolet\b", "Cabrio"), (r"\b3d\b", "3-door"), (r"\b5d\b", "5-door")]
+# Polish body words -> the words tools/build-model-specs.py body_of() reads.
+BODY_WORDS = [(r"\bLimuzyna\b", "Sedan"), (r"\bKabriolet\b", "Cabrio"), (r"\bGrand ?[Cc]oupe\b", "Sedan"),
+              (r"\b3d\b", "3-door"), (r"\b5d\b", "5-door")]
+FACELIFT_STAGE = re.compile(r"^(рестайлинг|обновление)")
 
 
 def body_name(label, code, name, generation=""):
-    """'Limuzyna Facelifting' -> 'Corolla E170 Sedan Facelifting (autocentrum)' (body words our builders read)."""
+    """'Limuzyna Facelifting' -> 'Corolla E170 Sedan Facelifting (autocentrum)'."""
     text = name
     if label == "Klasa A" and re.search(r"w169|w176", generation, re.I):
         text = re.sub(r"\bLimuzyna\b", "Hatchback 5-door", re.sub(r"\bCoupe\b", "Hatchback 3-door", text))
     for pattern, word in BODY_WORDS:
         text = re.sub(pattern, word, text)
-    return f"{label} {code} {text} (autocentrum)"
+    prefix = code if code.lower().startswith(label.lower()) else f"{label} {code}"
+    return f"{prefix} {text} (autocentrum)"
 
 
-def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label):
-    """Our CSV rows for one autocentrum engine of one body: one per gearbox + drive option."""
+def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label, only=None):
+    """Our CSV rows for one autocentrum engine of one body: one per gearbox + drive option
+    (only one when `only` is given)."""
     fuel = AC_FUEL.get(engine["type"], "petrol")
     note = ""
     if fuel in ("hybrid", "hybrid_diesel") and MILD.search(engine["text"]):
         fuel, note = ("petrol" if fuel == "hybrid" else "diesel"), "мягкий гибрид (MHEV) — autocentrum"
     cc = re.sub(r"\D", "", engine.get("Pojemność skokowa", "")) or (
         str(round(float(engine["litres"]) * 1000)) if engine.get("litres") else "")
-    options = sorted({config_parts(c) for c in engine.get("configs", []) if config_parts(c)[0]}) or [("", "")]
+    options = [only] if only else sorted({config_parts(c) for c in engine.get("configs", [])
+                                          if config_parts(c)[0]}) or [("", "")]
     out = []
     for gearbox, drive in options:
         row = dict(template)
@@ -306,45 +315,80 @@ def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label):
     return out
 
 
+def facelift_years(ac_gen):
+    """Start years of the "… Facelifting" bodies, neighbours (±1) taken as one facelift."""
+    out = []
+    for year in sorted({b["from"] for b in ac_gen["bodies"] if "facelifting" in b["name"].lower() and b["from"]}):
+        if not out or year - out[-1] > 1:
+            out.append(year)
+    return out
+
+
+def phase_groups(our_rows):
+    """(code, stage, checked years, mobile.de model) -> a row of that group (the template for new rows)."""
+    groups = collections.OrderedDict()
+    for item in our_rows:
+        row = item["src"]
+        groups.setdefault((row["Поколение"], row["Этап"], row["Годы (проверено)"], row["Модель mobile.de"]), row)
+    return groups
+
+
+def pick_group(groups, engine, body):
+    """The phase an engine joins: the one whose years hold its first year, a facelift body to a facelift phase."""
+    facelift = "facelifting" in body["name"].lower()
+
+    def score(item):
+        (code, stage, years, mobile), _row = item
+        start, end = our_years(years)
+        end = end or 2026
+        overlap = min(end, engine["to"] or 2026) - max(start, engine["from"]) + 1
+        return start <= engine["from"] <= end, facelift == bool(FACELIFT_STAGE.match(stage)), overlap
+    return max(groups.items(), key=score)
+
+
 def merge(rows, ac):
-    """Carry autocentrum into our table (rows edited in place, new rows appended). Returns counters."""
+    """Carry autocentrum into our table (rows edited in place, new rows appended). Returns counters.
+    Order: facelift years, gearbox, new generations, then engines/bodies/drive/gearbox options
+    missing in generations we have. "ошибка autocentrum" (verdict()) is never carried."""
     stats = collections.Counter()
     for row in rows:
         row.setdefault("Источник", "ultimatespecs")
         row.setdefault("Рестайлинг, год", "")
-    ac_models = [m for m in ac["models"]]
+    models = ac["models"]
 
-    # 1. Facelift years: split a generation whose facelift bodies have no year.
+    # 1. Facelift years. A generation whose facelift bodies carry no year ("2008 Facelift",
+    #    "A4 (B8) Restyling") is split at autocentrum's year; one with no facelift bodies at all
+    #    only gets the year ("Рестайлинг, год"), its versions are not split: we cannot tell them apart.
     gens = our_generations(rows)
-    for model in ac_models:
+    for model in models:
         key = (model["brand"], model["label"])
-        if key not in LIFT_MODELS:
-            continue
         for ac_gen in group_body_level(model["generations"]):
-            lifts = sorted(b["from"] for b in ac_gen["bodies"] if "facelifting" in b["name"].lower() and b["from"])
+            lifts = facelift_years(ac_gen)
             for gen in match_gens(ac_gen, gens.get(key, {})):
-                if not gen.get("lift_unknown") or not lifts or not gen["from"] < lifts[0] < (gen["to"] or 2100):
+                inside = [y for y in lifts if gen["from"] < y < (gen["to"] or 2100)]
+                if not inside or gen["lifts"]:
                     continue
-                lift, whole = lifts[0], f"{gen['from']}–{gen['to'] or 'н. в.'}"
+                lift, whole = inside[0], f"{gen['from']}–{gen['to'] or 'н. в.'}"
                 for item in gen["rows"]:
                     row = item["src"]
-                    if row["Годы (проверено)"] != whole:
+                    row["Рестайлинг, год"] = str(lift)
+                    if not gen.get("lift_unknown") or row["Годы (проверено)"] != whole:
                         continue
                     if row["Этап"] in ("рестайлинг", "рестайлинг 2"):
                         row["Годы (проверено)"] = f"{lift}–{gen['to'] or 'н. в.'}"
                     else:
                         row["Этап"], row["Годы (проверено)"] = "дорестайлинг", f"{gen['from']}–{lift}"
-                    row["Рестайлинг, год"] = str(lift)
-                stats["рестайлинг: год из autocentrum (поколений)"] += 1
+                stats["рестайлинг: разделено по году autocentrum (поколений)" if gen.get("lift_unknown")
+                      else "рестайлинг: год из autocentrum, версии не разделены (поколений)"] += 1
+                gen["lifts"].add(lift)
 
     # 2. Gearbox where ours is unknown and every autocentrum option of that engine and drive agrees.
     gens = our_generations(rows)
     options = collections.defaultdict(set)
-    for model in ac_models:
+    for model in models:
         key = (model["brand"], model["label"])
         for ac_gen in group_body_level(model["generations"]):
-            matched = match_gens(ac_gen, gens.get(key, {}))
-            our_rows = [r for g in matched for r in g["rows"]]
+            our_rows = [r for g in match_gens(ac_gen, gens.get(key, {})) for r in g["rows"]]
             for body in ac_gen["bodies"]:
                 for engine in body["engines"]:
                     if engine.get("to") and engine["to"] < SINCE:
@@ -364,7 +408,7 @@ def merge(rows, ac):
     # 3. Generations we lack.
     gens = our_generations(rows)
     added = []
-    for model in ac_models:
+    for model in models:
         brand, label = model["brand"], model["label"]
         model_rows = [r for r in rows if r["Марка"] == brand and r["Модель"] == label]
         if not model_rows:
@@ -375,20 +419,77 @@ def merge(rows, ac):
             code = NEW_GENERATIONS.get((brand, label, ac_gen["name"]))
             if not code or match_gens(ac_gen, gens.get((brand, label), {})):
                 continue
-            lifts = sorted(b["from"] for b in ac_gen["bodies"] if "facelifting" in b["name"].lower() and b["from"])
+            lifts = facelift_years(ac_gen)
             end = ac_gen["to"] or "н. в."
             for body in ac_gen["bodies"]:
-                facelift = "facelifting" in body["name"].lower()
                 if not lifts:
                     stage, years = "весь выпуск", f"{ac_gen['from']}–{end}"
-                elif facelift:
+                elif "facelifting" in body["name"].lower():
                     stage, years = "рестайлинг", f"{lifts[0]}–{end}"
                 else:
                     stage, years = "дорестайлинг", f"{ac_gen['from']}–{lifts[0]}"
                 for engine in body["engines"]:
                     if "hp" in engine and not (engine.get("to") and engine["to"] < SINCE):
                         added += new_rows(template, ac_gen, body, engine, code, stage, years, brand, label)
-            stats[f"новое поколение {brand} {label} {code}"] += 1
+            stats["новых поколений"] += 1
     rows.extend(added)
-    stats["строк из autocentrum"] += len(added)
+    stats["строк: новые поколения"] += len(added)
+
+    # 4. In generations we have: engines, bodies, drives and gearboxes autocentrum has and we have not.
+    gens = our_generations(rows)
+    added, seen = [], set()
+    for model in models:
+        brand, label = model["brand"], model["label"]
+        for ac_gen in group_body_level(model["generations"]):
+            matched = match_gens(ac_gen, gens.get((brand, label), {}))
+            if not matched:
+                continue
+            our_rows = [r for g in matched for r in g["rows"]]
+            our_tags = set().union(*(body_tags(label, b) for g in matched for b in g["bodies"]))
+            groups = phase_groups(our_rows)
+            for body in ac_gen["bodies"]:
+                if body.get("to") and body["to"] < SINCE:
+                    continue
+                new_body = bool(body_tags(label, body["name"], ac_gen["name"]) - our_tags)
+                for engine in body["engines"]:
+                    if "hp" not in engine or (engine.get("to") and engine["to"] < SINCE):
+                        continue
+                    (code, stage, years, _mobile), template = pick_group(groups, engine, body)
+
+                    def carry(only=None, why=""):
+                        mark = (body["path"], engine["slug"], only)
+                        if mark in seen:
+                            return
+                        seen.add(mark)
+                        made = new_rows(template, ac_gen, body, engine, code, stage, years, brand, label, only)
+                        added.extend(made)
+                        stats[why] += len(made)
+
+                    found = list(engine_found(engine, our_rows, brand))
+                    if not found or new_body:
+                        carry(why="строк: двигатели, которых не было" if not found else "строк: кузова, которых не было")
+                        continue
+                    fuel = AC_FUEL.get(engine["type"], "petrol")
+                    for config in engine.get("configs", []):
+                        gearbox, drive = config_parts(config)
+                        if not gearbox:
+                            continue
+                        on_drive = [r for r in found if not drive or r["drive"] == drive]
+                        if on_drive and any(r["gearbox"] in (gearbox, "") for r in on_drive):
+                            continue
+                        kind = "привод" if not on_drive else "коробка"
+                        said = verdict(kind, brand, ac_gen["name"], engine["name"], body["name"],
+                                       option_label(config), fuel)
+                        if said.startswith("ошибка autocentrum"):
+                            stats[f"{kind}: не перенесено (ошибка autocentrum)"] += 1
+                            continue
+                        wrong = [r for r in found if kind == "привод" and said.startswith("у нас ошибка")
+                                 and AWD_NAME.search(f"{r['name']} {r['body']}") and r["drive"] != drive]
+                        for item in wrong:
+                            item["src"]["Привод"], item["src"]["Привод: откуда"] = DRIVE_RU[drive], "autocentrum (исправлено)"
+                            item["drive"] = drive
+                            stats["привод исправлен (версий)"] += 1
+                        if not wrong:
+                            carry((gearbox, drive), f"строк: {kind}, которого не было")
+    rows.extend(added)
     return stats

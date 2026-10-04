@@ -47,7 +47,10 @@
      "mobileModel": "A3",
      "bodies": [
       "A3 (8Y) Sedan",
-      "A3 (8Y) Sportback"
+      "A3 (8Y) Sportback",
+      "A3 8Y Allstreet (autocentrum)",
+      "A3 8Y Limousine (autocentrum)",
+      "A3 8Y Sportback (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -58,6 +61,8 @@
         150
        ],
        "1984": [
+        190,
+        204,
         310
        ],
        "2480": [
@@ -145,7 +150,9 @@
       "A3 (8V)",
       "A3 (8V) Cabrio",
       "A3 (8V) Sedan",
-      "A3 (8V) Sportback"
+      "A3 (8V) Sportback",
+      "A3 8V Limousine (autocentrum)",
+      "A3 8V Sportback 5-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -202,7 +209,10 @@
      "mobileModel": "A3",
      "bodies": [
       "A3 (8P)",
-      "A3 (8P) Cabrio"
+      "A3 (8P) Cabrio",
+      "A3 8P Hatchback 3-door (autocentrum)",
+      "A3 8P S3 Sportback (autocentrum)",
+      "A3 8P Sportback (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -226,12 +236,16 @@
         200,
         265
        ],
+       "2480": [
+        340
+       ],
        "3189": [
         250
        ]
       },
       "diesel": {
        "1598": [
+        90,
         105
        ],
        "1896": [
@@ -343,7 +357,8 @@
      "bodies": [
       "A4 (B9)",
       "A4 (B9) Allroad",
-      "A4 (B9) Avant"
+      "A4 (B9) Avant",
+      "A4 B9 Allroad Quattro (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -382,13 +397,15 @@
     },
     {
      "code": "B8",
-     "phase": "весь выпуск",
-     "years": "2007–2015",
+     "phase": "дорестайлинг",
+     "years": "2007–2012",
      "mobileModel": "A4",
      "bodies": [
       "A4 (B8)",
       "A4 (B8) Allroad",
-      "A4 (B8) Avant"
+      "A4 (B8) Avant",
+      "A4 B8 Avant (autocentrum)",
+      "A4 B8 Limousine (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -397,6 +414,7 @@
         160
        ],
        "1984": [
+        170,
         179,
         211
        ],
@@ -418,7 +436,8 @@
         190
        ],
        "2967": [
-        239
+        239,
+        240
        ]
       },
       "flex": {
@@ -432,12 +451,15 @@
     {
      "code": "B8",
      "phase": "рестайлинг",
-     "years": "2007–2015",
+     "years": "2012–2015",
      "mobileModel": "A4",
      "bodies": [
       "A4 (B8) Allroad Restyling",
       "A4 (B8) Avant Restyling",
-      "A4 (B8) Restyling"
+      "A4 (B8) Restyling",
+      "A4 B8 Allroad quattro Facelifting (autocentrum)",
+      "A4 B8 Avant Facelifting (autocentrum)",
+      "A4 B8 Limousine Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -446,7 +468,8 @@
         170
        ],
        "1984": [
-        211
+        211,
+        225
        ],
        "2995": [
         272,
@@ -571,7 +594,8 @@
      "bodies": [
       "A5 (F5)",
       "A5 (F5) Cabrio",
-      "A5 (F5) Sportback"
+      "A5 (F5) Sportback",
+      "A5 F5 Sportback (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -617,6 +641,9 @@
      "years": "2007–2016",
      "mobileModel": "A5",
      "bodies": [
+      "A5 8T Cabrio Facelifting (autocentrum)",
+      "A5 8T Coupe Facelifting (autocentrum)",
+      "A5 8T Sportback Facelifting (autocentrum)",
       "A5 Cabrio",
       "A5 Coupe",
       "A5 Sportback"
@@ -624,13 +651,15 @@
      "engines": {
       "petrol": {
        "1798": [
+        144,
         160,
         170
        ],
        "1984": [
         179,
         180,
-        211
+        211,
+        225
        ],
        "2995": [
         272,
@@ -646,6 +675,7 @@
       },
       "diesel": {
        "1968": [
+        136,
         143,
         150,
         163,
@@ -658,6 +688,7 @@
        ],
        "2967": [
         204,
+        218,
         239,
         240,
         245
@@ -836,15 +867,23 @@
      "bodies": [
       "A6 (C7)",
       "A6 (C7) Allroad",
-      "A6 (C7) Avant"
+      "A6 (C7) Avant",
+      "A6 C7 Allroad quattro (autocentrum)",
+      "A6 C7 Avant (autocentrum)",
+      "A6 C7 Limousine (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1984": [
-        179
+        179,
+        245
        ],
        "2773": [
         204
+       ],
+       "2995": [
+        300,
+        310
        ],
        "3993": [
         560
@@ -857,6 +896,7 @@
        ],
        "2967": [
         204,
+        245,
         313
        ]
       }
@@ -969,6 +1009,8 @@
      "mobileModel": "Q3",
      "bodies": [
       "Q3 (F3)",
+      "Q3 F3 SUV (autocentrum)",
+      "Q3 F3 Sportback (autocentrum)",
       "Q3 Sportback"
      ],
      "engines": {
@@ -994,7 +1036,8 @@
        "1968": [
         150,
         190,
-        193
+        193,
+        200
        ]
       }
      }
@@ -1005,7 +1048,8 @@
      "years": "2011–2018",
      "mobileModel": "Q3",
      "bodies": [
-      "Q3"
+      "Q3",
+      "Q3 8U SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1019,7 +1063,8 @@
       },
       "diesel": {
        "1968": [
-        140
+        140,
+        177
        ]
       }
      }
@@ -1095,7 +1140,9 @@
      "mobileModel": "Q5",
      "bodies": [
       "Q5 2025",
-      "Q5 2025 Sportback"
+      "Q5 2025 Sportback",
+      "Q5 GU SUV (autocentrum)",
+      "Q5 GU Sportback (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -1106,7 +1153,8 @@
       },
       "petrol": {
        "1984": [
-        204
+        204,
+        272
        ],
        "2995": [
         367
@@ -1197,7 +1245,10 @@
      "years": "2008–2017",
      "mobileModel": "Q5",
      "bodies": [
-      "Q5"
+      "Q5",
+      "Q5 8R SQ5 (autocentrum)",
+      "Q5 8R SUV (autocentrum)",
+      "Q5 8R SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1209,6 +1260,9 @@
        ],
        "2995": [
         272
+       ],
+       "3197": [
+        270
        ]
       },
       "hybrid": {
@@ -1225,10 +1279,12 @@
         190
        ],
        "2967": [
+        240,
         245,
         258,
         313,
-        326
+        326,
+        340
        ]
       }
      }
@@ -1461,12 +1517,14 @@
     },
     {
      "code": "F20/F21",
-     "phase": "весь выпуск",
-     "years": "2011–2019",
+     "phase": "дорестайлинг",
+     "years": "2011–2015",
      "mobileModel": "1",
      "bodies": [
       "F20 1 Series 5 Doors",
-      "F21 1 Series 3 Doors"
+      "F21 1 Series 3 Doors",
+      "Seria 1 F20/F21 Hatchback 3-door (autocentrum)",
+      "Seria 1 F20/F21 Hatchback 5-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1499,11 +1557,15 @@
     {
      "code": "F20/F21",
      "phase": "рестайлинг",
-     "years": "2011–2019",
+     "years": "2015–2019",
      "mobileModel": "1",
      "bodies": [
       "F20 LCI 1 Series 5 Doors",
-      "F21 LCI 1 Series 3 Doors"
+      "F21 LCI 1 Series 3 Doors",
+      "Seria 1 F20/F21 Hatchback 3-door Facelifting 2015 (autocentrum)",
+      "Seria 1 F20/F21 Hatchback 3-door Facelifting 2017 (autocentrum)",
+      "Seria 1 F20/F21 Hatchback 5-door Facelifting 2015 (autocentrum)",
+      "Seria 1 F20/F21 Hatchback 5-door Facelifting 2017 (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1535,7 +1597,11 @@
        ],
        "1995": [
         150,
-        190
+        190,
+        224
+       ],
+       "1998": [
+        224
        ]
       }
      }
@@ -1549,13 +1615,18 @@
       "E81 1 Series 3 door",
       "E82 1 Series Coupe",
       "E87 1 Series 5 door",
-      "E88 1 Series Cabrio"
+      "E88 1 Series Cabrio",
+      "Seria 1 E81/E87 Hatchback 3-door E81 (autocentrum)",
+      "Seria 1 E81/E87 Hatchback 5-door E87 (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1596": [
         115,
         116
+       ],
+       "1599": [
+        122
        ],
        "1995": [
         122,
@@ -1745,12 +1816,14 @@
       "F30 3 Series Sedan",
       "F31 3 Series Touring",
       "F34 3 Series GT Gran Turismo",
-      "F80"
+      "F80",
+      "Seria 3 F30 Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1598": [
-        136
+        136,
+        170
        ],
        "1997": [
         184,
@@ -1764,6 +1837,9 @@
       "hybrid": {
        "2979": [
         340
+       ],
+       "2993": [
+        354
        ]
       },
       "diesel": {
@@ -1839,10 +1915,18 @@
       "E90 3 Series",
       "E91 3 Series Touring",
       "E92 3 Series Coupe",
-      "E93 3 Series Cabrio"
+      "E93 3 Series Cabrio",
+      "Seria 3 E90 Sedan E90 (autocentrum)",
+      "Seria 3 E90 Touring E91 (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1597": [
+        122
+       ],
+       "1599": [
+        122
+       ],
        "1995": [
         129,
         143,
@@ -1872,6 +1956,7 @@
        "1995": [
         122,
         143,
+        150,
         163,
         177
        ],
@@ -1900,7 +1985,8 @@
       "G23 4 Series Cabrio LCI",
       "G26 4 Series Gran Coupe LCI",
       "G82 M4 Coupe LCI",
-      "G83 M4 Cabrio LCI"
+      "G83 M4 Cabrio LCI",
+      "Seria 4 G22 M4 Coupe Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1937,7 +2023,10 @@
       "CSL",
       "G22 4 Series Coupe",
       "G23 4 Series Cabrio",
-      "G26 4 Series Gran Coupe"
+      "G26 4 Series Gran Coupe",
+      "Seria 4 G22 Cabrio (autocentrum)",
+      "Seria 4 G22 Coupe (autocentrum)",
+      "Seria 4 G22 Gran Coupe (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1974,7 +2063,8 @@
      "bodies": [
       "F32 LCI 4 Series Coupe",
       "F33 LCI 4 Series Cabrio",
-      "F36 LCI 4 Series Gran Coupe"
+      "F36 LCI 4 Series Gran Coupe",
+      "Seria 4 F32 Cabrio Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1998,6 +2088,7 @@
         190
        ],
        "2993": [
+        252,
         258,
         313
        ]
@@ -2199,7 +2290,8 @@
      "bodies": [
       "F07 5 Series GT Gran Turismo LCI",
       "F10 5 Series Sedan LCI",
-      "F11 5 Series Touring LCI"
+      "F11 5 Series Touring LCI",
+      "Seria 5 F10 Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2228,6 +2320,11 @@
         313,
         381
        ]
+      },
+      "hybrid": {
+       "2979": [
+        340
+       ]
       }
      }
     },
@@ -2239,7 +2336,10 @@
      "bodies": [
       "F07 5 Series GT Gran Turismo",
       "F10 5 Series Sedan",
-      "F11 5 Series Touring"
+      "F11 5 Series Touring",
+      "Seria 5 F10 M5 Sedan (autocentrum)",
+      "Seria 5 F10 Sedan (autocentrum)",
+      "Seria 5 F10 Touring (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2252,12 +2352,16 @@
        ],
        "2996": [
         204,
-        258
+        258,
+        272
        ],
        "4395": [
         408,
         449,
         560
+       ],
+       "4999": [
+        507
        ]
       },
       "diesel": {
@@ -2273,6 +2377,11 @@
         313,
         381
        ]
+      },
+      "hybrid": {
+       "2979": [
+        340
+       ]
       }
      }
     },
@@ -2283,7 +2392,9 @@
      "mobileModel": "5",
      "bodies": [
       "E60 5 Series",
-      "E61 5 Series Touring"
+      "E61 5 Series Touring",
+      "Seria 5 E60 Sedan (autocentrum)",
+      "Seria 5 E60 Touring (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2302,7 +2413,8 @@
         218
        ],
        "2979": [
-        231
+        231,
+        306
        ],
        "2996": [
         218,
@@ -2313,7 +2425,8 @@
         306
        ],
        "4398": [
-        333
+        333,
+        507
        ],
        "4799": [
         367
@@ -2353,7 +2466,8 @@
      "years": "2022–н. в.",
      "mobileModel": "X1",
      "bodies": [
-      "U11 X1"
+      "U11 X1",
+      "X1 U11 Crossover (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -2383,11 +2497,12 @@
     },
     {
      "code": "F48",
-     "phase": "весь выпуск",
-     "years": "2015–2022",
+     "phase": "дорестайлинг",
+     "years": "2015–2019",
      "mobileModel": "X1",
      "bodies": [
-      "F48 X1"
+      "F48 X1",
+      "X1 F48 Crossover (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2414,7 +2529,7 @@
     {
      "code": "F48",
      "phase": "рестайлинг",
-     "years": "2015–2022",
+     "years": "2019–2022",
      "mobileModel": "X1",
      "bodies": [
       "F48 X1 LCI"
@@ -2450,8 +2565,8 @@
     },
     {
      "code": "E84",
-     "phase": "весь выпуск",
-     "years": "2009–2015",
+     "phase": "дорестайлинг",
+     "years": "2009–2012",
      "mobileModel": "X1",
      "bodies": [
       "X1 (E84)"
@@ -2480,10 +2595,11 @@
     {
      "code": "E84",
      "phase": "рестайлинг",
-     "years": "2009–2015",
+     "years": "2012–2015",
      "mobileModel": "X1",
      "bodies": [
-      "X1 (E84) LCI"
+      "X1 (E84) LCI",
+      "X1 E84 Crossover Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2499,6 +2615,7 @@
        "1995": [
         116,
         143,
+        150,
         163,
         184,
         218
@@ -2590,7 +2707,9 @@
      "years": "2018–2021",
      "mobileModel": "X3",
      "bodies": [
-      "G01 X3"
+      "G01 X3",
+      "X3 G01 M-SUV (autocentrum)",
+      "X3 G01 SUV (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -2606,11 +2725,15 @@
         184,
         252
        ],
+       "2979": [
+        306
+       ],
        "2993": [
         480,
         510
        ],
        "2998": [
+        354,
         360
        ]
       },
@@ -2623,11 +2746,13 @@
        "1995": [
         150,
         190,
-        211
+        211,
+        231
        ],
        "2993": [
         265,
         286,
+        313,
         326,
         340
        ]
@@ -2636,8 +2761,8 @@
     },
     {
      "code": "F25",
-     "phase": "весь выпуск",
-     "years": "2010–2017",
+     "phase": "дорестайлинг",
+     "years": "2010–2014",
      "mobileModel": "X3",
      "bodies": [
       "F25 X3"
@@ -2670,7 +2795,7 @@
     {
      "code": "F25",
      "phase": "рестайлинг",
-     "years": "2010–2017",
+     "years": "2014–2017",
      "mobileModel": "X3",
      "bodies": [
       "F25 X3 LCI"
@@ -2703,7 +2828,8 @@
      "years": "2003–2010",
      "mobileModel": "X3",
      "bodies": [
-      "E83 X3"
+      "E83 X3",
+      "X3 E83 E83 (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2855,7 +2981,8 @@
      "years": "2006–2013",
      "mobileModel": "X5",
      "bodies": [
-      "E70 X5"
+      "E70 X5",
+      "X5 E70 SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2877,8 +3004,30 @@
        "2993": [
         235,
         245,
+        286,
         306,
         381
+       ]
+      }
+     }
+    },
+    {
+     "code": "G65",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "X5",
+     "bodies": [
+      "X5 G65 G65 (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2998": [
+        400
+       ]
+      },
+      "hybrid_diesel": {
+       "2993": [
+        313
        ]
       }
      }
@@ -2896,6 +3045,8 @@
      "mobileModel": "C-Max",
      "bodies": [
       "C MAX II",
+      "C-Max Mk2 Grand C-MAX (autocentrum)",
+      "C-Max Mk2 Minivan (autocentrum)",
       "Grand C MAX"
      ],
      "engines": {
@@ -2905,9 +3056,11 @@
         125
        ],
        "1596": [
+        85,
         105,
         125,
-        150
+        150,
+        182
        ]
       },
       "diesel": {
@@ -2916,6 +3069,7 @@
         114
        ],
        "1997": [
+        115,
         140,
         163
        ]
@@ -2934,6 +3088,8 @@
      "mobileModel": "C-Max",
      "bodies": [
       "C MAX II 2015",
+      "C-Max Mk2 Grand C-MAX Facelifting (autocentrum)",
+      "C-Max Mk2 Minivan Facelifting (autocentrum)",
       "Grand C MAX 2015"
      ],
      "engines": {
@@ -2943,10 +3099,14 @@
         125
        ],
        "1498": [
-        150
+        150,
+        182
        ],
        "1499": [
         150
+       ],
+       "1596": [
+        85
        ]
       },
       "diesel": {
@@ -2963,7 +3123,8 @@
         114
        ],
        "1997": [
-        150
+        150,
+        170
        ]
       },
       "lpg": {
@@ -2980,6 +3141,7 @@
      "mobileModel": "C-Max",
      "bodies": [
       "C MAX",
+      "C-Max Mk1 I (autocentrum)",
       "Focus C MAX"
      ],
      "engines": {
@@ -2987,6 +3149,7 @@
        "1596": [
         100,
         101,
+        105,
         114
        ],
        "1798": [
@@ -3001,6 +3164,7 @@
       "diesel": {
        "1560": [
         90,
+        95,
         109
        ],
        "1753": [
@@ -3008,7 +3172,8 @@
         116
        ],
        "1997": [
-        136
+        136,
+        140
        ]
       },
       "flex": {
@@ -3100,7 +3265,10 @@
      "years": "2008–2017",
      "mobileModel": "Fiesta",
      "bodies": [
-      "Fiesta 7"
+      "Fiesta 7",
+      "Fiesta Mk7 Hatchback 3-door (autocentrum)",
+      "Fiesta Mk7 Hatchback 3-door ST (autocentrum)",
+      "Fiesta Mk7 Van (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3109,18 +3277,29 @@
         82
        ],
        "1388": [
+        96,
         97
        ],
        "1596": [
-        120
+        120,
+        182,
+        200
        ]
       },
       "diesel": {
+       "1398": [
+        68
+       ],
        "1399": [
         68,
-        69
+        69,
+        70
        ],
        "1560": [
+        90,
+        95
+       ],
+       "1596": [
         95
        ]
       }
@@ -3132,11 +3311,15 @@
      "years": "2008–2017",
      "mobileModel": "Fiesta",
      "bodies": [
-      "Fiesta 7 2012 Facelift"
+      "Fiesta 7 2012 Facelift",
+      "Fiesta Mk7 Hatchback 3-door Facelifting (autocentrum)",
+      "Fiesta Mk7 Hatchback 5-door Facelifting (autocentrum)",
+      "Fiesta Mk7 Van Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "999": [
+        80,
         100,
         125,
         140
@@ -3146,9 +3329,11 @@
         82
        ],
        "1388": [
+        96,
         97
        ],
        "1596": [
+        105,
         120,
         133,
         182,
@@ -3159,10 +3344,17 @@
        "1399": [
         69
        ],
-       "1498": [
+       "1495": [
         75
        ],
+       "1498": [
+        75,
+        95
+       ],
        "1560": [
+        95
+       ],
+       "1596": [
         95
        ]
       },
@@ -3217,7 +3409,14 @@
      "bodies": [
       "Focus 4",
       "Focus 4 Wagon",
-      "Focus 4 Wagon Active"
+      "Focus 4 Wagon Active",
+      "Focus Mk4 Active Hatchback (autocentrum)",
+      "Focus Mk4 Active Kombi (autocentrum)",
+      "Focus Mk4 Hatchback (autocentrum)",
+      "Focus Mk4 Hatchback ST (autocentrum)",
+      "Focus Mk4 Kombi (autocentrum)",
+      "Focus Mk4 Kombi ST (autocentrum)",
+      "Focus Mk4 Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3225,6 +3424,15 @@
         100,
         125,
         155
+       ],
+       "999": [
+        85,
+        100,
+        125
+       ],
+       "1497": [
+        150,
+        182
        ],
        "1498": [
         150,
@@ -3242,8 +3450,12 @@
         95,
         120
        ],
+       "1996": [
+        190
+       ],
        "1997": [
-        150
+        150,
+        190
        ]
       }
      }
@@ -3256,7 +3468,10 @@
      "bodies": [
       "Focus 3 (EU Market)",
       "Focus 3 Sedan (EU Market)",
-      "Focus 3 Sportbreak (EU Market)"
+      "Focus 3 Sportbreak (EU Market)",
+      "Focus Mk3 Hatchback 5-door (autocentrum)",
+      "Focus Mk3 Kombi (autocentrum)",
+      "Focus Mk3 Sedan (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -3270,12 +3485,14 @@
         125
        ],
        "1596": [
+        85,
         105,
         125,
         150,
         182
        ],
        "1999": [
+        162,
         250
        ]
       },
@@ -3285,6 +3502,7 @@
         114
        ],
        "1997": [
+        115,
         140,
         163
        ]
@@ -3304,13 +3522,17 @@
      "mobileModel": "Focus",
      "bodies": [
       "Focus 3 2014",
-      "Focus 3 2014 Sportbreak"
+      "Focus 3 2014 Sportbreak",
+      "Focus Mk3 Hatchback 5-door facelifting (autocentrum)",
+      "Focus Mk3 Kombi Facelifting (autocentrum)",
+      "Focus Mk3 Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "998": [
         100,
-        125
+        125,
+        140
        ],
        "999": [
         125
@@ -3320,9 +3542,11 @@
         182
        ],
        "1596": [
+        85,
         125
        ],
        "1999": [
+        160,
         250
        ],
        "2264": [
@@ -3366,7 +3590,11 @@
       "Focus 2 3-door",
       "Focus 2 CC",
       "Focus 2 Sedan",
-      "Focus 2 Wagon"
+      "Focus 2 Wagon",
+      "Focus Mk2 Hatchback 3-door (autocentrum)",
+      "Focus Mk2 Hatchback 5-door (autocentrum)",
+      "Focus Mk2 Kombi (autocentrum)",
+      "Focus Mk2 Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3396,6 +3624,9 @@
        ],
        "1753": [
         116
+       ],
+       "1977": [
+        110
        ],
        "1997": [
         136
@@ -3501,7 +3732,8 @@
      "years": "2020–2024",
      "mobileModel": "Kuga",
      "bodies": [
-      "Kuga 2020"
+      "Kuga 2020",
+      "Kuga Mk3 SUV (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -3523,6 +3755,11 @@
        ]
       },
       "diesel": {
+       "1995": [
+        120,
+        150,
+        190
+       ],
        "1996": [
         120
        ]
@@ -3535,7 +3772,8 @@
      "years": "2017–2019",
      "mobileModel": "Kuga",
      "bodies": [
-      "Kuga III"
+      "Kuga III",
+      "Kuga Mk2 SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3544,6 +3782,10 @@
         150,
         176,
         182
+       ],
+       "1999": [
+        230,
+        242
        ]
       },
       "diesel": {
@@ -3563,7 +3805,8 @@
      "years": "2012–2017",
      "mobileModel": "Kuga",
      "bodies": [
-      "Kuga II"
+      "Kuga II",
+      "Kuga Mk2 SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3571,6 +3814,9 @@
         120,
         150,
         182
+       ],
+       "1499": [
+        150
        ],
        "1596": [
         150,
@@ -3594,7 +3840,8 @@
      "years": "2007–2012",
      "mobileModel": "Kuga",
      "bodies": [
-      "Kuga"
+      "Kuga",
+      "Kuga Mk1 I (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3624,7 +3871,13 @@
      "bodies": [
       "Mondeo 5",
       "Mondeo 5 Estate",
-      "Mondeo 5 Sedan"
+      "Mondeo 5 Sedan",
+      "Mondeo Mk5 Kombi (autocentrum)",
+      "Mondeo Mk5 Kombi Facelifting (autocentrum)",
+      "Mondeo Mk5 Liftback (autocentrum)",
+      "Mondeo Mk5 Liftback Facelifting (autocentrum)",
+      "Mondeo Mk5 Sedan (autocentrum)",
+      "Mondeo Mk5 Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3637,7 +3890,11 @@
        ],
        "1999": [
         187,
+        203,
         241
+       ],
+       "2000": [
+        203
        ]
       },
       "diesel": {
@@ -3649,8 +3906,10 @@
         116
        ],
        "1997": [
+        120,
         150,
         179,
+        190,
         209
        ]
       },
@@ -3669,12 +3928,16 @@
      "bodies": [
       "Mondeo 4",
       "Mondeo 4 Estate",
-      "Mondeo 4 Sedan"
+      "Mondeo 4 Sedan",
+      "Mondeo Mk4 Hatchback (autocentrum)",
+      "Mondeo Mk4 Kombi (autocentrum)",
+      "Mondeo Mk4 Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1596": [
         110,
+        120,
         125,
         160
        ],
@@ -3700,6 +3963,7 @@
        ],
        "1997": [
         116,
+        130,
         131,
         140,
         163
@@ -3711,6 +3975,7 @@
         203
        ],
        "2179": [
+        175,
         200
        ]
       },
@@ -3733,12 +3998,15 @@
      "years": "2015–2023",
      "mobileModel": "S-Max",
      "bodies": [
-      "S-Max 2015"
+      "S-Max 2015",
+      "S-Max Mk2 Van (autocentrum)",
+      "S-Max Mk2 Van Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1498": [
-        159
+        159,
+        165
        ],
        "1999": [
         241
@@ -3749,7 +4017,14 @@
         120,
         150,
         179,
-        209
+        190,
+        209,
+        240
+       ]
+      },
+      "hybrid": {
+       "2488": [
+        190
        ]
       }
      }
@@ -3760,7 +4035,9 @@
      "years": "2006–2015",
      "mobileModel": "S-Max",
      "bodies": [
-      "S-Max"
+      "S-Max",
+      "S-Max Mk1 Van (autocentrum)",
+      "S-Max Mk1 Van Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3772,6 +4049,9 @@
         203,
         240
        ],
+       "2261": [
+        161
+       ],
        "2521": [
         220
        ]
@@ -3781,14 +4061,17 @@
         114
        ],
        "1753": [
+        100,
         125
        ],
        "1997": [
         116,
+        130,
         140,
         163
        ],
        "2179": [
+        175,
         200
        ]
       },
@@ -3849,6 +4132,7 @@
      "mobileModel": "A",
      "bodies": [
       "Class A Sedan (V177)",
+      "Klasa A W177 Hatchback AMG (autocentrum)",
       "W177 Class A"
      ],
      "engines": {
@@ -3862,7 +4146,8 @@
        "1991": [
         190,
         224,
-        306
+        306,
+        387
        ]
       },
       "diesel": {
@@ -3889,7 +4174,8 @@
      "years": "2012–2018",
      "mobileModel": "A",
      "bodies": [
-      "A Class (W176)"
+      "A Class (W176)",
+      "Klasa A W176 Hatchback 5-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3907,6 +4193,7 @@
         109
        ],
        "1796": [
+        109,
         136
        ],
        "2143": [
@@ -3956,7 +4243,8 @@
      "years": "2004–2012",
      "mobileModel": "A",
      "bodies": [
-      "A Class (W169)"
+      "A Class (W169)",
+      "Klasa A W169 Hatchback 3-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3965,6 +4253,12 @@
        ],
        "1699": [
         116
+       ],
+       "1700": [
+        116
+       ],
+       "2000": [
+        95
        ],
        "2034": [
         136,
@@ -3994,7 +4288,10 @@
      "bodies": [
       "Class C (W206)",
       "Class C All-Terrain (S206)",
-      "Class C Station (S206)"
+      "Class C Station (S206)",
+      "Klasa C W206 All-Terrain (autocentrum)",
+      "Klasa C W206 Kombi AMG (autocentrum)",
+      "Klasa C W206 Sedan AMG (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -4018,7 +4315,11 @@
         227
        ],
        "1991": [
-        422
+        422,
+        476
+       ],
+       "1993": [
+        200
        ],
        "1999": [
         258,
@@ -4047,7 +4348,8 @@
       "Class C (W205 2019)",
       "Class C Cabrio (A205 2019)",
       "Class C Coupe (C205 2019)",
-      "Class C Station (S205 2019)"
+      "Class C Station (S205 2019)",
+      "Klasa C W205 Coupe Facelifting (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -4089,6 +4391,7 @@
        ],
        "1950": [
         150,
+        160,
         194,
         245
        ]
@@ -4103,6 +4406,8 @@
      "bodies": [
       "A205 Class C Cabrio",
       "C205 Class C Coupe",
+      "Klasa C W205 Kombi (autocentrum)",
+      "Klasa C W205 Sedan (autocentrum)",
       "S205 Estate Class C",
       "W205 Class C"
      ],
@@ -4138,10 +4443,16 @@
       },
       "plugin": {
        "1991": [
-        279
+        279,
+        293
        ]
       },
       "hybrid_diesel": {
+       "2143": [
+        231
+       ]
+      },
+      "hybrid": {
        "2143": [
         231
        ]
@@ -4155,10 +4466,15 @@
      "mobileModel": "C",
      "bodies": [
       "C Class (W204 2011) Estate",
-      "C Class (W204 2011) Sedan"
+      "C Class (W204 2011) Sedan",
+      "Klasa C W204 Kombi T204 Facelifting (autocentrum)",
+      "Klasa C W204 Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1595": [
+        156
+       ],
        "1796": [
         156,
         184,
@@ -4189,6 +4505,7 @@
      "mobileModel": "C",
      "bodies": [
       "C Class Coupe (C204)",
+      "Klasa C W204 Coupe (autocentrum)",
       "W204 Class C"
      ],
      "engines": {
@@ -4248,7 +4565,10 @@
      "bodies": [
       "E Class All Terrain S214",
       "E Class Estate S214",
-      "E Class W214"
+      "E Class W214",
+      "Klasa E W214 All-Terrain (autocentrum)",
+      "Klasa E W214 Kombi (autocentrum)",
+      "Klasa E W214 Sedan (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -4275,6 +4595,9 @@
        "1993": [
         186,
         220
+       ],
+       "2999": [
+        367
        ]
       }
      }
@@ -4289,7 +4612,10 @@
       "E Class All Terrain (W213 2021)",
       "E Class Cabriolet (A238 2021)",
       "E Class Coupe (C238 2021)",
-      "E Class Estate (W213 2021)"
+      "E Class Estate (W213 2021)",
+      "Klasa E W213 All-terrain Facelifting (autocentrum)",
+      "Klasa E W213 Kombi Facelifting (autocentrum)",
+      "Klasa E W213 Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -4317,11 +4643,15 @@
        ]
       },
       "diesel": {
+       "195": [
+        200
+       ],
        "1598": [
         160
        ],
        "1950": [
-        194
+        194,
+        200
        ],
        "1993": [
         265
@@ -4343,7 +4673,10 @@
       "E Class All Terrain (W213)",
       "E Class Cabriolet",
       "E Class Coupe (C238)",
-      "E Class Estate (W213)"
+      "E Class Estate (W213)",
+      "Klasa E W213 Coupe (autocentrum)",
+      "Klasa E W213 Kombi (autocentrum)",
+      "Klasa E W213 Sedan (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -4355,6 +4688,9 @@
        ]
       },
       "petrol": {
+       "1595": [
+        156
+       ],
        "1991": [
         184,
         211,
@@ -4395,6 +4731,12 @@
        "2987": [
         258
        ]
+      },
+      "hybrid": {
+       "1991": [
+        211,
+        272
+       ]
       }
      }
     },
@@ -4407,7 +4749,12 @@
       "E Class (W212 2013)",
       "E Class Cabrio (A207 2013)",
       "E Class Coupe (C207 2013)",
-      "E Class Estate (W212 2013)"
+      "E Class Estate (W212 2013)",
+      "Klasa E W212 Cabrio Facelifting (autocentrum)",
+      "Klasa E W212 Coupe Facelifting (autocentrum)",
+      "Klasa E W212 Kombi Facelifting (autocentrum)",
+      "Klasa E W212 Sedan Facelifting (autocentrum)",
+      "Klasa E W212 Sedan Facelifting AMG (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -4427,18 +4774,21 @@
        ],
        "5461": [
         557,
+        558,
         585
        ]
       },
       "diesel": {
        "2143": [
         136,
+        163,
         170,
         204
        ],
        "2987": [
         231,
-        252
+        252,
+        258
        ]
       },
       "cng": {
@@ -4447,6 +4797,11 @@
        ]
       },
       "hybrid_diesel": {
+       "2143": [
+        231
+       ]
+      },
+      "hybrid": {
        "2143": [
         231
        ]
@@ -4462,13 +4817,21 @@
       "E Class (W212)",
       "E Class Cabrio (A207)",
       "E Class Coupe (C207)",
-      "E Class Estate (W212)"
+      "E Class Estate (W212)",
+      "Klasa E W212 Kombi (autocentrum)",
+      "Klasa E W212 Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1796": [
         184,
         204
+       ],
+       "2143": [
+        163
+       ],
+       "2996": [
+        231
        ],
        "3498": [
         252,
@@ -4598,6 +4961,7 @@
      "bodies": [
       "2018 S Class Cabriolet",
       "C217 2018 Class S Coupe",
+      "Klasa S W222 Sedan wersja długa Facelifting (autocentrum)",
       "W222 2018 Class S",
       "X222 2018 Mercedes-Maybach"
      ],
@@ -4625,6 +4989,14 @@
         286,
         340
        ]
+      },
+      "hybrid": {
+       "2996": [
+        476
+       ],
+       "2999": [
+        457
+       ]
       }
      }
     },
@@ -4635,6 +5007,10 @@
      "mobileModel": "S",
      "bodies": [
       "C217 Class S Coupe",
+      "Klasa S W222 Sedan (autocentrum)",
+      "Klasa S W222 Sedan Facelifting (autocentrum)",
+      "Klasa S W222 Sedan wersja długa (autocentrum)",
+      "Klasa S W222 Sedan wersja długa Facelifting (autocentrum)",
       "Mercedes-Maybach S Cabriolet",
       "S Class Cabriolet",
       "W222 Class S",
@@ -4642,6 +5018,9 @@
      ],
      "engines": {
       "petrol": {
+       "2987": [
+        435
+       ],
        "2996": [
         333
        ],
@@ -4662,6 +5041,13 @@
        ]
       },
       "hybrid": {
+       "2143": [
+        231
+       ],
+       "2987": [
+        389,
+        457
+       ],
        "3498": [
         333
        ]
@@ -4672,7 +5058,8 @@
        ],
        "2987": [
         252,
-        258
+        258,
+        272
        ]
       }
      }
@@ -4683,6 +5070,8 @@
      "years": "2005–2013",
      "mobileModel": "S",
      "bodies": [
+      "Klasa S W221 Sedan Facelifting AMG (autocentrum)",
+      "Klasa S W221 Sedan wersja długa Facelifting AMG (autocentrum)",
       "W221 Class S"
      ],
      "engines": {
@@ -4697,7 +5086,8 @@
        ],
        "5461": [
         388,
-        544
+        544,
+        571
        ],
        "5513": [
         517
@@ -4736,6 +5126,7 @@
      "years": "2025–н. в.",
      "mobileModel": "CLA",
      "bodies": [
+      "CLA C178 Saloon (autocentrum)",
       "CLA Coupe (C174)",
       "CLA Shooting Brake (X174)"
      ],
@@ -4745,6 +5136,15 @@
         224,
         272,
         354
+       ]
+      },
+      "petrol": {
+       "1496": [
+        156
+       ],
+       "1499": [
+        184,
+        211
        ]
       }
      }
@@ -4756,6 +5156,7 @@
      "mobileModel": "CLA",
      "bodies": [
       "C118 CLA 2023",
+      "CLA C118 Coupe Facelifting (autocentrum)",
       "X118 CLA Shooting Brake 2023"
      ],
      "engines": {
@@ -4793,6 +5194,7 @@
      "mobileModel": "CLA",
      "bodies": [
       "C118 CLA",
+      "CLA C118 Coupe (autocentrum)",
       "X118 CLA Shooting Brake"
      ],
      "engines": {
@@ -4833,7 +5235,9 @@
      "mobileModel": "CLA",
      "bodies": [
       "2017 C117 CLA",
-      "2017 X117 CLA Shooting Brake"
+      "2017 X117 CLA Shooting Brake",
+      "CLA C117 Coupe Facelifting (autocentrum)",
+      "CLA C117 Shooting Brake Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -4842,6 +5246,8 @@
         156
        ],
        "1991": [
+        184,
+        211,
         218,
         381
        ]
@@ -4864,6 +5270,8 @@
      "mobileModel": "CLA",
      "bodies": [
       "C117 CLA",
+      "CLA C117 Coupe (autocentrum)",
+      "CLA C117 Shooting Brake (autocentrum)",
       "X117 CLA Shooting Brake"
      ],
      "engines": {
@@ -5279,6 +5687,8 @@
      "years": "2018–2023",
      "mobileModel": "GLE",
      "bodies": [
+      "GLE V167 Coupe (autocentrum)",
+      "GLE V167 SUV (autocentrum)",
       "V167 GLE"
      ],
      "engines": {
@@ -5306,6 +5716,7 @@
         245
        ],
        "2925": [
+        272,
         330
        ]
       }
@@ -5317,7 +5728,9 @@
      "years": "2015–2019",
      "mobileModel": "GLE",
      "bodies": [
-      "GLE Coupe (C292)"
+      "GLE Coupe (C292)",
+      "GLE W166 Coupé (C292) Coupe (autocentrum)",
+      "GLE W166 Coupé (C292) SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -5325,6 +5738,9 @@
         333,
         367,
         390
+       ],
+       "4663": [
+        455
        ],
        "5461": [
         557,
@@ -5646,7 +6062,16 @@
      "years": "2007–2013",
      "mobileModel": "308",
      "bodies": [
-      "308"
+      "308",
+      "308 I CC (autocentrum)",
+      "308 I CC Facelifting (autocentrum)",
+      "308 I Hatchback 3-door (autocentrum)",
+      "308 I Hatchback 5-door (autocentrum)",
+      "308 I Hatchback 5-door Facelifting (autocentrum)",
+      "308 I Kombi (autocentrum)",
+      "308 I Kombi Facelifting (autocentrum)",
+      "308 I SW (autocentrum)",
+      "308 I SW Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -5659,6 +6084,7 @@
         140,
         150,
         156,
+        175,
         200
        ]
       },
@@ -5669,9 +6095,13 @@
         109,
         112
        ],
+       "1600": [
+        112
+       ],
        "1997": [
         136,
         140,
+        150,
         163
        ]
       }
@@ -5790,6 +6220,7 @@
      "mobileModel": "508",
      "bodies": [
       "508",
+      "508 I Sedan (autocentrum)",
       "508 SW"
      ],
      "engines": {
@@ -5816,6 +6247,11 @@
        ]
       },
       "hybrid_diesel": {
+       "1997": [
+        200
+       ]
+      },
+      "hybrid": {
        "1997": [
         200
        ]
@@ -5898,7 +6334,8 @@
      "years": "2013–2016",
      "mobileModel": "2008",
      "bodies": [
-      "2008"
+      "2008",
+      "2008 I SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -5916,6 +6353,7 @@
         68
        ],
        "1560": [
+        75,
         92,
         99,
         114,
@@ -5930,7 +6368,8 @@
      "years": "2016–2019",
      "mobileModel": "2008",
      "bodies": [
-      "2008 Facelift"
+      "2008 Facelift",
+      "2008 I SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -5945,6 +6384,7 @@
         100
        ],
        "1560": [
+        75,
         99
        ]
       }
@@ -5992,11 +6432,13 @@
      "years": "2020–2024",
      "mobileModel": "3008",
      "bodies": [
-      "3008 2021"
+      "3008 2021",
+      "3008 II Plug-In Hybrid Facelifting (autocentrum)"
      ],
      "engines": {
       "plugin": {
        "1598": [
+        180,
         225,
         300
        ]
@@ -6072,7 +6514,9 @@
      "years": "2009–2016",
      "mobileModel": "3008",
      "bodies": [
-      "3008"
+      "3008",
+      "3008 I Crossover (autocentrum)",
+      "3008 I Crossover Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6103,6 +6547,12 @@
        "1997": [
         200
        ]
+      },
+      "hybrid": {
+       "1997": [
+        163,
+        200
+       ]
       }
      }
     }
@@ -6118,7 +6568,8 @@
      "years": "2024–н. в.",
      "mobileModel": "5008",
      "bodies": [
-      "5008 III"
+      "5008 III",
+      "5008 III Suv (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -6136,6 +6587,7 @@
       },
       "hybrid": {
        "1199": [
+        136,
         145
        ]
       }
@@ -6207,8 +6659,8 @@
     },
     {
      "code": "5008 I",
-     "phase": "весь выпуск",
-     "years": "2009–2017",
+     "phase": "дорестайлинг",
+     "years": "2009–2013",
      "mobileModel": "5008",
      "bodies": [
       "5008"
@@ -6236,7 +6688,7 @@
     {
      "code": "5008 I",
      "phase": "рестайлинг",
-     "years": "2009–2017",
+     "years": "2013–2017",
      "mobileModel": "5008",
      "bodies": [
       "5008 Facelift"
@@ -6298,7 +6750,8 @@
      "years": "2019–2024",
      "mobileModel": "Captur",
      "bodies": [
-      "Captur 2"
+      "Captur 2",
+      "Captur II Crossover (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -6329,6 +6782,11 @@
        "999": [
         100,
         101
+       ]
+      },
+      "diesel": {
+       "1461": [
+        116
        ]
       }
      }
@@ -6398,7 +6856,9 @@
      "mobileModel": "Clio",
      "bodies": [
       "Clio 5",
-      "Clio 5 Phase 2"
+      "Clio 5 Phase 2",
+      "Clio V Hatchback 5-door (autocentrum)",
+      "Clio V Hatchback 5-door Facelifting (autocentrum)"
      ],
      "engines": {
       "hybrid": {
@@ -6414,12 +6874,16 @@
        ],
        "1330": [
         130
+       ],
+       "1332": [
+        140
        ]
       },
       "diesel": {
        "1461": [
         85,
-        101
+        101,
+        115
        ]
       },
       "lpg": {
@@ -6439,7 +6903,9 @@
       "Clio 4",
       "Clio 4 Ph2",
       "Clio 4 Ph2 Sport Tourer",
-      "Clio 4 Sport Tourer"
+      "Clio 4 Sport Tourer",
+      "Clio IV Grandtour (autocentrum)",
+      "Clio IV Hatchback 5-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6448,7 +6914,8 @@
         90
        ],
        "1149": [
-        73
+        73,
+        90
        ],
        "1197": [
         118,
@@ -6478,11 +6945,17 @@
       "Clio 3 Phase 1 5Doors",
       "Clio 3 Phase 1 Grand Tour",
       "Clio 3 Phase 2",
-      "Clio 3 Phase 2 Grand Tour"
+      "Clio 3 Phase 2 Grand Tour",
+      "Clio III Grandtour Phase II (autocentrum)",
+      "Clio III Hatchback 3-door (autocentrum)",
+      "Clio III Hatchback 3-door Phase II (autocentrum)",
+      "Clio III Hatchback 5-door (autocentrum)",
+      "Clio III Hatchback 5-door Phase II (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1149": [
+        65,
         75,
         78,
         101
@@ -6491,6 +6964,7 @@
         98
        ],
        "1598": [
+        75,
         111,
         112,
         128
@@ -6583,7 +7057,8 @@
      "years": "2018–2022",
      "mobileModel": "Kadjar",
      "bodies": [
-      "Kadjar 1 Phase 2"
+      "Kadjar 1 Phase 2",
+      "Kadjar I Crossover Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6599,6 +7074,9 @@
       "diesel": {
        "1461": [
         116
+       ],
+       "1749": [
+        150
        ]
       }
      }
@@ -6643,7 +7121,8 @@
      "mobileModel": "Megane",
      "bodies": [
       "Megane 4 Phase 2",
-      "Megane 4 Phase 2 Sport Tourer"
+      "Megane 4 Phase 2 Sport Tourer",
+      "Megane Mégane IV Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -6653,7 +7132,8 @@
       },
       "petrol": {
        "999": [
-        114
+        114,
+        115
        ],
        "1330": [
         116,
@@ -6681,7 +7161,12 @@
      "mobileModel": "Megane",
      "bodies": [
       "Megane 4 Phase 1",
-      "Megane 4 Phase 1 Sport Tourer"
+      "Megane 4 Phase 1 Sport Tourer",
+      "Megane Mégane IV GT (autocentrum)",
+      "Megane Mégane IV GT Grandtour (autocentrum)",
+      "Megane Mégane IV Grandtour (autocentrum)",
+      "Megane Mégane IV Hatchback 5-door (autocentrum)",
+      "Megane Mégane IV Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6704,7 +7189,16 @@
         140,
         160
        ],
+       "1333": [
+        115,
+        140
+       ],
+       "1598": [
+        114,
+        163
+       ],
        "1618": [
+        165,
         205
        ],
        "1798": [
@@ -6715,7 +7209,9 @@
       "diesel": {
        "1461": [
         90,
+        95,
         110,
+        115,
         116
        ],
        "1598": [
@@ -6723,6 +7219,9 @@
         131,
         160,
         163
+       ],
+       "1749": [
+        149
        ]
       }
      }
@@ -6742,7 +7241,15 @@
       "Megane 3 Phase 2 Coupe",
       "Megane 3 Phase 3",
       "Megane 3 Phase 3 Break Sport Tourer",
-      "Megane 3 Phase 3 Coupe"
+      "Megane 3 Phase 3 Coupe",
+      "Megane Mégane III Coupe (autocentrum)",
+      "Megane Mégane III Coupe Facelifting (autocentrum)",
+      "Megane Mégane III Coupe Facelifting 2013 (autocentrum)",
+      "Megane Mégane III Coupe-Cabriolet (autocentrum)",
+      "Megane Mégane III Grandtour (autocentrum)",
+      "Megane Mégane III Grandtour Facelifting (autocentrum)",
+      "Megane Mégane III Grandtour Facelifting 2013 (autocentrum)",
+      "Megane Mégane III Hatchback (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6763,6 +7270,8 @@
        ],
        "1998": [
         179,
+        190,
+        220,
         250,
         265,
         275
@@ -6770,8 +7279,10 @@
       },
       "diesel": {
        "1461": [
+        85,
         90,
         95,
+        105,
         110
        ],
        "1598": [
@@ -6817,7 +7328,9 @@
      "mobileModel": "Scenic",
      "bodies": [
       "Grand Scenic 4",
-      "Scenic 4"
+      "Scenic 4",
+      "Scenic Scénic IV III (autocentrum)",
+      "Scenic Scénic IV IV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6830,6 +7343,9 @@
         140,
         158,
         160
+       ],
+       "1461": [
+        110
        ]
       },
       "diesel": {
@@ -6842,7 +7358,9 @@
         160
        ],
        "1749": [
-        120
+        120,
+        149,
+        150
        ]
       },
       "hybrid_diesel": {
@@ -6863,6 +7381,8 @@
       "Grand Scenic 3 Phase 3",
       "Scenic 3 Phase 1",
       "Scenic 3 Phase 2",
+      "Scenic Scénic III Grand Scenic (autocentrum)",
+      "Scenic Scénic III Van (autocentrum)",
       "Scénic 3 Phase 3"
      ],
      "engines": {
@@ -6884,10 +7404,14 @@
       "diesel": {
        "1461": [
         95,
+        105,
         110
        ],
        "1598": [
         131
+       ],
+       "1600": [
+        160
        ],
        "1870": [
         131
@@ -6976,6 +7500,38 @@
        ]
       }
      }
+    },
+    {
+     "code": "Trafic II",
+     "phase": "весь выпуск",
+     "years": "2001–2014",
+     "mobileModel": "Trafic",
+     "bodies": [
+      "Trafic II Furgon (autocentrum)",
+      "Trafic II Kabina (autocentrum)",
+      "Trafic II Platforma (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "1900": [
+        80,
+        100
+       ],
+       "1995": [
+        80,
+        90,
+        115
+       ],
+       "2464": [
+        150
+       ]
+      },
+      "petrol": {
+       "1998": [
+        120
+       ]
+      }
+     }
     }
    ]
   },
@@ -6989,7 +7545,8 @@
      "years": "2021–н. в.",
      "mobileModel": "Fabia",
      "bodies": [
-      "Fabia 2022"
+      "Fabia 2022",
+      "Fabia IV IV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7032,7 +7589,8 @@
      "mobileModel": "Fabia",
      "bodies": [
       "Fabia 3",
-      "Fabia 3 Combi"
+      "Fabia 3 Combi",
+      "Fabia III Hatchback (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7045,6 +7603,9 @@
        "1197": [
         90,
         110
+       ],
+       "1395": [
+        125
        ]
       },
       "diesel": {
@@ -7062,11 +7623,15 @@
      "years": "2007–2014",
      "mobileModel": "Fabia",
      "bodies": [
-      "Fabia II"
+      "Fabia II",
+      "Fabia II Hatchback Facelifting (autocentrum)",
+      "Fabia II Kombi (autocentrum)",
+      "Fabia II Kombi Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1197": [
+        85,
         86,
         105
        ],
@@ -7084,8 +7649,12 @@
        ]
       },
       "diesel": {
+       "1199": [
+        75
+       ],
        "1422": [
         69,
+        70,
         80
        ],
        "1598": [
@@ -7131,7 +7700,8 @@
      "years": "2019–2024",
      "mobileModel": "Kamiq",
      "bodies": [
-      "Kamiq"
+      "Kamiq",
+      "Kamiq I Crossover (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7142,6 +7712,11 @@
        ],
        "1498": [
         150
+       ]
+      },
+      "diesel": {
+       "1598": [
+        115
        ]
       }
      }
@@ -7183,7 +7758,9 @@
      "years": "2017–2021",
      "mobileModel": "Karoq",
      "bodies": [
-      "Karoq"
+      "Karoq",
+      "Karoq I Crossover (autocentrum)",
+      "Karoq I Scout (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7252,12 +7829,18 @@
      "years": "2021–2023",
      "mobileModel": "Kodiaq",
      "bodies": [
-      "Kodiaq 2021"
+      "Kodiaq 2021",
+      "Kodiaq I SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1498": [
         150
+       ]
+      },
+      "diesel": {
+       "1968": [
+        200
        ]
       }
      }
@@ -7268,7 +7851,9 @@
      "years": "2016–2021",
      "mobileModel": "Kodiaq",
      "bodies": [
-      "Kodiaq"
+      "Kodiaq",
+      "Kodiaq I SUV (autocentrum)",
+      "Kodiaq I Scout (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7289,6 +7874,9 @@
         150,
         190,
         240
+       ],
+       "1986": [
+        200
        ]
       }
      }
@@ -7333,7 +7921,10 @@
      "mobileModel": "Octavia",
      "bodies": [
       "Octavia 4",
-      "Octavia 4 Combi"
+      "Octavia 4 Combi",
+      "Octavia IV Kombi (autocentrum)",
+      "Octavia IV Liftback (autocentrum)",
+      "Octavia IV Scout (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -7350,6 +7941,7 @@
         150
        ],
        "1984": [
+        190,
         245
        ]
       },
@@ -7375,6 +7967,8 @@
      "bodies": [
       "Octavia 2017",
       "Octavia Combi 2017",
+      "Octavia III Kombi Facelifting (autocentrum)",
+      "Octavia III Liftback Facelifting (autocentrum)",
       "Octavia Scout 2017"
      ],
      "engines": {
@@ -7392,12 +7986,15 @@
         179
        ],
        "1984": [
+        190,
         230,
         245
        ]
       },
       "diesel": {
        "1598": [
+        90,
+        115,
         116
        ],
        "1968": [
@@ -7421,20 +8018,24 @@
      "bodies": [
       "Octavia 3",
       "Octavia 3 Combi",
-      "Octavia 3 Scout"
+      "Octavia 3 Scout",
+      "Octavia III Kombi (autocentrum)",
+      "Octavia III Liftback (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1197": [
         86,
-        105
+        105,
+        110
        ],
        "1395": [
         140,
         150
        ],
        "1798": [
-        179
+        179,
+        180
        ],
        "1984": [
         220,
@@ -7443,6 +8044,7 @@
       },
       "diesel": {
        "1598": [
+        90,
         105,
         110
        ],
@@ -7464,7 +8066,13 @@
      "years": "2004–2013",
      "mobileModel": "Octavia",
      "bodies": [
-      "Octavia 2"
+      "Octavia 2",
+      "Octavia II Hatchback (autocentrum)",
+      "Octavia II Hatchback Facelifting (autocentrum)",
+      "Octavia II Kombi (autocentrum)",
+      "Octavia II Kombi Facelifting (autocentrum)",
+      "Octavia II Scout (autocentrum)",
+      "Octavia II Scout Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7498,6 +8106,7 @@
         105
        ],
        "1968": [
+        110,
         140,
         170
        ]
@@ -7505,6 +8114,40 @@
       "lpg": {
        "1595": [
         98
+       ]
+      }
+     }
+    },
+    {
+     "code": "Octavia I",
+     "phase": "весь выпуск",
+     "years": "1996–2010",
+     "mobileModel": "Octavia",
+     "bodies": [
+      "Octavia I Hatchback (autocentrum)",
+      "Octavia I Kombi (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1390": [
+        75
+       ],
+       "1397": [
+        80
+       ],
+       "1595": [
+        102
+       ],
+       "1598": [
+        102
+       ],
+       "1781": [
+        150
+       ]
+      },
+      "diesel": {
+       "1896": [
+        101
        ]
       }
      }
@@ -7522,7 +8165,8 @@
      "mobileModel": "Superb",
      "bodies": [
       "Superb 4",
-      "Superb 4 Combi"
+      "Superb 4 Combi",
+      "Superb IV Kombi (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -7554,7 +8198,10 @@
      "mobileModel": "Superb",
      "bodies": [
       "Superb 2020",
-      "Superb 2020 Combi"
+      "Superb 2020 Combi",
+      "Superb III Kombi Facelifting (autocentrum)",
+      "Superb III Liftback Facelifting (autocentrum)",
+      "Superb III Scout (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -7565,6 +8212,9 @@
       "petrol": {
        "1498": [
         150
+       ],
+       "1984": [
+        280
        ]
       },
       "diesel": {
@@ -7582,10 +8232,18 @@
      "mobileModel": "Superb",
      "bodies": [
       "Superb 3",
-      "Superb 3 Combi"
+      "Superb 3 Combi",
+      "Superb III Kombi (autocentrum)",
+      "Superb III Kombi Facelifting (autocentrum)",
+      "Superb III Liftback (autocentrum)",
+      "Superb III Liftback Facelifting (autocentrum)",
+      "Superb III Scout (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1390": [
+        125
+       ],
        "1395": [
         150
        ],
@@ -7596,7 +8254,9 @@
         179
        ],
        "1984": [
+        190,
         220,
+        272,
         280
        ]
       },
@@ -7613,11 +8273,13 @@
     },
     {
      "code": "Superb II",
-     "phase": "весь выпуск",
-     "years": "2008–2015",
+     "phase": "дорестайлинг",
+     "years": "2008–2013",
      "mobileModel": "Superb",
      "bodies": [
-      "Superb 2"
+      "Superb 2",
+      "Superb II Kombi (autocentrum)",
+      "Superb II Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7625,6 +8287,7 @@
         125
        ],
        "1798": [
+        152,
         160
        ],
        "1984": [
@@ -7648,7 +8311,7 @@
     {
      "code": "Superb II",
      "phase": "рестайлинг",
-     "years": "2008–2015",
+     "years": "2013–2015",
      "mobileModel": "Superb",
      "bodies": [
       "Superb 2 Combi Facelift",
@@ -7752,12 +8415,16 @@
      "years": "2006–2012",
      "mobileModel": "Auris",
      "bodies": [
-      "Auris"
+      "Auris",
+      "Auris E15 Hatchback (autocentrum)",
+      "Auris E15 Hatchback 3-door Facelifting (autocentrum)",
+      "Auris E15 Hatchback 5-door Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1329": [
-        99
+        99,
+        101
        ],
        "1398": [
         97
@@ -7765,6 +8432,9 @@
        "1598": [
         124,
         132
+       ],
+       "1794": [
+        147
        ]
       },
       "diesel": {
@@ -7776,6 +8446,11 @@
        ],
        "2231": [
         177
+       ]
+      },
+      "hybrid": {
+       "1798": [
+        136
        ]
       }
      }
@@ -7792,23 +8467,46 @@
      "years": "2009–2018",
      "mobileModel": "Avensis",
      "bodies": [
-      "Avensis 3rd Gen (2015 Restyling)"
+      "Avensis 3rd Gen (2015 Restyling)",
+      "Avensis T27 Sedan Facelifting (autocentrum)",
+      "Avensis T27 Wagon Facelifting (autocentrum)",
+      "Avensis T27 Wagon Facelifting 2015 (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1598": [
+        132
+       ],
+       "1794": [
+        147
+       ],
        "1798": [
         147
        ],
        "1987": [
         152
+       ],
+       "1998": [
+        152
        ]
       },
       "diesel": {
        "1598": [
-        111
+        111,
+        112
        ],
        "1995": [
         143
+       ],
+       "1998": [
+        124,
+        143,
+        150
+       ],
+       "2231": [
+        150,
+        177,
+        190
        ]
       }
      }
@@ -7819,7 +8517,8 @@
      "years": "2009–2018",
      "mobileModel": "Avensis",
      "bodies": [
-      "Avensis III"
+      "Avensis III",
+      "Avensis T27 Wagon (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7835,7 +8534,8 @@
       },
       "diesel": {
        "1998": [
-        124
+        124,
+        126
        ],
        "2231": [
         150,
@@ -7856,7 +8556,8 @@
      "years": "2023–н. в.",
      "mobileModel": "C-HR",
      "bodies": [
-      "C-HR II"
+      "C-HR II",
+      "C-HR II SUV (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -7869,6 +8570,7 @@
         140
        ],
        "1987": [
+        180,
         197
        ]
       }
@@ -7963,16 +8665,27 @@
      "years": "2011–2017",
      "mobileModel": "Camry",
      "bodies": [
-      "Camry XV50"
+      "Camry XV50",
+      "Camry XV50 (вне ЕС) VII (autocentrum)",
+      "Camry XV50 (вне ЕС) VIII (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1998": [
+        150
+       ],
        "2494": [
         171,
         181
        ],
        "3456": [
+        249,
         268
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        200
        ]
       }
      }
@@ -7984,7 +8697,8 @@
      "mobileModel": "Camry",
      "bodies": [
       "Camry Solara II",
-      "Camry XV40"
+      "Camry XV40",
+      "Camry XV40 (вне ЕС) VI (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7997,6 +8711,14 @@
        ],
        "3311": [
         213
+       ],
+       "3456": [
+        275
+       ]
+      },
+      "hybrid": {
+       "2362": [
+        187
        ]
       }
      }
@@ -8033,6 +8755,8 @@
      "years": "2018–2023",
      "mobileModel": "Corolla",
      "bodies": [
+      "Corolla E21 Sedan (autocentrum)",
+      "Corolla E21 Sedan Facelifting (autocentrum)",
       "Corolla E210 Hatchback",
       "Corolla E210 Sedan",
       "Corolla E210 Touring Sports"
@@ -8041,6 +8765,12 @@
       "petrol": {
        "1197": [
         115
+       ],
+       "1490": [
+        125
+       ],
+       "1598": [
+        132
        ]
       },
       "hybrid": {
@@ -8059,17 +8789,30 @@
      "years": "2006–2013",
      "mobileModel": "Corolla",
      "bodies": [
+      "Corolla E15 Sedan (autocentrum)",
+      "Corolla E15 Sedan Facelifting (autocentrum)",
       "E140 Corolla"
      ],
      "engines": {
       "petrol": {
        "1329": [
         101
+       ],
+       "1398": [
+        97
+       ],
+       "1598": [
+        124,
+        125,
+        132
        ]
       },
       "diesel": {
        "1364": [
         90
+       ],
+       "1998": [
+        126
        ]
       }
      }
@@ -8134,6 +8877,8 @@
      "years": "2018–2025",
      "mobileModel": "RAV 4",
      "bodies": [
+      "RAV 4 XA50 SUV (autocentrum)",
+      "RAV 4 XA50 SUV Facelifting (autocentrum)",
       "RAV4 (XA50)"
      ],
      "engines": {
@@ -8144,6 +8889,7 @@
       },
       "petrol": {
        "1987": [
+        173,
         175
        ]
       },
@@ -8186,12 +8932,14 @@
      "years": "2013–2018",
      "mobileModel": "RAV 4",
      "bodies": [
+      "RAV 4 XA40 MPV Facelifting (autocentrum)",
       "RAV4 2016"
      ],
      "engines": {
       "petrol": {
        "1987": [
-        151
+        151,
+        152
        ]
       },
       "hybrid": {
@@ -8212,6 +8960,8 @@
      "years": "2005–2012",
      "mobileModel": "RAV 4",
      "bodies": [
+      "RAV 4 XA30 MPV (autocentrum)",
+      "RAV 4 XA30 MPV Facelifting (autocentrum)",
       "RAV4 III"
      ],
      "engines": {
@@ -8221,13 +8971,42 @@
        ],
        "1998": [
         152
+       ],
+       "2362": [
+        170
+       ],
+       "3465": [
+        269
        ]
       },
       "diesel": {
        "2231": [
         136,
         150,
-        177
+        177,
+        180
+       ]
+      }
+     }
+    },
+    {
+     "code": "XA60",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "RAV 4",
+     "bodies": [
+      "RAV 4 XA60 SUV (autocentrum)",
+      "RAV 4 XA60 SUV Plug-In (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2487": [
+        268,
+        304
+       ],
+       "2494": [
+        183,
+        192
        ]
       }
      }
@@ -8245,7 +9024,9 @@
      "mobileModel": "Yaris",
      "bodies": [
       "Yaris (XP21)",
-      "Yaris GR"
+      "Yaris GR",
+      "Yaris XP21 Cross (autocentrum)",
+      "Yaris XP21 Cross Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -8262,7 +9043,8 @@
       },
       "hybrid": {
        "1490": [
-        116
+        116,
+        130
        ]
       }
      }
@@ -8273,13 +9055,18 @@
      "years": "2011–2020",
      "mobileModel": "Yaris",
      "bodies": [
-      "Yaris 2017"
+      "Yaris 2017",
+      "Yaris XP13 Hatchback 3-door Facelifting (autocentrum)",
+      "Yaris XP13 Hatchback 3-door Facelifting 2017 (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "998": [
         69,
         72
+       ],
+       "1329": [
+        99
        ],
        "1496": [
         111
@@ -8292,6 +9079,11 @@
        "1497": [
         100
        ]
+      },
+      "diesel": {
+       "1364": [
+        90
+       ]
       }
      }
     },
@@ -8302,7 +9094,9 @@
      "mobileModel": "Yaris",
      "bodies": [
       "Yaris 3",
-      "Yaris Hybrid"
+      "Yaris Hybrid",
+      "Yaris XP13 Hatchback 3-door (autocentrum)",
+      "Yaris XP13 VAN 3-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -8311,6 +9105,9 @@
        ],
        "1329": [
         99
+       ],
+       "1497": [
+        111
        ]
       },
       "diesel": {
@@ -8320,6 +9117,7 @@
       },
       "hybrid": {
        "1497": [
+        74,
         100
        ]
       }
@@ -8360,7 +9158,8 @@
      "years": "2005–2013",
      "mobileModel": "Yaris",
      "bodies": [
-      "Yaris 2"
+      "Yaris 2",
+      "Yaris XP9 Hatchback 3-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -8368,6 +9167,7 @@
         69
        ],
        "1296": [
+        86,
         87
        ],
        "1329": [
@@ -8396,7 +9196,9 @@
      "years": "2018–2024",
      "mobileModel": "S60",
      "bodies": [
-      "S60 III"
+      "S60 III",
+      "S60 III Sedan (autocentrum)",
+      "S60 III Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -8412,27 +9214,37 @@
         163,
         190,
         197,
-        250
+        250,
+        254,
+        264,
+        310
        ]
       }
      }
     },
     {
      "code": "S60 II",
-     "phase": "весь выпуск",
-     "years": "2010–2018",
+     "phase": "дорестайлинг",
+     "years": "2010–2013",
      "mobileModel": "S60",
      "bodies": [
       "S60 Cross Country",
-      "S60 II"
+      "S60 II",
+      "S60 II Sedan (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1596": [
+        150
+       ],
        "1999": [
         203,
         241
        ],
        "2497": [
+        254
+       ],
+       "2522": [
         254
        ],
        "2953": [
@@ -8467,14 +9279,23 @@
     {
      "code": "S60 II",
      "phase": "рестайлинг",
-     "years": "2010–2018",
+     "years": "2013–2018",
      "mobileModel": "S60",
      "bodies": [
-      "S60 II Restyling"
+      "S60 II Cross Country (autocentrum)",
+      "S60 II Restyling",
+      "S60 II Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1498": [
+        152
+       ],
+       "1596": [
+        150
+       ],
        "1969": [
+        152,
         190,
         245,
         306,
@@ -8517,7 +9338,8 @@
      "years": "2000–2010",
      "mobileModel": "S60",
      "bodies": [
-      "S60"
+      "S60",
+      "S60 I I (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -8534,6 +9356,9 @@
         140,
         170,
         200
+       ],
+       "2500": [
+        185
        ],
        "2521": [
         209,
@@ -8559,20 +9384,27 @@
    "generations": [
     {
      "code": "V40 II",
-     "phase": "весь выпуск",
-     "years": "2012–2019",
+     "phase": "дорестайлинг",
+     "years": "2012–2016",
      "mobileModel": "V40",
      "bodies": [
       "V40 Cross Country",
-      "V40 II"
+      "V40 II",
+      "V40 II Cross Country (autocentrum)",
+      "V40 II Hatchback (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1596": [
+        120,
+        150,
         179
        ],
        "1969": [
         245
+       ],
+       "1984": [
+        180
        ],
        "2497": [
         254
@@ -8595,10 +9427,11 @@
     {
      "code": "V40 II",
      "phase": "рестайлинг",
-     "years": "2012–2019",
+     "years": "2016–2019",
      "mobileModel": "V40",
      "bodies": [
       "V40 Cross Country Restyling",
+      "V40 II Hatchback Facelifting (autocentrum)",
       "V40 II Restyling"
      ],
      "engines": {
@@ -8636,7 +9469,8 @@
      "mobileModel": "V60",
      "bodies": [
       "V60 II",
-      "V60 II Cross Country"
+      "V60 II Cross Country",
+      "V60 II Kombi (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -8655,6 +9489,7 @@
         190,
         197,
         250,
+        254,
         310
        ]
       },
@@ -8669,12 +9504,13 @@
     },
     {
      "code": "V60 I",
-     "phase": "весь выпуск",
-     "years": "2010–2018",
+     "phase": "дорестайлинг",
+     "years": "2010–2013",
      "mobileModel": "V60",
      "bodies": [
       "V60",
-      "V60 Cross Country"
+      "V60 Cross Country",
+      "V60 I Kombi (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -8704,6 +9540,9 @@
         136,
         163
        ],
+       "2400": [
+        163
+       ],
        "2401": [
         190,
         205
@@ -8719,9 +9558,11 @@
     {
      "code": "V60 I",
      "phase": "рестайлинг",
-     "years": "2010–2018",
+     "years": "2013–2018",
      "mobileModel": "V60",
      "bodies": [
+      "V60 I Cross Country (autocentrum)",
+      "V60 I Kombi Facelifting (autocentrum)",
       "V60 Restyling"
      ],
      "engines": {
@@ -8732,8 +9573,10 @@
       },
       "petrol": {
        "1969": [
+        152,
         190,
         245,
+        306,
         367
        ],
        "2953": [
@@ -8747,12 +9590,18 @@
        "1969": [
         120,
         150,
+        181,
         190,
         224
        ],
        "1984": [
         136,
         163
+       ],
+       "2400": [
+        163,
+        181,
+        190
        ],
        "2401": [
         215
@@ -8777,11 +9626,15 @@
      "years": "2022–н. в.",
      "mobileModel": "XC40",
      "bodies": [
-      "XC40 2023"
+      "XC40 2023",
+      "XC40 I Crossover Facelifting (autocentrum)",
+      "XC40 I Crossover Plug-In Facelifting (autocentrum)",
+      "XC40 I Recharge (autocentrum)"
      ],
      "engines": {
       "electric": {
        "0": [
+        231,
         238,
         252,
         408
@@ -8801,6 +9654,11 @@
         163,
         197
        ]
+      },
+      "hybrid": {
+       "1477": [
+        262
+       ]
       }
      }
     },
@@ -8810,7 +9668,9 @@
      "years": "2018–2021",
      "mobileModel": "XC40",
      "bodies": [
-      "XC40 2018"
+      "XC40 2018",
+      "XC40 I Crossover (autocentrum)",
+      "XC40 I Crossover Plug-In (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -8912,7 +9772,8 @@
      "years": "2018–2021",
      "mobileModel": "XC60",
      "bodies": [
-      "XC60 2018"
+      "XC60 2018",
+      "XC60 II Crossover (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -8929,6 +9790,7 @@
         197,
         250,
         254,
+        310,
         320
        ]
       },
@@ -8944,22 +9806,34 @@
     },
     {
      "code": "XC60 I",
-     "phase": "весь выпуск",
-     "years": "2008–2016",
+     "phase": "дорестайлинг",
+     "years": "2008–2013",
      "mobileModel": "XC60",
      "bodies": [
-      "XC60"
+      "XC60",
+      "XC60 I SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
+       "1999": [
+        203,
+        240
+       ],
        "2953": [
         305
+       ],
+       "3192": [
+        243
        ]
       },
       "diesel": {
        "1984": [
         136,
         163
+       ],
+       "2400": [
+        175,
+        185
        ],
        "2401": [
         163,
@@ -8972,15 +9846,23 @@
     {
      "code": "XC60 I",
      "phase": "рестайлинг",
-     "years": "2008–2016",
+     "years": "2013–2016",
      "mobileModel": "XC60",
      "bodies": [
+      "XC60 I SUV Facelifting (autocentrum)",
       "XC60 Restyling"
      ],
      "engines": {
       "petrol": {
        "1969": [
-        245
+        245,
+        306
+       ],
+       "1999": [
+        240
+       ],
+       "2497": [
+        254
        ],
        "2953": [
         305
@@ -8995,6 +9877,9 @@
        "1984": [
         136,
         163
+       ],
+       "2400": [
+        220
        ],
        "2401": [
         163,
@@ -9067,7 +9952,8 @@
      "years": "2015–2019",
      "mobileModel": "XC90",
      "bodies": [
-      "XC90 II"
+      "XC90 II",
+      "XC90 II SUV (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -9098,7 +9984,8 @@
      "years": "2002–2015",
      "mobileModel": "XC90",
      "bodies": [
-      "XC90"
+      "XC90",
+      "XC90 I I (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9109,7 +9996,8 @@
         272
        ],
        "3192": [
-        238
+        238,
+        243
        ],
        "4414": [
         315,
@@ -9117,6 +10005,9 @@
        ]
       },
       "diesel": {
+       "2400": [
+        163
+       ],
        "2401": [
         163,
         185,
@@ -9137,7 +10028,8 @@
      "years": "2024–н. в.",
      "mobileModel": "Golf",
      "bodies": [
-      "Golf 8 2024"
+      "Golf 8 2024",
+      "Golf VIII Hatchback Facelifting (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -9147,6 +10039,9 @@
        ]
       },
       "petrol": {
+       "1498": [
+        116
+       ],
        "1984": [
         265,
         300,
@@ -9162,7 +10057,10 @@
      "mobileModel": "Golf",
      "bodies": [
       "Golf 8",
-      "Golf 8 Variant"
+      "Golf 8 Variant",
+      "Golf VIII Alltrack (autocentrum)",
+      "Golf VIII Hatchback (autocentrum)",
+      "Golf VIII Variant (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -9181,6 +10079,7 @@
         150
        ],
        "1984": [
+        190,
         245,
         320,
         333
@@ -9189,7 +10088,8 @@
       "diesel": {
        "1968": [
         115,
-        150
+        150,
+        200
        ]
       }
      }
@@ -9204,7 +10104,10 @@
       "Golf 2017 3-doors",
       "Golf 2017 Alltrack",
       "Golf 2017 Variant",
-      "Golf Sportsvan 2018"
+      "Golf Sportsvan 2018",
+      "Golf VII Hatchback 3-door Facelifting (autocentrum)",
+      "Golf VII Hatchback 5-door Facelifting (autocentrum)",
+      "Golf VII Variant Facelifting (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -9243,6 +10146,7 @@
       },
       "diesel": {
        "1598": [
+        90,
         115,
         116
        ],
@@ -9268,7 +10172,13 @@
       "Golf 7 3-doors",
       "Golf 7 Variant",
       "Golf Alltrack",
-      "Golf Sportsvan"
+      "Golf Sportsvan",
+      "Golf VII GTI 3-door (autocentrum)",
+      "Golf VII GTI 5-door (autocentrum)",
+      "Golf VII Hatchback 3-door (autocentrum)",
+      "Golf VII Hatchback 5-door (autocentrum)",
+      "Golf VII Sportsvan (autocentrum)",
+      "Golf VII Variant (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -9300,6 +10210,7 @@
        "1984": [
         220,
         230,
+        265,
         290,
         300,
         310
@@ -9307,6 +10218,7 @@
       },
       "diesel": {
        "1598": [
+        90,
         105,
         110
        ],
@@ -9330,7 +10242,12 @@
      "bodies": [
       "Golf 6",
       "Golf 6 Cabrio",
-      "Golf 6 Variant"
+      "Golf 6 Variant",
+      "Golf VI Cabriolet (autocentrum)",
+      "Golf VI Hatchback 3-door (autocentrum)",
+      "Golf VI Hatchback 5-door (autocentrum)",
+      "Golf VI II (autocentrum)",
+      "Golf VI Variant (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9341,7 +10258,8 @@
        "1390": [
         80,
         122,
-        160
+        160,
+        180
        ],
        "1395": [
         140
@@ -9353,14 +10271,17 @@
         210,
         211,
         235,
+        270,
         271
        ]
       },
       "diesel": {
        "1598": [
+        90,
         105
        ],
        "1968": [
+        110,
         140,
         150,
         170
@@ -9414,7 +10335,10 @@
      "mobileModel": "Passat",
      "bodies": [
       "Passat 2020",
-      "Passat 2020 Variant"
+      "Passat 2020 Variant",
+      "Passat B8 Alltrack Facelifting (autocentrum)",
+      "Passat B8 Limousine Facelifting (autocentrum)",
+      "Passat B8 Variant Facelifting (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -9451,7 +10375,10 @@
      "bodies": [
       "Passat B8",
       "Passat B8 Alltrack",
-      "Passat B8 Variant"
+      "Passat B8 Alltrack (autocentrum)",
+      "Passat B8 Limousine (autocentrum)",
+      "Passat B8 Variant",
+      "Passat B8 Variant (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9463,6 +10390,7 @@
         150
        ],
        "1798": [
+        160,
         179
        ],
        "1984": [
@@ -9477,7 +10405,8 @@
        "1968": [
         150,
         190,
-        239
+        239,
+        240
        ]
       },
       "plugin": {
@@ -9495,18 +10424,26 @@
      "bodies": [
       "Passat B7",
       "Passat B7 Alltrack",
-      "Passat B7 Variant"
+      "Passat B7 Alltrack (autocentrum)",
+      "Passat B7 Limousine (autocentrum)",
+      "Passat B7 Variant",
+      "Passat B7 Variant (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1390": [
-        122
+        122,
+        160
        ],
        "1798": [
         160
        ],
        "1984": [
+        210,
         211
+       ],
+       "3597": [
+        300
        ]
       },
       "diesel": {
@@ -9515,7 +10452,8 @@
        ],
        "1968": [
         140,
-        170
+        170,
+        177
        ]
       },
       "cng": {
@@ -9532,7 +10470,9 @@
      "mobileModel": "Passat",
      "bodies": [
       "Passat B6",
-      "Passat B6 Variant"
+      "Passat B6 Sedan (autocentrum)",
+      "Passat B6 Variant",
+      "Passat B6 Variant (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9555,6 +10495,9 @@
        "3168": [
         250
        ],
+       "3189": [
+        250
+       ],
        "3598": [
         300
        ]
@@ -9567,6 +10510,8 @@
         105
        ],
        "1968": [
+        110,
+        136,
         140,
         170
        ]
@@ -9606,7 +10551,8 @@
      "years": "2017–2021",
      "mobileModel": "Polo",
      "bodies": [
-      "Polo 6"
+      "Polo 6",
+      "Polo VI Hatchback 5-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9615,6 +10561,7 @@
         75,
         80,
         95,
+        110,
         116
        ],
        "1498": [
@@ -9626,6 +10573,7 @@
       },
       "diesel": {
        "1598": [
+        80,
         95
        ]
       },
@@ -9680,7 +10628,8 @@
      "bodies": [
       "CrossPolo (6R)",
       "Polo 5 (6R)",
-      "Polo 5 (6R) 3-doors"
+      "Polo 5 (6R) 3-doors",
+      "Polo V Hatchback 5-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9698,6 +10647,7 @@
         69
        ],
        "1390": [
+        85,
         86,
         179,
         180
@@ -9764,7 +10714,8 @@
      "mobileModel": "T-Roc",
      "bodies": [
       "T-Roc",
-      "T-Roc Cabrio"
+      "T-Roc Cabrio",
+      "T-Roc I SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9785,6 +10736,24 @@
         115
        ],
        "1968": [
+        150,
+        190
+       ]
+      }
+     }
+    },
+    {
+     "code": "T-Roc II",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "T-Roc",
+     "bodies": [
+      "T-Roc II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1498": [
+        116,
         150
        ]
       }
@@ -9853,7 +10822,9 @@
      "mobileModel": "T7",
      "bodies": [
       "Multivan T7 LWB",
-      "Multivan T7 SWB"
+      "Multivan T7 SWB",
+      "T6 (Multivan, Transporter) T7 Multivan Van L1 (autocentrum)",
+      "T6 (Multivan, Transporter) T7 Multivan Van L2 (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -9865,6 +10836,9 @@
        ]
       },
       "petrol": {
+       "1498": [
+        136
+       ],
        "1984": [
         204
        ]
@@ -9939,6 +10913,9 @@
      "years": "2009–2015",
      "mobileModel": "T5",
      "bodies": [
+      "T6 (Multivan, Transporter) T5 Transporter T5 Caravelle Minivan (autocentrum)",
+      "T6 (Multivan, Transporter) T5 Transporter T5 Multivan (autocentrum)",
+      "T6 (Multivan, Transporter) T5 Transporter T5 Transporter (autocentrum)",
       "Transporter T5.2 Kombi LWB",
       "Transporter T5.2 Kombi LWB High Roof",
       "Transporter T5.2 Kombi LWB Medium-High Roof",
@@ -9957,6 +10934,9 @@
         116,
         150,
         204
+       ],
+       "3189": [
+        235
        ]
       },
       "diesel": {
@@ -9966,6 +10946,17 @@
         114,
         140,
         180
+       ],
+       "2460": [
+        130,
+        174
+       ],
+       "2461": [
+        130,
+        174
+       ],
+       "2500": [
+        131
        ]
       }
      }
@@ -10085,7 +11076,8 @@
      "mobileModel": "Tiguan",
      "bodies": [
       "Tiguan 2016",
-      "Tiguan Allspace"
+      "Tiguan Allspace",
+      "Tiguan II SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -10106,6 +11098,9 @@
        ]
       },
       "diesel": {
+       "1598": [
+        115
+       ],
        "1968": [
         116,
         150,
@@ -10121,7 +11116,8 @@
      "years": "2007–2016",
      "mobileModel": "Tiguan",
      "bodies": [
-      "Tiguan"
+      "Tiguan",
+      "Tiguan I SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -10141,8 +11137,10 @@
        "1968": [
         110,
         140,
+        150,
         170,
-        177
+        177,
+        184
        ]
       }
      }
@@ -10221,7 +11219,8 @@
      "mobileModel": "Touran",
      "bodies": [
       "CrossTouran 2010",
-      "Touran 2010"
+      "Touran 2010",
+      "Touran I II (autocentrum)"
      ],
      "engines": {
       "diesel": {
@@ -10231,7 +11230,8 @@
        ],
        "1968": [
         140,
-        170
+        170,
+        177
        ]
       },
       "petrol": {
@@ -10251,7 +11251,8 @@
      "mobileModel": "Touran",
      "bodies": [
       "CrossTouran",
-      "Touran 2006"
+      "Touran 2006",
+      "Touran I I (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -10261,16 +11262,28 @@
        ],
        "1595": [
         102
+       ],
+       "1598": [
+        116
+       ],
+       "1984": [
+        150
        ]
       },
       "diesel": {
        "1896": [
         90,
+        100,
         105
        ],
        "1968": [
         140,
         170
+       ]
+      },
+      "lpg": {
+       "1984": [
+        109
        ]
       }
      }

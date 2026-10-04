@@ -207,6 +207,9 @@ def main():
             if body_lift:
                 year = int(body_lift.group(1))
                 gen["lift"] = year if gen["lift"] is None else min(gen["lift"], year)
+            # Facelift year autocentrum gives where the versions cannot be split (tools/autocentrum.py).
+            if row.get("Рестайлинг, год") and phase == "all" and gen["lift"] is None:
+                gen["lift"] = int(row["Рестайлинг, год"])
             types, doors_from, doors_to, seats_from, seats_to, sliding = body_of(row["Марка"], model, row["Кузов"])
             entry["bodies"].add((gen_key, tuple(types), doors_from, doors_to, seats_from, seats_to, sliding))
             fuel = FUELS.get(row["Топливо"], "petrol")

@@ -1344,6 +1344,21 @@
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120430/Mercedes-Benz-E-Class-Estate-(W213-2021)-200.html": {
+"drive": "RWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120431/Mercedes-Benz-E-Class-Estate-(W213-2021)-200-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120432/Mercedes-Benz-E-Class-Estate-(W213-2021)-300.html": {
+"drive": "RWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120442/Mercedes-Benz-E-Class-All-Terrain-(W213-2021)-220-d-4MATIC.html": {
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
@@ -1371,6 +1386,31 @@
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120447/Mercedes-Benz-E-Class-Coupe-(C238-2021)-300.html": {
 "drive": "RWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120448/Mercedes-Benz-E-Class-Coupe-(C238-2021)-450-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120449/Mercedes-Benz-E-Class-Coupe-(C238-2021)-53-AMG-4MATIC+.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120450/Mercedes-Benz-E-Class-Coupe-(C238-2021)-220-d.html": {
+"drive": "RWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120451/Mercedes-Benz-E-Class-Coupe-(C238-2021)-220-d-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120452/Mercedes-Benz-E-Class-Coupe-(C238-2021)-400-d-4MATIC.html": {
+"drive": "AWD",
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
@@ -1466,6 +1506,11 @@
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/122570/Mercedes-Benz-W223-Class-S-450-4MATIC-Long.html": {
 "drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/123934/Mercedes-Benz-E-Class-Coupe-(C238-2021)-350.html": {
+"drive": "RWD",
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
@@ -1610,6 +1655,11 @@
 "transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/129855/Mercedes-Benz-Class-C-All-Terrain-(S206)-220-d-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/130911/Mercedes-Benz-E-Class-Coupe-(C238-2021)-300-d-4MATIC.html": {
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
