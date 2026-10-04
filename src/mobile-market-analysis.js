@@ -4625,7 +4625,7 @@
   const roundTo = (value, step) => Math.round(value / step) * step;
 
   // The narrow searches of one favourite, and why some bound has none.
-  async function nearMissPlans(entry, base, markets, tolerance) {
+  async function nearMissPlans(base, markets, tolerance, ownPrices = {}) {
     const share = tolerance / 100;
     const plans = [];
     const skipped = [];
@@ -4672,7 +4672,7 @@
     }
     // Price: page 1's price (EUR) for portals without their own, each
     // portal's own price where it has one (set on page 3).
-    const own = Object.fromEntries(markets.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null]));
+    const own = Object.fromEntries(markets.map((source) => [source, ownPrices?.[source] || null]));
     // AutoScout24 without a price of its own follows mobile.de's (getListings).
     if (!own.autoscout && own.mobile) own.autoscout = own.mobile;
     ["max", "min"].forEach((side) => {
@@ -4740,26 +4740,28 @@
 
   // Reads every narrow search, one after another, and keeps per portal the
   // cars that are not in the monitoring's own lists.
-  async function readNearMisses({ entry, base, markets, tolerance, strictKeys, provider }) {
+  async function readNearMisses({ historyId, ownPrices = {}, base, markets, tolerance, strictKeys, provider, progress = null }) {
     const c = copy();
-    const { plans, skipped } = await nearMissPlans(entry, base, markets, tolerance);
+    const { plans, skipped } = await nearMissPlans(base, markets, tolerance, ownPrices);
+    // Every plan reads with the car's own portal prices unless it bands them.
+    const ownMap = Object.fromEntries(MARKET_SOURCES.map((source) => [source, ownPrices?.[source] || null]));
     const found = {};
     const seen = new Set(strictKeys);
     const done = [];
     for (const [index, plan] of plans.entries()) {
       monitoringPhase = c.monitoringExtraProgress.replace("{done}", String(index + 1)).replace("{total}", String(plans.length)).replace("{what}", nearMissPlanText(plan));
       Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
-      updateMonitoringProgress(plan.markets[0], { state: "wait" });
+      progress?.(plan.markets[0], { state: "wait" });
       let raw = [];
       try {
         raw = await provider.getListings({
           filters: { ...plan.filters, markets: plan.markets },
           pinned: true,
-          historyId: entry.id,
+          historyId,
           sequential: true,
           wholeList: plan.sample ? false : null,
-          priceOverride: plan.prices || null,
-          progress: (source, info) => updateMonitoringProgress(source, info),
+          priceOverride: plan.prices || ownMap,
+          progress: progress || (() => {}),
         });
       } catch {
         // Nothing just outside this bound (or the portals did not answer).
@@ -4833,6 +4835,195 @@
       .replace("{generation}", miss.generation || "");
   }
 
+  // One monitoring's reading of the portals, nothing saved: the page saves it
+  // (runMonitoringCheck), the automation runner returns it (B43). job =
+  // { id, filters, markets, countries, prices } (prices: each portal's own
+  // {from, to} or null; null for all = the favourite's own, read here).
+  async function readMonitoringLists(job, provider, progress) {
+    const markets = job.markets;
+    // A favourite saved before a newer form field existed: the search gets
+    // that field empty; the history keeps the filters as saved.
+    const searchFilters = { ...blankFilters(), ...job.filters, markets };
+    // mobile.de and AutoScout24 are searched in the monitoring countries;
+    // the statistics stay with page 1's countries (Germany by default).
+    const withCountries = markets.includes("mobile") || markets.includes("autoscout");
+    const base = withCountries ? { ...searchFilters, countries: job.countries } : searchFilters;
+    const readMarkets = (only) => provider.getListings({
+      filters: { ...base, markets: only },
+      pinned: true,
+      historyId: job.id,
+      sequential: true,
+      priceOverride: job.prices || null,
+      // A function: AutoScout24 is then read whole (B48), as Monitoring wants.
+      progress: progress || (() => {}),
+    });
+    const pause = () => new Promise((resolve) => setTimeout(resolve, 5000));
+    // otomoto, blocket and AutoScout24 share a free reader proxy that now
+    // and then refuses a burst: a portal that gave nothing is asked once
+    // more, alone, when the others are done.
+    let raw;
+    try {
+      raw = await readMarkets(markets);
+    } catch {
+      await pause();
+      raw = await readMarkets(markets);
+    }
+    let sourcesOk = [...(provider.lastSources || [])];
+    let errors = { ...(provider.lastErrors || {}) };
+    let autoscoutMeta = provider.lastAutoscout || null;
+    const pricesKey = provider.lastPrices ?? null;
+    const retry = markets.filter((source) => !sourcesOk.includes(source) && !/model not found/i.test(errors[source] || ""));
+    if (retry.length) {
+      await pause();
+      try {
+        let more = await readMarkets(retry);
+        const nowOk = provider.lastSources || [];
+        // AutoScout24 asked again alone: mobile.de's duplicates dropped here.
+        if (nowOk.includes("autoscout") && !retry.includes("mobile") && sourcesOk.includes("mobile")) {
+          const mobileRaw = raw.filter((listing) => listingSource(listing) === "mobile");
+          const autoscoutRaw = more.filter((listing) => listingSource(listing) === "autoscout");
+          const { unique, duplicates } = dropMobileDuplicates(autoscoutRaw, mobileRaw);
+          more = [...more.filter((listing) => listingSource(listing) !== "autoscout"), ...unique];
+          if (provider.lastAutoscout) provider.lastAutoscout = { ...provider.lastAutoscout, duplicates, deduplicated: true };
+        }
+        raw = [...raw, ...more];
+        sourcesOk = [...sourcesOk, ...nowOk];
+        nowOk.forEach((source) => delete errors[source]);
+        errors = { ...errors, ...(provider.lastErrors || {}) };
+        if (nowOk.includes("autoscout")) autoscoutMeta = provider.lastAutoscout || autoscoutMeta;
+      } catch {
+        // Still nothing: said in the status.
+      }
+    }
+    provider.lastSources = sourcesOk;
+    provider.lastErrors = errors;
+    provider.lastAutoscout = autoscoutMeta;
+    provider.lastPrices = pricesKey;
+    return { raw, searchFilters, base, sourcesOk, errors };
+  }
+
+  // ---- Automation (B43): Monitoring without a manager's browser ------------
+  // A runner (server/monitoring-runner.mjs) opens this page with ?runner=1 in
+  // its own Chrome and calls run(job) for every job; the records it returns
+  // are what this page would have saved. The manager's browser hands out its
+  // jobs (jobs()) and takes the records back (importRecords()). How jobs and
+  // records travel (server, login) is decided with B26; see
+  // docs/MONITORING-SERVER.md.
+  const RUNNER_MODE = new URLSearchParams(window.location.search).has("runner");
+  const runnerProgress = {};
+
+  function monitoringJobs() {
+    refreshMarketHistory();
+    const jobs = marketHistory.filter((entry) => entry.pinned && entry.autoRefresh?.enabled).map((entry) => {
+      const markets = monitoringMarketsOf(entry);
+      const scope = monitoringScopeOf(entry.id);
+      const prices = Object.fromEntries(markets.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null]).filter(([, price]) => price));
+      return { id: entry.id, title: monitoringTitle(entry), filters: entry.filters, markets, countries: scope.countries, tolerance: scope.tolerance, prices, every: "daily", hour: MONITORING_HOUR };
+    });
+    return { version: 1, exportedAt: new Date().toISOString(), jobs };
+  }
+
+  async function runMonitoringJob(job) {
+    const provider = window.AUTOGOOD_MOBILE_MARKET_PROVIDER;
+    if (!provider) throw new Error("Market provider missing");
+    if (!job?.id || !job.filters) throw new Error("Job without id or filters");
+    const markets = (job.markets || []).filter((source) => MARKET_SOURCES.includes(source));
+    const chosen = (job.countries || []).filter((code) => MONITORING_COUNTRY_CHOICES.includes(code));
+    const countries = chosen.length ? chosen : MONITORING_COUNTRIES;
+    const prices = Object.fromEntries(MARKET_SOURCES.map((source) => [source, job.prices?.[source] || null]));
+    Object.keys(runnerProgress).forEach((key) => delete runnerProgress[key]);
+    const progress = (source, info) => { runnerProgress[source] = { ...(runnerProgress[source] || {}), ...info }; };
+    const read = await readMonitoringLists({ id: String(job.id), filters: job.filters, markets, countries, prices }, provider, progress);
+    const fetched = normalizeListings(read.raw);
+    if (fetched.length < 3) throw new Error("Fewer than 3 offers");
+    const at = new Date().toISOString();
+    const scope = monitoringScopeKey({ countries }, markets);
+    const sources = read.sourcesOk.filter((source) => markets.includes(source));
+    const notes = { autoscout: provider.lastAutoscout || undefined, mobile: markets.includes("mobile") ? { countries } : undefined };
+    const record = { key: `${job.id}|${at}`, historyId: String(job.id), at, scope, markets: {}, by: "automation", signature: searchSignature(job.filters), prices: provider.lastPrices ?? null, errors: read.errors };
+    sources.forEach((source) => {
+      const market = { ...compactOffers(fetched, source, job.filters), ...(notes[source] || {}) };
+      if (market.offers.length) record.markets[source] = market;
+    });
+    // The dated row of the price history: statistics of page 1's countries.
+    const analysisCountries = (job.filters.countries || []).filter(Boolean);
+    const inAnalysis = (listing) => !["mobile", "autoscout"].includes(listingSource(listing)) || !analysisCountries.length || !listing.country || analysisCountries.includes(listing.country);
+    const point = marketPricePoint(fetched.filter(inAnalysis), at, job.filters);
+    record.point = Object.fromEntries(sources.filter((source) => point?.[source]).map((source) => [source, point[source]]));
+    if (Number(job.tolerance)) {
+      record.extra = await readNearMisses({
+        historyId: String(job.id),
+        ownPrices: prices,
+        base: read.base,
+        markets: sources,
+        tolerance: Number(job.tolerance),
+        strictKeys: new Set(fetched.map(offerKey)),
+        provider,
+        progress,
+      });
+    }
+    return record;
+  }
+
+  // Records made elsewhere join this browser's history: only added, never
+  // replacing a record or a dated row already here (4.6.1). A record of other
+  // filters than the favourite has now is left out (it would compare wrong).
+  async function importMonitoringRecords(records) {
+    const result = { added: 0, known: 0, unknownCar: 0, otherSearch: 0, invalid: 0 };
+    const db = await openCheckOffersDb();
+    const exists = (key) => new Promise((resolve) => {
+      const request = db.transaction(CHECK_OFFERS_STORE).objectStore(CHECK_OFFERS_STORE).get(key);
+      request.onsuccess = () => resolve(Boolean(request.result));
+      request.onerror = () => resolve(true);
+    });
+    for (const record of Array.isArray(records) ? records : [records]) {
+      if (!record || typeof record !== "object" || !record.historyId || !Number.isFinite(Date.parse(record.at)) || !record.markets || typeof record.markets !== "object") {
+        result.invalid += 1;
+        continue;
+      }
+      refreshMarketHistory();
+      const entry = marketHistory.find((item) => item.id === record.historyId);
+      if (!entry) {
+        result.unknownCar += 1;
+        continue;
+      }
+      if (record.signature && record.signature !== searchSignature(entry.filters)) {
+        result.otherSearch += 1;
+        continue;
+      }
+      const key = `${record.historyId}|${record.at}`;
+      if (await exists(key)) {
+        result.known += 1;
+        continue;
+      }
+      const { point, prices, signature, errors, ...stored } = record;
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(CHECK_OFFERS_STORE, "readwrite");
+        tx.objectStore(CHECK_OFFERS_STORE).put({ ...stored, key });
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+      refreshMarketHistory();
+      const fresh = marketHistory.find((item) => item.id === record.historyId);
+      if (fresh && point && Object.keys(point).length && !(fresh.priceLog || []).some((row) => row.at === record.at)) {
+        const log = [...(fresh.priceLog || []), { at: record.at, ...(prices ? { prices } : {}), ...point }].sort((left, right) => left.at.localeCompare(right.at));
+        storeMarketHistory(marketHistory.map((item) => (item.id === fresh.id ? { ...item, priceLog: log } : item)));
+      }
+      checkOffersCache.delete(record.historyId);
+      result.added += 1;
+    }
+    if (currentPage() === "history") renderPriceHistoryPage();
+    return result;
+  }
+
+  window.AUTOGOOD_MONITORING = {
+    jobs: monitoringJobs,
+    run: runMonitoringJob,
+    importRecords: importMonitoringRecords,
+    progress: () => ({ ...runnerProgress }),
+    runner: RUNNER_MODE,
+  };
+
   // Checks run one at a time (owner, 2026-10-04: the portals are not asked
   // for several cars at once); one asked for meanwhile waits in this queue.
   async function runMonitoringCheck(entry, markets = MARKET_SOURCES.filter((source) => chartSources[source]), { auto = false } = {}) {
@@ -4850,65 +5041,13 @@
     let ok = false;
     try {
       const filters = { ...entry.filters, markets };
-      // A favourite saved before a newer form field existed: the search gets
-      // that field empty; the history keeps the filters as saved.
-      const searchFilters = { ...blankFilters(), ...filters };
-      // mobile.de and AutoScout24 are searched in the monitoring countries;
-      // the statistics stay with page 1's countries (Germany by default).
       const scope = monitoringScopeOf(entry.id);
-      const withCountries = markets.includes("mobile") || markets.includes("autoscout");
       Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
-      const readMarkets = (only) => provider.getListings({
-        filters: { ...(withCountries ? { ...searchFilters, countries: scope.countries } : searchFilters), markets: only },
-        pinned: true,
-        historyId: entry.id,
-        sequential: true,
-        // Shown whichever car is open: the line says which car runs.
-        progress: (source, info) => updateMonitoringProgress(source, info),
-      });
-      const pause = () => new Promise((resolve) => setTimeout(resolve, 5000));
-      // otomoto, blocket and AutoScout24 share a free reader proxy that now
-      // and then refuses a burst: a portal that gave nothing is asked once
-      // more, alone, when the others are done.
-      let raw;
-      try {
-        raw = await readMarkets(markets);
-      } catch {
-        await pause();
-        raw = await readMarkets(markets);
-      }
-      let sourcesOk = [...(provider.lastSources || [])];
-      let errors = { ...(provider.lastErrors || {}) };
-      let autoscoutMeta = provider.lastAutoscout || null;
-      const pricesKey = provider.lastPrices ?? null;
-      const retry = markets.filter((source) => !sourcesOk.includes(source) && !/model not found/i.test(errors[source] || ""));
-      if (retry.length) {
-        await pause();
-        try {
-          let more = await readMarkets(retry);
-          const nowOk = provider.lastSources || [];
-          // AutoScout24 asked again alone: mobile.de's duplicates dropped here.
-          if (nowOk.includes("autoscout") && !retry.includes("mobile") && sourcesOk.includes("mobile")) {
-            const mobileRaw = raw.filter((listing) => listingSource(listing) === "mobile");
-            const autoscoutRaw = more.filter((listing) => listingSource(listing) === "autoscout");
-            const { unique, duplicates } = dropMobileDuplicates(autoscoutRaw, mobileRaw);
-            more = [...more.filter((listing) => listingSource(listing) !== "autoscout"), ...unique];
-            if (provider.lastAutoscout) provider.lastAutoscout = { ...provider.lastAutoscout, duplicates, deduplicated: true };
-          }
-          raw = [...raw, ...more];
-          sourcesOk = [...sourcesOk, ...nowOk];
-          nowOk.forEach((source) => delete errors[source]);
-          errors = { ...errors, ...(provider.lastErrors || {}) };
-          if (nowOk.includes("autoscout")) autoscoutMeta = provider.lastAutoscout || autoscoutMeta;
-        } catch {
-          // Still nothing: said in the status below.
-        }
-      }
-      provider.lastSources = sourcesOk;
-      provider.lastErrors = errors;
-      provider.lastAutoscout = autoscoutMeta;
-      provider.lastPrices = pricesKey;
-      const fetched = normalizeListings(raw);
+      // Shown whichever car is open: the line says which car runs.
+      const progress = (source, info) => updateMonitoringProgress(source, info);
+      const read = await readMonitoringLists({ id: entry.id, filters, markets, countries: scope.countries, prices: null }, provider, progress);
+      const { base } = read;
+      const fetched = normalizeListings(read.raw);
       if (fetched.length < 3) throw new Error(c.refreshInvalid);
       const analysisCountries = (entry.filters.countries || []).filter(Boolean);
       const countryBound = (listing) => ["mobile", "autoscout"].includes(listingSource(listing));
@@ -4949,12 +5088,14 @@
         try {
           if (currentPage() === "history") renderPriceHistoryPage();
           const extra = await readNearMisses({
-            entry,
-            base: withCountries ? { ...searchFilters, countries: scope.countries } : searchFilters,
+            historyId: entry.id,
+            ownPrices: Object.fromEntries(MARKET_SOURCES.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null])),
+            base,
             markets: markets.filter((source) => (keep.lastSources || markets).includes(source)),
             tolerance: scope.tolerance,
             strictKeys: new Set(fetched.map(offerKey)),
             provider,
+            progress,
           });
           await saveCheckExtra(entry.id, at, extra);
         } catch {
@@ -5017,14 +5158,14 @@
     const knowsAutoscout = saved.includes("autoscout") || !saved.includes("mobile");
     return MARKET_SOURCES.filter((source) => (source === "autoscout" && !knowsAutoscout ? Boolean(chartSources.autoscout) : saved.includes(source)));
   }
-  setTimeout(runDueMonitoring, 5000);
+  if (!RUNNER_MODE) setTimeout(runDueMonitoring, 5000);
   // The converter shows Walutomat's live rate once it has arrived.
   window.AUTOGOOD_TURNKEY?.calculatorRate?.().then(() => {
     const out = document.querySelector("[data-monitoring-convert-out]");
     if (out && currentPage() === "history" && !document.activeElement?.closest?.("[data-mobile-price-history-page]")) renderPriceHistoryPage();
   }).catch(() => {});
   // Looked at every 5 minutes, so 9:00 is met while the program is open.
-  setInterval(runDueMonitoring, 5 * 60 * 1000);
+  if (!RUNNER_MODE) setInterval(runDueMonitoring, 5 * 60 * 1000);
 
   // Scheduled checks are a setting of the favourite, stored with it (the
   // stored history is re-read first, see 4.6.1 in docs/PROJECT-MOBILE.md).

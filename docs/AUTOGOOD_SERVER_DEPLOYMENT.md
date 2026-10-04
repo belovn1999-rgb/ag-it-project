@@ -159,6 +159,17 @@ mobile.de check:
 curl 'http://127.0.0.1:8790/mobilede/import?url=https%3A%2F%2Fsuchen.mobile.de%2Ffahrzeuge%2Fdetails.html%3Fid%3D458107986'
 ```
 
+## Monitoring Runner
+
+`server/monitoring-runner.mjs` runs the daily Monitoring of `mobile.html`
+without a manager's browser: it opens `mobile.html?runner=1` in a real Chrome
+over DevTools (mobile.de refuses headless browsers and datacenter addresses),
+runs the jobs one after another and writes one JSON record per check. Jobs
+come from `window.AUTOGOOD_MONITORING.jobs()` in a manager's browser and the
+records go back through `window.AUTOGOOD_MONITORING.importRecords()`. Moving
+them through this server waits for the employee login (user-owned data, see
+above). Details and the steps left: `docs/MONITORING-SERVER.md`.
+
 ## Frontend Connection
 
 For testing from GitHub Pages, use:

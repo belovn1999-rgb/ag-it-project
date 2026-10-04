@@ -22,6 +22,7 @@
 | Отчёты Auto1 | `auto1.html`, `auctions.html` | [auto1-pdf-learning/structured-editor.md](auto1-pdf-learning/structured-editor.md) | Как редактируется PDF отчёта |
 | Выкладка | все | [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md) | Pages + конвертер на Render, smoke-тесты |
 | Переезд на сервер | все | [AUTOGOOD_SERVER_DEPLOYMENT.md](AUTOGOOD_SERVER_DEPLOYMENT.md) | Требования к серверу, данные пользователей |
+| Monitoring на сервере (B43) | `mobile.html` | [MONITORING-SERVER.md](MONITORING-SERVER.md) | Задания из браузера → раннер с Chrome → записи → браузер; что осталось при запуске сервера |
 | Калькуляторы | `calculators.html` | OPEN: отдельного документа нет | Формулы живут в `src/main.jsx` |
 | Договоры и документы | `umowy.html`, `pdf.html`, `umowa-sprzedazy.html`, `oswiadczenie-o-braku-tablic.html` | OPEN: отдельного документа нет | Распознавание данных и DOCX→PDF: `*.mdf`-выгрузки в `docs/` |
 
@@ -65,6 +66,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, B43: база автомониторинга на сервере — одно чтение мониторинга для браузера и сервера, `window.AUTOGOOD_MONITORING` (задания, запуск, возврат записей), `server/monitoring-runner.mjs`; проверено локально; ждёт B6 (Chrome с доступом к mobile.de) и B26 (вход, хранилище) (Claude).
 - 2026-10-04 — mobile.html, стр. 1 (B65): карточка «Kraj i pochodzenie» (mobile.de/AutoScout24 — Kraj; otomoto — Zarejestrowany w Polsce, Kraj pochodzenia); «Więcej filtrów» из трёх разделов с метками порталов у полей (Claude).
 - 2026-10-04 — mobile.html, Monitoring: проверки по одному и очередь запросов к бесплатному прокси (B64), ликвидность — дни на рынке, снижения цены, «Do negocjacji» (B22), «Dodatkowe» — авто чуть за фильтрами, год только в той же генерации (B63), «Oblicz na gotowo» — три калькулятора во всплывающем окне на стр. 1 и 3 (B42) (Claude).
 - 2026-10-04 — mobile.html: ссылка AutoScout24 распознаётся, Monitoring читает AutoScout24 целиком (B48), мощность л. с. → кВт для AutoScout24; курсы всех пар в шапке, ежедневный файл курсов через GitHub Action (B12) (Claude).
