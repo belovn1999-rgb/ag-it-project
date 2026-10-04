@@ -77,6 +77,17 @@ node server/monitoring-runner.mjs --jobs jobs.json --out data/monitoring --daily
    Флаги Chrome: `--disable-background-timer-throttling
    --disable-renderer-backgrounding --disable-backgrounding-occluded-windows`
    (иначе паузы скрытой вкладки растягиваются до минуты).
+   **Решение владельца 10-04:** арендованный сервер + «домашний» прокси.
+   Имеющийся сервер CRM — nazwa.pl **CloudHosting Biznes**
+   (`server953637.nazwa.pl`, 85.128.184.182) — общий хостинг: SSH и Node.js
+   есть, но Node.js до 1 ГБ памяти, задачи cron до 540 с, без root и своих
+   программ — Chrome с виртуальным экраном там не поставить. Он подходит для
+   хранилища заданий и записей и входа сотрудника (п. 2, PHP или Node.js).
+   Для Chrome — отдельный небольшой VPS (2 vCPU, 4 ГБ, Ubuntu; у nazwa.pl или
+   другого провайдера) + «домашний» прокси только для mobile.de. Оценка
+   трафика прокси (проверить на тесте): страница выдачи mobile.de ~1 МБ,
+   ~20–30 страниц на авто в день → ~1 ГБ на авто в месяц; при цене прокси
+   3–8 $ за ГБ это ~3–8 $ на авто в месяц.
 2. **Вход сотрудника и хранилище (B26).** Задания и записи — личные данные
    сотрудника: читать и писать только своё (`AUTOGOOD_SERVER_DEPLOYMENT.md`,
    раздел «User-owned history»). После выбора входа добавить в
