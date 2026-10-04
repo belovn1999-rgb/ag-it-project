@@ -209,7 +209,7 @@ const contractFragments = [
   ['params.set("vat", "1")', "VAT zwrotny"],
   ['params.set("vat", "0")', "VAT niezwrotny"],
   ['params.set("st", seller)', "sprzedawca"],
-  ['params.append("cn", country)', "kraj"],
+  ['params.set("cn", filters.countries[0])', "kraj"],
   ['params.append("it", value)', "materiał wnętrza"],
   ['params.set("clim", airConditioning)', "klimatyzacja"],
   ['params.set("tct", trailerCoupling)', "hak holowniczy"],
@@ -242,12 +242,12 @@ const parkingOrder = [...parkingHtml.matchAll(/data-mobile-(?:parking-sensor|fea
 equalObject(parkingOrder, ["REAR_VIEW_CAM", "CAM_360_DEGREES", "FRONT_REAR_SENSORS", "FRONT_SENSORS", "REAR_SENSORS", "BLIND_SPOT_MONITOR"], "Kolejnosc asystentow parkowania");
 requireSource('featureHeadUpDisplay: "Wyświetlacz Head-up (HUD)"', "polska etykieta HUD");
 requireSource('featureHeadUpDisplay: "Проекционный дисплей (HUD)"', "rosyjska etykieta HUD");
-requireHtml('data-i18n="vehicleConditionLabel"', "sekcja stanu pojazdu");
+requireHtml('mobileVehicleConditionSection', "sekcja stanu pojazdu");
 requireSource('damagedVehiclesShow: "Pokazuj"', "pokazanie uszkodzonych pojazdów");
 requireSource('function selectComboOption(optionButton)', "wybór pozycji z listy");
 requireSource('document.addEventListener("pointerdown", (event) => {', "wybór po pierwszym kliknięciu");
 requireSource('visibleOptions.length === 1 ? visibleOptions[0] : null', "automatyczne wyróżnienie jednego wyniku");
-requireSource('matchingOptions.filter((option) => !option.isCurrentInput)', "wpisany tekst nie powtarza się jako opcja listy");
+requireSource('matchingOptions.filter((option) => !option.isCurrentInput && !option.isPinnedCopy)', "wpisany tekst nie powtarza się jako opcja listy");
 requireSource('menu.hidden = !visibleOptions.length', "brak pustej listy, gdy nic nie pasuje");
 requireSource('event.key === "Enter"', "wybór klawiszem Enter");
 requireSource('selectComboOption(activeOption)', "zatwierdzenie wyróżnionej opcji");
@@ -262,7 +262,8 @@ requireMarketAnalysisSource('data-mobile-market-history-pin="${escapeMarketHtml(
 requireMarketAnalysisSource('aria-pressed="${entry.pinned ? "true" : "false"}"', "stan ikony zapisania");
 requireMarketAnalysisSource('data-mobile-market-history-delete="${escapeMarketHtml(entry.id)}"', "usunięcie wpisu");
 forbidMarketAnalysisSource('data-mobile-market-history-edit="${escapeMarketHtml(entry.id)}"', "osobna akcja edycji wpisu");
-forbidMarketAnalysisSource('data-mobile-market-history-analysis="${escapeMarketHtml(entry.id)}"', "analiza rynku w wierszu historii");
+// B19 (2026-10-04, owner): every history row has its own "Analiza →".
+requireMarketAnalysisSource('data-mobile-market-history-analysis="${escapeMarketHtml(entry.id)}"', "analiza rynku w wierszu historii");
 forbidMarketAnalysisSource('<a href="${escapeMarketHtml(searchUrl)}" target="_blank"', "otwieranie listy w wierszu historii");
 forbidMarketAnalysisSource("window.confirm(c.historyDeleteConfirm)", "potwierdzenie usunięcia wpisu");
 forbidMarketAnalysisSource("setAnalysisStatus(c.historyDeleteSuccess)", "komunikat po usunięciu wpisu");
