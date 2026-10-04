@@ -1241,7 +1241,8 @@
   // a portal in its column; a new portal goes into its country's column here.
   const MARKET_GROUPS = [
     { key: "de", countries: ["DE"], rows: ["mobile", "autoscout", "kleinanzeigen"] },
-    { key: "nlbe", countries: ["NL", "BE"], rows: ["autoscoutnlbe", "marktplaats", "dehands"] },
+    { key: "nl", countries: ["NL"], rows: ["autoscoutnl", "marktplaats"] },
+    { key: "be", countries: ["BE"], rows: ["autoscoutbe", "dehands"] },
     { key: "pl", countries: ["PL"], rows: ["otomoto"] },
     { key: "se", countries: ["SE"], rows: ["blocket"] },
     { key: "fr", countries: ["FR"], rows: ["autoscoutfr"] },
@@ -1256,10 +1257,14 @@
   const germanCountries = (countries = formCountries()) => countries.filter((code) => !NLBE.includes(code));
   const nlbeCountries = (countries = formCountries()) => countries.filter((code) => NLBE.includes(code));
   // The portal a row stands for (both AutoScout24 rows are one market).
-  const rowSource = (row) => (row === "autoscoutnlbe" ? "autoscout" : row);
+  const rowSource = (row) => (row === "autoscoutnl" || row === "autoscoutbe" ? "autoscout" : row);
+  // The Netherlands and Belgium (owner 2026-10-04: a column each): the
+  // country, its own portal and its AutoScout24 row.
+  const LOCAL_MARKETS = { nl: { code: "NL", portal: "marktplaats", row: "autoscoutnl" }, be: { code: "BE", portal: "dehands", row: "autoscoutbe" } };
   function rowOn(row) {
     if (row === "autoscout") return Boolean(chartSources.autoscout) && germanCountries().length > 0;
-    if (row === "autoscoutnlbe") return Boolean(chartSources.autoscout) && nlbeCountries().length > 0;
+    if (row === "autoscoutnl") return Boolean(chartSources.autoscout) && formCountries().includes("NL");
+    if (row === "autoscoutbe") return Boolean(chartSources.autoscout) && formCountries().includes("BE");
     return Boolean(chartSources[row]);
   }
   const groupOn = (group) => group.rows.some(rowOn);
@@ -1299,18 +1304,18 @@
         if (onlyRow === "kleinanzeigen") markets.kleinanzeigen = true;
         nextCountries = [...(german.length ? german : ["DE"]), ...nlbe];
       }
-    } else if (key === "nlbe") {
+    } else if (LOCAL_MARKETS[key]) {
+      const { code, portal, row } = LOCAL_MARKETS[key];
+      const others = countries.filter((item) => item !== code);
       if (on) {
-        markets.marktplaats = false;
-        markets.dehands = false;
-        nextCountries = german;
-        markets.autoscout = Boolean(chartSources.autoscout) && german.length > 0;
+        markets[portal] = false;
+        nextCountries = others;
+        markets.autoscout = Boolean(chartSources.autoscout) && others.length > 0;
       } else {
-        if (!onlyRow || onlyRow === "marktplaats") markets.marktplaats = true;
-        if (!onlyRow || onlyRow === "dehands") markets.dehands = true;
-        if (!onlyRow || onlyRow === "autoscoutnlbe") {
+        if (!onlyRow || onlyRow === portal) markets[portal] = true;
+        if (!onlyRow || onlyRow === row) {
           markets.autoscout = true;
-          nextCountries = [...german, ...NLBE];
+          nextCountries = [...others, code];
         }
       }
     } else group.rows.forEach((row) => { markets[row] = onlyRow ? (row === onlyRow || markets[row]) : !on; });
@@ -1323,21 +1328,10 @@
   // (AutoScout24 searches it); the others their one portal.
   function marketsWithMarketChip(market) {
     if (market === "mobile") return marketsWithGroup("de");
-    const markets = { ...chartSources };
-    let countries = null;
-    if (market === "marktplaats" || market === "dehands") {
-      const code = market === "marktplaats" ? "NL" : "BE";
-      const current = formCountries();
-      const on = Boolean(chartSources[market]) || (Boolean(chartSources.autoscout) && current.includes(code));
-      countries = current.filter((item) => item !== code);
-      markets[market] = !on;
-      if (on) markets.autoscout = Boolean(chartSources.autoscout) && countries.length > 0;
-      else {
-        countries.push(code);
-        markets.autoscout = true;
-      }
-    } else markets[market] = !chartSources[market];
-    return MARKET_SOURCES.some((source) => markets[source]) ? { markets, countries } : null;
+    if (market === "marktplaats") return marketsWithGroup("nl");
+    if (market === "dehands") return marketsWithGroup("be");
+    const markets = { ...chartSources, [market]: !chartSources[market] };
+    return MARKET_SOURCES.some((source) => markets[source]) ? { markets, countries: null } : null;
   }
 
   // A column's head: flags, the countries' names and the switch.
@@ -2312,7 +2306,7 @@
           // two samples, one after the other: in one list sorted by price
           // Germany's offers left the Netherlands and Belgium (AutoScout24 is
           // their main portal) a few dozen.
-          const groups = [germanCountries(countries), nlbeCountries(countries)].filter((list) => list.length);
+          const groups = [germanCountries(countries), ...nlbeCountries(countries).map((code) => [code])].filter((list) => list.length);
           if (groups.length < 2) return fetchAutoscoutListings(filters, options(countries));
           const results = [];
           let firstError = null;
@@ -6479,12 +6473,13 @@
     } catch {
       // Same for AutoScout24.
     }
-    let autoscoutNlBeUrl = "";
-    try {
-      autoscoutNlBeUrl = window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries: NLBE }) || "";
-    } catch {
-      autoscoutNlBeUrl = "";
-    }
+    const autoscoutLocalUrl = (code) => {
+      try {
+        return window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries: [code] }) || "";
+      } catch {
+        return "";
+      }
+    };
     let autoscoutFrUrl = "";
     try {
       autoscoutFrUrl = window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries: ["FR"] }) || "";
@@ -7736,7 +7731,7 @@
     // form holds unsaved changes), "Analiza rynku" and the offer count with a
     // link per compared market.
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
-    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", kleinanzeigen: "[data-mobile-search-count-kleinanzeigen]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnlbe: "[data-mobile-search-count-autoscoutnlbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
+    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", kleinanzeigen: "[data-mobile-search-count-kleinanzeigen]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnl: "[data-mobile-search-count-autoscoutnl]", autoscoutbe: "[data-mobile-search-count-autoscoutbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
     // mobile.de: Germany's countries only (the Netherlands and Belgium are not read there).
     let mobileDeUrl = searchUrl;
     try {
@@ -7745,7 +7740,7 @@
     } catch {
       mobileDeUrl = searchUrl;
     }
-    const marketLinks = { mobile: mobileDeUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, kleinanzeigen: localUrls.kleinanzeigen, autoscoutnlbe: autoscoutNlBeUrl, autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
+    const marketLinks = { mobile: mobileDeUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, kleinanzeigen: localUrls.kleinanzeigen, autoscoutnl: autoscoutLocalUrl("NL"), autoscoutbe: autoscoutLocalUrl("BE"), autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
     const specFoot = `
       <div class="mobileSearchSummaryFoot" data-report-hide>
         <span class="mobileSearchSummaryFootLabel">${escapeMarketHtml(t.offerCountLabel || "")}</span>

@@ -4989,9 +4989,10 @@ function defaultCountries() {
   // B68: the countries of the switched-on columns of "Aktualne oferty" —
   // Germany with mobile.de, the Netherlands and Belgium with Marktplaats /
   // 2dehands (AutoScout24 searches both columns' countries).
-  const nlbe = markets.includes("autoscout") && (markets.includes("marktplaats") || markets.includes("dehands"));
-  const germany = markets.includes("mobile") || (markets.includes("autoscout") && !nlbe);
-  return [...(germany ? ["DE"] : []), ...(nlbe ? ["NL", "BE"] : [])];
+  const nl = markets.includes("autoscout") && markets.includes("marktplaats");
+  const be = markets.includes("autoscout") && markets.includes("dehands");
+  const germany = markets.includes("mobile") || (markets.includes("autoscout") && !nl && !be);
+  return [...(germany ? ["DE"] : []), ...(nl ? ["NL"] : []), ...(be ? ["BE"] : [])];
 }
 
 window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {

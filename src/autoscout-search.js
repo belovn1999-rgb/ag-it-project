@@ -274,15 +274,17 @@
   const TEXT = {
     pl: { search: "Szukaj na AutoScout24", opening: "Otwieram AutoScout24 (wszystkie ogłoszenia; w analizie — tylko te, których nie ma na mobile.de).", skipped: "AutoScout24 nie przyjmie filtrów: {filters}.", countTitle: "Wszystkie ogłoszenia na AutoScout24 (razem z tymi, które są też na mobile.de)",
       searchFr: "Szukaj na AutoScout24 (Francja)", openingFr: "Otwieram AutoScout24 — ogłoszenia z Francji.", countTitleFr: "Ogłoszenia na AutoScout24 we Francji",
-      searchNlBe: "Szukaj na AutoScout24 (Holandia, Belgia)", openingNlBe: "Otwieram AutoScout24 — ogłoszenia z Holandii i Belgii.", countTitleNlBe: "Ogłoszenia na AutoScout24 w Holandii i Belgii" },
+      searchNl: "Szukaj na AutoScout24 (Holandia)", openingNl: "Otwieram AutoScout24 — ogłoszenia z Holandii.", countTitleNl: "Ogłoszenia na AutoScout24 w Holandii",
+      searchBe: "Szukaj na AutoScout24 (Belgia)", openingBe: "Otwieram AutoScout24 — ogłoszenia z Belgii.", countTitleBe: "Ogłoszenia na AutoScout24 w Belgii" },
     ru: { search: "Искать на AutoScout24", opening: "Открываю AutoScout24 (все объявления; в анализе — только те, которых нет на mobile.de).", skipped: "AutoScout24 не примет фильтры: {filters}.", countTitle: "Все объявления на AutoScout24 (вместе с теми, что есть и на mobile.de)",
       searchFr: "Искать на AutoScout24 (Франция)", openingFr: "Открываю AutoScout24 — объявления из Франции.", countTitleFr: "Объявления на AutoScout24 во Франции",
-      searchNlBe: "Искать на AutoScout24 (Нидерланды, Бельгия)", openingNlBe: "Открываю AutoScout24 — объявления из Нидерландов и Бельгии.", countTitleNlBe: "Объявления на AutoScout24 в Нидерландах и Бельгии" },
+      searchNl: "Искать на AutoScout24 (Нидерланды)", openingNl: "Открываю AutoScout24 — объявления из Нидерландов.", countTitleNl: "Объявления на AutoScout24 в Нидерландах",
+      searchBe: "Искать на AutoScout24 (Бельгия)", openingBe: "Открываю AutoScout24 — объявления из Бельгии.", countTitleBe: "Объявления на AutoScout24 в Бельгии" },
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
   // B68: page 1 has a German column (Germany, plus Austria or Luxembourg
-  // from "Kraj") and a column of the Netherlands and Belgium, each with its
-  // own AutoScout24 count and link; the analysis searches every "Kraj" country.
+  // from "Kraj"), a column of the Netherlands and one of Belgium, each with
+  // its own AutoScout24 count and link; the analysis searches every "Kraj" country.
   const NLBE = ["NL", "BE"];
   const countries = (filters) => {
     const german = (filters.countries || []).filter((code) => !NLBE.includes(code));
@@ -290,7 +292,8 @@
   };
   const MARKETS = {
     autoscout: { count: "[data-mobile-search-count-autoscout]", link: "[data-mobile-autoscout-search]", countries, search: "search", opening: "opening", countTitle: "countTitle" },
-    autoscoutnlbe: { count: "[data-mobile-search-count-autoscoutnlbe]", link: "[data-mobile-autoscoutnlbe-search]", countries: () => NLBE, search: "searchNlBe", opening: "openingNlBe", countTitle: "countTitleNlBe" },
+    autoscoutnl: { count: "[data-mobile-search-count-autoscoutnl]", link: "[data-mobile-autoscoutnl-search]", countries: () => ["NL"], search: "searchNl", opening: "openingNl", countTitle: "countTitleNl" },
+    autoscoutbe: { count: "[data-mobile-search-count-autoscoutbe]", link: "[data-mobile-autoscoutbe-search]", countries: () => ["BE"], search: "searchBe", opening: "openingBe", countTitle: "countTitleBe" },
     autoscoutfr: { count: "[data-mobile-search-count-autoscoutfr]", link: "[data-mobile-autoscoutfr-search]", countries: () => ["FR"], search: "searchFr", opening: "openingFr", countTitle: "countTitleFr" },
   };
   const proxy = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
@@ -329,7 +332,8 @@
     const picked = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : ["autoscout", "autoscoutfr"];
     refreshMarketCount("autoscout", filters);
     if (picked.includes("autoscoutfr")) refreshMarketCount("autoscoutfr", filters);
-    if (picked.includes("autoscout") && (filters?.countries || []).some((code) => NLBE.includes(code))) refreshMarketCount("autoscoutnlbe", filters);
+    if (picked.includes("autoscout") && (filters?.countries || []).includes("NL")) refreshMarketCount("autoscoutnl", filters);
+    if (picked.includes("autoscout") && (filters?.countries || []).includes("BE")) refreshMarketCount("autoscoutbe", filters);
   };
 
   Object.values(MARKETS).forEach((spec) => {
