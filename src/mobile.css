@@ -3210,3 +3210,15 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   border-color: #333a40;
   box-shadow: 0 0 0 1px #333a40;
 }
+
+/* Marktplaats and 2dehands: light logos with the country's flag (B47). */
+.agBrandLink.isMarktplaats:hover,
+.agBrandLink.isDehands:hover {
+  border-color: #2d3c4d;
+  box-shadow: 0 0 0 1px #2d3c4d;
+}
+
+.mobileLinkSource .isMarktplaats input:checked + span {
+  background: #0b6e86;
+  color: #fff;
+}

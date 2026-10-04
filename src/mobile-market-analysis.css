@@ -4554,3 +4554,59 @@
 .mobileMarketPanel.isAutoscoutFr .mobileMarketPanelHead b { color: var(--market-autoscoutfr); }
 .mobileMarketKeyTick.isGuide.isAutoscoutFr { color: var(--market-autoscoutfr); }
 .mobileMonitoringTile.isAutoscoutFr { --tile: #6b3fb8; }
+
+/* The Netherlands (Marktplaats) and Belgium (2dehands) as markets (B47). */
+.mobileMarketAnalysisPanel,
+.mobileMarketAnalysisView,
+:root {
+  --market-marktplaats: #0d8aa8;
+  --market-dehands: #c2185b;
+}
+
+.mobileMarketSourceButton.isMarktplaats i,
+.mobileMarketSourceTag.isMarktplaats i,
+.mobileMarketLegend .isMarktplaats i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--market-marktplaats);
+}
+
+.mobileMarketPoint.isMarktplaats::before {
+  background: var(--market-marktplaats);
+  box-shadow: 0 0 0 1px var(--market-marktplaats);
+}
+
+.mobileMarketPointTooltip b.isMarktplaats { color: var(--market-marktplaats); }
+.mobileMarketTrend.isCurve polyline.isMarktplaats { stroke: var(--market-marktplaats); }
+.mobileMarketSearchArrow.isMarktplaats { color: var(--market-marktplaats); }
+.mobileMarketMedian.isMarktplaats { border-top-color: var(--market-marktplaats); }
+.mobileMarketKeyTick.isMedian.isMarktplaats { color: var(--market-marktplaats); }
+.mobileMarketCompareRow.isMarktplaats { --row: var(--market-marktplaats); }
+.mobileMarketPanel.isMarktplaats .mobileMarketPanelHead b { color: var(--market-marktplaats); }
+.mobileMarketKeyTick.isGuide.isMarktplaats { color: var(--market-marktplaats); }
+.mobileMonitoringTile.isMarktplaats { --tile: var(--market-marktplaats); }
+
+.mobileMarketSourceButton.isDehands i,
+.mobileMarketSourceTag.isDehands i,
+.mobileMarketLegend .isDehands i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--market-dehands);
+}
+
+.mobileMarketPoint.isDehands::before {
+  background: var(--market-dehands);
+  box-shadow: 0 0 0 1px var(--market-dehands);
+}
+
+.mobileMarketPointTooltip b.isDehands { color: var(--market-dehands); }
+.mobileMarketTrend.isCurve polyline.isDehands { stroke: var(--market-dehands); }
+.mobileMarketSearchArrow.isDehands { color: var(--market-dehands); }
+.mobileMarketMedian.isDehands { border-top-color: var(--market-dehands); }
+.mobileMarketKeyTick.isMedian.isDehands { color: var(--market-dehands); }
+.mobileMarketCompareRow.isDehands { --row: var(--market-dehands); }
+.mobileMarketPanel.isDehands .mobileMarketPanelHead b { color: var(--market-dehands); }
+.mobileMarketKeyTick.isGuide.isDehands { color: var(--market-dehands); }
+.mobileMonitoringTile.isDehands { --tile: var(--market-dehands); }

@@ -74,6 +74,9 @@ const copy = {
     recognitionFromAutoscout: "Dane pobrane z ogłoszenia AutoScout24.",
     autoscoutAdFailed: "Nie udało się odczytać ogłoszenia AutoScout24. Sprawdź link i spróbuj ponownie.",
     autoscoutLinkExpected: "To nie jest link do ogłoszenia AutoScout24.",
+    recognitionFromMarktplaats: "Dane pobrane z ogłoszenia Marktplaats / 2dehands.",
+    marktplaatsAdFailed: "Nie udało się odczytać ogłoszenia Marktplaats / 2dehands (albo nie ma w nim stałej ceny). Sprawdź link.",
+    marktplaatsLinkExpected: "To nie jest link do ogłoszenia Marktplaats / 2dehands.",
     otomotoAdFailed: "Nie udało się odczytać ogłoszenia otomoto.pl. Sprawdź link i spróbuj ponownie.",
     otomotoLinkExpected: "To nie jest link do ogłoszenia otomoto.pl.",
     bookmarkletHint: "Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.",
@@ -406,6 +409,9 @@ const copy = {
     recognitionFromAutoscout: "Данные получены из объявления AutoScout24.",
     autoscoutAdFailed: "Не удалось прочитать объявление AutoScout24. Проверь ссылку и попробуй ещё раз.",
     autoscoutLinkExpected: "Это не ссылка на объявление AutoScout24.",
+    recognitionFromMarktplaats: "Данные получены из объявления Marktplaats / 2dehands.",
+    marktplaatsAdFailed: "Не удалось прочитать объявление Marktplaats / 2dehands (или в нём нет фиксированной цены). Проверь ссылку.",
+    marktplaatsLinkExpected: "Это не ссылка на объявление Marktplaats / 2dehands.",
     otomotoAdFailed: "Не удалось прочитать объявление otomoto.pl. Проверь ссылку и попробуй ещё раз.",
     otomotoLinkExpected: "Это не ссылка на объявление otomoto.pl.",
     bookmarkletHint: "Перетащи эту кнопку на панель закладок. Потом нажимай её на странице объявления или списка mobile.de.",
@@ -3934,6 +3940,7 @@ async function refreshOfferCount() {
   window.AUTOGOOD_BLOCKET_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_AVBY_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(filters);
+  window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(filters);
   if (!filters.brand || !filters.model) {
     renderOfferCount("—");
     return;
@@ -4142,7 +4149,8 @@ function setLinkSource(source) {
   els.url.placeholder = source === "otomoto" ? "https://www.otomoto.pl/osobowe/oferta/..."
     : source === "blocket" ? "https://www.blocket.se/mobility/item/..."
       : source === "avby" ? "https://cars.av.by/..."
-        : source === "autoscout" ? "https://www.autoscout24.de/angebote/..." : "https://suchen.mobile.de/...";
+        : source === "autoscout" ? "https://www.autoscout24.de/angebote/..."
+          : source === "marktplaats" ? "https://www.marktplaats.nl/v/auto-s/..." : "https://suchen.mobile.de/...";
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
   if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
@@ -4167,6 +4175,7 @@ els.url.addEventListener("input", () => {
   const value = els.url.value.trim();
   const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby"
     : isAutoscoutUrl(value) ? (/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout")
+    : isMarktplaatsUrl(value) ? (/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands")
     : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
   if (source && value !== mirroredLink) {
     mirroredLink = value;
@@ -4176,6 +4185,7 @@ els.url.addEventListener("input", () => {
   else if (isBlocketUrl(value)) setLinkSource("blocket");
   else if (isAvbyUrl(value)) setLinkSource("avby");
   else if (isAutoscoutUrl(value)) setLinkSource("autoscout");
+  else if (isMarktplaatsUrl(value)) setLinkSource("marktplaats");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
 });
 
@@ -4446,6 +4456,99 @@ async function loadAutoscoutAd(sourceUrl) {
   }
 }
 
+// ---- Marktplaats / 2dehands / 2ememain ad links ------------------------------------
+// The ad page (through the reader proxy) carries the ad as window.__CONFIG__:
+// price, make and model, and the car's data grouped by topic (carAttributes:
+// year, mileage, fuel, gearbox, engine in litres, power in PS, body, drive,
+// seats, doors, owners). A Dutch car is compared on "Holandia", a Belgian one
+// on "Belgia".
+function isMarktplaatsUrl(value) {
+  return /^https:\/\/(www\.)?(marktplaats\.nl|2dehands\.be|2ememain\.be)\/v\/[^?#]*\/m\d+/i.test(String(value || "").trim());
+}
+
+const MARKTPLAATS_FUELS = [[/plug-?in/i, "Plug-in-Hybrid (Benzin/Elektro)"], [/hybride?.*diesel/i, "Hybrid (Diesel/Elektro)"], [/hybride?/i, "Hybrid (Benzin/Elektro)"],
+  [/elektri|électri/i, "Elektro"], [/diesel/i, "Diesel"], [/benzine|essence|lpg|cng/i, "Benzin"]];
+// 2ememain (French): the same body types in French.
+const MARKTPLAATS_BODIES = [[/^break/i, "Stationwagon"], [/^berline/i, "Sedan"], [/monospace/i, "MPV"], [/tout-terrain|^suv/i, "SUV"], [/^cabriolet/i, "Cabriolet"], [/^coup/i, "Coupé"]];
+
+async function loadMarktplaatsAd(sourceUrl) {
+  const c = copy[state.lang];
+  setStatus("loading");
+  state.data = null;
+  renderData();
+  try {
+    const proxy = window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+    const response = await fetch(`${proxy}${sourceUrl}`, { headers: { "x-respond-with": "html" } });
+    if (!response.ok) throw new Error(String(response.status));
+    const html = await response.text();
+    const raw = html.match(/window\.__CONFIG__\s*=\s*(\{[\s\S]*?\});\s*<\/script>/);
+    const listing = raw ? JSON.parse(raw[1])?.listing : null;
+    const carBruttoEur = Math.round(Number(listing?.priceInfo?.priceCents) / 100) || 0;
+    if (!carBruttoEur || listing.priceInfo.priceType !== "FIXED") throw new Error(c.marktplaatsAdFailed);
+    const attributes = (listing.carAttributes?.groupedWithIcons || []).flatMap((group) => group.attributes || []);
+    const value = (key) => {
+      const found = attributes.find((item) => item.key === key);
+      return found === undefined || found.value === null ? "" : String(found.value);
+    };
+    const number = (key) => Number(value(key).replace(/[.\s]/g, "").replace(",", ".")) || null;
+    const fuelLabel = value("fuel");
+    const fuel = (MARKTPLAATS_FUELS.find(([pattern]) => pattern.test(fuelLabel)) || [])[1] || fuelLabel;
+    const litres = Number(value("cylinderCapacity").replace(",", ".")) || 0;
+    const displacementCcm = litres ? Math.round(litres * 1000) : null;
+    const bodyLabel = value("vehicleType");
+    const bodyType = (MARKTPLAATS_BODIES.find(([pattern]) => pattern.test(bodyLabel)) || [])[1] || bodyLabel;
+    const gearboxLabel = value("transmission");
+    const driveLabel = value("powerWheelDriver");
+    const location = listing.seller?.location || {};
+    const country = String(location.countryAbbreviation || (/2dehands|2ememain/i.test(sourceUrl) ? "BE" : "NL")).toUpperCase();
+    // VAT the buyer can deduct, when the dealer states it ("BTW verrekenbaar").
+    const vatDeductible = attributes.some((item) => /btw|tva|vat/i.test(`${item.key} ${item.label || ""}`) && /verrekenbaar|ja|oui|r[ée]cup/i.test(String(item.value)));
+    const title = String(listing.title || [listing.carDetails?.brand, listing.carDetails?.model, value("trim")].filter(Boolean).join(" ")).slice(0, 160);
+    const engineTypeIndex = classifyEngineType(`${fuel} ${title}`, displacementCcm);
+    const estimate = estimateDeliveryInspection(bodyType, { country, postalCode: "", city: String(location.cityName || "") });
+    state.data = {
+      sourceUrl,
+      adId: String(listing.itemId || ""),
+      importMode: country === "BE" ? "dehands" : "marktplaats",
+      carBruttoEur,
+      carNettoEur: vatDeductible ? Math.round(carBruttoEur / 1.21) : null,
+      purchaseType: vatDeductible ? "VAT" : "Marża",
+      title,
+      model: String(listing.carDetails?.model || ""),
+      bodyType,
+      fuel,
+      displacementCcm,
+      powerHp: number("powerInHorsePower"),
+      gearbox: /automaa?t|automatique/i.test(gearboxLabel) ? "Automatyczna" : /handgeschakeld|manuel/i.test(gearboxLabel) ? "Manualna" : "",
+      mileageKm: number("mileage"),
+      firstRegistration: value("constructionYear"),
+      drive: /vierwiel|4x4|intégrale|4 roues/i.test(driveLabel) ? "awd" : /voorwiel|avant/i.test(driveLabel) ? "fwd" : /achterwiel|arrière/i.test(driveLabel) ? "rwd" : "",
+      equipment: [],
+      condition: listing.carDetails?.condition === "NEW" ? "Neufahrzeug" : "Gebrauchtfahrzeug",
+      sellerType: listing.seller?.sellerType === "CONSUMER" ? "PRIVATE" : listing.seller?.sellerType ? "DEALER" : "",
+      location: { address: "", city: String(location.cityName || ""), postalCode: "", country, sellerName: String(listing.seller?.name || "") },
+      transportNettoPln: estimate.transport,
+      inspectionNettoPln: estimate.inspection,
+      engineTypeIndex,
+      engineTypeLabel: ENGINE_TYPE_LABELS[engineTypeIndex],
+    };
+    setStatus("ready", c.recognitionFromMarktplaats, true);
+    // The ad states the engine in litres ("1.0"); the search knows the exact
+    // cm³ (998): an exact range from litres would miss the car itself
+    // (checked 2026-10-04), so the form keeps "Pojemność" open.
+    const forForm = { ...state.data, displacementCcm: null };
+    applyRecognizedManualFields(forForm);
+    state.data.matchedFilters = forForm.matchedFilters;
+    // The car's own country is the market it is compared on.
+    window.AUTOGOOD_SET_ONLY_MARKET?.(state.data.importMode);
+    renderData();
+  } catch (error) {
+    state.data = null;
+    setStatus("error", error.message && !/^\d+$/.test(error.message) ? error.message : c.marktplaatsAdFailed, true);
+    renderData();
+  }
+}
+
 async function loadOtomotoAd(sourceUrl) {
   const c = copy[state.lang];
   setStatus("loading");
@@ -4550,7 +4653,12 @@ els.form.addEventListener("submit", (event) => {
     loadAutoscoutAd(sourceUrl);
     return;
   }
-  if (["otomoto", "blocket", "avby", "autoscout"].includes(linkSource())) {
+  if (isMarktplaatsUrl(sourceUrl)) {
+    setLinkSource("marktplaats");
+    loadMarktplaatsAd(sourceUrl);
+    return;
+  }
+  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats"].includes(linkSource())) {
     setStatus("error", copy[state.lang][`${linkSource()}LinkExpected`], true);
     return;
   }
@@ -4761,6 +4869,8 @@ window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {
   }
   // France switched on: its count (only counted while compared).
   if (next.autoscoutfr && !previous.autoscoutfr) window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(readManualFields());
+  // The Netherlands / Belgium switched on: their counts (only while compared).
+  if ((next.marktplaats && !previous.marktplaats) || (next.dehands && !previous.dehands)) window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(readManualFields());
   if (next.avby && !previous.avby && state.lang !== "ru") {
     document.querySelector('[data-lang-button="ru"]')?.click();
   }

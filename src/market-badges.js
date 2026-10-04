@@ -8,7 +8,7 @@
  */
 (() => {
   // AutoScout24 FR: AutoScout24 searched in France alone, the market "Francja".
-  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE", avby: "BY", autoscout: "DE", autoscoutfr: "FR" };
+  const MARKET_COUNTRY = { otomoto: "PL", mobile: "DE", blocket: "SE", avby: "BY", autoscout: "DE", autoscoutfr: "FR", marktplaats: "NL", dehands: "BE" };
   const COUNTRY_NAMES = {
     pl: { BY: "Białoruś", PL: "Polska", DE: "Niemcy", SE: "Szwecja", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", DK: "Dania", LU: "Luksemburg", CH: "Szwajcaria" },
     ru: { BY: "Беларусь", PL: "Польша", DE: "Германия", SE: "Швеция", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", DK: "Дания", LU: "Люксембург", CH: "Швейцария" },
