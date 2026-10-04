@@ -15,7 +15,9 @@ phase; "years" corrects the source where it says "Present" for a car that is
 no longer built (checked 2026-10-04). Gearbox and drive come from the version
 name: an explicit marker ("Auto", "S tronic", "DSG", "xDrive", "quattro"...),
 a manual twin (the same engine is listed with and without "Auto"), or the
-model's usual drive; the CSV says which.
+model's usual drive; the version's own page wins where
+tools/enrich-model-versions.py has read it (data/model-version-details.json).
+The CSV says which.
 
     python3 tools/build-model-engine-table.py
 """
@@ -418,11 +420,11 @@ FUEL_RU = {
     "flex": "бензин/E85 (Flexible Fuel)",
 }
 AUTO = re.compile(
-    r"\b(auto|aut|automatic|automatik|s[ -]?tronic|tiptronic|multitronic|dsg|steptronic|dkg|"
+    r"\b(auto(?![- ]?start)|aut|automatic|automatik|s[ -]?tronic|tiptronic|multitronic|dsg|steptronic|dkg|"
     r"powershift|eat\d|e-eat\d|edc|x-?tronic|cvt|e-cvt|multidrive|geartronic|g-?tronic|\d+g-?(tronic|dct)|"
     r"dct|sportshift|selespeed|easytronic|e-?tense)\b", re.I)
 AWD = re.compile(
-    r"(\bquattro\b|\bxdrive\b|\d{3}xd\b|\d{3}xi\b|\bxi\b|\b4matic\+?|\b4motion\b|\b4x4\b|\bawd(-i)?\b|"
+    r"(\bquattro\b|\bx ?drive(\d+[a-z]*)?\b|\d{3}xd\b|\d{3}xi\b|\bxi\b|\b4matic\+?|\b4motion\b|\b4x4\b|\bawd(-i)?\b|"
     r"\ball ?wheel\b|\b4wd\b|\be-four\b|\bhybrid4\b|\ballroad\b|\bscout\b|\bxc\d|\bcross country\b)", re.I)
 FACELIFT_BODY = re.compile(r"(restyling|facelift|\blci\b)", re.I)
 # Plug-in hybrids the source sometimes lists under "Petrol Engines" (A3 45 TFSIe, 330e, C 300 e...).
@@ -433,18 +435,55 @@ PLUGIN_NAME = re.compile(
 SPEEDS = re.compile(r"\b\d+[ -]?(speeds?|sp|g)\b\.?", re.I)
 
 
+# Full hybrids the source keeps under "Petrol Engines" (Toyota Hybrid, Renault E-Tech, Mondeo Hybrid...).
+FULL_HYBRID = re.compile(r"(\bhybrid\b(?!4)|activehybrid|\bf?hev\b|\bfull hybrid\b|\be-tech\b(?! plug)|\bhsd\b)", re.I)
+# Checked first: "M340i Mild Hybrid", Ford "EcoBoost Hybrid" (48 V) are mild hybrids.
+MILD_HYBRID = re.compile(r"(\bmhev\b|mild[- ]?hybrid|\betsi\b|\b48 ?v\b|eq boost|\bmild\b|ecoboost (\d+hp )?hybrid)", re.I)
+
+
 def fuel_for(version):
-    if version["fuel"] in ("petrol", "diesel") and PLUGIN_NAME.search(version["name"]):
+    name, fuel = version["name"], version["fuel"]
+    if fuel in ("petrol", "diesel") and re.search(r"hybrid4", name, re.I) and re.search(r"\bhdi\b", name, re.I):
+        return "hybrid_diesel", "по названию (дизельный гибрид HYbrid4)"
+    if fuel in ("petrol", "diesel") and PLUGIN_NAME.search(name):
         return "plugin", "по названию (плагин-гибрид)"
-    if version["fuel"] not in FUEL_RU:
-        name = version["name"]
-        if re.search(r"g-?tron|\bcng\b|\btgi\b|g-tec", name, re.I):
-            return "cng", "по названию (раздел «Others»)"
-        if re.search(r"\blpg\b|bi-?fuel", name, re.I):
-            return "lpg", "по названию (раздел «Others»)"
-        if re.search(r"flex", name, re.I):
-            return "flex", "по названию (раздел «Others»)"
-    return version["fuel"], ""
+    if fuel in ("petrol", "diesel") and MILD_HYBRID.search(name):
+        return fuel, "мягкий гибрид (MHEV) — по названию"
+    if fuel in ("petrol", "diesel") and FULL_HYBRID.search(name) and not re.search(r"plug-?in", name, re.I):
+        return ("hybrid_diesel" if fuel == "diesel" else "hybrid"), "по названию (полный гибрид)"
+    if fuel not in FUEL_RU:
+        others = "по названию (раздел «Others»)"
+        if re.search(r"g-?tron|\bcng\b|\btgi\b|g-tec|natural gas|ecofuel", name, re.I):
+            return "cng", others
+        if re.search(r"\blpg\b|\bglp\b|autogas|bi-?fuel|eco-g\b", name, re.I):
+            return "lpg", others
+        if re.search(r"flex|\bffv\b|\bt\d f\b", name, re.I):
+            return "flex", others
+        return "petrol", "раздел «Others», по названию не определено — бензин"
+    return fuel, ""
+
+
+def page_gearbox(found):
+    """Gearbox from the version's own page (tools/enrich-model-versions.py)."""
+    text = f"{found.get('gearbox', '')} {found.get('transmission', '')}"
+    if re.search(r"robot|automated manual|semi-?auto", text, re.I):
+        return "автомат (робот)"
+    if re.search(r"automatic|\bauto\b|cvt|dual[- ]clutch|dct|direct shift|sequential", text, re.I):
+        return "автомат"
+    if re.search(r"manual", text, re.I):
+        return "механика"
+    return ""
+
+
+def page_drive(found):
+    drive = found.get("drive", "")
+    if re.search(r"\b(awd|4wd|4x4|all)\b", drive, re.I):
+        return "полный"
+    if re.search(r"\brwd\b|rear", drive, re.I):
+        return "задний"
+    if re.search(r"\bfwd\b|front", drive, re.I):
+        return "передний"
+    return ""
 
 
 def checked_years(gen, override):
@@ -469,7 +508,13 @@ def strip_auto(name):
     return re.sub(r"\s+", " ", name).strip(" .").lower()
 
 
+ROBOT = re.compile(r"\b(cmp|bmp6?|etg6?|mta|ams|sensodrive)\b", re.I)
+TWO_WD = re.compile(r"\b(4x2|2wd)\b", re.I)
+
+
 def gearbox_for(version, twins, fuel):
+    if ROBOT.search(version["name"]):
+        return "автомат (робот)", "из названия"
     if AUTO.search(version["name"]):
         return "автомат", "из названия"
     if fuel in ("electric", "hybrid", "plugin", "hybrid_diesel"):
@@ -482,7 +527,9 @@ def gearbox_for(version, twins, fuel):
 def drive_for(brand, model, code, version):
     if AWD.search(version["name"]):
         return "полный", "из названия"
-    if re.search(r"\bsdrive\b", version["name"], re.I):
+    if TWO_WD.search(version["name"]):
+        return "передний", "из названия (4x2/2WD)"
+    if re.search(r"\bs ?drive(\d+[a-z]*)?\b", version["name"], re.I):
         front = model == "X1" and code != "E84"
         return ("передний" if front else "задний"), "из названия (sDrive)"
     if (brand, model) in ALWAYS_AWD:
@@ -497,6 +544,8 @@ def drive_for(brand, model, code, version):
 def main():
     with open(os.path.join(ROOT, "data", "model-engines.json"), encoding="utf8") as handle:
         source = json.load(handle)
+    details_path = os.path.join(ROOT, "data", "model-version-details.json")
+    version_pages = json.load(open(details_path, encoding="utf8")) if os.path.exists(details_path) else {}
     today = datetime.date.today().isoformat()
     rows, index, problems = [], {}, []
 
@@ -518,6 +567,11 @@ def main():
                     fuel, fuel_note = fuel_for(v)
                     gearbox, gearbox_src = gearbox_for(v, twins, fuel)
                     drive, drive_src = drive_for(model["brand"], model["model"], code, v)
+                    found = version_pages.get(v["url"])
+                    if found and page_gearbox(found):
+                        gearbox, gearbox_src = page_gearbox(found), "со страницы версии"
+                    if found and page_drive(found):
+                        drive, drive_src = page_drive(found), "со страницы версии"
                     rows.append({
                         "Марка": model["brand"],
                         "Модель": model["label"],
@@ -554,7 +608,7 @@ def main():
 
     columns = list(rows[0].keys()) if rows else []
     with open(os.path.join(ROOT, "data", "model-engines.csv"), "w", encoding="utf-8-sig", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=columns, delimiter=";")
+        writer = csv.DictWriter(handle, fieldnames=columns, delimiter=";", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

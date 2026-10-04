@@ -44,12 +44,14 @@
     "RS 3"
    ],
    "special": [
-    "S line (пакет)"
+    "S line (пакет)",
+    "Advance, Pro Line, Pro Line S (Бенилюкс)"
    ],
    "sources": [
-    "https://de.wikipedia.org/wiki/Audi_A3_8V"
+    "https://de.wikipedia.org/wiki/Audi_A3_8V",
+    "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A3"
    ],
-   "status": "частично проверено",
+   "status": "проверено",
    "note": "с рестайлинга 2016 Attraction/Ambition/Ambiente заменены на sport/design"
   },
   {
@@ -222,10 +224,14 @@
     "S5",
     "RS 5"
    ],
-   "special": [],
-   "sources": [],
-   "status": "проверить",
-   "note": "по аналогии с A4 B9 после рестайлинга"
+   "special": [
+    "design selection"
+   ],
+   "sources": [
+    "https://de.motor1.com/news/369291/audi-a5-facelift-2020/"
+   ],
+   "status": "проверено",
+   "note": ""
   },
   {
    "brand": "Audi",
@@ -294,9 +300,11 @@
    "special": [
     "edition one"
    ],
-   "sources": [],
-   "status": "проверить",
-   "note": "по аналогии с A5 B10 / Q5 GU"
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/audi-a6-c9-test/"
+   ],
+   "status": "проверено",
+   "note": ""
   },
   {
    "brand": "Audi",
@@ -413,10 +421,14 @@
     "S line"
    ],
    "sport": [],
-   "special": [],
-   "sources": [],
-   "status": "проверить",
-   "note": "по аналогии с Q5 GU"
+   "special": [
+    "Sportback (кузов)"
+   ],
+   "sources": [
+    "https://de.motor1.com/news/762262/audi-q3-suv-2025-neuvorstellung/"
+   ],
+   "status": "проверено",
+   "note": ""
   },
   {
    "brand": "Audi",
@@ -452,19 +464,24 @@
    "phase": "весь выпуск",
    "years": "2011–2018",
    "trims": [
-    "Basis"
+    "Attraction",
+    "Ambition",
+    "Ambiente",
+    "design (с 2015)",
+    "sport (с 2015)"
    ],
    "sport": [
     "RS Q3"
    ],
    "special": [
-    "S line (пакет)"
+    "S line (пакет)",
+    "Advance (Бенилюкс)"
    ],
    "sources": [
-    "https://de.wikipedia.org/wiki/Audi_Q3_8U"
+    "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q3"
    ],
    "status": "частично проверено",
-   "note": "линеек нет, только пакеты"
+   "note": "по названиям версий ultimatespecs; design/sport — после рестайлинга 2015"
   },
   {
    "brand": "Audi",
@@ -547,19 +564,22 @@
    "phase": "весь выпуск",
    "years": "2008–2017",
    "trims": [
-    "Basis"
+    "Attraction",
+    "Ambition",
+    "Ambiente"
    ],
    "sport": [
     "SQ5"
    ],
    "special": [
-    "S line (пакет)"
+    "S line (пакет)",
+    "Advance (Бенилюкс)"
    ],
    "sources": [
-    "https://de.wikipedia.org/wiki/Audi_Q5_8R"
+    "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q5"
    ],
    "status": "частично проверено",
-   "note": "линеек нет, только пакеты"
+   "note": "по названиям версий ultimatespecs"
   },
   {
    "brand": "Audi",
@@ -586,6 +606,8 @@
    "years": "2015–2025",
    "trims": [
     "Basis",
+    "design",
+    "sport",
     "S line"
    ],
    "sport": [
@@ -595,10 +617,11 @@
     "Business Edition (PL, S line)"
    ],
    "sources": [
-    "https://audi-mediacenter.pl/komunikat,47749,kultowe-audi-q5-i-audi-q7-w-ofercie-specjalnej-audi-business-edition.html"
+    "https://audi-mediacenter.pl/komunikat,47749,kultowe-audi-q5-i-audi-q7-w-ofercie-specjalnej-audi-business-edition.html",
+    "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q7"
    ],
    "status": "частично проверено",
-   "note": ""
+   "note": "design/sport — до рестайлинга 2019 (названия версий ultimatespecs)"
   },
   {
    "brand": "Audi",
@@ -608,19 +631,21 @@
    "phase": "весь выпуск",
    "years": "2005–2015",
    "trims": [
-    "Basis"
+    "Ambiente",
+    "Ambition"
    ],
    "sport": [
     "V12 TDI"
    ],
    "special": [
-    "S line (пакет)"
+    "S line (пакет)",
+    "Advance (Бенилюкс)"
    ],
    "sources": [
-    "https://de.wikipedia.org/wiki/Audi_Q7_4L"
+    "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q7"
    ],
    "status": "частично проверено",
-   "note": "линеек нет, только пакеты"
+   "note": "по названиям версий ultimatespecs"
   },
   {
    "brand": "BMW",
@@ -637,9 +662,13 @@
    "sport": [
     "M135 xDrive"
    ],
-   "special": [],
-   "sources": [],
-   "status": "проверить",
+   "special": [
+    "M Sport Design (пакет)"
+   ],
+   "sources": [
+    "https://www.bimmertoday.de/2024/06/05/bmw-1er-2024-alle-bilder-und-infos-zum-neuen-1er-m135-f70/"
+   ],
+   "status": "проверено",
    "note": ""
   },
   {
@@ -1122,18 +1151,20 @@
    "years": "2010–2017",
    "trims": [
     "Basis",
+    "Advantage",
     "xLine",
     "M Sport"
    ],
    "sport": [
-    "35d"
+    "xDrive35d"
    ],
-   "special": [
-    "Design Pure (пакеты)"
+   "special": [],
+   "sources": [
+    "https://www.press.bmwgroup.com/deutschland/photo/detail/P90142837/der-neue-bmw-x3-mit-xline-ausstattungspaket-02-2014",
+    "https://www.bimmertoday.de/2014/02/07/2014-bmw-x3-m-sportpaket-f25-lci-facelift-m-paket/"
    ],
-   "sources": [],
-   "status": "проверить",
-   "note": ""
+   "status": "проверено",
+   "note": "xLine и M Sport — с рестайлинга 2014"
   },
   {
    "brand": "BMW",
@@ -1222,9 +1253,11 @@
    "special": [
     "M Sportpaket"
    ],
-   "sources": [],
-   "status": "проверить",
-   "note": ""
+   "sources": [
+    "https://www.7-forum.com/news/2010/X5_LCI/steckbrief.php"
+   ],
+   "status": "частично проверено",
+   "note": "линеек нет: базовая + пакеты"
   },
   {
    "brand": "Ford",
@@ -1881,7 +1914,8 @@
    "years": "2013–2020",
    "trims": [
     "Basis",
-    "AMG Line"
+    "AMG Line",
+    "AMG Line Plus (с 2017)"
    ],
    "sport": [
     "S 63 AMG",
@@ -1889,10 +1923,12 @@
     "Maybach"
    ],
    "special": [
-    "Exclusive-Paket"
+    "Exclusiv-Paket"
    ],
-   "sources": [],
-   "status": "проверить",
+   "sources": [
+    "https://mbpassion.de/2017/05/blick-auf-das-amg-line-plus-paket-der-s-klasse/"
+   ],
+   "status": "проверено",
    "note": ""
   },
   {
@@ -2096,7 +2132,8 @@
    "years": "2015–2019",
    "trims": [
     "Basis",
-    "AMG Line"
+    "AMG Line",
+    "Exclusive (интерьер)"
    ],
    "sport": [
     "GLE 43 AMG",
@@ -2105,8 +2142,10 @@
    "special": [
     "Coupé (кузов C292)"
    ],
-   "sources": [],
-   "status": "проверить",
+   "sources": [
+    "https://www.mercedes-fans.de/load/file/38145/5312964/preisliste-gle-150423.pdf"
+   ],
+   "status": "проверено",
    "note": "до 2015 — M-Klasse (ML)"
   },
   {
@@ -2147,6 +2186,7 @@
     "Access",
     "Like",
     "Active",
+    "Style",
     "Allure",
     "GT Line"
    ],
@@ -2160,7 +2200,8 @@
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Peugeot_208",
-    "https://de.wikipedia.org/wiki/Peugeot_208_I"
+    "https://de.wikipedia.org/wiki/Peugeot_208_I",
+    "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-208"
    ],
    "status": "проверено",
    "note": ""
@@ -2202,6 +2243,7 @@
    "trims": [
     "Access",
     "Active",
+    "Style",
     "Allure",
     "GT Line"
    ],
@@ -2211,7 +2253,8 @@
    ],
    "special": [],
    "sources": [
-    "https://de.wikipedia.org/wiki/Peugeot_308_II"
+    "https://de.wikipedia.org/wiki/Peugeot_308_II",
+    "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308"
    ],
    "status": "проверено",
    "note": ""
@@ -2230,13 +2273,15 @@
    ],
    "sport": [],
    "special": [
-    "Filou, Tendance, Premium (до 2011, DE)"
+    "Confort, Premium, Sport (PL, до 2011)",
+    "Filou, Tendance, Premium (DE, до 2011)"
    ],
    "sources": [
-    "https://de.wikipedia.org/wiki/Peugeot_308_I"
+    "https://de.wikipedia.org/wiki/Peugeot_308_I",
+    "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308"
    ],
    "status": "проверено",
-   "note": ""
+   "note": "Access/Active/Allure — с рестайлинга 2011"
   },
   {
    "brand": "Peugeot",
@@ -2271,15 +2316,19 @@
    "trims": [
     "Access",
     "Active",
+    "Style",
     "Allure",
+    "GT Line",
     "GT"
    ],
    "sport": [],
    "special": [
+    "Business",
     "RXH (кузов)"
    ],
    "sources": [
-    "https://de.wikipedia.org/wiki/Peugeot_508_I"
+    "https://de.wikipedia.org/wiki/Peugeot_508_I",
+    "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-508"
    ],
    "status": "проверено",
    "note": ""
@@ -2395,15 +2444,19 @@
     "Access",
     "Active",
     "Allure",
-    "Business Line"
+    "Business Line",
+    "Premium",
+    "Sport",
+    "Style"
    ],
    "sport": [],
    "special": [],
    "sources": [
-    "https://de.wikipedia.org/wiki/Peugeot_3008"
+    "https://de.wikipedia.org/wiki/Peugeot_3008",
+    "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-3008"
    ],
    "status": "проверено",
-   "note": ""
+   "note": "Premium/Sport/Style — польская гамма до рестайлинга 2013"
   },
   {
    "brand": "Peugeot",
@@ -2464,14 +2517,18 @@
     "Active",
     "Allure",
     "Trendy (PL)",
-    "Premium (PL)"
+    "Premium (PL)",
+    "Sport",
+    "Style"
    ],
    "sport": [],
    "special": [
-    "Family (PL)"
+    "Family (PL)",
+    "Business"
    ],
    "sources": [
-    "https://pl.wikipedia.org/wiki/Peugeot_5008"
+    "https://pl.wikipedia.org/wiki/Peugeot_5008",
+    "https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-5008"
    ],
    "status": "проверено",
    "note": ""
@@ -3003,7 +3060,9 @@
     "Scout"
    ],
    "sport": [],
-   "special": [],
+   "special": [
+    "Business"
+   ],
    "sources": [
     "https://vwzone.pl/skoda-karoq-wersje-wyposazenia-dane-techniczne-silniki/",
     "https://de.wikipedia.org/wiki/Škoda_Karoq"
@@ -3052,9 +3111,12 @@
    "sport": [
     "RS"
    ],
-   "special": [],
+   "special": [
+    "Business"
+   ],
    "sources": [
-    "https://pl.wikipedia.org/wiki/Škoda_Kodiaq"
+    "https://pl.wikipedia.org/wiki/Škoda_Kodiaq",
+    "https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Kodiaq"
    ],
    "status": "проверено",
    "note": ""
@@ -3158,7 +3220,8 @@
    "special": [
     "Scout",
     "Mint",
-    "Edition 100"
+    "Edition 100",
+    "Executive"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Škoda_Octavia",
@@ -3232,7 +3295,8 @@
    "special": [
     "Business",
     "Outdoor",
-    "GreenLine"
+    "GreenLine",
+    "Exclusive"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Škoda_Superb",
@@ -3258,7 +3322,8 @@
    ],
    "sport": [],
    "special": [
-    "Comfort, Edition-S, Executive (DE)"
+    "Comfort, Edition-S, Executive (DE)",
+    "Advance, Business (Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Toyota_Auris",
@@ -3285,9 +3350,12 @@
    "sport": [
     "TS"
    ],
-   "special": [],
+   "special": [
+    "Active, Advance (Бенилюкс)"
+   ],
    "sources": [
-    "https://pl.wikipedia.org/wiki/Toyota_Auris"
+    "https://pl.wikipedia.org/wiki/Toyota_Auris",
+    "https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Auris"
    ],
    "status": "проверено",
    "note": ""
@@ -3310,7 +3378,8 @@
    ],
    "sport": [],
    "special": [
-    "Sprint (2016)"
+    "Sprint (2016)",
+    "Advance, Executive, Business (Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Toyota_Avensis"
@@ -3508,7 +3577,8 @@
    "special": [
     "Premium Hybrid",
     "Style Hybrid",
-    "Prestige Hybrid"
+    "Prestige Hybrid",
+    "Advance, Executive (Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Toyota_RAV4"
@@ -3524,14 +3594,19 @@
    "phase": "весь выпуск",
    "years": "2005–2012",
    "trims": [
+    "Luna",
     "Sol",
-    "Premium",
     "Prestige"
    ],
    "sport": [],
-   "special": [],
-   "sources": [],
-   "status": "проверить",
+   "special": [
+    "Prestige + Navi",
+    "Advance, Executive (Бенилюкс)"
+   ],
+   "sources": [
+    "https://autokatalog.pl/toyota/rav4/iii"
+   ],
+   "status": "проверено",
    "note": ""
   },
   {
@@ -3583,7 +3658,8 @@
     "GRMN"
    ],
    "special": [
-    "Cool, Club, Executive (DE)"
+    "Cool, Club, Executive (DE)",
+    "Advance (Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Toyota_Yaris",
@@ -3608,8 +3684,10 @@
     "TS"
    ],
    "special": [],
-   "sources": [],
-   "status": "проверить",
+   "sources": [
+    "https://www.autocentrum.pl/publikacje/testy-aut-uzywanych/japonska-ikona-toyota-yaris-2005-2011/"
+   ],
+   "status": "проверено",
    "note": ""
   },
   {
@@ -3952,7 +4030,8 @@
     "Join",
     "IQ.DRIVE",
     "Sound",
-    "Lounge"
+    "Lounge",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Golf",
@@ -3982,7 +4061,8 @@
     "Team",
     "Match",
     "Style",
-    "Move"
+    "Move",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Golf",
@@ -4054,7 +4134,8 @@
     "GTE"
    ],
    "special": [
-    "Alltrack (кузов)"
+    "Alltrack (кузов)",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Passat",
@@ -4081,7 +4162,8 @@
    "special": [
     "Business Edition",
     "Edition 40",
-    "Alltrack (кузов)"
+    "Alltrack (кузов)",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Passat",
@@ -4107,7 +4189,8 @@
     "R36"
    ],
    "special": [
-    "R-Line"
+    "R-Line",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Passat"
@@ -4187,7 +4270,8 @@
     "Lounge",
     "Team",
     "Cross Polo",
-    "BlueGT"
+    "BlueGT",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Polo",
@@ -4433,7 +4517,8 @@
    "special": [
     "Cityline",
     "Perfectline",
-    "R-Line"
+    "R-Line",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Tiguan",
@@ -4459,7 +4544,8 @@
     "R-Line",
     "Join",
     "United",
-    "Move"
+    "Move",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Touran",
@@ -4486,7 +4572,8 @@
     "Cross",
     "United",
     "Freestyle",
-    "R-Line"
+    "R-Line",
+    "Advance, Sport (ES/Бенилюкс)"
    ],
    "sources": [
     "https://pl.wikipedia.org/wiki/Volkswagen_Touran",

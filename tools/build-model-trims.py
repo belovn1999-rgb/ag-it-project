@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Trim levels (European market) of the pinned popular models, per generation (B61 stage 5).
 
-Writes data/model-trims.json (for the page-1 "Wersja" field later) and
-docs/MODEL-TRIMS.md. Collected 2026-10-04 from European sources: Polish and
+Writes data/model-trims.json (for the page-1 "Wersja" field later),
+data/model-trims.csv (Excel: UTF-8 with BOM, ";") and docs/MODEL-TRIMS.md. Collected 2026-10-04 from European sources: Polish and
 German Wikipedia (sections "Wersje wyposażeniowe", "Linie stylistyczne",
 "Ausstattungslinien"), manufacturer / press pages and Polish catalogues found
 by web search; every row names its sources. "check" marks rows (or parts)
@@ -15,6 +15,7 @@ special (editions and packages that show up in listings), sources, status.
 
     python3 tools/build-model-trims.py
 """
+import csv
 import datetime
 import json
 import os
@@ -30,6 +31,13 @@ def dew(title):
     return "https://de.wikipedia.org/wiki/" + title.replace(" ", "_")
 
 
+# ultimatespecs model page: some markets' trim names show up in its version names.
+US = "https://www.ultimatespecs.com/car-specs/Audi-models/Audi-"
+
+
+def us(path):
+    return "https://www.ultimatespecs.com/car-specs/" + path
+
 OK, CHECK, PART = "проверено", "проверить", "частично проверено"
 PRE, FL, ALL = "дорестайлинг", "рестайлинг", "весь выпуск"
 
@@ -38,8 +46,8 @@ TRIMS = {
     ("Audi", "A3", "A3"): [
         ("8Y", ALL, "2020–н. в.", ["Basis", "advanced", "S line"], ["S3", "RS 3"], ["edition one"],
          [dew("Audi A3 8Y")], OK, "после рестайлинга 2024 линейки те же"),
-        ("8V", FL, "2016–2020", ["Basis", "sport", "design"], ["S3", "RS 3"], ["S line (пакет)"],
-         [dew("Audi A3 8V")], PART, "с рестайлинга 2016 Attraction/Ambition/Ambiente заменены на sport/design"),
+        ("8V", FL, "2016–2020", ["Basis", "sport", "design"], ["S3", "RS 3"], ["S line (пакет)", "Advance, Pro Line, Pro Line S (Бенилюкс)"],
+         [dew("Audi A3 8V"), US + "A3"], OK, "с рестайлинга 2016 Attraction/Ambition/Ambiente заменены на sport/design"),
         ("8V", PRE, "2012–2016", ["Attraction", "Ambition", "Ambiente"], ["S3", "RS 3"], ["S line (пакет)"],
          [plw("Audi A3"), dew("Audi A3 8V")], OK, ""),
         ("8P", ALL, "2003–2013", ["Attraction", "Ambition", "Ambiente"], ["S3", "RS 3"], ["S line (только с Ambition)"],
@@ -56,8 +64,8 @@ TRIMS = {
     ("Audi", "A5", "A5"): [
         ("B10", PRE, "2024–н. в.", ["Basis", "advanced", "S line"], ["S5"], ["edition one"],
          [dew("Audi A5 B10")], OK, "новая A5 заменила A4 (седан = A5 Limousine, универсал = A5 Avant)"),
-        ("F5", FL, "2020–2024", ["Basis", "advanced", "S line"], ["S5", "RS 5"], [],
-         [], CHECK, "по аналогии с A4 B9 после рестайлинга"),
+        ("F5", FL, "2020–2024", ["Basis", "advanced", "S line"], ["S5", "RS 5"], ["design selection"],
+         ["https://de.motor1.com/news/369291/audi-a5-facelift-2020/"], OK, ""),
         ("F5", PRE, "2016–2020", ["Basis", "sport", "design"], ["S5", "RS 5"], ["S line (пакет)", "Audi design selection"],
          ["https://www.autobild.de/artikel/audi-a5-sportback-f5-gebrauchtwagen-test-23582547.html"], OK, ""),
         ("8T", ALL, "2007–2016", ["Basis"], ["S5", "RS 5"], ["S line (пакет)"],
@@ -65,7 +73,7 @@ TRIMS = {
     ],
     ("Audi", "A6", "A6"): [
         ("C9", PRE, "2025–н. в.", ["Basis", "advanced", "S line"], ["S6"], ["edition one"],
-         [], CHECK, "по аналогии с A5 B10 / Q5 GU"),
+         ["https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/audi-a6-c9-test/"], OK, ""),
         ("C8", FL, "2023–2025", ["Basis", "advanced", "S line"], ["S6", "RS 6"], ["Business Edition (PL)", "allroad quattro"],
          ["https://de.motor1.com/news/669693/audi-a6-a7-modelljahr-2024/", "https://www.audi.pl/pl/business-edition/"], OK, ""),
         ("C8", PRE, "2018–2023", ["Basis", "sport", "design"], ["S6", "RS 6"], ["S line (пакет)", "design selection", "allroad quattro"],
@@ -76,12 +84,12 @@ TRIMS = {
          [dew("Audi A6 C6")], PART, "линеек нет, только пакеты"),
     ],
     ("Audi", "Q3", "Q3"): [
-        ("FJ", PRE, "2025–н. в.", ["Basis", "advanced", "S line"], [], [],
-         [], CHECK, "по аналогии с Q5 GU"),
+        ("FJ", PRE, "2025–н. в.", ["Basis", "advanced", "S line"], [], ["Sportback (кузов)"],
+         ["https://de.motor1.com/news/762262/audi-q3-suv-2025-neuvorstellung/"], OK, ""),
         ("F3", ALL, "2018–2025", ["Q3", "advanced", "S line"], ["RS Q3"], ["Business Edition (PL)", "Sportback (кузов)"],
          [dew("Audi Q3 F3"), "https://www.audi.pl/pl/business-edition/"], OK, ""),
-        ("8U", ALL, "2011–2018", ["Basis"], ["RS Q3"], ["S line (пакет)"],
-         [dew("Audi Q3 8U")], PART, "линеек нет, только пакеты"),
+        ("8U", ALL, "2011–2018", ["Attraction", "Ambition", "Ambiente", "design (с 2015)", "sport (с 2015)"], ["RS Q3"], ["S line (пакет)", "Advance (Бенилюкс)"],
+         [US + "Q3"], PART, "по названиям версий ultimatespecs; design/sport — после рестайлинга 2015"),
     ],
     ("Audi", "Q5", "Q5"): [
         ("GU", PRE, "2024–н. в.", ["Basis", "Advanced", "S line"], ["SQ5"], ["edition one"],
@@ -90,17 +98,19 @@ TRIMS = {
          ["https://www.audi.pl/pl/business-edition/"], OK, ""),
         ("FY", PRE, "2017–2020", ["Basis", "sport", "design"], ["SQ5"], ["S line (пакет)"],
          ["https://de.driven-autowelt.com/audi/q5/2017-2018-preis-sport-design/"], OK, ""),
-        ("8R", ALL, "2008–2017", ["Basis"], ["SQ5"], ["S line (пакет)"],
-         [dew("Audi Q5 8R")], PART, "линеек нет, только пакеты"),
+        ("8R", ALL, "2008–2017", ["Attraction", "Ambition", "Ambiente"], ["SQ5"], ["S line (пакет)", "Advance (Бенилюкс)"],
+         [US + "Q5"], PART, "по названиям версий ultimatespecs"),
     ],
     ("Audi", "Q7", "Q7"): [
         ("Q7 III", PRE, "2026–н. в.", [], ["SQ7"], [], [], CHECK, "нет данных"),
-        ("4M", ALL, "2015–2025", ["Basis", "S line"], ["SQ7"], ["Business Edition (PL, S line)"],
-         ["https://audi-mediacenter.pl/komunikat,47749,kultowe-audi-q5-i-audi-q7-w-ofercie-specjalnej-audi-business-edition.html"], PART, ""),
-        ("4L", ALL, "2005–2015", ["Basis"], ["V12 TDI"], ["S line (пакет)"], [dew("Audi Q7 4L")], PART, "линеек нет, только пакеты"),
+        ("4M", ALL, "2015–2025", ["Basis", "design", "sport", "S line"], ["SQ7"], ["Business Edition (PL, S line)"],
+         ["https://audi-mediacenter.pl/komunikat,47749,kultowe-audi-q5-i-audi-q7-w-ofercie-specjalnej-audi-business-edition.html", US + "Q7"], PART, "design/sport — до рестайлинга 2019 (названия версий ultimatespecs)"),
+        ("4L", ALL, "2005–2015", ["Ambiente", "Ambition"], ["V12 TDI"], ["S line (пакет)", "Advance (Бенилюкс)"],
+         [US + "Q7"], PART, "по названиям версий ultimatespecs"),
     ],
     ("BMW", "1", "Seria 1"): [
-        ("F70", PRE, "2024–н. в.", ["Basis", "M Sport", "M Sport Pro"], ["M135 xDrive"], [], [], CHECK, ""),
+        ("F70", PRE, "2024–н. в.", ["Basis", "M Sport", "M Sport Pro"], ["M135 xDrive"], ["M Sport Design (пакет)"],
+         ["https://www.bimmertoday.de/2024/06/05/bmw-1er-2024-alle-bilder-und-infos-zum-neuen-1er-m135-f70/"], OK, ""),
         ("F40", ALL, "2019–2024", ["Advantage", "Sport Line", "Luxury Line", "M Sport"], ["128ti", "M135i xDrive"], [],
          [dew("BMW F40")], OK, ""),
         ("F20/F21", ALL, "2011–2019", ["Basis", "Sport Line", "Urban Line", "M Sport", "Advantage (с 2015)"], ["M135i", "M140i"], ["Edition Sport", "Edition M Sport Shadow"],
@@ -147,7 +157,9 @@ TRIMS = {
          ["https://www.bmw.pl/pl/all-models/x-series/x3/bmw-x3.html"], OK, ""),
         ("G01", ALL, "2017–2024", ["Advantage", "xLine", "Luxury Line", "M Sport"], ["M40i", "M40d", "X3 M"], [],
          ["https://www.angurten.de/is/ausstattung/1732-971-X3+2017-xLine"], OK, ""),
-        ("F25", ALL, "2010–2017", ["Basis", "xLine", "M Sport"], ["35d"], ["Design Pure (пакеты)"], [], CHECK, ""),
+        ("F25", ALL, "2010–2017", ["Basis", "Advantage", "xLine", "M Sport"], ["xDrive35d"], [],
+         ["https://www.press.bmwgroup.com/deutschland/photo/detail/P90142837/der-neue-bmw-x3-mit-xline-ausstattungspaket-02-2014",
+          "https://www.bimmertoday.de/2014/02/07/2014-bmw-x3-m-sportpaket-f25-lci-facelift-m-paket/"], OK, "xLine и M Sport — с рестайлинга 2014"),
         ("E83", ALL, "2003–2010", ["Basis"], ["3.0sd"], ["M Sportpaket"], [], CHECK, ""),
     ],
     ("BMW", "X5", "X5"): [
@@ -155,7 +167,8 @@ TRIMS = {
          ["https://www.7-forum.com/news/Der-neue-BMW-X5-Innenraum-Ausstattung-8484.html"], PART, "M Sport Pro — по знанию"),
         ("F15", ALL, "2013–2018", ["Basis", "Design Pure Experience", "Design Pure Excellence", "M Sport"], ["M50d", "X5 M"], [],
          ["https://www.bimmertoday.de/2013/05/31/2013-bmw-x5-f15-schluessel-m-sportpaket-design-pure-excellence-experience/"], OK, ""),
-        ("E70", ALL, "2006–2013", ["Basis"], ["M50d", "X5 M"], ["M Sportpaket"], [], CHECK, ""),
+        ("E70", ALL, "2006–2013", ["Basis"], ["M50d", "X5 M"], ["M Sportpaket"],
+         ["https://www.7-forum.com/news/2010/X5_LCI/steckbrief.php"], PART, "линеек нет: базовая + пакеты"),
     ],
     ("Ford", "C-Max", "C-Max"): [
         ("Mk2", ALL, "2010–2019", ["Ambiente", "Trend", "Titanium"], [], ["Edition", "Business Edition", "Grand C-Max (кузов)"],
@@ -221,7 +234,8 @@ TRIMS = {
     ("Mercedes-Benz", "S", "Klasa S"): [
         ("W223", ALL, "2020–н. в.", ["Basis", "AMG Line", "AMG Line Premium", "AMG Line Premium Plus", "Executive"], ["S 63 E Performance", "Maybach"], [],
          [plw("Mercedes-Benz klasy S")], PART, "названия из польской гаммы"),
-        ("W222", ALL, "2013–2020", ["Basis", "AMG Line"], ["S 63 AMG", "S 65 AMG", "Maybach"], ["Exclusive-Paket"], [], CHECK, ""),
+        ("W222", ALL, "2013–2020", ["Basis", "AMG Line", "AMG Line Plus (с 2017)"], ["S 63 AMG", "S 65 AMG", "Maybach"], ["Exclusiv-Paket"],
+         ["https://mbpassion.de/2017/05/blick-auf-das-amg-line-plus-paket-der-s-klasse/"], OK, ""),
         ("W221", ALL, "2005–2013", ["Basis"], ["S 63 AMG", "S 65 AMG"], ["AMG Sportpaket"], [], CHECK, "линеек нет"),
     ],
     ("Mercedes-Benz", "CLA", "CLA"): [
@@ -242,24 +256,28 @@ TRIMS = {
     ("Mercedes-Benz", "GLE", "GLE"): [
         ("V167", ALL, "2018–н. в.", ["Basis", "AMG Line"], ["GLE 53 AMG", "GLE 63 AMG"], ["Coupé (кузов)", "Night-Paket"],
          ["https://mbpassion.de/2018/12/blick-auf-die-amg-line-des-neuen-gle-im-detail-v167/"], OK, ""),
-        ("W166", ALL, "2015–2019", ["Basis", "AMG Line"], ["GLE 43 AMG", "GLE 63 AMG"], ["Coupé (кузов C292)"], [], CHECK, "до 2015 — M-Klasse (ML)"),
+        ("W166", ALL, "2015–2019", ["Basis", "AMG Line", "Exclusive (интерьер)"], ["GLE 43 AMG", "GLE 63 AMG"], ["Coupé (кузов C292)"],
+         ["https://www.mercedes-fans.de/load/file/38145/5312964/preisliste-gle-150423.pdf"], OK, "до 2015 — M-Klasse (ML)"),
     ],
     ("Peugeot", "208", "208"): [
         ("208 II", ALL, "2019–н. в.", ["Like", "Active", "Allure", "GT Line", "GT"], [], ["Active Pack", "Allure Pack", "GT Pack"],
          [plw("Peugeot 208"), dew("Peugeot 208 II")], OK, "после рестайлинга 2023 — Active, Allure, GT"),
-        ("208 I", ALL, "2012–2019", ["Access", "Like", "Active", "Allure", "GT Line"], ["GTi"], ["XY", "Feline", "Roland Garros"],
-         [plw("Peugeot 208"), dew("Peugeot 208 I")], OK, ""),
+        ("208 I", ALL, "2012–2019", ["Access", "Like", "Active", "Style", "Allure", "GT Line"], ["GTi"], ["XY", "Feline", "Roland Garros"],
+         [plw("Peugeot 208"), dew("Peugeot 208 I"), us("Peugeot-models/Peugeot-208")], OK, ""),
     ],
     ("Peugeot", "308", "308"): [
         ("308 III", ALL, "2021–н. в.", ["Active", "Allure", "GT", "Style (с 2025)", "GT Exclusive (с 2025)"], [], ["Active Pack", "Allure Pack", "GT Pack", "Business"],
          ["https://www.media.stellantis.com/pl-pl/peugeot/press/nowy-peugeot-308-i-peugeot-308-sw-stworzony-z-mysla-o-przyjemnosci-1"], OK, ""),
-        ("308 II", ALL, "2013–2021", ["Access", "Active", "Allure", "GT Line"], ["GT", "GTi"], [], [dew("Peugeot 308 II")], OK, ""),
-        ("308 I", ALL, "2007–2013", ["Access", "Active", "Allure"], [], ["Filou, Tendance, Premium (до 2011, DE)"], [dew("Peugeot 308 I")], OK, ""),
+        ("308 II", ALL, "2013–2021", ["Access", "Active", "Style", "Allure", "GT Line"], ["GT", "GTi"], [],
+         [dew("Peugeot 308 II"), us("Peugeot-models/Peugeot-308")], OK, ""),
+        ("308 I", ALL, "2007–2013", ["Access", "Active", "Allure"], [], ["Confort, Premium, Sport (PL, до 2011)", "Filou, Tendance, Premium (DE, до 2011)"],
+         [dew("Peugeot 308 I"), us("Peugeot-models/Peugeot-308")], OK, "Access/Active/Allure — с рестайлинга 2011"),
     ],
     ("Peugeot", "508", "508"): [
         ("508 II", ALL, "2018–2025", ["Active", "Allure", "GT Line", "GT"], ["PSE (Peugeot Sport Engineered)"], [],
          ["https://autoblog.spidersweb.pl/peugeot-508-ceny-polska"], OK, ""),
-        ("508 I", ALL, "2010–2018", ["Access", "Active", "Allure", "GT"], [], ["RXH (кузов)"], [dew("Peugeot 508 I")], OK, ""),
+        ("508 I", ALL, "2010–2018", ["Access", "Active", "Style", "Allure", "GT Line", "GT"], [], ["Business", "RXH (кузов)"],
+         [dew("Peugeot 508 I"), us("Peugeot-models/Peugeot-508")], OK, ""),
     ],
     ("Peugeot", "2008", "2008"): [
         ("2008 II", ALL, "2019–н. в.", ["Active", "Allure", "GT Line", "GT"], [], ["Active Pack", "Allure Pack"], [plw("Peugeot 2008")], OK, "после рестайлинга 2023 — Active, Allure, GT"),
@@ -270,14 +288,16 @@ TRIMS = {
          ["https://autogaleria.pl/peugeot-3008-2024-cennik-wersje-wyposazenie"], OK, ""),
         ("3008 II", ALL, "2016–2024", ["Access", "Active", "Allure", "GT Line", "GT"], [], ["Active Pack", "Allure Pack", "GT Pack", "Road Trip"],
          ["https://autokult.pl/peugeot-3008-i-5008-po-liftingu-polskie-ceny-modeli,6809443123103873a"], OK, ""),
-        ("3008 I", ALL, "2009–2016", ["Access", "Active", "Allure", "Business Line"], [], [], [dew("Peugeot 3008")], OK, ""),
+        ("3008 I", ALL, "2009–2016", ["Access", "Active", "Allure", "Business Line", "Premium", "Sport", "Style"], [], [],
+         [dew("Peugeot 3008"), us("Peugeot-models/Peugeot-3008")], OK, "Premium/Sport/Style — польская гамма до рестайлинга 2013"),
     ],
     ("Peugeot", "5008", "5008"): [
         ("5008 III", PRE, "2024–н. в.", ["Allure", "GT", "Allure Plus (с 2026)", "GT Plus (с 2026)"], [], ["Business"],
          ["https://francuskie.pl/peugeot-5008-drozszy-4-950-zl-cennik-znika-wersja/"], OK, ""),
         ("5008 II", ALL, "2017–2024", ["Active", "Allure", "GT Line", "GT"], [], ["Road Trip", "Allure Pack"],
          ["https://autokult.pl/peugeot-3008-i-5008-po-liftingu-polskie-ceny-modeli,6809443123103873a"], OK, ""),
-        ("5008 I", ALL, "2009–2017", ["Access", "Active", "Allure", "Trendy (PL)", "Premium (PL)"], [], ["Family (PL)"], [plw("Peugeot 5008")], OK, ""),
+        ("5008 I", ALL, "2009–2017", ["Access", "Active", "Allure", "Trendy (PL)", "Premium (PL)", "Sport", "Style"], [], ["Family (PL)", "Business"],
+         [plw("Peugeot 5008"), us("Peugeot-models/Peugeot-5008")], OK, ""),
     ],
     ("Renault", "Captur", "Captur"): [
         ("Captur II", FL, "2024–н. в.", ["evolution", "techno", "esprit Alpine"], [], ["E-Tech (гибрид)"],
@@ -331,12 +351,13 @@ TRIMS = {
          ["https://www.otomoto.pl/news/skoda-kamiq-uzywana-opinie-test", dew("Škoda Kamiq")], OK, ""),
     ],
     ("Skoda", "Karoq", "Karoq"): [
-        ("Karoq I", ALL, "2017–н. в.", ["Active", "Ambition", "Style", "Sportline", "Scout"], [], [],
+        ("Karoq I", ALL, "2017–н. в.", ["Active", "Ambition", "Style", "Sportline", "Scout"], [], ["Business"],
          ["https://vwzone.pl/skoda-karoq-wersje-wyposazenia-dane-techniczne-silniki/", dew("Škoda Karoq")], OK, "после рестайлинга 2022 — Ambition, Style, Sportline (+ Selection с 2024)"),
     ],
     ("Skoda", "Kodiaq", "Kodiaq"): [
         ("Kodiaq II", PRE, "2024–н. в.", ["Essence", "Selection", "Sportline", "Laurin & Klement"], ["RS"], [], [plw("Škoda Kodiaq")], OK, ""),
-        ("Kodiaq I", ALL, "2016–2024", ["Active", "Ambition", "Style", "Sportline", "Scout", "Laurin & Klement"], ["RS"], [], [plw("Škoda Kodiaq")], OK, ""),
+        ("Kodiaq I", ALL, "2016–2024", ["Active", "Ambition", "Style", "Sportline", "Scout", "Laurin & Klement"], ["RS"], ["Business"],
+         [plw("Škoda Kodiaq"), us("Skoda-models/Skoda-Kodiaq")], OK, ""),
     ],
     ("Skoda", "Octavia", "Octavia"): [
         ("Octavia IV", FL, "2024–н. в.", ["Essence", "Selection", "Sportline"], ["RS"], [],
@@ -344,23 +365,24 @@ TRIMS = {
         ("Octavia IV", PRE, "2020–2024", ["Active", "Ambition", "Style", "Sportline", "Scout", "Laurin & Klement"], ["RS"], [], [plw("Škoda Octavia"), dew("Škoda Octavia IV")], OK, ""),
         ("Octavia III", ALL, "2013–2020", ["Active", "Ambition", "Elegance", "Style", "Laurin & Klement", "Scout"], ["RS"], ["Edition", "Joy", "GreenLine"],
          [plw("Škoda Octavia"), dew("Škoda Octavia III")], OK, ""),
-        ("Octavia II", ALL, "2004–2013", ["Classic", "Ambiente", "Elegance", "Laurin & Klement", "Active (с 2011)", "Ambition (с 2011)"], ["RS"], ["Scout", "Mint", "Edition 100"],
+        ("Octavia II", ALL, "2004–2013", ["Classic", "Ambiente", "Elegance", "Laurin & Klement", "Active (с 2011)", "Ambition (с 2011)"], ["RS"], ["Scout", "Mint", "Edition 100", "Executive"],
          [plw("Škoda Octavia"), dew("Škoda Octavia II")], OK, ""),
     ],
     ("Skoda", "Superb", "Superb"): [
         ("Superb IV", PRE, "2024–н. в.", ["Essence", "Selection", "Laurin & Klement", "Sportline"], [], [], [plw("Škoda Superb")], OK, ""),
         ("Superb III", ALL, "2015–2023", ["Active", "Ambition", "Style", "Sportline", "Laurin & Klement", "Scout (с 2019)"], [], ["iV (плагин-гибрид)"],
          [plw("Škoda Superb"), dew("Škoda Superb III")], OK, ""),
-        ("Superb II", ALL, "2008–2015", ["Active", "Comfort", "Ambition", "Elegance", "Laurin & Klement"], [], ["Business", "Outdoor", "GreenLine"],
+        ("Superb II", ALL, "2008–2015", ["Active", "Comfort", "Ambition", "Elegance", "Laurin & Klement"], [], ["Business", "Outdoor", "GreenLine", "Exclusive"],
          [plw("Škoda Superb"), dew("Škoda Superb II")], OK, ""),
     ],
     ("Toyota", "Auris", "Auris"): [
-        ("E18", ALL, "2012–2018", ["Life", "Active", "Premium", "Dynamic", "Prestige", "Selection (с 2017)"], [], ["Comfort, Edition-S, Executive (DE)"],
+        ("E18", ALL, "2012–2018", ["Life", "Active", "Premium", "Dynamic", "Prestige", "Selection (с 2017)"], [], ["Comfort, Edition-S, Executive (DE)", "Advance, Business (Бенилюкс)"],
          [plw("Toyota Auris"), dew("Toyota Auris")], OK, ""),
-        ("E15", ALL, "2006–2012", ["Terra", "Luna", "Sol", "Premium", "Dynamic", "Prestige"], ["TS"], [], [plw("Toyota Auris")], OK, ""),
+        ("E15", ALL, "2006–2012", ["Terra", "Luna", "Sol", "Premium", "Dynamic", "Prestige"], ["TS"], ["Active, Advance (Бенилюкс)"],
+         [plw("Toyota Auris"), us("Toyota-models/Toyota-Auris")], OK, ""),
     ],
     ("Toyota", "Avensis", "Avensis"): [
-        ("T27", ALL, "2009–2018", ["Luna", "Sol", "Sol Plus", "Premium", "Prestige", "Active", "Selection (с 2017)"], [], ["Sprint (2016)"],
+        ("T27", ALL, "2009–2018", ["Luna", "Sol", "Sol Plus", "Premium", "Prestige", "Active", "Selection (с 2017)"], [], ["Sprint (2016)", "Advance, Executive, Business (Бенилюкс)"],
          [plw("Toyota Avensis")], OK, ""),
     ],
     ("Toyota", "C-HR", "C-HR"): [
@@ -383,16 +405,18 @@ TRIMS = {
     ("Toyota", "RAV 4", "RAV 4"): [
         ("XA50", ALL, "2018–2025", ["Active", "Comfort", "Style", "Executive", "Selection", "Adventure", "GR Sport"], [], [],
          ["https://www.autocentrum.pl/newsy/informacje-prasowe/toyota-rav4-wymiary-i-wersje-wyposazenia/"], OK, ""),
-        ("XA40", ALL, "2012–2018", ["Active", "Premium", "Style", "Prestige", "Selection (с 2017)"], [], ["Premium Hybrid", "Style Hybrid", "Prestige Hybrid"],
+        ("XA40", ALL, "2012–2018", ["Active", "Premium", "Style", "Prestige", "Selection (с 2017)"], [], ["Premium Hybrid", "Style Hybrid", "Prestige Hybrid", "Advance, Executive (Бенилюкс)"],
          [plw("Toyota RAV4")], OK, ""),
-        ("XA30", ALL, "2005–2012", ["Sol", "Premium", "Prestige"], [], [], [], CHECK, ""),
+        ("XA30", ALL, "2005–2012", ["Luna", "Sol", "Prestige"], [], ["Prestige + Navi", "Advance, Executive (Бенилюкс)"],
+         ["https://autokatalog.pl/toyota/rav4/iii"], OK, ""),
     ],
     ("Toyota", "Yaris", "Yaris"): [
         ("XP21", ALL, "2020–н. в.", ["Active", "Comfort", "Style", "Executive", "GR Sport"], ["GR Yaris"], ["Elegant (DE)"],
          [dew("Toyota Yaris (XP21)")], PART, "польская гамма — по знанию"),
-        ("XP13", ALL, "2011–2020", ["Terra", "Luna", "Sol", "Premium", "Prestige", "Life (с 2014)", "Active (с 2014)", "Dynamic", "Style", "Selection"], ["GRMN"], ["Cool, Club, Executive (DE)"],
+        ("XP13", ALL, "2011–2020", ["Terra", "Luna", "Sol", "Premium", "Prestige", "Life (с 2014)", "Active (с 2014)", "Dynamic", "Style", "Selection"], ["GRMN"], ["Cool, Club, Executive (DE)", "Advance (Бенилюкс)"],
          [plw("Toyota Yaris"), dew("Toyota Yaris (XP13)")], OK, "до 2014: Terra/Luna/Sol/Premium/Prestige; после 2014 и 2017: Life/Active/Premium/Dynamic/Selection"),
-        ("XP9", ALL, "2005–2011", ["Terra", "Luna", "Sol"], ["TS"], [], [], CHECK, ""),
+        ("XP9", ALL, "2005–2011", ["Terra", "Luna", "Sol"], ["TS"], [],
+         ["https://www.autocentrum.pl/publikacje/testy-aut-uzywanych/japonska-ikona-toyota-yaris-2005-2011/"], OK, ""),
     ],
     ("Volvo", "S60", "S60"): [
         ("S60 III", ALL, "2018–2024", ["Momentum", "Inscription", "R-Design", "Plus Bright", "Plus Dark", "Ultimate Bright", "Ultimate Dark"], ["Polestar Engineered"], [],
@@ -426,22 +450,22 @@ TRIMS = {
     ],
     ("Volkswagen", "Golf", "Golf"): [
         ("Golf VIII", ALL, "2019–н. в.", ["Golf", "Life", "Style", "R-Line"], ["GTI", "GTD", "GTE", "R"], [], [plw("Volkswagen Golf")], OK, ""),
-        ("Golf VII", ALL, "2012–2020", ["Trendline", "Comfortline", "Highline", "R-Line"], ["GTI", "GTD", "GTE", "R"], ["Cup", "United", "Join", "IQ.DRIVE", "Sound", "Lounge"],
+        ("Golf VII", ALL, "2012–2020", ["Trendline", "Comfortline", "Highline", "R-Line"], ["GTI", "GTD", "GTE", "R"], ["Cup", "United", "Join", "IQ.DRIVE", "Sound", "Lounge", "Advance, Sport (ES/Бенилюкс)"],
          [plw("Volkswagen Golf"), dew("VW Golf VII")], OK, ""),
-        ("Golf VI", ALL, "2008–2013", ["Trendline", "Comfortline", "Highline"], ["GTI", "GTD", "R"], ["Team", "Match", "Style", "Move"], [plw("Volkswagen Golf"), dew("VW Golf VI")], OK, ""),
+        ("Golf VI", ALL, "2008–2013", ["Trendline", "Comfortline", "Highline"], ["GTI", "GTD", "R"], ["Team", "Match", "Style", "Move", "Advance, Sport (ES/Бенилюкс)"], [plw("Volkswagen Golf"), dew("VW Golf VI")], OK, ""),
     ],
     ("Volkswagen", "Passat", "Passat"): [
         ("B9", PRE, "2023–н. в.", ["Passat", "Business", "Elegance", "R-Line"], [], [], [plw("Volkswagen Passat")], OK, ""),
         ("B8", FL, "2019–2023", ["Passat", "Business", "Elegance", "R-Line"], ["GTE"], ["Alltrack (кузов)"], [dew("VW Passat B8")], PART, "линейки переименованы при рестайлинге"),
-        ("B8", PRE, "2014–2019", ["Trendline", "Comfortline", "Highline", "R-Line"], ["GTE"], ["Alltrack (кузов)"], [plw("Volkswagen Passat"), dew("VW Passat B8")], OK, ""),
-        ("B7", ALL, "2010–2014", ["Trendline", "Comfortline", "Highline", "R-Line", "Exclusive"], [], ["Business Edition", "Edition 40", "Alltrack (кузов)"],
+        ("B8", PRE, "2014–2019", ["Trendline", "Comfortline", "Highline", "R-Line"], ["GTE"], ["Alltrack (кузов)", "Advance, Sport (ES/Бенилюкс)"], [plw("Volkswagen Passat"), dew("VW Passat B8")], OK, ""),
+        ("B7", ALL, "2010–2014", ["Trendline", "Comfortline", "Highline", "R-Line", "Exclusive"], [], ["Business Edition", "Edition 40", "Alltrack (кузов)", "Advance, Sport (ES/Бенилюкс)"],
          [plw("Volkswagen Passat"), dew("VW Passat B7")], OK, ""),
-        ("B6", ALL, "2005–2010", ["Trendline", "Comfortline", "Highline", "Sportline"], ["R36"], ["R-Line"], [plw("Volkswagen Passat")], OK, ""),
+        ("B6", ALL, "2005–2010", ["Trendline", "Comfortline", "Highline", "Sportline"], ["R36"], ["R-Line", "Advance, Sport (ES/Бенилюкс)"], [plw("Volkswagen Passat")], OK, ""),
     ],
     ("Volkswagen", "Polo", "Polo"): [
         ("Polo VI", FL, "2021–н. в.", ["Polo", "Life", "Style", "R-Line"], ["GTI"], [], [dew("VW Polo VI")], OK, ""),
         ("Polo VI", PRE, "2017–2021", ["Trendline", "Comfortline", "Highline"], ["GTI"], ["Beats", "United", "R-Line (пакет)"], [plw("Volkswagen Polo")], OK, ""),
-        ("Polo V", ALL, "2009–2017", ["Trendline", "Comfortline", "Highline"], ["GTI", "R WRC"], ["Life", "Fresh", "Match", "Lounge", "Team", "Cross Polo", "BlueGT"],
+        ("Polo V", ALL, "2009–2017", ["Trendline", "Comfortline", "Highline"], ["GTI", "R WRC"], ["Life", "Fresh", "Match", "Lounge", "Team", "Cross Polo", "BlueGT", "Advance, Sport (ES/Бенилюкс)"],
          [plw("Volkswagen Polo"), dew("VW Polo V")], OK, ""),
     ],
     ("Volkswagen", "T-Roc", "T-Roc"): [
@@ -460,12 +484,12 @@ TRIMS = {
         ("Tiguan III", PRE, "2024–н. в.", ["Tiguan", "Life", "Elegance", "R-Line"], [], [], [plw("Volkswagen Tiguan"), dew("VW Tiguan III")], OK, ""),
         ("Tiguan II", FL, "2020–2024", ["Tiguan", "Life", "Elegance", "R-Line"], ["Tiguan R"], ["Allspace (кузов)"], [dew("VW Tiguan II")], OK, ""),
         ("Tiguan II", PRE, "2016–2020", ["Trendline", "Comfortline", "Highline", "R-Line"], [], ["Join", "United", "Allspace (кузов)"], [plw("Volkswagen Tiguan")], OK, ""),
-        ("Tiguan I", ALL, "2007–2016", ["Trend & Fun", "Sport & Style", "Track & Field", "Track & Style", "Trendline (с 2011)", "Comfortline (с 2011)", "Highline (с 2011)"], [], ["Cityline", "Perfectline", "R-Line"],
+        ("Tiguan I", ALL, "2007–2016", ["Trend & Fun", "Sport & Style", "Track & Field", "Track & Style", "Trendline (с 2011)", "Comfortline (с 2011)", "Highline (с 2011)"], [], ["Cityline", "Perfectline", "R-Line", "Advance, Sport (ES/Бенилюкс)"],
          [plw("Volkswagen Tiguan"), dew("VW Tiguan I")], OK, ""),
     ],
     ("Volkswagen", "Touran", "Touran"): [
-        ("Touran II", ALL, "2015–н. в.", ["Trendline", "Comfortline", "Highline"], [], ["R-Line", "Join", "United", "Move"], [plw("Volkswagen Touran"), dew("VW Touran II")], OK, "Trendline снят в DE с 2019"),
-        ("Touran I", ALL, "2006–2015", ["Conceptline", "Trendline", "Comfortline", "Highline"], [], ["Cross", "United", "Freestyle", "R-Line"],
+        ("Touran II", ALL, "2015–н. в.", ["Trendline", "Comfortline", "Highline"], [], ["R-Line", "Join", "United", "Move", "Advance, Sport (ES/Бенилюкс)"], [plw("Volkswagen Touran"), dew("VW Touran II")], OK, "Trendline снят в DE с 2019"),
+        ("Touran I", ALL, "2006–2015", ["Conceptline", "Trendline", "Comfortline", "Highline"], [], ["Cross", "United", "Freestyle", "R-Line", "Advance, Sport (ES/Бенилюкс)"],
          [plw("Volkswagen Touran"), dew("VW Touran I")], OK, ""),
     ],
 }
@@ -483,6 +507,14 @@ def main():
     with open(os.path.join(ROOT, "data", "model-trims.json"), "w", encoding="utf8") as handle:
         json.dump({"generatedAt": today, "market": "EU (PL/DE)", "rows": rows}, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
+
+    with open(os.path.join(ROOT, "data", "model-trims.csv"), "w", encoding="utf-8-sig", newline="") as handle:
+        writer = csv.writer(handle, delimiter=";", lineterminator="\n")
+        writer.writerow(["Марка", "Модель", "Поколение", "Этап", "Годы", "Линейки", "Спорт", "Спецсерии и пакеты",
+                         "Статус", "Примечание", "Источники"])
+        for r in rows:
+            writer.writerow([r["brand"], r["label"], r["code"], r["phase"], r["years"], ", ".join(r["trims"]),
+                             ", ".join(r["sport"]), ", ".join(r["special"]), r["status"], r["note"], " ".join(r["sources"])])
 
     counts = {status: sum(1 for r in rows if r["status"] == status) for status in (OK, PART, CHECK)}
     lines = [

@@ -4,7 +4,7 @@
 > Источники: польская и немецкая Википедия (разделы «Wersje wyposażeniowe», «Linie stylistyczne»,
 > «Ausstattungslinien»), страницы производителей, прессы и польских каталогов. B61, этап 5
 > (`docs/PROJECT-MOBILE.md` §4.8). Названия — как в объявлениях и у дилеров (PL/DE).
-> Строк: 181 — проверено: 137, частично проверено: 28, проверить: 16
+> Строк: 181 — проверено: 147, частично проверено: 28, проверить: 6
 > («проверить» — по знанию, источник не найден; перед подстановкой в фильтр проверить).
 
 Колонки: **линейки** — основные комплектации; **спорт** — спортивные модели и версии,
@@ -18,7 +18,7 @@
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | 8Y | весь выпуск | 2020–н. в. | Basis, advanced, S line<br><small>после рестайлинга 2024 линейки те же</small> | S3, RS 3 | edition one | проверено | [1](https://de.wikipedia.org/wiki/Audi_A3_8Y) |
-| 8V | рестайлинг | 2016–2020 | Basis, sport, design<br><small>с рестайлинга 2016 Attraction/Ambition/Ambiente заменены на sport/design</small> | S3, RS 3 | S line (пакет) | частично проверено | [1](https://de.wikipedia.org/wiki/Audi_A3_8V) |
+| 8V | рестайлинг | 2016–2020 | Basis, sport, design<br><small>с рестайлинга 2016 Attraction/Ambition/Ambiente заменены на sport/design</small> | S3, RS 3 | S line (пакет), Advance, Pro Line, Pro Line S (Бенилюкс) | проверено | [1](https://de.wikipedia.org/wiki/Audi_A3_8V), [2](https://www.ultimatespecs.com/car-specs/Audi-models/Audi-A3) |
 | 8V | дорестайлинг | 2012–2016 | Attraction, Ambition, Ambiente | S3, RS 3 | S line (пакет) | проверено | [1](https://pl.wikipedia.org/wiki/Audi_A3), [2](https://de.wikipedia.org/wiki/Audi_A3_8V) |
 | 8P | весь выпуск | 2003–2013 | Attraction, Ambition, Ambiente | S3, RS 3 | S line (только с Ambition) | проверено | [1](https://de.wikipedia.org/wiki/Audi_A3_8P) |
 
@@ -35,7 +35,7 @@
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | B10 | дорестайлинг | 2024–н. в. | Basis, advanced, S line<br><small>новая A5 заменила A4 (седан = A5 Limousine, универсал = A5 Avant)</small> | S5 | edition one | проверено | [1](https://de.wikipedia.org/wiki/Audi_A5_B10) |
-| F5 | рестайлинг | 2020–2024 | Basis, advanced, S line<br><small>по аналогии с A4 B9 после рестайлинга</small> | S5, RS 5 | — | проверить | — |
+| F5 | рестайлинг | 2020–2024 | Basis, advanced, S line | S5, RS 5 | design selection | проверено | [1](https://de.motor1.com/news/369291/audi-a5-facelift-2020/) |
 | F5 | дорестайлинг | 2016–2020 | Basis, sport, design | S5, RS 5 | S line (пакет), Audi design selection | проверено | [1](https://www.autobild.de/artikel/audi-a5-sportback-f5-gebrauchtwagen-test-23582547.html) |
 | 8T | весь выпуск | 2007–2016 | Basis<br><small>отдельных линеек в DE нет, только пакеты</small> | S5, RS 5 | S line (пакет) | частично проверено | [1](https://de.wikipedia.org/wiki/Audi_A5_8T) |
 
@@ -43,7 +43,7 @@
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
-| C9 | дорестайлинг | 2025–н. в. | Basis, advanced, S line<br><small>по аналогии с A5 B10 / Q5 GU</small> | S6 | edition one | проверить | — |
+| C9 | дорестайлинг | 2025–н. в. | Basis, advanced, S line | S6 | edition one | проверено | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/audi-a6-c9-test/) |
 | C8 | рестайлинг | 2023–2025 | Basis, advanced, S line | S6, RS 6 | Business Edition (PL), allroad quattro | проверено | [1](https://de.motor1.com/news/669693/audi-a6-a7-modelljahr-2024/), [2](https://www.audi.pl/pl/business-edition/) |
 | C8 | дорестайлинг | 2018–2023 | Basis, sport, design | S6, RS 6 | S line (пакет), design selection, allroad quattro | проверено | [1](https://www.autorevue.at/autowelt/audi-a6-limousine-avant-kaufberatung) |
 | C7 | весь выпуск | 2011–2018 | Basis<br><small>линеек нет, только пакеты</small> | S6, RS 6 | S line (пакет), allroad quattro | частично проверено | [1](https://de.wikipedia.org/wiki/Audi_A6_C7) |
@@ -53,9 +53,9 @@
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
-| FJ | дорестайлинг | 2025–н. в. | Basis, advanced, S line<br><small>по аналогии с Q5 GU</small> | — | — | проверить | — |
+| FJ | дорестайлинг | 2025–н. в. | Basis, advanced, S line | — | Sportback (кузов) | проверено | [1](https://de.motor1.com/news/762262/audi-q3-suv-2025-neuvorstellung/) |
 | F3 | весь выпуск | 2018–2025 | Q3, advanced, S line | RS Q3 | Business Edition (PL), Sportback (кузов) | проверено | [1](https://de.wikipedia.org/wiki/Audi_Q3_F3), [2](https://www.audi.pl/pl/business-edition/) |
-| 8U | весь выпуск | 2011–2018 | Basis<br><small>линеек нет, только пакеты</small> | RS Q3 | S line (пакет) | частично проверено | [1](https://de.wikipedia.org/wiki/Audi_Q3_8U) |
+| 8U | весь выпуск | 2011–2018 | Attraction, Ambition, Ambiente, design (с 2015), sport (с 2015)<br><small>по названиям версий ultimatespecs; design/sport — после рестайлинга 2015</small> | RS Q3 | S line (пакет), Advance (Бенилюкс) | частично проверено | [1](https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q3) |
 
 ### Audi Q5
 
@@ -64,15 +64,15 @@
 | GU | дорестайлинг | 2024–н. в. | Basis, Advanced, S line | SQ5 | edition one | проверено | [1](https://de.wikipedia.org/wiki/Audi_Q5_GU) |
 | FY | рестайлинг | 2020–2024 | Basis, advanced, S line | SQ5 | Business Edition (PL), Sportback (кузов) | проверено | [1](https://www.audi.pl/pl/business-edition/) |
 | FY | дорестайлинг | 2017–2020 | Basis, sport, design | SQ5 | S line (пакет) | проверено | [1](https://de.driven-autowelt.com/audi/q5/2017-2018-preis-sport-design/) |
-| 8R | весь выпуск | 2008–2017 | Basis<br><small>линеек нет, только пакеты</small> | SQ5 | S line (пакет) | частично проверено | [1](https://de.wikipedia.org/wiki/Audi_Q5_8R) |
+| 8R | весь выпуск | 2008–2017 | Attraction, Ambition, Ambiente<br><small>по названиям версий ultimatespecs</small> | SQ5 | S line (пакет), Advance (Бенилюкс) | частично проверено | [1](https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q5) |
 
 ### Audi Q7
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | Q7 III | дорестайлинг | 2026–н. в. | нет данных<br><small>нет данных</small> | SQ7 | — | проверить | — |
-| 4M | весь выпуск | 2015–2025 | Basis, S line | SQ7 | Business Edition (PL, S line) | частично проверено | [1](https://audi-mediacenter.pl/komunikat,47749,kultowe-audi-q5-i-audi-q7-w-ofercie-specjalnej-audi-business-edition.html) |
-| 4L | весь выпуск | 2005–2015 | Basis<br><small>линеек нет, только пакеты</small> | V12 TDI | S line (пакет) | частично проверено | [1](https://de.wikipedia.org/wiki/Audi_Q7_4L) |
+| 4M | весь выпуск | 2015–2025 | Basis, design, sport, S line<br><small>design/sport — до рестайлинга 2019 (названия версий ultimatespecs)</small> | SQ7 | Business Edition (PL, S line) | частично проверено | [1](https://audi-mediacenter.pl/komunikat,47749,kultowe-audi-q5-i-audi-q7-w-ofercie-specjalnej-audi-business-edition.html), [2](https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q7) |
+| 4L | весь выпуск | 2005–2015 | Ambiente, Ambition<br><small>по названиям версий ultimatespecs</small> | V12 TDI | S line (пакет), Advance (Бенилюкс) | частично проверено | [1](https://www.ultimatespecs.com/car-specs/Audi-models/Audi-Q7) |
 
 
 ## BMW
@@ -81,7 +81,7 @@
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
-| F70 | дорестайлинг | 2024–н. в. | Basis, M Sport, M Sport Pro | M135 xDrive | — | проверить | — |
+| F70 | дорестайлинг | 2024–н. в. | Basis, M Sport, M Sport Pro | M135 xDrive | M Sport Design (пакет) | проверено | [1](https://www.bimmertoday.de/2024/06/05/bmw-1er-2024-alle-bilder-und-infos-zum-neuen-1er-m135-f70/) |
 | F40 | весь выпуск | 2019–2024 | Advantage, Sport Line, Luxury Line, M Sport | 128ti, M135i xDrive | — | проверено | [1](https://de.wikipedia.org/wiki/BMW_F40) |
 | F20/F21 | весь выпуск | 2011–2019 | Basis, Sport Line, Urban Line, M Sport, Advantage (с 2015)<br><small>M Sport с 2012, Advantage с рестайлинга 2015</small> | M135i, M140i | Edition Sport, Edition M Sport Shadow | частично проверено | [1](https://de.wikipedia.org/wiki/BMW_F20), [2](https://pl.wikipedia.org/wiki/BMW_serii_1) |
 | E81/E87 | весь выпуск | 2004–2013 | Basis<br><small>линеек нет: базовая + пакеты/спецсерии</small> | 130i, 135i, 1er M Coupé | M Sportpaket, Edition Sport, Edition Lifestyle | частично проверено | [1](https://www.bimmertoday.de/2010/01/17/sport-lifestyle-exclusive-drei-editionsmodelle-fur-die-3er-reihe/) |
@@ -126,7 +126,7 @@
 |---|---|---|---|---|---|---|---|
 | G45 | дорестайлинг | 2024–н. в. | Basis, xLine, M Sport, M Sport Pro | M50 xDrive | — | проверено | [1](https://www.bmw.pl/pl/all-models/x-series/x3/bmw-x3.html) |
 | G01 | весь выпуск | 2017–2024 | Advantage, xLine, Luxury Line, M Sport | M40i, M40d, X3 M | — | проверено | [1](https://www.angurten.de/is/ausstattung/1732-971-X3+2017-xLine) |
-| F25 | весь выпуск | 2010–2017 | Basis, xLine, M Sport | 35d | Design Pure (пакеты) | проверить | — |
+| F25 | весь выпуск | 2010–2017 | Basis, Advantage, xLine, M Sport<br><small>xLine и M Sport — с рестайлинга 2014</small> | xDrive35d | — | проверено | [1](https://www.press.bmwgroup.com/deutschland/photo/detail/P90142837/der-neue-bmw-x3-mit-xline-ausstattungspaket-02-2014), [2](https://www.bimmertoday.de/2014/02/07/2014-bmw-x3-m-sportpaket-f25-lci-facelift-m-paket/) |
 | E83 | весь выпуск | 2003–2010 | Basis | 3.0sd | M Sportpaket | проверить | — |
 
 ### BMW X5
@@ -135,7 +135,7 @@
 |---|---|---|---|---|---|---|---|
 | G05 | весь выпуск | 2018–н. в. | Basis, xLine, M Sport, M Sport Pro (рестайлинг)<br><small>M Sport Pro — по знанию</small> | M50i, M50d, M60i, X5 M | — | частично проверено | [1](https://www.7-forum.com/news/Der-neue-BMW-X5-Innenraum-Ausstattung-8484.html) |
 | F15 | весь выпуск | 2013–2018 | Basis, Design Pure Experience, Design Pure Excellence, M Sport | M50d, X5 M | — | проверено | [1](https://www.bimmertoday.de/2013/05/31/2013-bmw-x5-f15-schluessel-m-sportpaket-design-pure-excellence-experience/) |
-| E70 | весь выпуск | 2006–2013 | Basis | M50d, X5 M | M Sportpaket | проверить | — |
+| E70 | весь выпуск | 2006–2013 | Basis<br><small>линеек нет: базовая + пакеты</small> | M50d, X5 M | M Sportpaket | частично проверено | [1](https://www.7-forum.com/news/2010/X5_LCI/steckbrief.php) |
 
 
 ## Ford
@@ -217,7 +217,7 @@
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | W223 | весь выпуск | 2020–н. в. | Basis, AMG Line, AMG Line Premium, AMG Line Premium Plus, Executive<br><small>названия из польской гаммы</small> | S 63 E Performance, Maybach | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Mercedes-Benz_klasy_S) |
-| W222 | весь выпуск | 2013–2020 | Basis, AMG Line | S 63 AMG, S 65 AMG, Maybach | Exclusive-Paket | проверить | — |
+| W222 | весь выпуск | 2013–2020 | Basis, AMG Line, AMG Line Plus (с 2017) | S 63 AMG, S 65 AMG, Maybach | Exclusiv-Paket | проверено | [1](https://mbpassion.de/2017/05/blick-auf-das-amg-line-plus-paket-der-s-klasse/) |
 | W221 | весь выпуск | 2005–2013 | Basis<br><small>линеек нет</small> | S 63 AMG, S 65 AMG | AMG Sportpaket | проверить | — |
 
 ### Mercedes-Benz CLA
@@ -241,7 +241,7 @@
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | V167 | весь выпуск | 2018–н. в. | Basis, AMG Line | GLE 53 AMG, GLE 63 AMG | Coupé (кузов), Night-Paket | проверено | [1](https://mbpassion.de/2018/12/blick-auf-die-amg-line-des-neuen-gle-im-detail-v167/) |
-| W166 | весь выпуск | 2015–2019 | Basis, AMG Line<br><small>до 2015 — M-Klasse (ML)</small> | GLE 43 AMG, GLE 63 AMG | Coupé (кузов C292) | проверить | — |
+| W166 | весь выпуск | 2015–2019 | Basis, AMG Line, Exclusive (интерьер)<br><small>до 2015 — M-Klasse (ML)</small> | GLE 43 AMG, GLE 63 AMG | Coupé (кузов C292) | проверено | [1](https://www.mercedes-fans.de/load/file/38145/5312964/preisliste-gle-150423.pdf) |
 
 
 ## Peugeot
@@ -251,22 +251,22 @@
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | 208 II | весь выпуск | 2019–н. в. | Like, Active, Allure, GT Line, GT<br><small>после рестайлинга 2023 — Active, Allure, GT</small> | — | Active Pack, Allure Pack, GT Pack | проверено | [1](https://pl.wikipedia.org/wiki/Peugeot_208), [2](https://de.wikipedia.org/wiki/Peugeot_208_II) |
-| 208 I | весь выпуск | 2012–2019 | Access, Like, Active, Allure, GT Line | GTi | XY, Feline, Roland Garros | проверено | [1](https://pl.wikipedia.org/wiki/Peugeot_208), [2](https://de.wikipedia.org/wiki/Peugeot_208_I) |
+| 208 I | весь выпуск | 2012–2019 | Access, Like, Active, Style, Allure, GT Line | GTi | XY, Feline, Roland Garros | проверено | [1](https://pl.wikipedia.org/wiki/Peugeot_208), [2](https://de.wikipedia.org/wiki/Peugeot_208_I), [3](https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-208) |
 
 ### Peugeot 308
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | 308 III | весь выпуск | 2021–н. в. | Active, Allure, GT, Style (с 2025), GT Exclusive (с 2025) | — | Active Pack, Allure Pack, GT Pack, Business | проверено | [1](https://www.media.stellantis.com/pl-pl/peugeot/press/nowy-peugeot-308-i-peugeot-308-sw-stworzony-z-mysla-o-przyjemnosci-1) |
-| 308 II | весь выпуск | 2013–2021 | Access, Active, Allure, GT Line | GT, GTi | — | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_308_II) |
-| 308 I | весь выпуск | 2007–2013 | Access, Active, Allure | — | Filou, Tendance, Premium (до 2011, DE) | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_308_I) |
+| 308 II | весь выпуск | 2013–2021 | Access, Active, Style, Allure, GT Line | GT, GTi | — | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_308_II), [2](https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308) |
+| 308 I | весь выпуск | 2007–2013 | Access, Active, Allure<br><small>Access/Active/Allure — с рестайлинга 2011</small> | — | Confort, Premium, Sport (PL, до 2011), Filou, Tendance, Premium (DE, до 2011) | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_308_I), [2](https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-308) |
 
 ### Peugeot 508
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | 508 II | весь выпуск | 2018–2025 | Active, Allure, GT Line, GT | PSE (Peugeot Sport Engineered) | — | проверено | [1](https://autoblog.spidersweb.pl/peugeot-508-ceny-polska) |
-| 508 I | весь выпуск | 2010–2018 | Access, Active, Allure, GT | — | RXH (кузов) | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_508_I) |
+| 508 I | весь выпуск | 2010–2018 | Access, Active, Style, Allure, GT Line, GT | — | Business, RXH (кузов) | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_508_I), [2](https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-508) |
 
 ### Peugeot 2008
 
@@ -281,7 +281,7 @@
 |---|---|---|---|---|---|---|---|
 | 3008 III | дорестайлинг | 2023–н. в. | Allure, GT, Allure Plus (с 2026), GT Plus (с 2026) | — | Business | проверено | [1](https://autogaleria.pl/peugeot-3008-2024-cennik-wersje-wyposazenie) |
 | 3008 II | весь выпуск | 2016–2024 | Access, Active, Allure, GT Line, GT | — | Active Pack, Allure Pack, GT Pack, Road Trip | проверено | [1](https://autokult.pl/peugeot-3008-i-5008-po-liftingu-polskie-ceny-modeli,6809443123103873a) |
-| 3008 I | весь выпуск | 2009–2016 | Access, Active, Allure, Business Line | — | — | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_3008) |
+| 3008 I | весь выпуск | 2009–2016 | Access, Active, Allure, Business Line, Premium, Sport, Style<br><small>Premium/Sport/Style — польская гамма до рестайлинга 2013</small> | — | — | проверено | [1](https://de.wikipedia.org/wiki/Peugeot_3008), [2](https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-3008) |
 
 ### Peugeot 5008
 
@@ -289,7 +289,7 @@
 |---|---|---|---|---|---|---|---|
 | 5008 III | дорестайлинг | 2024–н. в. | Allure, GT, Allure Plus (с 2026), GT Plus (с 2026) | — | Business | проверено | [1](https://francuskie.pl/peugeot-5008-drozszy-4-950-zl-cennik-znika-wersja/) |
 | 5008 II | весь выпуск | 2017–2024 | Active, Allure, GT Line, GT | — | Road Trip, Allure Pack | проверено | [1](https://autokult.pl/peugeot-3008-i-5008-po-liftingu-polskie-ceny-modeli,6809443123103873a) |
-| 5008 I | весь выпуск | 2009–2017 | Access, Active, Allure, Trendy (PL), Premium (PL) | — | Family (PL) | проверено | [1](https://pl.wikipedia.org/wiki/Peugeot_5008) |
+| 5008 I | весь выпуск | 2009–2017 | Access, Active, Allure, Trendy (PL), Premium (PL), Sport, Style | — | Family (PL), Business | проверено | [1](https://pl.wikipedia.org/wiki/Peugeot_5008), [2](https://www.ultimatespecs.com/car-specs/Peugeot-models/Peugeot-5008) |
 
 
 ## Renault
@@ -361,14 +361,14 @@
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
-| Karoq I | весь выпуск | 2017–н. в. | Active, Ambition, Style, Sportline, Scout<br><small>после рестайлинга 2022 — Ambition, Style, Sportline (+ Selection с 2024)</small> | — | — | проверено | [1](https://vwzone.pl/skoda-karoq-wersje-wyposazenia-dane-techniczne-silniki/), [2](https://de.wikipedia.org/wiki/Škoda_Karoq) |
+| Karoq I | весь выпуск | 2017–н. в. | Active, Ambition, Style, Sportline, Scout<br><small>после рестайлинга 2022 — Ambition, Style, Sportline (+ Selection с 2024)</small> | — | Business | проверено | [1](https://vwzone.pl/skoda-karoq-wersje-wyposazenia-dane-techniczne-silniki/), [2](https://de.wikipedia.org/wiki/Škoda_Karoq) |
 
 ### Skoda Kodiaq
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | Kodiaq II | дорестайлинг | 2024–н. в. | Essence, Selection, Sportline, Laurin & Klement | RS | — | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Kodiaq) |
-| Kodiaq I | весь выпуск | 2016–2024 | Active, Ambition, Style, Sportline, Scout, Laurin & Klement | RS | — | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Kodiaq) |
+| Kodiaq I | весь выпуск | 2016–2024 | Active, Ambition, Style, Sportline, Scout, Laurin & Klement | RS | Business | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Kodiaq), [2](https://www.ultimatespecs.com/car-specs/Skoda-models/Skoda-Kodiaq) |
 
 ### Skoda Octavia
 
@@ -377,7 +377,7 @@
 | Octavia IV | рестайлинг | 2024–н. в. | Essence, Selection, Sportline | RS | — | проверено | [1](https://autokatalog.pl/blog/2024/nowa-skoda-octavia-2024-cena-wersje-essence-i-rs) |
 | Octavia IV | дорестайлинг | 2020–2024 | Active, Ambition, Style, Sportline, Scout, Laurin & Klement | RS | — | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Octavia), [2](https://de.wikipedia.org/wiki/Škoda_Octavia_IV) |
 | Octavia III | весь выпуск | 2013–2020 | Active, Ambition, Elegance, Style, Laurin & Klement, Scout | RS | Edition, Joy, GreenLine | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Octavia), [2](https://de.wikipedia.org/wiki/Škoda_Octavia_III) |
-| Octavia II | весь выпуск | 2004–2013 | Classic, Ambiente, Elegance, Laurin & Klement, Active (с 2011), Ambition (с 2011) | RS | Scout, Mint, Edition 100 | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Octavia), [2](https://de.wikipedia.org/wiki/Škoda_Octavia_II) |
+| Octavia II | весь выпуск | 2004–2013 | Classic, Ambiente, Elegance, Laurin & Klement, Active (с 2011), Ambition (с 2011) | RS | Scout, Mint, Edition 100, Executive | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Octavia), [2](https://de.wikipedia.org/wiki/Škoda_Octavia_II) |
 
 ### Skoda Superb
 
@@ -385,7 +385,7 @@
 |---|---|---|---|---|---|---|---|
 | Superb IV | дорестайлинг | 2024–н. в. | Essence, Selection, Laurin & Klement, Sportline | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Superb) |
 | Superb III | весь выпуск | 2015–2023 | Active, Ambition, Style, Sportline, Laurin & Klement, Scout (с 2019) | — | iV (плагин-гибрид) | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Superb), [2](https://de.wikipedia.org/wiki/Škoda_Superb_III) |
-| Superb II | весь выпуск | 2008–2015 | Active, Comfort, Ambition, Elegance, Laurin & Klement | — | Business, Outdoor, GreenLine | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Superb), [2](https://de.wikipedia.org/wiki/Škoda_Superb_II) |
+| Superb II | весь выпуск | 2008–2015 | Active, Comfort, Ambition, Elegance, Laurin & Klement | — | Business, Outdoor, GreenLine, Exclusive | проверено | [1](https://pl.wikipedia.org/wiki/Škoda_Superb), [2](https://de.wikipedia.org/wiki/Škoda_Superb_II) |
 
 
 ## Toyota
@@ -394,14 +394,14 @@
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
-| E18 | весь выпуск | 2012–2018 | Life, Active, Premium, Dynamic, Prestige, Selection (с 2017) | — | Comfort, Edition-S, Executive (DE) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Auris), [2](https://de.wikipedia.org/wiki/Toyota_Auris) |
-| E15 | весь выпуск | 2006–2012 | Terra, Luna, Sol, Premium, Dynamic, Prestige | TS | — | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Auris) |
+| E18 | весь выпуск | 2012–2018 | Life, Active, Premium, Dynamic, Prestige, Selection (с 2017) | — | Comfort, Edition-S, Executive (DE), Advance, Business (Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Auris), [2](https://de.wikipedia.org/wiki/Toyota_Auris) |
+| E15 | весь выпуск | 2006–2012 | Terra, Luna, Sol, Premium, Dynamic, Prestige | TS | Active, Advance (Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Auris), [2](https://www.ultimatespecs.com/car-specs/Toyota-models/Toyota-Auris) |
 
 ### Toyota Avensis
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
-| T27 | весь выпуск | 2009–2018 | Luna, Sol, Sol Plus, Premium, Prestige, Active, Selection (с 2017) | — | Sprint (2016) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Avensis) |
+| T27 | весь выпуск | 2009–2018 | Luna, Sol, Sol Plus, Premium, Prestige, Active, Selection (с 2017) | — | Sprint (2016), Advance, Executive, Business (Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Avensis) |
 
 ### Toyota C-HR
 
@@ -430,16 +430,16 @@
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | XA50 | весь выпуск | 2018–2025 | Active, Comfort, Style, Executive, Selection, Adventure, GR Sport | — | — | проверено | [1](https://www.autocentrum.pl/newsy/informacje-prasowe/toyota-rav4-wymiary-i-wersje-wyposazenia/) |
-| XA40 | весь выпуск | 2012–2018 | Active, Premium, Style, Prestige, Selection (с 2017) | — | Premium Hybrid, Style Hybrid, Prestige Hybrid | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_RAV4) |
-| XA30 | весь выпуск | 2005–2012 | Sol, Premium, Prestige | — | — | проверить | — |
+| XA40 | весь выпуск | 2012–2018 | Active, Premium, Style, Prestige, Selection (с 2017) | — | Premium Hybrid, Style Hybrid, Prestige Hybrid, Advance, Executive (Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_RAV4) |
+| XA30 | весь выпуск | 2005–2012 | Luna, Sol, Prestige | — | Prestige + Navi, Advance, Executive (Бенилюкс) | проверено | [1](https://autokatalog.pl/toyota/rav4/iii) |
 
 ### Toyota Yaris
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | XP21 | весь выпуск | 2020–н. в. | Active, Comfort, Style, Executive, GR Sport<br><small>польская гамма — по знанию</small> | GR Yaris | Elegant (DE) | частично проверено | [1](https://de.wikipedia.org/wiki/Toyota_Yaris_(XP21)) |
-| XP13 | весь выпуск | 2011–2020 | Terra, Luna, Sol, Premium, Prestige, Life (с 2014), Active (с 2014), Dynamic, Style, Selection<br><small>до 2014: Terra/Luna/Sol/Premium/Prestige; после 2014 и 2017: Life/Active/Premium/Dynamic/Selection</small> | GRMN | Cool, Club, Executive (DE) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Yaris), [2](https://de.wikipedia.org/wiki/Toyota_Yaris_(XP13)) |
-| XP9 | весь выпуск | 2005–2011 | Terra, Luna, Sol | TS | — | проверить | — |
+| XP13 | весь выпуск | 2011–2020 | Terra, Luna, Sol, Premium, Prestige, Life (с 2014), Active (с 2014), Dynamic, Style, Selection<br><small>до 2014: Terra/Luna/Sol/Premium/Prestige; после 2014 и 2017: Life/Active/Premium/Dynamic/Selection</small> | GRMN | Cool, Club, Executive (DE), Advance (Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Yaris), [2](https://de.wikipedia.org/wiki/Toyota_Yaris_(XP13)) |
+| XP9 | весь выпуск | 2005–2011 | Terra, Luna, Sol | TS | — | проверено | [1](https://www.autocentrum.pl/publikacje/testy-aut-uzywanych/japonska-ikona-toyota-yaris-2005-2011/) |
 
 
 ## Volvo
@@ -493,8 +493,8 @@
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
 | Golf VIII | весь выпуск | 2019–н. в. | Golf, Life, Style, R-Line | GTI, GTD, GTE, R | — | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Golf) |
-| Golf VII | весь выпуск | 2012–2020 | Trendline, Comfortline, Highline, R-Line | GTI, GTD, GTE, R | Cup, United, Join, IQ.DRIVE, Sound, Lounge | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Golf), [2](https://de.wikipedia.org/wiki/VW_Golf_VII) |
-| Golf VI | весь выпуск | 2008–2013 | Trendline, Comfortline, Highline | GTI, GTD, R | Team, Match, Style, Move | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Golf), [2](https://de.wikipedia.org/wiki/VW_Golf_VI) |
+| Golf VII | весь выпуск | 2012–2020 | Trendline, Comfortline, Highline, R-Line | GTI, GTD, GTE, R | Cup, United, Join, IQ.DRIVE, Sound, Lounge, Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Golf), [2](https://de.wikipedia.org/wiki/VW_Golf_VII) |
+| Golf VI | весь выпуск | 2008–2013 | Trendline, Comfortline, Highline | GTI, GTD, R | Team, Match, Style, Move, Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Golf), [2](https://de.wikipedia.org/wiki/VW_Golf_VI) |
 
 ### Volkswagen Passat
 
@@ -502,9 +502,9 @@
 |---|---|---|---|---|---|---|---|
 | B9 | дорестайлинг | 2023–н. в. | Passat, Business, Elegance, R-Line | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Passat) |
 | B8 | рестайлинг | 2019–2023 | Passat, Business, Elegance, R-Line<br><small>линейки переименованы при рестайлинге</small> | GTE | Alltrack (кузов) | частично проверено | [1](https://de.wikipedia.org/wiki/VW_Passat_B8) |
-| B8 | дорестайлинг | 2014–2019 | Trendline, Comfortline, Highline, R-Line | GTE | Alltrack (кузов) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Passat), [2](https://de.wikipedia.org/wiki/VW_Passat_B8) |
-| B7 | весь выпуск | 2010–2014 | Trendline, Comfortline, Highline, R-Line, Exclusive | — | Business Edition, Edition 40, Alltrack (кузов) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Passat), [2](https://de.wikipedia.org/wiki/VW_Passat_B7) |
-| B6 | весь выпуск | 2005–2010 | Trendline, Comfortline, Highline, Sportline | R36 | R-Line | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Passat) |
+| B8 | дорестайлинг | 2014–2019 | Trendline, Comfortline, Highline, R-Line | GTE | Alltrack (кузов), Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Passat), [2](https://de.wikipedia.org/wiki/VW_Passat_B8) |
+| B7 | весь выпуск | 2010–2014 | Trendline, Comfortline, Highline, R-Line, Exclusive | — | Business Edition, Edition 40, Alltrack (кузов), Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Passat), [2](https://de.wikipedia.org/wiki/VW_Passat_B7) |
+| B6 | весь выпуск | 2005–2010 | Trendline, Comfortline, Highline, Sportline | R36 | R-Line, Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Passat) |
 
 ### Volkswagen Polo
 
@@ -512,7 +512,7 @@
 |---|---|---|---|---|---|---|---|
 | Polo VI | рестайлинг | 2021–н. в. | Polo, Life, Style, R-Line | GTI | — | проверено | [1](https://de.wikipedia.org/wiki/VW_Polo_VI) |
 | Polo VI | дорестайлинг | 2017–2021 | Trendline, Comfortline, Highline | GTI | Beats, United, R-Line (пакет) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Polo) |
-| Polo V | весь выпуск | 2009–2017 | Trendline, Comfortline, Highline | GTI, R WRC | Life, Fresh, Match, Lounge, Team, Cross Polo, BlueGT | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Polo), [2](https://de.wikipedia.org/wiki/VW_Polo_V) |
+| Polo V | весь выпуск | 2009–2017 | Trendline, Comfortline, Highline | GTI, R WRC | Life, Fresh, Match, Lounge, Team, Cross Polo, BlueGT, Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Polo), [2](https://de.wikipedia.org/wiki/VW_Polo_V) |
 
 ### Volkswagen T-Roc
 
@@ -537,11 +537,11 @@
 | Tiguan III | дорестайлинг | 2024–н. в. | Tiguan, Life, Elegance, R-Line | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Tiguan), [2](https://de.wikipedia.org/wiki/VW_Tiguan_III) |
 | Tiguan II | рестайлинг | 2020–2024 | Tiguan, Life, Elegance, R-Line | Tiguan R | Allspace (кузов) | проверено | [1](https://de.wikipedia.org/wiki/VW_Tiguan_II) |
 | Tiguan II | дорестайлинг | 2016–2020 | Trendline, Comfortline, Highline, R-Line | — | Join, United, Allspace (кузов) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Tiguan) |
-| Tiguan I | весь выпуск | 2007–2016 | Trend & Fun, Sport & Style, Track & Field, Track & Style, Trendline (с 2011), Comfortline (с 2011), Highline (с 2011) | — | Cityline, Perfectline, R-Line | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Tiguan), [2](https://de.wikipedia.org/wiki/VW_Tiguan_I) |
+| Tiguan I | весь выпуск | 2007–2016 | Trend & Fun, Sport & Style, Track & Field, Track & Style, Trendline (с 2011), Comfortline (с 2011), Highline (с 2011) | — | Cityline, Perfectline, R-Line, Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Tiguan), [2](https://de.wikipedia.org/wiki/VW_Tiguan_I) |
 
 ### Volkswagen Touran
 
 | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии и пакеты | Статус | Источники |
 |---|---|---|---|---|---|---|---|
-| Touran II | весь выпуск | 2015–н. в. | Trendline, Comfortline, Highline<br><small>Trendline снят в DE с 2019</small> | — | R-Line, Join, United, Move | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Touran), [2](https://de.wikipedia.org/wiki/VW_Touran_II) |
-| Touran I | весь выпуск | 2006–2015 | Conceptline, Trendline, Comfortline, Highline | — | Cross, United, Freestyle, R-Line | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Touran), [2](https://de.wikipedia.org/wiki/VW_Touran_I) |
+| Touran II | весь выпуск | 2015–н. в. | Trendline, Comfortline, Highline<br><small>Trendline снят в DE с 2019</small> | — | R-Line, Join, United, Move, Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Touran), [2](https://de.wikipedia.org/wiki/VW_Touran_II) |
+| Touran I | весь выпуск | 2006–2015 | Conceptline, Trendline, Comfortline, Highline | — | Cross, United, Freestyle, R-Line, Advance, Sport (ES/Бенилюкс) | проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Touran), [2](https://de.wikipedia.org/wiki/VW_Touran_I) |
