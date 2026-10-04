@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=accident-20261003" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=b18-20261004" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=version-row-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=monitoring-audit-20261003d" />
     <link rel="stylesheet" href="./src/mobile-page2.css?v=b18-20261004" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
@@ -155,6 +155,11 @@
                       </div>
                     </div>
                   </div>
+                    <label class="mobileField mobileVersionField">
+                      <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="versionLabel">Wersja</span></span>
+                      <input data-mobile-version type="text" autocomplete="off" aria-describedby="mobile-version-hint" />
+                      <small class="mobileFieldNote" id="mobile-version-hint" data-i18n="versionHint">Linia wyposażenia lub oznaczenie z ogłoszenia, np. M Sport, S line, R-Line (nie działa na otomoto)</small>
+                    </label>
                 </div>
                 <fieldset class="mobileField mobileChoiceField mobileWideField">
                   <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="bodyLabel">Nadwozie</span></legend>
@@ -281,16 +286,6 @@
                     </label>
                   </div>
                 </fieldset>
-              </div>
-            </section>
-            <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-version">
-              <h2 id="mobile-filter-group-version" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="filterGroupVersion">Wersja wyposażenia</span></h2>
-              <div class="mobileFilterCardBody">
-                <label class="mobileField mobileVersionField">
-                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="versionLabel">Wersja</span></span>
-                  <input data-mobile-version type="text" autocomplete="off" aria-describedby="mobile-version-hint" />
-                  <small class="mobileFieldNote" id="mobile-version-hint" data-i18n="versionHint">Linia wyposażenia lub oznaczenie z ogłoszenia, np. M Sport, S line, R-Line (nie działa na otomoto)</small>
-                </label>
               </div>
             </section>
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-price">
@@ -619,7 +614,7 @@
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
     <script src="./src/market-badges.js?v=autoscout2-20261003"></script>
-    <script src="./src/mobile.js?v=b18-20261004"></script>
+    <script src="./src/mobile.js?v=version-row-20261004"></script>
     <script src="./src/blocket-search.js?v=b18-20261004"></script>
     <script src="./src/avby-search.js?v=b18-20261004"></script>
     <script src="./src/autoscout-search.js?v=b18-20261004"></script>

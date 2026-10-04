@@ -388,10 +388,12 @@
   min-width: 0;
 }
 
-.mobileVersionField {
+/* "Wersja" in the second row of "Pojazd", under Marka and Model (after
+   Rok): brand, model and years already tell which versions were made. */
+.mobileVehicleTripleRow > .mobileVersionField {
   display: grid;
   gap: 6px;
-  max-width: calc(50% - var(--space-xl) / 2);
+  grid-column: 1 / span 2;
 }
 
 .mobileVersionField .mobileFieldNote {
@@ -427,8 +429,8 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .mobileVersionField {
-    max-width: none;
+  .mobileVehicleTripleRow > .mobileVersionField {
+    grid-column: auto;
   }
 }
 
