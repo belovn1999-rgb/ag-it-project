@@ -273,14 +273,24 @@
   // mobile.de) and AutoScout24 in France alone, the market "Francja" (B47).
   const TEXT = {
     pl: { search: "Szukaj na AutoScout24", opening: "Otwieram AutoScout24 (wszystkie ogłoszenia; w analizie — tylko te, których nie ma na mobile.de).", skipped: "AutoScout24 nie przyjmie filtrów: {filters}.", countTitle: "Wszystkie ogłoszenia na AutoScout24 (razem z tymi, które są też na mobile.de)",
-      searchFr: "Szukaj na AutoScout24 (Francja)", openingFr: "Otwieram AutoScout24 — ogłoszenia z Francji.", countTitleFr: "Ogłoszenia na AutoScout24 we Francji" },
+      searchFr: "Szukaj na AutoScout24 (Francja)", openingFr: "Otwieram AutoScout24 — ogłoszenia z Francji.", countTitleFr: "Ogłoszenia na AutoScout24 we Francji",
+      searchNlBe: "Szukaj na AutoScout24 (Holandia, Belgia)", openingNlBe: "Otwieram AutoScout24 — ogłoszenia z Holandii i Belgii.", countTitleNlBe: "Ogłoszenia na AutoScout24 w Holandii i Belgii" },
     ru: { search: "Искать на AutoScout24", opening: "Открываю AutoScout24 (все объявления; в анализе — только те, которых нет на mobile.de).", skipped: "AutoScout24 не примет фильтры: {filters}.", countTitle: "Все объявления на AutoScout24 (вместе с теми, что есть и на mobile.de)",
-      searchFr: "Искать на AutoScout24 (Франция)", openingFr: "Открываю AutoScout24 — объявления из Франции.", countTitleFr: "Объявления на AutoScout24 во Франции" },
+      searchFr: "Искать на AutoScout24 (Франция)", openingFr: "Открываю AutoScout24 — объявления из Франции.", countTitleFr: "Объявления на AutoScout24 во Франции",
+      searchNlBe: "Искать на AutoScout24 (Нидерланды, Бельгия)", openingNlBe: "Открываю AutoScout24 — объявления из Нидерландов и Бельгии.", countTitleNlBe: "Объявления на AutoScout24 в Нидерландах и Бельгии" },
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
-  const countries = (filters) => (filters.countries && filters.countries.length ? filters.countries : ["DE"]);
+  // B68: page 1 has a German column (Germany, plus Austria or Luxembourg
+  // from "Kraj") and a column of the Netherlands and Belgium, each with its
+  // own AutoScout24 count and link; the analysis searches every "Kraj" country.
+  const NLBE = ["NL", "BE"];
+  const countries = (filters) => {
+    const german = (filters.countries || []).filter((code) => !NLBE.includes(code));
+    return german.length ? german : ["DE"];
+  };
   const MARKETS = {
     autoscout: { count: "[data-mobile-search-count-autoscout]", link: "[data-mobile-autoscout-search]", countries, search: "search", opening: "opening", countTitle: "countTitle" },
+    autoscoutnlbe: { count: "[data-mobile-search-count-autoscoutnlbe]", link: "[data-mobile-autoscoutnlbe-search]", countries: () => NLBE, search: "searchNlBe", opening: "openingNlBe", countTitle: "countTitleNlBe" },
     autoscoutfr: { count: "[data-mobile-search-count-autoscoutfr]", link: "[data-mobile-autoscoutfr-search]", countries: () => ["FR"], search: "searchFr", opening: "openingFr", countTitle: "countTitleFr" },
   };
   const proxy = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
@@ -313,11 +323,13 @@
       if (request === countRequests[market]) target.textContent = "—";
     }
   }
-  // France is counted only while it is compared: one proxy request less.
+  // France, the Netherlands and Belgium are counted only while compared: a
+  // proxy request less each.
   const refreshCount = (filters) => {
+    const picked = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : ["autoscout", "autoscoutfr"];
     refreshMarketCount("autoscout", filters);
-    const france = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS().includes("autoscoutfr") : true;
-    if (france) refreshMarketCount("autoscoutfr", filters);
+    if (picked.includes("autoscoutfr")) refreshMarketCount("autoscoutfr", filters);
+    if (picked.includes("autoscout") && (filters?.countries || []).some((code) => NLBE.includes(code))) refreshMarketCount("autoscoutnlbe", filters);
   };
 
   Object.values(MARKETS).forEach((spec) => {

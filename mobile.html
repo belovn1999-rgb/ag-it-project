@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=mp-20261004" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=history-rows-20261004" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=columns-20261004" />
     <link rel="stylesheet" href="./src/mobile-model-specs.css?v=b61-specs-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=rebase1-20261004" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
@@ -105,37 +105,68 @@
                   <button class="mobileSearchSummaryDone" type="button" data-mobile-history-done hidden><span data-market-i18n="historyDone">Gotowe</span> ✓</button>
                   <button class="mobileSearchSummaryAnalysis" type="button" data-mobile-market-analysis-open><span data-market-i18n="analysisButton">Analiza rynku</span> <i aria-hidden="true">&#8594;</i></button>
                 </div>
-                <div class="mobileSearchCountMarket" data-market="otomoto">
-                  <strong data-mobile-search-count aria-live="polite">—</strong>
-                  <a class="agBrandLink isOtomoto" href="#" target="_blank" rel="noopener" data-mobile-otomoto-search aria-label="Szukaj na otomoto.pl" title="Szukaj na otomoto.pl"><img src="./assets/brands/otomoto-logo.svg" alt="" /></a>
+                <!-- B68 (owner 2026-10-04): the markets in country columns — the
+                     column's switch takes its country into the search and the
+                     analysis; the main portal on top, the others under it; the
+                     head (flags, name, switch) is drawn by
+                     mobile-market-analysis.js. -->
+                <div class="agMarketColumns" data-market-columns>
+                  <section class="agMarketColumn" data-market-group="de">
+                    <div class="agMarketColumnHeadWrap" data-market-group-head></div>
+                    <div class="mobileSearchCountMarket isMain" data-market="mobile" data-market-row="mobile">
+                      <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de"><img src="./assets/brands/mobile-de-logo.svg" alt="" /></a>
+                      <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
+                    </div>
+                    <div class="mobileSearchCountMarket" data-market="autoscout" data-market-row="autoscout">
+                      <a class="agBrandLink isAutoscout" href="#" target="_blank" rel="noopener" data-mobile-autoscout-search aria-label="Szukaj na AutoScout24" title="Szukaj na AutoScout24"><img src="./assets/brands/autoscout24-logo.svg?v=2" alt="" /></a>
+                      <strong data-mobile-search-count-autoscout aria-live="polite">—</strong>
+                    </div>
+                  </section>
+                  <section class="agMarketColumn" data-market-group="nlbe">
+                    <div class="agMarketColumnHeadWrap" data-market-group-head></div>
+                    <div class="mobileSearchCountMarket isMain" data-market="autoscout" data-market-row="autoscoutnlbe">
+                      <a class="agBrandLink isAutoscout" href="#" target="_blank" rel="noopener" data-mobile-autoscoutnlbe-search aria-label="Szukaj na AutoScout24 (Holandia, Belgia)" title="Szukaj na AutoScout24 (Holandia, Belgia)"><img src="./assets/brands/autoscout24-logo.svg?v=2" alt="" /></a>
+                      <strong data-mobile-search-count-autoscoutnlbe aria-live="polite">—</strong>
+                    </div>
+                    <div class="mobileSearchCountMarket" data-market="marktplaats" data-market-row="marktplaats">
+                      <a class="agBrandLink isMarktplaats" href="#" target="_blank" rel="noopener" data-mobile-marktplaats-search aria-label="Szukaj na Marktplaats (Holandia)" title="Szukaj na Marktplaats (Holandia)"><img src="./assets/brands/marktplaats-logo.svg" alt="" /></a>
+                      <strong data-mobile-search-count-marktplaats aria-live="polite">—</strong>
+                    </div>
+                    <div class="mobileSearchCountMarket" data-market="dehands" data-market-row="dehands">
+                      <a class="agBrandLink isDehands" href="#" target="_blank" rel="noopener" data-mobile-dehands-search aria-label="Szukaj na 2dehands (Belgia)" title="Szukaj na 2dehands (Belgia)"><img src="./assets/brands/2dehands-logo.svg" alt="" /></a>
+                      <strong data-mobile-search-count-dehands aria-live="polite">—</strong>
+                    </div>
+                  </section>
+                  <section class="agMarketColumn" data-market-group="pl">
+                    <div class="agMarketColumnHeadWrap" data-market-group-head></div>
+                    <div class="mobileSearchCountMarket isMain" data-market="otomoto" data-market-row="otomoto">
+                      <a class="agBrandLink isOtomoto" href="#" target="_blank" rel="noopener" data-mobile-otomoto-search aria-label="Szukaj na otomoto.pl" title="Szukaj na otomoto.pl"><img src="./assets/brands/otomoto-logo.svg" alt="" /></a>
+                      <strong data-mobile-search-count aria-live="polite">—</strong>
+                    </div>
+                  </section>
+                  <section class="agMarketColumn" data-market-group="se">
+                    <div class="agMarketColumnHeadWrap" data-market-group-head></div>
+                    <div class="mobileSearchCountMarket isMain" data-market="blocket" data-market-row="blocket">
+                      <a class="agBrandLink isBlocket" href="#" target="_blank" rel="noopener" data-mobile-blocket-search aria-label="Szukaj na blocket.se" title="Szukaj na blocket.se"><img src="./assets/brands/blocket-logo.svg" alt="" /></a>
+                      <strong data-mobile-search-count-blocket aria-live="polite">—</strong>
+                    </div>
+                  </section>
+                  <section class="agMarketColumn" data-market-group="fr">
+                    <div class="agMarketColumnHeadWrap" data-market-group-head></div>
+                    <div class="mobileSearchCountMarket isMain" data-market="autoscoutfr" data-market-row="autoscoutfr">
+                      <a class="agBrandLink isAutoscoutFr" href="#" target="_blank" rel="noopener" data-mobile-autoscoutfr-search aria-label="Szukaj na AutoScout24 (Francja)" title="Szukaj na AutoScout24 (Francja)"><img src="./assets/brands/autoscout24-fr-logo.svg" alt="" /></a>
+                      <strong data-mobile-search-count-autoscoutfr aria-live="polite">—</strong>
+                    </div>
+                  </section>
+                  <section class="agMarketColumn" data-market-group="by">
+                    <div class="agMarketColumnHeadWrap" data-market-group-head></div>
+                    <div class="mobileSearchCountMarket isMain" data-market="avby" data-market-row="avby">
+                      <a class="agBrandLink isAvby" href="#" target="_blank" rel="noopener" data-mobile-avby-search aria-label="Szukaj na av.by" title="Szukaj na av.by"><img src="./assets/brands/avby-logo.svg" alt="" /></a>
+                      <strong data-mobile-search-count-avby aria-live="polite">—</strong>
+                    </div>
+                  </section>
                 </div>
-                <div class="mobileSearchCountMarket" data-market="mobile">
-                  <strong data-mobile-search-count-mobilede aria-live="polite">—</strong>
-                  <a class="agBrandLink isMobile" href="#" target="_blank" rel="noopener" data-mobile-market-search aria-label="Szukaj na mobile.de" title="Szukaj na mobile.de"><img src="./assets/brands/mobile-de-logo.svg" alt="" /></a>
-                </div>
-                <div class="mobileSearchCountMarket" data-market="autoscout">
-                  <strong data-mobile-search-count-autoscout aria-live="polite">—</strong>
-                  <a class="agBrandLink isAutoscout" href="#" target="_blank" rel="noopener" data-mobile-autoscout-search aria-label="Szukaj na AutoScout24" title="Szukaj na AutoScout24"><img src="./assets/brands/autoscout24-logo.svg?v=2" alt="" /></a>
-                </div>
-                <div class="mobileSearchCountMarket" data-market="autoscoutfr">
-                  <strong data-mobile-search-count-autoscoutfr aria-live="polite">—</strong>
-                  <a class="agBrandLink isAutoscoutFr" href="#" target="_blank" rel="noopener" data-mobile-autoscoutfr-search aria-label="Szukaj na AutoScout24 (Francja)" title="Szukaj na AutoScout24 (Francja)"><img src="./assets/brands/autoscout24-fr-logo.svg" alt="" /></a>
-                </div>
-                <div class="mobileSearchCountMarket" data-market="marktplaats">
-                  <strong data-mobile-search-count-marktplaats aria-live="polite">—</strong>
-                  <a class="agBrandLink isMarktplaats" href="#" target="_blank" rel="noopener" data-mobile-marktplaats-search aria-label="Szukaj na Marktplaats (Holandia)" title="Szukaj na Marktplaats (Holandia)"><img src="./assets/brands/marktplaats-logo.svg" alt="" /></a>
-                </div>
-                <div class="mobileSearchCountMarket" data-market="dehands">
-                  <strong data-mobile-search-count-dehands aria-live="polite">—</strong>
-                  <a class="agBrandLink isDehands" href="#" target="_blank" rel="noopener" data-mobile-dehands-search aria-label="Szukaj na 2dehands (Belgia)" title="Szukaj na 2dehands (Belgia)"><img src="./assets/brands/2dehands-logo.svg" alt="" /></a>
-                </div>
-                <div class="mobileSearchCountMarket" data-market="blocket">
-                  <strong data-mobile-search-count-blocket aria-live="polite">—</strong>
-                  <a class="agBrandLink isBlocket" href="#" target="_blank" rel="noopener" data-mobile-blocket-search aria-label="Szukaj na blocket.se" title="Szukaj na blocket.se"><img src="./assets/brands/blocket-logo.svg" alt="" /></a>
-                </div>
-                <div class="mobileSearchCountMarket" data-market="avby">
-                  <strong data-mobile-search-count-avby aria-live="polite">—</strong>
-                  <a class="agBrandLink isAvby" href="#" target="_blank" rel="noopener" data-mobile-avby-search aria-label="Szukaj na av.by" title="Szukaj na av.by"><img src="./assets/brands/avby-logo.svg" alt="" /></a>
+                  </section>
                 </div>
               </div>
             </section>
@@ -523,7 +554,7 @@
                         </details>
                       </fieldset>
                   </div>
-                  <small class="mobilePortalFilterOff" data-i18n="portalRowOff">Portal nie jest wybrany — filtr nie działa</small>
+                  <small class="mobilePortalFilterOff" data-i18n="portalRowOff">Rynek nie jest wybrany — filtr nie działa</small>
                 </div>
                 <div class="mobilePortalFilterRow" data-mobile-portal-row="otomoto">
                   <div class="mobilePortalFilterLogos"><img src="./assets/brands/otomoto-logo.svg" alt="otomoto" /></div>
@@ -561,7 +592,7 @@
                       </details>
                     </fieldset>
                   </div>
-                  <small class="mobilePortalFilterOff" data-i18n="portalRowOff">Portal nie jest wybrany — filtr nie działa</small>
+                  <small class="mobilePortalFilterOff" data-i18n="portalRowOff">Rynek nie jest wybrany — filtr nie działa</small>
                 </div>
                 </div>
                 <div class="mobileEquipmentPart mobileVehicleConditionSection" role="group" aria-labelledby="mobile-filter-group-condition">
@@ -697,21 +728,21 @@
     <script src="./src/mobile-rates.js?v=page3-20261004"></script>
     <script src="./src/model-specs.generated.js?v=b61-specs-20261004"></script>
     <script src="./src/mobile-model-specs.js?v=b61-specs-20261004"></script>
-    <script src="./src/mobile.js?v=paliwo-20261004"></script>
+    <script src="./src/mobile.js?v=columns-20261004"></script>
     <script src="./src/blocket-search.js?v=more-portals2-20261004"></script>
     <script src="./src/marktplaats-catalog.generated.js?v=mp-20261004"></script>
     <script src="./src/marktplaats-search.js?v=mp-20261004"></script>
     <script src="./src/avby-search.js?v=more-portals2-20261004"></script>
-    <script src="./src/autoscout-search.js?v=france3-20261004"></script>
+    <script src="./src/autoscout-search.js?v=columns-20261004"></script>
     <script src="./src/turnkey-estimate.js?v=rates-20261004"></script>
     <script src="./src/turnkey-belarus.js?v=rates-20261004"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=mac930-20261004"></script>
+    <script src="./src/mobile-market-analysis.js?v=columns-20261004"></script>
     <script src="./src/calculator-popup.js?v=mp-20261004"></script>
     <script src="./src/mobile-favorites-watch.js?v=mp-20261004"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
-    <script src="./src/mobile-page1.js?v=history-rows-20261004"></script>
-    <script src="./src/mobile-filter-warnings.js?v=paliwo-20261004"></script>
+    <script src="./src/mobile-page1.js?v=columns-20261004"></script>
+    <script src="./src/mobile-filter-warnings.js?v=columns-20261004"></script>
     <script src="./src/mobile-page2.js?v=page2-audit2-20261003"></script>
   </body>
 </html>

@@ -323,6 +323,8 @@
       sourcesPicker: "Analiza rynków:",
       marketPickOn: "kliknij, aby porównać",
       marketPickOff: "kliknij, aby ukryć",
+      marketGroupOn: "włącz do wyszukiwania i analizy",
+      marketGroupOff: "wyłącz z wyszukiwania i analizy",
       sourceOn: "{source}: widoczne na wykresie — kliknij, aby ukryć",
       sourceOff: "{source}: ukryte — kliknij, aby pokazać",
       sourceFetch: "Pobierz oferty z mobile.de",
@@ -872,6 +874,8 @@
       sourcesPicker: "Анализ рынков:",
       marketPickOn: "нажми, чтобы сравнить",
       marketPickOff: "нажми, чтобы скрыть",
+      marketGroupOn: "включить в поиск и анализ",
+      marketGroupOff: "выключить из поиска и анализа",
       sourceOn: "{source}: показан на графике — нажми, чтобы скрыть",
       sourceOff: "{source}: скрыт — нажми, чтобы показать",
       sourceFetch: "Загрузить объявления с mobile.de",
@@ -1215,6 +1219,112 @@
     // France starts switched off too.
     return { otomoto: true, mobile: true, autoscout: true, autoscoutfr: false, marktplaats: false, dehands: false, blocket: false, avby: false };
   })();
+  // B68 (owner 2026-10-04): "Aktualne oferty" in country columns. A market is
+  // picked by its country: the column's switch takes all its portals into the
+  // search and the analysis (no switch per portal). Germany: mobile.de (main)
+  // and AutoScout24 (Kleinanzeigen next). The Netherlands and Belgium, the
+  // column beside it: AutoScout24 in NL + BE (main: the most offers of the
+  // two countries, measured 10-04: 272 001 + 122 584, Marktplaats 266 973,
+  // 2dehands 97 622, mobile.de 11 542 + 4 802), Marktplaats and 2dehands.
+  // Both German columns share the "Kraj" filter of mobile.de and AutoScout24:
+  // DE (Austria, Luxembourg only in the filter itself) and NL + BE. A row is
+  // a portal in its column; a new portal goes into its country's column here.
+  const MARKET_GROUPS = [
+    { key: "de", countries: ["DE"], rows: ["mobile", "autoscout"] },
+    { key: "nlbe", countries: ["NL", "BE"], rows: ["autoscoutnlbe", "marktplaats", "dehands"] },
+    { key: "pl", countries: ["PL"], rows: ["otomoto"] },
+    { key: "se", countries: ["SE"], rows: ["blocket"] },
+    { key: "fr", countries: ["FR"], rows: ["autoscoutfr"] },
+    { key: "by", countries: ["BY"], rows: ["avby"] },
+  ];
+  const NLBE = ["NL", "BE"];
+  const marketGroup = (key) => MARKET_GROUPS.find((group) => group.key === key) || null;
+  const formCountries = () => Array.from(document.querySelectorAll("[data-mobile-country]"))
+    .filter((input) => input.checked)
+    .map((input) => input.value);
+  // The "Kraj" countries of each German column.
+  const germanCountries = (countries = formCountries()) => countries.filter((code) => !NLBE.includes(code));
+  const nlbeCountries = (countries = formCountries()) => countries.filter((code) => NLBE.includes(code));
+  // The portal a row stands for (both AutoScout24 rows are one market).
+  const rowSource = (row) => (row === "autoscoutnlbe" ? "autoscout" : row);
+  function rowOn(row) {
+    if (row === "autoscout") return Boolean(chartSources.autoscout) && germanCountries().length > 0;
+    if (row === "autoscoutnlbe") return Boolean(chartSources.autoscout) && nlbeCountries().length > 0;
+    return Boolean(chartSources[row]);
+  }
+  const groupOn = (group) => group.rows.some(rowOn);
+
+  function setFormCountries(codes) {
+    const inputs = Array.from(document.querySelectorAll("[data-mobile-country]"));
+    if (!inputs.length || inputs.every((input) => input.checked === codes.includes(input.value))) return false;
+    inputs.forEach((input) => {
+      input.checked = codes.includes(input.value);
+    });
+    inputs[0].dispatchEvent(new Event("change", { bubbles: true }));
+    return true;
+  }
+
+  // The markets and "Kraj" countries after a column's switch (or after a grey
+  // row is clicked: that row's portal back); null when nothing would be left.
+  function marketsWithGroup(key, onlyRow = "") {
+    const group = marketGroup(key);
+    if (!group) return null;
+    const countries = formCountries();
+    const german = germanCountries(countries);
+    const nlbe = nlbeCountries(countries);
+    const markets = { ...chartSources };
+    let nextCountries = null;
+    const on = groupOn(group) && !onlyRow;
+    if (key === "de") {
+      if (on) {
+        markets.mobile = false;
+        nextCountries = nlbe;
+        markets.autoscout = Boolean(chartSources.autoscout) && nlbe.length > 0;
+      } else {
+        if (!onlyRow || onlyRow === "mobile") markets.mobile = true;
+        if (!onlyRow || onlyRow === "autoscout") markets.autoscout = true;
+        nextCountries = [...(german.length ? german : ["DE"]), ...nlbe];
+      }
+    } else if (key === "nlbe") {
+      if (on) {
+        markets.marktplaats = false;
+        markets.dehands = false;
+        nextCountries = german;
+        markets.autoscout = Boolean(chartSources.autoscout) && german.length > 0;
+      } else {
+        if (!onlyRow || onlyRow === "marktplaats") markets.marktplaats = true;
+        if (!onlyRow || onlyRow === "dehands") markets.dehands = true;
+        if (!onlyRow || onlyRow === "autoscoutnlbe") {
+          markets.autoscout = true;
+          nextCountries = [...german, ...NLBE];
+        }
+      }
+    } else group.rows.forEach((row) => { markets[row] = onlyRow ? (row === onlyRow || markets[row]) : !on; });
+    if (!MARKET_SOURCES.some((source) => markets[source])) return null;
+    return { markets, countries: nextCountries };
+  }
+
+  // A column's head: flags, the countries' names and the switch.
+  function marketGroupHeadHtml(group, switchAttribute) {
+    const c = copy();
+    const on = groupOn(group);
+    const german = germanCountries();
+    const countries = group.key === "de" && on && german.length ? german : group.countries;
+    const names = countries.map((code) => window.AUTOGOOD_COUNTRY_NAME?.(code) || code);
+    const flags = countries.map((code) => window.AUTOGOOD_FLAG?.(code) || "").join("");
+    const label = `${names.join(", ")} — ${on ? c.marketGroupOff : c.marketGroupOn}`;
+    return `
+      <div class="agMarketColumnHead">
+        <span class="agMarketColumnFlags">${flags}</span>
+        <b class="agMarketColumnName">${escapeMarketHtml(names.join(" · "))}</b>
+        <button class="agMarketSwitch" type="button" role="switch" aria-checked="${on ? "true" : "false"}" ${switchAttribute}="${group.key}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"></button>
+      </div>`;
+  }
+
+  // A switched-on column shows all its portals (a grey one is off: its logo
+  // brings it back); a switched-off column its main portal alone.
+  const marketRowShown = (group, row) => groupOn(group) || row === group.rows[0];
+
   let chartAxis = "rank";
   // Several markets: one price scale for all charts ("shared", the default —
   // compares markets) or each chart its own ("own" — shows the spread inside
@@ -3546,15 +3656,21 @@
     return `<button class="agMarketToggle${on ? "" : " isAdd"}" type="button" ${attribute}="${source}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">${on ? "−" : "+"}</button>`;
   }
 
-  // Page 1: every portal's count and logo stays; the compared ones in colour.
+  // Page 1: the country columns of "Aktualne oferty" (B68). A portal of a
+  // switched-on column that is off (chosen so before B68, or by a recognised
+  // ad) stays grey; clicking its logo brings it back.
   function renderMarketPicker() {
-    document.querySelectorAll(".mobileManualPanel .mobileSearchCountMarket[data-market]").forEach((item) => {
-      const source = item.dataset.market;
-      const on = Boolean(chartSources[source]);
-      item.hidden = false;
-      item.classList.toggle("isOff", !on);
-      item.querySelector(".agMarketToggle")?.remove();
-      item.insertAdjacentHTML("beforeend", marketToggleHtml(source, on, "data-mobile-market-pick"));
+    document.querySelectorAll(".mobileManualPanel [data-market-group]").forEach((column) => {
+      const group = marketGroup(column.dataset.marketGroup);
+      if (!group) return;
+      column.classList.toggle("isOff", !groupOn(group));
+      const head = column.querySelector("[data-market-group-head]");
+      if (head) head.innerHTML = marketGroupHeadHtml(group, "data-mobile-market-group");
+      column.querySelectorAll(".mobileSearchCountMarket[data-market-row]").forEach((item) => {
+        const row = item.dataset.marketRow;
+        item.hidden = !marketRowShown(group, row);
+        item.classList.toggle("isOff", !rowOn(row));
+      });
     });
   }
 
@@ -6165,9 +6281,18 @@
     }
     let autoscoutUrl = "";
     try {
-      autoscoutUrl = window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries: (filters.countries || []).length ? filters.countries : ["DE"] }) || "";
+      // B68: the German column's AutoScout24 (Germany, plus Austria or
+      // Luxembourg from "Kraj"); the Netherlands and Belgium have their own.
+      const german = germanCountries(filters.countries || []);
+      autoscoutUrl = window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries: german.length ? german : ["DE"] }) || "";
     } catch {
       // Same for AutoScout24.
+    }
+    let autoscoutNlBeUrl = "";
+    try {
+      autoscoutNlBeUrl = window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries: NLBE }) || "";
+    } catch {
+      autoscoutNlBeUrl = "";
     }
     let autoscoutFrUrl = "";
     try {
@@ -7400,26 +7525,36 @@
     // form holds unsaved changes), "Analiza rynku" and the offer count with a
     // link per compared market.
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
-    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
-    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
+    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnlbe: "[data-mobile-search-count-autoscoutnlbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
+    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, autoscoutnlbe: autoscoutNlBeUrl, autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
     const specFoot = `
       <div class="mobileSearchSummaryFoot" data-report-hide>
         <span class="mobileSearchSummaryFootLabel">${escapeMarketHtml(t.offerCountLabel || "")}</span>
         <div class="mobileSearchSummaryActions">
           ${historyDone && !historyDone.hidden ? `<button class="mobileSearchSummaryDone" type="button" data-mobile-analysis-done>${escapeMarketHtml(c.historyDone)} ✓</button>` : ""}
         </div>
-        ${MARKET_SOURCES.map((source) => {
-          const on = Boolean(chartSources[source]);
-          const logo = on && marketLinks[source]
-            ? `<a class="agBrandLink is${sourceClass(source)}" href="${escapeMarketHtml(marketLinks[source])}" target="_blank" rel="noopener" title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></a>`
-            : `<button class="agBrandLink is${sourceClass(source)}" type="button"${on ? "" : ` data-mobile-analysis-market="${source}"`} title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
-          return `
-          <div class="mobileSearchCountMarket${on ? "" : " isOff"}">
-            <strong>${escapeMarketHtml(liveCount(source))}</strong>
-            ${logo}
-            ${marketToggleHtml(source, on, "data-mobile-analysis-market")}
-          </div>`;
-        }).join("")}
+        <div class="agMarketColumns">
+          ${MARKET_GROUPS.map((group) => {
+            const rows = group.rows.filter((row) => marketRowShown(group, row)).map((row, index) => {
+              const source = rowSource(row);
+              const on = rowOn(row);
+              const link = marketLinks[row];
+              const logo = on && link
+                ? `<a class="agBrandLink is${sourceClass(source)}" href="${escapeMarketHtml(link)}" target="_blank" rel="noopener" title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></a>`
+                : `<button class="agBrandLink is${sourceClass(source)}" type="button" title="${escapeMarketHtml(sourceName(source))}" aria-label="${escapeMarketHtml(sourceName(source))}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>`;
+              return `
+              <div class="mobileSearchCountMarket${index === 0 ? " isMain" : ""}${on ? "" : " isOff"}" data-analysis-market-row="${row}">
+                ${logo}
+                <strong>${escapeMarketHtml(on ? liveCount(row) : "—")}</strong>
+              </div>`;
+            }).join("");
+            return `
+            <section class="agMarketColumn${groupOn(group) ? "" : " isOff"}" data-analysis-market-group="${group.key}">
+              <div class="agMarketColumnHeadWrap">${marketGroupHeadHtml(group, "data-mobile-analysis-group")}</div>
+              ${rows}
+            </section>`;
+          }).join("")}
+        </div>
       </div>`;
     analysisContent.innerHTML = `
       <article class="mobileMarketAnalysisPanel">
@@ -8048,6 +8183,25 @@
       refreshActiveAnalysis();
       return;
     }
+    // B68: the country columns of "Aktualne oferty" on page 2 — the switch,
+    // "Tylko Niemcy / DE + NL + BE" (other countries: the data is read again)
+    // and a click on a switched-off column.
+    const analysisColumn = event.target.closest("[data-analysis-market-group]");
+    if (analysisColumn && activeAnalysis) {
+      const analysisSwitch = event.target.closest("[data-mobile-analysis-group]");
+      const greyRow = event.target.closest(".mobileSearchCountMarket.isOff[data-analysis-market-row]");
+      if (analysisSwitch || greyRow || analysisColumn.classList.contains("isOff")) {
+        event.preventDefault();
+        const key = analysisColumn.dataset.analysisMarketGroup;
+        const result = marketsWithGroup(key, !analysisSwitch && greyRow && !analysisColumn.classList.contains("isOff") ? greyRow.dataset.analysisMarketRow : "");
+        if (!result) {
+          setAnalysisStatus(copy().marketPickerLast, true);
+          return;
+        }
+        applyMarketsOnAnalysis(result.markets, result.countries);
+        return;
+      }
+    }
     const marketButton = event.target.closest("[data-mobile-analysis-market]");
     if (marketButton && activeAnalysis) {
       const source = marketButton.dataset.mobileAnalysisMarket;
@@ -8484,23 +8638,55 @@
   favoritesBar?.addEventListener("click", handleFavoriteClick);
   favoritesPage?.addEventListener("click", handleFavoriteClick);
 
-  // A grey logo is not a link: clicking it brings the portal back, like "+".
+  // Page 1, "Aktualne oferty" (B68): the column's switch, or a click anywhere
+  // on a switched-off column, turns the country on or off; a grey logo in a
+  // switched-on column is not a link: clicking it brings that portal back.
   document.addEventListener("click", (event) => {
-    const item = event.target.closest(".mobileManualPanel .mobileSearchCountMarket[data-market]");
-    if (!item) return;
-    const toggle = event.target.closest("[data-mobile-market-pick]");
-    const greyLogo = item.classList.contains("isOff") && event.target.closest(".agBrandLink");
-    if (!toggle && !greyLogo) return;
+    const column = event.target.closest(".mobileManualPanel [data-market-group]");
+    if (!column) return;
+    const switchButton = event.target.closest("[data-mobile-market-group]");
+    const item = event.target.closest(".mobileSearchCountMarket[data-market-row]");
+    const columnOff = column.classList.contains("isOff");
+    const greyLogo = !columnOff && item && item.classList.contains("isOff") && event.target.closest(".agBrandLink");
+    if (!switchButton && !greyLogo && !columnOff) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    const source = item.dataset.market;
-    const next = { ...chartSources, [source]: !chartSources[source] };
-    if (!MARKET_SOURCES.some((item) => next[item])) {
+    const result = marketsWithGroup(column.dataset.marketGroup, greyLogo && !switchButton ? item.dataset.marketRow : "");
+    if (!result) {
       setMarketSearchStatus?.(copy().marketPickerLast, true);
       return;
     }
-    applyChartSources(next);
+    applyChartSources(result.markets);
+    if (result.countries) setFormCountries(result.countries);
+    renderMarketPicker();
   }, true);
+  // "Kraj" changed in "Więcej filtrów": the German column's head follows.
+  document.addEventListener("change", (event) => {
+    if (event.target.closest?.("[data-mobile-country]")) renderMarketPicker();
+  });
+
+  // Page 2: new markets (and, from "Tylko Niemcy / DE + NL + BE", new
+  // countries of mobile.de and AutoScout24, also set in the page-1 form). A
+  // market without prices yet, or other countries, read the data again.
+  function applyMarketsOnAnalysis(next, countries = null) {
+    const before = { ...chartSources };
+    setChartSources(next);
+    let refetch = MARKET_SOURCES.some((source) => next[source] && !before[source]
+      && !activeAnalysis.listings.some((listing) => listingSource(listing) === source));
+    if (countries) {
+      setFormCountries(countries);
+      const old = [...(activeAnalysis.filters.countries || ["DE"])].sort().join(",");
+      if (old !== [...countries].sort().join(",")) {
+        activeAnalysis = { ...activeAnalysis, filters: { ...activeAnalysis.filters, countries } };
+        refetch = true;
+      }
+    }
+    renderMarketPicker();
+    renderHistory();
+    updateSelectedFiltersSummary?.();
+    if (refetch) refreshActiveAnalysis();
+    else renderAnalysis();
+  }
 
   function applyChartSources(next) {
     setChartSources(next);

@@ -1080,3 +1080,259 @@
     width: 100%;
   }
 }
+
+/* Owner 04.10: the category names of the chosen filters ("Nadwozie i silnik",
+   "Przebieg i napęd"…) centred over their columns, page 1 and page 2. */
+.mobileSearchSummary .agSpecColumn h4,
+.mobileMarketSearchCard .agSpecColumn h4 {
+  justify-content: center;
+  text-align: center;
+}
+
+/* ---- B68 (04.10): "Aktualne oferty" in country columns (page 1 and the
+   analysis): the label and the buttons on one line, below them six columns —
+   Niemcy, Holandia · Belgia, Polska, Szwecja, Francja, Białoruś: flag,
+   country, switch; the main portal on a tinted plate, the others under it; a
+   switched-off column is dashed and shows its main portal only. ---- */
+.mobileSearchSummaryFoot {
+  align-items: center;
+}
+
+.agMarketColumns {
+  flex: 1 0 100%;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1.2fr)) repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  align-items: start;
+  margin-top: 2px;
+}
+
+.agMarketColumn {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  padding: 7px 8px 8px;
+}
+
+.agMarketColumn.isOff {
+  border-style: dashed;
+  background: transparent;
+  cursor: pointer;
+}
+
+.agMarketColumn.isOff:hover {
+  border-color: var(--color-primary-rule);
+}
+
+.agMarketColumnHeadWrap {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.agMarketColumnHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.agMarketColumnFlags {
+  display: inline-flex;
+  flex: none;
+  gap: 3px;
+}
+
+.agMarketColumnFlags .agFlag {
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.25);
+}
+
+.agMarketColumnName {
+  min-width: 0;
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.agMarketColumn.isOff .agMarketColumnName {
+  color: var(--color-muted);
+}
+
+.agMarketColumn.isOff .agMarketColumnFlags {
+  filter: grayscale(0.6);
+  opacity: 0.6;
+}
+
+.agMarketSwitch {
+  position: relative;
+  flex: none;
+  width: 30px;
+  height: 18px;
+  margin-left: auto;
+  border: 0;
+  border-radius: 9px;
+  background: var(--color-brand);
+  padding: 0;
+  cursor: pointer;
+}
+
+.agMarketSwitch::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 14px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.12s ease;
+}
+
+.agMarketSwitch[aria-checked="false"] {
+  background: #b9c1cc;
+}
+
+.agMarketSwitch[aria-checked="false"]::after {
+  left: 2px;
+}
+
+.agMarketSwitch:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 0;
+  border-radius: var(--radius-md);
+  padding: 1px 2px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket[hidden] {
+  display: none;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket.isMain {
+  background: color-mix(in srgb, var(--color-brand) 8%, var(--color-surface));
+  padding: 4px 6px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn.isOff .mobileSearchCountMarket.isMain {
+  background: none;
+  padding: 1px 2px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .agBrandLink {
+  min-height: 24px;
+  min-width: 0;
+  padding: 0 6px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .agBrandLink img {
+  height: 12px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .isMain .agBrandLink {
+  min-height: 30px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .isMain .agBrandLink img {
+  height: 16px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket strong {
+  flex: none;
+  font-size: 0.875rem;
+  font-weight: 800;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket.isMain strong {
+  font-size: var(--text-lg);
+  font-weight: 900;
+}
+
+@media (max-width: 56rem) {
+  .agMarketColumns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 34rem) {
+  .agMarketColumns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* The slim bar: the switched-on countries' flags with the main portal's count. */
+.mobileCompactMarket .agFlag {
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.25);
+}
+
+.mobileCompactMarketFlags {
+  display: inline-flex;
+  gap: 2px;
+}
+
+/* B68: the filters show countries with flags instead of portal names. */
+.agPortalMarks.hasFlags {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.agPortalMarks.hasFlags::after {
+  content: none;
+}
+
+.agPortalMarkCountry {
+  display: inline-flex;
+  align-items: center;
+}
+
+.agPortalMarkCountry .agFlag,
+.mobilePortalFilterFlags .agFlag {
+  display: block;
+  border-radius: 2px;
+  box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.25);
+}
+
+.agPortalMarkCountry.isApprox::after {
+  content: "≈";
+  margin-left: 1px;
+  color: var(--color-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mobilePortalFilterLogos.hasFlags {
+  gap: 2px;
+}
+
+.mobilePortalFilterFlags {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.mobilePortalFilterLogos.hasFlags b {
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+.mobilePortalFilterLogos.hasFlags small {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+}

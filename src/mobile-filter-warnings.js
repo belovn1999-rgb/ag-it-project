@@ -56,10 +56,10 @@
     const picked = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : [];
     const lines = PORTALS
       .filter(([key]) => picked.includes(key))
-      .map(([, name, read]) => {
+      .map(([key, name, read]) => {
         const fromDefaults = new Set(safe(read, defaults));
         const left = [...new Set(safe(read, filters))].filter((label) => !fromDefaults.has(label));
-        return left.length ? { name, left } : null;
+        return left.length ? { name, country: window.AUTOGOOD_MARKET_COUNTRY?.[key] || "", left } : null;
       })
       .filter(Boolean);
     const key = JSON.stringify([lang(), lines]);
@@ -77,10 +77,13 @@
     mark.textContent = "!";
     title.append(mark, TEXT[lang()].title);
     const list = document.createElement("ul");
-    lines.forEach(({ name, left }) => {
+    lines.forEach(({ name, country, left }) => {
       const item = document.createElement("li");
       const portal = document.createElement("strong");
-      portal.textContent = `${name}: `;
+      // B68: the market's country flag before the portal (several portals
+      // share a country, so the portal is still named).
+      portal.innerHTML = window.AUTOGOOD_FLAG?.(country) || "";
+      portal.append(` ${name}: `);
       item.append(portal, left.join(", "));
       list.append(item);
     });

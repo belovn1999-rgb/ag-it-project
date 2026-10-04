@@ -87,7 +87,7 @@ const copy = {
     hideMoreFilters: "Ukryj",
     filterGroupPrice: "Przebieg i cena",
     filterGroupPortals: "Kraj i pochodzenie",
-    portalRowOff: "Portal nie jest wybrany — filtr nie działa",
+    portalRowOff: "Rynek nie jest wybrany — filtr nie działa",
     registeredLabel: "Zarejestrowany w Polsce",
     registeredAny: "Dowolnie",
     registeredYes: "Tak",
@@ -423,7 +423,7 @@ const copy = {
     hideMoreFilters: "Скрыть",
     filterGroupPrice: "Пробег и цена",
     filterGroupPortals: "Страна и происхождение",
-    portalRowOff: "Портал не выбран — фильтр не действует",
+    portalRowOff: "Рынок не выбран — фильтр не действует",
     registeredLabel: "Зарегистрирован в Польше",
     registeredAny: "Неважно",
     registeredYes: "Да",
@@ -3891,9 +3891,19 @@ window.AUTOGOOD_MOBILEDE_SEARCH = async (searchUrl, { countOnly = false, pages =
 const mobileDeCounts = new Map();
 let mobileDeCountRequest = 0;
 
+// B68: mobile.de stands in the German column of "Aktualne oferty" — its count
+// and link cover Germany (plus Austria or Luxembourg from "Kraj"); the
+// Netherlands and Belgium have their own column (AutoScout24, Marktplaats,
+// 2dehands). The analysis still reads every "Kraj" country.
+function germanColumnFilters(filters) {
+  const german = (filters?.countries || []).filter((code) => !["NL", "BE"].includes(code));
+  return { ...filters, countries: german.length ? german : ["DE"] };
+}
+
 async function refreshMobileDeCount(filters) {
   const target = document.querySelector("[data-mobile-search-count-mobilede]");
   if (!target) return;
+  filters = filters ? germanColumnFilters(filters) : filters;
   // A dash alone says nothing: its tooltip tells why there is no number.
   const show = (text, reason = "") => {
     target.textContent = text;
@@ -4098,7 +4108,7 @@ els.otomotoSearches.forEach((link) => link.addEventListener("click", (event) => 
 
 els.marketSearches.forEach((link) => link.addEventListener("click", (event) => {
   try {
-    const filters = readManualFields();
+    const filters = germanColumnFilters(readManualFields());
     const searchUrl = buildMobileDeSearchUrl(filters);
     link.href = searchUrl;
     window.AUTOGOOD_MOBILE_LOG_SEARCH?.(searchUrl);

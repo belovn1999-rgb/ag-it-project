@@ -14,6 +14,47 @@
   new MutationObserver(() => onLanguage.forEach((run) => run()))
     .observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
+  // ---- B68: countries with flags instead of portal names in the filters ----
+  // A market is a country (owner 2026-10-04): a field's marks show the flags
+  // of the countries whose portals take it (≈ when they take it only
+  // roughly), the portals in the tooltip; the rows of "Kraj i pochodzenie"
+  // are named by their market. SVG flags add no text to the labels.
+  const PORTAL_COUNTRY = { "mobile.de": "DE", AutoScout24: "DE", otomoto: "PL", blocket: "SE", "av.by": "BY", Marktplaats: "NL", "2dehands": "BE" };
+  const flagOf = (code) => window.AUTOGOOD_FLAG?.(code) || "";
+  const countryOf = (code) => window.AUTOGOOD_COUNTRY_NAME?.(code) || code;
+  const drawPortalMarks = () => {
+    document.querySelectorAll(".agPortalMarks[data-marks]").forEach((mark) => {
+      const countries = new Map();
+      mark.dataset.marks.split("·").map((part) => part.trim()).filter(Boolean).forEach((part) => {
+        const approx = part.endsWith("≈");
+        const portal = part.replace("≈", "").trim();
+        const code = PORTAL_COUNTRY[portal];
+        if (!code) return;
+        countries.set(code, [...(countries.get(code) || []), { portal, approx }]);
+      });
+      if (!countries.size) return;
+      mark.classList.add("hasFlags");
+      mark.innerHTML = [...countries].map(([code, list]) => `<span class="agPortalMarkCountry${list.every((item) => item.approx) ? " isApprox" : ""}">${flagOf(code)}</span>`).join("");
+      mark.title = [...countries].map(([code, list]) => `${countryOf(code)}: ${list.map((item) => `${item.portal}${item.approx ? " ≈" : ""}`).join(", ")}`).join("; ");
+    });
+  };
+  const PORTAL_ROWS = {
+    "mobile autoscout": { countries: ["DE", "NL", "BE"], portals: "mobile.de, AutoScout24" },
+    otomoto: { countries: ["PL"], portals: "otomoto" },
+  };
+  const drawPortalRows = () => {
+    document.querySelectorAll("[data-mobile-portal-row]").forEach((row) => {
+      const spec = PORTAL_ROWS[row.dataset.mobilePortalRow];
+      const box = row.querySelector(".mobilePortalFilterLogos");
+      if (!spec || !box) return;
+      box.classList.add("hasFlags");
+      box.innerHTML = `<span class="mobilePortalFilterFlags">${spec.countries.map(flagOf).join("")}</span><b>${spec.countries.map(countryOf).join(" · ")}</b><small>${spec.portals}</small>`;
+    });
+  };
+  drawPortalMarks();
+  drawPortalRows();
+  onLanguage.push(drawPortalMarks, drawPortalRows);
+
   // ---- 1. Every "od / do" box is named after its field ----------------------
   // The field's name sits above two bare boxes; screen readers, voice input
   // and autofill only saw "od" and "do".
@@ -243,26 +284,37 @@
     const navBottom = () => Math.max(0, document.querySelector(".agGlobalNav")?.getBoundingClientRect().bottom || 0);
 
 
+    // B68: one button per switched-on country column — its flags and the
+    // count of its first switched-on portal (the main one); a click opens
+    // that portal's search like its logo.
     let marketsKey = "";
     const renderMarkets = () => {
-      const markets = [...summary.querySelectorAll(".mobileSearchSummaryFoot .mobileSearchCountMarket")]
-        .filter((market) => !market.hidden && !market.classList.contains("isOff"));
-      const key = markets.map((market) => `${market.dataset.market}:${market.querySelector("strong")?.textContent.trim()}`).join("|");
+      const columns = [...summary.querySelectorAll(".mobileSearchSummaryFoot [data-market-group]")]
+        .filter((column) => !column.classList.contains("isOff"));
+      const picked = columns.map((column) => ({
+        column,
+        market: [...column.querySelectorAll(".mobileSearchCountMarket[data-market]")]
+          .find((market) => !market.hidden && !market.classList.contains("isOff")),
+      })).filter(({ market }) => market);
+      const key = picked.map(({ column, market }) => `${column.querySelector(".agMarketColumnName")?.textContent}:${market.dataset.market}:${market.querySelector("strong")?.textContent.trim()}`).join("|");
       if (key === marketsKey) return;
       marketsKey = key;
-      marketsEl.replaceChildren(...markets.map((market) => {
+      marketsEl.replaceChildren(...picked.map(({ column, market }) => {
         const link = market.querySelector(".agBrandLink");
         const count = market.querySelector("strong")?.textContent.trim() || "—";
+        const name = column.querySelector(".agMarketColumnName")?.textContent.trim() || market.dataset.market;
         const button = document.createElement("button");
         button.type = "button";
         button.className = "mobileCompactMarket";
-        const label = `${link?.getAttribute("aria-label") || market.dataset.market}: ${count}`;
+        const label = `${name} (${link?.getAttribute("aria-label") || market.dataset.market}): ${count}`;
         button.setAttribute("aria-label", label);
         button.title = label;
-        const logo = link?.querySelector("img")?.cloneNode();
+        const flags = document.createElement("span");
+        flags.className = "mobileCompactMarketFlags";
+        flags.innerHTML = column.querySelector(".agMarketColumnFlags")?.innerHTML || "";
         const number = document.createElement("b");
         number.textContent = count;
-        button.append(...[logo, number].filter(Boolean));
+        button.append(flags, number);
         // The original link fills in its search address on click.
         button.addEventListener("click", () => link?.click());
         return button;
