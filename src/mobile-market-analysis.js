@@ -145,6 +145,9 @@
       monitoringProgressRun: "czytam…",
       monitoringProgressDone: "✓ {count} ogłoszeń",
       monitoringProgressFail: "✕ brak odpowiedzi",
+      monitoringQueue: "W kolejce: {cars} — monitoringi idą po kolei, by nie przeciążać portali.",
+      monitoringProgressWait: "czeka na swoją kolej",
+      monitoringProgressLimit: "limit darmowego pośrednika: 18 zapytań na minutę, dalej za ~{seconds} s",
       monitoringErrorModel: "{portal} nie znalazł tego modelu — sprawdź nazwę modelu na stronie 1.",
       monitoringErrorNone: "Żaden portal nie zwrócił ogłoszeń — sprawdź internet i spróbuj ponownie za kilka minut.",
       monitoringErrorTooFew: "Portale zwróciły mniej niż 3 ogłoszenia — poszerz parametry na stronie 1.",
@@ -159,6 +162,50 @@
       monitoringSortDir: "Zmień kierunek sortowania",
       monitoringOnlyVat: "tylko VAT do odliczenia",
       monitoringOnlyDealers: "tylko dealerzy",
+      monitoringCalc: "Oblicz na gotowo",
+      monitoringViewExtra: "Dodatkowe (blisko filtrów)",
+      monitoringExtraTitle: "Oferty dodatkowe",
+      monitoringExtraHint: "Auta, które minimalnie nie mieszczą się w JEDNYM filtrze: przebieg, cena lub moc o kilka procent, rok o jeden (tylko w tej samej generacji) albo brak jednej z wybranych opcji. Pokazywane osobno, z zaznaczeniem, czym się różnią.",
+      monitoringExtraTolerance: "Zapas:",
+      monitoringExtraPercent: "{pct} %",
+      monitoringExtraOff: "wyłączone",
+      monitoringExtraProgress: "oferty dodatkowe {done}/{total} ({what})",
+      monitoringExtraPlanMileage: "przebieg",
+      monitoringExtraPlanYear: "rok",
+      monitoringExtraPlanPrice: "cena",
+      monitoringExtraPlanPower: "moc",
+      monitoringExtraPlanOptions: "bez opcji z filtra",
+      monitoringExtraNote: "Każde auto różni się od filtrów jednym parametrem (zapas {pct} %; rok ±1 tylko w tej samej generacji) — różnica zaznaczona na żółto.",
+      monitoringExtraYearNoData: "Rok bez zapasu: brak danych o generacjach tego modelu.",
+      monitoringExtraYearBoundary: "Rok bez zapasu: sąsiedni rok to już (albo także) inna generacja.",
+      monitoringExtraEmpty: "Brak aut tuż poza filtrami (zapas {pct} %).",
+      monitoringExtraNone: "Ten monitoring nie szukał ofert dodatkowych — pojawią się po następnym monitoringu (zapas ustawisz w „Ustawienia monitoringu”).",
+      monitoringMissTitle: "Poza filtrem o tyle; pozostałe parametry pasują.",
+      monitoringMissOptionsTitle: "Portal nie znalazł tego auta z wybranymi opcjami — sprawdź w ogłoszeniu, której brakuje. Pozostałe parametry pasują.",
+      monitoringMissMileageMax: "przebieg {value} — {delta} ponad filtr (do {limit})",
+      monitoringMissMileageMin: "przebieg {value} — {delta} poniżej filtra (od {limit})",
+      monitoringMissYearMin: "rok {value} — rok wcześniej niż filtr (od {limit}), ta sama generacja: {generation}",
+      monitoringMissYearMax: "rok {value} — rok później niż filtr (do {limit}), ta sama generacja: {generation}",
+      monitoringMissPriceMax: "cena {pct} ponad filtr (do {limit})",
+      monitoringMissPriceMin: "cena {pct} poniżej filtra (od {limit})",
+      monitoringMissPowerMax: "moc {value} — {delta} ponad filtr (do {limit})",
+      monitoringMissPowerMin: "moc {value} — {delta} poniżej filtra (od {limit})",
+      monitoringMissOption: "brak opcji z filtra: {options}",
+      monitoringMissOptions: "brak co najmniej jednej opcji z filtra: {options}",
+      monitoringSortDrop: "obniżka ceny",
+      monitoringOnlyDrop: "z obniżką ceny",
+      monitoringOnlyDeal: "do negocjacji",
+      monitoringDrop: "obniżka: {from} → {to} ({pct})",
+      monitoringDropTimes: "{count}×",
+      monitoringDropTitle: "Najwyższa znana cena tego ogłoszenia: z monitoringów tego auta i z portalu (otomoto: najniższa cena z 30 dni przed obniżką; AutoScout24: cena przed „Super Deal”).",
+      monitoringDeal: "Do negocjacji",
+      monitoringDealTitle: "W ofercie co najmniej 30 dni, a cena już spadała — sprzedawca może zgodzić się na więcej.",
+      monitoringLiquidity: "Płynność rynku:",
+      monitoringLiquidityDays: "mediana {days} w ofercie",
+      monitoringLiquidityDrops: "z obniżką ceny: {count} z {total} ({pct})",
+      monitoringLiquidityDeals: "do negocjacji: {count}",
+      monitoringLiquidityGone: "zniknęło w ostatnich 7 dniach: {count}",
+      monitoringLiquidityTitle: "Dni w ofercie: data z portalu (otomoto, blocket) albo pierwszy monitoring, w którym auto się pojawiło; auta obecne już w pierwszym monitoringu liczą się jako „co najmniej”. Zniknięte — tylko z pełnych list.",
       monitoringListedSince: "w ofercie od {date} · {days}",
       monitoringSeenSince: "w monitoringu od {date} · {days}",
       monitoringSeenBefore: "w ofercie co najmniej od {date} · {days}",
@@ -628,6 +675,9 @@
       monitoringProgressRun: "читаю…",
       monitoringProgressDone: "✓ {count} объявлений",
       monitoringProgressFail: "✕ нет ответа",
+      monitoringQueue: "В очереди: {cars} — мониторинги идут по очереди, чтобы не перегружать порталы.",
+      monitoringProgressWait: "ждёт своей очереди",
+      monitoringProgressLimit: "лимит бесплатного прокси: 18 запросов в минуту, дальше через ~{seconds} с",
       monitoringErrorModel: "{portal} не нашёл эту модель — проверь название модели на странице 1.",
       monitoringErrorNone: "Ни один портал не вернул объявления — проверь интернет и попробуй ещё раз через несколько минут.",
       monitoringErrorTooFew: "Порталы вернули меньше 3 объявлений — расширь параметры на странице 1.",
@@ -642,6 +692,50 @@
       monitoringSortDir: "Сменить направление сортировки",
       monitoringOnlyVat: "только НДС к вычету",
       monitoringOnlyDealers: "только дилеры",
+      monitoringCalc: "Посчитать под ключ",
+      monitoringViewExtra: "Дополнительные (рядом с фильтрами)",
+      monitoringExtraTitle: "Дополнительные предложения",
+      monitoringExtraHint: "Авто, которые чуть-чуть не проходят ОДИН фильтр: пробег, цена или мощность на несколько процентов, год на один (только в той же генерации) или нет одной из выбранных опций. Показываются отдельно, с пометкой, чем отличаются.",
+      monitoringExtraTolerance: "Запас:",
+      monitoringExtraPercent: "{pct} %",
+      monitoringExtraOff: "выключено",
+      monitoringExtraProgress: "дополнительные {done}/{total} ({what})",
+      monitoringExtraPlanMileage: "пробег",
+      monitoringExtraPlanYear: "год",
+      monitoringExtraPlanPrice: "цена",
+      monitoringExtraPlanPower: "мощность",
+      monitoringExtraPlanOptions: "без опций из фильтра",
+      monitoringExtraNote: "Каждое авто отличается от фильтров одним параметром (запас {pct} %; год ±1 только в той же генерации) — отличие отмечено жёлтым.",
+      monitoringExtraYearNoData: "Год без запаса: нет данных о генерациях этой модели.",
+      monitoringExtraYearBoundary: "Год без запаса: соседний год — уже (или тоже) другая генерация.",
+      monitoringExtraEmpty: "Нет авто сразу за фильтрами (запас {pct} %).",
+      monitoringExtraNone: "Этот мониторинг не искал дополнительные предложения — появятся после следующего мониторинга (запас — в «Настройках мониторинга»).",
+      monitoringMissTitle: "За фильтром на столько; остальные параметры подходят.",
+      monitoringMissOptionsTitle: "Портал не нашёл это авто с выбранными опциями — проверь в объявлении, какой нет. Остальные параметры подходят.",
+      monitoringMissMileageMax: "пробег {value} — на {delta} больше фильтра (до {limit})",
+      monitoringMissMileageMin: "пробег {value} — на {delta} меньше фильтра (от {limit})",
+      monitoringMissYearMin: "год {value} — на год раньше фильтра (от {limit}), та же генерация: {generation}",
+      monitoringMissYearMax: "год {value} — на год позже фильтра (до {limit}), та же генерация: {generation}",
+      monitoringMissPriceMax: "цена на {pct} выше фильтра (до {limit})",
+      monitoringMissPriceMin: "цена на {pct} ниже фильтра (от {limit})",
+      monitoringMissPowerMax: "мощность {value} — на {delta} больше фильтра (до {limit})",
+      monitoringMissPowerMin: "мощность {value} — на {delta} меньше фильтра (от {limit})",
+      monitoringMissOption: "нет опции из фильтра: {options}",
+      monitoringMissOptions: "нет как минимум одной опции из фильтра: {options}",
+      monitoringSortDrop: "снижение цены",
+      monitoringOnlyDrop: "со снижением цены",
+      monitoringOnlyDeal: "для торга",
+      monitoringDrop: "снижение: {from} → {to} ({pct})",
+      monitoringDropTimes: "{count}×",
+      monitoringDropTitle: "Самая высокая известная цена объявления: из мониторингов этого авто и с портала (otomoto: самая низкая цена за 30 дней до снижения; AutoScout24: цена до «Super Deal»).",
+      monitoringDeal: "Для торга",
+      monitoringDealTitle: "В продаже не меньше 30 дней, и цену уже снижали — продавец может уступить ещё.",
+      monitoringLiquidity: "Ликвидность рынка:",
+      monitoringLiquidityDays: "медиана {days} в продаже",
+      monitoringLiquidityDrops: "со снижением цены: {count} из {total} ({pct})",
+      monitoringLiquidityDeals: "для торга: {count}",
+      monitoringLiquidityGone: "исчезло за последние 7 дней: {count}",
+      monitoringLiquidityTitle: "Дни в продаже: дата с портала (otomoto, blocket) или первый мониторинг, где авто появилось; авто, которые были уже в первом мониторинге, считаются как «минимум». Исчезнувшие — только по полным спискам.",
       monitoringListedSince: "в продаже с {date} · {days}",
       monitoringSeenSince: "в мониторинге с {date} · {days}",
       monitoringSeenBefore: "в продаже минимум с {date} · {days}",
@@ -1311,6 +1405,8 @@
       vatDeductible: listingValue(row, ["vatdeductible"]) === true || listingValue(row, ["vatdeductible"]) === "true",
       // The portal's own date of the ad (otomoto, blocket), when it gives one.
       listedAt: String(listingValue(row, ["listedat"]) || "").slice(0, 30),
+      // The portal's own earlier price (otomoto price drop, AutoScout24 "Super Deal").
+      oldPrice: parseMarketNumber(listingValue(row, ["oldprice"])) || 0,
       // Otomoto: "1" history confirmed in CEPiK, "0" not; origin "pl" or the
       // country the car was imported from.
       cepik: String(listingValue(row, ["cepik"]) || "").slice(0, 1),
@@ -1433,6 +1529,9 @@
         seller: node.sellerLink ? "dealer" : "private",
         // When the ad was put up (Monitoring: "w ofercie od").
         listedAt: String(node.createdAt || ""),
+        // A price drop announced by otomoto: the lowest price of the 30 days
+        // before it (EU Omnibus rule), e.g. 27 799 → 26 699 zł (-3.96 %).
+        oldPrice: Number(node.priceDrop?.lowestPrice?.minorAmount) > 0 ? Math.round(Number(node.priceDrop.lowestPrice.minorAmount) / 100) : "",
         // History confirmed in CEPiK by otomoto, and where the car came from
         // ("Kraj pochodzenia": pl = bought new in Poland, else imported).
         cepik: node.cepikVerified === true ? "1" : node.cepikVerified === false ? "0" : "",
@@ -1812,15 +1911,21 @@
   const otomotoProvider = {
     id: "otomoto",
     lastSources: ["otomoto"],
-    async getListings({ filters, pinned = null, historyId = "", progress = null }) {
+    async getListings({ filters, pinned = null, historyId = "", progress = null, sequential = false, wholeList = null, priceOverride = null }) {
       const c = copy();
       setAnalysisStatus(c.preparing);
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
       // Favourites: whole lists where short enough (page 3 compares offers).
       const favorite = historyId ? marketHistory.find((entry) => entry.id === historyId) : historyEntryForFilters(filters);
-      const whole = pinned ?? Boolean(favorite?.pinned);
-      // ... and their own price per portal (set on page 3 "Monitoring").
-      const prices = Object.fromEntries(MARKET_SOURCES.map((source) => [source, whole && favorite ? window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(favorite.id, source) || null : null]));
+      const ownPrices = pinned ?? Boolean(favorite?.pinned);
+      // A sample instead of whole lists when asked (the "Dodatkowe" search
+      // without options can be large).
+      const whole = wholeList ?? ownPrices;
+      // ... and their own price per portal (set on page 3 "Monitoring"), or
+      // the band of a narrow search ("Dodatkowe").
+      const prices = priceOverride
+        ? Object.fromEntries(MARKET_SOURCES.map((source) => [source, priceOverride[source] || null]))
+        : Object.fromEntries(MARKET_SOURCES.map((source) => [source, ownPrices && favorite ? window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(favorite.id, source) || null : null]));
       this.lastPrices = JSON.stringify(Object.fromEntries(Object.entries(prices).filter(([, price]) => price)));
       // Each portal says how far it got (page 3 shows it while it checks).
       const step = (source) => (done, total, unit = "pages") => progress?.(source, { state: "run", done, total, unit });
@@ -1835,15 +1940,15 @@
           throw error;
         });
       };
-      const [otomoto, mobile, blocket, avby, autoscout] = await Promise.allSettled([
-        selected.includes("otomoto") ? track("otomoto", fetchOtomotoListings(filters, (page, pages) => {
+      const read = {
+        otomoto: () => fetchOtomotoListings(filters, (page, pages) => {
           setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
           step("otomoto")(page, pages);
-        }, whole, prices.otomoto)) : null,
-        selected.includes("mobile") ? track("mobile", fetchMobileDeSample(filters, whole, prices.mobile, step("mobile"))) : null,
-        selected.includes("blocket") ? track("blocket", fetchBlocketListings(filters, step("blocket"), whole, prices.blocket)) : null,
-        selected.includes("avby") ? track("avby", fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole)) : null,
-        selected.includes("autoscout") ? track("autoscout", fetchAutoscoutListings(filters, {
+        }, whole, prices.otomoto),
+        mobile: () => fetchMobileDeSample(filters, whole, prices.mobile, step("mobile")),
+        blocket: () => fetchBlocketListings(filters, step("blocket"), whole, prices.blocket),
+        avby: () => fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole),
+        autoscout: () => fetchAutoscoutListings(filters, {
           countries: (filters.countries || []).length ? filters.countries : ["DE"],
           price: prices.autoscout || prices.mobile || null,
           whole,
@@ -1851,8 +1956,25 @@
           // wait minutes for a whole AutoScout24 list.
           everyPage: typeof progress === "function",
           onProgress: step("autoscout"),
-        })) : null,
-      ]);
+        }),
+      };
+      // Monitoring reads the portals of the free reader proxy one after
+      // another (otomoto, AutoScout24, blocket), so they do not ask it all at
+      // once; mobile.de (own importer) and av.by (own API) go alongside.
+      let chain = Promise.resolve();
+      const inTurn = (source) => {
+        progress?.(source, { state: "wait" });
+        const promise = chain.then(() => track(source, read[source]()));
+        chain = promise.catch(() => {});
+        return promise;
+      };
+      const run = (source) => {
+        if (!selected.includes(source)) return null;
+        if (sequential && ["otomoto", "autoscout", "blocket"].includes(source)) return inTurn(source);
+        return track(source, read[source]());
+      };
+      const started = { otomoto: run("otomoto"), mobile: run("mobile"), autoscout: run("autoscout"), blocket: run("blocket"), avby: run("avby") };
+      const [otomoto, mobile, blocket, avby, autoscout] = await Promise.allSettled([started.otomoto, started.mobile, started.blocket, started.avby, started.autoscout]);
       this.lastErrors = Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout]]
         .filter(([, result]) => result.status === "rejected").map(([source, result]) => [source, String(result.reason?.message || result.reason || "")]));
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
@@ -2230,6 +2352,12 @@
       seller: listing.seller || "",
       country: String(listing.country || "").slice(0, 4),
       listedAt: listing.listedAt || undefined,
+      // The portal's earlier price: a drop even before two monitorings saw it.
+      was: Number(listing.oldPrice) > Number(listing.price) ? Math.round(listing.oldPrice) : undefined,
+      // Seller's place and body: the calculator's transport tariff ("Oblicz na gotowo").
+      zip: String(listing.postalCode || "").slice(0, 8) || undefined,
+      city: String(listing.city || "").slice(0, 40) || undefined,
+      body: String(listing.bodyType || "").slice(0, 30) || undefined,
       // For the turnkey price in Belarus: engine size, first registration, fuel.
       ccm: Number(listing.displacementCcm) || undefined,
       reg: listing.firstRegistration || undefined,
@@ -3537,10 +3665,13 @@
   // teraz" that reads the portals and compares with the previous check (new
   // and gone offers per portal), and the day-by-day history below, folded.
   const monitoringState = { id: "", view: "new", portal: "", busy: "", status: "", statusError: false };
+  // Monitoring checks waiting for the one running (see runMonitoringCheck).
+  const monitoringQueue = [];
+  const isQueued = (id) => monitoringQueue.some((item) => item.entry.id === id);
   // How the manager likes the list (sort, filters) and whether the settings
   // are open: conveniences of this browser, not user data.
   const MONITORING_PREFS_KEY = "autogood.mobile.monitoringListPrefs";
-  const monitoringPrefs = { sort: "price", dir: "asc", onlyVat: false, onlyDealers: false, settingsOpen: false };
+  const monitoringPrefs = { sort: "price", dir: "asc", onlyVat: false, onlyDealers: false, onlyDrop: false, onlyDeal: false, settingsOpen: false };
   try {
     Object.assign(monitoringPrefs, JSON.parse(localStorage.getItem(MONITORING_PREFS_KEY) || "{}"));
   } catch {
@@ -3555,6 +3686,8 @@
   };
   // What each portal has read while a monitoring runs.
   const monitoringProgress = {};
+  // "" while the main lists are read, else what the narrow searches do now.
+  let monitoringPhase = "";
   let monitoringExtended = false;
   try {
     monitoringExtended = localStorage.getItem("autogood.mobile.monitoringExtended") === "1";
@@ -3631,6 +3764,9 @@
   // Default (owner, 2026-10-03): Germany, the Netherlands, Belgium, Austria,
   // Luxembourg, AutoScout24 on. Same storage rules as the history (4.6.1).
   const MONITORING_SCOPE_KEY = "autogood.mobile.monitoringScope.v1";
+  // "Dodatkowe" margin per favourite, in % (owner, 2026-10-04: 5–10 %).
+  const NEAR_TOLERANCES = [0, 5, 10];
+  const NEAR_DEFAULT_TOLERANCE = 10;
   const MONITORING_COUNTRIES = ["DE", "NL", "BE", "AT", "LU"];
   // Other countries come later with their own portals (owner, 2026-10-03).
   const MONITORING_COUNTRY_CHOICES = ["DE", "NL", "BE", "AT", "LU"];
@@ -3664,7 +3800,8 @@
   function monitoringScopeOf(favoriteId) {
     const scope = readMonitoringScopes()[favoriteId] || {};
     const countries = Array.isArray(scope.countries) && scope.countries.length ? scope.countries.filter((code) => MONITORING_COUNTRY_CHOICES.includes(code)) : MONITORING_COUNTRIES;
-    return { countries: countries.length ? countries : MONITORING_COUNTRIES };
+    const tolerance = NEAR_TOLERANCES.includes(Number(scope.tolerance)) ? Number(scope.tolerance) : NEAR_DEFAULT_TOLERANCE;
+    return { countries: countries.length ? countries : MONITORING_COUNTRIES, tolerance };
   }
   function setMonitoringScope(favoriteId, change) {
     const all = readMonitoringScopes();
@@ -3723,7 +3860,7 @@
     if (monitoringState.id !== (entry?.id || "")) Object.assign(monitoringState, { id: entry?.id || "", view: "new", portal: "", status: "", statusError: false });
     const monitored = Boolean(entry?.autoRefresh?.enabled);
     // This car being checked, or waiting for another car's check.
-    const busy = entry && (monitoringState.busy === entry.id || queuedCheck?.entry.id === entry.id);
+    const busy = entry && (monitoringState.busy === entry.id || isQueued(entry.id));
     const otherCar = monitoringState.busy && monitoringState.busy !== entry?.id ? marketHistory.find((item) => item.id === monitoringState.busy) : null;
     priceHistoryPage.innerHTML = entry ? `
       <section class="mobileMarketCard mobileMonitoringHead">
@@ -3753,6 +3890,13 @@
             ${blockTitle("percent", c.monitoringConverter)}
             ${monitoringConverterHtml()}
           </section>
+          <section class="mobileMarketCard mobileMonitoringExtraCard">
+            ${blockTitle("percent", c.monitoringExtraTitle)}
+            <p class="mobileMonitoringHint">${escapeMarketHtml(c.monitoringExtraHint)}</p>
+            <label class="mobileMonitoringExtraChoice">${escapeMarketHtml(c.monitoringExtraTolerance)}
+              <select data-monitoring-tolerance>${NEAR_TOLERANCES.map((value) => `<option value="${value}"${monitoringScopeOf(entry.id).tolerance === value ? " selected" : ""}>${escapeMarketHtml(value ? c.monitoringExtraPercent.replace("{pct}", String(value)) : c.monitoringExtraOff)}</option>`).join("")}</select>
+            </label>
+          </section>
         </div>
       </details>
       <section class="mobileMarketCard mobileMonitoringResults">
@@ -3765,6 +3909,7 @@
         </div>
         <div class="mobileMonitoringProgress" data-monitoring-progress aria-live="polite"${monitoringState.busy ? "" : " hidden"}>${monitoringProgressHtml()}</div>
         ${otherCar ? `<p class="mobileMonitoringStatus">${escapeMarketHtml(c.monitoringAutoRunning.replace("{car}", monitoringTitle(otherCar)))}</p>` : ""}
+        ${monitoringQueue.length ? `<p class="mobileMonitoringStatus" data-monitoring-queue>${escapeMarketHtml(c.monitoringQueue.replace("{cars}", monitoringQueue.map((item) => monitoringTitle(item.entry)).join(", ")))}</p>` : ""}
         ${monitoringState.status ? `<p class="mobileMonitoringStatus${monitoringState.statusError ? " isError" : ""}">${escapeMarketHtml(monitoringState.status)}</p>` : ""}
         <div data-monitoring-results="${escapeMarketHtml(entry.id)}"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></div>
       </section>
@@ -3791,6 +3936,8 @@
   // Monitoring runs every day at 9:00 (while the program is open, until a
   // server runs it): due when no Monitoring check exists since today's 9:00.
   const MONITORING_HOUR = 9;
+  // Listed this long and already cheaper: "Do negocjacji" (B22).
+  const NEGOTIATION_DAYS = 30;
   const todayAtNine = () => {
     const at = new Date();
     at.setHours(MONITORING_HOUR, 0, 0, 0);
@@ -3813,7 +3960,14 @@
     }
     return `${n} ${n === 1 ? c.monitoringDay1 : c.monitoringDay5}`;
   }
-  const daysSince = (iso) => (Date.now() - Date.parse(iso)) / 86400000;
+  // Calendar days: yesterday's date is "1 day" whatever the hour.
+  const daysSince = (iso) => {
+    const then = new Date(iso);
+    const today = new Date();
+    then.setHours(0, 0, 0, 0);
+    today.setHours(0, 0, 0, 0);
+    return Math.round((today - then) / 86400000);
+  };
   const shortDate = (iso) => formatHistoryDate(iso).split(",")[0];
 
   function monitoringProgressHtml() {
@@ -3822,13 +3976,23 @@
       const info = monitoringProgress[source];
       const text = info.state === "ok" ? c.monitoringProgressDone.replace("{count}", numberFormat().format(info.count || 0))
         : info.state === "fail" ? c.monitoringProgressFail
+        : info.state === "wait" ? c.monitoringProgressWait
           : Number.isFinite(info.done) && Number.isFinite(info.total)
             ? (info.unit === "countries" ? c.monitoringProgressCountries : c.monitoringProgressPages).replace("{done}", info.done).replace("{total}", info.total)
             : c.monitoringProgressRun;
-      return `<span class="is${info.state === "ok" ? "Done" : info.state === "fail" ? "Fail" : "Run"}"><b>${escapeMarketHtml(portalName(source))}</b> ${escapeMarketHtml(text)}</span>`;
+      return `<span class="is${info.state === "ok" ? "Done" : info.state === "fail" ? "Fail" : info.state === "wait" ? "Wait" : "Run"}"><b>${escapeMarketHtml(portalName(source))}</b> ${escapeMarketHtml(text)}</span>`;
     });
-    return `<b>${escapeMarketHtml(c.monitoringProgressTitle)}</b> ${parts.length ? parts.join("") : `<span>${escapeMarketHtml(c.monitoringProgressRun)}</span>`}`;
+    // The free proxy's minute limit reached: the line says why it waits.
+    const proxy = window.AUTOGOOD_PROXY_QUEUE?.status?.();
+    const pause = proxy?.resumeAt && proxy.waiting ? `<span class="isWait">${escapeMarketHtml(c.monitoringProgressLimit.replace("{seconds}", String(Math.max(1, Math.ceil((proxy.resumeAt - Date.now()) / 1000)))))}</span>` : "";
+    return `<b>${escapeMarketHtml(monitoringPhase ? `${c.monitoringProgressTitle.replace(/:$/, "")} — ${monitoringPhase}:` : c.monitoringProgressTitle)}</b> ${parts.length ? parts.join("") : `<span>${escapeMarketHtml(c.monitoringProgressRun)}</span>`}${pause}`;
   }
+  // Redrawn when the proxy queue pauses or goes on.
+  window.AUTOGOOD_PROXY_QUEUE?.onChange?.(() => {
+    if (!monitoringState.busy) return;
+    const box = document.querySelector("[data-monitoring-progress]");
+    if (box && !box.hidden) box.innerHTML = monitoringProgressHtml();
+  });
   function updateMonitoringProgress(source, info) {
     monitoringProgress[source] = { ...(monitoringProgress[source] || {}), ...info };
     const box = document.querySelector("[data-monitoring-progress]");
@@ -4029,7 +4193,7 @@
     const monitoringChecks = [...byDate.values()].filter((item) => item.scope).sort((left, right) => left.at.localeCompare(right.at));
     const firstSeen = new Map();
     [...byDate.values()].sort((left, right) => left.at.localeCompare(right.at)).forEach((item) => {
-      Object.values(item.markets || {}).forEach((market) => (market.offers || []).forEach((offer) => {
+      [...Object.values(item.markets || {}), ...Object.values(item.extra?.markets || {})].forEach((market) => (market.offers || []).forEach((offer) => {
         if (!firstSeen.has(offer.key)) firstSeen.set(offer.key, item.at);
       }));
     });
@@ -4042,10 +4206,46 @@
         .replace("{count}", String(monitoringChecks.length));
     }
     const appearance = (offer) => {
-      if (offer.listedAt && Number.isFinite(Date.parse(offer.listedAt))) return { at: offer.listedAt, kind: "listed" };
+      const listed = offer.listedAt && Number.isFinite(Date.parse(offer.listedAt)) ? offer.listedAt : "";
       const at = firstSeen.get(offer.key);
+      // otomoto renews its date when an ad is refreshed: a monitoring that
+      // saw the car earlier wins.
+      if (listed && (!at || Date.parse(listed) <= Date.parse(at))) return { at: listed, kind: "listed" };
       if (!at) return null;
       return { at, kind: at === firstCheckAt ? "before" : "seen" };
+    };
+    // Liquidity (B22): every price each offer had in this car's checks, and
+    // the portal's own earlier price. Long listed and already cheaper = a
+    // candidate to negotiate (owner, 2026-10-04).
+    const pricePath = new Map();
+    [...byDate.values()].sort((left, right) => left.at.localeCompare(right.at)).forEach((item) => {
+      [...Object.values(item.markets || {}), ...Object.values(item.extra?.markets || {})].forEach((market) => (market.offers || []).forEach((offer) => {
+        const path = pricePath.get(offer.key) || [];
+        if (!path.length || path[path.length - 1].price !== offer.price) path.push({ at: item.at, price: offer.price });
+        pricePath.set(offer.key, path);
+      }));
+    });
+    const liquidityCache = new Map();
+    const liquidity = (offer) => {
+      if (liquidityCache.has(offer)) return liquidityCache.get(offer);
+      const path = pricePath.get(offer.key) || [{ price: offer.price }];
+      const seenDrops = path.filter((point, index) => index && point.price < path[index - 1].price).length;
+      const portalDrop = Number(offer.was) > Number(path[0].price) ? 1 : 0;
+      const highest = Math.max(Number(offer.was) || 0, ...path.map((point) => Number(point.price) || 0));
+      const dropped = highest > Number(offer.price);
+      const info = appearance(offer);
+      const days = info ? Math.floor(daysSince(info.at)) : null;
+      const result = {
+        dropped,
+        drops: dropped ? Math.max(1, seenDrops + portalDrop) : 0,
+        from: dropped ? highest : null,
+        share: dropped ? (Number(offer.price) - highest) / highest : 0,
+        days,
+        atLeast: info?.kind === "before",
+        deal: dropped && days !== null && days >= NEGOTIATION_DAYS,
+      };
+      liquidityCache.set(offer, result);
+      return result;
     };
     const changedBetween = false;
     const newBase = !previous && (checks.length > 1 || otherChecks);
@@ -4085,11 +4285,22 @@
     // Saved by hand: as listed now, or as saved when no longer listed.
     const saved = savedCarsOf(entry.id).filter((item) => !monitoringState.portal || item.source === monitoringState.portal);
     const savedKeys = new Set(savedCarsOf(entry.id).map((item) => item.offer?.key));
-    const currentByKey = new Map(perSource.flatMap(({ source, current }) => (current?.offers || []).map((offer) => [offer.key, { source, offer }])));
+    // "Dodatkowe": cars just outside the filters, found by this monitoring.
+    const extra = record.extra || null;
+    const extraBefore = new Set([before?.markets, before?.extra?.markets].flatMap((markets) => Object.values(markets || {}).flatMap((market) => (market.offers || []).map((offer) => offer.key))));
+    const extraRows = Object.entries(extra?.markets || {})
+      .filter(([source]) => chartSources[source] && (!monitoringState.portal || source === monitoringState.portal))
+      // "Nowe" only against a monitoring that also looked for them.
+      .flatMap(([source, market]) => (market.offers || []).map((offer) => ({ source, offer, extra: true, isNew: Boolean(before?.extra) && !extraBefore.has(offer.key) })));
+    const currentByKey = new Map([
+      ...perSource.flatMap(({ source, current }) => (current?.offers || []).map((offer) => [offer.key, { source, offer }])),
+      ...Object.entries(extra?.markets || {}).flatMap(([source, market]) => (market.offers || []).map((offer) => [offer.key, { source, offer }])),
+    ]);
     const viewRows = {
       new: allRows.filter((row) => row.group === "new"),
       gone: allRows.filter((row) => row.group === "gone"),
       all: allRows.filter((row) => !row.gone),
+      extra: extraRows,
       saved: saved.map((item) => {
         const now = currentByKey.get(item.offer.key);
         return now
@@ -4108,10 +4319,13 @@
       year: (row) => Number(row.offer.year) || 0,
       mileage: (row) => Number(row.offer.mileage) || 0,
       listed: (row) => Date.parse(appearance(row.offer)?.at || "") || 0,
+      // The biggest drop first (most negative share).
+      drop: (row) => liquidity(row.offer).share,
     }[monitoringPrefs.sort] || ((row) => row.offer.price);
     const direction = monitoringPrefs.dir === "desc" ? -1 : 1;
     const rows = viewRows[view]
       .filter((row) => (!monitoringPrefs.onlyVat || isVat(row.offer)) && (!monitoringPrefs.onlyDealers || row.offer.seller === "dealer"))
+      .filter((row) => (!monitoringPrefs.onlyDrop || liquidity(row.offer).dropped) && (!monitoringPrefs.onlyDeal || liquidity(row.offer).deal))
       .sort((left, right) => (sortValue(left) - sortValue(right)) * direction || left.offer.price - right.offer.price);
     // Belarus (av.by compared with mobile.de / AutoScout24): German offers with
     // the car's price, the price in Minsk and turnkey with customs, in USD.
@@ -4159,13 +4373,53 @@
       return `<small class="mobileMonitoringDate is${info.kind.charAt(0).toUpperCase()}${info.kind.slice(1)}" title="${escapeMarketHtml(title)}">${escapeMarketHtml(text)}</small>`;
     };
     const metaLine = (offer) => [offer.year, offer.mileage ? `${numbers.format(offer.mileage)} ${kmUnit()}` : "", powerText(offer.power)].filter(Boolean).join(" · ");
+    const percentText = (share) => `${share < 0 ? "−" : "+"}${Math.abs(Math.round(share * 1000) / 10).toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL")} %`;
+    const dropLine = (offer) => {
+      const info = liquidity(offer);
+      if (!info.dropped) return "";
+      const text = c.monitoringDrop
+        .replace("{from}", formatPlainPrice(info.from, offer.currency))
+        .replace("{to}", formatPlainPrice(offer.price, offer.currency))
+        .replace("{pct}", percentText(info.share));
+      return `<small class="mobileMonitoringDrop" title="${escapeMarketHtml(c.monitoringDropTitle)}">↓ ${escapeMarketHtml(text)}${info.drops > 1 ? ` · ${escapeMarketHtml(c.monitoringDropTimes.replace("{count}", String(info.drops)))}` : ""}</small>`;
+    };
+    const dealBadge = (offer) => (liquidity(offer).deal ? ` <span class="mobileMonitoringDeal" title="${escapeMarketHtml(c.monitoringDealTitle)}">${escapeMarketHtml(c.monitoringDeal)}</span>` : "");
+    // The market's pace: how long offers stay, how many got cheaper, how many
+    // went in the last week (complete lists only: a sample misses offers).
+    const liquidityHtml = (() => {
+      const current = viewRows.all.filter((row) => !row.gone);
+      if (!current.length) return "";
+      const known = current.map((row) => liquidity(row.offer)).filter((info) => info.days !== null);
+      const days = known.map((info) => info.days).sort((a, b) => a - b);
+      const medianDays = days.length ? days[Math.floor(days.length / 2)] : null;
+      const atLeast = known.some((info) => info.atLeast);
+      const dropped = current.filter((row) => liquidity(row.offer).dropped).length;
+      const deals = current.filter((row) => liquidity(row.offer).deal).length;
+      const weekAgo = Date.now() - 7 * 86400000;
+      const goneWeek = new Set();
+      perSource.filter(({ source, current: market }) => market?.complete && (!monitoringState.portal || source === monitoringState.portal)).forEach(({ source, current: market }) => {
+        const now = new Set((market.offers || []).map((offer) => offer.key));
+        monitoringChecks.filter((item) => item.scope === record.scope && item.at !== record.at && Date.parse(item.at) >= weekAgo && item.markets?.[source]?.complete)
+          .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key)) goneWeek.add(offer.key); }));
+      });
+      const parts = [
+        medianDays !== null ? c.monitoringLiquidityDays.replace("{days}", `${atLeast ? "≥ " : ""}${daysText(medianDays)}`) : "",
+        c.monitoringLiquidityDrops.replace("{count}", numbers.format(dropped)).replace("{total}", numbers.format(current.length)).replace("{pct}", `${Math.round((dropped / current.length) * 100)} %`),
+        deals ? c.monitoringLiquidityDeals.replace("{count}", numbers.format(deals)) : "",
+        before ? c.monitoringLiquidityGone.replace("{count}", numbers.format(goneWeek.size)) : "",
+      ].filter(Boolean);
+      return `<p class="mobileMonitoringLiquidity" title="${escapeMarketHtml(c.monitoringLiquidityTitle)}"><b>${escapeMarketHtml(c.monitoringLiquidity)}</b> ${parts.map((part) => `<span>${escapeMarketHtml(part)}</span>`).join("")}</p>`;
+    })();
     const nextText = c.monitoringNext.replace("{date}", nextMonitoringText(entry));
     const emptyText = {
       new: c.monitoringEmptyNew.replace("{date}", formatHistoryDate(latest.at)).replace("{next}", nextText),
       gone: c.monitoringEmptyGone.replace("{date}", formatHistoryDate(latest.at)).replace("{next}", nextText),
       saved: c.monitoringEmptySaved,
+      extra: extra ? c.monitoringExtraEmpty.replace("{pct}", String(extra.tolerance)) : c.monitoringExtraNone,
     }[view] || c.monitoringEmptyList;
-    const sortOptions = [["price", c.monitoringSortPrice], ["year", c.monitoringSortYear], ["mileage", c.monitoringSortMileage], ["listed", c.monitoringSortListed]];
+    // What the extra list is, and why the year got no margin.
+    const extraNote = view === "extra" && extra ? `<p class="mobileMonitoringExtraNote">${escapeMarketHtml(c.monitoringExtraNote.replace("{pct}", String(extra.tolerance)))}${(extra.skipped || []).filter((item) => item.kind === "year").slice(0, 1).map((item) => ` ${escapeMarketHtml(item.reason === "noData" ? c.monitoringExtraYearNoData : c.monitoringExtraYearBoundary)}`).join("")}</p>` : "";
+    const sortOptions = [["price", c.monitoringSortPrice], ["year", c.monitoringSortYear], ["mileage", c.monitoringSortMileage], ["listed", c.monitoringSortListed], ["drop", c.monitoringSortDrop]];
     const savedCount = viewRows.saved.length;
     rowsForDetails = new Map(rows.map((row) => [row.offer.key, row]));
     target.innerHTML = `
@@ -4173,10 +4427,12 @@
       ${!before ? `<p class="mobileMonitoringNote">${escapeMarketHtml((newBase ? c.monitoringNewBase : c.monitoringBaseline).replace("{count}", numbers.format(perSource.reduce((sum, item) => sum + (item.current?.offers.length || 0), 0))))}</p>` : ""}
       <div class="mobileMonitoringTiles">${tiles}</div>
       <div class="mobileMonitoringViews" role="group">
-        ${viewButton("new", c.monitoringViewNew)}${viewButton("gone", `${c.monitoringViewGone} (${c.monitoringGoneHint})`)}${viewButton("all", c.monitoringViewAll)}${viewButton("saved", c.monitoringViewSaved)}
+        ${viewButton("new", c.monitoringViewNew)}${viewButton("gone", `${c.monitoringViewGone} (${c.monitoringGoneHint})`)}${viewButton("all", c.monitoringViewAll)}${viewButton("extra", c.monitoringViewExtra)}${viewButton("saved", c.monitoringViewSaved)}
         ${monitoringState.portal ? `<button class="mobileMarketImportClear" type="button" data-monitoring-portal="">${escapeMarketHtml(c.monitoringAllPortals)} ✕</button>` : ""}
         <button class="mobileMarketImportClear mobileMonitoringPdfButton" type="button" data-monitoring-pdf${savedCount ? "" : ` aria-disabled="true" title="${escapeMarketHtml(c.monitoringPdfEmpty)}"`}>${escapeMarketHtml(c.monitoringPdf)} · ${savedCount}</button>
       </div>
+      ${liquidityHtml}
+      ${extraNote}
       <div class="mobileMonitoringListTools">
         <label>${escapeMarketHtml(c.monitoringSort)}
           <select data-monitoring-sort>${sortOptions.map(([key, label]) => `<option value="${key}"${monitoringPrefs.sort === key ? " selected" : ""}>${escapeMarketHtml(label)}</option>`).join("")}</select>
@@ -4184,6 +4440,8 @@
         <button class="mobileMonitoringSortDir" type="button" data-monitoring-sort-dir aria-label="${escapeMarketHtml(c.monitoringSortDir)}" title="${escapeMarketHtml(c.monitoringSortDir)}">${monitoringPrefs.dir === "desc" ? "↓" : "↑"}</button>
         <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyVat"${monitoringPrefs.onlyVat ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyVat)}</label>
         <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyDealers"${monitoringPrefs.onlyDealers ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyDealers)}</label>
+        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyDrop"${monitoringPrefs.onlyDrop ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyDrop)}</label>
+        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyDeal"${monitoringPrefs.onlyDeal ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyDeal)}</label>
       </div>
       ${rows.length ? `
       <div class="mobileMarketTableScroll mobileMonitoringList">
@@ -4200,12 +4458,12 @@
             const isSaved = savedKeys.has(row.offer.key);
             const detailsOpen = openDetails.has(row.offer.key);
             return `
-            <tr class="${row.gone ? "isGone" : ""}">
+            <tr class="${row.gone ? "isGone" : ""}${row.offer.miss ? " isExtra" : ""}">
               <td class="isNum mobileMarketRowNumber">${index + 1}</td>
               ${withStatus ? `<td><span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status] || "")}</span></td>` : ""}
               <td class="mobileMonitoringStarCell"><button class="mobileMonitoringStar${isSaved ? " isOn" : ""}" type="button" data-monitoring-save="${escapeMarketHtml(row.offer.key)}" aria-pressed="${isSaved ? "true" : "false"}" title="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}" aria-label="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}">${isSaved ? "★" : "☆"}</button></td>
-              <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}<small class="mobileMonitoringMeta">${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}<button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button></td>
-              <td class="isNum">${priceCell(row.offer, row.source)}</td>
+              <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.gone ? "" : dealBadge(row.offer)}${row.isNew ? ` <span class="mobileMarketOfferStatus isNew">${escapeMarketHtml(c.offerNew)}</span>` : ""}${row.offer.miss ? `<small class="mobileMonitoringMiss" title="${escapeMarketHtml(row.offer.miss.kind === "options" ? c.monitoringMissOptionsTitle : c.monitoringMissTitle)}">≈ ${escapeMarketHtml(nearMissText(row.offer.miss))}</small>` : ""}<small class="mobileMonitoringMeta">${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.gone ? "" : dropLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}<button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button></td>
+              <td class="isNum">${priceCell(row.offer, row.source)}${!row.gone && window.AUTOGOOD_CALC_POPUP?.importable(row.source) ? `<button class="agCalcButton" type="button" data-monitoring-calc="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringCalc)}</button>` : ""}</td>
               <td>${offerCountryBadge(row.source, row.offer.country)}</td>
             </tr>${detailsOpen ? offerDetailsHtml(row, columns) : ""}`;
           }).join("")}</tbody>
@@ -4275,14 +4533,310 @@
     }
   }
 
-  // A check asked for while another one runs waits for it.
-  var queuedCheck = null;
-  async function runMonitoringCheck(entry, markets = MARKET_SOURCES.filter((source) => chartSources[source])) {
+  // ---- "Dodatkowe": offers just outside the filters (owner, 2026-10-04) ----
+  // A car that misses ONE filter by a little is shown apart and marked with
+  // what differs: mileage, price or power up to 5 or 10 % past a set bound,
+  // the year by one (only when that year is surely the same generation), or
+  // one of the chosen options. Each bound is its own narrow search ("120 001 –
+  // 132 000 km" with every other filter as set), so a car found there differs
+  // in that one thing only. Options: the same search without them.
+  // Option fields of the page-1 form and their "nothing chosen" values.
+  const NEAR_OPTION_FIELDS = {
+    features: { empty: [], inputs: "[data-mobile-feature]" },
+    parkingSensors: { empty: [], inputs: "[data-mobile-parking-sensor]" },
+    interiorMaterials: { empty: [], inputs: "[data-mobile-interior-material]" },
+    airConditioning: { empty: "", inputs: "[data-mobile-air-conditioning]" },
+    trailerCoupling: { empty: "any", inputs: "[data-mobile-trailer-coupling]" },
+    cruiseControl: { empty: "any", inputs: "[data-mobile-cruise-control]" },
+  };
+
+  // The options chosen in a search, with their names as page 1 writes them.
+  function chosenOptions(filters) {
+    const labelOf = (selector, value) => {
+      const input = [...document.querySelectorAll(selector)].find((item) => item.value === value);
+      return input?.closest("label")?.textContent.replace(/\s+/g, " ").trim() || value;
+    };
+    return Object.entries(NEAR_OPTION_FIELDS).flatMap(([field, { empty, inputs }]) => {
+      const value = filters[field];
+      if (Array.isArray(empty)) return (Array.isArray(value) ? value : []).map((item) => ({ field, value: item, label: labelOf(inputs, item) }));
+      return value && value !== empty ? [{ field, value, label: labelOf(inputs, value) }] : [];
+    });
+  }
+
+  // ultimatespecs generations (data/model-generations.json, B61): a facelift
+  // is its own row there, so rows are grouped by the generation code
+  // ("G20 / G80 LCI - 2023 Update" and "G20 / G80" = G20).
+  let generationsPromise = null;
+  function loadGenerations() {
+    if (!generationsPromise) {
+      generationsPromise = fetch("./data/model-generations.json?v=b61-20261004")
+        .then((response) => (response.ok ? response.json() : null))
+        .catch(() => null);
+    }
+    return generationsPromise;
+  }
+  const plainWord = (value) => String(value || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+  const ROMAN = { i: "1", ii: "2", iii: "3", iv: "4", v: "5", vi: "6" };
+  const GENERATION_NOISE = new Set(["type", "typ", "gen", "generation", "facelift", "restyling", "update", "new", "model", "lci", "eu", "the"]);
+  function generationCode(name, model) {
+    const own = new Set([model.model, model.label, model.brand].flatMap((value) => plainWord(value).split(/[^a-z0-9]+/)).filter(Boolean));
+    const glued = new Set([model.model, model.label].map((value) => plainWord(value).replace(/[^a-z0-9]/g, "")));
+    const words = plainWord(name).split(/[^a-z0-9.]+/).filter(Boolean);
+    for (let index = 0; index < words.length; index += 1) {
+      const word = words[index].replace(/\.$/, "");
+      // "Phase 2" is a facelift step, not a generation.
+      if (word === "phase") return "";
+      if (!word || own.has(word) || glued.has(word) || GENERATION_NOISE.has(word) || /^(19|20)\d{2}$/.test(word)) continue;
+      return ROMAN[word] || word;
+    }
+    return "";
+  }
+  async function generationGroups(filters) {
+    const data = await loadGenerations();
+    const model = (data?.models || []).find((item) => plainWord(item.brand) === plainWord(filters.brand) && plainWord(item.model) === plainWord(filters.model));
+    if (!model) return null;
+    const thisYear = new Date().getFullYear();
+    const groups = new Map();
+    model.generations.forEach((row, index) => {
+      const code = generationCode(row.generation, model) || `#${index}`;
+      const group = groups.get(code) || { code, names: [], from: Infinity, to: -Infinity };
+      group.names.push(row.generation);
+      group.from = Math.min(group.from, Number(row.from) || thisYear);
+      group.to = Math.max(group.to, row.to === null || row.to === undefined ? thisYear : Number(row.to));
+      groups.set(code, group);
+    });
+    return [...groups.values()];
+  }
+  // One year past a year bound, when that year surely belongs to the
+  // generation the filter means: the one holding the bound and the year next
+  // to it inside the range ("od 2019" for a BMW 3 = 2019 and 2020 = G20, so
+  // 2018, an F30, is not offered). Years of two generations overlap: then no.
+  function sameGenerationStep(groups, bound, inside, next) {
+    const holds = (group, value) => group.from <= value && value <= group.to;
+    const meant = groups.filter((group) => holds(group, bound) && holds(group, inside));
+    const atNext = groups.filter((group) => holds(group, next));
+    return meant.length === 1 && atNext.length === 1 && atNext[0] === meant[0] ? meant[0] : null;
+  }
+
+  const roundTo = (value, step) => Math.round(value / step) * step;
+
+  // The narrow searches of one favourite, and why some bound has none.
+  async function nearMissPlans(entry, base, markets, tolerance) {
+    const share = tolerance / 100;
+    const plans = [];
+    const skipped = [];
+    const number = (value) => {
+      const parsed = Number(String(value ?? "").replace(/\s/g, ""));
+      return Number.isFinite(parsed) && parsed > 0 ? parsed : 0;
+    };
+    // Mileage, power: the same band on every portal.
+    const band = (kind, fromKey, toKey, step, extra = () => ({})) => {
+      const from = number(base[fromKey]);
+      const to = number(base[toKey]);
+      if (to) {
+        const upper = Math.max(to + step, roundTo(to * (1 + share), step));
+        plans.push({ kind, side: "max", limit: to, filters: { ...base, [fromKey]: String(to + 1), [toKey]: String(upper), ...extra(to + 1, upper) }, markets });
+      }
+      if (from) {
+        const lower = Math.max(0, Math.min(from - step, roundTo(from * (1 - share), step)));
+        plans.push({ kind, side: "min", limit: from, filters: { ...base, [fromKey]: String(lower), [toKey]: String(from - 1), ...extra(lower, from - 1) }, markets });
+      }
+    };
+    band("mileage", "mileageFrom", "mileageTo", 1000);
+    // In kW mode mobile.de gets kW; the band is kept in step.
+    band("power", "powerFrom", "powerTo", 1, (low, high) => (base.powerUnit === "kw" ? { powerKwFrom: String(Math.round(low / 1.35962)), powerKwTo: String(Math.round(high / 1.35962)) } : {}));
+    // Year: one more year only inside the same generation.
+    const yearFrom = number(base.yearFrom);
+    const yearTo = number(base.yearTo);
+    if (yearFrom || yearTo) {
+      const groups = await generationGroups(base);
+      const thisYear = new Date().getFullYear();
+      if (!groups) skipped.push({ kind: "year", reason: "noData" });
+      else {
+        const top = yearTo || thisYear;
+        if (yearFrom) {
+          const group = sameGenerationStep(groups, yearFrom, Math.min(yearFrom + 1, top), yearFrom - 1);
+          if (group) plans.push({ kind: "year", side: "min", limit: yearFrom, generation: group.names[group.names.length - 1], filters: { ...base, yearFrom: String(yearFrom - 1), yearTo: String(yearFrom - 1) }, markets });
+          else skipped.push({ kind: "year", side: "min", reason: "boundary" });
+        }
+        if (yearTo && yearTo < thisYear) {
+          const group = sameGenerationStep(groups, yearTo, Math.max(yearTo - 1, yearFrom || 0), yearTo + 1);
+          if (group) plans.push({ kind: "year", side: "max", limit: yearTo, generation: group.names[group.names.length - 1], filters: { ...base, yearFrom: String(yearTo + 1), yearTo: String(yearTo + 1) }, markets });
+          else skipped.push({ kind: "year", side: "max", reason: "boundary" });
+        }
+      }
+    }
+    // Price: page 1's price (EUR) for portals without their own, each
+    // portal's own price where it has one (set on page 3).
+    const own = Object.fromEntries(markets.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null]));
+    // AutoScout24 without a price of its own follows mobile.de's (getListings).
+    if (!own.autoscout && own.mobile) own.autoscout = own.mobile;
+    ["max", "min"].forEach((side) => {
+      const pageLimit = number(side === "max" ? base.priceTo : base.priceFrom);
+      const prices = {};
+      const limits = {};
+      const covered = markets.filter((source) => {
+        const ownLimit = number(side === "max" ? own[source]?.to : own[source]?.from);
+        // av.by keeps its own USD price field: no band there.
+        if (source === "avby") return false;
+        if (ownLimit) {
+          const step = SOURCE_CURRENCY[source] === "EUR" ? 100 : 1000;
+          prices[source] = side === "max"
+            ? { from: ownLimit + 1, to: Math.max(ownLimit + step, roundTo(ownLimit * (1 + share), step)) }
+            : { from: Math.max(0, Math.min(ownLimit - step, roundTo(ownLimit * (1 - share), step))), to: ownLimit - 1 };
+          limits[source] = { value: ownLimit, currency: SOURCE_CURRENCY[source] };
+          return true;
+        }
+        if (own[source]) return false;
+        if (!pageLimit) return false;
+        prices[source] = null;
+        limits[source] = { value: pageLimit, currency: "EUR" };
+        return true;
+      });
+      if (!covered.length) return;
+      const upper = Math.max(pageLimit + 100, roundTo(pageLimit * (1 + share), 100));
+      const lower = Math.max(0, Math.min(pageLimit - 100, roundTo(pageLimit * (1 - share), 100)));
+      const pageBand = pageLimit ? (side === "max" ? { priceFrom: String(pageLimit + 1), priceTo: String(upper) } : { priceFrom: String(lower), priceTo: String(pageLimit - 1) }) : {};
+      plans.push({ kind: "price", side, limits, filters: { ...base, ...pageBand }, prices, markets: covered });
+    });
+    // Options: the same search without them; a sample is enough.
+    const options = chosenOptions(base);
+    if (options.length) {
+      const bare = Object.fromEntries(Object.entries(NEAR_OPTION_FIELDS).map(([field, { empty }]) => [field, Array.isArray(empty) ? [] : empty]));
+      plans.push({ kind: "options", options: options.map((option) => option.label), filters: { ...base, ...bare }, markets, sample: true });
+    }
+    return { plans, skipped };
+  }
+
+  // What a found car shows, checked on its own data: a car that in fact
+  // meets the bound (the portal filters a little differently) is left out.
+  function nearMissOf(plan, listing, source) {
+    if (plan.kind === "options") return { kind: "options", options: plan.options };
+    if (plan.kind === "year") {
+      const year = Number(listing.year) || 0;
+      if (year && (plan.side === "min" ? year >= plan.limit : year <= plan.limit)) return null;
+      return { kind: "year", side: plan.side, limit: plan.limit, value: year || null, generation: plan.generation };
+    }
+    if (plan.kind === "mileage") {
+      const mileage = Number(listing.mileage) || 0;
+      if (mileage && (plan.side === "max" ? mileage <= plan.limit : mileage >= plan.limit)) return null;
+      return { kind: "mileage", side: plan.side, limit: plan.limit, value: mileage || null };
+    }
+    if (plan.kind === "power") {
+      const power = Number(String(powerInKm(listing.power)).match(/\d+/)?.[0]) || 0;
+      if (power && (plan.side === "max" ? power <= plan.limit : power >= plan.limit)) return null;
+      return { kind: "power", side: plan.side, limit: plan.limit, value: power || null };
+    }
+    const limit = plan.limits[source];
+    if (!limit) return null;
+    const price = convertPrice(Number(listing.price), listing.currency || SOURCE_CURRENCY[source], limit.currency);
+    if (price && (plan.side === "max" ? price <= limit.value : price >= limit.value)) return null;
+    return { kind: "price", side: plan.side, limit: limit.value, currency: limit.currency, share: price ? price / limit.value - 1 : null };
+  }
+
+  // Reads every narrow search, one after another, and keeps per portal the
+  // cars that are not in the monitoring's own lists.
+  async function readNearMisses({ entry, base, markets, tolerance, strictKeys, provider }) {
+    const c = copy();
+    const { plans, skipped } = await nearMissPlans(entry, base, markets, tolerance);
+    const found = {};
+    const seen = new Set(strictKeys);
+    const done = [];
+    for (const [index, plan] of plans.entries()) {
+      monitoringPhase = c.monitoringExtraProgress.replace("{done}", String(index + 1)).replace("{total}", String(plans.length)).replace("{what}", nearMissPlanText(plan));
+      Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
+      updateMonitoringProgress(plan.markets[0], { state: "wait" });
+      let raw = [];
+      try {
+        raw = await provider.getListings({
+          filters: { ...plan.filters, markets: plan.markets },
+          pinned: true,
+          historyId: entry.id,
+          sequential: true,
+          wholeList: plan.sample ? false : null,
+          priceOverride: plan.prices || null,
+          progress: (source, info) => updateMonitoringProgress(source, info),
+        });
+      } catch {
+        // Nothing just outside this bound (or the portals did not answer).
+      }
+      const bySource = {};
+      normalizeListings(raw).forEach((listing) => {
+        const key = offerKey(listing);
+        if (seen.has(key)) return;
+        const source = listingSource(listing);
+        const miss = nearMissOf(plan, listing, source);
+        if (!miss) return;
+        seen.add(key);
+        (bySource[source] = bySource[source] || []).push({ listing, miss });
+      });
+      Object.entries(bySource).forEach(([source, items]) => {
+        const compact = compactOffers(items.map((item) => item.listing), source, plan.filters);
+        const market = found[source] || (found[source] = { offers: [] });
+        compact.offers.forEach((offer, offerIndex) => market.offers.push({ ...offer, miss: items[offerIndex].miss }));
+      });
+      done.push({ kind: plan.kind, side: plan.side || "", count: Object.values(bySource).reduce((sum, items) => sum + items.length, 0) });
+    }
+    monitoringPhase = "";
+    return { tolerance, plans: done, skipped, markets: found };
+  }
+
+  // A short name of a narrow search for the progress line.
+  function nearMissPlanText(plan) {
+    const c = copy();
+    if (plan.kind === "options") return c.monitoringExtraPlanOptions;
+    return c[`monitoringExtraPlan${plan.kind.charAt(0).toUpperCase()}${plan.kind.slice(1)}`] || plan.kind;
+  }
+
+  // The near misses of a check join its record (never replacing its offers).
+  async function saveCheckExtra(historyId, at, extra) {
+    try {
+      const db = await openCheckOffersDb();
+      await new Promise((resolve, reject) => {
+        const tx = db.transaction(CHECK_OFFERS_STORE, "readwrite");
+        const store = tx.objectStore(CHECK_OFFERS_STORE);
+        const read = store.get(`${historyId}|${at}`);
+        read.onsuccess = () => {
+          // Normally the record is there; if its main lists are still being
+          // written, they merge into this one (saveCheckOffers keeps "extra").
+          store.put({ ...(read.result || { key: `${historyId}|${at}`, historyId, at, markets: {} }), extra });
+        };
+        tx.oncomplete = resolve;
+        tx.onerror = () => reject(tx.error);
+      });
+      checkOffersCache.delete(historyId);
+    } catch {
+      // The main lists of the check are kept anyway.
+    }
+  }
+
+  // The words of one near miss ("przebieg 121 000 km — 1 000 km ponad filtr").
+  function nearMissText(miss) {
+    const c = copy();
+    const numbers = numberFormat();
+    if (!miss) return "";
+    if (miss.kind === "options") {
+      return (miss.options.length === 1 ? c.monitoringMissOption : c.monitoringMissOptions).replace("{options}", miss.options.join(", "));
+    }
+    const key = `monitoringMiss${miss.kind.charAt(0).toUpperCase()}${miss.kind.slice(1)}${miss.side === "max" ? "Max" : "Min"}`;
+    const unit = miss.kind === "mileage" ? ` ${kmUnit()}` : miss.kind === "power" ? ` ${powerText("KM")}` : "";
+    const delta = miss.value ? Math.abs(miss.value - miss.limit) : null;
+    return (c[key] || "")
+      .replace("{value}", miss.value ? `${numbers.format(miss.value)}${unit}` : "—")
+      .replace("{delta}", delta !== null ? `${numbers.format(delta)}${unit}` : "—")
+      .replace("{limit}", miss.kind === "price" ? formatPlainPrice(miss.limit, miss.currency) : `${numbers.format(miss.limit)}${unit}`)
+      .replace("{pct}", Number.isFinite(miss.share) ? `${Math.abs(Math.round(miss.share * 1000) / 10).toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL")} %` : "—")
+      .replace("{generation}", miss.generation || "");
+  }
+
+  // Checks run one at a time (owner, 2026-10-04: the portals are not asked
+  // for several cars at once); one asked for meanwhile waits in this queue.
+  async function runMonitoringCheck(entry, markets = MARKET_SOURCES.filter((source) => chartSources[source]), { auto = false } = {}) {
     const c = copy();
     const provider = window.AUTOGOOD_MOBILE_MARKET_PROVIDER;
     if (!provider) return false;
     if (monitoringState.busy) {
-      if (monitoringState.busy !== entry.id) queuedCheck = { entry, markets };
+      if (monitoringState.busy !== entry.id && !isQueued(entry.id)) monitoringQueue.push({ entry, markets, auto });
       if (currentPage() === "history") renderPriceHistoryPage();
       return false;
     }
@@ -4304,6 +4858,7 @@
         filters: { ...(withCountries ? { ...searchFilters, countries: scope.countries } : searchFilters), markets: only },
         pinned: true,
         historyId: entry.id,
+        sequential: true,
         // Shown whichever car is open: the line says which car runs.
         progress: (source, info) => updateMonitoringProgress(source, info),
       });
@@ -4382,6 +4937,29 @@
           statusError: true,
         });
       }
+      // Then the cars just outside the filters ("Dodatkowe"), added to the
+      // same dated record; the main lists are already saved and shown.
+      const at = [...(marketHistory.find((item) => item.id === entry.id)?.priceLog || [])].reverse().find((point) => !point.filtersChange)?.at;
+      if (scope.tolerance && at) {
+        const keep = { lastSources: provider.lastSources, lastErrors: provider.lastErrors, lastAutoscout: provider.lastAutoscout, lastPrices: provider.lastPrices };
+        try {
+          if (currentPage() === "history") renderPriceHistoryPage();
+          const extra = await readNearMisses({
+            entry,
+            base: withCountries ? { ...searchFilters, countries: scope.countries } : searchFilters,
+            markets: markets.filter((source) => (keep.lastSources || markets).includes(source)),
+            tolerance: scope.tolerance,
+            strictKeys: new Set(fetched.map(offerKey)),
+            provider,
+          });
+          await saveCheckExtra(entry.id, at, extra);
+        } catch {
+          // The main check stands without them.
+        } finally {
+          Object.assign(provider, keep);
+          monitoringPhase = "";
+        }
+      }
     } catch (error) {
       if (monitoringState.id === entry.id) Object.assign(monitoringState, { status: monitoringErrorText(error), statusError: true });
     } finally {
@@ -4389,12 +4967,25 @@
       Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
       if (currentPage() === "history") renderPriceHistoryPage();
     }
-    if (queuedCheck) {
-      const next = queuedCheck;
-      queuedCheck = null;
-      runMonitoringCheck(next.entry, next.markets);
-    }
+    runNextMonitoring();
     return ok;
+  }
+
+  async function runNextMonitoring() {
+    while (monitoringQueue.length && !monitoringState.busy) {
+      const next = monitoringQueue.shift();
+      // A daily check done meanwhile (by hand) is not repeated.
+      if (next.auto && await monitoredToday(next.entry.id)) continue;
+      runMonitoringCheck(next.entry, next.markets, { auto: next.auto });
+      return;
+    }
+    if (currentPage() === "history") renderPriceHistoryPage();
+  }
+
+  async function monitoredToday(historyId) {
+    const nine = todayAtNine().getTime();
+    const byDate = await loadCheckOffers(historyId);
+    return [...byDate.values()].some((record) => record.scope && Date.parse(record.at) >= nine);
   }
 
   // Monitored favourites are checked once a day by themselves while the
@@ -4404,13 +4995,23 @@
     if (Date.now() < nine) return;
     refreshMarketHistory();
     for (const entry of marketHistory.filter((item) => item.pinned && item.autoRefresh?.enabled)) {
-      if (monitoringState.busy) return;
-      const byDate = await loadCheckOffers(entry.id);
-      const doneToday = [...byDate.values()].some((record) => record.scope && Date.parse(record.at) >= nine);
-      if (doneToday) continue;
-      const markets = (entry.filters.markets || []).filter((source) => MARKET_SOURCES.includes(source));
-      await runMonitoringCheck(entry, markets.length ? markets : MARKET_SOURCES.filter((source) => chartSources[source]));
+      if (monitoringState.busy === entry.id || isQueued(entry.id)) continue;
+      if (await monitoredToday(entry.id)) continue;
+      // One car after another: a car due while another runs joins the queue.
+      await runMonitoringCheck(entry, monitoringMarketsOf(entry), { auto: true });
     }
+  }
+
+  // The portals a favourite is monitored on, as page 3 shows it: an old
+  // favourite with mobile.de but without an AutoScout24 mark keeps the page's
+  // choice for AutoScout24 (restoreManualFilters). Before 2026-10-04 the daily
+  // check took the saved list alone, so its scope differed from the page's
+  // and the page said "no monitoring with these portals".
+  function monitoringMarketsOf(entry) {
+    const saved = (entry.filters.markets || []).filter((source) => MARKET_SOURCES.includes(source));
+    if (!saved.length) return MARKET_SOURCES.filter((source) => chartSources[source]);
+    const knowsAutoscout = saved.includes("autoscout") || !saved.includes("mobile");
+    return MARKET_SOURCES.filter((source) => (source === "autoscout" && !knowsAutoscout ? Boolean(chartSources.autoscout) : saved.includes(source)));
   }
   setTimeout(runDueMonitoring, 5000);
   // The converter shows Walutomat's live rate once it has arrived.
@@ -4462,6 +5063,13 @@
       saveMonitoringPrefs();
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
       if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    const tolerance = event.target.closest("[data-monitoring-tolerance]");
+    if (tolerance && priceHistoryId) {
+      setMonitoringScope(priceHistoryId, { tolerance: Number(tolerance.value) });
+      Object.assign(monitoringState, { status: copy().monitoringPriceChanged, statusError: false });
+      renderPriceHistoryPage();
       return;
     }
     const monitoringSwitch = event.target.closest("[data-monitoring-switch]");
@@ -4538,6 +5146,14 @@
       monitoringState.portal = monitoringState.portal === portal.dataset.monitoringPortal ? "" : portal.dataset.monitoringPortal;
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
       if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    // "Oblicz na gotowo" (B42): the calculators for this offer, in a window.
+    const calculate = event.target.closest("[data-monitoring-calc]");
+    if (calculate) {
+      const row = rowsForDetails.get(calculate.dataset.monitoringCalc);
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (row) window.AUTOGOOD_CALC_POPUP?.open({ ...row.offer, source: row.source, filters: entry?.filters || {} });
       return;
     }
     const save = event.target.closest("[data-monitoring-save]");

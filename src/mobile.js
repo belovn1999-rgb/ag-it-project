@@ -280,6 +280,7 @@ const copy = {
     countryNames: { DE: "Niemcy", PL: "Polska", AT: "Austria", BE: "Belgia", NL: "Holandia", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", CH: "Szwajcaria", LU: "Luksemburg", DK: "Dania", SE: "Szwecja" },
     briefSellerPrivate: "Osoba prywatna",
     adPriceLabel: "cena z ogłoszenia",
+    calcPopupButton: "Oblicz na gotowo",
     briefSellerDealer: "Komis / dealer",
     conditionWords: { Gebrauchtfahrzeug: "Używany", Neufahrzeug: "Nowy", Jahreswagen: "Roczny", "Vorführfahrzeug": "Demonstracyjny", Unfallfrei: "Bezwypadkowy", Unfallfahrzeug: "Powypadkowy", "Nicht fahrtauglich": "Niesprawny", Fahrtauglich: "Sprawny", Beschädigt: "Uszkodzony" },
     searchOnMobile: "Szukaj na mobile.de",
@@ -585,6 +586,7 @@ const copy = {
     countryNames: { DE: "Германия", PL: "Польша", AT: "Австрия", BE: "Бельгия", NL: "Нидерланды", FR: "Франция", IT: "Италия", ES: "Испания", CZ: "Чехия", CH: "Швейцария", LU: "Люксембург", DK: "Дания", SE: "Швеция" },
     briefSellerPrivate: "Частное лицо",
     adPriceLabel: "цена объявления",
+    calcPopupButton: "Посчитать под ключ",
     briefSellerDealer: "Автосалон / дилер",
     conditionWords: { Gebrauchtfahrzeug: "С пробегом", Neufahrzeug: "Новый", Jahreswagen: "Годовалый", "Vorführfahrzeug": "Демонстрационный", Unfallfrei: "Без ДТП", Unfallfahrzeug: "После ДТП", "Nicht fahrtauglich": "Не на ходу", Fahrtauglich: "На ходу", Beschädigt: "Повреждённый" },
     searchOnMobile: "Искать на mobile.de",
@@ -2340,9 +2342,12 @@ function recognizedAdPriceHtml() {
     ? `<b>${escapeHtml(formatAmount(ad.pricePln, "PLN"))}</b><small>≈ ${escapeHtml(formatAmount(ad.carBruttoEur, "EUR"))}</small>`
     : `<b>${escapeHtml(formatAmount(ad.carBruttoEur, "EUR"))}</b>`;
   const label = `<small class="agSpecAdLabel">${escapeHtml(c.adPriceLabel)}${/^https:\/\//.test(url) ? " ↗" : ""}</small>`;
+  // "Oblicz na gotowo" (B42): the calculators in a window, for a car bought
+  // abroad (not an otomoto or av.by ad).
+  const calculator = ["otomoto", "avby"].includes(ad.importMode) ? "" : `<button class="agCalcButton" type="button" data-calc-popup-recognized>${escapeHtml(c.calcPopupButton)}</button>`;
   return /^https:\/\//.test(url)
-    ? `<a class="agSpecPrice agSpecAdPrice" href="${escapeHtml(url)}" target="_blank" rel="noopener" title="${escapeHtml(c.adPriceLabel)}">${price}${label}</a>`
-    : `<span class="agSpecPrice agSpecAdPrice">${price}${label}</span>`;
+    ? `<a class="agSpecPrice agSpecAdPrice" href="${escapeHtml(url)}" target="_blank" rel="noopener" title="${escapeHtml(c.adPriceLabel)}">${price}${label}</a>${calculator}`
+    : `<span class="agSpecPrice agSpecAdPrice">${price}${label}</span>${calculator}`;
 }
 
 function updateSelectedFiltersSummary() {
@@ -3543,6 +3548,8 @@ function applyMobileAd(ad) {
 }
 
 window.AUTOGOOD_APPLY_MOBILE_AD = applyMobileAd;
+// The ad read from a link, for the "Oblicz na gotowo" window (calculator-popup.js).
+window.AUTOGOOD_RECOGNIZED_AD = () => state.data;
 window.AUTOGOOD_BRIDGE_HINT = () => setMarketSearchStatus(copy[state.lang].bookmarkletHint);
 
 async function loadMobileDeData(sourceUrl) {

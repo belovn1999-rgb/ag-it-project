@@ -1,0 +1,35 @@
+/* calculators.html?embed=1 — the calculator inside the "Oblicz na gotowo"
+ * window of the search page (src/calculator-popup.js, B42). Only the
+ * calculator: no site bar, logo, language switch, calculator tabs (the window
+ * has its own three) or history list. Print, screenshot, save and the rate
+ * stay. Nothing here applies without the "agEmbed" class. */
+.agEmbed .agGlobalNav,
+.agEmbed .topbar .logoGroup,
+.agEmbed .langSwitch,
+.agEmbed .tabsRow .tabs,
+.agEmbed .grid > .historyPanel {
+  display: none !important;
+}
+
+.agEmbed body {
+  margin: 0;
+  padding: 0;
+  background: #fff;
+}
+
+.agEmbed .appShell {
+  max-width: none;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.agEmbed .topbar {
+  justify-content: flex-end;
+  padding: 8px 20px;
+}
+
+.agEmbed .tabsRow {
+  justify-content: flex-end;
+  padding: 0 20px;
+}

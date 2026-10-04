@@ -6,6 +6,11 @@
     <title>AUTOGOOD Kalkulatory</title>
     <link rel="stylesheet" href="./src/styles.css?v=history20-20260923" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
+    <link rel="stylesheet" href="./src/calculator-embed.css?v=b42-20261004" />
+    <script>
+      // Opened in the "Oblicz na gotowo" window of mobile.html (B42): only the calculator.
+      if (new URLSearchParams(location.search).get("embed") === "1") document.documentElement.classList.add("agEmbed");
+    </script>
     <script defer src="./src/global-navigation.js?v=global-navigation-20260923" data-ag-global-nav></script>
   </head>
   <body>

@@ -127,6 +127,9 @@
         // "inkl. MwSt." with footnote 1 = VAT deductible (every result of a
         // vatded=true search carries it, 2026-10-03).
         vatDeductible: Boolean(item.price?.vatLabel && item.price?.priceSuperscriptString),
+        // "Super Deal": AutoScout24 shows the price before the reduction
+        // ("€ 12.950,-" beside € 12.500, checked 2026-10-04).
+        oldPrice: Number(digits(item.superDeal?.isEligible ? item.superDeal.oldPriceFormatted : item.price?.oldSuperDealPrice)) || "",
         make: String(item.vehicle?.make || ""),
         model: String(item.vehicle?.model || ""),
         rank: all ? (desc ? all - position + 1 : position) : position,

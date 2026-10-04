@@ -136,6 +136,7 @@
 
 .mobileMonitoringProgress span.isDone b { color: var(--color-success); }
 .mobileMonitoringProgress span.isFail { color: var(--color-error); }
+.mobileMonitoringProgress span.isWait { color: var(--color-muted); }
 
 /* ---- List tools: sort, filters, client PDF ------------------------------- */
 .mobileMonitoringListTools {
@@ -389,4 +390,90 @@
   margin-top: 4px;
   color: #1d5fd0;
   font-size: 0.8125rem;
+}
+
+/* ---- Liquidity (B22): days on the market, price drops ------------------- */
+.mobileMonitoringLiquidity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  margin: 0 0 var(--space-sm);
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: rgba(13, 100, 71, 0.06);
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+}
+
+.mobileMonitoringLiquidity span + span::before {
+  content: "· ";
+  color: var(--color-muted);
+}
+
+.mobileMonitoringDrop {
+  color: #0d6447;
+  font-weight: 600;
+}
+
+.mobileMonitoringDeal {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: #fff3cd;
+  color: #6b4e00;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+
+/* ---- "Dodatkowe": cars just outside the filters ------------------------- */
+.mobileMonitoringSettings .mobileMonitoringExtraCard {
+  grid-column: 1 / -1;
+}
+
+.mobileMonitoringExtraChoice {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.mobileMonitoringExtraChoice select {
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-rule);
+  border-radius: 8px;
+  font: inherit;
+}
+
+.mobileMonitoringExtraNote {
+  margin: 0 0 var(--space-sm);
+  padding: 8px 12px;
+  border-left: 3px solid #d9a400;
+  border-radius: 0 8px 8px 0;
+  background: #fff8e1;
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+}
+
+.mobileMonitoringTable tr.isExtra > td {
+  background: #fffbea;
+}
+
+.mobileMonitoringTable tr.isExtra > td:first-child {
+  box-shadow: inset 3px 0 0 #d9a400;
+}
+
+.mobileMonitoringTable .mobileMarketTableTitle small.mobileMonitoringMiss {
+  display: inline-block;
+  margin: 4px 0 2px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #ffe8a3;
+  color: #5c4300;
+  font-weight: 700;
 }
