@@ -32,6 +32,7 @@
 ## 3. Как тестировать
 
 - Фронтенд локально: `python3 -m http.server 4173 --bind 127.0.0.1` → `http://127.0.0.1:4173/`.
+- Проверки CI до push (`pnpm run verify` падает письмом владельцу): глобального `node` на Mac нет, есть `~/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node` — им `scripts/check-js.mjs`, `scripts/test-mobile-search-model-version.mjs`, `scripts/audit-mobile-search.mjs --offline`.
 - Импортер mobile.de: `127.0.0.1:8788`, туннель через LaunchAgent. Рецепт перезапуска в [PROJECT-MOBILE.md](PROJECT-MOBILE.md) (раздел про туннель).
 - Проверка VIN: бэкенд `4174`, работает из копии-зеркала вне репозитория. Правка `tools/partslink24/*` или `server/*` начинает действовать только после копирования в зеркало.
 - Quick-туннели запускать **без** `--protocol http2`. URL меняется при каждом перезапуске, проверяй заново.
@@ -68,6 +69,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html: курсы в шапке только на стр. 3 «Monitoring»; жёлтое «!» больше не пишет «otomoto: Paliwo» для гибрида (топливо уходит, предупреждение только для «Hybryda diesel») (Claude).
 - 2026-10-04 — mobile.html, вариант Б: мониторинг делает Mac владельца каждый день в 9:30 (служба `com.autogood.monitoring`, страница отдаёт задания и забирает записи), время в программе 9:30; из Chrome импортера удалены расширения; найдено переименование репозитория в `ag-it-project` (Claude).
 - 2026-10-04 — mobile.html, B47: Нидерланды и Бельгия — Marktplaats и 2dehands/2ememain как рынки «Holandia» и «Belgia» (стр. 1, анализ, Monitoring, ссылка на объявление, все фильтры проверены по числу объявлений) (Claude).
 - 2026-10-04 — mobile.html, история поиска (B67): одна строка на марку и модель (новые поиски той же машины не дублируют, «Gotowe» сохраняет в строку), заметка «+ notatka», выбор кликом по строке, ★/× без рамки, счётчик «N ulubionych · M z 20», логотипы порталов, группы «Dziś / Wczoraj / Wcześniej» (Claude).

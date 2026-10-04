@@ -89,7 +89,7 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | Rok | `fr` ✅ | `filter_float_year` ✅ | |
 | Pojemność | `cc` ✅ | `filter_float_engine_capacity` ✅ | «< 5000»/«> 5000» — правило 9. С 10-04 (B61): у модели с данными сверху реальные объёмы (см³, напр. 1995), «od = do» разрешено — конкретный двигатель (`cc=1995:1995`) |
 | Moc (переключатель **KM / kW**, по умолчанию KM; с 10-02; с 10-04 у модели с данными сверху реальные мощности, «od = do» разрешено, B61) | KM: `pw` в **kW** (KM×0.735499, нижняя граница вниз, верхняя вверх) ✅; kW: `pw` = введённые kW как есть ✅ (список шагов mobile.de 25…334 kW) | `filter_float_engine_power` в KM ✅ (kW → KM, округление) | в записи всегда `powerFrom/To` в KM; в режиме kW ещё `powerUnit: "kw"` и `powerKwFrom/To` — запись открывается в kW |
-| Paliwo | `ft` ✅ | `filter_enum_fuel_type` ✅/≈ | petrol `PETROL`/`petrol`, diesel `DIESEL`/`diesel`, electric `ELECTRICITY`/`electric`; hybrid diesel `HYBRID_DIESEL` / hybrid petrol `HYBRID` → otomoto оба `hybrid` ≈ |
+| Paliwo | `ft` ✅ | `filter_enum_fuel_type` ✅/≈ | petrol `PETROL`/`petrol`, diesel `DIESEL`/`diesel`, electric `ELECTRICITY`/`electric`; hybrid diesel `HYBRID_DIESEL` / hybrid petrol `HYBRID` → otomoto оба `hybrid` ≈ (у otomoto почти все гибриды бензиновые: жёлтое «!» только для «Hybryda diesel» без «Hybryda benzyna», 10-04) |
 | Plug-in | **`fe=HYBRID_PLUGIN`** (не `ft`! `ft=HYBRID_PLUGIN` игнорируется) ✅ | `plugin-hybrid` ✅ | исправлено Claude `1aad552` |
 | Napęd | `dt` ✅ | `filter_enum_transmission` ✅ | awd→`ALL_WHEEL` / `all-wheel-auto,-lock,-permanent`; fwd `FRONT`/`front-wheel`; rwd `REAR`/`rear-wheel` |
 | Skrzynia | `tr` ✅ | `filter_enum_gearbox` ✅ | `AUTOMATIC_GEAR`/`automatic`, `MANUAL_GEAR`/`manual` |

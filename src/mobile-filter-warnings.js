@@ -12,11 +12,11 @@
 
   const TEXT = {
     pl: {
-      title: "Nie wszystkie filtry trafią do portali",
+      title: "Portale nie przyjmą dokładnie wszystkich filtrów",
       autoscoutKeys: { drive: "Napęd", version: "Wersja", "plugin≈hybrid": "Plug-in (≈ hybryda)" },
     },
     ru: {
-      title: "Не все фильтры дойдут до порталов",
+      title: "Не все фильтры порталы примут точно",
       autoscoutKeys: { drive: "Привод", version: "Версия", "plugin≈hybrid": "Plug-in (≈ гибрид)" },
     },
   };

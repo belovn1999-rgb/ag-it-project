@@ -269,6 +269,7 @@ const copy = {
     otomotoSearchOpening: "Otwieram Otomoto: od najniższej ceny.",
     otomotoPriceConverted: "Cena przeliczona na PLN po kursie {rate}.",
     otomotoSearchSkipped: "Otomoto nie ma dokładnego odpowiednika dla: {filters}. Pozostałe filtry zostały zastosowane.",
+    otomotoHybridDiesel: "Hybryda diesel — otomoto pokaże każdą hybrydę",
     mobileSearchSkipped: "Mobile.de nie ma dokładnego odpowiednika dla: {filters}. Pozostałe filtry zostały zastosowane.",
     marketSearchButton: "Szukaj na mobile.de",
     marketSearchOpening: "Otwieram wyniki od najniższej ceny.",
@@ -604,6 +605,7 @@ const copy = {
     otomotoSearchOpening: "Открываю Otomoto: сначала самые дешёвые.",
     otomotoPriceConverted: "Цена пересчитана в PLN по курсу {rate}.",
     otomotoSearchSkipped: "В Otomoto нет точного аналога для: {filters}. Остальные фильтры применены.",
+    otomotoHybridDiesel: "Гибрид дизель — otomoto покажет любой гибрид",
     mobileSearchSkipped: "В Mobile.de нет точного аналога для: {filters}. Остальные фильтры применены.",
     marketSearchButton: "Найти на mobile.de",
     marketSearchOpening: "Открываю результаты: сначала самые дешёвые.",
@@ -3117,9 +3119,12 @@ function otomotoSkippedFilterLabels(filters) {
   if (filters.version && !otomotoVersionSlugs(filters.brand, filters.model, filters.version)) add(c.versionLabel);
   const modelSelection = otomotoModelSelection(filters.brand, filters.model);
   if (modelSelection.broad || modelSelection.unsupported) add(c.modelLabel);
-  if (manualFuelValues(filters).some((fuel) => ["hybrid_diesel", "hybrid_petrol"].includes(fuel))) {
-    add(c.fuelLabel);
-  }
+  // otomoto has one "Hybryda" for petrol and diesel hybrids, and the fuel is
+  // always sent (filter_enum_fuel_type=hybrid). Nearly all of them are petrol
+  // hybrids, so only a diesel hybrid alone comes back really wider (owner
+  // 2026-10-04: "Paliwo" under the warnings read as not sent at all).
+  const fuels = manualFuelValues(filters);
+  if (fuels.includes("hybrid_diesel") && !fuels.includes("hybrid_petrol")) add(c.otomotoHybridDiesel);
   if (["pickup", "other"].includes(filters.body)) add(c.bodyLabel);
   if (["dealer", "company"].includes(filters.seller)) add(c.sellerTypeLabel);
   if (filters.trailerCoupling && filters.trailerCoupling !== "any") add(c.trailerCouplingLabel);

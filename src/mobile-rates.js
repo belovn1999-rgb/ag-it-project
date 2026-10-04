@@ -1,6 +1,7 @@
 // Exchange rates of the whole page (B12, owner 2026-10-04): every pair the
 // analysis converts with is shown at the top, left of the language switch,
-// and these very rates are the ones the page counts with:
+// on page 3 "Monitoring" only (owner 2026-10-04: pages 1 and 2 keep the top
+// free), and these very rates are the ones the page counts with:
 //   EUR, SEK → PLN: the calculator's rate (Walutomat sale offer + 0.02 zł,
 //     turnkey-estimate.js), the same for prices, the price filter, "na gotowo";
 //   USD → PLN: Walutomat (av.by, avby-search.js);
@@ -66,9 +67,16 @@
     return { pln, usd, by };
   }
 
+  // Page 3 is the one whose tab is marked current (mobile-market-analysis.js).
+  const onMonitoring = () => document.querySelector('[data-mobile-page-tab="history"]')?.getAttribute("aria-current") === "page";
+
   let target = null;
   function render() {
     if (!target) return;
+    if (!onMonitoring()) {
+      target.hidden = true;
+      return;
+    }
     const t = TEXT[lang()];
     const { pln, usd, by } = used();
     const known = window.AUTOGOOD_EXCHANGE_RATES || {};
@@ -145,6 +153,8 @@
       window.AUTOGOOD_TURNKEY_BY?.ready?.(),
     ]).then(render);
     window.addEventListener("autogood:rates", render);
+    const tabs = document.querySelector("[data-mobile-page-tabs]");
+    if (tabs) new MutationObserver(render).observe(tabs, { subtree: true, attributes: true, attributeFilter: ["aria-current"] });
     document.querySelectorAll("[data-lang-button]").forEach((button) => button.addEventListener("click", () => setTimeout(render, 0)));
     setInterval(reloadIfNewDay, 10 * 60 * 1000);
     document.addEventListener("visibilitychange", () => {
