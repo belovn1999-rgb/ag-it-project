@@ -394,7 +394,16 @@
 .mobileVehicleTripleRow > .mobileVersionField {
   display: grid;
   gap: 6px;
-  grid-column: 1 / span 2;
+}
+
+/* Owner 04.10: row 1 Marka · Model, row 2 Rok · Wersja (two equal columns);
+   the body choices fill the whole row, right edge like the other fields. */
+.mobileVehicleTripleRow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+[data-mobile-body-choices] .mobileChoiceOption {
+  flex: 1 1 auto;
 }
 
 .mobileVersionField .mobileFieldNote {
@@ -430,9 +439,7 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .mobileVehicleTripleRow > .mobileVersionField {
-    grid-column: auto;
-  }
+
 }
 
 /* ---- B18 (04.10): the values set as chips with ×, under the chosen
