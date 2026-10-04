@@ -271,12 +271,14 @@ requireMarketAnalysisSource('if (entry.searchUrl) return entry.searchUrl;', "otw
 requireMarketAnalysisSource("data-mobile-market-history-select", "wybór wpisu historii");
 requireMarketAnalysisSource("function selectHistoryEntry(historyId)", "wczytanie filtrów wybranego wpisu");
 requireMarketAnalysisSource("function clearHistorySelection()", "wyczyszczenie filtrów po odznaczeniu wpisu");
-requireMarketAnalysisSource('data-mobile-market-history-pin="${escapeMarketHtml(entry.id)}"', "usunięcie z zapisanych");
-requireMarketAnalysisSource('aria-pressed="${entry.pinned ? "true" : "false"}"', "stan ikony zapisania");
-requireMarketAnalysisSource('data-mobile-market-history-delete="${escapeMarketHtml(entry.id)}"', "usunięcie wpisu");
+// B67 (2026-10-04): the history row builds its markup from an escaped `id`.
+requireMarketAnalysisSource("const id = escapeMarketHtml(entry.id);", "bezpieczny identyfikator wiersza historii");
+requireMarketAnalysisSource('data-mobile-market-history-pin="${id}"', "usunięcie z zapisanych");
+requireMarketAnalysisSource('button.setAttribute("aria-pressed", String(pinned));', "stan ikony zapisania");
+requireMarketAnalysisSource('data-mobile-market-history-delete="${id}"', "usunięcie wpisu");
 forbidMarketAnalysisSource('data-mobile-market-history-edit="${escapeMarketHtml(entry.id)}"', "osobna akcja edycji wpisu");
 // B19 (2026-10-04, owner): every history row has its own "Analiza →".
-requireMarketAnalysisSource('data-mobile-market-history-analysis="${escapeMarketHtml(entry.id)}"', "analiza rynku w wierszu historii");
+requireMarketAnalysisSource('data-mobile-market-history-analysis="${id}"', "analiza rynku w wierszu historii");
 forbidMarketAnalysisSource('<a href="${escapeMarketHtml(searchUrl)}" target="_blank"', "otwieranie listy w wierszu historii");
 forbidMarketAnalysisSource("window.confirm(c.historyDeleteConfirm)", "potwierdzenie usunięcia wpisu");
 forbidMarketAnalysisSource("setAnalysisStatus(c.historyDeleteSuccess)", "komunikat po usunięciu wpisu");
