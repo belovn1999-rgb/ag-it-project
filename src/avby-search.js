@@ -419,7 +419,6 @@ function avbySkippedFilterLabels(filters) {
   if (filters.vat === "reclaimable") add(c.vatLabel || "VAT");
   if (filters.vat === "non_reclaimable") add(avbyText("avbyVatNonReclaimable"));
   if (["dealer", "company"].includes(filters.seller)) add(c.sellerTypeLabel);
-  if ((filters.countries || []).length) add(c.countryLabel);
   const materials = filters.interiorMaterials || [];
   if (materials.includes("part_leather") || (materials.length && !avbyAllOrNothing(materials, avbyInteriorMaterialValues).length)) add(c.interiorMaterialLabel);
   if (["automatic_3_zones", "automatic_4_zones"].includes(filters.airConditioning)) add(c.airConditioningLabel);

@@ -389,7 +389,6 @@ function blocketSkippedFilterLabels(filters) {
   if (rangeSet(filters.doorsFrom, filters.doorsTo)) add(blocketText("blocketDoors"));
   if (filters.vat === "non_reclaimable") add(blocketText("blocketVatNonReclaimable"));
   if (["dealer", "company"].includes(filters.seller)) add(c.sellerTypeLabel);
-  if ((filters.countries || []).length) add(c.countryLabel);
   const materials = filters.interiorMaterials || [];
   if (materials.length && !(blocketLeatherOnly(filters) && materials.length === 2)) add(c.interiorMaterialLabel);
   if (filters.airConditioning && filters.airConditioning !== "any") add(c.airConditioningLabel);

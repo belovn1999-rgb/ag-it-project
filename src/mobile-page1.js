@@ -186,11 +186,11 @@
   checkRanges();
 
   // ---- B18. "Więcej filtrów": its counter tells only what differs from the
-  // defaults ("Sprawny technicznie", "Niemcy", "Dealer / komis" are not a
+  // defaults ("Sprawny technicznie", "Dealer / komis" are not a
   // choice the user made); the generic counter counted them and the hidden
   // halves of the selects twice.
   const moreCard = document.querySelector(".mobileMoreFiltersCard");
-  const MORE_KEYS = ["newUsed", "nonSmoking", "roadworthy", "warranty", "serviceHistory", "accidentFree", "firstOwner", "damagedVehicles", "vat", "seller", "countries"];
+  const MORE_KEYS = ["newUsed", "nonSmoking", "roadworthy", "warranty", "serviceHistory", "accidentFree", "firstOwner", "damagedVehicles", "vat", "seller"];
   const moreCount = () => {
     if (typeof readManualFields !== "function" || typeof defaultManualFields !== "function") return null;
     let current;

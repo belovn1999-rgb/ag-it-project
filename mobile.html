@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=accident-20261003" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=vehicle-rows-20261004" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=more-portals2-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=rebase1-20261004" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
     <link rel="stylesheet" href="./src/mobile-page2.css?v=b20-20261004" />
@@ -128,6 +128,70 @@
             <p class="mobileMarketSearchStatus" aria-live="polite" data-mobile-market-search-status></p>
           </div>
           <div class="mobileManualForm">
+            <section class="mobileFilterCard mobilePortalFiltersCard" aria-labelledby="mobile-filter-group-portals">
+              <h2 id="mobile-filter-group-portals" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#map-pin"></use></svg><span data-i18n="filterGroupPortals">Kraj i pochodzenie</span></h2>
+              <div class="mobileFilterCardBody">
+                <div class="mobilePortalFilterRow" data-mobile-portal-row="mobile autoscout">
+                  <div class="mobilePortalFilterLogos"><img src="./assets/brands/mobile-de-logo.svg" alt="mobile.de" /><img src="./assets/brands/autoscout24-logo.svg?v=2" alt="AutoScout24" /></div>
+                  <div class="mobilePortalFilterFields">
+                      <fieldset class="mobileField mobileCountryField">
+                        <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#map-pin"></use></svg><span data-i18n="countryLabel">Kraj</span></legend>
+                        <details class="mobileMultiSelect" data-mobile-country-select>
+                          <summary data-mobile-country-summary></summary>
+                          <div class="mobileMultiSelectMenu">
+                            <!-- mobile.de + AutoScout24 countries (owner, 2026-10-03); other
+                                 countries come with their own portals later. -->
+                            <label><input data-mobile-country type="checkbox" value="DE" checked /> <span data-i18n="countryGermany">Niemcy</span></label>
+                            <label><input data-mobile-country type="checkbox" value="NL" /> <span data-i18n="countryNetherlands">Holandia</span></label>
+                            <label><input data-mobile-country type="checkbox" value="BE" /> <span data-i18n="countryBelgium">Belgia</span></label>
+                            <label><input data-mobile-country type="checkbox" value="AT" /> <span data-i18n="countryAustria">Austria</span></label>
+                            <label><input data-mobile-country type="checkbox" value="LU" /> <span data-i18n="countryLuxembourg">Luksemburg</span></label>
+                          </div>
+                        </details>
+                      </fieldset>
+                  </div>
+                  <small class="mobilePortalFilterOff" data-i18n="portalRowOff">Portal nie jest wybrany — filtr nie działa</small>
+                </div>
+                <div class="mobilePortalFilterRow" data-mobile-portal-row="otomoto">
+                  <div class="mobilePortalFilterLogos"><img src="./assets/brands/otomoto-logo.svg" alt="otomoto" /></div>
+                  <div class="mobilePortalFilterFields">
+                    <fieldset class="mobileField mobileChoiceField mobileRegisteredField">
+                      <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="registeredLabel">Zarejestrowany w Polsce</span></legend>
+                      <div class="mobileChoiceGroup mobileInlineChoiceGroup">
+                        <label class="mobileChoiceOption"><input data-mobile-registered name="mobile-registered" type="radio" value="" checked /> <span data-i18n="registeredAny">Dowolnie</span></label>
+                        <label class="mobileChoiceOption"><input data-mobile-registered name="mobile-registered" type="radio" value="yes" /> <span data-i18n="registeredYes">Tak</span></label>
+                        <label class="mobileChoiceOption"><input data-mobile-registered name="mobile-registered" type="radio" value="no" /> <span data-i18n="registeredNo">Nie</span></label>
+                      </div>
+                    </fieldset>
+                    <fieldset class="mobileField mobileOriginField">
+                      <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#map-pin"></use></svg><span data-i18n="originLabel">Kraj pochodzenia</span></legend>
+                      <details class="mobileMultiSelect" data-mobile-origin-select>
+                        <summary data-mobile-origin-summary></summary>
+                        <div class="mobileMultiSelectMenu">
+                          <label><input data-mobile-origin type="checkbox" value="pl" /> <span data-i18n="originPoland">Polska</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="d" /> <span data-i18n="originGermany">Niemcy</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="f" /> <span data-i18n="originFrance">Francja</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="b" /> <span data-i18n="originBelgium">Belgia</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="nl" /> <span data-i18n="originNetherlands">Holandia</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="i" /> <span data-i18n="originItaly">Włochy</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="a" /> <span data-i18n="originAustria">Austria</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="ch" /> <span data-i18n="originSwitzerland">Szwajcaria</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="s" /> <span data-i18n="originSweden">Szwecja</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="dk" /> <span data-i18n="originDenmark">Dania</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="e" /> <span data-i18n="originSpain">Hiszpania</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="cz" /> <span data-i18n="originCzechia">Czechy</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="gb" /> <span data-i18n="originUk">Wielka Brytania</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="usa" /> <span data-i18n="originUsa">Stany Zjednoczone</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="cdn" /> <span data-i18n="originCanada">Kanada</span></label>
+                          <label><input data-mobile-origin type="checkbox" value="others" /> <span data-i18n="originOther">Inny</span></label>
+                        </div>
+                      </details>
+                    </fieldset>
+                  </div>
+                  <small class="mobilePortalFilterOff" data-i18n="portalRowOff">Portal nie jest wybrany — filtr nie działa</small>
+                </div>
+              </div>
+            </section>
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-vehicle">
               <h2 id="mobile-filter-group-vehicle" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="filterGroupVehicle">Pojazd</span></h2>
               <div class="mobileFilterCardBody">
@@ -485,81 +549,74 @@
               <h2 id="mobile-filter-group-more" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="filterGroupMore">Więcej filtrów</span></h2>
               <div class="mobileFilterCardBody">
                 <div class="mobileEquipmentPart mobileVehicleConditionSection" role="group" aria-labelledby="mobile-filter-group-condition">
-                  <h3 id="mobile-filter-group-condition" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#alert"></use></svg><span data-i18n="vehicleConditionLabel">Stan pojazdu</span></h3>
-                <div class="mobileVehicleConditionGrid">
-                  <label class="mobileField mobileNewUsedField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="newUsedLabel">Nowy / używany</span></span>
-                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="newUsed" data-mobile-options-target="data-mobile-new-used-label" data-mobile-value-target="data-mobile-new-used">
-                      <input data-mobile-new-used-label type="text" autocomplete="off" readonly />
-                      <input data-mobile-new-used type="hidden" />
+                  <h3 id="mobile-filter-group-condition" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#calendar"></use></svg><span data-i18n="vehicleHistoryLabel">Historia pojazdu</span></h3>
+                  <fieldset class="mobileField mobileChoiceField mobileNewUsedField">
+                    <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="newUsedLabel">Nowy / używany</span> <span class="agPortalMarks" title="otomoto, mobile.de, AutoScout24, av.by" data-marks="otomoto · mobile.de · AutoScout24 · av.by"></span></legend>
+                    <div class="mobileChoiceGroup mobileInlineChoiceGroup">
+                      <label class="mobileChoiceOption"><input data-mobile-new-used-choice name="mobile-new-used" type="radio" value="" checked /> <span data-i18n="newUsedAny">Dowolny</span></label>
+                      <label class="mobileChoiceOption"><input data-mobile-new-used-choice name="mobile-new-used" type="radio" value="new" /> <span data-i18n="newUsedNew">Nowy</span></label>
+                      <label class="mobileChoiceOption"><input data-mobile-new-used-choice name="mobile-new-used" type="radio" value="used" /> <span data-i18n="newUsedUsed">Używany</span></label>
                     </div>
-                  </label>
+                    <input data-mobile-new-used type="hidden" />
+                    <input data-mobile-new-used-label type="hidden" />
+                  </fieldset>
                   <div class="mobileVehicleChecks">
-                    <label class="mobileCheckOption mobileNonSmokingField">
-                      <input data-mobile-non-smoking type="checkbox" />
-                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#smoke-off"></use></svg><span data-i18n="nonSmokingLabel">Auto niepalącego</span>
-                    </label>
-                    <label class="mobileCheckOption mobileRoadworthyField">
-                      <input data-mobile-roadworthy type="checkbox" checked />
-                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-seats-roadworthy-20260902#check"></use></svg><span data-i18n="roadworthyLabel">Sprawny technicznie</span>
-                    </label>
                     <label class="mobileCheckOption">
-                      <input data-mobile-warranty type="checkbox" />
-                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="warrantyLabel">Gwarancja</span> <small class="mobileFieldNote" data-i18n="countryMobileNote">(dotyczy mobile.de)</small>
+                      <input data-mobile-first-owner type="checkbox" />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="firstOwnerLabel">Pierwszy właściciel</span> <span class="agPortalMarks" title="otomoto, mobile.de, AutoScout24" data-marks="otomoto · mobile.de · AutoScout24"></span>
                     </label>
                     <label class="mobileCheckOption">
                       <input data-mobile-service-history type="checkbox" />
-                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="serviceHistoryLabel">Serwisowany w ASO</span>
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="serviceHistoryLabel">Serwisowany w ASO</span> <span class="agPortalMarks" title="mobile.de, otomoto ≈" data-marks="mobile.de · otomoto ≈"></span>
                     </label>
-                    <label class="mobileCheckOption">
-                      <input data-mobile-accident-free type="checkbox" />
-                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="accidentFreeLabel">Bezwypadkowy</span> <small class="mobileFieldNote" data-i18n="accidentFreeNote">(dotyczy otomoto)</small>
-                    </label>
-                    <label class="mobileCheckOption">
-                      <input data-mobile-first-owner type="checkbox" />
-                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="firstOwnerLabel">Pierwszy właściciel</span>
-                    </label>
-                    <label class="mobileCheckOption">
-                      <input data-mobile-damaged-check type="checkbox" />
-                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#alert"></use></svg><span data-i18n="damagedVehiclesLabel">Uszkodzone pojazdy</span>
-                      <input data-mobile-damaged-vehicles type="hidden" />
+                    <label class="mobileCheckOption mobileNonSmokingField">
+                      <input data-mobile-non-smoking type="checkbox" />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#smoke-off"></use></svg><span data-i18n="nonSmokingLabel">Auto niepalącego</span> <span class="agPortalMarks" title="mobile.de" data-marks="mobile.de"></span>
                     </label>
                   </div>
                 </div>
+                <div class="mobileEquipmentPart mobileDamageSection" role="group" aria-labelledby="mobile-filter-group-damage">
+                  <h3 id="mobile-filter-group-damage" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#alert"></use></svg><span data-i18n="damageGroupLabel">Wypadki i uszkodzenia</span></h3>
+                  <div class="mobileVehicleChecks">
+                    <label class="mobileCheckOption">
+                      <input data-mobile-accident-free type="checkbox" />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="accidentFreeLabel">Bezwypadkowy</span> <span class="agPortalMarks" title="otomoto" data-marks="otomoto"></span>
+                    </label>
+                    <label class="mobileCheckOption mobileRoadworthyField">
+                      <input data-mobile-roadworthy type="checkbox" checked />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-seats-roadworthy-20260902#check"></use></svg><span data-i18n="roadworthyLabel">Sprawny technicznie</span> <span class="agPortalMarks" title="mobile.de, av.by" data-marks="mobile.de · av.by"></span>
+                    </label>
+                    <label class="mobileCheckOption">
+                      <input data-mobile-damaged-check type="checkbox" />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#alert"></use></svg><span data-i18n="damagedShowLabel">Pokaż też uszkodzone</span>
+                      <input data-mobile-damaged-vehicles type="hidden" /> <span class="agPortalMarks" title="otomoto, mobile.de, av.by" data-marks="otomoto · mobile.de · av.by"></span>
+                    </label>
+                  </div>
                 </div>
                 <div class="mobileEquipmentPart mobileTradeSection" role="group" aria-labelledby="mobile-filter-group-trade">
-                  <h3 id="mobile-filter-group-trade" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg><span data-i18n="tradeConditionsLabel">Warunki zakupu</span></h3>
-                <div class="mobileTradeGrid">
+                  <h3 id="mobile-filter-group-trade" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg><span data-i18n="tradeConditionsLabel">Sprzedawca i zakup</span></h3>
+                  <div class="mobileTradeGrid">
                   <label class="mobileField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#percent"></use></svg><span data-i18n="vatLabel">VAT</span></span>
-                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="vat" data-mobile-options-target="data-mobile-vat-label" data-mobile-value-target="data-mobile-vat">
-                      <input data-mobile-vat-label type="text" autocomplete="off" readonly />
-                      <input data-mobile-vat type="hidden" />
-                    </div>
-                  </label>
-                  <fieldset class="mobileField mobileCountryField">
-                    <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#map-pin"></use></svg><span data-i18n="countryLabel">Kraj</span> <small class="mobileFieldNote" data-i18n="countryMobileNote">(dotyczy mobile.de)</small></legend>
-                    <details class="mobileMultiSelect" data-mobile-country-select>
-                      <summary data-mobile-country-summary></summary>
-                      <div class="mobileMultiSelectMenu">
-                        <!-- mobile.de + AutoScout24 countries (owner, 2026-10-03); other
-                             countries come with their own portals later. -->
-                        <label><input data-mobile-country type="checkbox" value="DE" checked /> <span data-i18n="countryGermany">Niemcy</span></label>
-                        <label><input data-mobile-country type="checkbox" value="NL" /> <span data-i18n="countryNetherlands">Holandia</span></label>
-                        <label><input data-mobile-country type="checkbox" value="BE" /> <span data-i18n="countryBelgium">Belgia</span></label>
-                        <label><input data-mobile-country type="checkbox" value="AT" /> <span data-i18n="countryAustria">Austria</span></label>
-                        <label><input data-mobile-country type="checkbox" value="LU" /> <span data-i18n="countryLuxembourg">Luksemburg</span></label>
-                      </div>
-                    </details>
-                  </fieldset>
-                  <label class="mobileField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#store"></use></svg><span data-i18n="sellerTypeLabel">Sprzedawca</span></span>
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#store"></use></svg><span data-i18n="sellerTypeLabel">Sprzedawca</span> <span class="agPortalMarks" title="mobile.de, AutoScout24, otomoto ≈, blocket ≈, av.by ≈" data-marks="mobile.de · AutoScout24 · otomoto ≈ · blocket ≈ · av.by ≈"></span></span>
                     <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="seller" data-mobile-options-target="data-mobile-seller-label" data-mobile-value-target="data-mobile-seller">
                       <input data-mobile-seller-label type="text" autocomplete="off" readonly />
                       <input data-mobile-seller type="hidden" />
                     </div>
                   </label>
-                </div>
+                  <label class="mobileField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#percent"></use></svg><span data-i18n="vatLabel">VAT</span> <span class="agPortalMarks" title="otomoto, mobile.de, blocket ≈" data-marks="otomoto · mobile.de · blocket ≈"></span></span>
+                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="vat" data-mobile-options-target="data-mobile-vat-label" data-mobile-value-target="data-mobile-vat">
+                      <input data-mobile-vat-label type="text" autocomplete="off" readonly />
+                      <input data-mobile-vat type="hidden" />
+                    </div>
+                  </label>
+                  </div>
+                  <div class="mobileVehicleChecks">
+                    <label class="mobileCheckOption">
+                      <input data-mobile-warranty type="checkbox" />
+                      <svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#check"></use></svg><span data-i18n="warrantyLabel">Gwarancja</span> <span class="agPortalMarks" title="mobile.de" data-marks="mobile.de"></span>
+                    </label>
+                  </div>
                 </div>
               </div>
             </section>
@@ -621,18 +678,18 @@
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
     <script src="./src/market-badges.js?v=autoscout2-20261003"></script>
     <script src="./src/mobile-rates.js?v=rates-20261004"></script>
-    <script src="./src/mobile.js?v=rebase1-20261004"></script>
-    <script src="./src/blocket-search.js?v=rates-20261004"></script>
-    <script src="./src/avby-search.js?v=rates-20261004"></script>
+    <script src="./src/mobile.js?v=more-portals2-20261004"></script>
+    <script src="./src/blocket-search.js?v=more-portals2-20261004"></script>
+    <script src="./src/avby-search.js?v=more-portals2-20261004"></script>
     <script src="./src/autoscout-search.js?v=rebase1-20261004"></script>
     <script src="./src/turnkey-estimate.js?v=rates-20261004"></script>
     <script src="./src/turnkey-belarus.js?v=rates-20261004"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=rebase1-20261004"></script>
+    <script src="./src/mobile-market-analysis.js?v=more-portals2-20261004"></script>
     <script src="./src/calculator-popup.js?v=rebase1-20261004"></script>
     <script src="./src/mobile-favorites-watch.js?v=autoscout2-20261003"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
-    <script src="./src/mobile-page1.js?v=b19-20261004"></script>
+    <script src="./src/mobile-page1.js?v=more-portals-20261004"></script>
     <script src="./src/mobile-page2.js?v=page2-audit2-20261003"></script>
   </body>
 </html>

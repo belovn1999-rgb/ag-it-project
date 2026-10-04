@@ -32,7 +32,7 @@ const copy = {
     vehicleDataLabel: "DANE PODSTAWOWE POJAZDU",
     drivetrainLabel: "NAPĘD I SKRZYNIA",
     conditionLabel: "WNĘTRZE I STAN",
-    tradeConditionsLabel: "Warunki zakupu",
+    tradeConditionsLabel: "Sprzedawca i zakup",
     filterGroupMore: "Więcej filtrów",
     calculatorDataEyebrow: "DANE DO KALKULATORA",
     brandLabel: "Marka",
@@ -83,6 +83,32 @@ const copy = {
     showMoreFilters: "Pokaż",
     hideMoreFilters: "Ukryj",
     filterGroupPrice: "Przebieg i cena",
+    filterGroupPortals: "Kraj i pochodzenie",
+    portalRowOff: "Portal nie jest wybrany — filtr nie działa",
+    registeredLabel: "Zarejestrowany w Polsce",
+    registeredAny: "Dowolnie",
+    registeredYes: "Tak",
+    registeredNo: "Nie",
+    originLabel: "Kraj pochodzenia",
+    vehicleHistoryLabel: "Historia pojazdu",
+    damageGroupLabel: "Wypadki i uszkodzenia",
+    damagedShowLabel: "Pokaż też uszkodzone",
+    originPoland: "Polska",
+    originGermany: "Niemcy",
+    originFrance: "Francja",
+    originBelgium: "Belgia",
+    originNetherlands: "Holandia",
+    originItaly: "Włochy",
+    originAustria: "Austria",
+    originSwitzerland: "Szwajcaria",
+    originSweden: "Szwecja",
+    originDenmark: "Dania",
+    originSpain: "Hiszpania",
+    originCzechia: "Czechy",
+    originUk: "Wielka Brytania",
+    originUsa: "Stany Zjednoczone",
+    originCanada: "Kanada",
+    originOther: "Inny",
     filterGroupEquipment: "Wyposażenie",
     versionHint: "Linia wyposażenia lub oznaczenie z ogłoszenia, np. M Sport, S line, R-Line (nie działa na otomoto)",
     dependentsRemoved: "Zmieniono markę na {brand} — usunięto: {fields}.",
@@ -338,7 +364,7 @@ const copy = {
     vehicleDataLabel: "ОСНОВНЫЕ ДАННЫЕ АВТОМОБИЛЯ",
     drivetrainLabel: "ПРИВОД И КОРОБКА ПЕРЕДАЧ",
     conditionLabel: "САЛОН И СОСТОЯНИЕ",
-    tradeConditionsLabel: "Условия сделки",
+    tradeConditionsLabel: "Продавец и покупка",
     filterGroupMore: "Ещё фильтры",
     calculatorDataEyebrow: "ДАННЫЕ ДЛЯ КАЛЬКУЛЯТОРА",
     brandLabel: "Марка",
@@ -389,6 +415,32 @@ const copy = {
     showMoreFilters: "Показать",
     hideMoreFilters: "Скрыть",
     filterGroupPrice: "Пробег и цена",
+    filterGroupPortals: "Страна и происхождение",
+    portalRowOff: "Портал не выбран — фильтр не действует",
+    registeredLabel: "Зарегистрирован в Польше",
+    registeredAny: "Неважно",
+    registeredYes: "Да",
+    registeredNo: "Нет",
+    originLabel: "Страна происхождения",
+    vehicleHistoryLabel: "История автомобиля",
+    damageGroupLabel: "Аварии и повреждения",
+    damagedShowLabel: "Показывать и повреждённые",
+    originPoland: "Польша",
+    originGermany: "Германия",
+    originFrance: "Франция",
+    originBelgium: "Бельгия",
+    originNetherlands: "Нидерланды",
+    originItaly: "Италия",
+    originAustria: "Австрия",
+    originSwitzerland: "Швейцария",
+    originSweden: "Швеция",
+    originDenmark: "Дания",
+    originSpain: "Испания",
+    originCzechia: "Чехия",
+    originUk: "Великобритания",
+    originUsa: "США",
+    originCanada: "Канада",
+    originOther: "Другая",
     filterGroupEquipment: "Оснащение",
     versionHint: "Линия комплектации или обозначение из объявления, напр. M Sport, S line, R-Line (на otomoto не работает)",
     dependentsRemoved: "Марка изменена на {brand} — очищено: {fields}.",
@@ -1394,6 +1446,10 @@ const els = {
   sellerLabel: document.querySelector("[data-mobile-seller-label]"),
   countries: Array.from(document.querySelectorAll("[data-mobile-country]")),
   countrySummary: document.querySelector("[data-mobile-country-summary]"),
+  registered: Array.from(document.querySelectorAll("[data-mobile-registered]")),
+  origins: Array.from(document.querySelectorAll("[data-mobile-origin]")),
+  originSummary: document.querySelector("[data-mobile-origin-summary]"),
+  newUsedChoices: Array.from(document.querySelectorAll("[data-mobile-new-used-choice]")),
   interiorMaterials: Array.from(document.querySelectorAll("[data-mobile-interior-material]")),
   airConditioning: Array.from(document.querySelectorAll("[data-mobile-air-conditioning]")),
   trailerCoupling: Array.from(document.querySelectorAll("[data-mobile-trailer-coupling]")),
@@ -1931,6 +1987,36 @@ function updateCountrySummary() {
   els.countrySummary.textContent = selected.length ? selected.join(", ") : copy[state.lang].selectEmpty;
 }
 
+// "Kraj i pochodzenie": each row belongs to its portals (mobile.de and
+// AutoScout24: Kraj; otomoto: registered in Poland, country of origin); a row
+// whose portals are all off is greyed out with a note.
+function updatePortalFilterRows() {
+  const picked = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : ["mobile"];
+  document.querySelectorAll("[data-mobile-portal-row]").forEach((row) => {
+    const on = row.dataset.mobilePortalRow.split(" ").some((market) => picked.includes(market));
+    row.classList.toggle("isOff", !on);
+  });
+}
+
+// otomoto: "Kraj pochodzenia" (where the car came from, many at once).
+function updateOriginSummary() {
+  if (!els.originSummary) return;
+  const selected = els.origins.filter((input) => input.checked)
+    .map((input) => input.closest("label")?.textContent.trim())
+    .filter(Boolean);
+  els.originSummary.textContent = selected.length ? selected.join(", ") : copy[state.lang].selectEmpty;
+}
+
+// "Nowy / używany" as buttons; the hidden value (and its label, read by the
+// analysis) stays what every search and saved entry use.
+function syncNewUsedChoices() {
+  const value = els.newUsed?.value || "";
+  els.newUsedChoices.forEach((input) => { input.checked = input.value === value; });
+  const labelInput = document.querySelector("[data-mobile-new-used-label]");
+  const chosen = els.newUsedChoices.find((input) => input.checked && input.value);
+  if (labelInput) labelInput.value = chosen ? chosen.closest("label")?.textContent.trim() || "" : "";
+}
+
 function manualFuelValues(filters) {
   const values = Array.isArray(filters?.fuels) ? filters.fuels : [];
   const legacyValues = [
@@ -2075,6 +2161,8 @@ function defaultManualFields() {
     vat: "",
     seller: "dealer",
     countries: defaultCountries(),
+    otomotoRegistered: "",
+    otomotoOrigins: [],
     interiorMaterials: [],
     airConditioning: "",
     trailerCoupling: "any",
@@ -2122,6 +2210,10 @@ function renderManualOptions(keepValues = true) {
   if (els.doorsGroup) els.doorsGroup.value = doorsGroup;
   if (els.slidingDoor) els.slidingDoor.value = current.slidingDoor || "";
   if (els.newUsed) els.newUsed.value = current.newUsed || "";
+  syncNewUsedChoices();
+  setCheckedValue(els.registered, current.otomotoRegistered || "");
+  setCheckedValues(els.origins, current.otomotoOrigins || []);
+  updateOriginSummary();
   if (els.warranty) els.warranty.checked = Boolean(current.warranty);
   if (els.serviceHistory) els.serviceHistory.checked = Boolean(current.serviceHistory);
   if (els.accidentFree) els.accidentFree.checked = Boolean(current.accidentFree);
@@ -2215,6 +2307,8 @@ function readManualFields() {
     vat: els.vat?.value || "",
     seller: els.seller?.value || "",
     countries: checkedValues(els.countries),
+    otomotoRegistered: checkedValue(els.registered) || "",
+    otomotoOrigins: checkedValues(els.origins),
     interiorMaterials: checkedValues(els.interiorMaterials),
     airConditioning: checkedValue(els.airConditioning),
     trailerCoupling: checkedValue(els.trailerCoupling) || "any",
@@ -2351,6 +2445,7 @@ function recognizedAdPriceHtml() {
 }
 
 function updateSelectedFiltersSummary() {
+  updatePortalFilterRows();
   if (!els.selectedFilters) return;
   const saveButton = document.querySelector("[data-mobile-market-history-save]");
   const c = copy[state.lang];
@@ -2435,6 +2530,10 @@ function updateSelectedFiltersSummary() {
       { heading: c.specEquipmentHeading, items: equipment, empty: c.specNoEquipment },
       { heading: c.specOtherHeading, rows: [
         [c.specCountry, portalCountries.length ? portalCountries.join(", ") : any, "map-pin", target(els.countries)],
+        ...(pickedMarkets.includes("otomoto") && (filters.otomotoOrigins || []).length
+          ? [[c.originLabel, checked(els.origins).map(optionLabelText).join(", "), "map-pin", target(els.origins)]] : []),
+        ...(pickedMarkets.includes("otomoto") && filters.otomotoRegistered
+          ? [[c.registeredLabel, filters.otomotoRegistered === "yes" ? c.registeredYes : c.registeredNo, "check", target(els.registered)]] : []),
         [c.specStatus, status.length ? status.join(", ") : any, "check", target(els.roadworthy)],
         [c.specVat, filters.vat ? els.vatLabel?.value || any : any, "percent", target(els.vatLabel)],
         [c.specSeller, filters.seller ? els.sellerLabel?.value || any : any, "store", target(els.sellerLabel)],
@@ -2984,6 +3083,11 @@ function buildOtomotoSearchUrl(filters) {
   if (filters.metallic) colourTypes.push("metallic");
   appendOtomotoValues(params, "filter_enum_colour_type", colourTypes);
   if (filters.damagedVehicles !== "show") params.set("search[filter_enum_damaged]", "0");
+  // Checked on live counts 04.10 (VW Golf 3 681): registered 1 → 1 557, 0 → 304;
+  // origin pl → 921, d → 987, both → 1 908.
+  if (filters.otomotoRegistered === "yes") params.set("search[filter_enum_registered]", "1");
+  if (filters.otomotoRegistered === "no") params.set("search[filter_enum_registered]", "0");
+  appendOtomotoValues(params, "filter_enum_country_origin", filters.otomotoOrigins || []);
   if (filters.newUsed === "new" || filters.newUsed === "used") params.set("search[new_used]", filters.newUsed);
   // otomoto knows "Serwisowany w ASO" only: the closest to a full history.
   if (filters.serviceHistory) params.set("search[filter_enum_service_record]", "1");
@@ -3010,7 +3114,6 @@ function otomotoSkippedFilterLabels(filters) {
   }
   if (["pickup", "other"].includes(filters.body)) add(c.bodyLabel);
   if (["dealer", "company"].includes(filters.seller)) add(c.sellerTypeLabel);
-  if ((filters.countries || []).length) add(c.countryLabel);
   if (filters.trailerCoupling && filters.trailerCoupling !== "any") add(c.trailerCouplingLabel);
   (filters.features || [])
     .filter((feature) => otomotoUnsupportedFeatures.has(feature))
@@ -3732,6 +3835,11 @@ els.bodyChoices?.addEventListener("change", (event) => {
   if (choice) els.body.value = choice.value;
 });
 els.countries.forEach((input) => input.addEventListener("change", updateCountrySummary));
+els.origins.forEach((input) => input.addEventListener("change", updateOriginSummary));
+els.newUsedChoices.forEach((input) => input.addEventListener("change", () => {
+  if (els.newUsed) els.newUsed.value = input.checked ? input.value : els.newUsed.value;
+  syncNewUsedChoices();
+}));
 els.fuels.forEach((input) => input.addEventListener("change", updateFuelSummary));
 
 // Live Otomoto match count in the sticky panel: one request per settled

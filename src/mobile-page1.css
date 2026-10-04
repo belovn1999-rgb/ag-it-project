@@ -716,3 +716,118 @@
   font: inherit;
   font-size: var(--text-sm);
 }
+
+/* ---- "Kraj i pochodzenie" (04.10): one row per portal group — mobile.de and
+   AutoScout24: Kraj; otomoto: registered in Poland, country of origin. A row
+   whose portals are all off is greyed out with a note. ---- */
+.mobilePortalFilterRow {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: var(--space-xs) var(--space-lg);
+  align-items: start;
+}
+
+.mobilePortalFilterRow + .mobilePortalFilterRow {
+  padding-top: var(--space-lg);
+  border-top: var(--rule-thin) solid var(--color-rule-soft);
+}
+
+.mobilePortalFilterLogos {
+  display: grid;
+  gap: 8px;
+  justify-items: start;
+  padding-top: 26px;
+}
+
+.mobilePortalFilterLogos img {
+  height: 20px;
+  width: auto;
+  max-width: 130px;
+}
+
+.mobilePortalFilterFields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-lg);
+  align-items: start;
+}
+
+.mobilePortalFilterFields > .mobileCountryField:only-child {
+  grid-column: 1;
+}
+
+.mobilePortalFilterOff {
+  display: none;
+  grid-column: 2;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.mobilePortalFilterRow.isOff .mobilePortalFilterLogos,
+.mobilePortalFilterRow.isOff .mobilePortalFilterFields {
+  opacity: 0.45;
+}
+
+.mobilePortalFilterRow.isOff .mobilePortalFilterOff {
+  display: block;
+}
+
+/* Which portals a field works on (≈ = close, not the same). Drawn from
+   data-marks, so the marks never become part of the field's label text. */
+.agPortalMarks::after {
+  content: attr(data-marks);
+  display: inline-block;
+  margin-left: 6px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: 4px;
+  padding: 0 5px;
+  color: var(--color-muted);
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 16px;
+  text-transform: none;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.mobileMoreFiltersCard .mobileVehicleChecks .mobileCheckOption {
+  flex-wrap: wrap;
+  row-gap: 2px;
+}
+
+.mobileMoreFiltersCard .mobileTradeGrid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+@media (max-width: 760px) {
+  .mobilePortalFilterRow,
+  .mobilePortalFilterFields,
+  .mobileMoreFiltersCard .mobileTradeGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mobilePortalFilterLogos {
+    grid-auto-flow: column;
+    justify-content: start;
+    padding-top: 0;
+  }
+
+  .mobilePortalFilterOff {
+    grid-column: 1;
+  }
+}
+
+/* "Kraj pochodzenia" looks like "Kraj" (same open select, no frame). */
+.mobileOriginField {
+  min-width: 0;
+  margin: 0;
+  border: 0;
+  padding: 0;
+}
+
+.mobileOriginField legend {
+  margin-bottom: var(--space-xs);
+  padding: 0;
+}

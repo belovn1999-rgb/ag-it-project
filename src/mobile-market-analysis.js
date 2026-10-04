@@ -2732,6 +2732,10 @@
       input.checked = input.value === (filters.cruiseControl || "any");
     });
     setHistoryCheckboxes("[data-mobile-country]", filters.countries?.length ? filters.countries : ["DE"]);
+    setHistoryCheckboxes("[data-mobile-origin]", filters.otomotoOrigins || []);
+    document.querySelectorAll("[data-mobile-registered]").forEach((input) => {
+      input.checked = input.value === (filters.otomotoRegistered || "");
+    });
     setHistoryCheckboxes("[data-mobile-fuel]", manualFuelValues(filters));
     setHistoryCheckboxes("[data-mobile-interior-material]", filters.interiorMaterials);
     setHistoryCheckboxes("[data-mobile-feature]", filters.features);
