@@ -13,7 +13,8 @@ window.AUTOGOOD_MODEL_SPECS.models["<brand>|<model>"] =
             sub-models such as "320" or "C 220"; duplicates merged.
   trims:    [from, to|null, lines[], sport[], editions[]]
   bodies:   [gen index, types[], doors from, doors to, seats from, seats to, sliding 0|1]
-            from the ultimatespecs body names (body_of below, owner 2026-10-04):
+            doors and seats from autocentrum.pl where data/model-engines.csv has them
+            (with_autocentrum), otherwise from the ultimatespecs body names (body_of below, owner 2026-10-04):
             types = page-1 "Nadwozie" values (limousine estate suv hatchback
             coupe cabrio van_minibus); a 4-door coupe or liftback counts as
             both; doors and seats are ranges, wide where a name does not say.
@@ -168,6 +169,20 @@ def body_of(brand, model, name):
     return types, doors[0], doors[1], seats[0], seats[1], sliding
 
 
+def with_autocentrum(types, doors, seats, ac_doors, ac_seats):
+    """Doors and seats of a body from autocentrum.pl (columns "Двери"/"Места", "5" or "3/5";
+    tools/autocentrum.py). Doors replace a guess (a range body_of could not narrow); seats only
+    widen ours: autocentrum names one seat count per body and misses the 7-seat options
+    (Kodiaq, XC90), and its cargo vans (2-3 seats) are not the passenger bodies."""
+    door_values = [int(v) for v in ac_doors.split("/") if v]
+    if door_values and doors[0] != doors[1]:
+        doors = (min(door_values), max(door_values))
+    seat_values = [int(v) for v in ac_seats.split("/") if v and (int(v) > 3 or "van_minibus" in types)]
+    if seat_values:
+        seats = (min(seats[0], *seat_values), max(seats[1], *seat_values))
+    return doors[0], doors[1], seats[0], seats[1]
+
+
 def clean_names(items, model_names):
     """'Advance, Pro Line (Бенилюкс)' -> ['Advance', 'Pro Line']; body types and base trims out."""
     out = []
@@ -211,6 +226,8 @@ def main():
             if row.get("Рестайлинг, год") and phase == "all" and gen["lift"] is None:
                 gen["lift"] = int(row["Рестайлинг, год"])
             types, doors_from, doors_to, seats_from, seats_to, sliding = body_of(row["Марка"], model, row["Кузов"])
+            doors_from, doors_to, seats_from, seats_to = with_autocentrum(
+                types, (doors_from, doors_to), (seats_from, seats_to), row.get("Двери", ""), row.get("Места", ""))
             entry["bodies"].add((gen_key, tuple(types), doors_from, doors_to, seats_from, seats_to, sliding))
             fuel = FUELS.get(row["Топливо"], "petrol")
             mild = 1 if row["Топливо: примечание"].startswith("мягкий") else 0

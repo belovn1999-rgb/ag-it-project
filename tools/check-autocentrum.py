@@ -336,10 +336,10 @@ def write_report(ac, findings, stats):
     lines += [f"- {title}: **{len(by_kind[kind])}**" for kind, title in KINDS if by_kind[kind]]
     lines += [
         "",
-        "Категории данных, которых в нашей таблице нет совсем, а на autocentrum есть: число дверей и мест "
-        f"(у {doors['с дверьми']} из {doors['кузовов']} кузовов; это наши фильтры «Liczba drzwi» и «Liczba miejsc»), "
-        "крутящий момент, норма Euro, расход, CO₂, размеры, багажник, масса, разгон, макс. скорость, бак. "
-        "Двери и места сохранены в `data/autocentrum-models.json`.",
+        f"Двери и места (у {doors['с дверьми']} из {doors['кузовов']} кузовов autocentrum) перенесены в нашу таблицу — "
+        "столбцы «Двери» и «Места» `data/model-engines.csv`, фильтры «Liczba drzwi» и «Liczba miejsc». "
+        "Нет у нас совсем (есть в `data/autocentrum-table.csv`): крутящий момент, норма Euro, код двигателя, расход, "
+        "CO₂, размеры, багажник, масса, разгон, макс. скорость, бак.",
         "",
         "## По моделям",
         "",

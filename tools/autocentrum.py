@@ -309,7 +309,8 @@ def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label, o
             "Привод": DRIVE_RU.get(drive, template.get("Привод", "")),
             "Привод: откуда": "autocentrum" if drive else "как у модели",
             "Ссылка": AC_BASE + body["path"] + engine["slug"] + "/", "Источник": "autocentrum",
-            "Рестайлинг, год": "",
+            "Рестайлинг, год": "", "Двери": body.get("doors", ""),
+            "Места": engine.get("Liczba miejsc") or body.get("seats", ""),
         })
         out.append(row)
     return out
@@ -354,6 +355,8 @@ def merge(rows, ac):
     for row in rows:
         row.setdefault("Источник", "ultimatespecs")
         row.setdefault("Рестайлинг, год", "")
+        row.setdefault("Двери", "")
+        row.setdefault("Места", "")
     models = ac["models"]
 
     # 1. Facelift years. A generation whose facelift bodies carry no year ("2008 Facelift",
@@ -492,4 +495,30 @@ def merge(rows, ac):
                         if not wrong:
                             carry((gearbox, drive), f"строк: {kind}, которого не было")
     rows.extend(added)
+
+    # 5. Doors and seats of our bodies: autocentrum bodies of the same kind (body_tags) in the
+    #    matching generation, a facelift body for a facelift phase where there is one.
+    gens = our_generations(rows)
+    for model in models:
+        brand, label = model["brand"], model["label"]
+        shapes = collections.defaultdict(list)
+        for ac_gen in group_body_level(model["generations"]):
+            for gen in match_gens(ac_gen, gens.get((brand, label), {})):
+                for body in ac_gen["bodies"]:
+                    if body.get("doors") or body.get("seats"):
+                        kind = frozenset(body_tags(label, body["name"], ac_gen["name"]))
+                        shapes[(gen["code"], kind)].append(body)
+        for gen in gens.get((brand, label), {}).values():
+            for item in gen["rows"]:
+                row = item["src"]
+                if row["Источник"] == "autocentrum":
+                    continue
+                bodies = shapes.get((gen["code"], frozenset(body_tags(label, row["Кузов"]))), [])
+                facelift = bool(FACELIFT_STAGE.match(row["Этап"]))
+                same = [b for b in bodies if ("facelifting" in b["name"].lower()) == facelift] or bodies
+                doors = sorted({b["doors"] for b in same if b.get("doors")}, key=int)
+                seats = sorted({b["seats"] for b in same if b.get("seats")}, key=int)
+                if doors or seats:
+                    row["Двери"], row["Места"] = "/".join(doors), "/".join(seats)
+                    stats["двери и места из autocentrum (версий)"] += 1
     return stats
