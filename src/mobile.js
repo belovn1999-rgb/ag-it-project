@@ -4952,7 +4952,12 @@ document.querySelector(".mobileManualForm")?.addEventListener("click", (event) =
 // Russian, taking it off switches back to Polish.
 function defaultCountries() {
   const markets = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : ["mobile"];
-  return markets.includes("mobile") || markets.includes("autoscout") ? ["DE"] : [];
+  // B68: the countries of the switched-on columns of "Aktualne oferty" —
+  // Germany with mobile.de, the Netherlands and Belgium with Marktplaats /
+  // 2dehands (AutoScout24 searches both columns' countries).
+  const nlbe = markets.includes("autoscout") && (markets.includes("marktplaats") || markets.includes("dehands"));
+  const germany = markets.includes("mobile") || (markets.includes("autoscout") && !nlbe);
+  return [...(germany ? ["DE"] : []), ...(nlbe ? ["NL", "BE"] : [])];
 }
 
 window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {

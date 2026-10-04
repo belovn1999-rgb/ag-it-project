@@ -1317,6 +1317,28 @@
     return { markets, countries: nextCountries };
   }
 
+  // Page 2, "Analiza rynków" (B69): a chip is a country market. Niemcy is the
+  // German column; Holandia / Belgia each its portal and its "Kraj" country
+  // (AutoScout24 searches it); the others their one portal.
+  function marketsWithMarketChip(market) {
+    if (market === "mobile") return marketsWithGroup("de");
+    const markets = { ...chartSources };
+    let countries = null;
+    if (market === "marktplaats" || market === "dehands") {
+      const code = market === "marktplaats" ? "NL" : "BE";
+      const current = formCountries();
+      const on = Boolean(chartSources[market]) || (Boolean(chartSources.autoscout) && current.includes(code));
+      countries = current.filter((item) => item !== code);
+      markets[market] = !on;
+      if (on) markets.autoscout = Boolean(chartSources.autoscout) && countries.length > 0;
+      else {
+        countries.push(code);
+        markets.autoscout = true;
+      }
+    } else markets[market] = !chartSources[market];
+    return MARKET_SOURCES.some((source) => markets[source]) ? { markets, countries } : null;
+  }
+
   // A column's head: flags, the countries' names and the switch.
   function marketGroupHeadHtml(group, switchAttribute) {
     const c = copy();
@@ -1640,6 +1662,22 @@
     if (listing?.currency === "USD") return "avby";
     return listing?.currency === "PLN" ? "otomoto" : "mobile";
   }
+  // B69 (owner 2026-10-04): the analysis compares countries, an offer counts
+  // in its seller's country. mobile.de and AutoScout24 offers from the
+  // Netherlands or Belgium join Marktplaats / 2dehands in "Holandia" /
+  // "Belgia"; all their other offers are "Niemcy" (Austria and Luxembourg
+  // only through "Kraj"). The market keys reuse each country's portal, so the
+  // rows keep their names, flags and colours; logos and links stay the
+  // offer's own portal (listing.portal in the analysis).
+  function listingMarket(listing) {
+    const source = listingSource(listing);
+    // Kleinanzeigen (B47) is Germany's alone.
+    if (source === "kleinanzeigen") return "mobile";
+    if (source !== "mobile" && source !== "autoscout") return source;
+    const country = String(listing?.country || "").toUpperCase();
+    return country === "NL" ? "marktplaats" : country === "BE" ? "dehands" : "mobile";
+  }
+
 
   function normalizeListings(rows) {
     const seenListings = new Set();
@@ -2235,15 +2273,43 @@
         mobile: () => fetchMobileDeSample(filters, whole, prices.mobile, step("mobile")),
         blocket: () => fetchBlocketListings(filters, step("blocket"), whole, prices.blocket),
         avby: () => fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole),
-        autoscout: () => fetchAutoscoutListings(filters, {
-          countries: (filters.countries || []).length ? filters.countries : ["DE"],
-          price: prices.autoscout || prices.mobile || null,
-          whole,
-          // Monitoring follows each portal's progress; the analysis does not
-          // wait minutes for a whole AutoScout24 list.
-          everyPage: typeof progress === "function",
-          onProgress: step("autoscout"),
-        }),
+        autoscout: async () => {
+          const countries = (filters.countries || []).length ? filters.countries : ["DE"];
+          const options = (list) => ({
+            countries: list,
+            price: prices.autoscout || prices.mobile || null,
+            whole,
+            // Monitoring follows each portal's progress; the analysis does not
+            // wait minutes for a whole AutoScout24 list.
+            everyPage: typeof progress === "function",
+            onProgress: step("autoscout"),
+          });
+          // B69: Germany (with Austria / Luxembourg) and NL + BE are read as
+          // two samples, one after the other: in one list sorted by price
+          // Germany's offers left the Netherlands and Belgium (AutoScout24 is
+          // their main portal) a few dozen.
+          const groups = [germanCountries(countries), nlbeCountries(countries)].filter((list) => list.length);
+          if (groups.length < 2) return fetchAutoscoutListings(filters, options(countries));
+          const results = [];
+          let firstError = null;
+          for (const list of groups) {
+            try {
+              const result = await fetchAutoscoutListings(filters, options(list));
+              if (result) results.push(result);
+            } catch (error) {
+              firstError = firstError || error;
+            }
+          }
+          if (!results.length) {
+            if (firstError) throw firstError;
+            return null;
+          }
+          return {
+            listings: results.flatMap((result) => result.listings),
+            total: results.reduce((sum, result) => sum + (Number(result.total) || 0), 0),
+            read: results.reduce((sum, result) => sum + (Number(result.read) || 0), 0),
+          };
+        },
         // France: AutoScout24 in France alone, its own market (no duplicates
         // to drop: mobile.de is searched in other countries).
         autoscoutfr: () => fetchAutoscoutListings(filters, {
@@ -6414,7 +6480,7 @@
     const stored = providerId === "import" || providerId === "history";
     // Every valid offer remains in the sample, including unusually priced ones.
     const bySource = Object.fromEntries(MARKET_SOURCES.map((source) => [source, []]));
-    listings.forEach((listing) => bySource[listingSource(listing)].push(listing));
+    listings.forEach((listing) => bySource[listingMarket(listing)].push(listing));
     const inPlnForChecks = (listing) => priceInPln(listing.price, listing.currency || "EUR");
     const cleaned = {};
     const suspects = {};
@@ -6424,7 +6490,20 @@
       suspects[source] = bySource[source].filter((listing) => flagged.has(listing));
     });
     const availableSources = MARKET_SOURCES.filter((source) => cleaned[source].length);
-    const pickedSources = availableSources.filter((source) => chartSources[source]);
+    // A market is shown while one of the portals of its offers is compared;
+    // mobile.de / AutoScout24 offers only while their country is in "Kraj"
+    // (a country switched off on page 2 drops at once, without reading again).
+    const analysisCountries = (filters.countries || []).filter(Boolean);
+    const countryShown = (listing) => {
+      const portal = listingSource(listing);
+      if ((portal !== "mobile" && portal !== "autoscout") || !analysisCountries.length) return true;
+      const market = listingMarket(listing);
+      if (market === "marktplaats") return analysisCountries.includes("NL");
+      if (market === "dehands") return analysisCountries.includes("BE");
+      return germanCountries(analysisCountries).length > 0;
+    };
+    const portalOn = (listing) => Boolean(chartSources[listingSource(listing)]) && countryShown(listing);
+    const pickedSources = availableSources.filter((source) => cleaned[source].some(portalOn));
     const shownSources = pickedSources;
     // One chart, one currency: a marketplace alone in its own currency,
     // several together in PLN (the client pays in Poland).
@@ -6443,16 +6522,18 @@
     const inDisplayCurrency = (listing) => (byMode && listingSource(listing) === "avby" && Number(listing.priceByn) > 0
       ? byTurnkey.convert(Number(listing.priceByn), "BYN", "USD")
       : convertPrice(listing.price, listing.currency || "EUR", displayCurrency));
-    const marketListings = shownSources.flatMap((source) => cleaned[source]).map((listing) => ({
+    const marketListings = shownSources.flatMap((source) => cleaned[source]).filter(portalOn).map((listing) => ({
       ...listing,
-      source: listingSource(listing),
+      source: listingMarket(listing),
+      portal: listingSource(listing),
       originalPrice: listing.price,
       originalCurrency: listing.currency,
       price: Math.round(inDisplayCurrency(listing)),
     }));
-    const suspectListings = shownSources.flatMap((source) => suspects[source]).map((listing) => ({
+    const suspectListings = shownSources.flatMap((source) => suspects[source]).filter(portalOn).map((listing) => ({
       ...listing,
-      source: listingSource(listing),
+      source: listingMarket(listing),
+      portal: listingSource(listing),
       originalPrice: listing.price,
       originalCurrency: listing.currency,
       price: Math.round(inDisplayCurrency(listing)),
@@ -6506,7 +6587,7 @@
     // Excise without the engine size: mobile.de ads are read one by one and
     // the chart fills in; the rest are counted as up to 2000 cm³ (footnote).
     const unknownEngine = byMode ? [] : marketListings.filter((listing) => listing.engine?.source === "unknown");
-    const engineToRead = unknownEngine.filter((listing) => listing.source === "mobile" && !ccmTried.has(String(listing.id)));
+    const engineToRead = unknownEngine.filter((listing) => listing.portal === "mobile" && !ccmTried.has(String(listing.id)));
     if (engineToRead.length) setTimeout(() => startCcmDetails(engineToRead.map((listing) => String(listing.id))), 0);
     const bySaving = bySavings.length ? percentile([...bySavings].sort((left, right) => left - right), 0.5) : 0;
     // Belarus: three prices with every German offer — the car (net or gross),
@@ -6531,7 +6612,7 @@
     const mixedSources = shownSources.length > 1;
     const summary = filterSummary(filters);
     const sourceName = (source) => (portalName(source));
-    const listingKey = (listing) => listing.url || `${listing.source}-${listing.id}`;
+    const listingKey = (listing) => listing.url || `${listing.portal || listing.source}-${listing.id}`;
     let statsContent = "";
     let segmentsContent = "";
     let offersContent = "";
@@ -6713,7 +6794,7 @@
             ? formatMarketPrice(listing.originalPrice, listing.originalCurrency)
             : "";
           const title = fullTitle(listing);
-          const label = `${title ? `${title}, ` : ""}${listing.subtitle ? `${listing.subtitle}, ` : ""}${formatMarketPrice(listing.price)}${details ? `, ${details}` : ""}, ${sourceName(listing.source)}.${listing.url ? ` ${c.pointHint}` : ""}`;
+          const label = `${title ? `${title}, ` : ""}${listing.subtitle ? `${listing.subtitle}, ` : ""}${formatMarketPrice(listing.price)}${details ? `, ${details}` : ""}, ${sourceName(listing.portal || listing.source)}.${listing.url ? ` ${c.pointHint}` : ""}`;
           const tooltip = `
               <span class="mobileMarketPointTooltip" aria-hidden="true">
                 ${title ? `<i class="mobileMarketPointTitle">${escapeMarketHtml(title)}</i>` : ""}
@@ -6721,7 +6802,7 @@
                 <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${listing.turnkeyPln ? ` <small>${escapeMarketHtml(turnkeyLabel)}</small>` : ""}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
                 ${details ? `<em>${escapeMarketHtml(details)}</em>` : ""}
                 ${listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(listing.originalPrice, listing.source))}</em>` : ""}
-                <b class="is${sourceClass(listing.source)}">${marketBadge(listing.source)} <small>${escapeMarketHtml(sourceName(listing.source))}</small>${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
+                <b class="is${sourceClass(listing.source)}">${marketBadge(listing.source)} <small>${escapeMarketHtml(sourceName(listing.portal || listing.source))}</small>${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
               </span>`;
           const attributes = `class="mobileMarketPoint is${sourceClass(listing.source)}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
           return listing.url
@@ -6766,8 +6847,8 @@
         ? recognised.importMode
         : recognised?.importMode === "autoscout" && recognised.location?.country === "FR" && shownSources.includes("autoscoutfr")
         ? "autoscoutfr"
-        : recognised?.importMode === "autoscout" && shownSources.includes("autoscout")
-        ? "autoscout"
+        : recognised?.importMode === "autoscout" && shownSources.includes(listingMarket({ source: "autoscout", country: recognised.location?.country }))
+        ? listingMarket({ source: "autoscout", country: recognised.location?.country })
         : recognised?.pricePln
         ? "otomoto"
         : (shownSources.find((source) => source !== "otomoto") || shownSources[0]);
@@ -7006,18 +7087,14 @@
       // colours compare what the client pays in Poland (turnkey for foreign
       // offers, the price itself for Polish ones): higher green, lower red.
       const statsOf = (list, priceOf) => marketStatistics(list.map((listing) => ({ ...listing, price: priceOf(listing) })));
-      // mobile.de and AutoScout24 are one market, Germany's dealers (owner
-      // 2026-10-04, B48): one row, one median, one conclusion "z Niemiec".
-      // AutoScout24 holds only what mobile.de does not have, so nothing counts twice.
-      // Kleinanzeigen joins them (B47): only its offers mobile.de / AutoScout24 do not have.
-      const germanPresent = GERMAN_SOURCES.filter((source) => shownSources.includes(source) && marketListings.some((listing) => listing.source === source));
-      const germanyJoined = germanPresent.length > 1;
-      const germanyLead = germanPresent[0];
-      const rowSources = (shownSources.length > 1 ? shownSources : [shownSources[0] || ""])
-        .filter((source) => !(germanyJoined && germanPresent.includes(source) && source !== germanyLead));
+      // One row per country (B69): its portals under the name — "Niemcy:
+      // mobile.de + AutoScout24" (B48: one German market; AutoScout24 holds
+      // only what mobile.de does not have, so nothing counts twice),
+      // "Holandia: AutoScout24 + Marktplaats", "Polska: otomoto".
+      const rowSources = shownSources.length > 1 ? shownSources : [shownSources[0] || ""];
       const statRows = rowSources.map((source) => {
-        const joined = germanyJoined && source === germanyLead;
-        const own = marketListings.filter((listing) => !source || listing.source === source || (joined && germanPresent.includes(listing.source)));
+        const own = marketListings.filter((listing) => !source || listing.source === source);
+        const portals = MARKET_SOURCES.filter((portal) => own.some((listing) => listing.portal === portal));
         const currency = SOURCE_CURRENCY[source] || displayCurrency;
         const foreign = source && turnkeySources.includes(source) && own.some((listing) => listing.turnkeyPln);
         // Belarus: German rows show the car's price (net/gross) with the price in
@@ -7037,8 +7114,9 @@
         const inPln = turnkeyStats || statsOf(own, (listing) => (byMode ? listing.price : priceInPln(listing.originalPrice, listing.originalCurrency || currency)));
         return {
           source,
-          sources: joined ? germanPresent : [source],
-          portal: joined ? germanPresent.map(portalName).join(" + ") : portalName(source),
+          sources: [source],
+          portals,
+          portal: portals.map(portalName).join(" + ") || portalName(source),
           stats: native, turnkeyStats, inPln, deliveredStats, baseLabel, avbyUsd, own, mileage: meanMileage(own),
         };
       }).filter((row) => row.stats.count);
@@ -7111,10 +7189,10 @@
         if (source === "marktplaats") return c.countryNetherlands;
         if (source === "dehands") return c.countryBelgium;
         if (source === "kleinanzeigen") return c.countryGermany;
-        const countries = (filters.countries || []).filter(Boolean);
-        const base = countries.length === 1 ? (fromCountry[countries[0]] || c.countryAbroad) : c.countryAbroad;
-        // mobile.de and AutoScout24 in the same countries are told apart by the portal.
-        return foreignRows.some((other) => other.source !== source && GERMAN_SOURCES.includes(other.source)) ? `${base} (${portalName(source)})` : base;
+        // The German market (B69): Germany, or several countries with
+        // Austria / Luxembourg from "Kraj".
+        const countries = germanCountries((filters.countries || []).filter(Boolean));
+        return countries.length <= 1 ? (fromCountry[countries[0] || "DE"] || c.countryAbroad) : c.countryAbroad;
       };
       const plnText = (value) => formatMarketPrice(value, "PLN");
       const kmText = (value) => `${numberFormat().format(value)} km`;
@@ -7240,7 +7318,7 @@
           </div>
           ${statRows.map((row) => `
             <div class="mobileMarketStatsRow" role="row">
-              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(row.sources.length > 1 ? row.portal : sourceName(row.source))}">${marketBadge(row.source)}${row.sources.length > 1 ? `<small class="mobileMarketStatsPortals">${escapeMarketHtml(row.portal)}</small>` : ""}</span>` : ""}
+              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(row.portal)}">${marketBadge(row.source)}<small class="mobileMarketStatsPortals">${escapeMarketHtml(row.portal)}</small></span>` : ""}
               ${statColumns.map((column, index) => {
                 const left = index === 0 ? suspectListings.filter((listing) => !compared || row.sources.includes(listing.source)).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
@@ -7460,7 +7538,7 @@
       const tableMinWidth = Math.max(760, weights * 9);
       const searchText = (listing) => foldText([
         fullTitle(listing), listing.subtitle, listing.year, listing.city, listing.country,
-        fuelText(listing), gearboxText(listing), sellerText(listing), sourceName(listing.source),
+        fuelText(listing), gearboxText(listing), sellerText(listing), sourceName(listing.portal || listing.source),
       ].filter(Boolean).join(" "));
       const queryWords = foldText(tableQuery).split(/\s+/).filter(Boolean);
       const matchesQuery = (listing) => queryWords.every((word) => searchText(listing).includes(word));
@@ -7481,7 +7559,7 @@
         [c.tableGearbox, (listing) => escapeMarketHtml(gearboxText(listing))],
         [c.tableSeller, (listing) => escapeMarketHtml(sellerText(listing))],
         [c.tablePlace, (listing) => escapeMarketHtml(placeText(listing))],
-        [c.tableSource, (listing) => `${marketBadge(listing.source)}${listing.url ? ` ${brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`)}` : ""}`],
+        [c.tableSource, (listing) => `${marketBadge(listing.source)}${listing.url ? ` ${brandMarkLink(listing.portal || listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.portal || listing.source)}`)}` : ""}`],
       ];
       const carCompareHtml = !picked.length ? "" : `
         <section class="mobileMarketCarCompare" aria-label="${escapeMarketHtml(c.carCompareHeading)}">
@@ -7497,9 +7575,9 @@
                   <th scope="col"><span class="srOnly">${escapeMarketHtml(c.carCompareHeading)}</span></th>
                   ${picked.map((listing) => `
                     <th scope="col">
-                      <span>${escapeMarketHtml(fullTitle(listing) || sourceName(listing.source))}</span>
+                      <span>${escapeMarketHtml(fullTitle(listing) || sourceName(listing.portal || listing.source))}</span>
                       ${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}
-                      <button type="button" data-mobile-market-compare-remove="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(c.carCompareRemove.replace("{title}", fullTitle(listing) || sourceName(listing.source)))}" data-report-hide>×</button>
+                      <button type="button" data-mobile-market-compare-remove="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(c.carCompareRemove.replace("{title}", fullTitle(listing) || sourceName(listing.portal || listing.source)))}" data-report-hide>×</button>
                     </th>`).join("")}
                 </tr>
               </thead>
@@ -7518,7 +7596,7 @@
           case "number": return String(index + 1);
           case "pick": {
             const on = carCompareKeys.includes(listingKey(listing));
-            return `<input type="checkbox" data-mobile-market-compare-pick="${escapeMarketHtml(listingKey(listing))}"${on ? " checked" : ""}${!on && pickedFull ? " disabled" : ""} aria-label="${escapeMarketHtml(c.carComparePick.replace("{title}", [fullTitle(listing) || sourceName(listing.source), listing.year, formatMarketPrice(listing.price)].filter(Boolean).join(", ")))}" />`;
+            return `<input type="checkbox" data-mobile-market-compare-pick="${escapeMarketHtml(listingKey(listing))}"${on ? " checked" : ""}${!on && pickedFull ? " disabled" : ""} aria-label="${escapeMarketHtml(c.carComparePick.replace("{title}", [fullTitle(listing) || sourceName(listing.portal || listing.source), listing.year, formatMarketPrice(listing.price)].filter(Boolean).join(", ")))}" />`;
           }
           case "title": return `${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}`;
           case "year": return escapeMarketHtml(listing.year ? String(listing.year) : "—");
@@ -7537,7 +7615,7 @@
             ? `${escapeMarketHtml(sellerText(listing))}${listing.city ? `<small>${escapeMarketHtml(placeText(listing))}</small>` : ""}`
             : escapeMarketHtml(placeText(listing));
           case "source": return marketBadge(listing.source);
-          case "link": return listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : "—";
+          case "link": return listing.url ? brandMarkLink(listing.portal || listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.portal || listing.source)}`) : "—";
           default: return "";
         }
       };
@@ -7600,7 +7678,7 @@
       <div class="mobileMarketSources">
         <span>${escapeMarketHtml(c.sourcesPicker)}</span>
         <div class="mobileMarketSourcesList">
-          ${MARKET_SOURCES.map((source) => {
+          ${MARKET_SOURCES.filter((source) => source !== "autoscout" && source !== "kleinanzeigen").map((source) => {
             const drawn = reportSources.includes(source);
             const attribute = chartSources[source] ? "data-mobile-analysis-fetch" : "data-mobile-analysis-market";
             const country = window.AUTOGOOD_MARKET_COUNTRY?.[source] || "";
@@ -8310,18 +8388,14 @@
     }
     const marketButton = event.target.closest("[data-mobile-analysis-market]");
     if (marketButton && activeAnalysis) {
-      const source = marketButton.dataset.mobileAnalysisMarket;
-      const next = { ...chartSources, [source]: !chartSources[source] };
-      if (!MARKET_SOURCES.some((item) => next[item])) {
+      // B69: a chip is a country — all its portals (and its "Kraj" country)
+      // go in or out together.
+      const result = marketsWithMarketChip(marketButton.dataset.mobileAnalysisMarket);
+      if (!result) {
         setAnalysisStatus(copy().marketPickerLast, true);
         return;
       }
-      setChartSources(next);
-      renderHistory();
-      updateSelectedFiltersSummary?.();
-      const hasPrices = activeAnalysis.listings.some((listing) => listingSource(listing) === source);
-      if (next[source] && !hasPrices) refreshActiveAnalysis();
-      else renderAnalysis();
+      applyMarketsOnAnalysis(result.markets, result.countries);
       return;
     }
     const pdfButton = event.target.closest("[data-mobile-market-pdf]");
@@ -8781,10 +8855,11 @@
       && !activeAnalysis.listings.some((listing) => listingSource(listing) === source));
     if (countries) {
       setFormCountries(countries);
-      const old = [...(activeAnalysis.filters.countries || ["DE"])].sort().join(",");
-      if (old !== [...countries].sort().join(",")) {
+      const old = activeAnalysis.filters.countries?.length ? activeAnalysis.filters.countries : ["DE"];
+      if ([...old].sort().join(",") !== [...countries].sort().join(",")) {
         activeAnalysis = { ...activeAnalysis, filters: { ...activeAnalysis.filters, countries } };
-        refetch = true;
+        // A country added is read; one taken away just drops from the view.
+        if (countries.some((code) => !old.includes(code))) refetch = true;
       }
     }
     renderMarketPicker();
@@ -8894,6 +8969,14 @@
     renderHistory();
   });
   renderMarketTranslations();
+  // B68: "Kraj" is not kept over a reload, the switched-on country columns
+  // are: their countries come back with them (a favourite picked below sets
+  // its own).
+  if (typeof defaultCountries === "function") {
+    const wanted = defaultCountries();
+    if (wanted.length) setFormCountries(wanted);
+    renderMarketPicker();
+  }
   // A reload stays on the page it was on (#historia, #ulubione, #analiza).
   const startPage = Object.keys(PAGE_HASHES).find((page) => PAGE_HASHES[page] && PAGE_HASHES[page] === location.hash) || LEGACY_PAGE_HASHES[location.hash];
   if (startPage) showPage(startPage);
