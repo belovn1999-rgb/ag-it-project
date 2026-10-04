@@ -103,6 +103,26 @@ node server/monitoring-runner.mjs --jobs jobs.json --out data/monitoring --daily
    monitoring: serwer, 9:02»; рубильник тогда означает «сервер проверяет
    ежедневно», а не «пока программа открыта».
 
+## 6. Вариант Б — Mac владельца (работает с 04.10)
+
+Решение владельца 04.10: пока нет сервера, мониторинг делает его Mac, **только
+утром в 9:30**, для всех избранных с включённым мониторингом. Механизм —
+`PROJECT-MOBILE.md` §4.6.3 п. 18. Что нужно один раз:
+
+1. **Служба** — установлена: LaunchAgent `~/Library/LaunchAgents/com.autogood.monitoring.plist`,
+   файлы в `~/Library/Application Support/AUTOGOOD/monitoring/`. Проверка:
+   `curl http://127.0.0.1:8789/monitoring/health`. Перезапуск:
+   `launchctl kickstart -k gui/$(id -u)/com.autogood.monitoring`. Обновить код
+   службы: скопировать `server/monitoring-runner.mjs` в `…/monitoring/runner/` и
+   перезапустить (страницу она всегда берёт с живого сайта).
+2. **Браузер владельца** — один раз открыть
+   `https://belovn1999-rgb.github.io/ag-it-project/mobile.html?localMonitoring=1#monitoring`
+   и на вопрос Chrome о доступе к программам на этом устройстве нажать
+   «Разрешить». Под рубильником появится «Codziennie o 9:30 sprawdza ten Mac…».
+3. **Пробуждение в 9:25** — делает владелец (нужен пароль Mac):
+   `sudo pmset repeat wakeorpoweron MTWRFSU 09:25:00`. Спящий Mac на зарядке
+   просыпается; выключенный — проверяет при первом включении после 9:30.
+
 ## 5. Проверено 04.10 (локально)
 
 - Задания из браузера (`jobs()`, 2 авто) → раннер с Chrome импортера (9333) и

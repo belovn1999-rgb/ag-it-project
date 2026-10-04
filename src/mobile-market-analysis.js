@@ -65,7 +65,8 @@
       monitoringIntro: "Wybierz auto na pasku ulubionych u góry: zobaczysz nowe i zniknięte ogłoszenia od poprzedniego monitoringu.",
       monitoringNoFavorites: "Nie masz jeszcze ulubionych aut. Oznacz wyszukiwanie gwiazdką ★ na stronie 1 — tutaj pojawi się jego monitoring.",
       monitoringSwitch: "Włącz monitoring",
-      monitoringOn: "Codziennie o 9:00. Dopóki serwer automatyzacji nie działa, monitoring rusza, gdy program jest otwarty: o 9:00 albo przy pierwszym otwarciu po 9:00.",
+      monitoringOn: "Codziennie o 9:30, gdy program jest otwarty: o 9:30 albo przy pierwszym otwarciu po 9:30 (ten komputer nie ma usługi monitoringu AUTOGOOD).",
+      monitoringOnMac: "Codziennie o 9:30 sprawdza ten Mac — także gdy program jest zamknięty; wyniki pojawiają się tu przy otwarciu.",
       monitoringOff: "Monitoring tylko po kliknięciu „Uruchom monitoring”.",
       monitoringParams: "Parametry wyszukiwania",
       monitoringEditParams: "Zmień parametry",
@@ -133,8 +134,8 @@
       monitoringSince: "Monitoring od {date} · {days} · zapisanych monitoringów: {count}",
       monitoringNext: "Następny monitoring: {date}",
       monitoringNextNow: "zaraz (program jest otwarty)",
-      monitoringToday9: "dziś o 9:00",
-      monitoringTomorrow9: "jutro o 9:00",
+      monitoringToday9: "dziś o 9:30",
+      monitoringTomorrow9: "jutro o 9:30",
       monitoringDay0: "od dziś",
       monitoringDay1: "dzień",
       monitoringDay2: "dni",
@@ -613,7 +614,8 @@
       monitoringIntro: "Выбери авто в полосе избранного сверху: увидишь новые и исчезнувшие объявления с прошлого мониторинга.",
       monitoringNoFavorites: "Избранных авто пока нет. Отметь поиск звёздочкой ★ на странице 1 — здесь появится его мониторинг.",
       monitoringSwitch: "Включить мониторинг",
-      monitoringOn: "Каждый день в 9:00. Пока сервер автоматизации не запущен, мониторинг запускается, когда программа открыта: в 9:00 или при первом открытии после 9:00.",
+      monitoringOn: "Каждый день в 9:30, когда программа открыта: в 9:30 или при первом открытии после 9:30 (на этом компьютере нет службы мониторинга AUTOGOOD).",
+      monitoringOnMac: "Каждый день в 9:30 проверяет этот Mac — даже когда программа закрыта; результаты появляются здесь при открытии.",
       monitoringOff: "Мониторинг только по кнопке «Запустить мониторинг».",
       monitoringParams: "Параметры поиска",
       monitoringEditParams: "Изменить параметры",
@@ -681,8 +683,8 @@
       monitoringSince: "Мониторинг с {date} · {days} · сохранено мониторингов: {count}",
       monitoringNext: "Следующий мониторинг: {date}",
       monitoringNextNow: "сейчас (программа открыта)",
-      monitoringToday9: "сегодня в 9:00",
-      monitoringTomorrow9: "завтра в 9:00",
+      monitoringToday9: "сегодня в 9:30",
+      monitoringTomorrow9: "завтра в 9:30",
       monitoringDay0: "с сегодня",
       monitoringDay1: "день",
       monitoringDay2: "дня",
@@ -3943,6 +3945,8 @@
   // teraz" that reads the portals and compares with the previous check (new
   // and gone offers per portal), and the day-by-day history below, folded.
   const monitoringState = { id: "", view: "new", portal: "", busy: "", status: "", statusError: false };
+  // Does this Mac's monitoring service answer (variant B, see syncLocalMonitoring)?
+  const localMonitoring = { available: false, failedToday: false };
   // Monitoring checks waiting for the one running (see runMonitoringCheck).
   const monitoringQueue = [];
   const isQueued = (id) => monitoringQueue.some((item) => item.entry.id === id);
@@ -4096,6 +4100,7 @@
     } catch {
       Object.assign(monitoringState, { status: copy().historyStorageError, statusError: true });
     }
+    scheduleLocalSync();
   }
 
   const converterState = { amount: "10000", currency: "EUR" };
@@ -4156,7 +4161,7 @@
             <i aria-hidden="true"></i><b>${escapeMarketHtml(monitored ? c.monitoringSwitchOn : c.monitoringSwitch)}</b>
           </label>
         </div>
-        <p class="mobileMonitoringNote">${escapeMarketHtml(monitored ? c.monitoringOn : c.monitoringOff)}${monitored ? ` <b>${escapeMarketHtml(c.monitoringNext.replace("{date}", nextMonitoringText(entry)))}</b>` : ""}</p>
+        <p class="mobileMonitoringNote">${escapeMarketHtml(monitored ? (localMonitoring.available ? c.monitoringOnMac : c.monitoringOn) : c.monitoringOff)}${monitored ? ` <b>${escapeMarketHtml(c.monitoringNext.replace("{date}", nextMonitoringText(entry)))}</b>` : ""}</p>
         <button class="mobileMonitoringParamsLine" type="button" data-monitoring-edit title="${escapeMarketHtml(c.monitoringEditParams)}">
           <span>${escapeMarketHtml([monitoringTitle(entry), ...historyMeta(entry.filters)].join(" · "))}</span>
           <b>${escapeMarketHtml(c.monitoringEditParams)} →</b>
@@ -4218,14 +4223,16 @@
     if (monitoringExtended) fillOfferHistory(entry);
   }
 
-  // Monitoring runs every day at 9:00 (while the program is open, until a
-  // server runs it): due when no Monitoring check exists since today's 9:00.
+  // Monitoring runs every day at 9:30 (owner, 2026-10-04; was 9:00): by the
+  // owner's Mac (variant B, below) or, without it, while the program is open.
+  // Due when no Monitoring check exists since today's 9:30.
   const MONITORING_HOUR = 9;
+  const MONITORING_MINUTE = 30;
   // Listed this long and already cheaper: "Do negocjacji" (B22).
   const NEGOTIATION_DAYS = 30;
   const todayAtNine = () => {
     const at = new Date();
-    at.setHours(MONITORING_HOUR, 0, 0, 0);
+    at.setHours(MONITORING_HOUR, MONITORING_MINUTE, 0, 0);
     return at;
   };
   function nextMonitoringText(entry) {
@@ -5199,7 +5206,7 @@
       const markets = monitoringMarketsOf(entry);
       const scope = monitoringScopeOf(entry.id);
       const prices = Object.fromEntries(markets.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null]).filter(([, price]) => price));
-      return { id: entry.id, title: monitoringTitle(entry), filters: entry.filters, markets, countries: scope.countries, tolerance: scope.tolerance, prices, every: "daily", hour: MONITORING_HOUR };
+      return { id: entry.id, title: monitoringTitle(entry), filters: entry.filters, markets, countries: scope.countries, tolerance: scope.tolerance, prices, every: "daily", hour: MONITORING_HOUR, minute: MONITORING_MINUTE };
     });
     return { version: 1, exportedAt: new Date().toISOString(), jobs };
   }
@@ -5414,11 +5421,97 @@
     return [...byDate.values()].some((record) => record.scope && Date.parse(record.at) >= nine);
   }
 
+  // ---- Variant B (owner, 2026-10-04): the owner's Mac checks at 9:30 -------
+  // server/monitoring-runner.mjs --serve runs on that Mac as a LaunchAgent
+  // (127.0.0.1:8789, never through the tunnel). The page sends it the cars
+  // with monitoring on and takes its records back (importMonitoringRecords).
+  // Asked only from a browser where it was switched on once with
+  // mobile.html?localMonitoring=1 — elsewhere Chrome would ask every employee
+  // for "local network access". While the service answers and today's run
+  // did not break down, the page does not check on its own.
+  const LOCAL_MONITORING_URL = "http://127.0.0.1:8789/monitoring";
+  // {enabled, client, since}: a convenience of this browser, not user data.
+  const LOCAL_MONITORING_KEY = "autogood.mobile.localMonitoring.v1";
+  function localMonitoringState() {
+    try {
+      const state = JSON.parse(localStorage.getItem(LOCAL_MONITORING_KEY) || "{}");
+      return state && typeof state === "object" && !Array.isArray(state) ? state : {};
+    } catch {
+      return {};
+    }
+  }
+  function saveLocalMonitoring(change) {
+    try {
+      localStorage.setItem(LOCAL_MONITORING_KEY, JSON.stringify({ ...localMonitoringState(), ...change }));
+    } catch {
+      // Not remembered: the page still checks by itself.
+    }
+  }
+  (() => {
+    const flag = new URLSearchParams(window.location.search).get("localMonitoring");
+    if (flag === "1") saveLocalMonitoring({ enabled: true });
+    if (flag === "0") saveLocalMonitoring({ enabled: false });
+  })();
+  let localSyncRunning = null;
+  function syncLocalMonitoring() {
+    if (RUNNER_MODE || !localMonitoringState().enabled) return Promise.resolve();
+    if (!localSyncRunning) localSyncRunning = (async () => {
+      const was = localMonitoring.available;
+      let health = null;
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 3000);
+        const response = await fetch(`${LOCAL_MONITORING_URL}/health`, { cache: "no-store", signal: controller.signal });
+        clearTimeout(timer);
+        health = response.ok ? await response.json() : null;
+      } catch {
+        health = null;
+      }
+      Object.assign(localMonitoring, { available: Boolean(health?.ok), failedToday: Boolean(health?.failedToday) });
+      let added = 0;
+      if (health?.ok) {
+        let state = localMonitoringState();
+        if (!state.client) {
+          saveLocalMonitoring({ client: `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}` });
+          state = localMonitoringState();
+        }
+        try {
+          await fetch(`${LOCAL_MONITORING_URL}/jobs`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ client: state.client, jobs: monitoringJobs().jobs }) });
+          refreshMarketHistory();
+          const ids = marketHistory.filter((entry) => entry.pinned).map((entry) => entry.id);
+          let since = state.since || "";
+          for (let round = 0; round < 10 && ids.length; round += 1) {
+            const response = await fetch(`${LOCAL_MONITORING_URL}/records?ids=${encodeURIComponent(ids.join(","))}&since=${encodeURIComponent(since)}`, { cache: "no-store" });
+            const data = response.ok ? await response.json() : null;
+            if (!data?.records?.length) break;
+            added += (await importMonitoringRecords(data.records)).added;
+            since = data.records[data.records.length - 1].at;
+            saveLocalMonitoring({ since });
+            if (!data.more) break;
+          }
+        } catch {
+          // Next time (every 5 minutes).
+        }
+      }
+      if ((added || was !== localMonitoring.available) && currentPage() === "history") renderPriceHistoryPage();
+    })().finally(() => {
+      localSyncRunning = null;
+    });
+    return localSyncRunning;
+  }
+  // Settings changed (switch, countries, margin, prices): the Mac learns soon.
+  let localSyncTimer = null;
+  function scheduleLocalSync() {
+    clearTimeout(localSyncTimer);
+    localSyncTimer = setTimeout(syncLocalMonitoring, 1500);
+  }
+
   // Monitored favourites are checked once a day by themselves while the
-  // program is open (until the automation server runs them, B5).
+  // program is open — unless this Mac's service does it (variant B).
   async function runDueMonitoring() {
     const nine = todayAtNine().getTime();
     if (Date.now() < nine) return;
+    if (localMonitoring.available && !localMonitoring.failedToday) return;
     refreshMarketHistory();
     for (const entry of marketHistory.filter((item) => item.pinned && item.autoRefresh?.enabled)) {
       if (monitoringState.busy === entry.id || isQueued(entry.id)) continue;
@@ -5439,14 +5532,14 @@
     const knowsAutoscout = saved.includes("autoscout") || !saved.includes("mobile");
     return MARKET_SOURCES.filter((source) => (source === "autoscout" && !knowsAutoscout ? Boolean(chartSources.autoscout) : saved.includes(source)));
   }
-  if (!RUNNER_MODE) setTimeout(runDueMonitoring, 5000);
+  if (!RUNNER_MODE) setTimeout(() => syncLocalMonitoring().then(runDueMonitoring), 4000);
   // The converter shows Walutomat's live rate once it has arrived.
   window.AUTOGOOD_TURNKEY?.calculatorRate?.().then(() => {
     const out = document.querySelector("[data-monitoring-convert-out]");
     if (out && currentPage() === "history" && !document.activeElement?.closest?.("[data-mobile-price-history-page]")) renderPriceHistoryPage();
   }).catch(() => {});
-  // Looked at every 5 minutes, so 9:00 is met while the program is open.
-  if (!RUNNER_MODE) setInterval(runDueMonitoring, 5 * 60 * 1000);
+  // Looked at every 5 minutes, so 9:30 is met while the program is open.
+  if (!RUNNER_MODE) setInterval(() => syncLocalMonitoring().then(runDueMonitoring), 5 * 60 * 1000);
 
   // Scheduled checks are a setting of the favourite, stored with it (the
   // stored history is re-read first, see 4.6.1 in docs/PROJECT-MOBILE.md).
@@ -5455,6 +5548,7 @@
     if (!marketHistory.some((item) => item.id === historyId)) return;
     if (!storeMarketHistory(marketHistory.map((item) => (item.id === historyId ? { ...item, autoRefresh } : item)))) return;
     renderPriceHistoryPage();
+    scheduleLocalSync();
   }
 
   priceHistoryPage?.addEventListener("input", (event) => {
@@ -5507,6 +5601,7 @@
     const price = event.target.closest("[data-monitoring-price]");
     if (price && priceHistoryId) {
       window.AUTOGOOD_FAVORITES_WATCH?.setPortalPrice?.(priceHistoryId, price.dataset.monitoringPrice, price.dataset.side, price.value);
+      scheduleLocalSync();
       Object.assign(monitoringState, { status: copy().monitoringPriceChanged, statusError: false });
       renderPriceHistoryPage();
       return;
