@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <link rel="stylesheet" href="./src/mobile-page1.css?v=filter-warnings-20261004" />
+    <link rel="stylesheet" href="./src/mobile-model-specs.css?v=b61-specs-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=rebase1-20261004" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
     <link rel="stylesheet" href="./src/mobile-page2.css?v=b20-20261004" />
@@ -158,10 +159,13 @@
                         <em aria-hidden="true"></em>
                       </div>
                     </div>
+                    <small class="mobileFieldNote mobileGenerationHint" data-mobile-generation-hint aria-live="polite" hidden></small>
                   </div>
                     <label class="mobileField mobileVersionField">
                       <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="versionLabel">Wersja</span></span>
-                      <input data-mobile-version type="text" autocomplete="off" aria-describedby="mobile-version-hint" />
+                      <div class="mobileComboControl mobileTextComboControl mobileVersionCombo" data-mobile-options="version" data-mobile-options-target="data-mobile-version">
+                        <input data-mobile-version type="text" autocomplete="off" aria-describedby="mobile-version-hint" />
+                      </div>
                       <small class="mobileFieldNote" id="mobile-version-hint" data-i18n="versionHint">Linia wyposażenia lub oznaczenie z ogłoszenia, np. M Sport, S line, R-Line (nie działa na otomoto)</small>
                     </label>
                 </div>
@@ -677,7 +681,9 @@
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
     <script src="./src/market-badges.js?v=b48eq-20261004"></script>
     <script src="./src/mobile-rates.js?v=flags-20261004"></script>
-    <script src="./src/mobile.js?v=more-portals2-20261004"></script>
+    <script src="./src/model-specs.generated.js?v=b61-specs-20261004"></script>
+    <script src="./src/mobile-model-specs.js?v=b61-specs-20261004"></script>
+    <script src="./src/mobile.js?v=b61-specs-20261004"></script>
     <script src="./src/blocket-search.js?v=more-portals2-20261004"></script>
     <script src="./src/avby-search.js?v=more-portals2-20261004"></script>
     <script src="./src/autoscout-search.js?v=b48eq2-20261004"></script>

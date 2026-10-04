@@ -1792,7 +1792,7 @@ function comboOptionSets() {
   const powerKw = els.powerUnit?.value === "kw";
   const power = powerKw ? powerKwOptions : powerOptions;
   const powerUnitLabel = powerKw ? "kW" : "KM";
-  return {
+  const sets = {
     brand: brandCatalogOptions(),
     model: models,
     price: priceOptions.map((value) => ({
@@ -1817,7 +1817,7 @@ function comboOptionSets() {
       value,
       label: `${value} ccm`,
     })),
-    displacementTo: valuesAfter(displacement, els.displacementFrom?.value).map((value) => ({
+    displacementTo: valuesAfter(displacement, els.displacementFrom?.value, true).map((value) => ({
       value,
       label: `${value} ccm`,
     })),
@@ -1825,7 +1825,7 @@ function comboOptionSets() {
       value,
       label: `${value} ${powerUnitLabel}`,
     })),
-    powerTo: valuesAfter(power, els.powerFrom?.value).map((value) => ({
+    powerTo: valuesAfter(power, els.powerFrom?.value, true).map((value) => ({
       value,
       label: `${value} ${powerUnitLabel}`,
     })),
@@ -1853,6 +1853,8 @@ function comboOptionSets() {
       { value: "company", label: c.sellerCompany },
     ],
   };
+  // B61: lists of a model with data follow its real versions (src/mobile-model-specs.js).
+  return window.AUTOGOOD_MODEL_SPECS_UI ? window.AUTOGOOD_MODEL_SPECS_UI.enhance(sets) : sets;
 }
 
 // Doors as on mobile.de: one choice of 2/3, 4/5 or 6/7; the range it stands
@@ -1926,15 +1928,14 @@ function renderComboMenus(filterControl = null) {
     }
     menu.hidden = !visibleOptions.length;
     control.setAttribute("aria-expanded", control.classList.contains("isOpen") && visibleOptions.length ? "true" : "false");
-    const menuType = control.dataset.mobileOptions;
     let previousGroup = null;
     let previousPopular = null;
     menu.innerHTML = visibleOptions.flatMap((option) => {
       const items = [];
-      if ((menuType === "brand" || menuType === "model") && previousPopular === true && !option.isPopular) {
+      if (previousPopular === true && !option.isPopular) {
         items.push('<div class="mobileComboMenuDivider" aria-hidden="true"></div>');
       }
-      if (menuType === "model" && option.group && option.group !== previousGroup) {
+      if (option.group && option.group !== previousGroup) {
         const groupLabel = modelMenuGroupLabel(option.group);
         if (groupLabel) items.push(`<div class="mobileComboMenuGroup">${escapeHtml(groupLabel)}</div>`);
         else if (previousGroup) items.push('<div class="mobileComboMenuDivider" aria-hidden="true"></div>');
@@ -2446,6 +2447,7 @@ function recognizedAdPriceHtml() {
 
 function updateSelectedFiltersSummary() {
   updatePortalFilterRows();
+  window.AUTOGOOD_MODEL_SPECS_UI?.refresh();
   if (!els.selectedFilters) return;
   const saveButton = document.querySelector("[data-mobile-market-history-save]");
   const c = copy[state.lang];
@@ -3815,8 +3817,8 @@ const rangeEndsByStart = new Map([
   [els.priceFrom, [els.priceTo, true]],
   [els.mileageFrom, [els.mileageTo, false]],
   [els.yearFrom, [els.yearTo, true]],
-  [els.displacementFrom, [els.displacementTo, false]],
-  [els.powerFrom, [els.powerTo, false]],
+  [els.displacementFrom, [els.displacementTo, true]],
+  [els.powerFrom, [els.powerTo, true]],
   [els.seatsFrom, [els.seatsTo, true]],
   [els.doorsFrom, [els.doorsTo, true]],
 ]);

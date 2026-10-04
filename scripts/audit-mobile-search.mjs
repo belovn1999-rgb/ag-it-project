@@ -228,6 +228,19 @@ const contractFragments = [
 contractFragments.forEach(([fragment, label]) => requireSource(fragment, label));
 requireHtml('data-mobile-feature type="checkbox" value="ELECTRIC_TAILGATE"', "elektryczna klapa bagażnika w opcjach");
 requireHtml('data-mobile-options="price"', "cena od");
+// B61 stage 4 (2026-10-04, owner): lists follow the real versions of the model.
+requireHtml('data-mobile-options="version"', "lista Wersja z liniami wyposażenia");
+requireHtml("data-mobile-generation-hint", "pokolenia pod polem Rok");
+requireHtml("./src/model-specs.generated.js", "dane modeli dla list");
+requireSource("window.AUTOGOOD_MODEL_SPECS_UI.enhance(sets)", "listy według realnych wersji modelu");
+{
+  const specsSource = await fs.readFile(path.join(repoRoot, "src", "model-specs.generated.js"), "utf8");
+  const specs = JSON.parse(specsSource.slice(specsSource.indexOf("{"), specsSource.lastIndexOf("}") + 1));
+  const specModels = Object.keys(specs.models || {});
+  if (specModels.length < 65) throw new Error(`Dane modeli: ${specModels.length}/65 modeli.`);
+  const empty = specModels.filter((key) => !specs.models[key].gens.length || !specs.models[key].versions.length);
+  if (empty.length) throw new Error(`Dane modeli bez pokoleń lub wersji: ${empty.join(", ")}.`);
+}
 requireHtml('data-mobile-options="priceTo"', "cena do");
 requireHtml("data-mobile-search-count-mobilede", "miejsce na liczbę ofert Mobile.de");
 requireHtml('class="mobileSearchCountSaveButton mobileSearchSummaryStar"', "gwiazdka zapisania w wybranych filtrach");
