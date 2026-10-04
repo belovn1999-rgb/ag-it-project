@@ -496,7 +496,8 @@ def body_phase(gen_phase, gen_from, body_name):
     """Facelifts ultimatespecs keeps inside one generation ("Q3 2015", "S60 II Restyling")."""
     if FACELIFT_BODY.search(body_name):
         year = re.search(r"(20\d\d)", body_name)
-        return f"рестайлинг ({year.group(1)})" if year else FL
+        # "2008 Facelift": 2008 is the Peugeot model, not the year (a facelift is after the start).
+        return f"рестайлинг ({year.group(1)})" if year and int(year.group(1)) > gen_from else FL
     year = re.search(r"\b(20\d\d)\b", body_name)
     if gen_phase == ALL and year and int(year.group(1)) >= gen_from + 2:
         return f"рестайлинг ({year.group(1)})"

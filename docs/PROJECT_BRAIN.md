@@ -15,7 +15,7 @@
 |---|---|---|---|
 | Поиск и анализ рынка: Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | **§0 — текущая ситуация и план**, правила для параллельных чатов (§2), механизмы, решения, бэклог, журнал. Главный документ этой области. |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
-| Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), [MODEL-ENGINES.md](MODEL-ENGINES.md), [MODEL-TRIMS.md](MODEL-TRIMS.md) | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): поколения, двигатели (дорест/рест, коробка, привод), комплектации ЕС. Crawl-delay ultimatespecs 30 с |
+| Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), [MODEL-ENGINES.md](MODEL-ENGINES.md), [MODEL-TRIMS.md](MODEL-TRIMS.md), [MODEL-AUTOCENTRUM-CHECK.md](MODEL-AUTOCENTRUM-CHECK.md) | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): поколения, двигатели (дорест/рест, коробка, привод), комплектации ЕС; сверка со вторым источником autocentrum.pl (чего у нас нет). Crawl-delay ultimatespecs 30 с |
 | Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
@@ -69,6 +69,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, B61: таблица моделей сверена с autocentrum.pl — нет у нас 6 поколений (Corolla E170…), 228 двигателей, 35 кузовов, 27 рестайлингов; коробку autocentrum знает у 2730 наших «не указано»; привод — расхождения с «Выводом» (`docs/MODEL-AUTOCENTRUM-CHECK.md`, `data/autocentrum-*.csv`) (Claude).
 - 2026-10-04 — mobile.html, B47: правило «основной портал страны → дополнительные только с уникальными машинами» и при повторной попытке Monitoring; AutoTrack, AutoVlan/Gocar, Bytbil замерены — почти одни дубли, не добавлены (Bytbil ждёт решения владельца) (Claude).
 - 2026-10-04 — mobile.html, B70: «Najbardziej popularne» в списках марок и моделей; без строки поколений под «Rok»; серые кузова / двери / места / сдвижная дверь по таблице модели; «od» → «do» в Rok / Pojemność / Moc; «Więcej filtrów» — серые поля, которых нет у портала выбранных стран; mobile.de без NL/BE; Kleinanzeigen не включается сам; ошибка разметки B68 (пропавшая компактная строка, история, форма на стр. 2–3) исправлена (Claude).
 - 2026-10-04 — mobile.html, авария исправлена: после B68 стр. 2 и 3 показывали форму стр. 1 (лишние закрывающие теги); CI теперь проверяет вложенность тегов `mobile.html` (Claude).
