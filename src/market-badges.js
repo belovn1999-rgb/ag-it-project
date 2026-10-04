@@ -30,6 +30,12 @@
     CH: '<rect width="12" height="8" fill="#d52b1e"/><rect x="5.2" y="1.8" width="1.6" height="4.4" fill="#fff"/><rect x="3.8" y="3.2" width="4.4" height="1.6" fill="#fff"/>',
     // Belarus: red over green, the white ornament band at the hoist.
     BY: '<rect width="12" height="8" fill="#c8313e"/><rect y="5.3" width="12" height="2.7" fill="#4aa657"/><rect width="1.6" height="8" fill="#fff"/>',
+    // Currencies in the rates line at the top (mobile-rates.js): EUR, USD.
+    EU: `<rect width="12" height="8" fill="#003399"/>${Array.from({ length: 12 }, (_, index) => {
+      const angle = (index * Math.PI) / 6;
+      return `<circle cx="${(6 + 2.6 * Math.sin(angle)).toFixed(2)}" cy="${(4 - 2.6 * Math.cos(angle)).toFixed(2)}" r="0.42" fill="#ffcc00"/>`;
+    }).join("")}`,
+    US: `${Array.from({ length: 7 }, (_, index) => `<rect y="${((index * 8) / 7).toFixed(3)}" width="12" height="${(8 / 7).toFixed(3)}" fill="${index % 2 ? "#fff" : "#b22234"}"/>`).join("")}<rect width="5.2" height="4.3" fill="#3c3b6e"/>`,
     CZ: '<rect width="12" height="4" fill="#fff"/><rect y="4" width="12" height="4" fill="#d7141a"/><path d="M0 0 6 4 0 8z" fill="#11457e"/>',
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");

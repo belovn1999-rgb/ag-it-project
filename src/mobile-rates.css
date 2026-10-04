@@ -48,3 +48,13 @@
     justify-content: flex-start;
   }
 }
+
+/* Flags at every currency. */
+.mobileRatesPair .agFlag {
+  width: 14px;
+  height: 10px;
+  margin: 0 1px;
+  vertical-align: -1px;
+  border-radius: 1px;
+  box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.18);
+}

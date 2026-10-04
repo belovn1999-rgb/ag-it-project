@@ -98,7 +98,11 @@
       t.margin,
       byPairs.length ? (by.live ? t.nbrb : t.nbrbFile).replace("{date}", String(by.date || "—").split("-").reverse().join(".")) : "",
     ].filter(Boolean).join("\n");
-    const chip = ([code, value, unit]) => `<span class="mobileRatesPair">1 ${code} = <b>${escape(value)}</b> ${unit}</span>`;
+    // A flag at every currency (owner 2026-10-04); inline SVG like the market
+    // flags, since emoji flags show as two letters on Windows.
+    const CURRENCY_FLAG = { EUR: "EU", SEK: "SE", USD: "US", "zł": "PL", BYN: "BY" };
+    const flag = (code) => window.AUTOGOOD_FLAG?.(CURRENCY_FLAG[code]) || "";
+    const chip = ([code, value, unit]) => `<span class="mobileRatesPair">${flag(code)} 1 ${code} = <b>${escape(value)}</b> ${flag(unit)} ${unit}</span>`;
     target.hidden = false;
     target.title = title;
     target.setAttribute("aria-label", title);

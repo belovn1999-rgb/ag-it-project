@@ -14,6 +14,74 @@
   const GEAR = { automatic: "A", manual: "M" };
   const BODY = { hatchback: "1", cabrio: "2", coupe: "3", suv: "4", pickup: "4", estate: "5", limousine: "6", van_minibus: "12", other: "7" };
   const SELLER = { dealer: "D", company: "D", private: "P" };
+  // Every value below was checked by the change in the result count (VW Golf DE
+  // 29 987 / VW DE 147 329, 2026-10-04); names from AutoScout's own search
+  // code (driveTrain=dtrain, paintwork=ptype, upholstery=uph, version=version0…)
+  // and ids from its taxonomy (__NEXT_DATA__ → taxonomy.equipment).
+  const DRIVE = { awd: "4", fwd: "F", rwd: "R" };
+  // Equipment ids ("eq", several = all of them, like ticking them on the site).
+  const FEATURE_EQ = {
+    BLIND_SPOT_MONITOR: [158], // Totwinkel-Assistent
+    ELECTRIC_HEATED_SEATS: [34], // Sitzheizung
+    HEATED_STEERING_WHEEL: [136], // Beheizbares Lenkrad
+    ELECTRIC_HEATED_REAR_SEATS: [248], // Sitzheizung hinten
+    HEATED_WINDSHIELD: [135], // Beheizbare Frontscheibe
+    VENTILATED_SEATS: [154], // Sitzbelüftung
+    ELECTRIC_ADJUSTABLE_SEATS: [16], // Elektrische Sitze
+    ELECTRIC_FRONT_SEATS: [16], // ≈ the same "Elektrische Sitze"
+    ELECTRIC_TAILGATE: [139], // Elektrische Heckklappe
+    SPORT_SEATS: [117], // Sportsitze
+    MASSAGE_SEATS: [145], // Massagesitze
+    LUMBAR_SUPPORT: [143], // Lordosenstütze
+    LED_HEADLIGHTS: [140], // LED-Scheinwerfer
+    XENON_HEADLIGHTS: [39], // Xenonscheinwerfer
+    BI_XENON_HEADLIGHTS: [230], // Bi-Xenon Scheinwerfer
+    LASER_HEADLIGHTS: [213], // Laserlicht
+    GLARE_FREE_HIGH_BEAM: [214], // Blendfreies Fernlicht
+    PANORAMIC_GLASS_ROOF: [50], // Panoramadach
+    ROOF_RAILS: [27], // Dachreling
+    AIR_SUSPENSION: [144], // Luftfederung
+    PERFORMANCE_HANDLING_SYSTEM: [116], // Sportfahrwerk
+    LED_RUNNING_LIGHTS: [141], // LED-Tagfahrlicht
+    ADAPTIVE_BENDING_LIGHTS: [118], // Kurvenlicht
+    SPORT_PACKAGE: [112], // Sportpaket
+    KEYLESS_ENTRY: [153], // Schlüssellose Zentralverriegelung
+    NIGHT_VISION_ASSIST: [147], // Nachtsicht-Assistent
+    ALLOY_WHEELS: [15], // Alufelgen
+    TRAFFIC_SIGN_RECOGNITION: [162], // Verkehrszeichenerkennung
+    CARPLAY: [221], // Apple CarPlay
+    ANDROID_AUTO: [222], // Android Auto
+    AMBIENT_LIGHTING: [219], // Ambientebeleuchtung
+    DIGITAL_COCKPIT: [224], // Volldigitales Kombiinstrument
+    HEAD_UP_DISPLAY: [123], // Head-up display
+    NAVIGATION_SYSTEM: [23], // Navigationssystem
+    SOUND_SYSTEM: [155], // Soundsystem
+    WIRELESS_CHARGING: [223], // Induktionsladen für Smartphones
+    WINTER_TIRES: [25], // Winterreifen
+    SUMMER_TIRES: [210], // Sommerreifen
+  };
+  // No such equipment on AutoScout24: not sent, named in the warning.
+  const FEATURE_MISSING = new Set(["MEMORY_SEATS", "COMFORT_SEATS", "HALOGEN_HEADLIGHTS"]);
+  // Sent, but not quite the same thing (named as approximate).
+  const FEATURE_APPROX = new Set(["ELECTRIC_FRONT_SEATS"]);
+  const PARKING_EQ = {
+    REAR_VIEW_CAM: [130], // Einparkhilfe Rückfahrkamera
+    CAM_360_DEGREES: [187], // 360° Kamera
+    FRONT_REAR_SENSORS: [128, 129], // Sensoren vorne + hinten
+    FRONT_SENSORS: [128],
+    REAR_SENSORS: [129],
+    AUTOMATIC_PARKING: [131], // Einparkhilfe selbstlenkendes System
+  };
+  // Climate: "Klimaautomatik" 30, 2/3/4 zones 241/242/243.
+  const CLIMATE_EQ = { automatic: 30, automatic_2_zones: 241, automatic_3_zones: 242, automatic_4_zones: 243 };
+  // Cruise control: "Tempomat" 38 and "Abstandstempomat" 133 are separate
+  // ticks on AutoScout24 (Golf: 19 108 / 18 821, both 14 192), as on its site.
+  const CRUISE_EQ = { CRUISE_CONTROL: 38, ADAPTIVE_CRUISE_CONTROL: 133 };
+  const SLIDING_EQ = { right: [245], left: [244], both: [244, 245] };
+  // Colours (several = any of them): bcol body, icol interior; upholstery uph.
+  const BODY_COLOR = { beige: 1, blue: 2, brown: 3, yellow: 5, gold: 16, green: 7, grey: 6, orange: 15, red: 10, black: 11, silver: 12, purple: 13, white: 14 };
+  const INTERIOR_COLOR = { beige: 1, black: 2, grey: 3, brown: 4, other: 5, blue: 6, red: 7 };
+  const UPHOLSTERY = { alcantara: "AL", cloth: "CL", part_leather: "PL", full_leather: "FL" };
   const PAGE_SIZE = 20;
 
   const slug = (text) => String(text || "")
@@ -39,15 +107,40 @@
     return MODEL_SLUG[slug(brand)]?.[value] || value;
   };
 
-  // What the search cannot carry over (shown as "not transferred").
+  // What the search cannot carry over, as the form names it (shown as "not
+  // transferred"; "≈" = sent, but not quite the same).
   function unsupported(filters = {}) {
+    const words = (typeof copy === "object" && typeof state === "object" && copy[state.lang]) || {};
+    const optionLabel = (list, value) => {
+      const input = (list || []).find((item) => item.value === value);
+      return input && typeof optionLabelText === "function" ? optionLabelText(input) : value;
+    };
+    const features = typeof els === "object" ? els.features : [];
+    const sensors = typeof els === "object" ? els.parkingSensors : [];
     const missing = [];
-    if (filters.drive && filters.drive !== "any") missing.push("drive");
-    if (filters.version) missing.push("version");
+    (filters.features || []).forEach((feature) => {
+      if (FEATURE_MISSING.has(feature)) missing.push(optionLabel(features, feature));
+      else if (FEATURE_APPROX.has(feature)) missing.push(`${optionLabel(features, feature)} ≈`);
+    });
+    (filters.parkingSensors || []).filter((sensor) => !PARKING_EQ[sensor]).forEach((sensor) => missing.push(optionLabel(sensors, sensor)));
+    // A key the page-1 "!" strip (mobile-filter-warnings.js) names in either language.
     if ((filters.fuels || []).includes("plugin")) missing.push("plugin≈hybrid");
+    if (filters.trailerCoupling && !["any", "all", ""].includes(filters.trailerCoupling)) missing.push(`${words.trailerCouplingLabel || "Hak"} ≈`);
+    if (filters.matte) missing.push(words.matteLabel || "matte");
+    if (filters.vat === "non_reclaimable") missing.push(words.vatLabel || "VAT");
     // No accident-free filter (only "damaged: exclude", always sent).
-    if (filters.accidentFree) missing.push(window.AUTOGOOD_SPEC_COPY?.()?.accidentFreeLabel || "accident-free");
+    if (filters.accidentFree) missing.push(words.accidentFreeLabel || "accident-free");
     return missing;
+  }
+
+  // Door group of the form (2/3, 4/5, 6/7) as a range.
+  function doorRange(filters) {
+    try {
+      if (typeof doorRangeBounds === "function") return doorRangeBounds(filters);
+    } catch {
+      return { from: null, to: null };
+    }
+    return { from: Number(digits(filters.doorsFrom)) || null, to: Number(digits(filters.doorsTo)) || null };
   }
 
   // filters: the page-1 form; countries: ISO codes; price: {from, to} in EUR
@@ -58,11 +151,15 @@
     const params = url.searchParams;
     params.set("atype", "C");
     params.set("cy", countries.map((code) => COUNTRY[code] || code).join(","));
-    params.set("damaged_listing", "exclude");
+    // "Pokaż też uszkodzone": damaged cars too (Golf 29 987 → 30 722).
+    params.set("damaged_listing", filters.damagedVehicles === "show" ? "include" : "exclude");
     if (filters.firstOwner) params.set("prevownersid", "1");
     params.set("sort", "price");
     params.set("desc", desc ? "1" : "0");
-    params.set("ustate", filters.newUsed === "new" ? "N" : filters.newUsed === "used" ? "U" : "N,U");
+    // New / used is "offer" (checked 2026-10-04: N 14 768 + U,J,O,D,S 132 560 =
+    // all 147 329 VW). "ustate", sent until then, changed nothing.
+    if (filters.newUsed === "new") params.set("offer", "N");
+    if (filters.newUsed === "used") params.set("offer", "U,J,O,D,S");
     const range = (fromKey, toKey, from, to) => {
       if (digits(from)) params.set(fromKey, digits(from));
       if (digits(to) && !String(to).trim().endsWith("+")) params.set(toKey, digits(to));
@@ -83,11 +180,40 @@
       const kw = (hp, round) => (digits(hp) ? String(round(Number(digits(hp)) * 0.73549875)) : "");
       range("powerfrom", "powerto", kw(filters.powerFrom, Math.floor), String(filters.powerTo || "").trim().endsWith("+") ? "" : kw(filters.powerTo, Math.ceil));
     }
+    range("ccmfrom", "ccmto", filters.displacementFrom, filters.displacementTo);
+    range("seatsfrom", "seatsto", filters.seatsFrom, filters.seatsTo);
+    const doors = doorRange(filters);
+    if (doors.from !== null && doors.from !== undefined && doors.from > 2) params.set("doorfrom", String(doors.from));
+    if (doors.to !== null && doors.to !== undefined && doors.to < 7) params.set("doorto", String(doors.to));
     const fuels = [...new Set((filters.fuels || []).map((fuel) => FUEL[fuel]).filter(Boolean))];
     if (fuels.length) params.set("fuel", fuels.join(","));
     if (GEAR[filters.gearbox]) params.set("gear", GEAR[filters.gearbox]);
+    if (DRIVE[filters.drive]) params.set("dtrain", DRIVE[filters.drive]);
     if (BODY[filters.body]) params.set("body", BODY[filters.body]);
     if (SELLER[filters.seller]) params.set("custtype", SELLER[filters.seller]);
+    // "Wersja": AutoScout's own version text field (Golf + "gti" 3 263).
+    if (String(filters.version || "").trim()) params.set("version0", String(filters.version).trim());
+    if (filters.vat === "reclaimable") params.set("vatded", "true");
+    // Equipment: every ticked option must be there.
+    const eq = new Set();
+    (filters.features || []).forEach((feature) => (FEATURE_EQ[feature] || []).forEach((id) => eq.add(id)));
+    (filters.parkingSensors || []).forEach((sensor) => (PARKING_EQ[sensor] || []).forEach((id) => eq.add(id)));
+    if (CLIMATE_EQ[filters.airConditioning]) eq.add(CLIMATE_EQ[filters.airConditioning]);
+    if (CRUISE_EQ[filters.cruiseControl]) eq.add(CRUISE_EQ[filters.cruiseControl]);
+    // Towbar of any kind: "Anhängerkupplung" (no fixed/detachable on AutoScout24).
+    if (filters.trailerCoupling && !["any", ""].includes(filters.trailerCoupling)) eq.add(20);
+    (SLIDING_EQ[filters.slidingDoor] || []).forEach((id) => eq.add(id));
+    if (filters.warranty) eq.add(37); // Garantie
+    if (filters.serviceHistory) eq.add(49); // Scheckheftgepflegt
+    if (filters.nonSmoking) eq.add(110); // Nichtraucherfahrzeug
+    if (eq.size) params.set("eq", [...eq].join(","));
+    const bodyColors = (filters.exteriorColors || []).map((color) => BODY_COLOR[color]).filter(Boolean);
+    if (bodyColors.length) params.set("bcol", bodyColors.join(","));
+    const interiorColors = (filters.interiorColors || []).map((color) => INTERIOR_COLOR[color]).filter(Boolean);
+    if (interiorColors.length) params.set("icol", interiorColors.join(","));
+    const upholstery = (filters.interiorMaterials || []).map((material) => UPHOLSTERY[material]).filter(Boolean);
+    if (upholstery.length) params.set("uph", upholstery.join(","));
+    if (filters.metallic) params.set("ptype", "M");
     if (page > 1) params.set("page", String(page));
     return url.toString();
   }
@@ -182,7 +308,7 @@
       const url = buildSearchUrl(filters, { countries: countries(filters) });
       link.href = url;
       window.AUTOGOOD_MOBILE_LOG_SEARCH?.(url);
-      const skipped = unsupported(filters);
+      const skipped = unsupported(filters).map((item) => (item === "plugin≈hybrid" ? (lang() === "ru" ? "Plug-in (≈ гибрид)" : "Plug-in (≈ hybryda)") : item));
       setMarketSearchStatus(skipped.length ? TEXT[lang()].skipped.replace("{filters}", skipped.join(", ")) : TEXT[lang()].opening);
     } catch (error) {
       event.preventDefault();

@@ -6375,8 +6375,16 @@
       // colours compare what the client pays in Poland (turnkey for foreign
       // offers, the price itself for Polish ones): higher green, lower red.
       const statsOf = (list, priceOf) => marketStatistics(list.map((listing) => ({ ...listing, price: priceOf(listing) })));
-      const statRows = (shownSources.length > 1 ? shownSources : [shownSources[0] || ""]).map((source) => {
-        const own = marketListings.filter((listing) => !source || listing.source === source);
+      // mobile.de and AutoScout24 are one market, Germany's dealers (owner
+      // 2026-10-04, B48): one row, one median, one conclusion "z Niemiec".
+      // AutoScout24 holds only what mobile.de does not have, so nothing counts twice.
+      const germanyJoined = shownSources.includes("mobile") && shownSources.includes("autoscout")
+        && marketListings.some((listing) => listing.source === "mobile") && marketListings.some((listing) => listing.source === "autoscout");
+      const rowSources = (shownSources.length > 1 ? shownSources : [shownSources[0] || ""])
+        .filter((source) => !(germanyJoined && source === "autoscout"));
+      const statRows = rowSources.map((source) => {
+        const joined = germanyJoined && source === "mobile";
+        const own = marketListings.filter((listing) => !source || listing.source === source || (joined && listing.source === "autoscout"));
         const currency = SOURCE_CURRENCY[source] || displayCurrency;
         const foreign = source && turnkeySources.includes(source) && own.some((listing) => listing.turnkeyPln);
         // Belarus: German rows show the car's price (net/gross) with the price in
@@ -6394,7 +6402,12 @@
         const baseLabel = byRow ? byBaseLabel(bases.size === 1 ? [...bases][0] : "mixed") : "";
         // Compared in what the client pays: PLN, or USD for Belarus.
         const inPln = turnkeyStats || statsOf(own, (listing) => (byMode ? listing.price : priceInPln(listing.originalPrice, listing.originalCurrency || currency)));
-        return { source, stats: native, turnkeyStats, inPln, deliveredStats, baseLabel, avbyUsd, own, mileage: meanMileage(own) };
+        return {
+          source,
+          sources: joined ? ["mobile", "autoscout"] : [source],
+          portal: joined ? `${portalName("mobile")} + ${portalName("autoscout")}` : portalName(source),
+          stats: native, turnkeyStats, inPln, deliveredStats, baseLabel, avbyUsd, own, mileage: meanMileage(own),
+        };
       }).filter((row) => row.stats.count);
       // Otomoto alone: CEPiK history and imported cars, in the table and the conclusion.
       const polishShares = onlyOtomoto && statRows[0] ? polishMarketShares(statRows[0].own) : null;
@@ -6472,7 +6485,7 @@
       const importConclusion = (row) => {
         const from = fromLabel(row.source);
         if (polish.stats.count < COMPARE_MIN || row.stats.count < COMPARE_MIN) {
-          return [{ label: c.briefPrice, text: c.conclusionTooFew.replace("{pl}", String(polish.stats.count)).replace("{portal}", portalName(row.source)).replace("{foreign}", String(row.stats.count)).replace("{min}", String(COMPARE_MIN)) }];
+          return [{ label: c.briefPrice, text: c.conclusionTooFew.replace("{pl}", String(polish.stats.count)).replace("{portal}", row.portal).replace("{foreign}", String(row.stats.count)).replace("{min}", String(COMPARE_MIN)) }];
         }
         const lines = [];
         const same = sameCarPrices([polish.own, row.own]);
@@ -6548,7 +6561,7 @@
         const difference = polish.inPln.median - row.turnkeyStats.median;
         const percent = Math.round((Math.abs(difference) / polish.inPln.median) * 100);
         return (difference > 0 ? c.conclusionByCheaper : c.conclusionByDearer)
-          .replace("{portal}", portalName(row.source))
+          .replace("{portal}", row.portal)
           .replace("{amount}", formatMarketPrice(Math.abs(difference), "USD"))
           .replace("{percent}", String(percent));
       }) : polish ? foreignRows.flatMap((row) => importConclusion(row)) : [];
@@ -6589,9 +6602,9 @@
           </div>
           ${statRows.map((row) => `
             <div class="mobileMarketStatsRow" role="row">
-              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(sourceName(row.source))}">${marketBadge(row.source)}</span>` : ""}
+              ${compared ? `<span class="mobileMarketStatsSource" role="rowheader" title="${escapeMarketHtml(row.sources.length > 1 ? row.portal : sourceName(row.source))}">${marketBadge(row.source)}${row.sources.length > 1 ? `<small class="mobileMarketStatsPortals">${escapeMarketHtml(row.portal)}</small>` : ""}</span>` : ""}
               ${statColumns.map((column, index) => {
-                const left = index === 0 ? suspectListings.filter((listing) => !compared || listing.source === row.source).length : 0;
+                const left = index === 0 ? suspectListings.filter((listing) => !compared || row.sources.includes(listing.source)).length : 0;
                 const note = left ? `<small class="mobileMarketStatsNote">${escapeMarketHtml(c.suspectShort.replace("{count}", String(left)))}</small>` : "";
                 const toneClass = tone(column, row, index);
                 const arrow = toneClass === " isHigher" ? ["▲", c.toneHigher] : toneClass === " isLower" ? ["▼", c.toneLower] : null;

@@ -358,8 +358,12 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   (своей группы только T6 у AutoScout нет).
 - **Параметры (каждый проверен по изменению счёта, VW Golf, 5 стран):**
   `cy=D,NL,B,A,L` (страны: DE→D, BE→B, AT→A, LU→L, FR→F, IT→I, SE→S),
-  `atype=C`, `damaged_listing=exclude`, `sort=price&desc=0|1`,
-  `ustate=N,U|N|U`, `fregfrom/fregto` (год), `kmfrom/kmto`,
+  `atype=C`, `damaged_listing=exclude` (галочка «Pokaż też uszkodzone» → `include`,
+  Golf 29 987 → 30 722), `sort=price&desc=0|1`,
+  **Nowy / używany = `offer`** (с 10-04): новый `N`, б/у `U,J,O,D,S` (б/у, годовалый,
+  олдтаймер, демо, однодневная регистрация; VW DE: N 14 768 + остальные 132 560 =
+  все 147 329). `ustate=N,U|N|U`, который отправлялся до 10-04, **ничего не менял**
+  (`ustate=N` — тот же счёт), `fregfrom/fregto` (год), `kmfrom/kmto`,
   `pricefrom/priceto` (EUR), `powerfrom/powerto` — **всегда кВт** (`powertype=kw|hp`
   меняет только вид страницы; проверено 10-04: `powertype=hp&powerfrom=122&powerto=122`
   — 0 Passat, `powerfrom=90&powerto=90` — 24 машины «90 kW (122 PS)»; до 10-04 л. с.
@@ -369,8 +373,41 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   `gear=A|M`, `body=1 Kleinwagen,2 Cabrio,3 Coupé,4 SUV/Pickup,5 Kombi,
   6 Limousine,12 Van,7 Sonstige`, `custtype=D|P`, `prevownersid=1` (≤ 1 владелец, с 10-04). Коды — из `taxonomy`
   в `__NEXT_DATA__`.
-- **Не переносится:** привод (ни `drivetrain`, `dt`, `drive`… не меняют
-  счёт), версия, опции, цвета.
+- **С 10-04 (B48) переносится всё остальное** — имена параметров взяты из кода поиска
+  AutoScout24 (`driveTrain=dtrain`, `paintwork=ptype`, `upholstery=uph`, `version=version0`,
+  `engineMotorSize=ccmfrom/ccmto`, `vatReportable=vatded`…), коды — из `taxonomy`;
+  каждый проверен по изменению счёта (VW Golf DE 29 987, VW DE 147 329):
+  | Поле формы | AutoScout24 | Проверка |
+  |---|---|---|
+  | Napęd | `dtrain=4` (4x4) / `F` / `R` | Golf 1 463 / 23 469 / 25 |
+  | Pojemność | `ccmfrom/ccmto` (см³) | 1900–2000: 10 077 |
+  | Liczba miejsc | `seatsfrom/seatsto` | 7–7: 1 |
+  | Liczba drzwi 2/3 · 4/5 · 6/7 | `doorto=3` · `doorfrom=4&doorto=5` · `doorfrom=6` | 2–3: 2 029; 4–5: 27 778 |
+  | Wersja | `version0=<текст>` (своё поле версии AutoScout24) | Golf + «gti»: 3 263 |
+  | VAT odliczany | `vatded=true` (VAT marża — фильтра нет → предупреждение) | 15 465 |
+  | Metallic | `ptype=M` (матового нет → предупреждение) | 18 315 |
+  | Kolor nadwozia (несколько = «или») | `bcol`: beige 1, blue 2, brown 3, yellow 5, gold 16, green 7, grey 6, orange 15, red 10, black 11, silver 12, purple 13, white 14 | black 6 677; black+white 11 363 |
+  | Kolor wnętrza | `icol`: beige 1, black 2, grey 3, brown 4, other 5, blue 6, red 7 | black 19 653; black+grey 23 145 |
+  | Tapicerka | `uph`: alcantara `AL`, cloth `CL`, part_leather `PL`, full_leather `FL` | FL 1 166; FL+PL 2 280 |
+  | Opcje, parkowanie, klimatyzacja, tempomat, hak, drzwi przesuwne, gwarancja, ASO, niepalący | `eq=<id>,<id>` — **все отмеченные сразу** (как галочки на сайте): id в `FEATURE_EQ`, `PARKING_EQ`, `CLIMATE_EQ`, `CRUISE_EQ`, `SLIDING_EQ` (`src/autoscout-search.js`); гарантия 37, сервисная книжка 49, некурящий 110, фаркоп 20 | Sitzheizung 24 901; + Navi 18 739; таблица id ниже |
+  Опции → `eq`: слепые зоны 158, подогрев сидений 34, руля 136, задних 248, стекла 135,
+  вентиляция 154, электросиденья 16 (и «оба передних» ≈ 16), электробагажник 139,
+  спортивные сиденья 117, массаж 145, поясница 143, LED 140, Xenon 39, Bi-Xenon 230,
+  лазер 213, glare-free 214, панорама 50, рейлинги 27, пневмоподвеска 144, спортподвеска
+  116, LED ДХО 141, адаптивный свет 118, спортпакет 112, keyless 153, ночное видение 147,
+  диски 15, знаки 162, CarPlay 221, Android Auto 222, ambient 219, цифровая панель 224,
+  HUD 123, навигация 23, sound 155, беспроводная зарядка 223, зимние 25, летние 210;
+  парковка: камера 130, 360° 187, датчики спереди 128, сзади 129 (оба — 128+129),
+  автопарковка 131; климат: автомат 30, 2/3/4 зоны 241/242/243; круиз 38, адаптивный 133
+  (на AutoScout24 это две разные галочки: у 4 629 Golf отмечен только адаптивный);
+  сдвижные двери справа 245, слева 244, с обеих сторон 244+245.
+  Проверено 10-04: каждый из 45 id по отдельности уменьшает выдачу VW DE (147 329) и не
+  обнуляет её — от 406 (лазер) до 129 588 (датчики сзади); сдвижные двери: справа 17 308,
+  слева 8 546, обе 7 766.
+- **Не переносится (предупреждение при открытии AutoScout24):** память сидений,
+  «комфортные сиденья», галоген, Rear traffic alert, матовый цвет, VAT marża,
+  «Bezwypadkowy»; ≈ (отправляется приблизительно): «оба передних электросиденья»,
+  тип фаркопа (у AutoScout24 только «есть фаркоп»), plug-in (= гибрид бензин).
 - **Страницы:** ~20 на страницу, доступны и после 20-й (проверено 30-я и 40-я из 78);
   анализ: целиком до 1000, иначе 8 страниц равномерно. **Monitoring (с 10-04, B48):**
   целиком до 2000 объявлений — сначала те же 8 страниц, потом остальные; прокси

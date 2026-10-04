@@ -4505,3 +4505,21 @@
 .mobileMarketStatsRow b.isKm {
   white-space: nowrap;
 }
+
+/* Germany as one market: mobile.de + AutoScout24 under the flag (B48). */
+.mobileMarketStatsSource:has(.mobileMarketStatsPortals) {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  white-space: normal;
+}
+
+.mobileMarketStatsPortals {
+  display: block;
+  margin-top: 2px;
+  white-space: normal;
+  color: var(--color-muted);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+}
