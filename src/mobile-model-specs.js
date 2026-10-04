@@ -2,14 +2,17 @@
 // versions of the chosen model and years (data: src/model-specs.generated.js,
 // built from docs/MODEL-ENGINES.md and docs/MODEL-TRIMS.md).
 // - Rok: years grouped under the model's generations (newest first, facelift
-//   marked), other years below the divider; one line under the field says
-//   which generation(s) the chosen years are.
+//   marked), other years below the divider (the line under the field that
+//   named the generations is gone, owner 2026-10-04: the list says it).
 // - Pojemność / Moc: engines that exist for model + years (+ fuel, + engine
 //   size) on top in bold, the usual steps below the divider (owner 04.10).
 // - Wersja: trim lines of the matching generations, sport versions and
 //   editions; lines of other generations below the divider; free text stays.
 // - Typ / Skrzynia / Napęd: choices that do not exist are dimmed, still
 //   clickable; the gearbox only when every matching version's gearbox is known.
+// - Nadwozie, Liczba drzwi, Liczba miejsc, Drzwi przesuwne (owner 2026-10-04):
+//   the same for the bodies of the model's generations in the chosen years
+//   ("bodies" of the table: types, doors, seats, sliding door).
 // Models without data (and everything when no model is chosen) keep the
 // lists exactly as before. Sub-models use their family: BMW "320" and
 // Mercedes "C 220" also narrow the engines by the number in the version name.
@@ -17,9 +20,6 @@
   const models = window.AUTOGOOD_MODEL_SPECS?.models || {};
   const TEXT = {
     pl: {
-      generations: "Pokolenia",
-      inYears: "W wybranych latach",
-      noData: "Brak danych tego modelu w wybranych latach",
       lift: "lifting",
       lines: "Linie wyposażenia",
       sport: "Wersje sportowe",
@@ -29,9 +29,6 @@
       phase: { pre: "przed liftingiem", fl: "po liftingu", fl2: "po 2. liftingu", upd: "aktualizacja", all: "" },
     },
     ru: {
-      generations: "Поколения",
-      inYears: "В выбранные годы",
-      noData: "Нет данных по этой модели в выбранные годы",
       lift: "рестайлинг",
       lines: "Линии комплектации",
       sport: "Спортивные версии",
@@ -226,54 +223,56 @@
     };
   }
 
-  function hintText(sel) {
-    const t = text();
-    if (!sel.hasYears) {
-      const byCode = new Map();
-      sel.gens.slice().reverse().forEach((gen) => {
-        const entry = byCode.get(gen.code) || { code: gen.code, from: gen.from, to: gen.to, lifts: [] };
-        entry.from = Math.min(entry.from, gen.from);
-        entry.to = entry.to === null || gen.to === null ? null : Math.max(entry.to, gen.to);
-        if (gen.phase === "fl" || gen.phase === "fl2") entry.lifts.push(gen.from);
-        if (gen.lift) entry.lifts.push(gen.lift);
-        byCode.set(gen.code, entry);
-      });
-      const parts = [...byCode.values()].reverse().map((entry) => {
-        const lifts = unique(entry.lifts).sort();
-        return `${entry.code} ${entry.from}–${entry.to || ""}${lifts.length ? ` (${t.lift} ${lifts.join(", ")})` : ""}`;
-      });
-      return `${t.generations}: ${parts.join(" · ")}`;
-    }
-    const inYears = sel.gens.filter((gen) => sel.overlaps(gen.from, gen.to));
-    if (!inYears.length) return t.noData;
-    return `${t.inYears}: ${inYears.slice().reverse().map(genLabel).join("; ")}`;
-  }
-
   function dim(inputs, available) {
     const t = text();
     inputs.forEach((input) => {
       const label = input.closest(".mobileChoiceOption");
       if (!label) return;
-      const off = Boolean(available) && input.value !== "any" && !available.has(input.value);
+      const off = Boolean(available) && input.value !== "any" && input.value !== "" && !available.has(input.value);
       label.classList.toggle("isSpecUnavailable", off);
       if (off) label.title = t.unavailable;
       else if (label.title === TEXT.pl.unavailable || label.title === TEXT.ru.unavailable) label.removeAttribute("title");
     });
   }
 
-  function refresh() {
-    const hint = document.querySelector("[data-mobile-generation-hint]");
+  // The bodies of the model's generations in the chosen years (all its
+  // generations without years): [types[], doors from, to, seats from, to, sliding].
+  function bodiesOf(sel) {
+    const indexes = new Set(sel.gens.filter((gen) => !sel.hasYears || sel.overlaps(gen.from, gen.to)).map((gen) => gen.index));
+    return (sel.spec.bodies || []).filter((body) => indexes.has(body[0])).map((body) => body.slice(1));
+  }
+
+  // Values of a page-1 list (doors, seats, sliding door) no body of the model
+  // has: dimmed in the list (mobile.js asks while drawing it).
+  function unavailableOptions(setName) {
     const sel = selection();
-    if (hint) {
-      hint.textContent = sel ? hintText(sel) : "";
-      hint.hidden = !sel;
+    const bodies = sel ? bodiesOf(sel) : [];
+    if (!bodies.length) return null;
+    if (setName === "doorsGroup") {
+      const groups = { "2-3": [2, 3], "4-5": [4, 5], "6-7": [6, 7] };
+      return new Set(Object.keys(groups).filter((key) => !bodies.some((body) => body[1] <= groups[key][1] && body[2] >= groups[key][0])));
     }
+    if (setName === "slidingDoor") return bodies.some((body) => body[5]) ? null : new Set(["right", "left", "both"]);
+    const most = Math.max(...bodies.map((body) => body[4]));
+    const least = Math.min(...bodies.map((body) => body[3]));
+    if (setName === "seats") return new Set(Array.from({ length: 9 }, (_, index) => String(index + 1)).filter((value) => Number(value) > most));
+    if (setName === "seatsTo") return new Set(Array.from({ length: 9 }, (_, index) => String(index + 1)).filter((value) => Number(value) < least));
+    return null;
+  }
+  window.AUTOGOOD_COMBO_UNAVAILABLE = unavailableOptions;
+
+  function refresh() {
+    const sel = selection();
+    const bodyInputs = Array.from(document.querySelectorAll("[data-mobile-body-choice]"));
     if (!sel) {
       dim(els.fuels, null);
       dim(els.gearbox, null);
       dim(els.drive, null);
+      dim(bodyInputs, null);
       return;
     }
+    const bodies = bodiesOf(sel);
+    dim(bodyInputs, bodies.length ? new Set(bodies.flatMap((body) => body[0])) : null);
     const fuelRows = filtered(sel, { fuel: false, size: false, power: false });
     const fuels = new Set();
     fuelRows.forEach((row) => {
@@ -289,6 +288,9 @@
 
   document.addEventListener("input", () => refresh());
   document.addEventListener("change", () => refresh());
+  // The body chips are drawn again (language, a restored search): dim again.
+  const bodyBox = document.querySelector("[data-mobile-body-choices]");
+  if (bodyBox) new MutationObserver(() => refresh()).observe(bodyBox, { childList: true });
 
   window.AUTOGOOD_MODEL_SPECS_UI = { enhance, refresh, family };
 })();

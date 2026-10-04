@@ -273,6 +273,8 @@ const copy = {
     otomotoPriceConverted: "Cena przeliczona na PLN po kursie {rate}.",
     otomotoSearchSkipped: "Otomoto nie ma dokładnego odpowiednika dla: {filters}. Pozostałe filtry zostały zastosowane.",
     otomotoHybridDiesel: "Hybryda diesel — otomoto pokaże każdą hybrydę",
+    popularCaption: "Najbardziej popularne",
+    specUnavailable: "Brak w tym modelu i latach",
     mobileSearchSkipped: "Mobile.de nie ma dokładnego odpowiednika dla: {filters}. Pozostałe filtry zostały zastosowane.",
     marketSearchButton: "Szukaj na mobile.de",
     marketSearchOpening: "Otwieram wyniki od najniższej ceny.",
@@ -612,6 +614,8 @@ const copy = {
     otomotoPriceConverted: "Цена пересчитана в PLN по курсу {rate}.",
     otomotoSearchSkipped: "В Otomoto нет точного аналога для: {filters}. Остальные фильтры применены.",
     otomotoHybridDiesel: "Гибрид дизель — otomoto покажет любой гибрид",
+    popularCaption: "Самые популярные",
+    specUnavailable: "Нет у этой модели в эти годы",
     mobileSearchSkipped: "В Mobile.de нет точного аналога для: {filters}. Остальные фильтры применены.",
     marketSearchButton: "Найти на mobile.de",
     marketSearchOpening: "Открываю результаты: сначала самые дешёвые.",
@@ -1944,8 +1948,16 @@ function renderComboMenus(filterControl = null) {
     control.setAttribute("aria-expanded", control.classList.contains("isOpen") && visibleOptions.length ? "true" : "false");
     let previousGroup = null;
     let previousPopular = null;
+    // B61/B70: values no body of the chosen model has (doors, seats, sliding
+    // door) are dimmed, still clickable (src/mobile-model-specs.js).
+    const unavailable = window.AUTOGOOD_COMBO_UNAVAILABLE?.(control.dataset.mobileOptions) || null;
+    const unavailableTitle = copy[state.lang].specUnavailable;
     menu.innerHTML = visibleOptions.flatMap((option) => {
       const items = [];
+      // The pinned brands and models open the list under their own caption.
+      if (option.isPopular && previousPopular !== true && ["brand", "model"].includes(control.dataset.mobileOptions)) {
+        items.push(`<div class="mobileComboMenuGroup isPopularCaption">${escapeHtml(copy[state.lang].popularCaption)}</div>`);
+      }
       if (previousPopular === true && !option.isPopular) {
         items.push('<div class="mobileComboMenuDivider" aria-hidden="true"></div>');
       }
@@ -1954,12 +1966,14 @@ function renderComboMenus(filterControl = null) {
         if (groupLabel) items.push(`<div class="mobileComboMenuGroup">${escapeHtml(groupLabel)}</div>`);
         else if (previousGroup) items.push('<div class="mobileComboMenuDivider" aria-hidden="true"></div>');
       }
+      const off = Boolean(unavailable?.has(option.value));
       const optionClasses = [
         option.isPopular ? "isPopular" : "",
         option === keyboardActiveOption ? "isKeyboardActive" : "",
+        off ? "isSpecUnavailable" : "",
       ].filter(Boolean).join(" ");
       items.push(`
-        <button class="${optionClasses}" type="button" data-mobile-option-value="${escapeHtml(option.value)}" data-mobile-option-label="${escapeHtml(option.label)}">
+        <button class="${optionClasses}" type="button" data-mobile-option-value="${escapeHtml(option.value)}" data-mobile-option-label="${escapeHtml(option.label)}"${off ? ` title="${escapeHtml(unavailableTitle)}"` : ""}>
           ${escapeHtml(option.label)}
         </button>
       `);
@@ -3736,6 +3750,26 @@ function selectComboOption(optionButton) {
   }
   updateSelectedFiltersSummary();
   closeComboMenus();
+  // Owner 2026-10-04: "od" picked in Rok, Pojemność or Moc puts the same
+  // value in "do" (searches are mostly narrow) and opens the "do" list on
+  // it — arrows move, Enter confirms, a click picks another.
+  const rangeEnd = value && { year: "yearTo", displacement: "displacementTo", power: "powerTo" }[control.dataset.mobileOptions];
+  const endControl = rangeEnd && document.querySelector(`.mobileComboControl[data-mobile-options="${rangeEnd}"]`);
+  const endInput = endControl?.querySelector(`[${endControl.dataset.mobileOptionsTarget}]`);
+  if (endInput) {
+    endInput.value = value;
+    endInput.dispatchEvent(new Event("change", { bubbles: true }));
+    updateSelectedFiltersSummary();
+    endInput.focus();
+    openComboMenu(endControl);
+    const same = [...endControl.querySelectorAll(".mobileComboMenu button[data-mobile-option-value]")]
+      .find((option) => option.dataset.mobileOptionValue === value);
+    if (same) {
+      same.classList.add("isKeyboardActive");
+      same.scrollIntoView({ block: "nearest" });
+    }
+    return true;
+  }
   input.focus();
   return true;
 }

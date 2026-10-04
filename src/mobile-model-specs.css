@@ -1,17 +1,5 @@
-/* B61 stage 4 (src/mobile-model-specs.js): the generation line under "Rok"
-   and choices the chosen model and years never had. */
-.mobileGenerationHint {
-  display: block;
-  margin-top: 6px;
-  color: var(--color-muted);
-  font-size: var(--text-xs);
-  line-height: 1.35;
-}
-
-.mobileGenerationHint[hidden] {
-  display: none;
-}
-
+/* B61 stage 4 (src/mobile-model-specs.js): choices the chosen model and
+   years never had (the generation line under "Rok" removed 10-04). */
 /* Dimmed, still clickable: the data may miss a rare version. */
 .mobileChoiceOption.isSpecUnavailable {
   opacity: 0.45;
@@ -19,6 +7,11 @@
 
 .mobileChoiceOption.isSpecUnavailable:has(input:checked) {
   opacity: 0.8;
+}
+
+/* The same in the lists of doors, seats and the sliding door. */
+.mobileComboMenu button.isSpecUnavailable {
+  opacity: 0.45;
 }
 
 /* Generation headers inside the year list wrap instead of widening it. */

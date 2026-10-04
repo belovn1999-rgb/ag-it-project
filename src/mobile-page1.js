@@ -14,30 +14,11 @@
   new MutationObserver(() => onLanguage.forEach((run) => run()))
     .observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
 
-  // ---- B68: countries with flags instead of portal names in the filters ----
-  // A market is a country (owner 2026-10-04): a field's marks show the flags
-  // of the countries whose portals take it (≈ when they take it only
-  // roughly), the portals in the tooltip; the rows of "Kraj i pochodzenie"
-  // are named by their market. SVG flags add no text to the labels.
-  const PORTAL_COUNTRY = { "mobile.de": "DE", AutoScout24: "DE", otomoto: "PL", blocket: "SE", "av.by": "BY", Marktplaats: "NL", "2dehands": "BE" };
+  // ---- B68: the rows of "Kraj i pochodzenie" are named by their market ----
+  // (country flags and names; a field's availability is shown by greying it,
+  // src/mobile-filter-warnings.js, B70).
   const flagOf = (code) => window.AUTOGOOD_FLAG?.(code) || "";
   const countryOf = (code) => window.AUTOGOOD_COUNTRY_NAME?.(code) || code;
-  const drawPortalMarks = () => {
-    document.querySelectorAll(".agPortalMarks[data-marks]").forEach((mark) => {
-      const countries = new Map();
-      mark.dataset.marks.split("·").map((part) => part.trim()).filter(Boolean).forEach((part) => {
-        const approx = part.endsWith("≈");
-        const portal = part.replace("≈", "").trim();
-        const code = PORTAL_COUNTRY[portal];
-        if (!code) return;
-        countries.set(code, [...(countries.get(code) || []), { portal, approx }]);
-      });
-      if (!countries.size) return;
-      mark.classList.add("hasFlags");
-      mark.innerHTML = [...countries].map(([code, list]) => `<span class="agPortalMarkCountry${list.every((item) => item.approx) ? " isApprox" : ""}">${flagOf(code)}</span>`).join("");
-      mark.title = [...countries].map(([code, list]) => `${countryOf(code)}: ${list.map((item) => `${item.portal}${item.approx ? " ≈" : ""}`).join(", ")}`).join("; ");
-    });
-  };
   const PORTAL_ROWS = {
     "mobile autoscout": { countries: ["DE", "NL", "BE"], portals: "mobile.de, AutoScout24" },
     otomoto: { countries: ["PL"], portals: "otomoto" },
@@ -51,9 +32,8 @@
       box.innerHTML = `<span class="mobilePortalFilterFlags">${spec.countries.map(flagOf).join("")}</span><b>${spec.countries.map(countryOf).join(" · ")}</b><small>${spec.portals}</small>`;
     });
   };
-  drawPortalMarks();
   drawPortalRows();
-  onLanguage.push(drawPortalMarks, drawPortalRows);
+  onLanguage.push(drawPortalRows);
 
   // ---- 1. Every "od / do" box is named after its field ----------------------
   // The field's name sits above two bare boxes; screen readers, voice input

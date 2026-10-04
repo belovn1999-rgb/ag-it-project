@@ -772,25 +772,6 @@
   display: block;
 }
 
-/* Which portals a field works on (≈ = close, not the same). Drawn from
-   data-marks, so the marks never become part of the field's label text. */
-.agPortalMarks::after {
-  content: attr(data-marks);
-  display: inline-block;
-  margin-left: 6px;
-  border: var(--rule-thin) solid var(--color-rule);
-  border-radius: 4px;
-  padding: 0 5px;
-  color: var(--color-muted);
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 16px;
-  text-transform: none;
-  vertical-align: middle;
-  white-space: nowrap;
-}
 
 .mobileMoreFiltersCard .mobileVehicleChecks .mobileCheckOption {
   flex-wrap: wrap;
@@ -1284,37 +1265,11 @@
   gap: 2px;
 }
 
-/* B68: the filters show countries with flags instead of portal names. */
-.agPortalMarks.hasFlags {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: 6px;
-  vertical-align: middle;
-}
-
-.agPortalMarks.hasFlags::after {
-  content: none;
-}
-
-.agPortalMarkCountry {
-  display: inline-flex;
-  align-items: center;
-}
-
-.agPortalMarkCountry .agFlag,
+/* B68: the rows of "Kraj i pochodzenie" named by their market (flags). */
 .mobilePortalFilterFlags .agFlag {
   display: block;
   border-radius: 2px;
   box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.25);
-}
-
-.agPortalMarkCountry.isApprox::after {
-  content: "≈";
-  margin-left: 1px;
-  color: var(--color-muted);
-  font-size: 11px;
-  font-weight: 700;
 }
 
 .mobilePortalFilterLogos.hasFlags {
@@ -1335,4 +1290,22 @@
 .mobilePortalFilterLogos.hasFlags small {
   color: var(--color-muted);
   font-size: 0.75rem;
+}
+
+/* Owner 04.10: "Najbardziej popularne" over the pinned brands and models. */
+.mobileComboMenu .mobileComboMenuGroup.isPopularCaption {
+  margin-top: 0;
+  border-top: 0;
+  padding-top: 6px;
+  font-size: 0.75rem;
+}
+
+/* B70 (04.10): a "Więcej filtrów" field none of the compared countries'
+   portals takes — dimmed, still clickable; the tooltip names the portals. */
+.mobileMoreFiltersCard .isMarketUnavailable {
+  opacity: 0.45;
+}
+
+.mobileMoreFiltersCard .isMarketUnavailable:has(input:checked) {
+  opacity: 0.75;
 }

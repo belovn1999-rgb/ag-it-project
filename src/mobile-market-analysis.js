@@ -1294,8 +1294,9 @@
       } else {
         if (!onlyRow || onlyRow === "mobile") markets.mobile = true;
         if (!onlyRow || onlyRow === "autoscout") markets.autoscout = true;
-        // Kleinanzeigen (B47): Germany's third portal, on with the column.
-        if (!onlyRow || onlyRow === "kleinanzeigen") markets.kleinanzeigen = true;
+        // Kleinanzeigen (B47): Germany's third portal — not with the column
+        // (owner 2026-10-04): its grey logo turns it on.
+        if (onlyRow === "kleinanzeigen") markets.kleinanzeigen = true;
         nextCountries = [...(german.length ? german : ["DE"]), ...nlbe];
       }
     } else if (key === "nlbe") {
@@ -2270,7 +2271,10 @@
           setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
           step("otomoto")(page, pages);
         }, whole, prices.otomoto),
-        mobile: () => fetchMobileDeSample(filters, whole, prices.mobile, step("mobile")),
+        // Owner 2026-10-04: mobile.de is Germany's portal only — the
+        // Netherlands and Belgium are read on AutoScout24, Marktplaats and
+        // 2dehands (mobile.de had ~16 000 offers there against ~395 000).
+        mobile: () => fetchMobileDeSample({ ...filters, countries: germanCountries(filters.countries || []).length ? germanCountries(filters.countries || []) : ["DE"] }, whole, prices.mobile, step("mobile")),
         blocket: () => fetchBlocketListings(filters, step("blocket"), whole, prices.blocket),
         avby: () => fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole),
         autoscout: async () => {
@@ -7710,7 +7714,15 @@
     // link per compared market.
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
     const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", kleinanzeigen: "[data-mobile-search-count-kleinanzeigen]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnlbe: "[data-mobile-search-count-autoscoutnlbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
-    const marketLinks = { mobile: searchUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, kleinanzeigen: localUrls.kleinanzeigen, autoscoutnlbe: autoscoutNlBeUrl, autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
+    // mobile.de: Germany's countries only (the Netherlands and Belgium are not read there).
+    let mobileDeUrl = searchUrl;
+    try {
+      const german = germanCountries(filters.countries || []);
+      mobileDeUrl = buildMobileDeSearchUrl({ ...filters, countries: german.length ? german : ["DE"] });
+    } catch {
+      mobileDeUrl = searchUrl;
+    }
+    const marketLinks = { mobile: mobileDeUrl, otomoto: otomotoUrl, blocket: blocketUrl, avby: avbyUrl, autoscout: autoscoutUrl, kleinanzeigen: localUrls.kleinanzeigen, autoscoutnlbe: autoscoutNlBeUrl, autoscoutfr: autoscoutFrUrl, marktplaats: localUrls.marktplaats, dehands: localUrls.dehands };
     const specFoot = `
       <div class="mobileSearchSummaryFoot" data-report-hide>
         <span class="mobileSearchSummaryFootLabel">${escapeMarketHtml(t.offerCountLabel || "")}</span>

@@ -259,7 +259,9 @@ requireHtml('data-mobile-feature type="checkbox" value="ELECTRIC_TAILGATE"', "el
 requireHtml('data-mobile-options="price"', "cena od");
 // B61 stage 4 (2026-10-04, owner): lists follow the real versions of the model.
 requireHtml('data-mobile-options="version"', "lista Wersja z liniami wyposażenia");
-requireHtml("data-mobile-generation-hint", "pokolenia pod polem Rok");
+// Owner 2026-10-04: no generation line under Rok (the list says it); the
+// model's bodies dim Nadwozie, doors, seats and the sliding door (B70).
+requireSource("window.AUTOGOOD_COMBO_UNAVAILABLE?.(control.dataset.mobileOptions)", "przygaszone drzwi, miejsca i drzwi przesuwne modelu");
 requireHtml("./src/model-specs.generated.js", "dane modeli dla list");
 requireSource("window.AUTOGOOD_MODEL_SPECS_UI.enhance(sets)", "listy według realnych wersji modelu");
 {
@@ -269,6 +271,8 @@ requireSource("window.AUTOGOOD_MODEL_SPECS_UI.enhance(sets)", "listy według rea
   if (specModels.length < 65) throw new Error(`Dane modeli: ${specModels.length}/65 modeli.`);
   const empty = specModels.filter((key) => !specs.models[key].gens.length || !specs.models[key].versions.length);
   if (empty.length) throw new Error(`Dane modeli bez pokoleń lub wersji: ${empty.join(", ")}.`);
+  const noBodies = specModels.filter((key) => !(specs.models[key].bodies || []).length);
+  if (noBodies.length) throw new Error(`Dane modeli bez nadwozi: ${noBodies.join(", ")}.`);
 }
 requireHtml('data-mobile-options="priceTo"', "cena do");
 requireHtml("data-mobile-search-count-mobilede", "miejsce na liczbę ofert Mobile.de");

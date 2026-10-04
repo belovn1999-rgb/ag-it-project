@@ -37,6 +37,28 @@
     ["avby", "av.by", (filters) => (typeof avbySkippedFilterLabels === "function" ? avbySkippedFilterLabels(filters) : [])],
   ];
 
+  // B70 (owner 2026-10-04): "Więcej filtrów" — a field no portal of the
+  // compared countries takes is grey (still clickable), instead of country
+  // flags by the field; the tooltip names the portals that take it. A portal
+  // takes a field when setting it adds nothing to its own list above (or
+  // only "≈"): the strip and the grey fields always agree.
+  const FIELDS = [
+    { input: "[data-mobile-new-used-choice]", box: ".mobileNewUsedField", base: { newUsed: "" }, tests: [{ newUsed: "used" }, { newUsed: "new" }] },
+    { input: "[data-mobile-first-owner]", base: { firstOwner: false }, tests: [{ firstOwner: true }] },
+    { input: "[data-mobile-service-history]", base: { serviceHistory: false }, tests: [{ serviceHistory: true }] },
+    { input: "[data-mobile-non-smoking]", base: { nonSmoking: false }, tests: [{ nonSmoking: true }] },
+    { input: "[data-mobile-accident-free]", base: { accidentFree: false }, tests: [{ accidentFree: true }] },
+    { input: "[data-mobile-roadworthy]", base: { roadworthy: false }, tests: [{ roadworthy: true }] },
+    { input: "[data-mobile-damaged-check]", base: { damagedVehicles: "hide" }, tests: [{ damagedVehicles: "show" }] },
+    { input: "[data-mobile-seller]", box: ".mobileField", base: { seller: "" }, tests: [{ seller: "private" }, { seller: "dealer" }] },
+    { input: "[data-mobile-vat]", box: ".mobileField", base: { vat: "" }, tests: [{ vat: "reclaimable" }] },
+    { input: "[data-mobile-warranty]", base: { warranty: false }, tests: [{ warranty: true }] },
+  ];
+  const FIELD_TEXT = {
+    pl: { works: "Działa na: {portals}", none: "Wybrane rynki nie mają tego filtra — działa na: {portals}" },
+    ru: { works: "Работает на: {portals}", none: "У выбранных рынков этого фильтра нет — работает на: {portals}" },
+  };
+
   const safe = (read, filters) => {
     try {
       return (read(filters) || []).filter(Boolean);
@@ -44,6 +66,25 @@
       return [];
     }
   };
+
+  function markFields(filters, picked) {
+    const t = FIELD_TEXT[lang()];
+    FIELDS.forEach((field) => {
+      const box = document.querySelector(field.input)?.closest(field.box || ".mobileCheckOption");
+      if (!box) return;
+      const base = { ...filters, ...field.base };
+      const takes = PORTALS.filter(([, , read]) => {
+        const before = new Set(safe(read, base));
+        return field.tests.some((test) => safe(read, { ...base, ...test })
+          .filter((label) => !before.has(label))
+          .every((label) => /≈\s*$/.test(label)));
+      });
+      const on = takes.filter(([key]) => picked.includes(key));
+      const names = (list) => [...new Set(list.map(([, name]) => name))].join(", ") || "—";
+      box.classList.toggle("isMarketUnavailable", !on.length);
+      box.title = on.length ? t.works.replace("{portals}", names(on)) : t.none.replace("{portals}", names(takes));
+    });
+  }
 
   function render() {
     if (typeof readManualFields !== "function" || typeof defaultManualFields !== "function") return;
@@ -55,6 +96,7 @@
     }
     const defaults = defaultManualFields();
     const picked = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS() : [];
+    markFields(filters, picked);
     const lines = PORTALS
       .filter(([key]) => picked.includes(key))
       .map(([key, name, read]) => {

@@ -12,6 +12,11 @@ window.AUTOGOOD_MODEL_SPECS.models["<brand>|<model>"] =
             number from the version name ("320", "m340", "220", "s3") for
             sub-models such as "320" or "C 220"; duplicates merged.
   trims:    [from, to|null, lines[], sport[], editions[]]
+  bodies:   [gen index, types[], doors from, doors to, seats from, seats to, sliding 0|1]
+            from the ultimatespecs body names (body_of below, owner 2026-10-04):
+            types = page-1 "Nadwozie" values (limousine estate suv hatchback
+            coupe cabrio van_minibus); a 4-door coupe or liftback counts as
+            both; doors and seats are ranges, wide where a name does not say.
 
 Run after tools/build-model-engine-table.py and tools/build-model-trims.py:
 
@@ -59,6 +64,110 @@ def token(brand, name):
     return ""
 
 
+# Page-1 body types of a version from its ultimatespecs body name ("Golf 7
+# Variant", "A3 Sportback (8V 2016)", "F36 4 Series Gran Coupe"); a name with
+# no body word takes the model's own default.
+VAN_MODELS = {("Ford", "C-Max"), ("Ford", "S-Max"), ("Renault", "Trafic"), ("Volkswagen", "T6"), ("Volkswagen", "Touran"), ("Renault", "Scenic")}
+SUV_MODELS = {
+    ("Audi", "Q3"), ("Audi", "Q5"), ("Audi", "Q7"), ("BMW", "X1"), ("BMW", "X3"), ("BMW", "X5"), ("Ford", "Kuga"),
+    ("Mercedes-Benz", "GLC"), ("Mercedes-Benz", "GLE"), ("Peugeot", "2008"), ("Peugeot", "3008"), ("Peugeot", "5008"),
+    ("Renault", "Captur"), ("Renault", "Kadjar"), ("Skoda", "Kamiq"), ("Skoda", "Karoq"), ("Skoda", "Kodiaq"),
+    ("Toyota", "C-HR"), ("Toyota", "RAV 4"), ("Volvo", "XC40"), ("Volvo", "XC60"), ("Volvo", "XC90"),
+    ("Volkswagen", "T-Roc"), ("Volkswagen", "Tiguan"),
+}
+DEFAULT_TYPE = {
+    ("Audi", "A3"): "hatchback", ("Audi", "A4"): "limousine", ("Audi", "A5"): "coupe", ("Audi", "A6"): "limousine",
+    ("BMW", "1"): "hatchback", ("BMW", "3"): "limousine", ("BMW", "4"): "coupe", ("BMW", "5"): "limousine",
+    ("Ford", "Fiesta"): "hatchback", ("Ford", "Focus"): "hatchback", ("Ford", "Mondeo"): "limousine",
+    ("Mercedes-Benz", "A"): "hatchback", ("Mercedes-Benz", "C"): "limousine", ("Mercedes-Benz", "E"): "limousine",
+    ("Mercedes-Benz", "S"): "limousine", ("Mercedes-Benz", "CLA"): "coupe+limousine",
+    ("Peugeot", "208"): "hatchback", ("Peugeot", "308"): "hatchback", ("Peugeot", "508"): "limousine",
+    ("Renault", "Clio"): "hatchback", ("Renault", "Megane"): "hatchback", ("Skoda", "Fabia"): "hatchback",
+    ("Skoda", "Octavia"): "limousine", ("Skoda", "Superb"): "limousine", ("Toyota", "Auris"): "hatchback",
+    ("Toyota", "Avensis"): "limousine+estate", ("Toyota", "Camry"): "limousine", ("Toyota", "Corolla"): "limousine",
+    ("Toyota", "Yaris"): "hatchback", ("Volvo", "S60"): "limousine", ("Volvo", "V40"): "hatchback",
+    ("Volvo", "V60"): "estate", ("Volkswagen", "Golf"): "hatchback", ("Volkswagen", "Passat"): "limousine",
+    ("Volkswagen", "Polo"): "hatchback",
+}
+# Hatchbacks sold with 5 doors only (the rest: 3 or 5 unless the name says).
+FIVE_DOOR_HATCHES = {("Volkswagen", "Golf"), ("Volkswagen", "Polo"), ("Ford", "Focus"), ("Toyota", "Auris"), ("Volvo", "V40"),
+                     ("Renault", "Megane"), ("Skoda", "Fabia"), ("Peugeot", "308"), ("BMW", "1")}
+SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "grand scenic", "touran", "allspace", "gle")
+
+
+def body_of(brand, model, name):
+    """(types, doors from, doors to, seats from, seats to, sliding) of one body name."""
+    n = name.lower().replace("é", "e")
+    key = (brand, model)
+    types = None
+    if re.search(r"cabrio|convertible|roadster|spider|spyder|\bcc\b", n):
+        types = ["cabrio"]
+    elif key in VAN_MODELS and not (model == "Scenic" and re.search(r"scenic 5", n)):
+        types = ["van_minibus"]
+    elif "sportsvan" in n or "gran tourer" in n or "active tourer" in n:
+        types = ["van_minibus"]
+    elif model == "5008" and not re.search(r"5008 (ii|iii|2021)", n):
+        types = ["van_minibus"]
+    elif key in SUV_MODELS or (model == "Scenic"):
+        types = ["suv"]
+    elif "gran coupe" in n:
+        types = ["coupe", "limousine"]
+    elif "shooting brake" in n:
+        types = ["estate"]
+    elif "coupe" in n:
+        types = ["coupe", "limousine"] if model == "CLA" else ["coupe"]
+    elif re.search(r"gran turismo|\bgt\b", n):
+        types = ["limousine"]
+    elif re.search(r"avant|variant|touring|estate|\bsw\b|combi|kombi|grand tour|sport ?tourer|sportbreak|break|wagon|allroad|alltrack|station|all[- ]terrain|scout|rxh", n):
+        types = ["estate"]
+    elif re.search(r"sedan|limousine|saloon", n):
+        types = ["limousine"]
+    elif re.search(r"\b[35][- ]?doors?\b|[35]doors|hatchback|sportback", n):
+        types = ["hatchback"] if not (model in ("A5",) and "sportback" in n) else ["limousine"]
+    elif model == "Camry" and "solara" in n:
+        types = ["coupe"]
+    else:
+        default = DEFAULT_TYPE.get(key, "")
+        types = default.split("+") if default else []
+    if model == "A5" and "sportback" in n:
+        types = ["limousine"]
+    if model == "A3" and "sportback" in n:
+        types = ["hatchback"]
+    # Doors (the form's 2/3, 4/5, 6/7).
+    if re.search(r"\b3[- ]?doors?\b|3doors|3 door", n):
+        doors = (3, 3)
+    elif re.search(r"\b5[- ]?doors?\b|5doors|5 door|sportback|allstreet", n):
+        doors = (5, 5)
+    elif types == ["cabrio"]:
+        doors = (2, 2)
+    elif types == ["coupe"]:
+        doors = (2, 3)
+    elif types == ["hatchback"]:
+        if key in FIVE_DOOR_HATCHES:
+            doors = (5, 5)
+        elif model == "A3" and not re.search(r"allstreet", n):
+            doors = (3, 3)
+        else:
+            doors = (3, 5)
+    elif types == ["van_minibus"]:
+        doors = (4, 5)
+    elif not types:
+        doors = (2, 5)
+    else:
+        doors = (4, 5)
+    # Seats: 5, coupes and cabrios 4, the 7-seaters up to 7, vans 2-9.
+    if model in ("T6", "Trafic"):
+        seats = (2, 9)
+    elif any(word in n or word == model.lower() for word in SEVEN_SEATS):
+        seats = (5, 7)
+    elif types and set(types) <= {"coupe", "cabrio"}:
+        seats = (2, 4)
+    else:
+        seats = (4, 5)
+    sliding = 1 if model in ("T6", "Trafic") or "grand c max" in n else 0
+    return types, doors[0], doors[1], seats[0], seats[1], sliding
+
+
 def clean_names(items, model_names):
     """'Advance, Pro Line (Бенилюкс)' -> ['Advance', 'Pro Line']; body types and base trims out."""
     out = []
@@ -87,7 +196,7 @@ def main():
             if model is None:
                 continue
             key = f"{row['Марка']}|{model}"
-            entry = models.setdefault(key, {"gens": {}, "versions": set()})
+            entry = models.setdefault(key, {"gens": {}, "versions": set(), "bodies": set()})
             start, end = years(row["Годы (проверено)"])
             phase_text = row["Этап"]
             body_lift = re.match(r"рестайлинг \((\d{4})\)", phase_text)
@@ -98,6 +207,8 @@ def main():
             if body_lift:
                 year = int(body_lift.group(1))
                 gen["lift"] = year if gen["lift"] is None else min(gen["lift"], year)
+            types, doors_from, doors_to, seats_from, seats_to, sliding = body_of(row["Марка"], model, row["Кузов"])
+            entry["bodies"].add((gen_key, tuple(types), doors_from, doors_to, seats_from, seats_to, sliding))
             fuel = FUELS.get(row["Топливо"], "petrol")
             mild = 1 if row["Топливо: примечание"].startswith("мягкий") else 0
             entry["versions"].add((gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
@@ -123,10 +234,12 @@ def main():
             start, end = years(row["years"])
             model_trims.append([start, end, clean_names(row["trims"], names), clean_names(row["sport"], names),
                                 clean_names(row["special"], names)])
+        bodies = sorted([index[b[0]], list(b[1]), *b[2:]] for b in entry["bodies"])
         out[key] = {
             "gens": [[g["code"], g["phase"], g["from"], g["to"], g["mobile"], g["lift"]] for g in gens],
             "versions": versions,
             "trims": model_trims,
+            "bodies": bodies,
         }
 
     payload = {
