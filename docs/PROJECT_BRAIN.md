@@ -66,6 +66,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, стр. 1 (B66): жёлтое «!» о фильтрах, которые портал не примет; чипсы только в компактной строке; «Kraj i pochodzenie» внутри «Więcej filtrów» (Claude).
 - 2026-10-04 — mobile.html, B43: база автомониторинга на сервере — одно чтение мониторинга для браузера и сервера, `window.AUTOGOOD_MONITORING` (задания, запуск, возврат записей), `server/monitoring-runner.mjs`; проверено локально; ждёт B6 (Chrome с доступом к mobile.de) и B26 (вход, хранилище) (Claude).
 - 2026-10-04 — mobile.html, стр. 1 (B65): карточка «Kraj i pochodzenie» (mobile.de/AutoScout24 — Kraj; otomoto — Zarejestrowany w Polsce, Kraj pochodzenia); «Więcej filtrów» из трёх разделов с метками порталов у полей (Claude).
 - 2026-10-04 — mobile.html, Monitoring: проверки по одному и очередь запросов к бесплатному прокси (B64), ликвидность — дни на рынке, снижения цены, «Do negocjacji» (B22), «Dodatkowe» — авто чуть за фильтрами, год только в той же генерации (B63), «Oblicz na gotowo» — три калькулятора во всплывающем окне на стр. 1 и 3 (B42) (Claude).

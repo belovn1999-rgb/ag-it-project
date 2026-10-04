@@ -190,7 +190,7 @@
   // choice the user made); the generic counter counted them and the hidden
   // halves of the selects twice.
   const moreCard = document.querySelector(".mobileMoreFiltersCard");
-  const MORE_KEYS = ["newUsed", "nonSmoking", "roadworthy", "warranty", "serviceHistory", "accidentFree", "firstOwner", "damagedVehicles", "vat", "seller"];
+  const MORE_KEYS = ["newUsed", "nonSmoking", "roadworthy", "warranty", "serviceHistory", "accidentFree", "firstOwner", "damagedVehicles", "vat", "seller", "countries", "otomotoRegistered", "otomotoOrigins"];
   const moreCount = () => {
     if (typeof readManualFields !== "function" || typeof defaultManualFields !== "function") return null;
     let current;

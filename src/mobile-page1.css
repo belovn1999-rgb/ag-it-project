@@ -831,3 +831,64 @@
   margin-bottom: var(--space-xs);
   padding: 0;
 }
+
+/* Chips with × only in the slim bar (when the chosen filters are out of
+   view), not under the chosen filters themselves (owner 04.10). */
+.mobileSearchSummary .mobileFilterChips[data-mobile-filter-chips] {
+  display: none !important;
+}
+
+/* "Kraj i pochodzenie" as the first part of "Więcej filtrów". */
+.mobileMoreFiltersCard .mobilePortalFiltersCard {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+/* What a portal will not take: yellow, with "!". */
+.mobileFilterWarnings {
+  margin: var(--space-sm) 0 0;
+  border: var(--rule-thin) solid #e9c46a;
+  border-radius: var(--radius-md);
+  background: #fff8e1;
+  padding: 10px 14px;
+  color: #6b4e00;
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.mobileFilterWarningsTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 4px;
+  font-weight: 800;
+}
+
+.mobileFilterWarningsTitle b {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #f4b400;
+  color: #3d2c00;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.mobileFilterWarnings ul {
+  margin: 0;
+  padding-left: 28px;
+}
+
+.mobileFilterWarnings li {
+  font-size: var(--text-sm);
+}
+
+.mobileFilterWarnings li strong {
+  display: inline;
+  color: inherit;
+  font-size: inherit;
+  font-weight: 800;
+  line-height: inherit;
+}
