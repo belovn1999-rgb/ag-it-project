@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-const pagesUrl = process.env.PAGES_URL || "https://belovn1999-rgb.github.io/autogood-kalkulatory/";
+const pagesUrl = process.env.PAGES_URL || "https://belovn1999-rgb.github.io/ag-it-project/";
 const converterUrl =
   process.env.CONVERTER_URL || "https://autogood-pdf-converter.onrender.com/api/convert-docx-to-pdf";
 const templatePath =

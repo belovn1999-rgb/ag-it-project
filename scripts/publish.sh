@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-public_url="https://belovn1999-rgb.github.io/autogood-kalkulatory/"
+public_url="https://belovn1999-rgb.github.io/ag-it-project/"
 
 cd "$(dirname "$0")/.."
 

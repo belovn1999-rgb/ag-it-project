@@ -17,7 +17,7 @@ const routes = JSON.parse(readTextFile(routesPath));
 const outputDir = resolve(process.env.PARTSLINK24_OUTPUT_DIR || join(homedir(), "Library/Application Support/AUTOGOOD/partslink24-output"));
 const port = Number(process.env.PORT || 4174);
 const minRunGapMs = Number(process.env.PARTSLINK24_MIN_RUN_GAP_MS || 7000);
-const publicPartslinkPage = "https://belovn1999-rgb.github.io/autogood-kalkulatory/partslink24.html";
+const publicPartslinkPage = "https://belovn1999-rgb.github.io/ag-it-project/partslink24.html";
 let partslinkQueue = Promise.resolve();
 let lastRunFinishedAt = 0;
 

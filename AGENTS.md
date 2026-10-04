@@ -45,49 +45,49 @@ model matching, what is not sent, audits) are documented in
 Public URL:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/
+https://belovn1999-rgb.github.io/ag-it-project/
 ```
 
 Calculators URL:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/calculators.html
+https://belovn1999-rgb.github.io/ag-it-project/calculators.html
 ```
 
 PDF URL:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/pdf.html
+https://belovn1999-rgb.github.io/ag-it-project/pdf.html
 ```
 
 Process OS URL:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/process.html
+https://belovn1999-rgb.github.io/ag-it-project/process.html
 ```
 
 Deal Desk URL:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/deal.html
+https://belovn1999-rgb.github.io/ag-it-project/deal.html
 ```
 
 Messages URL:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/messages.html
+https://belovn1999-rgb.github.io/ag-it-project/messages.html
 ```
 
 Documents URL:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/documents.html
+https://belovn1999-rgb.github.io/ag-it-project/documents.html
 ```
 
 GitHub repository:
 
 ```text
-https://github.com/belovn1999-rgb/autogood-kalkulatory
+https://github.com/belovn1999-rgb/ag-it-project
 ```
 
 GitHub Pages is configured from the `main` branch, root folder (`/`).

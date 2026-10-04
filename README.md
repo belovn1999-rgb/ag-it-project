@@ -5,13 +5,13 @@ Publiczna strona AUTOGOOD Tools z zestawem narzedzi operacyjnych.
 Pierwsze narzedzie:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/calculators.html
+https://belovn1999-rgb.github.io/ag-it-project/calculators.html
 ```
 
 PDF:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/pdf.html
+https://belovn1999-rgb.github.io/ag-it-project/pdf.html
 ```
 
 PDF z generatora umowy wymaga konwertera DOCX -> PDF z LibreOffice. GitHub Pages
@@ -56,7 +56,7 @@ http://127.0.0.1:8788/mobilede/import
 Strona operacyjna Mobile.de:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/mobile.html
+https://belovn1999-rgb.github.io/ag-it-project/mobile.html
 ```
 
 Zakres importu Mobile.de:
@@ -87,31 +87,31 @@ podany w `window.AUTOGOOD_MOBILEDE_API_URL`.
 Mapa procesu managera:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/process.html
+https://belovn1999-rgb.github.io/ag-it-project/process.html
 ```
 
 Karta transakcji:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/deal.html
+https://belovn1999-rgb.github.io/ag-it-project/deal.html
 ```
 
 Szablony wiadomosci:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/messages.html
+https://belovn1999-rgb.github.io/ag-it-project/messages.html
 ```
 
 Dokumenty transakcji:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/documents.html
+https://belovn1999-rgb.github.io/ag-it-project/documents.html
 ```
 
 Auto1 PDF client cleaner:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/auto1.html
+https://belovn1999-rgb.github.io/ag-it-project/auto1.html
 ```
 
 PartsLink24 VIN check:
@@ -137,7 +137,7 @@ http://localhost:4173
 ## Publiczny link
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/
+https://belovn1999-rgb.github.io/ag-it-project/
 ```
 
 Zmiany opublikowane w galezi `main` sa automatycznie widoczne pod publicznym linkiem przez GitHub Pages.

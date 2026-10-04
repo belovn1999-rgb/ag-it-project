@@ -6,7 +6,7 @@ on:
       pages_url:
         description: Public GitHub Pages base URL
         required: false
-        default: https://belovn1999-rgb.github.io/autogood-kalkulatory/
+        default: https://belovn1999-rgb.github.io/ag-it-project/
       converter_url:
         description: Public DOCX-to-PDF converter endpoint
         required: false

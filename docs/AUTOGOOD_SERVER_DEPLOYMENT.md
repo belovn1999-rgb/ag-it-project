@@ -175,7 +175,7 @@ above). Details and the steps left: `docs/MONITORING-SERVER.md`.
 For testing from GitHub Pages, use:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/partslink24.html?api=https://YOUR-BACKEND-DOMAIN
+https://belovn1999-rgb.github.io/ag-it-project/partslink24.html?api=https://YOUR-BACKEND-DOMAIN
 ```
 
 For mobile.de, update the API base in `src/main.jsx` and rebuild/copy the same value into `src/main.compiled.js`, or keep the current tunnel during local testing.

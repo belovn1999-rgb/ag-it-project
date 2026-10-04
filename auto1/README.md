@@ -7,7 +7,7 @@
 Публичная страница:
 
 ```text
-https://belovn1999-rgb.github.io/autogood-kalkulatory/auto1.html
+https://belovn1999-rgb.github.io/ag-it-project/auto1.html
 ```
 
 Рабочий сценарий:

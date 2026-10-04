@@ -40,7 +40,7 @@
 
 ## 4. Как выкатывать
 
-- `main` → GitHub Pages: https://belovn1999-rgb.github.io/autogood-kalkulatory/
+- `main` → GitHub Pages: https://belovn1999-rgb.github.io/ag-it-project/
 - `./scripts/publish.sh "сообщение"` (коммит, push, проверка). Подробно в [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md).
 - Поднимать `?v=` у изменённых ассетов. `src/main.jsx` вручную зеркалится в `src/main.compiled.js` (сборщика нет).
 - Конвертер DOCX→PDF деплоится **отдельно** на Render, проверка через `/api/health` → `revision`.
@@ -57,18 +57,19 @@
 
 | Дата | Решение | Статус |
 |---|---|---|
+| 2026-10-04 | Репозиторий называется `belovn1999-rgb/ag-it-project`, живой сайт — `https://belovn1999-rgb.github.io/ag-it-project/` (старый адрес `…/autogood-kalkulatory/` — 404). Локальная папка на Mac остаётся `~/cloude/autogood-kalkulatory` | CONFIRMED |
 | 2026-10-03 | Единый мозг проекта = этот индекс + тематические файлы из карты; подключён в `CLAUDE.md` и `AGENTS.md` | CONFIRMED |
 | 2026-10-03 | Мозг живёт только в репозитории (GitHub). Личная память Claude/Codex хранит лишь ссылки на файлы мозга (для mobile.html; владелец) | CONFIRMED |
 | 2026-10-03 | mobile.html: куратор мозга — чат Claude Code «мозг проекта»; Codex эту область больше не ведёт | CONFIRMED |
 
 ## 7. Открытые вопросы
 
-- OPEN: репозиторий переименован 04.10 в `ag-it-project` — живой адрес теперь `https://belovn1999-rgb.github.io/ag-it-project/` (старый — 404); обновить ссылки в документах, `scripts/publish.sh`, smoke-тестах и закладках, если переименование намеренное.
 - OPEN: документ для калькуляторов (формулы, типы комиссии, VAT/акциз).
 - OPEN: документ для договоров (шаблоны, распознавание, шифрование, история).
 
 ## 8. Журнал
 
+- 2026-10-04 — все ссылки переведены на новый адрес `…/ag-it-project/` (документы, скрипты выкладки, smoke-тесты, git remote, `~/cloude/CLAUDE.md`); закладки сотрудников — обновить вручную (Claude).
 - 2026-10-04 — mobile.html: курсы в шапке только на стр. 3 «Monitoring»; жёлтое «!» больше не пишет «otomoto: Paliwo» для гибрида (топливо уходит, предупреждение только для «Hybryda diesel») (Claude).
 - 2026-10-04 — mobile.html, вариант Б: мониторинг делает Mac владельца каждый день в 9:30 (служба `com.autogood.monitoring`, страница отдаёт задания и забирает записи), время в программе 9:30; из Chrome импортера удалены расширения; найдено переименование репозитория в `ag-it-project` (Claude).
 - 2026-10-04 — mobile.html, B47: Нидерланды и Бельгия — Marktplaats и 2dehands/2ememain как рынки «Holandia» и «Belgia» (стр. 1, анализ, Monitoring, ссылка на объявление, все фильтры проверены по числу объявлений) (Claude).

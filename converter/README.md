@@ -63,7 +63,7 @@ Render deployment:
 1. Open Render Blueprint creation:
 
 ```text
-https://dashboard.render.com/blueprints/new?repo=https://github.com/belovn1999-rgb/autogood-kalkulatory
+https://dashboard.render.com/blueprints/new?repo=https://github.com/belovn1999-rgb/ag-it-project
 ```
 
 2. Create a new Blueprint from this repository.
