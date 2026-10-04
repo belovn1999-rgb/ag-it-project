@@ -3116,8 +3116,8 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   }
 }
 
-/* "Drzwi i hak": seats (od / do), doors and sliding door in one row; the
-   tow-hook choices in one row of four. */
+/* "Pojazd": seats (od / do), doors and sliding door in one row under the
+   body; the tow-hook choices (in "Wyposażenie" → Opcje) in one row of four. */
 .mobileVehicleCapacityRow {
   grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr);
 }
@@ -3126,7 +3126,7 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   max-width: none;
 }
 
-[aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow {
+.mobileEquipmentPart.isOptions .mobileOpenChoiceRow {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
@@ -3136,13 +3136,13 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  [aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow {
+  .mobileEquipmentPart.isOptions .mobileOpenChoiceRow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-[aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow .mobileChoiceOption,
-[aria-labelledby="mobile-filter-group-doors"] .mobileOpenChoiceRow .mobileChoiceOption span {
+.mobileEquipmentPart.isOptions .mobileOpenChoiceRow .mobileChoiceOption,
+.mobileEquipmentPart.isOptions .mobileOpenChoiceRow .mobileChoiceOption span {
   min-width: 0;
   overflow: visible;
   text-overflow: clip;

@@ -78,8 +78,11 @@ const copy = {
     offerCountLoading: "…",
     showMoreFilters: "Pokaż",
     hideMoreFilters: "Ukryj",
-    filterGroupMileage: "Przebieg i rok",
-    filterGroupPrice: "Cena",
+    filterGroupPrice: "Cena i przebieg",
+    filterGroupVersion: "Wersja wyposażenia",
+    filterGroupEquipment: "Wyposażenie",
+    versionHint: "Linia wyposażenia lub oznaczenie z ogłoszenia, np. M Sport, S line, R-Line (nie działa na otomoto)",
+    dependentsRemoved: "Zmieniono markę na {brand} — usunięto: {fields}.",
     filterGroupEngine: "Silnik",
     filterGroupComfort: "Komfort",
     filterGroupColors: "Kolory",
@@ -214,7 +217,6 @@ const copy = {
     damagedVehiclesShow: "Pokazuj",
     fuelTypeLabel: "Typ",
     filterGroupGearbox: "Skrzynia biegów i napęd",
-    filterGroupDoors: "Drzwi i hak",
     doorsAny: "Dowolna",
     slidingDoorLabel: "Drzwi przesuwne",
     slidingDoorAny: "Dowolne",
@@ -375,8 +377,11 @@ const copy = {
     offerCountLoading: "…",
     showMoreFilters: "Показать",
     hideMoreFilters: "Скрыть",
-    filterGroupMileage: "Пробег и год",
-    filterGroupPrice: "Цена",
+    filterGroupPrice: "Цена и пробег",
+    filterGroupVersion: "Комплектация",
+    filterGroupEquipment: "Оснащение",
+    versionHint: "Линия комплектации или обозначение из объявления, напр. M Sport, S line, R-Line (на otomoto не работает)",
+    dependentsRemoved: "Марка изменена на {brand} — очищено: {fields}.",
     filterGroupEngine: "Двигатель",
     filterGroupComfort: "Комфорт",
     filterGroupColors: "Цвета",
@@ -511,7 +516,6 @@ const copy = {
     damagedVehiclesShow: "Показывать",
     fuelTypeLabel: "Тип",
     filterGroupGearbox: "Коробка передач и привод",
-    filterGroupDoors: "Двери и фаркоп",
     doorsAny: "Любое",
     slidingDoorLabel: "Сдвижная дверь",
     slidingDoorAny: "Любая",
@@ -3219,6 +3223,8 @@ function applyRecognizedManualFields(data) {
   if (data && typeof data === "object") data.matchedFilters = { brand: next.brand, model: next.model };
   els.brand.value = next.brand;
   els.model.value = next.model;
+  // The ad defines the car: a "Wersja" left from the previous search is not its.
+  els.version.value = "";
   setCheckedValues(els.fuels, next.fuels);
   els.body.value = next.body;
   setBodyDisplay(next.body);
@@ -4238,6 +4244,45 @@ function handleBrandInput(event) {
 
 els.brand.addEventListener("input", handleBrandInput);
 els.brand.addEventListener("change", handleBrandInput);
+
+// Narrowing: a field that depends on the brand lets go of a value the new
+// brand does not have — the model (if not in its catalog) and "Wersja"
+// (trim lines are each brand's own) — with a line saying what was removed.
+// Only the person's own change of brand counts: the brand at the moment the
+// field was entered is compared, so a favourite or a recognised ad filling the
+// form never clears anything. B61 stage 4 (generations, engines) adds its
+// fields here.
+let brandWhenEntered = "";
+els.brand.addEventListener("focus", () => {
+  brandWhenEntered = canonicalBrand(els.brand.value) || "";
+});
+
+function releaseBrandDependents() {
+  const brand = canonicalBrand(els.brand.value) || "";
+  if (!brand || !brandWhenEntered || brand === brandWhenEntered) return;
+  brandWhenEntered = brand;
+  const c = copy[state.lang];
+  const removed = [];
+  const model = String(els.model.value || "").trim();
+  const modelKnown = modelGroupsForBrand(brand)
+    .some((group) => group.models.some((name) => normalizeToken(name) === normalizeToken(model)));
+  if (model && !modelKnown) {
+    removed.push(`${c.modelLabel} „${model}”`);
+    els.model.value = "";
+    renderModelOptions();
+  }
+  const version = String(els.version.value || "").trim();
+  if (version) {
+    removed.push(`${c.versionLabel} „${version}”`);
+    els.version.value = "";
+  }
+  if (!removed.length) return;
+  setMarketSearchStatus(c.dependentsRemoved.replace("{brand}", brand).replace("{fields}", removed.join(", ")));
+  els.model.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+els.brand.addEventListener("input", releaseBrandDependents);
+els.brand.addEventListener("change", releaseBrandDependents);
 
 fetch("./data/exchange-rates.json")
   .then((response) => (response.ok ? response.json() : null))

@@ -10,11 +10,11 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-  <link rel="stylesheet" href="./src/mobile.css?v=autoscout2-20261003" />
+  <link rel="stylesheet" href="./src/mobile.css?v=narrowing-order-20261004" />
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=accident-20261003" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=page1-audit-20261003" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=narrowing-order-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=monitoring-audit-20261003d" />
     <link rel="stylesheet" href="./src/mobile-page2.css?v=page2-audit-20261003" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
@@ -140,46 +140,53 @@
                     </div>
                     <small class="mobileFieldHint" data-mobile-model-hint hidden data-i18n="modelOutsideCatalog">Model spoza katalogu — szukamy po nazwie</small>
                   </label>
-                  <label class="mobileField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="versionLabel">Wersja</span></span>
-                    <input data-mobile-version type="text" autocomplete="off" />
-                  </label>
+                  <div class="mobileField mobileRangeField mobileYearField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#calendar"></use></svg><span data-i18n="yearRangeLabel">Rok</span></span>
+                    <div class="mobileRangePair">
+                      <div class="mobileComboControl" data-mobile-options="year" data-mobile-options-target="data-mobile-year-from">
+                        <input data-mobile-year-from inputmode="numeric" autocomplete="off" />
+                        <em aria-hidden="true"></em>
+                      </div>
+                      <div class="mobileComboControl" data-mobile-options="yearTo" data-mobile-options-target="data-mobile-year-to">
+                        <input data-mobile-year-to inputmode="numeric" autocomplete="off" />
+                        <em aria-hidden="true"></em>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <fieldset class="mobileField mobileChoiceField mobileWideField">
                   <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="bodyLabel">Nadwozie</span></legend>
                   <div class="mobileChoiceGroup mobileInlineChoiceGroup" data-mobile-body-choices></div>
                   <input data-mobile-body type="hidden" />
                 </fieldset>
-              </div>
-            </section>
-            <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-mileage">
-              <h2 id="mobile-filter-group-mileage" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#gauge"></use></svg><span data-i18n="filterGroupMileage">Przebieg i rok</span></h2>
-              <div class="mobileFilterCardBody isTwoColumn">
-                <div class="mobileField mobileRangeField mobileWideField">
-                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#gauge"></use></svg><span data-i18n="mileageRangeLabel">Przebieg</span></span>
-                  <div class="mobileRangePair">
-                    <div class="mobileComboControl" data-mobile-options="mileage" data-mobile-options-target="data-mobile-mileage-from">
-                      <input data-mobile-mileage-from inputmode="numeric" autocomplete="off" />
-                      <em>km</em>
-                    </div>
-                    <div class="mobileComboControl" data-mobile-options="mileageTo" data-mobile-options-target="data-mobile-mileage-to">
-                      <input data-mobile-mileage-to inputmode="numeric" autocomplete="off" />
-                      <em>km</em>
+                <div class="mobileVehicleCapacityRow mobileWideField">
+                  <div class="mobileField mobileRangeField mobileSeatsField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="seatsRangeLabel">Liczba miejsc</span></span>
+                    <div class="mobileRangePair">
+                      <div class="mobileComboControl" data-mobile-options="seats" data-mobile-options-target="data-mobile-seats-from">
+                        <input data-mobile-seats-from inputmode="numeric" autocomplete="off" />
+                      </div>
+                      <div class="mobileComboControl" data-mobile-options="seatsTo" data-mobile-options-target="data-mobile-seats-to">
+                        <input data-mobile-seats-to inputmode="numeric" autocomplete="off" />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="mobileField mobileRangeField mobileWideField">
-                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#calendar"></use></svg><span data-i18n="yearRangeLabel">Rok</span></span>
-                  <div class="mobileRangePair">
-                    <div class="mobileComboControl" data-mobile-options="year" data-mobile-options-target="data-mobile-year-from">
-                      <input data-mobile-year-from inputmode="numeric" autocomplete="off" />
-                      <em aria-hidden="true"></em>
+                                  <label class="mobileField mobileDoorsField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="doorsLabel">Liczba drzwi</span></span>
+                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="doorsGroup" data-mobile-options-target="data-mobile-doors-label" data-mobile-value-target="data-mobile-doors-group">
+                      <input data-mobile-doors-label type="text" autocomplete="off" readonly />
+                      <input data-mobile-doors-group type="hidden" />
                     </div>
-                    <div class="mobileComboControl" data-mobile-options="yearTo" data-mobile-options-target="data-mobile-year-to">
-                      <input data-mobile-year-to inputmode="numeric" autocomplete="off" />
-                      <em aria-hidden="true"></em>
+                    <input data-mobile-doors-from type="hidden" />
+                    <input data-mobile-doors-to type="hidden" />
+                  </label>
+                  <label class="mobileField mobileSlidingDoorField">
+                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="slidingDoorLabel">Drzwi przesuwne</span></span>
+                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="slidingDoor" data-mobile-options-target="data-mobile-sliding-door-label" data-mobile-value-target="data-mobile-sliding-door">
+                      <input data-mobile-sliding-door-label type="text" autocomplete="off" readonly />
+                      <input data-mobile-sliding-door type="hidden" />
                     </div>
-                  </div>
+                  </label>
                 </div>
               </div>
             </section>
@@ -274,52 +281,19 @@
                 </fieldset>
               </div>
             </section>
-            <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-doors">
-              <h2 id="mobile-filter-group-doors" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="filterGroupDoors">Drzwi i hak</span></h2>
-              <div class="mobileFilterCardBody isTwoColumn">
-                <div class="mobileVehicleCapacityRow mobileWideField">
-                  <div class="mobileField mobileRangeField mobileSeatsField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="seatsRangeLabel">Liczba miejsc</span></span>
-                    <div class="mobileRangePair">
-                      <div class="mobileComboControl" data-mobile-options="seats" data-mobile-options-target="data-mobile-seats-from">
-                        <input data-mobile-seats-from inputmode="numeric" autocomplete="off" />
-                      </div>
-                      <div class="mobileComboControl" data-mobile-options="seatsTo" data-mobile-options-target="data-mobile-seats-to">
-                        <input data-mobile-seats-to inputmode="numeric" autocomplete="off" />
-                      </div>
-                    </div>
-                  </div>
-                                  <label class="mobileField mobileDoorsField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="doorsLabel">Liczba drzwi</span></span>
-                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="doorsGroup" data-mobile-options-target="data-mobile-doors-label" data-mobile-value-target="data-mobile-doors-group">
-                      <input data-mobile-doors-label type="text" autocomplete="off" readonly />
-                      <input data-mobile-doors-group type="hidden" />
-                    </div>
-                    <input data-mobile-doors-from type="hidden" />
-                    <input data-mobile-doors-to type="hidden" />
-                  </label>
-                  <label class="mobileField mobileSlidingDoorField">
-                    <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="slidingDoorLabel">Drzwi przesuwne</span></span>
-                    <div class="mobileComboControl mobileTextComboControl mobileSelectCombo" data-mobile-options="slidingDoor" data-mobile-options-target="data-mobile-sliding-door-label" data-mobile-value-target="data-mobile-sliding-door">
-                      <input data-mobile-sliding-door-label type="text" autocomplete="off" readonly />
-                      <input data-mobile-sliding-door type="hidden" />
-                    </div>
-                  </label>
-                </div>
-                <fieldset class="mobileField mobileChoiceField mobileWideField">
-                  <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#route"></use></svg><span data-i18n="trailerCouplingLabel">Hak holowniczy</span></legend>
-                  <div class="mobileOpenChoiceRow">
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="any" checked /> <span data-i18n="trailerCouplingAny">Dowolny</span></label>
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="all" /> <span data-i18n="trailerCouplingAll">Stały, odpinany lub odchylany</span></label>
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="detachable_or_swiveling" /> <span data-i18n="trailerCouplingDetachableOrSwiveling">Odpinany lub odchylany</span></label>
-                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="swiveling" /> <span data-i18n="trailerCouplingSwiveling">Hak holowniczy odchylany</span></label>
-                  </div>
-                </fieldset>
+            <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-version">
+              <h2 id="mobile-filter-group-version" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="filterGroupVersion">Wersja wyposażenia</span></h2>
+              <div class="mobileFilterCardBody">
+                <label class="mobileField mobileVersionField">
+                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#list"></use></svg><span data-i18n="versionLabel">Wersja</span></span>
+                  <input data-mobile-version type="text" autocomplete="off" aria-describedby="mobile-version-hint" />
+                  <small class="mobileFieldNote" id="mobile-version-hint" data-i18n="versionHint">Linia wyposażenia lub oznaczenie z ogłoszenia, np. M Sport, S line, R-Line (nie działa na otomoto)</small>
+                </label>
               </div>
             </section>
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-price">
-              <h2 id="mobile-filter-group-price" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#tag"></use></svg><span data-i18n="filterGroupPrice">Cena</span></h2>
-              <div class="mobileFilterCardBody">
+              <h2 id="mobile-filter-group-price" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#tag"></use></svg><span data-i18n="filterGroupPrice">Cena i przebieg</span></h2>
+              <div class="mobileFilterCardBody isTwoColumn">
                 <div class="mobileField mobileRangeField mobileWideField">
                   <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#tag"></use></svg><span data-i18n="priceRangeLabel">Cena (EUR)</span></span>
                   <div class="mobileRangePair">
@@ -333,11 +307,26 @@
                     </div>
                   </div>
                 </div>
+                <div class="mobileField mobileRangeField mobileWideField">
+                  <span class="mobileFieldLabel"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#gauge"></use></svg><span data-i18n="mileageRangeLabel">Przebieg</span></span>
+                  <div class="mobileRangePair">
+                    <div class="mobileComboControl" data-mobile-options="mileage" data-mobile-options-target="data-mobile-mileage-from">
+                      <input data-mobile-mileage-from inputmode="numeric" autocomplete="off" />
+                      <em>km</em>
+                    </div>
+                    <div class="mobileComboControl" data-mobile-options="mileageTo" data-mobile-options-target="data-mobile-mileage-to">
+                      <input data-mobile-mileage-to inputmode="numeric" autocomplete="off" />
+                      <em>km</em>
+                    </div>
+                  </div>
+                </div>
               </div>
             </section>
-            <section class="mobileFilterCard mobileFilterCardCollapsible" data-mobile-collapsible aria-labelledby="mobile-filter-group-comfort">
-              <h2 id="mobile-filter-group-comfort" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="filterGroupComfort">Komfort</span></h2>
+            <section class="mobileFilterCard mobileFilterCardCollapsible" data-mobile-collapsible aria-labelledby="mobile-filter-group-equipment">
+              <h2 id="mobile-filter-group-equipment" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="filterGroupEquipment">Wyposażenie</span></h2>
               <div class="mobileFilterCardBody">
+                <div class="mobileEquipmentPart isComfort" role="group" aria-labelledby="mobile-filter-group-comfort">
+                  <h3 id="mobile-filter-group-comfort" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="filterGroupComfort">Komfort</span></h3>
                 <fieldset class="mobileField mobileChoiceField mobileWideField">
                   <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#armchair"></use></svg><span data-i18n="interiorMaterialLabel">Typ salonu</span></legend>
                   <div class="mobileChoiceGroup mobileInteriorMaterialGroup">
@@ -415,11 +404,9 @@
                     <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-air-conditioning name="mobile-air-conditioning" type="radio" value="automatic_4_zones" /> <span data-i18n="airConditioningAutomatic4Zones">Automatyczna, 4 strefy</span></label>
                   </div>
                 </fieldset>
-              </div>
-            </section>
-            <section class="mobileFilterCard mobileFeatureOptionsSection mobileFilterCardCollapsible" data-mobile-collapsible aria-labelledby="mobile-filter-group-options">
-              <h2 id="mobile-filter-group-options" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#settings"></use></svg><span data-i18n="featureOptionsLabel">Opcje</span></h2>
-              <div class="mobileFilterCardBody">
+                </div>
+                <div class="mobileEquipmentPart isOptions mobileFeatureOptionsSection" role="group" aria-labelledby="mobile-filter-group-options">
+                  <h3 id="mobile-filter-group-options" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#settings"></use></svg><span data-i18n="featureOptionsLabel">Opcje</span></h3>
                 <div class="mobileFeatureChoiceGroup">
                 <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-feature type="checkbox" value="PANORAMIC_GLASS_ROOF" /> <span data-i18n="featurePanoramicRoof">Dach panoramiczny</span></label>
                 <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-feature type="checkbox" value="ROOF_RAILS" /> <span data-i18n="featureRoofRails">Relingi dachowe</span></label>
@@ -445,11 +432,18 @@
                 <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-feature type="checkbox" value="WINTER_TIRES" /> <span data-i18n="featureWinterTyres">Opony zimowe</span></label>
                 <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-feature type="checkbox" value="SUMMER_TIRES" /> <span data-i18n="featureSummerTyres">Opony letnie</span></label>
                 </div>
-              </div>
-            </section>
-            <section class="mobileFilterCard mobileFilterCardCollapsible" data-mobile-collapsible aria-labelledby="mobile-filter-group-colors">
-              <h2 id="mobile-filter-group-colors" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#palette"></use></svg><span data-i18n="filterGroupColors">Kolory</span></h2>
-              <div class="mobileFilterCardBody">
+                <fieldset class="mobileField mobileChoiceField mobileWideField">
+                  <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#route"></use></svg><span data-i18n="trailerCouplingLabel">Hak holowniczy</span></legend>
+                  <div class="mobileOpenChoiceRow">
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="any" checked /> <span data-i18n="trailerCouplingAny">Dowolny</span></label>
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="all" /> <span data-i18n="trailerCouplingAll">Stały, odpinany lub odchylany</span></label>
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="detachable_or_swiveling" /> <span data-i18n="trailerCouplingDetachableOrSwiveling">Odpinany lub odchylany</span></label>
+                    <label class="mobileChoiceOption mobileFeatureOption"><input data-mobile-trailer-coupling name="mobile-trailer-coupling" type="radio" value="swiveling" /> <span data-i18n="trailerCouplingSwiveling">Hak holowniczy odchylany</span></label>
+                  </div>
+                </fieldset>
+                </div>
+                <div class="mobileEquipmentPart isColors" role="group" aria-labelledby="mobile-filter-group-colors">
+                  <h3 id="mobile-filter-group-colors" class="mobileEquipmentPartTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#palette"></use></svg><span data-i18n="filterGroupColors">Kolory</span></h3>
                 <fieldset class="mobileField mobileChoiceField mobileWideField mobileColorField">
                   <legend class="mobileFieldLegend"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#palette"></use></svg><span data-i18n="exteriorColorLabel">Kolor nadwozia</span></legend>
                   <div class="mobileSwatchGroup mobileColorGroup">
@@ -482,6 +476,7 @@
                     <label class="mobileColorOption"><input data-mobile-interior-color type="checkbox" value="other" /><i class="isOther"></i><span data-i18n="colorOther">inny</span></label>
                   </div>
                 </fieldset>
+                </div>
               </div>
             </section>
             <section class="mobileFilterCard mobileVehicleConditionSection" aria-labelledby="mobile-filter-group-condition">
@@ -611,7 +606,7 @@
     <script src="./src/blocket-catalog.generated.js?v=blocket-20260927"></script>
     <script src="./src/avby-catalog.generated.js?v=avby-20261002"></script>
     <script src="./src/market-badges.js?v=autoscout2-20261003"></script>
-    <script src="./src/mobile.js?v=page2-audit-20261003"></script>
+    <script src="./src/mobile.js?v=narrowing-order2-20261004"></script>
     <script src="./src/blocket-search.js?v=form-groups-20261002"></script>
     <script src="./src/avby-search.js?v=avby-20261002"></script>
     <script src="./src/autoscout-search.js?v=by-prices-20261003"></script>

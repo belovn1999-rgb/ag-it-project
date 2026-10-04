@@ -390,3 +390,54 @@
 .mobileHistoryMore[hidden] {
   display: none;
 }
+
+/* ---- Order of narrowing (04.10): Marka · Model · Rok in one row, the body
+   with its seats and doors, then engine, gearbox, "Wersja", price and
+   mileage, one folded "Wyposażenie". ---- */
+.mobileVehicleTripleRow > .mobileYearField {
+  min-width: 0;
+}
+
+.mobileVersionField {
+  display: grid;
+  gap: 6px;
+  max-width: calc(50% - var(--space-xl) / 2);
+}
+
+.mobileVersionField .mobileFieldNote {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  line-height: 1.35;
+}
+
+.mobileEquipmentPart {
+  display: grid;
+  gap: var(--space-xl);
+  min-width: 0;
+}
+
+.mobileEquipmentPart + .mobileEquipmentPart {
+  padding-top: var(--space-xl);
+  border-top: var(--rule-thin) solid var(--color-rule-soft);
+}
+
+.mobileEquipmentPartTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+@media (max-width: 760px) {
+  .mobileVehicleTripleRow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .mobileVersionField {
+    max-width: none;
+  }
+}
