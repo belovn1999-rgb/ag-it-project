@@ -164,8 +164,10 @@
   }
 
   // The calculator's rate: Walutomat's best EUR→PLN sale offer right now.
+  // fresh: asked again (a new day while the page stays open, mobile-rates.js).
   let ratePromise = null;
-  function calculatorRate() {
+  function calculatorRate(fresh = false) {
+    if (fresh) ratePromise = null;
     if (!ratePromise) {
       ratePromise = (async () => {
         const url = new URL(WALUTOMAT_API_URL);
@@ -190,7 +192,7 @@
   }
 
   // The whole page (price filter, chart) uses the calculator's rate once known.
-  calculatorRate().then((rate) => {
+  const publishRate = (rate) => {
     window.AUTOGOOD_EXCHANGE_RATES = {
       live: rate.source === "Walutomat",
       // The calculator's rate (with its margin): the rates file never replaces it.
@@ -201,7 +203,10 @@
       rates: { EUR_PLN: { label: "EUR - PLN", value: rate.value, unit: "PLN" } },
     };
     window.dispatchEvent(new CustomEvent("autogood:rates", { detail: rate }));
-  });
+    return rate;
+  };
+  calculatorRate().then(publishRate);
+  const reloadRate = () => calculatorRate(true).then(publishRate);
 
   window.AUTOGOOD_TURNKEY = {
     turnkeyDirect,
@@ -212,6 +217,8 @@
     EXCISE_RATES,
     currentRates,
     calculatorRate,
+    reloadRate,
+    RATE_MARGIN,
     AVERAGE_TRANSPORT_NETTO,
     AVERAGE_INSPECTION_NETTO,
   };

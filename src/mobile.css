@@ -2912,6 +2912,12 @@ label.isSummaryFocus {
   color: #fff;
 }
 
+/* AutoScout24 yellow-olive; white on #a68a00 is 3:1, this darker one 5:1. */
+.mobileLinkSource .isAutoscout input:checked + span {
+  background: #7a6500;
+  color: #fff;
+}
+
 .mobileLinkSource .isAvby input:checked + span {
   background: #0b4da2;
   color: #fff;

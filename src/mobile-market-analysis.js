@@ -1020,6 +1020,13 @@
   // can tell new and gone offers apart; longer lists stay a sample.
   const FULL_LIST_LIMIT = 1000;
   const OTOMOTO_PARALLEL = 3;
+  // AutoScout24 in Monitoring (B48): the whole list up to this many offers,
+  // so its new and gone offers are exact (before: 8 pages of a list > 1000).
+  // The free reader proxy lets about 20 pages a minute through (checked
+  // 2026-10-04: the 21st request in a minute is refused with 429), so a
+  // refused page waits and is asked again: ~4 min for 1 500 offers.
+  const AUTOSCOUT_FULL_LIMIT = 2000;
+  const PROXY_REFUSED_WAIT_MS = 20000;
 
   let activeAnalysis = null;
   let otomotoTotal = 0;
@@ -1615,8 +1622,10 @@
   }
 
   // AutoScout24 through the reader proxy, sorted by price; a whole list when
-  // short enough, else pages spread evenly over it (as otomoto).
-  async function fetchAutoscoutListings(filters, { countries, price = null, whole = false, onProgress = null } = {}) {
+  // short enough, else pages spread evenly over it (as otomoto). Monitoring
+  // (everyPage) reads every page up to AUTOSCOUT_FULL_LIMIT offers: first the
+  // same spread sample as before, then the rest, slowed down by the proxy.
+  async function fetchAutoscoutListings(filters, { countries, price = null, whole = false, everyPage = false, onProgress = null } = {}) {
     const autoscout = window.AUTOGOOD_AUTOSCOUT;
     if (!autoscout) return null;
     const read = async (page) => {
@@ -1631,9 +1640,13 @@
     const matches = first.listings.filter((listing) => wanted(listing.model).startsWith(wanted(filters.model)) || wanted(filters.model).startsWith(wanted(listing.model)));
     if (filters.model && first.listings.length && matches.length < first.listings.length / 2) throw new Error("model not found on AutoScout24");
     const pageCount = Math.max(1, first.pages);
+    const allPages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
+    const readAll = everyPage && whole && first.total <= AUTOSCOUT_FULL_LIMIT;
     let pages;
-    if (pageCount <= OTOMOTO_PAGES || (whole && first.total <= FULL_LIST_LIMIT)) pages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
+    if (pageCount <= OTOMOTO_PAGES || (whole && first.total <= FULL_LIST_LIMIT)) pages = allPages;
     else pages = [...new Set(Array.from({ length: OTOMOTO_PAGES }, (_, index) => Math.round(1 + (index * (pageCount - 1)) / (OTOMOTO_PAGES - 1))))].filter((page) => page > 1);
+    // The sample first (the same pages as before), then every other page.
+    if (readAll) pages = [...pages, ...allPages.filter((page) => !pages.includes(page))];
     const seen = new Set();
     const listings = [];
     const collect = (items) => items.forEach((listing) => {
@@ -1643,14 +1656,24 @@
     });
     collect(first.listings);
     const failed = [];
-    for (let start = 0; start < pages.length; start += OTOMOTO_PARALLEL) {
-      const batch = pages.slice(start, start + OTOMOTO_PARALLEL);
+    const queue = [...pages];
+    // A whole list may wait for the proxy this many times (20 s each).
+    let waits = readAll ? Math.ceil(pages.length / 10) + 6 : 0;
+    while (queue.length) {
+      const batch = queue.splice(0, OTOMOTO_PARALLEL);
       const results = await Promise.allSettled(batch.map(read));
+      const refused = [];
       results.forEach((result, index) => {
         if (result.status === "fulfilled") collect(autoscout.parseSearchPage(result.value, { page: batch[index], total: first.total }).listings);
+        else if (waits > 0 && /429/.test(String(result.reason?.message || ""))) refused.push(batch[index]);
         else failed.push(batch[index]);
       });
-      onProgress?.(Math.min(pages.length, start + OTOMOTO_PARALLEL) + 1, pages.length + 1);
+      onProgress?.(pages.length - queue.length - refused.length + 1, pages.length + 1);
+      if (refused.length) {
+        waits -= 1;
+        queue.unshift(...refused);
+        await new Promise((resolve) => setTimeout(resolve, PROXY_REFUSED_WAIT_MS));
+      }
     }
     for (const page of failed) {
       await new Promise((resolve) => setTimeout(resolve, 1200));
@@ -1824,6 +1847,9 @@
           countries: (filters.countries || []).length ? filters.countries : ["DE"],
           price: prices.autoscout || prices.mobile || null,
           whole,
+          // Monitoring follows each portal's progress; the analysis does not
+          // wait minutes for a whole AutoScout24 list.
+          everyPage: typeof progress === "function",
           onProgress: step("autoscout"),
         })) : null,
       ]);
@@ -5348,6 +5374,8 @@
       reportActionsInTitle = true;
       const carSource = recognised?.importMode === "avby" && shownSources.includes("avby")
         ? "avby"
+        : recognised?.importMode === "autoscout" && shownSources.includes("autoscout")
+        ? "autoscout"
         : recognised?.pricePln
         ? "otomoto"
         : (shownSources.find((source) => source !== "otomoto") || shownSources[0]);

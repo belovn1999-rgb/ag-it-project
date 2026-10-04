@@ -71,6 +71,9 @@ const copy = {
     recognitionFromAvby: "Dane pobrane z ogłoszenia av.by.",
     avbyAdFailed: "Nie udało się odczytać ogłoszenia av.by. Sprawdź link i spróbuj ponownie.",
     avbyLinkExpected: "To nie jest link do ogłoszenia av.by.",
+    recognitionFromAutoscout: "Dane pobrane z ogłoszenia AutoScout24.",
+    autoscoutAdFailed: "Nie udało się odczytać ogłoszenia AutoScout24. Sprawdź link i spróbuj ponownie.",
+    autoscoutLinkExpected: "To nie jest link do ogłoszenia AutoScout24.",
     otomotoAdFailed: "Nie udało się odczytać ogłoszenia otomoto.pl. Sprawdź link i spróbuj ponownie.",
     otomotoLinkExpected: "To nie jest link do ogłoszenia otomoto.pl.",
     bookmarkletHint: "Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.",
@@ -373,6 +376,9 @@ const copy = {
     recognitionFromAvby: "Данные получены из объявления av.by.",
     avbyAdFailed: "Не удалось прочитать объявление av.by. Проверь ссылку и попробуй ещё раз.",
     avbyLinkExpected: "Это не ссылка на объявление av.by.",
+    recognitionFromAutoscout: "Данные получены из объявления AutoScout24.",
+    autoscoutAdFailed: "Не удалось прочитать объявление AutoScout24. Проверь ссылку и попробуй ещё раз.",
+    autoscoutLinkExpected: "Это не ссылка на объявление AutoScout24.",
     otomotoAdFailed: "Не удалось прочитать объявление otomoto.pl. Проверь ссылку и попробуй ещё раз.",
     otomotoLinkExpected: "Это не ссылка на объявление otomoto.pl.",
     bookmarkletHint: "Перетащи эту кнопку на панель закладок. Потом нажимай её на странице объявления или списка mobile.de.",
@@ -4018,7 +4024,8 @@ function setLinkSource(source) {
   });
   els.url.placeholder = source === "otomoto" ? "https://www.otomoto.pl/osobowe/oferta/..."
     : source === "blocket" ? "https://www.blocket.se/mobility/item/..."
-      : source === "avby" ? "https://cars.av.by/..." : "https://suchen.mobile.de/...";
+      : source === "avby" ? "https://cars.av.by/..."
+        : source === "autoscout" ? "https://www.autoscout24.de/angebote/..." : "https://suchen.mobile.de/...";
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
   if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
@@ -4041,7 +4048,7 @@ document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
 let mirroredLink = "";
 els.url.addEventListener("input", () => {
   const value = els.url.value.trim();
-  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby"
+  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby" : isAutoscoutUrl(value) ? "autoscout"
     : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
   if (source && value !== mirroredLink) {
     mirroredLink = value;
@@ -4050,6 +4057,7 @@ els.url.addEventListener("input", () => {
   if (isOtomotoUrl(value)) setLinkSource("otomoto");
   else if (isBlocketUrl(value)) setLinkSource("blocket");
   else if (isAvbyUrl(value)) setLinkSource("avby");
+  else if (isAutoscoutUrl(value)) setLinkSource("autoscout");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
 });
 
@@ -4213,6 +4221,110 @@ async function loadAvbyAd(sourceUrl) {
   }
 }
 
+// ---- AutoScout24 ad links -------------------------------------------------------
+// Any AutoScout24 domain (.de/.nl/.be/.at/.lu/.com…): the ad is read in German
+// (www.autoscout24.de/angebote/<id>, the same id on every domain) through the
+// reader proxy, from __NEXT_DATA__ → listingDetails: gross and net price with
+// the VAT rate, engine size, power, gearbox, drive, month of first
+// registration, equipment (German names, read like mobile.de's), seller.
+const AUTOSCOUT_AD_ID = /[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}/i;
+
+function isAutoscoutUrl(value) {
+  const text = String(value || "").trim();
+  return /^https:\/\/(www\.|m\.)?autoscout24\.[a-z.]{2,6}\//i.test(text) && AUTOSCOUT_AD_ID.test(text);
+}
+
+function autoscoutFuel(vehicle) {
+  const label = `${vehicle.fuelCategory?.formatted || ""} ${vehicle.primaryFuel?.formatted || ""}`.toLowerCase();
+  const plugin = Boolean(vehicle.rawData?.fuels?.isPluginHybrid) || /plug/.test(label);
+  const diesel = /diesel/.test(label);
+  if (plugin) return diesel ? "Plug-in-Hybrid (Diesel/Elektro)" : "Plug-in-Hybrid (Benzin/Elektro)";
+  if (/elektro\s*\/|\/\s*elektro|hybrid/.test(label)) return diesel ? "Hybrid (Diesel/Elektro)" : "Hybrid (Benzin/Elektro)";
+  if (diesel) return "Diesel";
+  if (/benzin|super/.test(label)) return "Benzin";
+  if (/elektro|electric/.test(label)) return "Elektro";
+  return vehicle.fuelCategory?.formatted || "";
+}
+
+async function loadAutoscoutAd(sourceUrl) {
+  const c = copy[state.lang];
+  setStatus("loading");
+  state.data = null;
+  renderData();
+  try {
+    const id = (String(sourceUrl).match(AUTOSCOUT_AD_ID) || [])[0];
+    if (!id) throw new Error(c.autoscoutLinkExpected);
+    const proxy = window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+    const response = await fetch(`${proxy}https://www.autoscout24.de/angebote/${id}`, { headers: { "x-respond-with": "html" } });
+    if (!response.ok) throw new Error(String(response.status));
+    const html = await response.text();
+    const raw = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
+    const details = raw ? JSON.parse(raw[1])?.props?.pageProps?.listingDetails : null;
+    const prices = details?.prices?.public || {};
+    const carBruttoEur = Number(prices.priceRaw) || 0;
+    if (!carBruttoEur) throw new Error(c.autoscoutAdFailed);
+    const vehicle = details.vehicle || {};
+    // VAT shown ("¹", "inkl. MwSt."): the ad's own net price, else gross / (1 + its rate).
+    const vatDeductible = Boolean(prices.taxDeductible);
+    const vatRate = Number(prices.vatRate) || 0;
+    const carNettoEur = vatDeductible
+      ? Number(prices.netPriceRaw) || (vatRate ? Math.round(carBruttoEur / (1 + vatRate / 100)) : null)
+      : null;
+    const title = [vehicle.make, vehicle.model, vehicle.modelVersionInput].filter(Boolean).join(" ").slice(0, 160);
+    const fuel = autoscoutFuel(vehicle);
+    const displacementCcm = Number(vehicle.rawDisplacementInCCM || vehicle.rawCylinderCapacity) || null;
+    const equipment = Object.values(vehicle.equipment || {}).flat().map((item) => String(item?.id || "")).filter(Boolean).slice(0, 160);
+    const driveLabel = String(vehicle.driveTrain || "");
+    const location = details.location || {};
+    const country = String(location.countryCode || "DE").toUpperCase();
+    const bodyType = String(vehicle.bodyType || "");
+    const engineTypeIndex = classifyEngineType(`${fuel} ${title}`, displacementCcm);
+    const estimate = estimateDeliveryInspection(bodyType, { country, postalCode: String(location.zip || ""), city: String(location.city || "") });
+    state.data = {
+      sourceUrl,
+      adId: id,
+      importMode: "autoscout",
+      carBruttoEur,
+      carNettoEur,
+      vatRate: vatDeductible ? vatRate : null,
+      purchaseType: vatDeductible ? "VAT" : "Marża",
+      title,
+      model: String(vehicle.model || ""),
+      bodyType,
+      fuel,
+      displacementCcm,
+      powerHp: Number(vehicle.rawPowerInHp) || null,
+      gearbox: /automat/i.test(vehicle.transmissionType || "") ? "Automatyczna" : /schalt|manuell/i.test(vehicle.transmissionType || "") ? "Manualna" : "",
+      mileageKm: Number(vehicle.mileageInKmRaw) || null,
+      // "08/2021": the month decides the age for customs (Belarus).
+      firstRegistration: String(vehicle.firstRegistrationDate || "").match(/\d{1,2}\/\d{4}/)?.[0] || String(vehicle.firstRegistrationDateRaw || "").slice(0, 4),
+      equipment,
+      // German words, as mobile.de's (the page translates them).
+      condition: details.isNew ? "Neufahrzeug" : "Gebrauchtfahrzeug",
+      sellerType: details.seller?.isDealer ? "DEALER" : details.seller?.type ? "PRIVATE" : "",
+      drive: /allrad|4x4/i.test(driveLabel) ? "awd" : /front/i.test(driveLabel) ? "fwd" : /heck/i.test(driveLabel) ? "rwd" : "",
+      location: {
+        address: String(location.street || ""),
+        city: String(location.city || ""),
+        postalCode: String(location.zip || ""),
+        country,
+        sellerName: String(details.seller?.companyName || details.seller?.contactName || ""),
+      },
+      transportNettoPln: estimate.transport,
+      inspectionNettoPln: estimate.inspection,
+      engineTypeIndex,
+      engineTypeLabel: ENGINE_TYPE_LABELS[engineTypeIndex],
+    };
+    setStatus("ready", c.recognitionFromAutoscout, true);
+    applyRecognizedManualFields(state.data);
+    renderData();
+  } catch (error) {
+    state.data = null;
+    setStatus("error", error.message && !/^\d+$/.test(error.message) ? error.message : c.autoscoutAdFailed, true);
+    renderData();
+  }
+}
+
 async function loadOtomotoAd(sourceUrl) {
   const c = copy[state.lang];
   setStatus("loading");
@@ -4312,7 +4424,12 @@ els.form.addEventListener("submit", (event) => {
     loadAvbyAd(sourceUrl);
     return;
   }
-  if (["otomoto", "blocket", "avby"].includes(linkSource())) {
+  if (isAutoscoutUrl(sourceUrl)) {
+    setLinkSource("autoscout");
+    loadAutoscoutAd(sourceUrl);
+    return;
+  }
+  if (["otomoto", "blocket", "avby", "autoscout"].includes(linkSource())) {
     setStatus("error", copy[state.lang][`${linkSource()}LinkExpected`], true);
     return;
   }

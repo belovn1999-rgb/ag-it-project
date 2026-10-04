@@ -1,0 +1,42 @@
+name: Daily exchange rates
+
+# Every morning (before the 9:00 Monitoring check) the rates of every pair
+# the market analysis converts with are written to data/exchange-rates.json:
+# EUR, SEK, USD in PLN (Walutomat) and EUR, USD, PLN in BYN (NBRB). The pages
+# use the live rates and fall back to this file (mobile.html, B12).
+on:
+  schedule:
+    - cron: "15 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: exchange-rates
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/update-exchange-rates.mjs
+      - name: Commit when the rates changed
+        run: |
+          if git diff --quiet -- data/exchange-rates.json; then
+            echo "Rates unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add data/exchange-rates.json
+          git commit -m "data: daily exchange rates $(date -u +%Y-%m-%d)"
+          for attempt in 1 2 3; do
+            git pull --rebase origin main && git push origin HEAD:main && exit 0
+            sleep 10
+          done
+          exit 1

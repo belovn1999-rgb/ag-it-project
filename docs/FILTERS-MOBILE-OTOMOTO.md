@@ -358,15 +358,30 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   `cy=D,NL,B,A,L` (страны: DE→D, BE→B, AT→A, LU→L, FR→F, IT→I, SE→S),
   `atype=C`, `damaged_listing=exclude`, `sort=price&desc=0|1`,
   `ustate=N,U|N|U`, `fregfrom/fregto` (год), `kmfrom/kmto`,
-  `pricefrom/priceto` (EUR), `powerfrom/powerto` + `powertype=kw|hp`,
+  `pricefrom/priceto` (EUR), `powerfrom/powerto` — **всегда кВт** (`powertype=kw|hp`
+  меняет только вид страницы; проверено 10-04: `powertype=hp&powerfrom=122&powerto=122`
+  — 0 Passat, `powerfrom=90&powerto=90` — 24 машины «90 kW (122 PS)»; до 10-04 л. с.
+  уходили как кВт и подборка была неверной). Л. с. формы → кВт × 0,7355, округление
+  наружу (122 л. с. = 89,7 кВт → 89–90),
   `fuel=B,D,2,3,E` (запятая = ИЛИ; plug-in → `2` приблизительно),
   `gear=A|M`, `body=1 Kleinwagen,2 Cabrio,3 Coupé,4 SUV/Pickup,5 Kombi,
   6 Limousine,12 Van,7 Sonstige`, `custtype=D|P`, `prevownersid=1` (≤ 1 владелец, с 10-04). Коды — из `taxonomy`
   в `__NEXT_DATA__`.
 - **Не переносится:** привод (ни `drivetrain`, `dt`, `drive`… не меняют
   счёт), версия, опции, цвета.
-- **Страницы:** ~20 на страницу, доступны и после 20-й (проверено 30-я);
-  избранное читается целиком до 1000, иначе 8 страниц равномерно.
+- **Страницы:** ~20 на страницу, доступны и после 20-й (проверено 30-я и 40-я из 78);
+  анализ: целиком до 1000, иначе 8 страниц равномерно. **Monitoring (с 10-04, B48):**
+  целиком до 2000 объявлений — сначала те же 8 страниц, потом остальные; прокси
+  `r.jina.ai` пропускает ~20 страниц в минуту (21-я — 429), отказанная страница
+  ждёт 20 с и читается снова: Passat diesel 2019–22 DE — 1 462 из 1 463 за 5 мин (проверено 10-04).
+- **Ссылка на объявление (с 10-04, B48):** любой домен AutoScout24 (.de/.nl/.be/.at/
+  .lu/.com), берётся ID (UUID) и читается `www.autoscout24.de/angebote/<ID>`
+  (немецкая версия, тот же ID на всех доменах) через прокси, `__NEXT_DATA__ →
+  listingDetails`: `prices.public.priceRaw` (брутто), `netPriceRaw` и `vatRate`
+  при `taxDeductible`, `vehicle.rawDisplacementInCCM`, `rawPowerInHp`,
+  `transmissionType`, `driveTrain`, `firstRegistrationDate` («08/2021»),
+  `mileageInKmRaw`, `bodyType`, `equipment` (немецкие названия, как у mobile.de),
+  `location`, `seller`. Форма заполняется тем же `applyRecognizedManualFields`.
 - **Поля:** цена `price.priceRaw`, «inkl. MwSt.» + сноска «1» = НДС к вычету
   (у всех результатов `vatded=true`), пробег/год `tracking`, мощность
   `vehicleDetails` (speedometer), страна `location.countryCode`, продавец

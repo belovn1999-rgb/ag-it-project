@@ -1,0 +1,50 @@
+/* Exchange rates at the top, left of the language switch (mobile-rates.js, B12). */
+.mobileTopActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px 16px;
+}
+
+.mobileRates {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  max-width: 760px;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.4;
+  cursor: help;
+}
+
+.mobileRates[hidden] {
+  display: none;
+}
+
+.mobileRatesLabel {
+  font-weight: 700;
+  color: var(--color-brand-pressed);
+}
+
+.mobileRatesPair {
+  white-space: nowrap;
+}
+
+.mobileRatesPair b {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.mobileRatesSource {
+  padding-left: 10px;
+  border-left: 1px solid var(--color-rule);
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .mobileTopActions {
+    justify-content: flex-start;
+  }
+}

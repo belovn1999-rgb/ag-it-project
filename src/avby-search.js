@@ -12,7 +12,8 @@ const AVBY_API = "https://api.av.by/offer-types/cars";
 const AVBY_SEARCH_URL = "https://cars.av.by/filter";
 const AVBY_SORT_CHEAPEST = 2;
 const AVBY_SORT_DEAREST = 3;
-const USD_PLN_FALLBACK = 3.65;
+// Last resort only: the daily rates file (data/exchange-rates.json) comes first.
+const USD_PLN_FALLBACK = 3.9;
 // av.by answers "429 Too Many Requests" to bursts: one request at a time,
 // at least this far apart, and a few patient retries.
 const AVBY_REQUEST_GAP_MS = 700;
@@ -246,7 +247,8 @@ function avbyModelSelection(brand, model, version = "") {
 // (Walutomat), like SEK for Blocket.
 
 let avbyUsdRatePromise = null;
-function avbyUsdPlnRate() {
+function avbyUsdPlnRate(fresh = false) {
+  if (fresh === true) avbyUsdRatePromise = null;
   if (!avbyUsdRatePromise) {
     avbyUsdRatePromise = (async () => {
       const response = await fetch("https://api.walutomat.pl/api/v2.0.0/market_fx/best_offers?currencyPair=USDPLN", { cache: "no-store" });
@@ -255,7 +257,7 @@ function avbyUsdPlnRate() {
       const value = Number(offer?.price);
       if (!Number.isFinite(value) || value <= 0) throw new Error("Walutomat USD rate unavailable");
       return value;
-    })().catch(() => USD_PLN_FALLBACK).then((value) => {
+    })().catch(async () => Number((await window.AUTOGOOD_RATES_FILE)?.rates?.USD_PLN?.value) || USD_PLN_FALLBACK).then((value) => {
       window.AUTOGOOD_USD_PLN_RATE = value;
       return value;
     });

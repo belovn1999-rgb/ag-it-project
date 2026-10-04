@@ -10,7 +10,8 @@ const BLOCKET_SEARCH_URL = "https://www.blocket.se/mobility/search/car";
 const BLOCKET_API_URL = "https://www.blocket.se/mobility/search/api/search/SEARCH_ID_CAR_USED";
 // 1 Swedish mil = 10 km; Blocket's mileage filter and ads count in mil.
 const BLOCKET_KM_PER_MIL = 10;
-const SEK_PLN_FALLBACK = 0.385;
+// Last resort only: the daily rates file (data/exchange-rates.json) comes first.
+const SEK_PLN_FALLBACK = 0.39;
 
 const blocketCopy = {
   pl: {
@@ -272,7 +273,8 @@ function blocketModelSelection(brand, model, version = "") {
 // so every market is converted at one consistent set of rates.
 
 let blocketSekRatePromise = null;
-function blocketSekPlnRate() {
+function blocketSekPlnRate(fresh = false) {
+  if (fresh === true) blocketSekRatePromise = null;
   if (!blocketSekRatePromise) {
     blocketSekRatePromise = (async () => {
       const response = await fetch("https://api.walutomat.pl/api/v2.0.0/market_fx/best_offers?currencyPair=SEKPLN", { cache: "no-store" });
@@ -281,7 +283,7 @@ function blocketSekPlnRate() {
       const value = Number(offer?.price);
       if (!Number.isFinite(value) || value <= 0) throw new Error("Walutomat SEK rate unavailable");
       return value;
-    })().catch(() => SEK_PLN_FALLBACK).then((value) => {
+    })().catch(async () => Number((await window.AUTOGOOD_RATES_FILE)?.rates?.SEK_PLN?.value) || SEK_PLN_FALLBACK).then((value) => {
       window.AUTOGOOD_SEK_PLN_RATE = value;
       return value;
     });

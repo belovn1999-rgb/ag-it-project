@@ -65,6 +65,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html: ссылка AutoScout24 распознаётся, Monitoring читает AutoScout24 целиком (B48), мощность л. с. → кВт для AutoScout24; курсы всех пар в шапке, ежедневный файл курсов через GitHub Action (B12) (Claude).
 - 2026-10-04 — mobile.html, бэклог B18–B21 и B24 (решения владельца): «Więcej filtrów» и чипсы фильтров, «Bezwypadkowy» / «Pierwszy właściciel», предупреждение «od > do», своя шкала графиков рынков; история с заметкой клиента, «Analiza →» и поиском; анализ цены по открытым параметрам, новые колонки, поиск и сравнение в «Aktualne oferty» (Claude).
 - 2026-10-04 — mobile.html, стр. 1 (B61, выкачено): 10 закреплённых марок (+Skoda), у каждой 6–7 закреплённых моделей в «Model»; otomoto Mercedes-классы → `klasa-*`, AutoScout24 серии BMW/классы Mercedes/T6 без 404; таблица поколений с 2010 (`docs/MODEL-GENERATIONS.md`) (Claude).
 - 2026-10-04 — mobile.html, стр. 1 (B62): порядок фильтров = порядок сужения — Marka · Model · Rok, кузов с дверьми и местами, Silnik, Skrzynia, Wersja, «Cena i przebieg», одно свёрнутое «Wyposażenie» (фаркоп в Opcje); смена марки снимает чужие модель и «Wersja» (Claude).

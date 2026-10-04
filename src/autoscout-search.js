@@ -71,12 +71,17 @@
     range("kmfrom", "kmto", filters.mileageFrom, filters.mileageTo);
     if (price) range("pricefrom", "priceto", price.from, price.to);
     else range("pricefrom", "priceto", filters.priceFrom, filters.priceTo);
+    // powerfrom/powerto are always kW: "powertype" only changes how the page
+    // shows power (checked 2026-10-04: powertype=hp&powerfrom=122&powerto=122
+    // found 0 Passats, powerfrom=90&powerto=90 found the 122 PS ones). The
+    // form's PS go over as kW, rounded outwards (122 PS = 89.7 kW → 89–90).
     if (filters.powerUnit === "kw") {
       params.set("powertype", "kw");
       range("powerfrom", "powerto", filters.powerKwFrom, filters.powerKwTo);
     } else if (digits(filters.powerFrom) || digits(filters.powerTo)) {
       params.set("powertype", "hp");
-      range("powerfrom", "powerto", filters.powerFrom, filters.powerTo);
+      const kw = (hp, round) => (digits(hp) ? String(round(Number(digits(hp)) * 0.73549875)) : "");
+      range("powerfrom", "powerto", kw(filters.powerFrom, Math.floor), String(filters.powerTo || "").trim().endsWith("+") ? "" : kw(filters.powerTo, Math.ceil));
     }
     const fuels = [...new Set((filters.fuels || []).map((fuel) => FUEL[fuel]).filter(Boolean))];
     if (fuels.length) params.set("fuel", fuels.join(","));

@@ -8,7 +8,7 @@
 (() => {
   const NBRB_API = "https://api.nbrb.by/exrates/rates/";
   // BYN for one unit; the NBRB rates of 2026-10-03 until the live ones arrive.
-  const FALLBACK_RATES = { EUR: 3.386, USD: 3.0051, PLN: 0.795 };
+  const FALLBACK_RATES = { EUR: 3.386, USD: 3.0051, PLN: 0.7737 };
 
   const COSTS = {
     warsawMinskEur: 600,
@@ -32,8 +32,11 @@
 
   // ---- Rates (NBRB) --------------------------------------------------------------
   let rates = { ...FALLBACK_RATES, date: "", live: false };
+  // fresh: asked again (a new day while the page stays open, mobile-rates.js);
+  // NBRB unreachable: the daily rates file (data/exchange-rates.json, "nbrb").
   let ratesPromise = null;
-  function loadRates() {
+  function loadRates(fresh = false) {
+    if (fresh === true) ratesPromise = null;
     if (!ratesPromise) {
       ratesPromise = Promise.all(["EUR", "USD", "PLN"].map(async (code) => {
         const response = await fetch(`${NBRB_API}${code}?parammode=2`, { cache: "no-store" });
@@ -44,7 +47,14 @@
       })).then((list) => {
         rates = { ...Object.fromEntries(list.map(([code, value]) => [code, value])), date: list[0][2], live: true };
         return rates;
-      }).catch(() => rates);
+      }).catch(async () => {
+        const file = (await window.AUTOGOOD_RATES_FILE)?.nbrb;
+        const value = (code) => Number(file?.rates?.[`${code}_BYN`]?.value);
+        if (["EUR", "USD", "PLN"].every((code) => value(code) > 0)) {
+          rates = { EUR: value("EUR"), USD: value("USD"), PLN: value("PLN"), date: String(file.effectiveDate || ""), live: false, file: true };
+        }
+        return rates;
+      });
     }
     return ratesPromise;
   }
