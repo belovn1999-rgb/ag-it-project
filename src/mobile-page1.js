@@ -362,7 +362,7 @@
       const haystack = fold([
         row.querySelector(".mobileMarketHistoryTitleRow strong")?.textContent,
         row.querySelector(".mobileMarketHistoryMeta")?.textContent,
-        row.querySelector(".mobileMarketHistoryNote")?.value,
+        row.dataset.note || row.querySelector(".mobileMarketHistoryNote")?.value,
       ].join(" "));
       const match = words.every((word) => haystack.includes(word));
       row.classList.toggle("isFilteredOut", !match);

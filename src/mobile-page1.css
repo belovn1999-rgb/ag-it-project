@@ -929,3 +929,154 @@
 .mobileCompactMarkets {
   margin-left: auto;
 }
+
+/* ---- B67 (04.10): history rows — one row per car, the whole row picks it
+   (no radio), the note folded into "+ notatka" (a filled note is a line under
+   the car), a borderless star and cross, the portals' marks by the time and
+   "Dziś / Wczoraj / Wcześniej" over the rows. ---- */
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem {
+  grid-template-areas: "main actions";
+  cursor: pointer;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem.isGroupStart {
+  grid-template-areas:
+    "group group"
+    "main actions";
+}
+
+.mobileMarketHistoryItem.isGroupStart::before {
+  content: attr(data-group);
+  grid-area: group;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mobileMarketHistoryItem.isGroupStart + .mobileMarketHistoryItem,
+.mobileMarketHistoryItem + .mobileMarketHistoryItem.isGroupStart {
+  border-top: var(--rule-thin) solid var(--color-rule-soft);
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistorySelect {
+  display: block;
+}
+
+.mobileMarketHistoryTitleRow strong[role="button"] {
+  cursor: pointer;
+}
+
+.mobileMarketHistoryTitleRow strong[role="button"]:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.mobileMarketHistoryWhen {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-soft);
+  font-size: 0.75rem;
+}
+
+.mobileMarketHistoryMarks {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.mobileMarketHistoryMarks img {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.mobileMarketHistoryNoteSlot {
+  display: flex;
+  min-width: 0;
+}
+
+.mobileMarketHistoryNoteSlot .mobileMarketHistoryNote {
+  grid-area: auto;
+  width: min(100%, 420px);
+  margin: 2px 0;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.mobileMarketHistoryNoteAdd,
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.mobileMarketHistoryNoteText {
+  min-height: 0;
+  max-width: 100%;
+  border: 0;
+  background: none;
+  padding: 1px 0;
+  font-size: 0.8125rem;
+  text-align: left;
+  transform: none;
+}
+
+.mobileMarketHistoryItem button.mobileMarketHistoryNoteAdd {
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.mobileMarketHistoryItem button.mobileMarketHistoryNoteText {
+  display: block;
+  overflow: hidden;
+  color: var(--color-brand-pressed);
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mobileMarketHistoryItem button.mobileMarketHistoryNoteAdd:hover,
+.mobileMarketHistoryItem button.mobileMarketHistoryNoteText:hover {
+  background: none;
+  color: var(--color-brand);
+  text-decoration: underline;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.mobileMarketHistoryFavoriteButton,
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.isDelete {
+  width: 28px;
+  min-height: 28px;
+  border: 0;
+  background: none;
+  font-size: 17px !important;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.isDelete {
+  color: var(--color-muted);
+  font-size: 20px !important;
+}
+
+.mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem button.isDelete:hover {
+  color: var(--color-error);
+}
+
+.mobileMarketHistoryHead .mobileMarketHistoryHint {
+  margin: 2px 0 0;
+  font-size: 0.75rem;
+}
+
+@media (max-width: 48rem) {
+  .mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem {
+    grid-template-areas:
+      "main"
+      "actions";
+  }
+
+  .mobileMethodView[data-mobile-method-view="manual"] .mobileMarketHistoryItem.isGroupStart {
+    grid-template-areas:
+      "group"
+      "main"
+      "actions";
+  }
+
+  .mobileMarketHistoryNoteSlot .mobileMarketHistoryNote {
+    width: 100%;
+  }
+}

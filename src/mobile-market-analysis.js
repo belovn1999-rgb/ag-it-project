@@ -365,6 +365,15 @@
       historyNoteLabel: "Klient albo notatka do tego wyszukiwania",
       historyOpenAnalysis: "Analiza →",
       historyOpenAnalysisLabel: "Otwórz analizę rynku dla tego wyszukiwania",
+      historyNoteAdd: "+ notatka",
+      historyNoteEdit: "Zmień notatkę",
+      historyToday: "Dziś",
+      historyYesterday: "Wczoraj",
+      historyEarlier: "Wcześniej",
+      historyLimitHint: "Bez gwiazdki zostaje 20 ostatnich wyszukiwań, starsze znikają. ★ zapisuje na stałe.",
+      historyAttached: "Ten samochód jest już w historii: „Gotowe” zapisze w nim nowe parametry.",
+      historyPortals: "Porównywane portale",
+      historySelectLabel: "Wczytaj parametry tego wyszukiwania",
       favoriteNoteEdit: "Klient / notatka",
       otomotoFetching: "Pobieram oferty z otomoto.pl…",
       otomotoFetched: "Wczytano {count} z {total} ofert otomoto.pl.",
@@ -899,6 +908,15 @@
       historyNoteLabel: "Клиент или заметка к этому поиску",
       historyOpenAnalysis: "Анализ →",
       historyOpenAnalysisLabel: "Открыть анализ рынка для этого поиска",
+      historyNoteAdd: "+ заметка",
+      historyNoteEdit: "Изменить заметку",
+      historyToday: "Сегодня",
+      historyYesterday: "Вчера",
+      historyEarlier: "Раньше",
+      historyLimitHint: "Без звезды хранятся 20 последних поисков, старые удаляются. ★ сохраняет навсегда.",
+      historyAttached: "Эта машина уже есть в истории: «Готово» сохранит в ней новые параметры.",
+      historyPortals: "Сравниваемые порталы",
+      historySelectLabel: "Загрузить параметры этого поиска",
       favoriteNoteEdit: "Клиент / заметка",
       otomotoFetching: "Загружаю объявления с otomoto.pl…",
       otomotoFetched: "Загружено {count} из {total} объявлений otomoto.pl.",
@@ -2135,15 +2153,39 @@
     marketHistory = loadMarketHistory();
   }
 
-  // Pinned entries first, then the newest checks; unpinned ones are capped.
+  // B67: the history shows one row per car (make + model), the newest one.
+  const historyCarKey = (filters = {}) => [filters.brand, filters.model]
+    .map((value) => String(value || "").trim().toLowerCase())
+    .join("|");
+  const HISTORY_CAR_VARIANTS = 3;
+
+  // Pinned entries first, then the newest checks; unpinned ones are capped
+  // at 20 cars. Older variants of a car (hidden in the list, kept for their
+  // prices) are kept up to 3 per car.
   function trimHistory(entries) {
     const sorted = [...entries].sort((left, right) => {
       if (Boolean(left.pinned) !== Boolean(right.pinned)) return left.pinned ? -1 : 1;
       return String(right.updatedAt).localeCompare(String(left.updatedAt));
     });
     const pinned = sorted.filter((entry) => entry.pinned);
-    const recent = sorted.filter((entry) => !entry.pinned).slice(0, HISTORY_LIMIT);
+    const perCar = new Map();
+    const recent = sorted.filter((entry) => !entry.pinned).filter((entry) => {
+      const key = historyCarKey(entry.filters);
+      if (!perCar.has(key) && perCar.size >= HISTORY_LIMIT) return false;
+      const count = perCar.get(key) || 0;
+      perCar.set(key, count + 1);
+      return count < HISTORY_CAR_VARIANTS;
+    });
     return [...pinned, ...recent];
+  }
+
+  // The car's row in the history (the newest unpinned entry of the make and
+  // model), or null.
+  function historyRowForCar(filters) {
+    const key = historyCarKey(filters);
+    return marketHistory
+      .filter((entry) => !entry.pinned && historyCarKey(entry.filters) === key)
+      .sort((left, right) => String(right.updatedAt).localeCompare(String(left.updatedAt)))[0] || null;
   }
 
   function storeFavoritesBackup(entries) {
@@ -2573,6 +2615,62 @@
     }
   }
 
+  // B67: "Dziś / Wczoraj / Wcześniej" over the rows; the row shows the hour
+  // (or the day for older ones), the exact date on hover.
+  function historyDayGroup(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "earlier";
+    const start = new Date();
+    start.setHours(0, 0, 0, 0);
+    if (date >= start) return "today";
+    start.setDate(start.getDate() - 1);
+    return date >= start ? "yesterday" : "earlier";
+  }
+
+  function formatHistoryShortDate(value, group) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    const locale = currentLanguage() === "ru" ? "ru-RU" : "pl-PL";
+    return new Intl.DateTimeFormat(locale, group === "earlier"
+      ? { day: "2-digit", month: "2-digit", year: "2-digit" }
+      : { hour: "2-digit", minute: "2-digit" }).format(date);
+  }
+
+  // "6 ulubionych · 11 z 20 wyszukiwań" (Polish plural of the favourites).
+  function historyCountText(pinnedCount, rowCount) {
+    if (currentLanguage() === "ru") {
+      const rows = `${rowCount} из ${HISTORY_LIMIT} поисков`;
+      return pinnedCount ? `${pinnedCount} в избранном · ${rows}` : rows;
+    }
+    const rows = `${rowCount} z ${HISTORY_LIMIT} wyszukiwań`;
+    if (!pinnedCount) return rows;
+    const tens = pinnedCount % 100;
+    const units = pinnedCount % 10;
+    const word = pinnedCount === 1 ? "ulubione"
+      : (units >= 2 && units <= 4 && (tens < 12 || tens > 14)) ? "ulubione" : "ulubionych";
+    return `${pinnedCount} ${word} · ${rows}`;
+  }
+
+  // The rows of the history: one per car (B67), the newest entry of it; the
+  // selected entry stands for its car while it is being edited.
+  function historyRows() {
+    const recent = marketHistory
+      .filter((entry) => !entry.pinned)
+      .sort((left, right) => String(right.updatedAt).localeCompare(String(left.updatedAt)));
+    const editingKey = recent.find((entry) => entry.id === editingHistoryId);
+    const seen = new Set();
+    return recent.filter((entry) => {
+      const key = historyCarKey(entry.filters);
+      if (editingKey && key === historyCarKey(editingKey.filters)) {
+        if (entry.id !== editingKey.id) return false;
+      } else if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }
+
+  let historyNoteEditingId = "";
+
   function renderHistory() {
     const c = copy();
     updateHistorySaveButtons();
@@ -2580,18 +2678,22 @@
     if (favoritesView && !favoritesView.hidden) renderFavoritesSearchPage();
     if (historyView && !historyView.hidden) renderPriceHistoryPage();
     const pinnedCount = marketHistory.filter((entry) => entry.pinned).length;
-    const recentCount = marketHistory.length - pinnedCount;
-    const countText = pinnedCount
-      ? `★ ${pinnedCount} · ${recentCount} / ${HISTORY_LIMIT}`
-      : `${recentCount} / ${HISTORY_LIMIT}`;
-    historyCounts.forEach((element) => { element.textContent = countText; });
-    if (!marketHistory.some((entry) => !entry.pinned)) {
+    const rows = historyRows();
+    const countText = historyCountText(pinnedCount, rows.length);
+    historyCounts.forEach((element) => {
+      element.textContent = countText;
+      element.title = c.historyLimitHint;
+    });
+    if (!rows.length) {
       historyLists.forEach((list) => { list.innerHTML = `<p class="mobileMarketHistoryEmpty">${escapeMarketHtml(c.historyEmpty)}</p>`; });
       updateHistoryConfirm();
       return;
     }
 
-    const listHtml = marketHistory.filter((entry) => !entry.pinned).map((entry) => {
+    const groupNames = { today: c.historyToday, yesterday: c.historyYesterday, earlier: c.historyEarlier };
+    let lastGroup = "";
+    const listHtml = rows.map((entry) => {
+      const id = escapeMarketHtml(entry.id);
       const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
       const meta = historyMeta(entry.filters);
       const selectedCount = entry.listings.filter((listing) => chartSources[listingSource(listing)]).length;
@@ -2599,25 +2701,38 @@
       const status = ready
         ? withCount(c.historyReady, selectedCount)
         : c.historyWaiting;
+      const selected = editingHistoryId === entry.id;
+      const group = historyDayGroup(entry.updatedAt);
+      const groupStart = group !== lastGroup;
+      lastGroup = group;
+      const markets = (Array.isArray(entry.filters.markets) ? entry.filters.markets : []).filter((source) => BRAND_MARKS[source]);
+      const marks = markets.length
+        ? `<span class="mobileMarketHistoryMarks" title="${escapeMarketHtml(c.historyPortals)}">${markets.map((source) => `<img src="${BRAND_MARKS[source]}" alt="${escapeMarketHtml(source)}" />`).join("")}</span>`
+        : "";
+      const note = String(entry.note || "");
+      const noteHtml = historyNoteEditingId === entry.id
+        ? `<input class="mobileMarketHistoryNote" type="text" maxlength="200" autocomplete="off" data-mobile-market-history-note="${id}" value="${escapeMarketHtml(note)}" placeholder="${escapeMarketHtml(c.historyNotePlaceholder)}" aria-label="${escapeMarketHtml(`${c.historyNoteLabel}: ${title}`)}" />`
+        : note
+          ? `<button class="mobileMarketHistoryNoteText" type="button" data-mobile-market-history-note-edit="${id}" title="${escapeMarketHtml(c.historyNoteEdit)}">${escapeMarketHtml(note)}</button>`
+          : `<button class="mobileMarketHistoryNoteAdd" type="button" data-mobile-market-history-note-edit="${id}" aria-label="${escapeMarketHtml(`${c.historyNoteLabel}: ${title}`)}">${escapeMarketHtml(c.historyNoteAdd)}</button>`;
       return `
-        <article class="mobileMarketHistoryItem${ready ? " isReady" : ""}${entry.pinned ? " isPinned" : ""}${editingHistoryId === entry.id ? " isSelected" : ""}">
-          <label class="mobileMarketHistorySelect">
-            <input type="radio" name="mobile-market-history-selection" value="${escapeMarketHtml(entry.id)}" data-mobile-market-history-select${editingHistoryId === entry.id ? " checked" : ""} />
+        <article class="mobileMarketHistoryItem${ready ? " isReady" : ""}${selected ? " isSelected" : ""}${groupStart ? " isGroupStart" : ""}" data-mobile-market-history-row="${id}" data-group="${escapeMarketHtml(groupNames[group])}" data-note="${escapeMarketHtml(note)}">
+          <div class="mobileMarketHistorySelect">
             <span class="mobileMarketHistoryMain">
               <span class="mobileMarketHistoryTitleRow">
-                <strong>${entry.pinned ? '<i class="mobileMarketHistoryPinMark" aria-hidden="true">★</i>' : ""}${escapeMarketHtml(title)}</strong>
-                <time datetime="${escapeMarketHtml(entry.updatedAt)}">${escapeMarketHtml(formatHistoryDate(entry.updatedAt))}</time>
+                <strong role="button" tabindex="0" aria-pressed="${selected ? "true" : "false"}" title="${escapeMarketHtml(c.historySelectLabel)}" data-mobile-market-history-select="${id}">${escapeMarketHtml(title)}</strong>
+                <span class="mobileMarketHistoryWhen">${marks}<time datetime="${escapeMarketHtml(entry.updatedAt)}" title="${escapeMarketHtml(formatHistoryDate(entry.updatedAt))}">${escapeMarketHtml(formatHistoryShortDate(entry.updatedAt, group))}</time></span>
               </span>
+              <span class="mobileMarketHistoryNoteSlot">${noteHtml}</span>
               ${meta.length ? `<span class="mobileMarketHistoryMeta">${meta.map((item) => `<span>${escapeMarketHtml(item)}</span>`).join("")}</span>` : ""}
               <span class="mobileMarketHistoryStatus">${escapeMarketHtml(status)}</span>
             </span>
-          </label>
-          <input class="mobileMarketHistoryNote" type="text" maxlength="200" autocomplete="off" data-mobile-market-history-note="${escapeMarketHtml(entry.id)}" value="${escapeMarketHtml(entry.note || "")}" placeholder="${escapeMarketHtml(c.historyNotePlaceholder)}" aria-label="${escapeMarketHtml(`${c.historyNoteLabel}: ${title}`)}" />
+          </div>
           <div class="mobileMarketHistoryActions">
-            <button class="mobileMarketHistoryOpen" type="button" data-mobile-market-history-analysis="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(`${c.historyOpenAnalysisLabel}: ${title}`)}" title="${escapeMarketHtml(c.historyOpenAnalysisLabel)}">${escapeMarketHtml(c.historyOpenAnalysis)}</button>
-            ${editingHistoryId === entry.id ? `<button class="mobileMarketHistoryIconButton mobileMarketHistoryConfirmButton" type="button" data-mobile-market-history-confirm="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(c.historyConfirm)}" title="${escapeMarketHtml(c.historyConfirm)}" hidden>✓</button>` : ""}
-            <button class="mobileMarketHistoryIconButton mobileMarketHistoryFavoriteButton${entry.pinned ? " isPinned" : ""}" type="button" data-mobile-market-history-pin="${escapeMarketHtml(entry.id)}" data-mobile-market-history-pinned="${entry.pinned ? "true" : "false"}" aria-pressed="${entry.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(entry.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(entry.pinned ? c.historyUnpin : c.historyPin)}">★</button>
-            <button class="isDelete mobileMarketHistoryIconButton" type="button" data-mobile-market-history-delete="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(c.historyDelete)}" title="${escapeMarketHtml(c.historyDelete)}">×</button>
+            <button class="mobileMarketHistoryOpen" type="button" data-mobile-market-history-analysis="${id}" aria-label="${escapeMarketHtml(`${c.historyOpenAnalysisLabel}: ${title}`)}" title="${escapeMarketHtml(c.historyOpenAnalysisLabel)}">${escapeMarketHtml(c.historyOpenAnalysis)}</button>
+            ${selected ? `<button class="mobileMarketHistoryIconButton mobileMarketHistoryConfirmButton" type="button" data-mobile-market-history-confirm="${id}" aria-label="${escapeMarketHtml(c.historyConfirm)}" title="${escapeMarketHtml(c.historyConfirm)}" hidden>✓</button>` : ""}
+            <button class="mobileMarketHistoryIconButton mobileMarketHistoryFavoriteButton" type="button" data-mobile-market-history-pin="${id}" data-mobile-market-history-pinned="false" aria-pressed="false" aria-label="${escapeMarketHtml(c.historyPin)}" title="${escapeMarketHtml(c.historyPin)}">★</button>
+            <button class="isDelete mobileMarketHistoryIconButton" type="button" data-mobile-market-history-delete="${id}" aria-label="${escapeMarketHtml(c.historyDelete)}" title="${escapeMarketHtml(c.historyDelete)}">×</button>
           </div>
         </article>`;
     }).join("");
@@ -2663,11 +2778,30 @@
   // last saved), not with the stored filters: older entries lack newer
   // fields, which would show "Gotowe" before anything was changed.
   let editingBaseline = "";
+  // B67: the make and model of the edited history row. Another car in the
+  // form lets the row go (it gets its own row), so "Gotowe" never turns one
+  // car's row into another car. A favourite stays edited as before.
+  let editingCarKey = "";
+  // A row taken up by itself because the form holds its car (not clicked):
+  // clicking it then loads its filters instead of clearing the form.
+  let historyAttached = false;
   function updateHistoryConfirm() {
-    const entry = marketHistory.find((item) => item.id === editingHistoryId);
+    let entry = marketHistory.find((item) => item.id === editingHistoryId);
     let changed = false;
     try {
-      changed = Boolean(entry) && filterSignature(readManualFields()) !== editingBaseline;
+      const fields = readManualFields();
+      if (entry && !entry.pinned && editingCarKey && historyCarKey(fields) !== editingCarKey) {
+        editingHistoryId = "";
+        editingCarKey = "";
+        historyAttached = false;
+        entry = null;
+        historyLists.forEach((list) => list.querySelectorAll(".mobileMarketHistoryItem.isSelected").forEach((row) => {
+          row.classList.remove("isSelected");
+          row.querySelector("[data-mobile-market-history-select]")?.setAttribute("aria-pressed", "false");
+          row.querySelector("[data-mobile-market-history-confirm]")?.remove();
+        }));
+      }
+      changed = Boolean(entry) && filterSignature(fields) !== editingBaseline;
     } catch {
       changed = false;
     }
@@ -2690,6 +2824,8 @@
       if (!snapshot) return;
       editingHistoryId = snapshot.id;
       editingBaseline = filterSignature(readManualFields());
+      editingCarKey = historyCarKey(filters);
+      historyAttached = false;
       renderHistory();
       setAnalysisStatus(c.historyUpdateSuccess);
     } catch (error) {
@@ -2849,7 +2985,13 @@
         return;
       }
     }
-    if (existing) updateMarketSnapshot(existing.id, filters, existing.listings, existing.sourceFileName, resolvedSearchUrl);
+    if (existing) {
+      updateMarketSnapshot(existing.id, filters, existing.listings, existing.sourceFileName, resolvedSearchUrl);
+      return;
+    }
+    // B67: a car with a row keeps one row; its new filters wait for "Gotowe".
+    const row = historyRowForCar(filters);
+    if (row) attachHistoryRow(row, filters);
     else createMarketSnapshot(filters, [], "", resolvedSearchUrl);
   }
 
@@ -2881,7 +3023,11 @@
     if (!entry) return;
     if (!storeMarketHistory(marketHistory.filter((item) => item.id !== historyId))) return;
     if (activeAnalysis?.historyId === historyId) activeAnalysis.historyId = "";
-    if (editingHistoryId === historyId) editingHistoryId = "";
+    if (editingHistoryId === historyId) {
+      editingHistoryId = "";
+      historyAttached = false;
+      editingCarKey = "";
+    }
     renderHistory();
   }
 
@@ -2890,17 +3036,34 @@
     if (!entry) return;
     restoreManualFilters(entry.filters);
     editingHistoryId = entry.id;
+    historyAttached = false;
     // A favourite becomes the picked one; an ordinary search lets it go.
     setSelectedFavorite(entry.pinned ? entry.id : "");
     editingBaseline = filterSignature(readManualFields());
+    editingCarKey = historyCarKey(readManualFields());
     analysisView.hidden = true;
     setManualViewHidden(false);
     setAnalysisStatus("");
     renderHistory();
   }
 
+  // B67: the form holds a car that already has a row: that row is taken up
+  // (highlighted, "Gotowe" saves the new filters in it) instead of a second
+  // row of the same car. The form keeps what was typed.
+  function attachHistoryRow(entry, fields) {
+    if (!entry || editingHistoryId) return;
+    editingHistoryId = entry.id;
+    historyAttached = true;
+    editingCarKey = historyCarKey(fields);
+    editingBaseline = filterSignature(entry.filters);
+    renderHistory();
+    setAnalysisStatus(copy().historyAttached);
+  }
+
   function clearHistorySelection() {
     editingHistoryId = "";
+    historyAttached = false;
+    editingCarKey = "";
     document.querySelector("[data-mobile-manual-reset]")?.click();
     renderHistory();
   }
@@ -3738,7 +3901,9 @@
     if (!entry || editingHistoryId === entry.id) return;
     restoreManualFilters(entry.filters);
     editingHistoryId = entry.id;
+    historyAttached = false;
     editingBaseline = filterSignature(readManualFields());
+    editingCarKey = historyCarKey(readManualFields());
   }
 
   function monitoringParamsHtml() {
@@ -7807,6 +7972,8 @@
   historySaves.forEach((button) => button.addEventListener("click", toggleCurrentHistoryFavorite));
   document.querySelectorAll("[data-mobile-manual-reset]").forEach((button) => button.addEventListener("click", () => {
     editingHistoryId = "";
+    historyAttached = false;
+    editingCarKey = "";
     // Clearing the form lets go of the picked favourite.
     setSelectedFavorite("");
     renderFavoritesBar();
@@ -7838,28 +8005,77 @@
       setHistoryPinned(pinButton.dataset.mobileMarketHistoryPin, pinButton.dataset.mobileMarketHistoryPinned !== "true");
       return;
     }
-    const selection = event.target.closest("[data-mobile-market-history-select]");
-    if (selection) {
-      event.preventDefault();
-      if (editingHistoryId === selection.value) clearHistorySelection();
-      else selectHistoryEntry(selection.value);
+    const button = event.target.closest("[data-mobile-market-history-analysis]");
+    if (button) {
+      openHistoryAnalysis(button.dataset.mobileMarketHistoryAnalysis);
       return;
     }
-    const button = event.target.closest("[data-mobile-market-history-analysis]");
-    if (button) openHistoryAnalysis(button.dataset.mobileMarketHistoryAnalysis);
+    const noteEdit = event.target.closest("[data-mobile-market-history-note-edit]");
+    if (noteEdit) {
+      openHistoryNote(noteEdit.dataset.mobileMarketHistoryNoteEdit);
+      return;
+    }
+    if (event.target.closest("[data-mobile-market-history-note]")) return;
+    // B67: a click anywhere on the row (not on its buttons) picks it; on the
+    // picked row it lets it go and clears the form.
+    const row = event.target.closest("[data-mobile-market-history-row]");
+    if (row) {
+      const id = row.dataset.mobileMarketHistoryRow;
+      if (editingHistoryId === id && !historyAttached) clearHistorySelection();
+      else {
+        editingHistoryId = "";
+        selectHistoryEntry(id);
+      }
+    }
   };
   historyLists.forEach((list) => list.addEventListener("click", handleHistoryClick));
+
+  // B67: the client's note stays folded ("+ notatka"); a click opens the field,
+  // Enter or leaving it saves, Escape drops the change.
+  function openHistoryNote(historyId) {
+    historyNoteEditingId = historyId;
+    renderHistory();
+    const input = [...document.querySelectorAll("[data-mobile-market-history-note]")]
+      .find((item) => item.dataset.mobileMarketHistoryNote === historyId);
+    if (!input) return;
+    input.focus();
+    try {
+      input.setSelectionRange(input.value.length, input.value.length);
+    } catch {
+      // The caret stays where the browser put it.
+    }
+  }
+
+  function closeHistoryNote(input, save) {
+    if (historyNoteEditingId !== input.dataset.mobileMarketHistoryNote) return;
+    historyNoteEditingId = "";
+    if (save) setHistoryNote(input.dataset.mobileMarketHistoryNote, input.value);
+    renderHistory();
+  }
+
   historyLists.forEach((list) => {
-    list.addEventListener("change", (event) => {
-      const note = event.target.closest("[data-mobile-market-history-note]");
-      if (note) setHistoryNote(note.dataset.mobileMarketHistoryNote, note.value);
-    });
     list.addEventListener("keydown", (event) => {
       const note = event.target.closest("[data-mobile-market-history-note]");
-      if (note && event.key === "Enter") {
+      if (note && (event.key === "Enter" || event.key === "Escape")) {
         event.preventDefault();
-        note.blur();
+        closeHistoryNote(note, event.key === "Enter");
+        return;
       }
+      const select = event.target.closest("[data-mobile-market-history-select]");
+      if (select && (event.key === "Enter" || event.key === " ")) {
+        event.preventDefault();
+        select.click();
+      }
+    });
+    list.addEventListener("focusout", (event) => {
+      const note = event.target.closest("[data-mobile-market-history-note]");
+      if (!note) return;
+      // A re-render of the list puts the focus back in the new field: that
+      // is not leaving it.
+      setTimeout(() => {
+        if (document.activeElement?.dataset?.mobileMarketHistoryNote === note.dataset.mobileMarketHistoryNote) return;
+        closeHistoryNote(note, true);
+      });
     });
   });
   // The calculator's rate arrives after the page: an open analysis counts
@@ -8140,11 +8356,15 @@
       return;
     }
     const draft = autoLogId && marketHistory.find((entry) => entry.id === autoLogId && !entry.pinned);
-    if (draft && draft.filters.brand === filters.brand && draft.filters.model === filters.model) {
+    if (draft && historyCarKey(draft.filters) === historyCarKey(filters)) {
       updateMarketSnapshot(draft.id, filters, [], "", searchUrl);
-    } else {
-      autoLogId = createMarketSnapshot(filters, [], "", searchUrl)?.id || "";
+      return;
     }
+    // B67: a car already in the history keeps its one row; the new filters
+    // are saved in it with "Gotowe".
+    const row = historyRowForCar(filters);
+    if (row) attachHistoryRow(row, filters);
+    else autoLogId = createMarketSnapshot(filters, [], "", searchUrl)?.id || "";
   }
   const scheduleAutoLog = () => {
     window.clearTimeout(autoLogTimer);
