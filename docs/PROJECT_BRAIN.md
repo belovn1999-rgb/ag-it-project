@@ -67,6 +67,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, B47: Франция — AutoScout24 FR как рынок «Francja» (стр. 1, анализ, Monitoring, все фильтры, 28 живых проверок) (Claude).
 - 2026-10-04 — mobile.html, B61 этап 4: форма стр. 1 подключена к таблицам — Rok по поколениям (lifting), реальные Pojemność/Moc/Wersja сверху, остальное под чертой, приглушение Typ/Skrzynia/Napęd, подмодели (BMW 320, C 220…) (Claude).
 - 2026-10-04 — mobile.html, B47: исследование новых порталов по странам и порядок добавления — `docs/PORTALS-EXPANSION.md`; первым нужен свой прокси (B11) (Claude).
 - 2026-10-04 — CI на GitHub снова зелёный: офлайн-аудит mobile.html обновлён под намеренные изменения 03–04.10 (страна, «Stan pojazdu», «Analiza →» в истории); письма «All jobs have failed» прекратятся (Claude).

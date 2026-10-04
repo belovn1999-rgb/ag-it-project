@@ -4165,7 +4165,8 @@ document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
 let mirroredLink = "";
 els.url.addEventListener("input", () => {
   const value = els.url.value.trim();
-  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby" : isAutoscoutUrl(value) ? "autoscout"
+  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby"
+    : isAutoscoutUrl(value) ? (/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout")
     : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
   if (source && value !== mirroredLink) {
     mirroredLink = value;
@@ -4433,6 +4434,9 @@ async function loadAutoscoutAd(sourceUrl) {
       engineTypeLabel: ENGINE_TYPE_LABELS[engineTypeIndex],
     };
     setStatus("ready", c.recognitionFromAutoscout, true);
+    // A French car is compared on the French market (AutoScout24 FR), whatever
+    // the domain of the link.
+    if (country === "FR") window.AUTOGOOD_SET_ONLY_MARKET?.("autoscoutfr");
     applyRecognizedManualFields(state.data);
     renderData();
   } catch (error) {
@@ -4755,6 +4759,8 @@ window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {
     updateCountrySummary();
     els.countries[0]?.dispatchEvent(new Event("change", { bubbles: true }));
   }
+  // France switched on: its count (only counted while compared).
+  if (next.autoscoutfr && !previous.autoscoutfr) window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(readManualFields());
   if (next.avby && !previous.avby && state.lang !== "ru") {
     document.querySelector('[data-lang-button="ru"]')?.click();
   }

@@ -3204,3 +3204,9 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   border-color: #333a40;
   box-shadow: 0 0 0 1px #333a40;
 }
+
+/* AutoScout24 in France: the same dark logo with the French flag (B47). */
+.agBrandLink.isAutoscoutFr:hover {
+  border-color: #333a40;
+  box-shadow: 0 0 0 1px #333a40;
+}

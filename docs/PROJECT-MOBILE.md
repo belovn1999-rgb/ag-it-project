@@ -63,7 +63,7 @@ autogood.by, USD).
 4. **B3 / B55 — конкретное авто против Польши** по полной оценке «na gotowo».
 5. ~~B48 — AutoScout24~~ ✅ 10-04: ссылка, полный список в Monitoring, все фильтры формы, одна строка «Niemcy» (mobile.de + AutoScout24).
 6. ~~B52 — Беларусь, этап 3~~ ✅ 10-03 (импортер перезапущен 10-04).
-6b. **B11 → B47 — новые порталы стран** (исследование 10-04, `docs/PORTALS-EXPANSION.md`):
+6b. **B11 → B47 — новые порталы стран** (AutoScout24 FR ✅ 10-04) (исследование 10-04, `docs/PORTALS-EXPANSION.md`):
    сначала свой прокси, затем willhaben.at, Marktplaats + 2dehands, Kleinanzeigen,
    AutoScout24 FR; порядок утверждает владелец.
 7. **B61 — зависимые фильтры стр. 1 по базе ultimatespecs.com** (цель владельца
@@ -261,6 +261,19 @@ autogood.by, USD).
 - Объявление по ссылке: `GET api.av.by/offers/<id>`. Стр. 4: «новые» = сортировка 4.
 - Сайт cars.av.by показывает проверку «Confirm You Are Human» роботам — данные
   берутся только из API. Подробно — справочник фильтров, раздел 5c.
+
+### 4.2d Франция — AutoScout24 FR (с 10-04, B47)
+- Рынок `autoscoutfr` = «Francja»: стр. 1 (логотип AutoScout24 с флагом FR, счётчик —
+  только пока Франция включена, ссылка), анализ (своя строка статистики, свой график,
+  вывод «z Francji», «na gotowo», «под ключ в Минск» в режиме «Беларусь»), Monitoring
+  (своя строка цены od/do, плитка, полный список до 2000), история цен. По умолчанию
+  выключен («+» на логотипе), как Blocket и av.by.
+- Фильтры — те же, что у AutoScout24 в Германии (FILTERS-MOBILE-OTOMOTO.md §5e, 28
+  проверок по числу объявлений). Ссылка на объявление AutoScout24 французской машины
+  (любой домен) переключает сравнение на «Francja».
+- Проверено 10-04: VW Golf дизель 2019–2021 — счётчик 101, анализ «Francja» 101
+  предложение, медиана ~95 000 zł na gotowo против Niemcy 78 850 zł и Polska 55 999 zł;
+  Monitoring — 101 объявление, полный список.
 
 ### 4.3 Распознавание ссылки
 - **mobile.de:** «Rozpoznaj» обрабатывает ссылку **внутри текущей страницы**.
@@ -1111,7 +1124,7 @@ mobile.de и AutoScout24 показывают под каждой ценой «~
 | B44 | Monitoring: на больших рынках (> 1000) «Nowe» по дате публикации (чтение «от новых» со стр. 4), фото/продавец/оценка портала в карточках; отметки «przejrzane / wysłane klientowi»; «+N» в полосе избранного | ⏳ | — |
 | B45 | Monitoring: страны DE/NL/BE/AT/LU для mobile.de + AutoScout24 (уникальные, без дубликатов mobile.de по цене и пробегу), выбор стран, анализ по странам стр. 1 | ✅ 03.10 | Claude |
 | B46 | AutoScout24 на стр. 1 (логотип, счётчик, ссылка) и в анализе (уникальные объявления), «Kraj» = DE/NL/BE/AT/LU для mobile.de и AutoScout24 | ✅ 03.10 | Claude |
-| B47 | Новые порталы стран (владелец 03.10 и 10-04): исследование 10-04 — `docs/PORTALS-EXPANSION.md` (замеры доступа, данных и объёма по VW Golf). Порядок: B11 (свой прокси) → willhaben.at → Marktplaats + 2dehands/2ememain → Kleinanzeigen → AutoScout24 FR → luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu → La Centrale и Leboncoin через свой Chrome (DataDome, после B6). Агрегаторы, аукционы, heycar, GoCar — не добавляем | ❓ порядок утверждает владелец | Claude |
+| B47 | Новые порталы стран (владелец 03.10 и 10-04): исследование 10-04 — `docs/PORTALS-EXPANSION.md` (замеры доступа, данных и объёма по VW Golf). Порядок: B11 (свой прокси) → willhaben.at → Marktplaats + 2dehands/2ememain → Kleinanzeigen → AutoScout24 FR → luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu → La Centrale и Leboncoin через свой Chrome (DataDome, после B6). Агрегаторы, аукционы, heycar, GoCar — не добавляем **Шаг 1 ✅ 10-04: AutoScout24 FR — рынок «Francja»** (§4.2d). | 🔄 Франция шаг 1 ✅; дальше Marktplaats + 2dehands | Claude |
 | B48 | AutoScout24: распознавание ссылки на объявление, полный список в Monitoring, мощность л. с. → кВт; с 10-04 переносятся все фильтры формы, которые есть у AutoScout24 (оснащение `eq`, привод, объём, двери, места, версия, цвета, обивка, металлик, НДС, новый/б/у `offer`, повреждённые); статистика: mobile.de + AutoScout24 = одна строка «Niemcy» | ✅ | Claude |
 | B49 | Выбор рынков только на первой странице (с 09-29 — и логотипами на стр. 2, синхронно со стр. 1, решение владельца) управляет анализом, ссылками, избранным и историей; ширина статистики и выравнивание таблиц; единый пунктир медианы | ✅ | Codex |
 | B50 | Этап 1: модуль «под ключ РБ» + курсы НБРБ, сверка с autogood.by (99/99) | ✅ | Claude |
@@ -1135,6 +1148,7 @@ mobile.de и AutoScout24 показывают под каждой ценой «~
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-04 | Claude | **B47, Франция шаг 1: AutoScout24 FR = рынок «Francja»** (ключ `autoscoutfr`): стр. 1 — логотип с флагом FR, счётчик (только пока Франция включена), ссылка; анализ — своя строка, график (фиолетовый), вывод «z Francji», «na gotowo», Беларусь; Monitoring — строка цены, плитка, полный список; распознанная французская машина переключает сравнение на «Francja»; жёлтое «!» — строка «AutoScout24 FR». Фильтры — как у AutoScout24 в Германии, 28 живых проверок (FILTERS §5e). Поиск и ссылка — autoscout24.de с `cy=F` (французский домен показывает меньше: Golf 1 471 против 1 884). Проверено: Golf дизель 2019–2021 — 101 предложение во всех трёх местах | этот коммит |
 | 10-04 | Claude | Компактная строка стр. 1 — два ряда (`flex-wrap`): ряд 1 — ★, авто, чипсы с прокруткой вправо (`overflow-x: auto`, тонкая видимая полоса, без затухания края); ряд 2 справа — порталы, «Gotowe», «Analiza rynku». Высота строки растёт до ~90 px, `focusManualFilter` берёт её `offsetHeight` | этот коммит |
 | 10-04 | Claude | **B61 этап 4 — таблицы в форме стр. 1.** Новые `src/model-specs.generated.js` (`tools/build-model-specs.py`), `src/mobile-model-specs.js`, `src/mobile-model-specs.css`; «Wersja» — список (`data-mobile-options="version"`), строка `data-mobile-generation-hint` под «Rok». Rok — группы поколений (lifting), Pojemność/Moc — реальные двигатели сверху жирным, остальное под чертой; Wersja — линии/спорт/спецсерии лет, «Inne pokolenia» под чертой; приглушение Typ/Skrzynia/Napęd; подмодели (BMW 320, C 220, T5 Multivan…). `mobile.js`: вызов модуля в `comboOptionSets`/`updateSelectedFiltersSummary`, группы и черта для любой списка, «od = do» для объёма и мощности. Проверено в браузере на 8 сценариях (BMW 3/320, Golf VII, Octavia diesel, Corolla hybrid, T6 Multivan, C 220, 3008, Kia Ceed без данных); verify зелёный (check:js, model-version, офлайн-аудит + новые проверки B61, 71 тест) | этот коммит |
 | 10-04 | Claude | **B47 — исследование новых порталов** (`docs/PORTALS-EXPANSION.md`): 26 порталов DE/NL/BE/AT/LU/SE/FR проверены живыми запросами — доступ напрямую и через прокси, данные объявлений, защита от ботов, объём по VW Golf. Главное: willhaben.at крупнее AutoScout24 в Австрии и весь в JSON; Marktplaats (NL) и 2dehands/2ememain (BE) — одна платформа с открытым JSON API; Kleinanzeigen (DE) читается напрямую, в основном частники; AutoScout24 во Франции слабый (Golf 1 884); La Centrale и Leboncoin закрыты DataDome. Предложен порядок; B11 (свой прокси) — первым. Код не менялся | только документация |

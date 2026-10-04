@@ -4523,3 +4523,34 @@
   font-weight: 600;
   line-height: 1.3;
 }
+
+/* France (AutoScout24 FR) as a market: analysis, page 1, page 3 (B47). */
+.mobileMarketAnalysisPanel,
+.mobileMarketAnalysisView,
+:root {
+  --market-autoscoutfr: #6b3fb8;
+}
+
+.mobileMarketSourceButton.isAutoscoutFr i,
+.mobileMarketSourceTag.isAutoscoutFr i,
+.mobileMarketLegend .isAutoscoutFr i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--market-autoscoutfr);
+}
+
+.mobileMarketPoint.isAutoscoutFr::before {
+  background: var(--market-autoscoutfr);
+  box-shadow: 0 0 0 1px var(--market-autoscoutfr);
+}
+
+.mobileMarketPointTooltip b.isAutoscoutFr { color: var(--market-autoscoutfr); }
+.mobileMarketTrend.isCurve polyline.isAutoscoutFr { stroke: var(--market-autoscoutfr); }
+.mobileMarketSearchArrow.isAutoscoutFr { color: #6b3fb8; }
+.mobileMarketMedian.isAutoscoutFr { border-top-color: var(--market-autoscoutfr); }
+.mobileMarketKeyTick.isMedian.isAutoscoutFr { color: var(--market-autoscoutfr); }
+.mobileMarketCompareRow.isAutoscoutFr { --row: var(--market-autoscoutfr); }
+.mobileMarketPanel.isAutoscoutFr .mobileMarketPanelHead b { color: var(--market-autoscoutfr); }
+.mobileMarketKeyTick.isGuide.isAutoscoutFr { color: var(--market-autoscoutfr); }
+.mobileMonitoringTile.isAutoscoutFr { --tile: #6b3fb8; }

@@ -79,7 +79,7 @@
 
   // Is this offer bought abroad (the calculators' case)?
   function importable(source) {
-    return source === "mobile" || source === "autoscout" || source === "blocket";
+    return source === "mobile" || source === "autoscout" || source === "autoscoutfr" || source === "blocket";
   }
 
   function rates() {
@@ -107,7 +107,7 @@
     const r = rates();
     const currency = offer.currency || "EUR";
     const priceEur = currency === "SEK" ? (Number(offer.price) * r.sek) / r.eur : currency === "PLN" ? Number(offer.price) / r.eur : Number(offer.price);
-    const country = String(ad?.location?.country || offer.country || (offer.source === "blocket" ? "SE" : "DE")).toUpperCase().slice(0, 2);
+    const country = String(ad?.location?.country || offer.country || (offer.source === "blocket" ? "SE" : offer.source === "autoscoutfr" ? "FR" : "DE")).toUpperCase().slice(0, 2);
     const gross = Number(ad?.carBruttoEur) || priceEur;
     const vat = ad ? (ad.purchaseType === "VAT" || Boolean(ad.carNettoEur)) : offer.priceType === "vat";
     let net = Number(ad?.carNettoEur) || (offer.priceType === "vat" ? Number(offer.netPrice) || 0 : 0);

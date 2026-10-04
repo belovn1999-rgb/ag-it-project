@@ -7,6 +7,9 @@
 // every parameter below was checked by the change in the result count.
 // Drive (4x4/front/rear) could not be passed: no parameter changed the count.
 (() => {
+  // France too is searched and opened on autoscout24.de with cy=F: the French
+  // domain shows fewer cars for the same search (VW Golf 1 471 against 1 884,
+  // 2026-10-04), so the link opens exactly what the count and analysis read.
   const BASE = "https://www.autoscout24.de";
   // Monitoring countries (ISO) → AutoScout's own country codes.
   const COUNTRY = { DE: "D", NL: "NL", BE: "B", AT: "A", LU: "L", FR: "F", IT: "I", ES: "E", CZ: "CZ", DK: "DK", SE: "S" };
@@ -266,59 +269,76 @@
   }
 
   // ---- Page 1: live count and the search link -----------------------------
+  // Two markets on page 1: AutoScout24 in the "Kraj" countries (beside
+  // mobile.de) and AutoScout24 in France alone, the market "Francja" (B47).
   const TEXT = {
-    pl: { search: "Szukaj na AutoScout24", opening: "Otwieram AutoScout24 (wszystkie ogłoszenia; w analizie — tylko te, których nie ma na mobile.de).", skipped: "AutoScout24 nie przyjmie filtrów: {filters}.", countTitle: "Wszystkie ogłoszenia na AutoScout24 (razem z tymi, które są też na mobile.de)" },
-    ru: { search: "Искать на AutoScout24", opening: "Открываю AutoScout24 (все объявления; в анализе — только те, которых нет на mobile.de).", skipped: "AutoScout24 не примет фильтры: {filters}.", countTitle: "Все объявления на AutoScout24 (вместе с теми, что есть и на mobile.de)" },
+    pl: { search: "Szukaj na AutoScout24", opening: "Otwieram AutoScout24 (wszystkie ogłoszenia; w analizie — tylko te, których nie ma na mobile.de).", skipped: "AutoScout24 nie przyjmie filtrów: {filters}.", countTitle: "Wszystkie ogłoszenia na AutoScout24 (razem z tymi, które są też na mobile.de)",
+      searchFr: "Szukaj na AutoScout24 (Francja)", openingFr: "Otwieram AutoScout24 — ogłoszenia z Francji.", countTitleFr: "Ogłoszenia na AutoScout24 we Francji" },
+    ru: { search: "Искать на AutoScout24", opening: "Открываю AutoScout24 (все объявления; в анализе — только те, которых нет на mobile.de).", skipped: "AutoScout24 не примет фильтры: {filters}.", countTitle: "Все объявления на AutoScout24 (вместе с теми, что есть и на mobile.de)",
+      searchFr: "Искать на AutoScout24 (Франция)", openingFr: "Открываю AutoScout24 — объявления из Франции.", countTitleFr: "Объявления на AutoScout24 во Франции" },
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
   const countries = (filters) => (filters.countries && filters.countries.length ? filters.countries : ["DE"]);
+  const MARKETS = {
+    autoscout: { count: "[data-mobile-search-count-autoscout]", link: "[data-mobile-autoscout-search]", countries, search: "search", opening: "opening", countTitle: "countTitle" },
+    autoscoutfr: { count: "[data-mobile-search-count-autoscoutfr]", link: "[data-mobile-autoscoutfr-search]", countries: () => ["FR"], search: "searchFr", opening: "openingFr", countTitle: "countTitleFr" },
+  };
   const proxy = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
   const counts = new Map();
-  let countRequest = 0;
+  const countRequests = {};
 
-  async function refreshCount(filters) {
-    const target = document.querySelector("[data-mobile-search-count-autoscout]");
+  async function refreshMarketCount(market, filters) {
+    const spec = MARKETS[market];
+    const target = document.querySelector(spec.count);
     if (!target) return;
-    target.title = TEXT[lang()].countTitle;
+    target.title = TEXT[lang()][spec.countTitle];
     if (!filters?.brand || !filters?.model) {
       target.textContent = "—";
       return;
     }
-    const url = buildSearchUrl(filters, { countries: countries(filters) });
+    const url = buildSearchUrl(filters, { countries: spec.countries(filters) });
     if (counts.has(url)) {
       target.textContent = counts.get(url);
       return;
     }
-    const request = ++countRequest;
+    const request = (countRequests[market] = (countRequests[market] || 0) + 1);
     target.textContent = "…";
     try {
       const response = await fetch(`${proxy()}${url}`, { headers: { "x-respond-with": "html" } });
       if (!response.ok) throw new Error(String(response.status));
       const label = new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(parseSearchPage(await response.text()).total);
       counts.set(url, label);
-      if (request === countRequest) target.textContent = label;
+      if (request === countRequests[market]) target.textContent = label;
     } catch {
-      if (request === countRequest) target.textContent = "—";
+      if (request === countRequests[market]) target.textContent = "—";
     }
   }
+  // France is counted only while it is compared: one proxy request less.
+  const refreshCount = (filters) => {
+    refreshMarketCount("autoscout", filters);
+    const france = typeof window.AUTOGOOD_SELECTED_MARKETS === "function" ? window.AUTOGOOD_SELECTED_MARKETS().includes("autoscoutfr") : true;
+    if (france) refreshMarketCount("autoscoutfr", filters);
+  };
 
-  document.querySelectorAll("[data-mobile-autoscout-search]").forEach((link) => link.addEventListener("click", (event) => {
-    try {
-      const filters = readManualFields();
-      const url = buildSearchUrl(filters, { countries: countries(filters) });
-      link.href = url;
-      window.AUTOGOOD_MOBILE_LOG_SEARCH?.(url);
-      const skipped = unsupported(filters).map((item) => (item === "plugin≈hybrid" ? (lang() === "ru" ? "Plug-in (≈ гибрид)" : "Plug-in (≈ hybryda)") : item));
-      setMarketSearchStatus(skipped.length ? TEXT[lang()].skipped.replace("{filters}", skipped.join(", ")) : TEXT[lang()].opening);
-    } catch (error) {
-      event.preventDefault();
-      link.href = "#";
-      setMarketSearchStatus(error.message || "AutoScout24", true);
-    }
-  }));
-  document.querySelectorAll("[data-mobile-autoscout-search]").forEach((node) => {
-    node.setAttribute("aria-label", TEXT[lang()].search);
-    node.title = TEXT[lang()].search;
+  Object.values(MARKETS).forEach((spec) => {
+    document.querySelectorAll(spec.link).forEach((link) => link.addEventListener("click", (event) => {
+      try {
+        const filters = readManualFields();
+        const url = buildSearchUrl(filters, { countries: spec.countries(filters) });
+        link.href = url;
+        window.AUTOGOOD_MOBILE_LOG_SEARCH?.(url);
+        const skipped = unsupported(filters).map((item) => (item === "plugin≈hybrid" ? (lang() === "ru" ? "Plug-in (≈ гибрид)" : "Plug-in (≈ hybryda)") : item));
+        setMarketSearchStatus(skipped.length ? TEXT[lang()].skipped.replace("{filters}", skipped.join(", ")) : TEXT[lang()][spec.opening]);
+      } catch (error) {
+        event.preventDefault();
+        link.href = "#";
+        setMarketSearchStatus(error.message || "AutoScout24", true);
+      }
+    }));
+    document.querySelectorAll(spec.link).forEach((node) => {
+      node.setAttribute("aria-label", TEXT[lang()][spec.search]);
+      node.title = TEXT[lang()][spec.search];
+    });
   });
   window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT = refreshCount;
 
