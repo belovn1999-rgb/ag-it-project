@@ -10,16 +10,18 @@
 
 ## Итог
 
-- Просмотрено на autocentrum: 179 поколений, 740 кузовов, 5027 двигателей (по кузовам); найдено у нас 4506.
-- Вариантов «коробка + привод» со страниц двигателей: 7426. Наших версий без коробки: 4894; autocentrum даёт для них одну коробку (можно заполнить) — 2730, и механику, и автомат (какая у нашей версии — не сказать) — 1768.
-- Поколения, которых нет у нас: **6**
+Уже перенесено в нашу таблицу (`tools/autocentrum.py` → `merge()`, столбец «Источник»): 8 строк из autocentrum, коробка у 2409 версий ultimatespecs. Ниже — что осталось после переноса.
+
+- Просмотрено на autocentrum: 179 поколений, 742 кузовов, 5033 двигателей (по кузовам); найдено у нас 4512.
+- Вариантов «коробка + привод» со страниц двигателей: 7438. Наших версий без коробки: 2067; autocentrum даёт для них одну коробку (можно заполнить) — 0, и механику, и автомат (какая у нашей версии — не сказать) — 1725.
+- Поколения, которых нет у нас: **5**
 - Кузова, которых нет в нашем поколении: **35**
 - Двигатели (топливо + объём + мощность), которых нет в нашем поколении: **228**
 - Виды топлива, которых нет в нашем поколении: **12**
-- Привод, которого нет у нас для этого двигателя: **135**
-- Коробка, которой нет у нас для этого двигателя и привода: **34**
-- Коробка у нас не указана — autocentrum её называет: **940**
-- Годы поколения или рестайлинга расходятся на 2+ года (для сведения): **48**
+- Привод, которого нет у нас для этого двигателя: **122**
+- Коробка, которой нет у нас для этого двигателя и привода: **36**
+- Коробка у нас не указана — autocentrum её называет: **254**
+- Годы поколения или рестайлинга расходятся на 2+ года (для сведения): **47**
 - Мощность мягких гибридов записана по-разному (для сведения): **67**
 
 Категории данных, которых в нашей таблице нет совсем, а на autocentrum есть: число дверей и мест (у 739 из 751 кузовов; это наши фильтры «Liczba drzwi» и «Liczba miejsc»), крутящий момент, норма Euro, расход, CO₂, размеры, багажник, масса, разгон, макс. скорость, бак. Двери и места сохранены в `data/autocentrum-models.json`.
@@ -28,80 +30,79 @@
 
 | Марка | Модель | поколение | кузов | двигатель | топливо | привод | коробка | коробка+ | годы | мощность |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Audi | A3 |  |  | 4 |  | 1 | 1 | 9 |  |  |
-| Audi | A4 |  |  | 2 |  | 5 |  | 22 | 1 |  |
-| Audi | A5 |  |  | 4 |  | 2 | 1 | 17 | 1 |  |
-| Audi | A6 |  |  | 4 |  | 5 |  | 11 |  |  |
-| Audi | Q3 |  |  | 1 |  | 1 | 1 | 8 |  |  |
-| Audi | Q5 |  |  | 4 |  | 2 | 1 | 16 | 1 | 1 |
-| Audi | Q7 |  |  |  |  |  |  | 4 | 1 | 1 |
-| BMW | Seria 1 |  |  | 2 |  | 4 |  | 11 | 1 |  |
-| BMW | Seria 3 |  |  | 6 |  | 2 |  | 15 | 1 |  |
-| BMW | Seria 4 |  |  | 1 |  | 2 |  | 10 |  |  |
-| BMW | Seria 5 |  |  | 4 | 1 | 3 |  | 27 | 1 |  |
-| BMW | X1 |  |  | 1 |  | 7 | 1 | 9 | 2 |  |
-| BMW | X3 |  |  | 4 |  | 10 |  | 19 | 1 |  |
-| BMW | X5 | 1 |  | 2 |  | 1 |  | 32 | 1 |  |
-| Ford | C-Max |  |  | 8 |  | 1 | 1 | 15 |  |  |
-| Ford | Fiesta |  | 3 | 3 |  |  |  | 21 | 1 | 1 |
-| Ford | Focus |  | 1 | 10 |  |  |  | 28 |  |  |
-| Ford | Kuga |  |  | 4 |  | 1 | 2 | 11 |  |  |
-| Ford | Mondeo |  |  | 7 |  |  | 3 | 14 | 2 |  |
-| Ford | S-Max |  |  | 8 | 1 |  | 2 | 10 | 2 |  |
-| Mercedes-Benz | Klasa A |  | 1 | 3 |  | 1 |  | 13 |  |  |
-| Mercedes-Benz | Klasa C |  |  | 5 | 1 | 3 |  | 37 |  | 2 |
-| Mercedes-Benz | Klasa E |  |  | 10 | 2 | 7 |  | 40 |  | 8 |
-| Mercedes-Benz | Klasa S |  |  | 7 |  |  |  | 35 | 1 | 7 |
-| Mercedes-Benz | CLA |  |  | 4 |  | 3 | 3 | 7 |  |  |
-| Mercedes-Benz | GLC |  |  |  |  |  |  | 16 |  | 12 |
-| Mercedes-Benz | GLE |  |  | 3 |  |  |  | 19 |  | 8 |
-| Peugeot | 208 |  |  |  |  |  |  | 13 |  |  |
-| Peugeot | 308 |  | 7 | 2 |  |  | 2 | 20 | 1 |  |
-| Peugeot | 508 |  |  | 1 | 1 |  |  | 10 |  |  |
-| Peugeot | 2008 |  |  | 1 |  |  |  | 13 | 1 | 1 |
-| Peugeot | 3008 |  |  | 3 | 1 |  |  | 8 | 1 |  |
-| Peugeot | 5008 |  |  | 1 |  |  |  | 9 | 1 |  |
-| Renault | Captur |  |  | 1 | 1 |  | 1 | 11 | 1 | 2 |
-| Renault | Clio |  |  | 6 |  |  |  | 43 | 2 |  |
-| Renault | Kadjar |  |  | 1 |  |  |  | 2 |  |  |
-| Renault | Megane |  | 2 | 9 |  | 1 | 1 | 25 | 2 |  |
-| Renault | Scenic |  |  | 6 |  |  |  | 39 | 2 |  |
-| Renault | Trafic | 1 |  |  |  |  |  | 5 |  |  |
-| Skoda | Fabia |  | 2 | 2 |  |  |  | 18 | 1 |  |
-| Skoda | Kamiq |  |  | 1 | 1 |  |  | 1 |  |  |
-| Skoda | Karoq |  | 1 |  |  | 1 |  | 3 |  |  |
-| Skoda | Kodiaq |  | 1 | 1 |  |  |  | 1 |  |  |
-| Skoda | Octavia | 1 | 5 | 7 |  | 8 | 2 | 15 | 1 |  |
-| Skoda | Superb |  | 1 | 4 |  | 2 | 1 | 8 | 1 |  |
-| Toyota | Auris |  | 1 | 2 | 1 |  |  | 17 | 1 |  |
-| Toyota | Avensis |  | 3 | 2 |  |  |  | 8 | 1 |  |
+| Audi | A3 |  |  | 4 |  | 1 | 1 | 4 |  |  |
+| Audi | A4 |  |  | 2 |  | 5 |  | 17 | 1 |  |
+| Audi | A5 |  |  | 4 |  | 2 | 1 | 8 | 1 |  |
+| Audi | A6 |  |  | 4 |  | 5 |  | 7 |  |  |
+| Audi | Q3 |  |  | 1 |  | 1 | 1 | 2 |  |  |
+| Audi | Q5 |  |  | 4 |  | 2 | 1 | 1 | 1 | 1 |
+| Audi | Q7 |  |  |  |  |  |  |  | 1 | 1 |
+| BMW | Seria 1 |  |  | 2 |  | 4 |  | 1 | 1 |  |
+| BMW | Seria 3 |  |  | 6 |  | 2 |  | 8 | 1 |  |
+| BMW | Seria 4 |  |  | 1 |  | 2 | 1 | 1 |  |  |
+| BMW | Seria 5 |  |  | 4 | 1 | 2 |  | 4 | 1 |  |
+| BMW | X1 |  |  | 1 |  | 7 | 1 | 1 | 2 |  |
+| BMW | X3 |  |  | 4 |  | 6 |  | 6 | 1 |  |
+| BMW | X5 | 1 |  | 2 |  | 1 |  | 4 | 1 |  |
+| Ford | C-Max |  |  | 8 |  | 1 | 1 | 5 |  |  |
+| Ford | Fiesta |  | 3 | 3 |  |  |  | 4 | 1 | 1 |
+| Ford | Focus |  | 1 | 10 |  |  |  | 10 |  |  |
+| Ford | Kuga |  |  | 4 |  | 1 | 2 | 3 |  |  |
+| Ford | Mondeo |  |  | 7 |  |  | 3 | 3 | 2 |  |
+| Ford | S-Max |  |  | 8 | 1 |  | 2 | 1 | 2 |  |
+| Mercedes-Benz | Klasa A |  | 1 | 3 |  | 1 |  | 9 |  |  |
+| Mercedes-Benz | Klasa C |  |  | 5 | 1 | 3 |  | 4 |  | 2 |
+| Mercedes-Benz | Klasa E |  |  | 10 | 2 | 7 |  | 2 |  | 8 |
+| Mercedes-Benz | Klasa S |  |  | 7 |  |  |  |  | 1 | 7 |
+| Mercedes-Benz | CLA |  |  | 4 |  | 3 | 3 | 2 |  |  |
+| Mercedes-Benz | GLC |  |  |  |  |  |  |  |  | 12 |
+| Mercedes-Benz | GLE |  |  | 3 |  |  |  |  |  | 8 |
+| Peugeot | 208 |  |  |  |  |  |  | 2 |  |  |
+| Peugeot | 308 |  | 7 | 2 |  |  | 2 | 4 | 1 |  |
+| Peugeot | 508 |  |  | 1 | 1 |  |  | 5 |  |  |
+| Peugeot | 2008 |  |  | 1 |  |  |  | 6 |  | 1 |
+| Peugeot | 3008 |  |  | 3 | 1 |  |  | 3 | 1 |  |
+| Peugeot | 5008 |  |  | 1 |  |  |  | 2 | 1 |  |
+| Renault | Captur |  |  | 1 | 1 |  | 1 | 5 | 1 | 2 |
+| Renault | Clio |  |  | 6 |  |  |  | 10 | 2 |  |
+| Renault | Kadjar |  |  | 1 |  |  |  | 1 |  |  |
+| Renault | Megane |  | 2 | 9 |  | 1 | 1 | 7 | 2 |  |
+| Renault | Scenic |  |  | 6 |  |  |  | 8 | 2 |  |
+| Renault | Trafic | 1 |  |  |  |  |  |  |  |  |
+| Skoda | Fabia |  | 2 | 2 |  |  | 1 | 1 | 1 |  |
+| Skoda | Kamiq |  |  | 1 | 1 |  |  |  |  |  |
+| Skoda | Karoq |  | 1 |  |  | 1 |  | 2 |  |  |
+| Skoda | Kodiaq |  | 1 | 1 |  |  |  |  |  |  |
+| Skoda | Octavia | 1 | 5 | 7 |  | 8 | 2 | 12 | 1 |  |
+| Skoda | Superb |  | 1 | 4 |  | 2 | 1 | 3 | 1 |  |
+| Toyota | Auris |  | 1 | 2 | 1 |  |  | 6 | 1 |  |
+| Toyota | Avensis |  | 3 | 2 |  |  |  | 2 | 1 |  |
 | Toyota | C-HR |  |  | 1 |  |  |  |  |  |  |
-| Toyota | Camry |  |  | 5 | 1 |  |  | 2 | 1 |  |
-| Toyota | Corolla | 1 |  | 7 |  |  |  | 2 | 1 | 1 |
-| Toyota | RAV 4 | 1 |  | 2 |  | 6 | 1 | 5 | 2 |  |
-| Toyota | Yaris |  | 5 |  |  | 2 |  | 14 | 2 | 1 |
-| Volvo | S60 |  |  | 6 |  | 6 |  | 18 | 2 | 2 |
-| Volvo | V40 |  |  | 1 |  | 1 | 3 | 2 | 1 |  |
-| Volvo | V60 |  |  | 6 |  | 5 |  | 12 | 2 | 7 |
-| Volvo | XC40 |  |  |  |  | 14 |  | 8 |  | 2 |
-| Volvo | XC60 |  |  | 8 |  | 13 | 2 | 13 | 1 | 6 |
-| Volvo | XC90 |  |  | 1 |  | 2 |  | 11 |  | 4 |
-| Volkswagen | Golf |  | 2 | 9 |  | 3 | 1 | 22 |  | 1 |
-| Volkswagen | Passat |  |  | 6 |  | 4 | 1 | 26 |  |  |
-| Volkswagen | Polo |  |  | 1 |  | 4 | 1 | 17 | 1 |  |
-| Volkswagen | T-Roc | 1 |  | 1 |  | 1 | 1 | 6 |  |  |
-| Volkswagen | T6 (Multivan, Transporter) |  |  | 5 |  |  |  | 13 | 1 |  |
-| Volkswagen | Tiguan |  |  | 3 |  | 1 | 1 | 11 | 1 |  |
-| Volkswagen | Touran |  |  | 5 | 1 |  |  | 13 |  |  |
+| Toyota | Camry |  |  | 5 | 1 |  |  | 1 | 1 |  |
+| Toyota | Corolla |  |  | 7 |  |  |  | 1 | 1 | 1 |
+| Toyota | RAV 4 | 1 |  | 2 |  | 6 | 1 | 3 | 2 |  |
+| Toyota | Yaris |  | 5 |  |  | 2 |  | 7 | 2 | 1 |
+| Volvo | S60 |  |  | 6 |  | 6 |  | 8 | 2 | 2 |
+| Volvo | V40 |  |  | 1 |  | 1 | 3 | 1 | 1 |  |
+| Volvo | V60 |  |  | 6 |  | 5 |  | 5 | 2 | 7 |
+| Volvo | XC40 |  |  |  |  | 11 |  | 1 |  | 2 |
+| Volvo | XC60 |  |  | 8 |  | 8 | 2 | 1 | 1 | 6 |
+| Volvo | XC90 |  |  | 1 |  | 2 |  |  |  | 4 |
+| Volkswagen | Golf |  | 2 | 9 |  | 3 | 1 | 14 |  | 1 |
+| Volkswagen | Passat |  |  | 6 |  | 4 | 1 | 16 |  |  |
+| Volkswagen | Polo |  |  | 1 |  | 4 | 1 | 4 | 1 |  |
+| Volkswagen | T-Roc | 1 |  | 1 |  | 1 | 1 |  |  |  |
+| Volkswagen | T6 (Multivan, Transporter) |  |  | 5 |  |  |  | 1 | 1 |  |
+| Volkswagen | Tiguan |  |  | 3 |  | 1 | 1 | 2 | 1 |  |
+| Volkswagen | Touran |  |  | 5 | 1 |  |  | 3 |  |  |
 
-## Поколения, которых нет у нас (6)
+## Поколения, которых нет у нас (5)
 
 | Марка | Модель | Поколение (autocentrum) | Наше | Есть на autocentrum | Годы | Кузова | У нас |
 |---|---|---|---|---|---|---|---|
 | BMW | X5 | G65 (2026–н. в.) | — | [1 кузовов, 2 двигателей](https://www.autocentrum.pl/dane-techniczne/bmw/x5/g65/) |  | G65 | нет поколения |
 | Renault | Trafic | II (2001–2014) | — | [3 кузовов, 16 двигателей](https://www.autocentrum.pl/dane-techniczne/renault/trafic/ii/) |  | Kabina, Platforma, Furgon | нет поколения |
 | Skoda | Octavia | I (1996–2010) | — | [2 кузовов, 34 двигателей](https://www.autocentrum.pl/dane-techniczne/skoda/octavia/i/) |  | Kombi, Hatchback | нет поколения |
-| Toyota | Corolla | XI (2013–2018) | — | [2 кузовов, 6 двигателей](https://www.autocentrum.pl/dane-techniczne/toyota/corolla/xi/) |  | Sedan Facelifting, Sedan | нет поколения |
 | Toyota | RAV 4 | VI (2026–н. в.) | — | [2 кузовов, 4 двигателей](https://www.autocentrum.pl/dane-techniczne/toyota/rav4/vi/) |  | SUV, SUV Plug-In | нет поколения |
 | Volkswagen | T-Roc | II (2025–н. в.) | — | [1 кузовов, 2 двигателей](https://www.autocentrum.pl/dane-techniczne/volkswagen/t-roc/ii/) |  | II | нет поколения |
 
@@ -395,7 +396,7 @@
 | Toyota | Camry | VI (2006–2014) | XV40 (вне ЕС) | [гибрид: 2.4 Hybrid 187KM 138kW (2009-2014)](https://www.autocentrum.pl/dane-techniczne/toyota/camry/vi/) |  |  | нет такого топлива в поколении |
 | Volkswagen | Touran | I (2003–2010) | Touran I | [газ (LPG): 2.0 EcoFuel 109KM 80kW (2004-2010)](https://www.autocentrum.pl/dane-techniczne/volkswagen/touran/i/) |  |  | нет такого топлива в поколении |
 
-## Привод, которого нет у нас для этого двигателя (135)
+## Привод, которого нет у нас для этого двигателя (122)
 
 | Марка | Модель | Поколение (autocentrum) | Наше | Есть на autocentrum | Годы | Кузова | У нас |
 |---|---|---|---|---|---|---|---|
@@ -423,7 +424,6 @@
 | BMW | Seria 3 | F30-F31-F34 (2012–2020) | F30 | [дизель 3.0 258 KM](https://www.autocentrum.pl/dane-techniczne/bmw/seria-3/f30-f31-f34/limuzyna/silnik-diesla-3.0-330d-258km-2012-2015/) — 330d: автомат 8 / передний |  | Limuzyna | привод у нас: задний, полный — **ошибка autocentrum (вероятно): BMW этого поколения — задний/xDrive** |
 | BMW | Seria 4 | G22-23-26 (2020–н. в.) | G22 | [бензин 3.0 374 KM](https://www.autocentrum.pl/dane-techniczne/bmw/seria-4/g22-23-26/gran-coupe/silnik-benzynowy-3.0-m440i-374km-od-2021/) — M440i: автомат 8 / задний |  | Gran Coupe, Coupe, Cabrio | привод у нас: полный — **проверить** |
 | BMW | Seria 4 | G22-23-26 (2020–н. в.) | G22 | [бензин 2.0 184 KM](https://www.autocentrum.pl/dane-techniczne/bmw/seria-4/g22-23-26/coupe/silnik-benzynowy-2.0-420i-184km-od-2020/) — 420i: автомат 8 / полный |  | Coupe | привод у нас: задний — **проверить** |
-| BMW | Seria 5 | G30-G31 (2016–2024) | G30 | [бензин 4.4 635 KM](https://www.autocentrum.pl/dane-techniczne/bmw/seria-5/g30-g31/m5-limuzyna-facelifting/silnik-benzynowy-4.4-m5-cs-635km-2021-2023/) — M5 CS: автомат / полный |  | M5 Limuzyna Facelifting | привод у нас: задний — **проверить** |
 | BMW | Seria 5 | F10-F11 (2010–2017) | F10 | [дизель 184 KM](https://www.autocentrum.pl/dane-techniczne/bmw/seria-5/f10-f11/limuzyna/silnik-diesla-520d-efficient-dynamics-184km-2011-2013/) — 520d Efficient Dynamics: механика 6 / передний |  | Limuzyna | привод у нас: задний, полный — **ошибка autocentrum (вероятно): BMW этого поколения — задний/xDrive** |
 | BMW | Seria 5 | E60 (2003–2010) | E60 | [бензин 306 KM](https://www.autocentrum.pl/dane-techniczne/bmw/seria-5/e60/sedan/silnik-benzynowy-535i-306km-2007-2010/) — 535i: механика 6 / полный; автомат 6 / полный |  | Sedan | привод у нас: задний — **проверить** |
 | BMW | X1 | U11 (2022–н. в.) | U11 | [дизель 2.0 150 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x1/u11/crossover/silnik-diesla-2.0-20d-150km-od-2022/) — 20d: автомат / полный |  | Crossover | привод у нас: передний — **проверить** |
@@ -433,10 +433,6 @@
 | BMW | X1 | F48 (2015–2022) | F48 | [дизель 150 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x1/f48/crossover/silnik-diesla-sdrive18d-150km-2015-2019/) — sDrive18d: механика 6 / задний; автомат 8 / задний |  | Crossover | привод у нас: передний, полный — **ошибка autocentrum (вероятно): sDrive здесь — передний** |
 | BMW | X1 | F48 (2015–2022) | F48 | [дизель 190 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x1/f48/crossover/silnik-diesla-sdrive20d-190km-2015-2019/) — sDrive20d: механика 6 / задний; автомат 8 / задний |  | Crossover | привод у нас: передний, полный — **ошибка autocentrum (вероятно): sDrive здесь — передний** |
 | BMW | X1 | E84 (2009–2015) | E84 | [бензин 150 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x1/e84/crossover/silnik-benzynowy-sdrive18i-150km-2009-2012/) — sDrive18i: автомат / полный |  | Crossover | привод у нас: задний — **ошибка autocentrum (вероятно): в названии моноприводная версия** |
-| BMW | X3 | G01 (2017–2024) | G01 | [бензин 3.0 480 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x3/g01/m-suv-facelifting/silnik-benzynowy-3.0-m-480km-2021-2024/) — M: автомат / полный |  | M SUV Facelifting, M-SUV | привод у нас: задний — **у нас ошибка (вероятно): версия только с полным приводом** |
-| BMW | X3 | G01 (2017–2024) | G01 | [бензин 3.0 360 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x3/g01/m-suv-facelifting/silnik-benzynowy-3.0-m40i-360km-2021-2024/) — M40i: автомат / полный |  | M SUV Facelifting | привод у нас: задний — **у нас ошибка (вероятно): версия только с полным приводом** |
-| BMW | X3 | G01 (2017–2024) | G01 | [дизель 3.0 340 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x3/g01/m-suv-facelifting/silnik-diesla-3.0-m40d-340km-2021-2024/) — M40d: автомат / полный |  | M SUV Facelifting, M-SUV | привод у нас: задний — **у нас ошибка (вероятно): версия только с полным приводом** |
-| BMW | X3 | G01 (2017–2024) | G01 | [бензин 360 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x3/g01/m-suv/silnik-benzynowy-m40i-360km-2017-2021/) — M40i: автомат 8 / полный |  | M-SUV | привод у нас: задний — **у нас ошибка (вероятно): версия только с полным приводом** |
 | BMW | X3 | G01 (2017–2024) | G01 | [дизель 326 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x3/g01/m-suv/silnik-diesla-m40d-326km-2018-2020/) — M40d: автомат / полный |  | M-SUV | привод у нас: задний — **у нас ошибка (вероятно): версия только с полным приводом** |
 | BMW | X3 | E83 (2003–2010) | E83 | [бензин 2.5 192 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x3/e83/silnik-benzynowy-2.5-i-192km-2003-2010/) — i: механика 6 / полный; автомат / полный |  | E83 | привод у нас: задний — **проверить** |
 | BMW | X3 | E83 (2003–2010) | E83 | [бензин 3.0 231 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x3/e83/silnik-benzynowy-3.0-i-231km-2003-2010/) — i: механика 6 / полный; автомат / полный |  | E83 | привод у нас: задний — **проверить** |
@@ -496,8 +492,6 @@
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [электро 252 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/recharge/silnik-elektryczny-78kwh-extended-range-252km-od-2022/) — 78kWh Extended Range: автомат 1 / задний |  | Recharge | привод у нас: полный — **проверить** |
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [электро 231 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/recharge/silnik-elektryczny-p6-69kwh-231km-2022/) — P6 69kWh: автомат / передний |  | Recharge | привод у нас: полный — **проверить** |
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [бензин 1.5 129 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover-facelifting/silnik-benzynowy-1.5-t2-129km-od-2022/) — T2: механика 6 / передний; автомат 8 / передний |  | Crossover Facelifting | привод у нас: полный — **проверить** |
-| Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [бензин 2.0 163 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover-facelifting/silnik-benzynowy-2.0-b3-163km-od-2022/) — B3: автомат / передний |  | Crossover Facelifting | привод у нас: полный — **проверить** |
-| Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [бензин 2.0 197 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover-facelifting/silnik-benzynowy-2.0-b4-197km-od-2022/) — B4: автомат 7 / передний |  | Crossover Facelifting | привод у нас: полный — **проверить** |
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [гибрид 1.5 262 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover-plug-in-facelifting/silnik-hybrydowy-1.5-t5-262km-od-2022/) — T5: автомат / передний |  | Crossover Plug-In Facelifting | привод у нас: полный — **проверить** |
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [плагин-гибрид 1.5 211 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover-plug-in-facelifting/silnik-hybrydowy-1.5-t4-211km-od-2022/) — T4 / T4 Plug-in Hybrid: автомат / передний |  | Crossover Plug-In Facelifting, Crossover Plug-In | привод у нас: полный — **проверить** |
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [плагин-гибрид 1.5 262 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover-plug-in/silnik-hybrydowy-1.5-t5-plug-in-hybrid-262km-2019-2021/) — T5 Plug-in Hybrid: автомат / передний |  | Crossover Plug-In | привод у нас: полный — **проверить** |
@@ -505,15 +499,9 @@
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [бензин 1.5 163 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover/silnik-benzynowy-1.5-t3-163km-2018-2021/) — T3: механика 6 / передний; автомат 8 / передний |  | Crossover | привод у нас: полный — **проверить** |
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [бензин 2.0 190 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover/silnik-benzynowy-2.0-t4-190km-2018-2020/) — T4: автомат 8 / передний |  | Crossover | привод у нас: полный — **проверить** |
 | Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [дизель 2.0 150 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover/silnik-diesla-2.0-d3-150km-2018-2020/) — D3: механика 6 / передний; автомат 8 / передний |  | Crossover | привод у нас: полный — **проверить** |
-| Volvo | XC40 | xc40 (2017–н. в.) | XC40 I | [гибрид 2.0 211 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc40/crossover/silnik-hybrydowy-2.0-b4-mild-hybrid-211km-2020-2021/) — B4 Mild Hybrid: автомат 8 / передний |  | Crossover | привод у нас: полный — **проверить** |
-| Volvo | XC60 | II (2017–н. в.) | XC60 II | [гибрид 2.0 197 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover-facelifting/silnik-hybrydowy-2.0-b4-197km-2022-2025/) — B4: автомат / передний |  | Crossover Facelifting | привод у нас: полный — **проверить** |
-| Volvo | XC60 | II (2017–н. в.) | XC60 II | [гибрид (дизель) 2.0 197 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover-facelifting/silnik-hybrydowy-2.0d-b4-197km-2022-2025/) — d B4: автомат 8 / передний |  | Crossover Facelifting | привод у нас: полный — **проверить** |
 | Volvo | XC60 | II (2017–н. в.) | XC60 II | [бензин 190 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover/silnik-benzynowy-t4-190km-2018-2020/) — T4: автомат / передний |  | Crossover | привод у нас: полный — **проверить** |
-| Volvo | XC60 | II (2017–н. в.) | XC60 II | [бензин 250 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover/silnik-benzynowy-t5-250km-2018-2020/) — T5: автомат 8 / передний |  | Crossover | привод у нас: полный — **проверить** |
 | Volvo | XC60 | II (2017–н. в.) | XC60 II | [дизель 150 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover/silnik-diesla-d3-150km-2018-2020/) — D3: механика 6 / передний |  | Crossover | привод у нас: полный — **проверить** |
 | Volvo | XC60 | II (2017–н. в.) | XC60 II | [дизель 190 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover/silnik-diesla-d4-190km-2017-2020/) — D4: механика 6 / передний; автомат 8 / передний |  | Crossover | привод у нас: полный — **проверить** |
-| Volvo | XC60 | II (2017–н. в.) | XC60 II | [гибрид 2.0 211 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover/silnik-hybrydowy-2.0-b4-benzynowy-mild-hybrid-211km-2020-2021/) — B4 Benzynowy Mild Hybrid: автомат / передний |  | Crossover | привод у нас: полный — **проверить** |
-| Volvo | XC60 | II (2017–н. в.) | XC60 II | [гибрид (дизель) 2.0 211 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/ii/crossover/silnik-hybrydowy-2.0-b4-diesel-mild-hybrid-211km-2019-2021/) — B4 Diesel Mild Hybrid: автомат 8 / передний |  | Crossover | привод у нас: полный — **проверить** |
 | Volvo | XC60 | I (2008–2017) | XC60 I | [бензин 2.0 245 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/i/suv-facelifting/silnik-benzynowy-2.0-t5-drive-e-245km-2013-2017/) — T5 DRIVE-E: автомат 8 / передний |  | SUV Facelifting | привод у нас: полный — **проверить** |
 | Volvo | XC60 | I (2008–2017) | XC60 I | [дизель 2.0 136 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/i/suv-facelifting/silnik-diesla-2.0-d3-136km-2013-2015/) — D3: механика 6 / передний; автомат 6 / передний |  | SUV Facelifting | привод у нас: полный — **проверить** |
 | Volvo | XC60 | I (2008–2017) | XC60 I | [дизель 2.0 150 KM](https://www.autocentrum.pl/dane-techniczne/volvo/xc60/i/suv-facelifting/silnik-diesla-2.0-d3-drive-e-150km-2015-2017/) — D3 DRIVE-E: механика 6 / передний; автомат 8 / передний |  | SUV Facelifting | привод у нас: полный — **проверить** |
@@ -535,7 +523,7 @@
 | Volkswagen | T-Roc | I (2017–н. в.) | T-Roc I | [бензин 1.5 150 KM](https://www.autocentrum.pl/dane-techniczne/volkswagen/t-roc/i/suv/silnik-benzynowy-1.5-tsi-act-150km-2017-2021/) — TSI ACT: автомат 7 / полный |  | SUV | привод у нас: передний — **проверить** |
 | Volkswagen | Tiguan | II (2016–2024) | Tiguan II | [бензин 1.4 150 KM](https://www.autocentrum.pl/dane-techniczne/volkswagen/tiguan/ii/suv/silnik-benzynowy-1.4-tsi-150km-2016-2018/) — TSI: автомат 6 / полный |  | SUV | привод у нас: передний — **проверить** |
 
-## Коробка, которой нет у нас для этого двигателя и привода (34)
+## Коробка, которой нет у нас для этого двигателя и привода (36)
 
 | Марка | Модель | Поколение (autocentrum) | Наше | Есть на autocentrum | Годы | Кузова | У нас |
 |---|---|---|---|---|---|---|---|
@@ -543,9 +531,10 @@
 | Audi | A5 | 8T (2007–2016) | 8T | [дизель 2.0 150 KM](https://www.autocentrum.pl/dane-techniczne/audi/a5/8t/sportback-facelifting/silnik-diesla-2.0-tdi-150km-2013-2016/) — TDI / TDI clean diesel: механика 6 / передний |  | Sportback Facelifting, Cabrio Facelifting | у нас: автомат / передний — **проверить** |
 | Audi | Q3 | I (2011–2018) | 8U | [дизель 2.0 177 KM](https://www.autocentrum.pl/dane-techniczne/audi/q3/i/suv/silnik-diesla-2.0-tdi-177km-2011-2015/) — TDI: механика 6 / полный |  | SUV | у нас: автомат / полный — **проверить** |
 | Audi | Q5 | I (2008–2016) | 8R | [дизель 2.0 190 KM](https://www.autocentrum.pl/dane-techniczne/audi/q5/i/suv-facelifting/silnik-diesla-2.0-tdi-clean-diesel-190km-2014-2016/) — TDI clean diesel: механика 6 / полный |  | SUV Facelifting | у нас: автомат / полный — **проверить** |
+| BMW | Seria 4 | G22-23-26 (2020–н. в.) | G22 | [бензин 3.0 480 KM](https://www.autocentrum.pl/dane-techniczne/bmw/seria-4/g22-23-26/m4-coupe-facelifting/silnik-benzynowy-3.0-m4-480km-od-2024/) — M4: автомат / задний |  | M4 Coupe Facelifting | у нас: механика / задний — **проверить** |
 | BMW | X1 | F48 (2015–2022) | F48 | [дизель 190 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x1/f48/crossover/silnik-diesla-xdrive20d-190km-2015-2019/) — xDrive20d: механика 6 / полный |  | Crossover | у нас: автомат / полный — **проверить** |
 | Ford | C-Max | II (2010–2019) | Mk2 | [дизель 2.0 163 KM](https://www.autocentrum.pl/dane-techniczne/ford/c-max/ii/minivan/silnik-diesla-2.0-tdci-163km-2010-2015/) — TDCi: механика 6 / передний |  | Minivan, Grand C-MAX | у нас: автомат / передний — **проверить** |
-| Ford | Kuga | III (2019–н. в.) | Mk3 | [дизель 120 KM](https://www.autocentrum.pl/dane-techniczne/ford/kuga/iii/suv/silnik-diesla-20-ecoblue-120km-2019-2024/) — 2,0 EcoBlue: механика 6 / передний |  | SUV | у нас: автомат / передний — **проверить** |
+| Ford | Kuga | III (2019–н. в.) | Mk3 | [дизель 2.0 120 KM](https://www.autocentrum.pl/dane-techniczne/ford/kuga/iii/suv/silnik-diesla-20-ecoblue-120km-2019-2024/) — EcoBlue: механика 6 / передний |  | SUV | у нас: автомат / передний — **проверить** |
 | Ford | Kuga | I (2008–2012) | Mk1 | [дизель 2.0 163 KM](https://www.autocentrum.pl/dane-techniczne/ford/kuga/i/silnik-diesla-2.0-duratorq-tdci-163km-2010-2012/) — Duratorq TDCi: механика 6 / полный |  | I | у нас: автомат / полный — **проверить** |
 | Ford | Mondeo | IV (2007–2014) | Mk4 | [бензин 2.0 203 KM](https://www.autocentrum.pl/dane-techniczne/ford/mondeo/iv/sedan/silnik-benzynowy-2.0-ecoboost-203km-2010-2014/) — EcoBoost: механика 6 / привод ?; механика 6 / передний |  | Sedan, Hatchback, Kombi | у нас: автомат / передний — **проверить** |
 | Ford | Mondeo | IV (2007–2014) | Mk4 | [бензин 2.0 240 KM](https://www.autocentrum.pl/dane-techniczne/ford/mondeo/iv/sedan/silnik-benzynowy-2.0-ecoboost-240km-2011-2014/) — EcoBoost: механика 6 / привод ?; механика 6 / передний |  | Sedan, Hatchback, Kombi | у нас: автомат / передний — **проверить** |
@@ -559,6 +548,7 @@
 | Peugeot | 308 | I (2007–2015) | 308 I | [дизель 2.0 136 KM](https://www.autocentrum.pl/dane-techniczne/peugeot/308/i/kombi/silnik-diesla-2.0-hdi-fap-136km-2008-2011/) — HDi FAP: механика 6 / передний; механика / привод ? |  | Kombi, SW, CC, Hatchback 5d, Hatchback 3d | у нас: автомат / передний — **проверить** |
 | Renault | Captur | II (2019–н. в.) | Captur II | [гибрид 1.6 145 KM](https://www.autocentrum.pl/dane-techniczne/renault/captur/ii/crossover-hybrid/silnik-hybrydowy-1.6-e-tech-145km-2023/) — E-Tech: механика 6 / передний |  | Crossover Hybrid | у нас: автомат / передний — **ошибка autocentrum (вероятно): гибрид с механикой** |
 | Renault | Megane | III (2008–2016) | Mégane III | [бензин 2.0 140 KM](https://www.autocentrum.pl/dane-techniczne/renault/megane/iii/coupe-cabriolet/silnik-benzynowy-2.0-16v-140km-2010-2013/) — 16v: механика / привод ? |  | Coupe-Cabriolet | у нас: автомат / передний — **проверить** |
+| Skoda | Fabia | IV (2021–н. в.) | Fabia IV | [бензин 1.0 110 KM](https://www.autocentrum.pl/dane-techniczne/skoda/fabia/iv/silnik-benzynowy-1.0-tsi-110km-od-2021/) — TSI: механика 6 / передний |  | IV | у нас: автомат / передний — **проверить** |
 | Skoda | Octavia | IV (2020–н. в.) | Octavia IV | [дизель 2.0 150 KM](https://www.autocentrum.pl/dane-techniczne/skoda/octavia/iv/liftback/silnik-diesla-2.0-tdi-150km-od-2020/) — TDI: механика 6 / передний |  | Liftback, Kombi | у нас: автомат / передний — **проверить** |
 | Skoda | Octavia | III (2013–2020) | Octavia III | [бензин 1.8 180 KM](https://www.autocentrum.pl/dane-techniczne/skoda/octavia/iii/liftback/silnik-benzynowy-1.8-tsi-180km-2013-2016/) — TSI: механика 6 / полный |  | Liftback | у нас: автомат / полный — **проверить** |
 | Skoda | Superb | III (2015–н. в.) | Superb IV, Superb III | [дизель 2.0 190 KM](https://www.autocentrum.pl/dane-techniczne/skoda/superb/iii/kombi/silnik-diesla-2.0-tdi-190km-2015-2018/) — TDI: механика 6 / полный |  | Kombi | у нас: автомат / полный — **проверить** |
@@ -574,13 +564,13 @@
 | Volkswagen | T-Roc | I (2017–н. в.) | T-Roc I | [дизель 2.0 150 KM](https://www.autocentrum.pl/dane-techniczne/volkswagen/t-roc/i/suv/silnik-diesla-2.0-tdi-150km-2017-2021/) — TDI: механика 6 / передний; механика 6 / полный |  | SUV | у нас: автомат / передний — **проверить** |
 | Volkswagen | Tiguan | I (2007–2016) | Tiguan I | [дизель 2.0 177 KM](https://www.autocentrum.pl/dane-techniczne/volkswagen/tiguan/i/suv-facelifting/silnik-diesla-2.0-tdi-cr-dpf-bluemotion-177km-2013-2016/) — TDI CR DPF BlueMotion: механика 6 / полный |  | SUV Facelifting | у нас: автомат / полный — **проверить** |
 
-## Коробка у нас не указана — autocentrum её называет (940)
+## Коробка у нас не указана — autocentrum её называет (254)
 
 Это не пропуск, а подсказка: где у нас «не указано», autocentrum называет коробку. Список по моделям (строки — в CSV):
 
-Renault Clio — 43, Mercedes-Benz Klasa E — 40, Renault Scenic — 39, Mercedes-Benz Klasa C — 37, Mercedes-Benz Klasa S — 35, BMW X5 — 32, Ford Focus — 28, BMW Seria 5 — 27, Volkswagen Passat — 26, Renault Megane — 25, Audi A4 — 22, Volkswagen Golf — 22, Ford Fiesta — 21, Peugeot 308 — 20, BMW X3 — 19, Mercedes-Benz GLE — 19, Skoda Fabia — 18, Volvo S60 — 18, Audi A5 — 17, Toyota Auris — 17, Volkswagen Polo — 17, Audi Q5 — 16, Mercedes-Benz GLC — 16, BMW Seria 3 — 15, Ford C-Max — 15, Skoda Octavia — 15, Ford Mondeo — 14, Toyota Yaris — 14, Mercedes-Benz Klasa A — 13, Peugeot 208 — 13, Peugeot 2008 — 13, Volvo XC60 — 13, Volkswagen T6 (Multivan, Transporter) — 13, Volkswagen Touran — 13, Volvo V60 — 12, Audi A6 — 11, BMW Seria 1 — 11, Ford Kuga — 11, Renault Captur — 11, Volvo XC90 — 11, Volkswagen Tiguan — 11, BMW Seria 4 — 10, Ford S-Max — 10, Peugeot 508 — 10, Audi A3 — 9, BMW X1 — 9, Peugeot 5008 — 9, Audi Q3 — 8, Peugeot 3008 — 8, Skoda Superb — 8, Toyota Avensis — 8, Volvo XC40 — 8, Mercedes-Benz CLA — 7, Volkswagen T-Roc — 6, Renault Trafic — 5, Toyota RAV 4 — 5, Audi Q7 — 4, Skoda Karoq — 3, Renault Kadjar — 2, Toyota Camry — 2, Toyota Corolla — 2, Volvo V40 — 2, Skoda Kamiq — 1, Skoda Kodiaq — 1
+Audi A4 — 17, Volkswagen Passat — 16, Volkswagen Golf — 14, Skoda Octavia — 12, Ford Focus — 10, Renault Clio — 10, Mercedes-Benz Klasa A — 9, Audi A5 — 8, BMW Seria 3 — 8, Renault Scenic — 8, Volvo S60 — 8, Audi A6 — 7, Renault Megane — 7, Toyota Yaris — 7, BMW X3 — 6, Peugeot 2008 — 6, Toyota Auris — 6, Ford C-Max — 5, Peugeot 508 — 5, Renault Captur — 5, Volvo V60 — 5, Audi A3 — 4, BMW Seria 5 — 4, BMW X5 — 4, Ford Fiesta — 4, Mercedes-Benz Klasa C — 4, Peugeot 308 — 4, Volkswagen Polo — 4, Ford Kuga — 3, Ford Mondeo — 3, Peugeot 3008 — 3, Skoda Superb — 3, Toyota RAV 4 — 3, Volkswagen Touran — 3, Audi Q3 — 2, Mercedes-Benz Klasa E — 2, Mercedes-Benz CLA — 2, Peugeot 208 — 2, Peugeot 5008 — 2, Skoda Karoq — 2, Toyota Avensis — 2, Volkswagen Tiguan — 2, Audi Q5 — 1, BMW Seria 1 — 1, BMW Seria 4 — 1, BMW X1 — 1, Ford S-Max — 1, Renault Kadjar — 1, Skoda Fabia — 1, Toyota Camry — 1, Toyota Corolla — 1, Volvo V40 — 1, Volvo XC40 — 1, Volvo XC60 — 1, Volkswagen T6 (Multivan, Transporter) — 1
 
-## Годы поколения или рестайлинга расходятся на 2+ года (для сведения) (48)
+## Годы поколения или рестайлинга расходятся на 2+ года (для сведения) (47)
 
 | Марка | Модель | Поколение (autocentrum) | Наше | Есть на autocentrum | Годы | Кузова | У нас |
 |---|---|---|---|---|---|---|---|
@@ -602,7 +592,6 @@ Renault Clio — 43, Mercedes-Benz Klasa E — 40, Renault Scenic — 39, Merced
 | Ford | S-Max | I (2006–2015) | Mk1 | [рестайлинг 2010 / у нас рестайлинг не выделен](https://www.autocentrum.pl/dane-techniczne/ford/s-max/i/) |  |  |  |
 | Mercedes-Benz | Klasa S | W221 (2005–2013) | W221 | [рестайлинг 2009 / у нас рестайлинг не выделен](https://www.autocentrum.pl/dane-techniczne/mercedes/klasa-s/w221/) |  |  |  |
 | Peugeot | 308 | I (2007–2015) | 308 I | [конец 2015 / у нас 2013; рестайлинг 2011 / у нас рестайлинг не выделен](https://www.autocentrum.pl/dane-techniczne/peugeot/308/i/) |  |  |  |
-| Peugeot | 2008 | I (2013–2019) | 2008 I | [рестайлинг 2016 / у нас 2008](https://www.autocentrum.pl/dane-techniczne/peugeot/2008/i/) |  |  |  |
 | Peugeot | 3008 | I (2009–2016) | 3008 I | [рестайлинг 2013 / у нас рестайлинг не выделен](https://www.autocentrum.pl/dane-techniczne/peugeot/3008/i/) |  |  |  |
 | Peugeot | 5008 | I (2009–2016) | 5008 I | [рестайлинг 2013 / у нас рестайлинг без года](https://www.autocentrum.pl/dane-techniczne/peugeot/5008/i/) |  |  |  |
 | Renault | Captur | I (2013–2019) | Captur I | [рестайлинг 2017 / у нас рестайлинг не выделен](https://www.autocentrum.pl/dane-techniczne/renault/captur/i/) |  |  |  |

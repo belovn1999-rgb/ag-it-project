@@ -158,12 +158,13 @@ def engines(page, path):
                r'([^/"]+)/"\s+class="engine-link[^"]*"\s+data-engine-type="(\d+)">(.*?)</a>')
     for match in re.finditer(pattern, page, re.S):
         text = clean(match.group(3))
-        parsed = re.match(r"(?:(\d+\.\d)\s*)?(.*?)\s*(\d+)KM\s+(\d+)kW\s*\((?:od (\d{4})|(\d{4})-(\d{4})|(\d{4}))\)",
+        parsed = re.match(r"(?:(\d+[.,]\d+)\s*)?(.*?)\s*(\d+)KM\s+(\d+)kW\s*\((?:od (\d{4})|(\d{4})-(\d{4})|(\d{4}))\)",
                           text)
         item = {"slug": match.group(1), "type": types.get(match.group(2), match.group(2)), "text": text}
         if parsed:
             item.update({
-                "litres": parsed.group(1) or "", "name": parsed.group(2).strip(), "hp": int(parsed.group(3)),
+                "litres": (parsed.group(1) or "").replace(",", "."), "name": parsed.group(2).strip(),
+                "hp": int(parsed.group(3)),
                 "kw": int(parsed.group(4)), "from": int(parsed.group(5) or parsed.group(6) or parsed.group(8)),
                 "to": int(parsed.group(7) or parsed.group(8)) if (parsed.group(7) or parsed.group(8)) else None,
             })

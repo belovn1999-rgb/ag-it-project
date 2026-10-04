@@ -26,237 +26,13 @@ import os
 import re
 import sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-AC_BASE = "https://www.autocentrum.pl/dane-techniczne/"
-SINCE = 2010
-
-AC_FUEL = {
-    "Benzynowe": "petrol", "Benzynowe LPG": "lpg", "Diesla": "diesel", "Elektryczne": "electric",
-    "Hybrydowe": "hybrid", "Hybrydowe Diesla": "hybrid_diesel", "Hybrydowe plug-in": "plugin",
-    "Hybrydowe Diesla plug-in": "plugin",
-}
-OUR_FUEL = {
-    "бензин": "petrol", "бензин/E85 (Flexible Fuel)": "petrol", "газ (LPG)": "lpg", "газ (CNG)": "cng",
-    "дизель": "diesel", "гибрид": "hybrid", "гибрид (дизель)": "hybrid_diesel", "плагин-гибрид": "plugin",
-    "электро": "electric",
-}
-# Engine existence is checked within a family: a mild hybrid may sit under petrol on one site.
-FAMILY = {"petrol": "p", "lpg": "p", "cng": "p", "hybrid": "p", "diesel": "d", "hybrid_diesel": "d",
-          "plugin": "e", "electric": "x"}
-FUEL_RU = {"petrol": "бензин", "lpg": "газ (LPG)", "cng": "газ (CNG)", "diesel": "дизель", "hybrid": "гибрид",
-           "hybrid_diesel": "гибрид (дизель)", "plugin": "плагин-гибрид", "electric": "электро"}
-GEARBOX_RU = {"a": "автомат", "m": "механика"}
-DRIVE_RU = {"f": "передний", "r": "задний", "4": "полный"}
-OUR_GEARBOX = {"автомат": "a", "автомат (робот)": "a", "механика": "m"}
-OUR_DRIVE = {"передний": "f", "задний": "r", "полный": "4"}
-
-MILD = re.compile(r"mild|mhev|48 ?v|\bmh\b|ehybrid 48|\betsi\b|ecoboost hybrid|hybrid ?assist|eq ?boost|"
-                  r"\bb[3-6]\b", re.I)
-
-
-def our_years(text):
-    match = re.match(r"(\d{4})\s*–\s*(\d{4}|н\. в\.)", text)
-    return (int(match.group(1)), None if match.group(2) == "н. в." else int(match.group(2))) if match else (None, None)
-
-
-# Body kinds that make a separate body; the base body of a model has none.
-BODY_TAGS = [
-    ("универсал", r"kombi|avant|touring(?! sports?)|touring sports|variant|sportbreak|\bsw\b|estate|station|"
-                  r"sport ?tourer|grand ?tour|\bbreak\b|combi\b|wagon|shooting ?brake"),
-    ("кабриолет", r"cabrio|kabriolet|roadster|\bcc\b"),
-    ("купе", r"(?<!gran )(?<!grand )(?<!grand)(?<!suv )coup[eé](?! suv)(?![- ]cabrio)"),
-    ("гран купе / GT", r"gran coup[eé]|gran turismo"),
-    ("кросс-версия", r"allroad|alltrack|cross ?country|\bscout\b|\bactive\b|all[- ]?terrain|allstreet|crosspolo|"
-                     r"crosstouran|\brxh\b|x-?perience"),
-    ("седан", r"limuzyna|sedan|limousine|saloon|grand ?coup[eé]"),
-    ("3 двери", r"\b3 ?d\b|3[- ]?drzw|3[- ]?doors?|3doors"),
-    ("удлинённый", r"\bgrand\b|\blong\b|\blwb\b|\bl2\b|allspace|\bplus\b|\bxl\b"),
-    ("SUV-купе", r"suv coup[eé]|coup[eé] suv"),
-]
-# Models whose plain body already is that kind, so the tag adds nothing.
-BASE_KIND = {
-    "седан": {"A4", "A6", "Seria 3", "Seria 5", "Klasa C", "Klasa E", "Klasa S", "Passat", "Avensis", "Camry",
-              "S60", "Mondeo", "Superb", "Octavia", "508", "CLA", "Corolla"},
-    "универсал": {"V60"},
-    "купе": {"Seria 4", "CLA"},
-    "SUV-купе": set(),
-}
-
-
-def body_tags(model, name, generation=""):
-    lower = name.lower()
-    tags = set()
-    for tag, pattern in BODY_TAGS:
-        if re.search(pattern, lower):
-            tags.add(tag)
-    # "Sportback" is a 5-door hatch on the A3, a liftback on the A5, an SUV coupe on the Q3/Q5.
-    if "sportback" in lower and model in ("Q3", "Q5"):
-        tags.add("SUV-купе")
-    if "sportback" in lower and model == "A5":
-        tags.add("гран купе / GT")
-    # ultimatespecs names the 3-door A3 plainly: "A3 (8V)", "A3 (8V 2016)".
-    if model == "A3" and not re.search(r"sportback|sedan|limousine|cabrio|allstreet|hatchback 5", lower):
-        tags.add("3 двери")
-    # autocentrum calls the 5-door A-Class W169/W176 "Limuzyna" and the 3-door W169 "Coupe".
-    if model == "Klasa A" and re.search(r"w169|w176", generation, re.I):
-        if "седан" in tags:
-            tags.discard("седан")
-        if "купе" in tags:
-            tags.discard("купе")
-            tags.add("3 двери")
-    for kind, models in BASE_KIND.items():
-        if model in models:
-            tags.discard(kind)
-    return tags
-
-
-def config_parts(text):
-    """'automatyczna Steptronic 8 stopniowa AWD xDrive Euro 6d' -> ('a', '4')."""
-    lower = text.lower()
-    gearbox = "m" if lower.startswith("manualna") else "a" if re.match(r"(automatyczna|półautomatyczna|"
-                                                                       r"bezstopniowa|zautomatyzowana)", lower) else ""
-    drive = "4" if re.search(r"\bawd\b|4x4|4wd|obie osie|4motion|quattro|4matic|xdrive", text, re.I) else \
-        "r" if re.search(r"\brwd\b|tyln", text, re.I) else "f" if re.search(r"\bfwd\b|przedni", text, re.I) else ""
-    return gearbox, drive
-
-
-AWD_NAME = re.compile(r"quattro|allroad|alltrack|\bscout\b|cross country|xdrive|4matic|4motion|4x4|\bawd\b|"
-                      r"\brs ?\d|\bs[3-8]\b|\bsq\d|polestar|\bm[3-6]0[id]\b|\bm[- ]?suv|\bgolf r\b|\br [35]d\b|"
-                      r"\b45 amg|amg 45", re.I)
-TWO_NAME = re.compile(r"sdrive|\bfwd\b|\b2wd\b|4x2", re.I)
-# BMW generations on the front-drive platform: sDrive = front, everything else is rear or xDrive.
-BMW_FRONT = re.compile(r"\b(F40|F70|F48|U11)\b")
-
-
-def verdict(kind, brand, gen_name, engine_name, bodies, option, fuel):
-    """Who is likely wrong in a drive/gearbox difference (autocentrum mixes drives up too:
-    Polo V "4x4", BMW 330i "FWD")."""
-    drive = option.rsplit(" / ", 1)[-1]
-    name = f"{engine_name} {bodies}"
-    if kind == "коробка":
-        if fuel in ("hybrid", "plugin", "electric") and option.startswith("механика"):
-            return "ошибка autocentrum (вероятно): гибрид с механикой"
-        return "проверить"
-    if brand == "BMW" and drive == "передний" and not BMW_FRONT.search(gen_name):
-        return "ошибка autocentrum (вероятно): BMW этого поколения — задний/xDrive"
-    if brand == "BMW" and drive == "задний" and BMW_FRONT.search(gen_name):
-        return "ошибка autocentrum (вероятно): sDrive здесь — передний"
-    if drive != "полный" and AWD_NAME.search(engine_name):
-        return "ошибка autocentrum (вероятно): в названии полный привод"
-    if drive == "полный" and TWO_NAME.search(engine_name):
-        return "ошибка autocentrum (вероятно): в названии моноприводная версия"
-    if drive == "полный" and AWD_NAME.search(name):
-        return "у нас ошибка (вероятно): версия только с полным приводом"
-    return "проверить"
-
-
-def option_label(text):
-    """'automatyczna Steptronic 8 stopniowa AWD xDrive Euro 6d' -> 'автомат 8 / полный'."""
-    gearbox, drive = config_parts(text)
-    speeds = re.search(r"(\d+)\s*(?:biegowa|stopniowa)", text)
-    return f"{GEARBOX_RU[gearbox]}{' ' + speeds.group(1) if speeds else ''} / {DRIVE_RU.get(drive, 'привод ?')}"
-
-
-def load_ours():
-    models = collections.defaultdict(lambda: collections.OrderedDict())
-    with open(os.path.join(ROOT, "data", "model-engines.csv"), encoding="utf-8-sig") as handle:
-        for row in csv.DictReader(handle, delimiter=";"):
-            start, end = our_years(row["Годы (проверено)"])
-            gen = models[(row["Марка"], row["Модель"])].setdefault(row["Поколение"], {
-                "code": row["Поколение"], "from": start, "to": end, "rows": [], "lifts": set(), "bodies": set()})
-            gen["from"] = min(gen["from"], start)
-            gen["to"] = None if end is None or gen["to"] is None else max(gen["to"], end)
-            if row["Этап"] in ("рестайлинг", "рестайлинг 2"):
-                gen.setdefault("lift_starts", set()).add(start)
-            lift = re.match(r"рестайлинг \((\d{4})\)", row["Этап"])
-            if lift:
-                gen["lifts"].add(int(lift.group(1)))
-            gen["bodies"].add(row["Кузов"])
-            gen["rows"].append({
-                "fuel": OUR_FUEL.get(row["Топливо"], "petrol"),
-                "litres": float(row["Объём, л"] or 0), "hp": int(row["Мощность, л.с."] or 0),
-                "kw": int(row["Мощность, кВт"] or 0), "gearbox": OUR_GEARBOX.get(row["Коробка"], ""),
-                "drive": OUR_DRIVE.get(row["Привод"], ""), "name": row["Версия"], "body": row["Кузов"],
-                "mild": row["Топливо: примечание"].startswith("мягкий"),
-            })
-    # A facelift row that starts with the generation itself has no year of its own (B8 "Restyling" 2007-2015).
-    for gens in models.values():
-        for gen in gens.values():
-            for start in gen.pop("lift_starts", ()):
-                if start == gen["from"]:
-                    gen["lift_unknown"] = True
-                else:
-                    gen["lifts"].add(start)
-    return models
-
-
-def shared_years(a, b):
-    """Share of the shorter generation that both cover: numbering differs between the sites
-    (autocentrum Touran II 2010-2015 = our Touran I facelift 2), years do not."""
-    common = min(a["to"] or 2026, b["to"] or 2026) - max(a["from"], b["from"]) + 1
-    shorter = min((a["to"] or 2026) - a["from"] + 1, (b["to"] or 2026) - b["from"] + 1)
-    return max(common, 0) / max(shorter, 1)
-
-
-def match_gens(ac_gen, our_gens):
-    """Our generations an autocentrum generation corresponds to (one or more). A brand-new
-    generation (X5 G65 2026) must not hide inside a long one that runs into the same year."""
-    def span(g):
-        return (g["to"] or 2026) - g["from"] + 1
-    return [g for g in our_gens.values() if shared_years(g, ac_gen) >= 0.6
-            and (min(span(g), span(ac_gen)) >= 2 or abs(g["from"] - ac_gen["from"]) <= 1)
-            # An old generation that only ran on to 2010 (Octavia I Tour) is not our next one.
-            and not (ac_gen["to"] and ac_gen["to"] <= SINCE and g["from"] - ac_gen["from"] > 5)]
-
-
-CODE = re.compile(r"^([IVX]+|[A-Z]{0,3}\d[\w/-]*|T\d)$")
-
-
-def group_body_level(generations):
-    """Some models list bodies right on the model page (Kadjar: "Crossover", "Crossover
-    Facelifting"; Focus Vignale: "Hatchback", "Kombi"). Those become one generation."""
-    out, pseudo = [], collections.OrderedDict()
-    for gen in generations:
-        if CODE.match(gen["name"]):
-            out.append(gen)
-            continue
-        key = gen["path"].rsplit("/", 2)[0] + "/"
-        group = pseudo.setdefault(key, {"path": key, "name": key.strip("/").split("/")[-1], "from": gen["from"],
-                                        "to": gen["to"], "bodies": [], "body_level": True})
-        group["from"] = min(group["from"], gen["from"])
-        group["to"] = None if None in (group["to"], gen["to"]) else max(group["to"], gen["to"])
-        for body in gen["bodies"]:
-            group["bodies"].append({**body, "name": gen["name"], "from": gen["from"], "to": gen["to"]})
-    return out + list(pseudo.values())
-
-
-def engine_found(engine, rows, brand=""):
-    if "hp" not in engine:
-        return
-    fuel = AC_FUEL.get(engine["type"], "petrol")
-    # Mild hybrids: autocentrum often gives the power with the electric boost (Volvo B4 197+14 = 211,
-    # Mercedes EQ Boost C 300 258+14 = 272), so allow up to +25 KM over ours.
-    # ultimatespecs gives Mercedes 2018+ with the boost too (E 200 W214 227 = 204+23), autocentrum without.
-    mild = bool(MILD.search(engine["text"])) or (brand == "Mercedes-Benz" and engine["from"] >= 2018)
-    # Plug-in system power differs between sources by a few KM.
-    slack = 8 if fuel in ("plugin", "hybrid") else 3
-    # autocentrum files some plug-ins (X5 40e, XC90 T8 Twin Engine) under "Hybrydowe".
-    families = {FAMILY[fuel], "e"} if fuel == "hybrid" else {FAMILY[fuel]}
-    for row in rows:
-        if FAMILY[row["fuel"]] not in families:
-            continue
-        diff = engine["hp"] - row["hp"]
-        boosted = (mild or row["mild"]) and abs(diff) <= 25 and engine.get("litres") and row["litres"] \
-            and abs(float(engine["litres"]) - row["litres"]) < 0.05
-        if not (abs(diff) <= slack or abs(row["kw"] - engine["kw"]) <= slack * 2 // 3 or boosted):
-            continue
-        if engine.get("litres") and row["litres"] and abs(float(engine["litres"]) - row["litres"]) > 0.15:
-            continue
-        yield row
+from autocentrum import (AC_BASE, AC_FUEL, DRIVE_RU, FUEL_RU, GEARBOX_RU, MILD, ROOT, SINCE, body_tags, config_parts,
+                         engine_found, group_body_level, match_gens, option_label, our_generations, read_table,
+                         verdict)
 
 
 def main():
-    ours = load_ours()
+    ours = our_generations(read_table())
     source = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "data", "autocentrum-models.json")
     with open(source, encoding="utf8") as handle:
         ac = json.load(handle)
@@ -513,6 +289,9 @@ def write_report(ac, findings, stats):
                 doors["с дверьми"] += bool(body.get("doors"))
                 doors["с местами"] += bool(body.get("seats"))
 
+    table = read_table()
+    carried = collections.Counter(r.get("Источник", "") for r in table)
+    gearbox = sum(r["Коробка: откуда"].startswith("autocentrum") and r.get("Источник") != "autocentrum" for r in table)
     lines = [
         "# Проверка таблицы моделей по autocentrum.pl (B61)",
         "",
@@ -539,6 +318,10 @@ def write_report(ac, findings, stats):
         "кросс-версия, удлинённый, SUV-купе, гран купе); коробка и привод — по вариантам двигателя.",
         "",
         "## Итог",
+        "",
+        f"Уже перенесено в нашу таблицу (`tools/autocentrum.py` → `merge()`, столбец «Источник»): "
+        f"{carried['autocentrum']} строк из autocentrum, коробка у {gearbox} версий ultimatespecs. "
+        "Ниже — что осталось после переноса.",
         "",
         f"- Просмотрено на autocentrum: {stats['поколений autocentrum']} поколений, {stats['кузовов autocentrum']} "
         f"кузовов, {stats['двигателей autocentrum']} двигателей (по кузовам); найдено у нас "

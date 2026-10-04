@@ -17,7 +17,9 @@ name: an explicit marker ("Auto", "S tronic", "DSG", "xDrive", "quattro"...),
 a manual twin (the same engine is listed with and without "Auto"), or the
 model's usual drive; the version's own page wins where
 tools/enrich-model-versions.py has read it (data/model-version-details.json).
-The CSV says which.
+The CSV says which. Then tools/autocentrum.py merge() adds the second source,
+autocentrum.pl (data/autocentrum-models.json): the gearbox where an engine has one,
+generations ultimatespecs lacks, facelift years; column "Источник" says whose row.
 
     python3 tools/build-model-engine-table.py
 """
@@ -27,6 +29,8 @@ import datetime
 import json
 import os
 import re
+
+import autocentrum
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -419,6 +423,7 @@ FUEL_RU = {
     "plugin": "плагин-гибрид", "electric": "электро", "lpg": "газ (LPG)", "cng": "газ (CNG)",
     "flex": "бензин/E85 (Flexible Fuel)",
 }
+FUEL_CODE = {text: code for code, text in FUEL_RU.items()}
 AUTO = re.compile(
     r"\b(auto(?![- ]?start)|aut|automatic|automatik|s[ -]?tronic|tiptronic|multitronic|dsg|steptronic|dkg|"
     r"powershift|eat\d|e-eat\d|edc|x-?tronic|cvt|e-cvt|multidrive|geartronic|g-?tronic|\d+g-?(tronic|dct)|"
@@ -548,7 +553,7 @@ def main():
     details_path = os.path.join(ROOT, "data", "model-version-details.json")
     version_pages = json.load(open(details_path, encoding="utf8")) if os.path.exists(details_path) else {}
     today = datetime.date.today().isoformat()
-    rows, index, problems = [], {}, []
+    rows, index, problems, model_ids = [], {}, [], {}
 
     for model in source["models"]:
         mapping = GENERATIONS.get((model["brand"], model["model"]), {})
@@ -596,16 +601,26 @@ def main():
                         "Привод: откуда": drive_src,
                         "Ссылка": v["url"],
                     })
-                    key = (model["brand"], model["model"])
-                    gens = index.setdefault(key, collections.OrderedDict())
-                    gkey = (code, phase, years)
-                    entry = gens.setdefault(gkey, {"code": code, "phase": phase, "years": years,
-                                                   "mobileModel": mobile_model or model["model"],
-                                                   "bodies": set(), "engines": {}})
-                    entry["bodies"].add(body["name"])
-                    if v["hp"]:
-                        sizes = entry["engines"].setdefault(fuel, {})
-                        sizes.setdefault(str(v["cc"] or 0), set()).add(v["hp"])
+                    model_ids[(model["brand"], model["label"])] = model["model"]
+
+    # Second source: what autocentrum.pl has and ultimatespecs has not (tools/autocentrum.py).
+    ac_path = os.path.join(ROOT, "data", "autocentrum-models.json")
+    if os.path.exists(ac_path):
+        with open(ac_path, encoding="utf8") as handle:
+            for name, count in sorted(autocentrum.merge(rows, json.load(handle)).items()):
+                print(f"   autocentrum: {name}: {count}")
+
+    for row in rows:
+        key = (row["Марка"], model_ids[(row["Марка"], row["Модель"])])
+        gens = index.setdefault(key, collections.OrderedDict())
+        gkey = (row["Поколение"], row["Этап"], row["Годы (проверено)"])
+        entry = gens.setdefault(gkey, {"code": row["Поколение"], "phase": row["Этап"],
+                                       "years": row["Годы (проверено)"], "mobileModel": row["Модель mobile.de"],
+                                       "bodies": set(), "engines": {}})
+        entry["bodies"].add(row["Кузов"])
+        if row["Мощность, л.с."]:
+            sizes = entry["engines"].setdefault(FUEL_CODE[row["Топливо"]], {})
+            sizes.setdefault(str(row["Объём, см³"] or 0), set()).add(int(row["Мощность, л.с."]))
 
     columns = list(rows[0].keys()) if rows else []
     with open(os.path.join(ROOT, "data", "model-engines.csv"), "w", encoding="utf-8-sig", newline="") as handle:
@@ -644,8 +659,9 @@ def write_markdown(filter_index, rows, problems, today):
         "> (открывается в Excel), для фильтров — `data/model-filter-index.json`. Не править руками.",
         "> Строка = поколение и этап (дорестайлинг / рестайлинг): топливо → объём см³ (л) → мощности в л.с.",
         "> «Годы (проверено)» исправляют источник там, где он пишет «н. в.» про снятую модель.",
-        f"> Версий: {len(rows)}. Коробка не определена по названию у {unknown_gearbox} версий",
-        "> (в CSV колонка «Коробка: откуда»).",
+        f"> Версий: {len(rows)} (из них autocentrum.pl: {sum(r['Источник'] == 'autocentrum' for r in rows)},"
+        " `docs/MODEL-AUTOCENTRUM-CHECK.md`). Коробка не определена",
+        f"> у {unknown_gearbox} версий (в CSV колонка «Коробка: откуда»).",
         "",
     ]
     if problems:
