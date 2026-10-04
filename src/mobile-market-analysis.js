@@ -341,6 +341,40 @@
       tableMileage: "Przebieg",
       tableOpen: "Otwórz",
       tableSortHint: "Kliknij nagłówek, aby posortować.",
+      segmentsHeading: "Cena a parametry",
+      segmentsLead: "Mediana ceny w grupach ofert{turnkey}, pod nią liczba ofert i różnica do mediany całego rynku. Grupa poniżej 3 ofert — bez ceny. Pokazane są tylko parametry, których wyszukiwanie nie ustala.",
+      segmentsTurnkey: " (oferty zagraniczne: {label})",
+      segmentYear: "Rok produkcji",
+      segmentMileage: "Przebieg",
+      segmentDisplacement: "Pojemność silnika",
+      segmentPower: "Moc",
+      segmentGearbox: "Skrzynia biegów",
+      segmentMedian: "Mediana",
+      thousandKm: "tys. km",
+      tablePower: "Silnik",
+      tableFuel: "Paliwo",
+      tableGearbox: "Skrzynia",
+      tableSeller: "Sprzedawca",
+      tablePlace: "Lokalizacja",
+      tableDeviation: "Od mediany",
+      tableDeviationHint: "Różnica ceny do mediany ofert tego rynku",
+      gearboxShort: { automatic: "Automat", manual: "Manual" },
+      fuelShort: { diesel: "Diesel", petrol: "Benzyna", hybrid: "Hybryda", plugin: "Plug-in", electric: "Elektryk", lpg: "LPG", cng: "CNG" },
+      sellerDealer: "Dealer",
+      sellerPrivate: "Prywatny",
+      tableSearch: "Szukaj w ofertach: wersja, miasto, paliwo…",
+      tableSearchLabel: "Szukaj w aktualnych ofertach",
+      tableSearchCount: "{shown} z {total}",
+      tableNoMatch: "Żadna oferta nie pasuje do wyszukiwania.",
+      carCompareColumn: "VS",
+      carCompareColumnHint: "Zaznacz 2–3 oferty w kolumnie VS, aby je porównać.",
+      carComparePick: "Porównaj: {title}",
+      carCompareHeading: "Porównanie ofert",
+      carCompareMore: "Zaznacz jeszcze 1–2 oferty w kolumnie VS.",
+      carCompareFull: "Porównać można najwyżej 3 oferty.",
+      carCompareClear: "Wyczyść",
+      carCompareRemove: "Usuń z porównania: {title}",
+      carCompareCheapest: "najtańsza",
       axisMileage: "Oś pozioma: przebieg",
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
@@ -790,6 +824,40 @@
       tableMileage: "Пробег",
       tableOpen: "Открыть",
       tableSortHint: "Нажми на заголовок, чтобы отсортировать.",
+      segmentsHeading: "Цена и параметры",
+      segmentsLead: "Медиана цены в группах предложений{turnkey}, под ней — число предложений и разница с медианой всего рынка. Группа меньше 3 предложений — без цены. Показаны только параметры, которые поиск не задаёт.",
+      segmentsTurnkey: " (зарубежные: {label})",
+      segmentYear: "Год выпуска",
+      segmentMileage: "Пробег",
+      segmentDisplacement: "Объём двигателя",
+      segmentPower: "Мощность",
+      segmentGearbox: "Коробка передач",
+      segmentMedian: "Медиана",
+      thousandKm: "тыс. км",
+      tablePower: "Двигатель",
+      tableFuel: "Топливо",
+      tableGearbox: "Коробка",
+      tableSeller: "Продавец",
+      tablePlace: "Город",
+      tableDeviation: "От медианы",
+      tableDeviationHint: "Разница цены с медианой предложений этого рынка",
+      gearboxShort: { automatic: "АКПП", manual: "МКПП" },
+      fuelShort: { diesel: "Дизель", petrol: "Бензин", hybrid: "Гибрид", plugin: "Plug-in", electric: "Электро", lpg: "Газ (LPG)", cng: "Метан (CNG)" },
+      sellerDealer: "Дилер",
+      sellerPrivate: "Частный",
+      tableSearch: "Поиск в предложениях: версия, город, топливо…",
+      tableSearchLabel: "Поиск в актуальных предложениях",
+      tableSearchCount: "{shown} из {total}",
+      tableNoMatch: "Ни одно предложение не подходит под поиск.",
+      carCompareColumn: "VS",
+      carCompareColumnHint: "Отметь 2–3 предложения в колонке VS, чтобы их сравнить.",
+      carComparePick: "Сравнить: {title}",
+      carCompareHeading: "Сравнение предложений",
+      carCompareMore: "Отметь ещё 1–2 предложения в колонке VS.",
+      carCompareFull: "Сравнить можно не больше 3 предложений.",
+      carCompareClear: "Очистить",
+      carCompareRemove: "Убрать из сравнения: {title}",
+      carCompareCheapest: "самое дешёвое",
       axisMileage: "Горизонтальная ось: пробег",
       sourceOtomoto: "otomoto.pl",
       sourceMobile: "mobile.de",
@@ -956,6 +1024,11 @@
   let activeAnalysis = null;
   let otomotoTotal = 0;
   let tableSort = { key: "price", direction: "asc" };
+  // "Aktualne oferty" (B21): the search typed above the table and the 2–3
+  // offers picked for comparison; both live while the page is open.
+  let tableQuery = "";
+  let carCompareKeys = [];
+  const foldText = (value) => String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/ł/g, "l").replace(/Ł/g, "L").toLowerCase();
   // Chart view: which marketplaces are shown and what the horizontal axis carries.
   // AutoScout24 (2026-10-03): the offers mobile.de does not have, in the
   // same countries (page 1 "Kraj"); see src/autoscout-search.js.
@@ -1221,6 +1294,8 @@
       bodyType: String(listingValue(row, ["bodytype"]) || "").slice(0, 40),
       displacementCcm: parseMarketNumber(listingValue(row, ["displacementccm"])) || null,
       seller: String(listingValue(row, ["seller"]) || "").slice(0, 12),
+      // "automatic" / "manual" whatever the portal writes (B21, 04.10).
+      gearbox: gearboxKind(listingValue(row, ["gearbox", "transmission", "skrzynia"])),
       netPrice: parseMarketNumber(listingValue(row, ["netprice"])) || 0,
       priceByn: parseMarketNumber(listingValue(row, ["pricebyn"])) || null,
       // "MM/YYYY": the month of first registration (age for customs in Belarus).
@@ -1325,6 +1400,7 @@
       const node = edge?.node || {};
       const amount = node.price?.amount || {};
       const parameters = Object.fromEntries((node.parameters || []).map((item) => [item.key, item.value]));
+      const shown = Object.fromEntries((node.parameters || []).map((item) => [item.key, item.displayValue || item.value]));
       const price = Number(amount.units ?? amount.value);
       if (!Number.isFinite(price) || price <= 0) return null;
       return {
@@ -1339,6 +1415,10 @@
         mileage: parameters.mileage || "",
         year: parameters.year || "",
         power: parameters.engine_power ? `${parameters.engine_power} KM` : "",
+        gearbox: parameters.gearbox || "",
+        fuel: String(shown.fuel_type || "").slice(0, 40),
+        displacementCcm: Number(parameters.engine_capacity) || null,
+        city: String(node.location?.city?.name || "").slice(0, 80),
         // "isGross: false" comes with "INCLUDE_VAT": the price is gross and
         // a company may deduct the VAT ("Możliwość odliczenia VAT"; checked on
         // 132 offers 2026-10-03, the ads say "49.999 zł brutto, 40.649 netto").
@@ -1468,6 +1548,7 @@
       // Blocket counts in Swedish mil (10 km).
       mileage: Number.isFinite(mileageMil) && mileageMil > 0 ? String(Math.round(mileageMil * kmPerMil)) : "",
       fuel: String(doc.fuel || "").slice(0, 40),
+      gearbox: String(doc.transmission || "").slice(0, 20),
       city: String(doc.location || "").slice(0, 80),
       country: "SE",
       // "Företag" = a company (dealer); the ad's date (ms) for "w ofercie od".
@@ -1661,6 +1742,7 @@
       mileage: Number(property("mileage_km")) > 0 ? String(property("mileage_km")) : "",
       power: property("engine_power") ? `${property("engine_power")} KM` : "",
       fuel: String(property("engine_type") || "").slice(0, 40),
+      gearbox: String(property("transmission_type") || "").slice(0, 20),
       displacementCcm: Number.isFinite(capacity) && capacity > 0 ? Math.round(capacity * 1000) : null,
       city: String(advert.locationName || "").slice(0, 80),
       country: "BY",
@@ -2045,6 +2127,36 @@
     } catch {
       return `id:${listing.id || `${listing.price}|${listing.year}|${listing.mileage}`}`;
     }
+  }
+
+  // Gearbox as a code: "Schaltgetriebe", "Manuell", "manual", "механика" /
+  // "Automatik", "Automat", "automatic", "автомат", "робот" (mobile.de counts
+  // every two-pedal box as automatic).
+  function gearboxKind(value) {
+    const text = String(value || "").toLowerCase();
+    if (/schalt|manu|механ/.test(text)) return "manual";
+    if (/auto|robot|робот|вариатор|cvt|dsg|автомат/.test(text)) return "automatic";
+    return "";
+  }
+
+  // Fuel as a code: "Diesel", "Benzin", "Bensin", "бензин", "Hybrid
+  // (Benzin/Elektro)", "Benzyna+LPG", "Hybrid gas" (blocket: CNG)...
+  function fuelKind(value) {
+    const text = String(value || "").toLowerCase().trim();
+    if (!text) return "";
+    if (/plug|phev|laddhybrid/.test(text)) return "plugin";
+    if (/cng|erdgas|metan|метан|biogas|\bgas$/.test(text)) return "cng";
+    if (/lpg|autogas|gaz|газ/.test(text)) return "lpg";
+    if (/hybr|гибрид/.test(text)) return "hybrid";
+    if (/elektr|electric|^el$|электр/.test(text)) return "electric";
+    if (/diesel|дизель/.test(text)) return "diesel";
+    if (/benz|petrol|gasoline|bensin|бензин/.test(text)) return "petrol";
+    return "";
+  }
+
+  // Power as a number of KM (0 when unknown).
+  function powerKmOf(value) {
+    return Number(powerInKm(value).match(/^(\d+) KM$/)?.[1]) || 0;
   }
 
   // Power as KM whatever the portal writes ("110 kW (150 PS)", "150 hk").
@@ -5007,6 +5119,7 @@
     const sourceName = (source) => (portalName(source));
     const listingKey = (listing) => listing.url || `${listing.source}-${listing.id}`;
     let statsContent = "";
+    let segmentsContent = "";
     let offersContent = "";
     let summaryContent = "";
     let marketContent = `
@@ -5153,6 +5266,17 @@
       const overallTrend = buildTrend(plotted, shownSources);
       const trendLine = overallTrend.html;
       let trendMedians = overallTrend.medians;
+
+      // Each market's median as drawn (foreign offers "na gotowo"): the
+      // segments and the "Od mediany" column compare with it (B20, B21).
+      const sourceMedian = Object.fromEntries(shownSources.map((source) => {
+        const prices = marketListings.filter((listing) => listing.source === source).map((listing) => listing.price).sort((left, right) => left - right);
+        return [source, prices.length ? percentile(prices, 0.5) : 0];
+      }));
+      [...marketListings, ...suspectListings].forEach((listing) => {
+        listing.powerKm = powerKmOf(listing.power);
+        listing.deviation = sourceMedian[listing.source] ? (listing.price - sourceMedian[listing.source]) / sourceMedian[listing.source] : 0;
+      });
 
       // The table lists every offer on the chart, the left-out ones greyed.
       const sortedListings = [...marketListings, ...suspectListings].sort((left, right) => {
@@ -5741,6 +5865,251 @@
           ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.hiddenNoAxis, hiddenByAxis))}</p>` : ""}
 
 `;
+      // ---- B20 (04.10): the price by year, mileage, engine and gearbox -----
+      // Per market, only what the search leaves open: one year, one engine
+      // (od = do) or a chosen gearbox give a single group. Mileage always.
+      const locale = currentLanguage() === "ru" ? "ru-RU" : "pl-PL";
+      const fixedRange = (from, to) => Boolean(from) && Boolean(to) && Number(from) === Number(to);
+      const byNumber = (left, right) => left - right;
+      const SEGMENT_MIN = 3;
+      const litres = (ccm) => `${(Math.round(Number(ccm) / 100) / 10).toLocaleString(locale, { minimumFractionDigits: 1, maximumFractionDigits: 1 })} ${currentLanguage() === "ru" ? "л" : "l"}`;
+      const segmentDimensions = [];
+      const addDimension = (title, groupOf, labelOf, order = byNumber) => {
+        const groups = new Map();
+        marketListings.forEach((listing) => {
+          const group = groupOf(listing);
+          if (group === null || group === undefined || group === "") return;
+          if (!groups.has(group)) groups.set(group, []);
+          groups.get(group).push(listing);
+        });
+        // A table only with two groups of enough offers to compare.
+        if ([...groups.values()].filter((items) => items.length >= SEGMENT_MIN).length < 2) return;
+        segmentDimensions.push({ title, rows: [...groups.keys()].sort(order).map((group) => ({ label: labelOf(group, groups.get(group)), listings: groups.get(group) })) });
+      };
+      if (!fixedRange(filters.yearFrom, filters.yearTo)) {
+        const years = marketListings.map((listing) => Number(listing.year)).filter((year) => year > 1900);
+        if (years.length) {
+          const first = Math.min(...years);
+          const span = Math.max(...years) - first + 1;
+          const size = span > 8 ? Math.ceil(span / 6) : 1;
+          addDimension(c.segmentYear,
+            (listing) => (Number(listing.year) > 1900 ? first + Math.floor((Number(listing.year) - first) / size) * size : null),
+            (start) => (size === 1 ? String(start) : `${start}–${start + size - 1}`));
+        }
+      }
+      const kms = marketListings.map((listing) => Number(listing.mileage)).filter((km) => km > 0);
+      if (kms.length) {
+        const low = Math.min(...kms);
+        const high = Math.max(...kms);
+        const step = [10000, 20000, 25000, 50000, 100000].find((size) => Math.floor(high / size) - Math.floor(low / size) + 1 <= 6) || 100000;
+        const thousands = (value) => numbers.format(Math.round(value / 1000));
+        addDimension(c.segmentMileage,
+          (listing) => (Number(listing.mileage) > 0 ? Math.floor(Number(listing.mileage) / step) * step : null),
+          (start) => `${thousands(start)}–${thousands(start + step)} ${c.thousandKm}`);
+      }
+      if (!fixedRange(filters.displacementFrom, filters.displacementTo)) {
+        addDimension(c.segmentDisplacement,
+          (listing) => (Number(listing.displacementCcm) > 500 ? Math.round(Number(listing.displacementCcm) / 100) : null),
+          (tenths) => litres(tenths * 100));
+      }
+      if (!fixedRange(filters.powerFrom, filters.powerTo)) {
+        // 149 and 150 KM are one engine; many engines go in 25 KM steps. The
+        // label is the figure most offers of the group state.
+        const groupsOf5 = new Set(marketListings.map((listing) => Math.round(listing.powerKm / 5)).filter((group) => group > 0));
+        const size = groupsOf5.size > 7 ? 25 : 5;
+        addDimension(c.segmentPower,
+          (listing) => (listing.powerKm > 0 ? (size === 5 ? Math.round(listing.powerKm / 5) * 5 : Math.floor(listing.powerKm / 25) * 25) : null),
+          (group, items) => {
+            if (size === 25) return powerText(`${group}–${group + 24} KM`);
+            const counts = new Map();
+            items.forEach((listing) => counts.set(listing.powerKm, (counts.get(listing.powerKm) || 0) + 1));
+            return powerText(`${[...counts].sort((left, right) => right[1] - left[1])[0][0]} KM`);
+          });
+      }
+      if (!filters.gearbox || filters.gearbox === "any") {
+        addDimension(c.segmentGearbox, (listing) => listing.gearbox || null,
+          (kind) => (kind === "automatic" ? c.gearboxAutomatic : c.gearboxManual),
+          (left, right) => String(left).localeCompare(String(right)));
+      }
+      const percentFrom = (value, base) => {
+        const percent = Math.round(((value - base) / base) * 100);
+        return percent === 0 ? "±0%" : `${percent > 0 ? "+" : "−"}${Math.abs(percent)}%`;
+      };
+      const segmentCell = (items, source) => {
+        const own = items.filter((listing) => listing.source === source);
+        if (!own.length) return '<td class="isNum isEmpty">—</td>';
+        const count = withCount(c.panelOffers, own.length);
+        if (own.length < SEGMENT_MIN) return `<td class="isNum isFew"><b>—</b><small>${escapeMarketHtml(count)}</small></td>`;
+        const median = percentile(own.map((listing) => listing.price).sort(byNumber), 0.5);
+        const base = sourceMedian[source];
+        const tone = !base ? "" : median < base * 0.98 ? " isBelow" : median > base * 1.02 ? " isAbove" : "";
+        return `<td class="isNum${tone}"><b>${escapeMarketHtml(formatMarketPrice(median))}</b><small>${escapeMarketHtml(count)}${base ? ` · <span>${escapeMarketHtml(percentFrom(median, base))}</span>` : ""}</small></td>`;
+      };
+      const foreignShown = marketListings.some((listing) => listing.turnkeyPln);
+      segmentsContent = segmentDimensions.length ? `
+        <section class="mobileMarketCard mobileMarketSegmentsCard" aria-label="${escapeMarketHtml(c.segmentsHeading)}" data-report-list-hide>
+          ${blockTitle("settings", c.segmentsHeading)}
+          <p class="mobileMarketSegmentsLead">${escapeMarketHtml(c.segmentsLead.replace("{turnkey}", foreignShown ? c.segmentsTurnkey.replace("{label}", turnkeyLabel.replace(/\*$/, "")) : ""))}</p>
+          <div class="mobileMarketSegments">
+            ${segmentDimensions.map((dimension) => `
+              <div class="mobileMarketSegmentScroll">
+                <table class="mobileMarketSegmentTable">
+                  <caption>${escapeMarketHtml(dimension.title)}</caption>
+                  <thead>
+                    <tr>
+                      <th scope="col"><span class="srOnly">${escapeMarketHtml(dimension.title)}</span></th>
+                      ${shownSources.map((source) => `<th scope="col" class="isNum">${shownSources.length > 1 ? marketBadge(source) : escapeMarketHtml(c.segmentMedian)}</th>`).join("")}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${dimension.rows.map((row) => `
+                      <tr>
+                        <th scope="row">${escapeMarketHtml(row.label)}</th>
+                        ${shownSources.map((source) => segmentCell(row.listings, source)).join("")}
+                      </tr>`).join("")}
+                  </tbody>
+                </table>
+              </div>`).join("")}
+          </div>
+        </section>` : "";
+
+      // ---- B21 (04.10): the columns the search leaves open -------------------
+      // Power, fuel, gearbox and seller only when the search does not fix
+      // them: the client sees at once that the price depends on them.
+      const anyListing = (test) => sortedListings.some(test);
+      const extra = {
+        engine: !(fixedRange(filters.powerFrom, filters.powerTo) && fixedRange(filters.displacementFrom, filters.displacementTo))
+          && anyListing((listing) => listing.powerKm > 0 || Number(listing.displacementCcm) > 500),
+        fuel: (filters.fuels || []).length !== 1 && anyListing((listing) => fuelKind(listing.fuel)),
+        gearbox: (!filters.gearbox || filters.gearbox === "any") && anyListing((listing) => listing.gearbox),
+        seller: !filters.seller && anyListing((listing) => listing.seller === "dealer" || listing.seller === "private"),
+        place: anyListing((listing) => listing.city),
+      };
+      const engineText = (listing) => [
+        Number(listing.displacementCcm) > 500 ? litres(listing.displacementCcm) : "",
+        listing.powerKm ? powerText(`${listing.powerKm} KM`) : "",
+      ].filter(Boolean).join(" · ") || "—";
+      const fuelText = (listing) => c.fuelShort[fuelKind(listing.fuel)] || "—";
+      const gearboxText = (listing) => c.gearboxShort[listing.gearbox] || "—";
+      const sellerText = (listing) => (listing.seller === "dealer" ? c.sellerDealer : listing.seller === "private" ? c.sellerPrivate : "—");
+      const placeText = (listing) => [listing.city, listing.country && !["PL", "SE", "BY"].includes(listing.country) ? listing.country : ""].filter(Boolean).join(", ") || "—";
+      const deviationText = (listing) => (sourceMedian[listing.source] ? percentFrom(listing.price, sourceMedian[listing.source]) : "—");
+      const priceHtml = (listing) => (listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln
+        ? `<b class="mobileMarketTurnkeyPrice">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
+        : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`);
+      // [key, header, sortable, class, weight (its share of the width), cell]
+      const tableColumns = [
+        ["number", "#", false, "isNum mobileMarketRowNumber", 4],
+        ["pick", c.carCompareColumn, false, "mobileMarketPickCol", 4],
+        ["title", c.tableTitle, true, "", 21],
+        ["year", c.tableYear, true, "isNum", 6],
+        ["mileage", c.tableMileage, true, "isNum", 10],
+        ...(extra.engine ? [["powerKm", c.tablePower, true, "isNum", 10]] : []),
+        ...(extra.fuel ? [["fuel", c.tableFuel, false, "", 8]] : []),
+        ...(extra.gearbox ? [["gearbox", c.tableGearbox, false, "", 8]] : []),
+        ["price", c.tablePrice, true, "isNum", byMode ? 24 : 16],
+        ["deviation", c.tableDeviation, true, "isNum", 8],
+        // The seller with the town under it (or the town alone).
+        ...(extra.seller || extra.place ? [["seller", extra.seller ? c.tableSeller : c.tablePlace, false, "", 11]] : []),
+        ["source", c.tableSource, false, "", 9],
+        ["link", c.tableLink, false, "mobileMarketTableLinkHead", 5],
+      ];
+      const weights = tableColumns.reduce((sum, column) => sum + column[4], 0);
+      // On screen the table keeps ~9 px per weight and scrolls inside its
+      // box below that; the report (1100 px) fits it to the page.
+      const tableMinWidth = Math.max(760, weights * 9);
+      const searchText = (listing) => foldText([
+        fullTitle(listing), listing.subtitle, listing.year, listing.city, listing.country,
+        fuelText(listing), gearboxText(listing), sellerText(listing), sourceName(listing.source),
+      ].filter(Boolean).join(" "));
+      const queryWords = foldText(tableQuery).split(/\s+/).filter(Boolean);
+      const matchesQuery = (listing) => queryWords.every((word) => searchText(listing).includes(word));
+      const shownRows = sortedListings.filter(matchesQuery).length;
+      // Offers picked for comparison: kept while they are in the table.
+      const byKey = new Map(sortedListings.map((listing) => [listingKey(listing), listing]));
+      carCompareKeys = carCompareKeys.filter((key) => byKey.has(key));
+      const picked = carCompareKeys.map((key) => byKey.get(key));
+      const pickedFull = picked.length >= 3;
+      const cheapestPicked = picked.length > 1 ? Math.min(...picked.map((listing) => listing.price)) : 0;
+      const compareRows = [
+        [c.tablePrice, (listing) => priceHtml(listing) + (listing.price === cheapestPicked ? `<small class="mobileMarketCheapest">${escapeMarketHtml(c.carCompareCheapest)}</small>` : "")],
+        [c.tableDeviation, (listing) => escapeMarketHtml(deviationText(listing))],
+        [c.tableYear, (listing) => escapeMarketHtml(listing.year ? String(listing.year) : "—")],
+        [c.tableMileage, (listing) => escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} ${kmUnit()}` : "—")],
+        [c.tablePower, (listing) => escapeMarketHtml(engineText(listing))],
+        [c.tableFuel, (listing) => escapeMarketHtml(fuelText(listing))],
+        [c.tableGearbox, (listing) => escapeMarketHtml(gearboxText(listing))],
+        [c.tableSeller, (listing) => escapeMarketHtml(sellerText(listing))],
+        [c.tablePlace, (listing) => escapeMarketHtml(placeText(listing))],
+        [c.tableSource, (listing) => `${marketBadge(listing.source)}${listing.url ? ` ${brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`)}` : ""}`],
+      ];
+      const carCompareHtml = !picked.length ? "" : `
+        <section class="mobileMarketCarCompare" aria-label="${escapeMarketHtml(c.carCompareHeading)}">
+          <div class="mobileMarketCarCompareHead">
+            <strong>${escapeMarketHtml(c.carCompareHeading)}</strong>
+            <span>${escapeMarketHtml(picked.length < 2 ? c.carCompareMore : pickedFull ? c.carCompareFull : "")}</span>
+            <button class="mobileMarketImportClear" type="button" data-mobile-market-compare-clear data-report-hide>${escapeMarketHtml(c.carCompareClear)}</button>
+          </div>
+          <div class="mobileMarketCarCompareScroll">
+            <table class="mobileMarketCarCompareTable">
+              <thead>
+                <tr>
+                  <th scope="col"><span class="srOnly">${escapeMarketHtml(c.carCompareHeading)}</span></th>
+                  ${picked.map((listing) => `
+                    <th scope="col">
+                      <span>${escapeMarketHtml(fullTitle(listing) || sourceName(listing.source))}</span>
+                      ${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}
+                      <button type="button" data-mobile-market-compare-remove="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(c.carCompareRemove.replace("{title}", fullTitle(listing) || sourceName(listing.source)))}" data-report-hide>×</button>
+                    </th>`).join("")}
+                </tr>
+              </thead>
+              <tbody>
+                ${compareRows.map(([label, cell]) => `
+                  <tr>
+                    <th scope="row">${escapeMarketHtml(label)}</th>
+                    ${picked.map((listing) => `<td>${cell(listing)}</td>`).join("")}
+                  </tr>`).join("")}
+              </tbody>
+            </table>
+          </div>
+        </section>`;
+      const cellHtml = (key, listing, index) => {
+        switch (key) {
+          case "number": return String(index + 1);
+          case "pick": {
+            const on = carCompareKeys.includes(listingKey(listing));
+            return `<input type="checkbox" data-mobile-market-compare-pick="${escapeMarketHtml(listingKey(listing))}"${on ? " checked" : ""}${!on && pickedFull ? " disabled" : ""} aria-label="${escapeMarketHtml(c.carComparePick.replace("{title}", [fullTitle(listing) || sourceName(listing.source), listing.year, formatMarketPrice(listing.price)].filter(Boolean).join(", ")))}" />`;
+          }
+          case "title": return `${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}`;
+          case "year": return escapeMarketHtml(listing.year ? String(listing.year) : "—");
+          case "mileage": return escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} ${kmUnit()}` : "—");
+          case "powerKm": {
+            // Power first (it sorts the column), the engine size under it.
+            const size = Number(listing.displacementCcm) > 500 ? litres(listing.displacementCcm) : "";
+            if (!listing.powerKm) return size ? escapeMarketHtml(size) : "—";
+            return `${escapeMarketHtml(powerText(`${listing.powerKm} KM`))}${size ? `<small>${escapeMarketHtml(size)}</small>` : ""}`;
+          }
+          case "fuel": return escapeMarketHtml(fuelText(listing));
+          case "gearbox": return escapeMarketHtml(gearboxText(listing));
+          case "price": return priceHtml(listing);
+          case "deviation": return escapeMarketHtml(deviationText(listing));
+          case "seller": return extra.seller
+            ? `${escapeMarketHtml(sellerText(listing))}${listing.city ? `<small>${escapeMarketHtml(placeText(listing))}</small>` : ""}`
+            : escapeMarketHtml(placeText(listing));
+          case "source": return marketBadge(listing.source);
+          case "link": return listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : "—";
+          default: return "";
+        }
+      };
+      const cellClass = (key, listing, base) => {
+        const classes = [base];
+        if (key === "title") classes.push("mobileMarketTableTitle");
+        if (key === "link") classes.push("mobileMarketTableLink");
+        if (key === "seller" || key === "powerKm") classes.push("mobileMarketSellerCell");
+        if (key === "deviation" && sourceMedian[listing.source]) classes.push(listing.deviation <= -0.02 ? "isBelow" : listing.deviation >= 0.02 ? "isAbove" : "");
+        return classes.filter(Boolean).join(" ");
+      };
+
       offersContent = `
         <div class="mobileMarketTableBlock">
           <div class="mobileMarketTableHead">
@@ -5751,31 +6120,27 @@
               <span class="mobileMarketSortHint">${escapeMarketHtml(c.tableSortHint)}</span>
             </div>
           </div>
+          <div class="mobileMarketTableFind" data-report-hide>
+            <input class="mobileMarketTableSearch" type="search" autocomplete="off" data-mobile-market-table-search value="${escapeMarketHtml(tableQuery)}" placeholder="${escapeMarketHtml(c.tableSearch)}" aria-label="${escapeMarketHtml(c.tableSearchLabel)}" />
+            <span class="mobileMarketTableFindCount" data-mobile-market-table-count aria-live="polite">${queryWords.length ? escapeMarketHtml(c.tableSearchCount.replace("{shown}", String(shownRows)).replace("{total}", String(sortedListings.length))) : ""}</span>
+            ${picked.length ? "" : `<span class="mobileMarketTableFindHint">${escapeMarketHtml(c.carCompareColumnHint)}</span>`}
+          </div>
+          ${carCompareHtml}
+          <p class="mobileMarketTableNoMatch" data-mobile-market-table-nomatch${queryWords.length && !shownRows ? "" : " hidden"}>${escapeMarketHtml(c.tableNoMatch)}</p>
           <div class="mobileMarketTableScroll">
-            <table class="mobileMarketTable mobileMarketOffersTable${byMode ? " isByPrices" : ""}">
+            <table class="mobileMarketTable mobileMarketOffersTable${byMode ? " isByPrices" : ""}" style="min-width:${tableMinWidth}px">
               <thead>
                 <tr>
-                  <th scope="col" class="isNum mobileMarketRowNumber">#</th>
-                  ${[["title", c.tableTitle], ["year", c.tableYear], ["mileage", c.tableMileage], ["price", c.tablePrice]].map(([key, label]) => `
-                    <th scope="col"${key === "title" ? "" : ' class="isNum"'}>
-                      <button type="button" data-mobile-market-sort="${key}">${escapeMarketHtml(label)}${tableSort.key === key ? (tableSort.direction === "asc" ? " ↑" : " ↓") : ""}</button>
+                  ${tableColumns.map(([key, label, sortable, cls, weight]) => `
+                    <th scope="col"${cls ? ` class="${cls}"` : ""} style="width:${((weight / weights) * 100).toFixed(2)}%"${key === "pick" ? ` data-report-hide title="${escapeMarketHtml(c.carCompareColumnHint)}"` : ""}${key === "deviation" ? ` title="${escapeMarketHtml(c.tableDeviationHint)}"` : ""}>
+                      ${sortable ? `<button type="button" data-mobile-market-sort="${key}">${escapeMarketHtml(label)}${tableSort.key === key ? (tableSort.direction === "asc" ? " ↑" : " ↓") : ""}</button>` : escapeMarketHtml(label)}
                     </th>`).join("")}
-                  <th scope="col">${escapeMarketHtml(c.tableSource)}</th>
-                  <th scope="col">${escapeMarketHtml(c.tableLink)}</th>
                 </tr>
               </thead>
               <tbody>
                 ${sortedListings.map((listing, index) => `
-                  <tr class="${listing.suspect ? "isSuspect" : marketClass(listing.price, statistics)}" data-market-key="${escapeMarketHtml(listingKey(listing))}">
-                    <td class="isNum mobileMarketRowNumber">${index + 1}</td>
-                    <td class="mobileMarketTableTitle">${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}</td>
-                    <td class="isNum">${escapeMarketHtml(listing.year ? String(listing.year) : "—")}</td>
-                    <td class="isNum">${escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} ${kmUnit()}` : "—")}</td>
-                    <td class="isNum">${listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln
-                      ? `<b class="mobileMarketTurnkeyPrice">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
-                      : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`}</td>
-                    <td>${marketBadge(listing.source)}</td>
-                    <td class="mobileMarketTableLink">${listing.url ? brandMarkLink(listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.source)}`) : "—"}</td>
+                  <tr class="${listing.suspect ? "isSuspect" : marketClass(listing.price, statistics)}" data-market-key="${escapeMarketHtml(listingKey(listing))}" data-market-search="${escapeMarketHtml(searchText(listing))}"${matchesQuery(listing) ? "" : " hidden"}>
+                    ${tableColumns.map(([key, , , cls]) => `<td class="${cellClass(key, listing, cls)}"${key === "pick" ? " data-report-hide" : ""}>${cellHtml(key, listing, index)}</td>`).join("")}
                   </tr>`).join("")}
               </tbody>
             </table>
@@ -5875,6 +6240,8 @@
         </section>
 
         ${summaryContent}
+
+        ${segmentsContent}
 
         ${offersContent ? `
           <section class="mobileMarketCard mobileMarketOffersCard" aria-label="${escapeMarketHtml(c.tableHeading)}" data-report-hide-copy>
@@ -6389,6 +6756,36 @@
     window.focus();
   };
 
+  // "Aktualne oferty" (B21): the search hides rows in place (no re-draw, the
+  // cursor stays); the 2–3 offers picked are compared above the table.
+  analysisContent.addEventListener("input", (event) => {
+    const search = event.target.closest("[data-mobile-market-table-search]");
+    if (!search) return;
+    tableQuery = search.value;
+    const words = foldText(tableQuery).split(/\s+/).filter(Boolean);
+    const rows = [...analysisContent.querySelectorAll(".mobileMarketOffersTable tbody tr")];
+    let shown = 0;
+    rows.forEach((row) => {
+      const match = words.every((word) => (row.dataset.marketSearch || "").includes(word));
+      row.hidden = !match;
+      if (match) shown += 1;
+    });
+    const count = analysisContent.querySelector("[data-mobile-market-table-count]");
+    if (count) count.textContent = words.length ? copy().tableSearchCount.replace("{shown}", String(shown)).replace("{total}", String(rows.length)) : "";
+    const none = analysisContent.querySelector("[data-mobile-market-table-nomatch]");
+    if (none) none.hidden = !words.length || shown > 0;
+  });
+  analysisContent.addEventListener("change", (event) => {
+    const pick = event.target.closest("[data-mobile-market-compare-pick]");
+    if (!pick || !activeAnalysis) return;
+    const key = pick.dataset.mobileMarketComparePick;
+    carCompareKeys = pick.checked
+      ? [...carCompareKeys.filter((item) => item !== key), key].slice(-3)
+      : carCompareKeys.filter((item) => item !== key);
+    renderAnalysis();
+    [...analysisContent.querySelectorAll("[data-mobile-market-compare-pick]")].find((input) => input.dataset.mobileMarketComparePick === key)?.focus({ preventScroll: true });
+  });
+
   // The comparison price is applied when the field is left or Enter is
   // pressed; re-drawing on every key would take the cursor out of the field.
   analysisContent.addEventListener("change", (event) => {
@@ -6500,6 +6897,17 @@
       } catch {
         // Not remembered; the switch still works on this page.
       }
+      renderAnalysis();
+      return;
+    }
+    if (event.target.closest("[data-mobile-market-compare-clear]")) {
+      carCompareKeys = [];
+      renderAnalysis();
+      return;
+    }
+    const compareRemove = event.target.closest("[data-mobile-market-compare-remove]");
+    if (compareRemove) {
+      carCompareKeys = carCompareKeys.filter((key) => key !== compareRemove.dataset.mobileMarketCompareRemove);
       renderAnalysis();
       return;
     }

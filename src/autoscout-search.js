@@ -114,6 +114,7 @@
         mileage: Number(item.tracking?.mileage) || Number(digits(item.vehicle?.mileageInKm)) || "",
         power: detail("speedometer"),
         fuel: String(item.vehicle?.fuel || "").slice(0, 40),
+        gearbox: String(item.vehicle?.transmission || detail("gearbox") || "").slice(0, 20),
         country: String(item.location?.countryCode || "").toUpperCase(),
         city: String(item.location?.city || "").slice(0, 80),
         postalCode: String(item.location?.zip || "").slice(0, 12),
