@@ -1,0 +1,4499 @@
+{
+ "generatedAt": "2026-10-04",
+ "market": "EU (PL/DE)",
+ "rows": [
+  {
+   "brand": "Audi",
+   "model": "A3",
+   "label": "A3",
+   "code": "8Y",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "S3",
+    "RS 3"
+   ],
+   "special": [
+    "edition one"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A3_8Y"
+   ],
+   "status": "проверено",
+   "note": "после рестайлинга 2024 линейки те же"
+  },
+  {
+   "brand": "Audi",
+   "model": "A3",
+   "label": "A3",
+   "code": "8V",
+   "phase": "рестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "Basis",
+    "sport",
+    "design"
+   ],
+   "sport": [
+    "S3",
+    "RS 3"
+   ],
+   "special": [
+    "S line (пакет)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A3_8V"
+   ],
+   "status": "частично проверено",
+   "note": "с рестайлинга 2016 Attraction/Ambition/Ambiente заменены на sport/design"
+  },
+  {
+   "brand": "Audi",
+   "model": "A3",
+   "label": "A3",
+   "code": "8V",
+   "phase": "дорестайлинг",
+   "years": "2012–2016",
+   "trims": [
+    "Attraction",
+    "Ambition",
+    "Ambiente"
+   ],
+   "sport": [
+    "S3",
+    "RS 3"
+   ],
+   "special": [
+    "S line (пакет)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Audi_A3",
+    "https://de.wikipedia.org/wiki/Audi_A3_8V"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "A3",
+   "label": "A3",
+   "code": "8P",
+   "phase": "весь выпуск",
+   "years": "2003–2013",
+   "trims": [
+    "Attraction",
+    "Ambition",
+    "Ambiente"
+   ],
+   "sport": [
+    "S3",
+    "RS 3"
+   ],
+   "special": [
+    "S line (только с Ambition)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A3_8P"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "A4",
+   "label": "A4",
+   "code": "B9",
+   "phase": "рестайлинг",
+   "years": "2019–2024",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "S4",
+    "RS 4"
+   ],
+   "special": [
+    "Business Edition (PL)",
+    "allroad quattro"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A4_B9",
+    "https://www.audi.pl/pl/business-edition/"
+   ],
+   "status": "частично проверено",
+   "note": "названия линеек после рестайлинга 2019 — как у A6 C8 и Q5 FY"
+  },
+  {
+   "brand": "Audi",
+   "model": "A4",
+   "label": "A4",
+   "code": "B9",
+   "phase": "дорестайлинг",
+   "years": "2015–2019",
+   "trims": [
+    "Basis",
+    "sport",
+    "design"
+   ],
+   "sport": [
+    "S4",
+    "RS 4"
+   ],
+   "special": [
+    "S line (пакет)",
+    "allroad quattro"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A4_B9"
+   ],
+   "status": "проверено",
+   "note": "включая обновление 2018–2019"
+  },
+  {
+   "brand": "Audi",
+   "model": "A4",
+   "label": "A4",
+   "code": "B8",
+   "phase": "весь выпуск",
+   "years": "2007–2015",
+   "trims": [
+    "Attraction",
+    "Ambition",
+    "Ambiente"
+   ],
+   "sport": [
+    "S4",
+    "RS 4"
+   ],
+   "special": [
+    "S line (пакет)",
+    "allroad quattro"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A4_B8"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "A5",
+   "label": "A5",
+   "code": "B10",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "S5"
+   ],
+   "special": [
+    "edition one"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A5_B10"
+   ],
+   "status": "проверено",
+   "note": "новая A5 заменила A4 (седан = A5 Limousine, универсал = A5 Avant)"
+  },
+  {
+   "brand": "Audi",
+   "model": "A5",
+   "label": "A5",
+   "code": "F5",
+   "phase": "рестайлинг",
+   "years": "2020–2024",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "S5",
+    "RS 5"
+   ],
+   "special": [],
+   "sources": [],
+   "status": "проверить",
+   "note": "по аналогии с A4 B9 после рестайлинга"
+  },
+  {
+   "brand": "Audi",
+   "model": "A5",
+   "label": "A5",
+   "code": "F5",
+   "phase": "дорестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "Basis",
+    "sport",
+    "design"
+   ],
+   "sport": [
+    "S5",
+    "RS 5"
+   ],
+   "special": [
+    "S line (пакет)",
+    "Audi design selection"
+   ],
+   "sources": [
+    "https://www.autobild.de/artikel/audi-a5-sportback-f5-gebrauchtwagen-test-23582547.html"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "A5",
+   "label": "A5",
+   "code": "8T",
+   "phase": "весь выпуск",
+   "years": "2007–2016",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "S5",
+    "RS 5"
+   ],
+   "special": [
+    "S line (пакет)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A5_8T"
+   ],
+   "status": "частично проверено",
+   "note": "отдельных линеек в DE нет, только пакеты"
+  },
+  {
+   "brand": "Audi",
+   "model": "A6",
+   "label": "A6",
+   "code": "C9",
+   "phase": "дорестайлинг",
+   "years": "2025–н. в.",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "S6"
+   ],
+   "special": [
+    "edition one"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": "по аналогии с A5 B10 / Q5 GU"
+  },
+  {
+   "brand": "Audi",
+   "model": "A6",
+   "label": "A6",
+   "code": "C8",
+   "phase": "рестайлинг",
+   "years": "2023–2025",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "S6",
+    "RS 6"
+   ],
+   "special": [
+    "Business Edition (PL)",
+    "allroad quattro"
+   ],
+   "sources": [
+    "https://de.motor1.com/news/669693/audi-a6-a7-modelljahr-2024/",
+    "https://www.audi.pl/pl/business-edition/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "A6",
+   "label": "A6",
+   "code": "C8",
+   "phase": "дорестайлинг",
+   "years": "2018–2023",
+   "trims": [
+    "Basis",
+    "sport",
+    "design"
+   ],
+   "sport": [
+    "S6",
+    "RS 6"
+   ],
+   "special": [
+    "S line (пакет)",
+    "design selection",
+    "allroad quattro"
+   ],
+   "sources": [
+    "https://www.autorevue.at/autowelt/audi-a6-limousine-avant-kaufberatung"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "A6",
+   "label": "A6",
+   "code": "C7",
+   "phase": "весь выпуск",
+   "years": "2011–2018",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "S6",
+    "RS 6"
+   ],
+   "special": [
+    "S line (пакет)",
+    "allroad quattro"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A6_C7"
+   ],
+   "status": "частично проверено",
+   "note": "линеек нет, только пакеты"
+  },
+  {
+   "brand": "Audi",
+   "model": "A6",
+   "label": "A6",
+   "code": "C6",
+   "phase": "весь выпуск",
+   "years": "2004–2011",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "S6",
+    "RS 6"
+   ],
+   "special": [
+    "S line (пакет)",
+    "allroad quattro"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_A6_C6"
+   ],
+   "status": "частично проверено",
+   "note": "линеек нет, только пакеты"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q3",
+   "label": "Q3",
+   "code": "FJ",
+   "phase": "дорестайлинг",
+   "years": "2025–н. в.",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [],
+   "status": "проверить",
+   "note": "по аналогии с Q5 GU"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q3",
+   "label": "Q3",
+   "code": "F3",
+   "phase": "весь выпуск",
+   "years": "2018–2025",
+   "trims": [
+    "Q3",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "RS Q3"
+   ],
+   "special": [
+    "Business Edition (PL)",
+    "Sportback (кузов)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_Q3_F3",
+    "https://www.audi.pl/pl/business-edition/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "Q3",
+   "label": "Q3",
+   "code": "8U",
+   "phase": "весь выпуск",
+   "years": "2011–2018",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "RS Q3"
+   ],
+   "special": [
+    "S line (пакет)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_Q3_8U"
+   ],
+   "status": "частично проверено",
+   "note": "линеек нет, только пакеты"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q5",
+   "label": "Q5",
+   "code": "GU",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Basis",
+    "Advanced",
+    "S line"
+   ],
+   "sport": [
+    "SQ5"
+   ],
+   "special": [
+    "edition one"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_Q5_GU"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "Q5",
+   "label": "Q5",
+   "code": "FY",
+   "phase": "рестайлинг",
+   "years": "2020–2024",
+   "trims": [
+    "Basis",
+    "advanced",
+    "S line"
+   ],
+   "sport": [
+    "SQ5"
+   ],
+   "special": [
+    "Business Edition (PL)",
+    "Sportback (кузов)"
+   ],
+   "sources": [
+    "https://www.audi.pl/pl/business-edition/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "Q5",
+   "label": "Q5",
+   "code": "FY",
+   "phase": "дорестайлинг",
+   "years": "2017–2020",
+   "trims": [
+    "Basis",
+    "sport",
+    "design"
+   ],
+   "sport": [
+    "SQ5"
+   ],
+   "special": [
+    "S line (пакет)"
+   ],
+   "sources": [
+    "https://de.driven-autowelt.com/audi/q5/2017-2018-preis-sport-design/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "Q5",
+   "label": "Q5",
+   "code": "8R",
+   "phase": "весь выпуск",
+   "years": "2008–2017",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "SQ5"
+   ],
+   "special": [
+    "S line (пакет)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_Q5_8R"
+   ],
+   "status": "частично проверено",
+   "note": "линеек нет, только пакеты"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q7",
+   "label": "Q7",
+   "code": "Q7 III",
+   "phase": "дорестайлинг",
+   "years": "2026–н. в.",
+   "trims": [],
+   "sport": [
+    "SQ7"
+   ],
+   "special": [],
+   "sources": [],
+   "status": "проверить",
+   "note": "нет данных"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q7",
+   "label": "Q7",
+   "code": "4M",
+   "phase": "весь выпуск",
+   "years": "2015–2025",
+   "trims": [
+    "Basis",
+    "S line"
+   ],
+   "sport": [
+    "SQ7"
+   ],
+   "special": [
+    "Business Edition (PL, S line)"
+   ],
+   "sources": [
+    "https://audi-mediacenter.pl/komunikat,47749,kultowe-audi-q5-i-audi-q7-w-ofercie-specjalnej-audi-business-edition.html"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "Audi",
+   "model": "Q7",
+   "label": "Q7",
+   "code": "4L",
+   "phase": "весь выпуск",
+   "years": "2005–2015",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "V12 TDI"
+   ],
+   "special": [
+    "S line (пакет)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Audi_Q7_4L"
+   ],
+   "status": "частично проверено",
+   "note": "линеек нет, только пакеты"
+  },
+  {
+   "brand": "BMW",
+   "model": "1",
+   "label": "Seria 1",
+   "code": "F70",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Basis",
+    "M Sport",
+    "M Sport Pro"
+   ],
+   "sport": [
+    "M135 xDrive"
+   ],
+   "special": [],
+   "sources": [],
+   "status": "проверить",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "1",
+   "label": "Seria 1",
+   "code": "F40",
+   "phase": "весь выпуск",
+   "years": "2019–2024",
+   "trims": [
+    "Advantage",
+    "Sport Line",
+    "Luxury Line",
+    "M Sport"
+   ],
+   "sport": [
+    "128ti",
+    "M135i xDrive"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/BMW_F40"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "1",
+   "label": "Seria 1",
+   "code": "F20/F21",
+   "phase": "весь выпуск",
+   "years": "2011–2019",
+   "trims": [
+    "Basis",
+    "Sport Line",
+    "Urban Line",
+    "M Sport",
+    "Advantage (с 2015)"
+   ],
+   "sport": [
+    "M135i",
+    "M140i"
+   ],
+   "special": [
+    "Edition Sport",
+    "Edition M Sport Shadow"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/BMW_F20",
+    "https://pl.wikipedia.org/wiki/BMW_serii_1"
+   ],
+   "status": "частично проверено",
+   "note": "M Sport с 2012, Advantage с рестайлинга 2015"
+  },
+  {
+   "brand": "BMW",
+   "model": "1",
+   "label": "Seria 1",
+   "code": "E81/E87",
+   "phase": "весь выпуск",
+   "years": "2004–2013",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "130i",
+    "135i",
+    "1er M Coupé"
+   ],
+   "special": [
+    "M Sportpaket",
+    "Edition Sport",
+    "Edition Lifestyle"
+   ],
+   "sources": [
+    "https://www.bimmertoday.de/2010/01/17/sport-lifestyle-exclusive-drei-editionsmodelle-fur-die-3er-reihe/"
+   ],
+   "status": "частично проверено",
+   "note": "линеек нет: базовая + пакеты/спецсерии"
+  },
+  {
+   "brand": "BMW",
+   "model": "3",
+   "label": "Seria 3",
+   "code": "G20",
+   "phase": "рестайлинг",
+   "years": "2022–н. в.",
+   "trims": [
+    "Basis",
+    "M Sport",
+    "M Sport Pro"
+   ],
+   "sport": [
+    "M340i",
+    "M340d",
+    "M3"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/BMW_G20"
+   ],
+   "status": "проверено",
+   "note": "Sport Line и Luxury Line убраны"
+  },
+  {
+   "brand": "BMW",
+   "model": "3",
+   "label": "Seria 3",
+   "code": "G20",
+   "phase": "дорестайлинг",
+   "years": "2019–2022",
+   "trims": [
+    "Advantage",
+    "Sport Line",
+    "Luxury Line",
+    "M Sport"
+   ],
+   "sport": [
+    "M340i",
+    "M340d",
+    "M3"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/BMW_serii_3",
+    "https://de.wikipedia.org/wiki/BMW_G20"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "3",
+   "label": "Seria 3",
+   "code": "F30",
+   "phase": "весь выпуск",
+   "years": "2012–2019",
+   "trims": [
+    "Basis",
+    "Advantage",
+    "Sport Line",
+    "Modern Line",
+    "Luxury Line",
+    "M Sport"
+   ],
+   "sport": [
+    "335i",
+    "340i",
+    "M3"
+   ],
+   "special": [
+    "Edition Sport Line Shadow",
+    "Edition M Sport Shadow"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/BMW_serii_3",
+    "https://de.wikipedia.org/wiki/BMW_F30"
+   ],
+   "status": "проверено",
+   "note": "одинаково до и после рестайлинга 2015 (Modern Line до 2016)"
+  },
+  {
+   "brand": "BMW",
+   "model": "3",
+   "label": "Seria 3",
+   "code": "E90",
+   "phase": "весь выпуск",
+   "years": "2005–2012",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "335i",
+    "335d",
+    "M3"
+   ],
+   "special": [
+    "M Sportpaket",
+    "Edition Sport",
+    "Edition Lifestyle",
+    "Edition Exclusive"
+   ],
+   "sources": [
+    "https://www.bimmertoday.de/2010/01/17/sport-lifestyle-exclusive-drei-editionsmodelle-fur-die-3er-reihe/"
+   ],
+   "status": "проверено",
+   "note": "линеек нет: базовая + пакеты/спецсерии 2010"
+  },
+  {
+   "brand": "BMW",
+   "model": "4",
+   "label": "Seria 4",
+   "code": "G22",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "Basis",
+    "M Sport",
+    "M Sport Pro"
+   ],
+   "sport": [
+    "M440i",
+    "M440d",
+    "M4"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.press.bmwgroup.com/deutschland/article/detail/T0461142DE/bmw-modellpflege-massnahmen-zum-herbst-2026"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "4",
+   "label": "Seria 4",
+   "code": "F32",
+   "phase": "весь выпуск",
+   "years": "2013–2020",
+   "trims": [
+    "Advantage",
+    "Sport Line",
+    "Modern Line",
+    "Luxury Line",
+    "M Sport"
+   ],
+   "sport": [
+    "435i",
+    "440i",
+    "M4"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.mobile.de/auto/bmw/4er/2013/coupe/modell/",
+    "https://de.wikipedia.org/wiki/BMW_F32"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "5",
+   "label": "Seria 5",
+   "code": "G60",
+   "phase": "дорестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Basis",
+    "M Sport",
+    "M Sport Pro"
+   ],
+   "sport": [
+    "M5",
+    "i5 M60"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.7-forum.com/news/BMW-5er-Limousine-(G60-ab-2023)-Innenrau-10975.html"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "5",
+   "label": "Seria 5",
+   "code": "G30",
+   "phase": "рестайлинг",
+   "years": "2020–2023",
+   "trims": [
+    "Basis",
+    "Luxury Line",
+    "M Sport"
+   ],
+   "sport": [
+    "M550i",
+    "M5"
+   ],
+   "special": [
+    "Edition M Sport"
+   ],
+   "sources": [
+    "https://www.bimmertoday.de/2020/05/27/bmw-5er-facelift-2020-alle-bilder-und-infos-zum-g30-lci/"
+   ],
+   "status": "проверено",
+   "note": "Sport Line после рестайлинга убрана"
+  },
+  {
+   "brand": "BMW",
+   "model": "5",
+   "label": "Seria 5",
+   "code": "G30",
+   "phase": "дорестайлинг",
+   "years": "2017–2020",
+   "trims": [
+    "Sport Line",
+    "Luxury Line",
+    "M Sport"
+   ],
+   "sport": [
+    "M550i",
+    "M550d",
+    "M5"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.bmwblog.com/2016/10/14/lines-packages-new-bmw-5-series/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "5",
+   "label": "Seria 5",
+   "code": "F10",
+   "phase": "весь выпуск",
+   "years": "2010–2017",
+   "trims": [
+    "Basis",
+    "Modern Line",
+    "Luxury Line",
+    "Sport Line",
+    "M Sport"
+   ],
+   "sport": [
+    "550i",
+    "M550d",
+    "M5"
+   ],
+   "special": [],
+   "sources": [
+    "https://f10.bimmerpost.com/forums/showthread/1399336/confused-by-the-lines?p=21897377"
+   ],
+   "status": "частично проверено",
+   "note": "Sport Line с 2013"
+  },
+  {
+   "brand": "BMW",
+   "model": "5",
+   "label": "Seria 5",
+   "code": "E60",
+   "phase": "весь выпуск",
+   "years": "2003–2010",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "550i",
+    "M5"
+   ],
+   "special": [
+    "M Sportpaket",
+    "Edition Sport",
+    "Edition Lifestyle"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": "линеек нет: базовая + пакеты"
+  },
+  {
+   "brand": "BMW",
+   "model": "X1",
+   "label": "X1",
+   "code": "U11",
+   "phase": "дорестайлинг",
+   "years": "2022–н. в.",
+   "trims": [
+    "Basis",
+    "xLine",
+    "M Sport"
+   ],
+   "sport": [
+    "M35i xDrive"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/BMW_U11"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "X1",
+   "label": "X1",
+   "code": "F48",
+   "phase": "весь выпуск",
+   "years": "2015–2022",
+   "trims": [
+    "Advantage",
+    "Sport Line",
+    "xLine",
+    "M Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.mobile.de/magazin/artikel/bmw-x1-f48-kaufberatung-35646"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "X1",
+   "label": "X1",
+   "code": "E84",
+   "phase": "весь выпуск",
+   "years": "2009–2015",
+   "trims": [
+    "Basis",
+    "xLine",
+    "Sport Line",
+    "M Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://e84.xbimmers.com/forums/showthread.php?t=775070"
+   ],
+   "status": "частично проверено",
+   "note": "линии с рестайлинга 2012"
+  },
+  {
+   "brand": "BMW",
+   "model": "X3",
+   "label": "X3",
+   "code": "G45",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Basis",
+    "xLine",
+    "M Sport",
+    "M Sport Pro"
+   ],
+   "sport": [
+    "M50 xDrive"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.bmw.pl/pl/all-models/x-series/x3/bmw-x3.html"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "X3",
+   "label": "X3",
+   "code": "G01",
+   "phase": "весь выпуск",
+   "years": "2017–2024",
+   "trims": [
+    "Advantage",
+    "xLine",
+    "Luxury Line",
+    "M Sport"
+   ],
+   "sport": [
+    "M40i",
+    "M40d",
+    "X3 M"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.angurten.de/is/ausstattung/1732-971-X3+2017-xLine"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "X3",
+   "label": "X3",
+   "code": "F25",
+   "phase": "весь выпуск",
+   "years": "2010–2017",
+   "trims": [
+    "Basis",
+    "xLine",
+    "M Sport"
+   ],
+   "sport": [
+    "35d"
+   ],
+   "special": [
+    "Design Pure (пакеты)"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "X3",
+   "label": "X3",
+   "code": "E83",
+   "phase": "весь выпуск",
+   "years": "2003–2010",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "3.0sd"
+   ],
+   "special": [
+    "M Sportpaket"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "X5",
+   "label": "X5",
+   "code": "G05",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [
+    "Basis",
+    "xLine",
+    "M Sport",
+    "M Sport Pro (рестайлинг)"
+   ],
+   "sport": [
+    "M50i",
+    "M50d",
+    "M60i",
+    "X5 M"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.7-forum.com/news/Der-neue-BMW-X5-Innenraum-Ausstattung-8484.html"
+   ],
+   "status": "частично проверено",
+   "note": "M Sport Pro — по знанию"
+  },
+  {
+   "brand": "BMW",
+   "model": "X5",
+   "label": "X5",
+   "code": "F15",
+   "phase": "весь выпуск",
+   "years": "2013–2018",
+   "trims": [
+    "Basis",
+    "Design Pure Experience",
+    "Design Pure Excellence",
+    "M Sport"
+   ],
+   "sport": [
+    "M50d",
+    "X5 M"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.bimmertoday.de/2013/05/31/2013-bmw-x5-f15-schluessel-m-sportpaket-design-pure-excellence-experience/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "BMW",
+   "model": "X5",
+   "label": "X5",
+   "code": "E70",
+   "phase": "весь выпуск",
+   "years": "2006–2013",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "M50d",
+    "X5 M"
+   ],
+   "special": [
+    "M Sportpaket"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "C-Max",
+   "label": "C-Max",
+   "code": "Mk2",
+   "phase": "весь выпуск",
+   "years": "2010–2019",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Titanium"
+   ],
+   "sport": [],
+   "special": [
+    "Edition",
+    "Business Edition",
+    "Grand C-Max (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_C-Max",
+    "https://de.wikipedia.org/wiki/Ford_C-MAX"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "C-Max",
+   "label": "C-Max",
+   "code": "Mk1",
+   "phase": "весь выпуск",
+   "years": "2003–2010",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Ghia",
+    "Titanium"
+   ],
+   "sport": [],
+   "special": [
+    "Style",
+    "Fun X"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_C-Max",
+    "https://de.wikipedia.org/wiki/Ford_C-MAX"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Fiesta",
+   "label": "Fiesta",
+   "code": "Mk8",
+   "phase": "весь выпуск",
+   "years": "2017–2023",
+   "trims": [
+    "Trend",
+    "Titanium",
+    "ST-Line",
+    "ST-Line X",
+    "Active",
+    "Vignale"
+   ],
+   "sport": [
+    "ST"
+   ],
+   "special": [
+    "Cool & Connect"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Fiesta"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Fiesta",
+   "label": "Fiesta",
+   "code": "Mk7",
+   "phase": "весь выпуск",
+   "years": "2008–2017",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Ghia",
+    "Sport",
+    "Titanium"
+   ],
+   "sport": [
+    "ST",
+    "ST200"
+   ],
+   "special": [
+    "Titanium Individual"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Fiesta"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Focus",
+   "label": "Focus",
+   "code": "Mk4",
+   "phase": "весь выпуск",
+   "years": "2018–2025",
+   "trims": [
+    "Trend",
+    "Titanium",
+    "Titanium X",
+    "ST-Line",
+    "ST-Line X",
+    "Active",
+    "Active X",
+    "Vignale"
+   ],
+   "sport": [
+    "ST"
+   ],
+   "special": [
+    "Cool & Connect"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Focus",
+    "https://de.wikipedia.org/wiki/Ford_Focus"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Focus",
+   "label": "Focus",
+   "code": "Mk3",
+   "phase": "весь выпуск",
+   "years": "2010–2018",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Titanium",
+    "Trend Sport",
+    "ST-Line (с 2016)"
+   ],
+   "sport": [
+    "ST",
+    "RS"
+   ],
+   "special": [
+    "Edition",
+    "SYNC Edition",
+    "Business",
+    "Champions Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Focus",
+    "https://de.wikipedia.org/wiki/Ford_Focus"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Focus",
+   "label": "Focus",
+   "code": "Mk2",
+   "phase": "весь выпуск",
+   "years": "2004–2010",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Ghia",
+    "Titanium",
+    "Sport"
+   ],
+   "sport": [
+    "ST",
+    "RS"
+   ],
+   "special": [
+    "Style",
+    "Fun X"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Focus",
+    "https://de.wikipedia.org/wiki/Ford_Focus"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Kuga",
+   "label": "Kuga",
+   "code": "Mk3",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "Trend",
+    "Titanium",
+    "Titanium X",
+    "ST-Line",
+    "ST-Line X",
+    "Vignale",
+    "Active (рестайлинг)"
+   ],
+   "sport": [],
+   "special": [
+    "Cool & Connect"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Kuga",
+    "https://de.wikipedia.org/wiki/Ford_Kuga"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Kuga",
+   "label": "Kuga",
+   "code": "Mk2",
+   "phase": "весь выпуск",
+   "years": "2012–2019",
+   "trims": [
+    "Trend",
+    "Titanium",
+    "Titanium Plus",
+    "ST-Line (с 2016)",
+    "Vignale (с 2016)"
+   ],
+   "sport": [],
+   "special": [
+    "Cool & Connect",
+    "Black & Silver"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Kuga",
+    "https://de.wikipedia.org/wiki/Ford_Kuga"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Kuga",
+   "label": "Kuga",
+   "code": "Mk1",
+   "phase": "весь выпуск",
+   "years": "2008–2012",
+   "trims": [
+    "Trend",
+    "Titanium",
+    "Titanium S"
+   ],
+   "sport": [],
+   "special": [
+    "Individual"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Kuga",
+    "https://de.wikipedia.org/wiki/Ford_Kuga"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Mondeo",
+   "label": "Mondeo",
+   "code": "Mk5",
+   "phase": "весь выпуск",
+   "years": "2014–2022",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Titanium",
+    "ST-Line",
+    "Vignale"
+   ],
+   "sport": [],
+   "special": [
+    "Edition",
+    "Gold Edition",
+    "Silver X",
+    "Gold X",
+    "Business Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Mondeo"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "Mondeo",
+   "label": "Mondeo",
+   "code": "Mk4",
+   "phase": "весь выпуск",
+   "years": "2007–2014",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Ghia",
+    "Ghia X",
+    "Titanium",
+    "Titanium X",
+    "Titanium S"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition",
+    "Champions Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Mondeo"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "S-Max",
+   "label": "S-Max",
+   "code": "Mk2",
+   "phase": "весь выпуск",
+   "years": "2015–2023",
+   "trims": [
+    "Trend",
+    "Titanium",
+    "ST-Line",
+    "Vignale"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://moto.infor.pl/testy-aut/poradniki-kupujacego/277285,Ford-SMax-jakiego-wybrac-Poradnik-kupujacego.html"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Ford",
+   "model": "S-Max",
+   "label": "S-Max",
+   "code": "Mk1",
+   "phase": "весь выпуск",
+   "years": "2006–2015",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Titanium",
+    "Titanium S",
+    "Titanium X"
+   ],
+   "sport": [],
+   "special": [
+    "Gold X"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_S-Max"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "A",
+   "label": "Klasa A",
+   "code": "W177",
+   "phase": "рестайлинг",
+   "years": "2022–н. в.",
+   "trims": [
+    "Style",
+    "Progressive",
+    "AMG Line"
+   ],
+   "sport": [
+    "A 35 AMG",
+    "A 45 S AMG"
+   ],
+   "special": [
+    "Advanced / Premium (пакеты)"
+   ],
+   "sources": [
+    "https://www.mercedes-fans.de/magazin/sternstunde/die-neue-a-klasse-limousine-kompakte-premium-limousine.13475"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "A",
+   "label": "Klasa A",
+   "code": "W177",
+   "phase": "дорестайлинг",
+   "years": "2018–2022",
+   "trims": [
+    "Basis",
+    "Style",
+    "Progressive",
+    "AMG Line"
+   ],
+   "sport": [
+    "A 35 AMG",
+    "A 45 AMG"
+   ],
+   "special": [
+    "Edition 1"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mercedes-Benz_klasy_A",
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_177"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "A",
+   "label": "Klasa A",
+   "code": "W176",
+   "phase": "весь выпуск",
+   "years": "2012–2018",
+   "trims": [
+    "Basis",
+    "Style",
+    "Urban",
+    "AMG Line (до 05.2013 AMG Sport)"
+   ],
+   "sport": [
+    "A 250 Sport",
+    "A 45 AMG"
+   ],
+   "special": [
+    "Edition 1",
+    "Motorsport Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mercedes-Benz_klasy_A",
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_W_176"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "A",
+   "label": "Klasa A",
+   "code": "W169",
+   "phase": "весь выпуск",
+   "years": "2004–2012",
+   "trims": [
+    "Classic",
+    "Elegance",
+    "Avantgarde"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mercedes-Benz_klasy_A",
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_169"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "C",
+   "label": "Klasa C",
+   "code": "W206",
+   "phase": "дорестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "Basis",
+    "Avantgarde",
+    "AMG Line",
+    "AMG Line Plus"
+   ],
+   "sport": [
+    "C 43 AMG",
+    "C 63 S E Performance"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_206"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "C",
+   "label": "Klasa C",
+   "code": "W205",
+   "phase": "весь выпуск",
+   "years": "2014–2021",
+   "trims": [
+    "Basis",
+    "Avantgarde",
+    "Exclusive",
+    "AMG Line"
+   ],
+   "sport": [
+    "C 43 AMG",
+    "C 63 AMG"
+   ],
+   "special": [
+    "Night-Paket"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mercedes-Benz_klasy_C",
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_205"
+   ],
+   "status": "проверено",
+   "note": "одинаково до и после рестайлинга 2018"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "C",
+   "label": "Klasa C",
+   "code": "W204",
+   "phase": "весь выпуск",
+   "years": "2007–2014",
+   "trims": [
+    "Classic",
+    "Elegance",
+    "Avantgarde"
+   ],
+   "sport": [
+    "C 63 AMG"
+   ],
+   "special": [
+    "AMG Sportpaket",
+    "Edition C"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_204"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "E",
+   "label": "Klasa E",
+   "code": "W214",
+   "phase": "дорестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Avantgarde",
+    "Exclusive",
+    "AMG Line"
+   ],
+   "sport": [
+    "E 53 AMG"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_214"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "E",
+   "label": "Klasa E",
+   "code": "W213",
+   "phase": "весь выпуск",
+   "years": "2016–2023",
+   "trims": [
+    "Basis",
+    "Avantgarde",
+    "Exclusive",
+    "AMG Line"
+   ],
+   "sport": [
+    "E 43 AMG",
+    "E 53 AMG",
+    "E 63 AMG"
+   ],
+   "special": [
+    "All-Terrain (кузов)"
+   ],
+   "sources": [
+    "https://www.auto-motor-und-sport.de/news/mercedes-e-klasse-w213-2016-infos-preise-daten/"
+   ],
+   "status": "проверено",
+   "note": "одинаково до и после рестайлинга 2020"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "E",
+   "label": "Klasa E",
+   "code": "W212",
+   "phase": "весь выпуск",
+   "years": "2009–2016",
+   "trims": [
+    "Basis (Classic)",
+    "Elegance",
+    "Avantgarde"
+   ],
+   "sport": [
+    "E 63 AMG"
+   ],
+   "special": [
+    "AMG Sportpaket",
+    "Exclusiv-Paket"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_212"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "S",
+   "label": "Klasa S",
+   "code": "W223",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "Basis",
+    "AMG Line",
+    "AMG Line Premium",
+    "AMG Line Premium Plus",
+    "Executive"
+   ],
+   "sport": [
+    "S 63 E Performance",
+    "Maybach"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mercedes-Benz_klasy_S"
+   ],
+   "status": "частично проверено",
+   "note": "названия из польской гаммы"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "S",
+   "label": "Klasa S",
+   "code": "W222",
+   "phase": "весь выпуск",
+   "years": "2013–2020",
+   "trims": [
+    "Basis",
+    "AMG Line"
+   ],
+   "sport": [
+    "S 63 AMG",
+    "S 65 AMG",
+    "Maybach"
+   ],
+   "special": [
+    "Exclusive-Paket"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "S",
+   "label": "Klasa S",
+   "code": "W221",
+   "phase": "весь выпуск",
+   "years": "2005–2013",
+   "trims": [
+    "Basis"
+   ],
+   "sport": [
+    "S 63 AMG",
+    "S 65 AMG"
+   ],
+   "special": [
+    "AMG Sportpaket"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": "линеек нет"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "CLA",
+   "label": "CLA",
+   "code": "C178",
+   "phase": "дорестайлинг",
+   "years": "2025–н. в.",
+   "trims": [
+    "Progressive",
+    "AMG Line",
+    "AMG Line Plus"
+   ],
+   "sport": [],
+   "special": [
+    "Advanced",
+    "Advanced Plus",
+    "Premium",
+    "Premium Plus (пакеты)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mercedes-Benz_CLA"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "CLA",
+   "label": "CLA",
+   "code": "C118",
+   "phase": "весь выпуск",
+   "years": "2019–2025",
+   "trims": [
+    "Basis",
+    "Progressive",
+    "AMG Line"
+   ],
+   "sport": [
+    "CLA 35 AMG",
+    "CLA 45 S AMG"
+   ],
+   "special": [
+    "Edition 1",
+    "Edition 2020",
+    "Shooting Brake (кузов)"
+   ],
+   "sources": [
+    "https://mbpassion.de/2019/03/blick-auf-den-cla-in-der-progressive-line-der-baureihe-c118/",
+    "https://mbpassion.de/2023/01/so-sieht-die-cla-modellpflege-aus-alle-infos-details/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "CLA",
+   "label": "CLA",
+   "code": "C117",
+   "phase": "весь выпуск",
+   "years": "2013–2019",
+   "trims": [
+    "Basis",
+    "Urban",
+    "AMG Line"
+   ],
+   "sport": [
+    "CLA 250 Sport",
+    "CLA 45 AMG"
+   ],
+   "special": [
+    "Edition 1",
+    "Shooting Brake (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mercedes-Benz_CLA",
+    "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_117"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "GLC",
+   "label": "GLC",
+   "code": "X540 (электро)",
+   "phase": "дорестайлинг",
+   "years": "2026–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [],
+   "status": "проверить",
+   "note": "нет данных"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "GLC",
+   "label": "GLC",
+   "code": "X254",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Avantgarde",
+    "AMG Line"
+   ],
+   "sport": [
+    "GLC 43 AMG",
+    "GLC 63 S E Performance"
+   ],
+   "special": [
+    "Night-Paket",
+    "Coupé (кузов)"
+   ],
+   "sources": [
+    "https://media.daimler.com/marsMediaSite/en/instance/ko/Mercedes-Benz-GLC---The-full-spectrum-model-range-and-equipment.xhtml?oid=9905372"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "GLC",
+   "label": "GLC",
+   "code": "X253",
+   "phase": "весь выпуск",
+   "years": "2015–2022",
+   "trims": [
+    "Basis",
+    "Exclusive",
+    "AMG Line",
+    "Offroad"
+   ],
+   "sport": [
+    "GLC 43 AMG",
+    "GLC 63 AMG"
+   ],
+   "special": [
+    "Night-Paket",
+    "Coupé (кузов)"
+   ],
+   "sources": [
+    "https://mbpassion.de/2015/06/details-zu-den-modellprogramm-des-glc-x156/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "GLE",
+   "label": "GLE",
+   "code": "V167",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [
+    "Basis",
+    "AMG Line"
+   ],
+   "sport": [
+    "GLE 53 AMG",
+    "GLE 63 AMG"
+   ],
+   "special": [
+    "Coupé (кузов)",
+    "Night-Paket"
+   ],
+   "sources": [
+    "https://mbpassion.de/2018/12/blick-auf-die-amg-line-des-neuen-gle-im-detail-v167/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "GLE",
+   "label": "GLE",
+   "code": "W166",
+   "phase": "весь выпуск",
+   "years": "2015–2019",
+   "trims": [
+    "Basis",
+    "AMG Line"
+   ],
+   "sport": [
+    "GLE 43 AMG",
+    "GLE 63 AMG"
+   ],
+   "special": [
+    "Coupé (кузов C292)"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": "до 2015 — M-Klasse (ML)"
+  },
+  {
+   "brand": "Peugeot",
+   "model": "208",
+   "label": "208",
+   "code": "208 II",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "Like",
+    "Active",
+    "Allure",
+    "GT Line",
+    "GT"
+   ],
+   "sport": [],
+   "special": [
+    "Active Pack",
+    "Allure Pack",
+    "GT Pack"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Peugeot_208",
+    "https://de.wikipedia.org/wiki/Peugeot_208_II"
+   ],
+   "status": "проверено",
+   "note": "после рестайлинга 2023 — Active, Allure, GT"
+  },
+  {
+   "brand": "Peugeot",
+   "model": "208",
+   "label": "208",
+   "code": "208 I",
+   "phase": "весь выпуск",
+   "years": "2012–2019",
+   "trims": [
+    "Access",
+    "Like",
+    "Active",
+    "Allure",
+    "GT Line"
+   ],
+   "sport": [
+    "GTi"
+   ],
+   "special": [
+    "XY",
+    "Feline",
+    "Roland Garros"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Peugeot_208",
+    "https://de.wikipedia.org/wiki/Peugeot_208_I"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "308",
+   "label": "308",
+   "code": "308 III",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Active",
+    "Allure",
+    "GT",
+    "Style (с 2025)",
+    "GT Exclusive (с 2025)"
+   ],
+   "sport": [],
+   "special": [
+    "Active Pack",
+    "Allure Pack",
+    "GT Pack",
+    "Business"
+   ],
+   "sources": [
+    "https://www.media.stellantis.com/pl-pl/peugeot/press/nowy-peugeot-308-i-peugeot-308-sw-stworzony-z-mysla-o-przyjemnosci-1"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "308",
+   "label": "308",
+   "code": "308 II",
+   "phase": "весь выпуск",
+   "years": "2013–2021",
+   "trims": [
+    "Access",
+    "Active",
+    "Allure",
+    "GT Line"
+   ],
+   "sport": [
+    "GT",
+    "GTi"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Peugeot_308_II"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "308",
+   "label": "308",
+   "code": "308 I",
+   "phase": "весь выпуск",
+   "years": "2007–2013",
+   "trims": [
+    "Access",
+    "Active",
+    "Allure"
+   ],
+   "sport": [],
+   "special": [
+    "Filou, Tendance, Premium (до 2011, DE)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Peugeot_308_I"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "508",
+   "label": "508",
+   "code": "508 II",
+   "phase": "весь выпуск",
+   "years": "2018–2025",
+   "trims": [
+    "Active",
+    "Allure",
+    "GT Line",
+    "GT"
+   ],
+   "sport": [
+    "PSE (Peugeot Sport Engineered)"
+   ],
+   "special": [],
+   "sources": [
+    "https://autoblog.spidersweb.pl/peugeot-508-ceny-polska"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "508",
+   "label": "508",
+   "code": "508 I",
+   "phase": "весь выпуск",
+   "years": "2010–2018",
+   "trims": [
+    "Access",
+    "Active",
+    "Allure",
+    "GT"
+   ],
+   "sport": [],
+   "special": [
+    "RXH (кузов)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Peugeot_508_I"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "2008",
+   "label": "2008",
+   "code": "2008 II",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "Active",
+    "Allure",
+    "GT Line",
+    "GT"
+   ],
+   "sport": [],
+   "special": [
+    "Active Pack",
+    "Allure Pack"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Peugeot_2008"
+   ],
+   "status": "проверено",
+   "note": "после рестайлинга 2023 — Active, Allure, GT"
+  },
+  {
+   "brand": "Peugeot",
+   "model": "2008",
+   "label": "2008",
+   "code": "2008 I",
+   "phase": "весь выпуск",
+   "years": "2013–2019",
+   "trims": [
+    "Access",
+    "Active",
+    "Style",
+    "Allure",
+    "GT Line"
+   ],
+   "sport": [],
+   "special": [
+    "Urban Cross",
+    "Feline"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Peugeot_2008",
+    "https://de.wikipedia.org/wiki/Peugeot_2008_I"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "3008",
+   "label": "3008",
+   "code": "3008 III",
+   "phase": "дорестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Allure",
+    "GT",
+    "Allure Plus (с 2026)",
+    "GT Plus (с 2026)"
+   ],
+   "sport": [],
+   "special": [
+    "Business"
+   ],
+   "sources": [
+    "https://autogaleria.pl/peugeot-3008-2024-cennik-wersje-wyposazenie"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "3008",
+   "label": "3008",
+   "code": "3008 II",
+   "phase": "весь выпуск",
+   "years": "2016–2024",
+   "trims": [
+    "Access",
+    "Active",
+    "Allure",
+    "GT Line",
+    "GT"
+   ],
+   "sport": [],
+   "special": [
+    "Active Pack",
+    "Allure Pack",
+    "GT Pack",
+    "Road Trip"
+   ],
+   "sources": [
+    "https://autokult.pl/peugeot-3008-i-5008-po-liftingu-polskie-ceny-modeli,6809443123103873a"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "3008",
+   "label": "3008",
+   "code": "3008 I",
+   "phase": "весь выпуск",
+   "years": "2009–2016",
+   "trims": [
+    "Access",
+    "Active",
+    "Allure",
+    "Business Line"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Peugeot_3008"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "5008",
+   "label": "5008",
+   "code": "5008 III",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Allure",
+    "GT",
+    "Allure Plus (с 2026)",
+    "GT Plus (с 2026)"
+   ],
+   "sport": [],
+   "special": [
+    "Business"
+   ],
+   "sources": [
+    "https://francuskie.pl/peugeot-5008-drozszy-4-950-zl-cennik-znika-wersja/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "5008",
+   "label": "5008",
+   "code": "5008 II",
+   "phase": "весь выпуск",
+   "years": "2017–2024",
+   "trims": [
+    "Active",
+    "Allure",
+    "GT Line",
+    "GT"
+   ],
+   "sport": [],
+   "special": [
+    "Road Trip",
+    "Allure Pack"
+   ],
+   "sources": [
+    "https://autokult.pl/peugeot-3008-i-5008-po-liftingu-polskie-ceny-modeli,6809443123103873a"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Peugeot",
+   "model": "5008",
+   "label": "5008",
+   "code": "5008 I",
+   "phase": "весь выпуск",
+   "years": "2009–2017",
+   "trims": [
+    "Access",
+    "Active",
+    "Allure",
+    "Trendy (PL)",
+    "Premium (PL)"
+   ],
+   "sport": [],
+   "special": [
+    "Family (PL)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Peugeot_5008"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Captur",
+   "label": "Captur",
+   "code": "Captur II",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "evolution",
+    "techno",
+    "esprit Alpine"
+   ],
+   "sport": [],
+   "special": [
+    "E-Tech (гибрид)"
+   ],
+   "sources": [
+    "https://www.caradisiac.com/prix-renault-captur-2024-le-suv-restyle-debarque-a-partir-de-24-900-eur-208194.htm"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Captur",
+   "label": "Captur",
+   "code": "Captur II",
+   "phase": "дорестайлинг",
+   "years": "2019–2024",
+   "trims": [
+    "Life",
+    "Zen",
+    "Intens",
+    "R.S. Line",
+    "Initiale Paris"
+   ],
+   "sport": [],
+   "special": [
+    "Business",
+    "E-Tech (гибрид)"
+   ],
+   "sources": [
+    "https://www.largus.fr/actualite-automobile/renault-captur-2021-la-version-rs-line-arrive-au-catalogue-10520393.html"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Captur",
+   "label": "Captur",
+   "code": "Captur I",
+   "phase": "весь выпуск",
+   "years": "2013–2019",
+   "trims": [
+    "Life",
+    "Alize",
+    "Zen",
+    "Intens",
+    "Initiale Paris (с 2017)"
+   ],
+   "sport": [],
+   "special": [
+    "XMod",
+    "Helly Hansen",
+    "Red Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Captur"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Clio",
+   "label": "Clio",
+   "code": "Clio VI",
+   "phase": "дорестайлинг",
+   "years": "2025–н. в.",
+   "trims": [
+    "evolution",
+    "techno",
+    "esprit Alpine"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Clio"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Clio",
+   "label": "Clio",
+   "code": "Clio V",
+   "phase": "весь выпуск",
+   "years": "2019–2025",
+   "trims": [
+    "Life",
+    "Zen",
+    "Intens",
+    "R.S. Line",
+    "Initiale Paris"
+   ],
+   "sport": [],
+   "special": [
+    "Business",
+    "Lutecia",
+    "E-Tech (гибрид)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Clio",
+    "https://de.wikipedia.org/wiki/Renault_Clio_V"
+   ],
+   "status": "проверено",
+   "note": "после рестайлинга 2023 — evolution, techno, esprit Alpine"
+  },
+  {
+   "brand": "Renault",
+   "model": "Clio",
+   "label": "Clio",
+   "code": "Clio IV",
+   "phase": "весь выпуск",
+   "years": "2012–2019",
+   "trims": [
+    "Authentique / Life",
+    "Expression / Zen",
+    "Dynamique",
+    "Limited",
+    "Intens",
+    "GT",
+    "Initiale Paris"
+   ],
+   "sport": [
+    "R.S.",
+    "R.S. Trophy"
+   ],
+   "special": [
+    "Graphite",
+    "Techno Feel"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Clio"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Clio",
+   "label": "Clio",
+   "code": "Clio III",
+   "phase": "весь выпуск",
+   "years": "2005–2014",
+   "trims": [
+    "Authentique",
+    "Expression",
+    "Dynamique",
+    "Luxe",
+    "Privilège"
+   ],
+   "sport": [
+    "R.S. 200",
+    "Gordini"
+   ],
+   "special": [
+    "Night & Day",
+    "TomTom Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Clio",
+    "https://de.wikipedia.org/wiki/Renault_Clio_III"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Clio",
+   "label": "Clio",
+   "code": "Clio II",
+   "phase": "весь выпуск",
+   "years": "1998–2012",
+   "trims": [
+    "Authentique",
+    "Expression",
+    "Dynamique"
+   ],
+   "sport": [],
+   "special": [
+    "Storia",
+    "Campus"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Clio"
+   ],
+   "status": "проверено",
+   "note": "после 2009 продавался как Clio Storia / Campus"
+  },
+  {
+   "brand": "Renault",
+   "model": "Kadjar",
+   "label": "Kadjar",
+   "code": "Kadjar I",
+   "phase": "весь выпуск",
+   "years": "2015–2022",
+   "trims": [
+    "Life",
+    "Zen",
+    "Intens",
+    "Bose"
+   ],
+   "sport": [],
+   "special": [
+    "Black Edition"
+   ],
+   "sources": [
+    "https://www.auto-swiat.pl/wiadomosci/aktualnosci/renault-kadjar-wjezdza-do-polskich-salonow/p36yjmz"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Megane",
+   "label": "Megane",
+   "code": "Mégane IV",
+   "phase": "весь выпуск",
+   "years": "2016–2024",
+   "trims": [
+    "Life",
+    "Zen",
+    "Intens",
+    "Limited",
+    "GT Line",
+    "R.S. Line"
+   ],
+   "sport": [
+    "GT",
+    "R.S.",
+    "R.S. Trophy"
+   ],
+   "special": [
+    "Bose",
+    "Business"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Mégane"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Megane",
+   "label": "Megane",
+   "code": "Mégane III",
+   "phase": "весь выпуск",
+   "years": "2008–2016",
+   "trims": [
+    "Authentique",
+    "Expression",
+    "Dynamique",
+    "Privilège",
+    "Luxe",
+    "Limited",
+    "GT Line"
+   ],
+   "sport": [
+    "GT",
+    "R.S."
+   ],
+   "special": [
+    "Bose Edition",
+    "TomTom",
+    "Night & Day"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Mégane",
+    "https://de.wikipedia.org/wiki/Renault_Mégane_III"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Scenic",
+   "label": "Scenic",
+   "code": "Scénic V (E-Tech, электро)",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "evolution",
+    "techno",
+    "iconic",
+    "esprit Alpine"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://nowyosobowy.pl/strefa-wiedzy/prezentacja-renault-scenic-e-tech-electric-w-polsce-dane-techniczne-wersje-wyposazenie-ceny"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Scenic",
+   "label": "Scenic",
+   "code": "Scénic IV",
+   "phase": "весь выпуск",
+   "years": "2016–2022",
+   "trims": [
+    "Life",
+    "Zen",
+    "Intens",
+    "Initiale Paris"
+   ],
+   "sport": [],
+   "special": [
+    "Bose",
+    "Black Edition",
+    "Grand Scénic (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Scénic"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Scenic",
+   "label": "Scenic",
+   "code": "Scénic III",
+   "phase": "весь выпуск",
+   "years": "2009–2016",
+   "trims": [
+    "Authentique",
+    "Expression",
+    "Privilège",
+    "Life",
+    "Limited"
+   ],
+   "sport": [],
+   "special": [
+    "XMOD",
+    "Bose",
+    "TomTom",
+    "Grand Scénic (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Renault_Scénic"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Renault",
+   "model": "Trafic",
+   "label": "Trafic",
+   "code": "Trafic III",
+   "phase": "весь выпуск",
+   "years": "2014–н. в.",
+   "trims": [
+    "Pack Clim",
+    "Equilibre",
+    "SpaceClass"
+   ],
+   "sport": [],
+   "special": [
+    "SpaceClass Escapade",
+    "Combi / Passenger (кузов)"
+   ],
+   "sources": [
+    "https://www.renault.pl/samochody-osobowe/trafic-combi/wyposazenie.html?gradeCode=ENS_ACLASS00M$SERIESPE3"
+   ],
+   "status": "частично проверено",
+   "note": "для пассажирского Trafic"
+  },
+  {
+   "brand": "Skoda",
+   "model": "Fabia",
+   "label": "Fabia",
+   "code": "Fabia IV",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Style",
+    "Monte Carlo",
+    "Essence",
+    "Selection",
+    "Drive"
+   ],
+   "sport": [
+    "130 Sport"
+   ],
+   "special": [
+    "Edition 130"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Fabia"
+   ],
+   "status": "проверено",
+   "note": "Essence/Selection — новая схема с 2024"
+  },
+  {
+   "brand": "Skoda",
+   "model": "Fabia",
+   "label": "Fabia",
+   "code": "Fabia III",
+   "phase": "весь выпуск",
+   "years": "2014–2021",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Style",
+    "Monte Carlo"
+   ],
+   "sport": [],
+   "special": [
+    "Edition",
+    "Black Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Fabia"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Fabia",
+   "label": "Fabia",
+   "code": "Fabia II",
+   "phase": "весь выпуск",
+   "years": "2007–2014",
+   "trims": [
+    "Classic",
+    "Comfort",
+    "Ambiente",
+    "Elegance",
+    "Active Plus",
+    "Ambition",
+    "Style",
+    "Sport",
+    "Sportline",
+    "Scout",
+    "Monte Carlo"
+   ],
+   "sport": [
+    "RS"
+   ],
+   "special": [
+    "Greenline",
+    "Monnari"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Fabia"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Kamiq",
+   "label": "Kamiq",
+   "code": "Kamiq I",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Essence",
+    "Selection",
+    "Monte Carlo"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://autokatalog.pl/blog/2024/nowa-skoda-kamiq-2024-cena-wersje-wyposazenie"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Kamiq",
+   "label": "Kamiq",
+   "code": "Kamiq I",
+   "phase": "дорестайлинг",
+   "years": "2019–2024",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Style",
+    "Monte Carlo"
+   ],
+   "sport": [],
+   "special": [
+    "Scoutline"
+   ],
+   "sources": [
+    "https://www.otomoto.pl/news/skoda-kamiq-uzywana-opinie-test",
+    "https://de.wikipedia.org/wiki/Škoda_Kamiq"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Karoq",
+   "label": "Karoq",
+   "code": "Karoq I",
+   "phase": "весь выпуск",
+   "years": "2017–н. в.",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Style",
+    "Sportline",
+    "Scout"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://vwzone.pl/skoda-karoq-wersje-wyposazenia-dane-techniczne-silniki/",
+    "https://de.wikipedia.org/wiki/Škoda_Karoq"
+   ],
+   "status": "проверено",
+   "note": "после рестайлинга 2022 — Ambition, Style, Sportline (+ Selection с 2024)"
+  },
+  {
+   "brand": "Skoda",
+   "model": "Kodiaq",
+   "label": "Kodiaq",
+   "code": "Kodiaq II",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Essence",
+    "Selection",
+    "Sportline",
+    "Laurin & Klement"
+   ],
+   "sport": [
+    "RS"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Kodiaq"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Kodiaq",
+   "label": "Kodiaq",
+   "code": "Kodiaq I",
+   "phase": "весь выпуск",
+   "years": "2016–2024",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Style",
+    "Sportline",
+    "Scout",
+    "Laurin & Klement"
+   ],
+   "sport": [
+    "RS"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Kodiaq"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Octavia",
+   "label": "Octavia",
+   "code": "Octavia IV",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Essence",
+    "Selection",
+    "Sportline"
+   ],
+   "sport": [
+    "RS"
+   ],
+   "special": [],
+   "sources": [
+    "https://autokatalog.pl/blog/2024/nowa-skoda-octavia-2024-cena-wersje-essence-i-rs"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Octavia",
+   "label": "Octavia",
+   "code": "Octavia IV",
+   "phase": "дорестайлинг",
+   "years": "2020–2024",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Style",
+    "Sportline",
+    "Scout",
+    "Laurin & Klement"
+   ],
+   "sport": [
+    "RS"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Octavia",
+    "https://de.wikipedia.org/wiki/Škoda_Octavia_IV"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Octavia",
+   "label": "Octavia",
+   "code": "Octavia III",
+   "phase": "весь выпуск",
+   "years": "2013–2020",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Elegance",
+    "Style",
+    "Laurin & Klement",
+    "Scout"
+   ],
+   "sport": [
+    "RS"
+   ],
+   "special": [
+    "Edition",
+    "Joy",
+    "GreenLine"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Octavia",
+    "https://de.wikipedia.org/wiki/Škoda_Octavia_III"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Octavia",
+   "label": "Octavia",
+   "code": "Octavia II",
+   "phase": "весь выпуск",
+   "years": "2004–2013",
+   "trims": [
+    "Classic",
+    "Ambiente",
+    "Elegance",
+    "Laurin & Klement",
+    "Active (с 2011)",
+    "Ambition (с 2011)"
+   ],
+   "sport": [
+    "RS"
+   ],
+   "special": [
+    "Scout",
+    "Mint",
+    "Edition 100"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Octavia",
+    "https://de.wikipedia.org/wiki/Škoda_Octavia_II"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Superb",
+   "label": "Superb",
+   "code": "Superb IV",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Essence",
+    "Selection",
+    "Laurin & Klement",
+    "Sportline"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Superb"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Superb",
+   "label": "Superb",
+   "code": "Superb III",
+   "phase": "весь выпуск",
+   "years": "2015–2023",
+   "trims": [
+    "Active",
+    "Ambition",
+    "Style",
+    "Sportline",
+    "Laurin & Klement",
+    "Scout (с 2019)"
+   ],
+   "sport": [],
+   "special": [
+    "iV (плагин-гибрид)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Superb",
+    "https://de.wikipedia.org/wiki/Škoda_Superb_III"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Skoda",
+   "model": "Superb",
+   "label": "Superb",
+   "code": "Superb II",
+   "phase": "весь выпуск",
+   "years": "2008–2015",
+   "trims": [
+    "Active",
+    "Comfort",
+    "Ambition",
+    "Elegance",
+    "Laurin & Klement"
+   ],
+   "sport": [],
+   "special": [
+    "Business",
+    "Outdoor",
+    "GreenLine"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Škoda_Superb",
+    "https://de.wikipedia.org/wiki/Škoda_Superb_II"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "Auris",
+   "label": "Auris",
+   "code": "E18",
+   "phase": "весь выпуск",
+   "years": "2012–2018",
+   "trims": [
+    "Life",
+    "Active",
+    "Premium",
+    "Dynamic",
+    "Prestige",
+    "Selection (с 2017)"
+   ],
+   "sport": [],
+   "special": [
+    "Comfort, Edition-S, Executive (DE)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Toyota_Auris",
+    "https://de.wikipedia.org/wiki/Toyota_Auris"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "Auris",
+   "label": "Auris",
+   "code": "E15",
+   "phase": "весь выпуск",
+   "years": "2006–2012",
+   "trims": [
+    "Terra",
+    "Luna",
+    "Sol",
+    "Premium",
+    "Dynamic",
+    "Prestige"
+   ],
+   "sport": [
+    "TS"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Toyota_Auris"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "Avensis",
+   "label": "Avensis",
+   "code": "T27",
+   "phase": "весь выпуск",
+   "years": "2009–2018",
+   "trims": [
+    "Luna",
+    "Sol",
+    "Sol Plus",
+    "Premium",
+    "Prestige",
+    "Active",
+    "Selection (с 2017)"
+   ],
+   "sport": [],
+   "special": [
+    "Sprint (2016)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Toyota_Avensis"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "C-HR",
+   "label": "C-HR",
+   "code": "C-HR II",
+   "phase": "дорестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Comfort",
+    "Style",
+    "Executive",
+    "GR Sport"
+   ],
+   "sport": [],
+   "special": [
+    "Premiere Edition"
+   ],
+   "sources": [
+    "https://www.toyotanews.eu/pl/aktualnosci/2906-item-nowa-toyota-c-hr-od-139-900-zl-szesc-wersji-wyposazenia-do-wyboru"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "C-HR",
+   "label": "C-HR",
+   "code": "C-HR I",
+   "phase": "весь выпуск",
+   "years": "2016–2023",
+   "trims": [
+    "Active",
+    "Premium",
+    "Dynamic",
+    "Prestige",
+    "Style (рестайлинг)",
+    "Executive (рестайлинг)",
+    "GR Sport (с 2021)"
+   ],
+   "sport": [],
+   "special": [
+    "Prime Edition"
+   ],
+   "sources": [
+    "https://www.auto-swiat.pl/wiadomosci/aktualnosci/toyota-c-hr-w-sprzedazy-znamy-ceny/bg2t4hk"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "Camry",
+   "label": "Camry",
+   "code": "XV70",
+   "phase": "весь выпуск",
+   "years": "2019–2024",
+   "trims": [
+    "Comfort",
+    "Prestige",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [
+    "Comfort + Business",
+    "Executive + VIP"
+   ],
+   "sources": [
+    "https://spidersweb.pl/autoblog/toyota-camry-w-polsce-ceny-specyfikacja/"
+   ],
+   "status": "проверено",
+   "note": "в ЕС вернулась в 2019"
+  },
+  {
+   "brand": "Toyota",
+   "model": "Camry",
+   "label": "Camry",
+   "code": "XV50 (вне ЕС)",
+   "phase": "весь выпуск",
+   "years": "2011–2017",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [],
+   "status": "проверено",
+   "note": "в ЕС не продавалась"
+  },
+  {
+   "brand": "Toyota",
+   "model": "Camry",
+   "label": "Camry",
+   "code": "XV40 (вне ЕС)",
+   "phase": "весь выпуск",
+   "years": "2006–2011",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [],
+   "status": "проверено",
+   "note": "в ЕС не продавалась"
+  },
+  {
+   "brand": "Toyota",
+   "model": "Corolla",
+   "label": "Corolla",
+   "code": "E21",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [
+    "Active",
+    "Comfort",
+    "Style",
+    "Executive",
+    "GR Sport"
+   ],
+   "sport": [],
+   "special": [
+    "TREK",
+    "Touring Sports (кузов)"
+   ],
+   "sources": [
+    "https://autokatalog.pl/toyota/corolla/xii-e210/wyposazenie",
+    "https://www.autocentrum.pl/newsy/toyota-corolla-hatchback-wersje-wyposazenia/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "Corolla",
+   "label": "Corolla",
+   "code": "E15",
+   "phase": "весь выпуск",
+   "years": "2006–2013",
+   "trims": [
+    "Terra",
+    "Luna",
+    "Sol",
+    "Premium",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Toyota_Corolla"
+   ],
+   "status": "проверено",
+   "note": "седан для Европы"
+  },
+  {
+   "brand": "Toyota",
+   "model": "RAV 4",
+   "label": "RAV 4",
+   "code": "XA50",
+   "phase": "весь выпуск",
+   "years": "2018–2025",
+   "trims": [
+    "Active",
+    "Comfort",
+    "Style",
+    "Executive",
+    "Selection",
+    "Adventure",
+    "GR Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.autocentrum.pl/newsy/informacje-prasowe/toyota-rav4-wymiary-i-wersje-wyposazenia/"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "RAV 4",
+   "label": "RAV 4",
+   "code": "XA40",
+   "phase": "весь выпуск",
+   "years": "2012–2018",
+   "trims": [
+    "Active",
+    "Premium",
+    "Style",
+    "Prestige",
+    "Selection (с 2017)"
+   ],
+   "sport": [],
+   "special": [
+    "Premium Hybrid",
+    "Style Hybrid",
+    "Prestige Hybrid"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Toyota_RAV4"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "RAV 4",
+   "label": "RAV 4",
+   "code": "XA30",
+   "phase": "весь выпуск",
+   "years": "2005–2012",
+   "trims": [
+    "Sol",
+    "Premium",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [],
+   "status": "проверить",
+   "note": ""
+  },
+  {
+   "brand": "Toyota",
+   "model": "Yaris",
+   "label": "Yaris",
+   "code": "XP21",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "Active",
+    "Comfort",
+    "Style",
+    "Executive",
+    "GR Sport"
+   ],
+   "sport": [
+    "GR Yaris"
+   ],
+   "special": [
+    "Elegant (DE)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Toyota_Yaris_(XP21)"
+   ],
+   "status": "частично проверено",
+   "note": "польская гамма — по знанию"
+  },
+  {
+   "brand": "Toyota",
+   "model": "Yaris",
+   "label": "Yaris",
+   "code": "XP13",
+   "phase": "весь выпуск",
+   "years": "2011–2020",
+   "trims": [
+    "Terra",
+    "Luna",
+    "Sol",
+    "Premium",
+    "Prestige",
+    "Life (с 2014)",
+    "Active (с 2014)",
+    "Dynamic",
+    "Style",
+    "Selection"
+   ],
+   "sport": [
+    "GRMN"
+   ],
+   "special": [
+    "Cool, Club, Executive (DE)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Toyota_Yaris",
+    "https://de.wikipedia.org/wiki/Toyota_Yaris_(XP13)"
+   ],
+   "status": "проверено",
+   "note": "до 2014: Terra/Luna/Sol/Premium/Prestige; после 2014 и 2017: Life/Active/Premium/Dynamic/Selection"
+  },
+  {
+   "brand": "Toyota",
+   "model": "Yaris",
+   "label": "Yaris",
+   "code": "XP9",
+   "phase": "весь выпуск",
+   "years": "2005–2011",
+   "trims": [
+    "Terra",
+    "Luna",
+    "Sol"
+   ],
+   "sport": [
+    "TS"
+   ],
+   "special": [],
+   "sources": [],
+   "status": "проверить",
+   "note": ""
+  },
+  {
+   "brand": "Volvo",
+   "model": "S60",
+   "label": "S60",
+   "code": "S60 III",
+   "phase": "весь выпуск",
+   "years": "2018–2024",
+   "trims": [
+    "Momentum",
+    "Inscription",
+    "R-Design",
+    "Plus Bright",
+    "Plus Dark",
+    "Ultimate Bright",
+    "Ultimate Dark"
+   ],
+   "sport": [
+    "Polestar Engineered"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_S60"
+   ],
+   "status": "частично проверено",
+   "note": "Momentum/Inscription/R-Design до 2021, Plus/Ultimate после"
+  },
+  {
+   "brand": "Volvo",
+   "model": "S60",
+   "label": "S60",
+   "code": "S60 II",
+   "phase": "весь выпуск",
+   "years": "2010–2018",
+   "trims": [
+    "Base",
+    "Kinetic",
+    "Momentum",
+    "Summum",
+    "R-Design",
+    "Inscription"
+   ],
+   "sport": [
+    "Polestar"
+   ],
+   "special": [
+    "Dynamic Edition",
+    "Cross Country"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_S60",
+    "https://de.wikipedia.org/wiki/Volvo_S60"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volvo",
+   "model": "S60",
+   "label": "S60",
+   "code": "S60 I",
+   "phase": "весь выпуск",
+   "years": "2000–2010",
+   "trims": [
+    "Kinetic",
+    "Momentum",
+    "Summum"
+   ],
+   "sport": [
+    "S60 R"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_S60"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volvo",
+   "model": "V40",
+   "label": "V40",
+   "code": "V40 II",
+   "phase": "весь выпуск",
+   "years": "2012–2019",
+   "trims": [
+    "Kinetic",
+    "Momentum",
+    "Summum",
+    "R-Design",
+    "Inscription (с 2016)"
+   ],
+   "sport": [],
+   "special": [
+    "YOU!",
+    "Ocean Race",
+    "Cross Country (кузов)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Volvo_V40_(2012)"
+   ],
+   "status": "проверено",
+   "note": "Summum заменена на Inscription в 2016"
+  },
+  {
+   "brand": "Volvo",
+   "model": "V60",
+   "label": "V60",
+   "code": "V60 II",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [
+    "Momentum",
+    "Inscription",
+    "R-Design",
+    "Essential",
+    "Core",
+    "Plus Bright",
+    "Plus Dark",
+    "Ultimate Bright",
+    "Ultimate Dark"
+   ],
+   "sport": [],
+   "special": [
+    "Cross Country (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_V60"
+   ],
+   "status": "проверено",
+   "note": "после рестайлинга — Essential/Core/Plus/Ultimate"
+  },
+  {
+   "brand": "Volvo",
+   "model": "V60",
+   "label": "V60",
+   "code": "V60 I",
+   "phase": "весь выпуск",
+   "years": "2010–2018",
+   "trims": [
+    "Kinetic",
+    "Momentum",
+    "Summum",
+    "R-Design"
+   ],
+   "sport": [
+    "Polestar"
+   ],
+   "special": [
+    "Ocean Race",
+    "Business",
+    "Cross Country (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_V60"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC40",
+   "label": "XC40",
+   "code": "XC40 I",
+   "phase": "весь выпуск",
+   "years": "2017–н. в.",
+   "trims": [
+    "Momentum Core",
+    "Momentum",
+    "Momentum Pro",
+    "R-Design",
+    "Inscription",
+    "Essential",
+    "Core",
+    "Plus",
+    "Ultimate"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_XC40",
+    "https://de.wikipedia.org/wiki/Volvo_XC40"
+   ],
+   "status": "проверено",
+   "note": "с 2022 — Essential/Core/Plus/Ultimate"
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC60",
+   "label": "XC60",
+   "code": "XC60 II",
+   "phase": "весь выпуск",
+   "years": "2017–н. в.",
+   "trims": [
+    "Momentum",
+    "Inscription",
+    "R-Design",
+    "Core",
+    "Plus",
+    "Ultimate"
+   ],
+   "sport": [
+    "Polestar Engineered"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_XC60"
+   ],
+   "status": "частично проверено",
+   "note": "Core/Plus/Ultimate после 2021"
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC60",
+   "label": "XC60",
+   "code": "XC60 I",
+   "phase": "весь выпуск",
+   "years": "2008–2017",
+   "trims": [
+    "Base",
+    "Kinetic",
+    "Momentum",
+    "Summum",
+    "R-Design",
+    "Inscription"
+   ],
+   "sport": [],
+   "special": [
+    "Ocean Race"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_XC60"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC90",
+   "label": "XC90",
+   "code": "XC90 II",
+   "phase": "весь выпуск",
+   "years": "2014–н. в.",
+   "trims": [
+    "Kinetic",
+    "Momentum",
+    "Inscription",
+    "R-Design",
+    "Excellence",
+    "Core",
+    "Plus",
+    "Ultimate"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_XC90"
+   ],
+   "status": "частично проверено",
+   "note": "Core/Plus/Ultimate после 2021"
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC90",
+   "label": "XC90",
+   "code": "XC90 I",
+   "phase": "весь выпуск",
+   "years": "2002–2015",
+   "trims": [
+    "Kinetic",
+    "Momentum",
+    "Summum",
+    "Executive",
+    "R-Design"
+   ],
+   "sport": [],
+   "special": [
+    "Ocean Race",
+    "Signature Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volvo_XC90"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Golf",
+   "label": "Golf",
+   "code": "Golf VIII",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "Golf",
+    "Life",
+    "Style",
+    "R-Line"
+   ],
+   "sport": [
+    "GTI",
+    "GTD",
+    "GTE",
+    "R"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Golf"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Golf",
+   "label": "Golf",
+   "code": "Golf VII",
+   "phase": "весь выпуск",
+   "years": "2012–2020",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline",
+    "R-Line"
+   ],
+   "sport": [
+    "GTI",
+    "GTD",
+    "GTE",
+    "R"
+   ],
+   "special": [
+    "Cup",
+    "United",
+    "Join",
+    "IQ.DRIVE",
+    "Sound",
+    "Lounge"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Golf",
+    "https://de.wikipedia.org/wiki/VW_Golf_VII"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Golf",
+   "label": "Golf",
+   "code": "Golf VI",
+   "phase": "весь выпуск",
+   "years": "2008–2013",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline"
+   ],
+   "sport": [
+    "GTI",
+    "GTD",
+    "R"
+   ],
+   "special": [
+    "Team",
+    "Match",
+    "Style",
+    "Move"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Golf",
+    "https://de.wikipedia.org/wiki/VW_Golf_VI"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Passat",
+   "label": "Passat",
+   "code": "B9",
+   "phase": "дорестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Passat",
+    "Business",
+    "Elegance",
+    "R-Line"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Passat"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Passat",
+   "label": "Passat",
+   "code": "B8",
+   "phase": "рестайлинг",
+   "years": "2019–2023",
+   "trims": [
+    "Passat",
+    "Business",
+    "Elegance",
+    "R-Line"
+   ],
+   "sport": [
+    "GTE"
+   ],
+   "special": [
+    "Alltrack (кузов)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/VW_Passat_B8"
+   ],
+   "status": "частично проверено",
+   "note": "линейки переименованы при рестайлинге"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Passat",
+   "label": "Passat",
+   "code": "B8",
+   "phase": "дорестайлинг",
+   "years": "2014–2019",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline",
+    "R-Line"
+   ],
+   "sport": [
+    "GTE"
+   ],
+   "special": [
+    "Alltrack (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Passat",
+    "https://de.wikipedia.org/wiki/VW_Passat_B8"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Passat",
+   "label": "Passat",
+   "code": "B7",
+   "phase": "весь выпуск",
+   "years": "2010–2014",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline",
+    "R-Line",
+    "Exclusive"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition",
+    "Edition 40",
+    "Alltrack (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Passat",
+    "https://de.wikipedia.org/wiki/VW_Passat_B7"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Passat",
+   "label": "Passat",
+   "code": "B6",
+   "phase": "весь выпуск",
+   "years": "2005–2010",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline",
+    "Sportline"
+   ],
+   "sport": [
+    "R36"
+   ],
+   "special": [
+    "R-Line"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Passat"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Polo",
+   "label": "Polo",
+   "code": "Polo VI",
+   "phase": "рестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "Polo",
+    "Life",
+    "Style",
+    "R-Line"
+   ],
+   "sport": [
+    "GTI"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/VW_Polo_VI"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Polo",
+   "label": "Polo",
+   "code": "Polo VI",
+   "phase": "дорестайлинг",
+   "years": "2017–2021",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline"
+   ],
+   "sport": [
+    "GTI"
+   ],
+   "special": [
+    "Beats",
+    "United",
+    "R-Line (пакет)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Polo"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Polo",
+   "label": "Polo",
+   "code": "Polo V",
+   "phase": "весь выпуск",
+   "years": "2009–2017",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline"
+   ],
+   "sport": [
+    "GTI",
+    "R WRC"
+   ],
+   "special": [
+    "Life",
+    "Fresh",
+    "Match",
+    "Lounge",
+    "Team",
+    "Cross Polo",
+    "BlueGT"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Polo",
+    "https://de.wikipedia.org/wiki/VW_Polo_V"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T-Roc",
+   "label": "T-Roc",
+   "code": "T-Roc I",
+   "phase": "рестайлинг",
+   "years": "2022–2025",
+   "trims": [
+    "T-Roc",
+    "Life",
+    "Style",
+    "R-Line"
+   ],
+   "sport": [
+    "R"
+   ],
+   "special": [
+    "Cabriolet (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_T-Roc"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T-Roc",
+   "label": "T-Roc",
+   "code": "T-Roc I",
+   "phase": "дорестайлинг",
+   "years": "2017–2022",
+   "trims": [
+    "T-Roc",
+    "Style",
+    "Sport"
+   ],
+   "sport": [
+    "R"
+   ],
+   "special": [
+    "R-Line (пакет)",
+    "Special Edition",
+    "Cabriolet (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_T-Roc"
+   ],
+   "status": "частично проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T6",
+   "label": "T6 (Multivan, Transporter)",
+   "code": "T7 Multivan",
+   "phase": "дорестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "Multivan",
+    "Life",
+    "Style",
+    "Energetic"
+   ],
+   "sport": [],
+   "special": [
+    "Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Transporter"
+   ],
+   "status": "проверено",
+   "note": "на mobile.de это модель T7"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T6",
+   "label": "T6 (Multivan, Transporter)",
+   "code": "T7 Transporter",
+   "phase": "дорестайлинг",
+   "years": "2025–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Kombi",
+    "Furgon",
+    "PanAmericana"
+   ],
+   "sources": [],
+   "status": "проверить",
+   "note": "на mobile.de это модель T7"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T6",
+   "label": "T6 (Multivan, Transporter)",
+   "code": "T6 / T6.1",
+   "phase": "весь выпуск",
+   "years": "2015–2024",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline"
+   ],
+   "sport": [],
+   "special": [
+    "Business",
+    "Generation SIX",
+    "Edition 30",
+    "PanAmericana",
+    "Cruise",
+    "California (кузов)",
+    "Caravelle (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Transporter"
+   ],
+   "status": "проверено",
+   "note": "на mobile.de это модель T6"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "T6",
+   "label": "T6 (Multivan, Transporter)",
+   "code": "T5",
+   "phase": "весь выпуск",
+   "years": "2009–2015",
+   "trims": [
+    "Startline",
+    "Trendline",
+    "Comfortline",
+    "Highline"
+   ],
+   "sport": [],
+   "special": [
+    "Rockton",
+    "Caravelle (кузов)",
+    "California (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Transporter"
+   ],
+   "status": "проверено",
+   "note": "на mobile.de это модель T5"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Tiguan",
+   "label": "Tiguan",
+   "code": "Tiguan III",
+   "phase": "дорестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Tiguan",
+    "Life",
+    "Elegance",
+    "R-Line"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Tiguan",
+    "https://de.wikipedia.org/wiki/VW_Tiguan_III"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Tiguan",
+   "label": "Tiguan",
+   "code": "Tiguan II",
+   "phase": "рестайлинг",
+   "years": "2020–2024",
+   "trims": [
+    "Tiguan",
+    "Life",
+    "Elegance",
+    "R-Line"
+   ],
+   "sport": [
+    "Tiguan R"
+   ],
+   "special": [
+    "Allspace (кузов)"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/VW_Tiguan_II"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Tiguan",
+   "label": "Tiguan",
+   "code": "Tiguan II",
+   "phase": "дорестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline",
+    "R-Line"
+   ],
+   "sport": [],
+   "special": [
+    "Join",
+    "United",
+    "Allspace (кузов)"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Tiguan"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Tiguan",
+   "label": "Tiguan",
+   "code": "Tiguan I",
+   "phase": "весь выпуск",
+   "years": "2007–2016",
+   "trims": [
+    "Trend & Fun",
+    "Sport & Style",
+    "Track & Field",
+    "Track & Style",
+    "Trendline (с 2011)",
+    "Comfortline (с 2011)",
+    "Highline (с 2011)"
+   ],
+   "sport": [],
+   "special": [
+    "Cityline",
+    "Perfectline",
+    "R-Line"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Tiguan",
+    "https://de.wikipedia.org/wiki/VW_Tiguan_I"
+   ],
+   "status": "проверено",
+   "note": ""
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Touran",
+   "label": "Touran",
+   "code": "Touran II",
+   "phase": "весь выпуск",
+   "years": "2015–н. в.",
+   "trims": [
+    "Trendline",
+    "Comfortline",
+    "Highline"
+   ],
+   "sport": [],
+   "special": [
+    "R-Line",
+    "Join",
+    "United",
+    "Move"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Touran",
+    "https://de.wikipedia.org/wiki/VW_Touran_II"
+   ],
+   "status": "проверено",
+   "note": "Trendline снят в DE с 2019"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Touran",
+   "label": "Touran",
+   "code": "Touran I",
+   "phase": "весь выпуск",
+   "years": "2006–2015",
+   "trims": [
+    "Conceptline",
+    "Trendline",
+    "Comfortline",
+    "Highline"
+   ],
+   "sport": [],
+   "special": [
+    "Cross",
+    "United",
+    "Freestyle",
+    "R-Line"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_Touran",
+    "https://de.wikipedia.org/wiki/VW_Touran_I"
+   ],
+   "status": "проверено",
+   "note": ""
+  }
+ ]
+}

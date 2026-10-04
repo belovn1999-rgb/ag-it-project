@@ -15,7 +15,7 @@
 |---|---|---|---|
 | Поиск и анализ рынка: Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | **§0 — текущая ситуация и план**, правила для параллельных чатов (§2), механизмы, решения, бэклог, журнал. Главный документ этой области. |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
-| Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), MODEL-ENGINES.md | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): модель → поколение → двигатель → комплектация. Crawl-delay сайта 30 с |
+| Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), [MODEL-ENGINES.md](MODEL-ENGINES.md), [MODEL-TRIMS.md](MODEL-TRIMS.md) | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): поколения, двигатели (дорест/рест, коробка, привод), комплектации ЕС. Crawl-delay ultimatespecs 30 с |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
 | Проверка VIN | `partslink24.html` | [PARTSLINK24_VIN_CHECK.md](PARTSLINK24_VIN_CHECK.md) | Поля, марки, логика отчёта |

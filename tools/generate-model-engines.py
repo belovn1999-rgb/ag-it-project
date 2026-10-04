@@ -54,12 +54,16 @@ def cached_page(cache, url, offline):
     if not (os.path.exists(path) and os.path.getsize(path) > 10000):
         if offline:
             return None
-        wait = CRAWL_DELAY - (time.time() - _last_fetch[0])
-        if wait > 0:
-            time.sleep(wait)
-        subprocess.run(["curl", "-s", "-A", UA, "-o", path, url], check=False)
-        _last_fetch[0] = time.time()
-        if not (os.path.exists(path) and os.path.getsize(path) > 10000):
+        # A sleeping Mac or a dropped network leaves no page: retry, still one request per 30 s.
+        for _attempt in range(3):
+            wait = CRAWL_DELAY - (time.time() - _last_fetch[0])
+            if wait > 0:
+                time.sleep(wait)
+            subprocess.run(["curl", "-s", "--max-time", "60", "-A", UA, "-o", path, url], check=False)
+            _last_fetch[0] = time.time()
+            if os.path.exists(path) and os.path.getsize(path) > 10000:
+                break
+        else:
             return None
     with open(path, encoding="utf8", errors="ignore") as handle:
         return handle.read()
