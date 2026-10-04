@@ -16,6 +16,7 @@
 | Поиск и анализ рынка: Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | **§0 — текущая ситуация и план**, правила для параллельных чатов (§2), механизмы, решения, бэклог, журнал. Главный документ этой области. |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
 | Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), [MODEL-ENGINES.md](MODEL-ENGINES.md), [MODEL-TRIMS.md](MODEL-TRIMS.md) | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): поколения, двигатели (дорест/рест, коробка, привод), комплектации ЕС. Crawl-delay ultimatespecs 30 с |
+| Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
 | Проверка VIN | `partslink24.html` | [PARTSLINK24_VIN_CHECK.md](PARTSLINK24_VIN_CHECK.md) | Поля, марки, логика отчёта |
@@ -66,6 +67,7 @@
 
 ## 8. Журнал
 
+- 2026-10-04 — mobile.html, B47: исследование новых порталов по странам и порядок добавления — `docs/PORTALS-EXPANSION.md`; первым нужен свой прокси (B11) (Claude).
 - 2026-10-04 — CI на GitHub снова зелёный: офлайн-аудит mobile.html обновлён под намеренные изменения 03–04.10 (страна, «Stan pojazdu», «Analiza →» в истории); письма «All jobs have failed» прекратятся (Claude).
 - 2026-10-04 — mobile.html, B61: полная таблица двигателей 65 популярных моделей с 2010 (10 967 версий; поколение, дорестайлинг/рестайлинг, кузов, топливо, см³, л.с., кВт, год, коробка, привод) и комплектации ЕС по поколениям (181 строка с источниками) — `docs/MODEL-ENGINES.md`, `docs/MODEL-TRIMS.md`; коробка дозаполняется ночью со страниц версий (Claude).
 - 2026-10-04 — mobile.html: AutoScout24 получает все фильтры формы (оснащение, привод, объём, двери, места, версия, цвета, НДС; новый/б/у исправлен), статистика mobile.de + AutoScout24 = одна строка «Niemcy», флаги у валют в шапке (B48) (Claude).
