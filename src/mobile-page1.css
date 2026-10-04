@@ -892,3 +892,40 @@
   font-weight: 800;
   line-height: inherit;
 }
+
+/* ---- Slim bar in two rows (owner 04.10): star, car and every chip in the
+   first row — the chips scroll sideways with a visible scrollbar; the
+   compared portals with their counts, "Gotowe" and "Analiza rynku" in the
+   second row, bottom right. ---- */
+.mobileCompactBar {
+  flex-wrap: wrap;
+  row-gap: 4px;
+  padding-bottom: 8px;
+}
+
+.mobileCompactSummary {
+  flex: 1 1 calc(100% - 48px);
+}
+
+.mobileFilterChips.isCompact {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 6px;
+  -webkit-mask-image: none;
+  mask-image: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-muted) transparent;
+}
+
+.mobileFilterChips.isCompact::-webkit-scrollbar {
+  height: 6px;
+}
+
+.mobileFilterChips.isCompact::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: var(--color-muted);
+}
+
+.mobileCompactMarkets {
+  margin-left: auto;
+}
