@@ -24,6 +24,7 @@
 | Отчёты Auto1 | `auto1.html`, `auctions.html` | [auto1-pdf-learning/structured-editor.md](auto1-pdf-learning/structured-editor.md) | Как редактируется PDF отчёта |
 | Выкладка | все | [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md) | Pages + конвертер на Render, smoke-тесты |
 | Переезд на сервер | все | [AUTOGOOD_SERVER_DEPLOYMENT.md](AUTOGOOD_SERVER_DEPLOYMENT.md) | Требования к серверу, данные пользователей |
+| Инфраструктура чтения порталов (B73) | `mobile.html` | [PORTAL-INFRASTRUCTURE.md](PORTAL-INFRASTRUCTURE.md) | Worker-прокси, Chrome-узел mobile.de, постоянный адрес, ключи сотрудников, очередь и кэш, варианты с ценами, этапы |
 | Monitoring на сервере (B43) | `mobile.html` | [MONITORING-SERVER.md](MONITORING-SERVER.md) | Задания из браузера → раннер с Chrome → записи → браузер; что осталось при запуске сервера |
 | Калькуляторы | `calculators.html` | OPEN: отдельного документа нет | Формулы живут в `src/main.jsx` |
 | Договоры и документы | `umowy.html`, `pdf.html`, `umowa-sprzedazy.html`, `oswiadczenie-o-braku-tablic.html` | OPEN: отдельного документа нет | Распознавание данных и DOCX→PDF: `*.mdf`-выгрузки в `docs/` |
@@ -70,6 +71,7 @@
 
 ## 8. Журнал
 
+- 2026-10-05 — mobile.html, B73: план постоянной инфраструктуры порталов — Worker-прокси + Chrome-узел mobile.de через постоянный туннель + база Cloudflare для Monitoring, личные ключи сотрудников, очередь и кэш; варианты с ценами, рекомендация «Cloudflare + Mac mini в офисе»; ждёт решений владельца (`docs/PORTAL-INFRASTRUCTURE.md`) (Claude).
 - 2026-10-05 — mobile.html, B47: La Centrale пускает только человека в обычном Chrome, Chrome импортера блокирует DataDome; обход защиты не делаем — закладка или партнёрский доступ, пока ParuVendu (Claude).
 - 2026-10-05 — mobile.html, Monitoring (B72): ряд стран над плитками порталов, «Aktualne» вместо «Pełna lista», числа по выбранной стране и порталу, список по 100 машин (Claude).
 - 2026-10-05 — B71: страница оффера `oferta.html` и кнопка «Przygotuj ofertę» в Monitoring — фото, рынок, вердикт по правилам, торг, расчёт, PDF; импортер mobile.de отдаёт всё объявление и число авто дилера (Claude).

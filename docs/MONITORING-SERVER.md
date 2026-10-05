@@ -78,6 +78,9 @@ node server/monitoring-runner.mjs --jobs jobs.json --out data/monitoring --daily
    --disable-renderer-backgrounding --disable-backgrounding-occluded-windows`
    (иначе паузы скрытой вкладки растягиваются до минуты).
    **Решение владельца 10-04:** арендованный сервер + «домашний» прокси.
+   **Предложение 10-05 (B73, ждёт владельца):** вместо VPS + residential-прокси —
+   Chrome-узел на всегда включённом Mac mini в офисе, задания и записи — в базе
+   Cloudflare за Worker (`PORTAL-INFRASTRUCTURE.md` §6, §8).
    Имеющийся сервер CRM — nazwa.pl **CloudHosting Biznes**
    (`server953637.nazwa.pl`, 85.128.184.182) — общий хостинг: SSH и Node.js
    есть, но Node.js до 1 ГБ памяти, задачи cron до 540 с, без root и своих

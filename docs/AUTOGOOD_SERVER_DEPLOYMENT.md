@@ -25,6 +25,15 @@ separate retention policy. The identity provider, account recovery, database,
 retention period, and migration UX are still architecture decisions; this
 document does not select them.
 
+## Portal reading infrastructure (B73, plan 2026-10-05)
+
+The target layout for reading car portals — a Cloudflare Worker proxy with
+per-employee keys, one queue and cache per portal, a named tunnel to an
+always-on Chrome node for mobile.de, Monitoring jobs and records in Cloudflare
+D1 — with prices, owner decisions and stages lives in
+`docs/PORTAL-INFRASTRUCTURE.md` (Russian). Same rules as here: user data keyed
+by the server-verified account, secrets outside the repository.
+
 This repo now contains one server entrypoint for the backend workflows used by the GitHub Pages tools:
 
 - `GET /mobilede/import?url=...` - imports data from a mobile.de listing.
