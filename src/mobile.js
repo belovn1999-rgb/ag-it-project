@@ -167,10 +167,6 @@ const copy = {
     airConditioningAutomatic4Zones: "Automatyczna, 4 strefy",
     airConditioningAny: "Dowolna",
     trailerCouplingLabel: "Hak holowniczy",
-    trailerCouplingAny: "Dowolny",
-    trailerCouplingAll: "Stały, odpinany lub odchylany",
-    trailerCouplingDetachableOrSwiveling: "Odpinany lub odchylany",
-    trailerCouplingSwiveling: "Hak holowniczy odchylany",
     electricTailgate: "Elektryczna klapa bagażnika",
     seatsRangeLabel: "Liczba miejsc",
     doorsLabel: "Liczba drzwi",
@@ -510,10 +506,6 @@ const copy = {
     airConditioningAutomatic4Zones: "Автоматический, 4 зоны",
     airConditioningAny: "Любой",
     trailerCouplingLabel: "Фаркоп",
-    trailerCouplingAny: "Любой",
-    trailerCouplingAll: "Фиксированный, съёмный или поворотный",
-    trailerCouplingDetachableOrSwiveling: "Съёмный или поворотный",
-    trailerCouplingSwiveling: "Поворотный фаркоп",
     electricTailgate: "Электропривод крышки багажника",
     seatsRangeLabel: "Количество мест",
     doorsLabel: "Количество дверей",
@@ -2289,7 +2281,8 @@ function renderManualOptions(keepValues = true) {
   setCheckedValues(els.countries, current.countries?.length ? current.countries : defaultCountries());
   setCheckedValues(els.interiorMaterials, current.interiorMaterials);
   setCheckedValue(els.airConditioning, current.airConditioning || "");
-  setCheckedValue(els.trailerCoupling, current.trailerCoupling || "any");
+  // One tow-bar box (owner 2026-10-05): any kind saved before counts as "all".
+  setCheckedValue(els.trailerCoupling, current.trailerCoupling && current.trailerCoupling !== "any" ? "all" : "any");
   setCheckedValues(els.features, current.features);
   setCheckedValues(els.parkingSensors, current.parkingSensors);
   setCheckedValue(els.cruiseControl, current.cruiseControl || "any");
@@ -3502,7 +3495,7 @@ function applyRecognizedManualFields(data) {
   const radioInComfort = (inputs, value) => (inputs.some((input) => comfort?.contains(input)) ? value : "any");
   setCheckedValue(els.cruiseControl, radioInComfort(els.cruiseControl, equipment.cruiseControl));
   setCheckedValue(els.airConditioning, els.airConditioning.some((input) => comfort?.contains(input)) ? equipment.airConditioning : "");
-  setCheckedValue(els.trailerCoupling, radioInComfort(els.trailerCoupling, equipment.trailerCoupling));
+  setCheckedValue(els.trailerCoupling, equipment.trailerCoupling && equipment.trailerCoupling !== "any" ? "all" : "any");
 
   renderModelOptions(next.model);
   updateFuelSummary();

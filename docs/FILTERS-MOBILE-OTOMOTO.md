@@ -119,7 +119,7 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 |---|---|---|
 | Tapicerka | `it`: `ALCANTARA`, `FABRIC`, `PARTIAL_LEATHER`, `LEATHER` ✅ | `filter_enum_upholstery_type`: `alcantara-upholstery`, `textile-upholstery`, `upholstery-with-leather-inserts`, `leather-upholstery` ✅ |
 | Klimatyzacja | `clim`: `MANUAL_/AUTOMATIC_CLIMATISATION(_2/_3/_4_ZONES)` ✅ | `filter_enum_air_conditioning_type`: `air-conditioning`, `automatic-/dualzone-/trizone-/4-or-more-zone-…climate-control` ✅ |
-| Hak | `tct`: `TRAILER_COUPLING_FIX / _DETACHABLE / _SWIVELING` ✅ | `filter_enum_towbar=1` ≈ (только «есть») |
+| Hak (с 10-05 — один флажок «Hak holowniczy», значение `all`) | `tct`: все три вида (`all`) ✅ | `filter_enum_towbar=1` ✅ (только «есть») |
 | Tempomat | `spc=CRUISE_CONTROL / ADAPTIVE_CRUISE_CONTROL` ✅ | `filter_enum_cruisecontrol_type`: `cruise-control`; адаптивный = `adaptive-cruise-control` + `adaptive-cruise-control-predictive` ✅ |
 | Parkowanie | `pa=` значения; `FRONT_REAR_SENSORS` → `FRONT_SENSORS`+`REAR_SENSORS`; `REAR_TRAFFIC_ALERT` → `fe` ✅ | 360° `filter_enum_360_view_camera`, камера `rear_view_camera`, датчики `park_distance_control_front/rear`, `park_assistant`; Rear traffic alert ✗ |
 

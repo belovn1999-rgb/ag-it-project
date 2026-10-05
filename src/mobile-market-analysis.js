@@ -3450,7 +3450,7 @@
       input.checked = input.value === (filters.airConditioning || "");
     });
     document.querySelectorAll("[data-mobile-trailer-coupling]").forEach((input) => {
-      input.checked = input.value === (filters.trailerCoupling || "any");
+      input.checked = input.value === (filters.trailerCoupling && filters.trailerCoupling !== "any" ? "all" : "any");
     });
     document.querySelectorAll("[data-mobile-cruise-control]").forEach((input) => {
       input.checked = input.value === (filters.cruiseControl || "any");
