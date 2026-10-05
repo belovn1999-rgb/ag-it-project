@@ -1631,3 +1631,36 @@
 .mobileLinkSourceSelect[data-source]:focus-visible {
   opacity: 1;
 }
+
+/* 05.10: a favourite's ad (the link the analysis started from) — a small
+   square with its portal's mark, on the card's right edge. */
+.mobileMarketFavoriteAd {
+  position: absolute;
+  top: 50%;
+  right: 7px;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  transform: translateY(-50%);
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: 5px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.mobileMarketFavoriteAd img {
+  display: block;
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.mobileMarketFavoriteAd:hover {
+  border-color: var(--color-brand);
+}
+
+.mobileMarketFavoriteAd:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}

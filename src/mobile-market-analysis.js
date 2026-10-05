@@ -398,6 +398,7 @@
       historyPortals: "Porównywane portale",
       historySelectLabel: "Wczytaj parametry tego wyszukiwania",
       favoriteNoteEdit: "Klient / notatka",
+      favoriteAd: "Ogłoszenie z linku",
       otomotoFetching: "Pobieram oferty z otomoto.pl…",
       otomotoFetched: "Wczytano {count} z {total} ofert otomoto.pl.",
       mobileFetched: "Wczytano {count} z {total} ofert mobile.de.",
@@ -978,6 +979,7 @@
       historyPortals: "Сравниваемые порталы",
       historySelectLabel: "Загрузить параметры этого поиска",
       favoriteNoteEdit: "Клиент / заметка",
+      favoriteAd: "Объявление из ссылки",
       otomotoFetching: "Загружаю объявления с otomoto.pl…",
       otomotoFetched: "Загружено {count} из {total} объявлений otomoto.pl.",
       mobileFetched: "Загружено {count} из {total} объявлений mobile.de.",
@@ -1602,6 +1604,23 @@
   }
 
   // What of a recognised ad the search keeps: enough to draw and price it.
+  // Owner 2026-10-05: the ad the analysis started from, kept with the
+  // favourite — a small square with its portal's mark opens it.
+  function favoriteAdLink(entry) {
+    const url = String(entry?.car?.sourceUrl || "");
+    if (!/^https:\/\//.test(url)) return "";
+    const source = listingSource({ url });
+    let mark = "";
+    try {
+      mark = BRAND_MARKS[source] || BRAND_MARKS.mobile;
+    } catch {
+      // The marks are defined further down: drawn on the next render.
+      return "";
+    }
+    const label = `${copy().favoriteAd}: ${entry.car.title || sourceName(source)}`;
+    return `<a class="mobileMarketFavoriteAd" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${mark}" alt="" /></a>`;
+  }
+
   function linkedCarRecord(car) {
     if (!car || typeof car !== "object" || !(Number(car.carBruttoEur) || Number(car.pricePln) || Number(car.priceUsd))) return null;
     const pick = (value, length = 160) => (value === undefined || value === null ? "" : String(value).slice(0, length));
@@ -3987,6 +4006,7 @@
               </button>
               <button class="mobileMarketFavoriteRemove isStar" type="button" data-mobile-market-favorite-remove="${escapeMarketHtml(entry.id)}" aria-pressed="true" aria-label="${escapeMarketHtml(`${c.favoriteRemove}: ${title}`)}" title="${escapeMarketHtml(c.favoriteRemove)}">★</button>
               <button class="mobileMarketFavoriteNoteEdit" type="button" data-mobile-market-favorite-note="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(`${c.favoriteNoteEdit}: ${title}`)}" title="${escapeMarketHtml(c.favoriteNoteEdit)}">✎</button>
+              ${favoriteAdLink(entry)}
             </div>`;
           }).join("")}
         </div>` : `<p>${escapeMarketHtml(c.favoritesEmpty)}</p>`}
