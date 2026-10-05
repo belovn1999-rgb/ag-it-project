@@ -346,6 +346,14 @@
       screenshotDialogCopy: "Kopiuj obraz",
       screenshotDialogRightClick: "Kliknij obraz prawym przyciskiem → „Kopiuj obraz”",
       screenshotDialogClose: "Zamknij",
+      copyWhyClaude: "To okno w aplikacji Claude nie pozwala stronom kopiować obrazów do schowka — to ograniczenie aplikacji, nie programu. Otwórz stronę w Chrome lub Safari: tam „Kopiuj raport” kopiuje od razu. Tutaj: „Kopiuj do e-maila / dokumentu” (Gmail, Dokumenty Google, Word) albo zrzut ekranu.",
+      copyWhyBrowser: "Przeglądarka nie pozwoliła skopiować obrazu automatycznie: kliknij „Kopiuj obraz” jeszcze raz albo kliknij obraz prawym przyciskiem → „Kopiuj obraz”.",
+      copyWhyBlocked: "Kopiowanie do schowka jest zablokowane w ustawieniach przeglądarki dla tej strony: kłódka obok adresu → Ustawienia witryny → Schowek → Zezwalaj, potem „Kopiuj raport” jeszcze raz.",
+      copyForMail: "Kopiuj do e-maila / dokumentu",
+      copyForMailDone: "Skopiowano. Wklej (Cmd+V) w e-mailu, Dokumentach Google lub Wordzie. Komunikatory (WhatsApp, Messenger) potrzebują obrazu z Chrome lub Safari.",
+      copyForMailFailed: "Nie udało się skopiować — zrób zrzut ekranu albo otwórz stronę w Chrome.",
+      copyPageLink: "Kopiuj link do strony",
+      copyPageLinkDone: "Link skopiowany — wklej go w Chrome lub Safari i tam kliknij „Kopiuj raport”.",
       screenshotNoClipboard: "Ta przeglądarka nie pozwala kopiować obrazów. Użyj Chrome albo pobierz PDF.",
       screenshotWorking: "Przygotowuję raport…",
       screenshotPreparing: "Przygotowuję obraz… za chwilę można kopiować",
@@ -500,8 +508,8 @@
       mobilePending: "Oferty mobile.de ({count}) czekają — otwórz Analizę rynku dla tego auta.",
       bookmarkletInstall: "Zakładka do mobile.de:",
       bookmarkletInstallHint: "przeciągnij na pasek zakładek",
-      yourCar: "To auto",
-      yourCarVerdict: "To auto: {price} — taniej niż {share}% ofert, {diff} mediany.",
+      yourCar: "Porównywane auto",
+      yourCarVerdict: "Porównywane auto: {price} — taniej niż {share}% ofert, {diff} mediany.",
       belowMedian: "{pct}% poniżej",
       aboveMedian: "{pct}% powyżej",
       atMedian: "na poziomie",
@@ -906,6 +914,14 @@
       screenshotDialogCopy: "Копировать картинку",
       screenshotDialogRightClick: "Кликни по картинке правой кнопкой → «Копировать картинку»",
       screenshotDialogClose: "Закрыть",
+      copyWhyClaude: "Это окно в приложении Claude не разрешает страницам копировать картинки в буфер — это ограничение приложения, не программы. Открой страницу в Chrome или Safari: там «Копировать отчёт» копирует сразу. Здесь: «Копировать для письма / документа» (Gmail, Google Документы, Word) или скриншот.",
+      copyWhyBrowser: "Браузер не дал скопировать картинку автоматически: нажми «Копировать картинку» ещё раз или кликни по картинке правой кнопкой → «Копировать картинку».",
+      copyWhyBlocked: "Копирование в буфер запрещено в настройках браузера для этого сайта: замок слева от адреса → Настройки сайтов → Буфер обмена → Разрешить, затем «Копировать отчёт» ещё раз.",
+      copyForMail: "Копировать для письма / документа",
+      copyForMailDone: "Скопировано. Вставь (Cmd+V) в письмо, Google Документы или Word. Мессенджерам (WhatsApp, Messenger) нужна картинка из Chrome или Safari.",
+      copyForMailFailed: "Не получилось скопировать — сделай скриншот или открой страницу в Chrome.",
+      copyPageLink: "Копировать ссылку на страницу",
+      copyPageLinkDone: "Ссылка скопирована — вставь её в Chrome или Safari и там нажми «Копировать отчёт».",
       screenshotNoClipboard: "Этот браузер не умеет копировать картинки. Используй Chrome или скачай PDF.",
       screenshotWorking: "Готовлю отчёт…",
       screenshotPreparing: "Готовлю картинку… через секунду можно копировать",
@@ -1060,8 +1076,8 @@
       mobilePending: "Объявления mobile.de ({count}) ждут — открой анализ рынка для этого авто.",
       bookmarkletInstall: "Закладка для mobile.de:",
       bookmarkletInstallHint: "перетащи на панель закладок",
-      yourCar: "Это авто",
-      yourCarVerdict: "Это авто: {price} — дешевле {share}% объявлений, {diff} медианы.",
+      yourCar: "Сравниваемое авто",
+      yourCarVerdict: "Сравниваемое авто: {price} — дешевле {share}% объявлений, {diff} медианы.",
       belowMedian: "на {pct}% ниже",
       aboveMedian: "на {pct}% выше",
       atMedian: "на уровне",
@@ -1093,11 +1109,11 @@
       lowMarket: "Низ рынка",
       middleMarket: "Средние цены",
       highMarket: "Верх рынка",
-      count: "Объявлений",
+      count: "Объяв\u00adлений",
       minimum: "Самое дешёвое объявление",
       median: "Медиана",
       middleRange: "Средние цены (P25–P75)",
-      middleOffers: "В диапазоне",
+      middleOffers: "В диапа\u00adзоне",
       sampleDate: "Цены объявлений · данные на {date}",
       limitedSample: "Маленькая выборка: типичная цена может быть нестабильной. Для оценки автомобиля нужно минимум 8 объявлений.",
       priceFilterWarning: "Фильтр цены ограничивает сравнение. Уберите его, чтобы оценить весь рынок.",
@@ -7962,6 +7978,7 @@
   // write only right after the click, and drawing takes a few seconds, so
   // the clipboard is asked at once and gets the picture as a promise.
   let lastReportImage = null;
+  let reportCopyError = null;
 
   // Chrome refuses a clipboard write that waits seconds for its picture, so
   // the report's picture is drawn ahead, once the report is still for a
@@ -8039,19 +8056,67 @@
     if (changed) reportChanged();
   }).observe(analysisContent, { childList: true, subtree: true, characterData: true });
 
-  function showCopyDialog(blob) {
+  // The Claude app's browser pane (its user agent says "Claude/") lets a
+  // page write text but never a picture to the clipboard (checked
+  // 2026-10-05: "Write permission denied", clipboard-write "denied").
+  const inClaudeApp = () => /\bClaude\//.test(navigator.userAgent || "");
+
+  // The old copy command (allowed where the clipboard API is not): the
+  // picture as HTML, which e-mail and documents (Gmail, Google Docs, Word)
+  // paste as an image; messengers want a real picture.
+  function copyLegacy(html, text) {
+    let done = false;
+    const onCopy = (event) => {
+      event.preventDefault();
+      if (html) event.clipboardData.setData("text/html", html);
+      event.clipboardData.setData("text/plain", text || "");
+      done = true;
+    };
+    document.addEventListener("copy", onCopy, { once: true });
+    try {
+      document.execCommand("copy");
+    } catch {
+      // Not allowed either.
+    }
+    document.removeEventListener("copy", onCopy);
+    return done;
+  }
+
+  function showCopyDialog(blob, error = null) {
     const c = copy();
     document.querySelector(".mobileReportCopyDialog")?.remove();
     const url = URL.createObjectURL(blob);
+    let dataUrl = "";
+    const reader = new FileReader();
+    reader.onload = () => {
+      dataUrl = String(reader.result || "");
+    };
+    reader.readAsDataURL(blob);
     const dialog = document.createElement("dialog");
     dialog.className = "mobileReportCopyDialog";
+    const claude = inClaudeApp();
+    // Why it failed, said plainly: the Claude app, a blocked site setting, or
+    // the browser's own words.
+    const reason = claude ? c.copyWhyClaude : `${c.copyWhyBrowser}${error ? ` (${error.name}: ${error.message})` : ""}`;
     dialog.innerHTML = `
       <div class="mobileReportCopyBar">
-        <p><b>${escapeMarketHtml(c.screenshotDialogTitle)}</b>${escapeMarketHtml(c.screenshotDialogHint)}</p>
-        <button class="mobileMarketImportClear isPrimary" type="button" data-copy-dialog-copy>${escapeMarketHtml(c.screenshotDialogCopy)}</button>
-        <button class="mobileMarketImportClear" type="button" data-copy-dialog-close>${escapeMarketHtml(c.screenshotDialogClose)}</button>
+        <p><b>${escapeMarketHtml(c.screenshotDialogTitle)}</b><span data-copy-dialog-reason>${escapeMarketHtml(reason)}</span></p>
+        <div class="mobileReportCopyActions">
+          ${claude ? "" : `<button class="mobileMarketImportClear isPrimary" type="button" data-copy-dialog-copy>${escapeMarketHtml(c.screenshotDialogCopy)}</button>`}
+          <button class="mobileMarketImportClear${claude ? " isPrimary" : ""}" type="button" data-copy-dialog-html>${escapeMarketHtml(c.copyForMail)}</button>
+          ${claude ? `<button class="mobileMarketImportClear" type="button" data-copy-dialog-link>${escapeMarketHtml(c.copyPageLink)}</button>` : ""}
+          <button class="mobileMarketImportClear" type="button" data-copy-dialog-close>${escapeMarketHtml(c.screenshotDialogClose)}</button>
+        </div>
       </div>
       <img src="${url}" alt="${escapeMarketHtml(c.screenshotDialogTitle)}" />`;
+    const say = (text) => {
+      dialog.querySelector("[data-copy-dialog-reason]").textContent = text;
+    };
+    if (!claude) {
+      navigator.permissions?.query({ name: "clipboard-write" }).then((state) => {
+        if (state.state === "denied") say(c.copyWhyBlocked);
+      }).catch(() => {});
+    }
     const close = () => {
       dialog.close();
       dialog.remove();
@@ -8062,15 +8127,24 @@
         close();
         return;
       }
+      if (event.target.closest("[data-copy-dialog-html]")) {
+        const ok = dataUrl && copyLegacy(`<img src="${dataUrl}" alt="AUTOGOOD">`, "");
+        say(ok ? c.copyForMailDone : c.copyForMailFailed);
+        return;
+      }
+      if (event.target.closest("[data-copy-dialog-link]")) {
+        say(copyLegacy("", location.href) ? c.copyPageLinkDone : location.href);
+        return;
+      }
       const again = event.target.closest("[data-copy-dialog-copy]");
       if (!again) return;
       try {
         await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
         setAnalysisStatus(c.screenshotCopied);
         close();
-      } catch (error) {
-        console.warn("AUTOGOOD copy refused in the window:", error?.name, error?.message);
-        again.textContent = c.screenshotDialogRightClick;
+      } catch (failure) {
+        console.warn("AUTOGOOD copy refused in the window:", failure?.name, failure?.message);
+        say(`${c.copyWhyBrowser} (${failure?.name}: ${failure?.message}) ${c.screenshotDialogRightClick}`);
       }
     });
     dialog.addEventListener("cancel", () => {
@@ -8104,10 +8178,11 @@
       try {
         const blob = await blobPromise;
         lastReportImage = { mode, blob, at: Date.now() };
+        reportCopyError = error;
         // The finished picture in a window: its button copies it (a fresh
         // click), or a right click → "Copy image" where the page may not
         // write to the clipboard at all. Never a download.
-        showCopyDialog(blob);
+        showCopyDialog(blob, reportCopyError);
         setAnalysisStatus(c.screenshotInDialog, true);
       } catch {
         setAnalysisStatus(c.screenshotFailed, true);

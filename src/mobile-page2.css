@@ -627,3 +627,23 @@
 .mobileMarketAxisNote.isTurnkey {
   line-height: 1.55;
 }
+
+/* 05.10: the copy window's buttons wrap under the reason on a narrow window. */
+.mobileReportCopyBar {
+  flex-wrap: wrap;
+}
+
+.mobileReportCopyBar p {
+  min-width: min(100%, 420px);
+}
+
+.mobileReportCopyActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* A long header word (RU "Объявлений") breaks at its soft hyphen. */
+.mobileMarketStatsRow.isHead > span {
+  hyphens: manual;
+}
