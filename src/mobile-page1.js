@@ -54,7 +54,8 @@
       let total = head.querySelector(".agMarketColumnTotal");
       // Every switched-on column has its total on top, large (owner
       // 2026-10-05), also with one portal: the columns read alike.
-      const value = rows.length ? sumCounts(rows) : "";
+      // No count known yet (empty form): no "Razem —".
+      const value = rows.length && /\d/.test(sumCounts(rows)) ? sumCounts(rows) : "";
       if (!value) {
         total?.remove();
         return;
