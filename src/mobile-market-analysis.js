@@ -7586,10 +7586,6 @@
           </div>
         </div>
 
-        ${carVerdict || carLocalVerdict ? `<ul class="mobileMarketCarVerdict">
-          ${carVerdict ? `<li>${escapeMarketHtml(carVerdict)}</li>` : ""}
-          ${carLocalVerdict ? `<li>${escapeMarketHtml(carLocalVerdict)}</li>` : ""}
-        </ul>` : ""}
 
         <div class="mobileMarketLegend">
           ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${marketBadge(source)}${turnkeySources.includes(source) && marketListings.some((listing) => listing.source === source && listing.turnkeyPln) ? ` · ${escapeMarketHtml(turnkeyLabel)}` : ""}</span>`).join("")}
@@ -7605,6 +7601,10 @@
 
           ${byMode && byProgress ? `<p class="mobileMarketAxisNote" data-by-progress data-report-hide>${escapeMarketHtml(c.byDetailsProgress.replace("{done}", String(byProgress.done)).replace("{total}", String(byProgress.total)))}</p>` : ""}
           ${byMode && byMissing.size && !byProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(c.byDetailsMissing.replace("{missing}", String(byMissing.size)))}</p>` : ""}
+          ${carVerdict || carLocalVerdict ? `<ul class="mobileMarketCarVerdict">
+          ${carVerdict ? `<li>${escapeMarketHtml(carVerdict)}</li>` : ""}
+          ${carLocalVerdict ? `<li>${escapeMarketHtml(carLocalVerdict)}</li>` : ""}
+        </ul>` : ""}
           ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">* ${byMode
             ? escapeMarketHtml(c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD")))
             : turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(marketListings.filter((listing) => listing.turnkeyPln && listing.engine).map((listing) => listing.engine.index)))}</p>` : ""}
@@ -7720,7 +7720,7 @@
       // The block opens and closes on its title (closed at first; the
       // viewer's choice is remembered in this browser).
       segmentsContent = segmentDimensions.length || mileageTable ? `
-        <details class="mobileMarketCard mobileMarketSegmentsCard" aria-label="${escapeMarketHtml(c.segmentsHeading)}" data-report-list-hide data-mobile-segments${segmentsOpen ? " open" : ""}>
+        <details class="mobileMarketCard mobileMarketSegmentsCard" aria-label="${escapeMarketHtml(c.segmentsHeading)}" data-report-list-hide data-mobile-segments${segmentsOpen ? " open" : " data-report-hide"}>
           <summary>${blockTitle("settings", c.segmentsHeading)}<span class="mobileMarketSegmentsToggle" aria-hidden="true"></span></summary>
           ${mileageTable}
           <div class="mobileMarketSegments">
@@ -8036,6 +8036,8 @@
             ${statsContent}
           </section>` : ""}
 
+        ${segmentsContent}
+
         <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
           ${hasListings ? (reportActionsInTitle
             ? `<div class="mobileMarketChartTitleRow">${blockTitle("gauge", c.distributionHeading)}${reportActions}</div>`
@@ -8044,8 +8046,6 @@
         </section>
 
         ${summaryContent}
-
-        ${segmentsContent}
 
         ${offersContent ? `
           <section class="mobileMarketCard mobileMarketOffersCard" aria-label="${escapeMarketHtml(c.tableHeading)}" data-report-hide-copy>
@@ -9054,6 +9054,9 @@
   analysisContent.addEventListener("toggle", (event) => {
     if (!(event.target instanceof Element) || !event.target.matches("[data-mobile-segments]")) return;
     segmentsOpen = event.target.open;
+    // A closed block stays out of the report picture.
+    event.target.toggleAttribute("data-report-hide", !segmentsOpen);
+    reportChanged();
     try {
       localStorage.setItem(SEGMENTS_OPEN_KEY, segmentsOpen ? "1" : "0");
     } catch {
