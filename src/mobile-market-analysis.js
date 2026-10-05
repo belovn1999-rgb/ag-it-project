@@ -7410,7 +7410,8 @@
           : `<p>${item.label ? `<b>${escapeMarketHtml(item.label)}.</b> ` : ""}${escapeMarketHtml(item.text)}${item.note ? `<small class="mobileMarketConclusionNote">${escapeMarketHtml(item.note)}</small>` : ""}</p>`);
         summaryContent = `
           <section class="mobileMarketCard mobileMarketSummaryCard" aria-label="${escapeMarketHtml(c.conclusionHeading)}" data-report-list-hide>
-            <div class="mobileMarketConclusion"><strong>${escapeMarketHtml(c.conclusionHeading)}</strong>${conclusions.map(conclusionLine).join("")}</div>
+            ${blockTitle("check", c.conclusionHeading)}
+            <div class="mobileMarketConclusion">${conclusions.map(conclusionLine).join("")}</div>
           </section>`;
       }
       statsContent = `
@@ -7836,7 +7837,8 @@
         </div>
       </div>`;
     const spec = window.AUTOGOOD_SPEC_SHEET?.({
-      kicker: window.AUTOGOOD_SPEC_COPY?.().specSearchKicker || c.searchHeading,
+      // The block's name as a heading like "Statystyki" (owner 2026-10-05).
+      kicker: "",
       title: [filters.brand, filters.model, filters.version].filter(Boolean).join(" "),
       // The date stands once, top right of the report (the data's date).
       meta: "",
@@ -7898,6 +7900,7 @@
         <div data-report-hide>${analysisStatusHtml()}</div>
 
         <section class="mobileMarketCard mobileMarketSearchCard" aria-label="${escapeMarketHtml(c.searchHeading)}">
+          ${blockTitle("car", window.AUTOGOOD_SPEC_COPY?.().specSearchKicker || c.searchHeading)}
           ${spec}
           ${specFoot}
         </section>

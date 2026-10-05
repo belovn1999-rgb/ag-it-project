@@ -770,3 +770,14 @@
   border-radius: 2px;
   box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.25);
 }
+
+/* 05.10 (owner): every block's heading like "Statystyki" — icon, 15px,
+   600, capitals. */
+.mobileMarketAnalysisView .mobileMarketCard .agBlockTitle {
+  font-weight: 600;
+}
+
+.mobileMarketSummaryCard .agBlockTitle,
+.mobileMarketSearchCard > .agBlockTitle {
+  margin-bottom: var(--space-sm);
+}
