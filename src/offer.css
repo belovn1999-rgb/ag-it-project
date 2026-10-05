@@ -141,6 +141,8 @@
   border-bottom: 1.5px solid var(--of-navy);
 }
 .ofLogo { height: 30px; width: auto; display: block; }
+.ofLogoText { display: none; align-items: center; gap: 7px; font: 400 22px/1 Arial, "Helvetica Neue", sans-serif; letter-spacing: 0.01em; }
+.ofLogoText img { height: 24px; width: auto; display: block; }
 .ofHeadMeta { text-align: right; font-size: 11px; color: var(--of-muted); line-height: 1.5; }
 .ofHeadMeta b { color: var(--of-ink); font-weight: 600; }
 .ofPageNo { font-size: 10.5px; color: var(--of-faint); }
@@ -371,7 +373,7 @@
 .ofReasons li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 5px; height: 5px; border-radius: 50%; background: var(--of-brand); }
 
 /* Process. */
-.ofSteps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: step; }
+.ofSteps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 16px; counter-reset: step; }
 .ofStep { position: relative; padding-top: 30px; font-size: 11px; line-height: 1.4; }
 .ofStep::before {
   counter-increment: step;
@@ -391,7 +393,7 @@
   justify-content: center;
 }
 .ofStep::after { content: ""; position: absolute; top: 11px; left: 28px; right: -6px; height: 1px; background: var(--of-line-strong); }
-.ofStep:last-child::after { display: none; }
+.ofStep:nth-child(3n)::after, .ofStep:last-child::after { display: none; }
 .ofStep b { display: block; font-size: 11.5px; margin-bottom: 2px; }
 
 /* Contact and the foot of each sheet. */
@@ -564,3 +566,153 @@
 .isPremium .ofCosts tr.isTotal td { color: var(--of-navy); }
 .isPremium .ofOption { background: #ffffff; border: 1px solid #dfe7ef; }
 .isPremium .ofFoot { border-top-color: var(--of-gold-soft); }
+
+/* ---- Looks with their own layout (wave 5): the first sheet as a grid ------
+ * The hero, its info column and the card rows step aside (display: contents)
+ * and every block takes its place in the look's areas. Each look still fits
+ * one A4 page (autoFit trims the least important lines). */
+.ofKpis { display: none; }
+.ofStyleList label { align-items: flex-start; }
+.ofStyleList span { display: grid; gap: 1px; }
+.ofStyleList small { color: var(--of-muted); font-weight: 400; font-size: 11.5px; }
+.ofPage.isGrid[data-page="1"] { display: grid; column-gap: 24px; row-gap: 12px; align-content: stretch; }
+.isGrid[data-page="1"] .ofHero,
+.isGrid[data-page="1"] .ofHeroInfo,
+.isGrid[data-page="1"] > .ofGrid { display: contents; }
+.isGrid[data-page="1"] > *,
+.isGrid[data-page="1"] .ofHero > *,
+.isGrid[data-page="1"] .ofHeroInfo > *,
+.isGrid[data-page="1"] > .ofGrid > * { margin: 0; min-width: 0; }
+.isGrid[data-page="1"] .ofHead { grid-area: head; }
+.isGrid[data-page="1"] .ofPhotoColumn { grid-area: photo; }
+.isGrid[data-page="1"] .ofHeroTitle { grid-area: title; }
+.isGrid[data-page="1"] .ofPriceBox { grid-area: price; }
+.isGrid[data-page="1"] .ofChips { grid-area: chips; align-self: start; }
+.isGrid[data-page="1"] .ofKpis { grid-area: kpis; }
+.isGrid[data-page="1"] .ofSpecs { grid-area: specs; }
+.isGrid[data-page="1"] [data-block="market"] { grid-area: market; }
+.isGrid[data-page="1"] [data-block="verdict"] { grid-area: verdict; }
+.isGrid[data-page="1"] [data-block="equipment"] { grid-area: equipment; }
+.isGrid[data-page="1"] [data-block="seller"] { grid-area: seller; }
+.isGrid[data-page="1"] .ofFoot { grid-area: foot; }
+/* Blocks above a painted band or column. */
+.isGrid .ofHead, .isGrid .ofPhotoColumn, .isGrid .ofHeroTitle, .isGrid .ofPriceBox, .isGrid .ofChips,
+.isGrid .ofKpis, .isGrid .ofSpecs, .isGrid .ofCard, .isGrid .ofFoot, .isGrid .ofNote, .isGrid .ofGrid { position: relative; z-index: 1; }
+.isGrid::before { content: ""; position: absolute; z-index: 0; pointer-events: none; }
+
+/* "Magazyn": a cream column with the price, the data and the seller; serif titles. */
+.ofPage.isMagazyn { --of-cream: #f6f0e4; --of-brown: #6b5532; --of-sand: #ddd0b6; }
+.isMagazyn[data-page="1"] {
+  grid-template-columns: 222px minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto auto auto auto auto 1fr auto;
+  grid-template-areas:
+    "head head"
+    "price photo"
+    "specs photo"
+    "specs title"
+    "specs chips"
+    "specs market"
+    "seller verdict"
+    "seller equipment"
+    ". ."
+    "foot foot";
+}
+.isMagazyn[data-page="1"]::before { top: 0; bottom: 0; left: 0; width: 274px; background: var(--of-cream); }
+.isMagazyn .ofHead { border-bottom: 1px solid var(--of-sand); }
+.isMagazyn .ofLogo { mix-blend-mode: multiply; }
+.isMagazyn .ofTitle, .isMagazyn .ofPrice, .isMagazyn .ofBig, .isMagazyn .ofSellerName, .isMagazyn .ofCosts tr.isTotal td { font-family: "Playfair Display", Georgia, serif; letter-spacing: 0; }
+.isMagazyn .ofTitle { font-size: 27px; }
+.isMagazyn .ofKicker, .isMagazyn .ofLabel, .isMagazyn .ofCardHead { color: var(--of-brown); }
+.isMagazyn .ofCardHead svg { color: #a68548; }
+.isMagazyn .ofPriceBox { padding: 2px 0 12px; border: 0; border-bottom: 1px solid var(--of-sand); border-radius: 0; background: transparent; }
+.isMagazyn .ofPrice { font-size: 31px; }
+.isMagazyn .ofPhoto { aspect-ratio: 1.9 / 1; border-radius: 4px; }
+.isMagazyn[data-page="1"] .ofSpecs { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 9px; padding: 0; border: 0; }
+.isMagazyn .ofSpec span { color: #8f7d5e; }
+.isMagazyn .ofCard { border: 0; border-top: 1px solid var(--of-sand); border-radius: 0; padding: 10px 0 0; background: transparent; }
+.isMagazyn[data-page="1"] [data-block="seller"] { padding-top: 12px; }
+.isMagazyn .ofOption { background: var(--of-cream); color: var(--of-brown); }
+.isMagazyn .ofVerdict.isOk { background: #eef3e6; }
+.isMagazyn .ofBarBand { background: #e6dcc6; }
+.isMagazyn .ofBarMedian, .isMagazyn .ofStep::before { background: var(--of-brown); }
+.isMagazyn .ofFoot { border-top-color: var(--of-sand); }
+.isMagazyn .ofMethod { background: var(--of-cream); border-color: var(--of-sand); }
+
+/* "Raport": the price and three figures first, the market across the page. */
+.isRaport[data-page="1"] {
+  grid-template-columns: 290px minmax(0, 1fr);
+  grid-template-rows: auto auto auto auto auto auto auto 1fr auto;
+  grid-template-areas:
+    "head head"
+    "price kpis"
+    "photo title"
+    "photo specs"
+    "market market"
+    "verdict equipment"
+    "verdict seller"
+    ". ."
+    "foot foot";
+}
+.isRaport[data-page="1"] .ofChips { display: none; }
+.isRaport .ofKpis { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.ofKpi { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; border-radius: 10px; background: var(--of-soft); }
+.ofKpi span { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--of-muted); font-weight: 700; }
+.ofKpi b { font-size: 21px; line-height: 1.15; color: var(--of-navy); font-weight: 700; }
+.ofKpi small { font-size: 10.5px; color: var(--of-muted); }
+.ofKpi.isGood b { color: var(--of-green); }
+.ofKpi.isWarn b { color: var(--of-amber); }
+.ofKpi.isRisk b { color: var(--of-red); }
+.isRaport .ofPriceBox { padding: 12px 14px; border: 0; border-radius: 10px; background: var(--of-navy); color: #ffffff; }
+.isRaport .ofPriceBox .ofLabel { color: #b7cde0; }
+.isRaport .ofPriceBox .ofPrice { color: #ffffff; font-size: 27px; }
+.isRaport .ofPriceBox .ofPriceNote, .isRaport .ofPriceBox .ofAdPrice { color: rgba(255, 255, 255, 0.8); }
+.isRaport .ofPriceBox b { color: #ffffff; }
+.isRaport .ofPhoto { aspect-ratio: 4 / 3; border-radius: 10px; }
+.isRaport[data-page="1"] .ofSpecs { grid-template-columns: repeat(2, minmax(0, 1fr)); align-content: start; border-top: 0; padding-top: 4px; }
+.isRaport .ofTitle { font-size: 22px; }
+.isRaport .ofCard { border-radius: 8px; }
+.isRaport[data-page="1"] [data-block="market"] .ofBar { height: 40px; margin: 6px 6px 4px; }
+.isRaport .ofCardHead::before { content: ""; width: 6px; height: 6px; border-radius: 1px; background: var(--of-navy); }
+.isRaport .ofCardHead svg { display: none; }
+
+/* "Noc": a dark band with the name and the price, the photo reaching into it. */
+.ofPage.isNoc { --of-night: #0e1a24; --of-gold: #b39256; --of-gold-soft: #d9c08a; }
+.isNoc[data-page="1"] {
+  grid-template-columns: minmax(0, 1fr) 248px;
+  grid-template-rows: auto auto auto auto auto auto auto 1fr auto;
+  grid-template-areas:
+    "head head"
+    "title price"
+    "chips price"
+    "photo photo"
+    "specs specs"
+    "market verdict"
+    "equipment seller"
+    ". ."
+    "foot foot";
+}
+.isNoc[data-page="1"]::before { top: 0; left: 0; right: 0; height: var(--of-band, 330px); background: var(--of-night); }
+.isNoc[data-page="2"]::before { top: 0; left: 0; right: 0; height: 92px; background: var(--of-night); }
+.isNoc .ofHead { border-bottom: 1px solid rgba(217, 192, 138, 0.45); }
+.isNoc .ofLogo { display: none; }
+.isNoc .ofLogoText { display: inline-flex; color: #ffffff; }
+.isNoc .ofLogoText img { filter: brightness(0) invert(1); }
+.isNoc .ofHeadMeta, .isNoc .ofPageNo { color: rgba(255, 255, 255, 0.7); }
+.isNoc .ofHeadMeta b { color: #ffffff; }
+.isNoc[data-page="1"] .ofKicker { color: var(--of-gold-soft); }
+.isNoc[data-page="1"] .ofTitle { color: #ffffff; font-size: 24px; }
+.isNoc[data-page="1"] .ofSub { color: rgba(255, 255, 255, 0.74); }
+.isNoc .ofPriceBox { padding: 14px 16px; border: 1px solid rgba(217, 192, 138, 0.55); border-radius: 12px; background: rgba(255, 255, 255, 0.06); color: #ffffff; }
+.isNoc .ofPriceBox .ofLabel { color: var(--of-gold-soft); }
+.isNoc .ofPriceBox .ofPrice { color: #ffffff; font-size: 30px; }
+.isNoc .ofPriceBox .ofPriceNote, .isNoc .ofPriceBox .ofAdPrice { color: rgba(255, 255, 255, 0.78); }
+.isNoc .ofPriceBox b { color: #ffffff; }
+.isNoc[data-page="1"] .ofChip { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.2); color: #ffffff; }
+.isNoc[data-page="1"] .ofChip.isGood { background: rgba(46, 160, 90, 0.16); border-color: rgba(159, 224, 181, 0.45); color: #a6e3bb; }
+.isNoc .ofPhoto { aspect-ratio: 3.3 / 1; border-radius: 14px; box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28); }
+.isNoc[data-page="1"] { row-gap: 10px; }
+.isNoc[data-page="1"] .ofSpecs { border-top: 0; padding: 6px 0 8px; }
+.isNoc .ofCardHead { color: var(--of-night); }
+.isNoc .ofCardHead svg { color: var(--of-gold); }
+.isNoc .ofStep::after { background: var(--of-gold-soft); }
+.isNoc .ofFoot { border-top-color: var(--of-gold-soft); }

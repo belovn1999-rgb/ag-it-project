@@ -124,6 +124,7 @@
     const lastTwo = n % 100;
     return last >= 2 && last <= 4 && !(lastTwo >= 12 && lastTwo <= 14) ? few : many;
   }
+  const withFirm = (name) => (!name ? "" : /autogood/i.test(name) ? name : `${name} z AUTOGOOD`);
   const fuelShort = (fuel) => String(fuel || "").replace(/\s*\(.*\)$/, "");
 
   function carView() {
@@ -219,7 +220,7 @@
     const hi = Math.max(stats.p75 + (stats.p75 - stats.p25) * 0.9, view.price) * 1.01;
     const at = (value) => Math.max(0, Math.min(100, ((value - lo) / (hi - lo)) * 100));
     const vsMedian = stats.median ? view.price / stats.median - 1 : 0;
-    return { stats, near, lead, at, vsMedian, where, typical: `Połowa ofert kosztuje ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`, currency: own.currency };
+    return { stats, near, lead, at, vsMedian, where, share: cheaperShare, count: stats.count, typical: `Połowa ofert kosztuje ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`, currency: own.currency };
   }
 
   function polandView() {
@@ -241,7 +242,13 @@
   // "light" — white, thin rules, framed cards; "premium" — the photo across the
   // page, the price on a navy plate, quiet gold accents, cards without frames.
   const STYLE_KEY = "autogood.offer.style.v1";
-  const STYLES = [["light", "Jasny"], ["premium", "Premium"]];
+  const STYLES = [
+    ["light", "Jasny", "zdjęcie obok ceny, karty w ramkach"],
+    ["premium", "Premium", "zdjęcie na całą szerokość, cena na granatowej plakietce"],
+    ["magazyn", "Magazyn", "kremowa kolumna z ceną i danymi, tytuły szeryfowe"],
+    ["raport", "Raport", "liczby na górze, rynek na całą szerokość"],
+    ["noc", "Noc", "ciemny nagłówek z ceną, zdjęcie pod nim"],
+  ];
   function preferredStyle() {
     try {
       return localStorage.getItem(STYLE_KEY) || "light";
@@ -250,7 +257,7 @@
     }
   }
   const currentStyle = () => (STYLES.some(([key]) => key === offer?.style) ? offer.style : preferredStyle());
-  const styleClass = () => (currentStyle() === "premium" ? " isPremium" : "");
+  const styleClass = () => ({ premium: " isPremium", magazyn: " isMagazyn isGrid", raport: " isRaport isGrid", noc: " isNoc isGrid" })[currentStyle()] || "";
 
   // A car dearer than its Polish peers: the line stays off unless the manager
   // shows it ("shown" overrides, "hidden" hides in any case).
@@ -267,11 +274,30 @@
     return `
       <header class="ofHead">
         <img class="ofLogo" src="./assets/autogood-logo.png" alt="AUTOGOOD" />
+        <span class="ofLogoText" aria-hidden="true"><img src="./assets/ag-opt.svg" alt="" /><span>AUTOGOOD</span></span>
         <div class="ofHeadMeta">
           ${forWhom}Oferta nr <b>${esc(offer.number || "")}</b> · ${esc(dateText(offer.createdAt))}<br>
           <span class="ofPageNo">${page === 1 ? esc(view.title) : `${esc(view.title)} · strona 2 z 2`}</span>
         </div>
       </header>`;
+  }
+
+  // Three figures beside the price ("Raport"): against the median, the share
+  // of dearer offers or the saving against Poland, the verdict.
+  function kpiHtml(market, poland, verdict) {
+    const tiles = [];
+    if (market) {
+      tiles.push({ label: "Na tle rynku", value: `${market.vsMedian <= 0 ? "−" : "+"}${percent(market.vsMedian)}`, note: "od mediany podobnych ofert", tone: market.vsMedian <= -0.03 ? "isGood" : market.vsMedian > 0.05 ? "isWarn" : "" });
+      if (poland?.saving >= 1000 && !polandHidden(poland)) tiles.push({ label: "Taniej niż w Polsce", value: `ok. ${money(Math.round(poland.saving / 500) * 500, "PLN")}`, note: `mediana otomoto ${money(poland.median, "PLN")}`, tone: "isGood" });
+      else tiles.push({ label: "Tańsze niż", value: percent(market.share || 0), note: `z ${numbers.format(market.count)} ofert`, tone: (market.share || 0) >= 0.5 ? "isGood" : "" });
+    }
+    if (verdict) tiles.push({ label: "Ocena AUTOGOOD", value: { ok: "Polecamy", check: "Do weryfikacji", risk: "Odradzamy" }[verdict.level], note: (() => {
+      const good = verdict.all.filter((line) => line.level === "ok").length;
+      const check = verdict.all.filter((line) => line.level === "warn" || line.level === "risk").length;
+      return `${good} ${plural(good, "mocna strona", "mocne strony", "mocnych stron")} · ${check} do sprawdzenia`;
+    })(), tone: verdict.level === "ok" ? "isGood" : verdict.level === "check" ? "isWarn" : "isRisk" });
+    if (!tiles.length) return "";
+    return `<div class="ofKpis">${tiles.map((tile) => `<div class="ofKpi ${tile.tone}"><span>${esc(tile.label)}</span><b>${esc(tile.value)}</b><small>${esc(tile.note)}</small></div>`).join("")}</div>`;
   }
 
   function sheetOne(view) {
@@ -282,7 +308,7 @@
     const keyOptions = EQUIPMENT ? EQUIPMENT.keyOptions(offer.ad?.features || [], 8) : [];
     const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
     const salutation = SALUTATION[offer.client?.salutation] || SALUTATION.Pan;
-    const manager = offer.manager || {};
+    const manager = store.manager(offer.manager);
     const photo = edits().photo || view.images[0] || "";
     const chips = [];
     if (market && market.vsMedian <= -0.03) chips.push(`<span class="ofChip isGood">${icon("down")}${percent(market.vsMedian)} poniżej mediany rynku</span>`);
@@ -341,6 +367,7 @@
                 <p class="ofAdPrice">W ogłoszeniu: <b>${esc(money(view.price, view.currency))}</b> ${esc(vatText(view))}</p>
               </div>
               ${chips.length ? `<div class="ofChips${blockClass("chips")}">${chips.join("")}</div>` : ""}
+              ${kpiHtml(market, poland, verdict)}
             </div>
           </section>
           <section class="ofSpecs${blockClass("specs")}">
@@ -393,7 +420,7 @@
             </section>
           </div>
           <footer class="ofFoot">
-            <span>${manager.name || manager.phone ? `<b>${esc(salutation.owner)} opiekun:</b> ${esc([manager.name, manager.phone, manager.email].filter(Boolean).join(" · "))}` : `<b>AUTOGOOD</b> · ${esc([offer.company?.phone, offer.company?.email].filter(Boolean).join(" · "))}`}</span>
+            <span>${manager.name || manager.phone ? `<b>${esc(salutation.owner)} opiekun:</b> ${esc([withFirm(manager.name), manager.phone, manager.email].filter(Boolean).join(" · "))}` : `<b>AUTOGOOD</b> · ${esc([store.company(offer.company).phone, store.company(offer.company).email].filter(Boolean).join(" · "))}`}</span>
             <span>Dane z ogłoszenia — sprawdzamy je przed zakupem</span>
           </footer>
         </article>
@@ -405,8 +432,8 @@
     const negotiation = VERDICT ? VERDICT.negotiation({ car: offer.car, ad: offer.ad, market: offer.market }) : null;
     const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
     const salutation = SALUTATION[offer.client?.salutation] || SALUTATION.Pan;
-    const manager = offer.manager || {};
-    const company = offer.company || {};
+    const manager = store.manager(offer.manager);
+    const company = store.company(offer.company);
     const initials = manager.name ? String(manager.name).split(/\s+/).map((word) => word.charAt(0)).join("").slice(0, 2).toUpperCase() : "AG";
     const reasons = (negotiation?.reasons || []).map((reason) => {
       if (reason.id === "days") return `Auto ${reason.atLeast ? "co najmniej " : ""}${numbers.format(reason.days)} ${daysWord(reason.days)} w sprzedaży.`;
@@ -417,13 +444,35 @@
       if (reason.id === "pace") return `Na tym rynku ${percent(reason.share)} ofert obniżyło cenę${reason.medianDrop ? `, zwykle o ok. ${percent(reason.medianDrop)}` : ""}.`;
       return "";
     }).filter(Boolean);
-    const steps = [
-      ["Umowa", "Podpisujemy umowę na import. Do zakupu auta może Pan z niej zrezygnować bez kosztów."],
-      ["Depozyt i oględziny", "Rzeczoznawca sprawdza auto u sprzedawcy: lakier, diagnostyka, jazda próbna, zdjęcia i rekomendacja."],
-      ["Negocjacje i zakup", "Negocjujemy cenę i warunki z dealerem, weryfikujemy umowę i fakturę."],
-      ["Transport i dokumenty", "Ubezpieczona laweta do Łomianek. Akcyza, przegląd i tłumaczenia — po naszej stronie."],
-      ["Odbiór", "Auto gotowe do rejestracji. Odbiór w Łomiankach lub dostawa pod adres."],
-    ].map(([title, text]) => [title, salutation.you === "Pani" ? text.replace("może Pan", "może Pani") : salutation.you === "Państwo" ? text.replace("może Pan", "mogą Państwo") : text]);
+    // The six steps of "Jak wygląda proces" in the offer text (Notion,
+    // owner 2026-10-05), shortened for one chosen car.
+    const STEPS = {
+      Pan: [
+        ["Umowa i wymagania", "Potwierdzamy Pana wymagania i podpisujemy umowę. Przed zakupem może Pan ją rozwiązać bez kar i kosztów."],
+        ["Weryfikacja i rozliczenie", "Sprawdzamy auto i sprzedawcę. Wszystkie koszty dostaje Pan czarno na białym."],
+        ["Zaliczka i sprawdzenie auta", "Zwrotną zaliczkę wpłaca Pan po akceptacji oferty. Nasz specjalista ogląda auto za granicą."],
+        ["Finalizacja zakupu", "Negocjujemy cenę i warunki z dealerem - 70% wynegocjowanego rabatu zostaje dla Pana."],
+        ["Transport i kontrola", "Przewozimy auto lawetą do Łomianek i po rozładunku ponownie sprawdzamy jego stan."],
+        ["Dokumenty i wydanie", "Akcyza, przegląd techniczny i tłumaczenia po naszej stronie. Panu zostaje rejestracja i OC."],
+      ],
+      Pani: [
+        ["Umowa i wymagania", "Potwierdzamy Pani wymagania i podpisujemy umowę. Przed zakupem może Pani ją rozwiązać bez kar i kosztów."],
+        ["Weryfikacja i rozliczenie", "Sprawdzamy auto i sprzedawcę. Wszystkie koszty dostaje Pani czarno na białym."],
+        ["Zaliczka i sprawdzenie auta", "Zwrotną zaliczkę wpłaca Pani po akceptacji oferty. Nasz specjalista ogląda auto za granicą."],
+        ["Finalizacja zakupu", "Negocjujemy cenę i warunki z dealerem - 70% wynegocjowanego rabatu zostaje dla Pani."],
+        ["Transport i kontrola", "Przewozimy auto lawetą do Łomianek i po rozładunku ponownie sprawdzamy jego stan."],
+        ["Dokumenty i wydanie", "Akcyza, przegląd techniczny i tłumaczenia po naszej stronie. Pani zostaje rejestracja i OC."],
+      ],
+      "Państwo": [
+        ["Umowa i wymagania", "Potwierdzamy Państwa wymagania i podpisujemy umowę. Przed zakupem mogą Państwo ją rozwiązać bez kar i kosztów."],
+        ["Weryfikacja i rozliczenie", "Sprawdzamy auto i sprzedawcę. Wszystkie koszty dostają Państwo czarno na białym."],
+        ["Zaliczka i sprawdzenie auta", "Zwrotną zaliczkę wpłacają Państwo po akceptacji oferty. Nasz specjalista ogląda auto za granicą."],
+        ["Finalizacja zakupu", "Negocjujemy cenę i warunki z dealerem - 70% wynegocjowanego rabatu zostaje dla Państwa."],
+        ["Transport i kontrola", "Przewozimy auto lawetą do Łomianek i po rozładunku ponownie sprawdzamy jego stan."],
+        ["Dokumenty i wydanie", "Akcyza, przegląd techniczny i tłumaczenia po naszej stronie. Państwu zostaje rejestracja i OC."],
+      ],
+    };
+    const steps = STEPS[offer.client?.salutation] || STEPS.Pan;
     return `
       <div class="ofSheet${isHidden("page2") ? " isHiddenPage" : ""}" data-sheet="2">
         <article class="ofPage${styleClass()}" data-page="2">
@@ -436,7 +485,7 @@
               <span class="ofMethod">Sposób zakupu: ${esc(costView.method)}</span>
               <table class="ofCosts">
                 <tbody>
-                  ${costView.rows.map((row) => `<tr><td>${esc(row.label)}${row.sub ? `<small>${esc(row.sub)}</small>` : ""}</td><td>${esc(money(row.value, "PLN"))}</td></tr>`).join("")}
+                  ${costView.rows.map((row) => `<tr><td>${esc(row.label)}${row.sub ? `<small>${esc(String(row.sub).replace(/\s*=\s*$/, ""))}</small>` : ""}</td><td>${esc(money(row.value, "PLN"))}</td></tr>`).join("")}
                   <tr class="isTotal"><td>Razem na gotowo</td><td>${esc(money(costView.total, "PLN"))}</td></tr>
                 </tbody>
               </table>
@@ -460,7 +509,7 @@
           </section>` : ""}
           <section class="ofCard isFull${blockClass("process")}" data-block="process">
             ${hideToggle("process")}
-            <p class="ofCardHead">${icon("route")}Jak przebiega zakup<span class="ofDraftBadge">szkic — treść do akceptacji</span></p>
+            <p class="ofCardHead">${icon("route")}Jak przebiega zakup</p>
             <div class="ofSteps">${steps.map(([title, text], index) => `<div class="ofStep">${field(`step${index + 1}Title`, title, "b")}${field(`step${index + 1}`, text)}</div>`).join("")}</div>
           </section>
           <section class="ofCard isFull${blockClass("contact")}" data-block="contact">
@@ -469,8 +518,8 @@
               <div class="ofAvatar">${esc(initials)}</div>
               ${manager.name || manager.phone || manager.email ? `
               <div class="ofContactLines">
-                <b>${esc(manager.name || "AUTOGOOD")}</b>
-                <span class="ofSmall">${esc(salutation.owner)} opiekun w AUTOGOOD</span>
+                <b>${esc(withFirm(manager.name) || "AUTOGOOD")}</b>
+                <span class="ofSmall">${esc(salutation.owner)} opiekun</span>
                 ${manager.phone ? `<span>${icon("phone")}${esc(manager.phone)}</span>` : ""}
                 ${manager.email ? `<span>${icon("mail")}${esc(manager.email)}</span>` : ""}
               </div>` : `<div class="ofContactLines"><b>Zapraszamy do kontaktu</b><span class="ofSmall">Odpowiemy na każde pytanie o to auto</span></div>`}
@@ -504,8 +553,8 @@
   // ---- The manager's panel -------------------------------------------------------------
   function panelHtml(view) {
     const ad = offer.ad;
-    const manager = offer.manager || {};
-    const company = offer.company || {};
+    const manager = store.manager(offer.manager);
+    const company = store.company(offer.company);
     const client = offer.client || {};
     const verdict = verdictView(view);
     const priceChanged = ad?.vat?.gross && Math.abs(ad.vat.gross - view.price) >= 1 ? ad.vat.gross : 0;
@@ -532,7 +581,7 @@
       </section>
       <section class="ofPanelCard">
         <h2>Wygląd oferty</h2>
-        <div class="ofToggleList">${STYLES.map(([key, label]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> ${esc(label)}</label>`).join("")}</div>
+        <div class="ofToggleList ofStyleList">${STYLES.map(([key, label, note]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> <span><b>${esc(label)}</b><small>${esc(note)}</small></span></label>`).join("")}</div>
       </section>
       <section class="ofPanelCard">
         <h2>Dane z ogłoszenia</h2>
@@ -601,7 +650,7 @@
     if (heading) heading.textContent = `Oferta ${offer.number || ""} · ${view.title}`;
     stage.classList.toggle("isEditing", editing);
     stage.classList.add("isScreen");
-    stage.innerHTML = sheetOne(view) + sheetTwo(view);
+    stage.innerHTML = (sheetOne(view) + sheetTwo(view)).replace(/[\u2013\u2014]/g, "-");
     panel.innerHTML = panelHtml(view);
     fitSheets();
     autoFit();
@@ -613,6 +662,15 @@
   // told if it still does not fit.
   function autoFit() {
     const overflow = (page) => page.scrollHeight - page.clientHeight;
+    stage.querySelectorAll(".ofPage.isNoc").forEach((page) => {
+      const photo = page.querySelector(".ofPhoto");
+      const box = page.getBoundingClientRect();
+      const scale = box.width / PAGE_W || 1;
+      if (photo && page.dataset.page === "1") {
+        const rect = photo.getBoundingClientRect();
+        page.style.setProperty("--of-band", `${Math.round((rect.top - box.top) / scale + (rect.height / scale) * 0.42)}px`);
+      }
+    });
     const one = stage.querySelector('[data-page="1"]');
     if (one) {
       const checks = () => [...one.querySelectorAll(".ofCheck:not(.ofBlockHidden)")];
@@ -884,7 +942,7 @@
     const text = (node) => (node?.textContent || "").replace(/\s+/g, " ").trim();
     const rows = [...doc.querySelectorAll(".resultsList .resultLine")].map((line) => ({
       label: text(line.querySelector(".resultLineLabel")),
-      sub: [text(line.querySelector(".resultLinePrefix")), text(line.querySelector(".resultLineSub"))].filter(Boolean).join(" · "),
+      sub: [text(line.querySelector(".resultLinePrefix")).replace(/\s*=\s*$/, ""), text(line.querySelector(".resultLineSub"))].filter(Boolean).join(" · "),
       value: amountOf(text(line.querySelector(".resultLineAmount"))),
     })).filter((row) => row.label && row.value);
     const total = amountOf(text(doc.querySelector(".totalBarValue")));
@@ -954,8 +1012,8 @@
   async function pageFontCss() {
     if (fontCss !== null) return fontCss;
     try {
-      const link = document.querySelector('link[href*="fonts.googleapis.com/css"]');
-      const css = link ? await (await fetch(link.href)).text() : "";
+      const links = [...document.querySelectorAll('link[href*="fonts.googleapis.com/css"]')];
+      const css = (await Promise.all(links.map(async (link) => (await fetch(link.href)).text()))).join("\n");
       const faces = [...css.matchAll(/\/\*\s*([\w-]+)\s*\*\/\s*(@font-face\s*\{[^}]*\})/g)]
         .filter((match) => match[1] === "latin" || match[1] === "latin-ext")
         .map((match) => match[2]);

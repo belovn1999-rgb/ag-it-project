@@ -106,7 +106,7 @@
     "laserlicht": "Reflektory laserowe", "adaptives kurvenlicht": "Adaptacyjne doświetlanie zakrętów",
     "360°-kamera": "Kamera 360°", "elektr. sitzeinstellung mit memory": "Elektryczne fotele z pamięcią",
     "partikelfilter": "Filtr cząstek stałych", "nachtsichtassistent": "Noktowizor", "spurwechselassistent": "Asystent zmiany pasa",
-    "skisack": "Otwór na narty", "dachträger": "Bagażnik dachowy", "tuning": "Tuning", "sportlenkrad": "Kierownica sportowa",
+    "skisack": "Otwór na narty", "ausparkassistent": "Asystent wyjazdu z parkingu", "e10-geeignet": "Paliwo E10", "allwetterreifen (ganzjahresreifen)": "Opony całoroczne", "dachträger": "Bagażnik dachowy", "tuning": "Tuning", "sportlenkrad": "Kierownica sportowa",
   };
 
   const clean = (name) => String(name || "").replace(/\s+/g, " ").trim();

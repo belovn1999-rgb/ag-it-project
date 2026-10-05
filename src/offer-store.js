@@ -20,16 +20,20 @@
   const STORE = "offers";
   const MANAGER_KEY = "autogood.offer.manager.v1";
   const COMPANY_KEY = "autogood.offer.company.v1";
-  // The firm's details as the offer text of the site brain gives them
-  // (autogood-site brain/10, Q-08); the phone is the owner's to confirm.
+  // The firm's details and the manager shown by default (owner, 2026-10-05:
+  // "Nikodem z AUTOGOOD", +48 531 900 775, info@autogood.pl — as in the offer
+  // text in Notion). What a manager enters in the panel replaces them.
   const COMPANY_DEFAULTS = {
     name: "AUTOGOOD",
     address: "ul. Kolejowa 102, 05-092 Łomianki",
-    hours: "pon.-pt. 9:00-17:00, sob. po umówieniu",
-    phone: "",
+    hours: "pon.-pt. 9:00-17:00, sob. po wcześniejszym umówieniu",
+    phone: "+48 531 900 775",
     email: "info@autogood.pl",
     web: "autogood.pl",
   };
+  const MANAGER_DEFAULTS = { name: "Nikodem", phone: "+48 531 900 775", email: "info@autogood.pl" };
+  // Empty fields never hide a default.
+  const filled = (value) => Object.fromEntries(Object.entries(value || {}).filter(([, item]) => String(item ?? "").trim() !== ""));
   let dbPromise = null;
 
   function open() {
@@ -168,10 +172,10 @@
     return next;
   }
 
-  const manager = () => ({ name: "", phone: "", email: "", ...readJson(MANAGER_KEY) });
+  const manager = (own = {}) => ({ ...MANAGER_DEFAULTS, ...filled(readJson(MANAGER_KEY)), ...filled(own) });
   const setManager = (change) => writeJson(MANAGER_KEY, change);
-  const company = () => ({ ...COMPANY_DEFAULTS, ...readJson(COMPANY_KEY) });
+  const company = (own = {}) => ({ ...COMPANY_DEFAULTS, ...filled(readJson(COMPANY_KEY)), ...filled(own) });
   const setCompany = (change) => writeJson(COMPANY_KEY, change);
 
-  window.AUTOGOOD_OFFER_STORE = { get, put, update, byAdKey, byFavorite, recent, madeOn, newId, manager, setManager, company, setCompany, channel, COMPANY_DEFAULTS };
+  window.AUTOGOOD_OFFER_STORE = { get, put, update, byAdKey, byFavorite, recent, madeOn, newId, manager, setManager, company, setCompany, channel, COMPANY_DEFAULTS, MANAGER_DEFAULTS };
 })();
