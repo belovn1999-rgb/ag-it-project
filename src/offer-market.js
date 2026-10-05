@@ -16,9 +16,9 @@
  * as in the statistics of page 2.
  */
 (() => {
-  const EUR_SOURCES = ["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands"];
+  const EUR_SOURCES = ["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "paruvendu", "marktplaats", "dehands"];
   // Portals of one country carry no country of their own in the checks.
-  const SOURCE_COUNTRY = { kleinanzeigen: "DE", autoscoutfr: "FR", marktplaats: "NL", dehands: "BE" };
+  const SOURCE_COUNTRY = { kleinanzeigen: "DE", autoscoutfr: "FR", paruvendu: "FR", marktplaats: "NL", dehands: "BE" };
   const NEGOTIATION_DAYS = 30;
   // A market narrower than this is too thin to speak for: the offer widens
   // it (all countries of the check) or says nothing.

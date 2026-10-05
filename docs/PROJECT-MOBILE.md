@@ -32,7 +32,7 @@ blocket.se (SE), av.by (BY). Два режима расчёта: **Польша*
 формуле калькулятора, PLN) и **Беларусь** («под ключ в Минск» по формуле
 autogood.by, USD).
 
-**Последнее сделано (05.10):** **B11 — свой прокси на Cloudflare Workers** (`ag-proxy.autogood-crm.workers.dev`, §4.9): otomoto, AutoScout24, Blocket, Marktplaats, 2dehands/2ememain, Kleinanzeigen читаются через него в 2–3 раза быстрее и без лимита 18/мин, `r.jina.ai` — запасной путь; mobile.de не пускает ни Worker, ни jina. стр. 2 по списку владельца — графики по два в ряд, цена авто на шкале жёлтым, цвета статистики, только выбранные рынки, копирование отчёта с окном при отказе браузера. **(04.10):** «Więcej filtrów» по разделам и «Kraj i pochodzenie» с фильтрами otomoto (B65); Monitoring — мониторинги по одному и общая очередь запросов к бесплатному прокси (B64), ликвидность: дни на рынке, снижения цены, «Do negocjacji» (B22), «Dodatkowe» — авто чуть за фильтрами (B63), «Oblicz na gotowo» — три калькулятора во всплывающем окне на стр. 1 и 3 (B42); порядок фильтров стр. 1 под сужение и сброс зависящих от марки значений (B62). **(03.10):** аудит дизайна Monitoring — все пункты, кроме совета 6 (B60): мониторинг в 9:00, результаты первым экраном, сортировка, фильтры, дата появления, PDF для клиента; аудит дизайна стр. 1 — все 16 пунктов (B58);
+**Последнее сделано (05.10):** **B47 — ParuVendu** второй портал Франции (§4.2g: строка «Francja» = AutoScout24 FR + ParuVendu без дубликатов). **B11 — свой прокси на Cloudflare Workers** (`ag-proxy.autogood-crm.workers.dev`, §4.9): otomoto, AutoScout24, Blocket, Marktplaats, 2dehands/2ememain, Kleinanzeigen читаются через него в 2–3 раза быстрее и без лимита 18/мин, `r.jina.ai` — запасной путь; mobile.de не пускает ни Worker, ни jina. стр. 2 по списку владельца — графики по два в ряд, цена авто на шкале жёлтым, цвета статистики, только выбранные рынки, копирование отчёта с окном при отказе браузера. **(04.10):** «Więcej filtrów» по разделам и «Kraj i pochodzenie» с фильтрами otomoto (B65); Monitoring — мониторинги по одному и общая очередь запросов к бесплатному прокси (B64), ликвидность: дни на рынке, снижения цены, «Do negocjacji» (B22), «Dodatkowe» — авто чуть за фильтрами (B63), «Oblicz na gotowo» — три калькулятора во всплывающем окне на стр. 1 и 3 (B42); порядок фильтров стр. 1 под сужение и сброс зависящих от марки значений (B62). **(03.10):** аудит дизайна Monitoring — все пункты, кроме совета 6 (B60): мониторинг в 9:00, результаты первым экраном, сортировка, фильтры, дата появления, PDF для клиента; аудит дизайна стр. 1 — все 16 пунктов (B58);
 аудит дизайна стр. 2 — пп. 17–28 по решениям владельца (B59). AutoScout24 — пятый портал (B45, B46);
 Беларусь — три цены у каждого авто из Германии (B50, B51, B53), история цен и
 медиана во времени «под ключ с растаможкой» в USD (B52); Monitoring,
@@ -83,7 +83,7 @@ klienta».** Из найденного в Monitoring объявления кно
 4. **B3 / B55 — конкретное авто против Польши** по полной оценке «na gotowo».
 5. ~~B48 — AutoScout24~~ ✅ 10-04: ссылка, полный список в Monitoring, все фильтры формы, одна строка «Niemcy» (mobile.de + AutoScout24).
 6. ~~B52 — Беларусь, этап 3~~ ✅ 10-03 (импортер перезапущен 10-04).
-6b. **~~B11~~ ✅ 10-05 → B47 — новые порталы стран** (следующий — willhaben.at: через Worker читается, замер 24/24; AutoScout24 FR, Marktplaats + 2dehands, Kleinanzeigen ✅ 10-04; дальше приоритет 2: luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu) (исследование 10-04, `docs/PORTALS-EXPANSION.md`):
+6b. **~~B11~~ ✅ 10-05 → B47 — новые порталы стран** (следующий — willhaben.at: через Worker читается, замер 24/24; AutoScout24 FR, Marktplaats + 2dehands, Kleinanzeigen ✅ 10-04; ParuVendu (FR) ✅ 10-05, §4.2g; дальше приоритет 2: luxauto, AutoTrack, AutoVlan, Bytbil) (исследование 10-04, `docs/PORTALS-EXPANSION.md`):
    сначала свой прокси, затем willhaben.at, Marktplaats + 2dehands, Kleinanzeigen,
    AutoScout24 FR; порядок утверждает владелец.
 7. **B61 — зависимые фильтры стр. 1 по базе ultimatespecs.com** (цель владельца
@@ -329,6 +329,28 @@ klienta».** Из найденного в Monitoring объявления кно
   только машины, которых нет у основного (та же цена и пробег). Германия: mobile.de →
   AutoScout24 → Kleinanzeigen; Нидерланды / Бельгия: AutoScout24 (и mobile.de) →
   Marktplaats / 2dehands. Работает и при повторном чтении портала в Monitoring.
+
+### 4.2g Франция — ParuVendu (с 10-05, B47)
+- Рынок `paruvendu` — второй портал Франции (~90 % дилеры): стр. 1 (логотип в колонке
+  «Francja» под AutoScout24 FR, счётчик только пока включён — лёгкий запрос `?ajax=1`,
+  ссылка на выдачу сайта «от дешёвых»), анализ (свой цвет на графике — бордовый, статистика
+  и вывод — в общей строке «Francja · AutoScout24 FR + ParuVendu»: `listingMarket` →
+  `autoscoutfr`), Monitoring (вторая строка карточки «Francja», до 50 страниц), распознавание
+  ссылки на объявление, жёлтое «!». По умолчанию выключен; переключатель колонки «Francja»
+  (B68) включает и выключает оба портала, серый логотип — один.
+- **Дубликаты:** основной портал Франции — AutoScout24 FR; ParuVendu показывает только машины,
+  которых у него нет (та же цена и пробег) — `SECOND_PORTALS.paruvendu`, и при повторной
+  попытке Monitoring. Замер: своих 63–84 % (`PORTALS-EXPANSION.md` §6).
+- **Нагрузка:** все страницы выдачи доступны напрямую (адрес `listefo` с `tri=prix`), поэтому
+  выборка анализа — 8 страниц по всему списку, без «лесенки»; Monitoring — не больше
+  50 страниц (1 250 самых дешёвых) на поиск. Читается через `r.jina.ai` (очередь 18/мин);
+  Worker B11 знает `paruvendu.fr` в коде (`worker.js`), но в `WORKER_HOSTS` портал не добавлен
+  до деплоя Worker и замера.
+- Проверено 10-05 на `127.0.0.1:4173`: VW Passat — счётчик 250 (дилеры 227, как на сайте);
+  анализ «Francja» — AutoScout24 FR 148 из 208 + ParuVendu 174 своих из выборки 200
+  (26 дубликатов); Monitoring (дилеры) — 158 + 188 (39 дубликатов); ссылки на объявления
+  дилера (Passat 2024) и частника (Mercedes C, «Classe C» → C) распознаются.
+- Фильтры и проверки — FILTERS-MOBILE-OTOMOTO.md §5h.
 
 ### 4.3 Распознавание ссылки
 - **mobile.de:** «Rozpoznaj» обрабатывает ссылку **внутри текущей страницы**.
@@ -1514,7 +1536,7 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 | B44 | Monitoring: на больших рынках (> 1000) «Nowe» по дате публикации (чтение «от новых» со стр. 4), фото/продавец/оценка портала в карточках; отметки «przejrzane / wysłane klientowi»; «+N» в полосе избранного | ⏳ | — |
 | B45 | Monitoring: страны DE/NL/BE/AT/LU для mobile.de + AutoScout24 (уникальные, без дубликатов mobile.de по цене и пробегу), выбор стран, анализ по странам стр. 1 | ✅ 03.10 | Claude |
 | B46 | AutoScout24 на стр. 1 (логотип, счётчик, ссылка) и в анализе (уникальные объявления), «Kraj» = DE/NL/BE/AT/LU для mobile.de и AutoScout24 | ✅ 03.10 | Claude |
-| B47 | Новые порталы стран (владелец 03.10 и 10-04): исследование 10-04 — `docs/PORTALS-EXPANSION.md` (замеры доступа, данных и объёма по VW Golf). Порядок: B11 (свой прокси) → willhaben.at → Marktplaats + 2dehands/2ememain → Kleinanzeigen → AutoScout24 FR → luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu → La Centrale и Leboncoin через свой Chrome (DataDome, после B6). Агрегаторы, аукционы, heycar, GoCar — не добавляем **Шаг 1 ✅ 10-04: AutoScout24 FR — рынок «Francja»** (§4.2d). **Шаг 2 ✅ 10-04: Marktplaats (NL) + 2dehands/2ememain (BE)** (§4.2e). **Шаг 3 ✅ 10-04: Kleinanzeigen (DE)** (§4.2f). Замеры 10-04: AutoTrack (NL) — 93 % дублей AutoScout24/Marktplaats, AutoVlan = Gocar (BE) — дубли + Cloudflare, Bytbil (SE) — 28 из 30 есть на Blocket (одна компания Vend): не добавлены, Bytbil ❓ владельцу (`docs/PORTALS-EXPANSION.md` §6). | 🔄 AS24 FR, Marktplaats + 2dehands, Kleinanzeigen ✅; дальше luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu | Claude |
+| B47 | Новые порталы стран (владелец 03.10 и 10-04): исследование 10-04 — `docs/PORTALS-EXPANSION.md` (замеры доступа, данных и объёма по VW Golf). Порядок: B11 (свой прокси) → willhaben.at → Marktplaats + 2dehands/2ememain → Kleinanzeigen → AutoScout24 FR → luxauto, AutoTrack, AutoVlan, Bytbil, ParuVendu → La Centrale и Leboncoin через свой Chrome (DataDome, после B6). Агрегаторы, аукционы, heycar, GoCar — не добавляем **Шаг 1 ✅ 10-04: AutoScout24 FR — рынок «Francja»** (§4.2d). **Шаг 2 ✅ 10-04: Marktplaats (NL) + 2dehands/2ememain (BE)** (§4.2e). **Шаг 3 ✅ 10-04: Kleinanzeigen (DE)** (§4.2f). Замеры 10-04: AutoTrack (NL) — 93 % дублей AutoScout24/Marktplaats, AutoVlan = Gocar (BE) — дубли + Cloudflare, Bytbil (SE) — 28 из 30 есть на Blocket (одна компания Vend): не добавлены, Bytbil ❓ владельцу (`docs/PORTALS-EXPANSION.md` §6). **Шаг 4 ✅ 10-05: ParuVendu (FR)** — второй портал Франции (§4.2g). | 🔄 AS24 FR, Marktplaats + 2dehands, Kleinanzeigen, ParuVendu ✅; дальше luxauto, AutoTrack, AutoVlan, Bytbil | Claude |
 | B48 | AutoScout24: распознавание ссылки на объявление, полный список в Monitoring, мощность л. с. → кВт; с 10-04 переносятся все фильтры формы, которые есть у AutoScout24 (оснащение `eq`, привод, объём, двери, места, версия, цвета, обивка, металлик, НДС, новый/б/у `offer`, повреждённые); статистика: mobile.de + AutoScout24 = одна строка «Niemcy» | ✅ | Claude |
 | B49 | Выбор рынков только на первой странице (с 09-29 — и логотипами на стр. 2, синхронно со стр. 1, решение владельца) управляет анализом, ссылками, избранным и историей; ширина статистики и выравнивание таблиц; единый пунктир медианы | ✅ | Codex |
 | B50 | Этап 1: модуль «под ключ РБ» + курсы НБРБ, сверка с autogood.by (99/99) | ✅ | Claude |
@@ -1547,6 +1569,7 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-05 | Claude | **B47, ParuVendu (FR)** — второй портал Франции: новый `src/paruvendu-search.js` + справочник (`scripts/generate-paruvendu-catalog.py`, 114 марок, 1 476 моделей из списков формы сайта); стр. 1 (строка в колонке «Francja», счётчик `?ajax=1`, ссылка), анализ (общая строка «Francja · AutoScout24 FR + ParuVendu», дубликаты с AutoScout24 FR отсеиваются — `SECOND_PORTALS`), Monitoring, ссылка на объявление (schema.org `Vehicle`), жёлтое «!», цвета, логотипы. Выборка 8 страниц по всему списку (страницы доступны напрямую), Monitoring ≤ 50 страниц. `paruvendu.fr` в белом списке Worker (не задеплоено, в `WORKER_HOSTS` нет). Проверено: Passat 250, анализ FR 148 + 174, Monitoring 158 + 188; фильтры по числу объявлений (FILTERS §5h) | этот коммит |
 | 10-05 | Claude | **B73 — бюджет клиента и фильтры в Monitoring** (4.6.3 п. 22): общий бюджет «na gotowo» od–do, цены порталов из обратной формулы калькулятора (`carForTurnkey`), своя цена — в расширенных; «Sprawdź w kalkulatorze»; «Więcej filtrów» стр. 1 в настройках с сохранением в поиск машины | этот коммит |
 | 10-05 | Claude | **B11 — свой прокси на Cloudflare Workers** (§4.9): Worker `ag-proxy.autogood-crm.workers.dev` создан в аккаунте владельца (код `server/cloudflare-proxy/worker.js`: белый список хостов, CORS только для github.io и 127.0.0.1:4173, без секретов). Замер Worker против `r.jina.ai` по 12 порталам: те же данные в 2–3 раза быстрее у otomoto, AutoScout24 (DE/FR/NL+BE), Marktplaats, 2dehands/2ememain, Kleinanzeigen, Blocket, willhaben, ultimatespecs; mobile.de — 403 обоим; Kleinanzeigen отказывает части адресов, Blocket — изредка. `src/market-proxy-queue.js`: эти порталы сначала через Worker (6 одновременно, без лимита 18/мин), отказ → `r.jina.ai`; модули порталов и парсеры не менялись | этот коммит |
 | 10-05 | Claude | **B71:** владелец выбрал вид «Premium» (по умолчанию): название поверх фото, плашка цены на краю фото, «Kadrowanie zdjęcia» убирает рамку дилера; PDF без пустых строк — для оффера копия html-to-image без уменьшения шрифта | этот коммит |

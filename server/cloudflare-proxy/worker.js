@@ -25,6 +25,7 @@ const ALLOWED_HOSTS = [
   "marktplaats.nl",
   "2dehands.be", "2ememain.be",
   "kleinanzeigen.de",
+  "paruvendu.fr",
   "av.by",
   "willhaben.at",
   "mobile.de",
@@ -48,6 +49,7 @@ const LANGUAGE = {
   "blocket.se": "sv-SE,sv;q=0.9,en;q=0.8",
   "av.by": "ru-RU,ru;q=0.9,en;q=0.8",
   "autoscout24.fr": "fr-FR,fr;q=0.9,en;q=0.8",
+  "paruvendu.fr": "fr-FR,fr;q=0.9,en;q=0.8",
 };
 
 const matchHost = (host, list) => list.find((allowed) => host === allowed || host.endsWith(`.${allowed}`));

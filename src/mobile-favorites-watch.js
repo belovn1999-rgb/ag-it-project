@@ -333,7 +333,7 @@
     const to = String(filters.priceTo || "").trim().endsWith("+") ? null : cleanPrice(filters.priceTo);
     const convert = (eur) => {
       if (eur === null) return null;
-      if (["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands"].includes(source)) return eur;
+      if (["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "paruvendu", "marktplaats", "dehands"].includes(source)) return eur;
       if (source === "blocket") return eur * (window.AUTOGOOD_BLOCKET?.eurSekRate?.() || 11);
       if (source === "avby") return eur * (window.AUTOGOOD_AVBY?.eurUsdRate?.() || 1.17);
       return helpers()?.priceInPln?.(eur, "EUR") ?? eur * 4.3;

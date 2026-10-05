@@ -583,6 +583,63 @@ Kleinanzeigen). В основном частные продавцы: VW Golf —
 двери, металлик, матовый, НДС, новый/б/у, гарантия, «Bezwypadkowy», «Pierwszy
 właściciel», остальные опции.
 
+## 5h. Франция — ParuVendu (с 2026-10-05, B47)
+
+Код: `src/paruvendu-search.js` (`AUTOGOOD_PARUVENDU`), справочник
+`src/paruvendu-catalog.generated.js` (`scripts/generate-paruvendu-catalog.py
+[--proxy https://r.jina.ai/]`, 114 марок, 1 476 моделей; из наших 181 марки на ParuVendu
+нет 87 — редкие и китайские), чтение — `fetchParuvenduListings` в
+`src/mobile-market-analysis.js`. Рынок `paruvendu` — **второй портал Франции**: в анализе
+и Monitoring только объявления, которых нет на AutoScout24 FR (та же цена и пробег),
+статистика — в общей строке «Francja · AutoScout24 FR + ParuVendu». Около 90 % — дилеры
+(VW Passat: 227 дилерских + 23 частных = 250).
+
+- **Поиск — форма сайта (GET):** `/auto-moto/listefo/default/default?tt=1&r=VO&r2=<марка>
+  &md=<модель>,<модель>&…&tri=prix&ord=asc&p=<стр.>`. Значения одного списка (`nrj[]`,
+  `tr[]`, `npo[]`, модели через запятую) — «или», поля — «и». Тот же адрес с `&ajax=1`
+  отдаёт `{"nbAnnonces":N}` — счётчик стр. 1 (лёгкий запрос). Без `tri` сервер делает 301
+  на `/a/voiture-occasion/<марка>/<модель>/?rechpv=1&…`, а там больше 5 страниц нет (p=6 →
+  404); через `listefo` с `tri` читается любая страница (Golf, p=93 из 93 — проверено).
+  25 объявлений на страницу. Сортировка «от дешёвых» `tri=prix&ord=asc` (есть и `desc`).
+- **Нагрузка:** выборка анализа — 8 страниц по всему списку (`OTOMOTO_PAGES`, страницы
+  доступны напрямую, «лесенка» не нужна); избранное целиком до 250 объявлений; Monitoring
+  — не больше 50 страниц (`MAX_PAGES`, 1 250 самых дешёвых) на поиск. Через очередь
+  прокси (`src/market-proxy-queue.js`, `r.jina.ai`, 18/мин): Worker B11 знает paruvendu.fr
+  в `server/cloudflare-proxy/worker.js`, но в `WORKER_HOSTS` не добавлен — ждёт деплоя
+  и замера.
+- **Справочник:** `/auto-moto/listefo/default/affinage?tt=1&r=VVO00000[&r2=<марка>]` — списки
+  формы сайта (JSON): марки, модели марки. Семейство «Golf (tous)» (`VW_GOL`) стоит перед
+  своими моделями (Golf, Golf Plus, Golf SW); поиск шлёт коды моделей. BMW и Mercedes — только
+  серии («Série 3», «Classe C»): серия формы — точно, мотор («320», «C 220») — серия ≈.
+  Golf формы = Golf + Golf SW (Golf Plus у нас отдельной моделью): 2 320 + 255 = 2 575.
+- **Цена:** «35 990 €» — цена; «NC» (не указана), «… €/mois» (лизинг) и < 300 € — нет.
+- **Карточка выдачи** (`<div class="blocAnnonce …" data-id>`): ссылка `/a/voiture-occasion/
+  <марка>/<модель>/<id>A1K<код>`, чипсы «Ville (75001)», «Année 2024», «63 467 km», топливо,
+  «Boîte manuelle / automatique / semi automatique», кузов; продавец — `pseudoinfo
+  Particulier` или ссылка `/auto-moto/pro/…`; мощность — из названия («150ch»), если есть.
+- **Ссылка на объявление** распознаётся: schema.org `Vehicle` (цена, марка, модель, пробег,
+  топливо, коробка, продавец `AutoDealer`, индекс и город) + список «Année» (месяц и год),
+  «Puissance réelle» (л. с.), «Carrosserie»; объём — из текста дилера («Cylindrée : 1968»),
+  в форму не переносится. «Classe C» → C, «Série 3» → 3.
+
+| Поле формы | ParuVendu | Проверка (VW Golf `VVOVWGOL`, база 2 320; 05.10) |
+|---|---|---|
+| Model | `md=<код>,<код>` | Golf 2 320, Golf SW 255, вместе 2 575; Passat 250 |
+| Rok | `a0` / `a1` | 2019–2021 → 599; от 2019 → 1 394 |
+| Przebieg | `km0` / `km1` | 50–150 тыс. → 1 300; до 100 тыс. → 1 679 |
+| Cena (€) | `px0` / `px1` | 10–20 тыс. → 1 010; до 20 тыс. → 1 250; от 10 тыс. → 2 080 |
+| Paliwo | `nrj[]`: ES бензин, DI дизель, EL электро, HY все гибриды (с plug-in и micro), HR plug-in, MH micro, GP газ, BI этанол, HD водород | ES 1 358, DI 589, ES+DI 1 947, EL 3, HY 319 (= HY+HR), HR 36, MH 29; гибрид формы → HY ≈ |
+| Skrzynia | `tr[]`: MA ручная; автомат формы = AU + SA (DSG часто «semi automatique») | MA 707, AU 1 488, SA 119, AU+SA 1 607 |
+| Liczba drzwi | `npo[]`: 2, 3 («2 portes avec hayon»), 4, 5 («4 portes avec hayon»); 6–7 — нет | 3 → 238, 5 → 1 905, 3+5 → 2 142 |
+| Nadwozie | `r1` (одно значение; `TO,BR` не работает): TO berline (хэтчбек и седан ≈), BR break, 4X SUV, CA cabriolet, CO coupé, MO monospace (van ≈), PU pick-up | TO 1 760, BR 85, CA 188, CO 17, MO 149 |
+| Sprzedawca | `codPro=on` дилер / `off` частник | 2 185 / 135 (сумма = 2 320); Passat 227 / 23 |
+| Wersja | `fulltext=` | «gti» 270, «r line» 244, «gti performance» 110 |
+
+**Нет на ParuVendu (жёлтое «!»):** мощность в л. с. (на сайте только налоговая `pf0/pf1`,
+CV: 5–7 CV → 835), привод, объём, места, цвета, салон, опции и оснащение, металлик,
+матовый, НДС, новый/б/у, гарантия, «Bezwypadkowy», «Pierwszy właściciel», некурящий,
+сервисная книжка. Гибрид — ≈ (все гибриды), хэтчбек/седан/van — ≈.
+
 ## 6. Известные открытые вопросы
 
 - Курс цены для otomoto — файл, а не живой курс (B12 в PROJECT-MOBILE.md).

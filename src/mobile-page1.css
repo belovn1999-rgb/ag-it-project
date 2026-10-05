@@ -1567,6 +1567,7 @@
 .mobileLinkSourceSelect[data-source="otomoto"] { background-color: #1d5fd0; }
 .mobileLinkSourceSelect[data-source="blocket"] { background-color: #d0101a; }
 .mobileLinkSourceSelect[data-source="autoscoutfr"] { background-color: #6b3fb8; }
+.mobileLinkSourceSelect[data-source="paruvendu"] { background-color: #c8102e; }
 .mobileLinkSourceSelect[data-source="avby"] { background-color: #0b4da2; }
 
 .mobileLinkSourceSelect optgroup,

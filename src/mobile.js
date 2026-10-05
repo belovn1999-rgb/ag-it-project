@@ -81,6 +81,9 @@ const copy = {
     recognitionFromKleinanzeigen: "Dane pobrane z ogłoszenia Kleinanzeigen.",
     kleinanzeigenAdFailed: "Nie udało się odczytać ogłoszenia Kleinanzeigen (albo nie ma w nim ceny). Sprawdź link.",
     kleinanzeigenLinkExpected: "To nie jest link do ogłoszenia Kleinanzeigen.",
+    recognitionFromParuvendu: "Dane pobrane z ogłoszenia ParuVendu.",
+    paruvenduAdFailed: "Nie udało się odczytać ogłoszenia ParuVendu (albo nie ma w nim ceny). Sprawdź link.",
+    paruvenduLinkExpected: "To nie jest link do ogłoszenia ParuVendu.",
     otomotoAdFailed: "Nie udało się odczytać ogłoszenia otomoto.pl. Sprawdź link i spróbuj ponownie.",
     otomotoLinkExpected: "To nie jest link do ogłoszenia otomoto.pl.",
     bookmarkletHint: "Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.",
@@ -420,6 +423,9 @@ const copy = {
     recognitionFromKleinanzeigen: "Данные получены из объявления Kleinanzeigen.",
     kleinanzeigenAdFailed: "Не удалось прочитать объявление Kleinanzeigen (или в нём нет цены). Проверь ссылку.",
     kleinanzeigenLinkExpected: "Это не ссылка на объявление Kleinanzeigen.",
+    recognitionFromParuvendu: "Данные получены из объявления ParuVendu.",
+    paruvenduAdFailed: "Не удалось прочитать объявление ParuVendu (или в нём нет цены). Проверь ссылку.",
+    paruvenduLinkExpected: "Это не ссылка на объявление ParuVendu.",
     otomotoAdFailed: "Не удалось прочитать объявление otomoto.pl. Проверь ссылку и попробуй ещё раз.",
     otomotoLinkExpected: "Это не ссылка на объявление otomoto.pl.",
     bookmarkletHint: "Перетащи эту кнопку на панель закладок. Потом нажимай её на странице объявления или списка mobile.de.",
@@ -3996,6 +4002,7 @@ async function refreshOfferCount() {
   window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT?.(filters);
+  window.AUTOGOOD_PARUVENDU_REFRESH_COUNT?.(filters);
   if (!filters.brand || !filters.model) {
     renderOfferCount("—");
     return;
@@ -4211,6 +4218,7 @@ const LINK_PLACEHOLDERS = {
   marktplaats: "https://www.marktplaats.nl/v/auto-s/...",
   dehands: "https://www.2dehands.be/v/auto-s/...",
   kleinanzeigen: "https://www.kleinanzeigen.de/s-anzeige/...",
+  paruvendu: "https://www.paruvendu.fr/a/voiture-occasion/...",
 };
 
 function setLinkSource(source) {
@@ -4242,6 +4250,7 @@ els.url.addEventListener("input", () => {
     : isAutoscoutUrl(value) ? (/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout")
     : isMarktplaatsUrl(value) ? (/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands")
     : isKleinanzeigenUrl(value) ? "kleinanzeigen"
+    : isParuvenduUrl(value) ? "paruvendu"
     : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
   if (source && value !== mirroredLink) {
     mirroredLink = value;
@@ -4253,6 +4262,7 @@ els.url.addEventListener("input", () => {
   else if (isAutoscoutUrl(value)) setLinkSource(/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout");
   else if (isMarktplaatsUrl(value)) setLinkSource(/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands");
   else if (isKleinanzeigenUrl(value)) setLinkSource("kleinanzeigen");
+  else if (isParuvenduUrl(value)) setLinkSource("paruvendu");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
 });
 
@@ -4690,6 +4700,112 @@ async function loadKleinanzeigenAd(sourceUrl) {
   }
 }
 
+// ---- ParuVendu ad links ------------------------------------------------------------
+// The ad page (through the reader proxy): a schema.org Vehicle (price, make,
+// model, fuel, gearbox, mileage, colour, the seller: AutoDealer or a person,
+// postcode and town) and the details list ("Année" with the month,
+// "Puissance réelle" in ch DIN, "Version", "Carrosserie", "Nb de portes"); the
+// engine size only in the dealer's text ("Cylindrée : 1968").
+function isParuvenduUrl(value) {
+  return /^https:\/\/(www\.)?paruvendu\.fr\/a\/voiture-occasion\/[^?#]*\/\d{6,}A\d/i.test(String(value || "").trim());
+}
+
+const PARUVENDU_MONTHS = { janvier: 1, fevrier: 2, février: 2, mars: 3, avril: 4, mai: 5, juin: 6, juillet: 7, aout: 8, août: 8, septembre: 9, octobre: 10, novembre: 11, decembre: 12, décembre: 12 };
+// "Carrosserie" in the words normalizeBody knows; "Berline" is a hatchback
+// or a saloon alike, so it leaves the body open.
+const PARUVENDU_BODIES = [[/break/i, "Kombi"], [/4x4|suv/i, "SUV"], [/cabriolet/i, "Cabrio"], [/coup/i, "Coupe"], [/monospace/i, "Van"], [/pick/i, "Pickup"]];
+
+async function loadParuvenduAd(sourceUrl) {
+  const c = copy[state.lang];
+  setStatus("loading");
+  state.data = null;
+  renderData();
+  try {
+    const proxy = window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+    const response = await fetch(`${proxy}${sourceUrl}`, { headers: { "x-respond-with": "html" } });
+    if (!response.ok) throw new Error(String(response.status));
+    const html = await response.text();
+    const text = (value) => String(value || "").replace(/<[^>]+>/g, " ").replace(/&euro;/g, "€").replace(/&nbsp;|&#160;/g, " ").replace(/&amp;/g, "&").replace(/[\u202f\u00a0]/g, " ").replace(/\s+/g, " ").trim();
+    let vehicle = null;
+    for (const match of html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)) {
+      try {
+        const data = JSON.parse(match[1]);
+        if (data?.["@type"] === "Vehicle") vehicle = data;
+      } catch {
+        // Another block.
+      }
+    }
+    const details = Object.fromEntries([...html.matchAll(/<span class="uppercase">([^<]+)<\/span>\s*<br\s*\/?>\s*<span[^>]*>([\s\S]*?)<\/span>/g)]
+      .map((match) => [text(match[1]).toLowerCase(), text(match[2])]));
+    const carBruttoEur = Number(vehicle?.offers?.price) || Number(String(details.prix || "").replace(/[^\d]/g, "")) || 0;
+    if (carBruttoEur < 300) throw new Error(c.paruvenduAdFailed);
+    const brand = String(vehicle?.brand?.name || details.marque || "");
+    // Series named in French: "Classe C" = our "C", "Série 3" = our "3".
+    const model = String(vehicle?.model || details["modèle"] || "")
+      .replace(/^Classe\s+([A-Z]{1,3})$/i, "$1-Class").replace(/^S[ée]rie\s+([1-8])$/i, "$1");
+    const version = String(details.version || vehicle?.vehicleConfiguration || "").trim();
+    // The make as our catalog spells it (the ad writes it in capitals).
+    const make = /^mercedes/i.test(brand) ? "Mercedes-Benz" : /^land.?rover/i.test(brand) ? "Land Rover" : brand.toLowerCase().replace(/(^|[\s-])\S/g, (letter) => letter.toUpperCase());
+    // "Version" repeats the model ("Passat 2.0 TDI …"): once in the title.
+    const trim = version.toLowerCase().startsWith(model.toLowerCase()) ? version.slice(model.length) : version;
+    const title = `${make} ${model} ${trim}`.replace(/\s+/g, " ").trim().slice(0, 160);
+    const yearText = String(details["année"] || vehicle?.dateVehicleFirstRegistered || "").toLowerCase();
+    const yearMatch = yearText.match(/(?:([a-zéû]+)\s+)?((?:19|20)\d{2})/);
+    const month = yearMatch?.[1] ? PARUVENDU_MONTHS[yearMatch[1]] : 0;
+    const fuelLabel = String(vehicle?.fuelType || details.energie || "");
+    const fuel = /rechargeable/i.test(fuelLabel) ? "Plug-in-Hybrid" : /hybride/i.test(fuelLabel) ? (/diesel/i.test(fuelLabel) ? "Hybrid (Diesel/Elektro)" : "Hybrid (Benzin/Elektro)")
+      : /lectri/i.test(fuelLabel) ? "Elektro" : /diesel/i.test(fuelLabel) ? "Diesel" : /essence|gpl|thanol/i.test(fuelLabel) ? "Benzin" : fuelLabel;
+    const gearboxLabel = String(details.transmission || vehicle?.vehicleTransmission || "");
+    const bodyLabel = details.carrosserie || "";
+    const bodyType = (PARUVENDU_BODIES.find(([pattern]) => pattern.test(bodyLabel)) || [])[1] || "";
+    const address = vehicle?.offers?.seller?.address || {};
+    const postalCode = String(address.postalCode || "");
+    const city = String(address.addressLocality || "");
+    const ccm = Number((text(html).match(/Cylindr[ée]e\s*:?\s*(\d{3,4})\b/i) || [])[1]) || null;
+    const displacementCcm = ccm && ccm >= 600 && ccm <= 7000 ? ccm : null;
+    const vat = /TVA\s+r[ée]cup[ée]rable/i.test(html);
+    const engineTypeIndex = classifyEngineType(`${fuel} ${title}`, displacementCcm);
+    const estimate = estimateDeliveryInspection(bodyType, { country: "FR", postalCode, city });
+    const sellerType = String(vehicle?.offers?.seller?.["@type"] || "");
+    state.data = {
+      sourceUrl,
+      adId: (sourceUrl.match(/\/(\d{6,})A\d/i) || [])[1] || "",
+      importMode: "paruvendu",
+      carBruttoEur,
+      carNettoEur: vat ? Math.round(carBruttoEur / 1.2) : null,
+      purchaseType: vat ? "VAT" : "Marża",
+      title,
+      model,
+      bodyType,
+      fuel,
+      displacementCcm,
+      powerHp: Number(String(details["puissance réelle"] || "").replace(/[^\d]/g, "")) || null,
+      gearbox: /automatique/i.test(gearboxLabel) || /^automatic$/i.test(gearboxLabel) ? "Automatyczna" : /manuelle|manual/i.test(gearboxLabel) ? "Manualna" : "",
+      mileageKm: Number(vehicle?.mileageFromOdometer?.value) || Number(String(details["kilométrage"] || "").replace(/[^\d]/g, "")) || null,
+      firstRegistration: yearMatch ? (month ? `${String(month).padStart(2, "0")}/${yearMatch[2]}` : yearMatch[2]) : "",
+      equipment: [],
+      condition: "Gebrauchtfahrzeug",
+      sellerType: /dealer|organization|autodealer/i.test(sellerType) ? "DEALER" : /person/i.test(sellerType) || /pseudoinfo">\s*Particulier/i.test(html) ? "PRIVATE" : "",
+      location: { address: "", city, postalCode, country: "FR", sellerName: /dealer/i.test(sellerType) ? String(vehicle?.offers?.seller?.name || "").slice(0, 80) : "" },
+      transportNettoPln: estimate.transport,
+      inspectionNettoPln: estimate.inspection,
+      engineTypeIndex,
+      engineTypeLabel: ENGINE_TYPE_LABELS[engineTypeIndex],
+    };
+    setStatus("ready", c.recognitionFromParuvendu, true);
+    // The engine size comes from free text: the form keeps "Pojemność" open.
+    const forForm = { ...state.data, displacementCcm: null };
+    applyRecognizedManualFields(forForm);
+    state.data.matchedFilters = forForm.matchedFilters;
+    window.AUTOGOOD_SET_ONLY_MARKET?.("paruvendu");
+    renderData();
+  } catch (error) {
+    state.data = null;
+    setStatus("error", error.message && !/^\d+$/.test(error.message) ? error.message : c.paruvenduAdFailed, true);
+    renderData();
+  }
+}
+
 async function loadOtomotoAd(sourceUrl) {
   const c = copy[state.lang];
   setStatus("loading");
@@ -4804,8 +4920,13 @@ els.form.addEventListener("submit", (event) => {
     loadKleinanzeigenAd(sourceUrl);
     return;
   }
+  if (isParuvenduUrl(sourceUrl)) {
+    setLinkSource("paruvendu");
+    loadParuvenduAd(sourceUrl);
+    return;
+  }
   const expected = { dehands: "marktplaats", autoscoutfr: "autoscout" }[linkSource()] || linkSource();
-  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats", "kleinanzeigen"].includes(expected)) {
+  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats", "kleinanzeigen", "paruvendu"].includes(expected)) {
     setStatus("error", copy[state.lang][`${expected}LinkExpected`], true);
     return;
   }
@@ -5025,6 +5146,7 @@ window.AUTOGOOD_MARKETS_PICKED = (previous = {}, next = {}) => {
   // The Netherlands / Belgium switched on: their counts (only while compared).
   if ((next.marktplaats && !previous.marktplaats) || (next.dehands && !previous.dehands)) window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(readManualFields());
   if (next.kleinanzeigen && !previous.kleinanzeigen) window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT?.(readManualFields());
+  if (next.paruvendu && !previous.paruvendu) window.AUTOGOOD_PARUVENDU_REFRESH_COUNT?.(readManualFields());
   if (next.avby && !previous.avby && state.lang !== "ru") {
     document.querySelector('[data-lang-button="ru"]')?.click();
   }

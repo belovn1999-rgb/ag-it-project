@@ -4573,3 +4573,35 @@
 .mobileMarketPanel.isKleinanzeigen .mobileMarketPanelHead b { color: var(--market-kleinanzeigen); }
 .mobileMarketKeyTick.isGuide.isKleinanzeigen { color: var(--market-kleinanzeigen); }
 .mobileMonitoringTile.isKleinanzeigen { --tile: var(--market-kleinanzeigen); }
+
+/* ParuVendu as a French portal (B47): its own chart colour (burgundy; the
+   brand red #ee1c24 is too close to Blocket's). */
+.mobileMarketAnalysisPanel,
+.mobileMarketAnalysisView,
+:root {
+  --market-paruvendu: #9b1c31;
+}
+
+.mobileMarketSourceButton.isParuvendu i,
+.mobileMarketSourceTag.isParuvendu i,
+.mobileMarketLegend .isParuvendu i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--market-paruvendu);
+}
+
+.mobileMarketPoint.isParuvendu::before {
+  background: var(--market-paruvendu);
+  box-shadow: 0 0 0 1px var(--market-paruvendu);
+}
+
+.mobileMarketPointTooltip b.isParuvendu { color: var(--market-paruvendu); }
+.mobileMarketTrend.isCurve polyline.isParuvendu { stroke: var(--market-paruvendu); }
+.mobileMarketSearchArrow.isParuvendu { color: var(--market-paruvendu); }
+.mobileMarketMedian.isParuvendu { border-top-color: var(--market-paruvendu); }
+.mobileMarketKeyTick.isMedian.isParuvendu { color: var(--market-paruvendu); }
+.mobileMarketCompareRow.isParuvendu { --row: var(--market-paruvendu); }
+.mobileMarketPanel.isParuvendu .mobileMarketPanelHead b { color: var(--market-paruvendu); }
+.mobileMarketKeyTick.isGuide.isParuvendu { color: var(--market-paruvendu); }
+.mobileMonitoringTile.isParuvendu { --tile: var(--market-paruvendu); }

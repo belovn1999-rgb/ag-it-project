@@ -53,7 +53,7 @@
   const daysWord = (days) => (days === 1 ? "dzień" : "dni");
   const COUNTRY = { DE: "Niemcy", NL: "Holandia", BE: "Belgia", AT: "Austria", LU: "Luksemburg", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", SK: "Słowacja", SE: "Szwecja", DK: "Dania", CH: "Szwajcaria", PL: "Polska", SI: "Słowenia", HU: "Węgry", PT: "Portugalia" };
   const COUNTRY_IN = { DE: "w Niemczech", NL: "w Holandii", BE: "w Belgii", AT: "w Austrii", LU: "w Luksemburgu", FR: "we Francji", IT: "we Włoszech", ES: "w Hiszpanii", CZ: "w Czechach", SE: "w Szwecji", DK: "w Danii" };
-  const PORTAL = { mobile: "mobile.de", autoscout: "AutoScout24", kleinanzeigen: "Kleinanzeigen", autoscoutfr: "AutoScout24 FR", marktplaats: "Marktplaats", dehands: "2dehands", otomoto: "otomoto", blocket: "Blocket" };
+  const PORTAL = { mobile: "mobile.de", autoscout: "AutoScout24", kleinanzeigen: "Kleinanzeigen", autoscoutfr: "AutoScout24 FR", paruvendu: "ParuVendu", marktplaats: "Marktplaats", dehands: "2dehands", otomoto: "otomoto", blocket: "Blocket" };
   const SALUTATION = { Pan: { owner: "Pana", you: "Pan" }, Pani: { owner: "Pani", you: "Pani" }, "Państwo": { owner: "Państwa", you: "Państwo" } };
 
   // ---- Icons (inline, so the PDF needs no font) --------------------------------

@@ -3233,3 +3233,9 @@ a.agSpecAdPrice:hover .agSpecAdLabel {
   background: #1d4b00;
   color: #fff;
 }
+
+/* ParuVendu: red logo with the French flag (B47). */
+.agBrandLink.isParuvendu:hover {
+  border-color: #ee1c24;
+  box-shadow: 0 0 0 1px #ee1c24;
+}
