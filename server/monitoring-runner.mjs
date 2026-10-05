@@ -29,6 +29,7 @@
 // --disable-background-timer-throttling --disable-renderer-backgrounding,
 // or a hidden tab's pauses (the proxy's minute limit) stretch to a minute.
 import http from "node:http";
+import { spawn } from "node:child_process";
 import { mkdir, readFile, readdir, rename, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
@@ -228,6 +229,54 @@ function todayAt(hour, minute = 0) {
   return at;
 }
 
+// A car's own schedule (page 3, owner 2026-10-05): every = daily | weekdays
+// | every2 | weekly (Monday), time "HH:MM"; without one, the --hour/--minute
+// of the service. The same rule as isMonitoringDay() in the page.
+const EVERY = ["daily", "weekdays", "every2", "weekly"];
+function isRunDay(every, date) {
+  const day = date.getDay();
+  if (every === "weekdays") return day >= 1 && day <= 5;
+  if (every === "weekly") return day === 1;
+  if (every === "every2") {
+    const noon = new Date(date);
+    noon.setHours(12, 0, 0, 0);
+    return Math.floor(noon.getTime() / 86400000) % 2 === 0;
+  }
+  return true;
+}
+function jobSchedule(job, args) {
+  const time = /^([01]\d|2[0-3]):[0-5]\d$/.test(job.time || "") ? job.time : `${String(args.hour).padStart(2, "0")}:${String(args.minute).padStart(2, "0")}`;
+  return { every: EVERY.includes(job.every) ? job.every : "daily", time };
+}
+function slotOn(schedule, date) {
+  const [hour, minute] = schedule.time.split(":").map(Number);
+  const at = new Date(date);
+  at.setHours(hour, minute, 0, 0);
+  return at.getTime();
+}
+function nextSlot(schedule, from = new Date()) {
+  for (let offset = 0; offset < 15; offset += 1) {
+    const day = new Date(from);
+    day.setDate(from.getDate() + offset);
+    if (!isRunDay(schedule.every, day)) continue;
+    const slot = slotOn(schedule, day);
+    if (slot > from.getTime()) return slot;
+  }
+  return null;
+}
+
+// While cars are checked the Mac must not fall asleep (it woke at 9:25 by
+// itself and would doze off again): macOS's caffeinate, for this process.
+function keepAwake() {
+  if (process.platform !== "darwin") return () => {};
+  try {
+    const child = spawn("caffeinate", ["-i", "-w", String(process.pid)], { stdio: "ignore" });
+    return () => child.kill();
+  } catch {
+    return () => {};
+  }
+}
+
 // ---- --serve: the local service of this Mac (variant B, owner 2026-10-04) --
 // Listens on 127.0.0.1 only (never through the tunnel): the search page in a
 // browser of this Mac sends its jobs and takes the records; every day at the
@@ -279,7 +328,6 @@ async function serveApp(args, request, response) {
 
 function serve(args) {
   const state = { running: false, lastRun: null, tries: new Map(), nextRun: "" };
-  const runTime = () => todayAt(args.hour, args.minute).getTime();
   const send = (request, response, status, payload) => {
     const origin = request.headers.origin || "";
     response.writeHead(status, {
@@ -296,19 +344,25 @@ function serve(args) {
 
   const tick = async () => {
     if (state.running) return;
-    const start = runTime();
-    state.nextRun = new Date(Date.now() < start ? start : start + 24 * 60 * 60 * 1000).toISOString();
-    if (Date.now() < start) return;
-    const day = new Date(start).toISOString().slice(0, 10);
+    const now = new Date();
+    const jobs = await readJobs(args);
+    const upcoming = jobs.map((job) => nextSlot(jobSchedule(job, args), now)).filter(Boolean);
+    state.nextRun = upcoming.length ? new Date(Math.min(...upcoming)).toISOString() : "";
+    const day = now.toISOString().slice(0, 10);
     const due = [];
-    for (const job of await readJobs(args)) {
+    for (const job of jobs) {
+      const schedule = jobSchedule(job, args);
+      if (!isRunDay(schedule.every, now)) continue;
+      const slot = slotOn(schedule, now);
+      if (now.getTime() < slot) continue;
       if ((state.tries.get(`${day}|${job.id}`) || 0) >= 2) continue;
-      if (!(await ranSince(args.out, job.id, start))) due.push(job);
+      if (!(await ranSince(args.out, job.id, slot))) due.push(job);
     }
     if (!due.length) return;
     state.running = true;
     due.forEach((job) => state.tries.set(`${day}|${job.id}`, (state.tries.get(`${day}|${job.id}`) || 0) + 1));
     let failed = 0;
+    const release = keepAwake();
     try {
       await runJobs(args, due, (job, ok) => { if (!ok) failed += 1; });
       state.lastRun = { at: new Date().toISOString(), ok: failed === 0, error: failed ? `${failed} of ${due.length} cars failed` : "" };
@@ -316,6 +370,7 @@ function serve(args) {
       state.lastRun = { at: new Date().toISOString(), ok: false, error: error.message };
       log(`run failed: ${error.message}`);
     } finally {
+      release();
       state.running = false;
     }
   };
@@ -330,7 +385,8 @@ function serve(args) {
     const url = new URL(request.url || "/", "http://127.0.0.1");
     try {
       if (request.method === "GET" && url.pathname === "/monitoring/health") {
-        const start = runTime();
+        const start = new Date();
+        start.setHours(0, 0, 0, 0);
         const jobs = await readJobs(args);
         return send(request, response, 200, {
           ok: true,
@@ -341,7 +397,7 @@ function serve(args) {
           nextRun: state.nextRun,
           lastRun: state.lastRun,
           // Today's run broke down: the page then checks by itself.
-          failedToday: Boolean(state.lastRun && !state.lastRun.ok && Date.parse(state.lastRun.at) >= start),
+          failedToday: Boolean(state.lastRun && !state.lastRun.ok && Date.parse(state.lastRun.at) >= start.getTime()),
         });
       }
       if (request.method === "PUT" && url.pathname === "/monitoring/jobs") {

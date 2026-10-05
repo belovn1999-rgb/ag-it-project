@@ -115,10 +115,15 @@ node server/monitoring-runner.mjs --jobs jobs.json --out data/monitoring --daily
    `launchctl kickstart -k gui/$(id -u)/com.autogood.monitoring`. Обновить код
    службы: скопировать `server/monitoring-runner.mjs` в `…/monitoring/runner/` и
    перезапустить (страницу она всегда берёт с живого сайта).
-2. **Браузер владельца** — один раз открыть
-   `https://belovn1999-rgb.github.io/ag-it-project/mobile.html?localMonitoring=1#monitoring`
-   и на вопрос Chrome о доступе к программам на этом устройстве нажать
-   «Разрешить». Под рубильником появится «Codziennie o 9:30 sprawdza ten Mac…».
+2. **Браузер владельца** — на стр. 3 у машины с включённым мониторингом нажать
+   «Sprawdzaj przy zamkniętym programie (ten Mac)» (или открыть
+   `…/mobile.html?localMonitoring=1#monitoring`) и на вопрос Chrome о доступе к
+   программам на этом устройстве нажать «Разрешить». Появится
+   «✓ sprawdza ten Mac, także przy zamkniętym programie». С 05.10 у каждой машины
+   своя частота и время (служба читает `every` и `time` из заданий; без них —
+   `--hour/--minute`, 9:30); на время проверки служба держит Mac бодрствующим
+   (`caffeinate`). Mac сам просыпается только в 9:25 — для другого времени он
+   должен не спать, иначе проверка пройдёт при пробуждении.
 3. **Пробуждение в 9:25** — делает владелец (нужен пароль Mac):
    `sudo pmset repeat wakeorpoweron MTWRFSU 09:25:00`. Спящий Mac на зарядке
    просыпается; выключенный — проверяет при первом включении после 9:30.

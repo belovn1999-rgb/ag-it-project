@@ -131,10 +131,10 @@
       monitoringAllCountries: "{count} na mobile.de we wszystkich krajach",
       monitoringMissing: "Bez danych z: {portals} — portal nie odpowiedział, ten monitoring go nie obejmuje. Spróbuj ponownie za kilka minut.",
       monitoringSwitchOn: "Monitoring włączony",
-      monitoringSettings: "Ustawienia monitoringu: portale, ceny, kraje, przelicznik walut",
+      monitoringSettings: "Ustawienia monitoringu",
       monitoringSince: "Monitoring od {date} · {days} · zapisanych monitoringów: {count}",
       monitoringNext: "Następny monitoring: {date}",
-      monitoringNextNow: "zaraz (program jest otwarty)",
+      monitoringNextNow: "zaraz",
       monitoringToday9: "dziś o 9:30",
       monitoringTomorrow9: "jutro o 9:30",
       monitoringDay0: "od dziś",
@@ -164,6 +164,24 @@
       monitoringSortDir: "Zmień kierunek sortowania",
       monitoringOnlyVat: "tylko VAT do odliczenia",
       monitoringOnlyDealers: "tylko dealerzy",
+      monitoringEvery: "Częstotliwość",
+      monitoringTime: "Godzina",
+      monitoringEveryDaily: "codziennie",
+      monitoringEveryWeekdays: "w dni robocze (pn–pt)",
+      monitoringEveryEvery2: "co 2 dni",
+      monitoringEveryWeekly: "raz w tygodniu (pon.)",
+      monitoringAt: "{day} o {time}",
+      monitoringDayToday: "dziś",
+      monitoringDayTomorrow: "jutro",
+      monitoringOffShort: "Monitoring wyłączony — tylko „Uruchom monitoring”.",
+      monitoringMacOn: "sprawdza ten Mac, także przy zamkniętym programie",
+      monitoringMacConnect: "Sprawdzaj przy zamkniętym programie (ten Mac)",
+      monitoringMacRetry: "Połącz ponownie z usługą tego Maca",
+      monitoringMacConnecting: "Łączę z usługą monitoringu na tym Macu… Jeśli Chrome zapyta o dostęp do aplikacji na tym urządzeniu — kliknij „Zezwól”.",
+      monitoringMacConnected: "Połączono: ten Mac sprawdza auta o ustawionej godzinie, także przy zamkniętym programie.",
+      monitoringMacFailed: "Nie połączono. Działa tylko na Macu z usługą AUTOGOOD, a Chrome musi zezwolić na dostęp do aplikacji na tym urządzeniu (ikona po lewej od adresu strony).",
+      monitoringCountriesTitle: "Kraje i portale · cena auta brutto (puste = z filtrów)",
+      monitoringDone: "Gotowe",
       monitoringCalc: "Oblicz na gotowo",
       monitoringViewExtra: "Dodatkowe (blisko filtrów)",
       monitoringExtraTitle: "Oferty dodatkowe",
@@ -712,10 +730,10 @@
       monitoringAllCountries: "{count} на mobile.de во всех странах",
       monitoringMissing: "Нет данных с: {portals} — портал не ответил, этот мониторинг его не включает. Попробуй ещё раз через несколько минут.",
       monitoringSwitchOn: "Мониторинг включён",
-      monitoringSettings: "Настройки мониторинга: порталы, цены, страны, конвертер валют",
+      monitoringSettings: "Настройки мониторинга",
       monitoringSince: "Мониторинг с {date} · {days} · сохранено мониторингов: {count}",
       monitoringNext: "Следующий мониторинг: {date}",
-      monitoringNextNow: "сейчас (программа открыта)",
+      monitoringNextNow: "сейчас",
       monitoringToday9: "сегодня в 9:30",
       monitoringTomorrow9: "завтра в 9:30",
       monitoringDay0: "с сегодня",
@@ -745,6 +763,24 @@
       monitoringSortDir: "Сменить направление сортировки",
       monitoringOnlyVat: "только НДС к вычету",
       monitoringOnlyDealers: "только дилеры",
+      monitoringEvery: "Частота",
+      monitoringTime: "Время",
+      monitoringEveryDaily: "каждый день",
+      monitoringEveryWeekdays: "по будням (пн–пт)",
+      monitoringEveryEvery2: "раз в 2 дня",
+      monitoringEveryWeekly: "раз в неделю (пн)",
+      monitoringAt: "{day} в {time}",
+      monitoringDayToday: "сегодня",
+      monitoringDayTomorrow: "завтра",
+      monitoringOffShort: "Мониторинг выключен — только «Запустить мониторинг».",
+      monitoringMacOn: "проверяет этот Mac, даже при закрытой программе",
+      monitoringMacConnect: "Проверять при закрытой программе (этот Mac)",
+      monitoringMacRetry: "Подключиться к службе этого Mac снова",
+      monitoringMacConnecting: "Подключаюсь к службе мониторинга на этом Mac… Если Chrome спросит о доступе к приложениям на этом устройстве — нажми «Разрешить».",
+      monitoringMacConnected: "Подключено: этот Mac проверяет авто в заданное время, даже при закрытой программе.",
+      monitoringMacFailed: "Не подключено. Работает только на Mac со службой AUTOGOOD, и Chrome должен разрешить доступ к приложениям на этом устройстве (значок слева от адреса страницы).",
+      monitoringCountriesTitle: "Страны и порталы · цена авто брутто (пусто = из фильтров)",
+      monitoringDone: "Готово",
       monitoringCalc: "Посчитать под ключ",
       monitoringViewExtra: "Дополнительные (рядом с фильтрами)",
       monitoringExtraTitle: "Дополнительные предложения",
@@ -4372,7 +4408,7 @@
     const compareRecord = compareAt ? byDate.get(compareAt) : null;
     const [from, to] = [compareAt, at].sort();
     const filtersBetween = compareAt && (entry.priceLog || []).some((point) => point.filtersChange && point.at > from && point.at < to);
-    const sources = MARKET_SOURCES.filter((source) => chartSources[source]);
+    const sources = monitoringSelection(entry).markets;
     const chips = checks.map((point) => {
       const has = byDate.has(point.at);
       const state = point.at === at ? " isPrimary" : point.at === compareAt ? " isCompare" : "";
@@ -4548,40 +4584,63 @@
     return `<span class="agMarketBadge" title="${escapeMarketHtml(name)}">${window.AUTOGOOD_FLAG?.(country) || ""}<span>${source === "autoscout" ? "AutoScout24" : "mobile.de"}${country ? ` · ${escapeMarketHtml(country)}` : ""}</span></span>`;
   }
 
-  function monitoringPortalsHtml(entry) {
+  // Countries as on pages 1-2 (owner 2026-10-05): a card per country, its
+  // portals under it, each with the car's own price (empty = the filters').
+  function monitoringCountriesHtml(entry) {
     const c = copy();
     const watch = window.AUTOGOOD_FAVORITES_WATCH;
     const numbers = numberFormat();
     const symbol = { PLN: "zł", EUR: "€", SEK: "kr", USD: "$" };
-    const scope = monitoringScopeOf(entry.id);
-    // mobile.de and AutoScout24: searched in the same countries.
-    const countriesRow = () => {
-      const on = Boolean(chartSources.mobile || chartSources.autoscout);
+    const selection = monitoringSelection(entry);
+    return `<div class="mobileMonitoringCountryGrid">${MARKET_GROUPS.map((group) => {
+      const on = selectionGroupOn(selection, group);
+      const german = germanCountries(selection.countries);
+      const countries = group.key === "de" && on && german.length ? german : group.countries;
+      const names = countries.map((code) => window.AUTOGOOD_COUNTRY_NAME?.(code) || code);
+      const flags = countries.map((code) => window.AUTOGOOD_FLAG?.(code) || "").join("");
+      const rows = group.rows.filter((row, index) => on || index === 0).map((row) => {
+        const source = rowSource(row);
+        const rowOnNow = on && selectionRowOn(selection, row);
+        const own = watch?.portalPrice?.(entry.id, source) || null;
+        const fallback = (source === "autoscout" ? watch?.portalPrice?.(entry.id, "mobile") : null) || watch?.filtersPriceIn?.(source, entry.filters) || {};
+        const currency = SOURCE_CURRENCY[source] || "EUR";
+        const field = (side) => {
+          const value = own?.[side];
+          const hint = fallback[side];
+          return `<label><span>${escapeMarketHtml(side === "from" ? c.monitoringFrom : c.monitoringTo)}</span><input type="text" inputmode="numeric" data-monitoring-price="${source}" data-side="${side}" value="${value === null || value === undefined ? "" : escapeMarketHtml(numbers.format(value))}" placeholder="${Number.isFinite(hint) ? escapeMarketHtml(numbers.format(Math.round(hint))) : "—"}"${rowOnNow ? "" : " disabled"} /><b>${escapeMarketHtml(symbol[currency] || currency)}</b></label>`;
+        };
+        const name = portalName(source);
+        return `
+          <div class="mobileMonitoringCountryRow${rowOnNow ? "" : " isOff"}">
+            <button class="agBrandLink is${sourceClass(source)}" type="button" data-monitoring-row="${group.key}:${row}" aria-pressed="${rowOnNow ? "true" : "false"}" title="${escapeMarketHtml(name)}" aria-label="${escapeMarketHtml(name)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>
+            ${on ? `<div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>` : ""}
+          </div>`;
+      }).join("");
+      // Germany: Austria and Luxembourg go with it (mobile.de, AutoScout24).
+      const extra = group.key === "de" && on ? `<div class="mobileMonitoringSubCountries">${["AT", "LU"].map((code) => {
+        const picked = selection.countries.includes(code);
+        return `<button type="button" data-monitoring-country="${code}" aria-pressed="${picked ? "true" : "false"}" class="${picked ? "isOn" : ""}">${window.AUTOGOOD_FLAG?.(code) || ""}${escapeMarketHtml(window.AUTOGOOD_COUNTRY_NAME?.(code) || code)}</button>`;
+      }).join("")}</div>` : "";
+      const label = `${names.join(", ")} — ${on ? c.marketGroupOff : c.marketGroupOn}`;
       return `
-        <div class="mobileMonitoringCountries${on ? "" : " isOff"}" role="group" aria-label="${escapeMarketHtml(c.monitoringCountries)}">
-          <b>${escapeMarketHtml(c.monitoringCountries)}:</b>
-          ${MONITORING_COUNTRY_CHOICES.map((code) => `<button class="mobileMonitoringCountry${scope.countries.includes(code) ? " isOn" : ""}" type="button" data-monitoring-country="${code}" aria-pressed="${scope.countries.includes(code) ? "true" : "false"}"${on ? "" : " disabled"} title="${escapeMarketHtml(window.AUTOGOOD_COUNTRY_NAME?.(code) || code)}">${window.AUTOGOOD_FLAG?.(code) || ""}${code}</button>`).join("")}
-          <small>${escapeMarketHtml(c.monitoringCountriesHint)}</small>
-        </div>`;
-    };
-    return MARKET_SOURCES.map((source) => {
-      const on = Boolean(chartSources[source]);
-      const own = watch?.portalPrice?.(entry.id, source) || null;
-      // AutoScout24 without a price of its own: mobile.de's.
-      const fallback = (source === "autoscout" ? watch?.portalPrice?.(entry.id, "mobile") : null) || watch?.filtersPriceIn?.(source, entry.filters) || {};
-      const currency = SOURCE_CURRENCY[source] || "EUR";
-      const field = (side) => {
-        const value = own?.[side];
-        const hint = fallback[side];
-        return `<label><span>${escapeMarketHtml(side === "from" ? c.monitoringFrom : c.monitoringTo)}</span><input type="text" inputmode="numeric" data-monitoring-price="${source}" data-side="${side}" value="${value === null || value === undefined ? "" : escapeMarketHtml(numbers.format(value))}" placeholder="${Number.isFinite(hint) ? escapeMarketHtml(numbers.format(Math.round(hint))) : "—"}"${on ? "" : " disabled"} /><b>${escapeMarketHtml(symbol[currency] || currency)}</b></label>`;
-      };
-      const label = portalName(source);
-      return `
-        <div class="mobileMonitoringPortal${on ? " isOn" : ""}">
-          <button class="agSourceToggle${on ? " isOn" : ""}" type="button" data-monitoring-market="${source}" aria-pressed="${on ? "true" : "false"}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>
-          <span class="mobileMonitoringPortalName">${["mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "marktplaats", "dehands"].includes(source) ? monitoringPortalBadge(source, scope.countries) : marketBadge(source)}${source === "autoscout" ? `<small>${escapeMarketHtml(c.monitoringAutoscout)}</small>` : ""}</span>
-          <div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>
-        </div>${source === "autoscout" ? countriesRow() : ""}`;
+        <section class="agMarketColumn mobileMonitoringCountryCard${on ? "" : " isOff"}">
+          <button class="agMarketColumnHead isToggle" type="button" role="switch" aria-checked="${on ? "true" : "false"}" data-monitoring-group="${group.key}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">
+            <span class="agMarketColumnFlags">${flags}</span>
+            <b class="agMarketColumnName">${escapeMarketHtml(names.join(" · "))}</b>
+          </button>
+          ${rows}${extra}
+        </section>`;
+    }).join("")}</div>`;
+  }
+
+  // The folded settings say what is chosen: "🇩🇪 Niemcy: mobile.de, AutoScout24 · 🇵🇱 Polska: otomoto".
+  function monitoringSelectionSummary(entry) {
+    const selection = monitoringSelection(entry);
+    return MARKET_GROUPS.filter((group) => selectionGroupOn(selection, group)).map((group) => {
+      const german = germanCountries(selection.countries);
+      const countries = group.key === "de" && german.length ? german : group.countries;
+      const portals = [...new Set(group.rows.filter((row) => selectionRowOn(selection, row)).map((row) => portalName(rowSource(row))))];
+      return `<span class="mobileMonitoringSummaryCountry">${countries.map((code) => window.AUTOGOOD_FLAG?.(code) || "").join("")} <b>${escapeMarketHtml(window.AUTOGOOD_COUNTRY_NAME?.(group.countries[0]) || group.countries[0])}</b> ${escapeMarketHtml(portals.join(", "))}</span>`;
     }).join("");
   }
 
@@ -4624,9 +4683,81 @@
 
   function monitoringScopeOf(favoriteId) {
     const scope = readMonitoringScopes()[favoriteId] || {};
-    const countries = Array.isArray(scope.countries) && scope.countries.length ? scope.countries.filter((code) => MONITORING_COUNTRY_CHOICES.includes(code)) : MONITORING_COUNTRIES;
+    // Picked in the country cards (2026-10-05): the car's own portals, and
+    // its countries exactly as picked (none, when only otomoto is left).
+    const picked = Array.isArray(scope.markets) ? scope.markets.filter((source) => MARKET_SOURCES.includes(source)) : [];
+    const listed = Array.isArray(scope.countries) ? scope.countries.filter((code) => MONITORING_COUNTRY_CHOICES.includes(code)) : [];
+    const countries = picked.length ? listed : (listed.length ? listed : MONITORING_COUNTRIES);
     const tolerance = NEAR_TOLERANCES.includes(Number(scope.tolerance)) ? Number(scope.tolerance) : NEAR_DEFAULT_TOLERANCE;
-    return { countries: countries.length ? countries : MONITORING_COUNTRIES, tolerance };
+    return { countries, tolerance, ...(picked.length ? { markets: picked } : {}) };
+  }
+
+  // What one car is monitored on (owner 2026-10-05: chosen per car, by
+  // country, as on pages 1-2): its own picks, else the portals of the saved
+  // search (monitoringMarketsOf). Page 1's choice is not touched.
+  function monitoringSelection(entry) {
+    const scope = monitoringScopeOf(entry.id);
+    return { markets: scope.markets || monitoringMarketsOf(entry), countries: scope.countries };
+  }
+  const selectionRowOn = (selection, row) => {
+    if (row === "autoscout") return selection.markets.includes("autoscout") && germanCountries(selection.countries).length > 0;
+    if (row === "autoscoutnl") return selection.markets.includes("autoscout") && selection.countries.includes("NL");
+    if (row === "autoscoutbe") return selection.markets.includes("autoscout") && selection.countries.includes("BE");
+    return selection.markets.includes(row);
+  };
+  const selectionGroupOn = (selection, group) => group.rows.some((row) => selectionRowOn(selection, row));
+  // A country card switched (or one portal of it): the same rules as the
+  // columns of page 1 (marketsWithGroup), on this car's own picks. Germany
+  // comes with Austria and Luxembourg (the monitoring default since 03.10).
+  function selectionWithGroup(selection, key, onlyRow = "") {
+    const group = marketGroup(key);
+    if (!group) return null;
+    const countries = selection.countries;
+    const german = germanCountries(countries);
+    const nlbe = nlbeCountries(countries);
+    const markets = Object.fromEntries(MARKET_SOURCES.map((source) => [source, selection.markets.includes(source)]));
+    let nextCountries = countries;
+    const on = selectionGroupOn(selection, group) && !onlyRow;
+    if (key === "de") {
+      if (on) {
+        markets.mobile = false;
+        markets.kleinanzeigen = false;
+        nextCountries = nlbe;
+        markets.autoscout = markets.autoscout && nlbe.length > 0;
+      } else {
+        if (!onlyRow || onlyRow === "mobile") markets.mobile = true;
+        if (!onlyRow || onlyRow === "autoscout") markets.autoscout = true;
+        if (onlyRow === "kleinanzeigen") markets.kleinanzeigen = true;
+        nextCountries = [...(german.length ? german : ["DE", "AT", "LU"]), ...nlbe];
+      }
+    } else if (LOCAL_MARKETS[key]) {
+      const { code, portal, row } = LOCAL_MARKETS[key];
+      const others = countries.filter((item) => item !== code);
+      if (on) {
+        markets[portal] = false;
+        nextCountries = others;
+        markets.autoscout = markets.autoscout && (germanCountries(others).length > 0 || nlbeCountries(others).length > 0);
+      } else {
+        if (!onlyRow || onlyRow === portal) markets[portal] = true;
+        if (!onlyRow || onlyRow === row) {
+          markets.autoscout = true;
+          nextCountries = [...others, code];
+        }
+      }
+    } else group.rows.forEach((row) => { markets[row] = onlyRow ? (row === onlyRow || markets[row]) : !on; });
+    const list = MARKET_SOURCES.filter((source) => markets[source]);
+    if (!list.length) return null;
+    return { markets: list, countries: nextCountries };
+  }
+  // One portal of a switched-on country, on or off (AutoScout24 is one
+  // portal in all its countries).
+  function selectionWithRow(selection, key, row) {
+    const group = marketGroup(key);
+    if (!group) return null;
+    if (!selectionGroupOn(selection, group) || !selectionRowOn(selection, row)) return selectionWithGroup(selection, key, row);
+    const source = rowSource(row);
+    const list = selection.markets.filter((item) => item !== source);
+    return list.length ? { markets: list, countries: selection.countries } : null;
   }
   function setMonitoringScope(favoriteId, change) {
     const all = readMonitoringScopes();
@@ -4657,18 +4788,40 @@
     const rates = converterRates();
     const rate = (value) => (Number.isFinite(value) ? new Intl.NumberFormat(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { minimumFractionDigits: 2, maximumFractionDigits: 4 }).format(value) : "—");
     const date = window.AUTOGOOD_EXCHANGE_RATES?.updatedAt ? formatHistoryDate(window.AUTOGOOD_EXCHANGE_RATES.updatedAt) : "";
+    // Small, one line, above the countries (owner 2026-10-05); the rates as a hint.
     return `
-      <div class="mobileMonitoringConverter">
-        <div class="mobileMonitoringConverterInput">
-          <input type="text" inputmode="decimal" data-monitoring-convert-amount value="${escapeMarketHtml(converterState.amount)}" aria-label="${escapeMarketHtml(c.monitoringConverter)}" />
-          <select data-monitoring-convert-currency aria-label="${escapeMarketHtml(c.monitoringConverter)}">
-            ${["PLN", "EUR", "SEK"].map((currency) => `<option value="${currency}"${currency === converterState.currency ? " selected" : ""}>${currency}</option>`).join("")}
-          </select>
-          <span class="mobileMonitoringConverterEq">=</span>
-          <div class="mobileMonitoringConverterOut" data-monitoring-convert-out>${converterOutputHtml()}</div>
-        </div>
-        <small>${escapeMarketHtml(c.monitoringAvgRate)}: 1 EUR = ${rate(rates.eurRaw)} PLN · 1 SEK = ${rate(rates.sekRaw)} PLN${date ? ` · ${escapeMarketHtml(date)}` : ""}</small>
+      <div class="mobileMonitoringConverter isCompact" title="${escapeMarketHtml(`${c.monitoringAvgRate}: 1 EUR = ${rate(rates.eurRaw)} PLN · 1 SEK = ${rate(rates.sekRaw)} PLN${date ? ` · ${date}` : ""}`)}">
+        <span class="mobileMonitoringConverterLabel">${escapeMarketHtml(c.monitoringConverter)}</span>
+        <input type="text" inputmode="decimal" data-monitoring-convert-amount value="${escapeMarketHtml(converterState.amount)}" aria-label="${escapeMarketHtml(c.monitoringConverter)}" />
+        <select data-monitoring-convert-currency aria-label="${escapeMarketHtml(c.monitoringConverter)}">
+          ${["PLN", "EUR", "SEK"].map((currency) => `<option value="${currency}"${currency === converterState.currency ? " selected" : ""}>${currency}</option>`).join("")}
+        </select>
+        <span class="mobileMonitoringConverterEq">=</span>
+        <span class="mobileMonitoringConverterOut" data-monitoring-convert-out>${converterOutputHtml()}</span>
         <small>${escapeMarketHtml(c.monitoringCalcRate)}: 1 EUR = ${rate(rates.eur)} PLN · 1 SEK = ${rate(rates.sek)} PLN</small>
+      </div>`;
+  }
+
+  // Frequency and time of a car's monitoring (owner 2026-10-05), the next
+  // run, and whether this Mac checks also with the program closed.
+  function monitoringScheduleHtml(entry) {
+    const c = copy();
+    const monitored = Boolean(entry.autoRefresh?.enabled);
+    const schedule = monitoringSchedule(entry);
+    const everyText = { daily: c.monitoringEveryDaily, weekdays: c.monitoringEveryWeekdays, every2: c.monitoringEveryEvery2, weekly: c.monitoringEveryWeekly };
+    const mac = !monitored ? ""
+      : localMonitoring.available ? `<span class="mobileMonitoringMac isOn">✓ ${escapeMarketHtml(c.monitoringMacOn)}</span>`
+        : `<button class="mobileMonitoringMac" type="button" data-monitoring-connect>${escapeMarketHtml(localMonitoringState().enabled ? c.monitoringMacRetry : c.monitoringMacConnect)}</button>`;
+    return `
+      <div class="mobileMonitoringSchedule${monitored ? "" : " isOff"}">
+        <label><span>${escapeMarketHtml(c.monitoringEvery)}</span>
+          <select data-monitoring-every${monitored ? "" : " disabled"}>${MONITORING_EVERY.map((every) => `<option value="${every}"${every === schedule.every ? " selected" : ""}>${escapeMarketHtml(everyText[every])}</option>`).join("")}</select>
+        </label>
+        <label><span>${escapeMarketHtml(c.monitoringTime)}</span>
+          <select data-monitoring-time${monitored ? "" : " disabled"}>${[...new Set([...MONITORING_TIMES, schedule.time])].sort().map((time) => `<option value="${time}"${time === schedule.time ? " selected" : ""}>${time}</option>`).join("")}</select>
+        </label>
+        <span class="mobileMonitoringNext">${escapeMarketHtml(monitored ? c.monitoringNext.replace("{date}", nextMonitoringText(entry)) : c.monitoringOffShort)}</span>
+        ${mac}
       </div>`;
   }
 
@@ -4697,7 +4850,7 @@
             <i aria-hidden="true"></i><b>${escapeMarketHtml(monitored ? c.monitoringSwitchOn : c.monitoringSwitch)}</b>
           </label>
         </div>
-        <p class="mobileMonitoringNote">${escapeMarketHtml(monitored ? (localMonitoring.available ? c.monitoringOnMac : c.monitoringOn) : c.monitoringOff)}${monitored ? ` <b>${escapeMarketHtml(c.monitoringNext.replace("{date}", nextMonitoringText(entry)))}</b>` : ""}</p>
+        ${monitoringScheduleHtml(entry)}
         <button class="mobileMonitoringParamsLine" type="button" data-monitoring-edit title="${escapeMarketHtml(c.monitoringEditParams)}">
           <span>${escapeMarketHtml([monitoringTitle(entry), ...historyMeta(entry.filters)].join(" · "))}</span>
           <b>${escapeMarketHtml(c.monitoringEditParams)} →</b>
@@ -4705,24 +4858,14 @@
         <p class="mobileMonitoringSince" data-monitoring-since></p>
       </section>
       <details class="mobileMonitoringSettings" data-monitoring-settings${monitoringPrefs.settingsOpen ? " open" : ""}>
-        <summary>${escapeMarketHtml(c.monitoringSettings)}</summary>
-        <div class="mobileMonitoringColumns">
-          <section class="mobileMarketCard mobileMonitoringPortalsCard">
-            ${blockTitle("percent", c.monitoringPortals)}
-            <p class="mobileMonitoringHint">${escapeMarketHtml(c.monitoringPortalsHint)}</p>
-            <div class="mobileMonitoringPortals">${monitoringPortalsHtml(entry)}</div>
-          </section>
-          <section class="mobileMarketCard mobileMonitoringConverterCard">
-            ${blockTitle("percent", c.monitoringConverter)}
-            ${monitoringConverterHtml()}
-          </section>
-          <section class="mobileMarketCard mobileMonitoringExtraCard">
-            ${blockTitle("percent", c.monitoringExtraTitle)}
-            <p class="mobileMonitoringHint">${escapeMarketHtml(c.monitoringExtraHint)}</p>
-            <label class="mobileMonitoringExtraChoice">${escapeMarketHtml(c.monitoringExtraTolerance)}
-              <select data-monitoring-tolerance>${NEAR_TOLERANCES.map((value) => `<option value="${value}"${monitoringScopeOf(entry.id).tolerance === value ? " selected" : ""}>${escapeMarketHtml(value ? c.monitoringExtraPercent.replace("{pct}", String(value)) : c.monitoringExtraOff)}</option>`).join("")}</select>
-            </label>
-          </section>
+        <summary><b>${escapeMarketHtml(c.monitoringSettings)}</b><span class="mobileMonitoringSummary">${monitoringSelectionSummary(entry)}</span></summary>
+        <div class="mobileMonitoringSettingsBody">
+          ${monitoringConverterHtml()}
+          <h3 class="mobileMonitoringCountriesTitle">${escapeMarketHtml(c.monitoringCountriesTitle)}</h3>
+          ${monitoringCountriesHtml(entry)}
+          <div class="mobileMonitoringSettingsFoot">
+            <button class="mobileMarketImportClear isPrimary" type="button" data-monitoring-settings-done>${escapeMarketHtml(c.monitoringDone)} ✓</button>
+          </div>
         </div>
       </details>
       <section class="mobileMarketCard mobileMonitoringResults">
@@ -4759,24 +4902,69 @@
     if (monitoringExtended) fillOfferHistory(entry);
   }
 
-  // Monitoring runs every day at 9:30 (owner, 2026-10-04; was 9:00): by the
-  // owner's Mac (variant B, below) or, without it, while the program is open.
-  // Due when no Monitoring check exists since today's 9:30.
-  const MONITORING_HOUR = 9;
-  const MONITORING_MINUTE = 30;
+  // When a car is monitored (owner 2026-10-05: frequency and time chosen per
+  // car on page 3; default every day at 9:30): by the owner's Mac (variant B,
+  // below) or, without it, while the program is open. Due on a run day once
+  // its time has come and no Monitoring check exists since then. The same
+  // rule lives in server/monitoring-runner.mjs (the Mac's service).
+  const MONITORING_EVERY = ["daily", "weekdays", "every2", "weekly"];
+  // 6:00 … 21:00 every half hour.
+  const MONITORING_TIMES = Array.from({ length: 31 }, (_, index) => {
+    const minutes = 6 * 60 + index * 30;
+    return `${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}`;
+  });
+  function monitoringSchedule(entry) {
+    const auto = entry?.autoRefresh || {};
+    return {
+      every: MONITORING_EVERY.includes(auto.every) ? auto.every : "daily",
+      time: /^([01]\d|2[0-3]):[0-5]\d$/.test(auto.time || "") ? auto.time : "09:30",
+    };
+  }
+  // Weekly = Monday; every second day = even day numbers since 1970 (the
+  // service counts the same way).
+  function isMonitoringDay(every, date) {
+    const day = date.getDay();
+    if (every === "weekdays") return day >= 1 && day <= 5;
+    if (every === "weekly") return day === 1;
+    if (every === "every2") {
+      const noon = new Date(date);
+      noon.setHours(12, 0, 0, 0);
+      return Math.floor(noon.getTime() / 86400000) % 2 === 0;
+    }
+    return true;
+  }
+  function monitoringSlot(schedule, date) {
+    const [hour, minute] = schedule.time.split(":").map(Number);
+    const at = new Date(date);
+    at.setHours(hour, minute, 0, 0);
+    return at;
+  }
+  // Today's moment of the car's monitoring once it has come, else null.
+  function dueSlot(entry, now = new Date()) {
+    const schedule = monitoringSchedule(entry);
+    if (!isMonitoringDay(schedule.every, now)) return null;
+    const slot = monitoringSlot(schedule, now).getTime();
+    return now.getTime() >= slot ? slot : null;
+  }
   // Listed this long and already cheaper: "Do negocjacji" (B22).
   const NEGOTIATION_DAYS = 30;
-  const todayAtNine = () => {
-    const at = new Date();
-    at.setHours(MONITORING_HOUR, MONITORING_MINUTE, 0, 0);
-    return at;
-  };
   function nextMonitoringText(entry) {
     const c = copy();
-    const nine = todayAtNine();
-    if (Date.now() < nine.getTime()) return c.monitoringToday9;
-    const doneToday = (entry.priceLog || []).some((point) => !point.filtersChange && Date.parse(point.at) >= nine.getTime());
-    return doneToday ? c.monitoringTomorrow9 : c.monitoringNextNow;
+    const schedule = monitoringSchedule(entry);
+    const now = new Date();
+    const slotToday = monitoringSlot(schedule, now).getTime();
+    const doneToday = (entry.priceLog || []).some((point) => !point.filtersChange && Date.parse(point.at) >= slotToday);
+    for (let offset = 0; offset < 15; offset += 1) {
+      const day = new Date(now);
+      day.setDate(now.getDate() + offset);
+      if (!isMonitoringDay(schedule.every, day)) continue;
+      if (offset === 0 && doneToday) continue;
+      if (offset === 0 && now.getTime() >= slotToday) return c.monitoringNextNow;
+      const dayText = offset === 0 ? c.monitoringDayToday : offset === 1 ? c.monitoringDayTomorrow
+        : day.toLocaleDateString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { weekday: "short", day: "numeric", month: "numeric" });
+      return c.monitoringAt.replace("{day}", dayText).replace("{time}", schedule.time);
+    }
+    return "—";
   }
   function daysText(days) {
     const c = copy();
@@ -4994,7 +5182,8 @@
     const info = document.querySelector("[data-monitoring-check-info]");
     if (!target) return;
     const log = entry.priceLog || [];
-    const scopeKey = monitoringScopeKey(monitoringScopeOf(entry.id), MARKET_SOURCES.filter((source) => chartSources[source]));
+    const selection = monitoringSelection(entry);
+    const scopeKey = monitoringScopeKey(monitoringScopeOf(entry.id), selection.markets);
     // Monitoring compares its own checks of the same portals and countries
     // (checks made from the analysis, page 2, cover other countries).
     const checks = log.filter((point) => !point.filtersChange && byDate.get(point.at)?.scope === scopeKey);
@@ -5077,7 +5266,7 @@
     };
     const changedBetween = false;
     const newBase = !previous && (checks.length > 1 || otherChecks);
-    const sources = MARKET_SOURCES.filter((source) => chartSources[source] && (record.markets[source] || before?.markets[source]));
+    const sources = MARKET_SOURCES.filter((source) => selection.markets.includes(source) && (record.markets[source] || before?.markets[source]));
     const numbers = numberFormat();
     const perSource = sources.map((source) => {
       const current = record.markets[source];
@@ -5117,7 +5306,7 @@
     const extra = record.extra || null;
     const extraBefore = new Set([before?.markets, before?.extra?.markets].flatMap((markets) => Object.values(markets || {}).flatMap((market) => (market.offers || []).map((offer) => offer.key))));
     const extraRows = Object.entries(extra?.markets || {})
-      .filter(([source]) => chartSources[source] && (!monitoringState.portal || source === monitoringState.portal))
+      .filter(([source]) => selection.markets.includes(source) && (!monitoringState.portal || source === monitoringState.portal))
       // "Nowe" only against a monitoring that also looked for them.
       .flatMap(([source, market]) => (market.offers || []).map((offer) => ({ source, offer, extra: true, isNew: Boolean(before?.extra) && !extraBefore.has(offer.key) })));
     const currentByKey = new Map([
@@ -5246,7 +5435,8 @@
       extra: extra ? c.monitoringExtraEmpty.replace("{pct}", String(extra.tolerance)) : c.monitoringExtraNone,
     }[view] || c.monitoringEmptyList;
     // What the extra list is, and why the year got no margin.
-    const extraNote = view === "extra" && extra ? `<p class="mobileMonitoringExtraNote">${escapeMarketHtml(c.monitoringExtraNote.replace("{pct}", String(extra.tolerance)))}${(extra.skipped || []).filter((item) => item.kind === "year").slice(0, 1).map((item) => ` ${escapeMarketHtml(item.reason === "noData" ? c.monitoringExtraYearNoData : c.monitoringExtraYearBoundary)}`).join("")}</p>` : "";
+    // No description (owner 2026-10-05): the orange mark on each car says it.
+    const extraNote = "";
     const sortOptions = [["price", c.monitoringSortPrice], ["year", c.monitoringSortYear], ["mileage", c.monitoringSortMileage], ["listed", c.monitoringSortListed], ["drop", c.monitoringSortDrop]];
     const savedCount = viewRows.saved.length;
     rowsForDetails = new Map(rows.map((row) => [row.offer.key, row]));
@@ -5742,10 +5932,10 @@
   function monitoringJobs() {
     refreshMarketHistory();
     const jobs = marketHistory.filter((entry) => entry.pinned && entry.autoRefresh?.enabled).map((entry) => {
-      const markets = monitoringMarketsOf(entry);
+      const { markets } = monitoringSelection(entry);
       const scope = monitoringScopeOf(entry.id);
       const prices = Object.fromEntries(markets.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null]).filter(([, price]) => price));
-      return { id: entry.id, title: monitoringTitle(entry), filters: entry.filters, markets, countries: scope.countries, tolerance: scope.tolerance, prices, every: "daily", hour: MONITORING_HOUR, minute: MONITORING_MINUTE };
+      return { id: entry.id, title: monitoringTitle(entry), filters: entry.filters, markets, countries: scope.countries, tolerance: scope.tolerance, prices, ...monitoringSchedule(entry) };
     });
     return { version: 1, exportedAt: new Date().toISOString(), jobs };
   }
@@ -5853,7 +6043,7 @@
 
   // Checks run one at a time (owner, 2026-10-04: the portals are not asked
   // for several cars at once); one asked for meanwhile waits in this queue.
-  async function runMonitoringCheck(entry, markets = MARKET_SOURCES.filter((source) => chartSources[source]), { auto = false } = {}) {
+  async function runMonitoringCheck(entry, markets = monitoringSelection(entry).markets, { auto = false } = {}) {
     const c = copy();
     const provider = window.AUTOGOOD_MOBILE_MARKET_PROVIDER;
     if (!provider) return false;
@@ -5946,18 +6136,17 @@
   async function runNextMonitoring() {
     while (monitoringQueue.length && !monitoringState.busy) {
       const next = monitoringQueue.shift();
-      // A daily check done meanwhile (by hand) is not repeated.
-      if (next.auto && await monitoredToday(next.entry.id)) continue;
+      // A scheduled check done meanwhile (by hand) is not repeated.
+      if (next.auto && await monitoredSince(next.entry.id, dueSlot(next.entry) ?? Date.now())) continue;
       runMonitoringCheck(next.entry, next.markets, { auto: next.auto });
       return;
     }
     if (currentPage() === "history") renderPriceHistoryPage();
   }
 
-  async function monitoredToday(historyId) {
-    const nine = todayAtNine().getTime();
+  async function monitoredSince(historyId, since) {
     const byDate = await loadCheckOffers(historyId);
-    return [...byDate.values()].some((record) => record.scope && Date.parse(record.at) >= nine);
+    return [...byDate.values()].some((record) => record.scope && Date.parse(record.at) >= since);
   }
 
   // ---- Variant B (owner, 2026-10-04): the owner's Mac checks at 9:30 -------
@@ -5992,14 +6181,15 @@
     if (flag === "0") saveLocalMonitoring({ enabled: false });
   })();
   let localSyncRunning = null;
-  function syncLocalMonitoring() {
+  function syncLocalMonitoring({ patient = false } = {}) {
     if (RUNNER_MODE || !localMonitoringState().enabled) return Promise.resolve();
     if (!localSyncRunning) localSyncRunning = (async () => {
       const was = localMonitoring.available;
       let health = null;
       try {
         const controller = new AbortController();
-        const timer = setTimeout(() => controller.abort(), 3000);
+        // A click on "connect" waits for Chrome's local-access question.
+        const timer = setTimeout(() => controller.abort(), patient ? 60000 : 3000);
         const response = await fetch(`${LOCAL_MONITORING_URL}/health`, { cache: "no-store", signal: controller.signal });
         clearTimeout(timer);
         health = response.ok ? await response.json() : null;
@@ -6048,15 +6238,15 @@
   // Monitored favourites are checked once a day by themselves while the
   // program is open — unless this Mac's service does it (variant B).
   async function runDueMonitoring() {
-    const nine = todayAtNine().getTime();
-    if (Date.now() < nine) return;
     if (localMonitoring.available && !localMonitoring.failedToday) return;
     refreshMarketHistory();
     for (const entry of marketHistory.filter((item) => item.pinned && item.autoRefresh?.enabled)) {
+      const slot = dueSlot(entry);
+      if (slot === null) continue;
       if (monitoringState.busy === entry.id || isQueued(entry.id)) continue;
-      if (await monitoredToday(entry.id)) continue;
+      if (await monitoredSince(entry.id, slot)) continue;
       // One car after another: a car due while another runs joins the queue.
-      await runMonitoringCheck(entry, monitoringMarketsOf(entry), { auto: true });
+      await runMonitoringCheck(entry, monitoringSelection(entry).markets, { auto: true });
     }
   }
 
@@ -6133,8 +6323,19 @@
     }
     const monitoringSwitch = event.target.closest("[data-monitoring-switch]");
     if (monitoringSwitch) {
-      setAutoRefresh(monitoringSwitch.dataset.monitoringSwitch, monitoringSwitch.checked ? { enabled: true, every: "daily" } : null);
+      // The schedule stays with the car when monitoring is switched off.
+      const entry = marketHistory.find((item) => item.id === monitoringSwitch.dataset.monitoringSwitch);
+      setAutoRefresh(monitoringSwitch.dataset.monitoringSwitch, { ...monitoringSchedule(entry), enabled: monitoringSwitch.checked });
       if (monitoringSwitch.checked) runDueMonitoring();
+      return;
+    }
+    const every = event.target.closest("[data-monitoring-every]");
+    const time = event.target.closest("[data-monitoring-time]");
+    if ((every || time) && priceHistoryId) {
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (!entry) return;
+      const schedule = monitoringSchedule(entry);
+      setAutoRefresh(priceHistoryId, { ...schedule, ...(every ? { every: every.value } : { time: time.value }), enabled: Boolean(entry.autoRefresh?.enabled) });
       return;
     }
     const price = event.target.closest("[data-monitoring-price]");
@@ -6179,26 +6380,55 @@
       if (entry) runMonitoringCheck(entry);
       return;
     }
-    const market = event.target.closest("[data-monitoring-market]");
-    if (market) {
-      const source = market.dataset.monitoringMarket;
-      const next = { ...chartSources, [source]: !chartSources[source] };
-      if (!MARKET_SOURCES.some((item) => next[item])) return;
-      setChartSources(next);
-      renderHistory();
-      updateHistoryConfirm();
-      updateSelectedFiltersSummary?.();
+    // The car's countries and portals (owner 2026-10-05, as on pages 1-2).
+    const group = event.target.closest("[data-monitoring-group]");
+    const row = event.target.closest("[data-monitoring-row]");
+    if ((group || row) && priceHistoryId) {
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (!entry) return;
+      const selection = monitoringSelection(entry);
+      const [key, rowKey] = row ? row.dataset.monitoringRow.split(":") : [group.dataset.monitoringGroup, ""];
+      const next = row ? selectionWithRow(selection, key, rowKey) : selectionWithGroup(selection, key);
+      if (!next) return;
+      setMonitoringScope(priceHistoryId, { markets: next.markets, countries: next.countries });
+      Object.assign(monitoringState, { status: copy().monitoringPriceChanged, statusError: false });
       renderPriceHistoryPage();
       return;
     }
     const country = event.target.closest("[data-monitoring-country]");
     if (country && priceHistoryId) {
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (!entry) return;
+      const selection = monitoringSelection(entry);
       const code = country.dataset.monitoringCountry;
-      const current = monitoringScopeOf(priceHistoryId).countries;
-      const next = current.includes(code) ? current.filter((item) => item !== code) : [...current, code];
-      if (next.length) setMonitoringScope(priceHistoryId, { countries: next });
+      const next = selection.countries.includes(code) ? selection.countries.filter((item) => item !== code) : [...selection.countries, code];
+      // Germany itself stays while its column is on.
+      if (!germanCountries(next).length) return;
+      setMonitoringScope(priceHistoryId, { markets: selection.markets, countries: next });
       Object.assign(monitoringState, { status: copy().monitoringPriceChanged, statusError: false });
       renderPriceHistoryPage();
+      return;
+    }
+    // "Gotowe": the settings fold, the results come first again.
+    if (event.target.closest("[data-monitoring-settings-done]")) {
+      const details = priceHistoryPage.querySelector("[data-monitoring-settings]");
+      if (details) details.open = false;
+      monitoringPrefs.settingsOpen = false;
+      saveMonitoringPrefs();
+      priceHistoryPage.querySelector(".mobileMonitoringResults")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    // Connect this Mac's service (Chrome asks once for local access).
+    if (event.target.closest("[data-monitoring-connect]")) {
+      saveLocalMonitoring({ enabled: true });
+      Object.assign(monitoringState, { status: copy().monitoringMacConnecting, statusError: false });
+      renderPriceHistoryPage();
+      syncLocalMonitoring({ patient: true }).then(() => {
+        Object.assign(monitoringState, localMonitoring.available
+          ? { status: copy().monitoringMacConnected, statusError: false }
+          : { status: copy().monitoringMacFailed, statusError: true });
+        renderPriceHistoryPage();
+      });
       return;
     }
     const portal = event.target.closest("[data-monitoring-portal]");
