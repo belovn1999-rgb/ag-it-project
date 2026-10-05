@@ -123,8 +123,8 @@
       const years = seller.since ? (/^\d{4}$/.test(seller.since) ? new Date(now).getUTCFullYear() - Number(seller.since) : yearsSince(seller.since, now)) : null;
       const parts = [];
       if (years !== null && years >= 1) parts.push(`od ${Math.floor(years)} ${plural(Math.floor(years), "roku", "lat", "lat")} na ${rating?.portal || "portalu"}`);
-      if (rating?.reviews) parts.push(`ocena ${String(rating.score).replace(".", ",")}/5 (${rating.reviews} ${plural(rating.reviews, "opinia", "opinie", "opinii")})`);
-      if (rating?.reviews >= 5 && rating.score < 4) lines.push({ level: "warn", id: "seller:rating", text: `Słabsze opinie dealera: ${String(rating.score).replace(".", ",")}/5 (${rating.reviews} ${plural(rating.reviews, "opinia", "opinie", "opinii")})` });
+      if (rating?.reviews) parts.push(`ocena ${Number(rating.score).toFixed(1).replace(".", ",")}/5 (${rating.reviews} ${plural(rating.reviews, "opinia", "opinie", "opinii")})`);
+      if (rating?.reviews >= 5 && rating.score < 4) lines.push({ level: "warn", id: "seller:rating", text: `Słabsze opinie dealera: ${Number(rating.score).toFixed(1).replace(".", ",")}/5 (${rating.reviews} ${plural(rating.reviews, "opinia", "opinie", "opinii")})` });
       else if (parts.length) lines.push({ level: "ok", id: "seller:dealer", text: `Dealer ${parts.join(", ")}` });
       else if (ad?.complete) lines.push({ level: "warn", id: "seller:unknown", text: "Brak opinii i historii dealera na portalu — sprawdzimy firmę" });
       if (Number.isFinite(rating?.adReality) && rating.adReality < 85) lines.push({ level: "warn", id: "seller:reality", text: `Kupujący oceniają zgodność ogłoszeń dealera na ${rating.adReality}%` });

@@ -293,7 +293,7 @@
     const listedAt = offer.ad?.listedAt || "";
     const listedDays = listedAt ? Math.max(0, Math.floor((Date.now() - Date.parse(listedAt)) / 86400000)) : adAge?.days ?? null;
     const sellerFacts = [];
-    if (seller?.rating?.reviews) sellerFacts.push(`<span class="ofStars">${icon("star")}${esc(String(seller.rating.score).replace(".", ","))}</span> · ${numbers.format(seller.rating.reviews)} ${plural(seller.rating.reviews, "opinia", "opinie", "opinii")}${seller.rating.recommend !== null && seller.rating.recommend !== undefined ? ` · ${seller.rating.recommend}% poleca` : ""}`);
+    if (seller?.rating?.reviews) sellerFacts.push(`<span class="ofStars">${icon("star")}${esc(Number(seller.rating.score).toFixed(1).replace(".", ","))}</span> · ${numbers.format(seller.rating.reviews)} ${plural(seller.rating.reviews, "opinia", "opinie", "opinii")}${seller.rating.recommend !== null && seller.rating.recommend !== undefined ? ` · ${seller.rating.recommend}% poleca` : ""}`);
     const sinceYear = seller?.since ? String(seller.since).slice(0, 4) : "";
     if (sinceYear) sellerFacts.push(`na ${esc(seller.rating?.portal || PORTAL[offer.source] || "portalu")} od <b>${esc(sinceYear)}</b>`);
     if (seller?.stock) sellerFacts.push(`<b>${numbers.format(seller.stock)}</b> ${plural(seller.stock, "auto", "auta", "aut")} w ofercie`);
