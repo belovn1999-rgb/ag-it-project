@@ -336,6 +336,9 @@
       pdfReady: "Raport PDF zapisany: {file}",
       pdfFailed: "Nie udało się przygotować raportu PDF.",
       distributionHeading: "Wykres cen",
+      auctionToggle: "Aukcje",
+      auctionLineLabel: "Aukcja",
+      auctionHint: "Oczekiwana cena na gotowo z aukcji (auta o podobnych parametrach) — orientacyjnie 15% poniżej mediany tego wykresu.",
       exciseClasses: ["elektryczny lub plug-in do 2000 cm³", "hybryda powyżej 2000 cm³", "hybryda do 2000 cm³", "silnik spalinowy do 2000 cm³", "silnik spalinowy powyżej 2000 cm³"],
       screenshotButton: "Kopiuj raport",
       screenshotCopied: "Raport skopiowany do schowka — wklej go w wiadomości do klienta.",
@@ -913,6 +916,9 @@
       pdfReady: "Отчёт PDF сохранён: {file}",
       pdfFailed: "Не удалось подготовить отчёт PDF.",
       distributionHeading: "График цен",
+      auctionToggle: "Аукционы",
+      auctionLineLabel: "Аукцион",
+      auctionHint: "Ожидаемая цена под ключ на аукционах (авто с похожими параметрами) — ориентировочно на 15% ниже медианы этого графика.",
       exciseClasses: ["электромобиль или plug-in до 2000 см³", "гибрид больше 2000 см³", "гибрид до 2000 см³", "ДВС до 2000 см³", "ДВС больше 2000 см³"],
       screenshotButton: "Копировать отчёт",
       screenshotCopied: "Отчёт скопирован в буфер обмена — вставь его в сообщение клиенту.",
@@ -1403,6 +1409,23 @@
   const marketRowShown = (group, row) => groupOn(group) || row === group.rows[0];
 
   let chartAxis = "rank";
+  // The expected auction price line, switched on per chart (owner 2026-10-05):
+  // turnkey from an auction ≈ 15 % under the chart's median. A viewer's
+  // preference, kept in this browser.
+  const AUCTION_SHARE = 0.85;
+  const AUCTION_KEY = "autogood.mobile.auctionLines";
+  const auctionLines = new Set((() => {
+    try {
+      return JSON.parse(localStorage.getItem(AUCTION_KEY) || "[]");
+    } catch {
+      return [];
+    }
+  })());
+  function auctionToggleHtml(key) {
+    const c = copy();
+    const on = auctionLines.has(key);
+    return `<button class="mobileAuctionToggle" type="button" data-mobile-auction-line="${escapeMarketHtml(key)}" aria-pressed="${on ? "true" : "false"}" title="${escapeMarketHtml(c.auctionHint)}" data-report-hide><i aria-hidden="true"></i>${escapeMarketHtml(c.auctionToggle)}</button>`;
+  }
   // "Cena a parametry" open or closed: the viewer's choice, kept in this browser.
   const SEGMENTS_OPEN_KEY = "autogood.mobile.segmentsOpen";
   let segmentsOpen = (() => {
@@ -7190,7 +7213,7 @@
       // One chart: its own P25, median and P75 (labelled), the dots given, and
       // other markets' medians as thin dashed guides. Every chart shares the
       // price scale, so two markets side by side compare at a glance.
-      const chartBody = ({ panelStats, panelPlotted, panelSuspects, trendHtml, car, source = "", guides = [], ticks = xTicks, scale = null }) => {
+      const chartBody = ({ panelStats, panelPlotted, panelSuspects, trendHtml, car, source = "", guides = [], ticks = xTicks, scale = null, auctionKey = "" }) => {
         const domainMinimum = scale ? scale.min : sharedMinimum;
         const domainMaximum = scale ? scale.max : sharedMaximum;
         // The car's price on the scale (yellow); scale labels it would cover give way.
@@ -7233,6 +7256,11 @@
             const guideName = guide.source === "autoscout" ? portalName(guide.source) : marketName(guide.source);
             return Math.abs(position - middle) >= 2.6 && Math.abs(position - high) >= 2.6 && Math.abs(position - low) >= 2.6 ? `<span class="mobileMarketKeyTick isGuide is${sourceClass(guide.source)}" style="top:${position}%">${escapeMarketHtml(guideName)} · ${escapeMarketHtml(formatMarketPrice(guide.value))}</span>` : "";
           }).join("")}
+          ${auctionKey && auctionLines.has(auctionKey) ? (() => {
+            const value = panelStats.median * AUCTION_SHARE;
+            const position = verticalMarketPosition(Math.min(Math.max(value, domainMinimum), domainMaximum), domainMinimum, domainMaximum);
+            return `<div class="mobileMarketAuctionLine" style="top:${position}%" aria-hidden="true"></div><span class="mobileMarketKeyTick isAuction" style="top:${position}%">${escapeMarketHtml(c.auctionLineLabel)} · ${escapeMarketHtml(formatMarketPrice(Math.round(value / 50) * 50))}</span>`;
+          })() : ""}
           ${Math.abs(high - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${high}%">P75 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleHigh))}</span>` : ""}
           <span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>
           ${Math.abs(low - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${low}%">P25 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleLow))}</span>` : ""}
@@ -7251,7 +7279,7 @@
       let chartsHtml = "";
       let comparisonHtml = "";
       if (!compareMarkets) {
-        chartsHtml = chartBody({ panelStats: statistics, panelPlotted: plotted, panelSuspects: suspectPlotted, trendHtml: trendLine, car: carMarker });
+        chartsHtml = `<div class="mobileMarketChartTools">${auctionToggleHtml("single")}</div>${chartBody({ panelStats: statistics, panelPlotted: plotted, panelSuspects: suspectPlotted, trendHtml: trendLine, car: carMarker, auctionKey: "single" })}`;
       } else {
         // One chart per market, side by side, on the same price scale.
         const panels = shownSources.map((source) => {
@@ -7289,6 +7317,7 @@
               trendHtml: buildTrend(panelPlotted, [source], scale).html,
               car: source === carSource ? (scale && carMarkerFor ? carMarkerFor(scale.min, scale.max) : carMarker) : "",
               source,
+              auctionKey: source,
               ticks,
               scale,
               guides: shownSources.filter((other) => other !== source)
@@ -7305,6 +7334,7 @@
             ${panels.map((panel) => `
               <section class="mobileMarketPanel is${sourceClass(panel.source)}">
                 <header class="mobileMarketPanelHead">
+                  ${auctionToggleHtml(panel.source)}
                   <b>${marketBadge(panel.source)}${panel.foreign ? ` · ${escapeMarketHtml(turnkeyLabel)}` : ""}</b>
                   <small>${escapeMarketHtml(withCount(c.panelOffers, panel.panelStats.count))} · ${escapeMarketHtml(c.averagePrices)}: ${escapeMarketHtml(formatMarketPrice(panel.panelStats.middleLow))} – ${escapeMarketHtml(formatMarketPrice(panel.panelStats.middleHigh))}</small>
                 </header>
@@ -7598,6 +7628,7 @@
         </div>
 
         ${chartsHtml}
+          ${[...auctionLines].some((key) => key === "single" ? !compareMarkets : shownSources.includes(key)) ? `<p class="mobileMarketAxisNote isAuction"><i aria-hidden="true"></i>${escapeMarketHtml(c.auctionHint)}</p>` : ""}
 
           ${byMode && byProgress ? `<p class="mobileMarketAxisNote" data-by-progress data-report-hide>${escapeMarketHtml(c.byDetailsProgress.replace("{done}", String(byProgress.done)).replace("{total}", String(byProgress.total)))}</p>` : ""}
           ${byMode && byMissing.size && !byProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(c.byDetailsMissing.replace("{missing}", String(byMissing.size)))}</p>` : ""}
@@ -8885,6 +8916,19 @@
     const compareRemove = event.target.closest("[data-mobile-market-compare-remove]");
     if (compareRemove) {
       carCompareKeys = carCompareKeys.filter((key) => key !== compareRemove.dataset.mobileMarketCompareRemove);
+      renderAnalysis();
+      return;
+    }
+    const auctionButton = event.target.closest("[data-mobile-auction-line]");
+    if (auctionButton) {
+      const key = auctionButton.dataset.mobileAuctionLine;
+      if (auctionLines.has(key)) auctionLines.delete(key);
+      else auctionLines.add(key);
+      try {
+        localStorage.setItem(AUCTION_KEY, JSON.stringify([...auctionLines]));
+      } catch {
+        // Kept for this page only.
+      }
       renderAnalysis();
       return;
     }

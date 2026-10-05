@@ -859,3 +859,104 @@ a.mobileLinkedCarChip:hover {
   background: #ffcc00;
   transform: rotate(45deg);
 }
+
+/* ---- 05.10 (owner): expected auction price — a violet line 15 % under the
+   chart's median, switched on per chart by the button left of it. ---- */
+.mobileMarketAuctionLine {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  left: 86px;
+  height: 0;
+  border-top: 2px dashed #7b3fe4;
+  pointer-events: none;
+}
+
+.mobileMarketKeyTick.isAuction {
+  color: #6a2fd1;
+  font-weight: 800;
+}
+
+.mobileMarketChartTools {
+  display: flex;
+  margin-bottom: var(--space-xs);
+}
+
+.mobileMarketPanelHead:has(.mobileAuctionToggle) {
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.mobileMarketPanelHead .mobileAuctionToggle {
+  grid-row: span 2;
+}
+
+.mobileAuctionToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: 999px;
+  background: var(--color-surface);
+  color: var(--color-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 10px 2px 4px;
+}
+
+.mobileAuctionToggle i {
+  position: relative;
+  width: 26px;
+  height: 16px;
+  border-radius: 8px;
+  background: #c9cfd8;
+  transition: background 0.12s ease;
+}
+
+.mobileAuctionToggle i::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.12s ease;
+}
+
+.mobileAuctionToggle[aria-pressed="true"] {
+  border-color: #7b3fe4;
+  color: #6a2fd1;
+}
+
+.mobileAuctionToggle[aria-pressed="true"] i {
+  background: #7b3fe4;
+}
+
+.mobileAuctionToggle[aria-pressed="true"] i::after {
+  left: 12px;
+}
+
+.mobileAuctionToggle:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.mobileMarketAxisNote.isAuction i {
+  display: inline-block;
+  width: 18px;
+  margin-right: 6px;
+  border-top: 2px dashed #7b3fe4;
+  vertical-align: middle;
+}
+
+@media (max-width: 60rem) {
+  .mobileMarketAuctionLine {
+    left: 68px;
+  }
+}
