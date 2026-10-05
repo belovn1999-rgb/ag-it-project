@@ -93,7 +93,7 @@
       monitoringAllPortals: "Wszystkie portale",
       monitoringViewNew: "Nowe",
       monitoringViewGone: "Zniknęły",
-      monitoringViewAll: "Pełna lista",
+      monitoringViewAll: "Aktualne",
       monitoringPower: "Moc",
       monitoringEmptyList: "Brak ogłoszeń spełniających filtry listy.",
       monitoringExtended: "Rozszerzony monitoring: historia dzień po dniu",
@@ -164,6 +164,9 @@
       monitoringSortDir: "Zmień kierunek sortowania",
       monitoringOnlyVat: "tylko VAT do odliczenia",
       monitoringOnlyDealers: "tylko dealerzy",
+      monitoringCountryAll: "Wszystkie",
+      monitoringCountriesLabel: "Kraje",
+      monitoringShowMore: "Pokaż więcej · {count}",
       monitoringEvery: "Częstotliwość",
       monitoringTime: "Godzina",
       monitoringEveryDaily: "codziennie",
@@ -693,7 +696,7 @@
       monitoringAllPortals: "Все порталы",
       monitoringViewNew: "Новые",
       monitoringViewGone: "Исчезли",
-      monitoringViewAll: "Весь список",
+      monitoringViewAll: "Актуальные",
       monitoringPower: "Мощность",
       monitoringEmptyList: "Нет объявлений под фильтры списка.",
       monitoringExtended: "Расширенный мониторинг: история по дням",
@@ -764,6 +767,9 @@
       monitoringSortDir: "Сменить направление сортировки",
       monitoringOnlyVat: "только НДС к вычету",
       monitoringOnlyDealers: "только дилеры",
+      monitoringCountryAll: "Все",
+      monitoringCountriesLabel: "Страны",
+      monitoringShowMore: "Показать ещё · {count}",
       monitoringEvery: "Частота",
       monitoringTime: "Время",
       monitoringEveryDaily: "каждый день",
@@ -4374,6 +4380,19 @@
   }
 
   // What happened to each offer between the compared date and the picked one.
+  // The country card an offer belongs to: mobile.de and AutoScout24 by the
+  // seller's country (Austria, Luxembourg go with Germany), the others by
+  // their portal's country.
+  function offerCountryKey(source, offer) {
+    if (source === "mobile" || source === "autoscout") {
+      const code = String(offer?.country || "").toUpperCase();
+      if (code === "NL") return "nl";
+      if (code === "BE") return "be";
+      return "de";
+    }
+    return MARKET_GROUPS.find((group) => group.rows.includes(source))?.key || "";
+  }
+
   function offerChanges(source, current, compared) {
     const certain = Boolean(current?.complete && compared?.complete);
     const before = new Map((compared?.offers || []).map((offer) => [offer.key, offer]));
@@ -4518,7 +4537,9 @@
   // with the car's own price on each, a currency converter, one "Sprawdź
   // teraz" that reads the portals and compares with the previous check (new
   // and gone offers per portal), and the day-by-day history below, folded.
-  const monitoringState = { id: "", view: "new", portal: "", busy: "", status: "", statusError: false };
+  // country: a country card's key ("" = all), portal: a portal ("" = all),
+  // limit: how many cars of the list are drawn (100 more each click).
+  const monitoringState = { id: "", view: "new", portal: "", country: "", limit: 100, busy: "", status: "", statusError: false };
   // Does this Mac's monitoring service answer (variant B, see syncLocalMonitoring)?
   const localMonitoring = { available: false, failedToday: false };
   // Monitoring checks waiting for the one running (see runMonitoringCheck).
@@ -4838,7 +4859,7 @@
     }
     const entry = favorites.find((item) => item.id === priceHistoryId);
     if (entry) loadFavoriteIntoForm(entry);
-    if (monitoringState.id !== (entry?.id || "")) Object.assign(monitoringState, { id: entry?.id || "", view: "new", portal: "", status: "", statusError: false });
+    if (monitoringState.id !== (entry?.id || "")) Object.assign(monitoringState, { id: entry?.id || "", view: "new", portal: "", country: "", limit: 100, status: "", statusError: false });
     const monitored = Boolean(entry?.autoRefresh?.enabled);
     // This car being checked, or waiting for another car's check.
     const busy = entry && (monitoringState.busy === entry.id || isQueued(entry.id));
@@ -5278,54 +5299,93 @@
       const rows = offerChanges(source, current, compared);
       return { source, current, compared, rows };
     });
-    if (monitoringState.portal && !sources.includes(monitoringState.portal)) monitoringState.portal = "";
-    const tiles = perSource.map(({ source, current, compared, rows }) => {
+    // Countries -> portals -> states in one view (owner 2026-10-05): the row
+    // of countries, the portal tiles of the chosen country, then the states.
+    const inCountry = (source, offer) => !monitoringState.country || offerCountryKey(source, offer) === monitoringState.country;
+    const countryGroups = MARKET_GROUPS.filter((group) => selectionGroupOn(selection, group)
+      || perSource.some(({ source, rows }) => rows.some((row) => offerCountryKey(source, row.offer) === group.key)));
+    if (monitoringState.country && !countryGroups.some((group) => group.key === monitoringState.country)) monitoringState.country = "";
+    const countrySources = monitoringState.country ? [...new Set(marketGroup(monitoringState.country).rows.map(rowSource))] : null;
+    const shownSources = perSource.filter(({ source }) => !countrySources || countrySources.includes(source));
+    if (monitoringState.portal && !shownSources.some(({ source }) => source === monitoringState.portal)) monitoringState.portal = "";
+    const countryTabs = (() => {
+      if (countryGroups.length < 2) return "";
+      const stats = (key) => {
+        const rows = perSource.flatMap(({ source, rows: list }) => list.filter((row) => !key || offerCountryKey(source, row.offer) === key));
+        const sure = perSource.filter(({ source, rows: list }) => list.some((row) => !key || offerCountryKey(source, row.offer) === key))
+          .every(({ current, compared }) => Boolean(current?.complete && compared?.complete));
+        return { now: rows.filter((row) => !row.gone).length, fresh: rows.filter((row) => row.group === "new").length, sure };
+      };
+      const chip = (key, label, flags) => {
+        const { now, fresh, sure } = stats(key);
+        const active = monitoringState.country === key;
+        return `<button class="mobileMonitoringCountryTab${active ? " isActive" : ""}" type="button" data-monitoring-country-filter="${key}" aria-pressed="${active ? "true" : "false"}">${flags}<span>${escapeMarketHtml(label)}</span><b>${escapeMarketHtml(numbers.format(now))}</b>${before ? `<em class="${sure ? "isNew" : "isUnsure"}">${sure ? "" : "≈ "}+${escapeMarketHtml(numbers.format(fresh))}</em>` : ""}</button>`;
+      };
+      return `<div class="mobileMonitoringCountryTabs" role="group" aria-label="${escapeMarketHtml(c.monitoringCountriesLabel)}">
+        ${chip("", c.monitoringCountryAll, "")}
+        ${countryGroups.map((group) => {
+          const german = germanCountries(selection.countries);
+          const codes = group.key === "de" && german.length ? german : group.countries;
+          return chip(group.key, window.AUTOGOOD_COUNTRY_NAME?.(group.countries[0]) || group.countries[0], `<span class="mobileMonitoringCountryFlags">${codes.map((code) => window.AUTOGOOD_FLAG?.(code) || "").join("")}</span>`);
+        }).join("")}
+      </div>`;
+    })();
+    const tiles = shownSources.map(({ source, current, compared, rows: allSourceRows }) => {
+      const rows = allSourceRows.filter((row) => inCountry(source, row.offer));
       const count = (group) => rows.filter((row) => row.group === group).length;
-      // AutoScout24 counts its unique offers (duplicates of mobile.de left out).
-      const total = source === "autoscout" ? current?.offers.length || 0 : current?.total || 0;
-      const comparedTotal = source === "autoscout" ? compared?.offers.length || 0 : compared?.total || 0;
+      // AutoScout24 counts its unique offers (duplicates of mobile.de left out);
+      // inside a country: the cars of that country that were read.
+      const byCountry = Boolean(monitoringState.country);
+      const total = byCountry ? rows.filter((row) => !row.gone).length : source === "autoscout" ? current?.offers.length || 0 : current?.total || 0;
+      const comparedTotal = byCountry ? (compared?.offers || []).filter((offer) => inCountry(source, offer)).length : source === "autoscout" ? compared?.offers.length || 0 : compared?.total || 0;
       const delta = compared && comparedTotal ? total - comparedTotal : null;
       const certain = Boolean(current?.complete && compared?.complete);
       const active = monitoringState.portal === source;
+      const german = germanCountries(selection.countries);
+      const flagsOf = byCountry ? (monitoringState.country === "de" && german.length ? german : marketGroup(monitoringState.country).countries) : current?.countries || record.markets.mobile?.countries || [];
       return `
         <button class="mobileMonitoringTile is${sourceClass(source)}${active ? " isActive" : ""}" type="button" data-monitoring-portal="${source}" aria-pressed="${active ? "true" : "false"}">
-          <span class="mobileMonitoringTileHead">${monitoringPortalBadge(source, current?.countries || record.markets.mobile?.countries || [])}</span>
+          <span class="mobileMonitoringTileHead">${monitoringPortalBadge(source, flagsOf)}</span>
           <span class="mobileMonitoringTileStats">
             <span><small>${escapeMarketHtml(c.monitoringOffers)}</small><b>${escapeMarketHtml(numbers.format(total))}</b>${delta ? `<em class="${delta > 0 ? "isGood" : "isBad"}">${delta > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.abs(delta)))}</em>` : ""}</span>
             <span><small>${escapeMarketHtml(c.monitoringNew)}</small><b class="${certain ? "isNew" : "isUnsure"}">${compared ? `${certain ? "" : "≈ "}+${count("new")}` : "—"}</b></span>
             <span><small>${escapeMarketHtml(c.monitoringGone)}</small><b class="${certain ? "isGone" : "isUnsure"}">${compared ? `${certain ? "" : "≈ "}−${count("gone")}` : "—"}</b></span>
           </span>
-          ${compared && !certain ? `<small class="mobileMonitoringTileNote" title="${escapeMarketHtml(c.monitoringApproxTitle)}">${escapeMarketHtml(c.monitoringSample)} · ${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current?.offers.length || 0)).replace("{total}", numbers.format(current?.read && source === "autoscout" ? current.total : current?.total || 0)))}</small>` : ""}
-          ${current?.allCountriesTotal ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringAllCountries.replace("{count}", numbers.format(current.allCountriesTotal)))}</small>` : ""}
-          ${current?.duplicates ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringDuplicates.replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
+          ${compared && !certain ? `<small class="mobileMonitoringTileNote" title="${escapeMarketHtml(c.monitoringApproxTitle)}">${escapeMarketHtml(c.monitoringSample)}${byCountry ? "" : ` · ${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current?.offers.length || 0)).replace("{total}", numbers.format(current?.read && source === "autoscout" ? current.total : current?.total || 0)))}`}</small>` : ""}
+          ${current?.allCountriesTotal && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringAllCountries.replace("{count}", numbers.format(current.allCountriesTotal)))}</small>` : ""}
+          ${current?.duplicates && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringDuplicates.replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
         </button>`;
     }).join("");
-    const allRows = perSource.flatMap((item) => item.rows).filter((row) => !monitoringState.portal || row.source === monitoringState.portal);
-    // Saved by hand: as listed now, or as saved when no longer listed.
-    const saved = savedCarsOf(entry.id).filter((item) => !monitoringState.portal || item.source === monitoringState.portal);
+    const chosen = (source, offer) => (!monitoringState.portal || source === monitoringState.portal) && inCountry(source, offer);
+    const allRows = perSource.flatMap((item) => item.rows).filter((row) => chosen(row.source, row.offer));
+    // Saved by hand: as listed now, or as saved when no longer listed. The
+    // client PDF takes all of them, whatever is chosen above.
+    const savedAll = savedCarsOf(entry.id);
+    const saved = savedAll.filter((item) => chosen(item.source, item.offer || {}));
     const savedKeys = new Set(savedCarsOf(entry.id).map((item) => item.offer?.key));
     // "Dodatkowe": cars just outside the filters, found by this monitoring.
     const extra = record.extra || null;
     const extraBefore = new Set([before?.markets, before?.extra?.markets].flatMap((markets) => Object.values(markets || {}).flatMap((market) => (market.offers || []).map((offer) => offer.key))));
     const extraRows = Object.entries(extra?.markets || {})
-      .filter(([source]) => selection.markets.includes(source) && (!monitoringState.portal || source === monitoringState.portal))
+      .filter(([source]) => selection.markets.includes(source))
       // "Nowe" only against a monitoring that also looked for them.
-      .flatMap(([source, market]) => (market.offers || []).map((offer) => ({ source, offer, extra: true, isNew: Boolean(before?.extra) && !extraBefore.has(offer.key) })));
+      .flatMap(([source, market]) => (market.offers || []).filter((offer) => chosen(source, offer)).map((offer) => ({ source, offer, extra: true, isNew: Boolean(before?.extra) && !extraBefore.has(offer.key) })));
     const currentByKey = new Map([
       ...perSource.flatMap(({ source, current }) => (current?.offers || []).map((offer) => [offer.key, { source, offer }])),
       ...Object.entries(extra?.markets || {}).flatMap(([source, market]) => (market.offers || []).map((offer) => [offer.key, { source, offer }])),
     ]);
+    const savedRows = (items) => items.map((item) => {
+      const now = currentByKey.get(item.offer.key);
+      return now
+        ? { source: now.source, offer: now.offer, previous: now.offer.price !== item.offer.price ? item.offer : null, savedAt: item.savedAt }
+        : { source: item.source, offer: item.offer, gone: true, savedAt: item.savedAt };
+    });
     const viewRows = {
       new: allRows.filter((row) => row.group === "new"),
       gone: allRows.filter((row) => row.group === "gone"),
       all: allRows.filter((row) => !row.gone),
       extra: extraRows,
-      saved: saved.map((item) => {
-        const now = currentByKey.get(item.offer.key);
-        return now
-          ? { source: now.source, offer: now.offer, previous: now.offer.price !== item.offer.price ? item.offer : null, savedAt: item.savedAt }
-          : { source: item.source, offer: item.offer, gone: true, savedAt: item.savedAt };
-      }),
+      saved: savedRows(saved),
     };
     if (!before && (monitoringState.view === "new" || monitoringState.view === "gone")) monitoringState.view = "all";
     const view = monitoringState.view;
@@ -5419,7 +5479,7 @@
       perSource.filter(({ source, current: market }) => market?.complete && (!monitoringState.portal || source === monitoringState.portal)).forEach(({ source, current: market }) => {
         const now = new Set((market.offers || []).map((offer) => offer.key));
         monitoringChecks.filter((item) => item.scope === record.scope && item.at !== record.at && Date.parse(item.at) >= weekAgo && item.markets?.[source]?.complete)
-          .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key)) goneWeek.add(offer.key); }));
+          .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key) && inCountry(source, offer)) goneWeek.add(offer.key); }));
       });
       const parts = [
         medianDays !== null ? c.monitoringLiquidityDays.replace("{days}", `${atLeast ? "≥ " : ""}${daysText(medianDays)}`) : "",
@@ -5440,11 +5500,14 @@
     // No description (owner 2026-10-05): the orange mark on each car says it.
     const extraNote = "";
     const sortOptions = [["price", c.monitoringSortPrice], ["year", c.monitoringSortYear], ["mileage", c.monitoringSortMileage], ["listed", c.monitoringSortListed], ["drop", c.monitoringSortDrop]];
-    const savedCount = viewRows.saved.length;
-    rowsForDetails = new Map(rows.map((row) => [row.offer.key, row]));
+    const savedCount = savedAll.length;
+    // 100 cars at a time (AutoScout24 alone can bring 2 000).
+    const shownRows = rows.slice(0, monitoringState.limit);
+    rowsForDetails = new Map(shownRows.map((row) => [row.offer.key, row]));
     target.innerHTML = `
       ${changedBetween ? `<p class="mobileMarketOfferWarning">${escapeMarketHtml(c.offerFiltersBetween)}</p>` : ""}
       ${!before ? `<p class="mobileMonitoringNote">${escapeMarketHtml((newBase ? c.monitoringNewBase : c.monitoringBaseline).replace("{count}", numbers.format(perSource.reduce((sum, item) => sum + (item.current?.offers.length || 0), 0))))}</p>` : ""}
+      ${countryTabs}
       <div class="mobileMonitoringTiles">${tiles}</div>
       <div class="mobileMonitoringViews" role="group">
         ${viewButton("new", c.monitoringViewNew)}${viewButton("gone", `${c.monitoringViewGone} (${c.monitoringGoneHint})`)}${viewButton("all", c.monitoringViewAll)}${viewButton("extra", c.monitoringViewExtra)}${viewButton("saved", c.monitoringViewSaved)}
@@ -5474,7 +5537,7 @@
             <th scope="col" class="isNum">${escapeMarketHtml(c.offerPrice)}</th>
             <th scope="col">${escapeMarketHtml(c.priceHistorySource)}</th>
           </tr></thead>
-          <tbody>${rows.map((row, index) => {
+          <tbody>${shownRows.map((row, index) => {
             const isSaved = savedKeys.has(row.offer.key);
             const detailsOpen = openDetails.has(row.offer.key);
             return `
@@ -5488,8 +5551,9 @@
             </tr>${detailsOpen ? offerDetailsHtml(row, columns) : ""}`;
           }).join("")}</tbody>
         </table>
-      </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(emptyText)}</p>`}${byFootnote}`;
-    monitoringPdfRows = { entry, rows: viewRows.saved, priceCell, metaLine, dateLine };
+      </div>
+      ${rows.length > shownRows.length ? `<button class="mobileMarketImportClear mobileMonitoringShowMore" type="button" data-monitoring-page-more>${escapeMarketHtml(c.monitoringShowMore.replace("{count}", numbers.format(rows.length - shownRows.length)))}</button>` : ""}` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(emptyText)}</p>`}${byFootnote}`;
+    monitoringPdfRows = { entry, rows: savedRows(savedAll), priceCell, metaLine, dateLine };
   }
 
   // ---- PDF for the client: the cars saved (★) for this favourite ---------
@@ -6435,6 +6499,7 @@
     }
     const portal = event.target.closest("[data-monitoring-portal]");
     if (portal) {
+      monitoringState.limit = 100;
       monitoringState.portal = monitoringState.portal === portal.dataset.monitoringPortal ? "" : portal.dataset.monitoringPortal;
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
       if (entry) fillMonitoringResults(entry);
@@ -6478,8 +6543,23 @@
       if (entry) fillMonitoringResults(entry);
       return;
     }
+    const countryFilter = event.target.closest("[data-monitoring-country-filter]");
+    if (countryFilter) {
+      const key = countryFilter.dataset.monitoringCountryFilter;
+      Object.assign(monitoringState, { country: monitoringState.country === key ? "" : key, portal: "", limit: 100 });
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    if (event.target.closest("[data-monitoring-page-more]")) {
+      monitoringState.limit += 100;
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (entry) fillMonitoringResults(entry);
+      return;
+    }
     const view = event.target.closest("[data-monitoring-view]");
     if (view) {
+      monitoringState.limit = 100;
       monitoringState.view = view.dataset.monitoringView;
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
       if (entry) fillMonitoringResults(entry);
