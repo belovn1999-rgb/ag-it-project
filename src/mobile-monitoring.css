@@ -842,3 +842,85 @@ button.mobileMonitoringMac {
     flex: none;
   }
 }
+
+/* ---- One client budget for all portals; the search's filters (05.10) --- */
+.mobileMonitoringBudget {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid color-mix(in srgb, var(--color-brand) 35%, var(--color-rule));
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--color-brand) 4%, #fff);
+}
+
+.mobileMonitoringBudgetHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+
+.mobileMonitoringBudgetHead > b {
+  color: var(--color-ink);
+  font-size: 0.9375rem;
+}
+
+.mobileMonitoringBudgetHead .mobileMonitoringPrice input {
+  width: 110px;
+  min-height: 32px;
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.mobileMonitoringAdvanced {
+  margin-left: auto;
+  font-size: 0.8125rem;
+}
+
+.mobileMonitoringBudget > small {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+.mobileMonitoringBudgetLine {
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-align: right;
+}
+
+.mobileMonitoringBudgetLine small {
+  display: block;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.mobileMonitoringBudgetLine.isOwn {
+  color: #8a3d08;
+}
+
+.mobileMonitoringBudgetLine.isNone {
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+/* Page 1's "Więcej filtrów" card, borrowed: always open, no own title. */
+.mobileMonitoringMoreFilters .mobileMoreFiltersCard {
+  margin: 0;
+}
+
+.mobileMonitoringMoreFilters .mobileMoreFiltersCard > .mobileFilterCardHead,
+.mobileMonitoringMoreFilters .mobileMoreFiltersCard > .mobileFilterCardTitle {
+  display: none;
+}
+
+.mobileMonitoringMoreFilters .mobileMoreFiltersCard > .mobileFilterCardBody {
+  display: block;
+}
+
+/* Countries of mobile.de / AutoScout24 are chosen in the cards above. */
+.mobileMonitoringMoreFilters .mobilePortalFilterRow[data-mobile-portal-row="mobile autoscout"] {
+  display: none;
+}

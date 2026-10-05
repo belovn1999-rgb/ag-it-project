@@ -294,5 +294,25 @@
     }
   });
 
-  window.AUTOGOOD_CALC_POPUP = { open, importable, words };
+  // Ready numbers instead of an offer (Monitoring's client budget, owner
+  // 2026-10-05): the calculator opens with them, every field still editable.
+  function openValues(values) {
+    const data = {
+      source: "budget",
+      title: values.title || "",
+      url: "",
+      original: "",
+      gross: Number(values.gross) || 0,
+      net: 0,
+      netGuessed: false,
+      vat: false,
+      engine: Number.isInteger(values.engine) ? values.engine : 3,
+      transport: Math.round(Number(values.transport) || 0),
+      inspection: Math.round(Number(values.inspection) || 0),
+      fromList: false,
+    };
+    show(data, 0);
+  }
+
+  window.AUTOGOOD_CALC_POPUP = { open, openValues, importable, words };
 })();

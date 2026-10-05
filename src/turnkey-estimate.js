@@ -69,6 +69,18 @@
     };
   }
 
+  // The other way round (Monitoring's client budget, owner 2026-10-05): the
+  // highest gross car price in EUR whose "Zakup bezpośredni" turnkey stays
+  // within budgetPln — turnkeyDirect solved for the car price:
+  // total = car·(1 + excise + 1 %·1.23) + (inspection + transport + STD_FIX)·1.23 + fees.
+  function carForTurnkey({ budgetPln, rate, transportNettoPln = 0, inspectionNettoPln = 0, engineTypeIndex = 3 }) {
+    const useRate = rate > 0 ? rate : DEFAULT_RATE;
+    const exciseRate = EXCISE_RATES[engineTypeIndex] ?? EXCISE_RATES[3];
+    const fixed = ((Number(inspectionNettoPln) || 0) + (Number(transportNettoPln) || 0) + STD_FIX) * (1 + VAT) + TO_FEE + DOC_TRANSLATION;
+    const carPln = (Number(budgetPln) - fixed) / (1 + exciseRate + 0.01 * (1 + VAT));
+    return carPln > 0 ? carPln / useRate : 0;
+  }
+
   // One offer from a marketplace list: its own seller location, body and
   // engine decide transport, inspection and excise.
   function turnkeyForListing(listing, rate) {
@@ -210,6 +222,7 @@
 
   window.AUTOGOOD_TURNKEY = {
     turnkeyDirect,
+    carForTurnkey,
     turnkeyForListing,
     turnkeyAverage,
     engineClassFor,

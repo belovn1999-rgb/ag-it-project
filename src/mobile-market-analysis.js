@@ -164,6 +164,20 @@
       monitoringSortDir: "Zmień kierunek sortowania",
       monitoringOnlyVat: "tylko VAT do odliczenia",
       monitoringOnlyDealers: "tylko dealerzy",
+      monitoringBudgetCalc: "Sprawdź w kalkulatorze",
+      monitoringBudgetCalcTitle: "Kalkulator z ceną auta, transportem i akcyzą, z których wyszedł budżet (Niemcy) — wszystkie pola można zmienić.",
+      monitoringBudget: "Budżet klienta na gotowo w Polsce",
+      monitoringBudgetShort: "budżet na gotowo",
+      monitoringBudgetHint: "Jeden budżet dla wszystkich portali: maksymalna cena auta liczona jak w kalkulatorze („Zakup bezpośredni”), transport i oględziny wg kraju sprzedawcy, akcyza wg filtrów: {engine}, kurs 1 EUR = {rate} zł. otomoto: budżet = cena w Polsce.",
+      monitoringPortalPrices: "Osobne ceny dla portali (zaawansowane)",
+      monitoringGross: "brutto",
+      monitoringNet: "netto",
+      monitoringOwnPrice: "własna cena: {range}",
+      monitoringOwnPriceTitle: "Cena wpisana dla tego portalu (zaawansowane) — ważniejsza niż budżet.",
+      monitoringNoBudget: "cena z filtrów (strona 1)",
+      monitoringNoBudgetAvby: "bez budżetu (Białoruś)",
+      monitoringMoreFiltersTitle: "Parametry wyszukiwania: VAT, sprzedawca, więcej filtrów",
+      monitoringFiltersSaved: "Parametry wyszukiwania zapisane — następny monitoring to nowa baza porównań.",
       monitoringCountryAll: "Wszystkie",
       monitoringCountriesLabel: "Kraje",
       monitoringShowMore: "Pokaż więcej · {count}",
@@ -183,7 +197,7 @@
       monitoringMacConnecting: "Łączę z usługą monitoringu na tym Macu… Jeśli Chrome zapyta o dostęp do aplikacji na tym urządzeniu — kliknij „Zezwól”.",
       monitoringMacConnected: "Połączono: ten Mac sprawdza auta o ustawionej godzinie, także przy zamkniętym programie.",
       monitoringMacFailed: "Nie połączono. Działa tylko na Macu z usługą AUTOGOOD, a Chrome musi zezwolić na dostęp do aplikacji na tym urządzeniu (ikona po lewej od adresu strony).",
-      monitoringCountriesTitle: "Kraje i portale · cena auta brutto (puste = z filtrów)",
+      monitoringCountriesTitle: "Kraje i portale",
       monitoringDone: "Gotowe",
       monitoringCalc: "Oblicz na gotowo",
       monitoringOffer: "Przygotuj ofertę",
@@ -767,6 +781,20 @@
       monitoringSortDir: "Сменить направление сортировки",
       monitoringOnlyVat: "только НДС к вычету",
       monitoringOnlyDealers: "только дилеры",
+      monitoringBudgetCalc: "Проверить в калькуляторе",
+      monitoringBudgetCalcTitle: "Калькулятор с ценой авто, транспортом и акцизом, из которых получен бюджет (Германия), — все поля можно менять.",
+      monitoringBudget: "Бюджет клиента под ключ в Польше",
+      monitoringBudgetShort: "бюджет под ключ",
+      monitoringBudgetHint: "Один бюджет для всех порталов: максимальная цена авто считается как в калькуляторе («Прямая покупка»), транспорт и осмотр по стране продавца, акциз по фильтрам: {engine}, курс 1 EUR = {rate} зл. otomoto: бюджет = цена в Польше.",
+      monitoringPortalPrices: "Отдельные цены для порталов (расширенные)",
+      monitoringGross: "брутто",
+      monitoringNet: "нетто",
+      monitoringOwnPrice: "своя цена: {range}",
+      monitoringOwnPriceTitle: "Цена, введённая для этого портала (расширенные), — важнее бюджета.",
+      monitoringNoBudget: "цена из фильтров (стр. 1)",
+      monitoringNoBudgetAvby: "без бюджета (Беларусь)",
+      monitoringMoreFiltersTitle: "Параметры поиска: НДС, продавец, другие фильтры",
+      monitoringFiltersSaved: "Параметры поиска сохранены — следующий мониторинг станет новой базой сравнения.",
       monitoringCountryAll: "Все",
       monitoringCountriesLabel: "Страны",
       monitoringShowMore: "Показать ещё · {count}",
@@ -786,7 +814,7 @@
       monitoringMacConnecting: "Подключаюсь к службе мониторинга на этом Mac… Если Chrome спросит о доступе к приложениям на этом устройстве — нажми «Разрешить».",
       monitoringMacConnected: "Подключено: этот Mac проверяет авто в заданное время, даже при закрытой программе.",
       monitoringMacFailed: "Не подключено. Работает только на Mac со службой AUTOGOOD, и Chrome должен разрешить доступ к приложениям на этом устройстве (значок слева от адреса страницы).",
-      monitoringCountriesTitle: "Страны и порталы · цена авто брутто (пусто = из фильтров)",
+      monitoringCountriesTitle: "Страны и порталы",
       monitoringDone: "Готово",
       monitoringCalc: "Посчитать под ключ",
       monitoringOffer: "Подготовить оффер",
@@ -4548,7 +4576,7 @@
   // How the manager likes the list (sort, filters) and whether the settings
   // are open: conveniences of this browser, not user data.
   const MONITORING_PREFS_KEY = "autogood.mobile.monitoringListPrefs";
-  const monitoringPrefs = { sort: "price", dir: "asc", onlyVat: false, onlyDealers: false, onlyDrop: false, onlyDeal: false, settingsOpen: false };
+  const monitoringPrefs = { sort: "price", dir: "asc", onlyVat: false, onlyDealers: false, onlyDrop: false, onlyDeal: false, settingsOpen: false, portalPrices: false };
   try {
     Object.assign(monitoringPrefs, JSON.parse(localStorage.getItem(MONITORING_PREFS_KEY) || "{}"));
   } catch {
@@ -4615,6 +4643,7 @@
     const numbers = numberFormat();
     const symbol = { PLN: "zł", EUR: "€", SEK: "kr", USD: "$" };
     const selection = monitoringSelection(entry);
+    const prices = monitoringPrices(entry);
     return `<div class="mobileMonitoringCountryGrid">${MARKET_GROUPS.map((group) => {
       const on = selectionGroupOn(selection, group);
       const german = germanCountries(selection.countries);
@@ -4625,6 +4654,7 @@
         const source = rowSource(row);
         const rowOnNow = on && selectionRowOn(selection, row);
         const own = watch?.portalPrice?.(entry.id, source) || null;
+        const budgetPrice = prices[source];
         const fallback = (source === "autoscout" ? watch?.portalPrice?.(entry.id, "mobile") : null) || watch?.filtersPriceIn?.(source, entry.filters) || {};
         const currency = SOURCE_CURRENCY[source] || "EUR";
         const field = (side) => {
@@ -4633,10 +4663,19 @@
           return `<label><span>${escapeMarketHtml(side === "from" ? c.monitoringFrom : c.monitoringTo)}</span><input type="text" inputmode="numeric" data-monitoring-price="${source}" data-side="${side}" value="${value === null || value === undefined ? "" : escapeMarketHtml(numbers.format(value))}" placeholder="${Number.isFinite(hint) ? escapeMarketHtml(numbers.format(Math.round(hint))) : "—"}"${rowOnNow ? "" : " disabled"} /><b>${escapeMarketHtml(symbol[currency] || currency)}</b></label>`;
         };
         const name = portalName(source);
+        // Without the advanced prices: what the budget allows on this portal.
+        const money = (value) => `${numbers.format(value)} ${symbol[currency] || currency}`;
+        const vat = PORTAL_VAT[source === "otomoto" ? "PL" : BUDGET_COUNTRY[source]] || 0;
+        const range = (price) => [price.from ? `${c.monitoringFrom} ${money(price.from)}` : "", price.to ? `${c.monitoringTo} ${money(price.to)}` : ""].filter(Boolean).join(" ");
+        const budgetLine = own
+          ? `<span class="mobileMonitoringBudgetLine isOwn" title="${escapeMarketHtml(c.monitoringOwnPriceTitle)}">${escapeMarketHtml(c.monitoringOwnPrice.replace("{range}", range(own)))}</span>`
+          : budgetPrice
+            ? `<span class="mobileMonitoringBudgetLine">${escapeMarketHtml(range(budgetPrice))} ${escapeMarketHtml(c.monitoringGross)}${budgetPrice.to && vat ? ` <small>≈ ${escapeMarketHtml(money(Math.round(budgetPrice.to / (1 + vat) / (currency === "EUR" ? 100 : 1000)) * (currency === "EUR" ? 100 : 1000)))} ${escapeMarketHtml(c.monitoringNet)}</small>` : ""}</span>`
+            : `<span class="mobileMonitoringBudgetLine isNone">${escapeMarketHtml(source === "avby" ? c.monitoringNoBudgetAvby : c.monitoringNoBudget)}</span>`;
         return `
           <div class="mobileMonitoringCountryRow${rowOnNow ? "" : " isOff"}">
             <button class="agBrandLink is${sourceClass(source)}" type="button" data-monitoring-row="${group.key}:${row}" aria-pressed="${rowOnNow ? "true" : "false"}" title="${escapeMarketHtml(name)}" aria-label="${escapeMarketHtml(name)}"><img src="${BRAND_LOGOS[source]}" alt="" /></button>
-            ${on ? `<div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>` : ""}
+            ${on ? (monitoringPrefs.portalPrices ? `<div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>` : budgetLine) : ""}
           </div>`;
       }).join("");
       // Germany: Austria and Luxembourg go with it (mobile.de, AutoScout24).
@@ -4654,6 +4693,79 @@
           ${rows}${extra}
         </section>`;
     }).join("")}</div>`;
+  }
+
+  function monitoringBudgetText(entry) {
+    const c = copy();
+    const budget = monitoringScopeOf(entry.id).budget;
+    if (!budget) return "";
+    const numbers = numberFormat();
+    return `${c.monitoringBudgetShort}: ${[budget.from ? `${c.monitoringFrom} ${numbers.format(budget.from)}` : "", budget.to ? `${c.monitoringTo} ${numbers.format(budget.to)}` : ""].filter(Boolean).join(" ")} zł`;
+  }
+
+  // The client's budget "na gotowo w Polsce" (one for all portals) and the
+  // switch to separate prices per portal.
+  function monitoringBudgetHtml(entry) {
+    const c = copy();
+    const numbers = numberFormat();
+    const budget = monitoringScopeOf(entry.id).budget || {};
+    const engine = budgetEngineClass(entry.filters);
+    const rate = window.AUTOGOOD_TURNKEY?.currentRates?.().eur;
+    const field = (side) => `<label><span>${escapeMarketHtml(side === "from" ? c.monitoringFrom : c.monitoringTo)}</span><input type="text" inputmode="numeric" data-monitoring-budget="${side}" value="${budget[side] ? escapeMarketHtml(numbers.format(budget[side])) : ""}" placeholder="—" /><b>zł</b></label>`;
+    return `
+      <div class="mobileMonitoringBudget">
+        <div class="mobileMonitoringBudgetHead">
+          <b>${escapeMarketHtml(c.monitoringBudget)}</b>
+          <div class="mobileMonitoringPrice">${field("from")}${field("to")}</div>
+          <button class="agCalcButton mobileMonitoringBudgetCheck" type="button" data-monitoring-budget-calc title="${escapeMarketHtml(c.monitoringBudgetCalcTitle)}">${escapeMarketHtml(c.monitoringBudgetCalc)}</button>
+          <label class="mobileMonitoringCheck mobileMonitoringAdvanced"><input type="checkbox" data-monitoring-portal-prices${monitoringPrefs.portalPrices ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringPortalPrices)}</label>
+        </div>
+        <small>${escapeMarketHtml(c.monitoringBudgetHint
+          .replace("{engine}", `${typeof ENGINE_TYPE_LABELS !== "undefined" ? ENGINE_TYPE_LABELS[engine] : ""} · ${String(Math.round((window.AUTOGOOD_TURNKEY?.EXCISE_RATES?.[engine] ?? 0) * 1000) / 10).replace(".", ",")} %`)
+          .replace("{rate}", rate ? String(rate).replace(".", ",") : "—"))}</small>
+      </div>`;
+  }
+
+  // ---- "Więcej filtrów" of page 1 in the settings (owner 2026-10-05) ------
+  // The same fields (VAT, seller, condition, colours…): the card is moved
+  // here while page 3 is shown and back when it leaves, so the portal rules
+  // stay one. The form listens to its own fields: their changes are passed
+  // on to it. Saved into this car's search with "Gotowe".
+  let moreFiltersHome = null;
+  let moreFiltersWasOpen = false;
+  const moreFiltersCard = () => document.querySelector(".mobileMoreFiltersCard");
+  function parkMoreFilters() {
+    const card = moreFiltersCard();
+    if (!card || !moreFiltersHome?.parentNode || card.previousSibling === moreFiltersHome) return;
+    moreFiltersHome.after(card);
+    card.classList.toggle("isOpen", moreFiltersWasOpen);
+  }
+  function borrowMoreFilters(slot) {
+    const card = moreFiltersCard();
+    if (!card || !slot) return;
+    if (!moreFiltersHome) {
+      moreFiltersHome = document.createComment(" Więcej filtrów: page 1 ");
+      card.before(moreFiltersHome);
+    }
+    if (card.previousSibling === moreFiltersHome) moreFiltersWasOpen = card.classList.contains("isOpen");
+    card.classList.add("isOpen");
+    slot.append(card);
+  }
+  // The form's edits saved into the car's search (a changed search starts a
+  // new comparison base, as on page 1).
+  function saveMonitoringFilters(entry) {
+    if (!entry || editingHistoryId !== entry.id) return false;
+    let changed = false;
+    try {
+      changed = filterSignature(readManualFields()) !== editingBaseline;
+    } catch {
+      changed = false;
+    }
+    if (changed) {
+      confirmHistoryChanges(entry.id);
+      scheduleLocalSync();
+    }
+    return changed;
   }
 
   // The folded settings say what is chosen: "🇩🇪 Niemcy: mobile.de, AutoScout24 · 🇵🇱 Polska: otomoto".
@@ -4712,7 +4824,51 @@
     const listed = Array.isArray(scope.countries) ? scope.countries.filter((code) => MONITORING_COUNTRY_CHOICES.includes(code)) : [];
     const countries = picked.length ? listed : (listed.length ? listed : MONITORING_COUNTRIES);
     const tolerance = NEAR_TOLERANCES.includes(Number(scope.tolerance)) ? Number(scope.tolerance) : NEAR_DEFAULT_TOLERANCE;
-    return { countries, tolerance, ...(picked.length ? { markets: picked } : {}) };
+    // The client's budget "na gotowo w Polsce", PLN (owner 2026-10-05).
+    const amount = (value) => (Number.isFinite(Number(value)) && Number(value) > 0 ? Math.round(Number(value)) : null);
+    const budget = scope.budget && (amount(scope.budget.from) || amount(scope.budget.to)) ? { from: amount(scope.budget.from), to: amount(scope.budget.to) } : null;
+    return { countries, tolerance, ...(picked.length ? { markets: picked } : {}), ...(budget ? { budget } : {}) };
+  }
+
+  // ---- One client budget for all portals (owner 2026-10-05) --------------
+  // The budget agreed with the client is the price "na gotowo w Polsce";
+  // each portal is searched up to the car price that fits it: the
+  // calculator's "Zakup bezpośredni" solved for the car price
+  // (AUTOGOOD_TURNKEY.carForTurnkey), with transport and inspection by the
+  // tariff of the portal's country and ONE excise class — the one the search
+  // filters give (fuel, engine size). otomoto: the car is in Poland already,
+  // the budget is its price. av.by: no budget (Belarus). A portal's own price
+  // (advanced settings) wins.
+  const BUDGET_COUNTRY = { mobile: "DE", autoscout: "DE", kleinanzeigen: "DE", marktplaats: "NL", dehands: "BE", autoscoutfr: "FR", blocket: "SE" };
+  const PORTAL_VAT = { DE: 0.19, NL: 0.21, BE: 0.21, FR: 0.2, SE: 0.25, PL: 0.23 };
+  function budgetEngineClass(filters) {
+    return window.AUTOGOOD_TURNKEY?.engineClassFor?.({}, filters) ?? 3;
+  }
+  // The car price (in the portal's currency) that a budget in PLN allows.
+  function budgetCarPrice(source, budgetPln, filters) {
+    if (!budgetPln || source === "avby") return null;
+    if (source === "otomoto") return budgetPln;
+    const country = BUDGET_COUNTRY[source];
+    const turnkey = window.AUTOGOOD_TURNKEY;
+    if (!country || !turnkey?.carForTurnkey) return null;
+    const rates = turnkey.currentRates();
+    const tariff = typeof estimateDeliveryInspection === "function" ? estimateDeliveryInspection(filters.body || "", { country }) : { transport: 2500, inspection: 1500 };
+    const eur = turnkey.carForTurnkey({ budgetPln, rate: rates.eur, transportNettoPln: tariff.transport, inspectionNettoPln: tariff.inspection, engineTypeIndex: budgetEngineClass(filters) });
+    if (!eur) return null;
+    return source === "blocket" ? Math.round((eur * rates.eur) / rates.sek / 1000) * 1000 : Math.round(eur / 100) * 100;
+  }
+  // What each portal is searched with: its own price, else the budget's
+  // car price, else nothing (page 1's price then).
+  function monitoringPrices(entry) {
+    const budget = monitoringScopeOf(entry.id).budget;
+    return Object.fromEntries(MARKET_SOURCES.map((source) => {
+      const own = window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null;
+      if (own) return [source, own];
+      if (!budget) return [source, null];
+      const from = budget.from ? budgetCarPrice(source, budget.from, entry.filters) : null;
+      const to = budget.to ? budgetCarPrice(source, budget.to, entry.filters) : null;
+      return [source, from || to ? { from, to } : null];
+    }));
   }
 
   // What one car is monitored on (owner 2026-10-05: chosen per car, by
@@ -4864,6 +5020,8 @@
     // This car being checked, or waiting for another car's check.
     const busy = entry && (monitoringState.busy === entry.id || isQueued(entry.id));
     const otherCar = monitoringState.busy && monitoringState.busy !== entry?.id ? marketHistory.find((item) => item.id === monitoringState.busy) : null;
+    // "Więcej filtrów" is page 1's own card: home before the page is redrawn.
+    parkMoreFilters();
     priceHistoryPage.innerHTML = entry ? `
       <section class="mobileMarketCard mobileMonitoringHead">
         <div class="mobileMonitoringTitleRow">
@@ -4875,7 +5033,7 @@
         </div>
         ${monitoringScheduleHtml(entry)}
         <button class="mobileMonitoringParamsLine" type="button" data-monitoring-edit title="${escapeMarketHtml(c.monitoringEditParams)}">
-          <span>${escapeMarketHtml([monitoringTitle(entry), ...historyMeta(entry.filters)].join(" · "))}</span>
+          <span>${escapeMarketHtml([monitoringTitle(entry), ...historyMeta(entry.filters), monitoringBudgetText(entry)].filter(Boolean).join(" · "))}</span>
           <b>${escapeMarketHtml(c.monitoringEditParams)} →</b>
         </button>
         <p class="mobileMonitoringSince" data-monitoring-since></p>
@@ -4884,8 +5042,11 @@
         <summary><b>${escapeMarketHtml(c.monitoringSettings)}</b><span class="mobileMonitoringSummary">${monitoringSelectionSummary(entry)}</span></summary>
         <div class="mobileMonitoringSettingsBody">
           ${monitoringConverterHtml()}
+          ${monitoringBudgetHtml(entry)}
           <h3 class="mobileMonitoringCountriesTitle">${escapeMarketHtml(c.monitoringCountriesTitle)}</h3>
           ${monitoringCountriesHtml(entry)}
+          <h3 class="mobileMonitoringCountriesTitle">${escapeMarketHtml(c.monitoringMoreFiltersTitle)}</h3>
+          <div class="mobileMonitoringMoreFilters" data-monitoring-more-filters></div>
           <div class="mobileMonitoringSettingsFoot">
             <button class="mobileMarketImportClear isPrimary" type="button" data-monitoring-settings-done>${escapeMarketHtml(c.monitoringDone)} ✓</button>
           </div>
@@ -4921,6 +5082,7 @@
         <p>${escapeMarketHtml(favorites.length ? c.monitoringIntro : c.monitoringNoFavorites)}</p>
       </section>`;
     if (!entry) return;
+    borrowMoreFilters(priceHistoryPage.querySelector("[data-monitoring-more-filters]"));
     fillMonitoringResults(entry);
     if (monitoringExtended) fillOfferHistory(entry);
   }
@@ -6000,7 +6162,8 @@
     const jobs = marketHistory.filter((entry) => entry.pinned && entry.autoRefresh?.enabled).map((entry) => {
       const { markets } = monitoringSelection(entry);
       const scope = monitoringScopeOf(entry.id);
-      const prices = Object.fromEntries(markets.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null]).filter(([, price]) => price));
+      const all = monitoringPrices(entry);
+      const prices = Object.fromEntries(markets.map((source) => [source, all[source]]).filter(([, price]) => price));
       return { id: entry.id, title: monitoringTitle(entry), filters: entry.filters, markets, countries: scope.countries, tolerance: scope.tolerance, prices, ...monitoringSchedule(entry) };
     });
     return { version: 1, exportedAt: new Date().toISOString(), jobs };
@@ -6128,7 +6291,7 @@
       Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
       // Shown whichever car is open: the line says which car runs.
       const progress = (source, info) => updateMonitoringProgress(source, info);
-      const read = await readMonitoringLists({ id: entry.id, filters, markets, countries: scope.countries, prices: null }, provider, progress);
+      const read = await readMonitoringLists({ id: entry.id, filters, markets, countries: scope.countries, prices: monitoringPrices(entry) }, provider, progress);
       const { base } = read;
       const fetched = normalizeListings(read.raw);
       if (fetched.length < 3) throw new Error(c.refreshInvalid);
@@ -6172,7 +6335,7 @@
           if (currentPage() === "history") renderPriceHistoryPage();
           const extra = await readNearMisses({
             historyId: entry.id,
-            ownPrices: Object.fromEntries(MARKET_SOURCES.map((source) => [source, window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null])),
+            ownPrices: monitoringPrices(entry),
             base,
             markets: markets.filter((source) => (keep.lastSources || markets).includes(source)),
             tolerance: scope.tolerance,
@@ -6346,6 +6509,10 @@
     scheduleLocalSync();
   }
 
+  // Typing in a field of "Więcej filtrów" moved here: the form hears it.
+  priceHistoryPage?.addEventListener("input", (event) => {
+    if (event.target.closest?.("[data-monitoring-more-filters]")) document.querySelector(".mobileManualForm")?.dispatchEvent(new Event("input", { bubbles: true }));
+  });
   priceHistoryPage?.addEventListener("input", (event) => {
     const amount = event.target.closest("[data-monitoring-convert-amount]");
     if (!amount) return;
@@ -6358,6 +6525,14 @@
     if (!event.target.matches?.("[data-monitoring-settings]")) return;
     monitoringPrefs.settingsOpen = event.target.open;
     saveMonitoringPrefs();
+    // Folded by its title: the search's filters are kept as with "Gotowe".
+    if (!event.target.open) {
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (saveMonitoringFilters(entry)) {
+        Object.assign(monitoringState, { status: copy().monitoringFiltersSaved, statusError: false });
+        renderPriceHistoryPage();
+      }
+    }
   }, true);
 
   priceHistoryPage?.addEventListener("change", (event) => {
@@ -6378,6 +6553,27 @@
       saveMonitoringPrefs();
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
       if (entry) fillMonitoringResults(entry);
+      return;
+    }
+    const budgetField = event.target.closest("[data-monitoring-budget]");
+    if (budgetField && priceHistoryId) {
+      const budget = monitoringScopeOf(priceHistoryId).budget || {};
+      const value = Number(String(budgetField.value).replace(/[^\d]/g, "")) || null;
+      setMonitoringScope(priceHistoryId, { budget: { ...budget, [budgetField.dataset.monitoringBudget]: value } });
+      Object.assign(monitoringState, { status: copy().monitoringPriceChanged, statusError: false });
+      renderPriceHistoryPage();
+      return;
+    }
+    const portalPrices = event.target.closest("[data-monitoring-portal-prices]");
+    if (portalPrices) {
+      monitoringPrefs.portalPrices = portalPrices.checked;
+      saveMonitoringPrefs();
+      renderPriceHistoryPage();
+      return;
+    }
+    // Page 1's "Więcej filtrów" in the settings: the form hears its fields.
+    if (event.target.closest("[data-monitoring-more-filters]")) {
+      document.querySelector(".mobileManualForm")?.dispatchEvent(new Event("change", { bubbles: true }));
       return;
     }
     const tolerance = event.target.closest("[data-monitoring-tolerance]");
@@ -6475,13 +6671,32 @@
       renderPriceHistoryPage();
       return;
     }
-    // "Gotowe": the settings fold, the results come first again.
+    // "Gotowe": the search's filters saved, the settings fold, the results
+    // come first again.
     if (event.target.closest("[data-monitoring-settings-done]")) {
-      const details = priceHistoryPage.querySelector("[data-monitoring-settings]");
-      if (details) details.open = false;
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
       monitoringPrefs.settingsOpen = false;
       saveMonitoringPrefs();
+      const saved = saveMonitoringFilters(entry);
+      if (saved) Object.assign(monitoringState, { status: copy().monitoringFiltersSaved, statusError: false });
+      renderPriceHistoryPage();
       priceHistoryPage.querySelector(".mobileMonitoringResults")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    // The budget checked by hand: the calculator with the numbers it was
+    // turned into (Germany: the car price, its tariff, the filters' excise).
+    if (event.target.closest("[data-monitoring-budget-calc]") && priceHistoryId) {
+      const entry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (!entry) return;
+      const budget = monitoringScopeOf(entry.id).budget;
+      const tariff = typeof estimateDeliveryInspection === "function" ? estimateDeliveryInspection(entry.filters.body || "", { country: "DE" }) : { transport: 2500, inspection: 1300 };
+      window.AUTOGOOD_CALC_POPUP?.openValues({
+        title: `${monitoringTitle(entry)} · ${copy().monitoringBudgetShort}${budget?.to ? ` ${numberFormat().format(budget.to)} zł` : ""}`,
+        gross: budget?.to ? budgetCarPrice("mobile", budget.to, entry.filters) : 0,
+        engine: budgetEngineClass(entry.filters),
+        transport: tariff.transport,
+        inspection: tariff.inspection,
+      });
       return;
     }
     // Connect this Mac's service (Chrome asks once for local access).
@@ -9514,6 +9729,8 @@
 
   function showPage(page) {
     if (page === "favorites") page = "history";
+    // Leaving Monitoring: "Więcej filtrów" goes back to page 1.
+    if (page !== "history") parkMoreFilters();
     if (showSelectedFavoriteOn(page)) return;
     if (page === "analysis") {
       let filters = {};
