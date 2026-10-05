@@ -1612,3 +1612,22 @@
   position: static;
   flex: none;
 }
+
+/* 05.10: the portal list on the centre line of "Link ogłoszenia" (a flex box,
+   no line-box gap under the list) and half-transparent. */
+.mobileLinkSourcePick {
+  display: flex;
+  align-items: center;
+  /* Measured 05.10: the heading's text sits 6.5 px above its box's middle. */
+  transform: translateY(-6.5px);
+}
+
+.mobileLinkSourceSelect[data-source] {
+  opacity: 0.72;
+  transition: opacity 0.12s ease;
+}
+
+.mobileLinkSourceSelect[data-source]:hover,
+.mobileLinkSourceSelect[data-source]:focus-visible {
+  opacity: 1;
+}
