@@ -1578,6 +1578,59 @@
     return at > 0 ? `${escapeMarketHtml(text.slice(0, at))}<small class="mobileMarketTickUnit">${escapeMarketHtml(text.slice(at + 1))}</small>` : escapeMarketHtml(text);
   }
 
+  // What of a recognised ad the search keeps: enough to draw and price it.
+  function linkedCarRecord(car) {
+    if (!car || typeof car !== "object" || !(Number(car.carBruttoEur) || Number(car.pricePln) || Number(car.priceUsd))) return null;
+    const pick = (value, length = 160) => (value === undefined || value === null ? "" : String(value).slice(0, length));
+    return {
+      sourceUrl: pick(car.sourceUrl, 400),
+      title: pick(car.title),
+      carBruttoEur: Number(car.carBruttoEur) || 0,
+      carNettoEur: Number(car.carNettoEur) || 0,
+      pricePln: Number(car.pricePln) || 0,
+      priceUsd: Number(car.priceUsd) || 0,
+      importMode: pick(car.importMode, 20),
+      fuel: pick(car.fuel, 40),
+      displacementCcm: Number(car.displacementCcm) || 0,
+      firstRegistration: pick(car.firstRegistration, 20),
+      mileageKm: Number(car.mileageKm) || 0,
+      matchedFilters: { brand: pick(car.matchedFilters?.brand, 60), model: pick(car.matchedFilters?.model, 80) },
+      location: { country: pick(car.location?.country, 4) },
+      savedAt: pick(car.savedAt, 30) || new Date().toISOString(),
+    };
+  }
+  // When a link was last read ("Rozpoznaj"): a newer link replaces the car of
+  // the search, an older one never overwrites a favourite's own car.
+  let linkReadAt = 0;
+  function attachLinkedCar(historyId, car) {
+    refreshMarketHistory();
+    const index = marketHistory.findIndex((entry) => entry.id === historyId);
+    if (index < 0) return;
+    const record = linkedCarRecord({ ...car, savedAt: new Date().toISOString() });
+    if (!record || marketHistory[index].car?.sourceUrl === record.sourceUrl && marketHistory[index].car?.carBruttoEur === record.carBruttoEur && marketHistory[index].car?.pricePln === record.pricePln) return;
+    const updated = [...marketHistory];
+    updated[index] = { ...marketHistory[index], car: record };
+    if (storeMarketHistory(updated)) {
+      renderHistory();
+      renderFavoritesBar();
+    }
+  }
+  function linkedCarPrice(car) {
+    if (!car) return "";
+    if (Number(car.pricePln)) return formatMarketPrice(car.pricePln, "PLN");
+    if (Number(car.priceUsd)) return formatMarketPrice(car.priceUsd, "USD");
+    return formatMarketPrice(car.carBruttoEur, "EUR");
+  }
+  function linkedCarChip(car) {
+    if (!car) return "";
+    const c = copy();
+    const inner = `<i aria-hidden="true"></i><span>${escapeMarketHtml(linkedCarPrice(car))}</span>`;
+    const label = `${c.yourCar}: ${car.title || ""} ${linkedCarPrice(car)}`.trim();
+    return car.sourceUrl
+      ? `<a class="mobileLinkedCarChip" href="${escapeMarketHtml(car.sourceUrl)}" target="_blank" rel="noopener" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">${inner}<b aria-hidden="true">↗</b></a>`
+      : `<span class="mobileLinkedCarChip" title="${escapeMarketHtml(label)}">${inner}</span>`;
+  }
+
   // The car read from a link, kept in this tab (sessionStorage) so a reload
   // or another favourite does not lose it; cleared with the form.
   const LINKED_CAR_KEY = "autogood.mobile.linkedCar.v1";
@@ -2583,6 +2636,9 @@
       // The language of the check (owner 2026-10-05): a favourite sits in
       // that language's list. Older entries are Polish.
       lang: entry.lang === "ru" ? "ru" : "pl",
+      // The ad the search started from (owner 2026-10-05): bound to the
+      // search, drawn yellow on its chart whatever its filters become.
+      car: linkedCarRecord(entry.car),
       // Who the search is for ("Kowalski — Golf do 80 tys."), typed in the
       // history (B19, 04.10). Older entries have none.
       note: String(entry.note || "").slice(0, 200),
@@ -3904,6 +3960,7 @@
                 <b>${escapeMarketHtml(title)}</b>
                 ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
                 ${entry.note ? `<small class="mobileMarketFavoriteNote">${escapeMarketHtml(entry.note)}</small>` : ""}
+                ${entry.car ? `<small class="mobileMarketFavoriteCar" title="${escapeMarketHtml(`${c.yourCar}: ${entry.car.title || ""}`)}"><i aria-hidden="true"></i>${escapeMarketHtml(linkedCarPrice(entry.car))}</small>` : ""}
               </button>
               <button class="mobileMarketFavoriteRemove isStar" type="button" data-mobile-market-favorite-remove="${escapeMarketHtml(entry.id)}" aria-pressed="true" aria-label="${escapeMarketHtml(`${c.favoriteRemove}: ${title}`)}" title="${escapeMarketHtml(c.favoriteRemove)}">★</button>
               <button class="mobileMarketFavoriteNoteEdit" type="button" data-mobile-market-favorite-note="${escapeMarketHtml(entry.id)}" aria-label="${escapeMarketHtml(`${c.favoriteNoteEdit}: ${title}`)}" title="${escapeMarketHtml(c.favoriteNoteEdit)}">✎</button>
@@ -6586,6 +6643,30 @@
     const c = copy();
     const { filters, listings, searchUrl, providerId, sourceFileName } = activeAnalysis;
     const historyEntry = marketHistory.find((entry) => entry.id === activeAnalysis.historyId) || null;
+    // The car from the link shown on this report (its chip by the title).
+    let shownLinkedCar = null;
+    // The ad the search started from: the search's own (saved with it), or a
+    // link just read for this make and model, which then becomes its own.
+    const looseModel = (left, right) => {
+      const a = normalizeToken(left || "");
+      const b = normalizeToken(right || "");
+      return !a || !b || a === b || a.includes(b) || b.includes(a);
+    };
+    const fitsSearch = (car) => Boolean(car)
+      && (!filters.brand || normalizeToken(car.matchedFilters?.brand || filters.brand) === normalizeToken(filters.brand))
+      && looseModel(car.matchedFilters?.model, filters.model);
+    const freshLink = typeof state !== "undefined" && state.data && fitsSearch(state.data) ? rememberLinkedCar(state.data) : null;
+    // The search's own car, else the newest one bound to another search of
+    // the same make and model (changed filters can make a second entry).
+    const ownCar = historyEntry?.car || marketHistory
+      .filter((entry) => entry.car && fitsSearch(entry.car))
+      .map((entry) => entry.car)
+      .sort((left, right) => String(right.savedAt).localeCompare(String(left.savedAt)))[0] || null;
+    // A link read after the search's car was saved replaces it.
+    const freshWins = Boolean(freshLink) && (!ownCar || linkReadAt > Date.parse(ownCar.savedAt || 0));
+    if (freshWins && historyEntry) setTimeout(() => attachLinkedCar(historyEntry.id, freshLink), 0);
+    const linkedCar = freshWins ? freshLink : ownCar || freshLink || readLinkedCar();
+    if (linkedCar && fitsSearch(linkedCar)) shownLinkedCar = linkedCar;
     const comparePriceEur = Number(String(activeAnalysis.comparePrice || "").replace(/[^\d]/g, "")) || 0;
     let otomotoUrl = "";
     try {
@@ -6993,21 +7074,13 @@
       // 2026-10-05): it stays on the chart whatever the filters are changed
       // to (same make), and survives a reload or a picked favourite until a
       // new link is read or the form is cleared.
-      const linkedCar = typeof state !== "undefined" && state.data ? rememberLinkedCar(state.data) : readLinkedCar();
       const recognised = comparePriceEur
         ? { carBruttoEur: comparePriceEur, matchedFilters: { brand: filters.brand, model: filters.model }, isComparison: true }
         : linkedCar;
       const carLabel = recognised?.isComparison ? c.comparedCar : c.yourCar;
       // Same make and model (loosely: "Ceed" = "cee'd / Ceed"); every other
       // filter may change.
-      const looseModel = (left, right) => {
-        const a = normalizeToken(left || "");
-        const b = normalizeToken(right || "");
-        return !a || !b || a === b || a.includes(b) || b.includes(a);
-      };
-      const sameCar = Boolean(recognised?.carBruttoEur || recognised?.pricePln)
-        && (!filters.brand || normalizeToken(recognised.matchedFilters?.brand || filters.brand) === normalizeToken(filters.brand))
-        && looseModel(recognised.matchedFilters?.model, filters.model);
+      const sameCar = Boolean(recognised?.carBruttoEur || recognised?.pricePln || recognised?.priceUsd) && fitsSearch(recognised);
       let carMarker = "";
       // The car's price, written on the price scale of its chart.
       let carScalePrice = null;
@@ -7896,7 +7969,7 @@
       meta: "",
       // The same favourite star as on the search page.
       // "Odśwież dane" left of the favourite star.
-      aside: `<button class="mobileMarketImportClear mobileMarketAsideRefresh" type="button" data-mobile-market-refresh data-report-hide>${escapeMarketHtml(c.refresh)}</button><button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
+      aside: `${linkedCarChip(shownLinkedCar)}<button class="mobileMarketImportClear mobileMarketAsideRefresh" type="button" data-mobile-market-refresh data-report-hide>${escapeMarketHtml(c.refresh)}</button><button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
       columns: searchSpecColumns(filters, reportSources),
     }) || "";
     // The same bottom row as the chosen filters on page 1: "Gotowe" (when the
@@ -8862,7 +8935,13 @@
 
   historySaves.forEach((button) => button.addEventListener("click", toggleCurrentHistoryFavorite));
   // A new link replaces the car; clearing the form forgets it.
-  document.querySelector("[data-mobile-submit]")?.addEventListener("click", forgetLinkedCar);
+  document.querySelector("[data-mobile-submit]")?.addEventListener("click", () => {
+    linkReadAt = Date.now();
+    forgetLinkedCar();
+  });
+  document.querySelector("[data-mobile-url]")?.closest("form")?.addEventListener("submit", () => {
+    linkReadAt = Date.now();
+  });
   document.querySelectorAll("[data-mobile-manual-reset]").forEach((button) => button.addEventListener("click", () => {
     forgetLinkedCar();
     editingHistoryId = "";

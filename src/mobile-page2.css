@@ -799,3 +799,63 @@
   border-radius: 3px;
   padding: 0 3px;
 }
+
+/* 05.10 (owner): the ad the search started from — a yellow diamond with its
+   price, on the favourite and by the report's title; a click opens the ad. */
+.mobileLinkedCarChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 26px;
+  border: var(--rule-thin) solid #e6b800;
+  border-radius: 999px;
+  background: #fff6cc;
+  color: var(--color-ink);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 2px 9px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.mobileLinkedCarChip i {
+  width: 9px;
+  height: 9px;
+  border: 1.5px solid var(--color-ink);
+  background: #ffcc00;
+  transform: rotate(45deg);
+}
+
+.mobileLinkedCarChip b {
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+a.mobileLinkedCarChip:hover {
+  border-color: var(--color-ink);
+}
+
+.mobileMarketFavoriteItem .mobileLinkedCarChip {
+  margin-top: 4px;
+}
+
+.mobileMarketFavorite .mobileMarketFavoriteCar {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  width: max-content;
+  margin-top: 2px;
+  border-radius: 999px;
+  background: #fff6cc;
+  color: var(--color-ink);
+  font-weight: 800;
+  padding: 0 7px;
+}
+
+.mobileMarketFavoriteCar i {
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid var(--color-ink);
+  background: #ffcc00;
+  transform: rotate(45deg);
+}
