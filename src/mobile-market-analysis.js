@@ -271,7 +271,7 @@
       trendTitle: "Mediana ceny w czasie",
       trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
       adPrice: "cena w ogłoszeniu",
-      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu — ok. {transport} netto\n+ Przeciętnego kosztu oględzin — ok. {inspection} netto\n+ Akcyzy według rodzaju i pojemności silnika — 3,1% (do 2000 cm³), 18,6% (powyżej 2000 cm³), hybryda 1,55% / 9,3%, elektryczny i plug-in do 2000 cm³ 0%\n+ Tłumaczeń dokumentów — 250 zł\n+ Przeglądu technicznego — 150 zł\n+ Stałego wynagrodzenia AUTOGOOD — 1 829,27 zł + 1% ceny auta, netto (+ VAT 23%).\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
+      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu — ok. {transport} netto\n+ Przeciętnego kosztu oględzin — ok. {inspection} netto\n+ Akcyzy według rodzaju i pojemności silnika — {excise}\n+ Tłumaczeń dokumentów — 250 zł\n+ Przeglądu technicznego — 150 zł\n+ Stałego wynagrodzenia AUTOGOOD — 1 829,27 zł + 1% ceny auta, netto (+ VAT 23%).\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
       conclusionHeading: "Wniosek",
       conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce.",
       conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce.",
@@ -335,7 +335,8 @@
       pdfWorking: "Przygotowuję raport PDF…",
       pdfReady: "Raport PDF zapisany: {file}",
       pdfFailed: "Nie udało się przygotować raportu PDF.",
-      distributionHeading: "Rozkład cen",
+      distributionHeading: "Wykres cen",
+      exciseClasses: ["elektryczny lub plug-in do 2000 cm³", "hybryda powyżej 2000 cm³", "hybryda do 2000 cm³", "silnik spalinowy do 2000 cm³", "silnik spalinowy powyżej 2000 cm³"],
       screenshotButton: "Kopiuj raport",
       screenshotCopied: "Raport skopiowany do schowka — wklej go w wiadomości do klienta.",
       screenshotOpened: "Przeglądarka nie pozwala kopiować obrazów — raport zapisano jako plik PNG (Pobrane).",
@@ -847,7 +848,7 @@
       trendTitle: "Медиана цены во времени",
       trendNeedsTwo: "График появится после второго замера цен.",
       adPrice: "цена в объявлении",
-      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки — ок. {transport} нетто\n+ Средней стоимости осмотра — ок. {inspection} нетто\n+ Акциза по типу и объёму двигателя — 3,1% (до 2000 см³), 18,6% (больше 2000 см³), гибрид 1,55% / 9,3%, электромобиль и plug-in до 2000 см³ 0%\n+ Переводов документов — 250 PLN\n+ Техосмотра — 150 PLN\n+ Фиксированного вознаграждения AUTOGOOD — 1 829,27 PLN + 1% цены авто, нетто (+ VAT 23%).\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
+      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки — ок. {transport} нетто\n+ Средней стоимости осмотра — ок. {inspection} нетто\n+ Акциза по типу и объёму двигателя — {excise}\n+ Переводов документов — 250 PLN\n+ Техосмотра — 150 PLN\n+ Фиксированного вознаграждения AUTOGOOD — 1 829,27 PLN + 1% цены авто, нетто (+ VAT 23%).\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
       conclusionHeading: "Вывод",
       conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше.",
       conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше.",
@@ -911,7 +912,8 @@
       pdfWorking: "Готовлю отчёт PDF…",
       pdfReady: "Отчёт PDF сохранён: {file}",
       pdfFailed: "Не удалось подготовить отчёт PDF.",
-      distributionHeading: "Распределение цен",
+      distributionHeading: "График цен",
+      exciseClasses: ["электромобиль или plug-in до 2000 см³", "гибрид больше 2000 см³", "гибрид до 2000 см³", "ДВС до 2000 см³", "ДВС больше 2000 см³"],
       screenshotButton: "Копировать отчёт",
       screenshotCopied: "Отчёт скопирован в буфер обмена — вставь его в сообщение клиенту.",
       screenshotOpened: "Браузер не даёт копировать картинки — отчёт сохранён файлом PNG (Загрузки).",
@@ -1541,13 +1543,25 @@
   // (owner 2026-10-05).
   // One item per line; the term in bold, the closing sentence (contact us)
   // in italics.
-  function turnkeyFootnoteHtml(text) {
+  // The excise of this search: the rate(s) of its cars' engine classes
+  // (owner 2026-10-05), with the class in words.
+  function exciseText(indexes) {
+    const c = copy();
+    const rates = window.AUTOGOOD_TURNKEY?.EXCISE_RATES || [0, 0.093, 0.0155, 0.031, 0.186];
+    const unique = [...new Set(indexes.filter((index) => Number.isInteger(index)))].sort((left, right) => rates[left] - rates[right]);
+    if (!unique.length) unique.push(3);
+    const percent = (value) => `${(value * 100).toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { maximumFractionDigits: 2 })}%`;
+    return unique.map((index) => `${percent(rates[index])} (${c.exciseClasses[index]})`).join(", ");
+  }
+
+  function turnkeyFootnoteHtml(text, excise = exciseText([3])) {
     // The average transport and inspection from turnkey-estimate.js, so the
     // note and the calculation never differ.
     const turnkey = window.AUTOGOOD_TURNKEY || {};
     const lines = String(text || "")
       .replace("{transport}", formatMarketPrice(turnkey.AVERAGE_TRANSPORT_NETTO || 2500, "PLN"))
       .replace("{inspection}", formatMarketPrice(turnkey.AVERAGE_INSPECTION_NETTO || 1500, "PLN"))
+      .replace("{excise}", excise)
       .split("\n");
     const contact = lines.length > 2 ? lines.pop() : "";
     const [first, ...items] = lines;
@@ -5218,7 +5232,7 @@
             <td class="isNum">${data.priceCell(row.offer, row.source)}</td>
           </tr>`).join("")}</tbody>
       </table>
-      <p class="mobileMarketAxisNote isTurnkey">* ${turnkeyFootnoteHtml(c.turnkeyFootnote)}</p>`;
+      <p class="mobileMarketAxisNote isTurnkey">* ${turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText([window.AUTOGOOD_TURNKEY?.engineInfo?.({}, data.entry?.filters || {})?.index ?? 3]))}</p>`;
     const fileName = `AUTOGOOD ${c.monitoringPdfFile} ${title} ${today.toISOString().slice(0, 10)}.pdf`.replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
     await downloadReportPdf(button, "pdf", {
       live: report,
@@ -7520,7 +7534,7 @@
           ${byMode && byMissing.size && !byProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(c.byDetailsMissing.replace("{missing}", String(byMissing.size)))}</p>` : ""}
           ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">* ${byMode
             ? escapeMarketHtml(c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD")))
-            : turnkeyFootnoteHtml(c.turnkeyFootnote)}</p>` : ""}
+            : turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(marketListings.filter((listing) => listing.turnkeyPln && listing.engine).map((listing) => listing.engine.index)))}</p>` : ""}
           ${ccmProgress ? `<p class="mobileMarketAxisNote" data-ccm-progress data-report-hide>${escapeMarketHtml(c.ccmProgress.replace("{done}", String(ccmProgress.done)).replace("{total}", String(ccmProgress.total)))}</p>` : ""}
           ${unknownEngine.length && !ccmProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.ccmUnknown, unknownEngine.length))}</p>` : ""}
           ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}
@@ -8122,6 +8136,7 @@
       const blob = await toPngBlob((await captureReport(mode)).canvas);
       if (version !== reportVersion) return;
       preparedReports[mode] = blob;
+      prepareCopyFrame(blob);
     } catch {
       // Drawn on the click instead.
     }
@@ -8207,13 +8222,14 @@
     const claude = inClaudeApp();
     // Why it failed, said plainly: the Claude app, a blocked site setting, or
     // the browser's own words.
+    prepareCopyFrame(blob);
     const reason = claude ? c.copyWhyClaude : `${c.copyWhyBrowser}${error ? ` (${error.name}: ${error.message})` : ""}`;
     dialog.innerHTML = `
       <div class="mobileReportCopyBar">
         <p><b>${escapeMarketHtml(c.screenshotDialogTitle)}</b><span data-copy-dialog-reason>${escapeMarketHtml(reason)}</span></p>
         <div class="mobileReportCopyActions">
-          ${claude ? "" : `<button class="mobileMarketImportClear isPrimary" type="button" data-copy-dialog-copy>${escapeMarketHtml(c.screenshotDialogCopy)}</button>`}
-          <button class="mobileMarketImportClear${claude ? " isPrimary" : ""}" type="button" data-copy-dialog-html>${escapeMarketHtml(c.copyForMail)}</button>
+          <button class="mobileMarketImportClear isPrimary" type="button" data-copy-dialog-copy>${escapeMarketHtml(c.screenshotDialogCopy)}</button>
+          <button class="mobileMarketImportClear" type="button" data-copy-dialog-html>${escapeMarketHtml(c.copyForMail)}</button>
           ${claude ? `<button class="mobileMarketImportClear" type="button" data-copy-dialog-link>${escapeMarketHtml(c.copyPageLink)}</button>` : ""}
           <button class="mobileMarketImportClear" type="button" data-copy-dialog-close>${escapeMarketHtml(c.screenshotDialogClose)}</button>
         </div>
@@ -8248,6 +8264,11 @@
       }
       const again = event.target.closest("[data-copy-dialog-copy]");
       if (!again) return;
+      if (copyViaImageDocument(blob)) {
+        setAnalysisStatus(c.screenshotCopied);
+        close();
+        return;
+      }
       try {
         await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
         setAnalysisStatus(c.screenshotCopied);
@@ -8265,16 +8286,54 @@
     dialog.showModal();
   }
 
+  // The picture alone in a hidden frame is an image document: its "copy"
+  // command puts the picture itself on the clipboard (PNG, TIFF…) — the way
+  // that works in the Claude app's browser, which refuses the clipboard API
+  // (checked on the Mac clipboard 2026-10-05). The frame is loaded when the
+  // picture is drawn, so the click copies at once.
+  let copyFrame = null;
+  let copyFrameBlob = null;
+  function prepareCopyFrame(blob) {
+    if (!blob || (copyFrameBlob === blob && copyFrame?.isConnected)) return;
+    if (copyFrame) {
+      URL.revokeObjectURL(copyFrame.dataset.url || "");
+      copyFrame.remove();
+    }
+    const url = URL.createObjectURL(blob);
+    copyFrame = document.createElement("iframe");
+    copyFrame.dataset.url = url;
+    copyFrame.setAttribute("aria-hidden", "true");
+    copyFrame.tabIndex = -1;
+    copyFrame.style.cssText = "position:fixed;left:-10000px;top:0;width:10px;height:10px;border:0;";
+    copyFrame.src = url;
+    document.body.append(copyFrame);
+    copyFrameBlob = blob;
+  }
+  function copyViaImageDocument(blob) {
+    const doc = copyFrameBlob === blob ? copyFrame?.contentDocument : null;
+    if (!doc || !/^image\//.test(doc.contentType || "")) return false;
+    try {
+      return doc.execCommand("copy");
+    } catch {
+      return false;
+    }
+  }
+
   async function copyReportScreenshot(button, mode = "copy") {
     const c = copy();
-    if (!navigator.clipboard?.write || !window.ClipboardItem) {
-      setAnalysisStatus(c.screenshotNoClipboard, true);
-      return;
-    }
     // The picture drawn ahead, or one drawn a moment ago (the first try was
     // refused): copied at once, as a finished image.
     const recent = preparedReports[mode]
       || (lastReportImage && lastReportImage.mode === mode && Date.now() - lastReportImage.at < 120000 ? lastReportImage.blob : null);
+    // The Claude app's browser (or no clipboard API): the image document.
+    if (recent && (inClaudeApp() || !navigator.clipboard?.write || !window.ClipboardItem) && copyViaImageDocument(recent)) {
+      setAnalysisStatus(c.screenshotCopied);
+      return;
+    }
+    if (!navigator.clipboard?.write || !window.ClipboardItem) {
+      setAnalysisStatus(c.screenshotNoClipboard, true);
+      return;
+    }
     button.disabled = true;
     setAnalysisStatus(c.screenshotWorking);
     const blobPromise = recent ? Promise.resolve(recent) : captureReport(mode).then(({ canvas }) => toPngBlob(canvas));
@@ -8289,6 +8348,7 @@
         const blob = await blobPromise;
         lastReportImage = { mode, blob, at: Date.now() };
         reportCopyError = error;
+        prepareCopyFrame(blob);
         // The finished picture in a window: its button copies it (a fresh
         // click), or a right click → "Copy image" where the page may not
         // write to the clipboard at all. Never a download.
