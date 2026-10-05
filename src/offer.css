@@ -716,3 +716,47 @@
 .isNoc .ofCardHead svg { color: var(--of-gold); }
 .isNoc .ofStep::after { background: var(--of-gold-soft); }
 .isNoc .ofFoot { border-top-color: var(--of-gold-soft); }
+
+/* ---- Premium, owner 2026-10-05: the name over the photo -----------------
+ * The car's name sits on the lower left of the photo over a soft shade; the
+ * price plate rises into the photo's lower edge; the ad link goes under it. */
+.isPremium[data-page="1"] {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  grid-template-rows: auto auto auto auto auto auto auto auto 1fr auto;
+  grid-template-areas:
+    "head head"
+    "photo photo"
+    "link price"
+    "chips price"
+    "specs price"
+    "market verdict"
+    "equipment seller"
+    ". ."
+    "foot foot";
+  row-gap: 12px;
+}
+.isPremium[data-page="1"] .ofSpecs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 12px; border-bottom: 0; padding: 2px 0 0; align-self: start; }
+.isPremium[data-page="1"] .ofPhotoColumn { display: contents; }
+.isPremium[data-page="1"] .ofPhoto { grid-area: photo; align-self: start; aspect-ratio: auto; height: 308px; border-radius: 14px; position: relative; z-index: 1; }
+.isPremium[data-page="1"] .ofPhoto::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 22, 34, 0) 32%, rgba(10, 22, 34, 0.6) 64%, rgba(10, 22, 34, 0.88) 100%);
+  pointer-events: none;
+}
+.isPremium[data-page="1"] .ofHeroTitle {
+  grid-area: photo;
+  align-self: end;
+  z-index: 2;
+  padding: 0 22px 18px;
+}
+.isPremium[data-page="1"] .ofSub, .isPremium[data-page="1"] .ofTitle { max-width: 400px; }
+.isPremium[data-page="1"] .ofKicker { color: var(--of-gold-soft); }
+.isPremium[data-page="1"] .ofTitle { color: #ffffff; font-size: 27px; text-shadow: 0 1px 12px rgba(0, 0, 0, 0.35); }
+.isPremium[data-page="1"] .ofSub { color: rgba(255, 255, 255, 0.86); }
+.isPremium[data-page="1"] .ofPriceBox { grid-area: price; justify-self: end; width: 272px; margin-top: -70px; z-index: 3; box-shadow: 0 12px 30px rgba(10, 22, 34, 0.28); align-self: start; }
+.isPremium[data-page="1"] .ofAdLink { grid-area: link; position: static; padding: 0; background: transparent; align-self: start; }
+.isPremium[data-page="1"] .ofAdLink small { display: inline; margin-left: 6px; }
+.isPremium[data-page="1"] .ofChips { align-self: end; }
+.ofPhoto img { transition: none; }

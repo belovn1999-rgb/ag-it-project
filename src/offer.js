@@ -251,13 +251,13 @@
   ];
   function preferredStyle() {
     try {
-      return localStorage.getItem(STYLE_KEY) || "light";
+      return localStorage.getItem(STYLE_KEY) || "premium";
     } catch {
-      return "light";
+      return "premium";
     }
   }
   const currentStyle = () => (STYLES.some(([key]) => key === offer?.style) ? offer.style : preferredStyle());
-  const styleClass = () => ({ premium: " isPremium", magazyn: " isMagazyn isGrid", raport: " isRaport isGrid", noc: " isNoc isGrid" })[currentStyle()] || "";
+  const styleClass = () => ({ premium: " isPremium isGrid", magazyn: " isMagazyn isGrid", raport: " isRaport isGrid", noc: " isNoc isGrid" })[currentStyle()] || "";
 
   // A car dearer than its Polish peers: the line stays off unless the manager
   // shows it ("shown" overrides, "hidden" hides in any case).
@@ -300,6 +300,17 @@
     return `<div class="ofKpis">${tiles.map((tile) => `<div class="ofKpi ${tile.tone}"><span>${esc(tile.label)}</span><b>${esc(tile.value)}</b><small>${esc(tile.note)}</small></div>`).join("")}</div>`;
   }
 
+  // The manager's framing of the photo: a zoom (dealers often frame their
+  // first photo with a banner) and the side kept in view.
+  const ZOOMS = [["1", "Całe zdjęcie"], ["1.15", "Przybliż 15%"], ["1.3", "Przybliż 30%"], ["1.45", "Przybliż 45%"]];
+  const FOCUS = [["center", "Środek"], ["left", "Lewa strona"], ["right", "Prawa strona"], ["top", "Góra"], ["bottom", "Dół"]];
+  function photoFrame() {
+    const zoom = Number(offer.photoZoom) || 1;
+    const focus = FOCUS.some(([key]) => key === offer.photoFocus) ? offer.photoFocus : "center";
+    if (zoom === 1 && focus === "center") return "";
+    return ` style="object-position:${focus};transform:scale(${zoom});transform-origin:${focus}"`;
+  }
+
   function sheetOne(view) {
     const market = marketView(view);
     const poland = polandView();
@@ -316,7 +327,7 @@
     if (offer.ad?.portalPrice?.label && /dobra|uczciwa/.test(offer.ad.portalPrice.label)) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(offer.ad.portalPrice.label)}</span>`);
     const subtitle = [view.reg, kmText(view.mileage), view.powerHp ? `${view.powerHp} KM` : "", view.gearbox, view.fuel].filter(Boolean).join(" · ");
     const specs = [
-      ["Pierwsza rejestracja", view.reg],
+      ["1. rejestracja", view.reg],
       ["Przebieg", kmText(view.mileage)],
       ["Silnik", [view.ccm ? `${String((Math.round(view.ccm / 100) / 10).toFixed(1)).replace(".", ",")} l` : "", fuelShort(view.fuel)].filter(Boolean).join(" · ")],
       ["Moc", view.powerHp ? `${view.powerHp} KM (${view.powerKw} kW)` : ""],
@@ -349,7 +360,7 @@
           <section class="ofHero">
             <div class="ofPhotoColumn">
               <figure class="ofPhoto">
-                ${photo ? `<img src="${esc(photo)}" alt="${esc(view.title)}" crossorigin="anonymous" />` : `<div class="ofPhotoEmpty">${icon("car")}<span>${reading ? "Wczytuję zdjęcie z ogłoszenia…" : "Zdjęcie z ogłoszenia pojawi się po wczytaniu danych"}</span></div>`}
+                ${photo ? `<img src="${esc(photo)}" alt="${esc(view.title)}" crossorigin="anonymous"${photoFrame()} />` : `<div class="ofPhotoEmpty">${icon("car")}<span>${reading ? "Wczytuję zdjęcie z ogłoszenia…" : "Zdjęcie z ogłoszenia pojawi się po wczytaniu danych"}</span></div>`}
                 ${view.images.length > 1 ? `<span class="ofPhotoCount">${view.images.length} ${plural(view.images.length, "zdjęcie", "zdjęcia", "zdjęć")} w ogłoszeniu</span>` : ""}
               </figure>
               ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>Ogłoszenie na ${esc(PORTAL[offer.source] || "portalu")}<small>${esc([view.city, COUNTRY[view.country] || view.country].filter(Boolean).join(", "))}</small></span></a>` : ""}
@@ -589,6 +600,11 @@
         ${priceChanged ? `<p class="ofPanelError">Cena w ogłoszeniu zmieniła się: ${esc(money(view.price, view.currency))} → ${esc(money(priceChanged, view.currency))}.</p><button class="offerButton isSmall" type="button" data-use-ad-price="${priceChanged}">Użyj aktualnej ceny</button>` : ""}
         <button class="offerButton isSmall" type="button" data-read-ad${reading ? " disabled" : ""}>Wczytaj ponownie z ogłoszenia</button>
         <label>Zdjęcie (adres, jeśli inne niż pierwsze z ogłoszenia)<input data-photo value="${esc(edits().photo || "")}" placeholder="https://…" /></label>
+        <div class="ofPanelRow">
+          <label>Kadrowanie zdjęcia<select data-photo-zoom>${ZOOMS.map(([key, label]) => `<option value="${key}"${String(offer.photoZoom || "1") === key ? " selected" : ""}>${esc(label)}</option>`).join("")}</select></label>
+          <label>Środek kadru<select data-photo-focus>${FOCUS.map(([key, label]) => `<option value="${key}"${(offer.photoFocus || "center") === key ? " selected" : ""}>${esc(label)}</option>`).join("")}</select></label>
+        </div>
+        <p>Ramka dealera na zdjęciu (logo, telefony, ikony) znika po przybliżeniu albo wybierz inne zdjęcie.</p>
         ${ad?.images?.length > 1 ? `<label>Wybierz zdjęcie z ogłoszenia<select data-photo-pick>${ad.images.slice(0, 20).map((url, index) => `<option value="${esc(url)}"${(edits().photo || ad.images[0]) === url ? " selected" : ""}>Zdjęcie ${index + 1}</option>`).join("")}</select></label>` : ""}
         ${ad?.description ? `<details><summary>Opis sprzedawcy (oryginał)</summary><div class="ofDescription">${esc(ad.description)}</div></details>` : ""}
         ${ad?.flags?.aiSummary ? `<details><summary>Podsumowanie mobile.de (AI portalu)</summary><div class="ofDescription">${esc([ad.flags.aiTags.join(" · "), ad.flags.aiSummary.replace(/\*\*/g, ""), ...(ad.flags.aiInsights || []).map((item) => `• ${item.title} — ${item.subtitle}`)].filter(Boolean).join("\n\n"))}</div></details>` : ""}
@@ -818,6 +834,10 @@
         else delete next.photo;
         return { edits: next };
       });
+    } else if (target.matches("[data-photo-zoom]")) {
+      save({ photoZoom: target.value });
+    } else if (target.matches("[data-photo-focus]")) {
+      save({ photoFocus: target.value });
     } else if (target.matches("[data-photo-pick]")) {
       save((stored) => ({ edits: { ...(stored.edits || {}), photo: target.value } }));
     }
@@ -1038,7 +1058,9 @@
   // One sheet drawn at its real size from a copy off screen, without the
   // manager's buttons, hidden blocks and edit marks.
   async function captureSheet(number, pixelRatio = 2.5) {
-    await loadScript("./vendor/html-to-image.js?v=1.11.11", "htmlToImage");
+    // The library without its font shrink (vendor/html-to-image-exact.js):
+    // the sheet's text is drawn at its real size, as laid out on the page.
+    await loadScript("./vendor/html-to-image-exact.js?v=1.11.11-exact", "htmlToImage");
     const live = stage.querySelector(`[data-page="${number}"]`);
     if (!live) return null;
     const holder = document.createElement("div");
