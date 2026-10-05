@@ -1359,6 +1359,36 @@
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120434/Mercedes-Benz-E-Class-Estate-(W213-2021)-450-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120435/Mercedes-Benz-E-Class-Estate-(W213-2021)-53-AMG-4MATIC+.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120436/Mercedes-Benz-E-Class-Estate-(W213-2021)-200-d.html": {
+"drive": "RWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120437/Mercedes-Benz-E-Class-Estate-(W213-2021)-220-d.html": {
+"drive": "RWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120438/Mercedes-Benz-E-Class-Estate-(W213-2021)-220-d-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120441/Mercedes-Benz-E-Class-Estate-(W213-2021)-400-d-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120442/Mercedes-Benz-E-Class-All-Terrain-(W213-2021)-220-d-4MATIC.html": {
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
@@ -1499,6 +1529,16 @@
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/122562/Mercedes-Benz-E-Class-Estate-(W213-2021)-63-AMG-4MATIC+.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/122563/Mercedes-Benz-E-Class-Estate-(W213-2021)-63-S-AMG-4MATIC+.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/122569/Mercedes-Benz-W223-Class-S-450-4MATIC.html": {
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
@@ -1570,6 +1610,11 @@
 "transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/127315/Mercedes-Benz-E-Class-(W213-2021)-300-d-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/127316/Mercedes-Benz-E-Class-Estate-(W213-2021)-300-d-4MATIC.html": {
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
@@ -1749,6 +1794,11 @@
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Peugeot/121539/Peugeot-3008-2021-16-PureTech-180.html": {
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Peugeot/121565/Peugeot-5008-2021-16-PureTech-180.html": {
 "drive": "FWD",
 "gearbox": "8 speed Automatic",
@@ -1780,6 +1830,36 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Peugeot/141773/Peugeot-2008-II-(2023)-12-PureTech-100.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/120291/Renault-Megane-4-Phase-2-TCe-115.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/120296/Renault-Megane-4-Phase-2-TCe-160.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/120302/Renault-Megane-4-Phase-2-Sport-Tourer-TCe-115.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/120307/Renault-Megane-4-Phase-2-Sport-Tourer-TCe-160.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/127413/Renault-Megane-4-Phase-2-TCe-115.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/127417/Renault-Megane-4-Phase-2-Sport-Tourer-TCe-115.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
@@ -1819,6 +1899,76 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Skoda/117868/Skoda-Superb-2020-15-TSI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/117871/Skoda-Superb-2020-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/117872/Skoda-Superb-2020-Combi-15-TSI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/117875/Skoda-Superb-2020-Combi-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/119338/Skoda-Octavia-4-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/119339/Skoda-Octavia-4-Combi-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/120371/Skoda-Octavia-4-Combi-10-TSI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/120378/Skoda-Octavia-4-10-TSI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/120929/Skoda-Octavia-4-10-TSI-e-TEC.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/120930/Skoda-Octavia-4-Combi-10-TSI-e-TEC.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/120937/Skoda-Octavia-4-15-TSI-G-TEC.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/120938/Skoda-Octavia-4-Combi-15-TSI-G-TEC.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/122763/Skoda-Octavia-4-15-TSI-e-TEC.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/122766/Skoda-Octavia-4-Combi-15-TSI-e-TEC.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Skoda/128214/Skoda-Fabia-2022-10-TSI-70kW.html": {
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -1828,6 +1978,11 @@
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/135064/Skoda-Octavia-4-Combi-20-TDI-115HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Skoda/135639/Skoda-Fabia-2022-10-MPI.html": {
 "drive": "FWD",
@@ -1840,6 +1995,21 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Skoda/136820/Skoda-Octavia-4-2024-15-TSI-116HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/136825/Skoda-Octavia-4-20-TDI-115HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/136829/Skoda-Octavia-4-RS-20-TSI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/136832/Skoda-Octavia-4-Combi-RS-20-TSI-.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
@@ -1938,6 +2108,36 @@
 "drive": "FWD",
 "gearbox": "5 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Toyota/119454/Toyota-Yaris-(XP21)-10-VVT-i.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Toyota/119455/Toyota-Yaris-(XP21)-15-VVT-i.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Toyota/119544/Toyota-Yaris-GR-GR.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/119326/Volkswagen-Golf-8-10-TSI-110HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/119328/Volkswagen-Golf-8-10-TSI-90HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/121266/Volkswagen-Golf-8-10-eTSI-110HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/128034/Volkswagen-Polo-2022-10-MPI-80HP.html": {
 "drive": "FWD",

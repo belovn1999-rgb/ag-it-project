@@ -76,7 +76,8 @@ def main():
     todo, seen = [], set()
     for row in sorted(rows, key=start, reverse=True):
         url = row["Ссылка"]
-        if row["Коробка"] or url in seen or url in done or start(row) < args.since:
+        # Rows from autocentrum.pl (tools/autocentrum.py) have no ultimatespecs page.
+        if row["Коробка"] or "ultimatespecs.com" not in url or url in seen or url in done or start(row) < args.since:
             continue
         seen.add(url)
         todo.append(row)
