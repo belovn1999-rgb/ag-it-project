@@ -237,6 +237,21 @@
     };
   }
 
+  // Two looks of the sheets (owner chooses, docs/OFFER-PAGE.md §0 wave 5):
+  // "light" — white, thin rules, framed cards; "premium" — the photo across the
+  // page, the price on a navy plate, quiet gold accents, cards without frames.
+  const STYLE_KEY = "autogood.offer.style.v1";
+  const STYLES = [["light", "Jasny"], ["premium", "Premium"]];
+  function preferredStyle() {
+    try {
+      return localStorage.getItem(STYLE_KEY) || "light";
+    } catch {
+      return "light";
+    }
+  }
+  const currentStyle = () => (STYLES.some(([key]) => key === offer?.style) ? offer.style : preferredStyle());
+  const styleClass = () => (currentStyle() === "premium" ? " isPremium" : "");
+
   // A car dearer than its Polish peers: the line stays off unless the manager
   // shows it ("shown" overrides, "hidden" hides in any case).
   function polandHidden(poland) {
@@ -303,7 +318,7 @@
       : "";
     return `
       <div class="ofSheet" data-sheet="1">
-        <article class="ofPage" data-page="1">
+        <article class="ofPage${styleClass()}" data-page="1">
           ${headHtml(1, view)}
           <section class="ofHero">
             <div class="ofPhotoColumn">
@@ -314,9 +329,11 @@
               ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>Ogłoszenie na ${esc(PORTAL[offer.source] || "portalu")}<small>${esc([view.city, COUNTRY[view.country] || view.country].filter(Boolean).join(", "))}</small></span></a>` : ""}
             </div>
             <div class="ofHeroInfo">
-              <p class="ofKicker">${esc([view.brand, view.model, view.year].filter(Boolean).join(" · "))}</p>
-              ${field("title", view.title, "h1", "ofTitle")}
-              ${field("subtitle", subtitle, "p", "ofSub")}
+              <div class="ofHeroTitle">
+                <p class="ofKicker">${esc([view.brand, view.model, view.year].filter(Boolean).join(" · "))}</p>
+                ${field("title", view.title, "h1", "ofTitle")}
+                ${field("subtitle", subtitle, "p", "ofSub")}
+              </div>
               <div class="ofPriceBox">
                 <p class="ofLabel">Cena na gotowo w Polsce</p>
                 <p class="ofPrice">${esc(money(costView?.total, "PLN"))}</p>
@@ -409,7 +426,7 @@
     ].map(([title, text]) => [title, salutation.you === "Pani" ? text.replace("może Pan", "może Pani") : salutation.you === "Państwo" ? text.replace("może Pan", "mogą Państwo") : text]);
     return `
       <div class="ofSheet${isHidden("page2") ? " isHiddenPage" : ""}" data-sheet="2">
-        <article class="ofPage" data-page="2">
+        <article class="ofPage${styleClass()}" data-page="2">
           ${headHtml(2, view)}
           <div class="ofGrid isWide" style="margin-top:18px">
             ${costView ? `
@@ -512,6 +529,10 @@
           <label>Zwrot<select data-client-salutation>${Object.keys(SALUTATION).map((key) => `<option${client.salutation === key ? " selected" : ""}>${esc(key)}</option>`).join("")}</select></label>
           <label>Klient (opcjonalnie)<input data-client-name value="${esc(client.name || "")}" placeholder="np. Jan Kowalski" /></label>
         </div>
+      </section>
+      <section class="ofPanelCard">
+        <h2>Wygląd oferty</h2>
+        <div class="ofToggleList">${STYLES.map(([key, label]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> ${esc(label)}</label>`).join("")}</div>
       </section>
       <section class="ofPanelCard">
         <h2>Dane z ogłoszenia</h2>
@@ -702,6 +723,13 @@
         }
         return { hidden: [...set], shown: [...shown] };
       });
+    } else if (target.matches("[data-style]")) {
+      try {
+        localStorage.setItem(STYLE_KEY, target.dataset.style);
+      } catch {
+        // Only the default for new offers.
+      }
+      save({ style: target.dataset.style });
     } else if (target.matches("[data-verdict-level]")) {
       save({ verdictLevel: target.value || null });
     } else if (target.matches("[data-client-salutation]")) {

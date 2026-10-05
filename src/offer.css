@@ -512,3 +512,55 @@
 /* The calculator window (wave 3): the same look as "Oblicz na gotowo". */
 .ofCalcActions { display: flex; align-items: center; gap: 10px; flex: none; }
 .ofCalcDialog .agCalcPopupKicker { color: var(--of-navy); }
+
+/* ---- Look "Premium" (wave 5, for the owner to compare with "Jasny") -------- */
+.ofPage.isPremium { --of-gold: #b39256; --of-gold-soft: #d9c08a; padding-top: 30px; }
+.isPremium .ofHead { border-bottom: 1px solid var(--of-gold); }
+.isPremium .ofHero { grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 16px; }
+.isPremium .ofPhotoColumn { position: relative; }
+.isPremium .ofPhoto { aspect-ratio: 2.5 / 1; border-radius: 14px; }
+.isPremium .ofAdLink {
+  position: absolute;
+  left: 12px;
+  bottom: 12px;
+  padding: 5px 11px 5px 9px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--of-navy);
+}
+.isPremium .ofAdLink small { display: inline; margin-left: 6px; }
+.isPremium .ofPhotoCount { top: 12px; bottom: auto; }
+.isPremium .ofHeroInfo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 272px;
+  grid-template-areas: "title price" "chips price";
+  column-gap: 22px;
+  align-items: start;
+}
+.isPremium .ofHeroTitle { grid-area: title; }
+.isPremium .ofTitle { font-size: 24px; }
+.isPremium .ofKicker { color: var(--of-gold); }
+.isPremium .ofChips { grid-area: chips; align-self: end; }
+.isPremium .ofPriceBox {
+  grid-area: price;
+  margin-top: 0;
+  padding: 14px 16px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--of-navy);
+  color: #ffffff;
+}
+.isPremium .ofPriceBox .ofLabel { color: var(--of-gold-soft); }
+.isPremium .ofPriceBox .ofPrice { color: #ffffff; font-size: 30px; }
+.isPremium .ofPriceBox .ofPriceNote, .isPremium .ofPriceBox .ofAdPrice { color: rgba(255, 255, 255, 0.82); }
+.isPremium .ofPriceBox b { color: #ffffff; }
+.isPremium .ofSpecs { border-top: 0; border-bottom: 1px solid var(--of-line); padding-top: 4px; }
+.isPremium .ofCard { border: 0; background: var(--of-soft); border-radius: 14px; }
+.isPremium .ofCardHead svg, .isPremium .ofStep::after { color: var(--of-gold); }
+.isPremium .ofStep::after { background: var(--of-gold-soft); }
+.isPremium .ofBarBand { background: #d6e2ec; }
+.isPremium .ofMethod { background: #ffffff; }
+.isPremium .ofCosts td { border-bottom-color: #e3e9ef; }
+.isPremium .ofCosts tr.isTotal td { color: var(--of-navy); }
+.isPremium .ofOption { background: #ffffff; border: 1px solid #dfe7ef; }
+.isPremium .ofFoot { border-top-color: var(--of-gold-soft); }
