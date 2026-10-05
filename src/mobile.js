@@ -2580,16 +2580,16 @@ function updateSelectedFiltersSummary() {
   placePinnedControls();
 }
 
-// The star sits in the card's corner and the bottom row (Gotowe, Analiza
-// rynku, counts and links) under it.
+// The star right after the car's name (owner 2026-10-05) and the bottom row
+// (Gotowe, Analiza rynku, counts and links) under it.
 function placePinnedControls() {
   const summary = document.querySelector(".mobileSearchSummary");
   const foot = document.querySelector(".mobileSearchSummaryFoot");
   const star = document.querySelector("[data-mobile-market-history-save]");
   if (!summary || !foot) return;
   if (foot.parentElement !== summary) summary.append(foot);
-  const aside = summary.querySelector(".agSpecAside");
-  if (star && aside && star.parentElement !== aside) aside.prepend(star);
+  const title = summary.querySelector(".agSpecTitleLine strong");
+  if (star && title && star.previousElementSibling !== title) title.after(star);
 }
 
 function mobileDeNumber(value) {

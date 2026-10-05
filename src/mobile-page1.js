@@ -86,6 +86,15 @@
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["class", "hidden"] });
   scheduleTotals();
 
+  // ---- "Język sprawdzenia" by the language switch, on page 1 only ---------
+  const langLabel = document.querySelector("[data-mobile-lang-label]");
+  const searchTab = document.querySelector('[data-mobile-page-tab="search"]');
+  const showLangLabel = () => {
+    if (langLabel) langLabel.hidden = searchTab?.getAttribute("aria-current") !== "page";
+  };
+  if (langLabel && searchTab) new MutationObserver(showLangLabel).observe(searchTab, { attributes: true, attributeFilter: ["aria-current"] });
+  showLangLabel();
+
   // ---- 1. Every "od / do" box is named after its field ----------------------
   // The field's name sits above two bare boxes; screen readers, voice input
   // and autofill only saw "od" and "do".

@@ -1574,3 +1574,41 @@
   background: #fff;
   color: #1a2433;
 }
+
+/* 05.10: "Język sprawdzenia" left of PL/RU (page 1); the portal list right of
+   "Link ogłoszenia", a little duller; the star right after the car's name. */
+.mobileLangLabel {
+  align-self: center;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.mobileLangLabel[hidden] {
+  display: none;
+}
+
+.mobileListingLinkHead {
+  justify-content: flex-start;
+}
+
+.mobileLinkSourcePick {
+  margin-left: 0;
+}
+
+.mobileLinkSourceSelect[data-source] {
+  filter: saturate(0.6) brightness(1.08);
+}
+
+.mobileSearchSummary .agSpecTitleLine {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mobileSearchSummary .agSpecTitleLine .mobileSearchSummaryStar {
+  position: static;
+  flex: none;
+}
