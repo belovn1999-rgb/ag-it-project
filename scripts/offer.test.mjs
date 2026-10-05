@@ -75,6 +75,9 @@ test("red flags: whole words, denials and the anti-theft alarm are not flags", (
   assert.deepEqual(words(VERDICT.assess({ car: { price: 20000 }, ad: ad("Diebstahlwarnanlage, Alarmanlage, Navi") })), []);
   assert.deepEqual(words(VERDICT.assess({ car: { price: 20000 }, ad: ad("Kein Unfallschaden, kein Mietwagen, keine Vorkasse.") })), []);
   assert.deepEqual(words(VERDICT.assess({ car: { price: 20000 }, ad: ad("NESSUN VINCOLO DI FINANZIAMENTO") })), []);
+  // The police after a theft is not an ex-police car.
+  assert.deepEqual(words(VERDICT.assess({ car: { price: 20000 }, ad: ad("Nach Abschluss der polizeilichen Maßnahmen von der Polizei freigegeben.") })), []);
+  assert.ok(words(VERDICT.assess({ car: { price: 20000 }, ad: ad("Ehemaliges Polizeifahrzeug, gepflegt.") })).includes("Możliwe użytkowanie flotowe (taxi, wynajem, nauka jazdy)"));
   const stolen = VERDICT.assess({ car: { price: 12000 }, ad: ad("Dieses Fahrzeug stammt aus einem Diebstahl und hat keine Papiere.") });
   assert.equal(stolen.verdict, "risk");
   assert.ok(words(stolen).includes("Wzmianka o kradzieży"));

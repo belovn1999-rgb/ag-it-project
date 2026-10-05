@@ -32,7 +32,7 @@
     [/vorschaden|reparierte?r? (?:unfall)?schaden|instandgesetzt|nachlackiert|teilweise lackiert|riparat|réparé|naprawian/i, "Auto miało naprawiane szkody"],
     [/(?<!nessun )vincolo di finanziamento|prezzo (?:promo |valido )?con finanziamento|(?:preis|price) (?:nur )?(?:bei|with) finanzierung|finanzierungspreis|prix avec financement/i, "Cena może dotyczyć tylko zakupu na kredyt"],
     [/zzgl\.? (?:überführung|ueberfuehrung|zulassung|transport|bereitstellung)|(?:plus|\+) (?:überführung|ueberfuehrung)|bereitstellungskosten|spese di (?:passaggio|messa su strada)|frais de mise à la route/i, "Do ceny dochodzą opłaty dealera"],
-    [/taxi|mietwagen|autovermietung|rental car|fahrschule|polizei|noleggio|ex[- ]?location|wypożyczaln|nauki jazdy/i, "Możliwe użytkowanie flotowe (taxi, wynajem, nauka jazdy)"],
+    [/\btaxi\b|mietwagen|autovermietung|rental car|fahrschule|ex-?polizei|polizeifahrzeug|noleggio|ex[- ]?location|wypożyczaln|nauki jazdy/i, "Możliwe użytkowanie flotowe (taxi, wynajem, nauka jazdy)"],
     [/km[- ]?stand nicht garantiert|tachostand (?:nicht|unbekannt)|km non (?:certificati|garantiti)|kilom(?:é|e)trage non garanti|przebieg niepewny/i, "Sprzedawca nie gwarantuje przebiegu"],
   ];
   // Worth saying, not a warning.
