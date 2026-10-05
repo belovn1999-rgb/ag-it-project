@@ -1498,20 +1498,8 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* ---- 05.10 (owner): the language of the check on page 1, and the favourites
-   bar split into the PL / RU lists. ---- */
-.mobileCheckLang {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 0 0 var(--space-sm);
-  color: var(--color-ink);
-  font-size: 0.8125rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
+/* ---- 05.10 (owner): the favourites bar split into the PL / RU lists (the
+   language is switched top right only). ---- */
 .mobileFavoritesLang {
   display: inline-flex;
   flex: none;
