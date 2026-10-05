@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=ui-1005" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=p1d-0510" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=lang-1005c" />
     <link rel="stylesheet" href="./src/mobile-model-specs.css?v=b70-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=rebase1-20261004" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
-    <link rel="stylesheet" href="./src/mobile-page2.css?v=copy-1005b" />
+    <link rel="stylesheet" href="./src/mobile-page2.css?v=lang-1005b" />
     <link rel="stylesheet" href="./src/mobile-rates.css?v=flags-20261004" />
     <script defer src="./src/global-navigation.js?v=nav-search-20260928" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
@@ -47,6 +47,16 @@
       </nav>
 
       <section class="mobileListingSearch">
+        <!-- Owner 2026-10-05: the language of the check (the client's), Polish
+             by default; it is the page language, and a favourite starred in
+             it goes to that language's list in the bar above. -->
+        <div class="mobileCheckLang" role="group" aria-labelledby="mobile-check-lang-label">
+          <span id="mobile-check-lang-label" data-i18n="checkLang">Język sprawdzenia</span>
+          <div class="mobileLang mobileCheckLangButtons">
+            <button type="button" data-lang-button="pl" class="isActive">PL</button>
+            <button type="button" data-lang-button="ru">RU</button>
+          </div>
+        </div>
         <section class="mobileFilterCard mobileListingLinkCard" aria-labelledby="mobile-listing-link-heading">
           <div class="mobileListingLinkHead">
             <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
@@ -747,7 +757,7 @@
     <script src="./src/mobile-rates.js?v=page3-20261004"></script>
     <script src="./src/model-specs.generated.js?v=b61-ac4-20261004"></script>
     <script src="./src/mobile-model-specs.js?v=b70-20261004"></script>
-    <script src="./src/mobile.js?v=p1-0510"></script>
+    <script src="./src/mobile.js?v=lang-1005"></script>
     <script src="./src/blocket-search.js?v=more-portals2-20261004"></script>
     <script src="./src/marktplaats-catalog.generated.js?v=mp-20261004"></script>
     <script src="./src/marktplaats-search.js?v=mp-20261004"></script>
@@ -758,7 +768,7 @@
     <script src="./src/turnkey-estimate.js?v=rates-20261004"></script>
     <script src="./src/turnkey-belarus.js?v=rates-20261004"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=copy-1005b"></script>
+    <script src="./src/mobile-market-analysis.js?v=lang-1005c"></script>
     <script src="./src/calculator-popup.js?v=ka-20261004"></script>
     <script src="./src/mobile-favorites-watch.js?v=ui-1005"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>

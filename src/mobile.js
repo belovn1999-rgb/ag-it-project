@@ -4,6 +4,7 @@ const copy = {
   pl: {
     pageHeading: "Wyszukiwanie i analiza aut",
     appName: "Wyszukiwanie i analiza",
+    checkLang: "Język sprawdzenia",
     pageSearch: "Wyszukiwanie",
     pageAnalysis: "Analiza",
     pageHistory: "Monitoring",
@@ -346,6 +347,7 @@ const copy = {
   ru: {
     pageHeading: "Поиск и анализ автомобилей",
     appName: "Поиск и анализ",
+    checkLang: "Язык проверки",
     pageSearch: "Поиск",
     pageAnalysis: "Анализ",
     pageHistory: "Мониторинг",

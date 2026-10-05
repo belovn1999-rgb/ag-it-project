@@ -40,6 +40,7 @@
       historyConfirm: "Zapisz zmiany w tym wpisie",
       historyDone: "Gotowe",
       favoritesHeading: "Ulubione auta",
+      favoritesLangLabel: "Ulubione według języka sprawdzenia",
       favoritesSearchEmpty: "Nie masz jeszcze ulubionych aut. Oznacz wyszukiwanie gwiazdką ★ w panelu „Aktualne oferty” albo w historii.",
       marketPickerLabel: "Porównywane rynki",
       marketPickerLast: "Co najmniej jeden rynek musi zostać wybrany.",
@@ -608,6 +609,7 @@
       historyConfirm: "Сохранить изменения в этой записи",
       historyDone: "Готово",
       favoritesHeading: "Избранные авто",
+      favoritesLangLabel: "Избранное по языку проверки",
       favoritesSearchEmpty: "Избранных авто пока нет. Отметь поиск звёздочкой ★ в панели «Актуальные предложения» или в истории.",
       marketPickerLabel: "Сравниваемые рынки",
       marketPickerLast: "Должен остаться выбран хотя бы один рынок.",
@@ -1384,6 +1386,15 @@
   const marketRowShown = (group, row) => groupOn(group) || row === group.rows[0];
 
   let chartAxis = "rank";
+  // "Cena a parametry" open or closed: the viewer's choice, kept in this browser.
+  const SEGMENTS_OPEN_KEY = "autogood.mobile.segmentsOpen";
+  let segmentsOpen = (() => {
+    try {
+      return localStorage.getItem(SEGMENTS_OPEN_KEY) === "1";
+    } catch {
+      return false;
+    }
+  })();
   // Several markets: one price scale for all charts ("shared", the default —
   // compares markets) or each chart its own ("own" — shows the spread inside
   // a market). A viewer's preference, remembered in this browser.
@@ -2500,6 +2511,9 @@
       searchUrl: String(entry.searchUrl || ""),
       pinned: Boolean(entry.pinned),
       pinnedAt: entry.pinned ? String(entry.pinnedAt || "") : "",
+      // The language of the check (owner 2026-10-05): a favourite sits in
+      // that language's list. Older entries are Polish.
+      lang: entry.lang === "ru" ? "ru" : "pl",
       // Who the search is for ("Kowalski — Golf do 80 tys."), typed in the
       // history (B19, 04.10). Older entries have none.
       note: String(entry.note || "").slice(0, 200),
@@ -2614,7 +2628,8 @@
     // order whatever is updated later (the history itself goes newest first).
     const now = new Date().toISOString();
     const trimmed = trimHistory(entries).map((entry) => (entry.pinned
-      ? (entry.pinnedAt ? entry : { ...entry, pinnedAt: now })
+      // Starred now: into the list of the language the check is made in.
+      ? (entry.pinnedAt ? entry : { ...entry, pinnedAt: now, lang: currentLanguage() })
       : (entry.pinnedAt ? { ...entry, pinnedAt: "" } : entry)));
     try {
       storeFavoritesBackup(trimmed);
@@ -2950,6 +2965,7 @@
       sourceFileName,
       searchUrl: searchUrl || buildMobileDeSearchUrl(filters),
       pinned,
+      lang: currentLanguage(),
       createdAt: now,
       updatedAt: now,
     };
@@ -3792,12 +3808,23 @@
     });
   }
 
+  // The bar shows one language's favourites (PL / RU); it follows the page
+  // language and can be switched on its own.
+  let favoritesLang = "";
   function favoritesHtml(activeId = "") {
     const c = copy();
-    const favorites = pinnedFavorites();
+    const lang = favoritesLang || currentLanguage();
+    const all = pinnedFavorites();
+    const favorites = all.filter((entry) => (entry.lang || "pl") === lang);
+    const count = (code) => all.filter((entry) => (entry.lang || "pl") === code).length;
     return `
       <section class="mobileMarketFavorites" data-report-hide aria-label="${escapeMarketHtml(c.favoritesHeading)}">
-        <strong class="mobileMarketFavoritesTitle"><i aria-hidden="true">★</i>${escapeMarketHtml(c.favoritesHeading)}</strong>
+        <div class="mobileMarketFavoritesHead">
+          <strong class="mobileMarketFavoritesTitle"><i aria-hidden="true">★</i>${escapeMarketHtml(c.favoritesHeading)}</strong>
+          <span class="mobileFavoritesLang" role="group" aria-label="${escapeMarketHtml(c.favoritesLangLabel)}">
+            ${["pl", "ru"].map((code) => `<button type="button" data-mobile-favorites-lang="${code}" aria-pressed="${code === lang ? "true" : "false"}">${code.toUpperCase()}<small>${count(code)}</small></button>`).join("")}
+          </span>
+        </div>
         ${favorites.length ? `<div class="mobileMarketFavoritesList">
           ${favorites.map((entry) => {
             const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
@@ -6682,7 +6709,6 @@
     const listingKey = (listing) => listing.url || `${listing.portal || listing.source}-${listing.id}`;
     let statsContent = "";
     let segmentsContent = "";
-    let statsMileageContent = "";
     let offersContent = "";
     let summaryContent = "";
     let marketContent = `
@@ -7513,13 +7539,13 @@
         const tone = !base ? "" : median < base * 0.98 ? " isBelow" : median > base * 1.02 ? " isAbove" : "";
         return `<td class="isNum${tone}"><b>${escapeMarketHtml(formatMarketPrice(median))}</b><small>${escapeMarketHtml(count)}${base ? ` · <span>${escapeMarketHtml(percentFrom(median, base))}</span>` : ""}</small></td>`;
       };
-      // Price by mileage: the statistics card's second part (owner
-      // 2026-10-05), a row per market, the mileage groups across.
+      // Price by mileage: the first table of "Cena a parametry" (owner
+      // 2026-10-05), a row per market, the mileage groups across, ruled.
       const mileageIndex = segmentDimensions.findIndex((dimension) => dimension.title === c.statsMileageHeading);
       const mileageDimension = mileageIndex >= 0 ? segmentDimensions.splice(mileageIndex, 1)[0] : null;
-      statsMileageContent = mileageDimension ? `
-        <div class="mobileMarketSegmentScroll mobileMarketStatsMileage">
-          <table class="mobileMarketSegmentTable">
+      const mileageTable = mileageDimension ? `
+        <div class="mobileMarketSegmentScroll mobileMarketMileageTable">
+          <table class="mobileMarketSegmentTable isRuled">
             <caption>${escapeMarketHtml(c.statsMileageHeading)}</caption>
             <thead>
               <tr>
@@ -7536,13 +7562,16 @@
             </tbody>
           </table>
         </div>` : "";
-      segmentsContent = segmentDimensions.length ? `
-        <section class="mobileMarketCard mobileMarketSegmentsCard" aria-label="${escapeMarketHtml(c.segmentsHeading)}" data-report-list-hide>
-          ${blockTitle("settings", c.segmentsHeading)}
+      // The block opens and closes on its title (closed at first; the
+      // viewer's choice is remembered in this browser).
+      segmentsContent = segmentDimensions.length || mileageTable ? `
+        <details class="mobileMarketCard mobileMarketSegmentsCard" aria-label="${escapeMarketHtml(c.segmentsHeading)}" data-report-list-hide data-mobile-segments${segmentsOpen ? " open" : ""}>
+          <summary>${blockTitle("settings", c.segmentsHeading)}<span class="mobileMarketSegmentsToggle" aria-hidden="true"></span></summary>
+          ${mileageTable}
           <div class="mobileMarketSegments">
             ${segmentDimensions.map((dimension) => `
               <div class="mobileMarketSegmentScroll">
-                <table class="mobileMarketSegmentTable">
+                <table class="mobileMarketSegmentTable isRuled">
                   <caption>${escapeMarketHtml(dimension.title)}</caption>
                   <thead>
                     <tr>
@@ -7560,7 +7589,7 @@
                 </table>
               </div>`).join("")}
           </div>
-        </section>` : "";
+        </details>` : "";
 
       // ---- B21 (04.10): the columns the search leaves open -------------------
       // Power, fuel, gearbox and seller only when the search does not fix
@@ -7836,7 +7865,6 @@
           <section class="mobileMarketCard mobileMarketStatsCard" aria-label="${escapeMarketHtml(c.statsHeading)}" data-report-list-hide>
             <div class="mobileMarketStatsHead">${blockTitle("percent", c.statsHeading)}${sourcesPicker}</div>
             ${statsContent}
-            ${statsMileageContent}
           </section>` : ""}
 
         <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
@@ -8799,6 +8827,16 @@
       });
     });
   });
+  analysisContent.addEventListener("toggle", (event) => {
+    if (!(event.target instanceof Element) || !event.target.matches("[data-mobile-segments]")) return;
+    segmentsOpen = event.target.open;
+    try {
+      localStorage.setItem(SEGMENTS_OPEN_KEY, segmentsOpen ? "1" : "0");
+    } catch {
+      // Remembered for this page only.
+    }
+  }, true);
+
   // The calculator's rate arrives after the page: an open analysis counts
   // "na gotowo" again with it (before, it kept the old rates-file rate).
   window.addEventListener("autogood:rates", () => {
@@ -8807,7 +8845,12 @@
   analysisOpens.forEach((button) => button.addEventListener("click", openAnalysis));
   analysisBack.addEventListener("click", closeAnalysis);
   document.querySelectorAll("[data-lang-button]").forEach((button) => {
-    button.addEventListener("click", () => requestAnimationFrame(renderMarketTranslations));
+    button.addEventListener("click", () => {
+      // The favourites bar shows the list of the new check language.
+      favoritesLang = button.dataset.langButton === "ru" ? "ru" : "pl";
+      renderFavoritesBar();
+      requestAnimationFrame(renderMarketTranslations);
+    });
   });
 
   // ---- Pages -----------------------------------------------------------
@@ -8970,9 +9013,18 @@
       }
       return;
     }
+    const langButton = event.target.closest("[data-mobile-favorites-lang]");
+    if (langButton) {
+      favoritesLang = langButton.dataset.mobileFavoritesLang;
+      renderFavoritesBar();
+      return;
+    }
     const favorite = event.target.closest("[data-mobile-market-favorite]");
     if (!favorite) return;
     const id = favorite.dataset.mobileMarketFavorite;
+    // A favourite of the other language opens the check in its language.
+    const favoriteLang = marketHistory.find((item) => item.id === id)?.lang || "pl";
+    if (favoriteLang !== currentLanguage()) document.querySelector(`.mobileTopbar [data-lang-button="${favoriteLang}"]`)?.click();
     // The picked favourite clicked again lets it go and clears this page.
     if (event.currentTarget === favoritesBar && id === selectedFavorite()?.id) {
       releaseSelectedFavorite();
