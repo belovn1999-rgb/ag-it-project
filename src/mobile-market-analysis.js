@@ -271,7 +271,7 @@
       trendTitle: "Mediana ceny w czasie",
       trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
       adPrice: "cena w ogłoszeniu",
-      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu\n+ Przeciętnego kosztu oględzin\n+ Akcyzy według rodzaju i pojemności silnika\n+ Tłumaczeń dokumentów\n+ Przeglądu technicznego\n+ Stałego wynagrodzenia AUTOGOOD.\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
+      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu — ok. {transport} netto\n+ Przeciętnego kosztu oględzin — ok. {inspection} netto\n+ Akcyzy według rodzaju i pojemności silnika — 3,1% (do 2000 cm³), 18,6% (powyżej 2000 cm³), hybryda 1,55% / 9,3%, elektryczny i plug-in do 2000 cm³ 0%\n+ Tłumaczeń dokumentów — 250 zł\n+ Przeglądu technicznego — 150 zł\n+ Stałego wynagrodzenia AUTOGOOD — 1 829,27 zł + 1% ceny auta, netto (+ VAT 23%).\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
       conclusionHeading: "Wniosek",
       conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce.",
       conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce.",
@@ -419,7 +419,14 @@
       tableYear: "Rok",
       tableMileage: "Przebieg",
       tableOpen: "Otwórz",
-      tableSortHint: "Kliknij nagłówek, aby posortować.",
+      tableSortLabel: "Sortuj",
+      sortPriceAsc: "Cena: od najniższej",
+      sortPriceDesc: "Cena: od najwyższej",
+      sortYearDesc: "Rok: od najnowszych",
+      sortYearAsc: "Rok: od najstarszych",
+      sortMileageAsc: "Przebieg: od najmniejszego",
+      sortMileageDesc: "Przebieg: od największego",
+      sortDeviationAsc: "Najtańsze względem mediany",
       segmentsHeading: "Cena a parametry",
       statsMileageHeading: "Cena a przebieg",
       segmentYear: "Rok produkcji",
@@ -840,7 +847,7 @@
       trendTitle: "Медиана цены во времени",
       trendNeedsTwo: "График появится после второго замера цен.",
       adPrice: "цена в объявлении",
-      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки\n+ Средней стоимости осмотра\n+ Акциза по типу и объёму двигателя\n+ Переводов документов\n+ Техосмотра\n+ Фиксированного вознаграждения AUTOGOOD.\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
+      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки — ок. {transport} нетто\n+ Средней стоимости осмотра — ок. {inspection} нетто\n+ Акциза по типу и объёму двигателя — 3,1% (до 2000 см³), 18,6% (больше 2000 см³), гибрид 1,55% / 9,3%, электромобиль и plug-in до 2000 см³ 0%\n+ Переводов документов — 250 PLN\n+ Техосмотра — 150 PLN\n+ Фиксированного вознаграждения AUTOGOOD — 1 829,27 PLN + 1% цены авто, нетто (+ VAT 23%).\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
       conclusionHeading: "Вывод",
       conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше.",
       conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше.",
@@ -988,7 +995,14 @@
       tableYear: "Год",
       tableMileage: "Пробег",
       tableOpen: "Открыть",
-      tableSortHint: "Нажми на заголовок, чтобы отсортировать.",
+      tableSortLabel: "Сортировка",
+      sortPriceAsc: "Цена: сначала дешёвые",
+      sortPriceDesc: "Цена: сначала дорогие",
+      sortYearDesc: "Год: сначала новые",
+      sortYearAsc: "Год: сначала старые",
+      sortMileageAsc: "Пробег: сначала меньший",
+      sortMileageDesc: "Пробег: сначала больший",
+      sortDeviationAsc: "Дешевле всего к медиане",
       segmentsHeading: "Цена и параметры",
       statsMileageHeading: "Цена и пробег",
       segmentYear: "Год выпуска",
@@ -1111,11 +1125,11 @@
       lowMarket: "Низ рынка",
       middleMarket: "Средние цены",
       highMarket: "Верх рынка",
-      count: "Объяв\u00adлений",
+      count: "Кол-во",
       minimum: "Самое дешёвое объявление",
       median: "Медиана",
       middleRange: "Средние цены (P25–P75)",
-      middleOffers: "В диапа\u00adзоне",
+      middleOffers: "В середине",
       sampleDate: "Цены объявлений · данные на {date}",
       limitedSample: "Маленькая выборка: типичная цена может быть нестабильной. Для оценки автомобиля нужно минимум 8 объявлений.",
       priceFilterWarning: "Фильтр цены ограничивает сравнение. Уберите его, чтобы оценить весь рынок.",
@@ -1373,12 +1387,13 @@
     const names = countries.map((code) => window.AUTOGOOD_COUNTRY_NAME?.(code) || code);
     const flags = countries.map((code) => window.AUTOGOOD_FLAG?.(code) || "").join("");
     const label = `${names.join(", ")} — ${on ? c.marketGroupOff : c.marketGroupOn}`;
+    // The head itself switches the country (owner 2026-10-05: no knob, a
+    // country is simply on or grey).
     return `
-      <div class="agMarketColumnHead">
+      <button class="agMarketColumnHead isToggle" type="button" role="switch" aria-checked="${on ? "true" : "false"}" ${switchAttribute}="${group.key}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">
         <span class="agMarketColumnFlags">${flags}</span>
         <b class="agMarketColumnName">${escapeMarketHtml(names.join(" · "))}</b>
-        <button class="agMarketSwitch" type="button" role="switch" aria-checked="${on ? "true" : "false"}" ${switchAttribute}="${group.key}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}"></button>
-      </div>`;
+      </button>`;
   }
 
   // A switched-on column shows all its portals (a grey one is off: its logo
@@ -1527,12 +1542,26 @@
   // One item per line; the term in bold, the closing sentence (contact us)
   // in italics.
   function turnkeyFootnoteHtml(text) {
-    const lines = String(text || "").split("\n");
+    // The average transport and inspection from turnkey-estimate.js, so the
+    // note and the calculation never differ.
+    const turnkey = window.AUTOGOOD_TURNKEY || {};
+    const lines = String(text || "")
+      .replace("{transport}", formatMarketPrice(turnkey.AVERAGE_TRANSPORT_NETTO || 2500, "PLN"))
+      .replace("{inspection}", formatMarketPrice(turnkey.AVERAGE_INSPECTION_NETTO || 1500, "PLN"))
+      .split("\n");
     const contact = lines.length > 2 ? lines.pop() : "";
     const [first, ...items] = lines;
     const lead = String(first).match(/^(.*?[”»])([\s\S]*)$/);
     const head = lead ? `<b>${escapeMarketHtml(lead[1])}</b>${escapeMarketHtml(lead[2])}` : escapeMarketHtml(first);
     return [head, ...items.map(escapeMarketHtml), ...(contact ? [`<em>${escapeMarketHtml(contact)}</em>`] : [])].join("<br>");
+  }
+
+  // A price on the price scale: the number, the currency under it (owner
+  // 2026-10-05: "190 000 PLN" ran into the chart).
+  function tickPriceHtml(value) {
+    const text = formatMarketPrice(value);
+    const at = text.search(/[\s\u00a0\u202f](?=[^\d\s\u00a0\u202f]+$)/);
+    return at > 0 ? `${escapeMarketHtml(text.slice(0, at))}<small class="mobileMarketTickUnit">${escapeMarketHtml(text.slice(at + 1))}</small>` : escapeMarketHtml(text);
   }
 
   function escapeMarketHtml(value) {
@@ -7068,7 +7097,7 @@
           ${guides.map((guide) => `<div class="mobileMarketMedian isGuide is${sourceClass(guide.source)}" style="top:${verticalMarketPosition(Math.min(Math.max(guide.value, domainMinimum), domainMaximum), domainMinimum, domainMaximum)}%" aria-hidden="true"></div>`).join("")}
           ${scaleTicks.map((price) => {
             const position = verticalMarketPosition(price, domainMinimum, domainMaximum);
-            return `<div class="mobileMarketGridLine" style="top:${position}%"></div>${price % labelStep === 0 && clearOfCar(position) ? `<span class="mobileMarketTick isGrid" style="top:${position}%">${escapeMarketHtml(formatMarketPrice(price))}</span>` : ""}`;
+            return `<div class="mobileMarketGridLine" style="top:${position}%"></div>${price % labelStep === 0 && clearOfCar(position) ? `<span class="mobileMarketTick isGrid" style="top:${position}%">${tickPriceHtml(price)}</span>` : ""}`;
           }).join("")}
           ${ticks.map((tick) => `<div class="mobileMarketGridColumn" style="--x:${tick.x.toFixed(4)}"></div>`).join("")}
           <div class="mobileMarketPlot">${trendHtml}</div>
@@ -7082,8 +7111,8 @@
           ${Math.abs(high - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${high}%">P75 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleHigh))}</span>` : ""}
           <span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>
           ${Math.abs(low - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${low}%">P25 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleLow))}</span>` : ""}
-          ${clearOfCar(95) ? `<span class="mobileMarketTick isLimit" style="top:95%">${escapeMarketHtml(formatMarketPrice(domainMinimum))}</span>` : ""}
-          ${carY !== null ? `<span class="mobileMarketTick isCarPrice" style="top:${carY}%">${escapeMarketHtml(formatMarketPrice(carScalePrice))}</span>` : ""}
+          ${clearOfCar(95) ? `<span class="mobileMarketTick isLimit" style="top:95%">${tickPriceHtml(domainMinimum)}</span>` : ""}
+          ${carY !== null ? `<span class="mobileMarketTick isCarPrice" style="top:${carY}%">${tickPriceHtml(carScalePrice)}</span>` : ""}
           ${top ? `<span class="mobileMarketTick isLimit isPeak${top.x > 0.85 ? " isPeakRight" : ""}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : ""}
         </div>
         <div class="mobileMarketXAxis">
@@ -7610,7 +7639,14 @@
       const fuelText = (listing) => c.fuelShort[fuelKind(listing.fuel)] || "—";
       const gearboxText = (listing) => c.gearboxShort[listing.gearbox] || "—";
       const sellerText = (listing) => (listing.seller === "dealer" ? c.sellerDealer : listing.seller === "private" ? c.sellerPrivate : "—");
-      const placeText = (listing) => [listing.city, listing.country && !["PL", "SE", "BY"].includes(listing.country) ? listing.country : ""].filter(Boolean).join(", ") || "—";
+      const placeText = (listing) => listing.city || "";
+      // The country of the offer (the seller's, else its market's) as a flag.
+      const placeFlag = (listing) => {
+        const code = String(listing.country || window.AUTOGOOD_MARKET_COUNTRY?.[listing.source] || "").toUpperCase();
+        const flag = code ? window.AUTOGOOD_FLAG?.(code) || "" : "";
+        return flag ? `<span class="mobileMarketPlaceFlag" title="${escapeMarketHtml(window.AUTOGOOD_COUNTRY_NAME?.(code) || code)}">${flag}</span>` : "";
+      };
+      const placeHtml = (listing) => `${escapeMarketHtml(placeText(listing) || (placeFlag(listing) ? "" : "—"))}${placeFlag(listing)}`;
       const deviationText = (listing) => (sourceMedian[listing.source] ? percentFrom(listing.price, sourceMedian[listing.source]) : "—");
       const priceHtml = (listing) => (listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln
         ? `<b class="mobileMarketTurnkeyPrice">${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
@@ -7628,8 +7664,9 @@
         ["price", c.tablePrice, true, "isNum", byMode ? 24 : 16],
         ["deviation", c.tableDeviation, true, "isNum", 8],
         // The seller with the town under it (or the town alone).
-        ...(extra.seller || extra.place ? [["seller", extra.seller ? c.tableSeller : c.tablePlace, false, "", 11]] : []),
-        ["source", c.tableSource, false, "", 9],
+        // The seller with the town under it, the country's flag after the
+        // town (owner 2026-10-05: no "Rynek" column).
+        ["seller", extra.seller ? c.tableSeller : c.tablePlace, false, "", 12],
         ["link", c.tableLink, false, "mobileMarketTableLinkHead", 5],
       ];
       const weights = tableColumns.reduce((sum, column) => sum + column[4], 0);
@@ -7712,9 +7749,8 @@
           case "price": return priceHtml(listing);
           case "deviation": return escapeMarketHtml(deviationText(listing));
           case "seller": return extra.seller
-            ? `${escapeMarketHtml(sellerText(listing))}${listing.city ? `<small>${escapeMarketHtml(placeText(listing))}</small>` : ""}`
-            : escapeMarketHtml(placeText(listing));
-          case "source": return marketBadge(listing.source);
+            ? `${escapeMarketHtml(sellerText(listing))}<small>${placeHtml(listing)}</small>`
+            : placeHtml(listing);
           case "link": return listing.url ? brandMarkLink(listing.portal || listing.source, listing.url, `${c.tableOpen}: ${sourceName(listing.portal || listing.source)}`) : "—";
           default: return "";
         }
@@ -7735,7 +7771,12 @@
             <div class="mobileMarketTableTools" data-report-hide>
               <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-list-screenshot>${escapeMarketHtml(c.listScreenshotButton)}</button>
               <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-list-pdf>${escapeMarketHtml(c.listPdfButton)}</button>
-              <span class="mobileMarketSortHint">${escapeMarketHtml(c.tableSortHint)}</span>
+              <label class="mobileMarketSortPick">
+                <span>${escapeMarketHtml(c.tableSortLabel)}</span>
+                <select data-mobile-market-sort-select aria-label="${escapeMarketHtml(c.tableSortLabel)}">
+                  ${[["price", "asc", c.sortPriceAsc], ["price", "desc", c.sortPriceDesc], ["year", "desc", c.sortYearDesc], ["year", "asc", c.sortYearAsc], ["mileage", "asc", c.sortMileageAsc], ["mileage", "desc", c.sortMileageDesc], ["deviation", "asc", c.sortDeviationAsc]].map(([key, direction, label]) => `<option value="${key}:${direction}"${tableSort.key === key && tableSort.direction === direction ? " selected" : ""}>${escapeMarketHtml(label)}</option>`).join("")}
+                </select>
+              </label>
             </div>
           </div>
           <div class="mobileMarketTableFind" data-report-hide>
@@ -8841,6 +8882,13 @@
   // "na gotowo" again with it (before, it kept the old rates-file rate).
   window.addEventListener("autogood:rates", () => {
     if (activeAnalysis) renderAnalysis();
+  });
+  analysisContent.addEventListener("change", (event) => {
+    const pick = event.target.closest?.("[data-mobile-market-sort-select]");
+    if (!pick) return;
+    const [key, direction] = pick.value.split(":");
+    tableSort = { key, direction };
+    renderAnalysis();
   });
   analysisOpens.forEach((button) => button.addEventListener("click", openAnalysis));
   analysisBack.addEventListener("click", closeAnalysis);
