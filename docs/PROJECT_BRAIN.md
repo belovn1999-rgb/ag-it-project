@@ -71,6 +71,7 @@
 
 ## 8. Журнал
 
+- 2026-10-05 — mobile.html, B11: свой прокси на Cloudflare Workers (`ag-proxy.autogood-crm.workers.dev`) — otomoto, AutoScout24, Blocket, Marktplaats, 2dehands, Kleinanzeigen через него в 2–3 раза быстрее без лимита 18/мин, `r.jina.ai` запасной; mobile.de Worker не пускает; замеры — PROJECT-MOBILE.md §4.9 (Claude).
 - 2026-10-05 — mobile.html, B73: план постоянной инфраструктуры порталов — Worker-прокси + Chrome-узел mobile.de через постоянный туннель + база Cloudflare для Monitoring, личные ключи сотрудников, очередь и кэш; варианты с ценами, рекомендация «Cloudflare + Mac mini в офисе»; ждёт решений владельца (`docs/PORTAL-INFRASTRUCTURE.md`) (Claude).
 - 2026-10-05 — mobile.html, B47: La Centrale пускает только человека в обычном Chrome, Chrome импортера блокирует DataDome; обход защиты не делаем — закладка или партнёрский доступ, пока ParuVendu (Claude).
 - 2026-10-05 — mobile.html, Monitoring (B72): ряд стран над плитками порталов, «Aktualne» вместо «Pełna lista», числа по выбранной стране и порталу, список по 100 машин (Claude).

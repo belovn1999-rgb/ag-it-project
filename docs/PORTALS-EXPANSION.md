@@ -48,7 +48,13 @@ LU 322 · **FR 1 884** · SE 0.
 
 ## 3. Порядок добавления (предложение, утверждает владелец)
 
-0. **B11 — свой прокси (Cloudflare Worker).** Почти все новые порталы браузер не
+0. ✅ **B11 — свой прокси (Cloudflare Worker)** — сделано 10-05 (`PROJECT-MOBILE.md` §4.9,
+   замеры по порталам там же): willhaben, Marktplaats, 2dehands/2ememain, AutoScout24,
+   otomoto, Blocket читаются через Worker; Kleinanzeigen — с отказами части адресов
+   (они идут через `r.jina.ai`); mobile.de Worker не пускает. Новый портал — добавить
+   хост в белый список Worker (`server/cloudflare-proxy/worker.js`, затем Deploy в
+   дашборде) и в `WORKER_HOSTS` (`src/market-proxy-queue.js`) после замера.
+   Было: почти все новые порталы браузер не
    может читать напрямую (нет CORS: проверено на Marktplaats), а бесплатный
    `r.jina.ai` пропускает ~20 страниц в минуту на всё сразу. Без своего прокси каждый
    новый портал замедляет и ломает остальные. Нужен бесплатный аккаунт Cloudflare
