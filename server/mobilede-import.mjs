@@ -1283,6 +1283,167 @@ async function searchMobileDe(searchUrl, { countOnly = false, pages = 8, newest 
   return value;
 }
 
+// ---- The whole ad for the client offer (oferta.html, B71) -----------------
+// mobile.de's ad page carries its data in the Next.js flight payload
+// (self.__next_f.push chunks): photos, every technical attribute, the ticked
+// equipment, the seller with its rating and "Bei mobile.de seit", the dates,
+// mobile.de's own price rating, and flags such as a sale on a customer's
+// behalf or an ad copied from a partner portal. The description is a text
+// row of the same payload ("$44" → "44:T<byte length in hex>,<html>").
+function readFlightPayload(html) {
+  let payload = "";
+  for (const match of String(html || "").matchAll(/self\.__next_f\.push\(\[1,("(?:[^"\\]|\\.)*")\]\)/g)) {
+    try {
+      payload += JSON.parse(match[1]);
+    } catch {
+      // A chunk that is not a plain string is skipped.
+    }
+  }
+  return payload;
+}
+
+function balancedJsonAt(text, start) {
+  let depth = 0;
+  let quoted = false;
+  let escaped = false;
+  for (let index = start; index < text.length; index += 1) {
+    const char = text[index];
+    if (quoted) {
+      if (escaped) escaped = false;
+      else if (char === "\\") escaped = true;
+      else if (char === '"') quoted = false;
+      continue;
+    }
+    if (char === '"') quoted = true;
+    else if (char === "{") depth += 1;
+    else if (char === "}" && --depth === 0) return text.slice(start, index + 1);
+  }
+  return "";
+}
+
+function flightTextRow(payload, reference) {
+  const id = String(reference || "").replace(/^\$/, "");
+  if (!/^[0-9a-f]{1,6}$/i.test(id)) return "";
+  const match = new RegExp(`(?:^|\\n)${id}:T([0-9a-f]+),`).exec(payload);
+  if (!match) return "";
+  const bytes = parseInt(match[1], 16);
+  const start = match.index + match[0].length;
+  // The length counts UTF-8 bytes: take enough characters, then cut the bytes.
+  return Buffer.from(payload.slice(start, start + bytes), "utf8").subarray(0, bytes).toString("utf8");
+}
+
+function extractAdDetails(html) {
+  const payload = readFlightPayload(html);
+  const at = payload.indexOf('{"eventScope":"page-vip","listing":');
+  if (at < 0) return null;
+  const listing = JSON.parse(balancedJsonAt(payload, at) || "{}")?.listing;
+  if (!listing) return null;
+  const contact = listing.contact || {};
+  const rating = contact.rating || null;
+  const description = String(listing.htmlDescription || "").startsWith("$")
+    ? flightTextRow(payload, listing.htmlDescription)
+    : String(listing.htmlDescription || "");
+  const ai = listing.aiSummary || null;
+  return {
+    id: String(listing.id || ""),
+    title: String(listing.title || ""),
+    images: (listing.images || [])
+      .map((image) => String(image?.uri || "").replace(/^https?:\/\//, ""))
+      .filter((uri) => /^img\.classistatic\.de\//.test(uri))
+      .map((uri) => `https://${uri}?rule=mo-1024`)
+      .slice(0, 40),
+    attributes: Object.fromEntries((listing.attributes || [])
+      .filter((item) => item?.tag && !String(item.tag).startsWith("envkv"))
+      .map((item) => [item.tag, Array.isArray(item.value) ? item.value.join(", ") : String(item.value ?? "")])),
+    features: (listing.features || []).map((item) => String(item)).filter(Boolean),
+    description: description.slice(0, 30000),
+    contact: {
+      type: String(contact.enumType || ""),
+      name: String(contact.name || ""),
+      address1: String(contact.address1 || ""),
+      address2: String(contact.address2 || ""),
+      country: String(contact.country || ""),
+      languages: String(contact.languages || ""),
+      since: String(contact.withMobileSince || ""),
+      homepageUrl: String(contact.homepageUrl || ""),
+      customerId: String(contact.homepageUrl || "").match(/customerId=(\d+)/)?.[1] || "",
+      rating: rating ? {
+        reviews: Number(rating.totalCount) || 0,
+        score: Number(rating.score) || 0,
+        recommend: Number.isFinite(rating.recommendationRate) ? rating.recommendationRate : null,
+        adReality: Number.isFinite(rating.adRealityRate) ? rating.adRealityRate : null,
+        link: String(rating.link || ""),
+      } : null,
+    },
+    created: Number(listing.created) || 0,
+    renewed: Number(listing.renewed) || 0,
+    modified: Number(listing.modified) || 0,
+    priceRating: listing.priceRating ? {
+      rating: String(listing.priceRating.rating || ""),
+      label: String(listing.priceRating.ratingLabel || ""),
+      thresholds: listing.priceRating.thresholdLabels || [],
+      offset: Number.isFinite(listing.priceRating.vehiclePriceOffset) ? listing.priceRating.vehiclePriceOffset : null,
+    } : null,
+    price: {
+      gross: Number(listing.price?.grs?.amount) || 0,
+      net: Number(listing.price?.nt?.amount) || 0,
+      vat: Number(listing.price?.vat) || 0,
+      currency: String(listing.price?.grs?.currency || "EUR"),
+      type: String(listing.price?.type || ""),
+    },
+    vat: String(listing.vat || ""),
+    flags: {
+      isNew: Boolean(listing.isNew),
+      isConditionNew: Boolean(listing.isConditionNew),
+      isDamageCase: listing.isDamageCase === true,
+      readyToDrive: listing.readyToDrive === true ? true : listing.readyToDrive === false ? false : null,
+      onCustomerBehalf: listing.onCustomerBehalf === true,
+      partnerName: String(listing.partnerName || ""),
+      carfaxEligible: listing.carfaxEligible === true,
+    },
+    aiSummary: ai ? {
+      tags: ai.highlights_v1?.tags || [],
+      summary: String(ai.highlights_v1?.summary || ""),
+      insights: (ai.insights_v1?.items || []).map((item) => ({ title: String(item?.title || ""), subtitle: String(item?.subtitle || "") })),
+    } : null,
+  };
+}
+
+// A dealer's mobile.de page: how many cars it sells and its stars
+// ("Autohaus S+K GmbH · 5 Sterne (34) · 46 Pkw"). Read in the importer's
+// Chrome like the ads; kept for half a day.
+const dealerCache = new Map();
+const DEALER_CACHE_MS = 12 * 60 * 60 * 1000;
+async function readMobileDeDealer(customerId) {
+  const cached = dealerCache.get(customerId);
+  if (cached && Date.now() - cached.at < DEALER_CACHE_MS) return cached.value;
+  const page = await withBackgroundPage(`https://home.mobile.de/home/redirect.html?customerId=${customerId}`, async (evaluate) => {
+    for (let attempt = 1; attempt <= 30; attempt += 1) {
+      await delay(600);
+      try {
+        const ready = await evaluate("document.readyState === 'complete' && document.body && /\\d\\s+(?:Pkw|Fahrzeuge)/.test(document.body.innerText)", 5000);
+        if (ready) break;
+      } catch {
+        // Still loading.
+      }
+    }
+    return evaluate("JSON.stringify({ href: location.href, title: document.title, text: (document.body && document.body.innerText || '').slice(0, 6000) })", 8000);
+  });
+  const { href = "", title = "", text = "" } = JSON.parse(page || "{}");
+  if (/Zugriff verweigert|Access denied/i.test(text)) throw new Error("Mobile.de returned Access denied");
+  const number = (value) => Number(String(value || "").replace(/\./g, "")) || 0;
+  const value = {
+    customerId,
+    url: href,
+    name: title.replace(/\s+in\s+[^|]+$/, "").trim(),
+    vehicles: number(text.match(/(\d[\d.]*)\s+Pkw\b/)?.[1]) || number(text.match(/(\d[\d.]*)\s+Fahrzeuge\b/)?.[1]) || null,
+    score: Number(String(text.match(/(\d(?:[.,]\d)?)\s+Sterne?/)?.[1] || "").replace(",", ".")) || null,
+    reviews: number(text.match(/Sterne?\s*\((\d[\d.]*)\)/)?.[1]) || null,
+  };
+  dealerCache.set(customerId, { at: Date.now(), value });
+  return value;
+}
+
 function isMobileDeSearchUrl(value) {
   try {
     const url = new URL(value);
@@ -1327,6 +1488,15 @@ export async function handleMobiledeImport(request, response) {
       return sendJson(response, 502, { error: "Could not read Mobile.de search", detail: error.message, searchUrl });
     }
   }
+  if (requestUrl.pathname === "/mobilede/dealer") {
+    const customerId = requestUrl.searchParams.get("customerId") || "";
+    if (!/^\d{3,12}$/.test(customerId)) return sendJson(response, 400, { error: "Expected a mobile.de customerId" });
+    try {
+      return sendJson(response, 200, await withMobileDeAccess(() => readMobileDeDealer(customerId)));
+    } catch (error) {
+      return sendJson(response, 502, { error: "Could not read the mobile.de dealer page", detail: error.message, customerId });
+    }
+  }
   if (requestUrl.pathname !== "/mobilede/import") {
     return sendJson(response, 404, { error: "Not found" });
   }
@@ -1366,6 +1536,13 @@ export async function handleMobiledeImport(request, response) {
     const condition = technicalValue(html, "damageCondition");
     const drive = extractDrive(html, equipment, title);
     const deliveryInspectionEstimate = estimateDeliveryAndInspectionNettoPln(bodyType, location);
+    // Never in the way of the import: an ad page in another shape gives none.
+    let ad = null;
+    try {
+      ad = extractAdDetails(html);
+    } catch {
+      ad = null;
+    }
 
     if (!carBruttoEur) throw new Error("Price not found");
 
@@ -1374,6 +1551,7 @@ export async function handleMobiledeImport(request, response) {
       normalizedUrl: urlInfo.requestUrl,
       adId: urlInfo.adId,
       importMode: mode,
+      ad,
       carBruttoEur,
       carNettoEur: carNettoEur || null,
       purchaseType,

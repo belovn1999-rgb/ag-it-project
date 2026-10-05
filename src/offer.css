@@ -1,0 +1,510 @@
+/* AUTOGOOD "Oferta dla klienta" (B71) — oferta.html.
+ * Two A4 sheets (794 × 1123 px at 96 dpi) on a grey desk, the manager's panel
+ * on the right. Colours are literal hex: the picture/PDF capture draws the
+ * page itself, and oklch() values break it (see the calculators' history). */
+:root {
+  --of-ink: #17222c;
+  --of-text: #2b3640;
+  --of-muted: #5b6a78;
+  --of-faint: #8794a1;
+  --of-line: #e2e8ee;
+  --of-line-strong: #cfd8e1;
+  --of-soft: #f4f7fa;
+  --of-navy: #0f3d5e;
+  --of-brand: #145a85;
+  --of-brand-soft: #e6eff6;
+  --of-green: #1d6a3b;
+  --of-green-bg: #e8f4ec;
+  --of-green-line: #c9e3d2;
+  --of-amber: #855700;
+  --of-amber-bg: #fbf1dc;
+  --of-amber-line: #f0dcb0;
+  --of-red: #a12b2b;
+  --of-red-bg: #fbeaea;
+  --of-red-line: #f1c9c9;
+  --of-desk: #e6ebf0;
+  --of-page-w: 794px;
+  --of-page-h: 1123px;
+  --of-scale: 1;
+  --of-font: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+.offerBody {
+  margin: 0;
+  background: var(--of-desk);
+  color: var(--of-ink);
+  font-family: var(--of-font);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---- Manager's frame (screen only) ------------------------------------- */
+.offerBar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 20px;
+  background: #ffffff;
+  border-bottom: 1px solid var(--of-line-strong);
+}
+.offerBack {
+  color: var(--of-brand);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.offerBack:hover { text-decoration: underline; }
+.offerBarTitle { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.offerBarTitle b { font-size: 15px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.offerStatus { font-size: 12px; color: var(--of-muted); min-height: 16px; }
+.offerStatus.isError { color: var(--of-red); }
+.offerBarActions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+.offerButton {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--of-line-strong);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--of-ink);
+  font: 600 13px var(--of-font);
+  cursor: pointer;
+}
+.offerButton:hover { border-color: var(--of-brand); color: var(--of-brand); }
+.offerButton:focus-visible, .offerPanel :focus-visible, .ofPage :focus-visible { outline: 2px solid var(--of-brand); outline-offset: 2px; }
+.offerButton[aria-pressed="true"] { background: var(--of-brand-soft); border-color: var(--of-brand); color: var(--of-navy); }
+.offerButton.isPrimary { background: var(--of-navy); border-color: var(--of-navy); color: #ffffff; }
+.offerButton.isPrimary:hover { background: var(--of-brand); color: #ffffff; }
+.offerButton:disabled { opacity: 0.55; cursor: progress; }
+.offerButton.isSmall { min-height: 30px; padding: 0 10px; font-size: 12px; }
+
+.offerWork {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 20px;
+  padding: 20px;
+  align-items: start;
+}
+.offerStage { display: flex; flex-direction: column; align-items: center; gap: 20px; min-width: 0; }
+.offerWaiting, .offerProblem {
+  margin: 80px auto;
+  max-width: 520px;
+  padding: 20px 24px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid var(--of-line-strong);
+  color: var(--of-muted);
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+}
+.offerProblem { color: var(--of-red); text-align: left; }
+.offerProblem a { color: var(--of-brand); }
+
+/* A sheet scaled to the window, at its real size when there is room. */
+.ofSheet {
+  width: calc(var(--of-page-w) * var(--of-scale));
+  height: calc(var(--of-page-h) * var(--of-scale));
+  flex: none;
+}
+.ofSheet > .ofPage { transform: scale(var(--of-scale)); transform-origin: top left; }
+.ofSheet.isHiddenPage { opacity: 0.45; }
+
+/* ---- The document --------------------------------------------------------- */
+.ofPage {
+  position: relative;
+  width: var(--of-page-w);
+  height: var(--of-page-h);
+  padding: 34px 40px 30px;
+  background: #ffffff;
+  color: var(--of-text);
+  font-size: 12px;
+  line-height: 1.45;
+  overflow: hidden;
+  box-shadow: 0 1px 2px rgba(15, 61, 94, 0.08), 0 8px 24px rgba(15, 61, 94, 0.08);
+  display: flex;
+  flex-direction: column;
+}
+.ofPage p { margin: 0; }
+.ofPage b, .ofPage strong { font-weight: 600; color: var(--of-ink); }
+.ofPage a { color: var(--of-brand); text-decoration: none; }
+
+.ofHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-bottom: 12px;
+  border-bottom: 1.5px solid var(--of-navy);
+}
+.ofLogo { height: 30px; width: auto; display: block; }
+.ofHeadMeta { text-align: right; font-size: 11px; color: var(--of-muted); line-height: 1.5; }
+.ofHeadMeta b { color: var(--of-ink); font-weight: 600; }
+.ofPageNo { font-size: 10.5px; color: var(--of-faint); }
+
+/* Hero: the photo first, the price beside it. */
+.ofHero {
+  display: grid;
+  grid-template-columns: 1.08fr 1fr;
+  gap: 22px;
+  margin-top: 18px;
+}
+.ofPhotoColumn { display: flex; flex-direction: column; min-width: 0; }
+.ofPhoto {
+  margin: 0;
+  position: relative;
+  aspect-ratio: 3 / 2;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--of-soft);
+}
+.ofPhoto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.ofPhotoEmpty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--of-faint);
+  font-size: 11.5px;
+  text-align: center;
+  padding: 16px;
+}
+.ofPhotoEmpty svg { width: 34px; height: 34px; }
+.ofPhotoCount {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(23, 34, 44, 0.66);
+  color: #ffffff;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+.ofHeroInfo { display: flex; flex-direction: column; min-width: 0; }
+.ofKicker {
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--of-muted);
+  font-weight: 600;
+}
+.ofTitle {
+  margin: 4px 0 4px;
+  font-size: 21px;
+  line-height: 1.2;
+  font-weight: 700;
+  color: var(--of-ink);
+  letter-spacing: -0.01em;
+}
+.ofSub { color: var(--of-muted); font-size: 12px; }
+.ofPriceBox {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: var(--of-soft);
+  border: 1px solid var(--of-line);
+}
+.ofLabel { font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--of-muted); font-weight: 600; }
+.ofPrice { margin: 2px 0 0; font-size: 29px; line-height: 1.15; font-weight: 700; color: var(--of-navy); letter-spacing: -0.01em; }
+.ofPriceNote { font-size: 11px; color: var(--of-muted); margin-top: 3px; }
+.ofAdPrice { margin-top: 8px; font-size: 11.5px; color: var(--of-text); }
+.ofChips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.ofChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--of-line);
+  background: #ffffff;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--of-text);
+  line-height: 1.3;
+}
+.ofChip svg { width: 13px; height: 13px; flex: none; }
+.ofChip.isGood { background: var(--of-green-bg); border-color: var(--of-green-line); color: var(--of-green); }
+.ofChip.isWarn { background: var(--of-amber-bg); border-color: var(--of-amber-line); color: var(--of-amber); }
+.ofChip.isRisk { background: var(--of-red-bg); border-color: var(--of-red-line); color: var(--of-red); }
+.ofChip.isStrong { border-color: var(--of-brand); color: var(--of-navy); }
+.ofAdLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 9px;
+  font-size: 11.5px;
+  color: var(--of-brand);
+}
+.ofAdLink svg { width: 14px; height: 14px; flex: none; }
+.ofAdLink small { display: block; color: var(--of-muted); font-size: 10.5px; }
+
+/* Key data: one row of labelled values. */
+.ofSpecs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px 14px;
+  margin-top: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--of-line);
+  border-bottom: 1px solid var(--of-line);
+}
+.ofSpec { min-width: 0; }
+.ofSpec span { display: block; font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--of-faint); font-weight: 600; }
+.ofSpec b { display: block; font-size: 12.5px; font-weight: 600; color: var(--of-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.ofGrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-top: 14px; }
+.ofGrid.isWide { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+.ofCard {
+  position: relative;
+  border: 1px solid var(--of-line);
+  border-radius: 12px;
+  padding: 13px 15px 14px;
+  min-width: 0;
+}
+.ofCard.isFull { margin-top: 14px; }
+.ofCardHead {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 9px;
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--of-navy);
+  font-weight: 700;
+}
+.ofCardHead svg { width: 15px; height: 15px; color: var(--of-brand); flex: none; }
+.ofSmall { font-size: 10.5px; color: var(--of-muted); }
+.ofLine + .ofLine { margin-top: 5px; }
+
+/* Price against the market: the typical band, the median, this car. */
+.ofBar { position: relative; height: 34px; margin: 4px 6px 2px; }
+.ofBarTrack { position: absolute; left: 0; right: 0; top: 15px; height: 4px; border-radius: 2px; background: var(--of-line); }
+.ofBarBand { position: absolute; top: 12px; height: 10px; border-radius: 3px; background: #cfe0ec; }
+.ofBarMedian { position: absolute; top: 8px; width: 2px; height: 18px; margin-left: -1px; background: var(--of-navy); }
+.ofBarCar {
+  position: absolute;
+  top: 9px;
+  width: 16px;
+  height: 16px;
+  margin-left: -8px;
+  border-radius: 50%;
+  background: var(--of-green);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--of-green);
+}
+.ofBarCar.isDear { background: var(--of-amber); box-shadow: 0 0 0 1px var(--of-amber); }
+.ofBarLegend { display: flex; justify-content: space-between; gap: 8px; font-size: 10.5px; color: var(--of-muted); }
+.ofBarLegend b { color: var(--of-ink); }
+.ofBarLegend .isCar { color: var(--of-green); font-weight: 700; }
+.ofMarketLead { margin-top: 9px; font-size: 12px; }
+.ofMarketLead b { color: var(--of-green); }
+.ofPoland { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--of-line); font-size: 11.5px; }
+
+/* Verdict: a seal and the checks. */
+.ofVerdict {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.ofVerdict svg { width: 14px; height: 14px; }
+.ofVerdict.isOk { background: var(--of-green-bg); color: var(--of-green); }
+.ofVerdict.isCheck { background: var(--of-amber-bg); color: var(--of-amber); }
+.ofVerdict.isRisk { background: var(--of-red-bg); color: var(--of-red); }
+.ofChecks { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; }
+.ofCheck { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 6px; align-items: start; font-size: 11.5px; line-height: 1.4; }
+.ofCheck svg { width: 14px; height: 14px; margin-top: 1.5px; }
+.ofCheck.isOk svg { color: var(--of-green); }
+.ofCheck.isWarn svg { color: var(--of-amber); }
+.ofCheck.isRisk svg { color: var(--of-red); }
+.ofCheck.isRisk { color: var(--of-red); font-weight: 600; }
+.ofCheck.isInfo svg { color: var(--of-faint); }
+.ofCheck q { display: block; quotes: "„" "”"; color: var(--of-muted); font-size: 10.5px; font-style: italic; margin-top: 1px; }
+.ofInspect { margin-top: 9px; padding-top: 8px; border-top: 1px dashed var(--of-line); font-size: 10.5px; color: var(--of-muted); }
+
+/* Equipment chips. */
+.ofOptions { display: flex; flex-wrap: wrap; gap: 5px; }
+.ofOption { padding: 4px 9px; border-radius: 999px; background: var(--of-brand-soft); color: var(--of-navy); font-size: 11px; font-weight: 600; }
+.ofOptionsMore { margin-top: 7px; font-size: 10.5px; color: var(--of-muted); }
+.ofAllOptions { columns: 4; column-gap: 16px; font-size: 10.5px; line-height: 1.5; color: var(--of-text); margin: 0; padding: 0; list-style: none; }
+.ofAllOptions li { break-inside: avoid; padding-left: 10px; position: relative; }
+.ofAllOptions li::before { content: ""; position: absolute; left: 0; top: 0.62em; width: 4px; height: 4px; border-radius: 50%; background: var(--of-line-strong); }
+.ofAllOptions li.isStrong { font-weight: 600; color: var(--of-navy); }
+.ofAllOptions li.isStrong::before { background: var(--of-brand); }
+.ofAllOptions li.isMore { color: var(--of-muted); font-style: italic; }
+.ofAllOptions li.isMore::before { display: none; }
+.isScreen .ofPage.isOverflow { outline: 2px solid var(--of-red); outline-offset: 4px; }
+
+/* Seller. */
+.ofSellerName { font-size: 13px; font-weight: 700; color: var(--of-ink); }
+.ofStars { display: inline-flex; align-items: center; gap: 4px; color: var(--of-ink); font-weight: 600; }
+.ofStars svg { width: 13px; height: 13px; color: #c99a1c; }
+.ofFacts { display: flex; flex-wrap: wrap; gap: 4px 12px; margin-top: 5px; font-size: 11px; color: var(--of-muted); }
+.ofFacts span b { color: var(--of-ink); }
+.ofAdAge { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--of-line); font-size: 11.5px; }
+
+/* Costs: every line of the calculator. */
+.ofCosts { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ofCosts td { padding: 5px 0; border-bottom: 1px solid var(--of-line); vertical-align: top; }
+.ofCosts td:last-child { text-align: right; white-space: nowrap; padding-left: 12px; font-variant-numeric: tabular-nums; }
+.ofCosts td small { display: block; color: var(--of-faint); font-size: 10.5px; }
+.ofCosts tr.isTotal td { border-bottom: 0; padding-top: 10px; font-size: 13px; font-weight: 700; color: var(--of-navy); }
+.ofCosts tr.isTotal td:last-child { font-size: 18px; }
+.ofMethod { display: inline-block; margin-bottom: 8px; padding: 3px 9px; border-radius: 999px; background: var(--of-soft); border: 1px solid var(--of-line); font-size: 11px; font-weight: 600; color: var(--of-text); }
+
+/* Negotiation. */
+.ofBig { font-size: 26px; font-weight: 700; color: var(--of-navy); line-height: 1.1; }
+.ofReasons { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 4px; font-size: 11.5px; }
+.ofReasons li { padding-left: 12px; position: relative; }
+.ofReasons li::before { content: ""; position: absolute; left: 0; top: 0.6em; width: 5px; height: 5px; border-radius: 50%; background: var(--of-brand); }
+
+/* Process. */
+.ofSteps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; counter-reset: step; }
+.ofStep { position: relative; padding-top: 30px; font-size: 11px; line-height: 1.4; }
+.ofStep::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--of-navy);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ofStep::after { content: ""; position: absolute; top: 11px; left: 28px; right: -6px; height: 1px; background: var(--of-line-strong); }
+.ofStep:last-child::after { display: none; }
+.ofStep b { display: block; font-size: 11.5px; margin-bottom: 2px; }
+
+/* Contact and the foot of each sheet. */
+.ofContact { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: center; }
+.ofAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--of-brand-soft);
+  color: var(--of-navy);
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ofContactLines { display: grid; gap: 2px; font-size: 11.5px; }
+.ofContactLines svg { width: 12px; height: 12px; vertical-align: -1.5px; margin-right: 5px; color: var(--of-brand); }
+.ofFoot {
+  margin-top: auto;
+  padding-top: 10px;
+  border-top: 1px solid var(--of-line);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-size: 10.5px;
+  color: var(--of-muted);
+}
+.ofFoot b { color: var(--of-ink); }
+.ofNote { margin-top: 12px; font-size: 10px; color: var(--of-faint); line-height: 1.5; }
+
+/* ---- Editing (screen only) ------------------------------------------------ */
+.isEditing [data-edit] { outline: 1px dashed #9fb6c8; outline-offset: 2px; border-radius: 3px; cursor: text; }
+.isEditing [data-edit]:focus { outline: 2px solid var(--of-brand); background: #fbfdff; }
+[data-edit].isEdited { box-shadow: inset 0 -2px 0 #d7c46a; }
+.ofHideToggle {
+  display: none;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 2;
+  border: 1px solid var(--of-line-strong);
+  background: #ffffff;
+  color: var(--of-muted);
+  border-radius: 6px;
+  font: 600 10.5px var(--of-font);
+  padding: 2px 7px;
+  cursor: pointer;
+}
+.isEditing .ofHideToggle { display: inline-block; }
+.ofBlockHidden { display: none; }
+.isEditing .ofBlockHidden { display: block; opacity: 0.35; }
+.isEditing .ofCheck.ofBlockHidden { display: grid; text-decoration: line-through; }
+.ofCheck .ofHideToggle { position: static; padding: 0 5px; margin-left: 4px; font-size: 10px; }
+.ofDraftBadge { display: none; margin-left: 6px; padding: 1px 6px; border-radius: 4px; background: var(--of-amber-bg); color: var(--of-amber); font-size: 9.5px; letter-spacing: 0; text-transform: none; }
+.isScreen .ofDraftBadge { display: inline; }
+
+/* ---- Panel ------------------------------------------------------------------ */
+.offerPanel {
+  position: sticky;
+  top: 76px;
+  max-height: calc(100vh - 96px);
+  overflow: auto;
+  display: grid;
+  gap: 14px;
+  font-size: 13px;
+}
+.ofPanelCard { background: #ffffff; border: 1px solid var(--of-line-strong); border-radius: 12px; padding: 14px 16px; display: grid; gap: 10px; }
+.ofPanelCard h2 { margin: 0; font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--of-navy); }
+.ofPanelCard p { margin: 0; color: var(--of-muted); font-size: 12.5px; line-height: 1.45; }
+.ofPanelCard label { display: grid; gap: 4px; font-size: 12px; color: var(--of-muted); font-weight: 600; }
+.ofPanelCard input, .ofPanelCard select, .ofPanelCard textarea {
+  width: 100%;
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid var(--of-line-strong);
+  border-radius: 7px;
+  font: 400 13px var(--of-font);
+  color: var(--of-ink);
+  background: #ffffff;
+}
+.ofPanelRow { display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 8px; }
+.ofToggleList { display: grid; gap: 6px; }
+.ofToggleList label { display: flex; align-items: center; gap: 8px; font-weight: 500; color: var(--of-ink); }
+.ofToggleList input { width: auto; min-height: 0; }
+.ofPanelCard details { font-size: 12.5px; }
+.ofPanelCard summary { cursor: pointer; font-weight: 600; color: var(--of-ink); }
+.ofDescription { white-space: pre-wrap; max-height: 260px; overflow: auto; margin-top: 8px; padding: 8px; background: var(--of-soft); border-radius: 8px; font-size: 12px; color: var(--of-text); }
+.ofPanelError { color: var(--of-red) !important; }
+.ofPanelOk { color: var(--of-green) !important; }
+
+/* ---- Narrow windows: the panel under the sheets. --------------------------- */
+@media (max-width: 1180px) {
+  .offerWork { grid-template-columns: minmax(0, 1fr); }
+  .offerPanel { position: static; max-height: none; overflow: visible; }
+}
+@media (max-width: 640px) {
+  .offerBar { flex-wrap: wrap; padding: 10px 12px; }
+  .offerWork { padding: 12px; }
+  .offerBarActions { width: 100%; justify-content: stretch; }
+  .offerBarActions .offerButton { flex: 1; }
+}
+
+/* ---- Printing: the sheets alone, one per page. ------------------------------ */
+@page { size: A4; margin: 0; }
+@media print {
+  .offerBody { background: #ffffff; }
+  [data-offer-hide], .ag-global-nav, .agGlobalNav, header.agNav { display: none !important; }
+  .offerWork { display: block; padding: 0; }
+  .offerStage { display: block; }
+  .ofSheet { width: auto; height: auto; }
+  .ofSheet > .ofPage { transform: none; box-shadow: none; break-after: page; }
+  .ofSheet.isHiddenPage { display: none; }
+  .ofHideToggle, .ofDraftBadge { display: none !important; }
+  .isEditing [data-edit] { outline: none; }
+}

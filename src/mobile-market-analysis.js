@@ -183,6 +183,7 @@
       monitoringCountriesTitle: "Kraje i portale · cena auta brutto (puste = z filtrów)",
       monitoringDone: "Gotowe",
       monitoringCalc: "Oblicz na gotowo",
+      monitoringOffer: "Przygotuj ofertę",
       monitoringViewExtra: "Dodatkowe (blisko filtrów)",
       monitoringExtraTitle: "Oferty dodatkowe",
       monitoringExtraHint: "Auta, które minimalnie nie mieszczą się w JEDNYM filtrze: przebieg, cena lub moc o kilka procent, rok o jeden (tylko w tej samej generacji) albo brak jednej z wybranych opcji. Pokazywane osobno, z zaznaczeniem, czym się różnią.",
@@ -782,6 +783,7 @@
       monitoringCountriesTitle: "Страны и порталы · цена авто брутто (пусто = из фильтров)",
       monitoringDone: "Готово",
       monitoringCalc: "Посчитать под ключ",
+      monitoringOffer: "Подготовить оффер",
       monitoringViewExtra: "Дополнительные (рядом с фильтрами)",
       monitoringExtraTitle: "Дополнительные предложения",
       monitoringExtraHint: "Авто, которые чуть-чуть не проходят ОДИН фильтр: пробег, цена или мощность на несколько процентов, год на один (только в той же генерации) или нет одной из выбранных опций. Показываются отдельно, с пометкой, чем отличаются.",
@@ -5481,7 +5483,7 @@
               ${withStatus ? `<td><span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status] || "")}</span></td>` : ""}
               <td class="mobileMonitoringStarCell"><button class="mobileMonitoringStar${isSaved ? " isOn" : ""}" type="button" data-monitoring-save="${escapeMarketHtml(row.offer.key)}" aria-pressed="${isSaved ? "true" : "false"}" title="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}" aria-label="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}">${isSaved ? "★" : "☆"}</button></td>
               <td class="mobileMarketTableTitle">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.gone ? "" : dealBadge(row.offer)}${row.isNew ? ` <span class="mobileMarketOfferStatus isNew">${escapeMarketHtml(c.offerNew)}</span>` : ""}${row.offer.miss ? `<small class="mobileMonitoringMiss" title="${escapeMarketHtml(row.offer.miss.kind === "options" ? c.monitoringMissOptionsTitle : c.monitoringMissTitle)}">≈ ${escapeMarketHtml(nearMissText(row.offer.miss))}</small>` : ""}<small class="mobileMonitoringMeta">${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.gone ? "" : dropLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}<button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button></td>
-              <td class="isNum">${priceCell(row.offer, row.source)}${!row.gone && window.AUTOGOOD_CALC_POPUP?.importable(row.source) ? `<button class="agCalcButton" type="button" data-monitoring-calc="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringCalc)}</button>` : ""}</td>
+              <td class="isNum">${priceCell(row.offer, row.source)}${!row.gone && window.AUTOGOOD_CALC_POPUP?.importable(row.source) ? `<button class="agCalcButton" type="button" data-monitoring-calc="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringCalc)}</button>` : ""}${!row.gone && window.AUTOGOOD_OFFER_LINK?.offerable(row.source) ? `<button class="agOfferButton" type="button" data-offer-create data-offer-history="${escapeMarketHtml(entry.id)}" data-offer-key="${escapeMarketHtml(row.offer.key)}" data-offer-source="${escapeMarketHtml(row.source)}">${escapeMarketHtml(c.monitoringOffer)}</button>` : ""}</td>
               <td>${offerCountryBadge(row.source, row.offer.country)}</td>
             </tr>${detailsOpen ? offerDetailsHtml(row, columns) : ""}`;
           }).join("")}</tbody>

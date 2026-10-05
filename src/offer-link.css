@@ -1,0 +1,41 @@
+/* "Przygotuj ofertę" beside every offer from abroad on page 3 "Monitoring"
+ * (B71, src/offer-link.js). Navy like the AUTOGOOD mark; next to the orange
+ * "Oblicz na gotowo" of the calculator. */
+.agOfferButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  margin-top: 6px;
+  margin-left: 6px;
+  padding: 0 10px;
+  border: 1px solid #0f3d5e;
+  border-radius: 8px;
+  background: #0f3d5e;
+  color: #ffffff;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.agOfferButton:hover {
+  background: #145a85;
+  border-color: #145a85;
+}
+
+.agOfferButton:focus-visible {
+  outline: 2px solid #145a85;
+  outline-offset: 2px;
+}
+
+/* An ad that already has an offer: the button opens it. */
+.agOfferButton.hasOffer {
+  background: #ffffff;
+  color: #0f3d5e;
+}
+
+.agOfferButton.hasOffer:hover {
+  background: #e6eff6;
+}
