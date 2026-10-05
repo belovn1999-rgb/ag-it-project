@@ -1559,3 +1559,30 @@
 .mobileMarketFavoritesHead .mobileFavoritesLang {
   width: max-content;
 }
+
+/* 05.10: the portal list in the chosen portal's colour (the old buttons'). */
+.mobileLinkSourceSelect[data-source] {
+  border-color: transparent;
+  color: #fff;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 12px 8px;
+  appearance: none;
+}
+
+.mobileLinkSourceSelect[data-source="mobile"] { background-color: #b84f00; }
+.mobileLinkSourceSelect[data-source="autoscout"] { background-color: #7a6500; }
+.mobileLinkSourceSelect[data-source="kleinanzeigen"] { background-color: #1d4b00; }
+.mobileLinkSourceSelect[data-source="marktplaats"] { background-color: #0b6e86; }
+.mobileLinkSourceSelect[data-source="dehands"] { background-color: #a3154a; }
+.mobileLinkSourceSelect[data-source="otomoto"] { background-color: #1d5fd0; }
+.mobileLinkSourceSelect[data-source="blocket"] { background-color: #d0101a; }
+.mobileLinkSourceSelect[data-source="autoscoutfr"] { background-color: #6b3fb8; }
+.mobileLinkSourceSelect[data-source="avby"] { background-color: #0b4da2; }
+
+.mobileLinkSourceSelect optgroup,
+.mobileLinkSourceSelect option {
+  background: #fff;
+  color: #1a2433;
+}

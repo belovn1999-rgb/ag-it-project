@@ -4203,6 +4203,7 @@ function isOtomotoUrl(value) {
 // The portal of the link: one list over "Rozpoznaj", every portal on its own
 // (owner 2026-10-05).
 const linkSourceSelect = document.querySelector("[data-mobile-link-source-select]");
+if (linkSourceSelect) linkSourceSelect.dataset.source = linkSourceSelect.value;
 
 function linkSource() {
   return linkSourceSelect?.value || "mobile";
@@ -4221,6 +4222,8 @@ const LINK_PLACEHOLDERS = {
 
 function setLinkSource(source) {
   if (linkSourceSelect && [...linkSourceSelect.options].some((option) => option.value === source)) linkSourceSelect.value = source;
+  // The list wears the chosen portal's colour, like the old buttons.
+  if (linkSourceSelect) linkSourceSelect.dataset.source = linkSourceSelect.value;
   els.url.placeholder = LINK_PLACEHOLDERS[source] || "https://suchen.mobile.de/...";
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
