@@ -5,8 +5,8 @@
 // only reads their DOM; every action goes through their own buttons.
 (() => {
   const TEXT = {
-    pl: { from: "od", to: "do", showAll: "Pokaż wszystkie ({count})", showLess: "Zwiń", toFilters: "Pokaż wybrane parametry", removeFilter: "Usuń filtr: {name}", chipsLabel: "Wybrane filtry", historySearch: "Szukaj: marka, model, klient…", historySearchLabel: "Szukaj w historii wyszukiwania", historyNoMatch: "Brak wyszukiwań pasujących do „{query}”." },
-    ru: { from: "от", to: "до", showAll: "Показать все ({count})", showLess: "Свернуть", toFilters: "Показать выбранные параметры", removeFilter: "Убрать фильтр: {name}", chipsLabel: "Выбранные фильтры", historySearch: "Поиск: марка, модель, клиент…", historySearchLabel: "Поиск по истории поиска", historyNoMatch: "Нет поисков по запросу «{query}»." },
+    pl: { from: "od", to: "do", showAll: "Pokaż wszystkie ({count})", showLess: "Zwiń", toFilters: "Pokaż wybrane parametry", reset: "Wyczyść", resetLabel: "Wyczyść filtry", total: "Razem", portals: "Portale", removeFilter: "Usuń filtr: {name}", chipsLabel: "Wybrane filtry", historySearch: "Szukaj: marka, model, klient…", historySearchLabel: "Szukaj w historii wyszukiwania", historyNoMatch: "Brak wyszukiwań pasujących do „{query}”." },
+    ru: { from: "от", to: "до", showAll: "Показать все ({count})", showLess: "Свернуть", toFilters: "Показать выбранные параметры", reset: "Сбросить", resetLabel: "Сбросить фильтры", total: "Всего", portals: "Порталы", removeFilter: "Убрать фильтр: {name}", chipsLabel: "Выбранные фильтры", historySearch: "Поиск: марка, модель, клиент…", historySearchLabel: "Поиск по истории поиска", historyNoMatch: "Нет поисков по запросу «{query}»." },
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
   const text = () => TEXT[lang()];
@@ -34,6 +34,55 @@
   };
   drawPortalRows();
   onLanguage.push(drawPortalRows);
+
+  // ---- Country totals (owner 2026-10-05): a country's switched-on portals
+  // added up — in the head of its column (page 1 and 2) and in the slim bar.
+  const numberOf = (text) => (/\d/.test(text || "") ? Number(String(text).replace(/\D/g, "")) : null);
+  const sumCounts = (rows) => {
+    const values = rows.map((row) => numberOf(row.querySelector("strong")?.textContent));
+    const known = values.filter((value) => value !== null);
+    if (!known.length) return values.length ? (rows[0].querySelector("strong")?.textContent.trim() || "—") : "—";
+    const sum = known.reduce((total, value) => total + value, 0);
+    return `${known.length < values.length ? "≥ " : ""}${new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(sum)}`;
+  };
+  const writeTotals = () => {
+    document.querySelectorAll(".agMarketColumn").forEach((column) => {
+      const rows = [...column.querySelectorAll(".mobileSearchCountMarket")]
+        .filter((row) => !row.hidden && !row.classList.contains("isOff"));
+      const head = column.querySelector(".agMarketColumnHeadWrap");
+      if (!head?.querySelector(".agMarketColumnHead")) return;
+      let total = head.querySelector(".agMarketColumnTotal");
+      // One portal: its own count says it already.
+      const value = rows.length > 1 ? sumCounts(rows) : "";
+      if (!value) {
+        total?.remove();
+        return;
+      }
+      if (!total) {
+        total = document.createElement("div");
+        total.className = "agMarketColumnTotal";
+        total.innerHTML = "<span></span><b></b>";
+        head.append(total);
+      }
+      const [label, number] = total.children;
+      if (label.textContent !== text().total) label.textContent = text().total;
+      if (number.textContent !== value) number.textContent = value;
+    });
+  };
+  let totalsFrame = 0;
+  const scheduleTotals = () => {
+    if (totalsFrame) return;
+    // A timer, not a frame: a background tab still gets its totals.
+    totalsFrame = setTimeout(() => {
+      totalsFrame = 0;
+      writeTotals();
+    }, 60);
+  };
+  new MutationObserver((records) => {
+    if (records.every((record) => record.target.closest?.(".agMarketColumnTotal") || record.target.parentElement?.closest(".agMarketColumnTotal"))) return;
+    scheduleTotals();
+  }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["class", "hidden"] });
+  scheduleTotals();
 
   // ---- 1. Every "od / do" box is named after its field ----------------------
   // The field's name sits above two bare boxes; screen readers, voice input
@@ -265,41 +314,91 @@
 
 
     // B68: one button per switched-on country column — its flags and the
-    // count of its first switched-on portal (the main one); a click opens
-    // that portal's search like its logo.
+    // total of its switched-on portals (owner 2026-10-05); hovering or
+    // clicking opens the portals with their own counts, each opening its
+    // search like its logo.
     let marketsKey = "";
+    let openWrap = null;
+    const closePortals = () => {
+      if (!openWrap) return;
+      openWrap.classList.remove("isOpen");
+      openWrap.querySelector(".mobileCompactMarket")?.setAttribute("aria-expanded", "false");
+      openWrap = null;
+    };
     const renderMarkets = () => {
       const columns = [...summary.querySelectorAll(".mobileSearchSummaryFoot [data-market-group]")]
         .filter((column) => !column.classList.contains("isOff"));
       const picked = columns.map((column) => ({
         column,
-        market: [...column.querySelectorAll(".mobileSearchCountMarket[data-market]")]
-          .find((market) => !market.hidden && !market.classList.contains("isOff")),
-      })).filter(({ market }) => market);
-      const key = picked.map(({ column, market }) => `${column.querySelector(".agMarketColumnName")?.textContent}:${market.dataset.market}:${market.querySelector("strong")?.textContent.trim()}`).join("|");
+        rows: [...column.querySelectorAll(".mobileSearchCountMarket[data-market]")]
+          .filter((market) => !market.hidden && !market.classList.contains("isOff")),
+      })).filter(({ rows }) => rows.length);
+      const key = picked.map(({ column, rows }) => `${column.querySelector(".agMarketColumnName")?.textContent}:${rows.map((row) => `${row.dataset.marketRow}=${row.querySelector("strong")?.textContent.trim()}`).join(",")}`).join("|") + lang();
       if (key === marketsKey) return;
       marketsKey = key;
-      marketsEl.replaceChildren(...picked.map(({ column, market }) => {
-        const link = market.querySelector(".agBrandLink");
-        const count = market.querySelector("strong")?.textContent.trim() || "—";
-        const name = column.querySelector(".agMarketColumnName")?.textContent.trim() || market.dataset.market;
+      closePortals();
+      marketsEl.replaceChildren(...picked.map(({ column, rows }) => {
+        const name = column.querySelector(".agMarketColumnName")?.textContent.trim() || "";
+        const total = sumCounts(rows);
+        const wrap = document.createElement("div");
+        wrap.className = "mobileCompactMarketWrap";
         const button = document.createElement("button");
         button.type = "button";
         button.className = "mobileCompactMarket";
-        const label = `${name} (${link?.getAttribute("aria-label") || market.dataset.market}): ${count}`;
+        button.setAttribute("aria-expanded", "false");
+        const label = `${name}: ${total}`;
         button.setAttribute("aria-label", label);
         button.title = label;
         const flags = document.createElement("span");
         flags.className = "mobileCompactMarketFlags";
         flags.innerHTML = column.querySelector(".agMarketColumnFlags")?.innerHTML || "";
         const number = document.createElement("b");
-        number.textContent = count;
+        number.textContent = total;
         button.append(flags, number);
-        // The original link fills in its search address on click.
-        button.addEventListener("click", () => link?.click());
-        return button;
+        const list = document.createElement("div");
+        list.className = "mobileCompactPortals";
+        list.setAttribute("role", "menu");
+        list.append(...rows.map((row) => {
+          const link = row.querySelector(".agBrandLink");
+          const item = document.createElement("button");
+          item.type = "button";
+          item.setAttribute("role", "menuitem");
+          const logo = link?.querySelector("img")?.cloneNode();
+          const count = document.createElement("b");
+          count.textContent = row.querySelector("strong")?.textContent.trim() || "—";
+          item.append(...[logo, count].filter(Boolean));
+          item.title = link?.getAttribute("aria-label") || "";
+          // The original link fills in its search address on click.
+          item.addEventListener("click", () => {
+            closePortals();
+            link?.click();
+          });
+          return item;
+        }));
+        const open = () => {
+          if (openWrap && openWrap !== wrap) closePortals();
+          openWrap = wrap;
+          wrap.classList.add("isOpen");
+          button.setAttribute("aria-expanded", "true");
+        };
+        button.addEventListener("click", () => (wrap.classList.contains("isOpen") && wrap.dataset.pinned === "1" ? (delete wrap.dataset.pinned, closePortals()) : (wrap.dataset.pinned = "1", open())));
+        wrap.addEventListener("mouseenter", open);
+        wrap.addEventListener("mouseleave", () => {
+          if (wrap.dataset.pinned !== "1") closePortals();
+        });
+        wrap.append(button, list);
+        return wrap;
       }));
     };
+    document.addEventListener("click", (event) => {
+      if (openWrap && !openWrap.contains(event.target)) {
+        delete openWrap.dataset.pinned;
+        closePortals();
+      }
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closePortals();
+    });
 
     const sync = () => {
       nameEl.textContent = summary.querySelector(".agSpecTitle strong")?.textContent.trim() || "";
@@ -322,10 +421,13 @@
       renderMarkets();
     };
 
+    // Owner 2026-10-05: a little earlier — once the chosen filters are out
+    // of sight (only "Aktualne oferty" left), not after the whole block.
     const place = () => {
       const top = navBottom();
+      const foot = summary.querySelector(".mobileSearchSummaryFoot");
       const show = !view.hidden && view.offsetParent !== null
-        && summary.getBoundingClientRect().bottom < top
+        && (foot || summary).getBoundingClientRect().top < top
         && panel.getBoundingClientRect().bottom > top + 140;
       bar.style.top = `${top}px`;
       if (show) sync();
@@ -363,6 +465,17 @@
     star.addEventListener("click", () => original.star()?.click());
     done.addEventListener("click", () => original.done()?.click());
     analysis.addEventListener("click", () => original.analysis()?.click());
+    // Reset left of "Analiza rynku": the form's own reset button.
+    const reset = bar.querySelector("[data-compact-reset]");
+    const nameReset = () => {
+      if (!reset) return;
+      reset.querySelector("[data-compact-reset-text]").textContent = text().reset;
+      reset.setAttribute("aria-label", text().resetLabel);
+      reset.title = text().resetLabel;
+    };
+    nameReset();
+    onLanguage.push(nameReset);
+    reset?.addEventListener("click", () => document.querySelector(".mobileManualPanel [data-mobile-manual-reset]")?.click());
     // The car's name brings the full block of chosen filters back.
     summaryButton.addEventListener("click", () => {
       const top = panel.getBoundingClientRect().top + window.scrollY - navBottom() - 12;

@@ -372,6 +372,7 @@
       historyNoteEdit: "Zmień notatkę",
       historyToday: "Dziś",
       historyYesterday: "Wczoraj",
+      historyWeek: "Ostatni tydzień",
       historyEarlier: "Wcześniej",
       historyLimitHint: "Bez gwiazdki zostaje 20 ostatnich wyszukiwań, starsze znikają. ★ zapisuje na stałe.",
       historyAttached: "Ten samochód jest już w historii: „Gotowe” zapisze w nim nowe parametry.",
@@ -926,6 +927,7 @@
       historyNoteEdit: "Изменить заметку",
       historyToday: "Сегодня",
       historyYesterday: "Вчера",
+      historyWeek: "Последняя неделя",
       historyEarlier: "Раньше",
       historyLimitHint: "Без звезды хранятся 20 последних поисков, старые удаляются. ★ сохраняет навсегда.",
       historyAttached: "Эта машина уже есть в истории: «Готово» сохранит в ней новые параметры.",
@@ -2995,16 +2997,20 @@
     start.setHours(0, 0, 0, 0);
     if (date >= start) return "today";
     start.setDate(start.getDate() - 1);
-    return date >= start ? "yesterday" : "earlier";
+    if (date >= start) return "yesterday";
+    // Owner 2026-10-05: the last week before the rest.
+    start.setDate(start.getDate() - 6);
+    return date >= start ? "week" : "earlier";
   }
 
   function formatHistoryShortDate(value, group) {
     const date = new Date(value);
     if (Number.isNaN(date.getTime())) return "";
     const locale = currentLanguage() === "ru" ? "ru-RU" : "pl-PL";
-    return new Intl.DateTimeFormat(locale, group === "earlier"
-      ? { day: "2-digit", month: "2-digit", year: "2-digit" }
-      : { hour: "2-digit", minute: "2-digit" }).format(date);
+    const options = group === "earlier" ? { day: "2-digit", month: "2-digit", year: "2-digit" }
+      : group === "week" ? { weekday: "short", day: "2-digit", month: "2-digit" }
+        : { hour: "2-digit", minute: "2-digit" };
+    return new Intl.DateTimeFormat(locale, options).format(date);
   }
 
   // "6 ulubionych · 11 z 20 wyszukiwań" (Polish plural of the favourites).
@@ -3061,7 +3067,7 @@
       return;
     }
 
-    const groupNames = { today: c.historyToday, yesterday: c.historyYesterday, earlier: c.historyEarlier };
+    const groupNames = { today: c.historyToday, yesterday: c.historyYesterday, week: c.historyWeek, earlier: c.historyEarlier };
     let lastGroup = "";
     const listHtml = rows.map((entry) => {
       const id = escapeMarketHtml(entry.id);

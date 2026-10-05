@@ -274,6 +274,7 @@ const copy = {
     otomotoSearchSkipped: "Otomoto nie ma dokładnego odpowiednika dla: {filters}. Pozostałe filtry zostały zastosowane.",
     otomotoHybridDiesel: "Hybryda diesel — otomoto pokaże każdą hybrydę",
     popularCaption: "Najbardziej popularne",
+    versionsCaption: "Dostępne wersje",
     specUnavailable: "Brak w tym modelu i latach",
     mobileSearchSkipped: "Mobile.de nie ma dokładnego odpowiednika dla: {filters}. Pozostałe filtry zostały zastosowane.",
     marketSearchButton: "Szukaj na mobile.de",
@@ -615,6 +616,7 @@ const copy = {
     otomotoSearchSkipped: "В Otomoto нет точного аналога для: {filters}. Остальные фильтры применены.",
     otomotoHybridDiesel: "Гибрид дизель — otomoto покажет любой гибрид",
     popularCaption: "Самые популярные",
+    versionsCaption: "Доступные версии",
     specUnavailable: "Нет у этой модели в эти годы",
     mobileSearchSkipped: "В Mobile.de нет точного аналога для: {filters}. Остальные фильтры применены.",
     marketSearchButton: "Найти на mobile.de",
@@ -1954,9 +1956,11 @@ function renderComboMenus(filterControl = null) {
     const unavailableTitle = copy[state.lang].specUnavailable;
     menu.innerHTML = visibleOptions.flatMap((option) => {
       const items = [];
-      // The pinned brands and models open the list under their own caption.
-      if (option.isPopular && previousPopular !== true && ["brand", "model"].includes(control.dataset.mobileOptions)) {
-        items.push(`<div class="mobileComboMenuGroup isPopularCaption">${escapeHtml(copy[state.lang].popularCaption)}</div>`);
+      // The pinned brands and models open the list under their own caption;
+      // the engines the model has in Pojemność / Moc under "Dostępne wersje".
+      const caption = { brand: "popularCaption", model: "popularCaption", displacement: "versionsCaption", displacementTo: "versionsCaption", power: "versionsCaption", powerTo: "versionsCaption" }[control.dataset.mobileOptions];
+      if (option.isPopular && previousPopular !== true && caption) {
+        items.push(`<div class="mobileComboMenuGroup isPopularCaption">${escapeHtml(copy[state.lang][caption])}</div>`);
       }
       if (previousPopular === true && !option.isPopular) {
         items.push('<div class="mobileComboMenuDivider" aria-hidden="true"></div>');
@@ -4194,20 +4198,28 @@ function isOtomotoUrl(value) {
   return /^https:\/\/(www\.|m\.)?otomoto\.pl\//.test(String(value || "").trim());
 }
 
+// The portal of the link: one list over "Rozpoznaj", every portal on its own
+// (owner 2026-10-05).
+const linkSourceSelect = document.querySelector("[data-mobile-link-source-select]");
+
 function linkSource() {
-  return document.querySelector("[data-mobile-link-source]:checked")?.value || "mobile";
+  return linkSourceSelect?.value || "mobile";
 }
 
+const LINK_PLACEHOLDERS = {
+  otomoto: "https://www.otomoto.pl/osobowe/oferta/...",
+  blocket: "https://www.blocket.se/mobility/item/...",
+  avby: "https://cars.av.by/...",
+  autoscout: "https://www.autoscout24.de/angebote/...",
+  autoscoutfr: "https://www.autoscout24.fr/offres/...",
+  marktplaats: "https://www.marktplaats.nl/v/auto-s/...",
+  dehands: "https://www.2dehands.be/v/auto-s/...",
+  kleinanzeigen: "https://www.kleinanzeigen.de/s-anzeige/...",
+};
+
 function setLinkSource(source) {
-  document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
-    input.checked = input.value === source;
-  });
-  els.url.placeholder = source === "otomoto" ? "https://www.otomoto.pl/osobowe/oferta/..."
-    : source === "blocket" ? "https://www.blocket.se/mobility/item/..."
-      : source === "avby" ? "https://cars.av.by/..."
-        : source === "autoscout" ? "https://www.autoscout24.de/angebote/..."
-          : source === "marktplaats" ? "https://www.marktplaats.nl/v/auto-s/..."
-            : source === "kleinanzeigen" ? "https://www.kleinanzeigen.de/s-anzeige/..." : "https://suchen.mobile.de/...";
+  if (linkSourceSelect && [...linkSourceSelect.options].some((option) => option.value === source)) linkSourceSelect.value = source;
+  els.url.placeholder = LINK_PLACEHOLDERS[source] || "https://suchen.mobile.de/...";
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
   if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
@@ -4219,11 +4231,9 @@ function mirrorLinkSource(source) {
   window.AUTOGOOD_SET_ONLY_MARKET?.(source);
 }
 
-document.querySelectorAll("[data-mobile-link-source]").forEach((input) => {
-  input.addEventListener("change", () => {
-    setLinkSource(linkSource());
-    mirrorLinkSource(linkSource());
-  });
+linkSourceSelect?.addEventListener("change", () => {
+  setLinkSource(linkSource());
+  mirrorLinkSource(linkSource());
 });
 // A pasted link picks its portal by itself. Only a new link mirrors the
 // market: what was added in step 2 stays while the same link is recognised.
@@ -4242,8 +4252,8 @@ els.url.addEventListener("input", () => {
   if (isOtomotoUrl(value)) setLinkSource("otomoto");
   else if (isBlocketUrl(value)) setLinkSource("blocket");
   else if (isAvbyUrl(value)) setLinkSource("avby");
-  else if (isAutoscoutUrl(value)) setLinkSource("autoscout");
-  else if (isMarktplaatsUrl(value)) setLinkSource("marktplaats");
+  else if (isAutoscoutUrl(value)) setLinkSource(/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout");
+  else if (isMarktplaatsUrl(value)) setLinkSource(/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands");
   else if (isKleinanzeigenUrl(value)) setLinkSource("kleinanzeigen");
   else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
 });
@@ -4787,7 +4797,7 @@ els.form.addEventListener("submit", (event) => {
     return;
   }
   if (isMarktplaatsUrl(sourceUrl)) {
-    setLinkSource("marktplaats");
+    setLinkSource(/marktplaats\.nl/i.test(sourceUrl) ? "marktplaats" : "dehands");
     loadMarktplaatsAd(sourceUrl);
     return;
   }
@@ -4796,8 +4806,9 @@ els.form.addEventListener("submit", (event) => {
     loadKleinanzeigenAd(sourceUrl);
     return;
   }
-  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats", "kleinanzeigen"].includes(linkSource())) {
-    setStatus("error", copy[state.lang][`${linkSource()}LinkExpected`], true);
+  const expected = { dehands: "marktplaats", autoscoutfr: "autoscout" }[linkSource()] || linkSource();
+  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats", "kleinanzeigen"].includes(expected)) {
+    setStatus("error", copy[state.lang][`${expected}LinkExpected`], true);
     return;
   }
   loadMobileDeData(sourceUrl);

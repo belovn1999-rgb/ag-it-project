@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=ka-20261004" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=tabs3-20261004" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=p1d-0510" />
     <link rel="stylesheet" href="./src/mobile-model-specs.css?v=b70-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=rebase1-20261004" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
@@ -50,15 +50,24 @@
         <section class="mobileFilterCard mobileListingLinkCard" aria-labelledby="mobile-listing-link-heading">
           <div class="mobileListingLinkHead">
             <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
-            <div class="mobileLinkSource" role="radiogroup" aria-label="Portal">
-              <label class="isOtomoto"><input type="radio" name="mobile-link-source" value="otomoto" data-mobile-link-source /><span>otomoto.pl</span></label>
-              <label class="isMobile"><input type="radio" name="mobile-link-source" value="mobile" data-mobile-link-source checked /><span>mobile.de</span></label>
-              <label class="isBlocket"><input type="radio" name="mobile-link-source" value="blocket" data-mobile-link-source /><span>blocket.se</span></label>
-              <label class="isAutoscout"><input type="radio" name="mobile-link-source" value="autoscout" data-mobile-link-source /><span>AutoScout24</span></label>
-              <label class="isKleinanzeigen"><input type="radio" name="mobile-link-source" value="kleinanzeigen" data-mobile-link-source /><span>Kleinanzeigen</span></label>
-              <label class="isMarktplaats"><input type="radio" name="mobile-link-source" value="marktplaats" data-mobile-link-source /><span>Marktplaats · 2dehands</span></label>
-              <label class="isAvby"><input type="radio" name="mobile-link-source" value="avby" data-mobile-link-source /><span>av.by</span></label>
-            </div>
+            <!-- Owner 2026-10-05: every portal on its own, in a list over
+                 "Rozpoznaj", grouped by country (the columns' order). -->
+            <label class="mobileLinkSourcePick">
+              <span class="srOnly">Portal</span>
+              <select class="mobileLinkSourceSelect" data-mobile-link-source-select aria-label="Portal">
+                <optgroup data-country="DE" label="Niemcy">
+                  <option value="mobile" selected>mobile.de</option>
+                  <option value="autoscout">AutoScout24</option>
+                  <option value="kleinanzeigen">Kleinanzeigen</option>
+                </optgroup>
+                <optgroup data-country="NL" label="Holandia"><option value="marktplaats">Marktplaats</option></optgroup>
+                <optgroup data-country="BE" label="Belgia"><option value="dehands">2dehands · 2ememain</option></optgroup>
+                <optgroup data-country="PL" label="Polska"><option value="otomoto">otomoto.pl</option></optgroup>
+                <optgroup data-country="SE" label="Szwecja"><option value="blocket">blocket.se</option></optgroup>
+                <optgroup data-country="FR" label="Francja"><option value="autoscoutfr">AutoScout24 (Francja)</option></optgroup>
+                <optgroup data-country="BY" label="Białoruś"><option value="avby">av.by</option></optgroup>
+              </select>
+            </label>
           </div>
           <form class="mobileSearch" data-mobile-form>
             <label class="srOnly" for="mobile-url" data-i18n="inputLabel">Link ogłoszenia</label>
@@ -700,6 +709,7 @@
           <div class="mobileCompactSummary"><button class="mobileCompactName" type="button" data-compact-summary><strong data-compact-name></strong></button><span class="mobileFilterChips isCompact" data-compact-filters></span></div>
           <div class="mobileCompactMarkets" data-compact-markets></div>
           <button class="mobileCompactDone" type="button" data-compact-done hidden></button>
+          <button class="mobileCompactReset" type="button" data-compact-reset><svg aria-hidden="true"><use href="./src/mobile-icons.svg?v=manual-filter-navigation-20260831#rotate-ccw"></use></svg><span data-compact-reset-text>Wyczyść</span></button>
           <button class="mobileCompactAnalysis" type="button" data-compact-analysis></button>
         </div>
       </section>
@@ -737,7 +747,7 @@
     <script src="./src/mobile-rates.js?v=page3-20261004"></script>
     <script src="./src/model-specs.generated.js?v=b61-ac4-20261004"></script>
     <script src="./src/mobile-model-specs.js?v=b70-20261004"></script>
-    <script src="./src/mobile.js?v=nl-be-20261004"></script>
+    <script src="./src/mobile.js?v=p1-0510"></script>
     <script src="./src/blocket-search.js?v=more-portals2-20261004"></script>
     <script src="./src/marktplaats-catalog.generated.js?v=mp-20261004"></script>
     <script src="./src/marktplaats-search.js?v=mp-20261004"></script>
@@ -748,11 +758,11 @@
     <script src="./src/turnkey-estimate.js?v=rates-20261004"></script>
     <script src="./src/turnkey-belarus.js?v=rates-20261004"></script>
     <script src="./src/mobile-ad-details.js?v=by-analysis-20261003"></script>
-    <script src="./src/mobile-market-analysis.js?v=nl-be-20261004"></script>
+    <script src="./src/mobile-market-analysis.js?v=p1-0510"></script>
     <script src="./src/calculator-popup.js?v=ka-20261004"></script>
     <script src="./src/mobile-favorites-watch.js?v=ka-20261004"></script>
     <script src="./src/mobile-bridge.js?v=turnkey-20260926"></script>
-    <script src="./src/mobile-page1.js?v=b70-20261004"></script>
+    <script src="./src/mobile-page1.js?v=p1c-0510"></script>
     <script src="./src/mobile-filter-warnings.js?v=b70-20261004"></script>
     <script src="./src/mobile-page2.js?v=page2-audit2-20261003"></script>
   </body>
