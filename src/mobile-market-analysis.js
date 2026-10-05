@@ -1564,6 +1564,32 @@
     return at > 0 ? `${escapeMarketHtml(text.slice(0, at))}<small class="mobileMarketTickUnit">${escapeMarketHtml(text.slice(at + 1))}</small>` : escapeMarketHtml(text);
   }
 
+  // The car read from a link, kept in this tab (sessionStorage) so a reload
+  // or another favourite does not lose it; cleared with the form.
+  const LINKED_CAR_KEY = "autogood.mobile.linkedCar.v1";
+  function rememberLinkedCar(car) {
+    try {
+      sessionStorage.setItem(LINKED_CAR_KEY, JSON.stringify(car));
+    } catch {
+      // Kept for this render only.
+    }
+    return car;
+  }
+  function readLinkedCar() {
+    try {
+      return JSON.parse(sessionStorage.getItem(LINKED_CAR_KEY) || "null");
+    } catch {
+      return null;
+    }
+  }
+  function forgetLinkedCar() {
+    try {
+      sessionStorage.removeItem(LINKED_CAR_KEY);
+    } catch {
+      // Nothing kept.
+    }
+  }
+
   function escapeMarketHtml(value) {
     return String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -6949,13 +6975,25 @@
         .join("");
 
       // The car recognised from a link, placed among the offers.
+      // The car from the link is the anchor of the comparison (owner
+      // 2026-10-05): it stays on the chart whatever the filters are changed
+      // to (same make), and survives a reload or a picked favourite until a
+      // new link is read or the form is cleared.
+      const linkedCar = typeof state !== "undefined" && state.data ? rememberLinkedCar(state.data) : readLinkedCar();
       const recognised = comparePriceEur
         ? { carBruttoEur: comparePriceEur, matchedFilters: { brand: filters.brand, model: filters.model }, isComparison: true }
-        : (typeof state !== "undefined" ? state.data : null);
+        : linkedCar;
       const carLabel = recognised?.isComparison ? c.comparedCar : c.yourCar;
-      const sameCar = recognised?.carBruttoEur
-        && normalizeToken(recognised.matchedFilters?.brand || "") === normalizeToken(filters.brand || "")
-        && normalizeToken(recognised.matchedFilters?.model || "") === normalizeToken(filters.model || "");
+      // Same make and model (loosely: "Ceed" = "cee'd / Ceed"); every other
+      // filter may change.
+      const looseModel = (left, right) => {
+        const a = normalizeToken(left || "");
+        const b = normalizeToken(right || "");
+        return !a || !b || a === b || a.includes(b) || b.includes(a);
+      };
+      const sameCar = Boolean(recognised?.carBruttoEur || recognised?.pricePln)
+        && (!filters.brand || normalizeToken(recognised.matchedFilters?.brand || filters.brand) === normalizeToken(filters.brand))
+        && looseModel(recognised.matchedFilters?.model, filters.model);
       let carMarker = "";
       // The car's price, written on the price scale of its chart.
       let carScalePrice = null;
@@ -8763,7 +8801,10 @@
   });
 
   historySaves.forEach((button) => button.addEventListener("click", toggleCurrentHistoryFavorite));
+  // A new link replaces the car; clearing the form forgets it.
+  document.querySelector("[data-mobile-submit]")?.addEventListener("click", forgetLinkedCar);
   document.querySelectorAll("[data-mobile-manual-reset]").forEach((button) => button.addEventListener("click", () => {
+    forgetLinkedCar();
     editingHistoryId = "";
     historyAttached = false;
     editingCarKey = "";

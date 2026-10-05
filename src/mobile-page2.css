@@ -781,3 +781,21 @@
 .mobileMarketSearchCard > .agBlockTitle {
   margin-bottom: var(--space-sm);
 }
+
+/* 05.10 (owner): the linked car a little smaller, its yellow on the scale
+   only around the figure. */
+.mobileMarketCar i {
+  left: -7px;
+  top: -7px;
+  width: 14px;
+  height: 14px;
+  border-width: 2px;
+}
+
+.mobileMarketTick.isCarPrice {
+  left: auto;
+  right: calc(100% - 79px);
+  width: auto;
+  border-radius: 3px;
+  padding: 0 3px;
+}
