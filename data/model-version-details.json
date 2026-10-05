@@ -1,8 +1,233 @@
 {
+"https://www.ultimatespecs.com/car-specs/Audi/106357/Audi-A3-(8V-2016)-20-TDI-150HP-Quattro.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106377/Audi-A3-Sportback-(8V-2016)-20-TDI-150HP-Quattro.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106391/Audi-A3-Sedan-(8V-2016)-20-TDI-150HP-Quattro.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106394/Audi-A3-Cabrio-(8V-2016)-16-TDI-110HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106397/Audi-A3-Cabrio-(8V-2016)-20-TDI-150HP-Quattro.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106422/Audi-A3-Cabrio-(8V-2016)-14-TFSI-116HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/108399/Audi-Q5-(FY)-SQ5-30-TFSI.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/109018/Audi-A3-Sedan-(8V-2016)-RS3-400HP-Quattro.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/109019/Audi-A3-Sportback-(8V-2016)-RS3-400HP-Quattro.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114917/Audi-A5-(F5)-Cabrio-40-TDI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114924/Audi-A4-(B9-2019)-35-TFSI-Manual.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114927/Audi-A4-(B9-2019)-40-TFSI-Manual.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114929/Audi-A4-(B9-2019)-35-TDI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114932/Audi-A4-(B9-2019)-40-TDI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114935/Audi-A4-(B9-2019)-40-TDI-Quattro.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114938/Audi-A4-(B9-2019)-Avant-35-TFSI-Manual.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114941/Audi-A4-(B9-2019)-Avant-40-TFSI-Manual.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114944/Audi-A4-(B9-2019)-Avant-35-TDI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114947/Audi-A4-(B9-2019)-Avant-40-TDI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114950/Audi-A4-(B9-2019)-Avant-40-TDI-Quattro.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115041/Audi-A5-(F5)-Cabrio-40-TFSI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115731/Audi-A4-(B9-2019)-30-TDI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115734/Audi-A4-(B9-2019)-Avant-30-TDI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115969/Audi-A4-(B9-2019)-45-TDI-Quattro.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115972/Audi-A4-(B9-2019)-Avant-45-TDI-Quattro.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115975/Audi-A4-(B9-2019)-50-TDI-Quattro.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115978/Audi-A4-(B9-2019)-Avant-50-TDI-Quattro.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116078/Audi-A4-(B9-2019)-Avant-RS4-29-TFSI-Quattro.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116079/Audi-A5-(F5)-Sportback-RS5-29-TFSI-quattro.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116360/Audi-A3-Sportback-(8V-2016)-30-TFSI-Pro-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116362/Audi-A3-Sportback-(8V-2016)-30-TFSI-Advance.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116364/Audi-A3-Sportback-(8V-2016)-30-TFSI-Advance-Sport.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116375/Audi-A3-Sportback-(8V-2016)-30-TDI-Pro-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116376/Audi-A3-Sportback-(8V-2016)-30-TDI-Advance.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116377/Audi-A3-Sportback-(8V-2016)-30-TDI-Advance-Sport.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116381/Audi-A3-Sedan-(8V-2016)-30-TFSI-Pro-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116382/Audi-A3-Sedan-(8V-2016)-30-TFSI-Advance.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116383/Audi-A3-Sedan-(8V-2016)-30-TFSI-Advance-Sport.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116393/Audi-A3-Sedan-(8V-2016)-30-TDI-Pro-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116394/Audi-A3-Sedan-(8V-2016)-30-TDI-Advance.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/116395/Audi-A3-Sedan-(8V-2016)-30-TDI-Advance-Sport.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/117236/Audi-A6-(C8)-Avant-RS6.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/117519/Audi-A4-(B9-2019)-Allroad-45-TDI-quattro.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/117523/Audi-A5-Coupe-2020-S5-30-TDI-quattro.html": {
 "drive": "AWD",
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/118273/Audi-Q3-(F3)-RS.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/118274/Audi-Q3-Sportback-RS.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/118654/Audi-A5-Sportback-2020-40-TFSI-190HP.html": {
 "drive": "FWD",
@@ -158,6 +383,16 @@
 "drive": "AWD",
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/125725/Audi-A6-(C8)-40-TFSI.html": {
+"drive": "FWD",
+"gearbox": "8 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/125728/Audi-A6-(C8)-Avant-40-TFSI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/128063/Audi-A3-(8Y)-Sportback-RS3-quattro.html": {
 "drive": "AWD",
@@ -358,6 +593,21 @@
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/140651/Audi-A4-(B9-2020)-Avant-30-TDI-.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/140686/Audi-A4-(B9-2019)-Avant-40-g-tron.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/140730/Audi-A4-(B9-2020)-30-TDI-.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/140760/Audi-A5-Sportback-2020-RS5-Performance-Edition.html": {
 "drive": "AWD",
@@ -594,6 +844,91 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/BMW/108543/BMW-F32-LCI-4-Series-Coupe-430i-xDrive.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/108559/BMW-F33-LCI-4-Series-Cabrio-430i-xDrive.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/108560/BMW-F33-LCI-4-Series-Cabrio-440i.html": {
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/108561/BMW-F33-LCI-4-Series-Cabrio-440i-xDrive.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/108571/BMW-F36-LCI-4-Series-Gran-Coupe-430i-xDrive.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/108573/BMW-F36-LCI-4-Series-Gran-Coupe-440i.html": {
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/108574/BMW-F36-LCI-4-Series-Gran-Coupe-440i-xDrive.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/110000/BMW-F32-LCI-4-Series-Coupe-M4-CS.html": {
+"drive": "RWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/110769/BMW-G01-X3-xDrive20d.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/110771/BMW-G01-X3-M40i.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/113572/BMW-G01-X3-M40d.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/116335/BMW-G01-X3-M.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/118917/BMW-G20-3-Series-316d.html": {
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/118919/BMW-G01-X3-xDrive20d.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/118920/BMW-G01-X3-M-Competition.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/119559/BMW-G21-3-Series-Touring-316d.html": {
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/119564/BMW-F36-LCI-4-Series-Gran-Coupe-418i.html": {
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/BMW/119580/BMW-G30-5-Series-Sedan-LCI-520i.html": {
 "drive": "RWD",
 "gearbox": "8 speed Automatic",
@@ -700,6 +1035,16 @@
 "transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/BMW/119603/BMW-G31-5-Series-Touring-LCI-540d-xDrive.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/119812/BMW-G01-X3-M40d.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/119816/BMW-G01-X3-M40i.html": {
 "drive": "AWD",
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
@@ -1214,6 +1559,76 @@
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Ford/107751/Ford-Kuga-III-15-TDCi-120HP-4x2-ST-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/110822/Ford-Fiesta-8-3-doors-10-EcoBoost-100HP-ST-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/110824/Ford-Fiesta-8-10-EcoBoost-100HP-ST-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/110825/Ford-Fiesta-8-10-EcoBoost-125HP-ST-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/110826/Ford-Fiesta-8-10-EcoBoost-140HP-ST-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/113323/Ford-Focus-4-10-EcoBoost-100HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/113329/Ford-Focus-4-15-EcoBoost-175HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/113336/Ford-Focus-4-20-EcoBlue-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/113337/Ford-Focus-4-Wagon-10-EcoBoost-100HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/113343/Ford-Focus-4-Wagon-15-EcoBoost-175HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/113350/Ford-Focus-4-Wagon-20-EcoBlue-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/113517/Ford-Fiesta-8-ST.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/115311/Ford-Fiesta-8-10-EcoBoost-125HP-ST-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/118199/Ford-Fiesta-8-10-EcoBoost-125HP-ST-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Ford/118672/Ford-Kuga-2020-15-EcoBoost-120HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -1223,6 +1638,66 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119604/Ford-Fiesta-8-10-EcoBoost-125HP-mHEV.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119606/Ford-Focus-4-10-EcoBoost-100HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119610/Ford-Focus-4-20-EcoBlue-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119616/Ford-Focus-4-Wagon-Active-15-EcoBoost-150HP.html": {
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119617/Ford-Focus-4-Wagon-10-EcoBoost-125HP-mHEV.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119618/Ford-Focus-4-10-EcoBoost-125HP-mHEV.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119619/Ford-Focus-4-10-EcoBoost-155HP-mHEV.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119621/Ford-Focus-4-Wagon-10-EcoBoost-155HP-mHEV.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119623/Ford-Focus-4-Wagon-Active-10-EcoBoost-125HP-mHEV.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/119785/Ford-Focus-4-Wagon-Active-10-EcoBoost-155HP-mHEV.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/127214/Ford-Fiesta-8-10-EcoBoost-100HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/127221/Ford-Fiesta-2018-Active-10-EcoBoost-125HP-Hybrid.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Ford/129566/Ford-Fiesta-2022-11-75HP.html": {
 "drive": "FWD",
@@ -1298,6 +1773,71 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/179061/Ford-Fiesta-8-3-doors-ST-15-EcoBoost.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/189466/Ford-Fiesta-8-3-doors-ST-15-EcoBoost.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/202342/Ford-Fiesta-8-3-doors-ST-15-EcoBoost.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/111516/Mercedes-Benz-W222-2018-Class-S-450.html": {
+"drive": "RWD",
+"gearbox": "9 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/111520/Mercedes-Benz-W222-2018-Class-S-450-L.html": {
+"drive": "RWD",
+"gearbox": "9 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/111526/Mercedes-Benz-X222-2018-Mercedes-Maybach-650-4MATIC.html": {
+"drive": "AWD",
+"gearbox": "7 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/113544/Mercedes-Benz-Class-C-Station-(S205-2019)-200.html": {
+"drive": "RWD",
+"gearbox": "9 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/113887/Mercedes-Benz-Class-C-Coupe-(C205-2019)-200.html": {
+"drive": "RWD",
+"gearbox": "9 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/113888/Mercedes-Benz-Class-C-Cabrio-(A205-2019)-200.html": {
+"drive": "RWD",
+"gearbox": "9 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/116776/Mercedes-Benz-W177-Class-A-160-d.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/117197/Mercedes-Benz-Class-C-Station-(S205-2019)-200-d.html": {
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/118266/Mercedes-Benz-Class-A-Sedan-(V177)-200-d.html": {
+"drive": "FWD",
+"gearbox": "8 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/118270/Mercedes-Benz-Class-A-Sedan-(V177)-250-e.html": {
+"drive": "FWD",
+"gearbox": "8 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/120417/Mercedes-Benz-E-Class-(W213-2021)-200.html": {
 "drive": "RWD",
@@ -1794,6 +2334,51 @@
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Peugeot/109310/Peugeot-5008-II-12-PureTech-130-GT-Line.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/110474/Peugeot-308-2018-SW-GT-16-THP-205.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/110491/Peugeot-308-2018-GT-16-THP-205.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/111732/Peugeot-308-2018-GT-16-e-THP-225.html": {
+"drive": "FWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/111743/Peugeot-308-2018-SW-GT-16-e-THP-225.html": {
+"drive": "FWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/112672/Peugeot-308-2018-GT-20-BlueHDi-180.html": {
+"drive": "FWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/112673/Peugeot-308-2018-SW-GT-20-BlueHDi-180.html": {
+"drive": "FWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/117251/Peugeot-2008-II-12-PureTech-100.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/117273/Peugeot-208-II-12-GT-Line-PureTech-100.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Peugeot/121539/Peugeot-3008-2021-16-PureTech-180.html": {
 "drive": "FWD",
 "gearbox": "8 speed Automatic",
@@ -1834,6 +2419,41 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/115254/Renault-Kadjar-1-Phase-2-Energy-TCe-140-Life.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/115256/Renault-Kadjar-1-Phase-2-Energy-TCe-140-Intens.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/116429/Renault-Clio-5-TCe-100.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/116437/Renault-Clio-5-Blue-dCi-85.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/116916/Renault-Trafic-3-Phase-2-Van-L2H1-dCi-120.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/116918/Renault-Trafic-3-Phase-2-Van-L1H1-dCi-120.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/118887/Renault-Clio-5-TCe-100-Bi-Fuel.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/120291/Renault-Megane-4-Phase-2-TCe-115.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -1853,6 +2473,16 @@
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/122535/Renault-Clio-5-TCe-90.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/125625/Renault-Captur-2-TCe-140.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/127413/Renault-Megane-4-Phase-2-TCe-115.html": {
 "drive": "FWD",
@@ -1879,6 +2509,31 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/134746/Renault-Clio-5-TCe-100-Bi-Fuel.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/134940/Renault-Clio-5-Phase-2-TCe-90.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/134942/Renault-Clio-5-Phase-2-TCe-100-LPG.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/136691/Renault-Clio-5-Phase-2-15-Blue-dCi-100.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/136749/Renault-Captur-2-TCe-Mild-Hybrid-140.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/138513/Renault-Trafic-3-Phase-3-Combi-L1H1-20-Blue-dCi-110.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -1895,6 +2550,56 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/142505/Renault-Captur-2024-Eco-G-100-(on-petrol).html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/108427/Skoda-Octavia-2017-RS-20-TSI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/108429/Skoda-Octavia-2017-RS-20-TDI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/108432/Skoda-Octavia-Combi-2017-RS-20-TSI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/108434/Skoda-Octavia-Combi-2017-RS-20-TDI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/108497/Skoda-Octavia-Combi-2017-4x4-20-TDI.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/108745/Skoda-Octavia-2017-RS-20-TSI-245.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/108747/Skoda-Octavia-Combi-2017-RS-20-TSI-245.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/109963/Skoda-Octavia-Scout-2017-20-TDI-4x4-150HP.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/110348/Skoda-Karoq-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/116256/Skoda-Karoq-10-TSI-Greentech-Business-Edition.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
@@ -1918,6 +2623,11 @@
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/118603/Skoda-Octavia-Combi-2017-15-TSI-G-TEC.html": {
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Skoda/119338/Skoda-Octavia-4-15-TSI-150HP.html": {
 "drive": "FWD",
@@ -1987,6 +2697,11 @@
 "https://www.ultimatespecs.com/car-specs/Skoda/135639/Skoda-Fabia-2022-10-MPI.html": {
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/135654/Skoda-Karoq-20-TDI-115HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Skoda/136750/Skoda-Kamiq-2024-10-TSI.html": {
@@ -2109,6 +2824,11 @@
 "gearbox": "5 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Toyota/118505/Toyota-C-HR-2020-12T.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Toyota/119454/Toyota-Yaris-(XP21)-10-VVT-i.html": {
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -2124,6 +2844,226 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108266/Volkswagen-Golf-2017-3-doors-14-TSI-125HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108270/Volkswagen-Golf-2017-3-doors-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108276/Volkswagen-Golf-2017-14-TSI-125HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108278/Volkswagen-Golf-2017-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108290/Volkswagen-Golf-2017-3-doors-10-TSI-110HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108291/Volkswagen-Golf-2017-10-TSI-110HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108294/Volkswagen-Golf-2017-3-doors-16-TDI-115HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108295/Volkswagen-Golf-2017-16-TDI-115HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108352/Volkswagen-Golf-2017-3-doors-R.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108353/Volkswagen-Golf-2017-Variant-R.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108608/Volkswagen-Golf-2017-3-doors-GTD-20-TDI-184HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108609/Volkswagen-Golf-2017-GTD-20-TDI-184HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108712/Volkswagen-Golf-2017-Variant-10-TSI-110HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108714/Volkswagen-Golf-2017-Variant-14-TSI-125HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108716/Volkswagen-Golf-2017-Variant-16-TDI-115HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108720/Volkswagen-Golf-2017-Variant-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108725/Volkswagen-Golf-2017-Alltrack-20-TDI-150HP.html": {
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/109796/Volkswagen-Golf-2017-GTI-Performance-20-TSI-245HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/109864/Volkswagen-Golf-2017-3-doors-15-TSI-150HP-BMT.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/109866/Volkswagen-Golf-2017-15-TSI-150HP-BMT.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/109868/Volkswagen-Golf-2017-Variant-15-TSI-150HP-BMT.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111213/Volkswagen-Polo-6-10-TSI-95HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111215/Volkswagen-Polo-6-10-TSI-115HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111216/Volkswagen-Polo-6-16-TDI-95HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111394/Volkswagen-Golf-Sportsvan-2018-10-TSI-110HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111400/Volkswagen-Golf-Sportsvan-2018-15-TSI-ACT-130HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111403/Volkswagen-Golf-Sportsvan-2018-16-TDI-115HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111956/Volkswagen-Polo-6-20-TSI-GTI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/112829/Volkswagen-T-Roc-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/114297/Volkswagen-Golf-2017-10-TSI-115HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/114305/Volkswagen-Golf-2017-Variant-10-TSI-115HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/114311/Volkswagen-Golf-Sportsvan-2018-10-TSI-115HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/117429/Volkswagen-Polo-6-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/117434/Volkswagen-Passat-2020-16-TDI-120HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/117437/Volkswagen-Passat-2020-20-TDI-190HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/117440/Volkswagen-Passat-2020-Variant-16-TDI-120HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/117442/Volkswagen-Passat-2020-Variant-20-TDI-190HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/118070/Volkswagen-T-Roc-R-20-TSI-4Motion.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/118166/Volkswagen-Passat-2020-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/118168/Volkswagen-Passat-2020-Variant-20-TDI-150HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/118414/Volkswagen-Transporter-T61-L1H1-20-TDI-90HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/118422/Volkswagen-Transporter-T61-L2H1-20-TDI-90HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/118818/Volkswagen-Golf-8-15-TSI-130HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/119323/Volkswagen-T-Roc-Cabrio-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/119326/Volkswagen-Golf-8-10-TSI-110HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -2134,8 +3074,83 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/121037/Volkswagen-Tiguan-2021-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/121048/Volkswagen-Tiguan-2021-20-TDI-150HP-4Motion.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/121177/Volkswagen-Golf-8-20-TSI-GTI.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/121266/Volkswagen-Golf-8-10-eTSI-110HP.html": {
 "drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/122610/Volkswagen-Golf-8-Variant-10-TSI-110HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/122612/Volkswagen-Golf-8-Variant-15-TSI-130HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/123266/Volkswagen-Polo-6-10-TSI-95HP.html": {
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/125760/Volkswagen-Multivan-T61-L2H1-20-TDI-204HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/125761/Volkswagen-Multivan-T61-L1H1-20-TDI-204HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/125762/Volkswagen-Multivan-T61-L2H1-20-TDI-204HP-4Motion.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/125763/Volkswagen-Multivan-T61-L1H1-20-TDI-204HP-4Motion.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/127229/Volkswagen-Golf-8-20-TSI-R-4Motion.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/127702/Volkswagen-Transporter-T61-L1H1-20-TDI-204HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/127703/Volkswagen-Transporter-T61-L1H1-20-TDI-204HP-4Motion.html": {
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/127704/Volkswagen-Transporter-T61-L2H1-20-TDI-204HP.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/127705/Volkswagen-Transporter-T61-L2H1-20-TDI-204HP-4Motion.html": {
+"drive": "AWD",
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
@@ -2169,12 +3184,32 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134149/Volkswagen-Golf-8-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134159/Volkswagen-Golf-8-Variant-15-TSI-150HP.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/134165/Volkswagen-T-Roc-2022-Cabriolet-10-TSI.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/134171/Volkswagen-T-Roc-2022-20-TDI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134173/Volkswagen-Touran-2021-15-TSI.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134207/Volkswagen-Tiguan-2021-20-TDI-122HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
@@ -2289,6 +3324,61 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Volvo/109546/Volvo-XC60-2018-D4-AWD.html": {
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/112520/Volvo-XC40-2018-T3.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/112524/Volvo-XC40-2018-D3-Manual.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/113173/Volvo-XC60-2018-D4.html": {
+"drive": "FWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/113176/Volvo-XC60-2018-D3.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/115642/Volvo-XC40-2018-D3-AWD.html": {
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/116188/Volvo-V60-II-D3-Momentum-Pro.html": {
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/117890/Volvo-XC60-2018-T4.html": {
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/118970/Volvo-S60-III-B3.html": {
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/118976/Volvo-XC60-2018-B4.html": {
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/122769/Volvo-XC60-2018-B4.html": {
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volvo/127099/Volvo-XC60-2022-B4.html": {
 "drive": "FWD",
 "gearbox": "8 speed Automatic",
@@ -2303,6 +3393,11 @@
 "drive": "AWD",
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/130029/Volvo-XC40-2018-B3.html": {
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volvo/130810/Volvo-XC40-2023-B3.html": {
 "drive": "FWD",

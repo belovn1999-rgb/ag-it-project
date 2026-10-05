@@ -10,16 +10,16 @@
 
 ## Итог
 
-Уже перенесено в нашу таблицу (`tools/autocentrum.py` → `merge()`, столбец «Источник»): 1036 строк из autocentrum, коробка у 2399 версий ultimatespecs. Ниже — что осталось после переноса.
+Уже перенесено в нашу таблицу (`tools/autocentrum.py` → `merge()`, столбец «Источник»): 1061 строк из autocentrum, коробка у 2382 версий ultimatespecs. Ниже — что осталось после переноса.
 
 - Просмотрено на autocentrum: 179 поколений, 751 кузовов, 5091 двигателей (по кузовам); найдено у нас 4956.
-- Вариантов «коробка + привод» со страниц двигателей: 8008. Наших версий без коробки: 2079; autocentrum даёт для них одну коробку (можно заполнить) — 10, и механику, и автомат (какая у нашей версии — не сказать) — 1729.
+- Вариантов «коробка + привод» со страниц двигателей: 8008. Наших версий без коробки: 1837; autocentrum даёт для них одну коробку (можно заполнить) — 8, и механику, и автомат (какая у нашей версии — не сказать) — 1567.
 - Двигатели (топливо + объём + мощность), которых нет в нашем поколении: **1**
 - Привод, которого нет у нас для этого двигателя: **13**
 - Коробка, которой нет у нас для этого двигателя и привода: **1**
-- Коробка у нас не указана — autocentrum её называет: **235**
+- Коробка у нас не указана — autocentrum её называет: **192**
 - Годы поколения или рестайлинга расходятся на 2+ года (для сведения): **12**
-- Мощность мягких гибридов записана по-разному (для сведения): **63**
+- Мощность мягких гибридов записана по-разному (для сведения): **60**
 
 Двери и места (у 739 из 751 кузовов autocentrum) перенесены в нашу таблицу — столбцы «Двери» и «Места» `data/model-engines.csv`, фильтры «Liczba drzwi» и «Liczba miejsc». Нет у нас совсем (есть в `data/autocentrum-table.csv`): крутящий момент, норма Euro, код двигателя, расход, CO₂, размеры, багажник, масса, разгон, макс. скорость, бак.
 
@@ -28,26 +28,26 @@
 | Марка | Модель | поколение | кузов | двигатель | топливо | привод | коробка | коробка+ | годы | мощность |
 |---|---|---|---|---|---|---|---|---|---|---|
 | Audi | A3 |  |  |  |  |  |  | 4 |  |  |
-| Audi | A4 |  |  |  |  |  |  | 17 |  |  |
+| Audi | A4 |  |  |  |  |  |  | 14 |  |  |
 | Audi | A5 |  |  |  |  |  |  | 8 |  |  |
 | Audi | A6 |  |  |  |  |  |  | 8 |  |  |
 | Audi | Q3 |  |  |  |  |  |  | 2 |  |  |
 | Audi | Q5 |  |  |  |  |  |  | 1 |  | 1 |
 | Audi | Q7 |  |  |  |  |  |  |  |  | 1 |
 | BMW | Seria 1 |  |  |  |  | 3 |  | 1 | 1 |  |
-| BMW | Seria 3 |  |  |  |  | 2 |  | 8 | 1 |  |
-| BMW | Seria 4 |  |  |  |  |  |  | 1 |  |  |
+| BMW | Seria 3 |  |  |  |  | 2 |  | 7 | 1 |  |
+| BMW | Seria 4 |  |  |  |  |  |  |  |  |  |
 | BMW | Seria 5 |  |  |  |  | 1 |  | 4 | 1 |  |
 | BMW | X1 |  |  |  |  | 6 |  | 1 |  |  |
-| BMW | X3 |  |  |  |  |  |  | 7 |  |  |
+| BMW | X3 |  |  |  |  |  |  | 5 |  |  |
 | BMW | X5 |  |  |  |  | 1 |  | 4 |  |  |
 | Ford | C-Max |  |  |  |  |  |  | 5 |  |  |
-| Ford | Fiesta |  |  |  |  |  |  | 2 | 1 | 1 |
-| Ford | Focus |  |  |  |  |  |  | 10 |  |  |
+| Ford | Fiesta |  |  |  |  |  |  | 1 | 1 | 1 |
+| Ford | Focus |  |  |  |  |  |  | 8 |  |  |
 | Ford | Kuga |  |  |  |  |  |  | 3 |  |  |
 | Ford | Mondeo |  |  |  |  |  |  | 3 |  |  |
 | Ford | S-Max |  |  |  |  |  |  | 1 |  |  |
-| Mercedes-Benz | Klasa A |  |  |  |  |  |  | 2 |  |  |
+| Mercedes-Benz | Klasa A |  |  |  |  |  |  | 1 |  |  |
 | Mercedes-Benz | Klasa C |  |  |  |  |  |  | 4 |  | 2 |
 | Mercedes-Benz | Klasa E |  |  | 1 |  |  |  | 2 |  | 7 |
 | Mercedes-Benz | Klasa S |  |  |  |  |  |  |  |  | 7 |
@@ -57,20 +57,20 @@
 | Peugeot | 208 |  |  |  |  |  |  | 2 |  |  |
 | Peugeot | 308 |  |  |  |  |  |  |  | 1 |  |
 | Peugeot | 508 |  |  |  |  |  |  | 5 |  |  |
-| Peugeot | 2008 |  |  |  |  |  |  | 6 |  | 1 |
+| Peugeot | 2008 |  |  |  |  |  |  | 5 |  |  |
 | Peugeot | 3008 |  |  |  |  |  |  | 3 |  |  |
 | Peugeot | 5008 |  |  |  |  |  |  | 2 |  |  |
-| Renault | Captur |  |  |  |  |  | 1 | 5 |  | 2 |
-| Renault | Clio |  |  |  |  |  |  | 10 |  |  |
+| Renault | Captur |  |  |  |  |  | 1 | 3 |  |  |
+| Renault | Clio |  |  |  |  |  |  | 7 |  |  |
 | Renault | Kadjar |  |  |  |  |  |  | 1 |  |  |
 | Renault | Megane |  |  |  |  |  |  | 7 | 1 |  |
 | Renault | Scenic |  |  |  |  |  |  | 8 |  |  |
 | Renault | Trafic |  |  |  |  |  |  |  |  |  |
 | Skoda | Fabia |  |  |  |  |  |  |  |  |  |
 | Skoda | Kamiq |  |  |  |  |  |  |  |  |  |
-| Skoda | Karoq |  |  |  |  |  |  | 2 |  |  |
+| Skoda | Karoq |  |  |  |  |  |  |  |  |  |
 | Skoda | Kodiaq |  |  |  |  |  |  |  |  |  |
-| Skoda | Octavia |  |  |  |  |  |  | 10 |  |  |
+| Skoda | Octavia |  |  |  |  |  |  | 4 |  |  |
 | Skoda | Superb |  |  |  |  |  |  | 3 |  |  |
 | Toyota | Auris |  |  |  |  |  |  | 6 |  |  |
 | Toyota | Avensis |  |  |  |  |  |  |  | 1 |  |
@@ -78,16 +78,16 @@
 | Toyota | Camry |  |  |  |  |  |  | 1 | 1 |  |
 | Toyota | Corolla |  |  |  |  |  |  | 1 |  | 1 |
 | Toyota | RAV 4 |  |  |  |  |  |  | 3 |  |  |
-| Toyota | Yaris |  |  |  |  |  |  | 2 | 1 |  |
+| Toyota | Yaris |  |  |  |  |  |  |  | 1 |  |
 | Volvo | S60 |  |  |  |  |  |  | 9 | 1 | 1 |
 | Volvo | V40 |  |  |  |  |  |  | 1 |  |  |
 | Volvo | V60 |  |  |  |  |  |  | 6 |  | 7 |
-| Volvo | XC40 |  |  |  |  |  |  | 1 |  | 2 |
-| Volvo | XC60 |  |  |  |  |  |  | 1 |  | 6 |
+| Volvo | XC40 |  |  |  |  |  |  |  |  | 2 |
+| Volvo | XC60 |  |  |  |  |  |  |  |  | 6 |
 | Volvo | XC90 |  |  |  |  |  |  |  |  | 4 |
-| Volkswagen | Golf |  |  |  |  |  |  | 13 |  |  |
+| Volkswagen | Golf |  |  |  |  |  |  | 2 |  |  |
 | Volkswagen | Passat |  |  |  |  |  |  | 16 |  |  |
-| Volkswagen | Polo |  |  |  |  |  |  | 4 | 1 |  |
+| Volkswagen | Polo |  |  |  |  |  |  | 1 | 1 |  |
 | Volkswagen | T-Roc |  |  |  |  |  |  |  |  |  |
 | Volkswagen | T6 (Multivan, Transporter) |  |  |  |  |  |  | 1 | 1 |  |
 | Volkswagen | Tiguan |  |  |  |  |  |  | 2 |  |  |
@@ -123,11 +123,11 @@
 |---|---|---|---|---|---|---|---|
 | Renault | Captur | II (2019–н. в.) | Captur II | [гибрид 1.6 145 KM](https://www.autocentrum.pl/dane-techniczne/renault/captur/ii/crossover-hybrid/silnik-hybrydowy-1.6-e-tech-145km-2023/) — E-Tech: механика 6 / передний |  | Crossover Hybrid | у нас: автомат / передний — **ошибка autocentrum (вероятно): гибрид с механикой** |
 
-## Коробка у нас не указана — autocentrum её называет (235)
+## Коробка у нас не указана — autocentrum её называет (192)
 
 Это не пропуск, а подсказка: где у нас «не указано», autocentrum называет коробку. Список по моделям (строки — в CSV):
 
-Audi A4 — 17, Volkswagen Passat — 16, Volkswagen Golf — 13, Ford Focus — 10, Renault Clio — 10, Skoda Octavia — 10, Volvo S60 — 9, Audi A5 — 8, Audi A6 — 8, BMW Seria 3 — 8, Renault Scenic — 8, BMW X3 — 7, Renault Megane — 7, Peugeot 2008 — 6, Toyota Auris — 6, Volvo V60 — 6, Ford C-Max — 5, Peugeot 508 — 5, Renault Captur — 5, Audi A3 — 4, BMW Seria 5 — 4, BMW X5 — 4, Mercedes-Benz Klasa C — 4, Volkswagen Polo — 4, Ford Kuga — 3, Ford Mondeo — 3, Mercedes-Benz CLA — 3, Peugeot 3008 — 3, Skoda Superb — 3, Toyota RAV 4 — 3, Volkswagen Touran — 3, Audi Q3 — 2, Ford Fiesta — 2, Mercedes-Benz Klasa A — 2, Mercedes-Benz Klasa E — 2, Peugeot 208 — 2, Peugeot 5008 — 2, Skoda Karoq — 2, Toyota Yaris — 2, Volkswagen Tiguan — 2, Audi Q5 — 1, BMW Seria 1 — 1, BMW Seria 4 — 1, BMW X1 — 1, Ford S-Max — 1, Renault Kadjar — 1, Toyota Camry — 1, Toyota Corolla — 1, Volvo V40 — 1, Volvo XC40 — 1, Volvo XC60 — 1, Volkswagen T6 (Multivan, Transporter) — 1
+Volkswagen Passat — 16, Audi A4 — 14, Volvo S60 — 9, Audi A5 — 8, Audi A6 — 8, Ford Focus — 8, Renault Scenic — 8, BMW Seria 3 — 7, Renault Clio — 7, Renault Megane — 7, Toyota Auris — 6, Volvo V60 — 6, BMW X3 — 5, Ford C-Max — 5, Peugeot 508 — 5, Peugeot 2008 — 5, Audi A3 — 4, BMW Seria 5 — 4, BMW X5 — 4, Mercedes-Benz Klasa C — 4, Skoda Octavia — 4, Ford Kuga — 3, Ford Mondeo — 3, Mercedes-Benz CLA — 3, Peugeot 3008 — 3, Renault Captur — 3, Skoda Superb — 3, Toyota RAV 4 — 3, Volkswagen Touran — 3, Audi Q3 — 2, Mercedes-Benz Klasa E — 2, Peugeot 208 — 2, Peugeot 5008 — 2, Volkswagen Golf — 2, Volkswagen Tiguan — 2, Audi Q5 — 1, BMW Seria 1 — 1, BMW X1 — 1, Ford Fiesta — 1, Ford S-Max — 1, Mercedes-Benz Klasa A — 1, Renault Kadjar — 1, Toyota Camry — 1, Toyota Corolla — 1, Volvo V40 — 1, Volkswagen Polo — 1, Volkswagen T6 (Multivan, Transporter) — 1
 
 ## Годы поколения или рестайлинга расходятся на 2+ года (для сведения) (12)
 
@@ -146,7 +146,7 @@ Audi A4 — 17, Volkswagen Passat — 16, Volkswagen Golf — 13, Ford Focus —
 | Volkswagen | Polo | VI (2017–н. в.) | Polo VI | [рестайлинг 2025 / у нас 2021](https://www.autocentrum.pl/dane-techniczne/volkswagen/polo/vi/) |  |  |  |
 | Volkswagen | T6 (Multivan, Transporter) | T5 (2003–2015) | T5 Transporter, T5 Multivan | [рестайлинг 2009 / у нас рестайлинг без года](https://www.autocentrum.pl/dane-techniczne/volkswagen/caravelle/t5/) |  |  |  |
 
-## Мощность мягких гибридов записана по-разному (для сведения) (63)
+## Мощность мягких гибридов записана по-разному (для сведения) (60)
 
 | Марка | Модель | Поколение (autocentrum) | Наше | Есть на autocentrum | Годы | Кузова | У нас |
 |---|---|---|---|---|---|---|---|
@@ -189,9 +189,6 @@ Audi A4 — 17, Volkswagen Passat — 16, Volkswagen Golf — 13, Ford Focus —
 | Mercedes-Benz | GLE | V167 (2019–н. в.) | V167, V167 Coupé (C167) | [гибрид 3.0 389 KM](https://www.autocentrum.pl/dane-techniczne/mercedes/gle/v167/suv/silnik-hybrydowy-3.0-450-389km-2019-2023/) — 450 | 2019–2023 | SUV | у нас 367 л.с., 401 л.с. (мягкий гибрид: мощность с электромотором или без) |
 | Mercedes-Benz | GLE | V167 (2019–н. в.) | V167, V167 Coupé (C167) | [гибрид 4.0 511 KM](https://www.autocentrum.pl/dane-techniczne/mercedes/gle/v167/suv/silnik-hybrydowy-4.0-580-511km-2019-2023/) — 580 | 2019–2023 | SUV | у нас 489 л.с. (мягкий гибрид: мощность с электромотором или без) |
 | Mercedes-Benz | GLE | W166/C292 (2015–2018) | W166 Coupé (C292), W166 | [гибрид 3.0 449 KM](https://www.autocentrum.pl/dane-techniczne/mercedes/gle/w166c292/suv/silnik-hybrydowy-3.0-500e-449km-2015-2018/) — 500e | 2015–2018 | SUV | у нас 442 л.с. (мягкий гибрид: мощность с электромотором или без) |
-| Peugeot | 2008 | II (2019–н. в.) | 2008 II | [гибрид 1.2 110 KM](https://www.autocentrum.pl/dane-techniczne/peugeot/2008/ii/suv-facelifting/silnik-hybrydowy-1.2-hybrid-110-110km-od-2025/) — Hybrid 110 | 2025–н. в. | SUV Facelifting | у нас 102 л.с. (мягкий гибрид: мощность с электромотором или без) |
-| Renault | Captur | II (2019–н. в.) | Captur II | [гибрид 1.3 158 KM](https://www.autocentrum.pl/dane-techniczne/renault/captur/ii/crossover-hybrid-facelifting/silnik-hybrydowy-1.3-tce-mild-hybrid-158km-od-2024/) — TCe Mild Hybrid | 2024–н. в. | Crossover Hybrid Facelifting | у нас 140 л.с., 154 л.с. (мягкий гибрид: мощность с электромотором или без) |
-| Renault | Captur | II (2019–н. в.) | Captur II | [бензин 1.3 160 KM](https://www.autocentrum.pl/dane-techniczne/renault/captur/ii/crossover/silnik-benzynowy-1.3-tce-160km-2021-2023/) — TCe | 2021–2023 | Crossover | у нас 140 л.с. (мягкий гибрид: мощность с электромотором или без) |
 | Toyota | Corolla | XII (2019–н. в.) | E21 | [гибрид 2.0 184 KM](https://www.autocentrum.pl/dane-techniczne/toyota/corolla/xii/hatchback/silnik-hybrydowy-2.0-hybrid-dynamic-force-184km-2019-2022/) — Hybrid Dynamic Force | 2019–2022 | Hatchback, TS Kombi | у нас 180 л.с. (мягкий гибрид: мощность с электромотором или без) |
 | Volvo | S60 | III (2018–н. в.) | S60 III | [гибрид 2.0 211 KM](https://www.autocentrum.pl/dane-techniczne/volvo/s60/iii/sedan/silnik-hybrydowy-2.0-b4-mild-hybrid-211km-2020-2023/) — B4 Mild Hybrid | 2020–2023 | Sedan | у нас 190 л.с., 197 л.с. (мягкий гибрид: мощность с электромотором или без) |
 | Volvo | V60 | II (2018–н. в.) | V60 II | [бензин 2.0 300 KM](https://www.autocentrum.pl/dane-techniczne/volvo/v60/ii/kombi-facelifting/silnik-benzynowy-2.0-b6-300km-od-2023/) — B6 | 2023–н. в. | Kombi Facelifting | у нас 310 л.с. (мягкий гибрид: мощность с электромотором или без) |

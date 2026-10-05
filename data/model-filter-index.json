@@ -1,6 +1,6 @@
 {
  "source": "https://www.ultimatespecs.com",
- "generatedAt": "2026-10-04",
+ "generatedAt": "2026-10-05",
  "models": [
   {
    "brand": "Audi",
@@ -358,7 +358,8 @@
       "A4 (B9)",
       "A4 (B9) Allroad",
       "A4 (B9) Avant",
-      "A4 B9 Allroad Quattro (autocentrum)"
+      "A4 B9 Allroad Quattro (autocentrum)",
+      "A4 B9 Limousine (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -1719,7 +1720,9 @@
       "G20 3 Series",
       "G21 3 Series Touring",
       "G80 M3",
-      "G81 M3 Touring"
+      "G81 M3 Touring",
+      "Seria 3 G20 Sedan (autocentrum)",
+      "Seria 3 G20 Touring (autocentrum)"
      ],
      "engines": {
       "plugin": {
@@ -3451,6 +3454,7 @@
         120
        ],
        "1996": [
+        150,
         190
        ],
        "1997": [
@@ -4133,6 +4137,7 @@
      "bodies": [
       "Class A Sedan (V177)",
       "Klasa A W177 Hatchback AMG (autocentrum)",
+      "Klasa A W177 Sedan (autocentrum)",
       "W177 Class A"
      ],
      "engines": {
@@ -6270,7 +6275,8 @@
      "years": "2023–н. в.",
      "mobileModel": "2008",
      "bodies": [
-      "2008 II (2023)"
+      "2008 II (2023)",
+      "2008 II SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -6281,6 +6287,7 @@
       },
       "hybrid": {
        "1199": [
+        110,
         136,
         145
        ]
@@ -6767,7 +6774,8 @@
        "1332": [
         131,
         140,
-        154
+        154,
+        160
        ],
        "1333": [
         140
@@ -6869,6 +6877,7 @@
       "petrol": {
        "999": [
         67,
+        90,
         91,
         100
        ],
@@ -7733,7 +7742,8 @@
      "years": "2022–н. в.",
      "mobileModel": "Karoq",
      "bodies": [
-      "Karoq 2022"
+      "Karoq 2022",
+      "Karoq I Crossover Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7924,6 +7934,8 @@
       "Octavia 4 Combi",
       "Octavia IV Kombi (autocentrum)",
       "Octavia IV Liftback (autocentrum)",
+      "Octavia IV RS Kombi (autocentrum)",
+      "Octavia IV RS Liftback (autocentrum)",
       "Octavia IV Scout (autocentrum)"
      ],
      "engines": {
@@ -9026,7 +9038,9 @@
       "Yaris (XP21)",
       "Yaris GR",
       "Yaris XP21 Cross (autocentrum)",
-      "Yaris XP21 Cross Facelifting (autocentrum)"
+      "Yaris XP21 Cross Facelifting (autocentrum)",
+      "Yaris XP21 Hatchback (autocentrum)",
+      "Yaris XP21 Hatchback Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
