@@ -508,3 +508,7 @@
   .ofHideToggle, .ofDraftBadge { display: none !important; }
   .isEditing [data-edit] { outline: none; }
 }
+
+/* The calculator window (wave 3): the same look as "Oblicz na gotowo". */
+.ofCalcActions { display: flex; align-items: center; gap: 10px; flex: none; }
+.ofCalcDialog .agCalcPopupKicker { color: var(--of-navy); }

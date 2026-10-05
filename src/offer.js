@@ -320,7 +320,7 @@
               <div class="ofPriceBox">
                 <p class="ofLabel">Cena na gotowo w Polsce</p>
                 <p class="ofPrice">${esc(money(costView?.total, "PLN"))}</p>
-                ${field("priceNote", costView?.exact ? "Transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — wyliczenie na str. 2" : "Szacunek: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — str. 2", "p", "ofPriceNote")}
+                ${field(costView?.exact ? "priceNoteExact" : "priceNote", costView?.exact ? `${costView.method}: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — wyliczenie na str. 2` : "Szacunek: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — str. 2", "p", "ofPriceNote")}
                 <p class="ofAdPrice">W ogłoszeniu: <b>${esc(money(view.price, view.currency))}</b> ${esc(vatText(view))}</p>
               </div>
               ${chips.length ? `<div class="ofChips${blockClass("chips")}">${chips.join("")}</div>` : ""}
@@ -522,6 +522,15 @@
         ${ad?.images?.length > 1 ? `<label>Wybierz zdjęcie z ogłoszenia<select data-photo-pick>${ad.images.slice(0, 20).map((url, index) => `<option value="${esc(url)}"${(edits().photo || ad.images[0]) === url ? " selected" : ""}>Zdjęcie ${index + 1}</option>`).join("")}</select></label>` : ""}
         ${ad?.description ? `<details><summary>Opis sprzedawcy (oryginał)</summary><div class="ofDescription">${esc(ad.description)}</div></details>` : ""}
         ${ad?.flags?.aiSummary ? `<details><summary>Podsumowanie mobile.de (AI portalu)</summary><div class="ofDescription">${esc([ad.flags.aiTags.join(" · "), ad.flags.aiSummary.replace(/\*\*/g, ""), ...(ad.flags.aiInsights || []).map((item) => `• ${item.title} — ${item.subtitle}`)].filter(Boolean).join("\n\n"))}</div></details>` : ""}
+      </section>
+      <section class="ofPanelCard">
+        <h2>Kalkulacja</h2>
+        ${offer.calc
+          ? `<p class="ofPanelOk">Z kalkulatora: ${esc(offer.calc.methodLabel)}, ${esc(money(offer.calc.total, "PLN"))} (${esc(dateText(offer.calc.at))} ${esc(timeText(offer.calc.at))}).</p>`
+          : `<p>Teraz: szacunek „Zakup bezpośredni” z taryfą miejsca sprzedawcy. Wybierz sposób zakupu i wstaw dokładną kalkulację.</p>`}
+        <label>Sposób zakupu<select data-calc-method>${CALC_TABS.map((item) => `<option value="${item.tab}"${item.tab === defaultTab() ? " selected" : ""}${item.key === "vat" && !calcInput().vat ? " disabled" : ""}>${esc(item.label)}</option>`).join("")}</select></label>
+        <button class="offerButton isSmall" type="button" data-calc-open>${offer.calc ? "Zmień w kalkulatorze" : "Otwórz kalkulator"}</button>
+        ${offer.calc ? '<button class="offerButton isSmall" type="button" data-calc-drop>Wróć do szacunku</button>' : ""}
       </section>
       ${verdict ? `
       <section class="ofPanelCard">
@@ -728,7 +737,9 @@
     }
   });
   panel.addEventListener("click", (event) => {
-    if (event.target.closest("[data-read-ad]")) readAd();
+    if (event.target.closest("[data-calc-open]")) openCalculator(Number(panel.querySelector("[data-calc-method]")?.value ?? defaultTab()));
+    else if (event.target.closest("[data-calc-drop]")) save({ calc: null });
+    else if (event.target.closest("[data-read-ad]")) readAd();
     else if (event.target.closest("[data-reset-edits]")) save((stored) => ({ edits: stored.edits?.photo ? { photo: stored.edits.photo } : {} }));
     else if (event.target.closest("[data-use-ad-price]")) {
       const price = Number(event.target.closest("[data-use-ad-price]").dataset.useAdPrice) || 0;
@@ -757,6 +768,118 @@
     editButton.textContent = editing ? "Zakończ edycję" : "Edytuj teksty";
     render();
   });
+
+  // ---- The calculator (wave 3) ------------------------------------------------------------
+  // The calculators page itself in a window (calculators.html?embed=1, as
+  // "Oblicz na gotowo"), on the method the manager picks; "Wstaw do oferty"
+  // copies its lines and total as shown — the live rate, its tariffs and any
+  // change made there included — into the offer.
+  const CALC_TABS = [
+    { tab: 0, key: "direct", label: "Zakup bezpośredni" },
+    { tab: 3, key: "vat", label: "Dealerzy VAT 23%" },
+    { tab: 4, key: "margin", label: "Dealerzy VAT marża" },
+  ];
+  const VAT_RATES = { DE: 0.19, AT: 0.2, FR: 0.2, NL: 0.21, BE: 0.21, LU: 0.17, IT: 0.22, ES: 0.21, SE: 0.25, DK: 0.25, CZ: 0.21, SK: 0.23 };
+  function calcInput() {
+    const view = carView();
+    const vat = view.priceType === "vat" || Boolean(offer.ad?.vat?.deductible);
+    const net = view.netPrice || (vat && VAT_RATES[view.country] ? view.price / (1 + VAT_RATES[view.country]) : 0);
+    return {
+      gross: view.price,
+      net: vat ? net : 0,
+      vat,
+      engine: offer.estimate?.engine?.index ?? 3,
+      transport: offer.estimate?.transportNetto || 0,
+      inspection: offer.estimate?.inspectionNetto || 0,
+      url: offer.source === "mobile" ? view.url : "",
+    };
+  }
+  // An offer with VAT to deduct opens on "Dealerzy VAT 23%", others on "Zakup bezpośredni".
+  const defaultTab = () => (offer.calc?.tab ?? (calcInput().vat && calcInput().net ? 3 : 0));
+  function calcUrl(tab) {
+    const input = calcInput();
+    const params = new URLSearchParams({ embed: "1", tab: String(tab), lang: "pl", car: String(Math.round(tab === 3 ? input.net : input.gross)), engine: String(input.engine) });
+    if (input.transport) params.set("transport", String(Math.round(input.transport)));
+    if (input.inspection) params.set("inspection", String(Math.round(input.inspection)));
+    if (input.url) params.set("mobileUrl", input.url);
+    return `./calculators.html?${params.toString()}`;
+  }
+  let calcDialog = null;
+  let calcTab = 0;
+  function openCalculator(tab = defaultTab()) {
+    calcTab = tab;
+    const input = calcInput();
+    if (!calcDialog) {
+      calcDialog = document.createElement("dialog");
+      calcDialog.className = "agCalcPopup ofCalcDialog";
+      calcDialog.setAttribute("aria-labelledby", "ofCalcTitle");
+      document.body.append(calcDialog);
+      calcDialog.addEventListener("click", (event) => {
+        if (event.target === calcDialog || event.target.closest("[data-calc-close]")) calcDialog.close();
+        const pick = event.target.closest("[data-calc-tab]");
+        if (pick && !pick.disabled) openCalculator(Number(pick.dataset.calcTab));
+        if (event.target.closest("[data-calc-insert]")) insertCalculation();
+      });
+      calcDialog.addEventListener("close", () => {
+        const frame = calcDialog.querySelector("iframe");
+        if (frame) frame.src = "about:blank";
+      });
+    }
+    calcDialog.innerHTML = `
+      <div class="agCalcPopupHead">
+        <div>
+          <p class="agCalcPopupKicker">Kalkulacja do oferty ${esc(offer.number || "")}</p>
+          <h2 id="ofCalcTitle">${esc(carView().title)}</h2>
+          <p class="agCalcPopupFacts">${esc(money(input.gross, "EUR"))} brutto${input.vat ? ` · VAT do odliczenia · ${esc(money(input.net, "EUR"))} netto` : ""} · transport ${esc(numbers.format(input.transport))} + oględziny ${esc(numbers.format(input.inspection))} zł netto</p>
+        </div>
+        <div class="ofCalcActions">
+          <button class="offerButton isPrimary" type="button" data-calc-insert>Wstaw do oferty</button>
+          <button class="agCalcPopupClose" type="button" data-calc-close aria-label="Zamknij">×</button>
+        </div>
+      </div>
+      <div class="agCalcPopupTabs" role="tablist">
+        ${CALC_TABS.map((item) => `<button type="button" role="tab" data-calc-tab="${item.tab}" aria-selected="${item.tab === tab ? "true" : "false"}"${item.key === "vat" && !input.vat ? ' disabled title="Tylko dla auta z VAT do odliczenia"' : ""}>${esc(item.label)}</button>`).join("")}
+      </div>
+      <p class="agCalcPopupNote" data-calc-note>Popraw w kalkulatorze, co trzeba (transport, oględziny, rabat), i kliknij „Wstaw do oferty” — oferta pokaże dokładnie te linie i tę kwotę.</p>
+      <iframe class="agCalcPopupFrame" title="Kalkulator AUTOGOOD" src="${esc(calcUrl(tab))}"></iframe>`;
+    if (!calcDialog.open) calcDialog.showModal();
+  }
+
+  const amountOf = (text) => {
+    const digits = String(text || "").replace(/[^\d,-]/g, "").replace(",", ".");
+    return Number(digits) || 0;
+  };
+  function readCalculator() {
+    const frame = calcDialog?.querySelector("iframe");
+    const doc = frame?.contentDocument;
+    if (!doc) throw new Error("kalkulator nie jest gotowy");
+    const text = (node) => (node?.textContent || "").replace(/\s+/g, " ").trim();
+    const rows = [...doc.querySelectorAll(".resultsList .resultLine")].map((line) => ({
+      label: text(line.querySelector(".resultLineLabel")),
+      sub: [text(line.querySelector(".resultLinePrefix")), text(line.querySelector(".resultLineSub"))].filter(Boolean).join(" · "),
+      value: amountOf(text(line.querySelector(".resultLineAmount"))),
+    })).filter((row) => row.label && row.value);
+    const total = amountOf(text(doc.querySelector(".totalBarValue")));
+    if (!rows.length || !total) throw new Error("kalkulator jeszcze liczy — spróbuj za chwilę");
+    const rate = Number(String(text(doc.querySelector(".totalBarRate")).match(/(\d+[.,]\d+)/)?.[1] || "").replace(",", ".")) || 0;
+    const item = CALC_TABS.find((entry) => entry.tab === calcTab) || CALC_TABS[0];
+    return { tab: calcTab, method: item.key, methodLabel: item.label, rows, total, rate, at: new Date().toISOString() };
+  }
+  async function insertCalculation() {
+    const note = calcDialog?.querySelector("[data-calc-note]");
+    try {
+      const calcData = readCalculator();
+      calcData.note = `Kalkulator AUTOGOOD, kurs EUR ${calcData.rate ? calcData.rate.toFixed(2).replace(".", ",") : "—"} zł z dnia ${dateText(calcData.at)}.`;
+      await save({ calc: calcData });
+      calcDialog.close();
+      setStatus(`Wstawiono kalkulację: ${calcData.methodLabel}, ${money(calcData.total, "PLN")}.`);
+    } catch (error) {
+      if (note) {
+        note.textContent = `Nie udało się odczytać kalkulatora: ${error?.message || error}.`;
+        note.classList.add("ofPanelError");
+      }
+    }
+  }
 
   // ---- Reading the ad -----------------------------------------------------------------------
   async function readAd() {
