@@ -473,3 +473,142 @@
   font-size: var(--text-xs);
   font-weight: 600;
 }
+
+/* ---- 05.10 (owner) -------------------------------------------------------- */
+
+/* The car from the link: a yellow diamond on the chart, its price written on
+   the price scale in yellow (not over the dots). */
+.mobileMarketCar i {
+  background: #ffcc00;
+  box-shadow: 0 0 0 2px var(--color-ink);
+}
+
+.mobileMarketLegend .isCar i {
+  background: #ffcc00;
+  box-shadow: 0 0 0 1.5px var(--color-ink);
+}
+
+.mobileMarketTick.isCarPrice {
+  z-index: 4;
+  left: 4px;
+  width: 78px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  background: #ffd84d;
+  color: var(--color-ink);
+  font-weight: 800;
+  padding: 1px 5px;
+}
+
+/* Statistics: the cheapest green, the dearest red, the median blue — the
+   chart's colours; the ▲▼ of the market comparison stay neutral. */
+.mobileMarketStatsRow b.isCheapest {
+  color: var(--color-success);
+}
+
+.mobileMarketStatsRow b.isDearest {
+  color: var(--color-error);
+}
+
+.mobileMarketStatsRow b.isMedianPrice {
+  color: #1d5fd0;
+}
+
+.mobileMarketStatsRow b:is(.isCheapest, .isDearest, .isMedianPrice, .isRangePrice) .mobileMarketToneMark {
+  color: var(--color-ink);
+  opacity: 0.55;
+}
+
+/* The categories of the search ("Nadwozie i silnik", "Wyposażenie"…) unlike
+   the fields under them: larger, heavier, navy, a rule under them. */
+.mobileSearchSummary .agSpecColumn h4,
+.mobileMarketAnalysisView .agSpecColumn h4 {
+  padding-bottom: 4px;
+  border-bottom: var(--rule-thin) solid var(--color-rule);
+  color: oklch(0.335 0.073 240);
+  font-size: 0.8125rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.mobileSearchSummary .agSpecColumn dt,
+.mobileMarketAnalysisView .agSpecColumn dt {
+  font-weight: 500;
+}
+
+/* "Aktualne oferty": the country's total large with a thin rule under it;
+   every portal's count the same smaller size, the numbers in one column. */
+.agMarketColumnTotal {
+  margin-bottom: 2px;
+  padding-bottom: 4px;
+  border-bottom: var(--rule-thin) solid var(--color-rule);
+  font-size: 0.8125rem;
+}
+
+.agMarketColumnTotal b {
+  font-size: 1.25rem;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket,
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket.isMain,
+.mobileSearchSummaryFoot .agMarketColumn.isOff .mobileSearchCountMarket.isMain {
+  flex-wrap: nowrap;
+  padding: 3px 6px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket strong,
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket.isMain strong {
+  font-size: 0.875rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .agBrandLink,
+.mobileSearchSummaryFoot .agMarketColumn .isMain .agBrandLink {
+  min-height: 26px;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .agBrandLink img,
+.mobileSearchSummaryFoot .agMarketColumn .isMain .agBrandLink img {
+  height: 14px;
+}
+
+/* Copying refused by the browser: the finished picture in a window, copied
+   from there (button or right click). */
+.mobileReportCopyDialog {
+  width: min(1100px, 94vw);
+  max-height: 92vh;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.35);
+}
+
+.mobileReportCopyDialog::backdrop {
+  background: rgb(15 23 42 / 0.55);
+}
+
+.mobileReportCopyBar {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: var(--rule-thin) solid var(--color-rule);
+  background: var(--color-surface);
+  padding: 12px 16px;
+}
+
+.mobileReportCopyBar p {
+  flex: 1;
+  margin: 0;
+  color: var(--color-ink);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.mobileReportCopyDialog img {
+  display: block;
+  width: 100%;
+  height: auto;
+}

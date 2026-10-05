@@ -340,6 +340,12 @@
       screenshotOpened: "Przeglądarka nie pozwala kopiować obrazów — raport zapisano jako plik PNG (Pobrane).",
       screenshotFailed: "Nie udało się zrobić zrzutu raportu.",
       screenshotRetry: "Przeglądarka nie pozwoliła skopiować obrazu — kliknij przycisk jeszcze raz, obraz jest gotowy.",
+      screenshotInDialog: "Obraz raportu otwarty w okienku — skopiuj go stamtąd.",
+      screenshotDialogTitle: "Obraz raportu gotowy. ",
+      screenshotDialogHint: "Przeglądarka nie pozwoliła skopiować go automatycznie: kliknij „Kopiuj obraz” albo kliknij obraz prawym przyciskiem i wybierz „Kopiuj obraz”.",
+      screenshotDialogCopy: "Kopiuj obraz",
+      screenshotDialogRightClick: "Kliknij obraz prawym przyciskiem → „Kopiuj obraz”",
+      screenshotDialogClose: "Zamknij",
       screenshotNoClipboard: "Ta przeglądarka nie pozwala kopiować obrazów. Użyj Chrome albo pobierz PDF.",
       screenshotWorking: "Przygotowuję raport…",
       screenshotPreparing: "Przygotowuję obraz… za chwilę można kopiować",
@@ -895,6 +901,12 @@
       screenshotOpened: "Браузер не даёт копировать картинки — отчёт сохранён файлом PNG (Загрузки).",
       screenshotFailed: "Не удалось сделать снимок отчёта.",
       screenshotRetry: "Браузер не дал скопировать картинку — нажми кнопку ещё раз, картинка уже готова.",
+      screenshotInDialog: "Картинка отчёта открыта в окне — скопируй её оттуда.",
+      screenshotDialogTitle: "Картинка отчёта готова. ",
+      screenshotDialogHint: "Браузер не дал скопировать её автоматически: нажми «Копировать картинку» или кликни по картинке правой кнопкой и выбери «Копировать картинку».",
+      screenshotDialogCopy: "Копировать картинку",
+      screenshotDialogRightClick: "Кликни по картинке правой кнопкой → «Копировать картинку»",
+      screenshotDialogClose: "Закрыть",
       screenshotNoClipboard: "Этот браузер не умеет копировать картинки. Используй Chrome или скачай PDF.",
       screenshotWorking: "Готовлю отчёт…",
       screenshotPreparing: "Готовлю картинку… через секунду можно копировать",
@@ -1483,6 +1495,13 @@
     return [filters?.brand, filters?.model, filters?.version]
       .map((value) => String(value || "").trim())
       .join("|");
+  }
+
+  // The "na gotowo" footnote: the term in bold, its explanation in italics
+  // (owner 2026-10-05).
+  function turnkeyFootnoteHtml(text) {
+    const match = String(text || "").match(/^(.*?[”»])(\s*)([\s\S]*)$/);
+    return match ? `<b>${escapeMarketHtml(match[1])}</b>${match[2]}<em>${escapeMarketHtml(match[3])}</em>` : escapeMarketHtml(text);
   }
 
   function escapeMarketHtml(value) {
@@ -3929,7 +3948,7 @@
           const turnkeyNow = turnkeyOf(current);
           const turnkeyBefore = turnkeyOf(previous);
           const turnkeyNote = turnkeyNow && Number.isFinite(turnkeyNow[key])
-            ? `<small class="mobileMarketTurnkeyNote">~ ${price(turnkeyNow[key], turnkeyMoney)} ${escapeMarketHtml(turnkeyName)} ${turnkeyBefore ? change(turnkeyNow[key], turnkeyBefore[key]) : ""}</small>`
+            ? `<small class="mobileMarketTurnkeyNote">${price(turnkeyNow[key], turnkeyMoney)} ${escapeMarketHtml(turnkeyName)} ${turnkeyBefore ? change(turnkeyNow[key], turnkeyBefore[key]) : ""}</small>`
             : "";
           return `<td>${value} ${previous ? change(current[key], previous[key]) : ""}${turnkeyNote}</td>`;
         };
@@ -3938,7 +3957,7 @@
             <th scope="row"><button class="mobileMarketDateLink" type="button" data-offer-date="${escapeMarketHtml(point.at)}">${escapeMarketHtml(formatHistoryDate(point.at))}</button></th>
             <td>${current.count} ${previous ? change(current.count, previous.count, true) : ""}</td>
             ${cell("min")}${cell("max")}${cell("median")}
-            <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${turnkeyOf(current) ? `<small class="mobileMarketTurnkeyNote">~ ${price(turnkeyOf(current).p25, turnkeyMoney)} – ${price(turnkeyOf(current).p75, turnkeyMoney)} ${escapeMarketHtml(turnkeyName)}</small>` : ""}</td>
+            <td>${Number.isFinite(current.p25) ? `${price(current.p25, current.currency)} – ${price(current.p75, current.currency)}` : "—"} ${previous ? change((current.p25 + current.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}${turnkeyOf(current) ? `<small class="mobileMarketTurnkeyNote">${price(turnkeyOf(current).p25, turnkeyMoney)} – ${price(turnkeyOf(current).p75, turnkeyMoney)} ${escapeMarketHtml(turnkeyName)}</small>` : ""}</td>
             <td>${Number.isFinite(current.middleCount) ? current.middleCount : "—"} ${previous && Number.isFinite(previous.middleCount) ? change(current.middleCount, previous.middleCount, true) : ""}</td>
           </tr>`);
       });
@@ -4069,7 +4088,7 @@
     const nowMedian = median(now);
     const thenMedian = median(then);
     const thenByKey = new Map(then.map((item) => [item.offer.key, item]));
-    const tip = (offer, date) => escapeMarketHtml(`${date} · ${formatPlainPrice(offer.price, offer.currency)}${offer.turnkey ? ` (~ ${formatPlainPrice(offer.turnkey, "PLN")} ${c.turnkeyShort})` : ""} · ${[offer.year, offer.mileage ? `${numberFormat().format(offer.mileage)} ${kmUnit()}` : ""].filter(Boolean).join(" · ")} · ${offer.title}`);
+    const tip = (offer, date) => escapeMarketHtml(`${date} · ${formatPlainPrice(offer.price, offer.currency)}${offer.turnkey ? ` (${formatPlainPrice(offer.turnkey, "PLN")} ${c.turnkeyShort})` : ""} · ${[offer.year, offer.mileage ? `${numberFormat().format(offer.mileage)} ${kmUnit()}` : ""].filter(Boolean).join(" · ")} · ${offer.title}`);
     const dot = (item, date, compare) => {
       const circle = compare
         ? `<circle cx="${x(item.x)}" cy="${y(item.offer.price)}" r="3.6" class="isCompare"><title>${tip(item.offer, date)}</title></circle>`
@@ -4175,7 +4194,7 @@
     const shown = allRows
       .filter((row) => offerHistoryState.filter === "all" || row.group === offerHistoryState.filter)
       .sort((left, right) => OFFER_GROUP_ORDER.indexOf(left.group) - OFFER_GROUP_ORDER.indexOf(right.group) || left.offer.price - right.offer.price);
-    const price = (offer) => `${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
+    const price = (offer) => `${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
     const table = `
       <div class="mobileMarketTableScroll mobileMarketOfferChanges">
         <table class="mobileMarketTable">
@@ -4939,8 +4958,8 @@
     };
     const byPriceCell = (prices) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatMarketPrice(prices.parts.carEur, "EUR"))}</b>`
       + `<small class="mobileMonitoringVat is${prices.base === "netto" ? "Vat" : "Gross"}">${escapeMarketHtml(prices.base === "netto" ? c.byNet : c.byGross)} · ${escapeMarketHtml(formatMarketPrice(prices.carUsd, "USD"))}</small>`
-      + `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(prices.deliveredUsd, "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
-      + `<small class="mobileMarketTurnkeyNote isStrong">~ ${escapeMarketHtml(formatMarketPrice(prices.totalUsd, "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
+      + `<small class="mobileMarketTurnkeyNote">${escapeMarketHtml(formatMarketPrice(prices.deliveredUsd, "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
+      + `<small class="mobileMarketTurnkeyNote isStrong">${escapeMarketHtml(formatMarketPrice(prices.totalUsd, "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
     const priceCell = (offer, source) => {
       const prices = byOfferPrices(offer, source);
       return prices ? byPriceCell(prices) : plainPriceCell(offer);
@@ -4953,7 +4972,7 @@
         .replace("{date}", byRatesNow.date ? byRatesNow.date.split("-").reverse().join(".") : "—")
         .replace("{saving}", formatMarketPrice(percentile(bySavings, 0.5), "USD")))}</p>`
       : "";
-    const plainPriceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
+    const plainPriceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
     const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isPrimary" : ""}" type="button" data-monitoring-view="${key}"${(key === "new" || key === "gone") && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${viewRows[key].length}</button>`;
     const withStatus = view === "all" && before;
     const columns = 5 + (withStatus ? 1 : 0);
@@ -5097,7 +5116,7 @@
             <td class="isNum">${data.priceCell(row.offer, row.source)}</td>
           </tr>`).join("")}</tbody>
       </table>
-      <p class="mobileMarketAxisNote isTurnkey">* ${escapeMarketHtml(c.turnkeyFootnote || "")}</p>`;
+      <p class="mobileMarketAxisNote isTurnkey">* ${turnkeyFootnoteHtml(c.turnkeyFootnote)}</p>`;
     const fileName = `AUTOGOOD ${c.monitoringPdfFile} ${title} ${today.toISOString().slice(0, 10)}.pdf`.replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
     await downloadReportPdf(button, "pdf", {
       live: report,
@@ -6625,8 +6644,8 @@
     const byPriceLines = (prices) => `
       <span class="mobileMarketByPrices">
         <small>${escapeMarketHtml(c.byCarPrice)}: ${escapeMarketHtml(formatMarketPrice(prices.parts.carEur, "EUR"))} ${escapeMarketHtml(byBaseLabel(prices.base))} · ${escapeMarketHtml(formatMarketPrice(prices.carUsd, "USD"))}</small>
-        <small>${escapeMarketHtml(capital(c.byDelivered))}*: ~ ${escapeMarketHtml(formatMarketPrice(prices.deliveredUsd, "USD"))}</small>
-        <b>${escapeMarketHtml(capital(c.byTurnkey))}*: ~ ${escapeMarketHtml(formatMarketPrice(prices.totalUsd, "USD"))}</b>
+        <small>${escapeMarketHtml(capital(c.byDelivered))}*: ${escapeMarketHtml(formatMarketPrice(prices.deliveredUsd, "USD"))}</small>
+        <b>${escapeMarketHtml(capital(c.byTurnkey))}*: ${escapeMarketHtml(formatMarketPrice(prices.totalUsd, "USD"))}</b>
       </span>`;
     const byRates = byMode ? byTurnkey.rates() : null;
     // A price as the marketplace shows it: PLN, EUR, or SEK with its EUR value.
@@ -6862,6 +6881,8 @@
         && normalizeToken(recognised.matchedFilters?.brand || "") === normalizeToken(filters.brand || "")
         && normalizeToken(recognised.matchedFilters?.model || "") === normalizeToken(filters.model || "");
       let carMarker = "";
+      // The car's price, written on the price scale of its chart.
+      let carScalePrice = null;
       // The same marker on a chart with its own price scale.
       let carMarkerFor = null;
       let carVerdict = "";
@@ -6921,9 +6942,11 @@
         else if (chartAxis === "year" && carYear && axisSpan) carX = (carYear - axisMin) / axisSpan;
         const carMarkerOn = (minimum, maximum) => {
           const clampedY = verticalMarketPosition(Math.min(Math.max(carPrice, minimum), maximum), minimum, maximum);
-          return `<span class="mobileMarketCar" style="--x:${Math.min(1, Math.max(0, carX)).toFixed(4)};top:${clampedY}%" role="img" aria-label="${escapeMarketHtml(`${carLabel}: ${formatMarketPrice(carPrice)}`)}"><i aria-hidden="true"></i><b>${escapeMarketHtml(carLabel)} · ${escapeMarketHtml(formatMarketPrice(carPrice))}</b></span>`;
+          // The price is written on the price scale (chartBody), not over the dots.
+          return `<span class="mobileMarketCar" style="--x:${Math.min(1, Math.max(0, carX)).toFixed(4)};top:${clampedY}%" role="img" aria-label="${escapeMarketHtml(`${carLabel}: ${formatMarketPrice(carPrice)}`)}"><i aria-hidden="true"></i></span>`;
         };
         if (carX !== null) {
+          carScalePrice = carPrice;
           carMarker = carMarkerOn(domainMinimum, domainMaximum);
           carMarkerFor = carMarkerOn;
         }
@@ -6969,6 +6992,11 @@
       const chartBody = ({ panelStats, panelPlotted, panelSuspects, trendHtml, car, source = "", guides = [], ticks = xTicks, scale = null }) => {
         const domainMinimum = scale ? scale.min : sharedMinimum;
         const domainMaximum = scale ? scale.max : sharedMaximum;
+        // The car's price on the scale (yellow); scale labels it would cover give way.
+        const carY = car && carScalePrice !== null
+          ? verticalMarketPosition(Math.min(Math.max(carScalePrice, domainMinimum), domainMaximum), domainMinimum, domainMaximum)
+          : null;
+        const clearOfCar = (position) => carY === null || Math.abs(position - carY) >= 3.5;
         const scaleTicks = scale ? scale.ticks : sharedTicks;
         const labelStep = scale ? scale.labelStep : sharedLabelStep;
         const high = verticalMarketPosition(panelStats.middleHigh, domainMinimum, domainMaximum);
@@ -6993,7 +7021,7 @@
           ${guides.map((guide) => `<div class="mobileMarketMedian isGuide is${sourceClass(guide.source)}" style="top:${verticalMarketPosition(Math.min(Math.max(guide.value, domainMinimum), domainMaximum), domainMinimum, domainMaximum)}%" aria-hidden="true"></div>`).join("")}
           ${scaleTicks.map((price) => {
             const position = verticalMarketPosition(price, domainMinimum, domainMaximum);
-            return `<div class="mobileMarketGridLine" style="top:${position}%"></div>${price % labelStep === 0 ? `<span class="mobileMarketTick isGrid" style="top:${position}%">${escapeMarketHtml(formatMarketPrice(price))}</span>` : ""}`;
+            return `<div class="mobileMarketGridLine" style="top:${position}%"></div>${price % labelStep === 0 && clearOfCar(position) ? `<span class="mobileMarketTick isGrid" style="top:${position}%">${escapeMarketHtml(formatMarketPrice(price))}</span>` : ""}`;
           }).join("")}
           ${ticks.map((tick) => `<div class="mobileMarketGridColumn" style="--x:${tick.x.toFixed(4)}"></div>`).join("")}
           <div class="mobileMarketPlot">${trendHtml}</div>
@@ -7007,7 +7035,8 @@
           ${Math.abs(high - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${high}%">P75 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleHigh))}</span>` : ""}
           <span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>
           ${Math.abs(low - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${low}%">P25 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleLow))}</span>` : ""}
-          <span class="mobileMarketTick isLimit" style="top:95%">${escapeMarketHtml(formatMarketPrice(domainMinimum))}</span>
+          ${clearOfCar(95) ? `<span class="mobileMarketTick isLimit" style="top:95%">${escapeMarketHtml(formatMarketPrice(domainMinimum))}</span>` : ""}
+          ${carY !== null ? `<span class="mobileMarketTick isCarPrice" style="top:${carY}%">${escapeMarketHtml(formatMarketPrice(carScalePrice))}</span>` : ""}
           ${top ? `<span class="mobileMarketTick isLimit isPeak${top.x > 0.85 ? " isPeakRight" : ""}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : ""}
         </div>
         <div class="mobileMarketXAxis">
@@ -7071,7 +7100,7 @@
           };
         }).filter(Boolean);
         chartsHtml = `
-          <div class="mobileMarketPanels" style="--panels:${panels.length}">
+          <div class="mobileMarketPanels" style="--panels:${Math.min(panels.length, 2)}">
             ${panels.map((panel) => `
               <section class="mobileMarketPanel is${sourceClass(panel.source)}">
                 <header class="mobileMarketPanelHead">
@@ -7154,35 +7183,38 @@
       const priceCell = (row, key) => {
         if (row.deliveredStats) {
           return `${escapeMarketHtml(formatMarketPrice(row.stats[key], "EUR"))} <small class="mobileMarketGrossNote">${escapeMarketHtml(row.baseLabel)}</small>`
-            + `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.deliveredStats[key], "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
-            + `<small class="mobileMarketTurnkeyNote isStrong">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
+            + `<small class="mobileMarketTurnkeyNote">${escapeMarketHtml(formatMarketPrice(row.deliveredStats[key], "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
+            + `<small class="mobileMarketTurnkeyNote isStrong">${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
         }
         const main = row.avbyUsd ? formatMarketPrice(row.stats[key], "USD") : nativePrice(row.stats[key], row.source);
         // Złoty first ("na gotowo", what the client pays in Poland), under it
         // the ad's own gross price — the same order as "Aktualne oferty".
         return row.turnkeyStats
-          ? `<span class="mobileMarketStatsTurnkey">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], turnkeyCurrency))}<small> ${escapeMarketHtml(turnkeyLabel)}</small></span><small class="mobileMarketStatsAdPrice">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(main)} ${escapeMarketHtml(c.byGross)}</small>`
+          ? `<span class="mobileMarketStatsTurnkey">${escapeMarketHtml(formatMarketPrice(row.turnkeyStats[key], turnkeyCurrency))}<small> ${escapeMarketHtml(turnkeyLabel)}</small></span><small class="mobileMarketStatsAdPrice">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(main)} ${escapeMarketHtml(c.byGross)}</small>`
           : escapeMarketHtml(main);
       };
       const rangeCell = (row) => {
         if (row.deliveredStats) {
           return `${escapeMarketHtml(formatMarketPrice(row.stats.middleLow, "EUR"))} – ${escapeMarketHtml(formatMarketPrice(row.stats.middleHigh, "EUR"))} <small class="mobileMarketGrossNote">${escapeMarketHtml(row.baseLabel)}</small>`
-            + `<small class="mobileMarketTurnkeyNote">~ ${escapeMarketHtml(formatMarketPrice(row.deliveredStats.middleLow, "USD"))} – ${escapeMarketHtml(formatMarketPrice(row.deliveredStats.middleHigh, "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
-            + `<small class="mobileMarketTurnkeyNote isStrong">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, "USD"))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
+            + `<small class="mobileMarketTurnkeyNote">${escapeMarketHtml(formatMarketPrice(row.deliveredStats.middleLow, "USD"))} – ${escapeMarketHtml(formatMarketPrice(row.deliveredStats.middleHigh, "USD"))} ${escapeMarketHtml(c.byDelivered)}*</small>`
+            + `<small class="mobileMarketTurnkeyNote isStrong">${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, "USD"))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, "USD"))} ${escapeMarketHtml(c.byTurnkey)}*</small>`;
         }
         const main = row.avbyUsd
           ? `${formatMarketPrice(row.stats.middleLow, "USD")} – ${formatMarketPrice(row.stats.middleHigh, "USD")}`
           : `${nativePrice(row.stats.middleLow, row.source)} – ${nativePrice(row.stats.middleHigh, row.source)}`;
         return row.turnkeyStats
-          ? `<span class="mobileMarketStatsTurnkey">~ ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, turnkeyCurrency))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, turnkeyCurrency))}<small> ${escapeMarketHtml(turnkeyLabel)}</small></span><small class="mobileMarketStatsAdPrice">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(main)}</small>`
+          ? `<span class="mobileMarketStatsTurnkey">${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleLow, turnkeyCurrency))} – ${escapeMarketHtml(formatMarketPrice(row.turnkeyStats.middleHigh, turnkeyCurrency))}<small> ${escapeMarketHtml(turnkeyLabel)}</small></span><small class="mobileMarketStatsAdPrice">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(main)}</small>`
           : escapeMarketHtml(main);
       };
       const statColumns = [
         { label: c.count, value: (row) => row.stats.count, html: (row) => escapeMarketHtml(String(row.stats.count)) },
-        { label: c.minimum, value: (row) => row.inPln.min, html: (row) => priceCell(row, "min") },
-        { label: c.maximum, value: (row) => row.inPln.max, html: (row) => priceCell(row, "max") },
-        { label: c.median, value: (row) => row.inPln.median, html: (row) => priceCell(row, "median") },
-        { label: c.averagePrices, value: (row) => (row.inPln.middleLow + row.inPln.middleHigh) / 2, html: rangeCell, wide: true },
+        // Prices in the chart's colours (owner 2026-10-05): the cheapest green,
+        // the dearest red, the median blue; ▲▼ still mark the highest and
+        // lowest market.
+        { label: c.minimum, cat: "isCheapest", value: (row) => row.inPln.min, html: (row) => priceCell(row, "min") },
+        { label: c.maximum, cat: "isDearest", value: (row) => row.inPln.max, html: (row) => priceCell(row, "max") },
+        { label: c.median, cat: "isMedianPrice", value: (row) => row.inPln.median, html: (row) => priceCell(row, "median") },
+        { label: c.averagePrices, cat: "isRangePrice", value: (row) => (row.inPln.middleLow + row.inPln.middleHigh) / 2, html: rangeCell, wide: true },
         { label: c.middleOffers, value: (row) => row.stats.middleCount, html: (row) => escapeMarketHtml(String(row.stats.middleCount)) },
         // Mileage moves the price: shown for every market (lower = green).
         { label: c.averageMileage, cls: "isKm", value: (row) => (row.mileage ? row.mileage.mean : NaN), html: (row) => (row.mileage ? escapeMarketHtml(`${numberFormat().format(row.mileage.mean)} km`) : "—") },
@@ -7271,36 +7303,6 @@
         }
         return lines;
       };
-      // What "na gotowo" is made of, for the car in the middle of each foreign
-      // market (the offer closest to its median), like the calculator shows it.
-      const percentText = (value) => value.toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { maximumFractionDigits: 2 });
-      const breakdownHtml = byMode || !turnkey ? "" : foreignRows.map((row) => {
-        const median = row.turnkeyStats.median;
-        const example = row.own.filter((listing) => listing.turnkeyPln)
-          .sort((left, right) => Math.abs(left.turnkeyPln - median) - Math.abs(right.turnkeyPln - median))[0];
-        if (!example) return "";
-        const currency = example.originalCurrency || SOURCE_CURRENCY[example.source];
-        const result = turnkey.turnkeyAverage(turnkeyInput(example, example.originalPrice, currency), filters, rates);
-        const exciseRate = (turnkey.EXCISE_RATES?.[example.engine?.index] ?? 0) * 100;
-        const rateValue = currency === "SEK" ? rates.sek : rates.eur;
-        const parts = [
-          ["Car", c.partCar.replace("{price}", formatMarketPrice(example.originalPrice, currency)).replace("{rate}", rateValue.toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { minimumFractionDigits: 2, maximumFractionDigits: currency === "SEK" ? 4 : 2 })), result.parts.car],
-          ["Transport", c.partTransport, result.parts.transport],
-          ["Inspection", c.partInspection, result.parts.inspection],
-          ["Excise", c.partExcise.replace("{rate}", percentText(exciseRate)), result.parts.excise],
-          ["Commission", c.partCommission, result.parts.commission],
-          ["Fees", c.partFees, result.parts.fees],
-        ].filter((part) => part[2] > 0);
-        return `
-          <section class="mobileMarketBreakdown">
-            <p class="mobileMarketBreakdownTitle">${escapeMarketHtml(c.breakdownTitle.replace("{from}", fromLabel(row.source)))}</p>
-            <div class="mobileMarketBreakdownBar" aria-hidden="true">${parts.map(([key, label, value]) => `<i class="is${key}" style="flex:${value} 1 0" title="${escapeMarketHtml(`${label}: ${plnText(value)}`)}"></i>`).join("")}</div>
-            <ul class="mobileMarketBreakdownList">
-              ${parts.map(([key, label, value]) => `<li><i class="is${key}"></i><span>${escapeMarketHtml(label)}</span><b>${escapeMarketHtml(plnText(value))}</b></li>`).join("")}
-              <li class="isTotal"><span>${escapeMarketHtml(c.partTotal)}</span><b>${escapeMarketHtml(plnText(result.total))}</b></li>
-            </ul>
-          </section>`;
-      }).join("");
       const conclusions = polish && byMode ? foreignRows.map((row) => {
         const difference = polish.inPln.median - row.turnkeyStats.median;
         const percent = Math.round((Math.abs(difference) / polish.inPln.median) * 100);
@@ -7357,7 +7359,7 @@
                 const cellHtml = column.html(row);
                 const opener = '<span class="mobileMarketStatsTurnkey">';
                 const marked = mark && cellHtml.startsWith(opener) ? `${opener}${mark}${cellHtml.slice(opener.length)}` : `${mark}${cellHtml}`;
-                return `<b class="${column.wide ? "isWide" : ""}${column.cls ? ` ${column.cls}` : ""}${toneClass}" role="cell">${marked}${note}</b>`;
+                return `<b class="${column.wide ? "isWide" : ""}${column.cls ? ` ${column.cls}` : ""}${column.cat ? ` ${column.cat}` : toneClass}" role="cell">${marked}${note}</b>`;
               }).join("")}
             </div>`).join("")}
         </div>
@@ -7399,14 +7401,13 @@
 
         ${chartsHtml}
 
-          ${byMode && byProgress ? `<p class="mobileMarketAxisNote" data-by-progress>${escapeMarketHtml(c.byDetailsProgress.replace("{done}", String(byProgress.done)).replace("{total}", String(byProgress.total)))}</p>` : ""}
+          ${byMode && byProgress ? `<p class="mobileMarketAxisNote" data-by-progress data-report-hide>${escapeMarketHtml(c.byDetailsProgress.replace("{done}", String(byProgress.done)).replace("{total}", String(byProgress.total)))}</p>` : ""}
           ${byMode && byMissing.size && !byProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(c.byDetailsMissing.replace("{missing}", String(byMissing.size)))}</p>` : ""}
-          ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">* ${escapeMarketHtml(byMode
-            ? c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD"))
-            : c.turnkeyFootnote)}</p>` : ""}
-          ${ccmProgress ? `<p class="mobileMarketAxisNote" data-ccm-progress>${escapeMarketHtml(c.ccmProgress.replace("{done}", String(ccmProgress.done)).replace("{total}", String(ccmProgress.total)))}</p>` : ""}
+          ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">* ${byMode
+            ? escapeMarketHtml(c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD")))
+            : turnkeyFootnoteHtml(c.turnkeyFootnote)}</p>` : ""}
+          ${ccmProgress ? `<p class="mobileMarketAxisNote" data-ccm-progress data-report-hide>${escapeMarketHtml(c.ccmProgress.replace("{done}", String(ccmProgress.done)).replace("{total}", String(ccmProgress.total)))}</p>` : ""}
           ${unknownEngine.length && !ccmProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.ccmUnknown, unknownEngine.length))}</p>` : ""}
-          ${breakdownHtml}
           ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}
           ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.hiddenNoAxis, hiddenByAxis))}</p>` : ""}
 
@@ -7541,7 +7542,7 @@
       const placeText = (listing) => [listing.city, listing.country && !["PL", "SE", "BY"].includes(listing.country) ? listing.country : ""].filter(Boolean).join(", ") || "—";
       const deviationText = (listing) => (sourceMedian[listing.source] ? percentFrom(listing.price, sourceMedian[listing.source]) : "—");
       const priceHtml = (listing) => (listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln
-        ? `<b class="mobileMarketTurnkeyPrice">~ ${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
+        ? `<b class="mobileMarketTurnkeyPrice">${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
         : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`);
       // [key, header, sortable, class, weight (its share of the width), cell]
       const tableColumns = [
@@ -7698,27 +7699,26 @@
     // The portals drawn on the chart (a picked one without offers is left
     // out); they are switched under the filters, in "Aktualne oferty".
     const reportSources = hasListings ? shownSources : MARKET_SOURCES.filter((source) => chartSources[source]);
-    // "Analiza rynków": the countries drawn on the chart, flag + code, on the
-    // right of "Statystyki". As on page 1: "−" on hover drops a market, a grey
-    // one gets "+"; a picked market without offers is grey too, its "+"
-    // fetches the offers again.
+    // "Analiza rynków": only the markets picked for the analysis, flag + code,
+    // on the right of "Statystyki" (owner 2026-10-05: markets are picked in
+    // "Aktualne oferty", no "+ / −" here). A picked market without offers is
+    // grey; a click on it fetches its offers again.
     const sourcesPicker = `
       <div class="mobileMarketSources">
         <span>${escapeMarketHtml(c.sourcesPicker)}</span>
         <div class="mobileMarketSourcesList">
-          ${MARKET_SOURCES.filter((source) => source !== "autoscout" && source !== "kleinanzeigen").map((source) => {
+          ${MARKET_SOURCES.filter((source) => source !== "autoscout" && source !== "kleinanzeigen" && (chartSources[source] || reportSources.includes(source))).map((source) => {
             const drawn = reportSources.includes(source);
             const attribute = chartSources[source] ? "data-mobile-analysis-fetch" : "data-mobile-analysis-market";
             const country = window.AUTOGOOD_MARKET_COUNTRY?.[source] || "";
             // AutoScout24 shares Germany with mobile.de: named, not "DE" twice.
             const name = source === "autoscout" || source === "kleinanzeigen" ? portalName(source) : window.AUTOGOOD_COUNTRY_NAME?.(country) || country;
-            const label = drawn ? `${name} (${cleaned[source].length})` : `${name} — ${c.marketPickOn}`;
+            const label = drawn ? `${name} (${cleaned[source].length})` : `${name} — ${c.refresh}`;
             const inner = `${window.AUTOGOOD_FLAG?.(country) || ""}<b>${escapeMarketHtml(source === "autoscout" ? "AS24" : source === "kleinanzeigen" ? "KA" : country)}</b>`;
             return `<span class="mobileMarketChip${drawn ? "" : " isOff"}"${drawn ? "" : " data-report-hide"}>
               ${drawn
                 ? `<span class="mobileMarketChipBody" title="${escapeMarketHtml(label)}">${inner}</span>`
                 : `<button class="mobileMarketChipBody" type="button" ${attribute}="${source}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">${inner}</button>`}
-              ${drawn ? marketToggleHtml(source, true, "data-mobile-analysis-market") : marketToggleHtml(source, false, attribute)}
             </span>`;
           }).join("")}
         </div>
@@ -7979,6 +7979,12 @@
     clearTimeout(prepareTimer);
     markCopyButtons("copy", false);
     markCopyButtons("list-copy", false);
+    // The pointer may already rest on the buttons (no new "pointerover"):
+    // the picture is drawn again for it once the report is still.
+    prepareTimer = setTimeout(() => {
+      if (analysisContent.querySelector(".mobileMarketChartTitleRow:hover, [data-mobile-market-screenshot]:hover, [data-mobile-market-pdf]:hover")) ensureReportImage("copy");
+      else if (analysisContent.querySelector(".mobileMarketTableHead:hover, [data-mobile-market-list-screenshot]:hover")) ensureReportImage("list-copy");
+    }, 400);
   }
   // Drawing a picture holds the page for up to a second or two, so it is
   // drawn only when the pointer (or keyboard) comes to its buttons, not after
@@ -8006,6 +8012,48 @@
     if (changed) reportChanged();
   }).observe(analysisContent, { childList: true, subtree: true, characterData: true });
 
+  function showCopyDialog(blob) {
+    const c = copy();
+    document.querySelector(".mobileReportCopyDialog")?.remove();
+    const url = URL.createObjectURL(blob);
+    const dialog = document.createElement("dialog");
+    dialog.className = "mobileReportCopyDialog";
+    dialog.innerHTML = `
+      <div class="mobileReportCopyBar">
+        <p><b>${escapeMarketHtml(c.screenshotDialogTitle)}</b>${escapeMarketHtml(c.screenshotDialogHint)}</p>
+        <button class="mobileMarketImportClear isPrimary" type="button" data-copy-dialog-copy>${escapeMarketHtml(c.screenshotDialogCopy)}</button>
+        <button class="mobileMarketImportClear" type="button" data-copy-dialog-close>${escapeMarketHtml(c.screenshotDialogClose)}</button>
+      </div>
+      <img src="${url}" alt="${escapeMarketHtml(c.screenshotDialogTitle)}" />`;
+    const close = () => {
+      dialog.close();
+      dialog.remove();
+      URL.revokeObjectURL(url);
+    };
+    dialog.addEventListener("click", async (event) => {
+      if (event.target === dialog || event.target.closest("[data-copy-dialog-close]")) {
+        close();
+        return;
+      }
+      const again = event.target.closest("[data-copy-dialog-copy]");
+      if (!again) return;
+      try {
+        await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+        setAnalysisStatus(c.screenshotCopied);
+        close();
+      } catch (error) {
+        console.warn("AUTOGOOD copy refused in the window:", error?.name, error?.message);
+        again.textContent = c.screenshotDialogRightClick;
+      }
+    });
+    dialog.addEventListener("cancel", () => {
+      dialog.remove();
+      URL.revokeObjectURL(url);
+    });
+    document.body.append(dialog);
+    dialog.showModal();
+  }
+
   async function copyReportScreenshot(button, mode = "copy") {
     const c = copy();
     if (!navigator.clipboard?.write || !window.ClipboardItem) {
@@ -8027,8 +8075,13 @@
       // The browser's own reason, for diagnosis (e.g. "Document is not focused").
       console.warn("AUTOGOOD copy refused:", error?.name, error?.message, recent ? "(ready image)" : "(image still drawing)");
       try {
-        lastReportImage = { mode, blob: await blobPromise, at: Date.now() };
-        setAnalysisStatus(c.screenshotRetry, true);
+        const blob = await blobPromise;
+        lastReportImage = { mode, blob, at: Date.now() };
+        // The finished picture in a window: its button copies it (a fresh
+        // click), or a right click → "Copy image" where the page may not
+        // write to the clipboard at all. Never a download.
+        showCopyDialog(blob);
+        setAnalysisStatus(c.screenshotInDialog, true);
       } catch {
         setAnalysisStatus(c.screenshotFailed, true);
       }
@@ -8115,7 +8168,7 @@
   // analysis repeats the latest message in its own line.
   let analysisMessage = { text: "", isError: false };
   function analysisStatusHtml() {
-    return `<p class="mobileMarketAnalysisStatus${analysisMessage.isError ? " isError" : ""}" aria-live="polite" data-mobile-market-analysis-status${analysisMessage.text ? "" : " hidden"}>${escapeMarketHtml(analysisMessage.text)}</p>`;
+    return `<p class="mobileMarketAnalysisStatus${analysisMessage.isError ? " isError" : ""}" aria-live="polite" data-mobile-market-analysis-status data-report-hide${analysisMessage.text ? "" : " hidden"}>${escapeMarketHtml(analysisMessage.text)}</p>`;
   }
 
   function setAnalysisStatus(message, isError = false) {

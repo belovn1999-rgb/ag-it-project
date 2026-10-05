@@ -52,8 +52,9 @@
       const head = column.querySelector(".agMarketColumnHeadWrap");
       if (!head?.querySelector(".agMarketColumnHead")) return;
       let total = head.querySelector(".agMarketColumnTotal");
-      // One portal: its own count says it already.
-      const value = rows.length > 1 ? sumCounts(rows) : "";
+      // Every switched-on column has its total on top, large (owner
+      // 2026-10-05), also with one portal: the columns read alike.
+      const value = rows.length ? sumCounts(rows) : "";
       if (!value) {
         total?.remove();
         return;

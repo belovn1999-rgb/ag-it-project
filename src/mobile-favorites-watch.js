@@ -752,7 +752,7 @@
             <div class="agWatchPrice">
               <b>${esc(money(offer.price, offer.currency))}</b>
               ${foreign ? `<small>${esc(c.brutto)}</small>` : ""}
-              ${Number.isFinite(turnkey) ? `<em>~ ${esc(money(turnkey, "PLN"))} ${esc(c.turnkey)}</em>` : ""}
+              ${Number.isFinite(turnkey) ? `<em>${esc(money(turnkey, "PLN"))} ${esc(c.turnkey)}</em>` : ""}
             </div>
           </div>
           ${specs ? `<p class="agWatchSpecs">${specs}</p>` : ""}
