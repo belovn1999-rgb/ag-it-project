@@ -510,7 +510,8 @@
   color: var(--color-error);
 }
 
-.mobileMarketStatsRow b.isMedianPrice {
+.mobileMarketStatsRow b.isMedianPrice,
+.mobileMarketStatsRow b.isRangePrice {
   color: #1d5fd0;
 }
 
@@ -611,4 +612,18 @@
   display: block;
   width: 100%;
   height: auto;
+}
+
+/* 05.10 (owner): "Cena a przebieg" under the statistics, a row per market. */
+.mobileMarketStatsMileage {
+  margin-top: var(--space-lg);
+}
+
+.mobileMarketStatsMileage tbody th .agFlag {
+  vertical-align: -1px;
+}
+
+/* The "na gotowo" footnote: one item per line. */
+.mobileMarketAxisNote.isTurnkey {
+  line-height: 1.55;
 }

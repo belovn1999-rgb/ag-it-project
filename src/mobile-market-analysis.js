@@ -270,7 +270,7 @@
       trendTitle: "Mediana ceny w czasie",
       trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
       adPrice: "cena w ogłoszeniu",
-      turnkeyFootnote: "Cena „na gotowo” składa się z: ceny brutto z ogłoszenia + przeciętnego kosztu transportu, oględzin, akcyzy według rodzaju i pojemności silnika, tłumaczeń dokumentów, przeglądu technicznego oraz wynagrodzenia AUTOGOOD. Żeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
+      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu\n+ Przeciętnego kosztu oględzin\n+ Akcyzy według rodzaju i pojemności silnika\n+ Tłumaczeń dokumentów\n+ Przeglądu technicznego\n+ Stałego wynagrodzenia AUTOGOOD.\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
       conclusionHeading: "Wniosek",
       conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce.",
       conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce.",
@@ -412,8 +412,7 @@
       tableOpen: "Otwórz",
       tableSortHint: "Kliknij nagłówek, aby posortować.",
       segmentsHeading: "Cena a parametry",
-      segmentsLead: "Mediana ceny w grupach ofert{turnkey}, pod nią liczba ofert i różnica do mediany całego rynku. Grupa poniżej 3 ofert — bez ceny. Pokazane są tylko parametry, których wyszukiwanie nie ustala.",
-      segmentsTurnkey: " (oferty zagraniczne: {label})",
+      statsMileageHeading: "Cena a przebieg",
       segmentYear: "Rok produkcji",
       segmentMileage: "Przebieg",
       segmentDisplacement: "Pojemność silnika",
@@ -831,7 +830,7 @@
       trendTitle: "Медиана цены во времени",
       trendNeedsTwo: "График появится после второго замера цен.",
       adPrice: "цена в объявлении",
-      turnkeyFootnote: "Цена «под ключ» складывается из цены брутто в объявлении + средней стоимости доставки, осмотра, акциза по типу и объёму двигателя, переводов документов, техосмотра и вознаграждения AUTOGOOD. Чтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
+      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки\n+ Средней стоимости осмотра\n+ Акциза по типу и объёму двигателя\n+ Переводов документов\n+ Техосмотра\n+ Фиксированного вознаграждения AUTOGOOD.\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
       conclusionHeading: "Вывод",
       conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше.",
       conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше.",
@@ -973,8 +972,7 @@
       tableOpen: "Открыть",
       tableSortHint: "Нажми на заголовок, чтобы отсортировать.",
       segmentsHeading: "Цена и параметры",
-      segmentsLead: "Медиана цены в группах предложений{turnkey}, под ней — число предложений и разница с медианой всего рынка. Группа меньше 3 предложений — без цены. Показаны только параметры, которые поиск не задаёт.",
-      segmentsTurnkey: " (зарубежные: {label})",
+      statsMileageHeading: "Цена и пробег",
       segmentYear: "Год выпуска",
       segmentMileage: "Пробег",
       segmentDisplacement: "Объём двигателя",
@@ -1499,9 +1497,15 @@
 
   // The "na gotowo" footnote: the term in bold, its explanation in italics
   // (owner 2026-10-05).
+  // One item per line; the term in bold, the closing sentence (contact us)
+  // in italics.
   function turnkeyFootnoteHtml(text) {
-    const match = String(text || "").match(/^(.*?[”»])(\s*)([\s\S]*)$/);
-    return match ? `<b>${escapeMarketHtml(match[1])}</b>${match[2]}<em>${escapeMarketHtml(match[3])}</em>` : escapeMarketHtml(text);
+    const lines = String(text || "").split("\n");
+    const contact = lines.length > 2 ? lines.pop() : "";
+    const [first, ...items] = lines;
+    const lead = String(first).match(/^(.*?[”»])([\s\S]*)$/);
+    const head = lead ? `<b>${escapeMarketHtml(lead[1])}</b>${escapeMarketHtml(lead[2])}` : escapeMarketHtml(first);
+    return [head, ...items.map(escapeMarketHtml), ...(contact ? [`<em>${escapeMarketHtml(contact)}</em>`] : [])].join("<br>");
   }
 
   function escapeMarketHtml(value) {
@@ -6662,6 +6666,7 @@
     const listingKey = (listing) => listing.url || `${listing.portal || listing.source}-${listing.id}`;
     let statsContent = "";
     let segmentsContent = "";
+    let statsMileageContent = "";
     let offersContent = "";
     let summaryContent = "";
     let marketContent = `
@@ -7450,7 +7455,7 @@
         const high = Math.max(...kms);
         const step = [10000, 20000, 25000, 50000, 100000].find((size) => Math.floor(high / size) - Math.floor(low / size) + 1 <= 6) || 100000;
         const thousands = (value) => numbers.format(Math.round(value / 1000));
-        addDimension(c.segmentMileage,
+        addDimension(c.statsMileageHeading,
           (listing) => (Number(listing.mileage) > 0 ? Math.floor(Number(listing.mileage) / step) * step : null),
           (start) => `${thousands(start)}–${thousands(start + step)} ${c.thousandKm}`);
       }
@@ -7492,11 +7497,32 @@
         const tone = !base ? "" : median < base * 0.98 ? " isBelow" : median > base * 1.02 ? " isAbove" : "";
         return `<td class="isNum${tone}"><b>${escapeMarketHtml(formatMarketPrice(median))}</b><small>${escapeMarketHtml(count)}${base ? ` · <span>${escapeMarketHtml(percentFrom(median, base))}</span>` : ""}</small></td>`;
       };
-      const foreignShown = marketListings.some((listing) => listing.turnkeyPln);
+      // Price by mileage: the statistics card's second part (owner
+      // 2026-10-05), a row per market, the mileage groups across.
+      const mileageIndex = segmentDimensions.findIndex((dimension) => dimension.title === c.statsMileageHeading);
+      const mileageDimension = mileageIndex >= 0 ? segmentDimensions.splice(mileageIndex, 1)[0] : null;
+      statsMileageContent = mileageDimension ? `
+        <div class="mobileMarketSegmentScroll mobileMarketStatsMileage">
+          <table class="mobileMarketSegmentTable">
+            <caption>${escapeMarketHtml(c.statsMileageHeading)}</caption>
+            <thead>
+              <tr>
+                <th scope="col"><span class="srOnly">${escapeMarketHtml(c.marketsHeading)}</span></th>
+                ${mileageDimension.rows.map((row) => `<th scope="col" class="isNum">${escapeMarketHtml(row.label)}</th>`).join("")}
+              </tr>
+            </thead>
+            <tbody>
+              ${shownSources.map((source) => `
+                <tr>
+                  <th scope="row">${marketBadge(source)}</th>
+                  ${mileageDimension.rows.map((row) => segmentCell(row.listings, source)).join("")}
+                </tr>`).join("")}
+            </tbody>
+          </table>
+        </div>` : "";
       segmentsContent = segmentDimensions.length ? `
         <section class="mobileMarketCard mobileMarketSegmentsCard" aria-label="${escapeMarketHtml(c.segmentsHeading)}" data-report-list-hide>
           ${blockTitle("settings", c.segmentsHeading)}
-          <p class="mobileMarketSegmentsLead">${escapeMarketHtml(c.segmentsLead.replace("{turnkey}", foreignShown ? c.segmentsTurnkey.replace("{label}", turnkeyLabel.replace(/\*$/, "")) : ""))}</p>
           <div class="mobileMarketSegments">
             ${segmentDimensions.map((dimension) => `
               <div class="mobileMarketSegmentScroll">
@@ -7794,6 +7820,7 @@
           <section class="mobileMarketCard mobileMarketStatsCard" aria-label="${escapeMarketHtml(c.statsHeading)}" data-report-list-hide>
             <div class="mobileMarketStatsHead">${blockTitle("percent", c.statsHeading)}${sourcesPicker}</div>
             ${statsContent}
+            ${statsMileageContent}
           </section>` : ""}
 
         <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
