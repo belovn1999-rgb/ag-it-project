@@ -71,6 +71,7 @@
 
 ## 8. Журнал
 
+- 2026-10-06 — mobile.html, B11: ParuVendu через свой Worker (передеплоен, 24/24, 0,5 с вместо 2,3 с у r.jina.ai) (Claude).
 - 2026-10-06 — mobile.html: «Razem» стр. 1 (321) ≠ анализ (202) — это дубли mobile.de/AutoScout24 (106 из 172 одни и те же машины); исправлено чтение AutoScout24: короткий список (≤ 240) целиком, а не 8 страниц из 9 (Claude).
 - 2026-10-06 — mobile.html, B47: ссылка второго портала включает всю страну (главный + второй без дублей); Monitoring ParuVendu до 3 000 машин через Worker; оффер читает AutoScout24 FR, ParuVendu, Kleinanzeigen (Claude).
 - 2026-10-05 — mobile.html, B47: ParuVendu — второй портал Франции (строка «Francja» = AutoScout24 FR + ParuVendu без дубликатов, стр. 1, анализ, Monitoring, ссылка на объявление; фильтры проверены по числу объявлений) (Claude).

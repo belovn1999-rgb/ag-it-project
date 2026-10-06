@@ -50,7 +50,7 @@
   const WORKER_HOSTS = [
     "otomoto.pl", "blocket.se", "kleinanzeigen.de", "marktplaats.nl", "2dehands.be", "2ememain.be",
     "autoscout24.de", "autoscout24.fr", "autoscout24.nl", "autoscout24.be", "autoscout24.at", "autoscout24.lu",
-    "willhaben.at",
+    "willhaben.at", "paruvendu.fr",
   ];
   const WORKER_ACTIVE = 6;
   const WORKER_STRIKES = 5;
