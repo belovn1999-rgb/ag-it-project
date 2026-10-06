@@ -8624,7 +8624,9 @@
       meta: "",
       // The same favourite star as on the search page.
       // "Odśwież dane" left of the favourite star.
-      aside: `${linkedCarChip(shownLinkedCar)}<button class="mobileMarketImportClear mobileMarketAsideRefresh" type="button" data-mobile-market-refresh data-report-hide>${escapeMarketHtml(c.refresh)}</button><button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
+      // "Kopiuj raport / Raport PDF" (statistics and chart) left of
+      // "Odśwież dane" (owner 2026-10-06).
+      aside: `${linkedCarChip(shownLinkedCar)}${hasListings ? reportActions : ""}<button class="mobileMarketImportClear mobileMarketAsideRefresh" type="button" data-mobile-market-refresh data-report-hide>${escapeMarketHtml(c.refresh)}</button><button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
       columns: searchSpecColumns(filters, reportSources),
     }) || "";
     // The same bottom row as the chosen filters on page 1: "Gotowe" (when the
@@ -8694,9 +8696,7 @@
         ${segmentsContent}
 
         <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
-          ${hasListings ? (reportActionsInTitle
-            ? `<div class="mobileMarketChartTitleRow">${blockTitle("gauge", c.distributionHeading)}${reportActions}</div>`
-            : blockTitle("gauge", c.distributionHeading)) : ""}
+          ${hasListings ? blockTitle("gauge", c.distributionHeading) : ""}
           ${marketContent}
         </section>
 
@@ -8879,7 +8879,7 @@
     // The pointer may already rest on the buttons (no new "pointerover"):
     // the picture is drawn again for it once the report is still.
     prepareTimer = setTimeout(() => {
-      if (analysisContent.querySelector(".mobileMarketChartTitleRow:hover, [data-mobile-market-screenshot]:hover, [data-mobile-market-pdf]:hover")) ensureReportImage("copy");
+      if (analysisContent.querySelector(".agSpecAside:hover, [data-mobile-market-screenshot]:hover, [data-mobile-market-pdf]:hover")) ensureReportImage("copy");
       else if (analysisContent.querySelector(".mobileMarketTableHead:hover, [data-mobile-market-list-screenshot]:hover")) ensureReportImage("list-copy");
     }, 400);
   }
@@ -8896,7 +8896,7 @@
   const prepareOnIntent = (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
-    if (target.closest(".mobileMarketChartTitleRow, [data-mobile-market-screenshot], [data-mobile-market-pdf]")) ensureReportImage("copy");
+    if (target.closest(".agSpecAside, [data-mobile-market-screenshot], [data-mobile-market-pdf]")) ensureReportImage("copy");
     else if (target.closest(".mobileMarketTableHead, [data-mobile-market-list-screenshot]")) ensureReportImage("list-copy");
   };
   analysisContent.addEventListener("pointerover", prepareOnIntent);

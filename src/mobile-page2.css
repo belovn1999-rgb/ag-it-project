@@ -960,3 +960,11 @@ a.mobileLinkedCarChip:hover {
     left: 68px;
   }
 }
+
+/* 06.10: the report buttons beside "Odśwież dane". */
+.agSpecAside .mobileMarketReportActions {
+  order: -10;
+  display: inline-flex;
+  gap: 8px;
+  margin: 0;
+}
