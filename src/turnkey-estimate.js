@@ -131,6 +131,11 @@
     let fuelText = /petrol|diesel|hybrid|electric|elektr|plug|benzin|benzyna|lpg|cng|gas/.test(own) ? own : fuelsWanted.join(" ");
     if (mixed || HYBRID_WORDS.test(name) || HYBRID_WORDS.test(own)) fuelText += " hybrid";
     if (PLUGIN_WORDS.test(name)) fuelText += " plug-in";
+    // The search asks for plug-ins (mobile.de "HYBRID_PLUGIN"): its hybrids
+    // are plug-ins even when the ad says only "Hybrid (Benzin/Elektro)" —
+    // up to 2000 cm³ no excise (owner 2026-10-06).
+    const wantsPlugin = filters.plugin === "yes" || fuelsWanted.some((fuel) => /plug/.test(String(fuel)));
+    if (wantsPlugin && /hybrid|electric|elektr/.test(fuelText) && !/plug/.test(fuelText)) fuelText += " plug-in";
     const from = Number(filters.displacementFrom) || 0;
     const to = Number(filters.displacementTo) || 0;
     let ccm = Number(listing.displacementCcm) || 0;
