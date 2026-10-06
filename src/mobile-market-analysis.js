@@ -1300,6 +1300,11 @@
   // 2026-10-04: the 21st request in a minute is refused with 429), so a
   // refused page waits and is asked again: ~4 min for 1 500 offers.
   const AUTOSCOUT_FULL_LIMIT = 2000;
+  // A short AutoScout24 list is read whole in the analysis too (12 pages of 20
+  // = 240 offers, as mobile.de's whole list): a spread sample of 8 pages out of
+  // 9 skipped page 5, and its unique cars were missing (Opel Astra Kombi 2023,
+  // 2026-10-06: 53 instead of 66 cars not on mobile.de).
+  const AUTOSCOUT_WHOLE_PAGES = 12;
   const PROXY_REFUSED_WAIT_MS = 20000;
 
   let activeAnalysis = null;
@@ -2252,7 +2257,7 @@
     const allPages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
     const readAll = everyPage && whole && first.total <= AUTOSCOUT_FULL_LIMIT;
     let pages;
-    if (pageCount <= OTOMOTO_PAGES || (whole && first.total <= FULL_LIST_LIMIT)) pages = allPages;
+    if (pageCount <= AUTOSCOUT_WHOLE_PAGES || (whole && first.total <= FULL_LIST_LIMIT)) pages = allPages;
     else pages = [...new Set(Array.from({ length: OTOMOTO_PAGES }, (_, index) => Math.round(1 + (index * (pageCount - 1)) / (OTOMOTO_PAGES - 1))))].filter((page) => page > 1);
     // The sample first (the same pages as before), then every other page.
     if (readAll) pages = [...pages, ...allPages.filter((page) => !pages.includes(page))];

@@ -71,6 +71,7 @@
 
 ## 8. Журнал
 
+- 2026-10-06 — mobile.html: «Razem» стр. 1 (321) ≠ анализ (202) — это дубли mobile.de/AutoScout24 (106 из 172 одни и те же машины); исправлено чтение AutoScout24: короткий список (≤ 240) целиком, а не 8 страниц из 9 (Claude).
 - 2026-10-05 — mobile.html, B47: ParuVendu — второй портал Франции (строка «Francja» = AutoScout24 FR + ParuVendu без дубликатов, стр. 1, анализ, Monitoring, ссылка на объявление; фильтры проверены по числу объявлений) (Claude).
 - 2026-10-05 — mobile.html, Monitoring (B73): один бюджет клиента «na gotowo w Polsce» для всех порталов (цены порталов считаются обратной формулой калькулятора), «Sprawdź w kalkulatorze», «Więcej filtrów» и VAT/продавец прямо в настройках (Claude).
 - 2026-10-05 — mobile.html, B11: свой прокси на Cloudflare Workers (`ag-proxy.autogood-crm.workers.dev`) — otomoto, AutoScout24, Blocket, Marktplaats, 2dehands, Kleinanzeigen через него в 2–3 раза быстрее без лимита 18/мин, `r.jina.ai` запасной; mobile.de Worker не пускает; замеры — PROJECT-MOBILE.md §4.9 (Claude).
