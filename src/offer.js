@@ -348,7 +348,10 @@
     if (seller?.rating?.reviews) sellerFacts.push(`<span class="ofStars">${icon("star")}${esc(Number(seller.rating.score).toFixed(1).replace(".", ","))}</span> · ${numbers.format(seller.rating.reviews)} ${plural(seller.rating.reviews, "opinia", "opinie", "opinii")}${seller.rating.recommend !== null && seller.rating.recommend !== undefined ? ` · ${seller.rating.recommend}% poleca` : ""}`);
     const sinceYear = seller?.since ? String(seller.since).slice(0, 4) : "";
     if (sinceYear) sellerFacts.push(`na ${esc(seller.rating?.portal || PORTAL[offer.source] || "portalu")} od <b>${esc(sinceYear)}</b>`);
-    if (seller?.stock) sellerFacts.push(`<b>${numbers.format(seller.stock)}</b> ${plural(seller.stock, "auto", "auta", "aut")} w ofercie`);
+    // Kleinanzeigen counts every ad of the seller, not only cars.
+    if (seller?.stock) sellerFacts.push(offer.source === "kleinanzeigen"
+      ? `<b>${numbers.format(seller.stock)}</b> ${plural(seller.stock, "ogłoszenie", "ogłoszenia", "ogłoszeń")} na portalu`
+      : `<b>${numbers.format(seller.stock)}</b> ${plural(seller.stock, "auto", "auta", "aut")} w ofercie`);
     const sellerName = seller?.name || (view.seller === "private" ? "Osoba prywatna" : view.seller === "dealer" ? "Dealer" : "");
     const adAgeText = listedDays !== null
       ? `To auto: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> w sprzedaży${!listedAt && adAge?.kind === "atLeast" ? " (co najmniej)" : ""}${adAge?.dropped ? `, cena obniżona ${adAge.drops}× (−${percent(adAge.share)})` : ""}.`
@@ -419,7 +422,9 @@
               ${keyOptions.length
                 ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(item.label)}</span>`).join("")}</div>
                    <p class="ofOptionsMore">${allOptions.length > keyOptions.length ? `+ ${numbers.format(allOptions.length - keyOptions.length)} pozycji potwierdzonych w ogłoszeniu (lista na str. 2)` : "Z listy wyposażenia w ogłoszeniu"}</p>`
-                : `<p class="ofSmall">${reading ? "Wczytuję wyposażenie z ogłoszenia…" : "Wyposażenie pojawi się po wczytaniu danych z ogłoszenia."}</p>`}
+                : `<p class="ofSmall">${reading ? "Wczytuję wyposażenie z ogłoszenia…"
+                  : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${plural(allOptions.length, "pozycja", "pozycje", "pozycji")} wyposażenia w ogłoszeniu (lista na str. 2)` : "Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.")
+                  : "Wyposażenie pojawi się po wczytaniu danych z ogłoszenia."}</p>`}
             </section>
             <section class="ofCard${blockClass("seller")}" data-block="seller">
               ${hideToggle("seller")}
@@ -989,7 +994,7 @@
 
   // ---- Reading the ad -----------------------------------------------------------------------
   async function readAd() {
-    if (!offer || reading || !AD || !["mobile", "autoscout"].includes(offer.source) || !offer.url) return;
+    if (!offer || reading || !AD || !(AD.SOURCES || ["mobile", "autoscout"]).includes(offer.source) || !offer.url) return;
     reading = true;
     render();
     setStatus("Czytam ogłoszenie: zdjęcia, wyposażenie, sprzedawca…");

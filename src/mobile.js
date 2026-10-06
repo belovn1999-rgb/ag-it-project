@@ -4616,8 +4616,8 @@ async function loadMarktplaatsAd(sourceUrl) {
     const forForm = { ...state.data, displacementCcm: null };
     applyRecognizedManualFields(forForm);
     state.data.matchedFilters = forForm.matchedFilters;
-    // The car's own country is the market it is compared on.
-    window.AUTOGOOD_SET_ONLY_MARKET?.(state.data.importMode);
+    // The car's own country is compared: AutoScout24 there and its own portal.
+    window.AUTOGOOD_SET_AD_COUNTRY?.(state.data.importMode);
     renderData();
   } catch (error) {
     state.data = null;
@@ -4691,7 +4691,7 @@ async function loadKleinanzeigenAd(sourceUrl) {
     };
     setStatus("ready", c.recognitionFromKleinanzeigen, true);
     applyRecognizedManualFields(state.data);
-    window.AUTOGOOD_SET_ONLY_MARKET?.("kleinanzeigen");
+    window.AUTOGOOD_SET_AD_COUNTRY?.("kleinanzeigen");
     renderData();
   } catch (error) {
     state.data = null;
@@ -4797,7 +4797,7 @@ async function loadParuvenduAd(sourceUrl) {
     const forForm = { ...state.data, displacementCcm: null };
     applyRecognizedManualFields(forForm);
     state.data.matchedFilters = forForm.matchedFilters;
-    window.AUTOGOOD_SET_ONLY_MARKET?.("paruvendu");
+    window.AUTOGOOD_SET_AD_COUNTRY?.("paruvendu");
     renderData();
   } catch (error) {
     state.data = null;

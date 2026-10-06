@@ -3,8 +3,9 @@
  *
  * Only what the seller ticked in the portal's equipment list counts (owner,
  * 2026-10-05: "сильные опции из подтверждённых данных с объявления"; the
- * free description is never mined for options). mobile.de and AutoScout24
- * name their options in German; names without a translation stay as written.
+ * free description is never mined for options). mobile.de, AutoScout24 and
+ * Kleinanzeigen name their options in German, AutoScout24 FR and ParuVendu
+ * in French (2026-10-06); names without a translation stay as written.
  *
  * Pure — scripts/offer-market.test.mjs runs it.
  * window.AUTOGOOD_OFFER_EQUIPMENT: translate(name), keyOptions(names, limit),
@@ -13,46 +14,50 @@
 (() => {
   // What sells a car, most valuable first: [id, pattern, Polish label].
   const KEY_OPTIONS = [
-    ["panorama", /panorama|glasdach|panoramic/i, "Dach panoramiczny"],
-    ["sunroof", /schiebe-?(?:hebe)?dach|sunroof|szyberdach/i, "Szyberdach"],
-    ["leather", /(?:voll|teil)?leder(?!lenkrad|schaltknauf)|leather|skór/i, "Tapicerka skórzana"],
+    // Kleinanzeigen ticks one box for both roofs: the client is told just that.
+    ["roof", /^schiebedach\/panoramadach$/i, "Szyberdach lub dach panoramiczny"],
+    ["panorama", /^(?!schiebedach\/panoramadach$).*(?:panorama|glasdach|panoramic|toit vitr)/i, "Dach panoramiczny"],
+    ["sunroof", /^(?!schiebedach\/panoramadach$).*(?:schiebe-?(?:hebe)?dach|sunroof|szyberdach|toit ouvrant)/i, "Szyberdach"],
+    ["leather", /(?:voll|teil)?leder(?!lenkrad|schaltknauf)|leather|skór|(?:sellerie|int[ée]rieur|si[èe]ges?) (?:mi-)?cuir|cuir (?:int[ée]gral|partiel)|^(?:mi-)?cuir$/i, "Tapicerka skórzana"],
     ["matrix", /matrix|laser-?licht|laser light/i, "Reflektory Matrix LED"],
-    ["led", /voll-?led|led-?scheinwerfer|led headlights|reflektory led/i, "Reflektory LED"],
-    ["acc", /abstandstempomat|adaptive[rn]? (?:cruise|tempomat)|\bacc\b|aktywny tempomat/i, "Aktywny tempomat (ACC)"],
-    ["hud", /head-?up/i, "Wyświetlacz Head-Up"],
+    ["led", /^(?!xenon-\/led-scheinwerfer$).*(?:voll-?led|led-?scheinwerfer|led headlights|reflektory led|phares (?:full |au |à )?led)/i, "Reflektory LED"],
+    // Kleinanzeigen: one box for xenon or LED.
+    ["lights", /^xenon-\/led-scheinwerfer$/i, "Reflektory ksenonowe lub LED"],
+    ["acc", /abstandstempomat|adaptive[rn]? (?:cruise|tempomat)|\bacc\b|aktywny tempomat|r[ée]gulateur (?:de vitesse )?adaptatif/i, "Aktywny tempomat (ACC)"],
+    ["hud", /head-?up|t[êe]te haute/i, "Wyświetlacz Head-Up"],
     ["camera360", /360\s?°?|surround view|area view|umgebungskamera/i, "Kamera 360°"],
-    ["camera", /rückfahrkamera|einparkhilfe.*kamera|kamera|camera/i, "Kamera cofania"],
+    ["camera", /rückfahrkamera|einparkhilfe.*kamera|kamera|camera|cam[ée]ra/i, "Kamera cofania"],
     ["nav", /navigation|\bnavi\b|nawigac/i, "Nawigacja"],
-    ["auxHeating", /standheizung|webasto|ogrzewanie postojowe/i, "Ogrzewanie postojowe"],
-    ["ventSeats", /sitzbelüftung|belüftete sitze|ventilated|wentylowan/i, "Wentylowane fotele"],
+    ["auxHeating", /standheizung|webasto|ogrzewanie postojowe|chauffage (?:stationnaire|auxiliaire|additionnel)/i, "Ogrzewanie postojowe"],
+    ["ventSeats", /sitzbelüftung|belüftete sitze|ventilated|wentylowan|si[èe]ges? ventil[ée]s?/i, "Wentylowane fotele"],
     ["massage", /massage/i, "Fotele z masażem"],
-    ["heatedSeats", /sitzheizung|heated seat|podgrzewane fotele/i, "Podgrzewane fotele"],
-    ["heatedWheel", /beheizbares lenkrad|lenkradheizung|heated steering|podgrzewana kierownica/i, "Podgrzewana kierownica"],
-    ["memory", /memory|elektr(?:\.|ische)? sitzeinstellung|elektrisch verstellbare sitze/i, "Elektryczne fotele"],
-    ["sound", /harman|bose|burmester|bang\s?&?\s?olufsen|\bb&o\b|meridian|\bjbl\b|soundsystem|sound system/i, "System audio premium"],
-    ["air", /luftfederung|air suspension|zawieszenie pneumatyczne/i, "Zawieszenie pneumatyczne"],
-    ["awd", /allrad|4x4|quattro|xdrive|4motion|4matic/i, "Napęd 4x4"],
-    ["tow", /anhängerkupplung|\bahk\b|tow ?bar|hak holownicz/i, "Hak holowniczy"],
-    ["keyless", /keyless|schlüssellos|kessy|smart key/i, "Dostęp bezkluczykowy"],
-    ["tailgate", /elektr(?:\.|ische)? heckklappe|power tailgate|elektryczna klapa/i, "Elektryczna klapa bagażnika"],
-    ["digital", /volldigital|digitales? (?:cockpit|kombiinstrument)|virtual cockpit/i, "Cyfrowe zegary"],
+    ["heatedSeats", /sitzheizung|heated seat|podgrzewane fotele|si[èe]ges? chauffants?/i, "Podgrzewane fotele"],
+    ["heatedWheel", /beheizbares lenkrad|lenkradheizung|heated steering|podgrzewana kierownica|volant chauffant/i, "Podgrzewana kierownica"],
+    ["memory", /memory|elektr(?:\.|ische)? sitzeinstellung|elektrisch verstellbare sitze|si[èe]ges? [ée]lectriques?|m[ée]moire/i, "Elektryczne fotele"],
+    ["sound", /harman|bose|burmester|bang\s?&?\s?olufsen|\bb&o\b|meridian|\bjbl\b|soundsystem|sound system|focal/i, "System audio premium"],
+    ["air", /luftfederung|air suspension|zawieszenie pneumatyczne|suspension pneumatique/i, "Zawieszenie pneumatyczne"],
+    ["awd", /allrad|4x4|quattro|xdrive|4motion|4matic|transmission int[ée]grale/i, "Napęd 4x4"],
+    ["tow", /anhängerkupplung|\bahk\b|tow ?bar|hak holownicz|attache.?remorque|attelage/i, "Hak holowniczy"],
+    ["keyless", /keyless|schlüssellos|kessy|smart key|sans cl[ée]/i, "Dostęp bezkluczykowy"],
+    ["tailgate", /elektr(?:\.|ische)? heckklappe|power tailgate|elektryczna klapa|hayon [ée]lectrique|coffre [ée]lectrique/i, "Elektryczna klapa bagażnika"],
+    ["digital", /volldigital|digitales? (?:cockpit|kombiinstrument)|virtual cockpit|cockpit (?:virtuel|num[ée]rique|digital)|combin[ée] (?:d'instruments? )?num[ée]rique/i, "Cyfrowe zegary"],
     ["carplay", /carplay|android auto/i, "Apple CarPlay / Android Auto"],
-    ["blindSpot", /totwinkel|blind spot|martwego pola/i, "Asystent martwego pola"],
-    ["lane", /spurhalte|spurwechsel|lane assist|pasa ruchu/i, "Asystent pasa ruchu"],
-    ["parkAssist", /selbstlenkend|parkassist|park assist|parklenk/i, "Asystent parkowania"],
-    ["climate", /(?:2|3|4)-zonen|mehrzonen|klimaautomatik/i, "Klimatyzacja automatyczna"],
+    ["blindSpot", /totwinkel|blind spot|martwego pola|angle mort/i, "Asystent martwego pola"],
+    ["lane", /spurhalte|spurwechsel|lane assist|pasa ruchu|maintien (?:dans la|de) voie|franchissement/i, "Asystent pasa ruchu"],
+    ["parkAssist", /selbstlenkend|parkassist|park assist|parklenk|stationnement automatique/i, "Asystent parkowania"],
+    ["climate", /(?:2|3|4)-zonen|mehrzonen|klimaautomatik|climatisation automatique|bi-?zone|tri-?zone/i, "Klimatyzacja automatyczna"],
   ];
 
   // Not equipment: what the seller promises about the car (shown by the
   // seller and the verdict, not among the options).
   const TRUST = [
     ["warranty", /^garantie$|gebrauchtwagengarantie|warranty/i, "Gwarancja sprzedawcy"],
-    ["serviceBook", /scheckheft|service ?book|książka serwisowa/i, "Książka serwisowa"],
+    ["serviceBook", /scheckheft|service ?book|książka serwisowa|carnet d'entretien/i, "Książka serwisowa"],
     ["serviceNew", /inspektion neu|service neu|frisch (?:gewartet|inspiziert)/i, "Świeży serwis"],
-    ["nonSmoker", /nichtraucher|non-?smok/i, "Auto dla niepalących"],
+    ["nonSmoker", /nichtraucher|non-?smok|non[- ]fumeur/i, "Auto dla niepalących"],
   ];
   // Drive, tyres and the like: facts, not selling options; kept in the full list.
-  const PLAIN = /^(frontantrieb|heckantrieb|sommerreifen|pannenkit|tuner\/radio|radio|usb|mp3)$/i;
+  const PLAIN = /^(frontantrieb|heckantrieb|sommerreifen|pannenkit|tuner\/radio|radio\/tuner|radio|usb|mp3|cd)$/i;
 
   // The full list in Polish: mobile.de and AutoScout24 names.
   const DICTIONARY = {
@@ -107,6 +112,37 @@
     "360°-kamera": "Kamera 360°", "elektr. sitzeinstellung mit memory": "Elektryczne fotele z pamięcią",
     "partikelfilter": "Filtr cząstek stałych", "nachtsichtassistent": "Noktowizor", "spurwechselassistent": "Asystent zmiany pasa",
     "skisack": "Otwór na narty", "ausparkassistent": "Asystent wyjazdu z parkingu", "e10-geeignet": "Paliwo E10", "allwetterreifen (ganzjahresreifen)": "Opony całoroczne", "dachträger": "Bagażnik dachowy", "tuning": "Tuning", "sportlenkrad": "Kierownica sportowa",
+    // Kleinanzeigen's own boxes.
+    "antiblockiersystem (abs)": "ABS", "radio/tuner": "Radio", "xenon-/led-scheinwerfer": "Reflektory ksenonowe lub LED",
+    "schiebedach/panoramadach": "Szyberdach lub dach panoramiczny",
+    // AutoScout24 FR and ParuVendu (French).
+    "accoudoir": "Podłokietnik", "affichage tête haute": "Wyświetlacz Head-Up", "aide parking": "Czujniki parkowania",
+    "aides au stationnement": "Czujniki parkowania", "airbag conducteur": "Poduszka kierowcy", "airbag passager": "Poduszka pasażera",
+    "airbag frontaux": "Poduszki przednie", "airbags frontaux": "Poduszki przednie", "airbags frontaux + latéraux": "Poduszki przednie i boczne",
+    "airbags latéraux": "Poduszki boczne", "airbags rideaux": "Kurtyny powietrzne", "anti-patinage": "Kontrola trakcji",
+    "assistant au freinage d'urgence": "Asystent hamowania awaryjnego", "assistant de démarrage en côte": "Asystent ruszania pod górę",
+    "attache remorque": "Hak holowniczy", "caméra d'aide au stationnement": "Kamera cofania", "caméra de recul": "Kamera cofania",
+    "capteurs d'aide au stationnement arrière": "Czujniki parkowania tył", "capteurs d'aide au stationnement avant": "Czujniki parkowania przód",
+    "climatisation": "Klimatyzacja", "climatisation automatique": "Klimatyzacja automatyczna",
+    "climatisation automatique, 2 zones": "Klimatyzacja 2-strefowa", "climatisation automatique, 3 zones": "Klimatyzacja 3-strefowa",
+    "climatisation automatique, 4 zones": "Klimatyzacja 4-strefowa", "détecteur de lumière": "Czujnik zmierzchu", "détecteur de pluie": "Czujnik deszczu",
+    "ecran tactile": "Ekran dotykowy", "écran tactile": "Ekran dotykowy", "feux anti-brouillard": "Światła przeciwmgielne",
+    "fermeture centralisée": "Centralny zamek", "verrouillage centralisé": "Centralny zamek", "filtre à particules": "Filtr cząstek stałych",
+    "filtres à particules (fap)": "Filtr cząstek stałych", "jantes alliage": "Felgi aluminiowe", "limiteur de vitesse": "Ogranicznik prędkości",
+    "ordinateur de bord": "Komputer pokładowy", "phares full led": "Reflektory Full LED", "phares au led": "Reflektory LED",
+    "phares de jour": "Światła dzienne", "phares directionnels": "Doświetlanie zakrętów", "phares xénon": "Reflektory ksenonowe",
+    "porte-bagages": "Bagażnik dachowy", "barres de toit": "Relingi dachowe", "régulateur de vitesse": "Tempomat",
+    "régulateur de vitesse adaptatif": "Aktywny tempomat (ACC)", "rétroviseurs latéraux électriques": "Elektryczne lusterka",
+    "sellerie cuir": "Tapicerka skórzana", "intérieur cuir": "Tapicerka skórzana", "sellerie mi-cuir": "Tapicerka półskórzana",
+    "sièges chauffants": "Podgrzewane fotele", "sièges sport": "Fotele sportowe", "sièges électriques": "Elektryczna regulacja foteli",
+    "suspension pneumatique": "Zawieszenie pneumatyczne", "système d'aide au stationnement automatique": "Asystent parkowania",
+    "système d'appel d'urgence": "System eCall", "système de freinage antiblocage": "ABS", "système de navigation": "Nawigacja",
+    "toit ouvrant": "Szyberdach", "toit panoramique": "Dach panoramiczny", "trappe à ski": "Otwór na narty",
+    "vitres électriques": "Elektryczne szyby", "vitres teintées": "Przyciemniane szyby", "volant multifonctions": "Kierownica wielofunkcyjna",
+    "volant cuir": "Skórzana kierownica", "volant chauffant": "Podgrzewana kierownica", "éclairage d'ambiance": "Oświetlenie ambientowe",
+    "direction assistée": "Wspomaganie kierownicy", "antidémarrage électronique": "Immobilizer", "alarme": "Alarm",
+    "radar de recul": "Czujniki parkowania tył", "kit mains libres": "Zestaw głośnomówiący", "non-fumeur": "Auto dla niepalących",
+    "carnet d'entretien": "Książka serwisowa",
   };
 
   const clean = (name) => String(name || "").replace(/\s+/g, " ").trim();
@@ -123,10 +159,10 @@
       const match = list.find((name) => pattern.test(name));
       if (!match) continue;
       // "Kamera cofania" is not shown next to "Kamera 360°"; LED not next to Matrix.
-      if ((id === "camera" && found.some((item) => item.id === "camera360")) || (id === "led" && found.some((item) => item.id === "matrix"))) continue;
+      if ((id === "camera" && found.some((item) => item.id === "camera360")) || (["led", "lights"].includes(id) && found.some((item) => item.id === "matrix" || item.id === "led"))) continue;
       // The sound system names its maker when the seller did; part leather is said so.
       const brand = id === "sound" ? match.match(/harman(?:\s?kardon)?|bose|burmester|bang\s?&?\s?olufsen|meridian|\bjbl\b/i)?.[0] : "";
-      const text = brand ? `Audio ${brand.replace(/^./, (char) => char.toUpperCase())}` : id === "leather" && /teil|part/i.test(match) ? "Tapicerka półskórzana" : label;
+      const text = brand ? `Audio ${brand.replace(/^./, (char) => char.toUpperCase())}` : id === "leather" && /teil|part|mi-cuir/i.test(match) ? "Tapicerka półskórzana" : label;
       found.push({ id, label: text, from: match });
       if (found.length >= limit) break;
     }

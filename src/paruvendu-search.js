@@ -22,6 +22,7 @@
   const SEARCH = `${SITE}/auto-moto/listefo/default/default`;
   const PAGE_SIZE = 25;
   const MAX_PAGES = 50;
+  const MAX_PAGES_WORKER = 120;
 
   // "Hybride (tous)" (HY) holds every hybrid: plug-in (HR) and micro (MH) too.
   const FUEL = { petrol: "ES", diesel: "DI", electric: "EL", hybrid_petrol: "HY", hybrid_diesel: "HY", plugin: "HR" };
@@ -380,6 +381,7 @@
     SITE,
     PAGE_SIZE,
     MAX_PAGES,
+    MAX_PAGES_WORKER,
     modelSelection,
     searchParts,
     buildSearchUrl,

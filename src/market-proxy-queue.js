@@ -269,6 +269,8 @@
 
   window.AUTOGOOD_PROXY_QUEUE = {
     status,
+    // Is this portal address read by our Worker now (fast, no 18 a minute)?
+    viaWorker: (target) => Boolean(workerHost(target)),
     onChange(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);

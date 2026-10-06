@@ -12,7 +12,7 @@
 |---|---|---|
 | 0 | Проверка данных на реальных объявлениях mobile.de и AutoScout24 (§3) | ✅ 10-05 |
 | 1 | Каркас: `oferta.html` (2 листа A4), кнопка «Przygotuj ofertę» в Monitoring, снимок рынка на дату, правка и скрытие текстов и блоков, хранение офферов, PDF и картинка | ✅ 10-05 (проверено локально на живых объявлениях C-HR) |
-| 2 | Чтение объявления: фото, все опции (сильные жирным), описание, продавец с рейтингом и стажем, число авто у дилера | ✅ 10-05 — mobile.de через импортер (нужен перезапуск службы, §5), AutoScout24 через прокси |
+| 2 | Чтение объявления: фото, все опции (сильные жирным), описание, продавец с рейтингом и стажем, число авто у дилера | ✅ 10-05 — mobile.de через импортер (нужен перезапуск службы, §5), AutoScout24 через прокси; ✅ 10-06 — AutoScout24 FR, ParuVendu, Kleinanzeigen через прокси (§3а), французские опции и значения по-польски |
 | 3 | Расчёт выбранным способом — все строки калькулятора, «Wstaw do oferty», сверка с `calculators.html` | ✅ 10-05 — окно калькулятора (`calculators.html?embed=1`, как «Oblicz na gotowo») на выбранном способе; «Wstaw do oferty» копирует строки, итог и курс как показаны (правки в калькуляторе тоже); до вставки — предварительный расчёт «Zakup bezpośredni» |
 | 4 | «Мозги» по правилам: вердикт и красные флаги с цитатами, «Potencjał negocjacji» | ✅ 10-05 — сверено на 40 живых объявлениях C-HR (mobile.de): «ohne Papiere / Diebstahl» → 3 красных с цитатами; ложные срабатывания найдены и убраны («Diebstahlwarnanlage», «NESSUN VINCOLO DI FINANZIAMENTO», «Polizei» после кражи) |
 | 5 | Дизайн, тексты Pan/Pani, контакты, процесс импорта, проверка на живом сайте | 🔄 10-05: **пять видов листов** на выбор владельцу (панель «Wygląd oferty»): Jasny, Premium, Magazyn (кремовая колонка, шрифт с засечками Playfair Display), Raport (цена + 3 цифры сверху, рынок во всю ширину), Noc (тёмная шапка с ценой); контакты по умолчанию — «Nikodem z AUTOGOOD», +48 531 900 775, info@autogood.pl, autogood.pl (владелец 10-05); процесс — 6 шагов из оффера в Notion; **ждёт выбора вида** |
@@ -50,6 +50,7 @@ tle rynku», «Ocena AUTOGOOD», «Wyposażenie — najważniejsze», «Sprzedaw
 | 10-05 | Процесс в оффере — из текста оффера в Notion (`autogood_oferta_tekst_roboczy`, «Jak wygląda proces»): 6 шагов, сокращённых для одного авто, в форме Pan / Pani / Państwo; включая «70% wynegocjowanego rabatu zostaje dla Pana» (текст владельца) |
 | 10-05 | Владелец просит несколько макетов разного стиля и расположения — сделаны как настоящие виды страницы (Jasny, Premium, Magazyn, Raport, Noc), выбор за владельцем |
 | 10-05 | Контакты: **менеджер** (имя, телефон, e-mail — вводится один раз в браузере) **и фирма** (адрес, часы). Телефон фирмы в источниках расходится — берётся у владельца |
+| 10-06 | Следующие порталы оффера (задача 10-06): **AutoScout24 FR, ParuVendu, Kleinanzeigen** — кнопка в Monitoring и чтение объявления (§3а) |
 | 10-05 | Допущения, принятые без правок: польский язык, Pan/Pani, PLN (RU и Беларусь — позже); первая версия — mobile.de и AutoScout24, другие порталы следом; otomoto (покупка в Польше) — отдельный сценарий; любое поле правится или скрывается до PDF; оффер — снимок на дату (сам не пересчитывается); отметка «Oferta» у объявления в Monitoring |
 
 ## 3. Какие данные достаются (проверка 10-05)
@@ -85,6 +86,30 @@ VIN (почти всегда скрыт).
 «NEW Toyota C-HR 1.8 Hybrid» с пробегом 330 000 км у авто 2023 года; итальянские
 дилеры с «NESSUN VINCOLO DI FINANZIAMENTO» по цене ниже рынка.
 
+### 3а. AutoScout24 FR, ParuVendu, Kleinanzeigen (проверка 10-06)
+
+Проверено на живых объявлениях: ParuVendu — дилер (VW Passat, JEAN LAIN, 212 авто) и
+частники (Volvo V60); Kleinanzeigen — дилеры (Hyundai Tucson V&M Automobil, Audi SQ5,
+Dodge Charger) и частник (Audi A4 Avant); AutoScout24 FR — дилер (VW Passat, Quimper).
+Страницы — через общий прокси (`market-proxy-queue.js`: Worker или r.jina.ai).
+
+| Блок | AutoScout24 FR | ParuVendu | Kleinanzeigen |
+|---|---|---|---|
+| Фото | как AutoScout24 (`prod.pictures.autoscout24.net`) | дилер: ld+json `image` на `file-render.webapp4you.eu` (CORS `*`); частник: фото `media.paruvendu.fr` **без CORS** (в PDF не рисуются) → берём галерею страницы `img.paruvendu.fr/media_ext/…w=1000` (CORS `*`), миниатюры `w=480` отбрасываем | ld+json `ImageObject` — там и фото чужих объявлений: берём только с заголовком этого (`representativeOfPage`); `img.kleinanzeigen.de` (CORS `*`, 960×720) |
+| Параметры | как AutoScout24, значения по-французски («Boîte manuelle», «Gris», «Métallisé», «SUV/4x4/Pick-Up», «Autres») | ld+json `Vehicle` + список «Prix / Version / Carrosserie / Année (Mars 2024) / Kilométrage / Energie / Transmission / Nb de portes («4 portes avec hayon» = 5) / Puissance fiscale (CV) / Nombre de places / Couleur / Puissance réelle (ch)»; объём — только из текста дилера «Cylindrée : 1968»; привод — у частника («Traction avant») | `addetailslist`: Kilometerstand, Erstzulassung (месяц словом), Kraftstoffart, Leistung (PS), Getriebe, Fahrzeugtyp, Außenfarbe, Material Innenausstattung, Anzahl Türen («4/5»), HU bis, Schadstoffklasse, Fahrzeugzustand («Unbeschädigtes Fahrzeug» → bezwypadkowy wg sprzedawcy, как на стр. 1) |
+| Опции | `vehicle.equipment` по-французски («Sellerie cuir», «Toit panoramique», «Caméra d'aide au stationnement») — словарь FR→PL в `offer-equipment.js` | частник: блок «Caractéristiques techniques modèle …» (то, что отметил продавец, у разных объявлений разное); дилер: списка нет (оснащение только в тексте — не берём, правило владельца) | `checktag` — немецкие галочки (как mobile.de) + свои: «Schiebedach/Panoramadach», «Xenon-/LED-Scheinwerfer», «Radio/Tuner» |
+| Гарантия | `warranty` («12 mois» → «12 mies.») | «Garantie mécanique 12 mois» | нет |
+| Продавец | как AutoScout24 (рейтинг, `customerSince`, склад) | дилер: имя и адрес из ld+json `AutoDealer`, «Professionnel», «N véhicules en stock»; частник: «Vendeur particulier», город (индекс), «membre depuis N jours/mois/ans» → месяц регистрации | «Gewerblicher / Privater Nutzer», имя, «Aktiv seit dd.mm.yyyy», «N Anzeigen online» (у дилера — число в оффере), значки («TOP Zufriedenheit»…, без оценки числом), «PLZ Город - Район» / «PLZ Земля - Город» |
+| В продаже с | `createdTimestampWithOffset` | «Réf. annonce … Le 25/09/2026 à 05:16» | нет (дата на странице — последнее обновление) |
+| НДС | `prices.public` | «TVA récupérable» в странице → 20 % | нет поля («MwSt. ausweisbar» только в тексте — не берём) |
+| Чего нет | — | аварийность, владельцы, ТО, рейтинг продавца, оценка цены порталом | привод, объём, владельцы (обычно), рейтинг числом, оценка цены порталом |
+
+Правила чтения (10-06): имя частника на лист не попадает (только «Osoba prywatna», имя — в
+`seller.contactName`); общая галочка портала называется как есть («Szyberdach lub dach
+panoramiczny», «Reflektory ksenonowe lub LED»), лучший вариант не выбирается; кузов «Berline»
+ParuVendu не пишется (так помечены и хэтчбеки, и седаны, и универсалы — Passat Variant с
+ld+json «Hatchback»); дата Kleinanzeigen под адресом — последнее обновление, не используется.
+
 ## 4. Правила для текстов клиенту
 
 - У каждого утверждения виден источник: «z ogłoszenia» / «wg sprzedawcy» / «dane rynku na
@@ -107,16 +132,16 @@ VIN (почти всегда скрыт).
 |---|---|
 | `oferta.html` | страница оффера: два листа A4 (794 × 1123 px), панель менеджера справа, «Edytuj teksty», «Kopiuj obraz», «Pobierz PDF» |
 | `src/offer.js` + `src/offer.css` | вёрстка листов, правка текстов на месте (`data-edit`, сохраняются в `edits`), скрытие блоков и строк (`hidden`; «W Polsce» при невыгодном сравнении скрыта по умолчанию — `shown` её открывает), автоподгонка под A4 (лишние зелёные строки вердикта и обычные опции полного списка уходят первыми), PDF (html-to-image → JPEG → pdf-lib, ссылка на объявление кликабельна), картинка листа 1 в буфер (иначе PNG-файл); `window.AUTOGOOD_OFFER_PAGE` — проверки без скачивания |
-| `src/offer-link.js` + `src/offer-link.css` | на стр. 3: кнопка «Przygotuj ofertę» у объявлений mobile.de и AutoScout24 (`data-offer-create`); черновик собирается **до** открытия вкладки (иначе браузер без новых вкладок обрывает сборку): избранное (только чтение), записи мониторинга (только чтение) → `offer-market.js`, предварительный расчёт `turnkeyDirect` с тарифом места продавца (`estimateDeliveryInspection`) и классом акциза (`engineInfo`); кнопка у объявления с оффером — «Oferta · дата» (открыть), Shift — новый оффер |
+| `src/offer-link.js` + `src/offer-link.css` | на стр. 3: кнопка «Przygotuj ofertę» у объявлений mobile.de, AutoScout24 (DE и FR), ParuVendu и Kleinanzeigen (`SOURCES`, `data-offer-create`); черновик собирается **до** открытия вкладки (иначе браузер без новых вкладок обрывает сборку): избранное (только чтение), записи мониторинга (только чтение) → `offer-market.js`, предварительный расчёт `turnkeyDirect` с тарифом места продавца (`estimateDeliveryInspection`) и классом акциза (`engineInfo`); кнопка у объявления с оффером — «Oferta · дата» (открыть), Shift — новый оффер |
 | `src/offer-store.js` | IndexedDB `autogood-offers`, store `offers` (индексы `adKey`, `favoriteId`): запись только добавляется/дополняется в одной транзакции, не удаляется; опекун и фирма — `localStorage` `autogood.offer.manager.v1` / `autogood.offer.company.v1` (правила §4.6.1); `BroadcastChannel("autogood-offers")` |
 | `src/offer-market.js` | чистые функции: рынок страны авто (EUR-порталы, без «подозрительных»; < 8 — все страны), P25/медиана/P75, «tańsze niż N %», похожие (год ±1, пробег ±35 %, мин. 20 000 км; затем ±2 / ±60 %), Польша (otomoto той же проверки, похожие или весь поиск) против «na gotowo», дни в продаже, снижения цены, темп рынка |
-| `src/offer-ad.js` | чтение объявления в один вид, значения по-польски (топливо, коробка, кузов, цвет, салон, ТО): mobile.de — импортер `/mobilede/import` (поле `ad`) и `/mobilede/dealer`; AutoScout24 — `__NEXT_DATA__` через прокси и страница склада дилера |
-| `src/offer-equipment.js` | опции по-польски (словарь DE→PL), сильные опции по ценности (панорама, кожа/полукожа, Matrix/LED, ACC, Head-Up, 360°/камера, навигация, автономный отопитель, вентиляция, подогревы…), «обещания» (гарантия, сервисная книжка) отдельно |
+| `src/offer-ad.js` | чтение объявления в один вид, значения по-польски (топливо, коробка, кузов, цвет, салон, ТО; немецкие, английские и французские слова): mobile.de — импортер `/mobilede/import` (поле `ad`) и `/mobilede/dealer`; AutoScout24 и AutoScout24 FR — `__NEXT_DATA__` через прокси и страница склада дилера; ParuVendu и Kleinanzeigen — страница через прокси, разбор `parseParuvendu` / `parseKleinanzeigen` (чистые, в тесте); `SOURCES` — какие порталы читаются (`offer.js` берёт его) |
+| `src/offer-equipment.js` | опции по-польски (словарь DE→PL, FR→PL с 10-06, галочки Kleinanzeigen), сильные опции по ценности (панорама, кожа/полукожа, Matrix/LED, ACC, Head-Up, 360°/камера, навигация, автономный отопитель, вентиляция, подогревы…), «обещания» (гарантия, сервисная книжка) отдельно |
 | `src/offer-verdict.js` | вердикт и флаги (§4 правила): цена против медианы похожих (< 60 % — риск обмана), продавец (частник, рейтинг, стаж, комиссия, «реальность объявлений» < 85 %), состояние (повреждён, не на ходу, аварийность не указана, прокат, владельцы, книжка, гарантия, ТО, пробег в год), слова-флаги в заголовке/описании/сводке mobile.de на DE/PL/IT/NL/FR/EN — **целые слова, отрицание перед словом отменяет флаг** («kein Unfallschaden», «Diebstahlwarnanlage» — не флаг); торг — эвристика (дни, снижения, место в рынке → 0–1 / 1–2 / 2–3 / 3–5 %) |
 | `server/mobilede-import.mjs` | `/mobilede/import` отдаёт ещё `ad` (фото `mo-1024`, атрибуты, опции, описание из RSC-строки, продавец с рейтингом и «Bei mobile.de seit», даты, `priceRating`, флаги, сводка ИИ mobile.de); `/mobilede/dealer?customerId=` — число авто и звёзды со страницы дилера (Chrome импортера, кэш 12 ч) |
 | расчёт (волна 3, в `src/offer.js`) | панель «Kalkulacja»: способ (Zakup bezpośredni / Dealerzy VAT 23% — только авто с НДС / Dealerzy VAT marża; по умолчанию как «Oblicz na gotowo»: с НДС — VAT 23 %, иначе прямая покупка) → окно с `calculators.html?embed=1&tab=&car=&engine=&transport=&inspection=&mobileUrl=` (нетто для VAT 23 %, брутто для остальных; тариф и класс акциза — из черновика) → «Wstaw do oferty» читает из окна (тот же адрес сайта) `.resultsList .resultLine` (`.resultLineLabel`, `.resultLinePrefix`, `.resultLineSub`, `.resultLineAmount`), `.totalBarValue`, `.totalBarRate` → `offer.calc` `{tab, method, methodLabel, rows, total, rate, at}`; «Wróć do szacunku» убирает. Проверено 10-05: C-HR с НДС — 7 строк, 116 150 zł при курсе 4,40, совпадает с калькулятором |
 | `vendor/html-to-image-exact.js` | копия html-to-image 1.11.11 **без уменьшения шрифта** (библиотека ставит `floor(size) - 0,1 px`: 11,5 → 10,9 px), иначе в PDF текст уже, чем на странице, а высоты от страницы — пустые строки под переносами. Только для оффера; `vendor/html-to-image.js` не тронут |
-| `scripts/offer.test.mjs` | тест правил (в `pnpm test`, CI): рынок, Польша, снижения, сильные опции, флаги и отрицания, вердикт, торг, польские формы |
+| `scripts/offer.test.mjs` | тест правил (в `pnpm test`, CI): рынок, Польша, снижения, сильные опции, флаги и отрицания, вердикт, торг, польские формы; разбор страниц ParuVendu (дилер, частник) и Kleinanzeigen (дилер, частник), французские значения и опции |
 
 **Выкладка импортера.** Служба `com.autogood.mobilede-import` запускает файл из основной копии
 (`/Users/nikitq/cloude/autogood-kalkulatory`): после push — `git pull --ff-only` там (если
@@ -142,6 +167,7 @@ A4; PDF 2 стр. 1,1 МБ за 1,6 с, ссылка на объявление �
 
 | Дата | Изменение | Коммит |
 |---|---|---|
+| 10-06 | Оффер читает AutoScout24 FR, ParuVendu и Kleinanzeigen (фото, параметры, опции, описание, продавец, гарантия; §3а), кнопка в Monitoring для них; французские значения и опции по-польски; «Wyposażenie» после чтения без галочек — «Sprzedawca nie zaznaczył wyposażenia…» вместо «pojawi się»; проверено на 5 живых объявлениях (фото в PDF рисуются) | этот коммит |
 | 10-05 | Premium по выбору владельца: название поверх фото, плашка цены на краю фото, кадрирование фото; PDF без пустых строк (копия html-to-image без уменьшения шрифта) | этот коммит |
 | 10-05 | Пять видов листов (Magazyn, Raport, Noc — сетка областей поверх тех же блоков, `display: contents`), контакты по умолчанию, процесс из Notion, «-» вместо тире, логотип в тёмной шапке — знак AG и текст | этот коммит |
 | 10-05 | Волна 5 (часть): вид «Premium» рядом с «Jasny» — фото во всю ширину (2,5 : 1), цена на тёмно-синей плашке, золотистые акценты, карточки без рамок; выбор в панели | этот коммит |

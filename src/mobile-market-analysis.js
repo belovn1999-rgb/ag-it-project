@@ -2423,7 +2423,11 @@
     const first = api.parsePage(await read(1), { page: 1 });
     const total = first.total || (first.listings.length ? await api.fetchCount(api.buildCountUrl(filters, { price })).catch(() => 0) : 0);
     if (!total) return { listings: [], total: 0 };
-    const pageCount = Math.min(Math.ceil(total / api.PAGE_SIZE), api.MAX_PAGES);
+    // Monitoring reads the whole list (cheapest first): 120 pages (3 000
+    // cars, VW Golf without filters ~2 300) when our Worker reads ParuVendu,
+    // 50 through r.jina.ai (18 requests a minute).
+    const fast = window.AUTOGOOD_PROXY_QUEUE?.viaWorker?.(api.buildSearchUrl(filters, { page: 1, price }));
+    const pageCount = Math.min(Math.ceil(total / api.PAGE_SIZE), fast ? api.MAX_PAGES_WORKER : api.MAX_PAGES);
     let wanted;
     if (pageCount <= OTOMOTO_PAGES || (whole && total <= 250) || (everyPage && whole)) wanted = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
     else wanted = [...new Set(Array.from({ length: OTOMOTO_PAGES }, (_, index) => Math.round(1 + (index * (Math.ceil(total / api.PAGE_SIZE) - 1)) / (OTOMOTO_PAGES - 1))))].filter((page) => page > 1);
@@ -10025,6 +10029,27 @@
     if (!MARKET_SOURCES.includes(source)) return;
     if (MARKET_SOURCES.every((item) => Boolean(chartSources[item]) === (item === source))) return;
     applyChartSources({ [source]: true });
+  };
+
+  // An ad of a country's second portal (B47): the whole country is compared —
+  // its main portal and the second one without the cars the main one has
+  // (SECOND_PORTALS), the same as the country's column switched on.
+  const AD_COUNTRY_MARKETS = {
+    kleinanzeigen: { markets: ["mobile", "autoscout", "kleinanzeigen"], countries: ["DE"] },
+    marktplaats: { markets: ["autoscout", "marktplaats"], countries: ["NL"] },
+    dehands: { markets: ["autoscout", "dehands"], countries: ["BE"] },
+    paruvendu: { markets: ["autoscoutfr", "paruvendu"], countries: null },
+  };
+  window.AUTOGOOD_SET_AD_COUNTRY = (source) => {
+    const rule = AD_COUNTRY_MARKETS[source];
+    if (!rule) {
+      window.AUTOGOOD_SET_ONLY_MARKET(source);
+      return;
+    }
+    const next = Object.fromEntries(rule.markets.map((market) => [market, true]));
+    if (!MARKET_SOURCES.every((item) => Boolean(chartSources[item]) === Boolean(next[item]))) applyChartSources(next);
+    if (rule.countries) setFormCountries(rule.countries);
+    renderMarketPicker();
   };
 
   window.AUTOGOOD_SELECTED_MARKETS = () => MARKET_SOURCES.filter((source) => chartSources[source]);

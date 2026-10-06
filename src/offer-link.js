@@ -21,8 +21,9 @@
   const FAVORITES_KEY = "autogood.mobile.marketFavorites.v1";
   const SAVED_KEY = "autogood.mobile.savedCars.v1";
   const CHECKS_DB = "autogood-mobile-check-offers";
-  // The portals an offer can be made for now (docs/OFFER-PAGE.md §2).
-  const SOURCES = ["mobile", "autoscout"];
+  // The portals an offer can be made for now (docs/OFFER-PAGE.md §2): those
+  // offer-ad.js reads (mobile.de, AutoScout24 DE/FR, ParuVendu, Kleinanzeigen).
+  const SOURCES = ["mobile", "autoscout", "autoscoutfr", "paruvendu", "kleinanzeigen"];
   const WORDS = {
     pl: { make: "Przygotuj ofertę", has: "Oferta · {date}", hasTitle: "Oferta z {date} — otwórz (nowa: przytrzymaj Shift)", failed: "Nie udało się przygotować oferty: {reason}" },
     ru: { make: "Подготовить оффер", has: "Оффер · {date}", hasTitle: "Оффер от {date} — открыть (новый: удерживайте Shift)", failed: "Не удалось подготовить оффер: {reason}" },
