@@ -3674,6 +3674,24 @@
     }
   }
 
+  // Owner 2026-10-06: a car in the favourites is ONE favourite — once starred
+  // (or once the form holds a favourite's exact search) the form edits that
+  // favourite: its star stays filled while filters change, "Gotowe" saves
+  // them into it, and the star never makes a second card of the same search.
+  function editAsFavorite(historyId) {
+    const entry = marketHistory.find((item) => item.id === historyId);
+    if (!entry?.pinned) return;
+    editingHistoryId = entry.id;
+    historyAttached = false;
+    editingCarKey = historyCarKey(entry.filters);
+    try {
+      editingBaseline = filterSignature(readManualFields());
+    } catch {
+      editingBaseline = filterSignature(entry.filters);
+    }
+    setSelectedFavorite(entry.id);
+  }
+
   function toggleCurrentHistoryFavorite() {
     refreshMarketHistory();
     const c = copy();
@@ -3698,6 +3716,10 @@
         ? updateMarketSnapshot(existing.id, filters, listings, sourceFileName, searchUrl, pinned)
         : createMarketSnapshot(filters, listings, sourceFileName, searchUrl, true);
       if (snapshot) setAnalysisStatus(pinned ? c.historyPinned : c.historyUnpin);
+      if (snapshot && pinned) {
+        editAsFavorite(snapshot.id);
+        renderHistory();
+      }
     } catch (error) {
       setAnalysisStatus(error.message || c.missingVehicle, true);
     }
@@ -9431,6 +9453,8 @@
         const snapshot = createMarketSnapshot(activeAnalysis.filters, activeAnalysis.listings, activeAnalysis.sourceFileName || "", activeAnalysis.searchUrl, true);
         if (snapshot) activeAnalysis = { ...activeAnalysis, historyId: snapshot.id };
       }
+      // The page-1 form now edits this favourite (one card per search).
+      if (activeAnalysis.historyId) editAsFavorite(activeAnalysis.historyId);
       renderAnalysis();
       updateHistorySaveButtons();
       return;
@@ -10084,6 +10108,11 @@
     const same = historyEntryForFilters(filters);
     if (same) {
       autoLogId = same.pinned ? "" : same.id;
+      // The form holds a favourite's search: later changes edit it.
+      if (same.pinned) {
+        editAsFavorite(same.id);
+        renderHistory();
+      }
       return;
     }
     const draft = autoLogId && marketHistory.find((entry) => entry.id === autoLogId && !entry.pinned);
