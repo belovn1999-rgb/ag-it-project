@@ -338,7 +338,7 @@
 
 /* Equipment chips. */
 .ofOptions { display: flex; flex-wrap: wrap; gap: 5px; }
-.ofOption { padding: 4px 9px; border-radius: 999px; background: var(--of-brand-soft); color: var(--of-navy); font-size: 11px; font-weight: 600; }
+.ofOption { padding: 3px 9px; border-radius: 999px; background: var(--of-brand-soft); color: var(--of-navy); font-size: 11px; font-weight: 600; line-height: 1.3; }
 .ofOptionsMore { margin-top: 7px; font-size: 10.5px; color: var(--of-muted); }
 .ofAllOptions { columns: 4; column-gap: 16px; font-size: 10.5px; line-height: 1.5; color: var(--of-text); margin: 0; padding: 0; list-style: none; }
 .ofAllOptions li { break-inside: avoid; padding-left: 10px; position: relative; }
@@ -423,6 +423,7 @@
   color: var(--of-muted);
 }
 .ofFoot b { color: var(--of-ink); }
+.ofFoot > span:first-child { flex: none; }
 .ofNote { margin-top: 12px; font-size: 10px; color: var(--of-faint); line-height: 1.5; }
 
 /* ---- Editing (screen only) ------------------------------------------------ */
@@ -727,8 +728,8 @@
     "head head"
     "photo photo"
     "link price"
-    "chips price"
     "specs price"
+    "specs chips"
     "market verdict"
     "equipment seller"
     ". ."
@@ -758,5 +759,107 @@
 .isPremium[data-page="1"] .ofPriceBox { grid-area: price; justify-self: end; width: 272px; margin-top: -70px; z-index: 3; box-shadow: 0 12px 30px rgba(10, 22, 34, 0.28); align-self: start; }
 .isPremium[data-page="1"] .ofAdLink { grid-area: link; position: static; padding: 0; background: transparent; align-self: start; }
 .isPremium[data-page="1"] .ofAdLink small { display: inline; margin-left: 6px; }
-.isPremium[data-page="1"] .ofChips { align-self: end; }
+/* Owner 2026-10-06: the price's market badges sit under the price plate. */
+.isPremium[data-page="1"] .ofChips { align-self: start; justify-self: end; width: 272px; margin-top: 0; }
 .ofPhoto img { transition: none; }
+
+/* Owner 2026-10-06: the country's flag beside the town; the ad link one size up. */
+.ofPlaceLine { display: inline-flex; align-items: center; gap: 5px; }
+.ofPlaceLine .agFlag { width: 16px; height: 11px; border-radius: 2px; box-shadow: 0 0 0 0.5px rgba(23, 34, 44, 0.25); flex: none; }
+.ofAdLink { font-size: 13px; }
+.ofAdLink small { font-size: 12px; }
+.ofAdLink svg { width: 16px; height: 16px; }
+
+/* ---- Market card: active similar cars, the ad's price line (Carvago) ------- */
+.ofPage .ofActive { margin-top: 6px; font-size: 11.5px; color: var(--of-text); }
+.ofTrend { margin-top: 8px; }
+.ofTrend svg { display: block; width: 100%; height: 34px; }
+.ofPage .ofTrend p { margin-top: 2px; }
+
+/* ---- Sheet 2: "Co dalej" — three layouts of the process (owner 2026-10-06) -- */
+.ofPageTwo { margin-top: 16px; display: flex; flex-direction: column; gap: 12px; }
+.ofTwoCols { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.ofSideCol { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.ofBottomRow { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.ofPage .ofProcessNote { margin-top: 12px; }
+.ofStepTitle { display: block; font-size: 12.5px; color: var(--of-ink); margin-bottom: 1px; }
+.ofStepText { font-size: 11px; line-height: 1.42; color: var(--of-text); }
+.ofTimeNo {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--of-navy);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+/* Stage colours: free (green), first commitment (amber), purchase (navy), delivery (gold). */
+.ofProcess { --st-free: #1d6a3b; --st-deposit: #b06d00; --st-purchase: #0f3d5e; --st-delivery: #9a7a3c; }
+.is-free .ofTimeNo { background: var(--st-free); }
+.is-deposit .ofTimeNo { background: var(--st-deposit); }
+.is-purchase .ofTimeNo { background: var(--st-purchase); }
+.is-delivery .ofTimeNo { background: var(--st-delivery); }
+.ofMark { display: inline-flex; align-items: center; gap: 5px; margin-top: 5px; padding: 3px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 700; line-height: 1.2; }
+.ofMark svg { width: 12px; height: 12px; flex: none; }
+.ofMark.isPay { background: #fbf1dc; color: #7a4d00; border: 1px solid #f0dcb0; }
+.ofMark.isDecision { background: var(--of-brand-soft); color: var(--of-navy); border: 1px solid #cfdfec; }
+
+/* A: "Oś czasu" — one line down the page, stage headings on it. */
+.ofTimeline { list-style: none; margin: 0; padding: 0; position: relative; }
+.ofTimeline::before { content: ""; position: absolute; left: 10px; top: 8px; bottom: 8px; width: 2px; background: var(--of-line-strong); }
+.ofTimeStage { position: relative; display: flex; align-items: baseline; gap: 8px; margin: 10px 0 6px 32px; font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; }
+.ofTimeStage:first-child { margin-top: 2px; }
+.ofTimeStage small { text-transform: none; letter-spacing: 0; font-weight: 600; color: var(--of-muted); font-size: 10.5px; }
+.ofTimeStage::before { content: ""; position: absolute; left: -26px; top: 2px; width: 10px; height: 10px; border-radius: 3px; background: currentColor; }
+.ofTimeStage.is-free { color: var(--st-free); }
+.ofTimeStage.is-deposit { color: var(--st-deposit); }
+.ofTimeStage.is-purchase { color: var(--st-purchase); }
+.ofTimeStage.is-delivery { color: var(--st-delivery); }
+.ofTimeStep { position: relative; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; margin-bottom: 9px; }
+.ofTimeStep .ofTimeNo { position: relative; z-index: 1; box-shadow: 0 0 0 3px #ffffff; }
+
+/* B: "Droga" — four steps a row, the client's decisions and payments under them. */
+.ofRoad { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ofRoadStep { position: relative; padding: 10px 10px 10px; border-radius: 10px; background: var(--of-soft); border-top: 3px solid var(--of-line-strong); }
+.ofRoadStep.is-free { border-top-color: var(--st-free); }
+.ofRoadStep.is-deposit { border-top-color: var(--st-deposit); }
+.ofRoadStep.is-purchase { border-top-color: var(--st-purchase); }
+.ofRoadStep.is-delivery { border-top-color: var(--st-delivery); }
+.ofRoadStep .ofTimeNo { margin-bottom: 6px; }
+.ofRoadStep:not(:last-child)::after { content: "→"; position: absolute; right: -10px; top: 12px; width: 10px; text-align: center; color: var(--of-faint); font-size: 12px; }
+.ofLane { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; position: relative; margin: 2px 0 10px; min-height: 24px; border-top: 1px dashed var(--of-line-strong); padding-top: 6px; }
+.ofLaneLabel { position: absolute; left: 0; top: 11px; max-width: calc(25% - 12px); font-size: 9.5px; line-height: 1.3; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 700; color: var(--of-muted); }
+.ofLaneCell .ofMark { margin-top: 2px; }
+
+/* C: "Etapy" — four columns from "no commitment" to the keys. */
+.ofStages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.ofStageCol { border-radius: 10px; background: var(--of-soft); padding: 0 10px 10px; overflow: hidden; }
+.ofPage .ofStageHead { margin: 0 -10px 10px; padding: 8px 10px; min-height: 50px; color: #ffffff; display: grid; gap: 1px; align-content: start; }
+.ofStageHead b { color: #ffffff; font-size: 11.5px; }
+.ofStageHead small { color: rgba(255, 255, 255, 0.85); font-size: 10.5px; }
+.ofStageCol.is-free .ofStageHead { background: var(--st-free); }
+.ofStageCol.is-deposit .ofStageHead { background: var(--st-deposit); }
+.ofStageCol.is-purchase .ofStageHead { background: var(--st-purchase); }
+.ofStageCol.is-delivery .ofStageHead { background: var(--st-delivery); }
+.ofStageStep { display: grid; grid-template-columns: 22px minmax(0, 1fr); column-gap: 8px; row-gap: 3px; align-items: center; }
+.ofStageStep > .ofStepText, .ofStageStep > .ofMark { grid-column: 1 / -1; }
+.ofStageStep > .ofMark { justify-self: start; }
+.ofStageStep > .ofStepTitle { margin: 0; }
+.ofStageStep + .ofStageStep { margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--of-line); }
+
+/* Side cards of sheet 2: compact. */
+.ofCostsCard .ofCosts { font-size: 11px; }
+.ofCostsCard .ofCosts td { padding: 4px 0; }
+.ofCostsCard .ofCosts td small { font-size: 9.5px; }
+.ofCostsCard .ofCosts tr.isTotal td:last-child { font-size: 16px; }
+.ofNegoCard .ofBig { font-size: 20px; }
+.ofContactMini { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px; align-items: center; }
+.ofContactMini .ofAvatar { width: 38px; height: 38px; font-size: 13px; }
+.ofCompanyLine { margin-top: 8px; display: flex; gap: 5px; align-items: flex-start; }
+.ofCompanyLine svg { width: 12px; height: 12px; flex: none; margin-top: 2px; color: var(--of-brand); }
+.isPremium .ofRoadStep, .isPremium .ofStageCol { background: #ffffff; }
+.ofPage .ofTrendLine { margin-top: 2px; }

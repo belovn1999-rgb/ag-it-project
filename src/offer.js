@@ -124,6 +124,13 @@
     const lastTwo = n % 100;
     return last >= 2 && last <= 4 && !(lastTwo >= 12 && lastTwo <= 14) ? few : many;
   }
+  // "Bad Gögging, Niemcy" with the country's flag (inline SVG, market-badges.js).
+  function placeHtml(city, country) {
+    const code = String(country || "").toUpperCase();
+    const flag = typeof window.AUTOGOOD_FLAG === "function" ? window.AUTOGOOD_FLAG(code) : "";
+    const text = [city, COUNTRY[code] || code].filter(Boolean).join(", ");
+    return text ? `<span class="ofPlaceLine">${flag}<span>${esc(text)}</span></span>` : "";
+  }
   const withFirm = (name) => (!name ? "" : /autogood/i.test(name) ? name : `${name} z AUTOGOOD`);
   const fuelShort = (fuel) => String(fuel || "").replace(/\s*\(.*\)$/, "");
 
@@ -316,8 +323,10 @@
     const poland = polandView();
     const costView = costs();
     const verdict = verdictView(view);
-    const keyOptions = EQUIPMENT ? EQUIPMENT.keyOptions(offer.ad?.features || [], 8) : [];
+    const keyOptions = EQUIPMENT ? EQUIPMENT.keyOptions(offer.ad?.features || [], 10) : [];
     const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
+    // The full list is on page 2 only when the manager shows it there.
+    const listOnTwo = !isHidden("allOptions") && (offer.shown || []).includes("allOptions");
     const salutation = SALUTATION[offer.client?.salutation] || SALUTATION.Pan;
     const manager = store.manager(offer.manager);
     const photo = edits().photo || view.images[0] || "";
@@ -341,9 +350,9 @@
       ["Lokalizacja", [view.city, COUNTRY[view.country] || view.country].filter(Boolean).join(", ")],
     ].filter(([, value]) => value).slice(0, 8);
     const seller = offer.ad?.seller || null;
-    const adAge = offer.market?.ad || null;
-    const listedAt = offer.ad?.listedAt || "";
-    const listedDays = listedAt ? Math.max(0, Math.floor((Date.now() - Date.parse(listedAt)) / 86400000)) : adAge?.days ?? null;
+    const adAge = adHistory();
+    const listedAt = adAge.kind === "listed" ? adAge.since : "";
+    const listedDays = adAge.days ?? null;
     const sellerFacts = [];
     if (seller?.rating?.reviews) sellerFacts.push(`<span class="ofStars">${icon("star")}${esc(Number(seller.rating.score).toFixed(1).replace(".", ","))}</span> · ${numbers.format(seller.rating.reviews)} ${plural(seller.rating.reviews, "opinia", "opinie", "opinii")}${seller.rating.recommend !== null && seller.rating.recommend !== undefined ? ` · ${seller.rating.recommend}% poleca` : ""}`);
     const sinceYear = seller?.since ? String(seller.since).slice(0, 4) : "";
@@ -366,7 +375,7 @@
                 ${photo ? `<img src="${esc(photo)}" alt="${esc(view.title)}" crossorigin="anonymous"${photoFrame()} />` : `<div class="ofPhotoEmpty">${icon("car")}<span>${reading ? "Wczytuję zdjęcie z ogłoszenia…" : "Zdjęcie z ogłoszenia pojawi się po wczytaniu danych"}</span></div>`}
                 ${view.images.length > 1 ? `<span class="ofPhotoCount">${view.images.length} ${plural(view.images.length, "zdjęcie", "zdjęcia", "zdjęć")} w ogłoszeniu</span>` : ""}
               </figure>
-              ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>Ogłoszenie na ${esc(PORTAL[offer.source] || "portalu")}<small>${esc([view.city, COUNTRY[view.country] || view.country].filter(Boolean).join(", "))}</small></span></a>` : ""}
+              ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>Ogłoszenie na ${esc(PORTAL[offer.source] || "portalu")}<small>${placeHtml(view.city, view.country)}</small></span></a>` : ""}
             </div>
             <div class="ofHeroInfo">
               <div class="ofHeroTitle">
@@ -401,6 +410,8 @@
               <div class="ofBarLegend"><span class="isCar">to auto ${esc(money(view.price, market.currency))}</span><span>mediana <b>${esc(money(market.stats.median, market.currency))}</b></span></div>
               ${field("marketLead", market.lead, "p", "ofMarketLead")}
               ${field("marketTypical", market.typical, "p", "ofSmall")}
+              ${offer.carvago?.found && offer.carvago.active?.count && !isHidden("carvago") ? `<p class="ofActive">${field("carvagoActive", `Aktywnych podobnych ofert w Europie: ${numbers.format(offer.carvago.active.count)}${offer.carvago.active.kind === "search" ? ` (rok ${offer.carvago.active.yearFrom}-${offer.carvago.active.yearTo}, przebieg ${thousands(offer.carvago.active.kmFrom)}-${thousands(offer.carvago.active.kmTo)} tys. km)` : ""}`, "span")}</p>` : ""}
+              ${offer.carvago?.found && !isHidden("carvago") ? priceTrendHtml(offer.carvago.history, offer.carvago.changes, offer.carvago.listedSince) : ""}
               ${poland ? `<div class="ofPoland${polandHidden(poland) ? " ofBlockHidden" : ""}">${field("polandLine", poland.line, "span")}</div>` : ""}
             </section>` : ""}
             ${verdict ? `
@@ -412,7 +423,7 @@
                 ${verdict.lines.map((line) => `
                   <li class="ofCheck is${line.level.charAt(0).toUpperCase()}${line.level.slice(1)}${blockClass(`check:${line.id}`)}">${icon(line.level === "ok" ? "check" : line.level === "info" ? "info" : line.level)}<span>${field(`check:${line.id}`, line.text)}${line.quote ? `<q>${esc(line.quote)}</q>` : ""}${hideToggle(`check:${line.id}`)}</span></li>`).join("")}
               </ul>
-              ${field("inspect", "Przed zakupem sprawdzimy: grubość lakieru, diagnostykę komputerową, jazdę próbną, dokumenty i historię auta.", "p", "ofInspect")}
+              ${field("inspect", `${verdict.level === "ok" ? "* " : ""}Przed zakupem sprawdzimy lakier, diagnostykę, jazdę próbną, dokumenty i historię auta.`, "p", "ofInspect")}
             </section>` : ""}
           </div>
           <div class="ofGrid">
@@ -421,9 +432,9 @@
               <p class="ofCardHead">${icon("list")}Wyposażenie — najważniejsze</p>
               ${keyOptions.length
                 ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(item.label)}</span>`).join("")}</div>
-                   <p class="ofOptionsMore">${allOptions.length > keyOptions.length ? `+ ${numbers.format(allOptions.length - keyOptions.length)} pozycji potwierdzonych w ogłoszeniu (lista na str. 2)` : "Z listy wyposażenia w ogłoszeniu"}</p>`
+                   <p class="ofOptionsMore">${allOptions.length > keyOptions.length ? `+ ${numbers.format(allOptions.length - keyOptions.length)} ${plural(allOptions.length - keyOptions.length, "pozycja", "pozycje", "pozycji")} więcej w ogłoszeniu${listOnTwo ? " (lista na str. 2)" : ""}` : "Z listy wyposażenia w ogłoszeniu"}</p>`
                 : `<p class="ofSmall">${reading ? "Wczytuję wyposażenie z ogłoszenia…"
-                  : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${plural(allOptions.length, "pozycja", "pozycje", "pozycji")} wyposażenia w ogłoszeniu (lista na str. 2)` : "Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.")
+                  : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${plural(allOptions.length, "pozycja", "pozycje", "pozycji")} wyposażenia w ogłoszeniu${listOnTwo ? " (lista na str. 2)" : ""}` : "Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.")
                   : "Wyposażenie pojawi się po wczytaniu danych z ogłoszenia."}</p>`}
             </section>
             <section class="ofCard${blockClass("seller")}" data-block="seller">
@@ -431,7 +442,7 @@
               <p class="ofCardHead">${icon("store")}Sprzedawca</p>
               ${sellerName ? `<p class="ofSellerName">${esc(sellerName)}</p>` : ""}
               ${sellerFacts.length ? `<p class="ofFacts">${sellerFacts.map((fact) => `<span>${fact}</span>`).join("")}</p>` : ""}
-              ${seller?.city || view.city ? `<p class="ofSmall" style="margin-top:4px">${esc([seller?.city || view.city, COUNTRY[seller?.country || view.country] || ""].filter(Boolean).join(", "))}</p>` : ""}
+              ${seller?.city || view.city ? `<p class="ofSmall ofPlace" style="margin-top:4px">${placeHtml(seller?.city || view.city, seller?.country || view.country)}</p>` : ""}
               ${adAgeText ? `<p class="ofAdAge">${adAgeText}</p>` : ""}
             </section>
           </div>
@@ -443,115 +454,204 @@
       </div>`;
   }
 
+  // ---- How long the car is for sale and how its price moved --------------------
+  // The earliest date any source knows (the portal, our Monitoring, Carvago)
+  // and every price drop seen (Monitoring checks, the portal's own earlier
+  // price, Carvago's price history).
+  function adHistory() {
+    const own = offer.market?.ad || {};
+    const carvago = offer.carvago?.found ? offer.carvago : null;
+    const dates = [offer.ad?.listedAt, carvago?.listedSince, own.since].filter((value) => value && Number.isFinite(Date.parse(value))).sort((a, b) => Date.parse(a) - Date.parse(b));
+    const since = dates[0] || "";
+    const days = since ? Math.max(0, Math.floor((Date.now() - Date.parse(since)) / 86400000)) : own.days ?? null;
+    const carvagoDrops = (carvago?.changes || []).filter((change) => change.share < 0);
+    const carvagoShare = carvagoDrops.reduce((total, change) => total * (1 + change.share), 1) - 1;
+    const useCarvago = carvagoDrops.length > (own.drops || 0);
+    return {
+      ...own,
+      since,
+      days,
+      kind: since && since === own.since ? own.kind : "listed",
+      dropped: Boolean(own.dropped || carvagoDrops.length),
+      drops: useCarvago ? carvagoDrops.length : own.drops || 0,
+      share: useCarvago ? carvagoShare : own.share || 0,
+      changes: carvago?.changes || [],
+      history: carvago?.history || [],
+    };
+  }
+
+  // The price line of the ad over time (Carvago's history, drawn relative:
+  // its prices carry Carvago's margin, so only the shape and the % are shown).
+  function priceTrendHtml(history, changes, since) {
+    const start = since || history?.[0]?.at || "";
+    // An unchanged price needs no line: the date and the fact say it.
+    if (!changes?.length) return start ? `<p class="ofSmall ofTrendLine">W sprzedaży od <b>${esc(dateText(start))}</b> · cena bez zmian</p>` : "";
+    if (!history?.length) return "";
+    const points = history.map((point) => ({ at: Date.parse(point.at), price: point.price })).filter((point) => Number.isFinite(point.at));
+    if (!points.length) return "";
+    const now = Date.now();
+    const first = points[0].at;
+    const span = Math.max(1, now - first);
+    const prices = points.map((point) => point.price);
+    const top = Math.max(...prices);
+    const bottom = Math.min(...prices);
+    const range = Math.max(top - bottom, top * 0.02);
+    const x = (at) => 4 + ((at - first) / span) * 292;
+    const y = (price) => 6 + ((top - price) / range) * 22;
+    let path = `M${x(points[0].at).toFixed(1)} ${y(points[0].price).toFixed(1)}`;
+    points.slice(1).forEach((point, index) => {
+      path += ` H${x(point.at).toFixed(1)} V${y(point.price).toFixed(1)}`;
+    });
+    path += ` H${x(now).toFixed(1)}`;
+    const drops = (changes || []).filter((change) => change.share < 0);
+    const label = changes?.length
+      ? changes.map((change) => `${dateText(change.at).slice(0, 5)} ${change.share < 0 ? "−" : "+"}${(Math.abs(change.share) * 100).toFixed(1).replace(".", ",")}%`).join(" · ")
+      : "bez zmian ceny";
+    return `
+      <div class="ofTrend">
+        <svg viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="${path}" fill="none" stroke="${drops.length ? "#1d6a3b" : "#145a85"}" stroke-width="2" stroke-linejoin="round"/>${points.map((point) => `<circle cx="${x(point.at).toFixed(1)}" cy="${y(point.price).toFixed(1)}" r="2.4" fill="#145a85"/>`).join("")}</svg>
+        <p class="ofSmall">W sprzedaży od ${esc(dateText(start))} · zmiany ceny: <b>${esc(label)}</b></p>
+      </div>`;
+  }
+
+  // ---- Sheet 2: what happens next (owner 2026-10-06) ------------------------
+  // From the call to the keys, step by step, so the client sees at once what
+  // comes after what, when the first commitment starts and when he pays. The
+  // steps follow the offer text in Notion ("Jak wygląda proces") and
+  // Процесс.md; three layouts for the owner to choose ("Strona 2" in the panel).
+  const PROCESS_STAGES = {
+    free: { label: "Bez zobowiązań", note: "nic {Pan} {v:nie płaci|nie płacą}" },
+    deposit: { label: "Pierwsze zobowiązanie", note: "zaliczka zwrotna" },
+    purchase: { label: "Zakup", note: "płatność za auto" },
+    delivery: { label: "Dostawa i odbiór", note: "rozliczenie końcowe" },
+  };
+  const PROCESS_STEPS = [
+    { stage: "free", title: "Rozmowa", text: "Omawiamy ofertę i ustalamy sposób zakupu (faktura VAT, marża lub bezpośrednio), finansowanie, termin i pytania do sprzedawcy." },
+    { stage: "free", title: "Rezerwacja auta", text: "Dzwonimy do dealera: dostępność, dodatkowe zdjęcia, VIN i historia serwisowa. Rezerwujemy auto, jeśli dealer na to pozwala." },
+    { stage: "deposit", title: "Umowa i zaliczka", text: "Podpisujemy umowę zdalnie. {Pan} {v:wpłaca|wpłacają} zaliczkę 2000-4000 zł - zwracamy ją w całości, jeśli {v:zrezygnuje|zrezygnują} {Pan} przed zakupem.", mark: { kind: "pay", label: "Płatność 1 · zaliczka zwrotna" } },
+    { stage: "deposit", title: "Oględziny", text: "Nasz specjalista sprawdza auto u sprzedawcy: lakier, diagnostyka, jazda próbna, zdjęcia i film. {Pan} {v:dostaje|dostają} raport z rekomendacją.", mark: { kind: "decision", label: "{Pana} decyzja: kupujemy?" } },
+    { stage: "purchase", title: "Negocjacje i umowa", text: "Negocjujemy cenę i warunki - 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę." },
+    { stage: "purchase", title: "Płatność za auto", text: "{Pan} {v:zleca|zlecają} przelew za auto w ciągu 2 dni roboczych, z uwzględnieniem zaliczki.", mark: { kind: "pay", label: "Płatność 2 · cena auta" } },
+    { stage: "delivery", title: "Transport i kontrola", text: "Ubezpieczona laweta do Łomianek. Po rozładunku ponownie sprawdzamy stan auta z raportem z oględzin." },
+    { stage: "delivery", title: "Dokumenty i odbiór", text: "Akcyza, przegląd i tłumaczenia po naszej stronie. Rozliczenie końcowe i odbiór auta - {Panu} zostaje rejestracja i OC.", mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe" } },
+  ];
+  const PROCESS_STYLES = [
+    ["timeline", "Oś czasu", "kroki z góry na dół, koszt i kontakt obok"],
+    ["road", "Droga", "8 kroków w dwóch rzędach, pod nimi płatności"],
+    ["stages", "Etapy", "cztery kolumny: od „bez zobowiązań” do odbioru"],
+  ];
+  const processStyle = () => (PROCESS_STYLES.some(([key]) => key === offer?.processStyle) ? offer.processStyle : "timeline");
+  // Pan / Pani / Państwo in the step texts.
+  function addressed(text) {
+    const form = offer.client?.salutation === "Pani" ? 1 : offer.client?.salutation === "Państwo" ? 2 : 0;
+    const words = { "{Pan}": ["Pan", "Pani", "Państwo"], "{Pana}": ["Pana", "Pani", "Państwa"], "{Panu}": ["Panu", "Pani", "Państwu"] };
+    return String(text)
+      .replace(/\{v:([^|}]*)\|([^}]*)\}/g, (_, singular, plural) => (form === 2 ? plural : singular))
+      .replace(/\{Pan[au]?\}/g, (token) => words[token][form]);
+  }
+  const stageNote = (stage) => addressed(PROCESS_STAGES[stage].note);
+
+  function markHtml(step, index) {
+    if (!step.mark) return "";
+    return `<span class="ofMark is${step.mark.kind === "pay" ? "Pay" : "Decision"}">${icon(step.mark.kind === "pay" ? "receipt" : "check")}${field(`processMark${index + 1}`, addressed(step.mark.label))}</span>`;
+  }
+  function stepBody(step, index) {
+    return `${field(`process${index + 1}Title`, step.title, "b", "ofStepTitle")}${field(`process${index + 1}`, addressed(step.text), "p", "ofStepText")}`;
+  }
+
+  function processTimeline() {
+    let lastStage = "";
+    return `<ol class="ofTimeline">${PROCESS_STEPS.map((step, index) => {
+      const head = step.stage !== lastStage ? `<li class="ofTimeStage is-${step.stage}"><span>${esc(PROCESS_STAGES[step.stage].label)}</span><small>${esc(stageNote(step.stage))}</small></li>` : "";
+      lastStage = step.stage;
+      return `${head}<li class="ofTimeStep is-${step.stage}"><span class="ofTimeNo">${index + 1}</span><div>${stepBody(step, index)}${markHtml(step, index)}</div></li>`;
+    }).join("")}</ol>`;
+  }
+  function processRoad() {
+    const cell = (step, index) => `<div class="ofRoadStep is-${step.stage}"><span class="ofTimeNo">${index + 1}</span>${stepBody(step, index)}</div>`;
+    const lane = PROCESS_STEPS.map((step, index) => `<div class="ofLaneCell">${markHtml(step, index)}</div>`);
+    return `
+      <div class="ofRoad">${PROCESS_STEPS.slice(0, 4).map(cell).join("")}</div>
+      <div class="ofLane"><span class="ofLaneLabel">${esc(addressed("{Pana} decyzje i płatności"))}</span>${lane.slice(0, 4).join("")}</div>
+      <div class="ofRoad">${PROCESS_STEPS.slice(4).map((step, index) => cell(step, index + 4)).join("")}</div>
+      <div class="ofLane"><span class="ofLaneLabel"></span>${lane.slice(4).join("")}</div>`;
+  }
+  function processStages() {
+    return `<div class="ofStages">${Object.keys(PROCESS_STAGES).map((stage) => `
+      <div class="ofStageCol is-${stage}">
+        <p class="ofStageHead"><b>${esc(PROCESS_STAGES[stage].label)}</b><small>${esc(stageNote(stage))}</small></p>
+        ${PROCESS_STEPS.map((step, index) => (step.stage === stage ? `<div class="ofStageStep"><span class="ofTimeNo">${index + 1}</span>${stepBody(step, index)}${markHtml(step, index)}</div>` : "")).join("")}
+      </div>`).join("")}</div>`;
+  }
+
   function sheetTwo(view) {
     const costView = costs();
-    const negotiation = VERDICT ? VERDICT.negotiation({ car: offer.car, ad: offer.ad, market: offer.market }) : null;
+    const negotiation = VERDICT ? VERDICT.negotiation({ car: offer.car, ad: offer.ad, market: { ...offer.market, ad: adHistory() } }) : null;
     const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
     const salutation = SALUTATION[offer.client?.salutation] || SALUTATION.Pan;
     const manager = store.manager(offer.manager);
     const company = store.company(offer.company);
     const initials = manager.name ? String(manager.name).split(/\s+/).map((word) => word.charAt(0)).join("").slice(0, 2).toUpperCase() : "AG";
-    const reasons = (negotiation?.reasons || []).map((reason) => {
-      if (reason.id === "days") return `Auto ${reason.atLeast ? "co najmniej " : ""}${numbers.format(reason.days)} ${daysWord(reason.days)} w sprzedaży.`;
-      if (reason.id === "dropped") return `Cena była już obniżana (${reason.drops}×, łącznie −${percent(reason.share)}).`;
-      if (reason.id === "cheap") return "Cena jest już poniżej typowego przedziału rynku.";
-      if (reason.id === "dear") return "Cena jest powyżej typowego przedziału — jest o czym rozmawiać.";
-      if (reason.id === "fair") return "Cena w typowym przedziale rynku.";
-      if (reason.id === "pace") return `Na tym rynku ${percent(reason.share)} ofert obniżyło cenę${reason.medianDrop ? `, zwykle o ok. ${percent(reason.medianDrop)}` : ""}.`;
-      return "";
-    }).filter(Boolean);
-    // The six steps of "Jak wygląda proces" in the offer text (Notion,
-    // owner 2026-10-05), shortened for one chosen car.
-    const STEPS = {
-      Pan: [
-        ["Umowa i wymagania", "Potwierdzamy Pana wymagania i podpisujemy umowę. Przed zakupem może Pan ją rozwiązać bez kar i kosztów."],
-        ["Weryfikacja i rozliczenie", "Sprawdzamy auto i sprzedawcę. Wszystkie koszty dostaje Pan czarno na białym."],
-        ["Zaliczka i sprawdzenie auta", "Zwrotną zaliczkę wpłaca Pan po akceptacji oferty. Nasz specjalista ogląda auto za granicą."],
-        ["Finalizacja zakupu", "Negocjujemy cenę i warunki z dealerem - 70% wynegocjowanego rabatu zostaje dla Pana."],
-        ["Transport i kontrola", "Przewozimy auto lawetą do Łomianek i po rozładunku ponownie sprawdzamy jego stan."],
-        ["Dokumenty i wydanie", "Akcyza, przegląd techniczny i tłumaczenia po naszej stronie. Panu zostaje rejestracja i OC."],
-      ],
-      Pani: [
-        ["Umowa i wymagania", "Potwierdzamy Pani wymagania i podpisujemy umowę. Przed zakupem może Pani ją rozwiązać bez kar i kosztów."],
-        ["Weryfikacja i rozliczenie", "Sprawdzamy auto i sprzedawcę. Wszystkie koszty dostaje Pani czarno na białym."],
-        ["Zaliczka i sprawdzenie auta", "Zwrotną zaliczkę wpłaca Pani po akceptacji oferty. Nasz specjalista ogląda auto za granicą."],
-        ["Finalizacja zakupu", "Negocjujemy cenę i warunki z dealerem - 70% wynegocjowanego rabatu zostaje dla Pani."],
-        ["Transport i kontrola", "Przewozimy auto lawetą do Łomianek i po rozładunku ponownie sprawdzamy jego stan."],
-        ["Dokumenty i wydanie", "Akcyza, przegląd techniczny i tłumaczenia po naszej stronie. Pani zostaje rejestracja i OC."],
-      ],
-      "Państwo": [
-        ["Umowa i wymagania", "Potwierdzamy Państwa wymagania i podpisujemy umowę. Przed zakupem mogą Państwo ją rozwiązać bez kar i kosztów."],
-        ["Weryfikacja i rozliczenie", "Sprawdzamy auto i sprzedawcę. Wszystkie koszty dostają Państwo czarno na białym."],
-        ["Zaliczka i sprawdzenie auta", "Zwrotną zaliczkę wpłacają Państwo po akceptacji oferty. Nasz specjalista ogląda auto za granicą."],
-        ["Finalizacja zakupu", "Negocjujemy cenę i warunki z dealerem - 70% wynegocjowanego rabatu zostaje dla Państwa."],
-        ["Transport i kontrola", "Przewozimy auto lawetą do Łomianek i po rozładunku ponownie sprawdzamy jego stan."],
-        ["Dokumenty i wydanie", "Akcyza, przegląd techniczny i tłumaczenia po naszej stronie. Państwu zostaje rejestracja i OC."],
-      ],
-    };
-    const steps = STEPS[offer.client?.salutation] || STEPS.Pan;
+    const style = processStyle();
+    const costsHtml = costView ? `
+      <section class="ofCard ofCostsCard${blockClass("costs")}" data-block="costs">
+        ${hideToggle("costs")}
+        <p class="ofCardHead">${icon("receipt")}Koszt na gotowo</p>
+        <span class="ofMethod">${esc(costView.method)}</span>
+        <table class="ofCosts">
+          <tbody>
+            ${costView.rows.map((row) => `<tr><td>${esc(row.label)}${row.sub ? `<small>${esc(String(row.sub).replace(/\s*=\s*$/, ""))}</small>` : ""}</td><td>${esc(money(row.value, "PLN"))}</td></tr>`).join("")}
+            <tr class="isTotal"><td>Razem na gotowo</td><td>${esc(money(costView.total, "PLN"))}</td></tr>
+          </tbody>
+        </table>
+        ${field("costsNote", costView.note, "p", "ofSmall")}
+      </section>` : "";
+    const negotiationHtml = negotiation ? `
+      <section class="ofCard ofNegoCard${blockClass("negotiation")}" data-block="negotiation">
+        ${hideToggle("negotiation")}
+        <p class="ofCardHead">${icon("percent")}Potencjał negocjacji</p>
+        <p><span class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : `${negotiation.from}-${negotiation.to}%`}</span> <span class="ofSmall">${!negotiation.amountTo ? "cena bez dużego pola do negocjacji" : negotiation.amountFrom ? `ok. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} mniej` : `do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`}</span></p>
+        ${field("negotiationNote", `Obserwacja cen ogłoszeń, nie gwarancja rabatu. Negocjujemy w ${salutation.owner} imieniu.`, "p", "ofSmall")}
+      </section>` : "";
+    const contactHtml = `
+      <section class="ofCard ofContactCard${blockClass("contact")}" data-block="contact">
+        ${hideToggle("contact")}
+        <div class="ofContactMini">
+          <div class="ofAvatar">${esc(initials)}</div>
+          <div class="ofContactLines">
+            <b>${esc(withFirm(manager.name) || "AUTOGOOD")}</b>
+            <span class="ofSmall">${esc(salutation.owner)} opiekun</span>
+            ${manager.phone ? `<span>${icon("phone")}${esc(manager.phone)}</span>` : ""}
+            ${manager.email ? `<span>${icon("mail")}${esc(manager.email)}</span>` : ""}
+          </div>
+        </div>
+        <p class="ofSmall ofCompanyLine">${icon("pin")}${esc([company.name || "AUTOGOOD", company.address, company.hours].filter(Boolean).join(" · "))}</p>
+      </section>`;
+    const processHtml = `
+      <section class="ofCard ofProcess is-${style}${blockClass("process")}" data-block="process">
+        ${hideToggle("process")}
+        <p class="ofCardHead">${icon("route")}${field("processTitle", "Co dalej: od rozmowy do kluczyków", "span")}</p>
+        ${style === "road" ? processRoad() : style === "stages" ? processStages() : processTimeline()}
+        ${field("processNote", "Zwykle od 3 tygodni do 1,5 miesiąca od umowy do odbioru - zależnie od kraju i ścieżki zakupu.", "p", "ofSmall ofProcessNote")}
+      </section>`;
+    const optionsHtml = allOptions.length && !isHidden("allOptions") && (offer.shown || []).includes("allOptions") ? `
+      <section class="ofCard isFull" data-block="allOptions">
+        ${hideToggle("allOptions")}
+        <p class="ofCardHead">${icon("list")}Pełne wyposażenie z ogłoszenia (${numbers.format(allOptions.length)})</p>
+        <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(item.label)}</li>`).join("")}</ul>
+      </section>` : "";
+    const body = style === "timeline"
+      ? `<div class="ofTwoCols"><div>${processHtml}</div><div class="ofSideCol">${costsHtml}${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`
+      : `${processHtml}<div class="ofBottomRow">${costsHtml}<div class="ofSideCol">${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`;
     return `
       <div class="ofSheet${isHidden("page2") ? " isHiddenPage" : ""}" data-sheet="2">
-        <article class="ofPage${styleClass()}" data-page="2">
+        <article class="ofPage${styleClass()} isProcess-${style}" data-page="2">
           ${headHtml(2, view)}
-          <div class="ofGrid isWide" style="margin-top:18px">
-            ${costView ? `
-            <section class="ofCard${blockClass("costs")}" data-block="costs">
-              ${hideToggle("costs")}
-              <p class="ofCardHead">${icon("receipt")}Koszt na gotowo — z czego się składa</p>
-              <span class="ofMethod">Sposób zakupu: ${esc(costView.method)}</span>
-              <table class="ofCosts">
-                <tbody>
-                  ${costView.rows.map((row) => `<tr><td>${esc(row.label)}${row.sub ? `<small>${esc(String(row.sub).replace(/\s*=\s*$/, ""))}</small>` : ""}</td><td>${esc(money(row.value, "PLN"))}</td></tr>`).join("")}
-                  <tr class="isTotal"><td>Razem na gotowo</td><td>${esc(money(costView.total, "PLN"))}</td></tr>
-                </tbody>
-              </table>
-              ${field("costsNote", costView.note, "p", "ofSmall")}
-            </section>` : ""}
-            ${negotiation ? `
-            <section class="ofCard${blockClass("negotiation")}" data-block="negotiation">
-              ${hideToggle("negotiation")}
-              <p class="ofCardHead">${icon("percent")}Potencjał negocjacji</p>
-              <p class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : `${negotiation.from}–${negotiation.to}%`}</p>
-              <p class="ofSmall">${!negotiation.amountTo ? "cena bez dużego pola do negocjacji" : negotiation.amountFrom ? `ok. ${esc(money(negotiation.amountFrom, negotiation.currency))}–${esc(money(negotiation.amountTo, negotiation.currency))} mniej` : `do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`}</p>
-              <ul class="ofReasons">${reasons.map((text, index) => `<li>${field(`reason:${index}`, text)}</li>`).join("")}</ul>
-              ${field("negotiationNote", `Obserwacja cen ogłoszeń, nie gwarancja rabatu. Negocjujemy w ${salutation.owner} imieniu.`, "p", "ofSmall ofInspect")}
-            </section>` : ""}
-          </div>
-          ${allOptions.length ? `
-          <section class="ofCard isFull${blockClass("allOptions")}" data-block="allOptions">
-            ${hideToggle("allOptions")}
-            <p class="ofCardHead">${icon("list")}Pełne wyposażenie z ogłoszenia (${numbers.format(allOptions.length)})</p>
-            <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(item.label)}</li>`).join("")}</ul>
-          </section>` : ""}
-          <section class="ofCard isFull${blockClass("process")}" data-block="process">
-            ${hideToggle("process")}
-            <p class="ofCardHead">${icon("route")}Jak przebiega zakup</p>
-            <div class="ofSteps">${steps.map(([title, text], index) => `<div class="ofStep">${field(`step${index + 1}Title`, title, "b")}${field(`step${index + 1}`, text)}</div>`).join("")}</div>
-          </section>
-          <section class="ofCard isFull${blockClass("contact")}" data-block="contact">
-            ${hideToggle("contact")}
-            <div class="ofContact">
-              <div class="ofAvatar">${esc(initials)}</div>
-              ${manager.name || manager.phone || manager.email ? `
-              <div class="ofContactLines">
-                <b>${esc(withFirm(manager.name) || "AUTOGOOD")}</b>
-                <span class="ofSmall">${esc(salutation.owner)} opiekun</span>
-                ${manager.phone ? `<span>${icon("phone")}${esc(manager.phone)}</span>` : ""}
-                ${manager.email ? `<span>${icon("mail")}${esc(manager.email)}</span>` : ""}
-              </div>` : `<div class="ofContactLines"><b>Zapraszamy do kontaktu</b><span class="ofSmall">Odpowiemy na każde pytanie o to auto</span></div>`}
-              <div class="ofContactLines">
-                <b>${esc(company.name || "AUTOGOOD")}</b>
-                ${company.address ? `<span>${icon("pin")}${esc(company.address)}</span>` : ""}
-                ${company.phone ? `<span>${icon("phone")}${esc(company.phone)}</span>` : ""}
-                ${company.email ? `<span>${icon("mail")}${esc(company.email)}</span>` : ""}
-                ${company.hours ? `<span class="ofSmall">${esc(company.hours)}</span>` : ""}
-              </div>
-            </div>
-          </section>
+          <div class="ofPageTwo">${body}</div>
           ${field("note", `Dane z ogłoszenia na ${PORTAL[offer.source] || "portalu"} i z rynku na dzień ${dateText(offer.market?.at || offer.createdAt)}. Ceny w ogłoszeniach mogą się zmienić. Stan techniczny, historię i dokumenty auta sprawdzamy przed zakupem.`, "p", "ofNote")}
           <footer class="ofFoot">
             <span><b>AUTOGOOD</b> · import aut z Europy</span>
-            <span>${esc([company.web, company.email].filter(Boolean).join(" · "))}</span>
+            <span>${esc([company.web, company.phone, company.email].filter(Boolean).join(" · "))}</span>
           </footer>
         </article>
       </div>`;
@@ -561,7 +661,7 @@
     if (!VERDICT) return null;
     const result = VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market });
     const level = offer.verdictLevel || result.verdict;
-    const label = { ok: "Rekomendujemy do oględzin", check: "Do weryfikacji przed rezerwacją", risk: "Nie rekomendujemy" }[level];
+    const label = { ok: "Rekomendujemy do dalszego sprawdzenia*", check: "Do weryfikacji przed rezerwacją", risk: "Nie rekomendujemy" }[level];
     // Up to six lines on the sheet: the most important first.
     return { level, label, lines: result.lines.filter((line) => line.level !== "info" || line.id === "vat:margin").slice(0, 6), all: result.lines, auto: result.verdict };
   }
@@ -577,7 +677,8 @@
     const blocks = [
       ["specs", "Dane auta"], ["chips", "Plakietki (rynek, Polska)"], ["market", "Cena na tle rynku"], ["poland", "Linia „W Polsce”"],
       ["verdict", "Ocena AUTOGOOD"], ["equipment", "Wyposażenie — najważniejsze"], ["seller", "Sprzedawca"],
-      ["page2", "Strona 2 w PDF"], ["costs", "Koszt na gotowo"], ["negotiation", "Potencjał negocjacji"], ["allOptions", "Pełne wyposażenie"], ["process", "Jak przebiega zakup"], ["contact", "Kontakt"],
+      ["carvago", "Historia ceny i aktywne oferty"],
+      ["page2", "Strona 2 w PDF"], ["process", "Co dalej (proces)"], ["costs", "Koszt na gotowo"], ["negotiation", "Potencjał negocjacji"], ["contact", "Kontakt"], ["allOptions", "Pełne wyposażenie (str. 2)"],
     ];
     const adState = reading
       ? `<p>Czytam ogłoszenie…</p>`
@@ -598,6 +699,18 @@
       <section class="ofPanelCard">
         <h2>Wygląd oferty</h2>
         <div class="ofToggleList ofStyleList">${STYLES.map(([key, label, note]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> <span><b>${esc(label)}</b><small>${esc(note)}</small></span></label>`).join("")}</div>
+      </section>
+      <section class="ofPanelCard">
+        <h2>Strona 2: proces</h2>
+        <div class="ofToggleList ofStyleList">${PROCESS_STYLES.map(([key, label, note]) => `<label><input type="radio" name="ofProcess" data-process-style="${key}"${processStyle() === key ? " checked" : ""} /> <span><b>${esc(label)}</b><small>${esc(note)}</small></span></label>`).join("")}</div>
+      </section>
+      <section class="ofPanelCard">
+        <h2>Carvago (dla opiekuna)</h2>
+        ${readingCarvago ? "<p>Szukam tego auta na Carvago (rok + przebieg 1:1)…</p>"
+          : offer.carvago?.found ? `<p class="ofPanelOk">Znalezione ${offer.carvago.by === "id" ? "po numerze ogłoszenia" : "po roku, przebiegu i modelu"}: w sprzedaży od ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `${offer.carvago.changes.length} zmian ceny` : "cena bez zmian"}${offer.carvago.active?.count ? `, ${numbers.format(offer.carvago.active.count)} podobnych aktywnych` : ""}.</p><p><a href="${esc(offer.carvago.url)}" target="_blank" rel="noopener">Otwórz na Carvago ↗</a> W ofercie dla klienta bez nazwy i cen Carvago (konkurent, ceny z ich marżą) - tylko daty, % zmian i liczba ofert.</p>`
+          : offer.carvagoError ? `<p class="ofPanelError">Carvago nie odpowiedziało (${esc(offer.carvagoError)}).</p>`
+          : offer.carvago ? "<p>Tego auta nie ma na Carvago (rok + przebieg 1:1).</p>" : "<p>Jeszcze nie sprawdzone.</p>"}
+        <button class="offerButton isSmall" type="button" data-read-carvago${readingCarvago ? " disabled" : ""}>Sprawdź na Carvago</button>
       </section>
       <section class="ofPanelCard">
         <h2>Dane z ogłoszenia</h2>
@@ -628,7 +741,7 @@
         <h2>Ocena</h2>
         <label>Werdykt<select data-verdict-level>
           <option value="">Automatycznie (${esc({ ok: "rekomendujemy", check: "do weryfikacji", risk: "nie rekomendujemy" }[verdict.auto])})</option>
-          <option value="ok"${offer.verdictLevel === "ok" ? " selected" : ""}>Rekomendujemy do oględzin</option>
+          <option value="ok"${offer.verdictLevel === "ok" ? " selected" : ""}>Rekomendujemy do dalszego sprawdzenia</option>
           <option value="check"${offer.verdictLevel === "check" ? " selected" : ""}>Do weryfikacji przed rezerwacją</option>
           <option value="risk"${offer.verdictLevel === "risk" ? " selected" : ""}>Nie rekomendujemy</option>
         </select></label>
@@ -636,7 +749,7 @@
       </section>` : ""}
       <section class="ofPanelCard">
         <h2>Bloki w PDF</h2>
-        <div class="ofToggleList">${blocks.map(([key, label]) => `<label><input type="checkbox" data-block-toggle="${key}"${(key === "poland" ? polandHidden(polandView()) : isHidden(key)) ? "" : " checked"} /> ${esc(label)}</label>`).join("")}</div>
+        <div class="ofToggleList">${blocks.map(([key, label]) => `<label><input type="checkbox" data-block-toggle="${key}"${(key === "poland" ? polandHidden(polandView()) : key === "allOptions" ? !(offer.shown || []).includes("allOptions") || isHidden(key) : isHidden(key)) ? "" : " checked"} /> ${esc(label)}</label>`).join("")}</div>
         ${polandView()?.saving < 0 ? `<p class="ofPanelError">Podobne auta w Polsce są średnio o ${esc(money(-polandView().saving, "PLN"))} tańsze niż to auto na gotowo — dlatego linia „W Polsce” jest domyślnie ukryta.</p>` : ""}
       </section>
       <section class="ofPanelCard">
@@ -802,6 +915,8 @@
         }
         return { hidden: [...set], shown: [...shown] };
       });
+    } else if (target.matches("[data-process-style]")) {
+      save({ processStyle: target.dataset.processStyle });
     } else if (target.matches("[data-style]")) {
       try {
         localStorage.setItem(STYLE_KEY, target.dataset.style);
@@ -848,7 +963,8 @@
     }
   });
   panel.addEventListener("click", (event) => {
-    if (event.target.closest("[data-calc-open]")) openCalculator(Number(panel.querySelector("[data-calc-method]")?.value ?? defaultTab()));
+    if (event.target.closest("[data-read-carvago]")) readCarvago();
+    else if (event.target.closest("[data-calc-open]")) openCalculator(Number(panel.querySelector("[data-calc-method]")?.value ?? defaultTab()));
     else if (event.target.closest("[data-calc-drop]")) save({ calc: null });
     else if (event.target.closest("[data-read-ad]")) readAd();
     else if (event.target.closest("[data-reset-edits]")) save((stored) => ({ edits: stored.edits?.photo ? { photo: stored.edits.photo } : {} }));
@@ -1003,11 +1119,45 @@
       const ad = await AD.read(offer.source, offer.url, { importer });
       offer = (await store.update(offer.id, { ad, adError: "", adTriedAt: new Date().toISOString() })) || offer;
       setStatus(`Dane z ogłoszenia wczytane ${timeText(ad.readAt)}.`);
+      readCarvago();
     } catch (error) {
       offer = (await store.update(offer.id, { adError: String(error?.message || error).slice(0, 160), adTriedAt: new Date().toISOString() })) || offer;
       setStatus(adErrorText(), true);
     } finally {
       reading = false;
+      render();
+    }
+  }
+
+  // The same car on Carvago: dates, price history, similar cars on sale.
+  let readingCarvago = false;
+  async function readCarvago() {
+    const CARVAGO = window.AUTOGOOD_OFFER_CARVAGO;
+    if (!offer || readingCarvago || !CARVAGO) return;
+    readingCarvago = true;
+    render();
+    try {
+      const view = carView();
+      const rule = offer.market?.own?.similar?.rule || {};
+      const result = await CARVAGO.find({
+        brand: offer.filters?.brand || view.brand,
+        model: offer.filters?.model || view.model,
+        year: view.reg || view.year,
+        mileage: view.mileage,
+        source: offer.source,
+        url: offer.url,
+        adKey: offer.adKey,
+        price: view.price,
+        yearFrom: rule.yearFrom,
+        yearTo: rule.yearTo,
+        kmFrom: rule.kmFrom,
+        kmTo: rule.kmTo,
+      });
+      offer = (await store.update(offer.id, { carvago: result || { found: false }, carvagoError: "" })) || offer;
+    } catch (error) {
+      offer = (await store.update(offer.id, { carvagoError: String(error?.message || error).slice(0, 160) })) || offer;
+    } finally {
+      readingCarvago = false;
       render();
     }
   }
@@ -1242,6 +1392,7 @@
     render();
     setStatus(`Oferta ${offer.number || ""} · zapisana w tej przeglądarce`);
     if (!offer.ad && !offer.adTriedAt) readAd();
+    else if (!offer.carvago && !offer.carvagoError) readCarvago();
   }
 
   // Another tab saved this offer: show its version (unless typing here).

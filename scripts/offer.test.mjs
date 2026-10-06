@@ -6,13 +6,14 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
-for (const file of ["offer-market.js", "offer-equipment.js", "offer-verdict.js", "offer-ad.js"]) {
+for (const file of ["offer-market.js", "offer-equipment.js", "offer-verdict.js", "offer-ad.js", "offer-carvago.js"]) {
   vm.runInThisContext(readFileSync(new URL(`../src/${file}`, import.meta.url), "utf8"), { filename: file });
 }
 const MARKET = globalThis.AUTOGOOD_OFFER_MARKET;
 const EQUIPMENT = globalThis.AUTOGOOD_OFFER_EQUIPMENT;
 const VERDICT = globalThis.AUTOGOOD_OFFER_VERDICT;
 const AD = globalThis.AUTOGOOD_OFFER_AD;
+const CARVAGO = globalThis.AUTOGOOD_OFFER_CARVAGO;
 
 const offer = (key, price, year, mileage, extra = {}) => ({ key, price, currency: "EUR", year, mileage, country: "DE", ...extra });
 
@@ -244,4 +245,23 @@ test("values in Polish: French words added, German and English as before", () =>
   assert.equal(EQUIPMENT.translate("Climatisation automatique, 3 zones"), "Klimatyzacja 3-strefowa");
   assert.deepEqual(EQUIPMENT.keyOptions(["Toit panoramique", "Sièges chauffants", "Caméra d'aide au stationnement", "Phares Full LED", "Attache remorque", "Panoramadach"]).map((item) => item.label),
     ["Dach panoramiczny", "Reflektory LED", "Kamera cofania", "Podgrzewane fotele", "Hak holowniczy"]);
+});
+
+test("Carvago: the ad's own number, price changes over half a percent, oldest first", () => {
+  assert.equal(CARVAGO.externalId("mobile", "", "mobile:412345678"), "mobile_de-412345678");
+  assert.equal(CARVAGO.externalId("mobile", "https://suchen.mobile.de/fahrzeuge/details.html?id=987654321&lang=de", ""), "mobile_de-987654321");
+  assert.equal(CARVAGO.externalId("autoscout", "https://www.autoscout24.de/angebote/toyota-c-hr-0B6C1D2E-aaaa-bbbb-cccc-1234567890ab", ""), "autoscout24-0b6c1d2e-aaaa-bbbb-cccc-1234567890ab");
+  assert.equal(CARVAGO.externalId("otomoto", "https://www.otomoto.pl/x", "otomoto:1"), "");
+  const { points, changes } = CARVAGO.changes([
+    { created_at: "2026-09-20T08:00:00Z", price: 24000 },
+    { created_at: "2026-09-01T08:00:00Z", price: 25000 },
+    { created_at: "2026-09-10T08:00:00Z", price: 24990 },
+    { created_at: "2026-09-25T08:00:00Z", price: 0 },
+  ]);
+  assert.equal(points.length, 3);
+  assert.equal(points[0].price, 25000);
+  // 25 000 → 24 990 is rounding; 24 990 → 24 000 is a real drop.
+  assert.equal(changes.length, 1);
+  assert.equal(changes[0].at.slice(0, 10), "2026-09-20");
+  assert.ok(Math.abs(changes[0].share - (24000 / 24990 - 1)) < 1e-9);
 });

@@ -6,7 +6,7 @@
  * the market around it (offer-market.js). Output: lines {level, id, text,
  * quote} — "risk" (red), "warn" (amber), "ok" (green), "info" (grey) — and a
  * verdict: risk → "Nie rekomendujemy"; three or more warnings → "Do
- * weryfikacji"; otherwise "Rekomendujemy do oględzin".
+ * weryfikacji"; otherwise "Rekomendujemy do dalszego sprawdzenia" (owner 2026-10-06).
  * Plus the room to negotiate (a heuristic from how long the car is listed,
  * its price drops and how often prices drop on its market — an observation,
  * never a promised discount).
