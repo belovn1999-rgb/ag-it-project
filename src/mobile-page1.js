@@ -45,6 +45,11 @@
     const sum = known.reduce((total, value) => total + value, 0);
     return `${known.length < values.length ? "≥ " : ""}${new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(sum)}`;
   };
+  // Owner 2026-10-06: a column of several portals counts each car once
+  // (src/mobile-unique-totals.js reads the lists in the background); until it
+  // knows, and for a single portal, the plain sum.
+  const columnTotal = (column, rows) => window.AUTOGOOD_UNIQUE_TOTALS?.forColumn(column, rows)
+    || { value: sumCounts(rows), title: "", pending: false };
   const writeTotals = () => {
     document.querySelectorAll(".agMarketColumn").forEach((column) => {
       const rows = [...column.querySelectorAll(".mobileSearchCountMarket")]
@@ -55,7 +60,8 @@
       // Every switched-on column has its total on top, large (owner
       // 2026-10-05), also with one portal: the columns read alike.
       // No count known yet (empty form): no "Razem —".
-      const value = rows.length && /\d/.test(sumCounts(rows)) ? sumCounts(rows) : "";
+      const shown = rows.length && /\d/.test(sumCounts(rows)) ? columnTotal(column, rows) : null;
+      const value = shown?.value || "";
       if (!value) {
         total?.remove();
         return;
@@ -69,6 +75,8 @@
       const [label, number] = total.children;
       if (label.textContent !== text().total) label.textContent = text().total;
       if (number.textContent !== value) number.textContent = value;
+      if (total.title !== shown.title) total.title = shown.title;
+      total.classList.toggle("isPending", shown.pending);
     });
   };
   let totalsFrame = 0;
@@ -85,6 +93,7 @@
     scheduleTotals();
   }).observe(document.body, { subtree: true, childList: true, characterData: true, attributes: true, attributeFilter: ["class", "hidden"] });
   scheduleTotals();
+  window.AUTOGOOD_PAGE1_TOTALS_REFRESH = scheduleTotals;
 
   // ---- "Język sprawdzenia" by the language switch, on page 1 only ---------
   const langLabel = document.querySelector("[data-mobile-lang-label]");
@@ -344,13 +353,15 @@
         rows: [...column.querySelectorAll(".mobileSearchCountMarket[data-market]")]
           .filter((market) => !market.hidden && !market.classList.contains("isOff")),
       })).filter(({ rows }) => rows.length);
-      const key = picked.map(({ column, rows }) => `${column.querySelector(".agMarketColumnName")?.textContent}:${rows.map((row) => `${row.dataset.marketRow}=${row.querySelector("strong")?.textContent.trim()}`).join(",")}`).join("|") + lang();
+      const key = picked.map(({ column, rows }) => `${column.querySelector(".agMarketColumnName")?.textContent}:${rows.map((row) => `${row.dataset.marketRow}=${row.querySelector("strong")?.textContent.trim()}`).join(",")}`).join("|") + lang()
+        + (window.AUTOGOOD_UNIQUE_TOTALS?.version?.() ?? "");
       if (key === marketsKey) return;
       marketsKey = key;
       closePortals();
       marketsEl.replaceChildren(...picked.map(({ column, rows }) => {
         const name = column.querySelector(".agMarketColumnName")?.textContent.trim() || "";
-        const total = sumCounts(rows);
+        const shown = columnTotal(column, rows);
+        const total = shown.value;
         const wrap = document.createElement("div");
         wrap.className = "mobileCompactMarketWrap";
         const button = document.createElement("button");
@@ -359,7 +370,8 @@
         button.setAttribute("aria-expanded", "false");
         const label = `${name}: ${total}`;
         button.setAttribute("aria-label", label);
-        button.title = label;
+        button.title = shown.title ? `${label} — ${shown.title}` : label;
+        button.classList.toggle("isPending", shown.pending);
         const flags = document.createElement("span");
         flags.className = "mobileCompactMarketFlags";
         flags.innerHTML = column.querySelector(".agMarketColumnFlags")?.innerHTML || "";

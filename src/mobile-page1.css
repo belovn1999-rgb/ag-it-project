@@ -1665,3 +1665,14 @@
   outline: 2px solid var(--color-focus);
   outline-offset: 1px;
 }
+
+/* ---- 06.10: "Razem" without repeats (src/mobile-unique-totals.js) — while
+   the lists are read, the plain sum shows faded. ---- */
+.agMarketColumnTotal.isPending b,
+.mobileCompactMarket.isPending b {
+  opacity: 0.45;
+}
+
+.agMarketColumnTotal[title]:not([title=""]) {
+  cursor: help;
+}

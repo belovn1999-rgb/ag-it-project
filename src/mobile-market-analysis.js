@@ -2595,9 +2595,14 @@
   const otomotoProvider = {
     id: "otomoto",
     lastSources: ["otomoto"],
-    async getListings({ filters, pinned = null, historyId = "", progress = null, sequential = false, wholeList = null, priceOverride = null }) {
+    // quiet: a reading in the background (page 1 counts cars without repeats,
+    // src/mobile-unique-totals.js) — no status line, the analysis' own last*
+    // fields untouched; what each portal had and gave is in result.meta.
+    async getListings({ filters, pinned = null, historyId = "", progress = null, sequential = false, wholeList = null, priceOverride = null, quiet = false }) {
       const c = copy();
-      setAnalysisStatus(c.preparing);
+      const status = quiet ? () => {} : setAnalysisStatus;
+      const self = quiet ? {} : this;
+      status(c.preparing);
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
       // Favourites: whole lists where short enough (page 3 compares offers).
       const favorite = historyId ? marketHistory.find((entry) => entry.id === historyId) : historyEntryForFilters(filters);
@@ -2610,7 +2615,7 @@
       const prices = priceOverride
         ? Object.fromEntries(MARKET_SOURCES.map((source) => [source, priceOverride[source] || null]))
         : Object.fromEntries(MARKET_SOURCES.map((source) => [source, ownPrices && favorite ? window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(favorite.id, source) || null : null]));
-      this.lastPrices = JSON.stringify(Object.fromEntries(Object.entries(prices).filter(([, price]) => price)));
+      self.lastPrices = JSON.stringify(Object.fromEntries(Object.entries(prices).filter(([, price]) => price)));
       // Each portal says how far it got (page 3 shows it while it checks).
       const step = (source) => (done, total, unit = "pages") => progress?.(source, { state: "run", done, total, unit });
       const track = (source, promise) => {
@@ -2626,7 +2631,7 @@
       };
       const read = {
         otomoto: () => fetchOtomotoListings(filters, (page, pages) => {
-          setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
+          status(`${c.otomotoFetching} ${page}/${pages}`);
           step("otomoto")(page, pages);
         }, whole, prices.otomoto),
         // Owner 2026-10-04: mobile.de is Germany's portal only — the
@@ -2703,7 +2708,7 @@
       };
       const started = { otomoto: run("otomoto"), mobile: run("mobile"), autoscout: run("autoscout"), autoscoutfr: run("autoscoutfr"), marktplaats: run("marktplaats"), dehands: run("dehands"), kleinanzeigen: run("kleinanzeigen"), paruvendu: run("paruvendu"), blocket: run("blocket"), avby: run("avby") };
       const [otomoto, mobile, blocket, avby, autoscout, autoscoutfr, marktplaats, dehands, kleinanzeigen, paruvendu] = await Promise.allSettled([started.otomoto, started.mobile, started.blocket, started.avby, started.autoscout, started.autoscoutfr, started.marktplaats, started.dehands, started.kleinanzeigen, started.paruvendu]);
-      this.lastErrors = Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout], ["autoscoutfr", autoscoutfr], ["marktplaats", marktplaats], ["dehands", dehands], ["kleinanzeigen", kleinanzeigen], ["paruvendu", paruvendu]]
+      self.lastErrors = Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout], ["autoscoutfr", autoscoutfr], ["marktplaats", marktplaats], ["dehands", dehands], ["kleinanzeigen", kleinanzeigen], ["paruvendu", paruvendu]]
         .filter(([, result]) => result.status === "rejected").map(([source, result]) => [source, String(result.reason?.message || result.reason || "")]));
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
@@ -2717,7 +2722,7 @@
       const autoscoutResult = autoscout.status === "fulfilled" ? autoscout.value : null;
       const autoscoutAll = (autoscoutResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible }));
       const { unique: autoscoutListings, duplicates } = mobileListings.length ? dropMobileDuplicates(autoscoutAll, mobileListings) : { unique: autoscoutAll, duplicates: 0 };
-      this.lastAutoscout = autoscoutResult ? {
+      self.lastAutoscout = autoscoutResult ? {
         total: autoscoutResult.total,
         read: autoscoutAll.length,
         duplicates,
@@ -2748,9 +2753,30 @@
       const paruvenduResult = paruvendu.status === "fulfilled" ? paruvendu.value : null;
       const paruvenduAll = (paruvenduResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal }));
       const { unique: paruvenduListings, duplicates: paruvenduDuplicates } = dropCountryDuplicates("paruvendu", paruvenduAll, autoscoutFrListings);
+      // Per portal: its total, what was read, what is left without repeats.
+      const portal = (result, read, unique = read) => (result ? { total: Number(result.total) || read, read, unique } : null);
+      const meta = {
+        errors: self.lastErrors || Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout], ["autoscoutfr", autoscoutfr], ["marktplaats", marktplaats], ["dehands", dehands], ["kleinanzeigen", kleinanzeigen], ["paruvendu", paruvendu]]
+          .filter(([, result]) => result.status === "rejected").map(([source, result]) => [source, String(result.reason?.message || result.reason || "")])),
+        portals: Object.fromEntries(Object.entries({
+          otomoto: portal(otomoto.status === "fulfilled" ? otomoto.value : null, otomotoListings.length),
+          mobile: portal(mobileResult, mobileListings.length),
+          blocket: portal(blocketResult, blocketListings.length),
+          avby: portal(avbyResult, avbyListings.length),
+          autoscout: portal(autoscoutResult, autoscoutAll.length, autoscoutListings.length),
+          autoscoutfr: portal(autoscoutFrResult, autoscoutFrListings.length),
+          marktplaats: portal(local.marktplaats.result, local.marktplaats.listings.length + local.marktplaats.duplicates, local.marktplaats.listings.length),
+          dehands: portal(local.dehands.result, local.dehands.listings.length + local.dehands.duplicates, local.dehands.listings.length),
+          kleinanzeigen: portal(kleinanzeigenResult, kleinanzeigenAll.length, kleinanzeigenListings.length),
+          paruvendu: portal(paruvenduResult, paruvenduAll.length, paruvenduListings.length),
+        }).filter(([, value]) => value)),
+      };
       if (!otomotoListings.length && !mobileListings.length && !blocketListings.length && !avbyListings.length && !autoscoutListings.length && !autoscoutFrListings.length
-        && !local.marktplaats.listings.length && !local.dehands.listings.length && !kleinanzeigenListings.length && !paruvenduListings.length) throw new Error(c.otomotoFailed);
-      this.lastSources = [
+        && !local.marktplaats.listings.length && !local.dehands.listings.length && !kleinanzeigenListings.length && !paruvenduListings.length) {
+        if (quiet) return Object.assign([], { meta });
+        throw new Error(c.otomotoFailed);
+      }
+      self.lastSources = [
         otomotoListings.length ? "otomoto" : "",
         mobileListings.length ? "mobile" : "",
         blocketListings.length ? "blocket" : "",
@@ -2764,7 +2790,7 @@
       ].filter(Boolean);
       const messages = [];
       if (otomotoListings.length) {
-        otomotoTotal = otomoto.value.total;
+        if (!quiet) otomotoTotal = otomoto.value.total;
         messages.push(c.otomotoFetched.replace("{count}", String(otomotoListings.length)).replace("{total}", String(otomotoTotal)));
       }
       if (mobileListings.length) {
@@ -2799,8 +2825,8 @@
         messages.push(c.paruvenduFetched.replace("{count}", String(paruvenduListings.length))
           .replace("{total}", String(paruvenduResult.total || paruvenduAll.length)).replace("{duplicates}", String(paruvenduDuplicates)));
       }
-      setAnalysisStatus(messages.join(" "));
-      return [...otomotoListings, ...mobileListings, ...autoscoutListings, ...kleinanzeigenListings, ...autoscoutFrListings, ...paruvenduListings, ...local.marktplaats.listings, ...local.dehands.listings, ...blocketListings, ...avbyListings];
+      status(messages.join(" "));
+      return Object.assign([...otomotoListings, ...mobileListings, ...autoscoutListings, ...kleinanzeigenListings, ...autoscoutFrListings, ...paruvenduListings, ...local.marktplaats.listings, ...local.dehands.listings, ...blocketListings, ...avbyListings], { meta });
     },
   };
 
