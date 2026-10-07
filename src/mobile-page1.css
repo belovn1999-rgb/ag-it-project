@@ -1689,3 +1689,42 @@
   flex: none;
   white-space: nowrap;
 }
+
+/* 07.10 (owner): "−" / "+" on each portal of a switched-on country — a
+   small square on the logo's top-left corner, taking no room in the row. */
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket {
+  position: relative;
+}
+
+.agRowToggle {
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: -5px;
+  display: grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: 4px;
+  background: var(--color-surface);
+  padding: 0;
+  color: var(--color-muted);
+  font: 700 12px/1 var(--font-sans, system-ui);
+  cursor: pointer;
+}
+
+.agRowToggle:hover {
+  border-color: var(--color-muted);
+  color: var(--color-ink);
+}
+
+.agRowToggle.isAdd {
+  border-color: var(--color-primary-rule);
+  color: var(--color-brand-pressed);
+}
+
+.agRowToggle:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}

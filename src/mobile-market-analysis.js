@@ -1405,7 +1405,34 @@
   // The Netherlands and Belgium (owner 2026-10-04: a column each): the
   // country, its own portal and its AutoScout24 row.
   const LOCAL_MARKETS = { nl: { code: "NL", portal: "marktplaats", row: "autoscoutnl" }, be: { code: "BE", portal: "dehands", row: "autoscoutbe" } };
+  // Owner 2026-10-07: "−" / "+" on each portal of page 1. AutoScout24 is one
+  // portal in three countries, so its rows are switched off by country (kept
+  // in this browser): the search, the analysis and Monitoring leave it out.
+  const AUTOSCOUT_OFF_KEY = "autogood.mobile.autoscoutRowsOff.v1";
+  const AUTOSCOUT_ROWS = { autoscout: "DE", autoscoutnl: "NL", autoscoutbe: "BE" };
+  const autoscoutOff = new Set((() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(AUTOSCOUT_OFF_KEY) || "[]");
+      return Array.isArray(saved) ? saved.filter((row) => row in AUTOSCOUT_ROWS) : [];
+    } catch {
+      return [];
+    }
+  })());
+  function setAutoscoutRow(row, off) {
+    if (off) autoscoutOff.add(row);
+    else autoscoutOff.delete(row);
+    try {
+      localStorage.setItem(AUTOSCOUT_OFF_KEY, JSON.stringify([...autoscoutOff]));
+    } catch {
+      // Kept for this page only.
+    }
+  }
+  // The AutoScout24 row of a country code ("DE" also covers AT / LU).
+  const autoscoutRowOf = (code) => (code === "NL" ? "autoscoutnl" : code === "BE" ? "autoscoutbe" : "autoscout");
+  const autoscoutCountriesOn = (countries) => countries.filter((code) => !autoscoutOff.has(autoscoutRowOf(code)));
+
   function rowOn(row) {
+    if (row in AUTOSCOUT_ROWS && autoscoutOff.has(row)) return false;
     if (row === "autoscout") return Boolean(chartSources.autoscout) && germanCountries().length > 0;
     if (row === "autoscoutnl") return Boolean(chartSources.autoscout) && formCountries().includes("NL");
     if (row === "autoscoutbe") return Boolean(chartSources.autoscout) && formCountries().includes("BE");
@@ -2640,7 +2667,9 @@
         blocket: () => fetchBlocketListings(filters, step("blocket"), whole, prices.blocket),
         avby: () => fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole),
         autoscout: async () => {
-          const countries = (filters.countries || []).length ? filters.countries : ["DE"];
+          // Countries whose AutoScout24 row is off on page 1 are not read.
+          const countries = autoscoutCountriesOn((filters.countries || []).length ? filters.countries : ["DE"]);
+          if (!countries.length) return { listings: [], total: 0, read: 0 };
           const options = (list) => ({
             countries: list,
             price: prices.autoscout || prices.mobile || null,
@@ -4251,10 +4280,19 @@
       column.classList.toggle("isOff", !groupOn(group));
       const head = column.querySelector("[data-market-group-head]");
       if (head) head.innerHTML = marketGroupHeadHtml(group, "data-mobile-market-group");
+      const c = copy();
+      const columnOn = groupOn(group);
       column.querySelectorAll(".mobileSearchCountMarket[data-market-row]").forEach((item) => {
         const row = item.dataset.marketRow;
+        const on = rowOn(row);
         item.hidden = !marketRowShown(group, row);
-        item.classList.toggle("isOff", !rowOn(row));
+        item.classList.toggle("isOff", !on);
+        // "−" takes this portal out of the search, "+" brings it back.
+        item.querySelector(".agRowToggle")?.remove();
+        if (!columnOn) return;
+        const name = item.querySelector(".agBrandLink")?.getAttribute("aria-label") || row;
+        const label = `${name} — ${on ? c.marketPickOff : c.marketPickOn}`;
+        item.insertAdjacentHTML("beforeend", `<button class="agRowToggle${on ? "" : " isAdd"}" type="button" data-mobile-market-row-toggle="${row}" title="${escapeMarketHtml(label)}" aria-label="${escapeMarketHtml(label)}">${on ? "−" : "+"}</button>`);
       });
     });
   }
@@ -7412,6 +7450,8 @@
     const analysisCountries = (filters.countries || []).filter(Boolean);
     const countryShown = (listing) => {
       const portal = listingSource(listing);
+      // An AutoScout24 country switched off on page 1 drops from the view.
+      if (portal === "autoscout" && autoscoutOff.has(autoscoutRowOf(String(listing?.country || "DE").toUpperCase()))) return false;
       if ((portal !== "mobile" && portal !== "autoscout") || !analysisCountries.length) return true;
       const market = listingMarket(listing);
       if (market === "marktplaats") return analysisCountries.includes("NL");
@@ -10007,6 +10047,44 @@
   document.addEventListener("click", (event) => {
     const column = event.target.closest(".mobileManualPanel [data-market-group]");
     if (!column) return;
+    const rowToggle = event.target.closest("[data-mobile-market-row-toggle]");
+    if (rowToggle) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      const row = rowToggle.dataset.mobileMarketRowToggle;
+      if (rowOn(row)) {
+        // "−": this portal out; the last compared portal stays.
+        if (row in AUTOSCOUT_ROWS) {
+          const others = MARKET_SOURCES.some((source) => source !== "autoscout" && chartSources[source])
+            || Object.keys(AUTOSCOUT_ROWS).some((other) => other !== row && rowOn(other));
+          if (!others) {
+            setMarketSearchStatus?.(copy().marketPickerLast, true);
+            return;
+          }
+          setAutoscoutRow(row, true);
+          applyChartSources({ ...chartSources });
+        } else {
+          const next = { ...chartSources, [row]: false };
+          if (!MARKET_SOURCES.some((source) => next[source])) {
+            setMarketSearchStatus?.(copy().marketPickerLast, true);
+            return;
+          }
+          applyChartSources(next);
+        }
+      } else {
+        // "+": back, with its country in "Kraj" when it needs one.
+        if (row in AUTOSCOUT_ROWS) setAutoscoutRow(row, false);
+        const result = marketsWithGroup(column.dataset.marketGroup, row);
+        if (result) {
+          applyChartSources(result.markets);
+          if (result.countries) setFormCountries(result.countries);
+        }
+      }
+      renderMarketPicker();
+      // Counts of the portals that came back.
+      window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(readManualFields());
+      return;
+    }
     const switchButton = event.target.closest("[data-mobile-market-group]");
     const item = event.target.closest(".mobileSearchCountMarket[data-market-row]");
     const columnOff = column.classList.contains("isOff");
@@ -10014,7 +10092,13 @@
     if (!switchButton && !greyLogo && !columnOff) return;
     event.preventDefault();
     event.stopImmediatePropagation();
-    const result = marketsWithGroup(column.dataset.marketGroup, greyLogo && !switchButton ? item.dataset.marketRow : "");
+    const onlyRow = greyLogo && !switchButton ? item.dataset.marketRow : "";
+    if (onlyRow in AUTOSCOUT_ROWS) setAutoscoutRow(onlyRow, false);
+    // A country switched on again: its AutoScout24 row with it.
+    if (!onlyRow && columnOff) Object.entries(AUTOSCOUT_ROWS).forEach(([row]) => {
+      if (marketGroup(column.dataset.marketGroup)?.rows.includes(row)) setAutoscoutRow(row, false);
+    });
+    const result = marketsWithGroup(column.dataset.marketGroup, onlyRow);
     if (!result) {
       setMarketSearchStatus?.(copy().marketPickerLast, true);
       return;
