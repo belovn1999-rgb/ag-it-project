@@ -377,6 +377,8 @@
       auctionHint: "Oczekiwana cena na gotowo na aukcjach przy podobnych parametrach (ok. 15% poniżej mediany)",
       exciseClasses: ["elektryczny lub plug-in do 2000 cm³", "hybryda powyżej 2000 cm³", "hybryda do 2000 cm³", "silnik spalinowy do 2000 cm³", "silnik spalinowy powyżej 2000 cm³"],
       screenshotButton: "Kopiuj raport",
+      screenshotStatsButton: "Kopiuj statystyki",
+      screenshotChartButton: "Kopiuj wykres",
       screenshotCopied: "Raport skopiowany do schowka — wklej go w wiadomości do klienta.",
       screenshotOpened: "Przeglądarka nie pozwala kopiować obrazów — raport zapisano jako plik PNG (Pobrane).",
       screenshotFailed: "Nie udało się zrobić zrzutu raportu.",
@@ -997,6 +999,8 @@
       auctionHint: "Ожидаемая цена под ключ на аукционах по схожим параметрам (≈ на 15% ниже медианы)",
       exciseClasses: ["электромобиль или plug-in до 2000 см³", "гибрид больше 2000 см³", "гибрид до 2000 см³", "ДВС до 2000 см³", "ДВС больше 2000 см³"],
       screenshotButton: "Копировать отчёт",
+      screenshotStatsButton: "Копировать статистику",
+      screenshotChartButton: "Копировать график",
       screenshotCopied: "Отчёт скопирован в буфер обмена — вставь его в сообщение клиенту.",
       screenshotOpened: "Браузер не даёт копировать картинки — отчёт сохранён файлом PNG (Загрузки).",
       screenshotFailed: "Не удалось сделать снимок отчёта.",
@@ -7540,7 +7544,8 @@
     // on the right of the "Rozkład cen" title when markets are side by side.
     const reportActions = `
       <div class="mobileMarketReportActions" data-report-hide>
-        <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot>${escapeMarketHtml(c.screenshotButton)}</button>
+        <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot="stats">${escapeMarketHtml(c.screenshotStatsButton)}</button>
+        <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot="chart">${escapeMarketHtml(c.screenshotChartButton)}</button>
         <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-pdf>${escapeMarketHtml(c.pdfButton)}</button>
       </div>`;
     let reportActionsInTitle = false;
@@ -8793,7 +8798,10 @@
     const stage = document.createElement("div");
     const listMode = mode.startsWith("list");
     // The list report: the search (which car) and the offer table only.
-    stage.className = `isReportCapture ${mode === "copy" ? "isReportCopy" : "isReportPdf"}${listMode ? " isReportList" : ""}`;
+    // Two pictures (owner 2026-10-07): the search with the statistics, and
+    // the chart with its footnote; the PDF keeps the whole report.
+    const copyLike = mode === "copy" || mode.startsWith("copy-");
+    stage.className = `isReportCapture ${copyLike ? "isReportCopy" : "isReportPdf"}${listMode ? " isReportList" : ""}${mode === "copy-stats" ? " isReportStats" : mode === "copy-chart" ? " isReportChart" : ""}`;
     stage.setAttribute("aria-hidden", "true");
     // One report width whatever the window: the client gets the same layout
     // (two charts side by side) from a laptop or a narrow window.
@@ -8837,7 +8845,7 @@
         // Hidden parts are not copied at all: that is most of the work.
         filter: (node) => !(node instanceof Element) || !(
           node.hasAttribute("data-report-hide")
-          || (mode === "copy" && node.hasAttribute("data-report-hide-copy"))
+          || (copyLike && node.hasAttribute("data-report-hide-copy"))
           || (listMode && node.hasAttribute("data-report-list-hide"))
           || node.classList.contains("mobileMarketPointTooltip")
         ),
@@ -8867,7 +8875,7 @@
   // A copy button waits (disabled, "Przygotowuję obraz…") until its picture
   // is ready: a click then always writes a finished image, which Chrome
   // accepts; a write waiting for the drawing is what it refused.
-  const COPY_BUTTONS = { copy: "[data-mobile-market-screenshot]", "list-copy": "[data-mobile-market-list-screenshot]" };
+  const COPY_BUTTONS = { "copy-stats": '[data-mobile-market-screenshot="stats"]', "copy-chart": '[data-mobile-market-screenshot="chart"]', "list-copy": "[data-mobile-market-list-screenshot]" };
   function markCopyButtons(mode, ready) {
     analysisContent.querySelectorAll(COPY_BUTTONS[mode]).forEach((button) => {
       button.classList.toggle("isPreparing", !ready);
@@ -8891,17 +8899,20 @@
       // Drawn on the click instead.
     }
     if (version === reportVersion) markCopyButtons(mode, true);
+    // The two report pictures are drawn one after the other.
+    if (mode === "copy-stats" && version === reportVersion) ensureReportImage("copy-chart");
   }
   function reportChanged() {
     reportVersion += 1;
     preparedReports = {};
     clearTimeout(prepareTimer);
-    markCopyButtons("copy", false);
+    markCopyButtons("copy-stats", false);
+    markCopyButtons("copy-chart", false);
     markCopyButtons("list-copy", false);
     // The pointer may already rest on the buttons (no new "pointerover"):
     // the picture is drawn again for it once the report is still.
     prepareTimer = setTimeout(() => {
-      if (analysisContent.querySelector(".agSpecAside:hover, [data-mobile-market-screenshot]:hover, [data-mobile-market-pdf]:hover")) ensureReportImage("copy");
+      if (analysisContent.querySelector(".agSpecAside:hover, [data-mobile-market-screenshot]:hover, [data-mobile-market-pdf]:hover")) ensureReportImage("copy-stats");
       else if (analysisContent.querySelector(".mobileMarketTableHead:hover, [data-mobile-market-list-screenshot]:hover")) ensureReportImage("list-copy");
     }, 400);
   }
@@ -8918,7 +8929,7 @@
   const prepareOnIntent = (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
-    if (target.closest(".agSpecAside, [data-mobile-market-screenshot], [data-mobile-market-pdf]")) ensureReportImage("copy");
+    if (target.closest(".agSpecAside, [data-mobile-market-screenshot], [data-mobile-market-pdf]")) ensureReportImage("copy-stats");
     else if (target.closest(".mobileMarketTableHead, [data-mobile-market-list-screenshot]")) ensureReportImage("list-copy");
   };
   analysisContent.addEventListener("pointerover", prepareOnIntent);
@@ -9041,26 +9052,27 @@
   // that works in the Claude app's browser, which refuses the clipboard API
   // (checked on the Mac clipboard 2026-10-05). The frame is loaded when the
   // picture is drawn, so the click copies at once.
-  let copyFrame = null;
-  let copyFrameBlob = null;
+  // One frame per drawn picture (statistics, chart, list), the newest few.
+  const copyFrames = new Map();
   function prepareCopyFrame(blob) {
-    if (!blob || (copyFrameBlob === blob && copyFrame?.isConnected)) return;
-    if (copyFrame) {
-      URL.revokeObjectURL(copyFrame.dataset.url || "");
-      copyFrame.remove();
-    }
+    if (!blob || copyFrames.get(blob)?.isConnected) return;
     const url = URL.createObjectURL(blob);
-    copyFrame = document.createElement("iframe");
-    copyFrame.dataset.url = url;
-    copyFrame.setAttribute("aria-hidden", "true");
-    copyFrame.tabIndex = -1;
-    copyFrame.style.cssText = "position:fixed;left:-10000px;top:0;width:10px;height:10px;border:0;";
-    copyFrame.src = url;
-    document.body.append(copyFrame);
-    copyFrameBlob = blob;
+    const frame = document.createElement("iframe");
+    frame.setAttribute("aria-hidden", "true");
+    frame.tabIndex = -1;
+    frame.style.cssText = "position:fixed;left:-10000px;top:0;width:10px;height:10px;border:0;";
+    frame.src = url;
+    document.body.append(frame);
+    copyFrames.set(blob, frame);
+    while (copyFrames.size > 4) {
+      const [oldBlob, oldFrame] = copyFrames.entries().next().value;
+      URL.revokeObjectURL(oldFrame.src);
+      oldFrame.remove();
+      copyFrames.delete(oldBlob);
+    }
   }
   function copyViaImageDocument(blob) {
-    const doc = copyFrameBlob === blob ? copyFrame?.contentDocument : null;
+    const doc = copyFrames.get(blob)?.contentDocument;
     if (!doc || !/^image\//.test(doc.contentType || "")) return false;
     try {
       return doc.execCommand("copy");
@@ -9518,7 +9530,7 @@
     }
     const screenshot = event.target.closest("[data-mobile-market-screenshot]");
     if (screenshot) {
-      copyReportScreenshot(screenshot);
+      copyReportScreenshot(screenshot, screenshot.dataset.mobileMarketScreenshot === "chart" ? "copy-chart" : "copy-stats");
       return;
     }
     const favorite = event.target.closest("[data-mobile-market-favorite]");

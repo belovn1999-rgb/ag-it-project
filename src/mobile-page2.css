@@ -968,3 +968,16 @@ a.mobileLinkedCarChip:hover {
   gap: 8px;
   margin: 0;
 }
+
+/* 07.10 (owner): two report pictures — the search with the statistics, and
+   the chart with its footnote. The PDF keeps everything. */
+.isReportStats .mobileMarketChartCard,
+.isReportStats .mobileMarketSummaryCard,
+.isReportStats .mobileMarketOffersCard,
+.isReportChart .mobileMarketSearchCard,
+.isReportChart .mobileMarketStatsCard,
+.isReportChart .mobileMarketSegmentsCard,
+.isReportChart .mobileMarketSummaryCard,
+.isReportChart .mobileMarketOffersCard {
+  display: none !important;
+}
