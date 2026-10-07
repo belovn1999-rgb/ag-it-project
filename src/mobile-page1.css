@@ -1728,3 +1728,30 @@
   outline: 2px solid var(--color-focus);
   outline-offset: 1px;
 }
+
+/* 07.10 (owner): the favourites in two rows, the newest top left, read left
+   to right (row 1, then row 2); more than fit scroll sideways. */
+.mobileFavoritesBar .mobileMarketFavoritesList {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(var(--favorite-columns, 1), calc((100% - 3 * var(--space-sm)) / 4));
+  grid-auto-columns: unset;
+  row-gap: var(--space-sm);
+}
+
+@media (max-width: 72rem) {
+  .mobileFavoritesBar .mobileMarketFavoritesList {
+    grid-template-columns: repeat(var(--favorite-columns, 1), calc((100% - 2 * var(--space-sm)) / 3));
+  }
+}
+
+@media (max-width: 60rem) {
+  .mobileFavoritesBar .mobileMarketFavoritesList {
+    grid-template-columns: repeat(var(--favorite-columns, 1), calc((100% - var(--space-sm)) / 2));
+  }
+}
+
+@media (max-width: 36rem) {
+  .mobileFavoritesBar .mobileMarketFavoritesList {
+    grid-template-columns: repeat(var(--favorite-columns, 1), 85%);
+  }
+}

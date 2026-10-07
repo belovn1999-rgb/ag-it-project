@@ -4176,7 +4176,8 @@
     const c = copy();
     const lang = favoritesLang || currentLanguage();
     const all = pinnedFavorites();
-    const favorites = all.filter((entry) => (entry.lang || "pl") === lang);
+    // Owner 2026-10-07: the newest first (top left), in two rows.
+    const favorites = all.filter((entry) => (entry.lang || "pl") === lang).reverse();
     const count = (code) => all.filter((entry) => (entry.lang || "pl") === code).length;
     return `
       <section class="mobileMarketFavorites" data-report-hide aria-label="${escapeMarketHtml(c.favoritesHeading)}">
@@ -4186,7 +4187,7 @@
             ${["pl", "ru"].map((code) => `<button type="button" data-mobile-favorites-lang="${code}" aria-pressed="${code === lang ? "true" : "false"}">${code.toUpperCase()}<small>${count(code)}</small></button>`).join("")}
           </span>
         </div>
-        ${favorites.length ? `<div class="mobileMarketFavoritesList">
+        ${favorites.length ? `<div class="mobileMarketFavoritesList" style="--favorite-columns:${Math.max(1, Math.ceil(favorites.length / 2))}">
           ${favorites.map((entry) => {
             const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
             const meta = historyMeta(entry.filters).slice(0, 2).join(" · ");
