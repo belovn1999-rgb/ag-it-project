@@ -95,6 +95,30 @@
   if (langLabel && searchTab) new MutationObserver(showLangLabel).observe(searchTab, { attributes: true, attributeFilter: ["aria-current"] });
   showLangLabel();
 
+  // ---- The page holds still while the chosen filters change (owner 07.10) --
+  // The offer counts, totals and the summary above the screen change height
+  // after every new filter; what is on the screen stays where it was: the
+  // page moves by exactly the block's change of height, and only while the
+  // block's top is above the screen (at the top the layout just grows).
+  // The browser's own scroll anchoring stays off on this page (mobile.css):
+  // the two would move it twice.
+  {
+    const head = document.querySelector(".mobileManualPanel > .mobilePanelHead");
+    if (head && "ResizeObserver" in window) {
+      const navTop = () => Math.max(0, document.querySelector(".agGlobalNav")?.getBoundingClientRect().bottom || 0);
+      let lastHeight = head.offsetHeight;
+      new ResizeObserver(() => {
+        const height = head.offsetHeight;
+        const delta = height - lastHeight;
+        lastHeight = height;
+        if (!delta || head.offsetParent === null) return;
+        // The block's top before the change: above the screen means the
+        // person works further down — keep their place.
+        if (head.getBoundingClientRect().top < navTop()) window.scrollBy(0, delta);
+      }).observe(head);
+    }
+  }
+
   // ---- 1. Every "od / do" box is named after its field ----------------------
   // The field's name sits above two bare boxes; screen readers, voice input
   // and autofill only saw "od" and "do".

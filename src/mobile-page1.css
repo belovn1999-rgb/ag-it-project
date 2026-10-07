@@ -1665,3 +1665,27 @@
   outline: 2px solid var(--color-focus);
   outline-offset: 1px;
 }
+
+/* 07.10 (owner): the page does not jump while the offer counts come in
+   (mobile-page1.js holds its place). The portal rows keep one height
+   whatever the count ("…" or "25 181"): the count stays beside the logo,
+   the logo shrinks. */
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket {
+  flex-wrap: nowrap;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket > .agBrandLink {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket > .agBrandLink img {
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.mobileSearchSummaryFoot .agMarketColumn .mobileSearchCountMarket strong {
+  flex: none;
+  white-space: nowrap;
+}
