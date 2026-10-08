@@ -2,43 +2,43 @@
   "source": "Walutomat - kurs sprzedaży",
   "sourceUrl": "https://www.walutomat.pl/kursy-walut/",
   "providerApiUrl": "https://api.walutomat.pl/api/v2.0.0/market_fx/best_offers",
-  "updatedAt": "2026-10-07T11:05:47.152Z",
-  "effectiveDate": "2026-10-07",
+  "updatedAt": "2026-10-08T11:23:24.296Z",
+  "effectiveDate": "2026-10-08",
   "rates": {
     "EUR_PLN": {
       "label": "EUR - PLN",
-      "value": 4.3845,
+      "value": 4.3797,
       "unit": "PLN"
     },
     "SEK_PLN": {
       "label": "SEK - PLN",
-      "value": 0.3916,
+      "value": 0.399,
       "unit": "PLN"
     },
     "USD_PLN": {
       "label": "USD - PLN",
-      "value": 3.9185,
+      "value": 3.9175,
       "unit": "PLN"
     }
   },
   "nbrb": {
     "source": "NBRB - kurs oficjalny",
     "sourceUrl": "https://www.nbrb.by/statistics/rates/ratesdaily",
-    "effectiveDate": "2026-10-07",
+    "effectiveDate": "2026-10-08",
     "rates": {
       "EUR_BYN": {
         "label": "EUR - BYN",
-        "value": 3.456,
+        "value": 3.4338,
         "unit": "BYN"
       },
       "USD_BYN": {
         "label": "USD - BYN",
-        "value": 3.0739,
+        "value": 3.0667,
         "unit": "BYN"
       },
       "PLN_BYN": {
         "label": "PLN - BYN",
-        "value": 0.791,
+        "value": 0.7833,
         "unit": "BYN"
       }
     }
