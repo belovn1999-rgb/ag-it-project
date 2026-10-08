@@ -10042,9 +10042,10 @@
   favoritesBar?.addEventListener("click", handleFavoriteClick);
   favoritesPage?.addEventListener("click", handleFavoriteClick);
 
-  // Page 1, "Aktualne oferty" (B68): the column's switch, or a click anywhere
-  // on a switched-off column, turns the country on or off; a grey logo in a
-  // switched-on column is not a link: clicking it brings that portal back.
+  // Page 1, "Aktualne oferty" (B68): a click anywhere on a country's block
+  // turns the country on or off (owner 2026-10-08: not only on its name); a
+  // live logo stays the link to the portal's search, a grey logo in a
+  // switched-on column brings that portal back.
   document.addEventListener("click", (event) => {
     const column = event.target.closest(".mobileManualPanel [data-market-group]");
     if (!column) return;
@@ -10090,7 +10091,7 @@
     const item = event.target.closest(".mobileSearchCountMarket[data-market-row]");
     const columnOff = column.classList.contains("isOff");
     const greyLogo = !columnOff && item && item.classList.contains("isOff") && event.target.closest(".agBrandLink");
-    if (!switchButton && !greyLogo && !columnOff) return;
+    if (!switchButton && !greyLogo && !columnOff && event.target.closest(".agBrandLink")) return;
     event.preventDefault();
     event.stopImmediatePropagation();
     const onlyRow = greyLogo && !switchButton ? item.dataset.marketRow : "";
