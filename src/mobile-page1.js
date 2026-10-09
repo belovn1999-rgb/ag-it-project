@@ -119,6 +119,39 @@
     }
   }
 
+  // ---- Mileage and price show thousands apart: "150 000" (owner 09.10) ----
+  // The box shows the spaces, its value stays plain digits ("150000", or
+  // "150000+") for every script that reads it — searches, counts, history.
+  const valueOf = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, "value");
+  const plain = (text) => String(text ?? "").replace(/[\s\u00a0]/g, "");
+  const grouped = (text) => {
+    const raw = plain(text);
+    const match = raw.match(/^(\d+)(.*)$/);
+    return match ? match[1].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + match[2] : raw;
+  };
+  document.querySelectorAll("[data-mobile-mileage-from], [data-mobile-mileage-to], [data-mobile-price-from], [data-mobile-price-to]").forEach((input) => {
+    Object.defineProperty(input, "value", {
+      configurable: true,
+      get: () => plain(valueOf.get.call(input)),
+      set: (next) => valueOf.set.call(input, grouped(next)),
+    });
+    valueOf.set.call(input, grouped(valueOf.get.call(input)));
+    // While typing: spaces put in, the caret stays after the same digit.
+    input.addEventListener("input", () => {
+      const shown = valueOf.get.call(input);
+      const caret = input.selectionStart ?? shown.length;
+      const digitsBefore = plain(shown.slice(0, caret)).length;
+      const next = grouped(shown);
+      if (next === shown) return;
+      valueOf.set.call(input, next);
+      let place = 0;
+      for (let seen = 0; place < next.length && seen < digitsBefore; place += 1) {
+        if (!/\s/.test(next[place])) seen += 1;
+      }
+      input.setSelectionRange(place, place);
+    });
+  });
+
   // ---- 1. Every "od / do" box is named after its field ----------------------
   // The field's name sits above two bare boxes; screen readers, voice input
   // and autofill only saw "od" and "do".
