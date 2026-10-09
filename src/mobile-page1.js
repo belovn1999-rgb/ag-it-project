@@ -129,6 +129,27 @@
     const match = raw.match(/^(\d+)(.*)$/);
     return match ? match[1].replace(/\B(?=(\d{3})+(?!\d))/g, " ") + match[2] : raw;
   };
+  // The caret stays after the same digit when spaces come or go.
+  const regroup = (input) => {
+    const shown = valueOf.get.call(input);
+    const caret = input.selectionStart ?? shown.length;
+    const digitsBefore = plain(shown.slice(0, caret)).length;
+    const next = grouped(shown);
+    if (next === shown) return;
+    valueOf.set.call(input, next);
+    let place = 0;
+    for (let seen = 0; place < next.length && seen < digitsBefore; place += 1) {
+      if (!/\s/.test(next[place])) seen += 1;
+    }
+    input.setSelectionRange(place, place);
+  };
+  // Other money boxes drawn by the pages (Monitoring budget and portal
+  // prices, the favourite's prices, the converter, page 2's compared price):
+  // their readers already drop the spaces, so they are only grouped as typed.
+  const MONEY_BOXES = "[data-monitoring-budget], [data-monitoring-price], [data-watch-price], [data-monitoring-convert-amount], [data-mobile-market-compare-price]";
+  document.addEventListener("input", (event) => {
+    if (event.target.matches?.(MONEY_BOXES)) regroup(event.target);
+  }, true);
   document.querySelectorAll("[data-mobile-mileage-from], [data-mobile-mileage-to], [data-mobile-price-from], [data-mobile-price-to]").forEach((input) => {
     Object.defineProperty(input, "value", {
       configurable: true,
@@ -136,20 +157,8 @@
       set: (next) => valueOf.set.call(input, grouped(next)),
     });
     valueOf.set.call(input, grouped(valueOf.get.call(input)));
-    // While typing: spaces put in, the caret stays after the same digit.
-    input.addEventListener("input", () => {
-      const shown = valueOf.get.call(input);
-      const caret = input.selectionStart ?? shown.length;
-      const digitsBefore = plain(shown.slice(0, caret)).length;
-      const next = grouped(shown);
-      if (next === shown) return;
-      valueOf.set.call(input, next);
-      let place = 0;
-      for (let seen = 0; place < next.length && seen < digitsBefore; place += 1) {
-        if (!/\s/.test(next[place])) seen += 1;
-      }
-      input.setSelectionRange(place, place);
-    });
+    // While typing: spaces put in as the digits come.
+    input.addEventListener("input", () => regroup(input));
   });
 
   // ---- 1. Every "od / do" box is named after its field ----------------------
