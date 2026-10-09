@@ -10108,10 +10108,9 @@
   });
   favoritesPage?.addEventListener("click", handleFavoriteClick);
 
-  // Page 1, "Aktualne oferty" (B68): a click anywhere on a country's block
-  // turns the country on or off (owner 2026-10-08: not only on its name); a
-  // live logo stays the link to the portal's search, a grey logo in a
-  // switched-on column brings that portal back.
+  // Page 1, "Aktualne oferty" (B68): a click on a country's block outside
+  // its portals' rows turns the country on or off (owner 2026-10-08: not
+  // only on its name); a switched-off country turns on wherever clicked.
   document.addEventListener("click", (event) => {
     const column = event.target.closest(".mobileManualPanel [data-market-group]");
     if (!column) return;
@@ -10156,8 +10155,19 @@
     const switchButton = event.target.closest("[data-mobile-market-group]");
     const item = event.target.closest(".mobileSearchCountMarket[data-market-row]");
     const columnOff = column.classList.contains("isOff");
-    const greyLogo = !columnOff && item && item.classList.contains("isOff") && event.target.closest(".agBrandLink");
-    if (!switchButton && !greyLogo && !columnOff && event.target.closest(".agBrandLink")) return;
+    // A compared portal's row — its logo or its count — opens the portal's
+    // search and changes nothing here (owner 2026-10-09: the counts, the
+    // form and the favourite stay); a grey row brings its portal back.
+    const greyLogo = !columnOff && item && item.classList.contains("isOff");
+    if (!switchButton && !columnOff && item && !greyLogo) {
+      const link = item.querySelector(".agBrandLink");
+      if (link && !event.target.closest(".agBrandLink")) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        link.click();
+      }
+      return;
+    }
     event.preventDefault();
     event.stopImmediatePropagation();
     const onlyRow = greyLogo && !switchButton ? item.dataset.marketRow : "";
