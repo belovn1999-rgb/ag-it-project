@@ -10,14 +10,14 @@
 
 ## Итог
 
-Уже перенесено в нашу таблицу (`tools/autocentrum.py` → `merge()`, столбец «Источник»): 1061 строк из autocentrum, коробка у 2382 версий ultimatespecs. Ниже — что осталось после переноса.
+Уже перенесено в нашу таблицу (`tools/autocentrum.py` → `merge()`, столбец «Источник»): 1162 строк из autocentrum, коробка у 2382 версий ultimatespecs. Ниже — что осталось после переноса.
 
 - Просмотрено на autocentrum: 179 поколений, 751 кузовов, 5091 двигателей (по кузовам); найдено у нас 4956.
-- Вариантов «коробка + привод» со страниц двигателей: 8008. Наших версий без коробки: 1837; autocentrum даёт для них одну коробку (можно заполнить) — 8, и механику, и автомат (какая у нашей версии — не сказать) — 1567.
+- Вариантов «коробка + привод» со страниц двигателей: 8008. Наших версий без коробки: 1049; autocentrum даёт для них одну коробку (можно заполнить) — 4, и механику, и автомат (какая у нашей версии — не сказать) — 886.
 - Двигатели (топливо + объём + мощность), которых нет в нашем поколении: **1**
 - Привод, которого нет у нас для этого двигателя: **13**
-- Коробка, которой нет у нас для этого двигателя и привода: **1**
-- Коробка у нас не указана — autocentrum её называет: **192**
+- Коробка, которой нет у нас для этого двигателя и привода: **2**
+- Коробка у нас не указана — autocentrum её называет: **96**
 - Годы поколения или рестайлинга расходятся на 2+ года (для сведения): **12**
 - Мощность мягких гибридов записана по-разному (для сведения): **60**
 
@@ -27,71 +27,71 @@
 
 | Марка | Модель | поколение | кузов | двигатель | топливо | привод | коробка | коробка+ | годы | мощность |
 |---|---|---|---|---|---|---|---|---|---|---|
-| Audi | A3 |  |  |  |  |  |  | 4 |  |  |
-| Audi | A4 |  |  |  |  |  |  | 14 |  |  |
+| Audi | A3 |  |  |  |  |  |  | 2 |  |  |
+| Audi | A4 |  |  |  |  |  |  | 7 |  |  |
 | Audi | A5 |  |  |  |  |  |  | 8 |  |  |
-| Audi | A6 |  |  |  |  |  |  | 8 |  |  |
-| Audi | Q3 |  |  |  |  |  |  | 2 |  |  |
+| Audi | A6 |  |  |  |  |  |  | 3 |  |  |
+| Audi | Q3 |  |  |  |  |  |  |  |  |  |
 | Audi | Q5 |  |  |  |  |  |  | 1 |  | 1 |
 | Audi | Q7 |  |  |  |  |  |  |  |  | 1 |
 | BMW | Seria 1 |  |  |  |  | 3 |  | 1 | 1 |  |
-| BMW | Seria 3 |  |  |  |  | 2 |  | 7 | 1 |  |
+| BMW | Seria 3 |  |  |  |  | 2 |  | 6 | 1 |  |
 | BMW | Seria 4 |  |  |  |  |  |  |  |  |  |
-| BMW | Seria 5 |  |  |  |  | 1 |  | 4 | 1 |  |
+| BMW | Seria 5 |  |  |  |  | 1 |  | 2 | 1 |  |
 | BMW | X1 |  |  |  |  | 6 |  | 1 |  |  |
-| BMW | X3 |  |  |  |  |  |  | 5 |  |  |
+| BMW | X3 |  |  |  |  |  |  | 2 |  |  |
 | BMW | X5 |  |  |  |  | 1 |  | 4 |  |  |
-| Ford | C-Max |  |  |  |  |  |  | 5 |  |  |
+| Ford | C-Max |  |  |  |  |  |  | 1 |  |  |
 | Ford | Fiesta |  |  |  |  |  |  | 1 | 1 | 1 |
-| Ford | Focus |  |  |  |  |  |  | 8 |  |  |
-| Ford | Kuga |  |  |  |  |  |  | 3 |  |  |
-| Ford | Mondeo |  |  |  |  |  |  | 3 |  |  |
+| Ford | Focus |  |  |  |  |  |  |  |  |  |
+| Ford | Kuga |  |  |  |  |  |  | 1 |  |  |
+| Ford | Mondeo |  |  |  |  |  |  | 1 |  |  |
 | Ford | S-Max |  |  |  |  |  |  | 1 |  |  |
-| Mercedes-Benz | Klasa A |  |  |  |  |  |  | 1 |  |  |
-| Mercedes-Benz | Klasa C |  |  |  |  |  |  | 4 |  | 2 |
-| Mercedes-Benz | Klasa E |  |  | 1 |  |  |  | 2 |  | 7 |
+| Mercedes-Benz | Klasa A |  |  |  |  |  |  |  |  |  |
+| Mercedes-Benz | Klasa C |  |  |  |  |  |  | 3 |  | 2 |
+| Mercedes-Benz | Klasa E |  |  | 1 |  |  | 1 |  |  | 7 |
 | Mercedes-Benz | Klasa S |  |  |  |  |  |  |  |  | 7 |
-| Mercedes-Benz | CLA |  |  |  |  |  |  | 3 |  |  |
+| Mercedes-Benz | CLA |  |  |  |  |  |  |  |  |  |
 | Mercedes-Benz | GLC |  |  |  |  |  |  |  |  | 12 |
 | Mercedes-Benz | GLE |  |  |  |  |  |  |  |  | 8 |
-| Peugeot | 208 |  |  |  |  |  |  | 2 |  |  |
+| Peugeot | 208 |  |  |  |  |  |  |  |  |  |
 | Peugeot | 308 |  |  |  |  |  |  |  | 1 |  |
-| Peugeot | 508 |  |  |  |  |  |  | 5 |  |  |
-| Peugeot | 2008 |  |  |  |  |  |  | 5 |  |  |
+| Peugeot | 508 |  |  |  |  |  |  |  |  |  |
+| Peugeot | 2008 |  |  |  |  |  |  |  |  |  |
 | Peugeot | 3008 |  |  |  |  |  |  | 3 |  |  |
-| Peugeot | 5008 |  |  |  |  |  |  | 2 |  |  |
-| Renault | Captur |  |  |  |  |  | 1 | 3 |  |  |
+| Peugeot | 5008 |  |  |  |  |  |  | 1 |  |  |
+| Renault | Captur |  |  |  |  |  | 1 |  |  |  |
 | Renault | Clio |  |  |  |  |  |  | 7 |  |  |
-| Renault | Kadjar |  |  |  |  |  |  | 1 |  |  |
-| Renault | Megane |  |  |  |  |  |  | 7 | 1 |  |
-| Renault | Scenic |  |  |  |  |  |  | 8 |  |  |
+| Renault | Kadjar |  |  |  |  |  |  |  |  |  |
+| Renault | Megane |  |  |  |  |  |  | 6 | 1 |  |
+| Renault | Scenic |  |  |  |  |  |  | 4 |  |  |
 | Renault | Trafic |  |  |  |  |  |  |  |  |  |
 | Skoda | Fabia |  |  |  |  |  |  |  |  |  |
 | Skoda | Kamiq |  |  |  |  |  |  |  |  |  |
 | Skoda | Karoq |  |  |  |  |  |  |  |  |  |
 | Skoda | Kodiaq |  |  |  |  |  |  |  |  |  |
-| Skoda | Octavia |  |  |  |  |  |  | 4 |  |  |
-| Skoda | Superb |  |  |  |  |  |  | 3 |  |  |
-| Toyota | Auris |  |  |  |  |  |  | 6 |  |  |
+| Skoda | Octavia |  |  |  |  |  |  | 2 |  |  |
+| Skoda | Superb |  |  |  |  |  |  | 1 |  |  |
+| Toyota | Auris |  |  |  |  |  |  | 5 |  |  |
 | Toyota | Avensis |  |  |  |  |  |  |  | 1 |  |
 | Toyota | C-HR |  |  |  |  |  |  |  |  |  |
 | Toyota | Camry |  |  |  |  |  |  | 1 | 1 |  |
 | Toyota | Corolla |  |  |  |  |  |  | 1 |  | 1 |
-| Toyota | RAV 4 |  |  |  |  |  |  | 3 |  |  |
+| Toyota | RAV 4 |  |  |  |  |  |  | 2 |  |  |
 | Toyota | Yaris |  |  |  |  |  |  |  | 1 |  |
-| Volvo | S60 |  |  |  |  |  |  | 9 | 1 | 1 |
-| Volvo | V40 |  |  |  |  |  |  | 1 |  |  |
-| Volvo | V60 |  |  |  |  |  |  | 6 |  | 7 |
+| Volvo | S60 |  |  |  |  |  |  | 5 | 1 | 1 |
+| Volvo | V40 |  |  |  |  |  |  |  |  |  |
+| Volvo | V60 |  |  |  |  |  |  | 1 |  | 7 |
 | Volvo | XC40 |  |  |  |  |  |  |  |  | 2 |
 | Volvo | XC60 |  |  |  |  |  |  |  |  | 6 |
 | Volvo | XC90 |  |  |  |  |  |  |  |  | 4 |
-| Volkswagen | Golf |  |  |  |  |  |  | 2 |  |  |
-| Volkswagen | Passat |  |  |  |  |  |  | 16 |  |  |
+| Volkswagen | Golf |  |  |  |  |  |  | 1 |  |  |
+| Volkswagen | Passat |  |  |  |  |  |  | 5 |  |  |
 | Volkswagen | Polo |  |  |  |  |  |  | 1 | 1 |  |
 | Volkswagen | T-Roc |  |  |  |  |  |  |  |  |  |
 | Volkswagen | T6 (Multivan, Transporter) |  |  |  |  |  |  | 1 | 1 |  |
 | Volkswagen | Tiguan |  |  |  |  |  |  | 2 |  |  |
-| Volkswagen | Touran |  |  |  |  |  |  | 3 |  |  |
+| Volkswagen | Touran |  |  |  |  |  |  | 2 |  |  |
 
 ## Двигатели (топливо + объём + мощность), которых нет в нашем поколении (1)
 
@@ -117,17 +117,18 @@
 | BMW | X1 | E84 (2009–2015) | E84 | [бензин 150 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x1/e84/crossover/silnik-benzynowy-sdrive18i-150km-2009-2012/) — sDrive18i: автомат / полный |  | Crossover | привод у нас: задний — **ошибка autocentrum (вероятно): в названии моноприводная версия** |
 | BMW | X5 | E70 (2006–2013) | E70 | [дизель 245 KM](https://www.autocentrum.pl/dane-techniczne/bmw/x5/e70/suv-facelifting/silnik-diesla-xdrive30d-245km-2010-2013/) — xDrive30d: автомат 8 / задний |  | SUV Facelifting | привод у нас: полный — **ошибка autocentrum (вероятно): в названии полный привод** |
 
-## Коробка, которой нет у нас для этого двигателя и привода (1)
+## Коробка, которой нет у нас для этого двигателя и привода (2)
 
 | Марка | Модель | Поколение (autocentrum) | Наше | Есть на autocentrum | Годы | Кузова | У нас |
 |---|---|---|---|---|---|---|---|
+| Mercedes-Benz | Klasa E | W213 (2016–2023) | W213 | [гибрид 2.0 211 KM](https://www.autocentrum.pl/dane-techniczne/mercedes/klasa-e/w213/limuzyna/silnik-hybrydowy-2.0-200-211km-2016-2020/) — 200: механика 6 / задний |  | Limuzyna | у нас: автомат / задний — **ошибка autocentrum (вероятно): гибрид с механикой** |
 | Renault | Captur | II (2019–н. в.) | Captur II | [гибрид 1.6 145 KM](https://www.autocentrum.pl/dane-techniczne/renault/captur/ii/crossover-hybrid/silnik-hybrydowy-1.6-e-tech-145km-2023/) — E-Tech: механика 6 / передний |  | Crossover Hybrid | у нас: автомат / передний — **ошибка autocentrum (вероятно): гибрид с механикой** |
 
-## Коробка у нас не указана — autocentrum её называет (192)
+## Коробка у нас не указана — autocentrum её называет (96)
 
 Это не пропуск, а подсказка: где у нас «не указано», autocentrum называет коробку. Список по моделям (строки — в CSV):
 
-Volkswagen Passat — 16, Audi A4 — 14, Volvo S60 — 9, Audi A5 — 8, Audi A6 — 8, Ford Focus — 8, Renault Scenic — 8, BMW Seria 3 — 7, Renault Clio — 7, Renault Megane — 7, Toyota Auris — 6, Volvo V60 — 6, BMW X3 — 5, Ford C-Max — 5, Peugeot 508 — 5, Peugeot 2008 — 5, Audi A3 — 4, BMW Seria 5 — 4, BMW X5 — 4, Mercedes-Benz Klasa C — 4, Skoda Octavia — 4, Ford Kuga — 3, Ford Mondeo — 3, Mercedes-Benz CLA — 3, Peugeot 3008 — 3, Renault Captur — 3, Skoda Superb — 3, Toyota RAV 4 — 3, Volkswagen Touran — 3, Audi Q3 — 2, Mercedes-Benz Klasa E — 2, Peugeot 208 — 2, Peugeot 5008 — 2, Volkswagen Golf — 2, Volkswagen Tiguan — 2, Audi Q5 — 1, BMW Seria 1 — 1, BMW X1 — 1, Ford Fiesta — 1, Ford S-Max — 1, Mercedes-Benz Klasa A — 1, Renault Kadjar — 1, Toyota Camry — 1, Toyota Corolla — 1, Volvo V40 — 1, Volkswagen Polo — 1, Volkswagen T6 (Multivan, Transporter) — 1
+Audi A5 — 8, Audi A4 — 7, Renault Clio — 7, BMW Seria 3 — 6, Renault Megane — 6, Toyota Auris — 5, Volvo S60 — 5, Volkswagen Passat — 5, BMW X5 — 4, Renault Scenic — 4, Audi A6 — 3, Mercedes-Benz Klasa C — 3, Peugeot 3008 — 3, Audi A3 — 2, BMW Seria 5 — 2, BMW X3 — 2, Skoda Octavia — 2, Toyota RAV 4 — 2, Volkswagen Tiguan — 2, Volkswagen Touran — 2, Audi Q5 — 1, BMW Seria 1 — 1, BMW X1 — 1, Ford C-Max — 1, Ford Fiesta — 1, Ford Kuga — 1, Ford Mondeo — 1, Ford S-Max — 1, Peugeot 5008 — 1, Skoda Superb — 1, Toyota Camry — 1, Toyota Corolla — 1, Volvo V60 — 1, Volkswagen Golf — 1, Volkswagen Polo — 1, Volkswagen T6 (Multivan, Transporter) — 1
 
 ## Годы поколения или рестайлинга расходятся на 2+ года (для сведения) (12)
 

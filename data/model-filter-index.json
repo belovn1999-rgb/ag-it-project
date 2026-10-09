@@ -1,6 +1,6 @@
 {
  "source": "https://www.ultimatespecs.com",
- "generatedAt": "2026-10-05",
+ "generatedAt": "2026-10-09",
  "models": [
   {
    "brand": "Audi",
@@ -151,6 +151,7 @@
       "A3 (8V) Cabrio",
       "A3 (8V) Sedan",
       "A3 (8V) Sportback",
+      "A3 8V Cabriolet (autocentrum)",
       "A3 8V Limousine (autocentrum)",
       "A3 8V Sportback 5-door (autocentrum)"
      ],
@@ -877,6 +878,7 @@
       "petrol": {
        "1984": [
         179,
+        180,
         245
        ],
        "2773": [
@@ -2294,7 +2296,8 @@
       "F07 5 Series GT Gran Turismo LCI",
       "F10 5 Series Sedan LCI",
       "F11 5 Series Touring LCI",
-      "Seria 5 F10 Sedan Facelifting (autocentrum)"
+      "Seria 5 F10 Sedan Facelifting (autocentrum)",
+      "Seria 5 F10 Touring Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -2768,7 +2771,8 @@
      "years": "2010–2014",
      "mobileModel": "X3",
      "bodies": [
-      "F25 X3"
+      "F25 X3",
+      "X3 F25 SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3475,6 +3479,8 @@
       "Focus 3 Sportbreak (EU Market)",
       "Focus Mk3 Hatchback 5-door (autocentrum)",
       "Focus Mk3 Kombi (autocentrum)",
+      "Focus Mk3 ST (autocentrum)",
+      "Focus Mk3 ST Kombi (autocentrum)",
       "Focus Mk3 Sedan (autocentrum)"
      ],
      "engines": {
@@ -3508,7 +3514,8 @@
        "1997": [
         115,
         140,
-        163
+        163,
+        185
        ]
       },
       "flex": {
@@ -3540,6 +3547,9 @@
        ],
        "999": [
         125
+       ],
+       "1498": [
+        150
        ],
        "1499": [
         150,
@@ -3810,6 +3820,7 @@
      "mobileModel": "Kuga",
      "bodies": [
       "Kuga II",
+      "Kuga Mk2 SUV (autocentrum)",
       "Kuga Mk2 SUV Facelifting (autocentrum)"
      ],
      "engines": {
@@ -3888,8 +3899,14 @@
        "999": [
         125
        ],
+       "1497": [
+        165
+       ],
        "1498": [
         160,
+        165
+       ],
+       "1499": [
         165
        ],
        "1999": [
@@ -3915,6 +3932,9 @@
         179,
         190,
         209
+       ],
+       "2000": [
+        150
        ]
       },
       "hybrid": {
@@ -5293,6 +5313,9 @@
        ]
       },
       "diesel": {
+       "1461": [
+        109
+       ],
        "1796": [
         136
        ],
@@ -5904,7 +5927,8 @@
      "years": "2012–2015",
      "mobileModel": "208",
      "bodies": [
-      "208"
+      "208",
+      "208 I Hatchback 5-door (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6806,7 +6830,8 @@
      "mobileModel": "Captur",
      "bodies": [
       "Captur 1 Phase 1",
-      "Captur 1 Phase 2"
+      "Captur 1 Phase 2",
+      "Captur I Crossover Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -6819,6 +6844,9 @@
        ],
        "1330": [
         130,
+        150
+       ],
+       "1333": [
         150
        ]
       },
@@ -7096,7 +7124,8 @@
      "years": "2015–2018",
      "mobileModel": "Kadjar",
      "bodies": [
-      "Kadjar 1 Phase 1"
+      "Kadjar 1 Phase 1",
+      "Kadjar I Crossover (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -7112,6 +7141,7 @@
         110
        ],
        "1598": [
+        130,
         131
        ]
       }
@@ -7346,6 +7376,9 @@
        "1199": [
         131
        ],
+       "1330": [
+        160
+       ],
        "1332": [
         115,
         116,
@@ -7363,6 +7396,7 @@
         110
        ],
        "1598": [
+        130,
         131,
         160
        ],
@@ -7981,6 +8015,7 @@
       "Octavia Combi 2017",
       "Octavia III Kombi Facelifting (autocentrum)",
       "Octavia III Liftback Facelifting (autocentrum)",
+      "Octavia III Scout Kombi (autocentrum)",
       "Octavia Scout 2017"
      ],
      "engines": {
@@ -8291,6 +8326,7 @@
      "bodies": [
       "Superb 2",
       "Superb II Kombi (autocentrum)",
+      "Superb II Outdoor (autocentrum)",
       "Superb II Sedan (autocentrum)"
      ],
      "engines": {
@@ -8310,6 +8346,9 @@
        ]
       },
       "diesel": {
+       "1598": [
+        105
+       ],
        "1896": [
         105
        ],
@@ -8327,7 +8366,9 @@
      "mobileModel": "Superb",
      "bodies": [
       "Superb 2 Combi Facelift",
-      "Superb 2 Facelift"
+      "Superb 2 Facelift",
+      "Superb II Kombi Facelifting (autocentrum)",
+      "Superb II Sedan Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -9110,6 +9151,7 @@
       "Yaris 3",
       "Yaris Hybrid",
       "Yaris XP13 Hatchback 3-door (autocentrum)",
+      "Yaris XP13 Hatchback 5-door (autocentrum)",
       "Yaris XP13 VAN 3-door (autocentrum)"
      ],
      "engines": {
@@ -9249,10 +9291,12 @@
      "engines": {
       "petrol": {
        "1596": [
-        150
+        150,
+        180
        ],
        "1999": [
         203,
+        240,
         241
        ],
        "2497": [
@@ -9268,7 +9312,8 @@
       },
       "diesel": {
        "1560": [
-        114
+        114,
+        115
        ],
        "1969": [
         190
@@ -9306,11 +9351,13 @@
         152
        ],
        "1596": [
-        150
+        150,
+        180
        ],
        "1969": [
         152,
         190,
+        240,
         245,
         306,
         367
@@ -9321,7 +9368,8 @@
       },
       "diesel": {
        "1560": [
-        114
+        114,
+        115
        ],
        "1969": [
         120,
@@ -9529,10 +9577,12 @@
      "engines": {
       "petrol": {
        "1596": [
-        150
+        150,
+        180
        ],
        "1999": [
         203,
+        240,
         241
        ],
        "2497": [
@@ -9586,12 +9636,22 @@
        ]
       },
       "petrol": {
+       "1498": [
+        152
+       ],
+       "1596": [
+        150,
+        180
+       ],
        "1969": [
         152,
         190,
         245,
         306,
         367
+       ],
+       "1999": [
+        240
        ],
        "2953": [
         305
@@ -9966,8 +10026,7 @@
      "years": "2015–2019",
      "mobileModel": "XC90",
      "bodies": [
-      "XC90 II",
-      "XC90 II SUV (autocentrum)"
+      "XC90 II"
      ],
      "engines": {
       "plugin": {
@@ -10405,7 +10464,8 @@
        ],
        "1798": [
         160,
-        179
+        179,
+        180
        ],
        "1984": [
         220,
@@ -11193,7 +11253,8 @@
      "years": "2015–2020",
      "mobileModel": "Touran",
      "bodies": [
-      "Touran 2"
+      "Touran 2",
+      "Touran II III (autocentrum)"
      ],
      "engines": {
       "petrol": {
