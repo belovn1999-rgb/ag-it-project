@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Second source for the model table: autocentrum.pl/dane-techniczne (B61 check).
 
-For our 65 popular models (data/model-generations.json) this reads
+For our 65 popular models (data/model-generations.json) and the other models of the
+10 brands only autocentrum covers (data/model-list-autocentrum.json, stage 6) this reads
 model page -> generations still made in 2010 or later -> bodies (with
 "Facelifting") -> engines (fuel, litres, name, KM, kW, years) and, with
 --engines, each engine page: the drivetrain options ("Wybierz parametry
@@ -12,7 +13,7 @@ robots.txt allows /dane-techniczne/ and sets no crawl delay; we still wait
 missing. Output: data/autocentrum-models.json; compare with
 tools/check-autocentrum.py.
 
-    python3 tools/crawl-autocentrum.py [--engines] [--cache DIR]
+    python3 tools/crawl-autocentrum.py [--engines] [--keep-compared] [--cache DIR]
 """
 import argparse
 import html
@@ -224,22 +225,46 @@ def main():
     parser.add_argument("--engines", action="store_true", help="also read every engine page")
     parser.add_argument("--cache", default="/tmp/autocentrum-pages")
     parser.add_argument("--out", default=OUT)
+    parser.add_argument("--keep-compared", action="store_true",
+                        help="take our 65 models from the last output as they are (the page cache may be gone)")
     args = parser.parse_args()
     os.makedirs(args.cache, exist_ok=True)
     previous = json.load(open(args.out, encoding="utf8")) if os.path.exists(args.out) else {}
 
     result = {"source": BASE, "since": SINCE, "collected": time.strftime("%Y-%m-%d"), "models": []}
     total_engines = 0
-    for (brand, label), paths in MODELS.items():
-        model = {"brand": brand, "label": label, "generations": []}
+    # Our 65 models (compared with ultimatespecs) and, B61 stage 6, the other models of the
+    # 10 brands that only autocentrum covers ("primary"; data/model-list-autocentrum.json).
+    with open(os.path.join(ROOT, "data", "model-list-autocentrum.json"), encoding="utf8") as handle:
+        extra = json.load(handle)["models"]
+    todo = [({"brand": b, "label": l}, paths) for (b, l), paths in MODELS.items()]
+    todo += [({"brand": m["brand"], "label": m["label"], "mobile": m["mobile"], "primary": True}, m["paths"]) for m in extra]
+    kept = {(m["brand"], m["label"]): m for m in previous.get("models", []) if not m.get("primary")}
+    for head, paths in todo:
+        brand, label = head["brand"], head["label"]
+        if args.keep_compared and not head.get("primary") and (brand, label) in kept:
+            result["models"].append(kept[(brand, label)])
+            continue
+        model = {**head, "generations": []}
         for model_path in paths:
             page = fetch(model_path + "/", args.cache)
-            for gen_slug, gen_name in children(page, model_path + "/"):
+            listed = children(page, model_path + "/")
+            # A model with one generation and one body: its page is the engine list (VW CC, Peugeot 108).
+            # Or its page links the bodies' engines right away (BMW i8, VW ID. Buzz).
+            spans = [(e["from"], e.get("to")) for e in engines(page, model_path + "/") if "from" in e]
+            if not listed and not spans:
+                for start, single, end in re.findall(r'href="/dane-techniczne/' + re.escape(model_path) +
+                                                     r'/[^/"]+/silnik-[^"]*?-(?:od-(\d{4})|(\d{4})-(\d{4}))/"', page):
+                    spans.append((int(start or single), int(end) if end else None))
+            if not listed and spans:
+                ends = [to for _from, to in spans]
+                listed = [("", f"I ({min(f for f, _to in spans)} - {'teraz' if None in ends else max(ends)})")]
+            for gen_slug, gen_name in listed:
                 start, end = years(gen_name)
                 if start is None or (end is not None and end < SINCE):
                     continue
-                gen_path = f"{model_path}/{gen_slug}/"
-                gen_page = fetch(gen_path, args.cache)
+                gen_path = f"{model_path}/{gen_slug}/" if gen_slug else f"{model_path}/"
+                gen_page = fetch(gen_path, args.cache) if gen_slug else page
                 gen = {"path": gen_path, "name": re.sub(r"\s*\(.*", "", gen_name), "from": start, "to": end,
                        "bodies": []}
                 # A few generations show no body list: engines link into the bodies

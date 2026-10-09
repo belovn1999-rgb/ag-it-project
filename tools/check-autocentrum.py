@@ -31,6 +31,11 @@ from autocentrum import (AC_BASE, AC_FUEL, DRIVE_RU, FUEL_RU, GEARBOX_RU, MILD, 
                          verdict)
 
 
+def compared(ac):
+    """Models ultimatespecs covers too; the ones only autocentrum covers (stage 6) have nothing to compare."""
+    return [m for m in ac["models"] if not m.get("primary")]
+
+
 def main():
     ours = our_generations(read_table())
     source = sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "data", "autocentrum-models.json")
@@ -59,7 +64,7 @@ def main():
             item["Годы"] = (min(old_from, years[0]), None if None in (old_to, years[1]) else max(old_to, years[1]))
 
     stats = collections.Counter()
-    for model in ac["models"]:
+    for model in compared(ac):
         brand, label = model["brand"], model["label"]
         our_gens = ours.get((brand, label), {})
         generations = [g for g in group_body_level(model["generations"])
@@ -224,7 +229,7 @@ def main():
 def write_full_table(ac):
     """All autocentrum engines of our models in one sheet, with the fields our table lacks."""
     out = []
-    for model in ac["models"]:
+    for model in compared(ac):
         for gen in model["generations"]:
             for body in gen["bodies"]:
                 for engine in body["engines"]:
@@ -279,10 +284,10 @@ def write_report(ac, findings, stats):
     by_kind = collections.defaultdict(list)
     for item in findings:
         by_kind[item["Категория"]].append(item)
-    models = [(m["brand"], m["label"]) for m in ac["models"]]
+    models = [(m["brand"], m["label"]) for m in compared(ac)]
     per_model = collections.Counter((f["Марка"], f["Модель"], f["Категория"]) for f in findings)
     doors = collections.Counter()
-    for model in ac["models"]:
+    for model in compared(ac):
         for gen in model["generations"]:
             for body in gen["bodies"]:
                 doors["кузовов"] += 1

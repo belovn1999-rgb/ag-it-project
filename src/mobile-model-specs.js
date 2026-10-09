@@ -10,7 +10,7 @@
 // - Wersja: trim lines of the matching generations, sport versions and
 //   editions; lines of other generations below the divider; free text stays.
 // - Typ / Skrzynia / Napęd: choices that do not exist are dimmed, still
-//   clickable; the gearbox only when every matching version's gearbox is known.
+//   clickable; gearbox and drive only when every matching version's is known.
 // - Nadwozie, Liczba drzwi, Liczba miejsc, Drzwi przesuwne (owner 2026-10-04):
 //   the same for the bodies of the model's generations in the chosen years
 //   ("bodies" of the table: types, doors, seats, sliding door).
@@ -64,18 +64,38 @@
       "A4 Allroad": ["A4"], "A6 Allroad": ["A6"], S3: ["A3", "s3"], RS3: ["A3", "rs3"], S4: ["A4", "s4"],
       RS4: ["A4", "rs4"], S5: ["A5", "s5"], RS5: ["A5", "rs5"], S6: ["A6", "s6"], RS6: ["A6", "rs6"],
       SQ5: ["Q5", "sq5"], SQ7: ["Q7", "sq7"], RSQ3: ["Q3", "rsq3"],
+      S1: ["A1", "s1"], SQ2: ["Q2", "sq2"], S7: ["A7", "s7"], RS7: ["A7", "rs7"], S8: ["A8", "s8"],
+      SQ8: ["Q8", "sq8"], RSQ8: ["Q8", "rsq8"], "TT RS": ["TT", "rs"], TTS: ["TT"], "Q4 e-tron": ["Q4"],
+      "Q8 e-tron": ["Q8"], "SQ8 e-tron": ["Q8"],
     },
-    Ford: { "Grand C-Max": ["C-Max"] },
-    Peugeot: { "e-208": ["208"], "e-2008": ["2008"], "e-308": ["308"], "e-3008": ["3008"], "e-5008": ["5008"] },
-    Renault: { "Grand Scenic": ["Scenic"], "Scenic E-TECH": ["Scenic"], "Grand Scenic E-Tech": ["Scenic"] },
-    Toyota: { "Auris Touring Sports": ["Auris"] },
+    Ford: { "Grand C-Max": ["C-Max"], "Grand Tourneo": ["Tourneo Connect"] },
+    "Mercedes-Benz": {
+      "CLA Shooting Brake": ["CLA"], "CLS Shooting Brake": ["CLS"], "B Electric Drive": ["B"], "AMG GT C": ["AMG GT"],
+      "AMG GT R": ["AMG GT"], "AMG GT S": ["AMG GT"], "EQE SUV": ["EQE"], "EQS SUV": ["EQS"], eCitan: ["Citan"],
+      eVito: ["Vito"], eSprinter: ["Sprinter"],
+    },
+    Peugeot: {
+      "e-208": ["208"], "e-2008": ["2008"], "e-308": ["308"], "e-3008": ["3008"], "e-5008": ["5008"], "e-408": ["408"],
+      "Bipper Tepee": ["Bipper"], "Partner Tepee": ["Partner"], "Expert Tepee": ["Expert"], "e-Rifter": ["Rifter"],
+      "e-Traveller": ["Traveller"],
+    },
+    Renault: {
+      "Grand Scenic": ["Scenic"], "Scenic E-TECH": ["Scenic"], "Grand Scenic E-Tech": ["Scenic"], "Grand Espace": ["Espace"],
+      "Grand Kangoo": ["Kangoo"], "Kangoo E-TECH": ["Kangoo"], "Grand Kangoo E-TECH": ["Kangoo"], "Grand Modus": ["Modus"],
+    },
+    Toyota: { "Auris Touring Sports": ["Auris"], "Proace Verso Electric": ["Proace (Verso)"], "Prius+": ["Prius"] },
     Volkswagen: {
       "Golf Variant": ["Golf"], "Golf Plus": ["Golf"], "Golf Sportsvan": ["Golf"],
       "Passat Variant": ["Passat"], "Passat Alltrack": ["Passat"], "Tiguan Allspace": ["Tiguan"],
+      "Caddy Maxi": ["Caddy"], "e-up!": ["up!"], "Passat CC": ["CC"],
     },
-    Volvo: { "V40 Cross Country": ["V40"], "V60 Cross Country": ["V60"], "S60 Cross Country": ["S60"] },
+    Volvo: {
+      "V40 Cross Country": ["V40"], "V60 Cross Country": ["V60"], "S60 Cross Country": ["S60"], "V90 Cross Country": ["V90"],
+    },
   };
-  const MERCEDES_FAMILIES = ["CLA", "GLC", "GLE", "A", "C", "E", "S"];
+  // Mercedes catalog models are "<class> <number>" (GLA 200, CLS 350): the class is the family.
+  const MERCEDES_FAMILIES = ["CLA", "CLC", "CLE", "CLK", "CLS", "CL", "GLA", "GLB", "GLC", "GLE", "GLK", "GLS", "GL", "ML",
+    "SLC", "SLK", "SL", "A", "B", "C", "E", "G", "R", "S", "V", "X"];
 
   const text = () => TEXT[state.lang] || TEXT.pl;
   const lower = (value) => String(value || "").trim().toLowerCase();
@@ -100,14 +120,17 @@
     const sub = Object.entries(SUBMODELS[brand] || {}).find(([name]) => lower(name) === lower(model));
     if (sub && findModel(brand, sub[1][0])) return { key: findModel(brand, sub[1][0]), token: sub[1][1] || "", mobile: "" };
     if (brand === "BMW") {
-      const series = model.match(/^(m)?([1345])(\d\d)/i);
+      // "218", "M240i", "620 Gran Turismo" -> series; "2er Gran Coupé" -> series; M2...M8; "X3 M40", "Z4 M40".
+      const series = model.match(/^(m)?([1-8])(\d\d)/i);
       if (series && findModel("BMW", series[2])) {
         return { key: findModel("BMW", series[2]), token: `${series[1] ? "m" : ""}${series[2]}${series[3]}`, mobile: "" };
       }
-      const mModel = model.match(/^m([34])$/i);
+      const er = model.match(/^([1-8])er\b/i);
+      if (er && findModel("BMW", er[1])) return { key: findModel("BMW", er[1]), token: "", mobile: "" };
+      const mModel = model.match(/^m([2-8])$/i);
       if (mModel && findModel("BMW", mModel[1])) return { key: findModel("BMW", mModel[1]), token: `m${mModel[1]}`, mobile: "" };
-      const xModel = model.match(/^(x[135])\b/i);
-      if (xModel && findModel("BMW", xModel[1].toUpperCase())) return { key: findModel("BMW", xModel[1].toUpperCase()), token: "", mobile: "" };
+      const xModel = model.match(/^(x[1-7]|xm|z4)\b/i);
+      if (xModel && findModel("BMW", xModel[1])) return { key: findModel("BMW", xModel[1]), token: "", mobile: "" };
     }
     if (brand === "Mercedes-Benz") {
       const match = model.match(/^([a-z]{1,3})\s?(\d{2,3})\b/i);
@@ -293,7 +316,9 @@
       return;
     }
     const bodies = bodiesOf(sel);
-    dim(bodyInputs, bodies.length ? new Set(bodies.flatMap((body) => body[0])) : null);
+    // A body whose type the data does not know dims nothing (stage 6 models from autocentrum).
+    const typesKnown = bodies.length && bodies.every((body) => body[0].length);
+    dim(bodyInputs, typesKnown ? new Set(bodies.flatMap((body) => body[0])) : null);
     const fuelRows = filtered(sel, { fuel: false, size: false, power: false });
     const fuels = new Set();
     fuelRows.forEach((row) => {
@@ -304,7 +329,9 @@
     const rows = filtered(sel);
     const gearboxKnown = rows.length && rows.every((row) => row[5]);
     dim(els.gearbox, gearboxKnown ? new Set(rows.map((row) => (row[5] === "m" ? "manual" : "automatic"))) : null);
-    dim(els.drive, rows.length ? new Set(rows.map((row) => ({ f: "fwd", r: "rwd", 4: "awd" })[row[6]])) : null);
+    // The drive too only when every matching version's drive is known.
+    const driveKnown = rows.length && rows.every((row) => row[6]);
+    dim(els.drive, driveKnown ? new Set(rows.map((row) => ({ f: "fwd", r: "rwd", 4: "awd" })[row[6]])) : null);
   }
 
   document.addEventListener("input", () => refresh());

@@ -1,0 +1,1506 @@
+{
+ "note": "B61 stage 6 (variant A, owner 2026-10-09): the other models of the 10 pinned brands made since 2010, data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA).",
+ "models": [
+  {
+   "brand": "Audi",
+   "label": "A1",
+   "mobile": "A1",
+   "paths": [
+    "audi/a1"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "A7",
+   "mobile": "A7",
+   "paths": [
+    "audi/a7"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "A8",
+   "mobile": "A8",
+   "paths": [
+    "audi/a8"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "e-tron",
+   "mobile": "e-tron",
+   "paths": [
+    "audi/e-tron"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "Q2",
+   "mobile": "Q2",
+   "paths": [
+    "audi/q2"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "Q4",
+   "mobile": "Q4",
+   "paths": [
+    "audi/q4"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "Q6 e-tron",
+   "mobile": "Q6 e-tron",
+   "paths": [
+    "audi/q6"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "Q8",
+   "mobile": "Q8",
+   "paths": [
+    "audi/q8"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "R8",
+   "mobile": "R8",
+   "paths": [
+    "audi/r8"
+   ]
+  },
+  {
+   "brand": "Audi",
+   "label": "TT",
+   "mobile": "TT",
+   "paths": [
+    "audi/tt"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 2",
+   "mobile": "2",
+   "paths": [
+    "bmw/seria-2"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 6",
+   "mobile": "6",
+   "paths": [
+    "bmw/seria-6"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 7",
+   "mobile": "7",
+   "paths": [
+    "bmw/seria-7"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 8",
+   "mobile": "8",
+   "paths": [
+    "bmw/seria-8"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "X2",
+   "mobile": "X2",
+   "paths": [
+    "bmw/x2"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "X4",
+   "mobile": "X4",
+   "paths": [
+    "bmw/x4"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "X6",
+   "mobile": "X6",
+   "paths": [
+    "bmw/x6"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "X7",
+   "mobile": "X7",
+   "paths": [
+    "bmw/x7"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "XM",
+   "mobile": "XM",
+   "paths": [
+    "bmw/xm"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "Z4",
+   "mobile": "Z4",
+   "paths": [
+    "bmw/z4"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "i3",
+   "mobile": "i3",
+   "paths": [
+    "bmw/i3"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "i4",
+   "mobile": "i4",
+   "paths": [
+    "bmw/i4"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "i5",
+   "mobile": "i5",
+   "paths": [
+    "bmw/i5"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "i7",
+   "mobile": "i7",
+   "paths": [
+    "bmw/i7"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "i8",
+   "mobile": "i8",
+   "paths": [
+    "bmw/i8"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "iX",
+   "mobile": "iX",
+   "paths": [
+    "bmw/ix"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "iX1",
+   "mobile": "iX1",
+   "paths": [
+    "bmw/ix1"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "iX2",
+   "mobile": "iX2",
+   "paths": [
+    "bmw/ix2"
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "iX3",
+   "mobile": "iX3",
+   "paths": [
+    "bmw/ix3"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "B-Max",
+   "mobile": "B-Max",
+   "paths": [
+    "ford/b-max"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Capri",
+   "mobile": "Capri",
+   "paths": [
+    "ford/capri"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Crown Victoria",
+   "mobile": "Crown",
+   "paths": [
+    "ford/crown-victoria"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Econoline",
+   "mobile": "Econoline",
+   "paths": [
+    "ford/econoline"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "EcoSport",
+   "mobile": "EcoSport",
+   "paths": [
+    "ford/ecosport"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Edge",
+   "mobile": "Edge",
+   "paths": [
+    "ford/edge",
+    "ford/edge-vignale"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Escape",
+   "mobile": "Escape",
+   "paths": [
+    "ford/escape"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Explorer",
+   "mobile": "Explorer",
+   "paths": [
+    "ford/explorer",
+    "ford/explorer-ev"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Flex",
+   "mobile": "Flex",
+   "paths": [
+    "ford/flex"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Fusion",
+   "mobile": "Fusion",
+   "paths": [
+    "ford/fusion"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Galaxy",
+   "mobile": "Galaxy",
+   "paths": [
+    "ford/galaxy"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Ka/Ka+",
+   "mobile": "Ka/Ka+",
+   "paths": [
+    "ford/ka",
+    "ford/ka-plus"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Mustang",
+   "mobile": "Mustang",
+   "paths": [
+    "ford/mustang"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Mustang Mach-E",
+   "mobile": "Mustang Mach-E",
+   "paths": [
+    "ford/mustang-mach-e"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Puma",
+   "mobile": "Puma",
+   "paths": [
+    "ford/puma"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Ranger",
+   "mobile": "Ranger",
+   "paths": [
+    "ford/ranger"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Taurus",
+   "mobile": "Taurus",
+   "paths": [
+    "ford/taurus"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Connect",
+   "mobile": "Tourneo Connect",
+   "paths": [
+    "ford/tourneo-connect"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Courier",
+   "mobile": "Tourneo Courier",
+   "paths": [
+    "ford/tourneo-courier"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "mobile": "Tourneo Custom",
+   "paths": [
+    "ford/tourneo-custom"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit",
+   "mobile": "Transit",
+   "paths": [
+    "ford/transit"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Connect",
+   "mobile": "Transit Connect",
+   "paths": [
+    "ford/transit-connect"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Courier",
+   "mobile": "Transit Courier",
+   "paths": [
+    "ford/transit-courier"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "mobile": "Transit Custom",
+   "paths": [
+    "ford/transit-custom"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "AMG GT",
+   "mobile": "AMG GT",
+   "paths": [
+    "mercedes/amg-gt"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Citan",
+   "mobile": "Citan",
+   "paths": [
+    "mercedes/citan"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa CL",
+   "mobile": "CL",
+   "paths": [
+    "mercedes/cl"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "CLC",
+   "mobile": "CLC",
+   "paths": [
+    "mercedes/clc"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "CLE",
+   "mobile": "CLE",
+   "paths": [
+    "mercedes/cle"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "CLK",
+   "mobile": "CLK",
+   "paths": [
+    "mercedes/clk"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "CLS",
+   "mobile": "CLS",
+   "paths": [
+    "mercedes/cls"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQA",
+   "mobile": "EQA",
+   "paths": [
+    "mercedes/eqa"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQB",
+   "mobile": "EQB",
+   "paths": [
+    "mercedes/eqb"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQE",
+   "mobile": "EQE",
+   "paths": [
+    "mercedes/eqe"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQS",
+   "mobile": "EQS",
+   "paths": [
+    "mercedes/eqs"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQV",
+   "mobile": "EQV",
+   "paths": [
+    "mercedes/eqv"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLA",
+   "mobile": "GLA",
+   "paths": [
+    "mercedes/gla"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLB",
+   "mobile": "GLB",
+   "paths": [
+    "mercedes/glb"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLK",
+   "mobile": "GLK",
+   "paths": [
+    "mercedes/glk"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLS",
+   "mobile": "GLS",
+   "paths": [
+    "mercedes/gls"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa B",
+   "mobile": "B",
+   "paths": [
+    "mercedes/klasa-b"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa G",
+   "mobile": "G",
+   "paths": [
+    "mercedes/klasa-g"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa GL",
+   "mobile": "GL",
+   "paths": [
+    "mercedes/klasa-gl"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa M (ML)",
+   "mobile": "ML",
+   "paths": [
+    "mercedes/klasa-m"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa R",
+   "mobile": "R",
+   "paths": [
+    "mercedes/klasa-r"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa T",
+   "mobile": "T-Class",
+   "paths": [
+    "mercedes/klasa-t"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa V",
+   "mobile": "V",
+   "paths": [
+    "mercedes/klasa-v"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa X",
+   "mobile": "X",
+   "paths": [
+    "mercedes/klasa-x"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "SL",
+   "mobile": "SL",
+   "paths": [
+    "mercedes/sl"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "SLC",
+   "mobile": "SLC",
+   "paths": [
+    "mercedes/slc"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "SLK",
+   "mobile": "SLK",
+   "paths": [
+    "mercedes/slk"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "SLS AMG",
+   "mobile": "SLS AMG",
+   "paths": [
+    "mercedes/sls-amg"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Sprinter",
+   "mobile": "Sprinter",
+   "paths": [
+    "mercedes/sprinter"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Viano",
+   "mobile": "Viano",
+   "paths": [
+    "mercedes/viano"
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Vito",
+   "mobile": "Vito",
+   "paths": [
+    "mercedes/vito"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "107",
+   "mobile": "107",
+   "paths": [
+    "peugeot/107"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "108",
+   "mobile": "108",
+   "paths": [
+    "peugeot/108"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "206",
+   "mobile": "206",
+   "paths": [
+    "peugeot/206"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "207",
+   "mobile": "207",
+   "paths": [
+    "peugeot/207"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "301",
+   "mobile": "301",
+   "paths": [
+    "peugeot/301"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "307",
+   "mobile": "307",
+   "paths": [
+    "peugeot/307"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "407",
+   "mobile": "407",
+   "paths": [
+    "peugeot/407"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "408",
+   "mobile": "408",
+   "paths": [
+    "peugeot/408"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "4007",
+   "mobile": "4007",
+   "paths": [
+    "peugeot/4007"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "807",
+   "mobile": "807",
+   "paths": [
+    "peugeot/807"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Bipper",
+   "mobile": "Bipper",
+   "paths": [
+    "peugeot/bipper"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "mobile": "Boxer",
+   "paths": [
+    "peugeot/boxer"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Expert",
+   "mobile": "Expert",
+   "paths": [
+    "peugeot/expert"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Partner",
+   "mobile": "Partner",
+   "paths": [
+    "peugeot/partner"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "RCZ",
+   "mobile": "RCZ",
+   "paths": [
+    "peugeot/rcz"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Rifter",
+   "mobile": "Rifter",
+   "paths": [
+    "peugeot/rifter"
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Traveller",
+   "mobile": "Traveller",
+   "paths": [
+    "peugeot/traveller"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Arkana",
+   "mobile": "Arkana",
+   "paths": [
+    "renault/arkana"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Austral",
+   "mobile": "Austral",
+   "paths": [
+    "renault/austral"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Espace",
+   "mobile": "Espace",
+   "paths": [
+    "renault/espace"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Express",
+   "mobile": "Express",
+   "paths": [
+    "renault/express"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Fluence",
+   "mobile": "Fluence",
+   "paths": [
+    "renault/fluence"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Kangoo",
+   "mobile": "Kangoo",
+   "paths": [
+    "renault/kangoo"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Koleos",
+   "mobile": "Koleos",
+   "paths": [
+    "renault/koleos"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Laguna",
+   "mobile": "Laguna",
+   "paths": [
+    "renault/laguna"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Latitude",
+   "mobile": "Latitude",
+   "paths": [
+    "renault/latitude"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "mobile": "Master",
+   "paths": [
+    "renault/master"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Megane E-TECH",
+   "mobile": "Megane E-TECH",
+   "paths": [
+    "renault/megane-e-tech"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Modus",
+   "mobile": "Modus",
+   "paths": [
+    "renault/modus"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Rafale",
+   "mobile": "Rafale",
+   "paths": [
+    "renault/rafale"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Symbioz",
+   "mobile": "Symbioz",
+   "paths": [
+    "renault/symbioz"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Talisman",
+   "mobile": "Talisman",
+   "paths": [
+    "renault/talisman"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Twingo",
+   "mobile": "Twingo",
+   "paths": [
+    "renault/twingo"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Wind",
+   "mobile": "Wind",
+   "paths": [
+    "renault/wind"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "ZOE",
+   "mobile": "ZOE",
+   "paths": [
+    "renault/zoe"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Citigo",
+   "mobile": "Citigo",
+   "paths": [
+    "skoda/citigo"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Elroq",
+   "mobile": "Elroq",
+   "paths": [
+    "skoda/elroq"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Enyaq",
+   "mobile": "Enyaq",
+   "paths": [
+    "skoda/enyaq-iv"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Epiq",
+   "mobile": "Epiq",
+   "paths": [
+    "skoda/epiq"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Praktik",
+   "mobile": "Praktik",
+   "paths": [
+    "skoda/praktik"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Rapid",
+   "mobile": "Rapid",
+   "paths": [
+    "skoda/rapid"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Roomster",
+   "mobile": "Roomster",
+   "paths": [
+    "skoda/roomster"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Scala",
+   "mobile": "Scala",
+   "paths": [
+    "skoda/scala"
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Yeti",
+   "mobile": "Yeti",
+   "paths": [
+    "skoda/yeti"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Aygo",
+   "mobile": "Aygo (X)",
+   "paths": [
+    "toyota/aygo"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "bZ4X",
+   "mobile": "bZ4X",
+   "paths": [
+    "toyota/bz4x"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Corolla Cross",
+   "mobile": "Corolla Cross",
+   "paths": [
+    "toyota/corolla-cross"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Dyna",
+   "mobile": "Dyna",
+   "paths": [
+    "toyota/dyna"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "FJ Cruiser",
+   "mobile": "FJ",
+   "paths": [
+    "toyota/fj-cruiser"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "GT86",
+   "mobile": "GT86",
+   "paths": [
+    "toyota/gt86"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Hiace",
+   "mobile": "Hiace",
+   "paths": [
+    "toyota/hiace"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Highlander",
+   "mobile": "Highlander",
+   "paths": [
+    "toyota/highlander"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Hilux",
+   "mobile": "Hilux",
+   "paths": [
+    "toyota/hilux"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "IQ",
+   "mobile": "IQ",
+   "paths": [
+    "toyota/iq"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Land Cruiser",
+   "mobile": "Land Cruiser",
+   "paths": [
+    "toyota/land-cruiser",
+    "toyota/land-cruiser-v8"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Matrix",
+   "mobile": "Matrix",
+   "paths": [
+    "toyota/matrix"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Previa",
+   "mobile": "Previa",
+   "paths": [
+    "toyota/previa"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Prius",
+   "mobile": "Prius",
+   "paths": [
+    "toyota/prius"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Proace",
+   "mobile": "Proace (Verso)",
+   "paths": [
+    "toyota/proace"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Proace City",
+   "mobile": "Proace City",
+   "paths": [
+    "toyota/proace-city"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Sequoia",
+   "mobile": "Sequoia",
+   "paths": [
+    "toyota/sequoia"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Sienna",
+   "mobile": "Sienna",
+   "paths": [
+    "toyota/sienna"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Supra",
+   "mobile": "Supra",
+   "paths": [
+    "toyota/supra"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Tacoma",
+   "mobile": "Tacoma",
+   "paths": [
+    "toyota/tacoma"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Urban Cruiser",
+   "mobile": "Urban Cruiser",
+   "paths": [
+    "toyota/urban-cruiser"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Verso",
+   "mobile": "Verso",
+   "paths": [
+    "toyota/verso"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Verso-S",
+   "mobile": "Verso-S",
+   "paths": [
+    "toyota/verso-s"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "C30",
+   "mobile": "C30",
+   "paths": [
+    "volvo/c30"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "C40",
+   "mobile": "C40",
+   "paths": [
+    "volvo/c40"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "C70",
+   "mobile": "C70",
+   "paths": [
+    "volvo/c70"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "ES90",
+   "mobile": "ES90",
+   "paths": [
+    "volvo/es90"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX30",
+   "mobile": "EX30",
+   "paths": [
+    "volvo/ex-30"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX60",
+   "mobile": "EX60",
+   "paths": [
+    "volvo/ex-60"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX90",
+   "mobile": "EX90",
+   "paths": [
+    "volvo/ex-90"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "S40",
+   "mobile": "S40",
+   "paths": [
+    "volvo/s40"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "S80",
+   "mobile": "S80",
+   "paths": [
+    "volvo/s80"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "S90",
+   "mobile": "S90",
+   "paths": [
+    "volvo/s90"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "V50",
+   "mobile": "V50",
+   "paths": [
+    "volvo/v50"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "V70",
+   "mobile": "V70",
+   "paths": [
+    "volvo/v70"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "V90",
+   "mobile": "V90",
+   "paths": [
+    "volvo/v90"
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "XC70",
+   "mobile": "XC70",
+   "paths": [
+    "volvo/xc70"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Amarok",
+   "mobile": "Amarok",
+   "paths": [
+    "volkswagen/amarok"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Arteon",
+   "mobile": "Arteon",
+   "paths": [
+    "volkswagen/arteon"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Beetle",
+   "mobile": "Beetle",
+   "paths": [
+    "volkswagen/beetle"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Caddy",
+   "mobile": "Caddy",
+   "paths": [
+    "volkswagen/caddy"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "CC",
+   "mobile": "CC",
+   "paths": [
+    "volkswagen/cc",
+    "volkswagen/passat-cc"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "mobile": "Crafter",
+   "paths": [
+    "volkswagen/crafter"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Eos",
+   "mobile": "Eos",
+   "paths": [
+    "volkswagen/eos"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Fox",
+   "mobile": "Fox",
+   "paths": [
+    "volkswagen/fox"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.3",
+   "mobile": "ID.3",
+   "paths": [
+    "volkswagen/id.3"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.4",
+   "mobile": "ID.4",
+   "paths": [
+    "volkswagen/id.4"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.5",
+   "mobile": "ID.5",
+   "paths": [
+    "volkswagen/id.5"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.7",
+   "mobile": "ID.7",
+   "paths": [
+    "volkswagen/id.7"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID. Buzz",
+   "mobile": "ID. Buzz",
+   "paths": [
+    "volkswagen/id.-buzz"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Jetta",
+   "mobile": "Jetta",
+   "paths": [
+    "volkswagen/jetta"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Phaeton",
+   "mobile": "Phaeton",
+   "paths": [
+    "volkswagen/phaeton"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Scirocco",
+   "mobile": "Scirocco",
+   "paths": [
+    "volkswagen/scirocco"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Sharan",
+   "mobile": "Sharan",
+   "paths": [
+    "volkswagen/sharan"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "T-Cross",
+   "mobile": "T-Cross",
+   "paths": [
+    "volkswagen/t-cross"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Taigo",
+   "mobile": "Taigo",
+   "paths": [
+    "volkswagen/taigo"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Tayron",
+   "mobile": "Tayron",
+   "paths": [
+    "volkswagen/tayron"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Touareg",
+   "mobile": "Touareg",
+   "paths": [
+    "volkswagen/touareg"
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "up!",
+   "mobile": "up!",
+   "paths": [
+    "volkswagen/up"
+   ]
+  }
+ ]
+}

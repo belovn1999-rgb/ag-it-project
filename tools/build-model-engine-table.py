@@ -611,7 +611,8 @@ def main():
                 print(f"   autocentrum: {name}: {count}")
 
     for row in rows:
-        key = (row["Марка"], model_ids[(row["Марка"], row["Модель"])])
+        # Models only autocentrum covers (stage 6) are keyed by their page-1 model value.
+        key = (row["Марка"], model_ids.get((row["Марка"], row["Модель"]), row["Модель mobile.de"]))
         gens = index.setdefault(key, collections.OrderedDict())
         gkey = (row["Поколение"], row["Этап"], row["Годы (проверено)"])
         entry = gens.setdefault(gkey, {"code": row["Поколение"], "phase": row["Этап"],

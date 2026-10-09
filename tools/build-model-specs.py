@@ -10,7 +10,7 @@ window.AUTOGOOD_MODEL_SPECS_LOADED["<brand>"]["<brand>|<model>"] =
   versions: [gen index, fuel, cm3, hp, kW, gearbox, drive, mild, token]
             fuel: petrol diesel hybrid_petrol hybrid_diesel plugin electric
                   (CNG/LPG/E85 count as petrol), gearbox a|m|"" (unknown),
-            drive f|r|4, mild 1 = mild hybrid, token = BMW/Mercedes/Audi model
+            drive f|r|4|"" (unknown: stage-6 engine page without options), mild 1 = mild hybrid, token = BMW/Mercedes/Audi model
             number from the version name ("320", "m340", "220", "s3") for
             sub-models such as "320" or "C 220"; duplicates merged.
   trims:    [from, to|null, lines[], sport[], editions[]]
@@ -93,10 +93,66 @@ DEFAULT_TYPE = {
     ("Volvo", "V60"): "estate", ("Volkswagen", "Golf"): "hatchback", ("Volkswagen", "Passat"): "limousine",
     ("Volkswagen", "Polo"): "hatchback",
 }
+# B61 stage 6: the other models of the 10 brands (autocentrum.pl body names are Polish:
+# "SUV", "Crossover", "Furgon", "Kombi", "Liftback"...); keys are the page-1 model values.
+VAN_MODELS |= {
+    ("Ford", "B-Max"), ("Ford", "Galaxy"), ("Ford", "Tourneo Connect"), ("Ford", "Tourneo Courier"), ("Ford", "Tourneo Custom"),
+    ("Ford", "Transit"), ("Ford", "Transit Connect"), ("Ford", "Transit Courier"), ("Ford", "Transit Custom"), ("Ford", "Econoline"),
+    ("Mercedes-Benz", "B"), ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Vito"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Citan"),
+    ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Mercedes-Benz", "R"), ("Mercedes-Benz", "T-Class"),
+    ("Peugeot", "807"), ("Peugeot", "Bipper"), ("Peugeot", "Boxer"), ("Peugeot", "Expert"), ("Peugeot", "Partner"), ("Peugeot", "Rifter"),
+    ("Peugeot", "Traveller"), ("Renault", "Espace"), ("Renault", "Kangoo"), ("Renault", "Master"), ("Renault", "Modus"), ("Renault", "Express"),
+    ("Skoda", "Roomster"), ("Skoda", "Praktik"), ("Toyota", "Proace (Verso)"), ("Toyota", "Proace City"), ("Toyota", "Verso"),
+    ("Toyota", "Verso-S"), ("Toyota", "Previa"), ("Toyota", "Sienna"), ("Toyota", "Hiace"), ("Volkswagen", "Caddy"),
+    ("Volkswagen", "Crafter"), ("Volkswagen", "Sharan"), ("Volkswagen", "ID. Buzz"),
+}
+SUV_MODELS |= {
+    ("Audi", "Q2"), ("Audi", "Q4"), ("Audi", "Q6 e-tron"), ("Audi", "Q8"), ("Audi", "e-tron"), ("BMW", "X2"), ("BMW", "X4"), ("BMW", "X6"),
+    ("BMW", "X7"), ("BMW", "XM"), ("BMW", "iX"), ("BMW", "iX1"), ("BMW", "iX2"), ("BMW", "iX3"), ("Ford", "EcoSport"), ("Ford", "Edge"),
+    ("Ford", "Escape"), ("Ford", "Explorer"), ("Ford", "Puma"), ("Ford", "Mustang Mach-E"), ("Ford", "Flex"), ("Mercedes-Benz", "GLA"),
+    ("Mercedes-Benz", "GLB"), ("Mercedes-Benz", "GLK"), ("Mercedes-Benz", "GLS"), ("Mercedes-Benz", "GL"), ("Mercedes-Benz", "ML"),
+    ("Mercedes-Benz", "G"), ("Mercedes-Benz", "EQA"), ("Mercedes-Benz", "EQB"), ("Peugeot", "4007"), ("Renault", "Arkana"),
+    ("Renault", "Austral"), ("Renault", "Koleos"), ("Renault", "Rafale"), ("Renault", "Symbioz"), ("Renault", "Megane E-TECH"),
+    ("Skoda", "Enyaq"), ("Skoda", "Elroq"), ("Skoda", "Epiq"), ("Skoda", "Yeti"), ("Toyota", "Land Cruiser"), ("Toyota", "Highlander"),
+    ("Toyota", "Corolla Cross"), ("Toyota", "bZ4X"), ("Toyota", "Urban Cruiser"), ("Toyota", "Sequoia"), ("Toyota", "FJ"),
+    ("Volvo", "C40"), ("Volvo", "EX30"), ("Volvo", "EX60"), ("Volvo", "EX90"), ("Volkswagen", "T-Cross"), ("Volkswagen", "Taigo"),
+    ("Volkswagen", "Tayron"), ("Volkswagen", "Touareg"), ("Volkswagen", "ID.4"), ("Volkswagen", "ID.5"),
+}
+PICKUP_MODELS = {("Ford", "Ranger"), ("Mercedes-Benz", "X"), ("Toyota", "Hilux"), ("Toyota", "Tacoma"), ("Volkswagen", "Amarok")}
+DEFAULT_TYPE.update({
+    ("Audi", "A1"): "hatchback", ("Audi", "A7"): "limousine", ("Audi", "A8"): "limousine", ("Audi", "R8"): "coupe", ("Audi", "TT"): "coupe",
+    ("BMW", "2"): "coupe", ("BMW", "6"): "coupe", ("BMW", "7"): "limousine", ("BMW", "8"): "coupe", ("BMW", "Z4"): "cabrio",
+    ("BMW", "i3"): "hatchback", ("BMW", "i4"): "limousine", ("BMW", "i5"): "limousine", ("BMW", "i7"): "limousine", ("BMW", "i8"): "coupe",
+    ("Ford", "Capri"): "suv", ("Ford", "Crown"): "limousine", ("Ford", "Fusion"): "hatchback", ("Ford", "Ka/Ka+"): "hatchback",
+    ("Ford", "Mustang"): "coupe", ("Ford", "Taurus"): "limousine", ("Mercedes-Benz", "AMG GT"): "coupe", ("Mercedes-Benz", "CL"): "coupe",
+    ("Mercedes-Benz", "CLC"): "coupe", ("Mercedes-Benz", "CLE"): "coupe", ("Mercedes-Benz", "CLK"): "coupe", ("Mercedes-Benz", "CLS"): "limousine",
+    ("Mercedes-Benz", "EQE"): "limousine", ("Mercedes-Benz", "EQS"): "limousine", ("Mercedes-Benz", "SL"): "cabrio",
+    ("Mercedes-Benz", "SLC"): "cabrio", ("Mercedes-Benz", "SLK"): "cabrio", ("Mercedes-Benz", "SLS AMG"): "coupe",
+    ("Peugeot", "107"): "hatchback", ("Peugeot", "108"): "hatchback", ("Peugeot", "206"): "hatchback", ("Peugeot", "207"): "hatchback",
+    ("Peugeot", "301"): "limousine", ("Peugeot", "307"): "hatchback", ("Peugeot", "407"): "limousine", ("Peugeot", "408"): "limousine",
+    ("Peugeot", "RCZ"): "coupe", ("Renault", "Fluence"): "limousine", ("Renault", "Laguna"): "hatchback", ("Renault", "Latitude"): "limousine",
+    ("Renault", "Talisman"): "limousine", ("Renault", "Twingo"): "hatchback", ("Renault", "Wind"): "cabrio", ("Renault", "ZOE"): "hatchback",
+    ("Skoda", "Citigo"): "hatchback", ("Skoda", "Rapid"): "limousine", ("Skoda", "Scala"): "hatchback", ("Toyota", "Aygo (X)"): "hatchback",
+    ("Toyota", "GT86"): "coupe", ("Toyota", "IQ"): "hatchback", ("Toyota", "Matrix"): "hatchback", ("Toyota", "Prius"): "hatchback",
+    ("Toyota", "Supra"): "coupe", ("Toyota", "Dyna"): "other", ("Volvo", "C30"): "hatchback", ("Volvo", "C70"): "cabrio",
+    ("Volvo", "ES90"): "limousine", ("Volvo", "S40"): "limousine", ("Volvo", "S80"): "limousine", ("Volvo", "S90"): "limousine",
+    ("Volvo", "V50"): "estate", ("Volvo", "V70"): "estate", ("Volvo", "V90"): "estate", ("Volvo", "XC70"): "estate",
+    ("Volkswagen", "Arteon"): "limousine", ("Volkswagen", "Beetle"): "hatchback", ("Volkswagen", "CC"): "limousine",
+    ("Volkswagen", "Eos"): "cabrio", ("Volkswagen", "Fox"): "hatchback", ("Volkswagen", "ID.3"): "hatchback", ("Volkswagen", "ID.7"): "limousine",
+    ("Volkswagen", "Jetta"): "limousine", ("Volkswagen", "Phaeton"): "limousine", ("Volkswagen", "Scirocco"): "coupe",
+    ("Volkswagen", "up!"): "hatchback",
+})
+# Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
+BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
+            ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
+            ("Peugeot", "Expert"), ("Peugeot", "Traveller"), ("Renault", "Master"), ("Toyota", "Proace (Verso)"), ("Toyota", "Hiace"),
+            ("Volkswagen", "Crafter"), ("Volkswagen", "ID. Buzz")}
 # Hatchbacks sold with 5 doors only (the rest: 3 or 5 unless the name says).
 FIVE_DOOR_HATCHES = {("Volkswagen", "Golf"), ("Volkswagen", "Polo"), ("Ford", "Focus"), ("Toyota", "Auris"), ("Volvo", "V40"),
                      ("Renault", "Megane"), ("Skoda", "Fabia"), ("Peugeot", "308"), ("BMW", "1")}
-SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "grand scenic", "touran", "allspace", "gle")
+SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "grand scenic", "touran", "allspace", "gle",
+               "galaxy", "sharan", "espace", "x7", "gls", "land cruiser", "highlander", "previa", "sienna", "sequoia", "tayron",
+               "rifter", "tourneo connect", "caddy", "kangoo", "ex90", "eqb", "glb", "verso")
 
 
 def body_of(brand, model, name):
@@ -106,6 +162,8 @@ def body_of(brand, model, name):
     types = None
     if re.search(r"cabrio|convertible|roadster|spider|spyder|\bcc\b", n):
         types = ["cabrio"]
+    elif key in PICKUP_MODELS or re.search(r"pick-?up|skrzyniow|podw[oó]jna kabina|double cab", n):
+        types = ["pickup"]
     elif key in VAN_MODELS and not (model == "Scenic" and re.search(r"scenic 5", n)):
         types = ["van_minibus"]
     elif "sportsvan" in n or "gran tourer" in n or "active tourer" in n:
@@ -114,6 +172,12 @@ def body_of(brand, model, name):
         types = ["van_minibus"]
     elif key in SUV_MODELS or (model == "Scenic"):
         types = ["suv"]
+    elif re.search(r"\bsuv\b|crossover|off-?roader|terenowy|outdoor", n):
+        types = ["suv"]
+    elif re.search(r"minivan|mikrovan|\bmpv\b|furgon|kombivan|\btepee\b|\bkabina\b|platforma|\bvan\b", n):
+        types = ["van_minibus"]
+    elif re.search(r"liftback|fastback", n):
+        types = ["limousine"]
     elif "gran coupe" in n:
         types = ["coupe", "limousine"]
     elif "shooting brake" in n:
@@ -160,7 +224,7 @@ def body_of(brand, model, name):
     else:
         doors = (4, 5)
     # Seats: 5, coupes and cabrios 4, the 7-seaters up to 7, vans 2-9.
-    if model in ("T6", "Trafic"):
+    if model in ("T6", "Trafic") or key in BIG_VANS:
         seats = (2, 9)
     elif any(word in n or word == model.lower() for word in SEVEN_SEATS):
         seats = (5, 7)
@@ -206,6 +270,10 @@ def main():
     with open(os.path.join(ROOT, "data", "model-generations.json"), encoding="utf8") as handle:
         generations = json.load(handle)
     label_to_model = {(m["brand"], m["label"]): m["model"] for m in generations["models"]}
+    # Models only autocentrum.pl covers (B61 stage 6): the catalog model they stand for.
+    with open(os.path.join(ROOT, "data", "autocentrum-models.json"), encoding="utf8") as handle:
+        label_to_model.update({(m["brand"], m["label"]): m["mobile"] for m in json.load(handle)["models"]
+                               if m.get("primary")})
 
     models = {}
     with open(os.path.join(ROOT, "data", "model-engines.csv"), encoding="utf-8-sig") as handle:
@@ -236,7 +304,7 @@ def main():
             mild = 1 if row["Топливо: примечание"].startswith("мягкий") else 0
             entry["versions"].add((gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
                                    int(row["Мощность, кВт"] or 0), GEARBOX.get(row["Коробка"], ""),
-                                   DRIVE.get(row["Привод"], "f"), mild, token(row["Марка"], row["Версия"])))
+                                   DRIVE.get(row["Привод"], ""), mild, token(row["Марка"], row["Версия"])))
 
     with open(os.path.join(ROOT, "data", "model-trims.json"), encoding="utf8") as handle:
         trims = json.load(handle)["rows"]
