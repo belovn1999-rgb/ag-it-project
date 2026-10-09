@@ -1,6 +1,7 @@
 // B61 stage 4 (PROJECT-MOBILE.md 4.8): the page-1 lists follow the real
-// versions of the chosen model and years (data: src/model-specs.generated.js,
-// built from docs/MODEL-ENGINES.md and docs/MODEL-TRIMS.md).
+// versions of the chosen model and years (data: src/model-specs/<brand>.js,
+// one file per brand loaded when the brand is chosen, listed in
+// src/model-specs/index.js; built by tools/build-model-specs.py).
 // - Rok: years grouped under the model's generations (newest first, facelift
 //   marked), other years below the divider (the line under the field that
 //   named the generations is gone, owner 2026-10-04: the list says it).
@@ -17,7 +18,26 @@
 // lists exactly as before. Sub-models use their family: BMW "320" and
 // Mercedes "C 220" also narrow the engines by the number in the version name.
 (() => {
-  const models = window.AUTOGOOD_MODEL_SPECS?.models || {};
+  const index = window.AUTOGOOD_MODEL_SPECS_INDEX?.brands || {};
+  const models = {};
+  const requested = new Set();
+
+  // The brand's data arrives once, the first time the brand is chosen; the
+  // lists are drawn again when it is there (until then they stay as before).
+  function loadBrand(brand) {
+    const entry = index[brand];
+    if (!entry || requested.has(brand)) return;
+    requested.add(brand);
+    const script = document.createElement("script");
+    script.src = `./src/model-specs/${entry.file}?v=${entry.v}`;
+    script.onload = () => {
+      Object.assign(models, window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand] || {});
+      refresh();
+      if (typeof renderComboMenus === "function") renderComboMenus();
+    };
+    script.onerror = () => requested.delete(brand);
+    document.head.appendChild(script);
+  }
   const TEXT = {
     pl: {
       lift: "lifting",
@@ -74,6 +94,7 @@
   // The family data of the chosen (sub-)model, or null.
   function family(brand, model) {
     if (!brand || !model) return null;
+    loadBrand(brand);
     const direct = findModel(brand, model);
     if (direct) return { key: direct, token: "", mobile: direct === "Volkswagen|T6" ? "T6" : "" };
     const sub = Object.entries(SUBMODELS[brand] || {}).find(([name]) => lower(name) === lower(model));

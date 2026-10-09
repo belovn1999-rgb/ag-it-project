@@ -262,11 +262,19 @@ requireHtml('data-mobile-options="version"', "lista Wersja z liniami wyposażeni
 // Owner 2026-10-04: no generation line under Rok (the list says it); the
 // model's bodies dim Nadwozie, doors, seats and the sliding door (B70).
 requireSource("window.AUTOGOOD_COMBO_UNAVAILABLE?.(control.dataset.mobileOptions)", "przygaszone drzwi, miejsca i drzwi przesuwne modelu");
-requireHtml("./src/model-specs.generated.js", "dane modeli dla list");
+// Owner 2026-10-05: the model data is split by brand (src/model-specs/<brand>.js,
+// loaded when the brand is chosen); the page loads only the index.
+requireHtml("./src/model-specs/index.js", "dane modeli dla list (indeks marek)");
 requireSource("window.AUTOGOOD_MODEL_SPECS_UI.enhance(sets)", "listy według realnych wersji modelu");
 {
-  const specsSource = await fs.readFile(path.join(repoRoot, "src", "model-specs.generated.js"), "utf8");
-  const specs = JSON.parse(specsSource.slice(specsSource.indexOf("{"), specsSource.lastIndexOf("}") + 1));
+  const json = (source) => JSON.parse(source.slice(source.indexOf("{"), source.lastIndexOf("}") + 1));
+  const specsDir = path.join(repoRoot, "src", "model-specs");
+  const specsIndex = json(await fs.readFile(path.join(specsDir, "index.js"), "utf8"));
+  const specs = { models: {} };
+  for (const entry of Object.values(specsIndex.brands || {})) {
+    const source = await fs.readFile(path.join(specsDir, entry.file), "utf8");
+    Object.assign(specs.models, json(source.slice(source.lastIndexOf("] = ") + 4)));
+  }
   const specModels = Object.keys(specs.models || {});
   if (specModels.length < 65) throw new Error(`Dane modeli: ${specModels.length}/65 modeli.`);
   const empty = specModels.filter((key) => !specs.models[key].gens.length || !specs.models[key].versions.length);
