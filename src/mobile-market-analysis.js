@@ -4173,6 +4173,29 @@
     });
   }
 
+  // The favourites' order set by dragging the cards (owner 2026-10-09): ids
+  // in display order, a key of its own — the favourites themselves are not
+  // written, so a lost order never touches them (§4.6.1).
+  const FAVORITE_ORDER_KEY = "autogood.mobile.favoriteOrder.v1";
+  function readFavoriteOrder() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(FAVORITE_ORDER_KEY) || "[]");
+      return Array.isArray(saved) ? saved.filter((id) => typeof id === "string") : [];
+    } catch {
+      return [];
+    }
+  }
+  // The bar's cards in their new order; the other language's keep theirs.
+  function saveFavoriteOrder(shownIds) {
+    const pinned = new Set(pinnedFavorites().map((entry) => entry.id));
+    const others = readFavoriteOrder().filter((id) => !shownIds.includes(id) && pinned.has(id));
+    try {
+      localStorage.setItem(FAVORITE_ORDER_KEY, JSON.stringify([...shownIds, ...others]));
+    } catch {
+      // Kept until the bar is drawn again.
+    }
+  }
+
   // The bar shows one language's favourites (PL / RU); it follows the page
   // language and can be switched on its own.
   let favoritesLang = "";
@@ -4180,8 +4203,14 @@
     const c = copy();
     const lang = favoritesLang || currentLanguage();
     const all = pinnedFavorites();
-    // Owner 2026-10-07: the newest first (top left), in two rows.
-    const favorites = all.filter((entry) => (entry.lang || "pl") === lang).reverse();
+    // Owner 2026-10-07: the newest first (top left), in two rows; cards moved
+    // by hand (owner 2026-10-09) keep their place, a new one comes first.
+    const rank = new Map(readFavoriteOrder().map((id, index) => [id, index]));
+    const favorites = all.filter((entry) => (entry.lang || "pl") === lang).reverse()
+      .map((entry, index) => ({ entry, index }))
+      .sort((left, right) => (rank.has(left.entry.id) ? 1 : 0) - (rank.has(right.entry.id) ? 1 : 0)
+        || (rank.get(left.entry.id) ?? left.index) - (rank.get(right.entry.id) ?? right.index))
+      .map(({ entry }) => entry);
     const count = (code) => all.filter((entry) => (entry.lang || "pl") === code).length;
     return `
       <section class="mobileMarketFavorites" data-report-hide aria-label="${escapeMarketHtml(c.favoritesHeading)}">
@@ -4196,7 +4225,7 @@
             const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
             const meta = historyMeta(entry.filters).slice(0, 2).join(" · ");
             // No prices on favourites: the car and its filters only.
-            return `<div class="mobileMarketFavoriteItem">
+            return `<div class="mobileMarketFavoriteItem" draggable="true" data-favorite-item="${escapeMarketHtml(entry.id)}">
               <button class="mobileMarketFavorite${entry.id === activeId ? " isActive" : ""}" type="button" data-mobile-market-favorite="${escapeMarketHtml(entry.id)}"${entry.id === activeId ? ' aria-current="true"' : ""}>
                 <b>${escapeMarketHtml(title)}</b>
                 ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
@@ -10044,6 +10073,39 @@
     openFavorite(id);
   };
   favoritesBar?.addEventListener("click", handleFavoriteClick);
+  // Dragging a favourite card puts it anywhere in the bar (owner 2026-10-09):
+  // the cards make room while it moves, the order is kept on drop.
+  let draggedFavorite = null;
+  favoritesBar?.addEventListener("dragstart", (event) => {
+    const item = event.target.closest?.("[data-favorite-item]");
+    if (!item || event.target.closest(".mobileMarketFavoriteNoteInput")) return;
+    draggedFavorite = item;
+    item.classList.add("isDragging");
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", item.dataset.favoriteItem);
+  });
+  favoritesBar?.addEventListener("dragover", (event) => {
+    if (!draggedFavorite) return;
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+    const target = event.target.closest?.("[data-favorite-item]");
+    if (!target || target === draggedFavorite) return;
+    const box = target.getBoundingClientRect();
+    const after = event.clientX > box.left + box.width / 2;
+    if (after ? target.nextElementSibling !== draggedFavorite : target.previousElementSibling !== draggedFavorite) {
+      target.parentElement.insertBefore(draggedFavorite, after ? target.nextElementSibling : target);
+    }
+  });
+  favoritesBar?.addEventListener("drop", (event) => {
+    if (draggedFavorite) event.preventDefault();
+  });
+  favoritesBar?.addEventListener("dragend", () => {
+    if (!draggedFavorite) return;
+    const list = draggedFavorite.parentElement;
+    draggedFavorite.classList.remove("isDragging");
+    draggedFavorite = null;
+    if (list) saveFavoriteOrder([...list.querySelectorAll(":scope > [data-favorite-item]")].map((item) => item.dataset.favoriteItem));
+  });
   favoritesPage?.addEventListener("click", handleFavoriteClick);
 
   // Page 1, "Aktualne oferty" (B68): a click anywhere on a country's block

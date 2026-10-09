@@ -1877,3 +1877,16 @@
     display: none;
   }
 }
+
+/* Favourites: a card is dragged anywhere in the bar (owner 2026-10-09). */
+.mobileFavoritesBar .mobileMarketFavoriteItem[draggable="true"] {
+  cursor: grab;
+}
+
+.mobileFavoritesBar .mobileMarketFavoriteItem.isDragging {
+  opacity: 0.4;
+}
+
+.mobileFavoritesBar .mobileMarketFavoriteItem.isDragging .mobileMarketFavorite {
+  border-style: dashed;
+}
