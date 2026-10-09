@@ -1357,12 +1357,14 @@
   let chartSources = (() => {
     try {
       const saved = JSON.parse(localStorage.getItem(MARKETS_STORAGE_KEY) || "null");
+      // Kleinanzeigen starts every search switched off and out of the
+      // statistics (owner 2026-10-09); its grey logo takes it in.
       // Blocket starts switched off (owner, 2026-09-29): once for choices saved earlier.
       const blocketReset = localStorage.getItem("autogood.mobile.markets.blocketOff") !== "1";
       if (blocketReset) localStorage.setItem("autogood.mobile.markets.blocketOff", "1");
       if (saved && ["otomoto", "mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "paruvendu", "marktplaats", "dehands", "blocket", "avby"].some((source) => saved[source])) {
         // AutoScout24 goes with mobile.de for choices saved before it existed.
-        const picked = { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), autoscout: "autoscout" in saved ? Boolean(saved.autoscout) : Boolean(saved.mobile), blocket: blocketReset ? false : Boolean(saved.blocket), avby: Boolean(saved.avby), autoscoutfr: Boolean(saved.autoscoutfr), marktplaats: Boolean(saved.marktplaats), dehands: Boolean(saved.dehands), kleinanzeigen: Boolean(saved.kleinanzeigen), paruvendu: Boolean(saved.paruvendu) };
+        const picked = { otomoto: Boolean(saved.otomoto), mobile: Boolean(saved.mobile), autoscout: "autoscout" in saved ? Boolean(saved.autoscout) : Boolean(saved.mobile), blocket: blocketReset ? false : Boolean(saved.blocket), avby: Boolean(saved.avby), autoscoutfr: Boolean(saved.autoscoutfr), marktplaats: Boolean(saved.marktplaats), dehands: Boolean(saved.dehands), kleinanzeigen: false, paruvendu: Boolean(saved.paruvendu) };
         if (Object.values(picked).some(Boolean)) return picked;
       }
     } catch {
@@ -3703,7 +3705,9 @@
       // Saved before AutoScout24 existed (mobile.de without a word on it):
       // AutoScout24 keeps its current state instead of being switched off.
       const knowsAutoscout = filters.markets.includes("autoscout") || !filters.markets.includes("mobile");
-      setChartSources(Object.fromEntries(MARKET_SOURCES.map((source) => [source, source === "autoscout" && !knowsAutoscout ? Boolean(chartSources.autoscout) : filters.markets.includes(source)])));
+      // Kleinanzeigen is not taken back with a saved search (owner 2026-10-09).
+      const saved = filters.markets.filter((source) => source !== "kleinanzeigen");
+      if (saved.length) setChartSources(Object.fromEntries(MARKET_SOURCES.map((source) => [source, source === "autoscout" && !knowsAutoscout ? Boolean(chartSources.autoscout) : saved.includes(source)])));
     }
   }
 
@@ -10173,6 +10177,23 @@
     if (rule.countries) setFormCountries(rule.countries);
     renderMarketPicker();
   };
+
+  // Another car in the form is a new search: Kleinanzeigen off again (owner
+  // 2026-10-09). An ad from Kleinanzeigen turns it on after its fields are
+  // filled (AUTOGOOD_SET_AD_COUNTRY), so it stays on for that ad.
+  let searchedCar = "";
+  const carOfForm = () => ["[data-mobile-brand]", "[data-mobile-model]"]
+    .map((selector) => document.querySelector(selector)?.value.trim().toLowerCase() || "").join("|");
+  searchedCar = carOfForm();
+  document.addEventListener("change", (event) => {
+    if (!event.target.closest?.("[data-mobile-brand], [data-mobile-model]")) return;
+    const car = carOfForm();
+    if (car === searchedCar) return;
+    searchedCar = car;
+    if (!chartSources.kleinanzeigen) return;
+    const next = { ...chartSources, kleinanzeigen: false };
+    if (MARKET_SOURCES.some((source) => next[source])) applyChartSources(next);
+  });
 
   window.AUTOGOOD_SELECTED_MARKETS = () => MARKET_SOURCES.filter((source) => chartSources[source]);
   // av.by compared (Belarus): the page opens in Russian, as when av.by is picked.
