@@ -1819,6 +1819,35 @@
     }
   }
 
+  // One car listed twice (mobile.de and AutoScout24, or the same portal
+  // twice): same price, same mileage, same year → kept once, on the chart, in
+  // the statistics and in the list (owner 2026-10-09). The copy with a link
+  // and from the main portal stays.
+  const OFFER_PREFERENCE = ["mobile", "otomoto", "autoscout", "blocket", "marktplaats", "dehands", "autoscoutfr", "paruvendu", "kleinanzeigen", "avby"];
+  function uniqueOffers(listings) {
+    const rank = (listing) => (listing.url ? 0 : 100) + Math.max(0, OFFER_PREFERENCE.indexOf(listingSource(listing)));
+    const kept = new Map();
+    const out = [];
+    (listings || []).forEach((listing) => {
+      const mileage = Number(listing.mileage) || 0;
+      const price = Math.round(Number(listing.price) || 0);
+      if (mileage < 1000 || !price) {
+        out.push(listing);
+        return;
+      }
+      const key = `${String(listing.currency || "EUR").toUpperCase()}|${price}|${Math.round(mileage)}|${Number(listing.year) || ""}`;
+      const seen = kept.get(key);
+      if (!seen) {
+        kept.set(key, { listing, index: out.length });
+        out.push(listing);
+      } else if (rank(listing) < rank(seen.listing)) {
+        out[seen.index] = listing;
+        seen.listing = listing;
+      }
+    });
+    return out;
+  }
+
   function escapeMarketHtml(value) {
     return String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -3005,7 +3034,8 @@
   // each marketplace is written down with the date, so price changes of a
   // tracked car can be followed over weeks. Otomoto in PLN, Mobile.de in EUR,
   // so the exchange rate does not move the history.
-  function marketPricePoint(listings, at, filters = {}) {
+  function marketPricePoint(rawListings, at, filters = {}) {
+    const listings = uniqueOffers(rawListings);
     const point = { at };
     MARKET_SOURCES.forEach((source) => {
       const currency = SOURCE_CURRENCY[source];
@@ -7468,7 +7498,7 @@
     const stored = providerId === "import" || providerId === "history";
     // Every valid offer remains in the sample, including unusually priced ones.
     const bySource = Object.fromEntries(MARKET_SOURCES.map((source) => [source, []]));
-    listings.forEach((listing) => bySource[listingMarket(listing)].push(listing));
+    uniqueOffers(listings).forEach((listing) => bySource[listingMarket(listing)].push(listing));
     const inPlnForChecks = (listing) => priceInPln(listing.price, listing.currency || "EUR");
     const cleaned = {};
     const suspects = {};
