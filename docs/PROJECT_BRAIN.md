@@ -26,6 +26,7 @@
 | Переезд на сервер | все | [AUTOGOOD_SERVER_DEPLOYMENT.md](AUTOGOOD_SERVER_DEPLOYMENT.md) | Требования к серверу, данные пользователей |
 | Инфраструктура чтения порталов (B73) | `mobile.html` | [PORTAL-INFRASTRUCTURE.md](PORTAL-INFRASTRUCTURE.md) | Worker-прокси, Chrome-узел mobile.de, постоянный адрес, ключи сотрудников, очередь и кэш, варианты с ценами, этапы |
 | Monitoring на сервере (B43) | `mobile.html` | [MONITORING-SERVER.md](MONITORING-SERVER.md) | Задания из браузера → раннер с Chrome → записи → браузер; что осталось при запуске сервера |
+| Похожие open source проекты | `mobile.html`, оффер | [REFERENCE-PROJECTS.md](REFERENCE-PROJECTS.md) | deal-finder разобран по коду; идеи R1–R10 (уведомления, ИИ-проверка «обязательно», перевод описаний, «почему отсеяно», health-проверки); otomoto/av.by/Cloudflare-аналоги на проверку |
 | Калькуляторы | `calculators.html` | OPEN: отдельного документа нет | Формулы живут в `src/main.jsx` |
 | Договоры и документы | `umowy.html`, `pdf.html`, `umowa-sprzedazy.html`, `oswiadczenie-o-braku-tablic.html` | OPEN: отдельного документа нет | Распознавание данных и DOCX→PDF: `*.mdf`-выгрузки в `docs/` |
 
@@ -71,6 +72,7 @@
 
 ## 8. Журнал
 
+- 2026-10-10 — исследование похожих open source проектов (`docs/REFERENCE-PROJECTS.md`): deal-finder разобран по коду, 10 идей R1–R10 для Monitoring и оффера (HYPOTHESIS), аналоги для otomoto, av.by и Cloudflare-инфраструктуры; полного аналога нет (Claude).
 - 2026-10-10 — mobile.html: кнопки разделов в одной рамке и левее; такие же кнопки и цветные заголовки на стр. 2 (Claude).
 - 2026-10-10 — mobile.html, стр. 2, аудит волна 1: «Aktualne oferty» с числами текущего поиска, дата данных у названия (старше 2 дней — жёлтым), не висит «Przygotowuję analizę…», «Kolejność cen» — ровная линия по нашему списку от самого дешёвого (Claude).
 - 2026-10-10 — mobile.html, стр. 1: кнопки разделов слева — крупные значки в цвете раздела с рамкой и тенью, название при наведении; заголовки разделов в тех же цветах (Claude).
