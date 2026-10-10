@@ -492,6 +492,13 @@
       sortMileageAsc: "Przebieg: od najmniejszego",
       sortMileageDesc: "Przebieg: od największego",
       sortDeviationAsc: "Najtańsze względem mediany",
+      sortDaysDesc: "Najdłużej w ofercie",
+      sortDropAsc: "Największa obniżka",
+      tableDays: "W ofercie",
+      tableDrop: "Obniżka",
+      liquidityWas: "było {price}",
+      liquiditySeenTitle: "Portal nie podaje daty: to dzień sprawdzenia tego wyszukiwania (Monitoring albo „Odśwież dane”), w którym auto pojawiło się po raz pierwszy.",
+      liquidityBeforeTitle: "Auto było już przy pierwszym sprawdzeniu tego wyszukiwania — wystawione wcześniej, dokładnej daty portal nie podaje.",
       segmentsHeading: "Cena a parametry",
       statsMileageHeading: "Cena a przebieg",
       segmentYear: "Rok produkcji",
@@ -1135,6 +1142,13 @@
       sortMileageAsc: "Пробег: сначала меньший",
       sortMileageDesc: "Пробег: сначала больший",
       sortDeviationAsc: "Дешевле всего к медиане",
+      sortDaysDesc: "Дольше всех в продаже",
+      sortDropAsc: "Сильнее всего подешевели",
+      tableDays: "В продаже",
+      tableDrop: "Снижение",
+      liquidityWas: "было {price}",
+      liquiditySeenTitle: "Портал не даёт дату: это день проверки этого поиска (Monitoring или «Обновить данные»), в которую авто появилось впервые.",
+      liquidityBeforeTitle: "Авто было уже при первой проверке этого поиска — выставлено раньше, точную дату портал не даёт.",
       segmentsHeading: "Цена и параметры",
       statsMileageHeading: "Цена и пробег",
       segmentYear: "Год выпуска",
@@ -3363,6 +3377,77 @@
     const byDate = new Map(records.map((record) => [record.at, record]));
     checkOffersCache.set(historyId, byDate);
     return byDate;
+  }
+
+  // Days on the market and price drops on page 2 (B22 there, owner 10.10,
+  // variant B): the portal's own date and earlier price (otomoto, blocket)
+  // and every saved check of this search — Monitoring and "Odśwież dane" —
+  // which know every portal. Read once per search; page 2 is drawn again
+  // when they arrive, and again after a new check (the cache of checks is
+  // dropped then).
+  const offerHistoryCache = new Map();
+  const offerHistoryLoading = new Set();
+  function offerHistoryFor(historyId) {
+    if (!historyId) return null;
+    const byDate = checkOffersCache.get(historyId);
+    const cached = offerHistoryCache.get(historyId);
+    if (byDate && cached?.source === byDate) return cached;
+    if (byDate) {
+      const checks = [...byDate.values()].sort((left, right) => left.at.localeCompare(right.at));
+      const firstSeen = new Map();
+      const pricePath = new Map();
+      checks.forEach((item) => {
+        [...Object.values(item.markets || {}), ...Object.values(item.extra?.markets || {})].forEach((market) => (market.offers || []).forEach((offer) => {
+          if (!firstSeen.has(offer.key)) firstSeen.set(offer.key, item.at);
+          const path = pricePath.get(offer.key) || [];
+          if (!path.length || path[path.length - 1].price !== offer.price) path.push({ at: item.at, price: offer.price });
+          pricePath.set(offer.key, path);
+        }));
+      });
+      const built = { source: byDate, firstSeen, pricePath, firstCheckAt: checks[0]?.at || "" };
+      offerHistoryCache.set(historyId, built);
+      return built;
+    }
+    if (!offerHistoryLoading.has(historyId)) {
+      offerHistoryLoading.add(historyId);
+      loadCheckOffers(historyId).finally(() => {
+        offerHistoryLoading.delete(historyId);
+        if (activeAnalysis?.historyId === historyId && !analysisView.hidden) renderAnalysis();
+      });
+    }
+    return null;
+  }
+
+  // One offer of page 2: since when it is listed and how much cheaper it got
+  // (prices compared in the ad's own currency, as the checks keep them).
+  function offerLiquidity(listing, history) {
+    const key = offerKey(listing);
+    const listed = listing.listedAt && Number.isFinite(Date.parse(listing.listedAt)) ? listing.listedAt : "";
+    const seenAt = history?.firstSeen.get(key) || "";
+    // otomoto renews its date when an ad is refreshed: an earlier check wins.
+    const info = listed && (!seenAt || Date.parse(listed) <= Date.parse(seenAt))
+      ? { at: listed, kind: "listed" }
+      : seenAt ? { at: seenAt, kind: seenAt === history.firstCheckAt ? "before" : "seen" } : null;
+    const days = info ? Math.floor(daysSince(info.at)) : null;
+    const price = Number(listing.originalPrice ?? listing.price) || 0;
+    // The checks' prices, then today's when it differs.
+    const saved = history?.pricePath.get(key) || [];
+    const path = price && saved.length && saved[saved.length - 1].price !== price ? [...saved, { price }] : saved;
+    const was = Number(listing.oldPrice) > price ? Number(listing.oldPrice) : 0;
+    const highest = Math.max(was, ...path.map((point) => Number(point.price) || 0));
+    const dropped = price > 0 && highest > price;
+    const seenDrops = path.filter((point, index) => index && point.price < path[index - 1].price).length;
+    return {
+      kind: info?.kind || "",
+      at: info?.at || "",
+      // "Already there at the first check" says nothing on the day of it.
+      days: days !== null && (info.kind !== "before" || days >= 1) ? days : null,
+      dropped,
+      from: dropped ? highest : null,
+      share: dropped ? (price - highest) / highest : 0,
+      drops: dropped ? Math.max(1, seenDrops + (was > (Number(path[0]?.price) || price) ? 1 : 0)) : 0,
+      deal: dropped && days !== null && days >= NEGOTIATION_DAYS,
+    };
   }
 
   function withPriceLog(entry, previous) {
@@ -7941,9 +8026,14 @@
         const prices = marketListings.filter((listing) => listing.source === source).map((listing) => listing.price).sort((left, right) => left - right);
         return [source, prices.length ? percentile(prices, 0.5) : 0];
       }));
+      const offerHistory = offerHistoryFor(activeAnalysis.historyId);
       [...marketListings, ...suspectListings].forEach((listing) => {
         listing.powerKm = powerKmOf(listing.power);
         listing.deviation = sourceMedian[listing.source] ? (listing.price - sourceMedian[listing.source]) / sourceMedian[listing.source] : 0;
+        listing.liquidity = offerLiquidity(listing, offerHistory);
+        // Sort keys: days in the offer (unknown last), the drop (biggest first).
+        listing.days = listing.liquidity.days ?? -1;
+        listing.drop = listing.liquidity.share;
       });
 
       // The table lists every offer on the chart, the left-out ones greyed.
@@ -8739,6 +8829,8 @@
         gearbox: (!filters.gearbox || filters.gearbox === "any") && anyListing((listing) => listing.gearbox),
         seller: !filters.seller && anyListing((listing) => listing.seller === "dealer" || listing.seller === "private"),
         place: anyListing((listing) => listing.city),
+        days: anyListing((listing) => listing.liquidity?.days !== null),
+        drop: anyListing((listing) => listing.liquidity?.dropped),
       };
       const engineText = (listing) => [
         Number(listing.displacementCcm) > 500 ? litres(listing.displacementCcm) : "",
@@ -8771,6 +8863,9 @@
         ...(extra.gearbox ? [["gearbox", c.tableGearbox, false, "", 8]] : []),
         ["price", c.tablePrice, true, "isNum", byMode ? 24 : 16],
         ["deviation", c.tableDeviation, true, "isNum", 8],
+        // How long on offer and how much cheaper (only when known for some).
+        ...(extra.days ? [["days", c.tableDays, true, "isNum", 8]] : []),
+        ...(extra.drop ? [["drop", c.tableDrop, true, "isNum", 10]] : []),
         // The seller with the town under it (or the town alone).
         // The seller with the town under it, the country's flag after the
         // town (owner 2026-10-05: no "Rynek" column).
@@ -8856,6 +8951,20 @@
           case "gearbox": return escapeMarketHtml(gearboxText(listing));
           case "price": return priceHtml(listing);
           case "deviation": return escapeMarketHtml(deviationText(listing));
+          case "days": {
+            const info = listing.liquidity;
+            if (info?.days === null || info?.days === undefined) return "—";
+            const title = { listed: c.monitoringListedTitle, seen: c.liquiditySeenTitle, before: c.liquidityBeforeTitle }[info.kind] || "";
+            return `<span title="${escapeMarketHtml(`${title} ${shortDate(info.at)}`.trim())}">${info.kind === "before" ? "≥ " : ""}${escapeMarketHtml(daysText(info.days))}</span>${info.deal ? `<small class="mobileMarketDealTag" title="${escapeMarketHtml(c.monitoringDealTitle)}">${escapeMarketHtml(c.monitoringDeal)}</small>` : ""}`;
+          }
+          case "drop": {
+            const info = listing.liquidity;
+            if (!info?.dropped) return "—";
+            const currency = listing.originalCurrency || SOURCE_CURRENCY[listing.portal] || "EUR";
+            const pct = `−${Math.abs(Math.round(info.share * 1000) / 10).toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL")} %`;
+            // Today's price stands in "Cena": here only what it was.
+            return `<span title="${escapeMarketHtml(`${c.monitoringDropTitle} ${formatPlainPrice(info.from, currency)} → ${formatPlainPrice(Number(listing.originalPrice ?? listing.price), currency)}`)}">↓ ${escapeMarketHtml(pct)}</span><small>${escapeMarketHtml(c.liquidityWas.replace("{price}", formatPlainPrice(info.from, currency).replace(/\s/g, "\u00a0")))}${info.drops > 1 ? ` · ${escapeMarketHtml(c.monitoringDropTimes.replace("{count}", String(info.drops)))}` : ""}</small>`;
+          }
           case "seller": return extra.seller
             ? `${escapeMarketHtml(sellerText(listing))}<small>${placeHtml(listing)}</small>`
             : placeHtml(listing);
@@ -8869,6 +8978,8 @@
         if (key === "link") classes.push("mobileMarketTableLink");
         if (key === "seller" || key === "powerKm") classes.push("mobileMarketSellerCell");
         if (key === "deviation" && sourceMedian[listing.source]) classes.push(listing.deviation <= -0.02 ? "isBelow" : listing.deviation >= 0.02 ? "isAbove" : "");
+        if (key === "drop" && listing.liquidity?.dropped) classes.push("isBelow");
+        if (key === "days" || key === "drop") classes.push("mobileMarketLiquidityCell");
         return classes.filter(Boolean).join(" ");
       };
 
@@ -8882,7 +8993,7 @@
               <label class="mobileMarketSortPick">
                 <span>${escapeMarketHtml(c.tableSortLabel)}</span>
                 <select data-mobile-market-sort-select aria-label="${escapeMarketHtml(c.tableSortLabel)}">
-                  ${[["price", "asc", c.sortPriceAsc], ["price", "desc", c.sortPriceDesc], ["year", "desc", c.sortYearDesc], ["year", "asc", c.sortYearAsc], ["mileage", "asc", c.sortMileageAsc], ["mileage", "desc", c.sortMileageDesc], ["deviation", "asc", c.sortDeviationAsc]].map(([key, direction, label]) => `<option value="${key}:${direction}"${tableSort.key === key && tableSort.direction === direction ? " selected" : ""}>${escapeMarketHtml(label)}</option>`).join("")}
+                  ${[["price", "asc", c.sortPriceAsc], ["price", "desc", c.sortPriceDesc], ["year", "desc", c.sortYearDesc], ["year", "asc", c.sortYearAsc], ["mileage", "asc", c.sortMileageAsc], ["mileage", "desc", c.sortMileageDesc], ["deviation", "asc", c.sortDeviationAsc], ...(extra.days ? [["days", "desc", c.sortDaysDesc]] : []), ...(extra.drop ? [["drop", "asc", c.sortDropAsc]] : [])].map(([key, direction, label]) => `<option value="${key}:${direction}"${tableSort.key === key && tableSort.direction === direction ? " selected" : ""}>${escapeMarketHtml(label)}</option>`).join("")}
                 </select>
               </label>
             </div>
@@ -9921,7 +10032,8 @@
       const key = sortButton.dataset.mobileMarketSort;
       tableSort = tableSort.key === key
         ? { key, direction: tableSort.direction === "asc" ? "desc" : "asc" }
-        : { key, direction: "asc" };
+        // Days in the offer: the longest first.
+        : { key, direction: key === "days" ? "desc" : "asc" };
       renderAnalysis();
       return;
     }
