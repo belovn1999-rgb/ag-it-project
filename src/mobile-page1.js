@@ -626,62 +626,100 @@
     updateMore();
   }
 
-  // ---- Section rail (owner 2026-10-08): on the left of page 1, a button
-  // per section; a click takes the page to the section's start. The section
-  // in view is marked. Icons only, the name shows on hover (owner 10.10);
-  // each section has its colour, the same as its heading's icon on the page
-  // (mobile-page1.css, --ag-section-*). Names and icons come from the
-  // sections' own headings (PL / RU follow).
-  const SECTIONS = [
-    [".mobileListingLinkCard", "#mobile-listing-link-heading", "link"],
-    [".mobileManualPanel", "[data-i18n='offerCountLabel']", "offers"],
-    ["#mobile-filter-group-vehicle", "", "vehicle"],
-    ["#mobile-filter-group-engine", "", "engine"],
-    ["#mobile-filter-group-gearbox", "", "gearbox"],
-    ["#mobile-filter-group-price", "", "price"],
-    ["#mobile-filter-group-equipment", "", "equipment"],
-    ["#mobile-filter-group-more", "", "more"],
-    ["[data-mobile-market-history]", ".mobileMarketHistoryTitle", "history"],
+  // ---- Section rail (owner 2026-10-08): on the left of pages 1 and 2 (owner
+  // 10.10), a button per section in one frame; a click takes the page to the
+  // section's start, the section in view is marked. Icons only, the name
+  // shows on hover; each section has its colour, the same as its heading's
+  // icon on the page (mobile-page1.css, --ag-section-*). Names and icons come
+  // from the sections' own headings (PL / RU follow). Page 2 is drawn anew
+  // with each analysis, so the sections are looked up on every pass.
+  const RAIL_PAGES = [
+    {
+      view: "[data-mobile-method-view='manual']",
+      slim: true,
+      sections: [
+        { key: "link", target: ".mobileListingLinkCard", heading: "#mobile-listing-link-heading", pageTop: true },
+        { key: "offers", target: ".mobileManualPanel", heading: "[data-i18n='offerCountLabel']", noSlim: true },
+        { key: "vehicle", target: "#mobile-filter-group-vehicle" },
+        { key: "engine", target: "#mobile-filter-group-engine" },
+        { key: "gearbox", target: "#mobile-filter-group-gearbox" },
+        { key: "price", target: "#mobile-filter-group-price" },
+        { key: "equipment", target: "#mobile-filter-group-equipment" },
+        { key: "more", target: "#mobile-filter-group-more" },
+        { key: "history", target: "[data-mobile-market-history]", heading: ".mobileMarketHistoryTitle" },
+      ],
+    },
+    {
+      view: "[data-mobile-market-analysis-view]",
+      sections: [
+        { key: "a-search", target: ".mobileMarketSearchCard" },
+        { key: "a-stats", target: ".mobileMarketStatsCard" },
+        { key: "a-segments", target: ".mobileMarketSegmentsCard" },
+        { key: "a-chart", target: ".mobileMarketChartCard" },
+        { key: "a-conclusion", target: ".mobileMarketSummaryCard" },
+        { key: "a-offers", target: ".mobileMarketOffersCard" },
+      ],
+    },
   ];
-  const manualView = document.querySelector("[data-mobile-method-view='manual']");
   const rail = document.createElement("nav");
   rail.className = "mobileSectionRail";
   rail.hidden = true;
-  const railTargets = SECTIONS.map(([target, heading, key]) => {
-    let section = document.querySelector(target);
+  let railPage = null;
+  let railTargets = [];
+  let railButtons = [];
+  let railKey = "";
+  let railPicked = null;
+  const railPageNow = () => RAIL_PAGES.find((page) => {
+    const view = document.querySelector(page.view);
+    return view && !view.hidden;
+  }) || null;
+  const findTargets = (page) => (page ? page.sections.map((spec) => {
+    let section = document.querySelector(spec.target);
     if (section?.matches("h2")) section = section.closest("section");
-    const title = heading ? document.querySelector(heading) : section?.querySelector("h2");
-    return section && title ? { section, title, key } : null;
-  }).filter(Boolean);
-  rail.innerHTML = railTargets.map(({ key }, index) => `<button type="button" data-section-rail="${index}" data-section="${key}"><svg aria-hidden="true"><use></use></svg><span></span></button>`).join("");
-  const railButtons = [...rail.querySelectorAll("button")];
-  // Under the navigation and the slim bar (it shows once the chosen filters
-  // are scrolled away; its last height is kept while hidden).
+    const title = spec.heading ? document.querySelector(spec.heading) : section?.querySelector("h2");
+    return section && title && !section.hidden ? { ...spec, section, title } : null;
+  }).filter(Boolean) : []);
+  // Under the navigation and, on page 1, the slim bar (it shows once the
+  // chosen filters are scrolled away; its last height is kept while hidden).
   let slimHeight = 92;
-  const railOffset = (withSlim = true) => {
+  const railOffset = (withSlim) => {
     const slim = document.querySelector(".mobileCompactBar");
     if (slim && !slim.hidden && slim.offsetHeight) slimHeight = slim.offsetHeight;
     return (document.querySelector(".agGlobalNav")?.offsetHeight || 59) + (withSlim ? slimHeight : 0) + 12;
   };
   const nameRail = () => {
-    const anyIcon = railTargets.find(({ section }) => section.querySelector("h2 use"))?.section.querySelector("h2 use")?.getAttribute("href");
     rail.setAttribute("aria-label", lang() === "ru" ? "Разделы" : "Sekcje");
     railTargets.forEach(({ section, title }, index) => {
-      // The heading's name, shown beside the icon on hover.
-      const name = (title.querySelector("span") || title).textContent.trim();
-      const label = name.charAt(0) + name.slice(1).toLowerCase();
+      // The heading's name (a capitalised one written normally), shown
+      // beside the icon on hover.
+      const name = (title.querySelector("span") || title).textContent.replace(/\s+/g, " ").trim();
+      const label = name === name.toUpperCase() ? name.charAt(0) + name.slice(1).toLowerCase() : name;
       const button = railButtons[index];
       if (button.lastChild.textContent !== label) button.lastChild.textContent = label;
-      const icon = (title.closest("h2") || section.querySelector("h2"))?.querySelector("use")?.getAttribute("href") || anyIcon;
+      const icon = (title.closest("h2") || section.querySelector("h2"))?.querySelector("use")?.getAttribute("href");
       if (icon && button.querySelector("use").getAttribute("href") !== icon) button.querySelector("use").setAttribute("href", icon);
     });
   };
-  let railPicked = null;
+  // The rail of the page on screen, drawn again when its sections change.
+  const buildRail = () => {
+    railPage = railPageNow();
+    railTargets = findTargets(railPage);
+    const key = `${RAIL_PAGES.indexOf(railPage)}:${railTargets.map((target) => target.key).join(",")}`;
+    if (key !== railKey) {
+      railKey = key;
+      railPicked = null;
+      rail.innerHTML = railTargets.map(({ key: section }, index) => `<button type="button" data-section-rail="${index}" data-section="${section}"><svg aria-hidden="true"><use></use></svg><span></span></button>`).join("");
+      railButtons = [...rail.querySelectorAll("button")];
+    }
+    nameRail();
+  };
   const markRail = () => {
-    const shown = Boolean(manualView && !manualView.hidden);
+    buildRail();
+    const shown = railTargets.length > 1;
     if (rail.hidden === shown) rail.hidden = !shown;
     if (!shown) return;
-    const line = railOffset() + 8;
+    const slim = document.querySelector(".mobileCompactBar");
+    const line = railOffset(Boolean(slim && !slim.hidden)) + 8;
     let current = 0;
     railTargets.forEach(({ section }, index) => {
       if (section.getBoundingClientRect().top <= line) current = index;
@@ -697,36 +735,40 @@
   rail.addEventListener("click", (event) => {
     const button = event.target.closest("[data-section-rail]");
     if (!button) return;
+    buildRail();
     const index = Number(button.dataset.sectionRail);
-    const { section } = railTargets[index];
+    const target = railTargets[index];
+    if (!target) return;
     railPicked = index;
-    // The first section is the page's top; the filters' panel starts with
-    // the chosen filters, so the slim bar does not show over it.
-    const top = index === 0 ? 0 : section.getBoundingClientRect().top + window.scrollY - railOffset(index > 1);
+    // Page 1's first section is the page's top; its filters' panel starts
+    // with the chosen filters, so the slim bar does not show over it.
+    const top = target.pageTop ? 0 : target.section.getBoundingClientRect().top + window.scrollY - railOffset(Boolean(railPage?.slim) && !target.noSlim);
     window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
   });
-  if (railTargets.length) {
-    document.body.append(rail);
-    nameRail();
-    onLanguage.push(nameRail);
-    // A timer after scrolling, not a frame: a background tab is marked too.
-    let railTimer = 0;
-    const scheduleRail = () => {
-      if (railTimer) return;
-      railTimer = setTimeout(() => {
-        railTimer = 0;
-        markRail();
-      }, 80);
-    };
-    window.addEventListener("scroll", scheduleRail, { passive: true });
-    // Scrolled by hand: the position alone tells the section again.
-    ["wheel", "touchmove", "keydown"].forEach((type) => window.addEventListener(type, () => {
-      railPicked = null;
-    }, { passive: true }));
-    window.addEventListener("resize", scheduleRail);
-    if (manualView) new MutationObserver(scheduleRail).observe(manualView, { attributes: true, attributeFilter: ["hidden"] });
-    markRail();
-  }
+  document.body.append(rail);
+  onLanguage.push(nameRail);
+  // A timer after scrolling, not a frame: a background tab is marked too.
+  let railTimer = 0;
+  const scheduleRail = () => {
+    if (railTimer) return;
+    railTimer = setTimeout(() => {
+      railTimer = 0;
+      markRail();
+    }, 80);
+  };
+  window.addEventListener("scroll", scheduleRail, { passive: true });
+  // Scrolled by hand: the position alone tells the section again.
+  ["wheel", "touchmove", "keydown"].forEach((type) => window.addEventListener(type, () => {
+    railPicked = null;
+  }, { passive: true }));
+  window.addEventListener("resize", scheduleRail);
+  RAIL_PAGES.forEach(({ view }) => {
+    const node = document.querySelector(view);
+    if (node) new MutationObserver(scheduleRail).observe(node, { attributes: true, attributeFilter: ["hidden"] });
+  });
+  const analysisBody = document.querySelector("[data-mobile-market-analysis-content]");
+  if (analysisBody) new MutationObserver(scheduleRail).observe(analysisBody, { childList: true });
+  markRail();
 
   // ---- 12. Favourites: the full name on hover when a card cuts it ----------
   const favoritesBar = document.querySelector("[data-mobile-favorites-bar]");

@@ -1801,6 +1801,13 @@
   --ag-section-equipment: #db2777;
   --ag-section-more: #c2410c;
   --ag-section-history: #475569;
+  /* Page 2 (owner 10.10): its own sections, each its colour. */
+  --ag-section-a-search: #0f766e;
+  --ag-section-a-stats: #2563eb;
+  --ag-section-a-segments: #7c3aed;
+  --ag-section-a-chart: #16a34a;
+  --ag-section-a-conclusion: #c2410c;
+  --ag-section-a-offers: #db2777;
 }
 
 .mobileSectionRail [data-section="link"],
@@ -1821,6 +1828,18 @@
 #mobile-filter-group-more { --ag-section: var(--ag-section-more); }
 .mobileSectionRail [data-section="history"],
 .mobileMarketHistoryTitle { --ag-section: var(--ag-section-history); }
+.mobileSectionRail [data-section="a-search"],
+.mobileMarketSearchCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-search); }
+.mobileSectionRail [data-section="a-stats"],
+.mobileMarketStatsCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-stats); }
+.mobileSectionRail [data-section="a-segments"],
+.mobileMarketSegmentsCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-segments); }
+.mobileSectionRail [data-section="a-chart"],
+.mobileMarketChartCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-chart); }
+.mobileSectionRail [data-section="a-conclusion"],
+.mobileMarketSummaryCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-conclusion); }
+.mobileSectionRail [data-section="a-offers"],
+.mobileMarketOffersCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-offers); }
 
 /* The sections' headings on page 1: the icon in its section's colour, a
    size larger. */
@@ -1832,7 +1851,16 @@
 #mobile-filter-group-price .mobileFieldIcon,
 #mobile-filter-group-equipment .mobileFieldIcon,
 #mobile-filter-group-more .mobileFieldIcon,
-.mobileMarketHistoryTitle .mobileFieldIcon {
+.mobileMarketHistoryTitle .mobileFieldIcon,
+.mobileMarketSearchCard .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMarketStatsCard .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMarketSegmentsCard .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMarketChartCard .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMarketSummaryCard .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMarketOffersCard .mobileMarketBlockTitle .mobileFieldIcon {
+  box-sizing: content-box;
+  padding: 6px;
+  border-radius: var(--radius-lg);
   width: 18px;
   height: 18px;
   border: var(--rule-thin) solid color-mix(in srgb, var(--ag-section) 22%, transparent);
@@ -1846,15 +1874,27 @@
   stroke-linejoin: round;
 }
 
+/* Page 2's headings: room for the framed icon. */
+.mobileMarketCard .mobileMarketBlockTitle {
+  gap: 10px;
+}
+
+/* Owner 10.10: the buttons in one frame of one colour, a little further
+   left. */
 .mobileSectionRail {
   position: fixed;
   z-index: 800;
   top: 50%;
-  left: max(6px, calc((100vw - 1200px) / 2 - 62px));
+  left: max(6px, calc((100vw - 1200px) / 2 - 86px));
   transform: translateY(-50%);
   display: grid;
   gap: 9px;
-  opacity: 0.8;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: 16px;
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  padding: 8px;
+  box-shadow: 0 10px 24px -14px rgba(22, 43, 72, 0.35);
+  opacity: 0.85;
   transition: opacity 0.2s ease;
 }
 
@@ -1913,7 +1953,7 @@
 .mobileSectionRail span {
   position: absolute;
   top: 50%;
-  left: calc(100% + 9px);
+  left: calc(100% + 18px);
   border: var(--rule-thin) solid color-mix(in srgb, var(--ag-section) 35%, var(--color-rule));
   border-radius: var(--radius-md);
   background: var(--color-surface);
@@ -1936,7 +1976,7 @@
   transform: translate(0, -50%);
 }
 
-@media (max-width: 1299px) {
+@media (max-width: 1359px) {
   .mobileSectionRail {
     display: none;
   }
