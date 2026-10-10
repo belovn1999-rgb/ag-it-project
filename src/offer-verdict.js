@@ -143,12 +143,17 @@
     } else if (seller.type === "dealer" || car.seller === "dealer") {
       const rating = seller.rating;
       const years = seller.since ? (/^\d{4}$/.test(seller.since) ? new Date(now).getUTCFullYear() - Number(seller.since) : yearsSince(seller.since, now)) : null;
+      // Short (owner 2026-10-10): the seller's figures are in its own card;
+      // here only what they mean — long on the market, good reviews, many cars.
       const parts = [];
-      if (years !== null && years >= 1) parts.push(T(`od ${Math.floor(years)} ${plural(Math.floor(years), "roku", "lat", "lat")} na ${rating?.portal || "portalu"}`, `${Math.floor(years)} ${pluralRu(Math.floor(years), "год", "года", "лет")} на ${rating?.portal || "портале"}`));
-      if (rating?.reviews) parts.push(T(`ocena ${score(rating.score)}/5 (${rating.reviews} ${plural(rating.reviews, "opinia", "opinie", "opinii")})`, `оценка ${score(rating.score)}/5 (${rating.reviews} ${pluralRu(rating.reviews, "отзыв", "отзыва", "отзывов")})`));
+      if (years !== null && years >= 10) parts.push(T("od wielu lat na rynku", "давно на рынке"));
+      else if (years !== null && years >= 3) parts.push(T("od kilku lat na rynku", "несколько лет на рынке"));
+      if (rating?.reviews >= 5 && rating.score >= 4.5) parts.push(T("bardzo dobre opinie", "отличная оценка"));
+      else if (rating?.reviews >= 5 && rating.score >= 4) parts.push(T("dobre opinie", "хорошая оценка"));
+      if (Number(seller.stock) >= 30) parts.push(T("duży wybór aut", "много авто в продаже"));
       if (rating?.reviews >= 5 && rating.score < 4) lines.push({ level: "warn", id: "seller:rating", text: T(`Słabsze opinie dealera: ${score(rating.score)}/5 (${rating.reviews} ${plural(rating.reviews, "opinia", "opinie", "opinii")})`, `Слабые отзывы о дилере: ${score(rating.score)}/5 (${rating.reviews} ${pluralRu(rating.reviews, "отзыв", "отзыва", "отзывов")})`) });
-      else if (parts.length) lines.push({ level: "ok", id: "seller:dealer", text: T(`Dealer ${parts.join(", ")}`, `Дилер: ${parts.join(", ")}`) });
-      else if (ad?.complete) lines.push({ level: "warn", id: "seller:unknown", text: T("Brak opinii i historii dealera na portalu — sprawdzimy firmę", "Нет отзывов и истории дилера на портале — проверим компанию") });
+      else if (parts.length) lines.push({ level: "ok", id: "seller:dealer", text: T(`Dealer ${parts.join(", ")}`, `Дилер ${parts.join(", ")}`) });
+      else if (ad?.complete && !rating?.reviews && years === null) lines.push({ level: "warn", id: "seller:unknown", text: T("Brak opinii i historii dealera na portalu — sprawdzimy firmę", "Нет отзывов и истории дилера на портале — проверим компанию") });
       if (Number.isFinite(rating?.adReality) && rating.adReality < 85) lines.push({ level: "warn", id: "seller:reality", text: T(`Kupujący oceniają zgodność ogłoszeń dealera na ${rating.adReality}%`, `Покупатели оценивают соответствие объявлений дилера на ${rating.adReality}%`) });
     }
     if (flags.onCustomerBehalf) lines.push({ level: "warn", id: "seller:behalf", text: T("Sprzedaż w imieniu klienta (komis) — dealer nie odpowiada za wady", "Продажа от имени клиента (комиссия) — дилер не отвечает за дефекты") });

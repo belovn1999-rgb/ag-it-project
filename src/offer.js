@@ -202,6 +202,19 @@
     return L("brutto", "брутто");
   }
 
+  // Under the price (owner 2026-10-10): can the car be bought net (VAT to
+  // deduct) or on a margin invoice only.
+  function buyAsText(view) {
+    if (view.priceType === "vat" || offer.ad?.vat?.deductible) {
+      const rate = view.vatRate ? ` ${view.vatRate}%` : "";
+      return view.netPrice
+        ? L(`Można kupić netto: ${money(view.netPrice, view.currency)} (VAT${rate} do odliczenia)`, `Можно купить по нетто: ${money(view.netPrice, view.currency)} (VAT${rate} к вычету)`)
+        : L(`Faktura VAT${rate} - VAT do odliczenia`, `Счёт-фактура VAT${rate} - VAT к вычету`);
+    }
+    if (view.priceType === "private" || view.seller === "private") return L("Sprzedawca prywatny - bez faktury VAT", "Частный продавец - без счёта-фактуры VAT");
+    return L("Tylko VAT marża (bez odliczenia VAT)", "Только VAT marża (без вычета VAT)");
+  }
+
   // The cost lines: the calculator's (wave 3) or the estimate made with the draft.
   function costs() {
     const calc = offer.calc;
@@ -312,8 +325,7 @@
         <img class="ofLogo" src="./assets/autogood-logo.png" alt="AUTOGOOD" />
         <span class="ofLogoText" aria-hidden="true"><img src="./assets/ag-opt.svg" alt="" /><span>AUTOGOOD</span></span>
         <div class="ofHeadMeta">
-          ${forWhom}${L("Oferta nr", "Предложение №")} <b>${esc(offer.number || "")}</b> · ${esc(dateText(offer.createdAt))}<br>
-          <span class="ofPageNo">${page === 1 ? esc(view.title) : `${esc(view.title)} · ${L("strona 2 z 2", "страница 2 из 2")}`}</span>
+          ${forWhom}${esc(dateText(offer.createdAt))}
         </div>
       </header>`;
   }
@@ -358,8 +370,7 @@
     if (!offer.carvago?.found || isHidden("carvago")) return "";
     const active = offer.carvago.active;
     const scope = active?.kind === "search" ? L(` (rok ${active.yearFrom}-${active.yearTo}, przebieg ${thousands(active.kmFrom)}-${thousands(active.kmTo)} tys. km)`, ` (год ${active.yearFrom}-${active.yearTo}, пробег ${thousands(active.kmFrom)}-${thousands(active.kmTo)} тыс. км)`) : "";
-    return `${active?.count ? `<p class="ofActive">${field("carvagoActive", L(`Aktywnych podobnych ofert w Europie: ${numbers.format(active.count)}${scope}`, `Активных похожих предложений в Европе: ${numbers.format(active.count)}${scope}`), "span")}</p>` : ""}
-      ${priceTrendHtml(offer.carvago.history, offer.carvago.changes, offer.carvago.listedSince)}`;
+    return active?.count ? `<p class="ofActive">${field("carvagoActive", L(`Aktywnych podobnych ofert w Europie: ${numbers.format(active.count)}${scope}`, `Активных похожих предложений в Европе: ${numbers.format(active.count)}${scope}`), "span")}</p>` : "";
   }
   function portalMarket(view) {
     const rating = offer.ad?.portalPrice;
@@ -379,19 +390,20 @@
         </div>
         <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, view.currency))}</span><span>${BANDS[2]} <b>${esc(range(2))}</b></span></div>
         ${field("marketLead", L(`Wg skali cen mobile.de dla tego auta: „${BANDS[band]}” (${range(band)}).`, `По шкале цен mobile.de для этого авто: «${BANDS[band]}» (${range(band)}).`), "p", "ofMarketLead")}
-        ${field("marketTypical", L("Ocena portalu mobile.de na tle podobnych ofert.", "Оценка портала mobile.de на фоне похожих предложений."), "p", "ofSmall")}`;
+`;
     } else if (rating?.portal === "AutoScout24" && rating.median > 0 && view.price > 0) {
       const share = view.price / rating.median - 1;
       body = `${field("marketLead", L(`Mediana podobnych ofert wg AutoScout24: ${money(rating.median, "EUR")} - to auto ${share <= 0 ? `${percent(share)} taniej` : `${percent(share)} drożej`}.`, `Медиана похожих предложений по AutoScout24: ${money(rating.median, "EUR")} - это авто ${share <= 0 ? `на ${percent(share)} дешевле` : `на ${percent(share)} дороже`}.`), "p", "ofMarketLead")}`;
     }
     const carvago = carvagoLines();
-    if (!body && !carvago) return "";
+    if (!body && !carvago && adHistory().days === null) return "";
     return `
             <section class="ofCard${blockClass("market")}" data-block="market">
               ${hideToggle("market")}
               <p class="ofCardHead">${icon("chart")}${L("Cena na tle rynku", "Цена на фоне рынка")}</p>
               ${body}
               ${carvago}
+              <!--adAge-->
             </section>`;
   }
 
@@ -408,7 +420,7 @@
     const poland = polandView();
     const costView = costs();
     const verdict = verdictView(view);
-    const keyOptions = EQUIPMENT ? EQUIPMENT.keyOptions(offer.ad?.features || [], 10) : [];
+    const keyOptions = EQUIPMENT ? EQUIPMENT.keyOptions(offer.ad?.features || [], 12) : [];
     const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
     // The full list is on page 2 only when the manager shows it there.
     const listOnTwo = !isHidden("allOptions") && (offer.shown || []).includes("allOptions");
@@ -421,7 +433,6 @@
     const portalLabel = offer.ad?.portalPrice?.label || "";
     if (portalLabel && /dobra|uczciwa/.test(portalLabel) && !(portalCard.includes("ofBands") && !isHidden("market"))) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(ru() ? BANDS_RU[BANDS_PL.indexOf(portalLabel)] || portalLabel : portalLabel)}</span>`);
     const hp = L("KM", "л.с.");
-    const subtitle = [view.reg, kmText(view.mileage), view.powerHp ? `${view.powerHp} ${hp}` : "", view.gearbox, view.fuel].filter(Boolean).join(" · ");
     const specs = [
       [L("1. rejestracja", "1-я регистрация"), view.reg],
       [L("Przebieg", "Пробег"), kmText(view.mileage)],
@@ -440,19 +451,26 @@
     const adAge = adHistory();
     const listedAt = adAge.kind === "listed" ? adAge.since : "";
     const listedDays = adAge.days ?? null;
+    // The seller as figures across the card (owner 2026-10-10): a value, a word under it.
     const sellerFacts = [];
-    if (seller?.rating?.reviews) sellerFacts.push(`<span class="ofStars">${icon("star")}${esc(Number(seller.rating.score).toFixed(1).replace(".", ","))}</span> · ${numbers.format(seller.rating.reviews)} ${many(seller.rating.reviews, ["opinia", "opinie", "opinii"], ["отзыв", "отзыва", "отзывов"])}${seller.rating.recommend !== null && seller.rating.recommend !== undefined ? ` · ${seller.rating.recommend}% ${L("poleca", "рекомендуют")}` : ""}`);
+    if (seller?.rating?.reviews) {
+      sellerFacts.push([`${icon("star")}${esc(Number(seller.rating.score).toFixed(1).replace(".", ","))}`, `${numbers.format(seller.rating.reviews)} ${many(seller.rating.reviews, ["opinia", "opinie", "opinii"], ["отзыв", "отзыва", "отзывов"])}`]);
+      if (seller.rating.recommend !== null && seller.rating.recommend !== undefined) sellerFacts.push([`${esc(seller.rating.recommend)}%`, L("poleca", "рекомендуют")]);
+    }
     const sinceYear = seller?.since ? String(seller.since).slice(0, 4) : "";
-    if (sinceYear) sellerFacts.push(`${L("na", "на")} ${esc(seller.rating?.portal || PORTAL[offer.source] || L("portalu", "портале"))} ${L("od", "с")} <b>${esc(sinceYear)}</b>`);
+    if (sinceYear) sellerFacts.push([`${L("od", "с")} ${esc(sinceYear)}`, `${L("na", "на")} ${esc(seller.rating?.portal || PORTAL[offer.source] || L("portalu", "портале"))}`]);
     // Kleinanzeigen counts every ad of the seller, not only cars.
     if (seller?.stock) sellerFacts.push(offer.source === "kleinanzeigen"
-      ? `<b>${numbers.format(seller.stock)}</b> ${many(seller.stock, ["ogłoszenie", "ogłoszenia", "ogłoszeń"], ["объявление", "объявления", "объявлений"])} ${L("na portalu", "на портале")}`
-      : `<b>${numbers.format(seller.stock)}</b> ${L(plural(seller.stock, "auto", "auta", "aut"), "авто")} ${L("w ofercie", "в продаже")}`);
+      ? [esc(numbers.format(seller.stock)), `${many(seller.stock, ["ogłoszenie", "ogłoszenia", "ogłoszeń"], ["объявление", "объявления", "объявлений"])} ${L("na portalu", "на портале")}`]
+      : [esc(numbers.format(seller.stock)), `${L(plural(seller.stock, "auto", "auta", "aut"), "авто")} ${L("w ofercie", "в продаже")}`]);
     const sellerName = seller?.name || (view.seller === "private" ? L("Osoba prywatna", "Частное лицо") : view.seller === "dealer" ? L("Dealer", "Дилер") : "");
+    // How long the ad is on sale and how its price moved: in the market card
+    // (owner 2026-10-10), the changes as a list with arrows, no chart.
     const adAgeText = listedDays !== null
-      ? L(`To auto: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> w sprzedaży${!listedAt && adAge?.kind === "atLeast" ? " (co najmniej)" : ""}${adAge?.dropped ? `, cena obniżona ${adAge.drops}× (−${percent(adAge.share)})` : ""}.`,
-        `Это авто: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> в продаже${!listedAt && adAge?.kind === "atLeast" ? " (как минимум)" : ""}${adAge?.dropped ? `, цена снижена ${adAge.drops}× (−${percent(adAge.share)})` : ""}.`)
+      ? L(`To auto: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> w sprzedaży${!listedAt && adAge?.kind === "atLeast" ? " (co najmniej)" : ""}${adAge?.dropped ? `, cena obniżona ${adAge.drops}× (−${percent(adAge.share)})` : adAge?.changes?.length ? "" : ", cena bez zmian"}.`,
+        `Это авто: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> в продаже${!listedAt && adAge?.kind === "atLeast" ? " (как минимум)" : ""}${adAge?.dropped ? `, цена снижена ${adAge.drops}× (−${percent(adAge.share)})` : adAge?.changes?.length ? "" : ", цена без изменений"}.`)
       : "";
+    const adAgeHtml = adAgeText && !isHidden("adAge") ? `<div class="ofAdAge">${hideToggle("adAge")}<p>${adAgeText}</p>${priceMovesHtml(adAge.changes)}</div>` : "";
     return `
       <div class="ofSheet" data-sheet="1">
         <article class="ofPage${styleClass()}" data-page="1" lang="${ru() ? "ru" : "pl"}">
@@ -467,22 +485,19 @@
             </div>
             <div class="ofHeroInfo">
               <div class="ofHeroTitle">
-                <p class="ofKicker">${esc([view.brand, view.model, view.year].filter(Boolean).join(" · "))}</p>
                 ${field("title", view.title, "h1", "ofTitle")}
-                ${field("subtitle", subtitle, "p", "ofSub")}
               </div>
               ${costView ? `<div class="ofPriceBox">
-                <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}</p>
-                <p class="ofPrice">${esc(money(costView.total, "PLN"))}</p>
-                ${field(costView.exact ? "priceNoteExact" : "priceNote", costView.exact
-                  ? L(`${costView.method}: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — wyliczenie na str. 2`, `${costView.method}: транспорт, осмотр, акциз, сборы и услуга AUTOGOOD — расчёт на стр. 2`)
-                  : L("Szacunek: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — str. 2", "Оценка: транспорт, осмотр, акциз, сборы и услуга AUTOGOOD — стр. 2"), "p", "ofPriceNote")}
-                <p class="ofAdPrice">${L("W ogłoszeniu", "В объявлении")}: <b>${esc(money(view.price, view.currency))}</b> ${esc(vatText(view))}</p>
+                <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}*</p>
+                <p class="ofPrice">${esc(money(costView.total, "PLN"))} <span class="ofPriceAd">(${esc(money(view.price, view.currency))} ${L("brutto", "брутто")})</span></p>
+                ${field("buyAs", buyAsText(view), "p", "ofBuyAs")}
+                ${isHidden("costs") ? field("priceAsk", L("Dokładną kalkulację przygotuje Pana opiekun - prosimy o kontakt.", "Чтобы получить точный расчёт, свяжитесь с менеджером."), "p", "ofPriceAsk") : ""}
+                ${field("priceFoot", L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, другие расходы."), "p", "ofPriceFoot")}
               </div>` : `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena w ogłoszeniu", "Цена в объявлении")}</p>
                 <p class="ofPrice">${esc(money(view.price, view.currency))}</p>
-                ${field("priceNoteAd", L("Koszt na gotowo policzymy indywidualnie.", "Стоимость «под ключ» рассчитаем индивидуально."), "p", "ofPriceNote")}
-                <p class="ofAdPrice">${esc(vatText(view))}</p>
+                ${field("buyAs", buyAsText(view), "p", "ofBuyAs")}
+                ${field("priceNoteAd", L("Koszt na gotowo policzymy indywidualnie.", "Стоимость «под ключ» рассчитаем индивидуально."), "p", "ofPriceFoot")}
               </div>`}
               ${chips.length ? `<div class="ofChips${blockClass("chips")}">${chips.join("")}</div>` : ""}
               ${kpiHtml(market, poland, verdict)}
@@ -507,7 +522,8 @@
               ${field("marketTypical", market.typical, "p", "ofSmall")}
               ${carvagoLines()}
               ${poland ? `<div class="ofPoland${polandHidden(poland) ? " ofBlockHidden" : ""}">${field("polandLine", poland.line, "span")}</div>` : ""}
-            </section>` : portalCard}
+              ${adAgeHtml}
+            </section>` : portalCard.replace("<!--adAge-->", adAgeHtml)}
             ${verdict ? `
             <section class="ofCard${blockClass("verdict")}" data-block="verdict">
               ${hideToggle("verdict")}
@@ -517,7 +533,7 @@
                 ${verdict.lines.map((line) => `
                   <li class="ofCheck is${line.level.charAt(0).toUpperCase()}${line.level.slice(1)}${blockClass(`check:${line.id}`)}">${icon(line.level === "ok" ? "check" : line.level === "info" ? "info" : line.level)}<span>${field(`check:${line.id}`, line.text)}${line.quote ? `<q>${esc(line.quote)}</q>` : ""}${hideToggle(`check:${line.id}`)}</span></li>`).join("")}
               </ul>
-              ${field("inspect", `${verdict.level === "ok" ? "* " : ""}${L("Przed zakupem sprawdzimy lakier, diagnostykę, jazdę próbną, dokumenty i historię auta.", "Перед покупкой проверим ЛКП, диагностику, тест-драйв, документы и историю авто.")}`, "p", "ofInspect")}
+              ${field("inspect", `${verdict.level === "ok" ? "* " : ""}${L("Przed zakupem przeprowadzimy diagnostykę i jazdę próbną, sprawdzimy dokumenty i historię auta.", "Перед покупкой проведём диагностику и тест-драйв, перепроверим документы и историю авто.")}`, "p", "ofInspect")}
             </section>` : ""}
           </div>
           <div class="ofGrid">
@@ -535,14 +551,12 @@
               ${hideToggle("seller")}
               <p class="ofCardHead">${icon("store")}${L("Sprzedawca", "Продавец")}</p>
               ${sellerName ? `<p class="ofSellerName">${esc(sellerName)}</p>` : ""}
-              ${sellerFacts.length ? `<p class="ofFacts">${sellerFacts.map((fact) => `<span>${fact}</span>`).join("")}</p>` : ""}
-              ${seller?.city || view.city ? `<p class="ofSmall ofPlace" style="margin-top:4px">${placeHtml(seller?.city || view.city, seller?.country || view.country)}</p>` : ""}
-              ${adAgeText ? `<p class="ofAdAge">${adAgeText}</p>` : ""}
+              ${sellerFacts.length ? `<div class="ofSellerFacts">${sellerFacts.map(([value, word]) => `<div><b>${value}</b><span>${word}</span></div>`).join("")}</div>` : ""}
+              ${seller?.city || view.city ? `<p class="ofSmall ofPlace">${placeHtml(seller?.city || view.city, seller?.country || view.country)}</p>` : ""}
             </section>
           </div>
           <footer class="ofFoot">
-            <span>${manager.name || manager.phone ? `<b>${L(`${esc(salutation.owner)} opiekun`, "Ваш менеджер")}:</b> ${esc([withFirm(manager.name), manager.phone, manager.email].filter(Boolean).join(" · "))}` : `<b>AUTOGOOD</b> · ${esc([store.company(offer.company).phone, store.company(offer.company).email].filter(Boolean).join(" · "))}`}</span>
-            <span>${L("Dane z ogłoszenia — sprawdzamy je przed zakupem", "Данные из объявления — проверяем их до покупки")}</span>
+            <span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span>
           </footer>
         </article>
       </div>`;
@@ -574,38 +588,12 @@
     };
   }
 
-  // The price line of the ad over time (Carvago's history, drawn relative:
-  // its prices carry Carvago's margin, so only the shape and the % are shown).
-  function priceTrendHtml(history, changes, since) {
-    const start = since || history?.[0]?.at || "";
-    // An unchanged price needs no line: the date and the fact say it.
-    if (!changes?.length) return start ? `<p class="ofSmall ofTrendLine">${L("W sprzedaży od", "В продаже с")} <b>${esc(dateText(start))}</b> · ${L("cena bez zmian", "цена без изменений")}</p>` : "";
-    if (!history?.length) return "";
-    const points = history.map((point) => ({ at: Date.parse(point.at), price: point.price })).filter((point) => Number.isFinite(point.at));
-    if (!points.length) return "";
-    const now = Date.now();
-    const first = points[0].at;
-    const span = Math.max(1, now - first);
-    const prices = points.map((point) => point.price);
-    const top = Math.max(...prices);
-    const bottom = Math.min(...prices);
-    const range = Math.max(top - bottom, top * 0.02);
-    const x = (at) => 4 + ((at - first) / span) * 292;
-    const y = (price) => 6 + ((top - price) / range) * 22;
-    let path = `M${x(points[0].at).toFixed(1)} ${y(points[0].price).toFixed(1)}`;
-    points.slice(1).forEach((point, index) => {
-      path += ` H${x(point.at).toFixed(1)} V${y(point.price).toFixed(1)}`;
-    });
-    path += ` H${x(now).toFixed(1)}`;
-    const drops = (changes || []).filter((change) => change.share < 0);
-    const label = changes?.length
-      ? changes.map((change) => `${dateText(change.at).slice(0, 5)} ${change.share < 0 ? "−" : "+"}${(Math.abs(change.share) * 100).toFixed(1).replace(".", ",")}%`).join(" · ")
-      : L("bez zmian ceny", "без изменений цены");
-    return `
-      <div class="ofTrend">
-        <svg viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="${path}" fill="none" stroke="${drops.length ? "#1d6a3b" : "#145a85"}" stroke-width="2" stroke-linejoin="round"/>${points.map((point) => `<circle cx="${x(point.at).toFixed(1)}" cy="${y(point.price).toFixed(1)}" r="2.4" fill="#145a85"/>`).join("")}</svg>
-        <p class="ofSmall">${L("W sprzedaży od", "В продаже с")} ${esc(dateText(start))} · ${L("zmiany ceny", "изменения цены")}: <b>${esc(label)}</b></p>
-      </div>`;
+  // Each price change of the ad, oldest first: ↓ green when it dropped, ↑ red
+  // when it rose, with the date and the percent (owner 2026-10-10: a list, no chart).
+  function priceMovesHtml(changes) {
+    const moves = (changes || []).filter((change) => change.at && Number.isFinite(change.share) && change.share !== 0);
+    if (!moves.length) return "";
+    return `<ul class="ofMoves">${moves.slice(-4).map((change) => `<li class="${change.share < 0 ? "isDown" : "isUp"}"><span aria-hidden="true">${change.share < 0 ? "↓" : "↑"}</span>${esc(dateText(change.at))} <b>${change.share < 0 ? "−" : "+"}${(Math.abs(change.share) * 100).toFixed(1).replace(".", ",")}%</b></li>`).join("")}</ul>`;
   }
 
   // ---- Sheet 2: what happens next (owner 2026-10-06) ------------------------
@@ -758,7 +746,6 @@
             `Данные из объявления на ${PORTAL[offer.source] || "портале"}${offer.market ? " и данные рынка" : ""} на ${dateText(offer.market?.at || offer.createdAt)}. Цены в объявлениях могут меняться. Техническое состояние, историю и документы авто проверяем до покупки.`), "p", "ofNote")}
           <footer class="ofFoot">
             <span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span>
-            <span>${esc([company.web, company.phone, company.email].filter(Boolean).join(" · "))}</span>
           </footer>
         </article>
       </div>`;
@@ -784,7 +771,7 @@
     const blocks = [
       ["specs", "Dane auta"], ["chips", "Plakietki (rynek, Polska)"], ["market", "Cena na tle rynku"], ["poland", "Linia „W Polsce”"],
       ["verdict", "Ocena AUTOGOOD"], ["equipment", "Wyposażenie — najważniejsze"], ["seller", "Sprzedawca"],
-      ["carvago", "Historia ceny i aktywne oferty"],
+      ["adAge", "Dni w sprzedaży i zmiany ceny"], ["carvago", "Aktywne podobne oferty (Carvago)"],
       ["page2", "Strona 2 w PDF"], ["process", "Co dalej (proces)"], ["costs", "Koszt na gotowo"], ["negotiation", "Potencjał negocjacji"], ["contact", "Kontakt"], ["allOptions", "Pełne wyposażenie (str. 2)"],
     ];
     const adState = reading
@@ -887,6 +874,7 @@
   }
 
   // ---- Drawing ------------------------------------------------------------------------------
+  let fontsSettled = false;
   function render() {
     if (!offer) return;
     const view = carView();
@@ -903,6 +891,12 @@
       image.src = image.dataset.source;
     }, { once: true }));
     panel.innerHTML = panelHtml(view);
+    // Fitted again once the web fonts are in (a fallback font is wider and
+    // would take options and checks off a sheet that has room for them).
+    if (!fontsSettled && document.fonts?.status !== "loaded") {
+      fontsSettled = true;
+      document.fonts?.ready.then(() => render());
+    }
     fitSheets();
     autoFit();
   }

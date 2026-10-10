@@ -284,7 +284,11 @@ test("the offer in Russian: values, options, plural, calculator lines, verdict l
   const ru = VERDICT.assess({ car: { price: 20000 }, ad, now: Date.parse("2026-10-10T12:00:00Z"), lang: "ru" });
   // The same lines (the same ids: hiding one hides it in both languages), Russian words.
   assert.deepEqual(ru.lines.map((line) => line.id), pl.lines.map((line) => line.id));
-  assert.ok(ru.lines.some((line) => line.text === "Дилер: 24 года на mobile.de, оценка 4,3/5 (104 отзыва)"));
+  // The dealer in short: its figures are on its own card (owner 2026-10-10).
+  assert.ok(ru.lines.some((line) => line.text === "Дилер давно на рынке, хорошая оценка"));
+  assert.ok(pl.lines.some((line) => line.text === "Dealer od wielu lat na rynku, dobre opinie"));
+  const busy = VERDICT.assess({ car: { price: 20000 }, ad: { ...ad, seller: { ...ad.seller, stock: 69, rating: { score: 4.6, reviews: 40 } } }, now: Date.parse("2026-10-10T12:00:00Z"), lang: "ru" });
+  assert.ok(busy.lines.some((line) => line.text === "Дилер давно на рынке, отличная оценка, много авто в продаже"));
   assert.ok(ru.lines.some((line) => line.text === "Продавец исключает ответственность за дефекты"));
   assert.ok(ru.lines.some((line) => line.text === "Один предыдущий владелец"));
 });
