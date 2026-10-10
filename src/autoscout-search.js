@@ -15,7 +15,11 @@
   const COUNTRY = { DE: "D", NL: "NL", BE: "B", AT: "A", LU: "L", FR: "F", IT: "I", ES: "E", CZ: "CZ", DK: "DK", SE: "S" };
   const FUEL = { petrol: "B", diesel: "D", hybrid_petrol: "2", hybrid_diesel: "3", electric: "E", plugin: "2" };
   const GEAR = { automatic: "A", manual: "M" };
-  const BODY = { hatchback: "1", cabrio: "2", coupe: "3", suv: "4", pickup: "4", estate: "5", limousine: "6", van_minibus: "12", other: "7" };
+  // No hatchback on AutoScout24 (as on mobile.de): "Limousine" (6) holds
+  // hatchbacks and saloons, "Kleinwagen" (1) small cars. Golf DE 2026-10-10:
+  // 1 → 1 357, 6 → 18 524, "1,6" (comma = or) → 19 881. "Hatchback" and "Sedan"
+  // go out wider, named "Nadwozie ≈".
+  const BODY = { hatchback: "1,6", cabrio: "2", coupe: "3", suv: "4", pickup: "4", estate: "5", limousine: "6", van_minibus: "12", other: "7" };
   const SELLER = { dealer: "D", company: "D", private: "P" };
   // Every value below was checked by the change in the result count (VW Golf DE
   // 29 987 / VW DE 147 329, 2026-10-04); names from AutoScout's own search
@@ -119,6 +123,77 @@
   };
   const modelSlug = (brand, model) => splitModel(brand, model).model;
 
+  // "Wersja" naming one of AutoScout24's own models goes into the model, not
+  // into the seller's version text ("version0" finds only sellers who typed
+  // it): BMW "3" + "320d" → model 320 (version0=320d: 817 of 4 691 320s in DE,
+  // 320 + diesel: 3 063 — 2026-10-10), Mercedes "C" + "220 d" → C 220, VW
+  // "Golf" + "GTI" → Golf GTI. AutoScout24 models of the families (taxonomy
+  // of /lst/<make>, 2026-10-10): BMW and Mercedes list engines, VW the bodies
+  // and sport versions of Golf, Polo and Passat.
+  const SUB_MODELS = {
+    bmw: {
+      1: "114 116 118 120 123 125 128 130 135 140", 2: "214 216 218 220 223 225 228 230 235 240",
+      3: "315 316 318 320 323 324 325 328 330 335 340", 4: "418 420 425 428 430 435 440",
+      5: "518 520 523 524 525 528 530 535 540 545 550", 6: "620 628 630 633 635 640 645 650",
+      7: "725 728 730 732 735 740 745 750 760", 8: "830 840 850",
+    },
+    "mercedes-benz": {
+      A: "140,150,160,170,180,190,200,210,220,250,35 AMG,45 AMG", B: "150,160,170,180,200,220,250",
+      C: "160,180,200,220,230,240,250,270,280,300,320,350,400,450,30 AMG,32 AMG,36 AMG,43 AMG,55 AMG,63 AMG",
+      E: "200,220,230,240,250,260,270,280,290,300,320,350,400,420,430,450,500,550,36 AMG,43 AMG,50 AMG,53 AMG,55 AMG,60 AMG,63 AMG",
+      S: "250,260,280,300,320,350,380,400,420,430,450,500,550,560,580,600,650,680,55 AMG,63 AMG,65 AMG",
+      G: "230,240,250,270,280,290,300,320,350,400,450,500,580,650,55 AMG,63 AMG,65 AMG", V: "200,220,230,250,280,300",
+      CLA: "180,200,220,250,350,35 AMG,45 AMG", CLE: "180,200,220,300,450,53 AMG,63 AMG",
+      CLK: "200,220,230,240,270,280,320,350,430,500,55 AMG,63 AMG", CLS: "220,250,280,300,320,350,400,450,500,53 AMG,55 AMG,63 AMG",
+      GLA: "180,200,220,250,35 AMG,45 AMG", GLB: "180,200,220,250,350,35 AMG", GLC: "200,220,250,300,350,400,450,43 AMG,53 AMG,63 AMG",
+      GLE: "250,300,350,400,450,500,580,43 AMG,53 AMG,63 AMG", GLK: "200,220,250,280,300,320,350", GLS: "350,400,450,500,580,600,63 AMG",
+      GL: "320,350,400,420,450,500,55 AMG,63 AMG", ML: "230,250,270,280,300,320,350,400,420,430,450,500,55 AMG,63 AMG",
+      SL: "230,250,280,300,320,350,380,400,420,450,500,560,600,680,43 AMG,55 AMG,60 AMG,63 AMG,65 AMG,70 AMG,73 AMG",
+      SLC: "180,200,250,280,300,350,380,450,500,43 AMG", SLK: "200,230,250,280,300,320,350,32 AMG,55 AMG",
+      R: "280,300,320,350,500,63 AMG", X: "220,250,350",
+    },
+    volkswagen: {
+      golf: "Golf GTI,Golf GTD,Golf GTE,Golf R,Golf Variant,Golf Cabriolet,e-Golf,Cross Golf",
+      polo: "Polo GTI,Polo Variant,Polo Cross,Polo Sedan,Polo Plus",
+    },
+  };
+  const compact = (text) => slug(text).replace(/-/g, "");
+  // { slug, rest, fuel } of the AutoScout24 model the version names, or null.
+  function versionModel(brand, model, version) {
+    const text = String(version || "").trim();
+    const family = SUB_MODELS[slug(brand)];
+    if (!text || !family) return null;
+    let labels = [];
+    let candidates = [];
+    if (slug(brand) === "bmw") {
+      const series = String(model || "").match(/^M?([1-8])(?:\d\d|er\b|$)/i)?.[1];
+      labels = series ? family[series].split(" ") : [];
+      // "M340i" is a 340 on AutoScout24.
+      candidates = [text.replace(/^m(?=\d)/i, "")];
+    } else if (slug(brand) === "mercedes-benz") {
+      const head = String(model || "").match(/^([A-Z]{1,3})(?:\s?\d|-?\s*klasse|$)/i)?.[1]?.toUpperCase();
+      labels = head && family[head] ? family[head].split(",").map((item) => `${head} ${item}`) : [];
+      candidates = [text, `${head} ${text}`];
+    } else {
+      labels = (family[modelSlug(brand, model)] || "").split(",").filter(Boolean);
+      candidates = [`${model} ${text}`, text];
+    }
+    let best = null;
+    candidates.forEach((candidate) => {
+      const wanted = compact(candidate);
+      labels.forEach((label) => {
+        const key = compact(label);
+        const rest = wanted.slice(key.length);
+        if (!wanted.startsWith(key) || /^\d/.test(rest)) return;
+        if (!best || key.length > best.key.length) best = { key, slug: slug(label), rest };
+      });
+    });
+    if (!best) return null;
+    // An engine letter after the number: "320d" / "C 220 d" / "CDI" is a diesel, "320i" a petrol.
+    const fuel = /^(d|cdi|bluetec|dbluetec|tdi)$/.test(best.rest) ? "D" : /^i$/.test(best.rest) ? "B" : "";
+    return { slug: best.slug, rest: fuel ? "" : best.rest, fuel };
+  }
+
   // What the search cannot carry over, as the form names it (shown as "not
   // transferred"; "≈" = sent, but not quite the same).
   function unsupported(filters = {}) {
@@ -139,6 +214,14 @@
     if ((filters.fuels || []).includes("plugin")) missing.push("plugin≈hybrid");
     if (filters.trailerCoupling && !["any", "all", ""].includes(filters.trailerCoupling)) missing.push(`${words.trailerCouplingLabel || "Hak"} ≈`);
     if (filters.matte) missing.push(words.matteLabel || "matte");
+    if (typeof bodyApproximateOn === "function" && bodyApproximateOn("autoscout", filters.body)) missing.push(`${words.bodyLabel || "Nadwozie"} ≈`);
+    // "Wersja" as the seller's own version text, or a model of AutoScout24
+    // wider than the version ("Golf GTI" for "GTI Performance"): approximate.
+    const version = String(filters.version || "").trim();
+    if (version) {
+      const found = versionModel(filters.brand, filters.model, version);
+      if (!found || found.rest) missing.push(`${words.versionLabel || "Wersja"} ≈`);
+    }
     if (filters.vat === "non_reclaimable") missing.push(words.vatLabel || "VAT");
     // No accident-free filter (only "damaged: exclude", always sent).
     if (filters.accidentFree) missing.push(words.accidentFreeLabel || "accident-free");
@@ -158,7 +241,8 @@
   // filters: the page-1 form; countries: ISO codes; price: {from, to} in EUR
   // replacing the page-1 price; sort by price, cheapest first unless desc.
   function buildSearchUrl(filters = {}, { countries = ["DE"], price = null, desc = false, page = 1 } = {}) {
-    const path = ["lst", slug(filters.brand), modelSlug(filters.brand, filters.model)].filter(Boolean).join("/");
+    const byVersion = versionModel(filters.brand, filters.model, filters.version);
+    const path = ["lst", slug(filters.brand), byVersion?.slug || modelSlug(filters.brand, filters.model)].filter(Boolean).join("/");
     const url = new URL(`${BASE}/${path}`);
     const params = url.searchParams;
     params.set("atype", "C");
@@ -172,9 +256,16 @@
     // all 147 329 VW). "ustate", sent until then, changed nothing.
     if (filters.newUsed === "new") params.set("offer", "N");
     if (filters.newUsed === "used") params.set("offer", "U,J,O,D,S");
-    const range = (fromKey, toKey, from, to) => {
-      if (digits(from)) params.set(fromKey, digits(from));
-      if (digits(to) && !String(to).trim().endsWith("+")) params.set(toKey, digits(to));
+    // "< 5000" picked as "od" = up to 5000, "> 5000" as "do" = from 5000
+    // (rangeBounds of mobile.js, as every portal): digits alone turned
+    // "< 5000" into ccmfrom=5000 — Golf DE 1 car instead of 28 590 (2026-10-10).
+    const range = (fromKey, toKey, fromValue, toValue) => {
+      const open = String(toValue ?? "").trim().endsWith("+");
+      const bounds = typeof rangeBounds === "function"
+        ? rangeBounds(fromValue, open ? "" : toValue)
+        : { from: digits(fromValue) ? Number(digits(fromValue)) : null, to: digits(toValue) && !open ? Number(digits(toValue)) : null };
+      if (bounds.from !== null) params.set(fromKey, String(bounds.from));
+      if (bounds.to !== null) params.set(toKey, String(bounds.to));
     };
     range("fregfrom", "fregto", filters.yearFrom, filters.yearTo);
     range("kmfrom", "kmto", filters.mileageFrom, filters.mileageTo);
@@ -198,6 +289,8 @@
     if (doors.from !== null && doors.from !== undefined && doors.from > 2) params.set("doorfrom", String(doors.from));
     if (doors.to !== null && doors.to !== undefined && doors.to < 7) params.set("doorto", String(doors.to));
     const fuels = [...new Set((filters.fuels || []).map((fuel) => FUEL[fuel]).filter(Boolean))];
+    // "320d" as the version: the diesel 320s, unless the form chose a fuel.
+    if (!fuels.length && byVersion?.fuel) fuels.push(byVersion.fuel);
     if (fuels.length) params.set("fuel", fuels.join(","));
     if (GEAR[filters.gearbox]) params.set("gear", GEAR[filters.gearbox]);
     if (DRIVE[filters.drive]) params.set("dtrain", DRIVE[filters.drive]);
@@ -205,8 +298,9 @@
     const body = BODY[filters.body] || BODY[splitModel(filters.brand, filters.model).body];
     if (body) params.set("body", body);
     if (SELLER[filters.seller]) params.set("custtype", SELLER[filters.seller]);
-    // "Wersja": AutoScout's own version text field (Golf + "gti" 3 263).
-    if (String(filters.version || "").trim()) params.set("version0", String(filters.version).trim());
+    // "Wersja": a model of AutoScout24 when it names one (above), otherwise
+    // AutoScout's own version text field (Golf + "gti" 3 263) — approximate.
+    if (String(filters.version || "").trim() && !byVersion) params.set("version0", String(filters.version).trim());
     if (filters.vat === "reclaimable") params.set("vatded", "true");
     // Equipment: every ticked option must be there.
     const eq = new Set();
@@ -386,6 +480,7 @@
     buildSearchUrl,
     parseSearchPage,
     unsupported,
+    versionModel,
     slug,
   };
 })();

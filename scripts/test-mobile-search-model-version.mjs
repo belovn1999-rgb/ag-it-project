@@ -173,10 +173,18 @@ assert.throws(() => context.buildMobileDeSearchUrl({ ...baseFilters, doorsFrom: 
 assert.throws(() => context.buildMobileDeSearchUrl({ ...baseFilters, doorsFrom: "8" }), /invalid doors/, "unsupported door counts are rejected");
 context.els = { features: [] };
 context.mobileDeApproximateFeatures = new Set();
+// The real list of mobile.js (no hatchback/saloon split on mobile.de).
+vm.runInContext(`const BODY_APPROXIMATE = { mobile: ["hatchback", "limousine", "pickup"] };`, context);
+vm.runInContext(functionSource("bodyApproximateOn"), context);
+context.copy.pl.bodyLabel = "Nadwozie";
 vm.runInContext(functionSource("optionLabelText"), context);
 vm.runInContext(functionSource("mobileDeSkippedFilterLabels"), context);
 assert.deepEqual(Array.from(context.mobileDeSkippedFilterLabels({ ...baseFilters, doorsFrom: "3", doorsTo: "4" })), ["Liczba drzwi"], "cross-group range is reported as unsupported on Mobile.de");
 assert.deepEqual(Array.from(context.mobileDeSkippedFilterLabels({ ...baseFilters, doorsFrom: "4", doorsTo: "5" })), [], "an exact group needs no warning");
+assert.deepEqual(Array.from(context.mobileDeSkippedFilterLabels({ ...baseFilters, body: "hatchback" })), ["Nadwozie ≈"], "hatchback is approximate on Mobile.de (Limousine holds hatchbacks)");
+assert.deepEqual(Array.from(context.mobileDeSkippedFilterLabels({ ...baseFilters, body: "coupe" })), [], "a coupe is exact");
+context.mobileDeBodyValues.hatchback = ["SmallCar", "Limousine"];
+assert.deepEqual(new URL(context.buildMobileDeSearchUrl({ ...baseFilters, body: "hatchback" })).searchParams.getAll("c"), ["SmallCar", "Limousine"], "hatchback = Kleinwagen or Limousine");
 assert.deepEqual(filterUrl.searchParams.getAll("ft"), ["ELECTRICITY"], "electric fuel must use Mobile.de's ELECTRICITY value");
 assert.deepEqual(filterUrl.searchParams.getAll("pa"), ["REAR_VIEW_CAM", "FRONT_SENSORS"], "parking assistants must use Mobile.de's pa parameter");
 assert.equal(filterUrl.searchParams.get("spc"), "ADAPTIVE_CRUISE_CONTROL", "cruise control must use Mobile.de's spc parameter");

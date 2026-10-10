@@ -21,22 +21,32 @@
   const index = window.AUTOGOOD_MODEL_SPECS_INDEX?.brands || {};
   const models = {};
   const requested = new Set();
+  // brand -> promise of its data being there (bodyTypes waits for it).
+  const loading = {};
 
   // The brand's data arrives once, the first time the brand is chosen; the
   // lists are drawn again when it is there (until then they stay as before).
   function loadBrand(brand) {
     const entry = index[brand];
-    if (!entry || requested.has(brand)) return;
+    if (!entry) return Promise.resolve(false);
+    if (requested.has(brand)) return loading[brand] || Promise.resolve(true);
     requested.add(brand);
-    const script = document.createElement("script");
-    script.src = `./src/model-specs/${entry.file}?v=${entry.v}`;
-    script.onload = () => {
-      Object.assign(models, window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand] || {});
-      refresh();
-      if (typeof renderComboMenus === "function") renderComboMenus();
-    };
-    script.onerror = () => requested.delete(brand);
-    document.head.appendChild(script);
+    loading[brand] = new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = `./src/model-specs/${entry.file}?v=${entry.v}`;
+      script.onload = () => {
+        Object.assign(models, window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand] || {});
+        refresh();
+        if (typeof renderComboMenus === "function") renderComboMenus();
+        resolve(true);
+      };
+      script.onerror = () => {
+        requested.delete(brand);
+        resolve(false);
+      };
+      document.head.appendChild(script);
+    });
+    return loading[brand];
   }
   const TEXT = {
     pl: {
@@ -353,5 +363,24 @@
   const bodyBox = document.querySelector("[data-mobile-body-choices]");
   if (bodyBox) new MutationObserver(() => refresh()).observe(bodyBox, { childList: true });
 
-  window.AUTOGOOD_MODEL_SPECS_UI = { enhance, refresh, family };
+  // The body types of a model's generations in a year (all its generations
+  // without a year): a Set of form values ("hatchback", "limousine"…), or
+  // null when the table does not know the model. Waits for the brand's data.
+  async function bodyTypes(brand, model, year) {
+    if (!brand || !model) return null;
+    await loadBrand(brand);
+    const found = family(brand, String(model).trim());
+    if (!found) return null;
+    const spec = models[found.key];
+    const maxYear = new Date().getFullYear() + 1;
+    const wanted = Number(year) || 0;
+    const gens = spec.gens.map((gen, index) => ({ index, from: gen[2], to: gen[3], mobile: gen[4] }))
+      .filter((gen) => !found.mobile || gen.mobile === found.mobile);
+    const inYear = gens.filter((gen) => !wanted || ((gen.from || 0) <= wanted && (gen.to || maxYear) >= wanted));
+    const indexes = new Set((inYear.length ? inYear : gens).map((gen) => gen.index));
+    const types = (spec.bodies || []).filter((body) => indexes.has(body[0])).flatMap((body) => body[1]);
+    return types.length ? new Set(types) : null;
+  }
+
+  window.AUTOGOOD_MODEL_SPECS_UI = { enhance, refresh, family, bodyTypes };
 })();

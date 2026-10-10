@@ -4,7 +4,7 @@
 // analysis and Monitoring only its own offers (same price and mileage as a
 // mobile.de / AutoScout24 offer = the same car), counted in the row "Niemcy".
 // The search lives in the address:
-//   /s-autos/<make>/[anbieter:gewerblich/][preis:5000:15000/]sortierung:preis/[seite:2/][<words>/k0]c216
+//   /s-autos/<make>/anzeige:angebote/[anbieter:gewerblich/][preis:5000:15000/]sortierung:preis/[seite:2/][<words>/k0]c216
 //   +autos.marke_s:<make>+autos.model_s:<model>,<model>+autos.ez_i:2019,2021+…
 // (values of one attribute after a comma = "or"; attributes and equipment
 // "_b:true" = "and" — checked 2026-10-04). The page is read through the reader
@@ -21,7 +21,9 @@
 
   const FUEL = { petrol: "benzin", diesel: "diesel", electric: "elektro", hybrid_petrol: "hybrid", hybrid_diesel: "hybrid" };
   const GEARBOX = { automatic: "automatik", manual: "manuell" };
-  const BODY = { hatchback: "kleinwagen", estate: "kombi", limousine: "limousine", sedan: "limousine", suv: "suv", pickup: "suv", cabrio: "cabrio", coupe: "coupe", van_minibus: "bus", other: "andere" };
+  // "Limousine" holds hatchbacks and saloons (as on mobile.de), "Kleinwagen"
+  // small cars: "Hatchback" = both (Golf: 2 591 + 3 027), named "Nadwozie ≈".
+  const BODY = { hatchback: ["kleinwagen", "limousine"], estate: "kombi", limousine: "limousine", sedan: "limousine", suv: "suv", pickup: "suv", cabrio: "cabrio", coupe: "coupe", van_minibus: "bus", other: "andere" };
   const DOORS = { 2: "2_3", 3: "2_3", 4: "4_5", 5: "4_5", 6: "6_7", 7: "6_7" };
   const SELLER = { dealer: "gewerblich", company: "gewerblich", private: "privat" };
   const COLOR = { black: "schwarz", grey: "grau", white: "weiß", silver: "silber", blue: "blau", red: "rot", green: "grün", brown: "braun", beige: "beige", yellow: "gelb", orange: "orange", gold: "gold", purple: "violet" };
@@ -88,7 +90,7 @@
       const benz = brand === "Mercedes-Benz" && name.match(/^([A-Z]{1,3})(?:-?\s*klasse)?$/i);
       if (!bmw && !benz) continue;
       const found = bmw
-        ? nodes.filter((node) => node.name === `${bmw[1]}er` || new RegExp(`^${bmw[1]}\\d{2}(\\s|$)`).test(node.name))
+        ? nodes.filter((node) => node.name === `${bmw[1]}er` || new RegExp(`^M?${bmw[1]}\\d{2}(?!\\d)`, "i").test(node.name))
         : nodes.filter((node) => blocketToken(node.name) === blocketToken(`${benz[1]}-Klasse`) || new RegExp(`^${benz[1]}\\s?\\d{2,3}(\\s|$)`, "i").test(node.name));
       if (found.length) return result(found, false);
     }
@@ -132,7 +134,7 @@
     set("autos.fuel_s", fuels.map((fuel) => (fuel === "plugin" ? "hybrid" : FUEL[fuel])));
     set("autos.shift_s", GEARBOX[filters.gearbox]);
     set("autos.typ_s", BODY[filters.body]);
-    if (filters.body === "pickup") skip(`${c.bodyLabel || "Nadwozie"} ≈`);
+    if (typeof bodyApproximateOn === "function" ? bodyApproximateOn("kleinanzeigen", filters.body) : filters.body === "pickup") skip(`${c.bodyLabel || "Nadwozie"} ≈`);
     try {
       const doors = typeof doorRangeBounds === "function" ? doorRangeBounds(filters) : { from: null, to: null };
       if (doors.from !== null || doors.to !== null) {
@@ -215,6 +217,9 @@
     const parts = searchParts(filters, { price });
     const path = ["s-autos"];
     if (parts.selection.makeSlug) path.push(parts.selection.makeSlug);
+    // Offers only: without it the list holds "Gesuche" ("will buy") too —
+    // Toyota 10 649 = 10 383 offers + 266 wanted ads (2026-10-10).
+    path.push("anzeige:angebote");
     if (parts.seller) path.push(`anbieter:${parts.seller}`);
     const from = priceFrom ?? parts.price?.from ?? null;
     const to = parts.price?.to ?? null;
