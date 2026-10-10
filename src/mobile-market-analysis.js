@@ -90,6 +90,13 @@
       monitoringGone: "Zniknęły",
       monitoringGoneHint: "sprzedane lub zdjęte",
       monitoringSample: "≈ lista niepełna",
+      monitoringNoAnswer: "Brak odpowiedzi",
+      monitoringNoAnswerSince: "{date}: brak odpowiedzi — dane z {shown}",
+      monitoringNoAnswerModel: "portal nie zna tego modelu",
+      monitoringNoAnswerImporter: "brak połączenia z importerem mobile.de",
+      monitoringSilentInfo: "Bez odpowiedzi: {portals} — pokazane ich ostatnie dane.",
+      offerNoData: "brak danych z tego dnia",
+      offerNoCompareData: "Brak danych z dnia porównania — nowe i zniknięte nieznane.",
       monitoringAllPortals: "Wszystkie portale",
       monitoringViewNew: "Nowe",
       monitoringViewGone: "Zniknęły",
@@ -726,6 +733,13 @@
       monitoringGone: "Исчезли",
       monitoringGoneHint: "проданы или сняты",
       monitoringSample: "≈ список неполный",
+      monitoringNoAnswer: "Нет ответа",
+      monitoringNoAnswerSince: "{date}: нет ответа — данные от {shown}",
+      monitoringNoAnswerModel: "портал не знает эту модель",
+      monitoringNoAnswerImporter: "нет связи с импортером mobile.de",
+      monitoringSilentInfo: "Без ответа: {portals} — показаны их последние данные.",
+      offerNoData: "нет данных за этот день",
+      offerNoCompareData: "Нет данных за день сравнения — новые и исчезнувшие неизвестны.",
       monitoringAllPortals: "Все порталы",
       monitoringViewNew: "Новые",
       monitoringViewGone: "Исчезли",
@@ -1932,6 +1946,21 @@
     return url.hostname.endsWith("blocket.se") && /\/(?:mobility\/)?item\/\d+/.test(url.pathname);
   }
 
+  // Marktplaats, 2dehands / 2ememain, Kleinanzeigen and ParuVendu ads (B47).
+  // Until 2026-10-10 their links were dropped here: no Monitoring row of
+  // theirs could be opened.
+  function isDirectSecondPortalListingUrl(url) {
+    const host = url.hostname.replace(/^www\./, "");
+    if (["marktplaats.nl", "2dehands.be", "2ememain.be"].includes(host)) return /\/v\/.+\/m\d+/.test(url.pathname) || /\/a\/.+\/m\d+/.test(url.pathname);
+    if (host === "kleinanzeigen.de") return url.pathname.startsWith("/s-anzeige/");
+    if (host === "paruvendu.fr") return url.pathname.startsWith("/a/voiture-occasion/");
+    return false;
+  }
+  // Their offers were kept under the portal's ad id ("id:m2448354794") while
+  // the link was dropped; the key stays so, or every car of theirs would turn
+  // "new" (and the old copy "gone") once its link is kept.
+  const ID_KEYED_HOSTS = ["marktplaats.nl", "2dehands.be", "2ememain.be", "kleinanzeigen.de", "paruvendu.fr"];
+
   function isDirectMobileListingUrl(url) {
     const mobileHost = url.hostname === "mobile.de" || url.hostname.endsWith(".mobile.de");
     const canonicalListing = url.pathname.endsWith("/fahrzeuge/details.html")
@@ -1946,7 +1975,7 @@
     let url = "";
     try {
       const parsedUrl = new URL(String(urlValue || "").trim());
-      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl) || isDirectBlocketListingUrl(parsedUrl) || isDirectAvbyListingUrl(parsedUrl) || isDirectAutoscoutListingUrl(parsedUrl))) {
+      if (/^https?:$/.test(parsedUrl.protocol) && (isDirectMobileListingUrl(parsedUrl) || isDirectOtomotoListingUrl(parsedUrl) || isDirectBlocketListingUrl(parsedUrl) || isDirectAvbyListingUrl(parsedUrl) || isDirectAutoscoutListingUrl(parsedUrl) || isDirectSecondPortalListingUrl(parsedUrl))) {
         url = parsedUrl.toString();
       }
     } catch {
@@ -2334,6 +2363,9 @@
     if (!autoscout) return null;
     const read = async (page) => {
       const response = await fetch(`${MARKET_PROXY()}${autoscout.buildSearchUrl(filters, { countries, price, page })}`, { headers: { "x-respond-with": "html" } });
+      // A list path AutoScout24 does not know is a 404: no such model there
+      // (CLA 180 Shooting Brake answered so every day until 2026-10-10).
+      if (response.status === 404 && page === 1) throw new Error("model not found on AutoScout24");
       if (!response.ok) throw new Error(String(response.status));
       return response.text();
     };
@@ -2692,6 +2724,7 @@
       const c = copy();
       const say = progress ? () => {} : setAnalysisStatus;
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
+      this.lastAnswered = [];
       // Favourites: whole lists where short enough (page 3 compares offers).
       const favorite = historyId ? marketHistory.find((entry) => entry.id === historyId) : historyEntryForFilters(filters);
       const ownPrices = pinned ?? Boolean(favorite?.pinned);
@@ -2800,6 +2833,10 @@
       const [otomoto, mobile, blocket, avby, autoscout, autoscoutfr, marktplaats, dehands, kleinanzeigen, paruvendu] = await Promise.allSettled([started.otomoto, started.mobile, started.blocket, started.avby, started.autoscout, started.autoscoutfr, started.marktplaats, started.dehands, started.kleinanzeigen, started.paruvendu]);
       this.lastErrors = Object.fromEntries([["otomoto", otomoto], ["mobile", mobile], ["blocket", blocket], ["avby", avby], ["autoscout", autoscout], ["autoscoutfr", autoscoutfr], ["marktplaats", marktplaats], ["dehands", dehands], ["kleinanzeigen", kleinanzeigen], ["paruvendu", paruvendu]]
         .filter(([, result]) => result.status === "rejected").map(([source, result]) => [source, String(result.reason?.message || result.reason || "")]));
+      // Portals that answered, an empty list included ("none left"): only
+      // the others are "no answer" in Monitoring (lastSources = with offers).
+      this.lastAnswered = Object.entries({ otomoto, mobile, blocket, avby, autoscout, autoscoutfr, marktplaats, dehands, kleinanzeigen, paruvendu })
+        .filter(([source, result]) => selected.includes(source) && result.status === "fulfilled" && result.value).map(([source]) => source);
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const mobileListings = (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal }));
@@ -3173,6 +3210,7 @@
       const url = new URL(listing.url);
       const mobileId = url.searchParams.get("id") || url.pathname.match(/\/(\d+)\.html$/)?.[1];
       if (url.hostname.endsWith("mobile.de") && mobileId) return `mobile:${mobileId}`;
+      if (listing.id && ID_KEYED_HOSTS.includes(url.hostname.replace(/^www\./, ""))) return `id:${listing.id}`;
       return `${url.hostname.replace(/^www\./, "")}${url.pathname.replace(/\/$/, "")}`;
     } catch {
       return `id:${listing.id || `${listing.price}|${listing.year}|${listing.mileage}`}`;
@@ -3292,8 +3330,17 @@
         read.onsuccess = () => {
           const record = read.result || { key, historyId, at, markets: {} };
           // A Monitoring check is marked with its countries and portals, so
-          // it is compared only with checks of the same scope.
-          store.put({ ...record, ...(notes?.scope ? { scope: notes.scope } : {}), markets: { ...record.markets, ...markets } });
+          // it is compared only with checks of the same scope, and with the
+          // portals that answered (an empty list too) and why the rest did not.
+          const answered = notes?.answered ? [...new Set([...(record.answered || []), ...notes.answered])] : record.answered;
+          const failed = notes?.failed ? Object.fromEntries(Object.entries({ ...(record.failed || {}), ...notes.failed }).filter(([source]) => !answered?.includes(source))) : record.failed;
+          store.put({
+            ...record,
+            ...(notes?.scope ? { scope: notes.scope } : {}),
+            ...(answered ? { answered } : {}),
+            ...(failed ? { failed } : {}),
+            markets: { ...record.markets, ...markets },
+          });
         };
         tx.oncomplete = resolve;
         tx.onerror = () => reject(tx.error);
@@ -4663,6 +4710,25 @@
     return MARKET_GROUPS.find((group) => group.rows.includes(source))?.key || "";
   }
 
+  // Did a portal answer in this check? Since 2026-10-10 a check lists the
+  // portals that answered (an empty list = none left); in older ones a portal
+  // without offers counts as not answered. A portal that did not answer is
+  // never "everything gone" (owner's audit 2026-10-10: mobile.de 0, −48).
+  function portalAnswered(record, source) {
+    if (!record) return false;
+    if (record.markets?.[source]) return true;
+    return Array.isArray(record.answered) && record.answered.includes(source);
+  }
+  const answeredMarket = (record, source) => record.markets?.[source] || { total: 0, complete: true, offers: [] };
+  // Why a portal gave nothing, in the manager's words ("" = no answer).
+  function portalFailure(record, source) {
+    const c = copy();
+    const detail = String(record?.failed?.[source] || record?.errors?.[source] || "");
+    if (/model not found/i.test(detail)) return c.monitoringNoAnswerModel;
+    if (/no mobile\.de importer/i.test(detail)) return c.monitoringNoAnswerImporter;
+    return "";
+  }
+
   function offerChanges(source, current, compared) {
     const certain = Boolean(current?.complete && compared?.complete);
     const before = new Map((compared?.offers || []).map((offer) => [offer.key, offer]));
@@ -4708,16 +4774,27 @@
     const pct = (value) => `${value > 0 ? "+" : ""}${numbers.format(Math.round(value * 10) / 10)}%`;
     const allRows = [];
     const markets = sources.map((source) => {
-      const current = record.markets[source];
-      const compared = compareRecord?.markets[source];
-      const rows = offerChanges(source, current, compareRecord ? (compared || { offers: [], complete: false }) : null);
+      // A portal without an answer that day (or not asked then) has no list:
+      // neither its offers "gone" nor all of them "new" (audit 2026-10-10).
+      const answered = portalAnswered(record, source);
+      const current = answered ? answeredMarket(record, source) : null;
+      const comparedAnswered = Boolean(compareRecord) && portalAnswered(compareRecord, source);
+      const compared = comparedAnswered ? answeredMarket(compareRecord, source) : null;
+      if (!answered) {
+        const reason = portalFailure(record, source);
+        return `
+        <div class="mobileMarketOfferMarket">
+          <h3>${marketBadge(source)} <small>${escapeMarketHtml(c.offerNoData)}${reason ? ` · ${escapeMarketHtml(reason)}` : ""}</small></h3>
+        </div>`;
+      }
+      const rows = offerChanges(source, current, compared);
       allRows.push(...rows);
       const count = (group) => rows.filter((row) => row.group === group).length;
       const cheaper = rows.filter((row) => row.group === "cheaper");
       const avgDrop = cheaper.length ? cheaper.reduce((sum, row) => sum + ((row.offer.price - row.previous.price) / row.previous.price) * 100, 0) / cheaper.length : 0;
       const listNote = current ? (current.complete ? c.offerListComplete : c.offerListSample)
         .replace("{count}", numbers.format(current.offers.length)).replace("{total}", numbers.format(current.total)) : "";
-      const summary = compareRecord ? [
+      const summary = compareRecord && !comparedAnswered ? c.offerNoCompareData : compareRecord ? [
         `${c.offerNew}: ${count("new")}`,
         `${c.offerGoneGroup}: ${count("gone")}`,
         `${c.offerCheaper}: ${cheaper.length}${cheaper.length ? ` (${c.offerCheaperAvg.replace("{pct}", pct(avgDrop))})` : ""}`,
@@ -4789,7 +4866,9 @@
 
   async function fillOfferHistory(entry) {
     const byDate = await loadCheckOffers(entry.id);
-    const card = document.querySelector(`[data-offer-history="${CSS.escape(entry.id)}"]`);
+    // The section, not the "Przygotuj ofertę" buttons (B71) that carry the
+    // same attribute: the day's market stayed "Wczytuję…" beside them.
+    const card = document.querySelector(`section[data-offer-history="${CSS.escape(entry.id)}"]`);
     if (!card) return;
     card.innerHTML = `${blockTitle("gauge", copy().offerHistoryHeading)}${offerHistoryBodyHtml(entry, byDate)}`;
   }
@@ -4798,7 +4877,7 @@
     const entry = marketHistory.find((item) => item.id === priceHistoryId);
     if (!entry) return;
     fillOfferHistory(entry).then(() => {
-      if (scroll) scrollToPageContent(document.querySelector("[data-offer-history]"));
+      if (scroll) scrollToPageContent(document.querySelector("section[data-offer-history]"));
     });
   }
 
@@ -5693,16 +5772,26 @@
     };
     const changedBetween = false;
     const newBase = !previous && (checks.length > 1 || otherChecks);
-    const sources = MARKET_SOURCES.filter((source) => selection.markets.includes(source) && (record.markets[source] || before?.markets[source]));
+    // Every chosen portal has its tile, also one that never answered.
+    const sources = MARKET_SOURCES.filter((source) => selection.markets.includes(source));
     const numbers = numberFormat();
+    // Each portal against its own previous answer: one that did not answer
+    // this time shows its last answered list (dated on its tile), and one that
+    // did is compared with the last check it answered in.
     const perSource = sources.map((source) => {
-      const current = record.markets[source];
-      // A portal missing from the previous monitoring (it did not answer):
-      // nothing to compare with, this one is its base.
-      const compared = before && before.markets[source] ? before.markets[source] : null;
+      const answeredChecks = sameSearch.filter((point) => portalAnswered(byDate.get(point.at), source));
+      const shown = answeredChecks[answeredChecks.length - 1];
+      const prior = answeredChecks[answeredChecks.length - 2];
+      const current = shown ? answeredMarket(byDate.get(shown.at), source) : null;
+      const compared = prior ? answeredMarket(byDate.get(prior.at), source) : null;
+      const silent = !portalAnswered(record, source);
       const rows = offerChanges(source, current, compared);
-      return { source, current, compared, rows };
+      return { source, current, compared, rows, silent, shownAt: shown?.at || "", reason: silent ? portalFailure(record, source) : "" };
     });
+    const silentNames = perSource.filter((item) => item.silent).map((item) => portalName(item.source));
+    if (info && silentNames.length) {
+      info.insertAdjacentHTML("beforeend", `<small class="mobileMonitoringSilent">${escapeMarketHtml(c.monitoringSilentInfo.replace("{portals}", silentNames.join(", ")))}</small>`);
+    }
     // Countries -> portals -> states in one view (owner 2026-10-05): the row
     // of countries, the portal tiles of the chosen country, then the states.
     const inCountry = (source, offer) => !monitoringState.country || offerCountryKey(source, offer) === monitoringState.country;
@@ -5734,7 +5823,7 @@
         }).join("")}
       </div>`;
     })();
-    const tiles = shownSources.map(({ source, current, compared, rows: allSourceRows }) => {
+    const tiles = shownSources.map(({ source, current, compared, rows: allSourceRows, silent, shownAt, reason }) => {
       const rows = allSourceRows.filter((row) => inCountry(source, row.offer));
       const count = (group) => rows.filter((row) => row.group === group).length;
       // AutoScout24 counts its unique offers (duplicates of mobile.de left out);
@@ -5750,11 +5839,13 @@
       return `
         <button class="mobileMonitoringTile is${sourceClass(source)}${active ? " isActive" : ""}" type="button" data-monitoring-portal="${source}" aria-pressed="${active ? "true" : "false"}">
           <span class="mobileMonitoringTileHead">${monitoringPortalBadge(source, flagsOf)}</span>
-          <span class="mobileMonitoringTileStats">
+          ${current ? "" : `<span class="mobileMonitoringTileSilent"><b>${escapeMarketHtml(c.monitoringNoAnswer)}</b>${reason ? `<small>${escapeMarketHtml(reason)}</small>` : ""}</span>`}
+          ${current ? `<span class="mobileMonitoringTileStats">
             <span><small>${escapeMarketHtml(c.monitoringOffers)}</small><b>${escapeMarketHtml(numbers.format(total))}</b>${delta ? `<em class="${delta > 0 ? "isGood" : "isBad"}">${delta > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.abs(delta)))}</em>` : ""}</span>
             <span><small>${escapeMarketHtml(c.monitoringNew)}</small><b class="${certain ? "isNew" : "isUnsure"}">${compared ? `${certain ? "" : "≈ "}+${count("new")}` : "—"}</b></span>
             <span><small>${escapeMarketHtml(c.monitoringGone)}</small><b class="${certain ? "isGone" : "isUnsure"}">${compared ? `${certain ? "" : "≈ "}−${count("gone")}` : "—"}</b></span>
-          </span>
+          </span>` : ""}
+          ${current && silent ? `<small class="mobileMonitoringTileNote isSilent">${escapeMarketHtml(c.monitoringNoAnswerSince.replace("{date}", shortDate(latest.at)).replace("{shown}", shortDate(shownAt)))}${reason ? ` · ${escapeMarketHtml(reason)}` : ""}</small>` : ""}
           ${compared && !certain ? `<small class="mobileMonitoringTileNote" title="${escapeMarketHtml(c.monitoringApproxTitle)}">${escapeMarketHtml(c.monitoringSample)}${byCountry ? "" : ` · ${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current?.offers.length || 0)).replace("{total}", numbers.format(current?.read && source === "autoscout" ? current.total : current?.total || 0)))}`}</small>` : ""}
           ${current?.allCountriesTotal && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringAllCountries.replace("{count}", numbers.format(current.allCountriesTotal)))}</small>` : ""}
           ${current?.duplicates && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringDuplicates.replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
@@ -6353,10 +6444,12 @@
       raw = await readMarkets(markets);
     }
     let sourcesOk = [...(provider.lastSources || [])];
+    // Answered, an empty list included: the rest is "no answer" in the record.
+    let answered = [...(provider.lastAnswered || provider.lastSources || [])];
     let errors = { ...(provider.lastErrors || {}) };
     let autoscoutMeta = provider.lastAutoscout || null;
     const pricesKey = provider.lastPrices ?? null;
-    const retry = markets.filter((source) => !sourcesOk.includes(source) && !/model not found/i.test(errors[source] || ""));
+    const retry = markets.filter((source) => !answered.includes(source) && !/model not found/i.test(errors[source] || ""));
     if (retry.length) {
       await pause();
       try {
@@ -6375,18 +6468,23 @@
         });
         raw = [...raw, ...more];
         sourcesOk = [...sourcesOk, ...nowOk];
-        nowOk.forEach((source) => delete errors[source]);
+        answered = [...new Set([...answered, ...(provider.lastAnswered || nowOk)])];
+        answered.forEach((source) => delete errors[source]);
         errors = { ...errors, ...(provider.lastErrors || {}) };
         if (nowOk.includes("autoscout")) autoscoutMeta = provider.lastAutoscout || autoscoutMeta;
       } catch {
         // Still nothing: said in the status.
       }
     }
+    answered = answered.filter((source) => markets.includes(source));
     provider.lastSources = sourcesOk;
+    provider.lastAnswered = answered;
     provider.lastErrors = errors;
     provider.lastAutoscout = autoscoutMeta;
     provider.lastPrices = pricesKey;
-    return { raw, searchFilters, base, sourcesOk, errors };
+    // Each portal that did not answer, with its reason (shown on its tile).
+    const failed = Object.fromEntries(markets.filter((source) => !answered.includes(source)).map((source) => [source, String(errors[source] || "").slice(0, 120)]));
+    return { raw, searchFilters, base, sourcesOk, answered, failed, errors };
   }
 
   // ---- Automation (B43): Monitoring without a manager's browser ------------
@@ -6428,7 +6526,7 @@
     const scope = monitoringScopeKey({ countries }, markets);
     const sources = read.sourcesOk.filter((source) => markets.includes(source));
     const notes = { autoscout: provider.lastAutoscout || undefined, mobile: markets.includes("mobile") ? { countries } : undefined };
-    const record = { key: `${job.id}|${at}`, historyId: String(job.id), at, scope, markets: {}, by: "automation", signature: searchSignature(job.filters), prices: provider.lastPrices ?? null, errors: read.errors };
+    const record = { key: `${job.id}|${at}`, historyId: String(job.id), at, scope, markets: {}, answered: read.answered, failed: read.failed, by: "automation", signature: searchSignature(job.filters), prices: provider.lastPrices ?? null, errors: read.errors };
     sources.forEach((source) => {
       const market = { ...compactOffers(fetched, source, job.filters), ...(notes[source] || {}) };
       if (market.offers.length) record.markets[source] = market;
@@ -6540,7 +6638,9 @@
       const analysisCountries = (entry.filters.countries || []).filter(Boolean);
       const countryBound = (listing) => ["mobile", "autoscout"].includes(listingSource(listing));
       const inAnalysis = (listing) => !countryBound(listing) || !analysisCountries.length || !listing.country || analysisCountries.includes(listing.country);
-      const notes = { scope: monitoringScopeKey(scope, markets) };
+      // Which portals answered and why the others did not: a portal without an
+      // answer is not "everything sold" (owner's audit 2026-10-10).
+      const notes = { scope: monitoringScopeKey(scope, markets), answered: read.answered, failed: read.failed };
       if (provider.lastAutoscout) notes.autoscout = provider.lastAutoscout;
       if (markets.includes("mobile")) notes.mobile = { countries: scope.countries };
       refreshMarketHistory();
@@ -6558,7 +6658,7 @@
       }
       updateMarketSnapshot(entry.id, filters, mergeBySource(current.listings, fetched.filter(inAnalysis)), "API", searchUrl || "-");
       ok = true;
-      const missing = markets.filter((source) => !(provider.lastSources || []).includes(source));
+      const missing = markets.filter((source) => !read.answered.includes(source));
       if (missing.length && monitoringState.id === entry.id) {
         // A portal that answered "no such model" is said so; others did not answer.
         const reasons = missing.map((source) => (/model not found/i.test(provider.lastErrors?.[source] || "") ? monitoringErrorText(provider.lastErrors[source], source) : "")).filter(Boolean);

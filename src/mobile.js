@@ -1,4 +1,3 @@
-const DEFAULT_MOBILEDE_API_URL = "https://closing-evidence-thick-fastest.trycloudflare.com/mobilede/import";
 
 const copy = {
   pl: {
@@ -1503,11 +1502,35 @@ const els = {
   selectedFilters: document.querySelector("[data-mobile-selected-filters]"),
 };
 
+// The mobile.de importer runs on the owner's Mac behind a temporary tunnel
+// (PROJECT-MOBILE.md §4.3.1): its address is never written into the code
+// (owner 2026-10-10; until then a dead tunnel of 29.09 stood here). A page
+// opened with ?mobiledeApi= remembers it in this browser for the visits
+// without it (the menu's links drop it); with none, mobile.de says it is not
+// connected instead of asking a dead address.
+const MOBILEDE_IMPORTER_KEY = "autogood.mobilede.importer.v1";
+const importerAddress = (value) => /^https:\/\/|^http:\/\/(127\.0\.0\.1|localhost)[:/]/.test(String(value || ""));
 function readMobileDeApiUrl() {
   const configuredUrl = window.AUTOGOOD_MOBILEDE_API_URL;
-  const params = new URLSearchParams(window.location.search);
-  const queryUrl = params.get("mobiledeApi");
-  return configuredUrl || queryUrl || DEFAULT_MOBILEDE_API_URL;
+  if (configuredUrl) return configuredUrl;
+  const queryUrl = new URLSearchParams(window.location.search).get("mobiledeApi");
+  try {
+    if (importerAddress(queryUrl)) {
+      if (localStorage.getItem(MOBILEDE_IMPORTER_KEY) !== queryUrl) localStorage.setItem(MOBILEDE_IMPORTER_KEY, queryUrl);
+      return queryUrl;
+    }
+    const remembered = localStorage.getItem(MOBILEDE_IMPORTER_KEY) || localStorage.getItem("autogood.offer.importer.v1") || "";
+    return importerAddress(remembered) ? remembered : "";
+  } catch {
+    return importerAddress(queryUrl) ? queryUrl : "";
+  }
+}
+
+// No importer known in this browser: as unreachable as a dead tunnel.
+function mobileDeImporterUrl() {
+  const url = readMobileDeApiUrl();
+  if (!url) throw new TypeError("Failed to fetch: no mobile.de importer");
+  return url;
 }
 
 function formatAmount(value, currency) {
@@ -3699,7 +3722,7 @@ async function loadMobileDeData(sourceUrl) {
   renderData();
 
   try {
-    const response = await fetch(`${readMobileDeApiUrl()}?url=${encodeURIComponent(sourceUrl)}`);
+    const response = await fetch(`${mobileDeImporterUrl()}?url=${encodeURIComponent(sourceUrl)}`);
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.detail || errorData.error || "Mobile.de import failed");
@@ -3920,14 +3943,14 @@ function mobileDeApiBase() {
 // One mobile.de ad read by the importer (price net/gross, VAT, equipment,
 // power, transport estimate) — page 3 "Monitoring" uses it per offer.
 window.AUTOGOOD_MOBILEDE_IMPORT = async (adUrl) => {
-  const response = await fetch(`${readMobileDeApiUrl()}?url=${encodeURIComponent(adUrl)}`);
+  const response = await fetch(`${mobileDeImporterUrl()}?url=${encodeURIComponent(adUrl)}`);
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.detail || payload.error || "Mobile.de import failed");
   return payload;
 };
 
 window.AUTOGOOD_MOBILEDE_SEARCH = async (searchUrl, { countOnly = false, pages = 0 } = {}) => {
-  const response = await fetch(`${mobileDeApiBase()}/mobilede/search?${countOnly ? "count=1&" : ""}${pages ? `pages=${pages}&` : ""}url=${encodeURIComponent(searchUrl)}`);
+  const response = await fetch(`${mobileDeImporterUrl().replace(/\/mobilede\/import\/?$/, "")}/mobilede/search?${countOnly ? "count=1&" : ""}${pages ? `pages=${pages}&` : ""}url=${encodeURIComponent(searchUrl)}`);
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.detail || payload.error || "Mobile.de search failed");
   return payload;

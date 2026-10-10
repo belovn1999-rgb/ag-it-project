@@ -14,12 +14,19 @@ const STD_FIX = 1829.27;
 const FIN_FIX = 2642.28;
 const RATES_URL = "./data/exchange-rates.json";
 const WALUTOMAT_API_URL = "https://api.walutomat.pl/api/v2.0.0/market_fx/best_offers";
-const DEFAULT_MOBILEDE_API_URL = "https://albuquerque-junior-favourites-assist.trycloudflare.com/mobilede/import";
+// The mobile.de importer sits behind a temporary tunnel: its address is never
+// written into the code (owner 2026-10-10). ?mobiledeApi= of the page, else
+// the one mobile.html remembered in this browser (src/mobile.js).
 const readMobileDeApiUrl = () => {
   const configuredUrl = window.AUTOGOOD_MOBILEDE_API_URL;
   const params = new URLSearchParams(window.location.search);
   const queryUrl = params.get("mobiledeApi");
-  return configuredUrl || queryUrl || DEFAULT_MOBILEDE_API_URL;
+  if (configuredUrl || queryUrl) return configuredUrl || queryUrl;
+  try {
+    return localStorage.getItem("autogood.mobilede.importer.v1") || "";
+  } catch {
+    return "";
+  }
 };
 const MOBILEDE_API_URL = readMobileDeApiUrl();
 // Tabs that offer the Mobile.de listing import: direct purchase plus both dealer calculators.
@@ -3030,6 +3037,7 @@ function App() {
     setMobileDeSummary("");
     setMobileDeNotice("");
     try {
+      if (!MOBILEDE_API_URL) throw new Error("no mobile.de importer (open the page with ?mobiledeApi=)");
       const response = await fetch(`${MOBILEDE_API_URL}?url=${encodeURIComponent(sourceUrl)}`);
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));

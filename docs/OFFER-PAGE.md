@@ -251,7 +251,8 @@ A4; PDF 2 стр. 1,1 МБ за 1,6 с, ссылка на объявление �
 - Чтение — тот же `offer-ad.js`, что у оффера из Monitoring.
 - **Адрес импортера mobile.de ищет сама** (адрес quick-туннеля в код не пишется, PROJECT-MOBILE §4.3):
   `?mobiledeApi=` этой страницы (запоминается в `localStorage` `autogood.offer.importer.v1`) →
-  запомненный → адреса последних офферов → `DEFAULT_MOBILEDE_API_URL` из `src/mobile.js`;
+  запомненный → адреса последних офферов (константы `DEFAULT_MOBILEDE_API_URL` в `src/mobile.js` с 10.10 нет;
+  mobile.html запоминает свой `?mobiledeApi=` в `autogood.mobilede.importer.v1`, PROJECT-MOBILE §4.3.1);
   берётся первый, который отвечает (JSON на запрос без ссылки).
 - Марка и модель — от портала (`ad.make` / `ad.model`), иначе из названия по справочнику mobile.de
   (`mobile-model-catalog.generated.js`, самое длинное совпадение; «VW» → Volkswagen и т. п.).

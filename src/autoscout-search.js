@@ -105,10 +105,19 @@
     toyota: { "rav-4": "rav4" },
     volkswagen: { t5: "t6-alle", t6: "t6-alle", t7: "t6-alle" },
   };
-  const modelSlug = (brand, model) => {
+  // mobile.de names some bodies as models ("CLA 180 Shooting Brake", "218
+  // Active Tourer", "420 Gran Coupé"); AutoScout24 knows only "cla-180", "218",
+  // "420" (the long slug is a 404, checked 2026-10-10) and tells the body by
+  // its filter: CLA 180 + estate = 43 Shooting Brakes of 2024 in Germany.
+  const BODY_IN_MODEL = { "shooting-brake": "estate", "active-tourer": "van_minibus", "gran-tourer": "van_minibus", "gran-coupe": "limousine" };
+  const splitModel = (brand, model) => {
     const value = slug(model);
-    return MODEL_SLUG[slug(brand)]?.[value] || value;
+    const known = MODEL_SLUG[slug(brand)]?.[value];
+    if (known) return { model: known, body: "" };
+    const suffix = Object.keys(BODY_IN_MODEL).find((item) => value.endsWith(`-${item}`));
+    return suffix ? { model: value.slice(0, -suffix.length - 1), body: BODY_IN_MODEL[suffix] } : { model: value, body: "" };
   };
+  const modelSlug = (brand, model) => splitModel(brand, model).model;
 
   // What the search cannot carry over, as the form names it (shown as "not
   // transferred"; "≈" = sent, but not quite the same).
@@ -192,7 +201,9 @@
     if (fuels.length) params.set("fuel", fuels.join(","));
     if (GEAR[filters.gearbox]) params.set("gear", GEAR[filters.gearbox]);
     if (DRIVE[filters.drive]) params.set("dtrain", DRIVE[filters.drive]);
-    if (BODY[filters.body]) params.set("body", BODY[filters.body]);
+    // The body the model's name carried, when the form has none.
+    const body = BODY[filters.body] || BODY[splitModel(filters.brand, filters.model).body];
+    if (body) params.set("body", body);
     if (SELLER[filters.seller]) params.set("custtype", SELLER[filters.seller]);
     // "Wersja": AutoScout's own version text field (Golf + "gti" 3 263).
     if (String(filters.version || "").trim()) params.set("version0", String(filters.version).trim());

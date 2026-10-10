@@ -64,8 +64,14 @@ node server/monitoring-runner.mjs --jobs jobs.json --out data/monitoring --daily
   "extra": { "tolerance": 10, "plans": [...], "skipped": [...], "markets": {...} },
   "point": { "otomoto": { "median": 104450, "...": "строка истории цен" } },
   "prices": "{\"otomoto\":{\"from\":null,\"to\":120000}}",
+  "answered": ["otomoto", "mobile"], "failed": { "autoscout": "model not found on AutoScout24" },
   "signature": "<searchSignature(filters)>", "by": "automation", "errors": {} }
 ```
+
+`answered` (с 10.10) — порталы, которые ответили, пустой список тоже («машин не
+осталось»); `failed` — остальные с причиной. Портал без ответа стр. 3 не
+считает «всё исчезло»: показывает его последний ответ с датой (PROJECT-MOBILE
+§4.6.3 п. 23). В старых записях портал без `markets` = не ответил.
 
 ## 4. Что осталось при запуске сервера
 

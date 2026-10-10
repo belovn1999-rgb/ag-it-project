@@ -924,3 +924,26 @@ button.mobileMonitoringMac {
 .mobileMonitoringMoreFilters .mobilePortalFilterRow[data-mobile-portal-row="mobile autoscout"] {
   display: none;
 }
+
+/* A portal without an answer (audit 2026-10-10): said on its tile, never
+   shown as "everything gone". */
+.mobileMonitoringTileSilent {
+  display: grid;
+  gap: 2px;
+  color: #8a3d08;
+}
+
+.mobileMonitoringTileSilent b {
+  font-size: var(--text-lg);
+}
+
+.mobileMonitoringTileSilent small,
+.mobileMonitoringTileNote.isSilent {
+  color: #8a3d08;
+  font-weight: 600;
+}
+
+.mobileMonitoringCheckInfo .mobileMonitoringSilent {
+  color: #8a3d08;
+  font-weight: 600;
+}

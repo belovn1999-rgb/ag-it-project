@@ -356,6 +356,15 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   → `a-klasse`… `v-klasse`, Toyota `RAV 4` → `rav4`; VW `T5/T6/T7` →
   `t6-alle` — **приблизительно**: группа AutoScout «T6 (alle)» содержит и T5, и T7
   (своей группы только T6 у AutoScout нет).
+  **Кузов в названии модели (с 10.10, `BODY_IN_MODEL`):** mobile.de зовёт моделями
+  «CLA 180 Shooting Brake», «218 Active Tourer», «420 Gran Coupé» — у AutoScout24
+  такие пути 404 (CLA 180 Shooting Brake молча не читался в Monitoring 6 дней).
+  Модель без хвоста + фильтр кузова, если форма его не задала: `shooting-brake` →
+  `body=5` (универсал; CLA 180 + 2024 + бензин + АКПП = 43 в DE), `active-tourer` /
+  `gran-tourer` → `body=12` (BMW 218: 1 375 из 2 410), `gran-coupe` → `body=6`
+  (BMW 420: 298 из 1 319). `passat-variant` у AutoScout есть — не трогается.
+  **404 на первой странице = «model not found on AutoScout24»** (не переспрашивается,
+  на плитке Monitoring «portal nie zna tego modelu»).
 - **Параметры (каждый проверен по изменению счёта, VW Golf, 5 стран):**
   `cy=D,NL,B,A,L` (страны: DE→D, BE→B, AT→A, LU→L, FR→F, IT→I, SE→S),
   `atype=C`, `damaged_listing=exclude` (галочка «Pokaż też uszkodzone» → `include`,
