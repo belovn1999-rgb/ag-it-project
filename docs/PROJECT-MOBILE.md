@@ -1047,7 +1047,7 @@ portalPrice / setPortalPrice / filtersPriceIn`); чтение «от новых�
    - **п. 3 — AutoScout24 и модели с кузовом в названии** (FILTERS-MOBILE-OTOMOTO §5d):
      `cla-180-shooting-brake` → `cla-180` + `body=5`; 404 = «модель не найдена».
    - **п. 4 — адрес туннеля удалён из кода** (§4.3.1).
-   - **Дубли вторых порталов ≠ «исчезли» (найдено на живой проверке 10.10, закрывает п. 10).**
+   - **Дубли вторых порталов ≠ «исчезли» (найдено на живой проверке 10.10).**
      Когда AutoScout24 заработал, Marktplaats показал «przeczytano 1 z 7, Zniknęły ≈ −6»:
      6 машин те же, что на AutoScout24 NL, и считаются там (SECOND_PORTALS). Теперь
      число таких дублей сохраняется (`duplicates` у Marktplaats, 2dehands, Kleinanzeigen,
@@ -1056,7 +1056,11 @@ portalPrice / setPortalPrice / filtersPriceIn`); чтение «от новых�
      policzone tam», а машина, ушедшая из списка одного портала, но стоящая на
      другом с той же ценой и пробегом (`carSignature`), не «Zniknęła» (плитки,
      «Zniknęły», «zniknęło w ostatnich 7 dniach», «Rynek w wybranym dniu»).
-     2dehands «przeczytano 5 z 6» каждый день был тем же: 1 машина — на mobile.de.
+     Проверено на CLA 12:16: Marktplaats 1 своя + 6 на AutoScout24 = 7 из 7.
+     П. 10 это **не** закрывает: шестое объявление 2dehands — цена «licytacja od»
+     (`MIN_BID`, CLA 250), читатель Marktplaats/2dehands берёт только `FIXED` — «5 z 6»
+     остаётся до решения, как считать такие объявления. В «Rynek w wybranym dniu»
+     у списка с дублями — «pełna lista: 39 z 74 · 35 — te same auta na innym portalu».
    - **Попутно:** «Rynek w wybranym dniu» застревал на «Wczytuję ogłoszenia…»,
      когда в списке есть «Przygotuj ofertę» (у кнопки B71 тот же атрибут
      `data-offer-history`) — блок теперь ищет `section[data-offer-history]`.
@@ -1071,7 +1075,7 @@ portalPrice / setPortalPrice / filtersPriceIn`); чтение «от новых�
      заголовку; 7 — статистика цен посередине («Najtaniej · Mediana na gotowo ·
      zmiana») по странам; 8 — уведомление о новых машинах (служба Mac, «+N» в
      избранном); 9 — «Dodatkowe» 0 без причины; 10 — 2dehands «przeczytano 5 z 6»
-     каждый день (✅ — дубль mobile.de, см. выше); 13 — настройки 1,5 экрана, «Więcej filtrów» свернуть и без полей
+     каждый день (причина — объявление «licytacja od» `MIN_BID`, не дубль); 13 — настройки 1,5 экрана, «Więcej filtrów» свернуть и без полей
      невыбранных порталов; 14 — короткое пояснение бюджета, «Sprawdź w kalkulatorze»
      с медианой при пустом бюджете; 15 — фото и «Dobra cena wg mobile.de» (B44, B54);
      16 — «przejrzane / wysłane» (B44); 17 — «такое же» в Польше (B55); 18 — телефон:
@@ -1678,8 +1682,8 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 |---|---|---|---|
 | 10-10 | Claude | **Ссылка объявления без выбора портала** (`mobile.html`, `mobile.js`): список порталов у «Link ogłoszenia» убран; портал определяет вставленная ссылка (`linkPortalOf`), его логотип — плашкой рядом с заголовком (`data-mobile-link-source-badge`); под полем — какие ссылки принимаются (PL/RU, `linkPortalsHint`); ссылка не с наших порталов — «Nie rozpoznano portalu…» (раньше уходила в mobile.de), сообщение уходит, когда вставлена правильная ссылка; стили списка удалены. **Рамка кнопок разделов — «жидкое стекло»** (полупрозрачный размытый фон `backdrop-filter`, светлая кромка, блик сверху) | этот коммит |
 | 10-10 | Claude | **B71 «Oferta»:** ссылки со всех порталов стр. 1 (новые читатели Marktplaats/2dehands, otomoto, Blocket, av.by в `src/offer-ad.js`), портал по ссылке без выбора, PL / RU — оффер на выбранном языке; `server/cloudflare-proxy/worker.js`: хост `olxcdn.com` (фото otomoto для PDF) — **нужна выкладка Worker**; подробно `docs/OFFER-PAGE.md` §8 | этот коммит |
-| 10-10 | Claude | **Monitoring, волна 1 — дубли вторых порталов (B74):** живая проверка CLA после починки AutoScout24 показала «Marktplaats: przeczytano 1 z 7, Zniknęły −6» — 6 машин те же, что на AutoScout24 NL. Число дублей сохраняется в записи, список «прочитано + дубли» полный, машина, стоящая на другом портале с той же ценой и пробегом, не «исчезла» (плитки, «Zniknęły», неделя, «Rynek w wybranym dniu»); заодно ушло ежедневное «2dehands 5 z 6» (п. 10) | этот коммит |
-| 10-10 | Claude | **Аудит стр. 3 Monitoring, волна 1 (B74, 4.6.3 п. 23):** портал без ответа показывается последним ответом с датой («brak odpowiedzi — dane z …»), а не «Zniknęły −48» (`answered`/`failed` в записи проверки, `portalAnswered`); ссылки Marktplaats/2dehands/Kleinanzeigen/ParuVendu больше не отбрасываются (ключи `id:` прежние); AutoScout24: «CLA 180 Shooting Brake» → `cla-180` + кузов, 404 = «модель не найдена»; `DEFAULT_MOBILEDE_API_URL` удалён (mobile.js, калькуляторы), адрес — `?mobiledeApi=`, запоминается в браузере; «Rynek w wybranym dniu» не застревает из-за кнопки «Przygotuj ofertę». Проверено локально на трёх днях: не ответил / ответил пусто / не знает модель | этот коммит |
+| 10-10 | Claude | **Monitoring, волна 1 — дубли вторых порталов (B74):** живая проверка CLA после починки AutoScout24 показала «Marktplaats: przeczytano 1 z 7, Zniknęły −6» — 6 машин те же, что на AutoScout24 NL. Число дублей сохраняется в записи, список «прочитано + дубли» полный, машина, стоящая на другом портале с той же ценой и пробегом, не «исчезла» (плитки, «Zniknęły», неделя, «Rynek w wybranym dniu»); «2dehands 5 z 6» — другое: объявление с ценой «licytacja od» (MIN_BID) читатель пропускает (п. 10 открыт) | 8756d17 |
+| 10-10 | Claude | **Аудит стр. 3 Monitoring, волна 1 (B74, 4.6.3 п. 23):** портал без ответа показывается последним ответом с датой («brak odpowiedzi — dane z …»), а не «Zniknęły −48» (`answered`/`failed` в записи проверки, `portalAnswered`); ссылки Marktplaats/2dehands/Kleinanzeigen/ParuVendu больше не отбрасываются (ключи `id:` прежние); AutoScout24: «CLA 180 Shooting Brake» → `cla-180` + кузов, 404 = «модель не найдена»; `DEFAULT_MOBILEDE_API_URL` удалён (mobile.js, калькуляторы), адрес — `?mobiledeApi=`, запоминается в браузере; «Rynek w wybranym dniu» не застревает из-за кнопки «Przygotuj ofertę». Проверено локально на трёх днях: не ответил / ответил пусто / не знает модель | 982b693 |
 | 10-10 | Claude | **Аудит стр. 2, волна 3.** (13) Статистика на телефоне карточками (`data-label` у ячеек, `@media (max-width: 40rem)` в `mobile-page2.css`), проверено на 375 px — без прокрутки вбок; найдено попутно: клик по выбранному избранному во время открытия его анализа (после перезагрузки) снимал выбор и оставлял стр. 2 пустой — теперь снимает только когда анализ этой машины уже на экране. П. 9 (дни на рынке, снижения цены на стр. 2) не делался: в данных стр. 2 их дают только otomoto (дата и снижение) и Blocket (дата), у mobile.de и AutoScout24 — только Monitoring из повторных проверок; ждёт решения владельца | этот коммит |
 | 10-10 | Claude | **Аудит стр. 2, волна 2.** (7) Тексты «Wniosek» и сравниваемого авто переписаны простым языком (PL и RU); новый вывод без Польши: `oneMarketPrice/Range/Cheap`, `severalMarketLine`, `cheapestMarket`, `oneMarketBenefits`; подсказка `conclusionAddPoland` с `data-report-hide`; (8) `singleYear` — без кнопки «Rok», плашка `.mobileMarketSingleYear` у «Wykres cen»; (11) сноска с 2 250 zł + 1,23%; (12) `tone()` — только столбцы цен, новая легенда. Проверено: Astra только DE (вывод по одному рынку, плашка 2023) и Astra DE + 14 тестовых otomoto (сравнение, стрелки только у цен). В `src/offer.js` (оффер B71) строка «1 829,27 zł + 1% … netto + VAT» не менялась | этот коммит |
 | 10-10 | Claude | **Кнопки разделов — в одной рамке и на стр. 2** (`mobile-page1.js`, `mobile-page1.css`): кнопки в общей однотонной рамке (граница, светлый фон, тень), колонка левее (−86 px от края страницы, видна от 1360 px); у стр. 2 своя колонка — Parametry poszukiwania, Statystyki, Cena a parametry, Wykres cen, Wniosek, Aktualne oferty (только блоки, которые есть в анализе; страница перерисовывается, поэтому разделы ищутся на каждом проходе, `RAIL_PAGES`); у каждого блока стр. 2 свой цвет (`--ag-section-a-*`), значок заголовка — в рамке и тени того же цвета, как на стр. 1; на стр. 3 колонки нет | этот коммит |

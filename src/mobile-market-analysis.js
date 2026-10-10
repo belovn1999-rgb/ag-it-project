@@ -284,6 +284,7 @@
       offerLegendCurrent: "wybrany dzień",
       offerLegendCompare: "porównanie",
       offerListComplete: "pełna lista: {count} z {total}",
+      offerListDuplicates: "{count} — te same auta na innym portalu",
       offerListSample: "próbka: {count} z {total} — nowe i zniknięte niepewne",
       offerNoMarket: "Brak ogłoszeń tego rynku w wybranym dniu.",
       offerChangesHeading: "Ogłoszenia i zmiany",
@@ -935,6 +936,7 @@
       offerLegendCurrent: "выбранный день",
       offerLegendCompare: "сравнение",
       offerListComplete: "полный список: {count} из {total}",
+      offerListDuplicates: "{count} — те же машины на другом портале",
       offerListSample: "выборка: {count} из {total} — новые и исчезнувшие неточно",
       offerNoMarket: "В выбранный день нет объявлений этого рынка.",
       offerChangesHeading: "Объявления и изменения",
@@ -4899,8 +4901,10 @@
       const count = (group) => rows.filter((row) => row.group === group).length;
       const cheaper = rows.filter((row) => row.group === "cheaper");
       const avgDrop = cheaper.length ? cheaper.reduce((sum, row) => sum + ((row.offer.price - row.previous.price) / row.previous.price) * 100, 0) / cheaper.length : 0;
-      const listNote = current ? (current.complete ? c.offerListComplete : c.offerListSample)
-        .replace("{count}", numbers.format(current.offers.length)).replace("{total}", numbers.format(current.total)) : "";
+      // "39 z 74" of a whole list = 35 cars counted on the main portal: said.
+      const listNote = current ? [(current.complete ? c.offerListComplete : c.offerListSample)
+        .replace("{count}", numbers.format(current.offers.length)).replace("{total}", numbers.format(current.total)),
+      current.duplicates ? c.offerListDuplicates.replace("{count}", numbers.format(current.duplicates)) : ""].filter(Boolean).join(" · ") : "";
       const summary = compareRecord && !comparedAnswered ? c.offerNoCompareData : compareRecord ? [
         `${c.offerNew}: ${count("new")}`,
         `${c.offerGoneGroup}: ${count("gone")}`,
