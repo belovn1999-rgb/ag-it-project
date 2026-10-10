@@ -6,7 +6,7 @@
     <title>AUTOGOOD Oferta</title>
     <meta
       name="description"
-      content="Wewnętrzne narzędzie AUTOGOOD: oferta dla klienta z linku ogłoszenia — dane auta, ocena, koszt na gotowo, PDF."
+      content="Wewnętrzne narzędzie AUTOGOOD: oferta dla klienta z linku ogłoszenia — dane auta, ocena, koszt na gotowo, PDF po polsku lub po rosyjsku."
     />
     <meta name="robots" content="noindex" />
     <link rel="icon" href="./assets/ag-opt.svg" type="image/svg+xml" />
@@ -17,67 +17,61 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/offer-start.css?v=b71-start-1" />
-    <script defer src="./src/global-navigation.js?v=nav-offer-1010" data-ag-global-nav></script>
+    <link rel="stylesheet" href="./src/offer-start.css?v=b71-ru-3" />
+    <script defer src="./src/global-navigation.js?v=nav-offer-1010" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="osBody">
-    <!-- Program 06 "Oferta" (B71, owner 2026-10-10): an offer for a client
-         made from one car. First way: a dealer's ad link (the link box of
-         "Wyszukiwanie i analiza", page 1). Second way, later (its own chat):
-         an auction report read by scripts. docs/OFFER-PAGE.md §8. -->
+    <!-- Program 06 "Oferta" (B71, owner 2026-10-10): only offers in a nice
+         wrapping for interested clients, no market analysis. First way: a
+         dealer's ad link from any portal of page 1 of "Wyszukiwanie i
+         analiza" (the portal follows the link). Second way, later (its own
+         chat): an auction report read by scripts. The PL / RU switch makes
+         the offer in that language. docs/OFFER-PAGE.md §8. -->
     <main class="osShell">
       <header class="osTopbar">
-        <h1 class="osTitle">Oferta dla klienta</h1>
+        <h1 class="osTitle" data-os-text="title">Oferta dla klienta</h1>
+        <div class="osTopActions">
+          <span class="osLangLabel" data-os-text="langLabel">Język oferty</span>
+          <div class="osLang" role="group" aria-label="Język oferty" data-os-lang-group>
+            <button type="button" data-os-lang="pl" class="isActive" aria-pressed="true">PL</button>
+            <button type="button" data-os-lang="ru" aria-pressed="false">RU</button>
+          </div>
+        </div>
       </header>
 
-      <div class="osModes" role="tablist" aria-label="Skąd oferta">
+      <div class="osModes" role="tablist" data-os-modes>
         <button class="osMode isActive" type="button" role="tab" aria-selected="true" data-os-mode="dealer">
           <svg aria-hidden="true"><use href="./src/mobile-icons.svg#store"></use></svg>
-          <span>Z ogłoszenia dealera</span>
+          <span data-os-text="modeDealer">Z ogłoszenia dealera</span>
         </button>
-        <button class="osMode" type="button" role="tab" aria-selected="false" disabled title="Przygotujemy w osobnym kroku">
+        <button class="osMode" type="button" role="tab" aria-selected="false" disabled data-os-mode="auction">
           <svg aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg>
-          <span>Z raportu aukcji</span>
-          <small>wkrótce</small>
+          <span data-os-text="modeAuction">Z raportu aukcji</span>
+          <small data-os-text="soon">wkrótce</small>
         </button>
       </div>
 
       <section class="osCard osLinkCard" aria-labelledby="os-link-heading">
         <div class="osLinkHead">
-          <h2 id="os-link-heading" class="osCardTitle"><svg aria-hidden="true"><use href="./src/mobile-icons.svg#link"></use></svg><span>Link ogłoszenia</span></h2>
-          <!-- The portal follows the pasted link; the list is as on page 1 of
-               "Wyszukiwanie i analiza" (countries in the columns' order). -->
-          <label class="osSourcePick">
-            <span class="srOnly">Portal</span>
-            <select class="osSourceSelect" data-os-source aria-label="Portal">
-              <optgroup label="Niemcy">
-                <option value="mobile" selected>mobile.de</option>
-                <option value="autoscout">AutoScout24</option>
-                <option value="kleinanzeigen">Kleinanzeigen</option>
-              </optgroup>
-              <optgroup label="Holandia"><option value="marktplaats" disabled>Marktplaats - wkrótce</option></optgroup>
-              <optgroup label="Belgia"><option value="dehands" disabled>2dehands · 2ememain - wkrótce</option></optgroup>
-              <optgroup label="Polska"><option value="otomoto" disabled>otomoto.pl - wkrótce</option></optgroup>
-              <optgroup label="Szwecja"><option value="blocket" disabled>blocket.se - wkrótce</option></optgroup>
-              <optgroup label="Francja"><option value="autoscoutfr">AutoScout24 (Francja)</option><option value="paruvendu">ParuVendu</option></optgroup>
-              <optgroup label="Białoruś"><option value="avby" disabled>av.by - wkrótce</option></optgroup>
-            </select>
-          </label>
+          <h2 id="os-link-heading" class="osCardTitle"><svg aria-hidden="true"><use href="./src/mobile-icons.svg#link"></use></svg><span data-os-text="linkTitle">Link ogłoszenia</span></h2>
+          <!-- The portal is read from the link itself (no list to pick from). -->
+          <span class="osPortal" data-os-portal hidden></span>
         </div>
         <form class="osSearch" data-os-form>
-          <label class="srOnly" for="os-url">Link ogłoszenia</label>
+          <label class="srOnly" for="os-url" data-os-text="linkTitle">Link ogłoszenia</label>
           <div class="osSearchControl">
-            <input id="os-url" name="url" type="url" inputmode="url" autocomplete="url" placeholder="https://suchen.mobile.de/..." aria-describedby="os-status" data-os-url />
-            <button type="submit" data-os-read>Rozpoznaj</button>
+            <input id="os-url" name="url" type="url" inputmode="url" autocomplete="url" placeholder="https://…" aria-describedby="os-status os-portals" data-os-url />
+            <button type="submit" data-os-read data-os-text="read">Rozpoznaj</button>
           </div>
           <p id="os-status" class="osStatus" data-os-status aria-live="polite"></p>
+          <p id="os-portals" class="osPortals" data-os-portals></p>
         </form>
       </section>
 
       <section class="osCard osCarCard" data-os-car hidden aria-live="polite"></section>
 
       <section class="osRecent" data-os-recent hidden>
-        <h2 class="osRecentTitle">Ostatnie oferty</h2>
+        <h2 class="osRecentTitle" data-os-text="recent">Ostatnie oferty</h2>
         <ul class="osRecentList" data-os-recent-list></ul>
       </section>
     </main>
@@ -86,8 +80,9 @@
     <script src="./src/mobile-model-catalog.generated.js?v=mobile-de-ids-20260921"></script>
     <script src="./src/turnkey-estimate.js?v=phev-1006"></script>
     <script src="./src/offer-store.js?v=b71-looks-1"></script>
-    <script src="./src/offer-equipment.js?v=b71-looks-6-fr"></script>
-    <script src="./src/offer-ad.js?v=b71-start-1"></script>
-    <script src="./src/offer-start.js?v=b71-start-1"></script>
+    <script src="./src/offer-equipment.js?v=b71-ru-3"></script>
+    <script src="./src/offer-ru.js?v=b71-ru-3"></script>
+    <script src="./src/offer-ad.js?v=b71-ru-3"></script>
+    <script src="./src/offer-start.js?v=b71-ru-3"></script>
   </body>
 </html>

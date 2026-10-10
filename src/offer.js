@@ -18,6 +18,7 @@
   const AD = window.AUTOGOOD_OFFER_AD;
   const EQUIPMENT = window.AUTOGOOD_OFFER_EQUIPMENT;
   const VERDICT = window.AUTOGOOD_OFFER_VERDICT;
+  const RU = window.AUTOGOOD_OFFER_RU;
   const TURNKEY = window.AUTOGOOD_TURNKEY;
   const params = new URLSearchParams(window.location.search);
   const offerId = params.get("id") || "";
@@ -39,7 +40,7 @@
   const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const SYMBOL = { EUR: "€", PLN: "zł", SEK: "kr", USD: "$" };
   const money = (value, currency = "PLN") => (Number(value) > 0 ? `${numbers.format(Math.round(Number(value)))} ${SYMBOL[currency] || currency}` : "—");
-  const kmText = (value) => (Number(value) > 0 ? `${numbers.format(Math.round(Number(value)))} km` : "");
+  const kmText = (value) => (Number(value) > 0 ? `${numbers.format(Math.round(Number(value)))} ${L("km", "км")}` : "");
   const thousands = (value) => numbers.format(Math.round(Number(value) / 1000));
   const percent = (share) => `${Math.round(Math.abs(share) * 100)}%`;
   const dateText = (iso) => {
@@ -50,10 +51,18 @@
     const date = new Date(iso);
     return Number.isNaN(date.getTime()) ? "" : `${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
   };
-  const daysWord = (days) => (days === 1 ? "dzień" : "dni");
-  const COUNTRY = { DE: "Niemcy", NL: "Holandia", BE: "Belgia", AT: "Austria", LU: "Luksemburg", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", SK: "Słowacja", SE: "Szwecja", DK: "Dania", CH: "Szwajcaria", PL: "Polska", SI: "Słowenia", HU: "Węgry", PT: "Portugalia" };
-  const COUNTRY_IN = { DE: "w Niemczech", NL: "w Holandii", BE: "w Belgii", AT: "w Austrii", LU: "w Luksemburgu", FR: "we Francji", IT: "we Włoszech", ES: "w Hiszpanii", CZ: "w Czechach", SE: "w Szwecji", DK: "w Danii" };
-  const PORTAL = { mobile: "mobile.de", autoscout: "AutoScout24", kleinanzeigen: "Kleinanzeigen", autoscoutfr: "AutoScout24 FR", paruvendu: "ParuVendu", marktplaats: "Marktplaats", dehands: "2dehands", otomoto: "otomoto", blocket: "Blocket" };
+  // ---- The offer's language (owner 2026-10-10): Polish or Russian. Each
+  // client sentence is written in both (L); the readers' Polish values go
+  // through offer-ru.js (val); edits are kept per language (field).
+  const ru = () => offer?.lang === "ru" && Boolean(RU);
+  const L = (pl, russian) => (ru() ? russian : pl);
+  const val = (text) => (ru() ? RU.value(text) : text ?? "");
+  const many = (count, plForms, ruForms) => (ru() ? RU.plural(count, ...ruForms) : plural(count, ...plForms));
+  const countryName = (code) => (ru() ? RU.country(code) : COUNTRY[String(code || "").toUpperCase()]) || String(code || "");
+  const daysWord = (days) => many(days, ["dzień", "dni", "dni"], ["день", "дня", "дней"]);
+  const COUNTRY = { DE: "Niemcy", NL: "Holandia", BE: "Belgia", AT: "Austria", LU: "Luksemburg", FR: "Francja", IT: "Włochy", ES: "Hiszpania", CZ: "Czechy", SK: "Słowacja", SE: "Szwecja", DK: "Dania", CH: "Szwajcaria", PL: "Polska", SI: "Słowenia", HU: "Węgry", PT: "Portugalia", BY: "Białoruś", LT: "Litwa", LV: "Łotwa", EE: "Estonia" };
+  const COUNTRY_IN = { DE: "w Niemczech", NL: "w Holandii", BE: "w Belgii", AT: "w Austrii", LU: "w Luksemburgu", FR: "we Francji", IT: "we Włoszech", ES: "w Hiszpanii", CZ: "w Czechach", SE: "w Szwecji", DK: "w Danii", PL: "w Polsce", BY: "na Białorusi" };
+  const PORTAL = { mobile: "mobile.de", autoscout: "AutoScout24", kleinanzeigen: "Kleinanzeigen", autoscoutfr: "AutoScout24 FR", paruvendu: "ParuVendu", marktplaats: "Marktplaats", dehands: "2dehands", otomoto: "otomoto", blocket: "Blocket", avby: "av.by" };
   const SALUTATION = { Pan: { owner: "Pana", you: "Pan" }, Pani: { owner: "Pani", you: "Pani" }, "Państwo": { owner: "Państwa", you: "Państwo" } };
 
   // ---- Icons (inline, so the PDF needs no font) --------------------------------
@@ -91,10 +100,12 @@
   const hidden = () => new Set(offer?.hidden || []);
   const isHidden = (key) => hidden().has(key);
 
-  function field(key, fallback, tag = "span", className = "") {
+  function field(name, fallback, tag = "span", className = "") {
+    // A text edited in Polish stays Polish: each language keeps its own edits.
+    const key = ru() ? `ru:${name}` : name;
     const value = Object.prototype.hasOwnProperty.call(edits(), key) ? edits()[key] : fallback;
     const classes = [className, Object.prototype.hasOwnProperty.call(edits(), key) ? "isEdited" : ""].filter(Boolean).join(" ");
-    return `<${tag}${classes ? ` class="${classes}"` : ""} data-edit="${esc(key)}"${editing ? ' contenteditable="true" spellcheck="true"' : ""}>${esc(value)}</${tag}>`;
+    return `<${tag}${classes ? ` class="${classes}"` : ""} data-edit="${esc(key)}"${editing ? ` contenteditable="true" spellcheck="true" lang="${ru() ? "ru" : "pl"}"` : ""}>${esc(value)}</${tag}>`;
   }
   const hideToggle = (key) => `<button class="ofHideToggle" type="button" data-hide="${esc(key)}" data-offer-hide>${isHidden(key) ? "Pokaż" : "Ukryj"}</button>`;
   const blockClass = (key) => (isHidden(key) ? " ofBlockHidden" : "");
@@ -128,10 +139,10 @@
   function placeHtml(city, country) {
     const code = String(country || "").toUpperCase();
     const flag = typeof window.AUTOGOOD_FLAG === "function" ? window.AUTOGOOD_FLAG(code) : "";
-    const text = [city, COUNTRY[code] || code].filter(Boolean).join(", ");
+    const text = [city, countryName(code)].filter(Boolean).join(", ");
     return text ? `<span class="ofPlaceLine">${flag}<span>${esc(text)}</span></span>` : "";
   }
-  const withFirm = (name) => (!name ? "" : /autogood/i.test(name) ? name : `${name} z AUTOGOOD`);
+  const withFirm = (name) => (!name ? "" : /autogood/i.test(name) ? name : L(`${name} z AUTOGOOD`, `${name}, AUTOGOOD`));
   const fuelShort = (fuel) => String(fuel || "").replace(/\s*\(.*\)$/, "");
 
   function carView() {
@@ -156,14 +167,14 @@
       reg,
       mileage: specs.mileage || Number(car.mileage) || 0,
       ccm,
-      fuel,
-      gearbox,
-      drive: specs.drive || "",
-      body: specs.body || AD?.bodyPl(car.body) || "",
-      color: specs.color || "",
-      interior: specs.interior || "",
+      fuel: val(fuel),
+      gearbox: val(gearbox),
+      drive: val(specs.drive || ""),
+      body: val(specs.body || AD?.bodyPl(car.body) || ""),
+      color: val(specs.color || ""),
+      interior: val(specs.interior || ""),
       owners: specs.owners,
-      hu: specs.hu || "",
+      hu: val(specs.hu || ""),
       powerHp,
       powerKw,
       country,
@@ -183,31 +194,45 @@
   function vatText(view) {
     if (view.priceType === "vat" || offer.ad?.vat?.deductible) {
       const rate = view.vatRate ? ` ${view.vatRate}%` : "";
-      return `brutto · faktura VAT${rate}${view.netPrice ? ` (netto ${money(view.netPrice, view.currency)})` : ""}`;
+      const net = view.netPrice ? L(` (netto ${money(view.netPrice, view.currency)})`, ` (нетто ${money(view.netPrice, view.currency)})`) : "";
+      return L(`brutto · faktura VAT${rate}${net}`, `брутто · счёт-фактура VAT${rate}${net}`);
     }
-    if (view.priceType === "margin") return "brutto · faktura VAT marża";
-    if (view.priceType === "private" || view.seller === "private") return "osoba prywatna (bez faktury VAT)";
-    return "brutto";
+    if (view.priceType === "margin") return L("brutto · faktura VAT marża", "брутто · счёт-фактура VAT marża");
+    if (view.priceType === "private" || view.seller === "private") return L("osoba prywatna (bez faktury VAT)", "частное лицо (без счёта-фактуры VAT)");
+    return L("brutto", "брутто");
   }
 
   // The cost lines: the calculator's (wave 3) or the estimate made with the draft.
   function costs() {
     const calc = offer.calc;
-    if (calc?.rows?.length) return { method: calc.methodLabel, rows: calc.rows, total: calc.total, note: calc.note || "", exact: true };
+    if (calc?.rows?.length) {
+      // Inserted in the other language: the calculator's own words (offer-ru.js)
+      // for Polish lines in a Russian offer; a Russian calculation stays as is.
+      const words = ru() && calc.lang !== "ru" ? RU.calc : (text) => text;
+      const rate = calc.rate ? calc.rate.toFixed(2).replace(".", ",") : "—";
+      return {
+        method: words(calc.methodLabel),
+        rows: calc.rows.map((row) => ({ ...row, label: words(row.label) })),
+        total: calc.total,
+        note: L(`Kalkulator AUTOGOOD, kurs EUR ${rate} zł z dnia ${dateText(calc.at)}.`, `Калькулятор AUTOGOOD, курс EUR ${rate} zł на ${dateText(calc.at)}.`),
+        exact: true,
+      };
+    }
     const estimate = offer.estimate;
     if (!estimate) return null;
-    const engineLabel = ["elektryczny / plug-in do 2,0 l", "hybryda / plug-in powyżej 2,0 l", "hybryda do 2,0 l", "silnik do 2,0 l", "silnik powyżej 2,0 l"][estimate.engine?.index ?? 3];
+    const engineLabel = L(["elektryczny / plug-in do 2,0 l", "hybryda / plug-in powyżej 2,0 l", "hybryda do 2,0 l", "silnik do 2,0 l", "silnik powyżej 2,0 l"], ["электро / plug-in до 2,0 л", "гибрид / plug-in свыше 2,0 л", "гибрид до 2,0 л", "двигатель до 2,0 л", "двигатель свыше 2,0 л"])[estimate.engine?.index ?? 3];
     const rate = Number(estimate.rate || 0).toFixed(2).replace(".", ",");
     const parts = estimate.parts || {};
+    const excise = String(Math.round((estimate.engine?.rate ?? 0.031) * 10000) / 100).replace(".", ",");
     const rows = [
-      { label: "Cena auta", sub: `${money(estimate.carBruttoEur, "EUR")} brutto × ${rate} zł`, value: parts.car },
-      { label: "Transport do Polski", sub: "laweta, ubezpieczony", value: parts.transport },
-      { label: "Oględziny przed zakupem", sub: "rzeczoznawca u sprzedawcy", value: parts.inspection },
-      { label: `Akcyza ${String(Math.round((estimate.engine?.rate ?? 0.031) * 10000) / 100).replace(".", ",")}%`, sub: engineLabel, value: parts.excise },
-      { label: "Usługa AUTOGOOD", sub: "1 829,27 zł + 1% ceny auta, netto + VAT", value: parts.commission },
-      { label: "Tłumaczenia i przegląd techniczny", sub: "250 zł + 150 zł", value: parts.fees },
+      { label: L("Cena auta", "Цена авто"), sub: L(`${money(estimate.carBruttoEur, "EUR")} brutto × ${rate} zł`, `${money(estimate.carBruttoEur, "EUR")} брутто × ${rate} zł`), value: parts.car },
+      { label: L("Transport do Polski", "Транспорт в Польшу"), sub: L("laweta, ubezpieczony", "автовоз, со страховкой"), value: parts.transport },
+      { label: L("Oględziny przed zakupem", "Осмотр перед покупкой"), sub: L("rzeczoznawca u sprzedawcy", "эксперт у продавца"), value: parts.inspection },
+      { label: L(`Akcyza ${excise}%`, `Акциз ${excise}%`), sub: engineLabel, value: parts.excise },
+      { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 1% ceny auta, netto + VAT", "1 829,27 zł + 1% цены авто, нетто + VAT"), value: parts.commission },
+      { label: L("Tłumaczenia i przegląd techniczny", "Переводы и техосмотр"), sub: "250 zł + 150 zł", value: parts.fees },
     ];
-    return { method: "Zakup bezpośredni", rows, total: estimate.total, note: `Szacunek kalkulatora AUTOGOOD, kurs EUR ${rate} zł z dnia oferty.`, exact: false };
+    return { method: L("Zakup bezpośredni", "Прямая покупка"), rows, total: estimate.total, note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rate} zł z dnia oferty.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rate} zł на дату предложения.`), exact: false };
   }
 
   function marketView(view) {
@@ -216,18 +241,21 @@
     const near = own.similar?.stats?.count >= 6 ? own.similar : null;
     const stats = near ? near.stats : own.stats;
     const dearer = near ? near.dearerShare : own.dearerShare;
-    const where = own.scope === "country" && COUNTRY_IN[own.country] ? COUNTRY_IN[own.country] : "w Europie (kraje z wyszukiwania)";
+    const whereIn = ru() ? RU.countryIn(own.country) : COUNTRY_IN[own.country];
+    const where = own.scope === "country" && whereIn ? whereIn : L("w Europie (kraje z wyszukiwania)", "в Европе (страны поиска)");
     const rule = near?.rule;
-    const ruleText = rule ? [rule.yearFrom ? `rok ${rule.yearFrom}–${rule.yearTo}` : "", rule.kmTo ? `przebieg ${thousands(rule.kmFrom)}–${thousands(rule.kmTo)} tys. km` : ""].filter(Boolean).join(", ") : "";
+    const ruleText = rule ? [rule.yearFrom ? L(`rok ${rule.yearFrom}–${rule.yearTo}`, `год ${rule.yearFrom}–${rule.yearTo}`) : "", rule.kmTo ? L(`przebieg ${thousands(rule.kmFrom)}–${thousands(rule.kmTo)} tys. km`, `пробег ${thousands(rule.kmFrom)}–${thousands(rule.kmTo)} тыс. км`) : ""].filter(Boolean).join(", ") : "";
     const cheaperShare = dearer ?? 0;
+    const count = numbers.format(stats.count);
+    const rest = `${where}${ruleText ? ` (${ruleText})` : ""}`;
     const lead = cheaperShare >= 0.5
-      ? `Tańsze niż ${percent(cheaperShare)} z ${numbers.format(stats.count)} ${near ? "podobnych ofert" : "ofert o tych parametrach"} ${where}${ruleText ? ` (${ruleText})` : ""}.`
-      : `Cena w ${cheaperShare >= 0.25 ? "środku" : "górnej części"} rynku: ${numbers.format(stats.count)} ${near ? "podobnych ofert" : "ofert"} ${where}${ruleText ? ` (${ruleText})` : ""}.`;
+      ? L(`Tańsze niż ${percent(cheaperShare)} z ${count} ${near ? "podobnych ofert" : "ofert o tych parametrach"} ${rest}.`, `Дешевле, чем ${percent(cheaperShare)} из ${count} ${near ? "похожих предложений" : "предложений с такими параметрами"} ${rest}.`)
+      : L(`Cena w ${cheaperShare >= 0.25 ? "środku" : "górnej części"} rynku: ${count} ${near ? "podobnych ofert" : "ofert"} ${rest}.`, `Цена в ${cheaperShare >= 0.25 ? "середине" : "верхней части"} рынка: ${count} ${near ? "похожих предложений" : "предложений"} ${rest}.`);
     const lo = Math.min(stats.p25 - (stats.p75 - stats.p25) * 0.9, view.price) * 0.99;
     const hi = Math.max(stats.p75 + (stats.p75 - stats.p25) * 0.9, view.price) * 1.01;
     const at = (value) => Math.max(0, Math.min(100, ((value - lo) / (hi - lo)) * 100));
     const vsMedian = stats.median ? view.price / stats.median - 1 : 0;
-    return { stats, near, lead, at, vsMedian, where, share: cheaperShare, count: stats.count, typical: `Połowa ofert kosztuje ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`, currency: own.currency };
+    return { stats, near, lead, at, vsMedian, where, share: cheaperShare, count: stats.count, typical: L(`Połowa ofert kosztuje ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`, `Половина предложений стоит ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`), currency: own.currency };
   }
 
   function polandView() {
@@ -236,12 +264,13 @@
     const total = costs()?.total || poland.turnkey;
     const saving = total ? Math.round(poland.basis.median - total) : null;
     const rule = poland.similar?.rule;
-    const ruleText = poland.basis.kind === "similar" && rule ? [rule.yearFrom ? `rok ${rule.yearFrom}–${rule.yearTo}` : "", rule.kmTo ? `do ${thousands(rule.kmTo)} tys. km` : ""].filter(Boolean).join(", ") : "";
+    const ruleText = poland.basis.kind === "similar" && rule ? [rule.yearFrom ? L(`rok ${rule.yearFrom}–${rule.yearTo}`, `год ${rule.yearFrom}–${rule.yearTo}`) : "", rule.kmTo ? L(`do ${thousands(rule.kmTo)} tys. km`, `до ${thousands(rule.kmTo)} тыс. км`) : ""].filter(Boolean).join(", ") : "";
     return {
       median: poland.basis.median,
       count: poland.basis.count,
       saving,
-      line: `W Polsce takie auto: mediana ${money(poland.basis.median, "PLN")} (otomoto, ${numbers.format(poland.basis.count)} ${plural(poland.basis.count, "oferta", "oferty", "ofert")}${ruleText ? `, ${ruleText}` : ""}).`,
+      line: L(`W Polsce takie auto: mediana ${money(poland.basis.median, "PLN")} (otomoto, ${numbers.format(poland.basis.count)} ${plural(poland.basis.count, "oferta", "oferty", "ofert")}${ruleText ? `, ${ruleText}` : ""}).`,
+        `В Польше такое авто: медиана ${money(poland.basis.median, "PLN")} (otomoto, ${numbers.format(poland.basis.count)} ${RU?.plural(poland.basis.count, "предложение", "предложения", "предложений") || ""}${ruleText ? `, ${ruleText}` : ""}).`),
     };
   }
 
@@ -277,14 +306,14 @@
   // ---- Sheets ------------------------------------------------------------------------
   function headHtml(page, view) {
     const client = offer.client || {};
-    const forWhom = client.name ? `Przygotowano dla: <b>${esc(client.name)}</b><br>` : "";
+    const forWhom = client.name ? `${L("Przygotowano dla", "Подготовлено для")}: <b>${esc(client.name)}</b><br>` : "";
     return `
       <header class="ofHead">
         <img class="ofLogo" src="./assets/autogood-logo.png" alt="AUTOGOOD" />
         <span class="ofLogoText" aria-hidden="true"><img src="./assets/ag-opt.svg" alt="" /><span>AUTOGOOD</span></span>
         <div class="ofHeadMeta">
-          ${forWhom}Oferta nr <b>${esc(offer.number || "")}</b> · ${esc(dateText(offer.createdAt))}<br>
-          <span class="ofPageNo">${page === 1 ? esc(view.title) : `${esc(view.title)} · strona 2 z 2`}</span>
+          ${forWhom}${L("Oferta nr", "Предложение №")} <b>${esc(offer.number || "")}</b> · ${esc(dateText(offer.createdAt))}<br>
+          <span class="ofPageNo">${page === 1 ? esc(view.title) : `${esc(view.title)} · ${L("strona 2 z 2", "страница 2 из 2")}`}</span>
         </div>
       </header>`;
   }
@@ -294,14 +323,14 @@
   function kpiHtml(market, poland, verdict) {
     const tiles = [];
     if (market) {
-      tiles.push({ label: "Na tle rynku", value: `${market.vsMedian <= 0 ? "−" : "+"}${percent(market.vsMedian)}`, note: "od mediany podobnych ofert", tone: market.vsMedian <= -0.03 ? "isGood" : market.vsMedian > 0.05 ? "isWarn" : "" });
-      if (poland?.saving >= 1000 && !polandHidden(poland)) tiles.push({ label: "Taniej niż w Polsce", value: `ok. ${money(Math.round(poland.saving / 500) * 500, "PLN")}`, note: `mediana otomoto ${money(poland.median, "PLN")}`, tone: "isGood" });
-      else tiles.push({ label: "Tańsze niż", value: percent(market.share || 0), note: `z ${numbers.format(market.count)} ofert`, tone: (market.share || 0) >= 0.5 ? "isGood" : "" });
+      tiles.push({ label: L("Na tle rynku", "На фоне рынка"), value: `${market.vsMedian <= 0 ? "−" : "+"}${percent(market.vsMedian)}`, note: L("od mediany podobnych ofert", "от медианы похожих предложений"), tone: market.vsMedian <= -0.03 ? "isGood" : market.vsMedian > 0.05 ? "isWarn" : "" });
+      if (poland?.saving >= 1000 && !polandHidden(poland)) tiles.push({ label: L("Taniej niż w Polsce", "Дешевле, чем в Польше"), value: `${L("ok.", "ок.")} ${money(Math.round(poland.saving / 500) * 500, "PLN")}`, note: L(`mediana otomoto ${money(poland.median, "PLN")}`, `медиана otomoto ${money(poland.median, "PLN")}`), tone: "isGood" });
+      else tiles.push({ label: L("Tańsze niż", "Дешевле, чем"), value: percent(market.share || 0), note: L(`z ${numbers.format(market.count)} ofert`, `из ${numbers.format(market.count)} предложений`), tone: (market.share || 0) >= 0.5 ? "isGood" : "" });
     }
-    if (verdict) tiles.push({ label: "Ocena AUTOGOOD", value: { ok: "Polecamy", check: "Do weryfikacji", risk: "Odradzamy" }[verdict.level], note: (() => {
+    if (verdict) tiles.push({ label: L("Ocena AUTOGOOD", "Оценка AUTOGOOD"), value: L({ ok: "Polecamy", check: "Do weryfikacji", risk: "Odradzamy" }, { ok: "Рекомендуем", check: "На проверку", risk: "Не советуем" })[verdict.level], note: (() => {
       const good = verdict.all.filter((line) => line.level === "ok").length;
       const check = verdict.all.filter((line) => line.level === "warn" || line.level === "risk").length;
-      return `${good} ${plural(good, "mocna strona", "mocne strony", "mocnych stron")} · ${check} do sprawdzenia`;
+      return L(`${good} ${plural(good, "mocna strona", "mocne strony", "mocnych stron")} · ${check} do sprawdzenia`, `${good} ${RU?.plural(good, "сильная сторона", "сильные стороны", "сильных сторон") || ""} · ${check} на проверку`);
     })(), tone: verdict.level === "ok" ? "isGood" : verdict.level === "check" ? "isWarn" : "isRisk" });
     if (!tiles.length) return "";
     return `<div class="ofKpis">${tiles.map((tile) => `<div class="ofKpi ${tile.tone}"><span>${esc(tile.label)}</span><b>${esc(tile.value)}</b><small>${esc(tile.note)}</small></div>`).join("")}</div>`;
@@ -321,19 +350,22 @@
   // Without Monitoring (an offer made from a link, program 06): the portal's
   // own scale of prices — mobile.de's five bands from "bardzo dobra" to
   // "wysoka cena", AutoScout24's median — and Carvago's lines.
-  const BANDS = ["bardzo dobra cena", "dobra cena", "uczciwa cena", "podwyższona cena", "wysoka cena"];
+  const BANDS_PL = ["bardzo dobra cena", "dobra cena", "uczciwa cena", "podwyższona cena", "wysoka cena"];
+  const BANDS_RU = ["очень хорошая цена", "хорошая цена", "справедливая цена", "повышенная цена", "высокая цена"];
   const RATING_BAND = { VERY_GOOD_PRICE: 0, GOOD_PRICE: 1, REASONABLE_PRICE: 2, INCREASED_PRICE: 3, HIGH_PRICE: 4 };
   const euroNumber = (label) => Number(String(label || "").replace(/[^\d]/g, "")) || 0;
   function carvagoLines() {
     if (!offer.carvago?.found || isHidden("carvago")) return "";
     const active = offer.carvago.active;
-    return `${active?.count ? `<p class="ofActive">${field("carvagoActive", `Aktywnych podobnych ofert w Europie: ${numbers.format(active.count)}${active.kind === "search" ? ` (rok ${active.yearFrom}-${active.yearTo}, przebieg ${thousands(active.kmFrom)}-${thousands(active.kmTo)} tys. km)` : ""}`, "span")}</p>` : ""}
+    const scope = active?.kind === "search" ? L(` (rok ${active.yearFrom}-${active.yearTo}, przebieg ${thousands(active.kmFrom)}-${thousands(active.kmTo)} tys. km)`, ` (год ${active.yearFrom}-${active.yearTo}, пробег ${thousands(active.kmFrom)}-${thousands(active.kmTo)} тыс. км)`) : "";
+    return `${active?.count ? `<p class="ofActive">${field("carvagoActive", L(`Aktywnych podobnych ofert w Europie: ${numbers.format(active.count)}${scope}`, `Активных похожих предложений в Европе: ${numbers.format(active.count)}${scope}`), "span")}</p>` : ""}
       ${priceTrendHtml(offer.carvago.history, offer.carvago.changes, offer.carvago.listedSince)}`;
   }
   function portalMarket(view) {
     const rating = offer.ad?.portalPrice;
     const limits = (rating?.thresholds || []).map(euroNumber);
     const band = RATING_BAND[rating?.rating];
+    const BANDS = ru() ? BANDS_RU : BANDS_PL;
     let body = "";
     if (rating?.portal === "mobile.de" && limits.length === 6 && limits.every((value, index) => value > 0 && (!index || value > limits[index - 1])) && band !== undefined) {
       const low = limits[0];
@@ -341,26 +373,33 @@
       const at = Math.min(98, Math.max(2, ((view.price - low) / span) * 100));
       const range = (index) => `${numbers.format(limits[index])}-${numbers.format(limits[index + 1])} €`;
       body = `
-        <div class="ofBands" role="img" aria-label="Skala cen mobile.de: ${esc(BANDS[band])}">
+        <div class="ofBands" role="img" aria-label="${esc(L("Skala cen mobile.de", "Шкала цен mobile.de"))}: ${esc(BANDS[band])}">
           ${BANDS.map((name, index) => `<span class="ofBand is${index}" style="width:${(((limits[index + 1] - limits[index]) / span) * 100).toFixed(1)}%" title="${esc(`${name}: ${range(index)}`)}"></span>`).join("")}
           <span class="ofBarCar${band >= 3 ? " isDear" : ""}" style="left:${at.toFixed(1)}%"></span>
         </div>
-        <div class="ofBarLegend"><span class="isCar">to auto ${esc(money(view.price, view.currency))}</span><span>uczciwa cena <b>${esc(range(2))}</b></span></div>
-        ${field("marketLead", `Wg skali cen mobile.de dla tego auta: „${BANDS[band]}” (${range(band)}).`, "p", "ofMarketLead")}
-        ${field("marketTypical", "Ocena portalu mobile.de na tle podobnych ofert.", "p", "ofSmall")}`;
+        <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, view.currency))}</span><span>${BANDS[2]} <b>${esc(range(2))}</b></span></div>
+        ${field("marketLead", L(`Wg skali cen mobile.de dla tego auta: „${BANDS[band]}” (${range(band)}).`, `По шкале цен mobile.de для этого авто: «${BANDS[band]}» (${range(band)}).`), "p", "ofMarketLead")}
+        ${field("marketTypical", L("Ocena portalu mobile.de na tle podobnych ofert.", "Оценка портала mobile.de на фоне похожих предложений."), "p", "ofSmall")}`;
     } else if (rating?.portal === "AutoScout24" && rating.median > 0 && view.price > 0) {
       const share = view.price / rating.median - 1;
-      body = `${field("marketLead", `Mediana podobnych ofert wg AutoScout24: ${money(rating.median, "EUR")} - to auto ${share <= 0 ? `${percent(share).replace("−", "")} taniej` : `${percent(share)} drożej`}.`, "p", "ofMarketLead")}`;
+      body = `${field("marketLead", L(`Mediana podobnych ofert wg AutoScout24: ${money(rating.median, "EUR")} - to auto ${share <= 0 ? `${percent(share)} taniej` : `${percent(share)} drożej`}.`, `Медиана похожих предложений по AutoScout24: ${money(rating.median, "EUR")} - это авто ${share <= 0 ? `на ${percent(share)} дешевле` : `на ${percent(share)} дороже`}.`), "p", "ofMarketLead")}`;
     }
     const carvago = carvagoLines();
     if (!body && !carvago) return "";
     return `
             <section class="ofCard${blockClass("market")}" data-block="market">
               ${hideToggle("market")}
-              <p class="ofCardHead">${icon("chart")}Cena na tle rynku</p>
+              <p class="ofCardHead">${icon("chart")}${L("Cena na tle rynku", "Цена на фоне рынка")}</p>
               ${body}
               ${carvago}
             </section>`;
+  }
+
+  // "+ 46 pozycji więcej w ogłoszeniu" — also redrawn by autoFit when it
+  // takes options off a full sheet.
+  function optionsMore(rest, listOnTwo) {
+    if (rest <= 0) return L("Z listy wyposażenia w ogłoszeniu", "Из списка оснащения в объявлении");
+    return `+ ${numbers.format(rest)} ${many(rest, ["pozycja", "pozycje", "pozycji"], ["позиция", "позиции", "позиций"])} ${L("więcej w ogłoszeniu", "ещё в объявлении")}${listOnTwo ? L(" (lista na str. 2)", " (список на стр. 2)") : ""}`;
   }
 
   function sheetOne(view) {
@@ -377,51 +416,54 @@
     const manager = store.manager(offer.manager);
     const photo = edits().photo || view.images[0] || "";
     const chips = [];
-    if (market && market.vsMedian <= -0.03) chips.push(`<span class="ofChip isGood">${icon("down")}${percent(market.vsMedian)} poniżej mediany rynku</span>`);
-    if (poland?.saving >= 1000) chips.push(`<span class="ofChip isGood">ok. ${money(Math.round(poland.saving / 500) * 500, "PLN")} taniej niż w Polsce</span>`);
-    if (offer.ad?.portalPrice?.label && /dobra|uczciwa/.test(offer.ad.portalPrice.label) && !(portalCard.includes("ofBands") && !isHidden("market"))) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(offer.ad.portalPrice.label)}</span>`);
-    const subtitle = [view.reg, kmText(view.mileage), view.powerHp ? `${view.powerHp} KM` : "", view.gearbox, view.fuel].filter(Boolean).join(" · ");
+    if (market && market.vsMedian <= -0.03) chips.push(`<span class="ofChip isGood">${icon("down")}${L(`${percent(market.vsMedian)} poniżej mediany rynku`, `на ${percent(market.vsMedian)} ниже медианы рынка`)}</span>`);
+    if (poland?.saving >= 1000) chips.push(`<span class="ofChip isGood">${L(`ok. ${money(Math.round(poland.saving / 500) * 500, "PLN")} taniej niż w Polsce`, `ок. ${money(Math.round(poland.saving / 500) * 500, "PLN")} дешевле, чем в Польше`)}</span>`);
+    const portalLabel = offer.ad?.portalPrice?.label || "";
+    if (portalLabel && /dobra|uczciwa/.test(portalLabel) && !(portalCard.includes("ofBands") && !isHidden("market"))) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(ru() ? BANDS_RU[BANDS_PL.indexOf(portalLabel)] || portalLabel : portalLabel)}</span>`);
+    const hp = L("KM", "л.с.");
+    const subtitle = [view.reg, kmText(view.mileage), view.powerHp ? `${view.powerHp} ${hp}` : "", view.gearbox, view.fuel].filter(Boolean).join(" · ");
     const specs = [
-      ["1. rejestracja", view.reg],
-      ["Przebieg", kmText(view.mileage)],
-      ["Silnik", [view.ccm ? `${String((Math.round(view.ccm / 100) / 10).toFixed(1)).replace(".", ",")} l` : "", fuelShort(view.fuel)].filter(Boolean).join(" · ")],
-      ["Moc", view.powerHp ? `${view.powerHp} KM (${view.powerKw} kW)` : ""],
-      ["Skrzynia biegów", view.gearbox],
-      ["Napęd", view.drive],
-      ["Kolor", view.color],
-      ["Właściciele", view.owners === 0 ? "brak (auto nowe)" : view.owners ? String(view.owners) : ""],
-      ["Nadwozie", view.body],
-      ["Przegląd", view.hu],
-      ["Wnętrze", view.interior],
-      ["Lokalizacja", [view.city, COUNTRY[view.country] || view.country].filter(Boolean).join(", ")],
+      [L("1. rejestracja", "1-я регистрация"), view.reg],
+      [L("Przebieg", "Пробег"), kmText(view.mileage)],
+      [L("Silnik", "Двигатель"), [view.ccm ? `${String((Math.round(view.ccm / 100) / 10).toFixed(1)).replace(".", ",")} ${L("l", "л")}` : "", fuelShort(view.fuel)].filter(Boolean).join(" · ")],
+      [L("Moc", "Мощность"), view.powerHp ? `${view.powerHp} ${hp} (${view.powerKw} ${L("kW", "кВт")})` : ""],
+      [L("Skrzynia biegów", "Коробка передач"), view.gearbox],
+      [L("Napęd", "Привод"), view.drive],
+      [L("Kolor", "Цвет"), view.color],
+      [L("Właściciele", "Владельцы"), view.owners === 0 ? L("brak (auto nowe)", "нет (новое авто)") : view.owners ? String(view.owners) : ""],
+      [L("Nadwozie", "Кузов"), view.body],
+      [L("Przegląd", "Техосмотр"), view.hu],
+      [L("Wnętrze", "Салон"), view.interior],
+      [L("Lokalizacja", "Местонахождение"), [view.city, countryName(view.country)].filter(Boolean).join(", ")],
     ].filter(([, value]) => value).slice(0, 8);
     const seller = offer.ad?.seller || null;
     const adAge = adHistory();
     const listedAt = adAge.kind === "listed" ? adAge.since : "";
     const listedDays = adAge.days ?? null;
     const sellerFacts = [];
-    if (seller?.rating?.reviews) sellerFacts.push(`<span class="ofStars">${icon("star")}${esc(Number(seller.rating.score).toFixed(1).replace(".", ","))}</span> · ${numbers.format(seller.rating.reviews)} ${plural(seller.rating.reviews, "opinia", "opinie", "opinii")}${seller.rating.recommend !== null && seller.rating.recommend !== undefined ? ` · ${seller.rating.recommend}% poleca` : ""}`);
+    if (seller?.rating?.reviews) sellerFacts.push(`<span class="ofStars">${icon("star")}${esc(Number(seller.rating.score).toFixed(1).replace(".", ","))}</span> · ${numbers.format(seller.rating.reviews)} ${many(seller.rating.reviews, ["opinia", "opinie", "opinii"], ["отзыв", "отзыва", "отзывов"])}${seller.rating.recommend !== null && seller.rating.recommend !== undefined ? ` · ${seller.rating.recommend}% ${L("poleca", "рекомендуют")}` : ""}`);
     const sinceYear = seller?.since ? String(seller.since).slice(0, 4) : "";
-    if (sinceYear) sellerFacts.push(`na ${esc(seller.rating?.portal || PORTAL[offer.source] || "portalu")} od <b>${esc(sinceYear)}</b>`);
+    if (sinceYear) sellerFacts.push(`${L("na", "на")} ${esc(seller.rating?.portal || PORTAL[offer.source] || L("portalu", "портале"))} ${L("od", "с")} <b>${esc(sinceYear)}</b>`);
     // Kleinanzeigen counts every ad of the seller, not only cars.
     if (seller?.stock) sellerFacts.push(offer.source === "kleinanzeigen"
-      ? `<b>${numbers.format(seller.stock)}</b> ${plural(seller.stock, "ogłoszenie", "ogłoszenia", "ogłoszeń")} na portalu`
-      : `<b>${numbers.format(seller.stock)}</b> ${plural(seller.stock, "auto", "auta", "aut")} w ofercie`);
-    const sellerName = seller?.name || (view.seller === "private" ? "Osoba prywatna" : view.seller === "dealer" ? "Dealer" : "");
+      ? `<b>${numbers.format(seller.stock)}</b> ${many(seller.stock, ["ogłoszenie", "ogłoszenia", "ogłoszeń"], ["объявление", "объявления", "объявлений"])} ${L("na portalu", "на портале")}`
+      : `<b>${numbers.format(seller.stock)}</b> ${L(plural(seller.stock, "auto", "auta", "aut"), "авто")} ${L("w ofercie", "в продаже")}`);
+    const sellerName = seller?.name || (view.seller === "private" ? L("Osoba prywatna", "Частное лицо") : view.seller === "dealer" ? L("Dealer", "Дилер") : "");
     const adAgeText = listedDays !== null
-      ? `To auto: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> w sprzedaży${!listedAt && adAge?.kind === "atLeast" ? " (co najmniej)" : ""}${adAge?.dropped ? `, cena obniżona ${adAge.drops}× (−${percent(adAge.share)})` : ""}.`
+      ? L(`To auto: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> w sprzedaży${!listedAt && adAge?.kind === "atLeast" ? " (co najmniej)" : ""}${adAge?.dropped ? `, cena obniżona ${adAge.drops}× (−${percent(adAge.share)})` : ""}.`,
+        `Это авто: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> в продаже${!listedAt && adAge?.kind === "atLeast" ? " (как минимум)" : ""}${adAge?.dropped ? `, цена снижена ${adAge.drops}× (−${percent(adAge.share)})` : ""}.`)
       : "";
     return `
       <div class="ofSheet" data-sheet="1">
-        <article class="ofPage${styleClass()}" data-page="1">
+        <article class="ofPage${styleClass()}" data-page="1" lang="${ru() ? "ru" : "pl"}">
           ${headHtml(1, view)}
           <section class="ofHero">
             <div class="ofPhotoColumn">
               <figure class="ofPhoto">
-                ${photo ? `<img src="${esc(photo)}" alt="${esc(view.title)}" crossorigin="anonymous"${photoFrame()} />` : `<div class="ofPhotoEmpty">${icon("car")}<span>${reading ? "Wczytuję zdjęcie z ogłoszenia…" : "Zdjęcie z ogłoszenia pojawi się po wczytaniu danych"}</span></div>`}
-                ${view.images.length > 1 ? `<span class="ofPhotoCount">${view.images.length} ${plural(view.images.length, "zdjęcie", "zdjęcia", "zdjęć")} w ogłoszeniu</span>` : ""}
+                ${photo ? `<img src="${esc(photo)}" data-source="${esc(photo)}" alt="${esc(view.title)}" crossorigin="anonymous" data-photo-main${photoFrame()} />` : `<div class="ofPhotoEmpty">${icon("car")}<span>${reading ? L("Wczytuję zdjęcie z ogłoszenia…", "Загружаю фото из объявления…") : L("Zdjęcie z ogłoszenia pojawi się po wczytaniu danych", "Фото из объявления появится после загрузки данных")}</span></div>`}
+                ${view.images.length > 1 ? `<span class="ofPhotoCount">${L(`${view.images.length} ${plural(view.images.length, "zdjęcie", "zdjęcia", "zdjęć")} w ogłoszeniu`, `${view.images.length} фото в объявлении`)}</span>` : ""}
               </figure>
-              ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>Ogłoszenie na ${esc(PORTAL[offer.source] || "portalu")}<small>${placeHtml(view.city, view.country)}</small></span></a>` : ""}
+              ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>${L("Ogłoszenie na", "Объявление на")} ${esc(PORTAL[offer.source] || L("portalu", "портале"))}<small>${placeHtml(view.city, view.country)}</small></span></a>` : ""}
             </div>
             <div class="ofHeroInfo">
               <div class="ofHeroTitle">
@@ -429,12 +471,19 @@
                 ${field("title", view.title, "h1", "ofTitle")}
                 ${field("subtitle", subtitle, "p", "ofSub")}
               </div>
-              <div class="ofPriceBox">
-                <p class="ofLabel">Cena na gotowo w Polsce</p>
-                <p class="ofPrice">${esc(money(costView?.total, "PLN"))}</p>
-                ${field(costView?.exact ? "priceNoteExact" : "priceNote", costView?.exact ? `${costView.method}: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — wyliczenie na str. 2` : "Szacunek: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — str. 2", "p", "ofPriceNote")}
-                <p class="ofAdPrice">W ogłoszeniu: <b>${esc(money(view.price, view.currency))}</b> ${esc(vatText(view))}</p>
-              </div>
+              ${costView ? `<div class="ofPriceBox">
+                <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}</p>
+                <p class="ofPrice">${esc(money(costView.total, "PLN"))}</p>
+                ${field(costView.exact ? "priceNoteExact" : "priceNote", costView.exact
+                  ? L(`${costView.method}: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — wyliczenie na str. 2`, `${costView.method}: транспорт, осмотр, акциз, сборы и услуга AUTOGOOD — расчёт на стр. 2`)
+                  : L("Szacunek: transport, oględziny, akcyza, opłaty i usługa AUTOGOOD — str. 2", "Оценка: транспорт, осмотр, акциз, сборы и услуга AUTOGOOD — стр. 2"), "p", "ofPriceNote")}
+                <p class="ofAdPrice">${L("W ogłoszeniu", "В объявлении")}: <b>${esc(money(view.price, view.currency))}</b> ${esc(vatText(view))}</p>
+              </div>` : `<div class="ofPriceBox">
+                <p class="ofLabel">${L("Cena w ogłoszeniu", "Цена в объявлении")}</p>
+                <p class="ofPrice">${esc(money(view.price, view.currency))}</p>
+                ${field("priceNoteAd", L("Koszt na gotowo policzymy indywidualnie.", "Стоимость «под ключ» рассчитаем индивидуально."), "p", "ofPriceNote")}
+                <p class="ofAdPrice">${esc(vatText(view))}</p>
+              </div>`}
               ${chips.length ? `<div class="ofChips${blockClass("chips")}">${chips.join("")}</div>` : ""}
               ${kpiHtml(market, poland, verdict)}
             </div>
@@ -446,14 +495,14 @@
             ${market ? `
             <section class="ofCard${blockClass("market")}" data-block="market">
               ${hideToggle("market")}
-              <p class="ofCardHead">${icon("chart")}Cena na tle rynku</p>
+              <p class="ofCardHead">${icon("chart")}${L("Cena na tle rynku", "Цена на фоне рынка")}</p>
               <div class="ofBar" role="img" aria-label="${esc(market.lead)}">
                 <span class="ofBarTrack"></span>
                 <span class="ofBarBand" style="left:${market.at(market.stats.p25).toFixed(1)}%;width:${(market.at(market.stats.p75) - market.at(market.stats.p25)).toFixed(1)}%"></span>
                 <span class="ofBarMedian" style="left:${market.at(market.stats.median).toFixed(1)}%"></span>
                 <span class="ofBarCar${market.vsMedian > 0.03 ? " isDear" : ""}" style="left:${market.at(view.price).toFixed(1)}%"></span>
               </div>
-              <div class="ofBarLegend"><span class="isCar">to auto ${esc(money(view.price, market.currency))}</span><span>mediana <b>${esc(money(market.stats.median, market.currency))}</b></span></div>
+              <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, market.currency))}</span><span>${L("mediana", "медиана")} <b>${esc(money(market.stats.median, market.currency))}</b></span></div>
               ${field("marketLead", market.lead, "p", "ofMarketLead")}
               ${field("marketTypical", market.typical, "p", "ofSmall")}
               ${carvagoLines()}
@@ -462,29 +511,29 @@
             ${verdict ? `
             <section class="ofCard${blockClass("verdict")}" data-block="verdict">
               ${hideToggle("verdict")}
-              <p class="ofCardHead">${icon("shield")}Ocena AUTOGOOD</p>
+              <p class="ofCardHead">${icon("shield")}${L("Ocena AUTOGOOD", "Оценка AUTOGOOD")}</p>
               <span class="ofVerdict is${verdict.level === "ok" ? "Ok" : verdict.level === "check" ? "Check" : "Risk"}">${icon(verdict.level === "ok" ? "check" : verdict.level === "check" ? "warn" : "risk")}${field("verdictLabel", verdict.label, "span")}</span>
               <ul class="ofChecks">
                 ${verdict.lines.map((line) => `
                   <li class="ofCheck is${line.level.charAt(0).toUpperCase()}${line.level.slice(1)}${blockClass(`check:${line.id}`)}">${icon(line.level === "ok" ? "check" : line.level === "info" ? "info" : line.level)}<span>${field(`check:${line.id}`, line.text)}${line.quote ? `<q>${esc(line.quote)}</q>` : ""}${hideToggle(`check:${line.id}`)}</span></li>`).join("")}
               </ul>
-              ${field("inspect", `${verdict.level === "ok" ? "* " : ""}Przed zakupem sprawdzimy lakier, diagnostykę, jazdę próbną, dokumenty i historię auta.`, "p", "ofInspect")}
+              ${field("inspect", `${verdict.level === "ok" ? "* " : ""}${L("Przed zakupem sprawdzimy lakier, diagnostykę, jazdę próbną, dokumenty i historię auta.", "Перед покупкой проверим ЛКП, диагностику, тест-драйв, документы и историю авто.")}`, "p", "ofInspect")}
             </section>` : ""}
           </div>
           <div class="ofGrid">
             <section class="ofCard${blockClass("equipment")}" data-block="equipment">
               ${hideToggle("equipment")}
-              <p class="ofCardHead">${icon("list")}Wyposażenie — najważniejsze</p>
+              <p class="ofCardHead">${icon("list")}${L("Wyposażenie — najważniejsze", "Оснащение — главное")}</p>
               ${keyOptions.length
-                ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(item.label)}</span>`).join("")}</div>
-                   <p class="ofOptionsMore">${allOptions.length > keyOptions.length ? `+ ${numbers.format(allOptions.length - keyOptions.length)} ${plural(allOptions.length - keyOptions.length, "pozycja", "pozycje", "pozycji")} więcej w ogłoszeniu${listOnTwo ? " (lista na str. 2)" : ""}` : "Z listy wyposażenia w ogłoszeniu"}</p>`
-                : `<p class="ofSmall">${reading ? "Wczytuję wyposażenie z ogłoszenia…"
-                  : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${plural(allOptions.length, "pozycja", "pozycje", "pozycji")} wyposażenia w ogłoszeniu${listOnTwo ? " (lista na str. 2)" : ""}` : "Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.")
-                  : "Wyposażenie pojawi się po wczytaniu danych z ogłoszenia."}</p>`}
+                ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(ru() ? RU.option(item.label) : item.label)}</span>`).join("")}</div>
+                   <p class="ofOptionsMore" data-all="${allOptions.length}" data-list="${listOnTwo ? 1 : 0}">${esc(optionsMore(allOptions.length - keyOptions.length, listOnTwo))}</p>`
+                : `<p class="ofSmall">${reading ? L("Wczytuję wyposażenie z ogłoszenia…", "Загружаю оснащение из объявления…")
+                  : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${many(allOptions.length, ["pozycja", "pozycje", "pozycji"], ["позиция", "позиции", "позиций"])} ${L("wyposażenia w ogłoszeniu", "оснащения в объявлении")}${listOnTwo ? L(" (lista na str. 2)", " (список на стр. 2)") : ""}` : L("Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.", "Продавец не отметил оснащение в списке портала - подтвердим его до покупки."))
+                  : L("Wyposażenie pojawi się po wczytaniu danych z ogłoszenia.", "Оснащение появится после загрузки данных объявления.")}</p>`}
             </section>
             <section class="ofCard${blockClass("seller")}" data-block="seller">
               ${hideToggle("seller")}
-              <p class="ofCardHead">${icon("store")}Sprzedawca</p>
+              <p class="ofCardHead">${icon("store")}${L("Sprzedawca", "Продавец")}</p>
               ${sellerName ? `<p class="ofSellerName">${esc(sellerName)}</p>` : ""}
               ${sellerFacts.length ? `<p class="ofFacts">${sellerFacts.map((fact) => `<span>${fact}</span>`).join("")}</p>` : ""}
               ${seller?.city || view.city ? `<p class="ofSmall ofPlace" style="margin-top:4px">${placeHtml(seller?.city || view.city, seller?.country || view.country)}</p>` : ""}
@@ -492,8 +541,8 @@
             </section>
           </div>
           <footer class="ofFoot">
-            <span>${manager.name || manager.phone ? `<b>${esc(salutation.owner)} opiekun:</b> ${esc([withFirm(manager.name), manager.phone, manager.email].filter(Boolean).join(" · "))}` : `<b>AUTOGOOD</b> · ${esc([store.company(offer.company).phone, store.company(offer.company).email].filter(Boolean).join(" · "))}`}</span>
-            <span>Dane z ogłoszenia — sprawdzamy je przed zakupem</span>
+            <span>${manager.name || manager.phone ? `<b>${L(`${esc(salutation.owner)} opiekun`, "Ваш менеджер")}:</b> ${esc([withFirm(manager.name), manager.phone, manager.email].filter(Boolean).join(" · "))}` : `<b>AUTOGOOD</b> · ${esc([store.company(offer.company).phone, store.company(offer.company).email].filter(Boolean).join(" · "))}`}</span>
+            <span>${L("Dane z ogłoszenia — sprawdzamy je przed zakupem", "Данные из объявления — проверяем их до покупки")}</span>
           </footer>
         </article>
       </div>`;
@@ -530,7 +579,7 @@
   function priceTrendHtml(history, changes, since) {
     const start = since || history?.[0]?.at || "";
     // An unchanged price needs no line: the date and the fact say it.
-    if (!changes?.length) return start ? `<p class="ofSmall ofTrendLine">W sprzedaży od <b>${esc(dateText(start))}</b> · cena bez zmian</p>` : "";
+    if (!changes?.length) return start ? `<p class="ofSmall ofTrendLine">${L("W sprzedaży od", "В продаже с")} <b>${esc(dateText(start))}</b> · ${L("cena bez zmian", "цена без изменений")}</p>` : "";
     if (!history?.length) return "";
     const points = history.map((point) => ({ at: Date.parse(point.at), price: point.price })).filter((point) => Number.isFinite(point.at));
     if (!points.length) return "";
@@ -551,11 +600,11 @@
     const drops = (changes || []).filter((change) => change.share < 0);
     const label = changes?.length
       ? changes.map((change) => `${dateText(change.at).slice(0, 5)} ${change.share < 0 ? "−" : "+"}${(Math.abs(change.share) * 100).toFixed(1).replace(".", ",")}%`).join(" · ")
-      : "bez zmian ceny";
+      : L("bez zmian ceny", "без изменений цены");
     return `
       <div class="ofTrend">
         <svg viewBox="0 0 300 34" preserveAspectRatio="none" aria-hidden="true"><path d="${path}" fill="none" stroke="${drops.length ? "#1d6a3b" : "#145a85"}" stroke-width="2" stroke-linejoin="round"/>${points.map((point) => `<circle cx="${x(point.at).toFixed(1)}" cy="${y(point.price).toFixed(1)}" r="2.4" fill="#145a85"/>`).join("")}</svg>
-        <p class="ofSmall">W sprzedaży od ${esc(dateText(start))} · zmiany ceny: <b>${esc(label)}</b></p>
+        <p class="ofSmall">${L("W sprzedaży od", "В продаже с")} ${esc(dateText(start))} · ${L("zmiany ceny", "изменения цены")}: <b>${esc(label)}</b></p>
       </div>`;
   }
 
@@ -564,21 +613,30 @@
   // comes after what, when the first commitment starts and when he pays. The
   // steps follow the offer text in Notion ("Jak wygląda proces") and
   // Процесс.md; three layouts for the owner to choose ("Strona 2" in the panel).
+  // Russian (owner 2026-10-10): "Вы" for every client, no Pan / Pani forms.
   const PROCESS_STAGES = {
-    free: { label: "Bez zobowiązań", note: "nic {Pan} {v:nie płaci|nie płacą}" },
-    deposit: { label: "Pierwsze zobowiązanie", note: "zaliczka zwrotna" },
-    purchase: { label: "Zakup", note: "płatność za auto" },
-    delivery: { label: "Dostawa i odbiór", note: "rozliczenie końcowe" },
+    free: { label: "Bez zobowiązań", note: "nic {Pan} {v:nie płaci|nie płacą}", labelRu: "Без обязательств", noteRu: "Вы ничего не платите" },
+    deposit: { label: "Pierwsze zobowiązanie", note: "zaliczka zwrotna", labelRu: "Первое обязательство", noteRu: "возвратный аванс" },
+    purchase: { label: "Zakup", note: "płatność za auto", labelRu: "Покупка", noteRu: "оплата за авто" },
+    delivery: { label: "Dostawa i odbiór", note: "rozliczenie końcowe", labelRu: "Доставка и получение", noteRu: "окончательный расчёт" },
   };
   const PROCESS_STEPS = [
-    { stage: "free", title: "Rozmowa", text: "Omawiamy ofertę i ustalamy sposób zakupu (faktura VAT, marża lub bezpośrednio), finansowanie, termin i pytania do sprzedawcy." },
-    { stage: "free", title: "Rezerwacja auta", text: "Dzwonimy do dealera: dostępność, dodatkowe zdjęcia, VIN i historia serwisowa. Rezerwujemy auto, jeśli dealer na to pozwala." },
-    { stage: "deposit", title: "Umowa i zaliczka", text: "Podpisujemy umowę zdalnie. {Pan} {v:wpłaca|wpłacają} zaliczkę 2000-4000 zł - zwracamy ją w całości, jeśli {v:zrezygnuje|zrezygnują} {Pan} przed zakupem.", mark: { kind: "pay", label: "Płatność 1 · zaliczka zwrotna" } },
-    { stage: "deposit", title: "Oględziny", text: "Nasz specjalista sprawdza auto u sprzedawcy: lakier, diagnostyka, jazda próbna, zdjęcia i film. {Pan} {v:dostaje|dostają} raport z rekomendacją.", mark: { kind: "decision", label: "{Pana} decyzja: kupujemy?" } },
-    { stage: "purchase", title: "Negocjacje i umowa", text: "Negocjujemy cenę i warunki - 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę." },
-    { stage: "purchase", title: "Płatność za auto", text: "{Pan} {v:zleca|zlecają} przelew za auto w ciągu 2 dni roboczych, z uwzględnieniem zaliczki.", mark: { kind: "pay", label: "Płatność 2 · cena auta" } },
-    { stage: "delivery", title: "Transport i kontrola", text: "Ubezpieczona laweta do Łomianek. Po rozładunku ponownie sprawdzamy stan auta z raportem z oględzin." },
-    { stage: "delivery", title: "Dokumenty i odbiór", text: "Akcyza, przegląd i tłumaczenia po naszej stronie. Rozliczenie końcowe i odbiór auta - {Panu} zostaje rejestracja i OC.", mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe" } },
+    { stage: "free", title: "Rozmowa", text: "Omawiamy ofertę i ustalamy sposób zakupu (faktura VAT, marża lub bezpośrednio), finansowanie, termin i pytania do sprzedawcy.",
+      titleRu: "Разговор", textRu: "Обсуждаем предложение и способ покупки (счёт-фактура VAT, маржа или напрямую), финансирование, сроки и вопросы к продавцу." },
+    { stage: "free", title: "Rezerwacja auta", text: "Dzwonimy do dealera: dostępność, dodatkowe zdjęcia, VIN i historia serwisowa. Rezerwujemy auto, jeśli dealer na to pozwala.",
+      titleRu: "Резервация авто", textRu: "Звоним дилеру: наличие, дополнительные фото, VIN и сервисная история. Резервируем авто, если дилер это позволяет." },
+    { stage: "deposit", title: "Umowa i zaliczka", text: "Podpisujemy umowę zdalnie. {Pan} {v:wpłaca|wpłacają} zaliczkę 2000-4000 zł - zwracamy ją w całości, jeśli {v:zrezygnuje|zrezygnują} {Pan} przed zakupem.", mark: { kind: "pay", label: "Płatność 1 · zaliczka zwrotna", labelRu: "Платёж 1 · возвратный аванс" },
+      titleRu: "Договор и аванс", textRu: "Подписываем договор дистанционно. Вы вносите аванс 2000-4000 zł - возвращаем его полностью, если Вы откажетесь до покупки." },
+    { stage: "deposit", title: "Oględziny", text: "Nasz specjalista sprawdza auto u sprzedawcy: lakier, diagnostyka, jazda próbna, zdjęcia i film. {Pan} {v:dostaje|dostają} raport z rekomendacją.", mark: { kind: "decision", label: "{Pana} decyzja: kupujemy?", labelRu: "Ваше решение: покупаем?" },
+      titleRu: "Осмотр", textRu: "Наш специалист проверяет авто у продавца: ЛКП, диагностика, тест-драйв, фото и видео. Вы получаете отчёт с рекомендацией." },
+    { stage: "purchase", title: "Negocjacje i umowa", text: "Negocjujemy cenę i warunki - 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę.",
+      titleRu: "Переговоры и договор", textRu: "Торгуемся о цене и условиях - 70% выторгованной скидки остаётся Вам. Проверяем договор и счёт." },
+    { stage: "purchase", title: "Płatność za auto", text: "{Pan} {v:zleca|zlecają} przelew za auto w ciągu 2 dni roboczych, z uwzględnieniem zaliczki.", mark: { kind: "pay", label: "Płatność 2 · cena auta", labelRu: "Платёж 2 · цена авто" },
+      titleRu: "Оплата за авто", textRu: "Вы делаете перевод за авто в течение 2 рабочих дней, с учётом аванса." },
+    { stage: "delivery", title: "Transport i kontrola", text: "Ubezpieczona laweta do Łomianek. Po rozładunku ponownie sprawdzamy stan auta z raportem z oględzin.",
+      titleRu: "Транспорт и проверка", textRu: "Застрахованный автовоз до Ломянок. После разгрузки повторно сверяем состояние авто с отчётом осмотра." },
+    { stage: "delivery", title: "Dokumenty i odbiór", text: "Akcyza, przegląd i tłumaczenia po naszej stronie. Rozliczenie końcowe i odbiór auta - {Panu} zostaje rejestracja i OC.", mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" },
+      titleRu: "Документы и получение", textRu: "Акциз, техосмотр и переводы - на нашей стороне. Окончательный расчёт и получение авто - Вам остаются регистрация и страховка OC." },
   ];
   const PROCESS_STYLES = [
     ["timeline", "Oś czasu", "kroki z góry na dół, koszt i kontakt obok"],
@@ -594,20 +652,21 @@
       .replace(/\{v:([^|}]*)\|([^}]*)\}/g, (_, singular, plural) => (form === 2 ? plural : singular))
       .replace(/\{Pan[au]?\}/g, (token) => words[token][form]);
   }
-  const stageNote = (stage) => addressed(PROCESS_STAGES[stage].note);
+  const stageNote = (stage) => L(addressed(PROCESS_STAGES[stage].note), PROCESS_STAGES[stage].noteRu);
+  const stageLabel = (stage) => L(PROCESS_STAGES[stage].label, PROCESS_STAGES[stage].labelRu);
 
   function markHtml(step, index) {
     if (!step.mark) return "";
-    return `<span class="ofMark is${step.mark.kind === "pay" ? "Pay" : "Decision"}">${icon(step.mark.kind === "pay" ? "receipt" : "check")}${field(`processMark${index + 1}`, addressed(step.mark.label))}</span>`;
+    return `<span class="ofMark is${step.mark.kind === "pay" ? "Pay" : "Decision"}">${icon(step.mark.kind === "pay" ? "receipt" : "check")}${field(`processMark${index + 1}`, L(addressed(step.mark.label), step.mark.labelRu))}</span>`;
   }
   function stepBody(step, index) {
-    return `${field(`process${index + 1}Title`, step.title, "b", "ofStepTitle")}${field(`process${index + 1}`, addressed(step.text), "p", "ofStepText")}`;
+    return `${field(`process${index + 1}Title`, L(step.title, step.titleRu), "b", "ofStepTitle")}${field(`process${index + 1}`, L(addressed(step.text), step.textRu), "p", "ofStepText")}`;
   }
 
   function processTimeline() {
     let lastStage = "";
     return `<ol class="ofTimeline">${PROCESS_STEPS.map((step, index) => {
-      const head = step.stage !== lastStage ? `<li class="ofTimeStage is-${step.stage}"><span>${esc(PROCESS_STAGES[step.stage].label)}</span><small>${esc(stageNote(step.stage))}</small></li>` : "";
+      const head = step.stage !== lastStage ? `<li class="ofTimeStage is-${step.stage}"><span>${esc(stageLabel(step.stage))}</span><small>${esc(stageNote(step.stage))}</small></li>` : "";
       lastStage = step.stage;
       return `${head}<li class="ofTimeStep is-${step.stage}"><span class="ofTimeNo">${index + 1}</span><div>${stepBody(step, index)}${markHtml(step, index)}</div></li>`;
     }).join("")}</ol>`;
@@ -617,14 +676,14 @@
     const lane = PROCESS_STEPS.map((step, index) => `<div class="ofLaneCell">${markHtml(step, index)}</div>`);
     return `
       <div class="ofRoad">${PROCESS_STEPS.slice(0, 4).map(cell).join("")}</div>
-      <div class="ofLane"><span class="ofLaneLabel">${esc(addressed("{Pana} decyzje i płatności"))}</span>${lane.slice(0, 4).join("")}</div>
+      <div class="ofLane"><span class="ofLaneLabel">${esc(L(addressed("{Pana} decyzje i płatności"), "Ваши решения и платежи"))}</span>${lane.slice(0, 4).join("")}</div>
       <div class="ofRoad">${PROCESS_STEPS.slice(4).map((step, index) => cell(step, index + 4)).join("")}</div>
       <div class="ofLane"><span class="ofLaneLabel"></span>${lane.slice(4).join("")}</div>`;
   }
   function processStages() {
     return `<div class="ofStages">${Object.keys(PROCESS_STAGES).map((stage) => `
       <div class="ofStageCol is-${stage}">
-        <p class="ofStageHead"><b>${esc(PROCESS_STAGES[stage].label)}</b><small>${esc(stageNote(stage))}</small></p>
+        <p class="ofStageHead"><b>${esc(stageLabel(stage))}</b><small>${esc(stageNote(stage))}</small></p>
         ${PROCESS_STEPS.map((step, index) => (step.stage === stage ? `<div class="ofStageStep"><span class="ofTimeNo">${index + 1}</span>${stepBody(step, index)}${markHtml(step, index)}</div>` : "")).join("")}
       </div>`).join("")}</div>`;
   }
@@ -641,12 +700,12 @@
     const costsHtml = costView ? `
       <section class="ofCard ofCostsCard${blockClass("costs")}" data-block="costs">
         ${hideToggle("costs")}
-        <p class="ofCardHead">${icon("receipt")}Koszt na gotowo</p>
+        <p class="ofCardHead">${icon("receipt")}${L("Koszt na gotowo", "Стоимость «под ключ»")}</p>
         <span class="ofMethod">${esc(costView.method)}</span>
         <table class="ofCosts">
           <tbody>
             ${costView.rows.map((row) => `<tr><td>${esc(row.label)}${row.sub ? `<small>${esc(String(row.sub).replace(/\s*=\s*$/, ""))}</small>` : ""}</td><td>${esc(money(row.value, "PLN"))}</td></tr>`).join("")}
-            <tr class="isTotal"><td>Razem na gotowo</td><td>${esc(money(costView.total, "PLN"))}</td></tr>
+            <tr class="isTotal"><td>${L("Razem na gotowo", "Итого «под ключ»")}</td><td>${esc(money(costView.total, "PLN"))}</td></tr>
           </tbody>
         </table>
         ${field("costsNote", costView.note, "p", "ofSmall")}
@@ -654,9 +713,11 @@
     const negotiationHtml = negotiation ? `
       <section class="ofCard ofNegoCard${blockClass("negotiation")}" data-block="negotiation">
         ${hideToggle("negotiation")}
-        <p class="ofCardHead">${icon("percent")}Potencjał negocjacji</p>
-        <p><span class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : `${negotiation.from}-${negotiation.to}%`}</span> <span class="ofSmall">${!negotiation.amountTo ? "cena bez dużego pola do negocjacji" : negotiation.amountFrom ? `ok. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} mniej` : `do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`}</span></p>
-        ${field("negotiationNote", `Obserwacja cen ogłoszeń, nie gwarancja rabatu. Negocjujemy w ${salutation.owner} imieniu.`, "p", "ofSmall")}
+        <p class="ofCardHead">${icon("percent")}${L("Potencjał negocjacji", "Потенциал торга")}</p>
+        <p><span class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : `${negotiation.from}-${negotiation.to}%`}</span> <span class="ofSmall">${!negotiation.amountTo ? L("cena bez dużego pola do negocjacji", "цена без большого поля для торга")
+          : negotiation.amountFrom ? L(`ok. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `ок. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} меньше`)
+          : L(`do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `до ок. ${esc(money(negotiation.amountTo, negotiation.currency))} меньше`)}</span></p>
+        ${field("negotiationNote", L(`Obserwacja cen ogłoszeń, nie gwarancja rabatu. Negocjujemy w ${salutation.owner} imieniu.`, "Наблюдение за ценами объявлений, не гарантия скидки. Ведём переговоры от Вашего имени."), "p", "ofSmall")}
       </section>` : "";
     const contactHtml = `
       <section class="ofCard ofContactCard${blockClass("contact")}" data-block="contact">
@@ -665,7 +726,7 @@
           <div class="ofAvatar">${esc(initials)}</div>
           <div class="ofContactLines">
             <b>${esc(withFirm(manager.name) || "AUTOGOOD")}</b>
-            <span class="ofSmall">${esc(salutation.owner)} opiekun</span>
+            <span class="ofSmall">${L(`${esc(salutation.owner)} opiekun`, "Ваш менеджер")}</span>
             ${manager.phone ? `<span>${icon("phone")}${esc(manager.phone)}</span>` : ""}
             ${manager.email ? `<span>${icon("mail")}${esc(manager.email)}</span>` : ""}
           </div>
@@ -675,27 +736,28 @@
     const processHtml = `
       <section class="ofCard ofProcess is-${style}${blockClass("process")}" data-block="process">
         ${hideToggle("process")}
-        <p class="ofCardHead">${icon("route")}${field("processTitle", "Co dalej: od rozmowy do kluczyków", "span")}</p>
+        <p class="ofCardHead">${icon("route")}${field("processTitle", L("Co dalej: od rozmowy do kluczyków", "Что дальше: от разговора до ключей"), "span")}</p>
         ${style === "road" ? processRoad() : style === "stages" ? processStages() : processTimeline()}
-        ${field("processNote", "Zwykle od 3 tygodni do 1,5 miesiąca od umowy do odbioru - zależnie od kraju i ścieżki zakupu.", "p", "ofSmall ofProcessNote")}
+        ${field("processNote", L("Zwykle od 3 tygodni do 1,5 miesiąca od umowy do odbioru - zależnie od kraju i ścieżki zakupu.", "Обычно от 3 недель до 1,5 месяца от договора до получения авто - в зависимости от страны и способа покупки."), "p", "ofSmall ofProcessNote")}
       </section>`;
     const optionsHtml = allOptions.length && !isHidden("allOptions") && (offer.shown || []).includes("allOptions") ? `
       <section class="ofCard isFull" data-block="allOptions">
         ${hideToggle("allOptions")}
-        <p class="ofCardHead">${icon("list")}Pełne wyposażenie z ogłoszenia (${numbers.format(allOptions.length)})</p>
-        <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(item.label)}</li>`).join("")}</ul>
+        <p class="ofCardHead">${icon("list")}${L("Pełne wyposażenie z ogłoszenia", "Полное оснащение из объявления")} (${numbers.format(allOptions.length)})</p>
+        <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(ru() ? RU.option(item.label) : item.label)}</li>`).join("")}</ul>
       </section>` : "";
     const body = style === "timeline"
       ? `<div class="ofTwoCols"><div>${processHtml}</div><div class="ofSideCol">${costsHtml}${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`
       : `${processHtml}<div class="ofBottomRow">${costsHtml}<div class="ofSideCol">${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`;
     return `
       <div class="ofSheet${isHidden("page2") ? " isHiddenPage" : ""}" data-sheet="2">
-        <article class="ofPage${styleClass()} isProcess-${style}" data-page="2">
+        <article class="ofPage${styleClass()} isProcess-${style}" data-page="2" lang="${ru() ? "ru" : "pl"}">
           ${headHtml(2, view)}
           <div class="ofPageTwo">${body}</div>
-          ${field("note", `Dane z ogłoszenia na ${PORTAL[offer.source] || "portalu"}${offer.market ? " i z rynku" : ""} na dzień ${dateText(offer.market?.at || offer.createdAt)}. Ceny w ogłoszeniach mogą się zmienić. Stan techniczny, historię i dokumenty auta sprawdzamy przed zakupem.`, "p", "ofNote")}
+          ${field("note", L(`Dane z ogłoszenia na ${PORTAL[offer.source] || "portalu"}${offer.market ? " i z rynku" : ""} na dzień ${dateText(offer.market?.at || offer.createdAt)}. Ceny w ogłoszeniach mogą się zmienić. Stan techniczny, historię i dokumenty auta sprawdzamy przed zakupem.`,
+            `Данные из объявления на ${PORTAL[offer.source] || "портале"}${offer.market ? " и данные рынка" : ""} на ${dateText(offer.market?.at || offer.createdAt)}. Цены в объявлениях могут меняться. Техническое состояние, историю и документы авто проверяем до покупки.`), "p", "ofNote")}
           <footer class="ofFoot">
-            <span><b>AUTOGOOD</b> · import aut z Europy</span>
+            <span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span>
             <span>${esc([company.web, company.phone, company.email].filter(Boolean).join(" · "))}</span>
           </footer>
         </article>
@@ -704,9 +766,9 @@
 
   function verdictView(view) {
     if (!VERDICT) return null;
-    const result = VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market });
+    const result = VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market, lang: ru() ? "ru" : "pl" });
     const level = offer.verdictLevel || result.verdict;
-    const label = { ok: "Rekomendujemy do dalszego sprawdzenia*", check: "Do weryfikacji przed rezerwacją", risk: "Nie rekomendujemy" }[level];
+    const label = L({ ok: "Rekomendujemy do dalszego sprawdzenia*", check: "Do weryfikacji przed rezerwacją", risk: "Nie rekomendujemy" }, { ok: "Рекомендуем к дальнейшей проверке*", check: "Нужна проверка до резервации", risk: "Не рекомендуем" })[level];
     // Up to six lines on the sheet: the most important first.
     return { level, label, lines: result.lines.filter((line) => line.level !== "info" || line.id === "vat:margin").slice(0, 6), all: result.lines, auto: result.verdict };
   }
@@ -737,7 +799,10 @@
         <h2>Oferta ${esc(offer.number || "")}</h2>
         <p>Utworzona ${esc(dateText(offer.createdAt))} ${esc(timeText(offer.createdAt))} ${offer.origin === "link" ? `z linku ogłoszenia (program „Oferta”). Bez danych rynku - pojawią się w ofercie z Monitoringu.` : `z Monitoringu: ${esc(offer.favoriteTitle || "")}. Rynek z dnia ${esc(dateText(offer.market?.at || offer.createdAt))}.`}</p>
         <div class="ofPanelRow">
-          <label>Zwrot<select data-client-salutation>${Object.keys(SALUTATION).map((key) => `<option${client.salutation === key ? " selected" : ""}>${esc(key)}</option>`).join("")}</select></label>
+          <label>Język oferty<select data-offer-lang><option value="pl"${ru() ? "" : " selected"}>PL · polski</option><option value="ru"${ru() ? " selected" : ""}>RU · rosyjski</option></select></label>
+        </div>
+        <div class="ofPanelRow">
+          <label>Zwrot${ru() ? " (PL)" : ""}<select data-client-salutation>${Object.keys(SALUTATION).map((key) => `<option${client.salutation === key ? " selected" : ""}>${esc(key)}</option>`).join("")}</select></label>
           <label>Klient (opcjonalnie)<input data-client-name value="${esc(client.name || "")}" placeholder="np. Jan Kowalski" /></label>
         </div>
       </section>
@@ -830,6 +895,13 @@
     stage.classList.toggle("isEditing", editing);
     stage.classList.add("isScreen");
     stage.innerHTML = (sheetOne(view) + sheetTwo(view)).replace(/[\u2013\u2014]/g, "-");
+    // A photo server that refuses other sites (otomoto) still shows the photo
+    // on screen without CORS; the PDF reads its bytes another way (photoData).
+    stage.querySelectorAll("img[data-photo-main]").forEach((image) => image.addEventListener("error", () => {
+      if (!image.hasAttribute("crossorigin")) return;
+      image.removeAttribute("crossorigin");
+      image.src = image.dataset.source;
+    }, { once: true }));
     panel.innerHTML = panelHtml(view);
     fitSheets();
     autoFit();
@@ -858,6 +930,15 @@
         const drop = [...lines].reverse().find((line) => line.classList.contains("isOk") || line.classList.contains("isInfo")) || lines[lines.length - 1];
         drop.remove();
       }
+      // Then the weakest of the ten options (longer names in Russian), six at least.
+      const options = () => [...one.querySelectorAll(".ofOptions .ofOption")];
+      const more = one.querySelector(".ofOptionsMore[data-all]");
+      let cut = false;
+      while (overflow(one) > 0 && options().length > 6) {
+        options().pop().remove();
+        cut = true;
+      }
+      if (cut && more) more.textContent = optionsMore(Number(more.dataset.all) - options().length, more.dataset.list === "1");
     }
     const two = stage.querySelector('[data-page="2"]');
     if (two) {
@@ -960,6 +1041,9 @@
         }
         return { hidden: [...set], shown: [...shown] };
       });
+    } else if (target.matches("[data-offer-lang]")) {
+      // The same offer in the other language; each language keeps its edits.
+      save({ lang: target.value === "ru" ? "ru" : "pl" });
     } else if (target.matches("[data-process-style]")) {
       save({ processStyle: target.dataset.processStyle });
     } else if (target.matches("[data-style]")) {
@@ -1070,7 +1154,7 @@
   const defaultTab = () => (offer.calc?.tab ?? (calcInput().vat && calcInput().net ? 3 : 0));
   function calcUrl(tab) {
     const input = calcInput();
-    const params = new URLSearchParams({ embed: "1", tab: String(tab), lang: "pl", car: String(Math.round(tab === 3 ? input.net : input.gross)), engine: String(input.engine) });
+    const params = new URLSearchParams({ embed: "1", tab: String(tab), lang: ru() ? "ru" : "pl", car: String(Math.round(tab === 3 ? input.net : input.gross)), engine: String(input.engine) });
     if (input.transport) params.set("transport", String(Math.round(input.transport)));
     if (input.inspection) params.set("inspection", String(Math.round(input.inspection)));
     if (input.url) params.set("mobileUrl", input.url);
@@ -1135,7 +1219,8 @@
     if (!rows.length || !total) throw new Error("kalkulator jeszcze liczy — spróbuj za chwilę");
     const rate = Number(String(text(doc.querySelector(".totalBarRate")).match(/(\d+[.,]\d+)/)?.[1] || "").replace(",", ".")) || 0;
     const item = CALC_TABS.find((entry) => entry.tab === calcTab) || CALC_TABS[0];
-    return { tab: calcTab, method: item.key, methodLabel: item.label, rows, total, rate, at: new Date().toISOString() };
+    // The calculator speaks the offer's language (calcUrl): its lines are kept so.
+    return { tab: calcTab, method: item.key, methodLabel: ru() ? RU.calc(item.label) : item.label, rows, total, rate, lang: ru() ? "ru" : "pl", at: new Date().toISOString() };
   }
   async function insertCalculation() {
     const note = calcDialog?.querySelector("[data-calc-note]");
@@ -1228,14 +1313,17 @@
 
   // Google Fonts' stylesheet cannot be read by the picture maker: its faces
   // are fetched and written in as data (latin and latin-ext: Polish letters).
-  let fontCss = null;
+  const fontCss = {};
   async function pageFontCss() {
-    if (fontCss !== null) return fontCss;
+    const lang = ru() ? "ru" : "pl";
+    if (fontCss[lang] !== undefined) return fontCss[lang];
+    // A Russian sheet needs the Cyrillic faces too (Inter, Playfair Display).
+    const subsets = ru() ? ["latin", "latin-ext", "cyrillic", "cyrillic-ext"] : ["latin", "latin-ext"];
     try {
       const links = [...document.querySelectorAll('link[href*="fonts.googleapis.com/css"]')];
       const css = (await Promise.all(links.map(async (link) => (await fetch(link.href)).text()))).join("\n");
       const faces = [...css.matchAll(/\/\*\s*([\w-]+)\s*\*\/\s*(@font-face\s*\{[^}]*\})/g)]
-        .filter((match) => match[1] === "latin" || match[1] === "latin-ext")
+        .filter((match) => subsets.includes(match[1]))
         .map((match) => match[2]);
       const inlined = await Promise.all(faces.map(async (face) => {
         const url = (face.match(/url\(([^)]+)\)/) || [])[1];
@@ -1248,15 +1336,46 @@
         });
         return face.replace(url, `"${data}"`);
       }));
-      fontCss = inlined.join("\n");
+      fontCss[lang] = inlined.join("\n");
     } catch {
-      fontCss = "";
+      fontCss[lang] = "";
     }
-    return fontCss;
+    return fontCss[lang];
   }
 
   // One sheet drawn at its real size from a copy off screen, without the
   // manager's buttons, hidden blocks and edit marks.
+  // A photo's bytes as a data: URL — straight from its server, else through
+  // our Worker (it reads the photo servers of the portals it serves; otomoto's
+  // olxcdn answers other sites now and then only, checked 2026-10-10).
+  const photoCache = new Map();
+  function photoData(src) {
+    if (!photoCache.has(src)) {
+      const worker = window.AUTOGOOD_WORKER_PROXY ?? "https://ag-proxy.autogood-crm.workers.dev/";
+      const tries = [src, ...(worker && !src.startsWith(worker) ? [`${worker}${src}`] : [])];
+      photoCache.set(src, (async () => {
+        for (const url of tries) {
+          try {
+            const response = await fetch(url);
+            if (!response.ok) continue;
+            const blob = await response.blob();
+            if (!/^image\//.test(blob.type)) continue;
+            return await new Promise((resolve) => {
+              const reader = new FileReader();
+              reader.onload = () => resolve(reader.result);
+              reader.onerror = () => resolve("");
+              reader.readAsDataURL(blob);
+            });
+          } catch {
+            // The next way.
+          }
+        }
+        return "";
+      })());
+    }
+    return photoCache.get(src);
+  }
+
   async function captureSheet(number, pixelRatio = 2.5) {
     // The library without its font shrink (vendor/html-to-image-exact.js):
     // the sheet's text is drawn at its real size, as laid out on the page.
@@ -1274,6 +1393,14 @@
     holder.append(copy);
     document.body.append(holder);
     try {
+      // Every photo drawn from bytes this page could read (data: URL), so a
+      // photo server that refuses other sites (otomoto) does not leave a hole.
+      await Promise.all([...copy.querySelectorAll("img")].map(async (image) => {
+        const src = image.dataset.source || image.getAttribute("src") || "";
+        if (!/^https:\/\//.test(src)) return;
+        const data = await photoData(src);
+        if (data) image.setAttribute("src", data);
+      }));
       await Promise.all([...copy.querySelectorAll("img")].map((image) => (image.complete ? null : new Promise((resolve) => {
         image.onload = resolve;
         image.onerror = resolve;
@@ -1299,7 +1426,7 @@
 
   const fileName = (extension) => {
     const view = carView();
-    return `AUTOGOOD Oferta ${offer.number || ""} ${[view.brand, view.model].filter(Boolean).join(" ") || view.title} ${new Date().toISOString().slice(0, 10)}.${extension}`
+    return `AUTOGOOD Oferta ${offer.number || ""} ${[view.brand, view.model].filter(Boolean).join(" ") || view.title}${ru() ? " RU" : ""} ${new Date().toISOString().slice(0, 10)}.${extension}`
       .replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
   };
   function download(blob, name) {

@@ -26,7 +26,8 @@
   --of-page-w: 794px;
   --of-page-h: 1123px;
   --of-scale: 1;
-  --of-font: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  /* Public Sans has no Cyrillic: a Russian offer (2026-10-10) draws those letters in Inter. */
+  --of-font: "Public Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 * { box-sizing: border-box; }

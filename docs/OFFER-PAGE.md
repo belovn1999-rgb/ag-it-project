@@ -16,7 +16,7 @@
 | 3 | Расчёт выбранным способом — все строки калькулятора, «Wstaw do oferty», сверка с `calculators.html` | ✅ 10-05 — окно калькулятора (`calculators.html?embed=1`, как «Oblicz na gotowo») на выбранном способе; «Wstaw do oferty» копирует строки, итог и курс как показаны (правки в калькуляторе тоже); до вставки — предварительный расчёт «Zakup bezpośredni» |
 | 4 | «Мозги» по правилам: вердикт и красные флаги с цитатами, «Potencjał negocjacji» | ✅ 10-05 — сверено на 40 живых объявлениях C-HR (mobile.de): «ohne Papiere / Diebstahl» → 3 красных с цитатами; ложные срабатывания найдены и убраны («Diebstahlwarnanlage», «NESSUN VINCOLO DI FINANZIAMENTO», «Polizei» после кражи) |
 | 5 | Дизайн, тексты Pan/Pani, контакты, процесс импорта, проверка на живом сайте | ✅ 10-05 выбран **Premium** (остальные четыре вида остаются в панели «Wygląd oferty»); контакты по умолчанию — «Nikodem z AUTOGOOD», +48 531 900 775, info@autogood.pl, autogood.pl; 🔄 10-06: Carvago (история цены и число активных похожих), **стр. 2 — процесс «od rozmowy do kluczyków» в трёх вариантах (Oś czasu / Droga / Etapy), ждёт выбора владельца** |
-| 6 | **Программа 06 «Oferta»** (`oferty.html`): оффер без Monitoring — способ 1 «Z ogłoszenia dealera» (ссылка → данные → «Przygotuj ofertę PDF»), способ 2 «Z raportu aukcji» — в отдельном чате | 🔄 10-10: способ 1 работает (mobile.de, AutoScout24 DE/FR, Kleinanzeigen, ParuVendu), §8; дизайн доработаем позже (владелец) |
+| 6 | **Программа 06 «Oferta»** (`oferty.html`): только оффер в красивой обёртке для заинтересованного клиента, без анализа рынка — способ 1 «Z ogłoszenia dealera» (ссылка с любого портала стр. 1 → данные → «Przygotuj ofertę PDF»), способ 2 «Z raportu aukcji» — в отдельном чате | ✅ 10-10: все порталы стр. 1 (mobile.de, AutoScout24 DE/FR, Kleinanzeigen, Marktplaats, 2dehands/2ememain, otomoto, Blocket, ParuVendu, av.by), портал по ссылке без выбора, **PL / RU — оффер на выбранном языке**; дизайн страницы — позже (владелец) |
 
 ## 1. Цель (владелец, 10-05)
 
@@ -56,6 +56,7 @@ tle rynku», «Ocena AUTOGOOD», «Wyposażenie — najważniejsze», «Sprzedaw
 | 10-06 | **Carvago** (владелец): то же авто 1:1 на carvago.com/pl по марке, году и точному пробегу (затем номер объявления `mobile_de-…` / `autoscout24-…`), в блоке «Cena na tle rynku» — «Aktywnych podobnych ofert w Europie: N (rok, przebieg)» и линия цены «W sprzedaży od … · zmiany ceny: dd.mm −x %». Carvago — конкурент (продаёт авто с наценкой и VAT страны покупателя): **клиенту ни названия, ни цен Carvago** — только даты, проценты изменений и число; ссылку видит менеджер в панели («Carvago (dla opiekuna)»), блок скрывается как любой другой |
 | 10-06 | **Стр. 2 = процесс дальнейших шагов** (владелец): от звонка до ключей, 8 шагов в 4 этапах — «Bez zobowiązań» (1 Rozmowa, 2 Rezerwacja auta), «Pierwsze zobowiązanie» (3 Umowa i zaliczka — Płatność 1, zaliczka zwrotna; 4 Oględziny — «Pana decyzja: kupujemy?»), «Zakup» (5 Negocjacje i umowa, 6 Płatność za auto — Płatność 2), «Dostawa i odbiór» (7 Transport i kontrola, 8 Dokumenty i odbiór — Płatność 3); цвет этапа — с какого момента у клиента обязательства и оплаты. Три расположения на выбор владельцу (панель «Strona 2: proces»): **Oś czasu** (шаги сверху вниз, расчёт, торг и контакт справа), **Droga** (4 + 4 карточки, под ними полоса «Pana decyzje i płatności»), **Etapy** (4 цветные колонки). Срок — «zwykle od 3 tygodni do 1,5 miesiąca … zależnie od kraju i ścieżki zakupu» (без обещания); полный список опций на стр. 2 — только если менеджер включит |
 | 10-10 | **Оффер — отдельная, шестая программа «Oferta»** в навигации (`oferty.html`, 06): первый переключатель — «Z ogłoszenia dealera» (поле ссылки как на стр. 1 «Wyszukiwanie i analiza», вместо «Analiza rynku» — «Przygotuj ofertę PDF»); второй — отчёт аукциона (данные вытягиваются скриптами, разные формы отчётов; делается в другом чате). Дизайн страницы оффера пока не трогаем — доработаем потом |
+| 10-10 | Программа «Oferta» (владелец): **без анализа рынка** — только офферы в красивой обёртке для заинтересованных клиентов. Ссылка с **любого** портала стр. 1 «Wyszukiwanie i analiza»; **портал определяется по ссылке, выбирать его не нужно** (список убран). **Переключатель PL / RU** как в «Wyszukiwanie i analiza»: язык страницы и язык оффера (оба листа, вердикт, опции, расчёт, процесс; русский — на «Вы») |
 | 10-05 | Допущения, принятые без правок: польский язык, Pan/Pani, PLN (RU и Беларусь — позже); первая версия — mobile.de и AutoScout24, другие порталы следом; otomoto (покупка в Польше) — отдельный сценарий; любое поле правится или скрывается до PDF; оффер — снимок на дату (сам не пересчитывается); отметка «Oferta» у объявления в Monitoring |
 
 ## 3. Какие данные достаются (проверка 10-05)
@@ -144,6 +145,8 @@ ld+json «Hatchback»); дата Kleinanzeigen под адресом — пос�
 | `src/offer-equipment.js` | опции по-польски (словарь DE→PL, FR→PL с 10-06, галочки Kleinanzeigen), сильные опции по ценности (панорама, кожа/полукожа, Matrix/LED, ACC, Head-Up, 360°/камера, навигация, автономный отопитель, вентиляция, подогревы…), «обещания» (гарантия, сервисная книжка) отдельно |
 | `src/offer-verdict.js` | вердикт и флаги (§4 правила): цена против медианы похожих (< 60 % — риск обмана), продавец (частник, рейтинг, стаж, комиссия, «реальность объявлений» < 85 %), состояние (повреждён, не на ходу, аварийность не указана, прокат, владельцы, книжка, гарантия, ТО, пробег в год), слова-флаги в заголовке/описании/сводке mobile.de на DE/PL/IT/NL/FR/EN — **целые слова, отрицание перед словом отменяет флаг** («kein Unfallschaden», «Diebstahlwarnanlage» — не флаг); торг — эвристика (дни, снижения, место в рынке → 0–1 / 1–2 / 2–3 / 3–5 %) |
 | `src/offer-carvago.js` | то же авто на Carvago (`window.AUTOGOOD_OFFER_CARVAGO.find`): поиск `/pl/samochody/<марка>?registration-date-from=Y&…-to=Y&mileage-from=KM&mileage-to=KM` (`__NEXT_DATA__` → `searchResults.cars`), выбор по `external_id` (номер объявления mobile.de / uuid AutoScout24), иначе по модели, если она одна; страница авто `/pl/samochod/<id>/<slug>` → `priceHistoryData` (изменения ≥ 0,5 %); число похожих — поиск `/samochody/<марка>/<модель>?` с годами и пробегом похожих рынка (если модель Carvago не знает — `price_score.similar_cars_count`). Через `market-proxy-queue.js`: Worker carvago не пропускает → `r.jina.ai` (`x-respond-with: html`); 2–3 запроса на оффер, запускается после чтения объявления; результат — `offer.carvago` / `offer.carvagoError` |
+| `src/offer-ru.js` | оффер на русском (10-10): польские значения чтения и опции → русские (`value`, `option`), страны и «в стране», русское множественное число, строки калькулятора (`calc`); тексты листов — в `offer.js` (`L(pl, ru)`), вердикта — в `offer-verdict.js` (`lang`) |
+| `src/offer-start.js` + `oferty.html` + `src/offer-start.css` | программа 06 «Oferta» (§8): ссылка → портал по адресу → чтение → карточка авто → черновик `origin: "link"` → `oferta.html`; PL / RU |
 | `server/mobilede-import.mjs` | `/mobilede/import` отдаёт ещё `ad` (фото `mo-1024`, атрибуты, опции, описание из RSC-строки, продавец с рейтингом и «Bei mobile.de seit», даты, `priceRating`, флаги, сводка ИИ mobile.de); `/mobilede/dealer?customerId=` — число авто и звёзды со страницы дилера (Chrome импортера, кэш 12 ч) |
 | расчёт (волна 3, в `src/offer.js`) | панель «Kalkulacja»: способ (Zakup bezpośredni / Dealerzy VAT 23% — только авто с НДС / Dealerzy VAT marża; по умолчанию как «Oblicz na gotowo»: с НДС — VAT 23 %, иначе прямая покупка) → окно с `calculators.html?embed=1&tab=&car=&engine=&transport=&inspection=&mobileUrl=` (нетто для VAT 23 %, брутто для остальных; тариф и класс акциза — из черновика) → «Wstaw do oferty» читает из окна (тот же адрес сайта) `.resultsList .resultLine` (`.resultLineLabel`, `.resultLinePrefix`, `.resultLineSub`, `.resultLineAmount`), `.totalBarValue`, `.totalBarRate` → `offer.calc` `{tab, method, methodLabel, rows, total, rate, at}`; «Wróć do szacunku» убирает. Проверено 10-05: C-HR с НДС — 7 строк, 116 150 zł при курсе 4,40, совпадает с калькулятором |
 | `vendor/html-to-image-exact.js` | копия html-to-image 1.11.11 **без уменьшения шрифта** (библиотека ставит `floor(size) - 0,1 px`: 11,5 → 10,9 px), иначе в PDF текст уже, чем на странице, а высоты от страницы — пустые строки под переносами. Только для оффера; `vendor/html-to-image.js` не тронут |
@@ -173,6 +176,7 @@ A4; PDF 2 стр. 1,1 МБ за 1,6 с, ссылка на объявление �
 
 | Дата | Изменение | Коммит |
 |---|---|---|
+| 10-10 | «Oferta»: все порталы стр. 1 — новые читатели Marktplaats/2dehands/2ememain, otomoto, Blocket, av.by (`offer-ad.js`, тесты 36/36), портал только по ссылке (выбор убран), **PL / RU: оффер на выбранном языке** (`offer-ru.js`, оба листа, вердикт, опции, расчёт с `lang=ru`, правки по языку, Inter для кириллицы); опции на ru/pl/nl/fr/sv и исправления ложных совпадений; красные флаги на ru/nl/sv; цена SEK/PLN; фото otomoto для PDF через `photoData` (Worker: `olxcdn.com` — нужна выкладка) | этот коммит |
 | 10-10 | Программа 06 «Oferta» (`oferty.html`, `src/offer-start.js/.css`): ссылка → портал по адресу → «Rozpoznaj» (`offer-ad.js`) → карточка авто в колонках стр. 1 → «Przygotuj ofertę PDF» → `oferta.html` (origin `link`); марка и модель из названия по справочнику mobile.de; рабочий адрес импортера ищется сам; без Monitoring в «Cena na tle rynku» — шкала цен mobile.de (5 полос) или медиана AutoScout24 + Carvago; пункт 06 в навигации всех страниц и плитка на главной. Проверено: mobile.de (C-HR, 16 с, тариф транспорта импортера) и AutoScout24 (4 с), оба листа A4 | этот коммит |
 | 10-06 | Стр. 1: флаги стран, ссылка крупнее, 10 опций, «Rekomendujemy do dalszego sprawdzenia\*» со сноской, плашки под ценой; Carvago — история цены и число активных похожих (`src/offer-carvago.js`, тест); стр. 2 — процесс от звонка до ключей, 8 шагов / 4 этапа / 3 платежа, три расположения на выбор; оба листа A4 во всех трёх | этот коммит |
 | 10-06 | Оффер читает AutoScout24 FR, ParuVendu и Kleinanzeigen (фото, параметры, опции, описание, продавец, гарантия; §3а), кнопка в Monitoring для них; французские значения и опции по-польски; «Wyposażenie» после чтения без галочек — «Sprzedawca nie zaznaczył wyposażenia…» вместо «pojawi się»; проверено на 5 живых объявлениях (фото в PDF рисуются) | этот коммит |
@@ -187,35 +191,78 @@ A4; PDF 2 стр. 1,1 МБ за 1,6 с, ссылка на объявление �
 ## 8. Программа 06 «Oferta» (`oferty.html`, с 10-10)
 
 Отдельная программа в навигации (06, «Оффер» / «Oferta»; страница самого оффера
-`oferta.html` тоже подсвечивает 06). Оффер делается из одного авто без Monitoring.
+`oferta.html` тоже подсвечивает 06). Задача — **только оффер в красивой обёртке** для
+заинтересованного клиента, без анализа рынка (владелец 10-10).
 
 | Способ | Что делает | Статус |
 |---|---|---|
-| «Z ogłoszenia dealera» | ссылка объявления → «Rozpoznaj» → карточка авто → «Przygotuj ofertę PDF» → `oferta.html` (проверка, правки, «Pobierz PDF») | ✅ 10-10: mobile.de, AutoScout24 (DE и FR), Kleinanzeigen, ParuVendu; остальные порталы в списке серые «wkrótce» |
+| «Z ogłoszenia dealera» | ссылка объявления → «Rozpoznaj» → карточка авто → «Przygotuj ofertę PDF» → `oferta.html` (проверка, правки, «Pobierz PDF») | ✅ 10-10, все порталы стр. 1 |
 | «Z raportu aukcji» | отчёт аукциона → скрипты вытягивают данные (отчёты разной формы) → оффер | ⏳ в отдельном чате; кнопка видна, неактивна |
 
+**Порталы** (`src/offer-ad.js`, `read(source, url)`, проверено 10-10 на живых объявлениях):
+
+| Портал | Как читается | Особенности |
+|---|---|---|
+| mobile.de | импортер на Маке (`/mobilede/import`, `ad`, `/mobilede/dealer`) | тариф транспорта/осмотра импортера (`ad.tariff`); шкала цен mobile.de |
+| AutoScout24 DE / FR | `__NEXT_DATA__` через прокси | медиана AutoScout24 |
+| Kleinanzeigen, ParuVendu | страница через прокси | см. §3а |
+| Marktplaats, 2dehands / 2ememain | `window.__CONFIG__.listing` через прокси | VAT на странице нет — поиск по номеру объявления с фильтром «BTW verrekenbaar» (13149), иначе строка «BTW/Marge» в описании (`vat.basis`); число авто дилера — поиск по `sellerIds`; месяц регистрации — «Datum registratie Nederland» (не для импортных); см³ — из описания дилера, если рядом с литрами |
+| otomoto | `__NEXT_DATA__` `advert` через прокси | цена в **PLN**; VAT к вычету только «Możliwość odliczenia VAT»; `listedAt` = `originalCreatedAt`; дата 1-й регистрации и VIN зашифрованы (reCAPTCHA не обходим) — год или дата из описания; фото `;s=1200x0` |
+| Blocket | серверная страница (платформа Vend): ld+json + `<dt>/<dd>` | цена в **SEK**, «exkl. moms» = VAT 25 % к вычету; пробег в mil × 10; литры → см³ (≈); `listedAt` нет; «5+ år på Blocket» → нижняя граница |
+| av.by | `api.av.by/offers/<id>` напрямую | цена в EUR от av.by (+ `priceUsd`); фото (avcdn, AVIF) — только через наш Worker; расчёта «под ключ» нет (решение 10-02) |
+
+- **Портал — по адресу ссылки** (`sourceOf` в `offer-start.js`), значок портала рядом с заголовком;
+  под полем — список поддерживаемых порталов. Ручного выбора нет.
+- **Валюта** объявления — `ad.currency` (EUR; SEK — Blocket; PLN — otomoto); `car.currency` в черновике.
+  Оценка «Zakup bezpośredni» пересчитывает SEK/PLN в EUR по курсам калькулятора. **otomoto и av.by —
+  без оценки**: плашка показывает «Cena w ogłoszeniu» и «Koszt na gotowo policzymy indywidualnie»
+  (менеджер вставляет расчёт через «Kalkulacja»).
+- **Опции** — `offer-equipment.js`: `MORE_NAMES` — названия на русском (av.by), польском (otomoto),
+  нидерландском/французском (Marktplaats), шведском (Blocket) к тем же сильным опциям; словарь
+  `DICTIONARY` — полные списки этих порталов по-польски. Исправлено попутно: «Kierownica skórzana»
+  и «Kunstleder / PU-läder / ekoskóra» — не кожаный салон; «Kamera panoramiczna 360» — не панорамная
+  крыша; «ACC klimatanläggning» (Швеция) — климат, а не ACC; «360 kr i årsskatt» — не камера 360°;
+  передняя камера — не камера заднего вида.
+- **Красные флаги** (`offer-verdict.js`) — добавлены слова на русском, нидерландском, шведском
+  («после ДТП», «битый», «на запчасти», «без документов», «не на ходу», «такси», «niet rijdbaar»,
+  «utan papper», «reservdelar»…); отрицание по-русски («не битый», «без ДТП») — `DENIAL_RU`
+  (`\b` и `\w` в JS не видят кириллицу).
+- **Фото otomoto:** их сервер то отдаёт фото чужому сайту, то нет («Invalid CORS request», 10-10).
+  На экране фото показывается без CORS; для PDF `photoData()` читает байты напрямую, а при отказе —
+  через наш Worker. В `server/cloudflare-proxy/worker.js` добавлен хост `olxcdn.com` — **нужна
+  выкладка Worker** (без неё фото otomoto в PDF только когда их сервер отвечает).
+
+**Язык PL / RU** (`offer-start.js` → `offer.lang`; `src/offer-ru.js`):
+- Переключатель как в «Wyszukiwanie i analiza» (запоминается: `localStorage` `autogood.offer.lang.v1`),
+  меняет язык страницы, навигации и **оффера**: оффер создаётся на выбранном языке; в панели
+  `oferta.html` — «Język oferty» (PL / RU) для готового оффера.
+- Тексты листов — в `offer.js` парами `L(pl, ru)`; значения чтения (топливо, коробка, цвет, салон…)
+  и опции — через `offer-ru.js` (`value`, `option`); страны, русское множественное число; строки
+  калькулятора — калькулятор открывается с `lang=ru` (у него свои русские подписи), польская вставка
+  переводится словарём `calc`.
+- Правки текстов хранятся **по языку** (`edits["ru:<поле>"]`): переключение языка их не теряет.
+- Вердикт — `VERDICT.assess({…, lang: "ru"})`: те же строки (те же `id`, скрытие общее), русский текст.
+- Обращение по-русски — «Вы» (без Pan / Pani); процесс «Что дальше: от разговора до ключей» — свой
+  русский текст; название PDF с « RU».
+- Шрифт: в Public Sans нет кириллицы — русские буквы рисует **Inter** (`--of-font`), в PDF
+  встраиваются кириллические начертания (`pageFontCss`).
+
 **Как работает способ 1** (`src/offer-start.js`):
-- Портал определяется по адресу ссылки (список — как на стр. 1 «Wyszukiwanie i analiza»).
-- Чтение — тот же `offer-ad.js`, что у оффера из Monitoring: mobile.de через импортер на Маке,
-  остальные через прокси (`market-proxy-queue.js`). Для mobile.de импортер теперь отдаёт в `ad`
-  ещё цену при старом формате и `tariff` (транспорт и осмотр по месту продавца).
-- **Адрес импортера ищет сама** (адрес quick-туннеля в код не пишется, PROJECT-MOBILE §4.3):
+- Чтение — тот же `offer-ad.js`, что у оффера из Monitoring.
+- **Адрес импортера mobile.de ищет сама** (адрес quick-туннеля в код не пишется, PROJECT-MOBILE §4.3):
   `?mobiledeApi=` этой страницы (запоминается в `localStorage` `autogood.offer.importer.v1`) →
   запомненный → адреса последних офферов → `DEFAULT_MOBILEDE_API_URL` из `src/mobile.js`;
   берётся первый, который отвечает (JSON на запрос без ссылки).
-- Марка и модель — из названия объявления по справочнику mobile.de
+- Марка и модель — от портала (`ad.make` / `ad.model`), иначе из названия по справочнику mobile.de
   (`mobile-model-catalog.generated.js`, самое длинное совпадение; «VW» → Volkswagen и т. п.).
-- Черновик: `origin: "link"`, `adKey` как в Monitoring (`mobile:<id>`, `autoscout:<uuid>`),
+- Черновик: `origin: "link"`, `lang`, `adKey` как в Monitoring (`mobile:<id>`, `autoscout:<uuid>`),
   `car` в форме записи Monitoring, `ad` уже прочитан (страница оффера не читает его второй раз),
-  `market: null`, `estimate` — «Zakup bezpośredni» по курсу калькулятора (Walutomat + 0,02)
-  с тарифом импортера или средним; точные строки — панель «Kalkulacja».
+  `market: null`.
 - На `oferta.html` у такого оффера «← Oferta» ведёт обратно, в панели — «z linku ogłoszenia».
-- Внизу страницы — «Ostatnie oferty» (12 последних из этого браузера, и из Monitoring тоже).
+- Внизу страницы — «Ostatnie oferty» (12 последних из этого браузера, и из Monitoring тоже; язык).
 
 **Рынок без Monitoring.** Блок «Cena na tle rynku» строится из того, что даёт сам портал:
 mobile.de — шкала оценки цены (6 порогов → 5 полос «bardzo dobra … wysoka cena», точка авто,
 «uczciwa cena» справа), AutoScout24 — медиана портала; плюс строки Carvago (активные похожие,
 история цены). Если нет ничего — блока нет, «Ocena AUTOGOOD» занимает строку целиком (Premium).
-Полный анализ рынка (медиана, похожие, Польша) — по-прежнему из Monitoring; запуск поиска рынка
-прямо из этой страницы — следующий шаг.
-
+Поиск рынка из этой программы не делается (владелец 10-10: здесь только оффер).

@@ -27,6 +27,8 @@ const ALLOWED_HOSTS = [
   "kleinanzeigen.de",
   "paruvendu.fr",
   "av.by",
+  // otomoto's photo server (B71 offer PDF: it refuses other sites now and then).
+  "olxcdn.com",
   "willhaben.at",
   "mobile.de",
   "ultimatespecs.com",
