@@ -206,7 +206,7 @@ def match_gens(ac_gen, our_gens):
             and not (ac_gen["to"] and ac_gen["to"] <= SINCE and g["from"] - ac_gen["from"] > 5)]
 
 
-CODE = re.compile(r"^([IVX]+|[A-Z]{0,3}\d[\w/-]*|T\d)$")
+CODE = re.compile(r"^([IVX]+|[A-Z]{0,3}\d[\w/-]*|T\d|[A-Z])$")  # Opel: "Astra K"
 
 
 def group_body_level(generations):
@@ -348,11 +348,11 @@ def pick_group(groups, engine, body):
 
 
 def generation_code(label, ac_gen):
-    """Our code of an autocentrum generation: "II" -> "Arteon II", "F44" stays, a model page
+    """Our code of an autocentrum generation: "II" -> "Arteon II", "K" -> "Astra K", "F44" stays, a model page
     that lists bodies right away (group_body_level) -> the model name."""
     if ac_gen.get("body_level"):
         return label
-    return f"{label} {ac_gen['name']}" if re.fullmatch(r"[IVX]+", ac_gen["name"]) else ac_gen["name"]
+    return f"{label} {ac_gen['name']}" if re.fullmatch(r"[IVX]+|[A-Z]", ac_gen["name"]) else ac_gen["name"]
 
 
 def generation_rows(template, ac_gen, code, brand, label):

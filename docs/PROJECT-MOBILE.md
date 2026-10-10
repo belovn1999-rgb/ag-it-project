@@ -93,8 +93,9 @@ klienta».** Из найденного в Monitoring объявления кно
    (Rok по поколениям, реальные Pojemność/Moc/Wersja сверху, приглушение
    Typ/Skrzynia/Napęd). Идёт дозаполнение коробки со страниц версий; таблица
    сверена с autocentrum.pl и дополнена из него (`docs/MODEL-AUTOCENTRUM-CHECK.md`);
-   этап 6 вариант А ✅ — ещё 187 моделей 10 марок (всего 252, данные страницы по
-   маркам); дальше — правки владельца по мере работы, вариант Б (другие марки).
+   этап 6 вариант А ✅ — ещё 187 моделей 10 марок, вариант Б ✅ — 149 моделей Kia,
+   Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroën (всего 398 моделей 18 марок,
+   данные страницы по маркам); дальше — правки владельца, комплектации новых моделей.
 
 **Критерии приёмки ключевых шагов** (перенесены из среза 28.09, остаются в силе):
 - **B6:** воспроизвести сообщение о неверной подборке, проверить реальное
@@ -1391,7 +1392,17 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
    страниц двигателей нет вариантов (Sprinter, Crafter, Transit, Klasa G…) — привод
    «не указано», «Napęd» тогда не приглушается (как коробка). Комплектаций («Wersja»)
    у новых моделей нет. Пробелы источника: Hilux VIII — только кузова с 2020.
-   Дальше по решению владельца: вариант Б (следующие марки) или комплектации новых моделей.
+   **Вариант Б ✅ (решение владельца 10.10):** Kia, Hyundai, Opel, Seat, Cupra, Mazda,
+   Nissan, Citroën (без Dacia) — **149 моделей** в том же списке (всего 336 моделей
+   из autocentrum, 6230 двигателей, 6044 с вариантами коробки/привода); названия
+   каталога mobile.de: «cee'd / Ceed», «Crossland (X)», «Grandland (X)», «C-Elysée»,
+   «Grand C4 Picasso / SpaceTourer»; подмодели «cee'd Sportswagon», «KONA Elektro»,
+   «Zafira Tourer/Life», «Mokka X/-e», «Combo Life», «ë-C4» и др.; поколения Opel
+   одной буквой («Astra K») — `CODE` в `autocentrum.py`. Итог: таблица 20 351 версия,
+   на странице 398 моделей 18 марок (файлы 4–67 КБ, всего ≈ 500 КБ, индекс 4,6 КБ).
+   Без данных (нестандартная разметка autocentrum, сняты в 2011–2012): Mazda Tribute,
+   Nissan Sentra, Tiida. Дальше по решению владельца: комплектации новых моделей
+   или следующие марки (Dacia, Fiat, Honda, Lexus, Mini, Suzuki…).
 
 **Правила работы с ultimatespecs.com:**
 - `robots.txt`: **Crawl-delay: 30** — не чаще одной страницы в 30 с. Полная
@@ -1680,6 +1691,7 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-10 | Claude | **B61 этап 6, вариант Б — 149 моделей Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroën из autocentrum.pl.** `data/model-list-autocentrum.json` (+149), `build-model-specs.py` (типы кузова, вэны, 7 мест), `mobile-model-specs.js` (подмодели новых марок), `autocentrum.py` (поколения одной буквой у Opel: «Astra K»). Таблица 20 351 версия, на странице 398 моделей 18 марок; прежние 252 модели не изменились (сверено). Проверено в браузере: Sportage, i30, Astra, Formentor, CX-5, Qashqai, ë-C4, KONA Elektro, Zafira Tourer, cee'd Sportswagon | этот коммит |
 | 10-10 | Claude | **Стр. 3 Monitoring — кнопки разделов и цветные заголовки** (`RAIL_PAGES` в `mobile-page1.js`, `--ag-section-m-*`): авто (значок вместо ★), «Ustawienia monitoringu», новый заголовок «Wyniki monitoringu», «Mediana ceny w czasie», «Rynek w wybranym dniu» (значок календаря), «Historia cen» | этот коммит |
 | 10-10 | Claude | **Ссылка объявления без выбора портала** (`mobile.html`, `mobile.js`): список порталов у «Link ogłoszenia» убран; портал определяет вставленная ссылка (`linkPortalOf`), его логотип — плашкой рядом с заголовком (`data-mobile-link-source-badge`); под полем — какие ссылки принимаются (PL/RU, `linkPortalsHint`); ссылка не с наших порталов — «Nie rozpoznano portalu…» (раньше уходила в mobile.de), сообщение уходит, когда вставлена правильная ссылка; стили списка удалены. **Рамка кнопок разделов — «жидкое стекло»** (полупрозрачный размытый фон `backdrop-filter`, светлая кромка, блик сверху) | этот коммит |
 | 10-10 | Claude | **B71 «Oferta»:** ссылки со всех порталов стр. 1 (новые читатели Marktplaats/2dehands, otomoto, Blocket, av.by в `src/offer-ad.js`), портал по ссылке без выбора, PL / RU — оффер на выбранном языке; `server/cloudflare-proxy/worker.js`: хост `olxcdn.com` (фото otomoto для PDF) — **нужна выкладка Worker**; подробно `docs/OFFER-PAGE.md` §8 | этот коммит |

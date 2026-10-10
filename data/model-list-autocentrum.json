@@ -1,5 +1,5 @@
 {
- "note": "B61 stage 6 (variant A, owner 2026-10-09): the other models of the 10 pinned brands made since 2010, data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA).",
+ "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA).",
  "models": [
   {
    "brand": "Audi",
@@ -1500,6 +1500,1200 @@
    "mobile": "up!",
    "paths": [
     "volkswagen/up"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Carens",
+   "mobile": "Carens",
+   "paths": [
+    "kia/carens"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Carnival",
+   "mobile": "Carnival",
+   "paths": [
+    "kia/carnival",
+    "kia/sedona"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Ceed",
+   "mobile": "cee'd / Ceed",
+   "paths": [
+    "kia/ceed"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV2",
+   "mobile": "EV2",
+   "paths": [
+    "kia/ev2"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV3",
+   "mobile": "EV3",
+   "paths": [
+    "kia/ev3"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV4",
+   "mobile": "EV4",
+   "paths": [
+    "kia/ev4"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV5",
+   "mobile": "EV5",
+   "paths": [
+    "kia/ev5"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV6",
+   "mobile": "EV6",
+   "paths": [
+    "kia/ev6"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV9",
+   "mobile": "EV9",
+   "paths": [
+    "kia/ev9"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "K4",
+   "mobile": "K4",
+   "paths": [
+    "kia/k4"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Magentis",
+   "mobile": "Magentis",
+   "paths": [
+    "kia/magentis"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Niro",
+   "mobile": "Niro",
+   "paths": [
+    "kia/niro"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Opirus",
+   "mobile": "Opirus",
+   "paths": [
+    "kia/opirus"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Optima",
+   "mobile": "Optima",
+   "paths": [
+    "kia/optima"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Picanto",
+   "mobile": "Picanto",
+   "paths": [
+    "kia/picanto"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "ProCeed",
+   "mobile": "pro cee'd / ProCeed",
+   "paths": [
+    "kia/proceed"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "PV5",
+   "mobile": "PV5",
+   "paths": [
+    "kia/pv5"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Rio",
+   "mobile": "Rio",
+   "paths": [
+    "kia/rio"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Sorento",
+   "mobile": "Sorento",
+   "paths": [
+    "kia/sorento"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Soul",
+   "mobile": "Soul",
+   "paths": [
+    "kia/soul"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Sportage",
+   "mobile": "Sportage",
+   "paths": [
+    "kia/sportage"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Stinger",
+   "mobile": "Stinger",
+   "paths": [
+    "kia/stinger"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Stonic",
+   "mobile": "Stonic",
+   "paths": [
+    "kia/stonic"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Venga",
+   "mobile": "Venga",
+   "paths": [
+    "kia/venga"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "XCeed",
+   "mobile": "XCeed",
+   "paths": [
+    "kia/xceed"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Accent",
+   "mobile": "Accent",
+   "paths": [
+    "hyundai/accent"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Bayon",
+   "mobile": "BAYON",
+   "paths": [
+    "hyundai/bayon"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Elantra",
+   "mobile": "Elantra",
+   "paths": [
+    "hyundai/elantra"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Genesis",
+   "mobile": "Genesis",
+   "paths": [
+    "hyundai/genesis",
+    "hyundai/genesis-coupe"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Grand Santa Fe",
+   "mobile": "Grand Santa Fe",
+   "paths": [
+    "hyundai/grand-santa-fe"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Grandeur",
+   "mobile": "Grandeur",
+   "paths": [
+    "hyundai/grandeur"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "H-1",
+   "mobile": "H-1",
+   "paths": [
+    "hyundai/h1"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i10",
+   "mobile": "i10",
+   "paths": [
+    "hyundai/i10"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i20",
+   "mobile": "i20",
+   "paths": [
+    "hyundai/i20"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i30",
+   "mobile": "i30",
+   "paths": [
+    "hyundai/i30"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i40",
+   "mobile": "i40",
+   "paths": [
+    "hyundai/i40"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Inster",
+   "mobile": "INSTER",
+   "paths": [
+    "hyundai/inster"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq",
+   "mobile": "IONIQ",
+   "paths": [
+    "hyundai/ioniq"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 3",
+   "mobile": "IONIQ 3",
+   "paths": [
+    "hyundai/ioniq-3"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 5",
+   "mobile": "IONIQ 5",
+   "paths": [
+    "hyundai/ioniq-5"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 6",
+   "mobile": "IONIQ 6",
+   "paths": [
+    "hyundai/ioniq-6"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 9",
+   "mobile": "IONIQ 9",
+   "paths": [
+    "hyundai/ioniq-9"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "ix20",
+   "mobile": "ix20",
+   "paths": [
+    "hyundai/ix20"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "ix35",
+   "mobile": "ix35",
+   "paths": [
+    "hyundai/ix35"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Kona",
+   "mobile": "KONA",
+   "paths": [
+    "hyundai/kona"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Matrix",
+   "mobile": "Matrix",
+   "paths": [
+    "hyundai/matrix"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Santa Fe",
+   "mobile": "SANTA FE",
+   "paths": [
+    "hyundai/santa-fe"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Sonata",
+   "mobile": "SONATA",
+   "paths": [
+    "hyundai/sonata"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Tucson",
+   "mobile": "TUCSON",
+   "paths": [
+    "hyundai/tucson"
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Veloster",
+   "mobile": "Veloster",
+   "paths": [
+    "hyundai/veloster"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Adam",
+   "mobile": "Adam",
+   "paths": [
+    "opel/adam"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Agila",
+   "mobile": "Agila",
+   "paths": [
+    "opel/agila"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Antara",
+   "mobile": "Antara",
+   "paths": [
+    "opel/antara"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Astra",
+   "mobile": "Astra",
+   "paths": [
+    "opel/astra"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Cascada",
+   "mobile": "Cascada",
+   "paths": [
+    "opel/cascada"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Combo",
+   "mobile": "Combo",
+   "paths": [
+    "opel/combo"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Corsa",
+   "mobile": "Corsa",
+   "paths": [
+    "opel/corsa"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Crossland",
+   "mobile": "Crossland (X)",
+   "paths": [
+    "opel/crosslandcrossland-x"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Frontera",
+   "mobile": "Frontera",
+   "paths": [
+    "opel/frontera"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Grandland",
+   "mobile": "Grandland (X)",
+   "paths": [
+    "opel/grandlandgrandland-x"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Insignia",
+   "mobile": "Insignia",
+   "paths": [
+    "opel/insignia"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Meriva",
+   "mobile": "Meriva",
+   "paths": [
+    "opel/meriva"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Mokka",
+   "mobile": "Mokka",
+   "paths": [
+    "opel/mokka"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "mobile": "Movano",
+   "paths": [
+    "opel/movano"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Vivaro",
+   "mobile": "Vivaro",
+   "paths": [
+    "opel/vivaro"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Zafira",
+   "mobile": "Zafira",
+   "paths": [
+    "opel/zafira"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Alhambra",
+   "mobile": "Alhambra",
+   "paths": [
+    "seat/alhambra"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Altea",
+   "mobile": "Altea",
+   "paths": [
+    "seat/altea"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Arona",
+   "mobile": "Arona",
+   "paths": [
+    "seat/arona"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Ateca",
+   "mobile": "Ateca",
+   "paths": [
+    "seat/ateca"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Exeo",
+   "mobile": "Exeo",
+   "paths": [
+    "seat/exeo"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Ibiza",
+   "mobile": "Ibiza",
+   "paths": [
+    "seat/ibiza"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Leon",
+   "mobile": "Leon",
+   "paths": [
+    "seat/leon"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Mii",
+   "mobile": "Mii",
+   "paths": [
+    "seat/mii"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Tarraco",
+   "mobile": "Tarraco",
+   "paths": [
+    "seat/tarraco"
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Toledo",
+   "mobile": "Toledo",
+   "paths": [
+    "seat/toledo"
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Ateca",
+   "mobile": "Ateca",
+   "paths": [
+    "cupra/ateca"
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Born",
+   "mobile": "Born",
+   "paths": [
+    "cupra/born"
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Formentor",
+   "mobile": "Formentor",
+   "paths": [
+    "cupra/formentor"
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Leon",
+   "mobile": "Leon",
+   "paths": [
+    "cupra/leon"
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Raval",
+   "mobile": "Raval",
+   "paths": [
+    "cupra/raval"
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Tavascan",
+   "mobile": "Tavascan",
+   "paths": [
+    "cupra/tavascan"
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Terramar",
+   "mobile": "Terramar",
+   "paths": [
+    "cupra/terramar"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 2",
+   "mobile": "2",
+   "paths": [
+    "mazda/2"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 3",
+   "mobile": "3",
+   "paths": [
+    "mazda/3"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 5",
+   "mobile": "5",
+   "paths": [
+    "mazda/5"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 6",
+   "mobile": "6",
+   "paths": [
+    "mazda/6"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-3",
+   "mobile": "CX-3",
+   "paths": [
+    "mazda/cx-3"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-30",
+   "mobile": "CX-30",
+   "paths": [
+    "mazda/cx-30"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-5",
+   "mobile": "CX-5",
+   "paths": [
+    "mazda/cx-5"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-60",
+   "mobile": "CX-60",
+   "paths": [
+    "mazda/cx-60"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-7",
+   "mobile": "CX-7",
+   "paths": [
+    "mazda/cx-7"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-80",
+   "mobile": "CX-80",
+   "paths": [
+    "mazda/cx-80"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-9",
+   "mobile": "CX-9",
+   "paths": [
+    "mazda/cx-9"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "MPV",
+   "mobile": "MPV",
+   "paths": [
+    "mazda/mpv"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "MX-30",
+   "mobile": "MX-30",
+   "paths": [
+    "mazda/mx-30"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "MX-5",
+   "mobile": "MX-5",
+   "paths": [
+    "mazda/mx-5"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "Premacy",
+   "mobile": "Premacy",
+   "paths": [
+    "mazda/premacy"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "RX-8",
+   "mobile": "RX-8",
+   "paths": [
+    "mazda/rx-8"
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "Tribute",
+   "mobile": "Tribute",
+   "paths": [
+    "mazda/tribute"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "370Z",
+   "mobile": "370Z",
+   "paths": [
+    "nissan/370z"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Altima",
+   "mobile": "Altima",
+   "paths": [
+    "nissan/altima"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Ariya",
+   "mobile": "Ariya",
+   "paths": [
+    "nissan/ariya"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Evalia",
+   "mobile": "Evalia",
+   "paths": [
+    "nissan/evalia"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "GT-R",
+   "mobile": "GT-R",
+   "paths": [
+    "nissan/gt-r"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Interstar",
+   "mobile": "Interstar",
+   "paths": [
+    "nissan/interstar"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Juke",
+   "mobile": "Juke",
+   "paths": [
+    "nissan/juke"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Leaf",
+   "mobile": "Leaf",
+   "paths": [
+    "nissan/leaf"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Micra",
+   "mobile": "Micra",
+   "paths": [
+    "nissan/micra"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Murano",
+   "mobile": "Murano",
+   "paths": [
+    "nissan/murano"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Navara",
+   "mobile": "Navara",
+   "paths": [
+    "nissan/navara"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Note",
+   "mobile": "Note",
+   "paths": [
+    "nissan/note"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "NP 300",
+   "mobile": "NP 300",
+   "paths": [
+    "nissan/np300"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "NV200",
+   "mobile": "NV200",
+   "paths": [
+    "nissan/nv200"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Pathfinder",
+   "mobile": "Pathfinder",
+   "paths": [
+    "nissan/pathfinder"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Primastar",
+   "mobile": "Primastar",
+   "paths": [
+    "nissan/primastar"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Pulsar",
+   "mobile": "Pulsar",
+   "paths": [
+    "nissan/pulsar"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Qashqai",
+   "mobile": "Qashqai",
+   "paths": [
+    "nissan/qashqai"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Quest",
+   "mobile": "Quest",
+   "paths": [
+    "nissan/quest"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Sentra",
+   "mobile": "Sentra",
+   "paths": [
+    "nissan/sentra"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Skyline",
+   "mobile": "Skyline",
+   "paths": [
+    "nissan/skyline"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Tiida",
+   "mobile": "Tiida",
+   "paths": [
+    "nissan/tiida"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Titan",
+   "mobile": "Titan",
+   "paths": [
+    "nissan/titan"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Townstar",
+   "mobile": "Townstar",
+   "paths": [
+    "nissan/townstar"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "X-Trail",
+   "mobile": "X-Trail",
+   "paths": [
+    "nissan/x-trail"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "Berlingo",
+   "mobile": "Berlingo",
+   "paths": [
+    "citroen/berlingo"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C-Crosser",
+   "mobile": "C-Crosser",
+   "paths": [
+    "citroen/c-crosser"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C-Elysée",
+   "mobile": "C-Elysée",
+   "paths": [
+    "citroen/c-elysee"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C1",
+   "mobile": "C1",
+   "paths": [
+    "citroen/c1"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C3",
+   "mobile": "C3",
+   "paths": [
+    "citroen/c3"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C3 Aircross",
+   "mobile": "C3 Aircross",
+   "paths": [
+    "citroen/c3-aircross"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C3 Picasso",
+   "mobile": "C3 Picasso",
+   "paths": [
+    "citroen/c3-picasso"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4",
+   "mobile": "C4",
+   "paths": [
+    "citroen/c4"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 Aircross",
+   "mobile": "C4 Aircross",
+   "paths": [
+    "citroen/c4-aircross"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 Cactus",
+   "mobile": "C4 Cactus",
+   "paths": [
+    "citroen/c4-cactus"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 Picasso",
+   "mobile": "C4 Picasso",
+   "paths": [
+    "citroen/c4-picasso"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 SpaceTourer",
+   "mobile": "C4 SpaceTourer",
+   "paths": [
+    "citroen/c4-spacetourer"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "Grand C4 Picasso",
+   "mobile": "Grand C4 Picasso / SpaceTourer",
+   "paths": [
+    "citroen/grand-c4-picasso"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 X",
+   "mobile": "C4 X",
+   "paths": [
+    "citroen/c4-x"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C5",
+   "mobile": "C5",
+   "paths": [
+    "citroen/c5"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C5 Aircross",
+   "mobile": "C5 Aircross",
+   "paths": [
+    "citroen/c5-aircross"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C5 X",
+   "mobile": "C5 X",
+   "paths": [
+    "citroen/c5-x"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C6",
+   "mobile": "C6",
+   "paths": [
+    "citroen/c6"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C8",
+   "mobile": "C8",
+   "paths": [
+    "citroen/c8"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumper",
+   "mobile": "Jumper",
+   "paths": [
+    "citroen/jumper"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumpy",
+   "mobile": "Jumpy",
+   "paths": [
+    "citroen/jumpy"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "Nemo",
+   "mobile": "Nemo",
+   "paths": [
+    "citroen/nemo"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "SpaceTourer",
+   "mobile": "SpaceTourer",
+   "paths": [
+    "citroen/spacetourer"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "Xsara Picasso",
+   "mobile": "Xsara Picasso",
+   "paths": [
+    "citroen/xsara-picasso"
    ]
   }
  ]

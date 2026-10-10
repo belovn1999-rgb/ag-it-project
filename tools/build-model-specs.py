@@ -142,17 +142,65 @@ DEFAULT_TYPE.update({
     ("Volkswagen", "Jetta"): "limousine", ("Volkswagen", "Phaeton"): "limousine", ("Volkswagen", "Scirocco"): "coupe",
     ("Volkswagen", "up!"): "hatchback",
 })
+# B61 stage 6, variant B (owner 2026-10-10): Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen.
+VAN_MODELS |= {
+    ("Kia", "Carens"), ("Kia", "Carnival"), ("Kia", "Venga"), ("Kia", "PV5"), ("Hyundai", "H-1"), ("Hyundai", "ix20"),
+    ("Hyundai", "Matrix"), ("Opel", "Combo"), ("Opel", "Meriva"), ("Opel", "Movano"), ("Opel", "Vivaro"), ("Opel", "Zafira"),
+    ("Seat", "Alhambra"), ("Seat", "Altea"), ("Mazda", "5"), ("Mazda", "MPV"), ("Mazda", "Premacy"), ("Nissan", "Evalia"),
+    ("Nissan", "Interstar"), ("Nissan", "NV200"), ("Nissan", "Primastar"), ("Nissan", "Quest"), ("Nissan", "Townstar"),
+    ("Citroen", "Berlingo"), ("Citroen", "C3 Picasso"), ("Citroen", "C4 Picasso"), ("Citroen", "C4 SpaceTourer"),
+    ("Citroen", "Grand C4 Picasso / SpaceTourer"), ("Citroen", "C8"), ("Citroen", "Jumper"), ("Citroen", "Jumpy"),
+    ("Citroen", "Nemo"), ("Citroen", "SpaceTourer"), ("Citroen", "Xsara Picasso"),
+}
+SUV_MODELS |= {
+    ("Kia", "EV2"), ("Kia", "EV3"), ("Kia", "EV5"), ("Kia", "EV9"), ("Kia", "Niro"), ("Kia", "Sorento"), ("Kia", "Sportage"),
+    ("Kia", "Stonic"), ("Kia", "XCeed"), ("Hyundai", "BAYON"), ("Hyundai", "Grand Santa Fe"), ("Hyundai", "ix35"), ("Hyundai", "KONA"),
+    ("Hyundai", "SANTA FE"), ("Hyundai", "TUCSON"), ("Hyundai", "IONIQ 5"), ("Hyundai", "IONIQ 9"), ("Hyundai", "INSTER"),
+    ("Opel", "Antara"), ("Opel", "Crossland (X)"), ("Opel", "Frontera"), ("Opel", "Grandland (X)"), ("Opel", "Mokka"),
+    ("Seat", "Arona"), ("Seat", "Ateca"), ("Seat", "Tarraco"), ("Cupra", "Ateca"), ("Cupra", "Formentor"), ("Cupra", "Terramar"),
+    ("Cupra", "Tavascan"), ("Mazda", "CX-3"), ("Mazda", "CX-30"), ("Mazda", "CX-5"), ("Mazda", "CX-60"), ("Mazda", "CX-7"),
+    ("Mazda", "CX-80"), ("Mazda", "CX-9"), ("Mazda", "MX-30"), ("Mazda", "Tribute"), ("Nissan", "Ariya"), ("Nissan", "Juke"),
+    ("Nissan", "Murano"), ("Nissan", "Pathfinder"), ("Nissan", "Qashqai"), ("Nissan", "X-Trail"), ("Citroen", "C-Crosser"),
+    ("Citroen", "C3 Aircross"), ("Citroen", "C4 Aircross"), ("Citroen", "C5 Aircross"),
+}
+PICKUP_MODELS |= {("Nissan", "Navara"), ("Nissan", "NP 300"), ("Nissan", "Titan")}
+DEFAULT_TYPE.update({
+    ("Kia", "cee'd / Ceed"): "hatchback", ("Kia", "pro cee'd / ProCeed"): "estate", ("Kia", "EV4"): "hatchback",
+    ("Kia", "EV6"): "suv", ("Kia", "K4"): "hatchback", ("Kia", "Magentis"): "limousine", ("Kia", "Opirus"): "limousine",
+    ("Kia", "Optima"): "limousine", ("Kia", "Picanto"): "hatchback", ("Kia", "Rio"): "hatchback", ("Kia", "Soul"): "hatchback",
+    ("Kia", "Stinger"): "limousine", ("Hyundai", "Accent"): "limousine", ("Hyundai", "Elantra"): "limousine",
+    ("Hyundai", "Genesis"): "limousine", ("Hyundai", "Grandeur"): "limousine", ("Hyundai", "i10"): "hatchback",
+    ("Hyundai", "i20"): "hatchback", ("Hyundai", "i30"): "hatchback", ("Hyundai", "i40"): "limousine",
+    ("Hyundai", "IONIQ"): "hatchback", ("Hyundai", "IONIQ 3"): "hatchback", ("Hyundai", "IONIQ 6"): "limousine",
+    ("Hyundai", "SONATA"): "limousine", ("Hyundai", "Veloster"): "hatchback", ("Opel", "Adam"): "hatchback",
+    ("Opel", "Agila"): "hatchback", ("Opel", "Astra"): "hatchback", ("Opel", "Cascada"): "cabrio", ("Opel", "Corsa"): "hatchback",
+    ("Opel", "Insignia"): "limousine", ("Seat", "Exeo"): "limousine", ("Seat", "Ibiza"): "hatchback", ("Seat", "Leon"): "hatchback",
+    ("Seat", "Mii"): "hatchback", ("Seat", "Toledo"): "limousine", ("Cupra", "Born"): "hatchback", ("Cupra", "Leon"): "hatchback",
+    ("Cupra", "Raval"): "hatchback", ("Mazda", "2"): "hatchback", ("Mazda", "3"): "hatchback", ("Mazda", "6"): "limousine",
+    ("Mazda", "MX-5"): "cabrio", ("Mazda", "RX-8"): "coupe", ("Nissan", "370Z"): "coupe", ("Nissan", "GT-R"): "coupe",
+    ("Nissan", "Altima"): "limousine", ("Nissan", "Leaf"): "hatchback", ("Nissan", "Micra"): "hatchback", ("Nissan", "Note"): "hatchback",
+    ("Nissan", "Pulsar"): "hatchback", ("Nissan", "Sentra"): "limousine", ("Nissan", "Skyline"): "limousine", ("Nissan", "Tiida"): "hatchback",
+    ("Citroen", "C-Elysée"): "limousine", ("Citroen", "C1"): "hatchback", ("Citroen", "C3"): "hatchback", ("Citroen", "C4"): "hatchback",
+    ("Citroen", "C4 Cactus"): "hatchback", ("Citroen", "C4 X"): "limousine", ("Citroen", "C5"): "limousine",
+    ("Citroen", "C5 X"): "limousine", ("Citroen", "C6"): "limousine",
+})
 # Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
 BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
             ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
             ("Peugeot", "Expert"), ("Peugeot", "Traveller"), ("Renault", "Master"), ("Toyota", "Proace (Verso)"), ("Toyota", "Hiace"),
-            ("Volkswagen", "Crafter"), ("Volkswagen", "ID. Buzz")}
+            ("Volkswagen", "Crafter"), ("Volkswagen", "ID. Buzz"), ("Hyundai", "H-1"), ("Opel", "Movano"), ("Opel", "Vivaro"),
+            ("Nissan", "Interstar"), ("Nissan", "Primastar"), ("Citroen", "Jumper"), ("Citroen", "Jumpy"), ("Citroen", "SpaceTourer"),
+            ("Kia", "PV5"), ("Kia", "Carnival")}
 # Hatchbacks sold with 5 doors only (the rest: 3 or 5 unless the name says).
 FIVE_DOOR_HATCHES = {("Volkswagen", "Golf"), ("Volkswagen", "Polo"), ("Ford", "Focus"), ("Toyota", "Auris"), ("Volvo", "V40"),
                      ("Renault", "Megane"), ("Skoda", "Fabia"), ("Peugeot", "308"), ("BMW", "1")}
 SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "grand scenic", "touran", "allspace", "gle",
                "galaxy", "sharan", "espace", "x7", "gls", "land cruiser", "highlander", "previa", "sienna", "sequoia", "tayron",
-               "rifter", "tourneo connect", "caddy", "kangoo", "ex90", "eqb", "glb", "verso")
+               "rifter", "tourneo connect", "caddy", "kangoo", "ex90", "eqb", "glb", "verso", "carens", "sorento", "santa fe",
+               "zafira", "alhambra", "tarraco", "cx-9", "cx-80", "x-trail", "pathfinder", "grand c4", "berlingo",
+               "evalia", "ev9", "ioniq 9")
+# Seven-seaters whose name is also some other car's generation code ("C8" = Audi A6/A7 C8).
+SEVEN_SEAT_MODELS = {("Citroen", "C8")}
 
 
 def body_of(brand, model, name):
@@ -226,7 +274,7 @@ def body_of(brand, model, name):
     # Seats: 5, coupes and cabrios 4, the 7-seaters up to 7, vans 2-9.
     if model in ("T6", "Trafic") or key in BIG_VANS:
         seats = (2, 9)
-    elif any(word in n or word == model.lower() for word in SEVEN_SEATS):
+    elif key in SEVEN_SEAT_MODELS or any(word in n or word == model.lower() for word in SEVEN_SEATS):
         seats = (5, 7)
     elif types and set(types) <= {"coupe", "cabrio"}:
         seats = (2, 4)

@@ -92,6 +92,19 @@
     Volvo: {
       "V40 Cross Country": ["V40"], "V60 Cross Country": ["V60"], "S60 Cross Country": ["S60"], "V90 Cross Country": ["V90"],
     },
+    // Stage 6 variant B (owner 2026-10-10).
+    Kia: { "cee'd Sportswagon": ["cee'd / Ceed"], "Niro EV": ["Niro"] },
+    Hyundai: { "H-1 Starex": ["H-1"], "KONA Elektro": ["KONA"] },
+    Opel: {
+      "Astra Electric": ["Astra"], "Combo Life": ["Combo"], "Combo Electric": ["Combo"], "Insignia CT": ["Insignia"],
+      "Mokka X": ["Mokka"], "Mokka-e": ["Mokka"], "Zafira Tourer": ["Zafira"], "Zafira Life": ["Zafira"], "Zafira Electric": ["Zafira"],
+    },
+    Mazda: { "2 Hybrid": ["2"], "6e": ["6"] },
+    Nissan: { "e-NV200": ["NV200"], "Qashqai+2": ["Qashqai"] },
+    Citroen: {
+      "ë-Berlingo": ["Berlingo"], "ë-C3": ["C3"], "ë-C3 Aircross": ["C3 Aircross"], "ë-C4": ["C4"], "ë-C4 X": ["C4 X"],
+      "ë-Spacetourer": ["SpaceTourer"],
+    },
   };
   // Mercedes catalog models are "<class> <number>" (GLA 200, CLS 350): the class is the family.
   const MERCEDES_FAMILIES = ["CLA", "CLC", "CLE", "CLK", "CLS", "CL", "GLA", "GLB", "GLC", "GLE", "GLK", "GLS", "GL", "ML",
