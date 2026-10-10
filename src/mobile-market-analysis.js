@@ -7264,6 +7264,18 @@
   // for "local network access". While the service answers and today's run
   // did not break down, the page does not check on its own.
   const LOCAL_MONITORING_URL = "http://127.0.0.1:8789/monitoring";
+  // Claude's built-in browser cannot reach 127.0.0.1: there the service is
+  // asked through the mobile.de importer's tunnel, which passes on its three
+  // routes (owner 2026-10-10, audit p. 5, variant 1; server/mobilede-import.mjs).
+  const tunnelMonitoringUrl = () => {
+    try {
+      const importer = typeof readMobileDeApiUrl === "function" ? readMobileDeApiUrl() : "";
+      return /^https:\/\//.test(importer) ? `${importer.replace(/\/mobilede\/import\/?$/, "")}/monitoring` : "";
+    } catch {
+      return "";
+    }
+  };
+  let monitoringServiceUrl = LOCAL_MONITORING_URL;
   // {enabled, client, since}: a convenience of this browser, not user data.
   const LOCAL_MONITORING_KEY = "autogood.mobile.localMonitoring.v1";
   function localMonitoringState() {
@@ -7292,15 +7304,25 @@
     if (!localSyncRunning) localSyncRunning = (async () => {
       const was = localMonitoring.available;
       let health = null;
-      try {
-        const controller = new AbortController();
-        // A click on "connect" waits for Chrome's local-access question.
-        const timer = setTimeout(() => controller.abort(), patient ? 60000 : 3000);
-        const response = await fetch(`${LOCAL_MONITORING_URL}/health`, { cache: "no-store", signal: controller.signal });
-        clearTimeout(timer);
-        health = response.ok ? await response.json() : null;
-      } catch {
-        health = null;
+      const ask = async (base, wait) => {
+        try {
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), wait);
+          const response = await fetch(`${base}/health`, { cache: "no-store", signal: controller.signal });
+          clearTimeout(timer);
+          return response.ok ? await response.json() : null;
+        } catch {
+          return null;
+        }
+      };
+      // A click on "connect" waits for Chrome's local-access question; then
+      // the importer's tunnel (the built-in browser of Claude).
+      for (const base of [LOCAL_MONITORING_URL, tunnelMonitoringUrl()].filter(Boolean)) {
+        health = await ask(base, base === LOCAL_MONITORING_URL && patient ? 60000 : 4000);
+        if (health?.ok) {
+          monitoringServiceUrl = base;
+          break;
+        }
       }
       Object.assign(localMonitoring, { available: Boolean(health?.ok), failedToday: Boolean(health?.failedToday) });
       let added = 0;
@@ -7311,12 +7333,12 @@
           state = localMonitoringState();
         }
         try {
-          await fetch(`${LOCAL_MONITORING_URL}/jobs`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ client: state.client, jobs: monitoringJobs().jobs }) });
+          await fetch(`${monitoringServiceUrl}/jobs`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ client: state.client, jobs: monitoringJobs().jobs }) });
           refreshMarketHistory();
           const ids = marketHistory.filter((entry) => entry.pinned).map((entry) => entry.id);
           let since = state.since || "";
           for (let round = 0; round < 10 && ids.length; round += 1) {
-            const response = await fetch(`${LOCAL_MONITORING_URL}/records?ids=${encodeURIComponent(ids.join(","))}&since=${encodeURIComponent(since)}`, { cache: "no-store" });
+            const response = await fetch(`${monitoringServiceUrl}/records?ids=${encodeURIComponent(ids.join(","))}&since=${encodeURIComponent(since)}`, { cache: "no-store" });
             const data = response.ok ? await response.json() : null;
             if (!data?.records?.length) break;
             added += (await importMonitoringRecords(data.records)).added;

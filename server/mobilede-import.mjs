@@ -1469,7 +1469,63 @@ async function loadListing(urlInfo) {
   }
 }
 
+// Monitoring through the tunnel (owner 2026-10-10, audit p. 5, variant 1):
+// the owner's browser (Claude's built-in one) cannot reach 127.0.0.1, only this
+// importer's tunnel. Three routes of the Mac's monitoring service are passed
+// on — its health, the cars with monitoring on and the records back — nothing
+// else (not its /app/ copy of the site). The service itself still refuses
+// anything that comes straight through a tunnel.
+const MONITORING_SERVICE = process.env.AUTOGOOD_MONITORING_SERVICE || "http://127.0.0.1:8789";
+const MONITORING_ROUTES = { "/monitoring/health": ["GET"], "/monitoring/jobs": ["PUT"], "/monitoring/records": ["GET"] };
+const MONITORING_BODY_LIMIT = 2 * 1024 * 1024;
+
+async function forwardMonitoring(request, response, requestUrl) {
+  const methods = MONITORING_ROUTES[requestUrl.pathname];
+  const origin = request.headers.origin || "";
+  if (request.method === "OPTIONS") {
+    response.writeHead(204, {
+      "access-control-allow-origin": origin || "*",
+      vary: "Origin",
+      "access-control-allow-methods": "GET, PUT, OPTIONS",
+      "access-control-allow-headers": "content-type",
+      "access-control-max-age": "600",
+    });
+    return response.end();
+  }
+  if (!methods.includes(request.method)) return sendJson(response, 405, { ok: false, error: "Method not allowed" });
+  let body;
+  if (request.method === "PUT") {
+    const chunks = [];
+    let size = 0;
+    for await (const chunk of request) {
+      size += chunk.length;
+      if (size > MONITORING_BODY_LIMIT) return sendJson(response, 413, { ok: false, error: "Too large" });
+      chunks.push(chunk);
+    }
+    body = Buffer.concat(chunks);
+  }
+  try {
+    const answer = await fetch(`${MONITORING_SERVICE}${requestUrl.pathname}${requestUrl.search}`, {
+      method: request.method,
+      headers: { ...(origin ? { origin } : {}), ...(body ? { "content-type": "application/json" } : {}) },
+      body,
+      signal: AbortSignal.timeout(20000),
+    });
+    const text = await answer.text();
+    response.writeHead(answer.status, {
+      "content-type": answer.headers.get("content-type") || "application/json; charset=utf-8",
+      "access-control-allow-origin": answer.headers.get("access-control-allow-origin") || "*",
+      vary: "Origin",
+    });
+    return response.end(text);
+  } catch (error) {
+    return sendJson(response, 502, { ok: false, error: "Monitoring service unreachable", detail: error.message });
+  }
+}
+
 export async function handleMobiledeImport(request, response) {
+  const monitoringPath = new URL(request.url, "http://127.0.0.1").pathname;
+  if (MONITORING_ROUTES[monitoringPath]) return forwardMonitoring(request, response, new URL(request.url, "http://127.0.0.1"));
   if (request.method === "OPTIONS") return sendJson(response, 204, {});
 
   const requestUrl = new URL(request.url, `http://${request.headers.host}`);
