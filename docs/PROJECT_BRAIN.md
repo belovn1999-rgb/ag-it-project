@@ -72,6 +72,7 @@
 
 ## 8. Журнал
 
+- 2026-10-10 — mobile.html, стр. 3 Monitoring, волна 2 аудита: сверху фраза и 5 чисел (новые, исчезли, подходящие, медиана na gotowo, do negocjacji), вкладки «Lista aut / Historia cen / Rynek w wybranym dniu», в списке «Do mediany» и кнопки в строке; пробелы в тысячах во всех числах (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring, аудит п. 6: машины другой версии или plug-in (по названию объявления) с Marktplaats, 2dehands, Kleinanzeigen, ParuVendu не входят в цифры, видны в «Dodatkowe» с причиной (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring, аудит п. 5: служба Mac (9:30) получает машины из встроенного браузера Claude через туннель импортера mobile.de (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring, аудит пп. 7 и 19: посередине цены по странам (самая дешёвая и медиана na gotowo, изменение ко вчера), в истории и датах — одна проверка в день (Claude).
