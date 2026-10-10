@@ -215,10 +215,34 @@
     return L("Tylko VAT marża (bez odliczenia VAT)", "Только VAT marża (без вычета VAT)");
   }
 
+  // How the car is bought (owner 2026-10-10, chosen when the offer is made):
+  // straight from the dealer, or through AUTOGOOD on a VAT 23% invoice (the
+  // car net) or on a VAT margin invoice (the car gross). It picks the cost
+  // lines, the calculator's tab and steps 7 and 9 of the process.
+  const METHODS = {
+    direct: { tab: 0, label: "Zakup bezpośredni", labelRu: "Прямая покупка" },
+    vat: { tab: 3, label: "Przez AUTOGOOD · faktura VAT 23%", labelRu: "Через AUTOGOOD · счёт-фактура VAT 23%" },
+    margin: { tab: 4, label: "Przez AUTOGOOD · faktura VAT marża", labelRu: "Через AUTOGOOD · счёт-фактура VAT marża" },
+  };
+  const offerMethod = () => (METHODS[offer?.method] ? offer.method : "direct");
+  const methodLabel = (key = offerMethod()) => L(METHODS[key].label, METHODS[key].labelRu);
+  // The car's net price in EUR (VAT 23% way): the draft's, else the ad's.
+  function netEur() {
+    const estimate = offer.estimate || {};
+    if (estimate.netEur > 0) return estimate.netEur;
+    const net = Number(offer.car?.netPrice) || Number(offer.ad?.vat?.net) || 0;
+    const currency = offer.ad?.currency || offer.car?.currency || "EUR";
+    if (!net || !estimate.rate) return currency === "EUR" ? net : 0;
+    const rates = TURNKEY?.currentRates?.() || {};
+    return currency === "EUR" ? net : currency === "SEK" && rates.sek ? (net * rates.sek) / estimate.rate : currency === "PLN" ? net / estimate.rate : 0;
+  }
+
   // The cost lines: the calculator's (wave 3) or the estimate made with the draft.
   function costs() {
     const calc = offer.calc;
-    if (calc?.rows?.length) {
+    const method = offerMethod();
+    // A calculation inserted for another way of buying is set aside.
+    if (calc?.rows?.length && (calc.method || "direct") === method) {
       // Inserted in the other language: the calculator's own words (offer-ru.js)
       // for Polish lines in a Russian offer; a Russian calculation stays as is.
       const words = ru() && calc.lang !== "ru" ? RU.calc : (text) => text;
@@ -233,6 +257,7 @@
     }
     const estimate = offer.estimate;
     if (!estimate) return null;
+    if (method !== "direct") return estimateThroughAutogood(estimate, method);
     const engineLabel = L(["elektryczny / plug-in do 2,0 l", "hybryda / plug-in powyżej 2,0 l", "hybryda do 2,0 l", "silnik do 2,0 l", "silnik powyżej 2,0 l"], ["электро / plug-in до 2,0 л", "гибрид / plug-in свыше 2,0 л", "гибрид до 2,0 л", "двигатель до 2,0 л", "двигатель свыше 2,0 л"])[estimate.engine?.index ?? 3];
     const rate = Number(estimate.rate || 0).toFixed(2).replace(".", ",");
     const parts = estimate.parts || {};
@@ -245,7 +270,68 @@
       { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 1% ceny auta, netto + VAT", "1 829,27 zł + 1% цены авто, нетто + VAT"), value: parts.commission },
       { label: L("Tłumaczenia i przegląd techniczny", "Переводы и техосмотр"), sub: "250 zł + 150 zł", value: parts.fees },
     ];
-    return { method: L("Zakup bezpośredni", "Прямая покупка"), rows, total: estimate.total, note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rate} zł z dnia oferty.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rate} zł на дату предложения.`), exact: false };
+    return { method: methodLabel("direct"), rows, total: estimate.total, note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rate} zł z dnia oferty.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rate} zł на дату предложения.`), exact: false };
+  }
+
+  // Through AUTOGOOD, as the calculator counts it (src/main.jsx calculate(),
+  // tab 3 "Dealerzy VAT 23%" and tab 4 "Dealerzy VAT Marża", not financed):
+  // VAT 23% — every line net, VAT 23% on the sum; margin — the car gross,
+  // the other lines with VAT. Fee: 1 829,27 zł + 2% (of the car with VAT on
+  // the VAT way). The calculator's own lines replace these when inserted.
+  function estimateThroughAutogood(estimate, method) {
+    const rate = Number(estimate.rate) || 4.4;
+    const rateText = rate.toFixed(2).replace(".", ",");
+    const exciseRate = estimate.engine?.rate ?? 0.031;
+    const exciseText = String(Math.round(exciseRate * 10000) / 100).replace(".", ",");
+    const transport = Number(estimate.transportNetto) || 0;
+    const inspection = Number(estimate.inspectionNetto) || 0;
+    const FIX = 1829.27;
+    const TO = 150;
+    const round = (value) => Math.round(value);
+    if (method === "vat") {
+      const net = netEur();
+      if (!(net > 0)) return null;
+      const car = net * rate;
+      const excise = exciseRate * car;
+      const fee = FIX + 0.02 * car * 1.23;
+      const base = car + inspection + transport + excise + fee + TO;
+      const vat = base * 0.23;
+      return {
+        method: methodLabel("vat"),
+        rows: [
+          { label: L("Cena auta netto", "Цена авто нетто"), sub: L(`${money(net, "EUR")} netto × ${rateText} zł`, `${money(net, "EUR")} нетто × ${rateText} zł`), value: round(car) },
+          { label: L("Transport do Polski", "Транспорт в Польшу"), sub: L("laweta, ubezpieczony · netto", "автовоз, со страховкой · нетто"), value: round(transport) },
+          { label: L("Oględziny przed zakupem", "Осмотр перед покупкой"), sub: L("rzeczoznawca u sprzedawcy · netto", "эксперт у продавца · нетто"), value: round(inspection) },
+          { label: L(`Akcyza ${exciseText}%`, `Акциз ${exciseText}%`), sub: "", value: round(excise) },
+          { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 2% ceny auta z VAT · netto", "1 829,27 zł + 2% цены авто с VAT · нетто"), value: round(fee) },
+          { label: L("Przegląd techniczny", "Техосмотр"), sub: L("netto", "нетто"), value: TO },
+          { label: "VAT 23%", sub: L(`23% × ${money(base, "PLN")}`, `23% × ${money(base, "PLN")}`), value: round(vat) },
+        ],
+        total: Math.round((base + vat) / 50) * 50,
+        note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rateText} zł z dnia oferty. Faktura VAT 23% od AUTOGOOD.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rateText} zł на дату предложения. Счёт-фактура VAT 23% от AUTOGOOD.`),
+        exact: false,
+      };
+    }
+    const gross = Number(estimate.carBruttoEur) || 0;
+    if (!(gross > 0)) return null;
+    const car = gross * rate;
+    const excise = exciseRate * car;
+    const fee = FIX + 0.02 * car;
+    const total = car + (inspection + transport + excise + fee + TO) * 1.23;
+    return {
+      method: methodLabel("margin"),
+      rows: [
+        { label: L("Cena auta", "Цена авто"), sub: L(`${money(gross, "EUR")} brutto × ${rateText} zł`, `${money(gross, "EUR")} брутто × ${rateText} zł`), value: round(car) },
+        { label: L("Transport do Polski", "Транспорт в Польшу"), sub: L("laweta, ubezpieczony · z VAT", "автовоз, со страховкой · с VAT"), value: round(transport * 1.23) },
+        { label: L("Oględziny przed zakupem", "Осмотр перед покупкой"), sub: L("rzeczoznawca u sprzedawcy · z VAT", "эксперт у продавца · с VAT"), value: round(inspection * 1.23) },
+        { label: L(`Akcyza ${exciseText}%`, `Акциз ${exciseText}%`), sub: L("z VAT", "с VAT"), value: round(excise * 1.23) },
+        { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 2% ceny auta, netto + VAT", "1 829,27 zł + 2% цены авто, нетто + VAT"), value: round(fee * 1.23) },
+        { label: L("Przegląd techniczny", "Техосмотр"), sub: L("z VAT", "с VAT"), value: round(TO * 1.23) },
+      ],
+      total: Math.round(total / 50) * 50,
+      note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rateText} zł z dnia oferty. Faktura VAT marża od AUTOGOOD.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rateText} zł на дату предложения. Счёт-фактура VAT marża от AUTOGOOD.`),
+      exact: false,
+    };
   }
 
   function marketView(view) {
@@ -489,7 +575,8 @@
               </div>
               ${costView ? `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}*</p>
-                <p class="ofPrice">${esc(money(costView.total, "PLN"))} <span class="ofPriceAd">(${esc(money(view.price, view.currency))} ${L("brutto", "брутто")})</span></p>
+                <p class="ofPrice">${esc(money(costView.total, "PLN"))} <span class="ofPriceAd">(${offerMethod() === "vat" && netEur() > 0 ? `${esc(money(netEur(), "EUR"))} ${L("netto", "нетто")}` : `${esc(money(view.price, view.currency))} ${L("brutto", "брутто")}`})</span></p>
+                <p class="ofMethodLine">${esc(methodLabel())}</p>
                 ${field("buyAs", buyAsText(view), "p", "ofBuyAs")}
                 ${isHidden("costs") ? field("priceAsk", L("Dokładną kalkulację przygotuje Pana opiekun - prosimy o kontakt.", "Чтобы получить точный расчёт, свяжитесь с менеджером."), "p", "ofPriceAsk") : ""}
                 ${field("priceFoot", L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, другие расходы."), "p", "ofPriceFoot")}
@@ -596,42 +683,70 @@
     return `<ul class="ofMoves">${moves.slice(-4).map((change) => `<li class="${change.share < 0 ? "isDown" : "isUp"}"><span aria-hidden="true">${change.share < 0 ? "↓" : "↑"}</span>${esc(dateText(change.at))} <b>${change.share < 0 ? "−" : "+"}${(Math.abs(change.share) * 100).toFixed(1).replace(".", ",")}%</b></li>`).join("")}</ul>`;
   }
 
-  // ---- Sheet 2: what happens next (owner 2026-10-06) ------------------------
-  // From the call to the keys, step by step, so the client sees at once what
-  // comes after what, when the first commitment starts and when he pays. The
-  // steps follow the offer text in Notion ("Jak wygląda proces") and
-  // Процесс.md; three layouts for the owner to choose ("Strona 2" in the panel).
-  // Russian (owner 2026-10-10): "Вы" for every client, no Pan / Pani forms.
+  // ---- Sheet 2: what happens next (owner 2026-10-06, steps 2026-10-10) -----
+  // From the first call to the keys, step by step, so the client sees at once
+  // what comes after what, when the work starts and when he pays. The owner's
+  // ten steps (2026-10-10); steps 7 and 9 depend on how the car is bought.
+  // Colour: one per group of steps, from green to deep navy (a gradient over
+  // the whole way); headings only where the work, the purchase and the
+  // delivery begin.
+  const PROCESS_GROUPS = ["#3a9d5d", "#23806b", "#1d6585", "#1a4d7a", "#13365c"];
   const PROCESS_STAGES = {
-    free: { label: "Bez zobowiązań", note: "nic {Pan} {v:nie płaci|nie płacą}", labelRu: "Без обязательств", noteRu: "Вы ничего не платите" },
-    deposit: { label: "Pierwsze zobowiązanie", note: "zaliczka zwrotna", labelRu: "Первое обязательство", noteRu: "возвратный аванс" },
-    purchase: { label: "Zakup", note: "płatność za auto", labelRu: "Покупка", noteRu: "оплата за авто" },
-    delivery: { label: "Dostawa i odbiór", note: "rozliczenie końcowe", labelRu: "Доставка и получение", noteRu: "окончательный расчёт" },
+    2: { label: "Rozpoczęcie prac", labelRu: "Начало работ" },
+    5: { label: "Zakup", labelRu: "Покупка" },
+    7: { label: "Dostawa i odbiór", labelRu: "Доставка и получение" },
   };
-  const PROCESS_STEPS = [
-    { stage: "free", title: "Rozmowa", text: "Omawiamy ofertę i ustalamy sposób zakupu (faktura VAT, marża lub bezpośrednio), finansowanie, termin i pytania do sprzedawcy.",
-      titleRu: "Разговор", textRu: "Обсуждаем предложение и способ покупки (счёт-фактура VAT, маржа или напрямую), финансирование, сроки и вопросы к продавцу." },
-    { stage: "free", title: "Rezerwacja auta", text: "Dzwonimy do dealera: dostępność, dodatkowe zdjęcia, VIN i historia serwisowa. Rezerwujemy auto, jeśli dealer na to pozwala.",
-      titleRu: "Резервация авто", textRu: "Звоним дилеру: наличие, дополнительные фото, VIN и сервисная история. Резервируем авто, если дилер это позволяет." },
-    { stage: "deposit", title: "Umowa i zaliczka", text: "Podpisujemy umowę zdalnie. {Pan} {v:wpłaca|wpłacają} zaliczkę 2000-4000 zł - zwracamy ją w całości, jeśli {v:zrezygnuje|zrezygnują} {Pan} przed zakupem.", mark: { kind: "pay", label: "Płatność 1 · zaliczka zwrotna", labelRu: "Платёж 1 · возвратный аванс" },
-      titleRu: "Договор и аванс", textRu: "Подписываем договор дистанционно. Вы вносите аванс 2000-4000 zł - возвращаем его полностью, если Вы откажетесь до покупки." },
-    { stage: "deposit", title: "Oględziny", text: "Nasz specjalista sprawdza auto u sprzedawcy: lakier, diagnostyka, jazda próbna, zdjęcia i film. {Pan} {v:dostaje|dostają} raport z rekomendacją.", mark: { kind: "decision", label: "{Pana} decyzja: kupujemy?", labelRu: "Ваше решение: покупаем?" },
-      titleRu: "Осмотр", textRu: "Наш специалист проверяет авто у продавца: ЛКП, диагностика, тест-драйв, фото и видео. Вы получаете отчёт с рекомендацией." },
-    { stage: "purchase", title: "Negocjacje i umowa", text: "Negocjujemy cenę i warunki - 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę.",
-      titleRu: "Переговоры и договор", textRu: "Торгуемся о цене и условиях - 70% выторгованной скидки остаётся Вам. Проверяем договор и счёт." },
-    { stage: "purchase", title: "Płatność za auto", text: "{Pan} {v:zleca|zlecają} przelew za auto w ciągu 2 dni roboczych, z uwzględnieniem zaliczki.", mark: { kind: "pay", label: "Płatność 2 · cena auta", labelRu: "Платёж 2 · цена авто" },
-      titleRu: "Оплата за авто", textRu: "Вы делаете перевод за авто в течение 2 рабочих дней, с учётом аванса." },
-    { stage: "delivery", title: "Transport i kontrola", text: "Ubezpieczona laweta do Łomianek. Po rozładunku ponownie sprawdzamy stan auta z raportem z oględzin.",
-      titleRu: "Транспорт и проверка", textRu: "Застрахованный автовоз до Ломянок. После разгрузки повторно сверяем состояние авто с отчётом осмотра." },
-    { stage: "delivery", title: "Dokumenty i odbiór", text: "Akcyza, przegląd i tłumaczenia po naszej stronie. Rozliczenie końcowe i odbiór auta - {Panu} zostaje rejestracja i OC.", mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" },
-      titleRu: "Документы и получение", textRu: "Акциз, техосмотр и переводы - на нашей стороне. Окончательный расчёт и получение авто - Вам остаются регистрация и страховка OC." },
-  ];
-  const PROCESS_STYLES = [
-    ["timeline", "Oś czasu", "kroki z góry na dół, koszt i kontakt obok"],
-    ["road", "Droga", "8 kroków w dwóch rzędach, pod nimi płatności"],
-    ["stages", "Etapy", "cztery kolumny: od „bez zobowiązań” do odbioru"],
-  ];
-  const processStyle = () => (PROCESS_STYLES.some(([key]) => key === offer?.processStyle) ? offer.processStyle : "timeline");
+  const viaAutogood = () => offerMethod() !== "direct";
+  function processSteps() {
+    const company = store.company(offer.company);
+    const sample = /^https:\/\//.test(company.inspectionUrl || "") ? company.inspectionUrl : "";
+    return [
+      { group: 0, title: "Rozmowa", titleRu: "Разговор",
+        text: "Omawiamy ofertę auta i wszystkie szczegóły importu.", textRu: "Обсуждаем предложение авто и все подробности импорта." },
+      { group: 0, title: "Sprawdzenie informacji", titleRu: "Проверка информации",
+        text: "Dzwonimy do dealera: dostępność, ogólny stan, VIN i historia serwisowa, prosimy o dodatkowe zdjęcia.",
+        textRu: "Звоним дилеру: уточняем наличие, общее состояние, VIN и сервисную историю, запрашиваем дополнительные фото." },
+      { group: 1, title: "Umowa i depozyt", titleRu: "Договор и депозит",
+        text: "Podpisujemy umowę zdalnie lub w naszym biurze. {Pan} {v:wpłaca|wpłacają} depozyt 2000 zł na oględziny auta.",
+        textRu: "Подписываем договор дистанционно или в нашем офисе. Вы вносите депозит 2000 zł на осмотр авто.",
+        mark: { kind: "pay", label: "Płatność 1 · depozyt 2000 zł", labelRu: "Платёж 1 · депозит 2000 zł" } },
+      { group: 1, title: "Rezerwacja auta", titleRu: "Резервация авто",
+        text: "Uzgadniamy termin oględzin z naszym rzeczoznawcą. Jeśli dealer na to pozwala, rezerwujemy auto.",
+        textRu: "Согласовываем сроки осмотра с нашим осмотрщиком. Если дилер это позволяет, резервируем авто." },
+      { group: 1, title: "Oględziny", titleRu: "Осмотр",
+        text: "Nasz specjalista sprawdza auto na miejscu: lakier, diagnostyka, jazda próbna, nadwozie, wnętrze i elektronika. {Pan} {v:dostaje|dostają} pełny raport z rekomendacją.",
+        textRu: "Наш специалист проверяет авто на месте: ЛКП, диагностика, тест-драйв, кузов, салон, электроника. Вы получаете полный отчёт с рекомендацией.",
+        link: sample ? { url: sample, label: "Zobacz przykładowe oględziny", labelRu: "Посмотреть, как выглядит осмотр" } : null,
+        mark: { kind: "decision", label: "{Pana} decyzja: kupujemy?", labelRu: "Ваше решение: покупаем?" } },
+      { group: 2, title: "Negocjacje i umowa", titleRu: "Переговоры и договор",
+        text: "Negocjujemy cenę i warunki zakupu - 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę.",
+        textRu: "Торгуемся о цене и условиях покупки - 70% выторгованной скидки остаётся Вам. Проверяем договор и счёт." },
+      viaAutogood()
+        ? { group: 2, title: "Płatność za auto", titleRu: "Оплата за авто",
+          text: "{Pan} {v:przelewa|przelewają} za auto (w złotych lub euro) w ciągu 2 dni roboczych na podstawie faktury AUTOGOOD.",
+          textRu: "Вы делаете перевод за авто (в злотых или евро) в течение 2 рабочих дней по фактуре от AUTOGOOD.",
+          mark: { kind: "pay", label: "Płatność 2 · cena auta", labelRu: "Платёж 2 · цена авто" } }
+        : { group: 2, title: "Płatność za auto", titleRu: "Оплата за авто",
+          text: "{Pan} {v:przelewa|przelewają} za auto w euro bezpośrednio do dealera.",
+          textRu: "Вы делаете перевод за авто в евро напрямую дилеру.",
+          mark: { kind: "pay", label: "Płatność 2 · cena auta", labelRu: "Платёж 2 · цена авто" } },
+      { group: 3, title: "Transport i kontrola", titleRu: "Транспорт и проверка",
+        text: "Przywozimy auto lawetą na nasz plac w Łomiankach - w transporcie jest w pełni ubezpieczone. Po rozładunku ponownie porównujemy stan auta z raportem z oględzin.",
+        textRu: "Привозим авто автовозом на нашу площадку в Ломянках. Авто полностью застраховано во время перевозки. После разгрузки повторно сверяем состояние авто с отчётом осмотра." },
+      viaAutogood()
+        ? { group: 4, title: "Dokumenty i odbiór", titleRu: "Документы и получение",
+          text: "Robimy przegląd techniczny i akcyzę. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji - {Panu} zostaje rejestracja i OC.",
+          textRu: "Делаем ТО и акциз. Готовим окончательный расчёт авто к выдаче и высылаем пакет документов к регистрации. Вам остаются регистрация и страховка OC.",
+          mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" } }
+        : { group: 4, title: "Dokumenty i odbiór", titleRu: "Документы и получение",
+          text: "Robimy przegląd techniczny i tłumaczenia, pomagamy w akcyzie. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji - {Panu} zostaje rejestracja i OC.",
+          textRu: "Делаем ТО и переводы, помогаем в оформлении акциза. Готовим окончательный расчёт авто к выдаче и высылаем пакет документов к регистрации. Вам остаются регистрация и страховка OC.",
+          mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" } },
+      { group: 4, title: "Odbiór auta", titleRu: "Получение авто",
+        text: "Jeśli trzeba, zajmujemy się dodatkowymi pracami (serwis, polerowanie, czyszczenie) i dowozimy auto pod {Pana} adres. Ceny ustalamy osobno.",
+        textRu: "Если нужно, занимаемся всеми необходимыми доработками: сервис, полировка, чистка и т.д., и привозим авто на Ваш адрес. Цены оговариваем отдельно." },
+    ];
+  }
   // Pan / Pani / Państwo in the step texts.
   function addressed(text) {
     const form = offer.client?.salutation === "Pani" ? 1 : offer.client?.salutation === "Państwo" ? 2 : 0;
@@ -640,40 +755,23 @@
       .replace(/\{v:([^|}]*)\|([^}]*)\}/g, (_, singular, plural) => (form === 2 ? plural : singular))
       .replace(/\{Pan[au]?\}/g, (token) => words[token][form]);
   }
-  const stageNote = (stage) => L(addressed(PROCESS_STAGES[stage].note), PROCESS_STAGES[stage].noteRu);
-  const stageLabel = (stage) => L(PROCESS_STAGES[stage].label, PROCESS_STAGES[stage].labelRu);
 
   function markHtml(step, index) {
     if (!step.mark) return "";
     return `<span class="ofMark is${step.mark.kind === "pay" ? "Pay" : "Decision"}">${icon(step.mark.kind === "pay" ? "receipt" : "check")}${field(`processMark${index + 1}`, L(addressed(step.mark.label), step.mark.labelRu))}</span>`;
   }
   function stepBody(step, index) {
-    return `${field(`process${index + 1}Title`, L(step.title, step.titleRu), "b", "ofStepTitle")}${field(`process${index + 1}`, L(addressed(step.text), step.textRu), "p", "ofStepText")}`;
+    // The texts of steps 7 and 9 change with the way of buying: their edits too.
+    const key = (name) => ([6, 8].includes(index) ? `${name}:${viaAutogood() ? "ag" : "direct"}` : name);
+    return `${field(key(`process${index + 1}Title`), L(step.title, step.titleRu), "b", "ofStepTitle")}${field(key(`process${index + 1}`), L(addressed(step.text), step.textRu), "p", "ofStepText")}${step.link ? `<a class="ofStepLink" href="${esc(step.link.url)}" target="_blank" rel="noopener">${icon("link")}${esc(L(step.link.label, step.link.labelRu))}</a>` : ""}`;
   }
-
   function processTimeline() {
-    let lastStage = "";
-    return `<ol class="ofTimeline">${PROCESS_STEPS.map((step, index) => {
-      const head = step.stage !== lastStage ? `<li class="ofTimeStage is-${step.stage}"><span>${esc(stageLabel(step.stage))}</span><small>${esc(stageNote(step.stage))}</small></li>` : "";
-      lastStage = step.stage;
-      return `${head}<li class="ofTimeStep is-${step.stage}"><span class="ofTimeNo">${index + 1}</span><div>${stepBody(step, index)}${markHtml(step, index)}</div></li>`;
+    return `<ol class="ofTimeline">${processSteps().map((step, index) => {
+      const stage = PROCESS_STAGES[index];
+      const color = PROCESS_GROUPS[step.group];
+      const head = stage ? `<li class="ofTimeStage" style="--st:${color}"><span>${esc(L(stage.label, stage.labelRu))}</span></li>` : "";
+      return `${head}<li class="ofTimeStep" style="--st:${color}"><span class="ofTimeNo">${index + 1}</span><div>${stepBody(step, index)}${markHtml(step, index)}</div></li>`;
     }).join("")}</ol>`;
-  }
-  function processRoad() {
-    const cell = (step, index) => `<div class="ofRoadStep is-${step.stage}"><span class="ofTimeNo">${index + 1}</span>${stepBody(step, index)}</div>`;
-    const lane = PROCESS_STEPS.map((step, index) => `<div class="ofLaneCell">${markHtml(step, index)}</div>`);
-    return `
-      <div class="ofRoad">${PROCESS_STEPS.slice(0, 4).map(cell).join("")}</div>
-      <div class="ofLane"><span class="ofLaneLabel">${esc(L(addressed("{Pana} decyzje i płatności"), "Ваши решения и платежи"))}</span>${lane.slice(0, 4).join("")}</div>
-      <div class="ofRoad">${PROCESS_STEPS.slice(4).map((step, index) => cell(step, index + 4)).join("")}</div>
-      <div class="ofLane"><span class="ofLaneLabel"></span>${lane.slice(4).join("")}</div>`;
-  }
-  function processStages() {
-    return `<div class="ofStages">${Object.keys(PROCESS_STAGES).map((stage) => `
-      <div class="ofStageCol is-${stage}">
-        <p class="ofStageHead"><b>${esc(stageLabel(stage))}</b><small>${esc(stageNote(stage))}</small></p>
-        ${PROCESS_STEPS.map((step, index) => (step.stage === stage ? `<div class="ofStageStep"><span class="ofTimeNo">${index + 1}</span>${stepBody(step, index)}${markHtml(step, index)}</div>` : "")).join("")}
-      </div>`).join("")}</div>`;
   }
 
   function sheetTwo(view) {
@@ -684,7 +782,9 @@
     const manager = store.manager(offer.manager);
     const company = store.company(offer.company);
     const initials = manager.name ? String(manager.name).split(/\s+/).map((word) => word.charAt(0)).join("").slice(0, 2).toUpperCase() : "AG";
-    const style = processStyle();
+    // The full calculation is the manager's choice (owner 2026-10-10): without
+    // it the steps take the page's width and the rest goes under them.
+    const withCosts = Boolean(costView) && !isHidden("costs");
     const costsHtml = costView ? `
       <section class="ofCard ofCostsCard${blockClass("costs")}" data-block="costs">
         ${hideToggle("costs")}
@@ -701,12 +801,18 @@
     const negotiationHtml = negotiation ? `
       <section class="ofCard ofNegoCard${blockClass("negotiation")}" data-block="negotiation">
         ${hideToggle("negotiation")}
-        <p class="ofCardHead">${icon("percent")}${L("Potencjał negocjacji", "Потенциал торга")}</p>
+        <p class="ofCardHead">${icon("percent")}${L("Potencjał negocjacji", "Потенциал торга")}*</p>
         <p><span class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : `${negotiation.from}-${negotiation.to}%`}</span> <span class="ofSmall">${!negotiation.amountTo ? L("cena bez dużego pola do negocjacji", "цена без большого поля для торга")
           : negotiation.amountFrom ? L(`ok. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `ок. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} меньше`)
           : L(`do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `до ок. ${esc(money(negotiation.amountTo, negotiation.currency))} меньше`)}</span></p>
-        ${field("negotiationNote", L(`Obserwacja cen ogłoszeń, nie gwarancja rabatu. Negocjujemy w ${salutation.owner} imieniu.`, "Наблюдение за ценами объявлений, не гарантия скидки. Ведём переговоры от Вашего имени."), "p", "ofSmall")}
+        ${field("negotiationNote", L("*Wartości orientacyjne, ostateczna decyzja zawsze należy do sprzedawcy.", "*Ориентировочные значения, окончательное решение всегда за продавцом."), "p", "ofSmall")}
       </section>` : "";
+    // The manager, and why the firm can be trusted (owner 2026-10-10): the
+    // Google rating, the yard in Łomianki on the map, the hours.
+    const mapsUrl = /^https:\/\//.test(company.mapsUrl || "") ? company.mapsUrl : "";
+    const rating = company.googleRating && company.googleReviews
+      ? `<p class="ofTrust">${icon("star")}<b>${esc(company.googleRating)}</b> ${esc(L(`średnia ocena z ${company.googleReviews} opinii w Google`, `средняя оценка из ${company.googleReviews} отзывов в Google`))}</p>` : "";
+    const address = [company.name || "AUTOGOOD", company.address].filter(Boolean).join(" · ");
     const contactHtml = `
       <section class="ofCard ofContactCard${blockClass("contact")}" data-block="contact">
         ${hideToggle("contact")}
@@ -719,14 +825,16 @@
             ${manager.email ? `<span>${icon("mail")}${esc(manager.email)}</span>` : ""}
           </div>
         </div>
-        <p class="ofSmall ofCompanyLine">${icon("pin")}${esc([company.name || "AUTOGOOD", company.address, company.hours].filter(Boolean).join(" · "))}</p>
+        ${rating}
+        <p class="ofCompanyLine">${mapsUrl ? `<a href="${esc(mapsUrl)}" target="_blank" rel="noopener">${icon("pin")}<span>${esc(address)}</span><span class="ofMapsTag">Google Maps</span></a>` : `${icon("pin")}<span>${esc(address)}</span>`}</p>
+        ${company.hours ? `<p class="ofSmall ofHours">${esc(ru() && company.hours === store.COMPANY_DEFAULTS?.hours ? "пн-пт 9:00-17:00, сб по предварительной договорённости" : company.hours)}</p>` : ""}
       </section>`;
     const processHtml = `
-      <section class="ofCard ofProcess is-${style}${blockClass("process")}" data-block="process">
+      <section class="ofCard ofProcess${blockClass("process")}" data-block="process">
         ${hideToggle("process")}
-        <p class="ofCardHead">${icon("route")}${field("processTitle", L("Co dalej: od rozmowy do kluczyków", "Что дальше: от разговора до ключей"), "span")}</p>
-        ${style === "road" ? processRoad() : style === "stages" ? processStages() : processTimeline()}
-        ${field("processNote", L("Zwykle od 3 tygodni do 1,5 miesiąca od umowy do odbioru - zależnie od kraju i ścieżki zakupu.", "Обычно от 3 недель до 1,5 месяца от договора до получения авто - в зависимости от страны и способа покупки."), "p", "ofSmall ofProcessNote")}
+        <p class="ofCardHead">${icon("route")}${field("processTitle", L("Co dalej: od pierwszej rozmowy do odbioru kluczyków", "Что дальше: от первого разговора до получения ключей"), "span")}</p>
+        ${processTimeline()}
+        ${field("processNote", L("Zwykle od 3 tygodni do 1,5 miesiąca od umowy do odbioru - zależnie od kraju i ścieżki zakupu.", "Обычно от 3 недель до 1,5 месяца от договора до получения авто - в зависимости от страны и способа покупки."), "p", "ofProcessNote")}
       </section>`;
     const optionsHtml = allOptions.length && !isHidden("allOptions") && (offer.shown || []).includes("allOptions") ? `
       <section class="ofCard isFull" data-block="allOptions">
@@ -734,16 +842,14 @@
         <p class="ofCardHead">${icon("list")}${L("Pełne wyposażenie z ogłoszenia", "Полное оснащение из объявления")} (${numbers.format(allOptions.length)})</p>
         <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(ru() ? RU.option(item.label) : item.label)}</li>`).join("")}</ul>
       </section>` : "";
-    const body = style === "timeline"
+    const body = withCosts
       ? `<div class="ofTwoCols"><div>${processHtml}</div><div class="ofSideCol">${costsHtml}${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`
-      : `${processHtml}<div class="ofBottomRow">${costsHtml}<div class="ofSideCol">${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`;
+      : `${processHtml}<div class="ofBottomRow">${negotiationHtml}${contactHtml}</div>${optionsHtml}`;
     return `
       <div class="ofSheet${isHidden("page2") ? " isHiddenPage" : ""}" data-sheet="2">
-        <article class="ofPage${styleClass()} isProcess-${style}" data-page="2" lang="${ru() ? "ru" : "pl"}">
+        <article class="ofPage${styleClass()}${withCosts ? "" : " isProcessWide"}" data-page="2" lang="${ru() ? "ru" : "pl"}">
           ${headHtml(2, view)}
           <div class="ofPageTwo">${body}</div>
-          ${field("note", L(`Dane z ogłoszenia na ${PORTAL[offer.source] || "portalu"}${offer.market ? " i z rynku" : ""} na dzień ${dateText(offer.market?.at || offer.createdAt)}. Ceny w ogłoszeniach mogą się zmienić. Stan techniczny, historię i dokumenty auta sprawdzamy przed zakupem.`,
-            `Данные из объявления на ${PORTAL[offer.source] || "портале"}${offer.market ? " и данные рынка" : ""} на ${dateText(offer.market?.at || offer.createdAt)}. Цены в объявлениях могут меняться. Техническое состояние, историю и документы авто проверяем до покупки.`), "p", "ofNote")}
           <footer class="ofFoot">
             <span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span>
           </footer>
@@ -798,10 +904,6 @@
         <div class="ofToggleList ofStyleList">${STYLES.map(([key, label, note]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> <span><b>${esc(label)}</b><small>${esc(note)}</small></span></label>`).join("")}</div>
       </section>
       <section class="ofPanelCard">
-        <h2>Strona 2: proces</h2>
-        <div class="ofToggleList ofStyleList">${PROCESS_STYLES.map(([key, label, note]) => `<label><input type="radio" name="ofProcess" data-process-style="${key}"${processStyle() === key ? " checked" : ""} /> <span><b>${esc(label)}</b><small>${esc(note)}</small></span></label>`).join("")}</div>
-      </section>
-      <section class="ofPanelCard">
         <h2>Carvago (dla opiekuna)</h2>
         ${readingCarvago ? "<p>Szukam tego auta na Carvago (rok + przebieg 1:1)…</p>"
           : offer.carvago?.found ? `<p class="ofPanelOk">Znalezione ${offer.carvago.by === "id" ? "po numerze ogłoszenia" : "po roku, przebiegu i modelu"}: w sprzedaży od ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `${offer.carvago.changes.length} zmian ceny` : "cena bez zmian"}${offer.carvago.active?.count ? `, ${numbers.format(offer.carvago.active.count)} podobnych aktywnych` : ""}.</p><p><a href="${esc(offer.carvago.url)}" target="_blank" rel="noopener">Otwórz na Carvago ↗</a> W ofercie dla klienta bez nazwy i cen Carvago (konkurent, ceny z ich marżą) - tylko daty, % zmian i liczba ofert.</p>`
@@ -826,10 +928,10 @@
       </section>
       <section class="ofPanelCard">
         <h2>Kalkulacja</h2>
-        ${offer.calc
+        ${offer.calc && (offer.calc.method || "direct") === offerMethod()
           ? `<p class="ofPanelOk">Z kalkulatora: ${esc(offer.calc.methodLabel)}, ${esc(money(offer.calc.total, "PLN"))} (${esc(dateText(offer.calc.at))} ${esc(timeText(offer.calc.at))}).</p>`
-          : `<p>Teraz: szacunek „Zakup bezpośredni” z taryfą miejsca sprzedawcy. Wybierz sposób zakupu i wstaw dokładną kalkulację.</p>`}
-        <label>Sposób zakupu<select data-calc-method>${CALC_TABS.map((item) => `<option value="${item.tab}"${item.tab === defaultTab() ? " selected" : ""}${item.key === "vat" && !calcInput().vat ? " disabled" : ""}>${esc(item.label)}</option>`).join("")}</select></label>
+          : `<p>Teraz: szacunek „${esc(METHODS[offerMethod()].label)}” z taryfą miejsca sprzedawcy.${offer.calc ? " Wstawiona kalkulacja dotyczy innego sposobu zakupu - nie jest pokazana." : ""} Wstaw dokładną kalkulację z kalkulatora.</p>`}
+        <label>Sposób zakupu (zmienia koszt, plakietkę ceny i kroki 7 i 9)<select data-calc-method>${Object.entries(METHODS).map(([key, item]) => `<option value="${key}"${key === offerMethod() ? " selected" : ""}${key === "vat" && !(netEur() > 0) ? " disabled" : ""}>${esc(item.label)}</option>`).join("")}</select></label>
         <button class="offerButton isSmall" type="button" data-calc-open>${offer.calc ? "Zmień w kalkulatorze" : "Otwórz kalkulator"}</button>
         ${offer.calc ? '<button class="offerButton isSmall" type="button" data-calc-drop>Wróć do szacunku</button>' : ""}
       </section>
@@ -862,6 +964,12 @@
         <label>Telefon firmy<input data-company="phone" value="${esc(company.phone || "")}" placeholder="do potwierdzenia" /></label>
         <label>E-mail<input data-company="email" value="${esc(company.email || "")}" /></label>
         <label>Godziny<input data-company="hours" value="${esc(company.hours || "")}" /></label>
+        <div class="ofPanelRow">
+          <label>Ocena Google<input data-company="googleRating" value="${esc(company.googleRating || "")}" placeholder="4,9" /></label>
+          <label>Liczba opinii<input data-company="googleReviews" value="${esc(company.googleReviews || "")}" placeholder="126" /></label>
+        </div>
+        <label>Link Google Maps<input data-company="mapsUrl" value="${esc(company.mapsUrl || "")}" placeholder="https://maps.app.goo.gl/…" /></label>
+        <label>Link do przykładowych oględzin (krok 5)<input data-company="inspectionUrl" value="${esc(company.inspectionUrl || "")}" placeholder="https://…" /></label>
       </section>
       ${Object.keys(edits()).filter((key) => key !== "photo").length ? `<section class="ofPanelCard"><h2>Zmienione teksty</h2><p>${Object.keys(edits()).filter((key) => key !== "photo").length} zmian.</p><button class="offerButton isSmall" type="button" data-reset-edits>Przywróć teksty automatyczne</button></section>` : ""}`;
   }
@@ -1038,8 +1146,8 @@
     } else if (target.matches("[data-offer-lang]")) {
       // The same offer in the other language; each language keeps its edits.
       save({ lang: target.value === "ru" ? "ru" : "pl" });
-    } else if (target.matches("[data-process-style]")) {
-      save({ processStyle: target.dataset.processStyle });
+    } else if (target.matches("[data-calc-method]")) {
+      save({ method: METHODS[target.value] ? target.value : "direct" });
     } else if (target.matches("[data-style]")) {
       try {
         localStorage.setItem(STYLE_KEY, target.dataset.style);
@@ -1087,7 +1195,7 @@
   });
   panel.addEventListener("click", (event) => {
     if (event.target.closest("[data-read-carvago]")) readCarvago();
-    else if (event.target.closest("[data-calc-open]")) openCalculator(Number(panel.querySelector("[data-calc-method]")?.value ?? defaultTab()));
+    else if (event.target.closest("[data-calc-open]")) openCalculator(defaultTab());
     else if (event.target.closest("[data-calc-drop]")) save({ calc: null });
     else if (event.target.closest("[data-read-ad]")) readAd();
     else if (event.target.closest("[data-reset-edits]")) save((stored) => ({ edits: stored.edits?.photo ? { photo: stored.edits.photo } : {} }));
@@ -1145,7 +1253,7 @@
     };
   }
   // An offer with VAT to deduct opens on "Dealerzy VAT 23%", others on "Zakup bezpośredni".
-  const defaultTab = () => (offer.calc?.tab ?? (calcInput().vat && calcInput().net ? 3 : 0));
+  const defaultTab = () => METHODS[offerMethod()].tab;
   function calcUrl(tab) {
     const input = calcInput();
     const params = new URLSearchParams({ embed: "1", tab: String(tab), lang: ru() ? "ru" : "pl", car: String(Math.round(tab === 3 ? input.net : input.gross)), engine: String(input.engine) });
@@ -1214,7 +1322,7 @@
     const rate = Number(String(text(doc.querySelector(".totalBarRate")).match(/(\d+[.,]\d+)/)?.[1] || "").replace(",", ".")) || 0;
     const item = CALC_TABS.find((entry) => entry.tab === calcTab) || CALC_TABS[0];
     // The calculator speaks the offer's language (calcUrl): its lines are kept so.
-    return { tab: calcTab, method: item.key, methodLabel: ru() ? RU.calc(item.label) : item.label, rows, total, rate, lang: ru() ? "ru" : "pl", at: new Date().toISOString() };
+    return { tab: calcTab, method: item.key, methodLabel: methodLabel(item.key), rows, total, rate, lang: ru() ? "ru" : "pl", at: new Date().toISOString() };
   }
   async function insertCalculation() {
     const note = calcDialog?.querySelector("[data-calc-note]");

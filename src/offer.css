@@ -931,3 +931,45 @@
 .ofSpec b { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.25; }
 .ofFoot span { white-space: nowrap; }
 .isPremium[data-page="1"] .ofPhoto { height: 296px; }
+
+/* ---- Owner 2026-10-10, wave 2: page 2 ---------------------------------------
+ * Ten steps on one line whose colour goes from green to deep navy (each group
+ * of steps its own shade, --st); headings where the work, the purchase and the
+ * delivery begin; the time it takes in plain view; the contact card with the
+ * firm's Google rating and its place on the map. Without the full calculation
+ * the steps take the page's width (bigger text), the rest goes under them. */
+.ofTimeline::before { background: linear-gradient(180deg, #3a9d5d 0%, #23806b 25%, #1d6585 55%, #1a4d7a 75%, #13365c 100%); width: 3px; left: 9.5px; }
+.ofTimeStep .ofTimeNo { background: var(--st, var(--of-navy)); }
+.ofTimeStage { color: var(--st, var(--of-navy)); }
+.ofTimeStage::before { background: var(--st, currentColor); }
+.ofStepLink { display: inline-flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 11px; font-weight: 600; color: var(--of-brand); text-decoration: underline; text-underline-offset: 2px; }
+.ofStepLink svg { width: 12px; height: 12px; }
+.ofPage .ofProcessNote { margin-top: 12px; padding: 8px 12px; border-radius: 10px; background: #eef4ea; color: #1d4f2e; font-size: 12.5px; font-weight: 600; line-height: 1.4; }
+.isPremium .ofProcessNote { background: #ffffff; }
+.ofMethodLine { margin-top: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.02em; color: var(--of-gold-soft, #d9c08a); }
+.ofTrust { display: flex; align-items: center; gap: 6px; margin-top: 10px; padding: 7px 10px; border-radius: 8px; background: #fff8e6; font-size: 11.5px; color: var(--of-text); }
+.ofTrust svg { width: 14px; height: 14px; color: #c99a2e; flex: none; }
+.ofTrust b { font-size: 14px; color: var(--of-ink); }
+.ofCompanyLine a { display: inline-flex; align-items: flex-start; gap: 5px; color: var(--of-ink); text-decoration: none; }
+.ofCompanyLine a span:first-of-type { text-decoration: underline; text-decoration-color: rgba(20, 90, 133, 0.35); text-underline-offset: 2px; }
+.ofMapsTag { flex: none; margin-left: 2px; padding: 0 6px; border-radius: 999px; background: var(--of-brand-soft); color: var(--of-brand); font-size: 10px; font-weight: 700; line-height: 1.7; }
+.ofPage .ofCompanyLine { font-size: 11.5px; }
+.ofPage .ofHours { margin-top: 3px; padding-left: 17px; }
+.ofContactCard .ofContactLines b { font-size: 14px; }
+.ofContactCard .ofContactLines span { font-size: 12px; }
+/* Without the full calculation: the steps wide and larger, the rest under them. */
+.isProcessWide .ofProcess { width: 100%; max-width: 680px; margin: 0 auto; }
+.isProcessWide .ofStepTitle { font-size: 14px; }
+.isProcessWide .ofStepText { font-size: 12.5px; }
+.isProcessWide .ofTimeStage { font-size: 11.5px; }
+.isProcessWide .ofBottomRow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; }
+.isProcessWide .ofStepTitle { font-size: 13.5px; }
+.isProcessWide .ofStepText { font-size: 12px; line-height: 1.38; }
+.isProcessWide .ofTimeStep { margin-bottom: 6px; }
+.isProcessWide .ofTimeStage { margin: 6px 0 4px 32px; }
+.isProcessWide .ofMark { margin-top: 3px; }
+.isProcessWide .ofProcessNote { margin-top: 8px; padding: 6px 12px; }
+.isProcessWide .ofPageTwo { gap: 10px; }
+.isProcessWide .ofTimeStep { margin-bottom: 5px; }
+.isPremium[data-page="1"] .ofSpecs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); }
+.ofSpec b { font-size: 14px; }

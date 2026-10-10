@@ -30,6 +30,12 @@
     phone: "+48 531 900 775",
     email: "info@autogood.pl",
     web: "autogood.pl",
+    // The offer's contact card (owner 2026-10-10): the firm's Google rating,
+    // its place on the map, and (when given) a sample inspection report.
+    googleRating: "4,9",
+    googleReviews: "126",
+    mapsUrl: "https://www.google.com/maps/search/?api=1&query=AUTOGOOD%2C+Kolejowa+102%2C+05-092+%C5%81omianki",
+    inspectionUrl: "",
   };
   const MANAGER_DEFAULTS = { name: "Nikodem", phone: "+48 531 900 775", email: "info@autogood.pl" };
   // Empty fields never hide a default.

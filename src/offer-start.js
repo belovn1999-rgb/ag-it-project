@@ -62,6 +62,8 @@
       basic: "Odczytano podstawowe dane. Zdjęcia, wyposażenie i sprzedawca pojawią się po pełnym odczycie (dla mobile.de potrzebny jest importer na Macu).",
       missing: "Nie udało się odczytać: {list}. Uzupełnisz to na stronie oferty (Edytuj teksty).", missingWords: ["marka", "cena", "przebieg", "rok"],
       footLabel: "Oferta dla klienta · po polsku", make: "Przygotuj ofertę PDF",
+      method: "Sposób zakupu", methodDirect: "Zakup bezpośredni", methodVat: "Przez AUTOGOOD · VAT 23% (netto)", methodMargin: "Przez AUTOGOOD · VAT marża (brutto)",
+      vatOnly: "tylko auto z VAT do odliczenia", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
       fromLink: "z linku", fromMonitoring: "z Monitoringu",
     },
     ru: {
@@ -81,6 +83,8 @@
       basic: "Прочитаны основные данные. Фото, оснащение и продавец появятся после полного чтения (для mobile.de нужен импортер на Маке).",
       missing: "Не удалось прочитать: {list}. Допишете на странице предложения (Edytuj teksty).", missingWords: ["марка", "цена", "пробег", "год"],
       footLabel: "Предложение для клиента · на русском", make: "Подготовить PDF-предложение",
+      method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · VAT 23% (нетто)", methodMargin: "Через AUTOGOOD · VAT marża (брутто)",
+      vatOnly: "только авто с VAT к вычету", fullCalc: "Полный расчёт в предложении (стр. 2)",
       fromLink: "из ссылки", fromMonitoring: "из Monitoring",
     },
   };
@@ -250,6 +254,16 @@
 
   // ---- The car as page 1's summary shows it -----------------------------------------
   let current = null; // { source, url, ad, adKey, brand, model }
+  // How the car is bought (owner 2026-10-10): chosen here, before the offer;
+  // the VAT 23% way only for a car with VAT to deduct. Default: VAT 23% when
+  // possible, else straight from the dealer.
+  let method = "";
+  let fullCalc = true;
+  const chosenMethod = () => {
+    const vat = current?.ad?.vat || {};
+    if (method === "vat" && !(vat.deductible && vat.net)) return "direct";
+    return method || (vat.deductible && vat.net ? "vat" : "direct");
+  };
 
   function rows(list) {
     return list.filter(([, , value]) => value !== "" && value !== null && value !== undefined)
@@ -272,6 +286,7 @@
     const sellerLine = seller.type === "dealer" ? (seller.name || t("dealer")) : seller.type === "private" ? t("privateSeller") : seller.name || "";
     const missing = [!brand, !price, !specs.mileage, !specs.firstRegistration].map((gap, index) => (gap ? t("missingWords")[index] : "")).filter(Boolean);
     const option = (label) => (lang === "ru" && RU ? RU.option(label) : label);
+    const canNet = Boolean(vat.deductible && vat.net);
     return `
       <div class="osCarHead">
         ${ad.images?.[0] ? `<img class="osCarPhoto" src="${esc(ad.images[0])}" alt="" loading="lazy" referrerpolicy="no-referrer" />` : ""}
@@ -304,6 +319,12 @@
       </div>
       ${!ad.complete ? `<p class="osNote">${esc(t("basic"))}</p>` : ""}
       ${missing.length ? `<p class="osNote">${esc(t("missing", { list: missing.join(", ") }))}</p>` : ""}
+      <div class="osMethods" role="radiogroup" aria-label="${esc(t("method"))}">
+        <span class="osMethodsLabel">${esc(t("method"))}</span>
+        ${[["direct", t("methodDirect"), true], ["vat", t("methodVat"), canNet], ["margin", t("methodMargin"), true]].map(([key, label, enabled]) => `
+          <label class="osMethod${enabled ? "" : " isOff"}"${enabled ? "" : ` title="${esc(t("vatOnly"))}"`}><input type="radio" name="osMethod" value="${key}" data-os-method${key === chosenMethod() ? " checked" : ""}${enabled ? "" : " disabled"} /><span>${esc(label)}</span></label>`).join("")}
+        <label class="osFull"><input type="checkbox" data-os-full${fullCalc ? " checked" : ""} /><span>${esc(t("fullCalc"))}</span></label>
+      </div>
       <div class="osCarFoot">
         <span class="osCarFootLabel">${esc(t("footLabel"))}</span>
         <button class="osPrimary" type="button" data-os-make>${esc(t("make"))} <i aria-hidden="true">&#8594;</i></button>
@@ -341,6 +362,7 @@
       const named = makeModel([ad.make, ad.model].filter(Boolean).join(" ") || ad.title);
       const fromTitle = named.brand ? named : makeModel(ad.title);
       current = { source, url, ad, adKey: adKeyOf(source, url), brand: fromTitle.brand || ad.make || "", model: fromTitle.model || ad.model || "" };
+      method = "";
       carBox.innerHTML = carHtml();
       carBox.hidden = false;
       setStatus(t("read_ok", { time: new Date().toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" }) }));
@@ -383,8 +405,11 @@
       inspectionNettoPln: tariff.inspection,
       engineTypeIndex: engine.index,
     });
+    const net = Number(ad.vat?.net) || 0;
+    const netEur = !net ? 0 : currency === "EUR" ? net : currency === "SEK" ? (net * rates.sek) / rates.eur : currency === "PLN" ? net / rates.eur : 0;
     return {
       method: "direct",
+      netEur: Math.round(netEur),
       rate: result.rate,
       rateLive: Boolean(window.AUTOGOOD_EUR_PLN_RAW),
       carBruttoEur: Math.round(price),
@@ -413,6 +438,7 @@
       createdAt: now.toISOString(),
       number: `${String(now.getDate()).padStart(2, "0")}${String(now.getMonth() + 1).padStart(2, "0")}-${String(sequence).padStart(2, "0")}`,
       lang,
+      method: chosenMethod(),
       favoriteId: "",
       favoriteTitle: "",
       filters: { brand, model },
@@ -447,12 +473,17 @@
       company: store.company(),
       client: { salutation: "Pan", name: "" },
       edits: {},
-      hidden: [],
+      // Without the full calculation page 2 shows the steps wide (owner 2026-10-10).
+      hidden: fullCalc ? [] : ["costs"],
       ad,
       adTriedAt: now.toISOString(),
     };
   }
 
+  carBox.addEventListener("change", (event) => {
+    if (event.target.matches("[data-os-method]")) method = event.target.value;
+    if (event.target.matches("[data-os-full]")) fullCalc = event.target.checked;
+  });
   carBox.addEventListener("click", async (event) => {
     const button = event.target.closest("[data-os-make]");
     if (!button || !current || button.disabled) return;

@@ -14,7 +14,7 @@
   // Whole values first (fuel, gearbox, body, seller, the reader's phrases).
   const VALUES = {
     "benzyna": "бензин", "diesel": "дизель", "hybryda": "гибрид", "hybryda (benzyna)": "гибрид (бензин)", "hybryda (diesel)": "гибрид (дизель)",
-    "hybryda plug-in": "подключаемый гибрид (plug-in)", "elektryczny": "электро", "benzyna + LPG": "бензин + газ (LPG)",
+    "hybryda plug-in": "гибрид plug-in", "elektryczny": "электро", "benzyna + LPG": "бензин + газ (LPG)",
     "benzyna + CNG": "бензин + метан (CNG)", "benzyna (E85)": "бензин (E85)", "wodór": "водород",
     "automatyczna": "автомат", "manualna": "механика", "półautomatyczna": "робот",
     "przedni": "передний", "tylny": "задний", "4x4": "полный (4x4)",
