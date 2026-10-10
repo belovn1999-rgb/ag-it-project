@@ -90,7 +90,10 @@
   function engineIndexOf(input, filters = {}) {
     if (typeof classifyEngineType === "function" && (input.fuel || input.title)) {
       // Same rule as the analysis: a hybrid named anywhere is a hybrid.
-      const info = window.AUTOGOOD_TURNKEY?.engineInfo?.({ fuel: input.fuel, title: input.title, displacementCcm: input.ccm }, filters);
+      // Year, power and gearbox find a mild hybrid in the model table (B61).
+      const info = window.AUTOGOOD_TURNKEY?.engineInfo?.({
+        fuel: input.fuel, title: input.title, displacementCcm: input.ccm, year: input.year, power: input.power, gearbox: input.gearbox,
+      }, filters);
       if (info) return info.index;
       return classifyEngineType(`${input.fuel || ""} ${input.title || ""}`, input.ccm);
     }
@@ -131,7 +134,12 @@
       net: vat ? net : 0,
       netGuessed,
       vat,
-      engine: engineIndexOf({ fuel, title, ccm }, offer.filters || {}),
+      engine: engineIndexOf({
+        fuel, title, ccm,
+        year: ad?.firstRegistration || offer.year,
+        power: ad?.powerHp ? `${ad.powerHp} PS` : offer.power,
+        gearbox: ad?.gearbox || offer.gearbox,
+      }, offer.filters || {}),
       transport: Math.round(Number(ad?.transportNettoPln) || tariff.transport),
       inspection: Math.round(Number(ad?.inspectionNettoPln) || tariff.inspection),
       fromList: !ad,
@@ -160,7 +168,10 @@
       net: vat ? net : 0,
       netGuessed,
       vat,
-      engine: engineIndexOf({ fuel: ad.fuel, title: ad.title, ccm: ad.displacementCcm }),
+      engine: engineIndexOf({
+        fuel: ad.fuel, title: ad.title, ccm: ad.displacementCcm,
+        year: ad.firstRegistration, power: ad.powerHp ? `${ad.powerHp} PS` : "", gearbox: ad.gearbox,
+      }, typeof readManualFields === "function" ? readManualFields() : {}),
       transport: Math.round(Number(ad.transportNettoPln) || 0),
       inspection: Math.round(Number(ad.inspectionNettoPln) || 0),
       fromList: false,

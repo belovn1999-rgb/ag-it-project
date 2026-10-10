@@ -10,7 +10,7 @@ window.AUTOGOOD_MODEL_SPECS_LOADED["<brand>"]["<brand>|<model>"] =
   versions: [gen index, fuel, cm3, hp, kW, gearbox, drive, mild, token]
             fuel: petrol diesel hybrid_petrol hybrid_diesel plugin electric
                   (CNG/LPG/E85 count as petrol), gearbox a|m|"" (unknown),
-            drive f|r|4|"" (unknown: stage-6 engine page without options), mild 1 = mild hybrid, token = BMW/Mercedes/Audi model
+            drive f|r|4|"" (unknown: stage-6 engine page without options), mild = year the mild hybrid starts (0 = none), token = BMW/Mercedes/Audi model
             number from the version name ("320", "m340", "220", "s3") for
             sub-models such as "320" or "C 220"; duplicates merged.
   trims:    [from, to|null, lines[], sport[], editions[]]
@@ -349,7 +349,12 @@ def main():
                 types, (doors_from, doors_to), (seats_from, seats_to), row.get("Двери", ""), row.get("Места", ""))
             entry["bodies"].add((gen_key, tuple(types), doors_from, doors_to, seats_from, seats_to, sliding))
             fuel = FUELS.get(row["Топливо"], "petrol")
-            mild = 1 if row["Топливо: примечание"].startswith("мягкий") else 0
+            # The year the mild hybrid starts (tools/mild_hybrids.py; 0 = none): the excise and the lists
+            # count a car of that year or later as a hybrid.
+            mild = int(row.get("Мягкий гибрид с") or 0) if row["Топливо: примечание"].startswith("мягкий") else 0
+            # Negative: the same engine was also sold without it (the ad has to say it; no lower excise by itself).
+            if mild and "бывает и без него" in row["Топливо: примечание"]:
+                mild = -mild
             entry["versions"].add((gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
                                    int(row["Мощность, кВт"] or 0), GEARBOX.get(row["Коробка"], ""),
                                    DRIVE.get(row["Привод"], ""), mild, token(row["Марка"], row["Версия"])))

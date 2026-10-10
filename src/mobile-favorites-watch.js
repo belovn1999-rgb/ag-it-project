@@ -710,6 +710,9 @@
         fuel: offer.fuel,
         title: offer.title,
         displacementCcm: offer.displacementCcm,
+        year: offer.year,
+        power: offer.power,
+        gearbox: offer.gearbox,
       }, entry.filters).total
       : null;
     const market = latestMedian(entry, offer.source);

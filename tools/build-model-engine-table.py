@@ -31,6 +31,7 @@ import os
 import re
 
 import autocentrum
+import mild_hybrids
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -607,8 +608,26 @@ def main():
     ac_path = os.path.join(ROOT, "data", "autocentrum-models.json")
     if os.path.exists(ac_path):
         with open(ac_path, encoding="utf8") as handle:
-            for name, count in sorted(autocentrum.merge(rows, json.load(handle)).items()):
+            ac = json.load(handle)
+            for name, count in sorted(autocentrum.merge(rows, ac).items()):
                 print(f"   autocentrum: {name}: {count}")
+        # Mild hybrids (since 2016): the makers' rules checked against both databases and Wikipedia
+        # (tools/mild_hybrids.py). Only a confirmed one counts; the rest goes to docs/MODEL-MILD-HYBRIDS.md.
+        decisions = mild_hybrids.classify(rows, ac)
+        for row in rows:
+            found = decisions.get(id(row))
+            row["Мягкий гибрид с"], row["Мягкий гибрид: источники"] = "", ""
+            if found and found["applied"]:
+                system = f" {found['system']}" if found["system"] else ""
+                optional = "; бывает и без него — смотреть объявление" if found["optional"] else ""
+                row["Топливо: примечание"] = f"мягкий гибрид (MHEV{system}) — {found['status']}{optional}"
+                row["Мягкий гибрид с"] = str(found["since"])
+                row["Мягкий гибрид: источники"] = " · ".join(found["sources"])
+            elif row["Топливо: примечание"].startswith("мягкий"):
+                row["Топливо: примечание"] = ""  # a name ("W12 48V" = 48 valves) the check did not confirm
+            elif found:
+                row["Мягкий гибрид: источники"] = "проверить: " + " · ".join(found["sources"])
+        write_mild_report(rows, decisions)
 
     for row in rows:
         # Models only autocentrum covers (stage 6) are keyed by their page-1 model value.
@@ -648,6 +667,75 @@ def main():
     print(f"versions={len(rows)} problems={len(problems)}")
     for problem in problems:
         print("  ", problem)
+
+
+def write_mild_report(rows, decisions):
+    """docs/MODEL-MILD-HYBRIDS.md: every mild hybrid of the table by model and engine, with its sources,
+    and the versions a rule names but no second source confirms ("проверить")."""
+    groups = collections.OrderedDict()
+    for row in rows:
+        found = decisions.get(id(row))
+        if not found:
+            continue
+        fuel = "дизель" if row["Топливо"] in ("дизель", "гибрид (дизель)") else "бензин"
+        key = (found["applied"], row["Марка"], row["Модель"], row["Поколение"], fuel, row["Объём, л"], int(row["Мощность, л.с."] or 0))
+        status = found["status"] + ("; бывает и без него" if found.get("optional") else "")
+        item = groups.setdefault(key, {"since": found["since"], "system": found["system"], "status": status,
+                                       "boxes": set(), "sources": found["sources"], "names": []})
+        item["since"] = min(item["since"], found["since"])
+        item["boxes"].add(row["Коробка"] or "?")
+        if len(item["names"]) < 2 and row["Версия"] not in item["names"]:
+            item["names"].append(row["Версия"])
+    applied = [(k, v) for k, v in groups.items() if k[0]]
+    unsure = [(k, v) for k, v in groups.items() if not k[0]]
+    lines = [
+        "# Мягкие гибриды (MHEV) в таблице моделей",
+        "",
+        "> Сгенерировано `tools/build-model-engine-table.py` (правила и проверка — `tools/mild_hybrids.py`,",
+        "> Википедия — `tools/wiki_engines.py`). Не править руками. Решение владельца 2026-10-03/10: любой гибрид,",
+        "> мягкий тоже, — льготный акциз (1,55 % до 2000 см³, 9,3 % больше); мягкие гибриды с 2016 года.",
+        "",
+        "Как проверено: правило производителя (пресс-релизы, какие моторы, с какого года, 12/24/48 В) засчитывается,",
+        "только если его подтверждает второй источник — немецкая/английская Википедия (таблица моторов или прямая",
+        "фраза, цитата ниже) или одна из баз (ultimatespecs, autocentrum.pl) называет версию мягким гибридом. Версия,",
+        "которую база прямо называет «Mild Hybrid / MHEV / eTSI / 48V», засчитывается и без правила. Двигатели, у которых",
+        "мягкий гибрид был опцией (Ford EcoBlue Hybrid, Hyundai/Kia CRDi 48V до 2020, Kia 1.0 T-GDi), — только по названию",
+        "версии. «Hybrydowe» у autocentrum без правила и без названия ничего не решает.",
+        "",
+        f"Итого: {sum(1 for r in rows if r.get('Мягкий гибрид с'))} версий отмечены мягким гибридом "
+        f"({len(applied)} сочетаний модель · поколение · мотор); проверить: {len(unsure)} сочетаний.",
+        "",
+        "**Тот же мотор и без мягкого гибрида** (проверка «двойников» по таблицам моторов de.wikipedia, одна таблица,",
+        "та же мощность, объём и коробка): если обе версии продавались в годы нашей версии — «бывает и без него»,",
+        "на странице это «может быть MHEV» (подсказка), акциз сам не снижается, смотреть объявление (Kia Sportage V",
+        "1.6 T-GDI 150 механика, Hyundai i20/Bayon 1.0 T-GDI 100 механика, Tucson IV 1.6 T-GDI 150 механика). Если",
+        "обычная версия была раньше (Renault Arkana/Captur II, Mazda2, Volvo T5 → B5), мягкий гибрид отмечен с даты по",
+        "Википедии, округлённой вверх до следующего года (кроме января): машина этого года может быть ещё обычной.",
+        "",
+        "**Расхождения источников:** Audi A6 C8 V6 — de.wikipedia «48 V ab Sommer 2020», en.wikipedia и Audi A7 C8 —",
+        "с запуска 2018 (взято 2018). Renault Arkana — пресс-релизы 2021 называют TCe 140/160 «mild hybrid», таблица",
+        "de.wikipedia — только с 12/2023 (взято 2024); Mazda2 — M Hybrid с рестайлинга 2020 у Mazda, с 10/2021 в",
+        "de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взято 2021). Везде, где источники расходятся, взята",
+        "более поздняя дата: акциз в расчёте тогда не занижается. 12-вольтовые системы (Audi 4-цилиндровые, Renault 1.3 TCe, Nissan 1.3/1.5) — тоже",
+        "мягкие гибриды, но признание их гибридом для акциза спорнее, чем 48 В: решает владелец (сейчас — льготно).",
+        "",
+        "| Марка | Модель | Поколение | Топливо | Объём, л | Л.с. | С года | Система | Коробка | Пример версии | Статус | Источники |",
+        "|---|---|---|---|---|---|---|---|---|---|---|---|",
+    ]
+    for key, item in applied:
+        _a, brand, model, gen, fuel, litres, hp = key
+        lines.append(f"| {brand} | {model} | {gen} | {fuel} | {litres} | {hp} | {item['since']} | {item['system']} | "
+                     f"{', '.join(sorted(item['boxes']))} | {item['names'][0][:45]} | {item['status']} | "
+                     f"{' · '.join(item['sources']).replace('|', '/')[:400]} |")
+    lines += ["", f"## Проверить ({len(unsure)})", "",
+              "Правило есть, второго источника нет (или мягкий гибрид был опцией, а версия не названа): не отмечено.",
+              "", "| Марка | Модель | Поколение | Топливо | Л.с. | Коробка | Пример | Что говорит |", "|---|---|---|---|---|---|---|---|"]
+    for key, item in unsure:
+        _a, brand, model, gen, fuel, litres, hp = key
+        lines.append(f"| {brand} | {model} | {gen} | {fuel} | {hp} | {', '.join(sorted(item['boxes']))} | "
+                     f"{item['names'][0][:45]} | {' · '.join(item['sources']).replace('|', '/')[:300]} |")
+    with open(os.path.join(ROOT, "docs", "MODEL-MILD-HYBRIDS.md"), "w", encoding="utf8") as handle:
+        handle.write("\n".join(lines).rstrip("\n") + "\n")
 
 
 def write_markdown(filter_index, rows, problems, today):

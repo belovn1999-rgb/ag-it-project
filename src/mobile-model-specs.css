@@ -18,3 +18,34 @@
 .mobileComboMenu .mobileComboMenuGroup {
   white-space: normal;
 }
+
+/* Mild hybrids under "Moc" (owner 2026-10-10): what to tell the client. */
+.mobileMildHint {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: var(--space-sm, 8px) var(--space-md, 12px);
+  border-left: 3px solid var(--color-success);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-tint);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  line-height: 1.45;
+}
+
+.mobileMildHint[hidden] {
+  display: none;
+}
+
+.mobileMildHint small {
+  color: var(--color-muted);
+  font-size: inherit;
+}
+
+/* "MHEV od 2020" under a power or engine size in the lists. */
+.mobileComboMenu .mobileComboNote {
+  display: block;
+  color: var(--color-success);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}

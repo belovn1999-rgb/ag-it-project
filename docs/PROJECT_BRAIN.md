@@ -16,7 +16,7 @@
 | Поиск и анализ рынка: Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | **§0 — текущая ситуация и план**, правила для параллельных чатов (§2), механизмы, решения, бэклог, журнал. Главный документ этой области. |
 | Оффер для клиента (B71) | программа 06 `oferty.html` (ссылка → оффер), `oferta.html` (сам оффер), кнопка на стр. 3 `mobile.html` | [OFFER-PAGE.md](OFFER-PAGE.md) | Цель и решения владельца, какие данные дают порталы, правила текстов клиенту, архитектура, волны |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
-| Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), [MODEL-ENGINES.md](MODEL-ENGINES.md), [MODEL-TRIMS.md](MODEL-TRIMS.md), [MODEL-AUTOCENTRUM-CHECK.md](MODEL-AUTOCENTRUM-CHECK.md) | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): поколения, двигатели (дорест/рест, коробка, привод), комплектации ЕС; сверка со вторым источником autocentrum.pl (чего у нас нет). Crawl-delay ultimatespecs 30 с |
+| Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), [MODEL-ENGINES.md](MODEL-ENGINES.md), [MODEL-TRIMS.md](MODEL-TRIMS.md), [MODEL-AUTOCENTRUM-CHECK.md](MODEL-AUTOCENTRUM-CHECK.md), [MODEL-MILD-HYBRIDS.md](MODEL-MILD-HYBRIDS.md) | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): поколения, двигатели (дорест/рест, коробка, привод), комплектации ЕС; сверка со вторым источником autocentrum.pl (чего у нас нет); мягкие гибриды с 2016 (источники, «бывает и без него», акциз). Crawl-delay ultimatespecs 30 с |
 | Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
@@ -69,9 +69,11 @@
 
 - OPEN: документ для калькуляторов (формулы, типы комиссии, VAT/акциз).
 - OPEN: документ для договоров (шаблоны, распознавание, шифрование, история).
+- OPEN: мягкие гибриды 12 В (Audi 4-цилиндровые, Renault 1.3 TCe, Nissan 1.3/1.5) — считать для акциза гибридом (сейчас да) или только 48 В? `docs/MODEL-MILD-HYBRIDS.md`.
 
 ## 8. Журнал
 
+- 2026-10-10 — mobile.html, B61: мягкие гибриды (MHEV) с 2016 по всем 398 моделям — правила производителей, сверены с autocentrum.pl и de/en Википедией, «бывает и без него» не снижает акциз сам; подсказка под «Moc» (что сказать клиенту), «MHEV od …» в списках, льготный акциз в «na gotowo» на графике, в статистике и Monitoring; 1144 версии, отчёт `docs/MODEL-MILD-HYBRIDS.md`; OPEN: 12 В — льготно? (Claude).
 - 2026-10-10 — mobile.html, аудит порталов волна 2: кузов хэтчбек/седан со ссылки по справочнику моделей (otomoto Golf 1 → 62), AutoScout24 объём «< 5000» и «Wersja» как модель, все кузова-варианты модели на otomoto и полный справочник Kleinanzeigen, без «Gesuch»; портал без ответа — «—» и плашка, таймауты; НДС AutoScout24 FR, механика Marktplaats, даты появления; бюджет Monitoring зафиксирован в валюте портала; п. 10 (plug-in в «Hybryda») ждёт решения (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring, волна 2 аудита: сверху фраза и 5 чисел (новые, исчезли, подходящие, медиана na gotowo, do negocjacji), вкладки «Lista aut / Historia cen / Rynek w wybranym dniu», в списке «Do mediany» и кнопки в строке; пробелы в тысячах во всех числах (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring, аудит п. 6: машины другой версии или plug-in (по названию объявления) с Marktplaats, 2dehands, Kleinanzeigen, ParuVendu не входят в цифры, видны в «Dodatkowe» с причиной (Claude).

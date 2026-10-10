@@ -2021,7 +2021,7 @@ function renderComboMenus(filterControl = null) {
       ].filter(Boolean).join(" ");
       items.push(`
         <button class="${optionClasses}" type="button" data-mobile-option-value="${escapeHtml(option.value)}" data-mobile-option-label="${escapeHtml(option.label)}"${off ? ` title="${escapeHtml(unavailableTitle)}"` : ""}>
-          ${escapeHtml(option.label)}
+          ${escapeHtml(option.label)}${option.note ? `<small class="mobileComboNote">${escapeHtml(option.note)}</small>` : ""}
         </button>
       `);
       previousGroup = option.group || previousGroup;
@@ -3685,8 +3685,24 @@ function calculatorUrl(scenario) {
   if (state.data.carBruttoEur) params.set("car", String(Math.round(Number(state.data.carBruttoEur))));
   if (state.data.transportNettoPln) params.set("transport", String(Math.round(Number(state.data.transportNettoPln))));
   if (state.data.inspectionNettoPln) params.set("inspection", String(Math.round(Number(state.data.inspectionNettoPln))));
-  if (Number.isInteger(Number(state.data.engineTypeIndex))) params.set("engine", String(Number(state.data.engineTypeIndex)));
+  const engine = recognizedEngineIndex(state.data);
+  if (Number.isInteger(engine)) params.set("engine", String(engine));
   return `./calculators.html?${params.toString()}`;
+}
+
+// The ad's excise class; a mild hybrid by the model table (B61, owner
+// 2026-10-10) pays the hybrid's, which the ad seldom names.
+function recognizedEngineIndex(data) {
+  const own = Number(data?.engineTypeIndex);
+  const info = data && window.AUTOGOOD_TURNKEY?.engineInfo?.({
+    fuel: data.fuel,
+    title: data.title,
+    displacementCcm: data.displacementCcm,
+    year: data.firstRegistration,
+    power: data.powerHp ? `${data.powerHp} PS` : "",
+    gearbox: data.gearbox,
+  }, readManualFields());
+  return info?.mild?.status === "yes" ? info.index : own;
 }
 
 function renderScenarios() {

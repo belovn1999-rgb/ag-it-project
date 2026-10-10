@@ -38,6 +38,8 @@
         Object.assign(models, window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand] || {});
         refresh();
         if (typeof renderComboMenus === "function") renderComboMenus();
+        // The analysis counts its "na gotowo" again (a mild hybrid's excise).
+        window.dispatchEvent(new CustomEvent("autogood:model-specs", { detail: { brand } }));
         resolve(true);
       };
       script.onerror = () => {
@@ -47,6 +49,14 @@
       document.head.appendChild(script);
     });
     return loading[brand];
+  }
+
+  // Before a Monitoring check counts its "na gotowo" prices: the brand's data
+  // is in (a mild hybrid's excise), at most 10 s.
+  function ready(rawBrand) {
+    const brand = typeof canonicalBrand === "function" ? canonicalBrand(rawBrand) : String(rawBrand || "");
+    if (!index[brand] || window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand]) return Promise.resolve(Boolean(index[brand]));
+    return Promise.race([loadBrand(brand), new Promise((resolve) => setTimeout(() => resolve(false), 10000))]);
   }
   const TEXT = {
     pl: {
@@ -217,12 +227,13 @@
     return [gen.code, years, phase].filter(Boolean).join(" · ");
   }
 
-  // Existing values on top (bold), the usual list below the divider.
-  function topThenRest(base, values, label) {
+  // Existing values on top (bold), the usual list below the divider; note:
+  // a second, smaller line (mild hybrids).
+  function topThenRest(base, values, label, note = () => "") {
     if (!values.length) return base;
     const wanted = new Set(values.map(String));
     return [
-      ...values.map((value) => ({ value: String(value), label: label(value), isPopular: true })),
+      ...values.map((value) => ({ value: String(value), label: label(value), note: note(value), isPopular: true })),
       ...base.filter((option) => !wanted.has(String(option.value))),
     ];
   }
@@ -246,14 +257,101 @@
   function sizeOptions(sel, base, fromValue) {
     const sizes = unique(filtered(sel, { size: false, power: false }).map((row) => row[2]).filter(Boolean)).sort((a, b) => a - b)
       .filter((value) => fromValue === undefined || isAllowedRangeEndValue(String(value), fromValue, true));
-    return topThenRest(base, sizes, (value) => `${value} ccm (${(value / 1000).toFixed(1)})`);
+    const rows = filtered(sel, { size: false, power: false });
+    return topThenRest(base, sizes, (value) => `${value} ccm (${(value / 1000).toFixed(1)})`, (value) => mildMark(sel, rows.filter((row) => row[2] === value), false));
   }
 
   function powerOptions(sel, base, fromValue) {
     const kw = els.powerUnit?.value === "kw";
-    const powers = unique(filtered(sel, { power: false }).map((row) => (kw ? row[4] : row[3])).filter(Boolean)).sort((a, b) => a - b)
+    const rows = filtered(sel, { power: false });
+    const powers = unique(rows.map((row) => (kw ? row[4] : row[3])).filter(Boolean)).sort((a, b) => a - b)
       .filter((value) => fromValue === undefined || isAllowedRangeEndValue(String(value), fromValue, true));
-    return topThenRest(base, powers, (value) => `${value} ${kw ? "kW" : "KM"}`);
+    return topThenRest(base, powers, (value) => `${value} ${kw ? "kW" : "KM"}`, (value) => mildMark(sel, rows.filter((row) => (kw ? row[4] : row[3]) === value), true));
+  }
+
+  // Mild hybrids (B61, owner 2026-10-10): versions[7] = the year the version
+  // got its mild hybrid (12/24/48 V; docs/MODEL-MILD-HYBRIDS.md), 0 = none,
+  // negative = the same engine was also sold without it (the ad decides).
+  // Its excise is the hybrid's (1.55 % up to 2000 cm³, 9.3 % above; owner
+  // rule "any hybrid"), and the ads rarely say it.
+  const sinceOf = (row) => Math.abs(row[7] || 0);
+  const mildIn = (sel, row) => Boolean(row[7]) && (!sel.yearTo || sinceOf(row) <= sel.yearTo);
+
+  // "MHEV od 2020" under a power (or engine size) in the lists; with
+  // partly: "część MHEV od 2020" when only some versions of it are (or the
+  // engine was also sold without it).
+  function mildMark(sel, rows, partly) {
+    const mild = rows.filter((row) => mildIn(sel, row));
+    const some = mild.length < rows.length || mild.some((row) => row[7] < 0);
+    if (!mild.length || (!partly && some)) return "";
+    const since = Math.min(...mild.map(sinceOf));
+    return state.lang === "ru"
+      ? `${some ? "часть " : ""}MHEV с ${since}`
+      : `${some ? "część " : ""}MHEV od ${since}`;
+  }
+
+  function powerOf(value) {
+    const text = String(value || "");
+    const hp = text.match(/(\d{2,4})\s*(?:PS|KM|hk|hp|ch|pk|cv|л\.?\s?с)/i);
+    const kw = text.match(/(\d{2,4})\s*kW/i);
+    const plain = !hp && !kw && text.match(/^\s*(\d{2,4})\s*$/);
+    return { hp: hp ? Number(hp[1]) : plain ? Number(plain[1]) : 0, kw: kw ? Number(kw[1]) : 0 };
+  }
+
+  function gearboxOf(value) {
+    const text = lower(value);
+    if (/manu|schalt|handgesch|механ/.test(text)) return "m";
+    if (/auto|dsg|tronic|cvt|dct|автомат|робот|вариатор/.test(text)) return "a";
+    return text === "manual" ? "m" : "";
+  }
+
+  // Is this car a mild hybrid by our table? { status: "yes" (every version it
+  // can be is one in its year) | "maybe" (some are), since } or null (none,
+  // or the model is not in the table / its brand file not loaded yet).
+  // car: brand, model, year, power ("110 kW (150 PS)"), displacementCcm,
+  // fuel, gearbox — what the ad says; the search filters fill the gaps.
+  // Each step narrows the versions only when something is left.
+  function mildHybridFor(car = {}, filters = {}) {
+    const rawBrand = car.brand || filters.brand;
+    const brand = typeof canonicalBrand === "function" ? canonicalBrand(rawBrand) : String(rawBrand || "");
+    const found = family(brand, String(car.model || filters.model || "").trim());
+    const spec = found && models[found.key];
+    if (!spec) return null;
+    const year = Number(String(car.year || "").match(/(?:19|20)\d{2}/)?.[0]) || 0;
+    const yearFrom = year || number(filters.yearFrom) || 0;
+    const yearTo = year || number(filters.yearTo) || 0;
+    const gens = new Set(spec.gens.map((gen, index) => ({ index, from: gen[2], to: gen[3], mobile: gen[4] }))
+      .filter((gen) => (!found.mobile || gen.mobile === found.mobile) && (gen.from || 0) <= (yearTo || 9999) && (gen.to || 9999) >= (yearFrom || 0))
+      .map((gen) => gen.index));
+    let rows = spec.versions.filter((row) => gens.has(row[0]));
+    const narrow = (test) => {
+      const left = rows.filter(test);
+      if (left.length) rows = left;
+    };
+    if (found.token) narrow((row) => row[8] === found.token);
+    const fuelText = lower(car.fuel);
+    if (/electr|elektr|plug/.test(fuelText)) return null;
+    const fuel = /diesel/.test(fuelText) ? "diesel" : /benzin|petrol|benzyna|bensin|essence|gasoline|бензин/.test(fuelText) ? "petrol" : "";
+    const fuels = fuel ? [fuel] : (filters.fuels || []).map((value) => String(value).replace(/^hybrid_/, "")).filter((value) => ["diesel", "petrol"].includes(value));
+    if (fuels.length) narrow((row) => fuels.includes(row[1]));
+    const ccm = Number(car.displacementCcm) || 0;
+    const ccFrom = number(filters.displacementFrom);
+    const ccTo = number(filters.displacementTo);
+    if (ccm) narrow((row) => Math.abs(row[2] - ccm) <= 60);
+    else if (ccFrom || ccTo) narrow((row) => (!ccFrom || row[2] >= ccFrom) && (!ccTo || row[2] <= ccTo));
+    const power = powerOf(car.power);
+    // The search keeps its power in KM whatever unit the form shows (mobile.js readManualFields).
+    const powerFrom = number(filters.powerFrom);
+    const powerTo = number(filters.powerTo);
+    if (power.hp || power.kw) narrow((row) => (power.hp && Math.abs(row[3] - power.hp) <= 3) || (power.kw && Math.abs(row[4] - power.kw) <= 2));
+    else if (powerFrom || powerTo) narrow((row) => (!powerFrom || row[3] >= powerFrom - 2) && (!powerTo || row[3] <= powerTo + 2));
+    const gearbox = gearboxOf(car.gearbox) || ({ automatic: "a", manual: "m" })[filters.gearbox] || "";
+    if (gearbox) narrow((row) => row[5] === gearbox);
+    if (!rows.length) return null;
+    const mild = rows.filter((row) => row[7] > 0 && row[7] <= (yearFrom || row[7]));
+    const anyMild = rows.filter((row) => row[7] && sinceOf(row) <= (yearTo || 9999));
+    if (!anyMild.length) return null;
+    return { status: mild.length === rows.length ? "yes" : "maybe", since: Math.min(...anyMild.map(sinceOf)) };
   }
 
   function versionOptions(sel) {
@@ -336,6 +434,7 @@
       dim(els.gearbox, null);
       dim(els.drive, null);
       dim(bodyInputs, null);
+      mildHint(null, []);
       return;
     }
     const bodies = bodiesOf(sel);
@@ -355,6 +454,40 @@
     // The drive too only when every matching version's drive is known.
     const driveKnown = rows.length && rows.every((row) => row[6]);
     dim(els.drive, driveKnown ? new Set(rows.map((row) => ({ f: "fwd", r: "rwd", 4: "awd" })[row[6]])) : null);
+    mildHint(sel, rows);
+  }
+
+  // Under "Moc": the mild hybrids among the matching engines and what to tell
+  // the client (owner 2026-10-10: "чтобы я сразу понимал что нужно сказать клиенту").
+  function mildHint(sel, rows) {
+    const box = document.querySelector("[data-mobile-mild-hint]");
+    if (!box) return;
+    const mild = sel ? rows.filter((row) => mildIn(sel, row)) : [];
+    box.hidden = !mild.length;
+    if (!mild.length) {
+      box.innerHTML = "";
+      return;
+    }
+    const ru = state.lang === "ru";
+    const fuelName = { diesel: "diesel", petrol: ru ? "бензин" : "benzyna" };
+    const engines = new Map();
+    mild.forEach((row) => {
+      // The gearbox only when the same engine also comes without the mild hybrid (eTSI DSG / TSI manual).
+      const twin = rows.some((other) => !mildIn(sel, other) && other[1] === row[1] && other[2] === row[2] && Math.abs(other[3] - row[3]) <= 3);
+      const gear = twin && row[5] ? (row[5] === "a" ? (ru ? " АКПП" : " automat") : (ru ? " МКПП" : " manual")) : "";
+      const name = `${(row[2] / 1000).toFixed(1)} ${fuelName[row[1]] || row[1]} ${row[3]} ${ru ? "л.с." : "KM"}${gear}`;
+      const since = Math.min(sinceOf(row), engines.get(name)?.since || 9999);
+      engines.set(name, { name, since, fuel: row[1], hp: row[3], optional: row[7] < 0 || engines.get(name)?.optional });
+    });
+    const list = [...engines.values()].sort((a, b) => a.fuel.localeCompare(b.fuel) || a.hp - b.hp);
+    const either = ru ? " (бывает и без него)" : " (bywa też bez)";
+    const shown = list.slice(0, 10).map((item) => `${item.name} ${ru ? "с" : "od"} ${item.since}${item.optional ? either : ""}`);
+    if (list.length > 10) shown.push(`+${list.length - 10}`);
+    const others = mild.length < rows.length || list.some((item) => item.optional);
+    const html = ru
+      ? `<b>Мягкий гибрид (MHEV)</b> — клиенту: акциз как у гибрида, 1,55 % (до 2000 см³) / 9,3 % (больше) вместо 3,1 % / 18,6 %.<br>${others ? "Двигатели" : "Все двигатели"}: ${shown.join(", ")}.${others ? " Остальные — обычный акциз." : ""}<br><small>В объявлении это часто не написано — сверяйте мощность и год.</small>`
+      : `<b>Miękka hybryda (MHEV)</b> — dla klienta: akcyza jak hybryda, 1,55 % (do 2000 cm³) / 9,3 % (powyżej) zamiast 3,1 % / 18,6 %.<br>${others ? "Silniki" : "Wszystkie silniki"}: ${shown.join(", ")}.${others ? " Pozostałe — zwykła akcyza." : ""}<br><small>Ogłoszenie często tego nie podaje — sprawdź moc i rok.</small>`;
+    if (box.innerHTML !== html) box.innerHTML = html;
   }
 
   document.addEventListener("input", () => refresh());
@@ -382,5 +515,5 @@
     return types.length ? new Set(types) : null;
   }
 
-  window.AUTOGOOD_MODEL_SPECS_UI = { enhance, refresh, family, bodyTypes };
+  window.AUTOGOOD_MODEL_SPECS_UI = { enhance, refresh, family, bodyTypes, mildHybridFor, ready };
 })();

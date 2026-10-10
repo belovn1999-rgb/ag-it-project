@@ -3425,6 +3425,10 @@
       title: listing.title,
       subtitle: listing.subtitle,
       displacementCcm: Number(listing.displacementCcm) || Number(details?.ccm) || null,
+      // A mild hybrid by the model table needs the year, power and gearbox (B61).
+      year: listing.year || listing.firstRegistration || null,
+      power: listing.power || "",
+      gearbox: listing.gearbox || "",
     };
   }
 
@@ -5689,7 +5693,7 @@
   function pdfExciseClasses(rows, filters) {
     const turnkey = window.AUTOGOOD_TURNKEY;
     const classes = rows.filter((row) => row.offer?.turnkey && turnkey?.engineInfo)
-      .map((row) => turnkey.engineInfo({ fuel: row.offer.fuel, title: row.offer.title, displacementCcm: row.offer.ccm }, filters).index);
+      .map((row) => turnkey.engineInfo({ fuel: row.offer.fuel, title: row.offer.title, displacementCcm: row.offer.ccm, year: row.offer.year, power: row.offer.power }, filters).index);
     return classes.length ? classes : searchExcise(filters).classes;
   }
 
@@ -5754,7 +5758,16 @@
       && (!ccFrom || row[2] >= ccFrom) && (!ccTo || row[2] <= ccTo));
     if (!rows.length || typeof classifyEngineType !== "function") return { index: fallback, classes: [fallback], settled: true };
     const fuelText = { electric: "electric", plugin: "plug-in hybrid", hybrid_petrol: "hybrid petrol", hybrid_diesel: "hybrid diesel", diesel: "diesel", petrol: "petrol" };
-    const classes = [...new Set(rows.map((row) => classifyEngineType(`${fuelText[row[1]] || row[1]}${row[7] ? " mild hybrid" : ""}`, row[2])))];
+    // row[7]: the year the version got its mild hybrid (0 = none; negative:
+    // also sold without it); before it the same version pays the combustion
+    // excise, so a search reaching earlier years counts both.
+    const classes = [...new Set(rows.flatMap((row) => {
+      const plain = classifyEngineType(fuelText[row[1]] || row[1], row[2]);
+      const since = Math.abs(row[7] || 0);
+      if (!since || (yearTo && yearTo < since)) return [plain];
+      const mild = classifyEngineType(`${fuelText[row[1]] || row[1]} mild hybrid`, row[2]);
+      return row[7] > 0 && yearFrom >= since ? [mild] : [mild, plain];
+    }))];
     const index = classes.reduce((best, item) => ((rates[item] ?? 0) > (rates[best] ?? 0) ? item : best), classes[0]);
     return { index, classes, settled: true };
   }
@@ -7485,6 +7498,8 @@
     const prices = Object.fromEntries(MARKET_SOURCES.map((source) => [source, job.prices?.[source] || null]));
     Object.keys(runnerProgress).forEach((key) => delete runnerProgress[key]);
     const progress = (source, info) => { runnerProgress[source] = { ...(runnerProgress[source] || {}), ...info }; };
+    // The model table first: a mild hybrid's "na gotowo" is counted with the hybrid's excise (B61).
+    await window.AUTOGOOD_MODEL_SPECS_UI?.ready?.(job.filters.brand);
     const read = await readMonitoringLists({ id: String(job.id), filters: job.filters, markets, countries, prices }, provider, progress);
     const fetched = normalizeListings(read.raw);
     if (fetched.length < 3) throw new Error("Fewer than 3 offers");
@@ -7603,6 +7618,8 @@
     if (currentPage() === "history") renderPriceHistoryPage();
     let ok = false;
     try {
+      // The model table first: a mild hybrid's "na gotowo" is counted with the hybrid's excise (B61).
+      await window.AUTOGOOD_MODEL_SPECS_UI?.ready?.(entry.filters?.brand);
       const filters = { ...entry.filters, markets };
       const scope = monitoringScopeOf(entry.id);
       Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
@@ -9111,6 +9128,9 @@
             fuel: recognised.fuel,
             title: recognised.title,
             displacementCcm: recognised.displacementCcm,
+            year: recognised.firstRegistration,
+            power: recognised.powerHp ? `${recognised.powerHp} PS` : "",
+            gearbox: recognised.gearbox,
           }, filters).total || convertPrice(recognised.carBruttoEur, "EUR", displayCurrency));
         const carYear = Number((String(recognised.firstRegistration || "").match(/(?:19|20)\d{2}/) || [])[0]) || null;
         const carMileage = Number(recognised.mileageKm) || null;
@@ -11199,6 +11219,12 @@
   // "na gotowo" again with it (before, it kept the old rates-file rate).
   window.addEventListener("autogood:rates", () => {
     if (activeAnalysis) renderAnalysis();
+  });
+  // The model table of the analysed brand came in after the analysis was
+  // drawn: its mild hybrids get the hybrid's excise (B61, owner 2026-10-10).
+  window.addEventListener("autogood:model-specs", (event) => {
+    const brand = typeof canonicalBrand === "function" ? canonicalBrand(activeAnalysis?.filters?.brand) : activeAnalysis?.filters?.brand;
+    if (activeAnalysis && brand && brand === event.detail?.brand) renderAnalysis();
   });
   analysisContent.addEventListener("change", (event) => {
     const pick = event.target.closest?.("[data-mobile-market-sort-select]");

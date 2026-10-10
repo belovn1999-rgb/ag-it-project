@@ -146,13 +146,29 @@
     let ccm = Number(listing.displacementCcm) || 0;
     let source = ccm ? "ad" : "";
     if (!ccm && (ccm = litresInText(name))) source = "title";
+    // A mild hybrid by the model table (B61, owner 2026-10-10): the ads seldom
+    // say it, the excise is the hybrid's. Only when every version the car can
+    // be (model, year, power, engine size, gearbox) is one in its year.
+    let mild = null;
+    if (!/hybrid|electric|elektr|plug/.test(fuelText) && window.AUTOGOOD_MODEL_SPECS_UI?.mildHybridFor) {
+      mild = window.AUTOGOOD_MODEL_SPECS_UI.mildHybridFor({
+        brand: listing.brand,
+        model: listing.model,
+        year: listing.year || listing.firstRegistration,
+        power: listing.power,
+        gearbox: listing.gearbox,
+        fuel: listing.fuel,
+        displacementCcm: ccm,
+      }, filters);
+      if (mild?.status === "yes") fuelText += " mild hybrid";
+    }
     if (!ccm && (from > 2000 || (to && to <= 2000))) {
       ccm = from > 2000 ? from : to;
       source = "filter";
     }
     const index = typeof classifyEngineType === "function" ? classifyEngineType(fuelText, ccm) : 3;
     // Electric cars pay no excise whatever the size.
-    return { index, ccm, source: source || (index === 0 && !/plug/.test(fuelText) ? "ad" : "unknown") };
+    return { index, ccm, source: source || (index === 0 && !/plug/.test(fuelText) ? "ad" : "unknown"), mild };
   }
 
   function engineClassFor(listing = {}, filters = {}) {
