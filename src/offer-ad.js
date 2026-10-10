@@ -240,7 +240,10 @@
       portalPrice: ad?.priceRating && MOBILE_RATING[ad.priceRating.rating]
         ? { portal: "mobile.de", label: MOBILE_RATING[ad.priceRating.rating], rating: ad.priceRating.rating, thresholds: ad.priceRating.thresholds || [] }
         : null,
-      vat: ad?.price ? { rate: ad.price.vat || 0, net: Math.round(ad.price.net || 0), gross: ad.price.gross || 0, deductible: Boolean(ad.price.vat) } : (data.carNettoEur ? { net: data.carNettoEur, deductible: true } : null),
+      vat: ad?.price ? { rate: ad.price.vat || 0, net: Math.round(ad.price.net || 0), gross: ad.price.gross || Number(data.carBruttoEur) || 0, deductible: Boolean(ad.price.vat) } : (data.carBruttoEur ? { rate: 0, net: Number(data.carNettoEur) || 0, gross: Number(data.carBruttoEur), deductible: Boolean(data.carNettoEur) } : null),
+      // The seller's own transport / inspection tariff (the importer counts it
+      // as page 1 does) — the offer made from a link starts its estimate here.
+      tariff: data.transportNettoPln ? { transport: Number(data.transportNettoPln) || 0, inspection: Number(data.inspectionNettoPln) || 0, rule: data.deliveryInspectionEstimate?.rule || "" } : null,
       flags: {
         damaged: Boolean(ad?.flags?.isDamageCase),
         readyToDrive: ad?.flags?.readyToDrive ?? null,

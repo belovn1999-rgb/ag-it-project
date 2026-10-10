@@ -10,6 +10,9 @@
     { href: "auctions.html", number: "03", label: "Аукционы", labelPl: "Aukcje" },
     { href: "partslink24.html", number: "04", label: "VIN" },
     { href: "mobile.html", number: "05", label: "Поиск и анализ", labelPl: "Wyszukiwanie i analiza" },
+    // B71 (owner 2026-10-10): the offer for a client from an ad's link; the
+    // offer sheet itself (oferta.html) belongs to it too.
+    { href: "oferty.html", number: "06", label: "Оффер", labelPl: "Oferta", also: ["oferta.html"] },
   ];
   // Pages with their own PL/RU switch opt in (data-ag-nav-follow-lang): the
   // bar then speaks the page's language. Every other page keeps it as it was.
@@ -54,7 +57,8 @@
     const link = document.createElement("a");
     const target = new URL(basePath + section.href, currentUrl);
     link.href = basePath + section.href;
-    if (target.pathname === currentUrl.pathname) link.setAttribute("aria-current", "page");
+    const current = [section.href, ...(section.also || [])].some((href) => new URL(basePath + href, currentUrl).pathname === currentUrl.pathname);
+    if (current) link.setAttribute("aria-current", "page");
     link.innerHTML = `<b>${section.number}</b><span>${section.label}</span>`;
     link.querySelector("span").dataset.labelRu = section.label;
     link.querySelector("span").dataset.labelPl = section.labelPl || section.label;

@@ -318,8 +318,54 @@
     return ` style="object-position:${focus};transform:scale(${zoom});transform-origin:${focus}"`;
   }
 
+  // Without Monitoring (an offer made from a link, program 06): the portal's
+  // own scale of prices — mobile.de's five bands from "bardzo dobra" to
+  // "wysoka cena", AutoScout24's median — and Carvago's lines.
+  const BANDS = ["bardzo dobra cena", "dobra cena", "uczciwa cena", "podwyższona cena", "wysoka cena"];
+  const RATING_BAND = { VERY_GOOD_PRICE: 0, GOOD_PRICE: 1, REASONABLE_PRICE: 2, INCREASED_PRICE: 3, HIGH_PRICE: 4 };
+  const euroNumber = (label) => Number(String(label || "").replace(/[^\d]/g, "")) || 0;
+  function carvagoLines() {
+    if (!offer.carvago?.found || isHidden("carvago")) return "";
+    const active = offer.carvago.active;
+    return `${active?.count ? `<p class="ofActive">${field("carvagoActive", `Aktywnych podobnych ofert w Europie: ${numbers.format(active.count)}${active.kind === "search" ? ` (rok ${active.yearFrom}-${active.yearTo}, przebieg ${thousands(active.kmFrom)}-${thousands(active.kmTo)} tys. km)` : ""}`, "span")}</p>` : ""}
+      ${priceTrendHtml(offer.carvago.history, offer.carvago.changes, offer.carvago.listedSince)}`;
+  }
+  function portalMarket(view) {
+    const rating = offer.ad?.portalPrice;
+    const limits = (rating?.thresholds || []).map(euroNumber);
+    const band = RATING_BAND[rating?.rating];
+    let body = "";
+    if (rating?.portal === "mobile.de" && limits.length === 6 && limits.every((value, index) => value > 0 && (!index || value > limits[index - 1])) && band !== undefined) {
+      const low = limits[0];
+      const span = limits[5] - low;
+      const at = Math.min(98, Math.max(2, ((view.price - low) / span) * 100));
+      const range = (index) => `${numbers.format(limits[index])}-${numbers.format(limits[index + 1])} €`;
+      body = `
+        <div class="ofBands" role="img" aria-label="Skala cen mobile.de: ${esc(BANDS[band])}">
+          ${BANDS.map((name, index) => `<span class="ofBand is${index}" style="width:${(((limits[index + 1] - limits[index]) / span) * 100).toFixed(1)}%" title="${esc(`${name}: ${range(index)}`)}"></span>`).join("")}
+          <span class="ofBarCar${band >= 3 ? " isDear" : ""}" style="left:${at.toFixed(1)}%"></span>
+        </div>
+        <div class="ofBarLegend"><span class="isCar">to auto ${esc(money(view.price, view.currency))}</span><span>uczciwa cena <b>${esc(range(2))}</b></span></div>
+        ${field("marketLead", `Wg skali cen mobile.de dla tego auta: „${BANDS[band]}” (${range(band)}).`, "p", "ofMarketLead")}
+        ${field("marketTypical", "Ocena portalu mobile.de na tle podobnych ofert.", "p", "ofSmall")}`;
+    } else if (rating?.portal === "AutoScout24" && rating.median > 0 && view.price > 0) {
+      const share = view.price / rating.median - 1;
+      body = `${field("marketLead", `Mediana podobnych ofert wg AutoScout24: ${money(rating.median, "EUR")} - to auto ${share <= 0 ? `${percent(share).replace("−", "")} taniej` : `${percent(share)} drożej`}.`, "p", "ofMarketLead")}`;
+    }
+    const carvago = carvagoLines();
+    if (!body && !carvago) return "";
+    return `
+            <section class="ofCard${blockClass("market")}" data-block="market">
+              ${hideToggle("market")}
+              <p class="ofCardHead">${icon("chart")}Cena na tle rynku</p>
+              ${body}
+              ${carvago}
+            </section>`;
+  }
+
   function sheetOne(view) {
     const market = marketView(view);
+    const portalCard = market ? "" : portalMarket(view);
     const poland = polandView();
     const costView = costs();
     const verdict = verdictView(view);
@@ -333,7 +379,7 @@
     const chips = [];
     if (market && market.vsMedian <= -0.03) chips.push(`<span class="ofChip isGood">${icon("down")}${percent(market.vsMedian)} poniżej mediany rynku</span>`);
     if (poland?.saving >= 1000) chips.push(`<span class="ofChip isGood">ok. ${money(Math.round(poland.saving / 500) * 500, "PLN")} taniej niż w Polsce</span>`);
-    if (offer.ad?.portalPrice?.label && /dobra|uczciwa/.test(offer.ad.portalPrice.label)) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(offer.ad.portalPrice.label)}</span>`);
+    if (offer.ad?.portalPrice?.label && /dobra|uczciwa/.test(offer.ad.portalPrice.label) && !(portalCard.includes("ofBands") && !isHidden("market"))) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(offer.ad.portalPrice.label)}</span>`);
     const subtitle = [view.reg, kmText(view.mileage), view.powerHp ? `${view.powerHp} KM` : "", view.gearbox, view.fuel].filter(Boolean).join(" · ");
     const specs = [
       ["1. rejestracja", view.reg],
@@ -410,10 +456,9 @@
               <div class="ofBarLegend"><span class="isCar">to auto ${esc(money(view.price, market.currency))}</span><span>mediana <b>${esc(money(market.stats.median, market.currency))}</b></span></div>
               ${field("marketLead", market.lead, "p", "ofMarketLead")}
               ${field("marketTypical", market.typical, "p", "ofSmall")}
-              ${offer.carvago?.found && offer.carvago.active?.count && !isHidden("carvago") ? `<p class="ofActive">${field("carvagoActive", `Aktywnych podobnych ofert w Europie: ${numbers.format(offer.carvago.active.count)}${offer.carvago.active.kind === "search" ? ` (rok ${offer.carvago.active.yearFrom}-${offer.carvago.active.yearTo}, przebieg ${thousands(offer.carvago.active.kmFrom)}-${thousands(offer.carvago.active.kmTo)} tys. km)` : ""}`, "span")}</p>` : ""}
-              ${offer.carvago?.found && !isHidden("carvago") ? priceTrendHtml(offer.carvago.history, offer.carvago.changes, offer.carvago.listedSince) : ""}
+              ${carvagoLines()}
               ${poland ? `<div class="ofPoland${polandHidden(poland) ? " ofBlockHidden" : ""}">${field("polandLine", poland.line, "span")}</div>` : ""}
-            </section>` : ""}
+            </section>` : portalCard}
             ${verdict ? `
             <section class="ofCard${blockClass("verdict")}" data-block="verdict">
               ${hideToggle("verdict")}
@@ -648,7 +693,7 @@
         <article class="ofPage${styleClass()} isProcess-${style}" data-page="2">
           ${headHtml(2, view)}
           <div class="ofPageTwo">${body}</div>
-          ${field("note", `Dane z ogłoszenia na ${PORTAL[offer.source] || "portalu"} i z rynku na dzień ${dateText(offer.market?.at || offer.createdAt)}. Ceny w ogłoszeniach mogą się zmienić. Stan techniczny, historię i dokumenty auta sprawdzamy przed zakupem.`, "p", "ofNote")}
+          ${field("note", `Dane z ogłoszenia na ${PORTAL[offer.source] || "portalu"}${offer.market ? " i z rynku" : ""} na dzień ${dateText(offer.market?.at || offer.createdAt)}. Ceny w ogłoszeniach mogą się zmienić. Stan techniczny, historię i dokumenty auta sprawdzamy przed zakupem.`, "p", "ofNote")}
           <footer class="ofFoot">
             <span><b>AUTOGOOD</b> · import aut z Europy</span>
             <span>${esc([company.web, company.phone, company.email].filter(Boolean).join(" · "))}</span>
@@ -690,7 +735,7 @@
     return `
       <section class="ofPanelCard">
         <h2>Oferta ${esc(offer.number || "")}</h2>
-        <p>Utworzona ${esc(dateText(offer.createdAt))} ${esc(timeText(offer.createdAt))} z Monitoringu: ${esc(offer.favoriteTitle || "")}. Rynek z dnia ${esc(dateText(offer.market?.at || offer.createdAt))}.</p>
+        <p>Utworzona ${esc(dateText(offer.createdAt))} ${esc(timeText(offer.createdAt))} ${offer.origin === "link" ? `z linku ogłoszenia (program „Oferta”). Bez danych rynku - pojawią się w ofercie z Monitoringu.` : `z Monitoringu: ${esc(offer.favoriteTitle || "")}. Rynek z dnia ${esc(dateText(offer.market?.at || offer.createdAt))}.`}</p>
         <div class="ofPanelRow">
           <label>Zwrot<select data-client-salutation>${Object.keys(SALUTATION).map((key) => `<option${client.salutation === key ? " selected" : ""}>${esc(key)}</option>`).join("")}</select></label>
           <label>Klient (opcjonalnie)<input data-client-name value="${esc(client.name || "")}" placeholder="np. Jan Kowalski" /></label>
@@ -1388,6 +1433,14 @@
       const clean = new URL(window.location.href);
       clean.searchParams.delete("new");
       window.history.replaceState(null, "", clean.toString());
+    }
+    // An offer made from a link goes back to program 06 "Oferta".
+    if (offer.origin === "link") {
+      const back = document.querySelector(".offerBack");
+      if (back) {
+        back.href = "./oferty.html";
+        back.textContent = "← Oferta";
+      }
     }
     render();
     setStatus(`Oferta ${offer.number || ""} · zapisana w tej przeglądarce`);

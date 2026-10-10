@@ -863,3 +863,18 @@
 .ofCompanyLine svg { width: 12px; height: 12px; flex: none; margin-top: 2px; color: var(--of-brand); }
 .isPremium .ofRoadStep, .isPremium .ofStageCol { background: #ffffff; }
 .ofPage .ofTrendLine { margin-top: 2px; }
+
+/* Without Monitoring (program 06): mobile.de's own scale of prices, five
+   bands from "bardzo dobra" (green) to "wysoka cena" (red). */
+.ofBands { position: relative; display: flex; height: 8px; margin: 14px 4px 6px; border-radius: 999px; overflow: visible; }
+.ofBand { height: 100%; }
+.ofBand:first-child { border-radius: 999px 0 0 999px; }
+.ofBand:nth-last-child(2) { border-radius: 0 999px 999px 0; }
+.ofBand.is0 { background: #1d6a3b; }
+.ofBand.is1 { background: #6fae7f; }
+.ofBand.is2 { background: #c9d5df; }
+.ofBand.is3 { background: #e6b56a; }
+.ofBand.is4 { background: #c46a4f; }
+.ofBands .ofBarCar { top: 50%; margin-top: -8px; }
+/* No market card at all: the verdict takes the whole row. */
+.isPremium[data-page="1"]:not(:has([data-block="market"])) [data-block="verdict"] { grid-column: market-start / verdict-end; }

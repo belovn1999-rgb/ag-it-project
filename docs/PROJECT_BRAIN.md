@@ -14,7 +14,7 @@
 | Область | Страницы | Файл | О чём |
 |---|---|---|---|
 | Поиск и анализ рынка: Mobile.de / AutoScout24 / Otomoto / Blocket / av.by | `mobile.html` | [PROJECT-MOBILE.md](PROJECT-MOBILE.md) | **§0 — текущая ситуация и план**, правила для параллельных чатов (§2), механизмы, решения, бэклог, журнал. Главный документ этой области. |
-| Оффер для клиента (B71) | `oferta.html`, кнопка на стр. 3 `mobile.html` | [OFFER-PAGE.md](OFFER-PAGE.md) | Цель и решения владельца, какие данные дают порталы, правила текстов клиенту, архитектура, волны |
+| Оффер для клиента (B71) | программа 06 `oferty.html` (ссылка → оффер), `oferta.html` (сам оффер), кнопка на стр. 3 `mobile.html` | [OFFER-PAGE.md](OFFER-PAGE.md) | Цель и решения владельца, какие данные дают порталы, правила текстов клиенту, архитектура, волны |
 | Фильтры поиска | `mobile.html` | [FILTERS-MOBILE-OTOMOTO.md](FILTERS-MOBILE-OTOMOTO.md) | Поле формы → параметр URL каждого портала |
 | Справочник моделей (ultimatespecs) и зависимые фильтры | `mobile.html` | [MODEL-GENERATIONS.md](MODEL-GENERATIONS.md), [MODEL-ENGINES.md](MODEL-ENGINES.md), [MODEL-TRIMS.md](MODEL-TRIMS.md), [MODEL-AUTOCENTRUM-CHECK.md](MODEL-AUTOCENTRUM-CHECK.md) | Цель и этапы — PROJECT-MOBILE.md §4.8 (B61): поколения, двигатели (дорест/рест, коробка, привод), комплектации ЕС; сверка со вторым источником autocentrum.pl (чего у нас нет). Crawl-delay ultimatespecs 30 с |
 | Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
@@ -71,6 +71,7 @@
 
 ## 8. Журнал
 
+- 2026-10-10 — B71: программа 06 «Oferta» (`oferty.html`) — ссылка объявления дилера → данные авто → «Przygotuj ofertę PDF» (mobile.de, AutoScout24 DE/FR, Kleinanzeigen, ParuVendu); переключатель «Z raportu aukcji» — в другом чате; без Monitoring рынок — шкала цен mobile.de / медиана AutoScout24 + Carvago; пункт 06 в навигации (Claude).
 - 2026-10-09 — mobile.html, стр. 2: одна машина — одно предложение (одинаковые цена, пробег и год = дубль); на графике, в статистике, в «Aktualne oferty» и в истории цен остаётся одна копия — со ссылкой и с главного портала (Claude).
 - 2026-10-09 — mobile.html: пробелы между тысячами и в бюджете/ценах Monitoring, ценах избранного, конвертере, «Porównaj cenę» (Claude).
 - 2026-10-09 — mobile.html, стр. 1: пробег и цена в полях с пробелами между тысячами («150 000»), в поиск уходят чистые цифры (Claude).
