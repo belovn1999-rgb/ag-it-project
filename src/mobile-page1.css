@@ -1786,19 +1786,75 @@
   border-color: var(--color-primary-rule);
 }
 
-/* Page 1: the section rail on the left (owner 2026-10-08) — quiet until
-   hovered, in the empty margin beside the page; names on wide screens,
-   icons alone where the margin is narrow, none on small screens. */
+/* Page 1: the section rail on the left (owner 2026-10-08) — in the empty
+   margin beside the page, a little see-through until hovered. Owner 10.10:
+   icons only (the name shows beside the icon on hover), larger, each
+   section in its own colour — the same as its heading's icon on the page —
+   with a border and a shadow; none on screens too narrow for it. */
+.mobileBody {
+  --ag-section-link: #2563eb;
+  --ag-section-offers: #0f766e;
+  --ag-section-vehicle: #7c3aed;
+  --ag-section-engine: #ca8a04;
+  --ag-section-gearbox: #0891b2;
+  --ag-section-price: #16a34a;
+  --ag-section-equipment: #db2777;
+  --ag-section-more: #c2410c;
+  --ag-section-history: #475569;
+}
+
+.mobileSectionRail [data-section="link"],
+#mobile-listing-link-heading { --ag-section: var(--ag-section-link); }
+.mobileSectionRail [data-section="offers"],
+.mobileManualPanelHeadRow .mobileFilterCardTitle { --ag-section: var(--ag-section-offers); }
+.mobileSectionRail [data-section="vehicle"],
+#mobile-filter-group-vehicle { --ag-section: var(--ag-section-vehicle); }
+.mobileSectionRail [data-section="engine"],
+#mobile-filter-group-engine { --ag-section: var(--ag-section-engine); }
+.mobileSectionRail [data-section="gearbox"],
+#mobile-filter-group-gearbox { --ag-section: var(--ag-section-gearbox); }
+.mobileSectionRail [data-section="price"],
+#mobile-filter-group-price { --ag-section: var(--ag-section-price); }
+.mobileSectionRail [data-section="equipment"],
+#mobile-filter-group-equipment { --ag-section: var(--ag-section-equipment); }
+.mobileSectionRail [data-section="more"],
+#mobile-filter-group-more { --ag-section: var(--ag-section-more); }
+.mobileSectionRail [data-section="history"],
+.mobileMarketHistoryTitle { --ag-section: var(--ag-section-history); }
+
+/* The sections' headings on page 1: the icon in its section's colour, a
+   size larger. */
+#mobile-listing-link-heading .mobileFieldIcon,
+.mobileManualPanelHeadRow .mobileFilterCardTitle .mobileFieldIcon,
+#mobile-filter-group-vehicle .mobileFieldIcon,
+#mobile-filter-group-engine .mobileFieldIcon,
+#mobile-filter-group-gearbox .mobileFieldIcon,
+#mobile-filter-group-price .mobileFieldIcon,
+#mobile-filter-group-equipment .mobileFieldIcon,
+#mobile-filter-group-more .mobileFieldIcon,
+.mobileMarketHistoryTitle .mobileFieldIcon {
+  width: 18px;
+  height: 18px;
+  border: var(--rule-thin) solid color-mix(in srgb, var(--ag-section) 22%, transparent);
+  background: color-mix(in srgb, var(--ag-section) 11%, var(--color-surface));
+  color: var(--ag-section);
+  box-shadow: 0 2px 6px -3px color-mix(in srgb, var(--ag-section) 45%, transparent);
+  /* Outlined like the rail's icons (they were filled black inside). */
+  fill: none;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .mobileSectionRail {
   position: fixed;
   z-index: 800;
   top: 50%;
-  left: max(4px, calc((100vw - 1200px) / 2 - 122px));
+  left: max(6px, calc((100vw - 1200px) / 2 - 62px));
   transform: translateY(-50%);
   display: grid;
-  gap: 2px;
-  width: 110px;
-  opacity: 0.5;
+  gap: 9px;
+  opacity: 0.8;
   transition: opacity 0.2s ease;
 }
 
@@ -1812,38 +1868,40 @@
 }
 
 .mobileSectionRail button {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  min-width: 0;
-  min-height: 28px;
-  border: 0;
-  border-radius: var(--radius-md);
-  background: transparent;
-  color: var(--color-muted);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: var(--rule-thin) solid color-mix(in srgb, var(--ag-section) 30%, var(--color-rule));
+  border-radius: 11px;
+  background: var(--color-surface);
+  color: var(--ag-section);
   font: inherit;
-  font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 1.2;
-  text-align: left;
-  padding: 4px 6px;
+  padding: 0;
+  box-shadow: 0 3px 8px -3px rgba(22, 43, 72, 0.28), 0 1px 2px rgba(22, 43, 72, 0.08);
   cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-.mobileSectionRail button:hover {
-  background: color-mix(in srgb, var(--color-surface) 80%, transparent);
-  color: var(--color-ink);
+.mobileSectionRail button:hover,
+.mobileSectionRail button:focus-visible {
+  border-color: var(--ag-section);
+  background: color-mix(in srgb, var(--ag-section) 10%, var(--color-surface));
+  box-shadow: 0 6px 14px -5px color-mix(in srgb, var(--ag-section) 55%, transparent), 0 1px 2px rgba(22, 43, 72, 0.1);
 }
 
+/* The section in view: filled with its colour. */
 .mobileSectionRail button.isCurrent {
-  color: var(--color-primary);
-  font-weight: 800;
+  border-color: var(--ag-section);
+  background: var(--ag-section);
+  color: #fff;
+  box-shadow: 0 6px 14px -5px color-mix(in srgb, var(--ag-section) 70%, transparent);
 }
 
 .mobileSectionRail svg {
-  flex: none;
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -1851,28 +1909,34 @@
   stroke-linejoin: round;
 }
 
+/* The name, beside the icon on hover. */
 .mobileSectionRail span {
-  min-width: 0;
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 9px);
+  border: var(--rule-thin) solid color-mix(in srgb, var(--ag-section) 35%, var(--color-rule));
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--ag-section);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  padding: 6px 10px;
+  box-shadow: 0 6px 16px -6px rgba(22, 43, 72, 0.35);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-4px, -50%);
+  transition: opacity 0.15s ease, transform 0.15s ease;
 }
 
-@media (max-width: 1439px) {
-  .mobileSectionRail {
-    left: max(4px, calc((100vw - 1200px) / 2 - 46px));
-    width: auto;
-  }
-
-  .mobileSectionRail span {
-    display: none;
-  }
-
-  .mobileSectionRail button {
-    justify-content: center;
-    width: 30px;
-    padding: 4px;
-  }
+.mobileSectionRail button:hover span,
+.mobileSectionRail button:focus-visible span {
+  opacity: 1;
+  transform: translate(0, -50%);
 }
 
-@media (max-width: 1279px) {
+@media (max-width: 1299px) {
   .mobileSectionRail {
     display: none;
   }

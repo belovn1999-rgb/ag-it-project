@@ -626,36 +626,34 @@
     updateMore();
   }
 
-  // ---- Section rail (owner 2026-10-08): on the left of page 1, a quiet
-  // button per section; a click takes the page to the section's start. The
-  // section in view is marked. Names and icons come from the sections' own
-  // headings (PL / RU follow).
+  // ---- Section rail (owner 2026-10-08): on the left of page 1, a button
+  // per section; a click takes the page to the section's start. The section
+  // in view is marked. Icons only, the name shows on hover (owner 10.10);
+  // each section has its colour, the same as its heading's icon on the page
+  // (mobile-page1.css, --ag-section-*). Names and icons come from the
+  // sections' own headings (PL / RU follow).
   const SECTIONS = [
-    [".mobileListingLinkCard", "#mobile-listing-link-heading"],
-    [".mobileManualPanel", "[data-i18n='offerCountLabel']"],
-    ["#mobile-filter-group-vehicle", ""],
-    ["#mobile-filter-group-engine", ""],
-    ["#mobile-filter-group-gearbox", ""],
-    ["#mobile-filter-group-price", ""],
-    ["#mobile-filter-group-equipment", ""],
-    ["#mobile-filter-group-more", ""],
-    ["[data-mobile-market-history]", ".mobileMarketHistoryTitle"],
+    [".mobileListingLinkCard", "#mobile-listing-link-heading", "link"],
+    [".mobileManualPanel", "[data-i18n='offerCountLabel']", "offers"],
+    ["#mobile-filter-group-vehicle", "", "vehicle"],
+    ["#mobile-filter-group-engine", "", "engine"],
+    ["#mobile-filter-group-gearbox", "", "gearbox"],
+    ["#mobile-filter-group-price", "", "price"],
+    ["#mobile-filter-group-equipment", "", "equipment"],
+    ["#mobile-filter-group-more", "", "more"],
+    ["[data-mobile-market-history]", ".mobileMarketHistoryTitle", "history"],
   ];
-  const RAIL_NAMES = {
-    pl: ["Link", "Oferty", "Pojazd", "Silnik", "Skrzynia", "Cena", "Wyposażenie", "Inne filtry", "Historia"],
-    ru: ["Ссылка", "Объявления", "Авто", "Двигатель", "Коробка", "Цена", "Оснащение", "Фильтры", "История"],
-  };
   const manualView = document.querySelector("[data-mobile-method-view='manual']");
   const rail = document.createElement("nav");
   rail.className = "mobileSectionRail";
   rail.hidden = true;
-  const railTargets = SECTIONS.map(([target, heading], place) => {
+  const railTargets = SECTIONS.map(([target, heading, key]) => {
     let section = document.querySelector(target);
     if (section?.matches("h2")) section = section.closest("section");
     const title = heading ? document.querySelector(heading) : section?.querySelector("h2");
-    return section && title ? { section, title, place } : null;
+    return section && title ? { section, title, key } : null;
   }).filter(Boolean);
-  rail.innerHTML = railTargets.map((_, index) => `<button type="button" data-section-rail="${index}"><svg aria-hidden="true"><use></use></svg><span></span></button>`).join("");
+  rail.innerHTML = railTargets.map(({ key }, index) => `<button type="button" data-section-rail="${index}" data-section="${key}"><svg aria-hidden="true"><use></use></svg><span></span></button>`).join("");
   const railButtons = [...rail.querySelectorAll("button")];
   // Under the navigation and the slim bar (it shows once the chosen filters
   // are scrolled away; its last height is kept while hidden).
@@ -668,13 +666,12 @@
   const nameRail = () => {
     const anyIcon = railTargets.find(({ section }) => section.querySelector("h2 use"))?.section.querySelector("h2 use")?.getAttribute("href");
     rail.setAttribute("aria-label", lang() === "ru" ? "Разделы" : "Sekcje");
-    railTargets.forEach(({ section, title, place }, index) => {
-      // A short name in the rail, the heading's full name on hover.
+    railTargets.forEach(({ section, title }, index) => {
+      // The heading's name, shown beside the icon on hover.
       const name = (title.querySelector("span") || title).textContent.trim();
-      const label = RAIL_NAMES[lang()][place] || name;
+      const label = name.charAt(0) + name.slice(1).toLowerCase();
       const button = railButtons[index];
       if (button.lastChild.textContent !== label) button.lastChild.textContent = label;
-      if (button.title !== name) button.title = name;
       const icon = (title.closest("h2") || section.querySelector("h2"))?.querySelector("use")?.getAttribute("href") || anyIcon;
       if (icon && button.querySelector("use").getAttribute("href") !== icon) button.querySelector("use").setAttribute("href", icon);
     });
