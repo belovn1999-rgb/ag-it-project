@@ -439,7 +439,6 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-
 }
 
 /* ---- B18 (04.10): the values set as chips with ×, under the chosen
@@ -771,7 +770,6 @@
 .mobilePortalFilterRow.isOff .mobilePortalFilterOff {
   display: block;
 }
-
 
 .mobileMoreFiltersCard .mobileVehicleChecks .mobileCheckOption {
   flex-wrap: wrap;
@@ -1364,32 +1362,6 @@
   }
 }
 
-/* ---- 05.10: the link's portal — one list over "Rozpoznaj", every portal on
-   its own, grouped by country. ---- */
-.mobileLinkSourcePick {
-  display: block;
-  margin-left: auto;
-}
-
-.mobileLinkSourceSelect {
-  min-height: 36px;
-  min-width: 190px;
-  border: var(--rule-thin) solid var(--color-field);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  color: var(--color-ink);
-  padding: 0 32px 0 var(--space-sm);
-  font: inherit;
-  font-size: var(--text-sm);
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.mobileLinkSourceSelect:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 1px;
-}
-
 /* ---- 05.10: a country's total in its column head. ---- */
 .agMarketColumnTotal {
   display: flex;
@@ -1548,34 +1520,6 @@
   width: max-content;
 }
 
-/* 05.10: the portal list in the chosen portal's colour (the old buttons'). */
-.mobileLinkSourceSelect[data-source] {
-  border-color: transparent;
-  color: #fff;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23fff' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 12px 8px;
-  appearance: none;
-}
-
-.mobileLinkSourceSelect[data-source="mobile"] { background-color: #b84f00; }
-.mobileLinkSourceSelect[data-source="autoscout"] { background-color: #7a6500; }
-.mobileLinkSourceSelect[data-source="kleinanzeigen"] { background-color: #1d4b00; }
-.mobileLinkSourceSelect[data-source="marktplaats"] { background-color: #0b6e86; }
-.mobileLinkSourceSelect[data-source="dehands"] { background-color: #a3154a; }
-.mobileLinkSourceSelect[data-source="otomoto"] { background-color: #1d5fd0; }
-.mobileLinkSourceSelect[data-source="blocket"] { background-color: #d0101a; }
-.mobileLinkSourceSelect[data-source="autoscoutfr"] { background-color: #6b3fb8; }
-.mobileLinkSourceSelect[data-source="paruvendu"] { background-color: #c8102e; }
-.mobileLinkSourceSelect[data-source="avby"] { background-color: #0b4da2; }
-
-.mobileLinkSourceSelect optgroup,
-.mobileLinkSourceSelect option {
-  background: #fff;
-  color: #1a2433;
-}
-
 /* 05.10: "Język sprawdzenia" left of PL/RU (page 1); the portal list right of
    "Link ogłoszenia", a little duller; the star right after the car's name. */
 .mobileLangLabel {
@@ -1595,14 +1539,6 @@
   justify-content: flex-start;
 }
 
-.mobileLinkSourcePick {
-  margin-left: 0;
-}
-
-.mobileLinkSourceSelect[data-source] {
-  filter: saturate(0.6) brightness(1.08);
-}
-
 .mobileSearchSummary .agSpecTitleLine {
   display: flex;
   align-items: center;
@@ -1612,25 +1548,6 @@
 .mobileSearchSummary .agSpecTitleLine .mobileSearchSummaryStar {
   position: static;
   flex: none;
-}
-
-/* 05.10: the portal list on the centre line of "Link ogłoszenia" (a flex box,
-   no line-box gap under the list) and half-transparent. */
-.mobileLinkSourcePick {
-  display: flex;
-  align-items: center;
-  /* Measured 05.10: the heading's text sits 6.5 px above its box's middle. */
-  transform: translateY(-6.5px);
-}
-
-.mobileLinkSourceSelect[data-source] {
-  opacity: 0.72;
-  transition: opacity 0.12s ease;
-}
-
-.mobileLinkSourceSelect[data-source]:hover,
-.mobileLinkSourceSelect[data-source]:focus-visible {
-  opacity: 1;
 }
 
 /* 05.10: a favourite's ad (the link the analysis started from) — a small
@@ -1756,25 +1673,6 @@
   }
 }
 
-/* 07.10 (owner): the portal list transparent, its name (and the arrow) in
-   the portal's brand colour; full strength, no dimming. */
-.mobileLinkSourceSelect[data-source] {
-  border-color: var(--color-rule);
-  background-color: transparent;
-  filter: none;
-  opacity: 1;
-}
-.mobileLinkSourceSelect[data-source="mobile"] { background-color: transparent; color: #b84f00; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23b84f00' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="autoscout"] { background-color: transparent; color: #7a6500; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%237a6500' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="kleinanzeigen"] { background-color: transparent; color: #1d4b00; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%231d4b00' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="marktplaats"] { background-color: transparent; color: #0b6e86; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%230b6e86' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="dehands"] { background-color: transparent; color: #a3154a; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23a3154a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="otomoto"] { background-color: transparent; color: #1d5fd0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%231d5fd0' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="blocket"] { background-color: transparent; color: #d0101a; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23d0101a' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="autoscoutfr"] { background-color: transparent; color: #6b3fb8; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%236b3fb8' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="paruvendu"] { background-color: transparent; color: #c2410c; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%23c2410c' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.mobileLinkSourceSelect[data-source="avby"] { background-color: transparent; color: #0b4da2; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%230b4da2' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-
 /* Page 1, "Aktualne oferty": the whole country block switches it (owner
    2026-10-08), not only its name. */
 .mobileManualPanel .agMarketColumn {
@@ -1889,18 +1787,45 @@
   transform: translateY(-50%);
   display: grid;
   gap: 9px;
-  border: var(--rule-thin) solid var(--color-rule);
-  border-radius: 16px;
-  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  /* Owner 10.10: a "liquid glass" frame, like the new iPhones — a
+     see-through, blurred and brightened pane with a light edge and a sheen
+     on top. */
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 20px;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.28) 55%, rgba(255, 255, 255, 0.45) 100%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
   padding: 8px;
-  box-shadow: 0 10px 24px -14px rgba(22, 43, 72, 0.35);
-  opacity: 0.85;
-  transition: opacity 0.2s ease;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.35),
+    inset 0 0 0 0.5px rgba(22, 43, 72, 0.06),
+    0 12px 32px -12px rgba(22, 43, 72, 0.32),
+    0 2px 6px rgba(22, 43, 72, 0.06);
+  transition: box-shadow 0.2s ease;
+}
+
+.mobileSectionRail::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(120% 45% at 30% 0%, rgba(255, 255, 255, 0.75), transparent 70%);
+  pointer-events: none;
+}
+
+.mobileSectionRail button {
+  z-index: 1;
 }
 
 .mobileSectionRail:hover,
 .mobileSectionRail:focus-within {
-  opacity: 1;
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.4),
+    inset 0 0 0 0.5px rgba(22, 43, 72, 0.08),
+    0 16px 36px -12px rgba(22, 43, 72, 0.4),
+    0 2px 6px rgba(22, 43, 72, 0.08);
 }
 
 .mobileSectionRail[hidden] {
@@ -1915,7 +1840,7 @@
   height: 40px;
   border: var(--rule-thin) solid color-mix(in srgb, var(--ag-section) 30%, var(--color-rule));
   border-radius: 11px;
-  background: var(--color-surface);
+  background: rgba(255, 255, 255, 0.78);
   color: var(--ag-section);
   font: inherit;
   padding: 0;
@@ -1993,4 +1918,36 @@
 
 .mobileFavoritesBar .mobileMarketFavoriteItem.isDragging .mobileMarketFavorite {
   border-style: dashed;
+}
+
+/* Page 1 (owner 2026-10-10): the link's portal is told by the link — its
+   logo next to "Link ogłoszenia"; the portals taken are listed under the
+   field. */
+.mobileLinkSourceBadge {
+  display: inline-flex;
+  align-items: center;
+  height: 28px;
+  border: var(--rule-thin) solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  padding: 0 10px;
+  box-shadow: 0 2px 6px -3px rgba(22, 43, 72, 0.3);
+}
+
+.mobileLinkSourceBadge[hidden] {
+  display: none;
+}
+
+.mobileLinkSourceBadge img {
+  display: block;
+  max-width: 110px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.mobileLinkPortals {
+  margin: 6px 0 0;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  line-height: 1.4;
 }

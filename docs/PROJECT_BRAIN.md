@@ -72,6 +72,7 @@
 
 ## 8. Журнал
 
+- 2026-10-10 — mobile.html, стр. 1: портал ссылки объявления определяется сам (значок у заголовка, список убран, под полем — какие порталы принимаются); рамка кнопок разделов — «жидкое стекло» (Claude).
 - 2026-10-10 — mobile.html, стр. 2 (B22, вариант Б): в «Aktualne oferty» колонки «W ofercie» и «Obniżka» с «Do negocjacji» — из даты/цены портала (otomoto, Blocket) и всех проверок поиска (Monitoring, «Odśwież dane»), так что и для mobile.de/AutoScout24 (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring, аудит (6/10) волна 1: портал без ответа больше не «всё исчезло» (последний ответ с датой), ссылки Marktplaats/2dehands/Kleinanzeigen/ParuVendu открываются, AutoScout24 читает модели с кузовом в названии (CLA 180 Shooting Brake), адрес туннеля mobile.de удалён из кода (Claude).
 - 2026-10-10 — B71 «Oferta»: только офферы без анализа рынка; ссылки со всех порталов стр. 1 (добавлены Marktplaats/2dehands, otomoto, Blocket, av.by), портал по ссылке без выбора, переключатель PL / RU — оффер на выбранном языке; Worker: хост фото otomoto ждёт выкладки (Claude).

@@ -15,6 +15,8 @@ const copy = {
     manualChoiceDescription: "Uzupełnij parametry auta samodzielnie.",
     backToMethods: "← Wybierz metodę",
     inputLabel: "Link ogłoszenia",
+    linkPortalsHint: "Przyjmujemy linki do ogłoszeń: mobile.de, AutoScout24 (DE, NL, BE, FR), Kleinanzeigen, Marktplaats, 2dehands · 2ememain, otomoto.pl, blocket.se, ParuVendu, av.by.",
+    linkPortalUnknown: "Nie rozpoznano portalu tego linku. Przyjmujemy linki do ogłoszeń: mobile.de, AutoScout24, Kleinanzeigen, Marktplaats, 2dehands, otomoto.pl, blocket.se, ParuVendu, av.by.",
     loadButton: "Rozpoznaj",
     loadingButton: "Pobieram",
     helper: "",
@@ -357,6 +359,8 @@ const copy = {
     manualChoiceDescription: "Заполни параметры автомобиля вручную.",
     backToMethods: "← Выбрать способ",
     inputLabel: "Ссылка объявления",
+    linkPortalsHint: "Принимаются ссылки на объявления: mobile.de, AutoScout24 (DE, NL, BE, FR), Kleinanzeigen, Marktplaats, 2dehands · 2ememain, otomoto.pl, blocket.se, ParuVendu, av.by.",
+    linkPortalUnknown: "Портал этой ссылки не распознан. Принимаются ссылки на объявления: mobile.de, AutoScout24, Kleinanzeigen, Marktplaats, 2dehands, otomoto.pl, blocket.se, ParuVendu, av.by.",
     loadButton: "Распознать",
     loadingButton: "Загружаю",
     helper: "",
@@ -4223,35 +4227,54 @@ function isOtomotoUrl(value) {
   return /^https:\/\/(www\.|m\.)?otomoto\.pl\//.test(String(value || "").trim());
 }
 
-// The portal of the link: one list over "Rozpoznaj", every portal on its own
-// (owner 2026-10-05).
-const linkSourceSelect = document.querySelector("[data-mobile-link-source-select]");
-if (linkSourceSelect) linkSourceSelect.dataset.source = linkSourceSelect.value;
+// The portal of the link (owner 2026-10-10): not picked from a list — it is
+// told by the pasted link and shown as its logo next to "Link ogłoszenia".
+const linkSourceBadge = document.querySelector("[data-mobile-link-source-badge]");
+let currentLinkSource = "";
 
 function linkSource() {
-  return linkSourceSelect?.value || "mobile";
+  return currentLinkSource;
 }
 
-const LINK_PLACEHOLDERS = {
-  otomoto: "https://www.otomoto.pl/osobowe/oferta/...",
-  blocket: "https://www.blocket.se/mobility/item/...",
-  avby: "https://cars.av.by/...",
-  autoscout: "https://www.autoscout24.de/angebote/...",
-  autoscoutfr: "https://www.autoscout24.fr/offres/...",
-  marktplaats: "https://www.marktplaats.nl/v/auto-s/...",
-  dehands: "https://www.2dehands.be/v/auto-s/...",
-  kleinanzeigen: "https://www.kleinanzeigen.de/s-anzeige/...",
-  paruvendu: "https://www.paruvendu.fr/a/voiture-occasion/...",
+const LINK_PORTALS = {
+  mobile: ["mobile.de", "./assets/brands/mobile-de-logo.svg"],
+  autoscout: ["AutoScout24", "./assets/brands/autoscout24-logo.svg?v=2"],
+  autoscoutfr: ["AutoScout24 (Francja)", "./assets/brands/autoscout24-fr-logo.svg"],
+  kleinanzeigen: ["Kleinanzeigen", "./assets/brands/kleinanzeigen-logo.svg"],
+  marktplaats: ["Marktplaats", "./assets/brands/marktplaats-logo.svg"],
+  dehands: ["2dehands · 2ememain", "./assets/brands/2dehands-logo.svg"],
+  otomoto: ["otomoto.pl", "./assets/brands/otomoto-logo.svg"],
+  blocket: ["blocket.se", "./assets/brands/blocket-logo.svg"],
+  paruvendu: ["ParuVendu", "./assets/brands/paruvendu-logo.svg"],
+  avby: ["av.by", "./assets/brands/avby-logo.svg"],
 };
 
+function isMobileDeUrl(value) {
+  return /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(String(value || "").trim());
+}
+
+// The portal a link belongs to, or "" when it is none of ours.
+function linkPortalOf(value) {
+  return isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby"
+    : isAutoscoutUrl(value) ? (/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout")
+    : isMarktplaatsUrl(value) ? (/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands")
+    : isKleinanzeigenUrl(value) ? "kleinanzeigen"
+    : isParuvenduUrl(value) ? "paruvendu"
+    : isMobileDeUrl(value) ? "mobile" : "";
+}
+
 function setLinkSource(source) {
-  if (linkSourceSelect && [...linkSourceSelect.options].some((option) => option.value === source)) linkSourceSelect.value = source;
-  // The list wears the chosen portal's colour, like the old buttons.
-  if (linkSourceSelect) linkSourceSelect.dataset.source = linkSourceSelect.value;
-  els.url.placeholder = LINK_PLACEHOLDERS[source] || "https://suchen.mobile.de/...";
+  currentLinkSource = LINK_PORTALS[source] ? source : "";
+  if (linkSourceBadge) {
+    const [name, logo] = LINK_PORTALS[currentLinkSource] || [];
+    linkSourceBadge.hidden = !currentLinkSource;
+    linkSourceBadge.dataset.source = currentLinkSource;
+    linkSourceBadge.title = name || "";
+    linkSourceBadge.innerHTML = logo ? `<img src="${logo}" alt="${name}" />` : "";
+  }
   // The bookmark is only the fallback for mobile.de when the importer is off.
   const bookmarkletRow = document.querySelector("[data-mobile-bookmarklet-row]");
-  if (bookmarkletRow) bookmarkletRow.hidden = source !== "mobile" || !state.importerDown;
+  if (bookmarkletRow) bookmarkletRow.hidden = currentLinkSource !== "mobile" || !state.importerDown;
 }
 
 // The portal of the link is the one market compared in step 2 (more can be
@@ -4260,33 +4283,19 @@ function mirrorLinkSource(source) {
   window.AUTOGOOD_SET_ONLY_MARKET?.(source);
 }
 
-linkSourceSelect?.addEventListener("change", () => {
-  setLinkSource(linkSource());
-  mirrorLinkSource(linkSource());
-});
-// A pasted link picks its portal by itself. Only a new link mirrors the
+// A pasted link shows its portal by itself. Only a new link mirrors the
 // market: what was added in step 2 stays while the same link is recognised.
 let mirroredLink = "";
 els.url.addEventListener("input", () => {
   const value = els.url.value.trim();
-  const source = isOtomotoUrl(value) ? "otomoto" : isBlocketUrl(value) ? "blocket" : isAvbyUrl(value) ? "avby"
-    : isAutoscoutUrl(value) ? (/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout")
-    : isMarktplaatsUrl(value) ? (/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands")
-    : isKleinanzeigenUrl(value) ? "kleinanzeigen"
-    : isParuvenduUrl(value) ? "paruvendu"
-    : /^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value) ? "mobile" : "";
+  const source = linkPortalOf(value);
   if (source && value !== mirroredLink) {
     mirroredLink = value;
     mirrorLinkSource(source);
   }
-  if (isOtomotoUrl(value)) setLinkSource("otomoto");
-  else if (isBlocketUrl(value)) setLinkSource("blocket");
-  else if (isAvbyUrl(value)) setLinkSource("avby");
-  else if (isAutoscoutUrl(value)) setLinkSource(/autoscout24\.fr\//i.test(value) ? "autoscoutfr" : "autoscout");
-  else if (isMarktplaatsUrl(value)) setLinkSource(/marktplaats\.nl/i.test(value) ? "marktplaats" : "dehands");
-  else if (isKleinanzeigenUrl(value)) setLinkSource("kleinanzeigen");
-  else if (isParuvenduUrl(value)) setLinkSource("paruvendu");
-  else if (/^https:\/\/(suchen|www|m)\.mobile\.de\//.test(value)) setLinkSource("mobile");
+  setLinkSource(source);
+  // "Not one of our portals" goes once a link of ours is pasted.
+  if (source && state.status === "error" && Object.values(copy).some((c) => c.linkPortalUnknown === state.error)) setStatus("idle");
 });
 
 // ---- Blocket.se ad links -----------------------------------------------------
@@ -4948,11 +4957,12 @@ els.form.addEventListener("submit", (event) => {
     loadParuvenduAd(sourceUrl);
     return;
   }
-  const expected = { dehands: "marktplaats", autoscoutfr: "autoscout" }[linkSource()] || linkSource();
-  if (["otomoto", "blocket", "avby", "autoscout", "marktplaats", "kleinanzeigen", "paruvendu"].includes(expected)) {
-    setStatus("error", copy[state.lang][`${expected}LinkExpected`], true);
+  if (!/mobile\.de/i.test(sourceUrl)) {
+    setLinkSource("");
+    setStatus("error", copy[state.lang].linkPortalUnknown, true);
     return;
   }
+  setLinkSource("mobile");
   loadMobileDeData(sourceUrl);
 });
 

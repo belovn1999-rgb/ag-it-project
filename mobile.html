@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=pv-1005" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=rail3-1010" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=glass-1010" />
     <link rel="stylesheet" href="./src/mobile-model-specs.css?v=b70-20261004" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=audit1-1010" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
@@ -52,25 +52,7 @@
       <section class="mobileListingSearch">
         <section class="mobileFilterCard mobileListingLinkCard" aria-labelledby="mobile-listing-link-heading">
           <div class="mobileListingLinkHead">
-            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span></h2>
-            <!-- Owner 2026-10-05: every portal on its own, in a list over
-                 "Rozpoznaj", grouped by country (the columns' order). -->
-            <label class="mobileLinkSourcePick">
-              <span class="srOnly">Portal</span>
-              <select class="mobileLinkSourceSelect" data-mobile-link-source-select aria-label="Portal">
-                <optgroup data-country="DE" label="Niemcy">
-                  <option value="mobile" selected>mobile.de</option>
-                  <option value="autoscout">AutoScout24</option>
-                  <option value="kleinanzeigen">Kleinanzeigen</option>
-                </optgroup>
-                <optgroup data-country="NL" label="Holandia"><option value="marktplaats">Marktplaats</option></optgroup>
-                <optgroup data-country="BE" label="Belgia"><option value="dehands">2dehands · 2ememain</option></optgroup>
-                <optgroup data-country="PL" label="Polska"><option value="otomoto">otomoto.pl</option></optgroup>
-                <optgroup data-country="SE" label="Szwecja"><option value="blocket">blocket.se</option></optgroup>
-                <optgroup data-country="FR" label="Francja"><option value="autoscoutfr">AutoScout24 (Francja)</option><option value="paruvendu">ParuVendu</option></optgroup>
-                <optgroup data-country="BY" label="Białoruś"><option value="avby">av.by</option></optgroup>
-              </select>
-            </label>
+            <h2 id="mobile-listing-link-heading" class="mobileFilterCardTitle mobileManualPanelTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg?v=listing-frame-20260921#link"></use></svg><span data-i18n="inputLabel">Link ogłoszenia</span><!-- Owner 2026-10-10: no portal list — the pasted link's portal shows here (mobile.js). --><span class="mobileLinkSourceBadge" data-mobile-link-source-badge hidden></span></h2>
           </div>
           <form class="mobileSearch" data-mobile-form>
             <label class="srOnly" for="mobile-url" data-i18n="inputLabel">Link ogłoszenia</label>
@@ -81,7 +63,7 @@
                 type="url"
                 inputmode="url"
                 autocomplete="url"
-                placeholder="https://suchen.mobile.de/..."
+                placeholder="https://…"
                 aria-describedby="mobile-helper"
                 data-mobile-url
               />
@@ -89,6 +71,7 @@
                 <span data-i18n="loadButton">Rozpoznaj</span>
               </button>
             </div>
+            <p class="mobileLinkPortals" data-i18n="linkPortalsHint">Przyjmujemy linki do ogłoszeń: mobile.de, AutoScout24 (DE, NL, BE, FR), Kleinanzeigen, Marktplaats, 2dehands · 2ememain, otomoto.pl, blocket.se, ParuVendu, av.by.</p>
             <p id="mobile-helper" class="mobileHelper" data-mobile-status></p>
             <p class="mobileBookmarkletRow" data-mobile-bookmarklet-row hidden><span data-i18n="bookmarkletInstall">Zakładka do mobile.de:</span> <a class="mobileBookmarkletLink" href="#" data-autogood-bookmarklet draggable="true">AUTOGOOD ↦ mobile.de</a> <em data-i18n="bookmarkletHint">Przeciągnij ten przycisk na pasek zakładek. Potem klikaj go na stronie ogłoszenia albo listy wyników mobile.de.</em></p>
           </form>
@@ -748,7 +731,7 @@
     <script src="./src/mobile-rates.js?v=page3-20261004"></script>
     <script src="./src/model-specs/index.js?v=b61-stage6-20261009"></script>
     <script src="./src/mobile-model-specs.js?v=b61-stage6-20261009"></script>
-    <script src="./src/mobile.js?v=audit-notunnel-1010"></script>
+    <script src="./src/mobile.js?v=linkbadge-1010"></script>
     <script src="./src/blocket-search.js?v=more-portals2-20261004"></script>
     <script src="./src/marktplaats-catalog.generated.js?v=mp-20261004"></script>
     <script src="./src/marktplaats-search.js?v=mp-20261004"></script>
