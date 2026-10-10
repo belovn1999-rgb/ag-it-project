@@ -11,7 +11,7 @@
 мягкий гибрид был опцией (Ford EcoBlue Hybrid, Hyundai/Kia CRDi 48V до 2020, Kia 1.0 T-GDi), — только по названию
 версии. «Hybrydowe» у autocentrum без правила и без названия ничего не решает.
 
-Итого: 1144 версий отмечены мягким гибридом (347 сочетаний модель · поколение · мотор); проверить: 19 сочетаний.
+Итого: 1132 версий отмечены мягким гибридом (345 сочетаний модель · поколение · мотор); проверить: 22 сочетаний.
 
 **Тот же мотор и без мягкого гибрида** (проверка «двойников» по таблицам моторов de.wikipedia, одна таблица,
 та же мощность, объём и коробка): если обе версии продавались в годы нашей версии — «бывает и без него»,
@@ -33,7 +33,7 @@ de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взя�
 | Audi | A3 | 8Y | бензин | 1.5 | 116 | 2024 | 48V | автомат | A3 Limousine 30 TFSI S tronic | подтверждено | производитель: Audi MediaCenter 2020 · Википедия: de: Audi A3 8Y — «35 TFSI mit Doppelkupplungsgetriebe … 48-V-Bordnetz für den Mildhybridantrieb»; Tabelle 116 PS (2024) |
 | Audi | A4 | B9 | бензин | 2.0 | 150 | 2019 | 12V | автомат, механика | A4 35 TFSI | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System» |
 | Audi | A4 | B9 | бензин | 2.0 | 204 | 2019 | 12V | автомат | A4 40 TFSI quattro S tronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System» |
-| Audi | A4 | B9 | бензин | 2.0 | 190 | 2017 | 12V | автомат, механика | A4 40 TFSI S tronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System» |
+| Audi | A4 | B9 | бензин | 2.0 | 190 | 2019 | 12V | автомат | A4 40 TFSI S tronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System» |
 | Audi | A4 | B9 | бензин | 2.0 | 245 | 2019 | 12V | автомат | A4 45 TFSI quattro S tronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System» |
 | Audi | A4 | B9 | бензин | 2.0 | 265 | 2019 | 12V | автомат | A4 45 TFSI quattro S tronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System» |
 | Audi | A4 | B9 | дизель | 2.0 | 136 | 2019 | 12V | автомат | A4 30 TDI S tronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — 12-Volt-Mildhybrid für alle Motoren außer S4 TDI, 50 TDI, 45 TDI |
@@ -43,7 +43,6 @@ de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взя�
 | Audi | A4 | B9 | дизель | 3.0 | 286 | 2019 | 48V | автомат | A4 50 TDI quattro tiptronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 / A5 F5 — S4/S5 TDI und 50 TDI mit 48-V-Bordnetz (45 TDI 231 PS ohne Startergenerator) |
 | Audi | A4 | B9 | дизель | 3.0 | 347 | 2019 | 48V | автомат | A4 S4 TDI tiptronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 / A5 F5 — S4/S5 TDI und 50 TDI mit 48-V-Bordnetz (45 TDI 231 PS ohne Startergenerator) |
 | Audi | A4 | B9 | дизель | 3.0 | 341 | 2019 | 48V | автомат | A4 S4 TDI tiptronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 / A5 F5 — S4/S5 TDI und 50 TDI mit 48-V-Bordnetz (45 TDI 231 PS ohne Startergenerator) |
-| Audi | A4 | B9 | бензин | 2.0 | 252 | 2017 |  | автомат | A4 2.0 TFSI MHEV 252HP | одна база, прямо в названии | ultimatespecs: в названии версии |
 | Audi | A5 | B10 | бензин | 3.0 | 367 | 2024 |  | автомат | A5 Avant S5 3.0 V6 TFSI MHEV S tronic | одна база, прямо в названии | ultimatespecs: в названии версии |
 | Audi | A5 | B10 | дизель | 2.0 | 204 | 2024 | 48V | автомат | A5 Avant 2.0 TDI MHEV quattro S tronic | подтверждено | ultimatespecs: в названии версии · производитель: Audi MediaCenter 2024 |
 | Audi | A5 | F5 | бензин | 2.0 | 150 | 2019 | 12V | автомат, механика | A5 Cabriolet 35 TFSI | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System» |
@@ -57,7 +56,6 @@ de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взя�
 | Audi | A5 | F5 | дизель | 3.0 | 286 | 2019 | 48V | автомат, механика | A5 Cabriolet 50 TDI quattro tiptronic | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 / A5 F5 — S4/S5 TDI und 50 TDI mit 48-V-Bordnetz (45 TDI 231 PS ohne Startergenerator) |
 | Audi | A5 | F5 | дизель | 3.0 | 347 | 2020 | 48V | автомат | A5 Coupe S5 3.0 TDI quattro | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 / A5 F5 — S4/S5 TDI und 50 TDI mit 48-V-Bordnetz (45 TDI 231 PS ohne Startergenerator) |
 | Audi | A5 | F5 | дизель | 3.0 | 341 | 2020 | 48V | автомат | A5 Coupe S5 TDI quattro | подтверждено | производитель: Audi MediaCenter 2019 · Википедия: de: Audi A4 B9 / A5 F5 — S4/S5 TDI und 50 TDI mit 48-V-Bordnetz (45 TDI 231 PS ohne Startergenerator) |
-| Audi | A5 | F5 | бензин | 2.0 | 252 | 2017 |  | автомат | A5 2.0 TFSI MHEV 252HP | одна база, прямо в названии | ultimatespecs: в названии версии |
 | Audi | A6 | C9 | бензин | 3.0 | 367 | 2025 |  | автомат | A6 3.0 V6 TFSI MHEV quattro | одна база, прямо в названии | ultimatespecs: в названии версии |
 | Audi | A6 | C9 | дизель | 2.0 | 204 | 2025 |  | автомат | A6 2.0 TDI MHEV | одна база, прямо в названии | ultimatespecs: в названии версии |
 | Audi | A6 | C8 | бензин | 2.0 | 265 | 2018 | 12V | автомат | A6 45 TFSI quattro S tronic | подтверждено | производитель: Audi MediaCenter 2018 · Википедия: de: Audi A7 C8 — «Bei den Vierzylinder-Modellen ist der Riemen-Startergenerator in 12 Volt ausgeführt»; en: Audi A6 — «All engines are offered with a mild hybrid drivetrain» |
@@ -377,13 +375,16 @@ de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взя�
 | Renault | Scenic | Scénic IV | бензин | 1.5 | 110 | 2017 |  | механика | Scenic III 1.5 dCi HybridAssist | одна база, прямо в названии | autocentrum: в названии (1.5dCi HybridAssist 110KM 81kW (2017-2018)) |
 | Volvo | S60 | S60 III | бензин | 2.0 | 264 | 2019 | 48V | автомат | S60 Sedan 2.0 B5 Mild Hybrid | подтверждено | autocentrum: в названии (2.0 B5 Mild Hybrid 264KM 194kW (2020-2023)) · производитель: Volvo Cars media 2019-2020 · Википедия: de: Volvo XC40 / V60 / S90 / V90 — Tabellen B3 / B4 / B5 / B6 mit Mild-Hybrid |
 
-## Проверить (19)
+## Проверить (22)
 
 Правило есть, второго источника нет (или мягкий гибрид был опцией, а версия не названа): не отмечено.
 
 | Марка | Модель | Поколение | Топливо | Л.с. | Коробка | Пример | Что говорит |
 |---|---|---|---|---|---|---|---|
+| Audi | A4 | B9 | бензин | 190 | автомат, механика | A4 2.0 TFSI MHEV 190HP | ultimatespecs: в названии версии · производитель: у поколения B9 мягкий гибрид только с 2019 |
+| Audi | A4 | B9 | бензин | 252 | автомат | A4 2.0 TFSI MHEV 252HP | ultimatespecs: в названии версии · производитель: у поколения B9 мягкий гибрид только с 2019 |
 | Audi | A5 | B10 | бензин | 204 | автомат | A5 Avant 2.0 TFSI 204HP quattro S tronic | производитель: Audi MediaCenter 2024 |
+| Audi | A5 | F5 | бензин | 252 | автомат | A5 2.0 TFSI MHEV 252HP | ultimatespecs: в названии версии · производитель: у поколения F5 мягкий гибрид только с 2019 |
 | Ford | Transit | Transit VIII | дизель | 130 | ? | Transit VAN 2.0 New Ecoblue | производитель: Ford media 2019 · Википедия: en: Ford Transit Custom — «An optional mild hybrid system was introduced to the EcoBlue engines in 2019» |
 | Volvo | V90 | V90 II | бензин | 250 | автомат | V90 Kombi 2.0 T5 | производитель: Volvo Cars media 2019-2020 · Википедия: de: Volvo XC40 / V60 / S90 / V90 — Tabellen B3 / B4 / B5 / B6 mit Mild-Hybrid · Википедия (Volvo V90 II): до 03/2020 без мягкого гибрида — T5 10/2017–03/2020; T5 Polestar Performance 10/2018–03/2020; отмечено с 2021 |
 | Kia | Ceed | Ceed III | бензин | 100 | механика | Ceed Hatchback 1.0 T-GDI | производитель: Kia media 2020 |

@@ -22,7 +22,8 @@ _last = [0.0]
 
 def _get(url, path):
     if not os.path.exists(path):
-        wait = 1.0 - (time.time() - _last[0])
+        # One request at a time (Wikimedia API etiquette); WIKI_PAUSE seconds between them.
+        wait = float(os.environ.get("WIKI_PAUSE", "1.0")) - (time.time() - _last[0])
         if wait > 0:
             time.sleep(wait)
         subprocess.run(["curl", "-s", "--max-time", "60", "-A", UA, "-o", path, url], check=False)

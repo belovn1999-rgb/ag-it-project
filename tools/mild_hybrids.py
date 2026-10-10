@@ -320,16 +320,25 @@ def classify(rows, ac):
         firm = [rule for rule in rules if not rule["optional"] and (not rule["gearbox"] or box)]
         if not (rules or explicit):
             continue  # autocentrum's "Hybrydowe" alone (no maker's rule, no name) decides nothing
+        # One database naming it where the maker brought the mild hybrid to this generation only later
+        # (ultimatespecs "A4 2.0 TFSI MHEV 190HP" of 2017; Audi: B9 from the 2019 facelift) is not trusted.
+        start, end = years_of(row["Годы (проверено)"])
+        version_year = int(row["Год версии"]) if str(row.get("Год версии", "")).isdigit() else 0
+        named_since = max(start or 0, version_year)
+        later = [rule["since"] for rule in RULES if not rules and rule["brand"] == row["Марка"]
+                 and row["Модель"] in (rule["models"] or [row["Модель"]]) and rule["gens"] and row["Поколение"] in rule["gens"]
+                 and rule["since"] > named_since]
         if (firm and (wiki or own or ac_says)) or (rules and explicit) or (own and ac_says):
             status = "подтверждено"
+        elif explicit and later:
+            status = "проверить"
+            sources.append(f"производитель: у поколения {row['Поколение']} мягкий гибрид только с {min(later)}")
         elif explicit:
             status = "одна база, прямо в названии"
         else:
             status = "проверить"
         years = [rule["since"] for rule in rules] + ([ac_says[1]] if ac_says and ac_says[1] else [])
-        start, _end = years_of(row["Годы (проверено)"])
-        version_year = int(row["Год версии"]) if str(row.get("Год версии", "")).isdigit() else 0
-        since = max(min(years), start or 0) if years else max(start or 0, version_year)
+        since = max(min(years), start or 0) if years else named_since
         system = sorted({rule["system"] for rule in rules}) or (["48V"] if re.search(r"48 ?v|etsi|e-?tec", row["Версия"], re.I) else [])
         out[id(row)] = {"status": status, "since": since, "system": "/".join(system), "sources": sources,
                         "applied": status != "проверить", "optional": False}
