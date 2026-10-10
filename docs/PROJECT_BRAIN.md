@@ -26,7 +26,7 @@
 | Переезд на сервер | все | [AUTOGOOD_SERVER_DEPLOYMENT.md](AUTOGOOD_SERVER_DEPLOYMENT.md) | Требования к серверу, данные пользователей |
 | Инфраструктура чтения порталов (B73) | `mobile.html` | [PORTAL-INFRASTRUCTURE.md](PORTAL-INFRASTRUCTURE.md) | Worker-прокси, Chrome-узел mobile.de, постоянный адрес, ключи сотрудников, очередь и кэш, варианты с ценами, этапы |
 | Monitoring на сервере (B43) | `mobile.html` | [MONITORING-SERVER.md](MONITORING-SERVER.md) | Задания из браузера → раннер с Chrome → записи → браузер; что осталось при запуске сервера |
-| Похожие open source проекты | `mobile.html`, оффер | [REFERENCE-PROJECTS.md](REFERENCE-PROJECTS.md) | deal-finder разобран по коду; идеи R1–R10 (уведомления, ИИ-проверка «обязательно», перевод описаний, «почему отсеяно», health-проверки); otomoto/av.by/Cloudflare-аналоги на проверку |
+| Похожие open source проекты | `mobile.html`, оффер (06 и стр. 3) | [REFERENCE-PROJECTS.md](REFERENCE-PROJECTS.md) | Паспорт 9 проектов; **единый список M1–M19** (уведомления, «okazja», «wróciło», «почему отсеяно», проверка парсеров, облако для порталов) и **для оффера O1–O12** (слежение после отправки, архив объявления, «Co wiemy z ogłoszenia», ИИ-этап); порядок внедрения |
 | Калькуляторы | `calculators.html` | OPEN: отдельного документа нет | Формулы живут в `src/main.jsx` |
 | Договоры и документы | `umowy.html`, `pdf.html`, `umowa-sprzedazy.html`, `oswiadczenie-o-braku-tablic.html` | OPEN: отдельного документа нет | Распознавание данных и DOCX→PDF: `*.mdf`-выгрузки в `docs/` |
 
@@ -72,6 +72,7 @@
 
 ## 8. Журнал
 
+- 2026-10-10 — `docs/REFERENCE-PROJECTS.md`: единый список «что взять» из 9 похожих проектов — M1–M19 для программы и Monitoring, O1–O12 для оффера (программа 06 и стр. 3), что уже есть, приоритет, порядок; всё HYPOTHESIS до выбора владельца (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring, аудит «дизайн код» волна 1: Германия у моделей с пробелом (RAV 4), время мониторинга больше не сбрасывается на 9:30, акциза бюджета по параметрам поиска, числа только по машинам под бюджет, фильтры результата один раз в настройках, «Nowe» после мониторинга, история цен из всех рынков, AutoScout24 smyle читается (Claude).
 - 2026-10-10 — mobile.html, B61 этап 6 (вариант Б): ещё 149 моделей Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroën из autocentrum.pl — в формах стр. 1 398 моделей 18 марок (Claude).
 - 2026-10-10 — mobile.html, стр. 3 Monitoring: кнопки разделов слева (авто, настройки, результаты, медиана, рынок в день, история цен) и цветные значки заголовков, как на стр. 1–2 (Claude).
