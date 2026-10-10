@@ -52,7 +52,9 @@
     const base = typeof mobileDeApiBase === "function" ? mobileDeApiBase() : "";
     if (!base) throw new Error("offline");
     const adUrl = `https://suchen.mobile.de/fahrzeuge/details.html?id=${encodeURIComponent(id)}`;
-    const response = await fetch(`${base}/mobilede/import?url=${encodeURIComponent(adUrl)}`);
+    // A hanging importer must not stop the queue of ads (audit 2026-10-10).
+    const signal = typeof window.AUTOGOOD_TIMEOUT_SIGNAL === "function" ? window.AUTOGOOD_TIMEOUT_SIGNAL(45 * 1000) : undefined;
+    const response = await fetch(`${base}/mobilede/import?url=${encodeURIComponent(adUrl)}`, { signal });
     const data = await response.json().catch(() => ({}));
     if (!response.ok || data.error) throw new Error(data.detail || data.error || String(response.status));
     const details = {

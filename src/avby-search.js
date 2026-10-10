@@ -546,6 +546,11 @@ window.AUTOGOOD_AVBY_REFRESH_COUNT = async (filters) => {
   if (!target) return;
   const show = (text) => {
     target.textContent = text;
+    // A "no answer" reason does not stay on a later number.
+    if (target.dataset.countNoAnswer) {
+      delete target.dataset.countNoAnswer;
+      target.removeAttribute("title");
+    }
   };
   if (!filters?.brand || !filters?.model) {
     show("—");
@@ -571,7 +576,11 @@ window.AUTOGOOD_AVBY_REFRESH_COUNT = async (filters) => {
     avbyCounts.set(key, label);
     if (request === avbyCountRequest) show(label);
   } catch {
-    if (request === avbyCountRequest) show("—");
+    // No answer is "—" with its reason, never "0".
+    if (request === avbyCountRequest) {
+      if (window.AUTOGOOD_COUNT_NO_ANSWER) window.AUTOGOOD_COUNT_NO_ANSWER(target, "av.by");
+      else show("—");
+    }
   }
 };
 

@@ -261,7 +261,7 @@
       monitoringLiquidityDrops: "z obniżką ceny: {count} z {total} ({pct})",
       monitoringLiquidityDeals: "do negocjacji: {count}",
       monitoringLiquidityGone: "zniknęło w ostatnich 7 dniach: {count}",
-      monitoringLiquidityTitle: "Dni w ofercie: data z portalu (otomoto, blocket) albo pierwszy monitoring, w którym auto się pojawiło; auta obecne już w pierwszym monitoringu liczą się jako „co najmniej”. Zniknięte — tylko z pełnych list.",
+      monitoringLiquidityTitle: "Dni w ofercie: data z portalu (otomoto, blocket, Marktplaats, 2dehands, Kleinanzeigen; mobile.de, AutoScout24 i ParuVendu jej nie podają) albo pierwszy monitoring, w którym auto się pojawiło; auta obecne już w pierwszym monitoringu liczą się jako „co najmniej”. Zniknięte — tylko z pełnych list.",
       monitoringListedSince: "w ofercie od {date} · {days}",
       monitoringSeenSince: "w monitoringu od {date} · {days}",
       monitoringSeenBefore: "w ofercie co najmniej od {date} · {days}",
@@ -482,6 +482,9 @@
       paruvenduFetched: "ParuVendu: {count} ogłoszeń, których nie ma na AutoScout24 FR (z {total}; pominięto {duplicates} duplikatów).",
       avbyFetched: "Wczytano {count} z {total} ofert av.by.",
       otomotoFailed: "Nie udało się pobrać ofert z otomoto.pl.",
+      silentWithout: "Brak odpowiedzi: {portals} — statystyka i wykresy są bez ich ofert (to nie znaczy 0 ofert). Spróbuj „Odśwież dane” za kilka minut.",
+      silentKept: "Brak odpowiedzi teraz: {portals} — pokazane są ich oferty z poprzedniego sprawdzenia.",
+      silentMobileOffline: "Bez mobile.de: importer mobile.de nie odpowiada (Mac z importerem wyłączony albo tunel nie działa) — statystyka bez mobile.de.",
       otomotoLabel: "Dane: otomoto.pl",
       mixedLabel: "Dane: otomoto.pl + mobile.de",
       mixedDescription: "Oferty otomoto.pl (PLN) i mobile.de (EUR przeliczone na PLN) na jednym wykresie.",
@@ -923,7 +926,7 @@
       monitoringLiquidityDrops: "со снижением цены: {count} из {total} ({pct})",
       monitoringLiquidityDeals: "для торга: {count}",
       monitoringLiquidityGone: "исчезло за последние 7 дней: {count}",
-      monitoringLiquidityTitle: "Дни в продаже: дата с портала (otomoto, blocket) или первый мониторинг, где авто появилось; авто, которые были уже в первом мониторинге, считаются как «минимум». Исчезнувшие — только по полным спискам.",
+      monitoringLiquidityTitle: "Дни в продаже: дата с портала (otomoto, blocket, Marktplaats, 2dehands, Kleinanzeigen; mobile.de, AutoScout24 и ParuVendu её не дают) или первый мониторинг, где авто появилось; авто, которые были уже в первом мониторинге, считаются как «минимум». Исчезнувшие — только по полным спискам.",
       monitoringListedSince: "в продаже с {date} · {days}",
       monitoringSeenSince: "в мониторинге с {date} · {days}",
       monitoringSeenBefore: "в продаже минимум с {date} · {days}",
@@ -1144,6 +1147,9 @@
       paruvenduFetched: "ParuVendu: {count} объявлений, которых нет на AutoScout24 FR (из {total}; пропущено дубликатов: {duplicates}).",
       avbyFetched: "Загружено {count} из {total} объявлений av.by.",
       otomotoFailed: "Не удалось загрузить объявления с otomoto.pl.",
+      silentWithout: "Нет ответа: {portals} — статистика и графики без их объявлений (это не 0 объявлений). Попробуй «Odśwież dane» через несколько минут.",
+      silentKept: "Сейчас нет ответа: {portals} — показаны их объявления из прошлой проверки.",
+      silentMobileOffline: "Без mobile.de: импортер mobile.de не отвечает (Mac с импортером выключен или туннель не работает) — статистика без mobile.de.",
       otomotoLabel: "Данные: otomoto.pl",
       mixedLabel: "Данные: otomoto.pl + mobile.de",
       mixedDescription: "Объявления otomoto.pl (PLN) и mobile.de (EUR, пересчитано в PLN) на одном графике.",
@@ -2054,8 +2060,11 @@
       firstRegistration: String(listingValue(row, ["firstregistration"]) || "").slice(0, 10),
       priceType: String(listingValue(row, ["pricetype"]) || "").slice(0, 12),
       vatDeductible: listingValue(row, ["vatdeductible"]) === true || listingValue(row, ["vatdeductible"]) === "true",
-      // The portal's own date of the ad (otomoto, blocket), when it gives one.
-      listedAt: String(listingValue(row, ["listedat"]) || "").slice(0, 30),
+      // The portal's own date of the ad, when it gives one (otomoto, blocket,
+      // Marktplaats/2dehands, Kleinanzeigen; mobile.de's importer as
+      // "createdAt" — empty on its English result cards, 0 of 160 on
+      // 2026-10-10; AutoScout24 and ParuVendu lists have none: "brak").
+      listedAt: String(listingValue(row, ["listedat", "createdat"]) || "").slice(0, 30),
       // The portal's own earlier price (otomoto price drop, AutoScout24 "Super Deal").
       oldPrice: parseMarketNumber(listingValue(row, ["oldprice"])) || 0,
       // Otomoto: "1" history confirmed in CEPiK, "0" not; origin "pl" or the
@@ -2155,12 +2164,18 @@
   // Otomoto's result page carries every offer as JSON in __NEXT_DATA__, so the
   // proxy is asked for the raw HTML and the numbers are read from there.
   function parseOtomotoPage(html) {
+    // A page that is not a result list (captcha, consent page, a new layout,
+    // even with code 200) is "not read" — never "0 offers" (audit 2026-10-10:
+    // page 1 showed "0" and the analysis went on without otomoto).
     const raw = String(html || "").match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-    if (!raw) return { total: 0, listings: [] };
+    if (!raw) throw new Error("otomoto: not a result page");
     let search = null;
+    // The search answer is "advertSearch" (an empty list too: totalCount 0,
+    // edges [] — checked 2026-10-10); any list of priced offers as before.
     const walk = (value) => {
       if (!value || typeof value !== "object" || search) return;
-      if (Array.isArray(value.edges) && value.edges[0]?.node?.price) search = value;
+      if (value.advertSearch && Array.isArray(value.advertSearch.edges) && Number.isFinite(Number(value.advertSearch.totalCount))) search = value.advertSearch;
+      else if (Array.isArray(value.edges) && value.edges[0]?.node?.price) search = value;
       else Object.values(value).forEach(walk);
     };
     const urqlState = JSON.parse(raw[1])?.props?.pageProps?.urqlState || {};
@@ -2172,7 +2187,7 @@
         // A cache entry that is not a search result is simply skipped.
       }
     });
-    if (!search) return { total: 0, listings: [] };
+    if (!search) throw new Error("otomoto: not a result page");
     const listings = (search.edges || []).map((edge) => {
       const node = edge?.node || {};
       const amount = node.price?.amount || {};
@@ -2454,7 +2469,14 @@
       const results = await Promise.allSettled(batch.map(read));
       const refused = [];
       results.forEach((result, index) => {
-        if (result.status === "fulfilled") collect(autoscout.parseSearchPage(result.value, { page: batch[index], total: first.total }).listings);
+        let parsed = null;
+        try {
+          parsed = result.status === "fulfilled" ? autoscout.parseSearchPage(result.value, { page: batch[index], total: first.total }) : null;
+        } catch {
+          // Not a result page: asked once more below, like a refused one.
+        }
+        if (parsed) collect(parsed.listings);
+        else if (result.status === "fulfilled") failed.push(batch[index]);
         else if (waits > 0 && /429/.test(String(result.reason?.message || ""))) refused.push(batch[index]);
         else failed.push(batch[index]);
       });
@@ -2699,7 +2721,10 @@
     }
     // The importer reads at most 12 pages of 20: whole lists up to 240 offers.
     const result = await window.AUTOGOOD_MOBILEDE_SEARCH(searchUrl, whole ? { pages: 12 } : {});
-    return result?.listings?.length ? result : null;
+    // An empty list is an answer ("0 offers"); an answer without a list
+    // (the importer's {error}: mobile.de refused it) is none (audit 2026-10-10).
+    if (result?.error) throw new Error(String(result.error));
+    return Array.isArray(result?.listings) ? result : null;
   }
 
   // av.by: 25 offers a page; pages spread evenly over the list sorted from the
@@ -2772,6 +2797,7 @@
     id: "otomoto",
     lastSources: ["otomoto"],
     async getListings({ filters, pinned = null, historyId = "", progress = null, sequential = false, wholeList = null, priceOverride = null }) {
+      this.lastSilent = [];
       // The status line only for page 2's own reading: Monitoring reads
       // through this too (with a progress callback), in the background, and
       // its "Przygotowuję…" stayed on page 2 (audit 10.10).
@@ -2892,6 +2918,8 @@
       // the others are "no answer" in Monitoring (lastSources = with offers).
       this.lastAnswered = Object.entries({ otomoto, mobile, blocket, avby, autoscout, autoscoutfr, marktplaats, dehands, kleinanzeigen, paruvendu })
         .filter(([source, result]) => selected.includes(source) && result.status === "fulfilled" && result.value).map(([source]) => source);
+      // Page 2 names the chosen portals that did not answer (audit 2026-10-10).
+      this.lastSilent = selected.filter((source) => !this.lastAnswered.includes(source));
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const mobileListings = (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal }));
@@ -3288,9 +3316,12 @@
   // Gearbox as a code: "Schaltgetriebe", "Manuell", "manual", "механика" /
   // "Automatik", "Automat", "automatic", "автомат", "робот" (mobile.de counts
   // every two-pedal box as automatic).
+  // Dutch "Handgeschakeld" / "Automaat" (Marktplaats, 2dehands) and French
+  // "Manuelle" / "Automatique" too: until 2026-10-10 every Dutch manual was
+  // "unknown".
   function gearboxKind(value) {
     const text = String(value || "").toLowerCase();
-    if (/schalt|manu|механ/.test(text)) return "manual";
+    if (/schalt|schakel|manu|механ/.test(text)) return "manual";
     if (/auto|robot|робот|вариатор|cvt|dsg|автомат/.test(text)) return "automatic";
     return "";
   }
@@ -9512,7 +9543,7 @@
           <span>${escapeMarketHtml(c.reportTitle)} · ${escapeMarketHtml(formatHistoryDate(dataDate || new Date().toISOString()))}</span>
         </div>
 
-        <div data-report-hide>${analysisStatusHtml()}</div>
+        <div data-report-hide>${analysisStatusHtml()}${silentPortalsHtml()}</div>
 
         <section class="mobileMarketCard mobileMarketSearchCard" aria-label="${escapeMarketHtml(c.searchHeading)}">
           ${blockTitle("car", window.AUTOGOOD_SPEC_COPY?.().specSearchKicker || c.searchHeading)}
@@ -10030,6 +10061,32 @@
     if (pageOneFoot) new MutationObserver(syncAnalysisCounts).observe(pageOneFoot, { subtree: true, childList: true, characterData: true });
   }
 
+  // The chosen portals that did not answer the last reading, with why
+  // (audit 2026-10-10: the status named only those that answered, and a
+  // silent portal looked like a market without offers).
+  function silentOf(provider) {
+    if (!Array.isArray(provider?.lastSilent)) return [];
+    return provider.lastSilent.map((source) => ({ source, error: String(provider.lastErrors?.[source] || "").slice(0, 200) }));
+  }
+
+  function silentPortalsHtml() {
+    const silent = activeAnalysis?.silent || [];
+    if (!silent.length) return "";
+    const c = copy();
+    const listings = activeAnalysis.listings || [];
+    // mobile.de without its importer (no address, a dead tunnel) has its own line.
+    const mobileOffline = silent.some((item) => item.source === "mobile" && (!item.error || /fetch|importer|network|timeout|load failed/i.test(item.error)));
+    const others = silent.filter((item) => !(mobileOffline && item.source === "mobile"));
+    const kept = others.filter((item) => listings.some((listing) => listingSource(listing) === item.source)).map((item) => portalName(item.source));
+    const without = others.filter((item) => !listings.some((listing) => listingSource(listing) === item.source)).map((item) => portalName(item.source));
+    const lines = [
+      mobileOffline ? (listings.some((listing) => listingSource(listing) === "mobile") ? c.silentKept.replace("{portals}", portalName("mobile")) : c.silentMobileOffline) : "",
+      without.length ? c.silentWithout.replace("{portals}", without.join(", ")) : "",
+      kept.length ? c.silentKept.replace("{portals}", kept.join(", ")) : "",
+    ].filter(Boolean);
+    return `<div class="mobileMarketSilent" role="status" data-report-hide>${lines.map((line) => `<p>${escapeMarketHtml(line)}</p>`).join("")}</div>`;
+  }
+
   function analysisStatusHtml() {
     return `<p class="mobileMarketAnalysisStatus${analysisMessage.isError ? " isError" : ""}" aria-live="polite" data-mobile-market-analysis-status data-report-hide${analysisMessage.text ? "" : " hidden"}>${escapeMarketHtml(analysisMessage.text)}</p>`;
   }
@@ -10077,6 +10134,7 @@
           providerError = error.message || c.invalidData;
         }
       }
+      const silent = provider ? silentOf(provider) : [];
       const normalizedListings = normalizeListings(rawListings);
       let listings = provider && savedEntry?.listings?.length
         ? mergeBySource(savedEntry.listings, normalizedListings)
@@ -10102,6 +10160,7 @@
         sourceFileName: importedDataset?.fileName || snapshot?.sourceFileName || savedEntry?.sourceFileName || "",
         historyId: snapshot?.id || savedEntry?.id || "",
         fetchedAt: provider && listings.length ? new Date().toISOString() : "",
+        silent,
       };
       analysisMessage = { text: providerError, isError: Boolean(providerError) };
       renderAnalysis();
@@ -10206,10 +10265,17 @@
         providerId: provider.id || "api",
         sourceFileName: "API",
         historyId: snapshot.id,
+        silent: silentOf(provider),
       };
       renderAnalysis();
       setAnalysisStatus(c.snapshotSaved.replace("{date}", formatHistoryDate(new Date().toISOString())));
     } catch (error) {
+      // A refresh that failed still names the portals that did not answer.
+      const silent = silentOf(provider);
+      if (silent.length && activeAnalysis) {
+        activeAnalysis = { ...activeAnalysis, silent };
+        renderAnalysis();
+      }
       setAnalysisStatus(error.message || c.refreshInvalid, true);
     }
   }

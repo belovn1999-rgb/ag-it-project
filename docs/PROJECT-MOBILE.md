@@ -508,6 +508,66 @@ klienta».** Из найденного в Monitoring объявления кно
   браузера; «Raport PDF /
   Lista PDF» только скачивает (PDF со ссылками на объявления). История цен и
   новые объявления избранного — на странице 3 «Monitoring».
+- **Ответ портала, даты и НДС объявлений (аудит порталов, волна 2, 10-10):**
+  - **«Не прочитано» ≠ «0 предложений».** Парсер бросает ошибку, если страница
+    не похожа на выдачу (капча, окно согласия, блокировка, новая разметка при
+    коде 200): otomoto — нет `advertSearch` в `__NEXT_DATA__` (пустая выдача =
+    `totalCount 0, edges []`), AutoScout24 — нет `__NEXT_DATA__`/`numberOfResults`,
+    Kleinanzeigen — нет `onsite_search_total_results` и карточек или страница
+    «IP-Bereich vorübergehend gesperrt», ParuVendu — нет «N annonces» и карточек,
+    Marktplaats/2dehands — нет `totalResultCount`/`listings`, blocket — нет
+    `docs`/`metadata.result_size`. Импортер mobile.de: пустой список = ответ
+    «0», `{error}` = нет ответа. Стр. 1: «—» с подсказкой «{portal} nie
+    odpowiedział — liczba nieznana» (`window.AUTOGOOD_COUNT_NO_ANSWER`, mobile.js);
+    стр. 2: жёлтая плашка над анализом (`silentPortalsHtml`, в отчёт не входит) —
+    «Brak odpowiedzi: … — statystyka bez ich ofert», «… pokazane są ich oferty z
+    poprzedniego sprawdzenia» (старые предложения из сохранённой записи), для
+    mobile.de без импортера — «Bez mobile.de: importer nie odpowiada».
+    `provider.lastSilent` = выбранные порталы минус `lastAnswered` (Monitoring
+    пользуется `lastAnswered`, как и раньше).
+  - **Таймауты.** Очередь прокси (`market-proxy-queue.js`): Worker 30 с → запрос
+    уходит на r.jina.ai как при отказе; r.jina.ai 45 с → ошибка сразу, без пауз
+    20 + 40 с. Импортер mobile.de: 45 с (объявление, число), 90 с (список до 12
+    страниц; замер 10-10 — 3 с); `mobile-ad-details.js` 45 с. Сигнал времени
+    объединён с отменой вызывающего кода (`window.AUTOGOOD_TIMEOUT_SIGNAL`:
+    `AbortSignal.any` + `AbortSignal.timeout`, запасной вариант без них).
+    Страница блокировки Kleinanzeigen с кодом 200 через Worker = отказ:
+    очередь читает её через r.jina.ai (`BLOCK_PAGES`).
+  - **Дата появления объявления (`listedAt`, «w ofercie od», дни на рынке):**
+    otomoto, blocket — как раньше; **Marktplaats/2dehands** — поле `date` выдачи
+    («Vandaag», «Gisteren», «6 okt 26»), только у непродвигаемых объявлений
+    (`priorityProduct` NONE): у «Dagtopper» это день поднятия (сверено со
+    `stats.since` объявления 10-10: 3 из 4 тот же день, 1 — на 3 дня позже,
+    Dagtopper «Vandaag» при объявлении от 18.08); **Kleinanzeigen** — дата
+    карточки («25.09.2026», «Heute, 19:41») = выставлено или поднято
+    («hochschieben»); id выдаются по порядку, поэтому карточка с датой позже,
+    чем у более нового объявления той же страницы, считается поднятой и даты не
+    получает (VW Golf 10-10: 19 из 24 с датой, 3 поднятых, 2 TOP без даты);
+    **mobile.de** — `createdAt` импортера («online seit» карточки), на
+    английских карточках пусто (0 из 160, 10-10; импортер не менялся);
+    **AutoScout24, ParuVendu** — в выдаче даты нет: «brak», в Monitoring
+    «w monitoringu od» (первая проверка). Более ранняя проверка всегда
+    побеждает дату портала.
+  - **НДС AutoScout24 FR:** во французской выдаче нет «inkl. MwSt.», только
+    сноска «1» (`priceSuperscriptString`) — она и есть «НДС к вычету» (Peugeot
+    3008 FR 20–21 тыс. €: 20 из 20 совпали с выдачей `vatded=true`); до 10-10
+    такие дилеры считались маржой.
+  - **Коробка:** «Handgeschakeld» (Marktplaats/2dehands) — механика
+    (`gearboxKind`: `schakel`); «Automaat», «Manuelle», «Automatique» и раньше
+    читались.
+  - **Страна продавца 2dehands/Marktplaats:** голландские дилеры на 2dehands
+    приходят `abroad: true` без страны (VW 10-10: 4 голландских, 1 бельгийский)
+    — «за границей без страны» = другая страна пары (2dehands → NL,
+    Marktplaats → BE), иначе страна сайта.
+  - **Kleinanzeigen: не продажи вне рынка** — «Gesuch» (чип карточки; «Suche
+    RAV4» за 25 000 €), «Suche…/gesucht», Leasingübernahme, «zu vermieten»,
+    «Ankauf», «nur Tausch». Число на стр. 1 всё ещё включает Gesuche (~2,5 %):
+    `anzeige:angebote` в адресе поиска — OPEN (адрес поиска ведёт чат фильтров).
+  - **«Kolejność cen»** монотонна по построению (x — место в списке рынка по
+    цене «na gotowo», y — та же цена); проверено 10-10 на VW Golf: otomoto 228
+    точек и Niemcy 136 — ни одного шага вниз.
+  - Тест: `scripts/market-listing.test.mjs` (ссылки всех порталов, даты, НДС FR,
+    коробка, страна, «не прочитано»).
 
 ### 4.6 История поисков, избранное, история цен
 - **Ссылка поиска (10-05):** у записи поле `car` — объявление, с которого начат поиск (`linkedCarRecord`); анализ рисует его жёлтым при любых фильтрах той же марки и модели; новая «Rozpoznaj» той же модели заменяет его; `sessionStorage` `autogood.mobile.linkedCar.v1` — запасной вариант для вкладки.
