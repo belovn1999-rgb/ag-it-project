@@ -175,6 +175,8 @@
       monitoringResultFiltersTitle: "Pokazuj w wynikach tylko",
       monitoringStatsUnit: "na gotowo w Polsce, zł · wszystkie wybrane rynki",
       monitoringSummaryTitle: "Ceny na gotowo w Polsce (auta pasujące do wyszukiwania)",
+      monitoringMissVersion: "inna wersja: {found}",
+      monitoringMissFuel: "inne paliwo: hybryda plug-in",
       monitoringSummaryCheapest: "najtaniej",
       monitoringSummaryCount: "{count} aut",
       monitoringSummaryVs: "vs {date}",
@@ -841,6 +843,8 @@
       monitoringResultFiltersTitle: "Показывать в результатах только",
       monitoringStatsUnit: "под ключ в Польше, зл · все выбранные рынки",
       monitoringSummaryTitle: "Цены под ключ в Польше (машины, подходящие под поиск)",
+      monitoringMissVersion: "другая версия: {found}",
+      monitoringMissFuel: "другое топливо: plug-in гибрид",
       monitoringSummaryCheapest: "дешевле всего",
       monitoringSummaryCount: "{count} авто",
       monitoringSummaryVs: "к {date}",
@@ -5457,12 +5461,46 @@
   const BUDGET_TOLERANCE = 0.1;
   const isVatOffer = (offer) => offer.priceType === "vat" || (offer.priceType === "net" && offer.currency === "PLN");
   const clientPricePln = (offer, source) => Number(offer.turnkey) || priceInPln(offer.price, offer.currency || SOURCE_CURRENCY[source] || "EUR");
-  // The search's own test of an offer: the client's budget with its margin
-  // and the result filters that need no history (VAT, dealers).
+  // Audit p. 6 (owner 2026-10-10): Marktplaats, 2dehands, Kleinanzeigen and
+  // ParuVendu cannot search a version — asked for a CLA 180 they give every
+  // CLA, the 250 e plug-in too, which then bent the median and got the
+  // excise of a petrol car. The ad's name is read: another version number
+  // right after the model's name, or a plug-in while petrol / diesel is
+  // searched, sends the car to "Dodatkowe" with the reason. A name without a
+  // version stays (it may well be the car).
+  const VERSION_BLIND = ["marktplaats", "dehands", "kleinanzeigen", "paruvendu"];
+  const escapeRegExp = (text) => String(text).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  function otherVersionOf(filters, source, offer) {
+    if (!filters || !VERSION_BLIND.includes(source)) return null;
+    const title = ` ${String(offer?.title || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")} `;
+    const modelText = `${filters.model || ""} ${filters.version || ""}`.trim();
+    const tokens = modelText.toLowerCase().split(/\s+/).filter(Boolean);
+    const wanted = (modelText.match(/\b(\d{2,3})\s?(?:[a-z]{1,2})?\b/i) || [])[1] || "";
+    if (wanted && tokens.length) {
+      // "CLA 180": the number after "cla" (or "cla-klasse", "cla shooting
+      // brake"); "BMW 320": the number after the make.
+      const base = /^\d/.test(tokens[0]) ? String(filters.brand || "").toLowerCase().split(/[\s-]+/)[0] : tokens[0];
+      const after = new RegExp(`[\\s(]${escapeRegExp(base)}(?:[-\\s]?(?:klasse|class|klasa|classe))?(?:\\s+(?:shooting\\s+brake|sb|coupe|kombi|limousine|sedan|touring|sw|break))?[\\s-]+(\\d{2,3})\\s?(e|d|i|h|xe)?(?=[\\s,|/*)-])`, "i");
+      const found = title.match(after);
+      if (found && found[1] !== wanted) return { kind: "version", found: `${found[1]}${found[2] ? ` ${found[2]}` : ""}` };
+    }
+    const fuels = (filters.fuels || []).length ? filters.fuels : filters.fuel ? [filters.fuel] : [];
+    const combustionOnly = fuels.length && fuels.every((fuel) => fuel === "petrol" || fuel === "diesel");
+    if (combustionOnly && (/plug-?in|\bphev\b|e-?hybrid|\bgte\b|\b\d{3}\s?x?e\b/.test(title) || (/\bhybri[dt]e?\b/.test(title) && !/mild/.test(title)))) {
+      return { kind: "fuel" };
+    }
+    return null;
+  }
+  const favoriteFilters = (favoriteId) => marketHistory.find((item) => item.id === favoriteId)?.filters || null;
+
+  // The search's own test of an offer: the client's budget with its margin,
+  // the version and fuel the name tells (p. 6) and the result filters that
+  // need no history (VAT, dealers).
   function offerFitsSearch(favoriteId) {
     const budget = monitoringScopeOf(favoriteId).budget || null;
     const only = resultFiltersOf(favoriteId);
-    return (source, offer) => (!budget || source === "avby"
+    const filters = favoriteFilters(favoriteId);
+    return (source, offer) => !otherVersionOf(filters, source, offer) && (!budget || source === "avby"
       || ((!budget.to || clientPricePln(offer, source) <= budget.to * (1 + BUDGET_TOLERANCE))
         && (!budget.from || clientPricePln(offer, source) >= budget.from * (1 - BUDGET_TOLERANCE))))
       && (!only.vat || isVatOffer(offer)) && (!only.dealers || offer.seller === "dealer");
@@ -6345,6 +6383,14 @@
       .filter(([source]) => selection.markets.includes(source))
       // "Nowe" only against a monitoring that also looked for them.
       .flatMap(([source, market]) => (market.offers || []).filter((offer) => chosen(source, offer) && passesOnly(offer)).map((offer) => ({ source, offer, extra: true, isNew: Boolean(before?.extra) && !extraBefore.has(offer.key) })));
+    // p. 6: cars of another version or fuel (by the ad's name) from portals
+    // that cannot search a version — out of the numbers, here with the reason.
+    perSource.filter(({ source }) => VERSION_BLIND.includes(source)).forEach(({ source, current }) => {
+      (current?.offers || []).forEach((offer) => {
+        const miss = otherVersionOf(entry.filters, source, offer);
+        if (miss && chosen(source, offer) && passesOnly(offer)) extraRows.push({ source, offer: { ...offer, miss }, extra: true, isNew: false });
+      });
+    });
     const currentByKey = new Map([
       ...perSource.flatMap(({ source, current }) => (current?.offers || []).map((offer) => [offer.key, { source, offer }])),
       ...Object.entries(extra?.markets || {}).flatMap(([source, market]) => (market.offers || []).map((offer) => [offer.key, { source, offer }])),
@@ -6913,6 +6959,8 @@
     const c = copy();
     const numbers = numberFormat();
     if (!miss) return "";
+    if (miss.kind === "version") return c.monitoringMissVersion.replace("{found}", miss.found || "—");
+    if (miss.kind === "fuel") return c.monitoringMissFuel;
     if (miss.kind === "options") {
       return (miss.options.length === 1 ? c.monitoringMissOption : c.monitoringMissOptions).replace("{options}", miss.options.join(", "));
     }
