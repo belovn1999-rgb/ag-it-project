@@ -191,6 +191,7 @@
       monitoringBudgetShort: "budżet na gotowo",
       monitoringExciseHighest: "najwyższa z wersji modelu",
       monitoringBudgetHint: "Jeden budżet dla wszystkich portali: maksymalna cena auta liczona jak w kalkulatorze („Zakup bezpośredni”), transport i oględziny wg kraju sprzedawcy, akcyza wg parametrów wyszukiwania: {engine}, kurs 1 EUR = {rate} zł. otomoto: budżet = cena w Polsce.",
+      monitoringBudgetLocked: "Ceny w walucie portalu zapisane {date} i co dzień takie same — kurs dnia ich nie zmienia (zmienia tylko „na gotowo”). Nowy budżet lub parametry = nowe ceny i nowa baza porównań.",
       monitoringPortalPrices: "Osobne ceny dla portali (zaawansowane)",
       monitoringGross: "brutto",
       monitoringNet: "netto",
@@ -857,6 +858,7 @@
       monitoringBudgetShort: "бюджет под ключ",
       monitoringExciseHighest: "наибольший из версий модели",
       monitoringBudgetHint: "Один бюджет для всех порталов: максимальная цена авто считается как в калькуляторе («Прямая покупка»), транспорт и осмотр по стране продавца, акциз по параметрам поиска: {engine}, курс 1 EUR = {rate} зл. otomoto: бюджет = цена в Польше.",
+      monitoringBudgetLocked: "Цены в валюте портала зафиксированы {date} и каждый день те же — курс дня их не меняет (меняет только «под ключ»). Новый бюджет или параметры = новые цены и новая база сравнения.",
       monitoringPortalPrices: "Отдельные цены для порталов (расширенные)",
       monitoringGross: "брутто",
       monitoringNet: "нетто",
@@ -3540,15 +3542,17 @@
     const fresh = point ? Object.fromEntries(measurement.sources.filter((source) => point[source]).map((source) => [source, point[source]])) : {};
     if (!Object.keys(fresh).length) return { ...entry, priceLog: log, dataAt: entry.listings.length >= 3 ? dataAt : "" };
     const last = log[log.length - 1];
-    // Another price per portal than at the last check: a new market, marked.
-    const lastCheck = [...log].reverse().find((item) => !item.filtersChange);
-    if (measurement.prices !== null && measurement.prices !== undefined && lastCheck && (lastCheck.prices || "{}") !== measurement.prices && !last.filtersChange) {
-      log.push({ at: now, filtersChange: true, pricesChange: true, filters: entry.filters });
-    }
+    // Another price per portal than at the last check of the same kind: a
+    // new market, marked. Monitoring's budget border is fixed (budgetLockOf),
+    // so the day's rate alone no longer marks it (audit 2026-10-10, p. 18);
+    // page 2 (no budget) is compared with page 2 only.
+    const monitoring = Boolean(measurement.offers?.notes?.scope);
+    const mark = pricesMarkFor(log, measurement.prices, monitoring, monitoring ? measurement.offers?.markets || null : null);
+    if (mark) log.push({ at: now, filtersChange: true, pricesChange: true, ...mark, filters: entry.filters });
     const priceKey = measurement.prices ? { prices: measurement.prices } : {};
     if (measurement.isNewCheck || !last || log[log.length - 1].filtersChange || Date.parse(now) - Date.parse(last.at) >= PRICE_POINT_MERGE_MS) {
-      // Every check is its own row, stamped with its time.
-      log.push({ at: now, ...priceKey, ...fresh });
+      // Every check is its own row, stamped with its time (and its kind).
+      log.push({ at: now, ...priceKey, ...(measurement.isNewCheck ? { monitoring } : {}), ...fresh });
       saveCheckOffers(entry.id, now, measurement.offers?.sources || Object.keys(fresh), measurement.offers?.listings || entry.listings, entry.filters, measurement.offers?.notes);
     } else {
       // Offers of another marketplace fetched soon after belong to that check.
@@ -4809,7 +4813,7 @@
   function monitoringStatsRows(entry, byDate) {
     const fits = offerFitsSearch(entry.id);
     const records = oneCheckPerDay([...byDate.values()].filter((record) => record.scope));
-    const changes = (entry.priceLog || []).filter((point) => point.filtersChange);
+    const changes = (entry.priceLog || []).filter(isBaseChange);
     return records.map((record, index) => {
       const offers = Object.entries(record.markets || {}).flatMap(([source, market]) => (market.offers || [])
         .filter((offer) => !offer.suspect && fits(source, offer))
@@ -5054,6 +5058,12 @@
     return "";
   }
 
+  // The bands each check searched with (its row's "prices"), by date.
+  function checkBandsOf(entry) {
+    const bands = new Map((entry.priceLog || []).filter((row) => !row.filtersChange && row.prices).map((row) => [row.at, priceBands(row.prices)]));
+    return (at, source) => (at ? bands.get(at)?.[source] || null : null);
+  }
+
   function offerChanges(source, current, compared) {
     const certain = Boolean(current?.complete && compared?.complete);
     const before = new Map((compared?.offers || []).map((offer) => [offer.key, offer]));
@@ -5092,8 +5102,9 @@
     const record = byDate.get(at);
     const compareRecord = compareAt ? byDate.get(compareAt) : null;
     const [from, to] = [compareAt, at].sort();
-    const filtersBetween = compareAt && (entry.priceLog || []).some((point) => point.filtersChange && point.at > from && point.at < to);
+    const filtersBetween = compareAt && (entry.priceLog || []).some((point) => isBaseChange(point) && point.at > from && point.at < to);
     const sources = monitoringSelection(entry).markets;
+    const bandAt = checkBandsOf(entry);
     const chips = checks.map((point) => {
       const has = byDate.has(point.at);
       const state = point.at === at ? " isPrimary" : point.at === compareAt ? " isCompare" : "";
@@ -5116,7 +5127,9 @@
           <h3>${marketBadge(source)} <small>${escapeMarketHtml(c.offerNoData)}${reason ? ` · ${escapeMarketHtml(reason)}` : ""}</small></h3>
         </div>`;
       }
-      const rows = offerChanges(source, current, compared).filter(stillListed(carsThatDay));
+      // Checks of other budget borders: only the cars inside both (p. 18).
+      const rows = withinBothBands(offerChanges(source, current, compared), bandAt(at, source), compared ? bandAt(compareAt, source) : null, SOURCE_CURRENCY[source])
+        .filter(stillListed(carsThatDay));
       allRows.push(...rows);
       const count = (group) => rows.filter((row) => row.group === group).length;
       const cheaper = rows.filter((row) => row.group === "cheaper");
@@ -5365,8 +5378,10 @@
     const numbers = numberFormat();
     const budget = monitoringScopeOf(entry.id).budget || {};
     const excise = searchExcise(entry.filters);
-    const engine = excise.index;
-    const rate = window.AUTOGOOD_TURNKEY?.currentRates?.().eur;
+    // The fixed border (owner 2026-10-10): the rate and date it was counted with.
+    const lock = monitoringScopeOf(entry.id).budget ? budgetLockOf(entry) : null;
+    const engine = lock && Number.isInteger(lock.engine) ? lock.engine : excise.index;
+    const rate = (lock && !lock.adopted && lock.rates?.eur) || window.AUTOGOOD_TURNKEY?.currentRates?.().eur;
     const ratePercent = (index) => `${String(Math.round((window.AUTOGOOD_TURNKEY?.EXCISE_RATES?.[index] ?? 0) * 1000) / 10).replace(".", ",")} %`;
     const field = (side) => `<label><span>${escapeMarketHtml(side === "from" ? c.monitoringFrom : c.monitoringTo)}</span><input type="text" inputmode="numeric" data-monitoring-budget="${side}" value="${budget[side] ? escapeMarketHtml(numbers.format(budget[side])) : ""}" placeholder="—" /><b>zł</b></label>`;
     return `
@@ -5379,7 +5394,7 @@
         </div>
         <small>${escapeMarketHtml(c.monitoringBudgetHint
           .replace("{engine}", `${typeof ENGINE_TYPE_LABELS !== "undefined" ? ENGINE_TYPE_LABELS[engine] : ""} · ${ratePercent(engine)}${excise.classes.length > 1 ? ` (${c.monitoringExciseHighest}: ${excise.classes.map(ratePercent).join(", ")})` : ""}`)
-          .replace("{rate}", rate ? String(rate).replace(".", ",") : "—"))}</small>
+          .replace("{rate}", rate ? String(rate).replace(".", ",") : "—"))}${lock ? ` ${escapeMarketHtml(c.monitoringBudgetLocked.replace("{date}", formatHistoryDate(lock.adopted || lock.at)))}` : ""}</small>
       </div>`;
   }
 
@@ -5537,7 +5552,10 @@
     const only = scope.only && typeof scope.only === "object"
       ? Object.fromEntries(RESULT_FILTERS.map((key) => [key, Boolean(scope.only[key])]))
       : null;
-    return { countries, tolerance, ...(picked.length ? { markets: picked } : {}), ...(budget ? { budget } : {}), ...(only ? { only } : {}) };
+    // The budget's border fixed in the portals' currencies (owner 2026-10-10),
+    // kept as stored; read only by budgetLockOf.
+    const budgetLock = scope.budgetLock && typeof scope.budgetLock === "object" && scope.budgetLock.prices && typeof scope.budgetLock.prices === "object" ? scope.budgetLock : null;
+    return { countries, tolerance, ...(picked.length ? { markets: picked } : {}), ...(budget ? { budget } : {}), ...(only ? { only } : {}), ...(budgetLock ? { budgetLock } : {}) };
   }
 
   // ---- One client budget for all portals (owner 2026-10-05) --------------
@@ -5574,6 +5592,8 @@
   // client's budget is never passed, and the footnote names every rate.
   // Models without data: the filters alone, as before.
   const specsPending = new Set();
+  // Brands whose file did not come in 15 s: their excise stays the filters'.
+  const specsFailed = new Set();
   function searchExcise(filters = {}) {
     const fallback = window.AUTOGOOD_TURNKEY?.engineClassFor?.({}, filters) ?? 3;
     const rates = window.AUTOGOOD_TURNKEY?.EXCISE_RATES || [0, 0.093, 0.0155, 0.031, 0.186];
@@ -5590,11 +5610,17 @@
             specsPending.delete(brand);
             if (priceHistoryId) renderPriceHistoryPage();
           } else if (Date.now() - started < 15000) setTimeout(wait, 300);
-          else specsPending.delete(brand);
+          else {
+            specsPending.delete(brand);
+            specsFailed.add(brand);
+          }
         };
         setTimeout(wait, 300);
       }
-      return { index: fallback, classes: [fallback] };
+      // settled: false while the brand's file is still on its way (the
+      // budget's border is not fixed with a provisional excise).
+      const loading = Boolean(brand && window.AUTOGOOD_MODEL_SPECS_INDEX?.brands?.[brand] && !window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand] && !specsFailed.has(brand));
+      return { index: fallback, classes: [fallback], settled: !loading };
     }
     const digits = (value) => Number(String(value || "").replace(/[^\d]/g, "")) || 0;
     const yearFrom = digits(filters.yearFrom);
@@ -5612,36 +5638,246 @@
     }
     rows = rows.filter((row) => (!fuels.length || fuels.includes(row[1]) || (row[7] && fuels.includes(row[1] === "diesel" ? "hybrid_diesel" : "hybrid_petrol")))
       && (!ccFrom || row[2] >= ccFrom) && (!ccTo || row[2] <= ccTo));
-    if (!rows.length || typeof classifyEngineType !== "function") return { index: fallback, classes: [fallback] };
+    if (!rows.length || typeof classifyEngineType !== "function") return { index: fallback, classes: [fallback], settled: true };
     const fuelText = { electric: "electric", plugin: "plug-in hybrid", hybrid_petrol: "hybrid petrol", hybrid_diesel: "hybrid diesel", diesel: "diesel", petrol: "petrol" };
     const classes = [...new Set(rows.map((row) => classifyEngineType(`${fuelText[row[1]] || row[1]}${row[7] ? " mild hybrid" : ""}`, row[2])))];
     const index = classes.reduce((best, item) => ((rates[item] ?? 0) > (rates[best] ?? 0) ? item : best), classes[0]);
-    return { index, classes };
+    return { index, classes, settled: true };
   }
-  // The car price (in the portal's currency) that a budget in PLN allows.
-  function budgetCarPrice(source, budgetPln, filters) {
+  // ==== monitoring-budget: begin ===========================================
+  // Pure functions (no page state): scripts/monitoring-budget.test.mjs runs
+  // this block on its own. The client's budget is in PLN, the portals are
+  // searched in their own currency (€, kr; otomoto zł, av.by $).
+  //
+  // Audit 2026-10-10 (p. 18), owner: "check by the price in euro". Until then
+  // the budget's border was counted again at every check with the day's rate
+  // (rounded to 100 € / 1 000 kr): at 120 000 zł a move of 0,01 zł moved it
+  // by ~58 €, almost every check got a "prices changed" mark (a new base, no
+  // Nowe / Zniknęły), and the Mac service's records were compared across two
+  // bands — cars at the border turned up as "new" or "gone". Now the border
+  // in the portal's currency is FIXED when the budget is set or changed
+  // (with the rate it was counted at) and searched every day the same; the
+  // day's rate only changes what "na gotowo" shows.
+  // A band that differs from the last searched one by at most 2 % moved with
+  // the rate only (a budget typed anew differs more).
+  function budgetAdoptTolerance() {
+    return 0.02;
+  }
+  function carPriceForBudget({ source, budgetPln, rates, tariff, engine, carForTurnkey }) {
+    if (!budgetPln || source === "avby") return null;
+    if (source === "otomoto") return budgetPln;
+    if (typeof carForTurnkey !== "function") return null;
+    const eur = carForTurnkey({ budgetPln, rate: rates?.eur, transportNettoPln: tariff?.transport, inspectionNettoPln: tariff?.inspection, engineTypeIndex: engine });
+    if (!eur) return null;
+    return source === "blocket" ? Math.round((eur * rates.eur) / rates.sek / 1000) * 1000 : Math.round(eur / 100) * 100;
+  }
+  // One portal's band {from, to} (null = no limit on that side), or null.
+  function priceBand(value) {
+    if (!value || typeof value !== "object") return null;
+    const number = (item) => (Number.isFinite(Number(item)) && Number(item) > 0 ? Number(item) : null);
+    const from = number(value.from);
+    const to = number(value.to);
+    return from === null && to === null ? null : { from, to };
+  }
+  // The bands a check searched with: the "prices" of its row (JSON text).
+  function priceBands(prices) {
+    let parsed = prices;
+    if (typeof prices === "string") {
+      try {
+        parsed = JSON.parse(prices);
+      } catch {
+        return {};
+      }
+    }
+    if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) return {};
+    return Object.fromEntries(Object.entries(parsed).map(([source, value]) => [source, priceBand(value)]).filter(([, band]) => band));
+  }
+  function sameBand(left, right) {
+    return (left?.from ?? null) === (right?.from ?? null) && (left?.to ?? null) === (right?.to ?? null);
+  }
+  // sources: only the portals a check searched (a Mac job carries the chosen
+  // portals' bands, this browser every portal's).
+  function samePriceBands(left, right, sources = null) {
+    const a = priceBands(left);
+    const b = priceBands(right);
+    const keys = sources ? sources : [...new Set([...Object.keys(a), ...Object.keys(b)])];
+    return keys.every((source) => sameBand(a[source], b[source]));
+  }
+  function nearPrice(left, right, tolerance) {
+    return (left === null && right === null)
+      || (left !== null && right !== null && Math.abs(left - right) <= Math.abs(right) * tolerance);
+  }
+  // The fixed border of a car's budget. lock: the one stored (or null);
+  // compute(): every portal's band now (today's rate); last: the latest
+  // check row that searched with bands ({at, prices}). Returns the lock to
+  // use and whether to store it.
+  // - Same budget, same search, same excise: the stored lock, whatever the rate.
+  // - Budget or search changed (by the manager): counted again = new base.
+  // - Never fixed (cars from before 2026-10-10): counted now, but a portal
+  //   whose last searched band differs only by the rate (≤ 2 %) keeps that
+  //   band — fixing the border is no "new base" by itself.
+  // - Not stored while the excise is provisional (brand file loading), unless
+  //   the manager just set the budget or a lock exists (then re-counted later).
+  function budgetLockFor({ budget, sig, excise, lock = null, compute, last = null, rates = null, now = "", manual = false }) {
+    const from = Number(budget?.from) || null;
+    const to = Number(budget?.to) || null;
+    if (!from && !to) return { lock: null, store: false };
+    const settled = excise?.settled !== false;
+    const engine = excise?.index ?? null;
+    if (lock && lock.from === from && lock.to === to && lock.sig === sig && (!settled || lock.engine === engine)) return { lock, store: false };
+    const prices = Object.fromEntries(Object.entries(compute() || {}).map(([source, value]) => [source, priceBand(value)]));
+    let adopted = "";
+    if (!lock && !manual && last) {
+      const before = priceBands(last.prices);
+      Object.keys(prices).forEach((source) => {
+        const band = prices[source];
+        const old = before[source];
+        if (band && old && !sameBand(band, old) && nearPrice(old.from, band.from, budgetAdoptTolerance()) && nearPrice(old.to, band.to, budgetAdoptTolerance())) {
+          prices[source] = old;
+          adopted = last.at || "";
+        }
+      });
+    }
+    const fresh = {
+      from, to, sig, engine, prices,
+      rates: rates ? { eur: Number(rates.eur) || null, sek: Number(rates.sek) || null } : null,
+      at: now,
+      ...(adopted ? { adopted } : {}),
+      ...(settled ? {} : { provisional: true }),
+    };
+    return { lock: fresh, store: Boolean(lock) || manual || settled };
+  }
+  // Which rows of the price history are Monitoring checks: marked since
+  // 2026-10-10; before, a row searched with a band (prices other than "{}").
+  // Page 2 searches a favourite without the budget: Monitoring is compared
+  // with Monitoring, page 2 with page 2 (alternating them marked a "new base"
+  // every time).
+  function isMonitoringRow(row) {
+    return typeof row?.monitoring === "boolean" ? row.monitoring : Object.keys(priceBands(row?.prices)).length > 0;
+  }
+  // kind: true = Monitoring, false = page 2, null = any check.
+  function lastComparableCheck(log, kind = null) {
+    for (let index = log.length - 1; index >= 0; index -= 1) {
+      const row = log[index];
+      if (row && !row.filtersChange && (kind === null || isMonitoringRow(row) === Boolean(kind))) return row;
+    }
+    return null;
+  }
+  // The mark a check gets before its row when it searched with other bands
+  // than the check before it, or null:
+  // - {monitoring: true}: a Monitoring check with other bands than the
+  //   Monitoring check before it — a new base for Nowe / Zniknęły;
+  // - {monitoring: false}: only another kind of check in between (page 2
+  //   without the budget) — a divider of the price history table, no new
+  //   base for Monitoring.
+  // Marks from before 2026-10-10 carry no flag and count as a new base.
+  function pricesMarkFor(log, prices, monitoring, sources = null) {
+    if (prices === null || prices === undefined) return null;
+    const last = log[log.length - 1];
+    if (!last || last.filtersChange) return null;
+    const differs = (row) => Boolean(row) && !samePriceBands(row.prices || "{}", prices, sources);
+    if (monitoring && differs(lastComparableCheck(log, true))) return { monitoring: true };
+    return differs(lastComparableCheck(log)) ? { monitoring: false } : null;
+  }
+  // A mark that makes the next Monitoring check a new base.
+  function isBaseChange(point) {
+    return Boolean(point?.filtersChange) && point.monitoring !== false;
+  }
+  // An offer inside a band, in the portal's currency (another currency or no
+  // price: cannot tell, kept).
+  function inPriceBand(offer, band, currency = "") {
+    if (!band) return true;
+    if (currency && offer?.currency && offer.currency !== currency) return true;
+    const price = Number(offer?.price);
+    if (!Number.isFinite(price) || price <= 0) return true;
+    return (band.from === null || price >= band.from) && (band.to === null || price <= band.to);
+  }
+  // Two checks searched with other bands (records from before 2026-10-10, a
+  // Mac record of an older job): only a car inside both bands can be new or
+  // gone. A car only in the band of the latest check is listed, not "new";
+  // one that left the list but is outside the latest band is not "gone".
+  // Same band (the rule since the border is fixed): nothing changes.
+  function withinBothBands(rows, nowBand, beforeBand, currency = "") {
+    if (sameBand(nowBand, beforeBand)) return rows;
+    return rows.filter((row) => !row.gone || inPriceBand(row.offer, nowBand, currency))
+      .map((row) => (row.group === "new" && !inPriceBand(row.offer, beforeBand, currency) ? { ...row, group: "same", status: "" } : row));
+  }
+  // ==== monitoring-budget: end =============================================
+
+  // The car price (in the portal's currency) that a budget in PLN allows at
+  // today's rate (or the rates given).
+  function budgetCarPrice(source, budgetPln, filters, rates = null) {
     if (!budgetPln || source === "avby") return null;
     if (source === "otomoto") return budgetPln;
     const country = BUDGET_COUNTRY[source];
     const turnkey = window.AUTOGOOD_TURNKEY;
     if (!country || !turnkey?.carForTurnkey) return null;
-    const rates = turnkey.currentRates();
     const tariff = typeof estimateDeliveryInspection === "function" ? estimateDeliveryInspection(filters.body || "", { country }) : { transport: 2500, inspection: 1500 };
-    const eur = turnkey.carForTurnkey({ budgetPln, rate: rates.eur, transportNettoPln: tariff.transport, inspectionNettoPln: tariff.inspection, engineTypeIndex: budgetEngineClass(filters) });
-    if (!eur) return null;
-    return source === "blocket" ? Math.round((eur * rates.eur) / rates.sek / 1000) * 1000 : Math.round(eur / 100) * 100;
+    return carPriceForBudget({ source, budgetPln, rates: rates || turnkey.currentRates(), tariff, engine: budgetEngineClass(filters), carForTurnkey: turnkey.carForTurnkey });
+  }
+  // The latest check that searched with bands (a Monitoring one), before any
+  // change of the search itself.
+  function lastSearchedBands(entry) {
+    const log = entry.priceLog || [];
+    for (let index = log.length - 1; index >= 0; index -= 1) {
+      const row = log[index];
+      if (row.filtersChange && !row.pricesChange) return null;
+      if (!row.filtersChange && Object.keys(priceBands(row.prices)).length) return row;
+    }
+    return null;
+  }
+  // The car's fixed budget border (owner 2026-10-10), stored in its
+  // Monitoring settings (monitoringScope.budgetLock). manual: the manager
+  // just set the budget (fixed at once, never taken from an older check).
+  // The calculator's live rate (Walutomat) is in, or the page has waited
+  // long enough for it (Walutomat down: the rates file).
+  function budgetRateReady() {
+    return Boolean(window.AUTOGOOD_EXCHANGE_RATES?.live) || performance.now() > 20000;
+  }
+  function budgetLockOf(entry, { manual = false } = {}) {
+    const scope = monitoringScopeOf(entry.id);
+    if (!scope.budget) return null;
+    const rates = window.AUTOGOOD_TURNKEY?.currentRates?.() || null;
+    const excise = searchExcise(entry.filters);
+    const { lock, store } = budgetLockFor({
+      budget: scope.budget,
+      sig: searchSignature(entry.filters),
+      // Not fixed before the real excise and the live rate are known.
+      excise: { ...excise, settled: excise.settled !== false && budgetRateReady() },
+      lock: scope.budgetLock || null,
+      compute: () => Object.fromEntries(MARKET_SOURCES.map((source) => {
+        const from = scope.budget.from ? budgetCarPrice(source, scope.budget.from, entry.filters, rates) : null;
+        const to = scope.budget.to ? budgetCarPrice(source, scope.budget.to, entry.filters, rates) : null;
+        return [source, from || to ? { from, to } : null];
+      })),
+      last: lastSearchedBands(entry),
+      rates,
+      now: new Date().toISOString(),
+      manual,
+    });
+    // The runner (?runner=1) searches with the bands of its job.
+    if (store && !new URLSearchParams(window.location.search).has("runner")) setMonitoringScope(entry.id, { budgetLock: lock });
+    return lock;
+  }
+  // The excise of a search is known once its brand's file is in, the rate
+  // once Walutomat answered: a check waits for them a little (the border is
+  // not fixed with provisional ones).
+  async function exciseSettled(filters, ms = 8000) {
+    const started = Date.now();
+    while ((searchExcise(filters).settled === false || !budgetRateReady()) && Date.now() - started < ms) {
+      await new Promise((resolve) => setTimeout(resolve, 250));
+    }
   }
   // What each portal is searched with: its own price, else the budget's
-  // car price, else nothing (page 1's price then).
+  // fixed car price, else nothing (page 1's price then).
   function monitoringPrices(entry) {
     const budget = monitoringScopeOf(entry.id).budget;
+    const lock = budget ? budgetLockOf(entry) : null;
     return Object.fromEntries(MARKET_SOURCES.map((source) => {
       const own = window.AUTOGOOD_FAVORITES_WATCH?.portalPrice?.(entry.id, source) || null;
       if (own) return [source, own];
-      if (!budget) return [source, null];
-      const from = budget.from ? budgetCarPrice(source, budget.from, entry.filters) : null;
-      const to = budget.to ? budgetCarPrice(source, budget.to, entry.filters) : null;
-      return [source, from || to ? { from, to } : null];
+      const band = lock?.prices?.[source] || null;
+      return [source, band ? { from: band.from ?? null, to: band.to ?? null } : null];
     }));
   }
 
@@ -6157,7 +6393,7 @@
     const latest = checks[checks.length - 1];
     // Compared only with a check of the same search and prices: after a
     // change the latest check is a new base (not "gone" for the old budget).
-    const lastChange = [...log].reverse().find((point) => point.filtersChange && latest && point.at <= latest.at && log.indexOf(point) < log.indexOf(latest));
+    const lastChange = [...log].reverse().find((point) => isBaseChange(point) && latest && point.at <= latest.at && log.indexOf(point) < log.indexOf(latest));
     const sameSearch = checks.filter((point) => !lastChange || log.indexOf(point) > log.indexOf(lastChange));
     const previous = sameSearch[sameSearch.length - 2];
     if (info) {
@@ -6249,6 +6485,7 @@
     // Each portal against its own previous answer: one that did not answer
     // this time shows its last answered list (dated on its tile), and one that
     // did is compared with the last check it answered in.
+    const bandAt = checkBandsOf(entry);
     const perSource = sources.map((source) => {
       const answeredChecks = sameSearch.filter((point) => portalAnswered(byDate.get(point.at), source));
       const shown = answeredChecks[answeredChecks.length - 1];
@@ -6256,7 +6493,12 @@
       const current = shown ? answeredMarket(byDate.get(shown.at), source) : null;
       const compared = prior ? answeredMarket(byDate.get(prior.at), source) : null;
       const silent = !portalAnswered(record, source);
-      const rows = offerChanges(source, current, compared).filter((row) => keepOffer(source, row.offer));
+      // Checks searched with other budget borders (records from before
+      // 2026-10-10, a Mac record of an older job): only the cars inside both
+      // bands can be new or gone — no car at the border "new" one day and
+      // "gone" the next (audit 2026-10-10, p. 18).
+      const rows = withinBothBands(offerChanges(source, current, compared), bandAt(shown?.at, source), prior ? bandAt(prior.at, source) : null, SOURCE_CURRENCY[source])
+        .filter((row) => keepOffer(source, row.offer));
       return { source, current, compared, rows, silent, shownAt: shown?.at || "", reason: silent ? portalFailure(record, source) : "" };
     });
     const carsNow = carsOf(perSource.map((item) => item.current));
@@ -6455,8 +6697,11 @@
       const goneWeek = new Set();
       perSource.filter(({ source, current: market }) => market?.complete && (!monitoringState.portal || source === monitoringState.portal)).forEach(({ source, current: market }) => {
         const now = new Set((market.offers || []).map((offer) => offer.key));
+        const nowBand = bandAt(record.at, source);
+        // A car outside today's budget border (an older check of another band) has not gone.
+        const inBand = (item, offer) => sameBand(bandAt(item.at, source), nowBand) || inPriceBand(offer, nowBand, SOURCE_CURRENCY[source]);
         monitoringChecks.filter((item) => item.scope === record.scope && item.at !== record.at && Date.parse(item.at) >= weekAgo && item.markets?.[source]?.complete)
-          .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key) && !carsNow.has(carSignature(offer)) && inCountry(source, offer)) goneWeek.add(offer.key); }));
+          .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key) && !carsNow.has(carSignature(offer)) && inCountry(source, offer) && inBand(item, offer)) goneWeek.add(offer.key); }));
       });
       const parts = [
         medianDays !== null && !(atLeast && medianDays < 1) ? c.monitoringLiquidityDays.replace("{days}", `${atLeast ? "≥ " : ""}${daysText(medianDays)}`) : "",
@@ -7119,7 +7364,14 @@
       refreshMarketHistory();
       const fresh = marketHistory.find((item) => item.id === record.historyId);
       if (fresh && point && Object.keys(point).length && !(fresh.priceLog || []).some((row) => row.at === record.at)) {
-        const log = [...(fresh.priceLog || []), { at: record.at, ...(prices ? { prices } : {}), ...point }].sort((left, right) => left.at.localeCompare(right.at));
+        // Searched with other bands than the Monitoring check before it (the
+        // manager changed the budget after the job was handed out): a new
+        // base, as a check of this browser would mark it (audit 2026-10-10,
+        // p. 18; until then a Mac record was compared across two bands).
+        const before = (fresh.priceLog || []).filter((row) => row.at < record.at);
+        const mark = pricesMarkFor(before, prices ?? null, true, record.scope ? String(record.scope).split("|")[0].split(",").filter(Boolean) : null);
+        const marker = mark ? [{ at: new Date(Date.parse(record.at) - 1).toISOString(), filtersChange: true, pricesChange: true, ...mark, filters: fresh.filters }] : [];
+        const log = [...(fresh.priceLog || []), ...marker, { at: record.at, ...(prices ? { prices } : {}), monitoring: true, ...point }].sort((left, right) => left.at.localeCompare(right.at));
         storeMarketHistory(marketHistory.map((item) => (item.id === fresh.id ? { ...item, priceLog: log } : item)));
       }
       checkOffersCache.delete(record.historyId);
@@ -7158,6 +7410,8 @@
       Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
       // Shown whichever car is open: the line says which car runs.
       const progress = (source, info) => updateMonitoringProgress(source, info);
+      // The budget's border is fixed with the search's real excise.
+      if (scope.budget) await exciseSettled(entry.filters);
       const read = await readMonitoringLists({ id: entry.id, filters, markets, countries: scope.countries, prices: monitoringPrices(entry) }, provider, progress);
       const { base } = read;
       const fetched = normalizeListings(read.raw);
@@ -7178,6 +7432,8 @@
       refreshMarketHistory();
       const current = marketHistory.find((item) => item.id === entry.id) || entry;
       measureNextSnapshot(provider.lastSources || markets, true, provider.lastPrices ?? null, {
+        // The chosen portals: their bands decide a new base.
+        markets,
         // Also a portal whose every car is a duplicate of the main portal's.
         sources: [...new Set([...(provider.lastSources || markets), ...read.answered])],
         listings: fetched,
@@ -7311,6 +7567,9 @@
           state = localMonitoringState();
         }
         try {
+          // The jobs carry the budget's fixed border (counted with the real excise).
+          refreshMarketHistory();
+          for (const entry of marketHistory.filter((item) => item.pinned && item.autoRefresh?.enabled && monitoringScopeOf(item.id).budget)) await exciseSettled(entry.filters, 4000);
           await fetch(`${LOCAL_MONITORING_URL}/jobs`, { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ client: state.client, jobs: monitoringJobs().jobs }) });
           refreshMarketHistory();
           const ids = marketHistory.filter((entry) => entry.pinned).map((entry) => entry.id);
@@ -7443,6 +7702,9 @@
       const budget = monitoringScopeOf(priceHistoryId).budget || {};
       const value = Number(String(budgetField.value).replace(/[^\d]/g, "")) || null;
       setMonitoringScope(priceHistoryId, { budget: { ...budget, [budgetField.dataset.monitoringBudget]: value } });
+      // The border in the portals' currencies is fixed now, at today's rate.
+      const budgetEntry = marketHistory.find((item) => item.id === priceHistoryId);
+      if (budgetEntry) budgetLockOf(budgetEntry, { manual: true });
       Object.assign(monitoringState, { status: copy().monitoringPriceChanged, statusError: false });
       renderPriceHistoryPage();
       return;
@@ -7575,7 +7837,9 @@
       const tariff = typeof estimateDeliveryInspection === "function" ? estimateDeliveryInspection(entry.filters.body || "", { country: "DE" }) : { transport: 2500, inspection: 1300 };
       window.AUTOGOOD_CALC_POPUP?.openValues({
         title: `${monitoringTitle(entry)} · ${copy().monitoringBudgetShort}${budget?.to ? ` ${numberFormat().format(budget.to)} zł` : ""}`,
-        gross: budget?.to ? budgetCarPrice("mobile", budget.to, entry.filters) : 0,
+        // The fixed border mobile.de is searched with; the calculator counts
+        // it at today's rate.
+        gross: budget?.to ? budgetLockOf(entry)?.prices?.mobile?.to || budgetCarPrice("mobile", budget.to, entry.filters) : 0,
         engine: budgetEngineClass(entry.filters),
         transport: tariff.transport,
         inspection: tariff.inspection,
