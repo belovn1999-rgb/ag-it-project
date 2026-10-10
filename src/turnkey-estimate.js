@@ -104,7 +104,10 @@
   // Any hybrid named anywhere (mild ones too: MHEV, 48V, eTSI, EQ Boost)
   // takes the reduced excise (owner, 2026-10-03). Plug-ins only when named.
   const HYBRID_WORDS = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b/;
+  // The model names of plug-ins (eHybrid, GTE, TFSI e, 330e…): one list
+  // with the link reader (src/mobile.js isPluginHybridText).
   const PLUGIN_WORDS = /plug|\bphev\b|laddhybrid|e-hybrid/;
+  const pluginNamed = (text) => (typeof isPluginHybridText === "function" ? isPluginHybridText(text) : PLUGIN_WORDS.test(text));
   // Engine size written in the name: "2.0 TDI", "1,5 T-GDI", "Diesel 1.9".
   function litresInText(text) {
     const match = String(text || "").match(/(?:^|[\s(/])([0-7])[.,]([0-9])(?=$|[\s)/a-z-])/i);
@@ -123,6 +126,8 @@
     const own = String(listing.fuel || "").toLowerCase()
       // Blocket (Swedish): plug-in hybrid, electric, petrol.
       .replace(/laddhybrid/g, "plug-in hybrid")
+      // Blocket "Hybrid gas" is a gas (CNG) car, no hybrid.
+      .replace(/hybrid\s*gas|gas\s*hybrid/g, "gas")
       .replace(/^el$|\bel\b(?=\s*\/|$)/g, "electric")
       .replace(/bensin/g, "petrol");
     // AutoScout24 "Elektro/Benzin", Blocket "el/bensin": a hybrid.
@@ -130,7 +135,7 @@
     const name = `${listing.title || ""} ${listing.subtitle || ""}`.toLowerCase();
     let fuelText = /petrol|diesel|hybrid|electric|elektr|plug|benzin|benzyna|lpg|cng|gas/.test(own) ? own : fuelsWanted.join(" ");
     if (mixed || HYBRID_WORDS.test(name) || HYBRID_WORDS.test(own)) fuelText += " hybrid";
-    if (PLUGIN_WORDS.test(name)) fuelText += " plug-in";
+    if (pluginNamed(name)) fuelText += " plug-in";
     // The search asks for plug-ins (mobile.de "HYBRID_PLUGIN"): its hybrids
     // are plug-ins even when the ad says only "Hybrid (Benzin/Elektro)" —
     // up to 2000 cm³ no excise (owner 2026-10-06).

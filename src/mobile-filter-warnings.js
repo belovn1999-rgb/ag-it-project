@@ -33,7 +33,7 @@
     ["kleinanzeigen", "Kleinanzeigen", (filters) => (window.AUTOGOOD_KLEINANZEIGEN?.skippedFilterLabels?.(filters) || [])],
     ["paruvendu", "ParuVendu", (filters) => (window.AUTOGOOD_PARUVENDU?.skippedFilterLabels?.(filters) || [])],
     ["marktplaats", "Marktplaats", (filters) => (window.AUTOGOOD_MARKTPLAATS?.skippedFilterLabels?.(filters) || [])],
-    ["dehands", "2dehands", (filters) => (window.AUTOGOOD_MARKTPLAATS?.skippedFilterLabels?.(filters) || [])],
+    ["dehands", "2dehands", (filters) => (window.AUTOGOOD_MARKTPLAATS?.skippedFilterLabels?.(filters, "dehands") || [])],
     ["blocket", "blocket.se", (filters) => (typeof blocketSkippedFilterLabels === "function" ? blocketSkippedFilterLabels(filters) : [])],
     ["avby", "av.by", (filters) => (typeof avbySkippedFilterLabels === "function" ? avbySkippedFilterLabels(filters) : [])],
   ];

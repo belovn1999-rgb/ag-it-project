@@ -14,10 +14,25 @@
 // blocket-search.js: uses their helpers (rangeBounds, manualFuelValues, copy,
 // state, doorRangeBounds, the blocket* model matching).
 (() => {
+  // The category tree and most attribute values are shared, a few keys are
+  // not (facets of /lrp/api/search, 2026-10-10): 2dehands has its own doors
+  // (one value per count), seats, power in kW and only an extended warranty.
   const SITES = {
-    marktplaats: { host: "https://www.marktplaats.nl", country: "NL", name: "Marktplaats" },
-    dehands: { host: "https://www.2dehands.be", country: "BE", name: "2dehands" },
+    marktplaats: {
+      host: "https://www.marktplaats.nl", country: "NL", name: "Marktplaats",
+      power: { key: "engineHorsepower", kw: false }, seats: "numberOfSeats",
+      doors: { 2: 171, 3: 171, 4: 172, 5: 172, 6: 173, 7: 173 }, warranty: 8783, warrantyApprox: false,
+    },
+    dehands: {
+      host: "https://www.2dehands.be", country: "BE", name: "2dehands",
+      power: { key: "enginePowerKW", kw: true }, seats: "numberOfSeatsBE",
+      doors: { 2: 11757, 3: 11758, 4: 11759, 5: 11760, 6: 11761, 7: 11761 }, warranty: 13182, warrantyApprox: true,
+      // The same body ids, Belgian names: 481 is "Stadsauto" (a city car),
+      // 483 "Berline" — a hatchback as well as a saloon (Golf: 454 / 814).
+      body: { hatchback: [481, 483], limousine: [483], sedan: [483] },
+    },
   };
+  const KW_PER_HP = 0.73549875;
   const CARS = 91;
   const PAGE_SIZE = 100;
   // Results beyond this offset are not served in one sort order (2026-10-04:
@@ -31,7 +46,6 @@
   const GEARBOX = { automatic: [534], manual: [535] };
   const DRIVE = { fwd: [13943], rwd: [13944], awd: [13945] };
   const BODY = { hatchback: [481], van_minibus: [482], limousine: [483], sedan: [483], estate: [484], coupe: [486], cabrio: [485], suv: [488], pickup: [488], other: [487] };
-  const DOORS = { 2: 171, 3: 171, 4: 172, 5: 172, 6: 173, 7: 173 };
   const SELLER = { dealer: [10899], company: [10899], private: [10898] };
   const CONDITION = { new: [30], used: [14049] };
   const BODY_COLOR = { beige: 468, blue: 287, brown: 469, yellow: 443364, green: 288, red: 465, white: 471, grey: 466, silver: 466, black: 290 };
@@ -56,7 +70,6 @@
   const TOWBAR = 11564;
   const SLIDING_DOOR = 11807;
   const METALLIC = 11558;
-  const WARRANTY = 8783;
   // "Dealer onderhouden" or "Onderhoudsboekje": a documented service history.
   const SERVICE = [13183, 13184];
   const VAT = 13149;
@@ -113,18 +126,37 @@
     const alternatives = blocketModelAlternatives(brand, cleanModel);
     const ourModels = blocketOurModels(brand);
     const separateFor = (name) => ourModels.filter((other) => blocketToken(other).length > blocketToken(name).length && blocketInFamily(other, name));
+    // An empty token only for the same name: Land Rover "Series".
+    const seriesOf = (name) => nodes.filter((node) => node.series && seriesToken(node.name) === seriesToken(name)
+      && (seriesToken(name) || blocketToken(node.name) === blocketToken(name)));
+    // A series' body models are its flat siblings on the platform, not part
+    // of it: "3-Serie" (610) and "3-Serie GT" (10887), "2-Serie" and "2-Serie
+    // Active Tourer" / "Gran Coupé" / "Gran Tourer" (checked 2026-10-10).
+    const bodyModels = (series) => nodes.filter((node) => !node.series
+      && series.some((head) => blocketNormal(node.name).startsWith(`${blocketNormal(head.name)} `)));
+    const bodyWord = (value) => blocketToken(String(value || "").replace(/\bgran\s+turismo\b/gi, "GT"));
+    // A whole series first, with its body models, as mobile.de's "3er" with
+    // the Gran Turismo: BMW "3" -> 3-Serie + 3-Serie GT, Mercedes "C" -> C-Klasse.
+    // Before the family below: "3-Serie GT" opens with "3", the series itself
+    // is not a family member, so "3" found only the GT (2026-10-10).
+    const series = alternatives.flatMap(seriesOf);
+    if (series.length) return result([...series, ...bodyModels(series)], false);
     const exact = alternatives.flatMap((name) => blocketFamily(nodes, name, separateFor(name), ourModels));
     if (exact.length) return result(exact, false);
-    // A whole series: BMW "3" -> "3-serie", Mercedes "C" -> "C-Klasse".
-    const series = alternatives.flatMap((name) => nodes.filter((node) => node.series && seriesToken(node.name) === seriesToken(name)));
-    if (series.length) return result(series, false);
-    // An engine of a series: BMW 320d -> 3-serie, C 200 -> C-Klasse.
+    // An engine of a series: BMW 320d -> 3-Serie, C 200 -> C-Klasse; with a
+    // body after it, that body model: "320 Gran Turismo" -> 3-Serie GT,
+    // "218 Active Tourer" -> 2-Serie Active Tourer, "2er Gran Coupé" -> 2-Serie
+    // Gran Coupé (the whole of it, not approximate).
     for (const name of alternatives) {
-      const bmw = brand === "BMW" && name.match(/^M?([1-8])\d{2}[a-z]{0,2}\b/i);
+      const bmw = brand === "BMW" && name.match(/^M?([1-8])(\d{2}[a-z]{0,2}|er)\b\s*(.*)$/i);
       const head = bmw ? bmw[1] : (name.match(/^([A-Za-z]{1,3})\s*\d{2,3}/) || [])[1];
       if (!head) continue;
-      const found = nodes.filter((node) => node.series && seriesToken(node.name) === seriesToken(head));
-      if (found.length) return result(found, true);
+      const found = seriesOf(head);
+      if (!found.length) continue;
+      if (bmw && /^er$/i.test(bmw[2]) && !bmw[3]) return result([...found, ...bodyModels(found)], false);
+      const body = bmw && bmw[3] ? bodyModels(found).filter((node) => found.some((one) => blocketToken(node.name) === `${blocketToken(one.name)}${bodyWord(bmw[3])}`)) : [];
+      if (body.length) return result(body, !/^er$/i.test(bmw[2]));
+      return result(found, true);
     }
     // A broader model the requested name opens with ("Golf GTI" -> Golf).
     for (const name of alternatives) {
@@ -142,7 +174,8 @@
 
   // ---- The search ------------------------------------------------------------------
   // { selection, groups: [[ids]], ranges: [{key, from, to}], query, skipped: [] }
-  function searchParts(filters = {}, { price = null } = {}) {
+  function searchParts(filters = {}, { price = null, market = "marktplaats" } = {}) {
+    const site = SITES[market] || SITES.marktplaats;
     const c = (typeof copy === "object" && copy[state.lang]) || {};
     const t = TEXT[lang()];
     const skipped = [];
@@ -170,19 +203,26 @@
     }
     group(GEARBOX[filters.gearbox] || []);
     group(DRIVE[filters.drive] || []);
-    group(BODY[filters.body] || []);
+    const bodyIds = site.body?.[filters.body];
+    group(bodyIds || BODY[filters.body] || []);
+    if (bodyIds) skip(`${c.bodyLabel || "Nadwozie"} ≈`);
     group(SELLER[filters.seller] || []);
     group(CONDITION[filters.newUsed] || []);
     if (filters.vat === "reclaimable") group([VAT]);
     if (filters.vat === "non_reclaimable") skip(c.vatLabel || "VAT");
-    if (filters.warranty) group([WARRANTY]);
+    // 2dehands has no "Garantie", only "Verlengde garantie" (an extended one).
+    if (filters.warranty) {
+      group([site.warranty]);
+      if (site.warrantyApprox) skip(`${c.warrantyLabel || "Gwarancja"} ≈`);
+    }
     if (filters.serviceHistory) group(SERVICE);
-    // Doors: the form's group (2/3, 4/5, 6/7) is one value of "Aantal deuren".
+    // Doors: Marktplaats has one value for 2/3, 4/5, 6+ ("Aantal deuren"),
+    // 2dehands one for each count ("aantaldeurenBE": 2, 3, 4, 5, 6).
     try {
       const doors = typeof doorRangeBounds === "function" ? doorRangeBounds(filters) : { from: null, to: null };
       if (doors.from !== null || doors.to !== null) {
         const values = [];
-        for (let count = doors.from ?? 2; count <= (doors.to ?? 7); count += 1) values.push(DOORS[count]);
+        for (let count = doors.from ?? 2; count <= (doors.to ?? 7); count += 1) values.push(site.doors[count]);
         if (values.length < 6) group(values);
       }
     } catch {
@@ -230,24 +270,28 @@
     if (filters.firstOwner) skip(c.firstOwnerLabel || "Pierwszy właściciel");
 
     const ranges = [];
-    const range = (key, fromValue, toValue, scale = 1) => {
+    const range = (key, fromValue, toValue, scale = 1, roundFrom = Math.round, roundTo = Math.round) => {
       const { from, to } = typeof rangeBounds === "function" ? rangeBounds(fromValue, toValue) : { from: Number(digits(fromValue)) || null, to: Number(digits(toValue)) || null };
       if (from === null && to === null) return;
-      ranges.push({ key, from: from === null ? null : Math.round(from * scale), to: to === null ? null : Math.round(to * scale) });
+      ranges.push({ key, from: from === null ? null : roundFrom(from * scale), to: to === null ? null : roundTo(to * scale) });
     };
     range("constructionYear", filters.yearFrom, filters.yearTo);
     range("mileage", filters.mileageFrom, filters.mileageTo);
     if (price) range("PriceCents", price.from, price.to, 100);
     else range("PriceCents", filters.priceFrom, String(filters.priceTo || "").trim().endsWith("+") ? "" : filters.priceTo, 100);
-    range("engineHorsepower", filters.powerFrom, filters.powerTo);
+    // Power: Marktplaats in hp, 2dehands in kW — the form's kW as they are,
+    // its hp rounded outwards (150 hp = 110.3 kW -> up to 111), as AutoScout24.
+    if (!site.power.kw) range(site.power.key, filters.powerFrom, filters.powerTo);
+    else if (filters.powerUnit === "kw" && (digits(filters.powerKwFrom) || digits(filters.powerKwTo))) range(site.power.key, filters.powerKwFrom, filters.powerKwTo);
+    else range(site.power.key, filters.powerFrom, filters.powerTo, KW_PER_HP, Math.floor, Math.ceil);
     range("engineDisplacement", filters.displacementFrom, filters.displacementTo);
-    range("numberOfSeats", filters.seatsFrom, filters.seatsTo);
+    range(site.seats, filters.seatsFrom, filters.seatsTo);
     return { selection, groups, ranges, query: selection.query, skipped };
   }
 
   function buildApiUrl(market, filters, { offset = 0, limit = PAGE_SIZE, desc = false, price = null } = {}) {
     const site = SITES[market];
-    const parts = searchParts(filters, { price });
+    const parts = searchParts(filters, { price, market });
     const query = [`l1CategoryId=${CARS}`];
     if (parts.selection.makeId) query.push(`l2CategoryIds=${parts.selection.makeId}`);
     // "Te koop" (not lease), as the site shows by default.
@@ -262,7 +306,7 @@
   // The site's own link: the same search in the hash of the make's page.
   function buildSearchUrl(market, filters) {
     const site = SITES[market];
-    const parts = searchParts(filters);
+    const parts = searchParts(filters, { market });
     const path = parts.selection.makeKey ? `/l/auto-s/${parts.selection.makeKey}/` : "/l/auto-s/";
     const hash = [];
     const ids = parts.groups.flat();
@@ -290,6 +334,11 @@
       const options = attr("options")?.values || [];
       const position = offset + index + 1;
       const advertiser = value("advertiser");
+      // "150 pk" (Marktplaats, 2dehands "engineHorsepowerBE") or "100 kW"
+      // (2dehands "enginePowerKW"), as hp ("KM") for the analysis.
+      const hp = Number(digits(value("engineHorsepower") || value("engineHorsepowerBE")));
+      const kw = Number(digits(value("enginePowerKW")));
+      const power = hp || (kw ? Math.round(kw * 1.35962) : 0);
       return {
         id: String(item.itemId || ""),
         url: item.vipUrl ? new URL(item.vipUrl, site.host).toString() : "",
@@ -299,7 +348,7 @@
         currency: "EUR",
         year: Number(value("constructionYear")) || "",
         mileage: Number(digits(value("mileage"))) || "",
-        power: value("engineHorsepower"),
+        power: power ? `${power} KM` : "",
         fuel: value("fuel").slice(0, 40),
         gearbox: value("transmission").slice(0, 20),
         body: value("body").slice(0, 40),
@@ -371,7 +420,7 @@
         const url = buildSearchUrl(market, filters);
         link.href = url;
         window.AUTOGOOD_MOBILE_LOG_SEARCH?.(url);
-        const { skipped } = searchParts(filters);
+        const { skipped } = searchParts(filters, { market });
         setMarketSearchStatus(skipped.length
           ? TEXT[lang()].skipped.replace("{portal}", SITES[market].name).replace("{filters}", skipped.join(", "))
           : TEXT[lang()].opening[market]);
@@ -401,6 +450,8 @@
     buildSearchUrl,
     parseListings,
     fetchJson,
-    skippedFilterLabels: (filters) => searchParts(filters).skipped,
+    // Each site its own list: 2dehands takes the warranty, hatchback and
+    // sedan only approximately.
+    skippedFilterLabels: (filters, market = "marktplaats") => searchParts(filters, { market }).skipped,
   };
 })();

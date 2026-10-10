@@ -475,8 +475,12 @@ LU 346, FR 7; у C-HR в NL/AT просто 0), но **несколько `cn` �
 `src/marktplaats-catalog.generated.js` (`scripts/generate-marktplaats-catalog.py
 [--proxy https://r.jina.ai/]`, 101 марка, 1 395 моделей), чтение —
 `fetchMarktplaatsListings` в `src/mobile-market-analysis.js`.
-Две страны — одна платформа (Adevinta), один API `/lrp/api/search` и одни коды
-на обоих сайтах (VW 157, Golf 1260, BMW «3-Serie» = «3 Reeks» = 610). Рынки:
+Две страны — одна платформа (Adevinta), один API `/lrp/api/search`, одно дерево
+марок и моделей (VW 157, Golf 1260, BMW «3-Serie» = «3 Reeks» = 610) и одни id у
+большинства значений. **Но не у всех полей:** у 2dehands свои ключи дверей, мест,
+мощности (в кВт) и гарантии — таблица «Различия NL / BE» ниже (проверено по фасетам
+`/lrp/api/search` 10-10; до 10-10 эти четыре фильтра на 2dehands давали 0 или
+молча не работали). Рынки:
 `marktplaats` = «Holandia» (marktplaats.nl), `dehands` = «Belgia» (2dehands.be;
 2ememain.be — тот же сайт по-французски). У API нет CORS для других сайтов —
 читается через прокси с `x-respond-with: text` (чистый JSON).
@@ -504,22 +508,66 @@ LU 346, FR 7; у C-HR в NL/AT просто 0), но **несколько `cn` �
 
 | Поле формы | Marktplaats / 2dehands | Проверка (VW Golf NL, база 5985) |
 |---|---|---|
-| Model | `attributesById` модели из справочника (семейство, как Blocket; серии «Serie/Reeks/Klasse») | Golf = Golf + Golf Variant |
+| Model | `attributesById` модели из справочника (семейство, как Blocket; серии «Serie/Reeks/Klasse», см. «Серии BMW» ниже) | Golf = Golf + Golf Variant |
 | Paliwo | benzyna 473, diesel 474, elektryk 11756, hybryda benzyna 13838, hybryda diesel 13839; plug-in — группа «Type hybride» 13956 (только если выбран один plug-in, иначе ≈) | бензин 4736, дизель 348, электро 53, гибрид 828, plug-in 561 |
 | Skrzynia | automat 534, manual 535 | 3240 / 2699 |
 | Napęd | FWD 13943, RWD 13944, AWD 13945 | 5277 / 10 / 364 |
-| Nadwozie | hatchback 481, kombi 484, sedan 483, SUV (и pickup ≈) 488, van 482, cabrio 485, coupé 486 | hatchback 5499, kombi 170, sedan 2, SUV 1, MPV 20, cabrio 235, coupé 1 |
+| Nadwozie | hatchback 481, kombi 484, sedan 483, SUV (и pickup ≈) 488, van 482, cabrio 485, coupé 486; **2dehands:** hatchback 481 + 483 ≈, sedan 483 ≈ (см. различия) | hatchback 5499, kombi 170, sedan 2, SUV 1, MPV 20, cabrio 235, coupé 1 |
 | Sprzedawca | dealer 10899, prywatny 10898 | 4261 / 1644 |
 | Nowy / używany | 30 / 14049 | 48 / 3818 |
 | VAT odliczany | «BTW verrekenbaar» 13149 (marża — нет, предупреждение) | 689 |
-| Gwarancja | 8783 | 607 |
+| Gwarancja | 8783; **2dehands:** 13182 «Verlengde garantie» ≈ | 607 |
 | Serwisowany w ASO | 13183 «Dealer onderhouden» или 13184 «Onderhoudsboekje» | 1263 |
-| Liczba drzwi | 2/3 → 171, 4/5 → 172, 6/7 → 173 | 2/3 850, 4/5 4804 |
+| Liczba drzwi | 2/3 → 171, 4/5 → 172, 6/7 → 173; **2dehands:** каждое число отдельно 11757–11761 | 2/3 850, 4/5 4804 |
 | Kolor nadwozia | beige 468, blue 287, brown 469, yellow 443364, green 288, red 465, white 471, grey/silver 466, black 290 (золотой, оранжевый, фиолетовый — нет, предупреждение) | чёрный+белый 2897, серый/серебро 1954 |
 | Kolor wnętrza | beige 11776, blue 11777, brown 11778, grey 11779, black 11780, other 12155 (красный — нет) | чёрный 2348 |
 | Tapicerka | alcantara 13977, cloth 13982, part leather 13981 + 13980, full leather 13979 | кожа 630, частично 428, ткань 1872, алькантара 545 |
-| Rok / przebieg / cena / moc / pojemność / miejsca | `constructionYear`, `mileage`, `PriceCents` (€ × 100), `engineHorsepower` (л. с.), `engineDisplacement` (см³), `numberOfSeats` | 2019–2021 1104; ≤100 тыс. км 1585; 10–20 тыс. € 1684; 110–150 л. с. 2712; 1900–2000 см³ 1450; 5 мест 5536 |
+| Rok / przebieg / cena / moc / pojemność / miejsca | `constructionYear`, `mileage`, `PriceCents` (€ × 100), `engineHorsepower` (л. с.), `engineDisplacement` (см³), `numberOfSeats`; **2dehands:** `enginePowerKW`, `numberOfSeatsBE` | 2019–2021 1104; ≤100 тыс. км 1585; 10–20 тыс. € 1684; 110–150 л. с. 2712; 1900–2000 см³ 1450; 5 мест 5536 |
 | Wersja | `query=` (поиск в названии и описании) | «gti» 1024 |
+
+**Различия NL / BE** (фасеты `/lrp/api/search` обоих сайтов, 10-10). Остальные группы
+и диапазоны — одни и те же ключи и id: топливо, plug-in, коробка, привод, кузов (id),
+продавец, новый/б/у, НДС, обслуживание, цвета, салон, обивка, все 40 опций, год,
+пробег, цена, объём. Проверка — VW Golf (Golf + Golf Variant) на 2dehands, база 2 870 (10-10):
+
+| Поле формы | Marktplaats (NL) | 2dehands (BE) | 2dehands: было → стало |
+|---|---|---|---|
+| Moc | `engineHorsepower`, л. с. | `enginePowerKW`, кВт; л. с. формы → кВт с округлением наружу (×0,73549875: «от» вниз, «до» вверх, как AutoScout24), кВт формы — как есть | 110–150 л. с.: 0 → 684 (80–111 кВт); от 200 л. с.: 0 → 315 (≥147 кВт) |
+| Liczba miejsc | `numberOfSeats` | `numberOfSeatsBE` | 5 мест: 0 → 1 328 |
+| Liczba drzwi | `numberOfDoors`: 171 (2/3), 172 (4/5), 173 (6+) | `aantaldeurenBE`: 11757 (2), 11758 (3), 11759 (4), 11760 (5), 11761 (6; 7 → 6) | 2/3: 2 870 (171 молча не работал) → 300; 4/5: 1 672 |
+| Gwarancja | `warranty` 8783 «Met garantie (alle)» | только `extendedWarranty` 13182 «Verlengde garantie» → «Gwarancja ≈» в жёлтом «!» | 2 870 (8783 молча не работал) → 77 (сайт «77 resultaten») |
+| Nadwozie | 481 Hatchback, 483 Sedan | те же id, но 481 = «Stadsauto» (городская), 483 = «Berline» (и хэтчбек, и седан): у Golf 446 / 801. Hatchback → 481 + 483 ≈, sedan → 483 ≈ | hatchback: 446 → 1 247 (сайт «1.247 resultaten») |
+| Нет у 2dehands | — | APK, NAP, импорт, энергетический ярлык (мы их не шлём) | — |
+
+Проверено и без изменений на 2dehands (тот же Golf): год 2019–2021 — 342, пробег
+≤ 100 тыс. км — 955, цена 10–20 тыс. € — 777, объём 1900–2000 см³ — 377. Ссылка на
+сайт с новыми ключами (`enginePowerKWFrom:80|enginePowerKWTo:111|numberOfSeatsBEFrom:5|…`
++ двери 4/5): наш счётчик 541, сайт «541 resultaten». Жёлтое «!» и сообщение при открытии ссылки у 2dehands — свои
+(`skippedFilterLabels(filters, "dehands")`). Мощность объявления: `engineHorsepower`
+/ `engineHorsepowerBE` («150 pk») или `enginePowerKW` («100 kW») → «… KM» для анализа.
+
+**Серии BMW** (10-10). Модели платформы плоские: серия и её кузова — соседи, а не
+вложенные («3-Serie» 610 и «3-Serie GT» 10887 не пересекаются: 3 349 + 129 = 3 478).
+До 10-10 «3» находила только «3-Serie GT» (семейство «3» проверялось раньше серии, а
+сама серия в семейство не входит). Теперь серия проверяется первой и берётся с
+кузовами, как «3er» mobile.de с Gran Turismo: 2 → 2-Serie + Active Tourer + Gran
+Coupé + Gran Tourer, 3 → + GT, 4 → + Gran Coupé, 5 → + GT, 6 → + Gran Coupé, 8 → +
+Gran Coupé; 1 и 7 кузовов не имеют. Двигатель серии — вся серия ≈ («320», «320d»,
+«M340i» → 3-Serie), двигатель с кузовом — этот кузов ≈ («320 Gran Turismo» → 3-Serie
+GT, «218 Active Tourer» → 2-Serie Active Tourer, «420 Gran Coupé» → 4-Serie Gran
+Coupé), «2er Gran Coupé» → 2-Serie Gran Coupé точно; «640 Gran Turismo» (кузова GT у
+6-й серии на платформе нет) → 6-Serie ≈. Mercedes C/E, Rover, Infiniti, Land Rover
+«Series» — без изменений (кузова-соседи у серий есть только у BMW).
+
+| BMW, дилеры | Marktplaats: было → стало | 2dehands: было → стало |
+|---|---|---|
+| 2 | 1 035 → 1 218 | 192 → 334 |
+| 3 | 129 → 3 478 (сайт «3.477 resultaten»; ±1 — минуты между замерами) | 30 → 704 (сайт «705 resultaten») |
+| 4 | 274 → 626 | 58 → 160 |
+| 5 | 31 → 2 493 | 13 → 378 |
+| 6 | 27 → 164 | 9 → 46 |
+| 8 | 28 → 73 | 5 → 17 |
+| 1, 7 | 2 092, 264 (без изменений) | 639, 62 (без изменений) |
 
 Опции (каждая отдельно, все вместе — «и»): слепые зоны 11910 (1028), подогрев
 сидений 11563 (2783), руля 11916 (1128), задних 443384 (39),
@@ -682,3 +730,4 @@ CV: 5–7 CV → 835), привод, объём, места, цвета, сал�
 | 09-29 | Codex | Значение продавца по умолчанию — `dealer` («Dealer / komis»): mobile.de `st=DEALER`, otomoto `private_business=business`, blocket `dealer_segment=2`; явный выбор пользователя и старые сохранённые фильтры не меняются | этот коммит |
 | 10-02 | Claude | av.by: четвёртая площадка — каталог, перенос всех фильтров (138 вариантов = ссылке самого av.by), предупреждения, счётчик, объявления, анализ, стр. 4, аудит | этот коммит |
 | 10-04 | Claude | «Bezwypadkowy» (otomoto `filter_enum_no_accident`; mobile.de, AutoScout24, blocket, av.by — нет, предупреждение) и «Pierwszy właściciel» (mobile.de `pvo=1`, otomoto `filter_enum_original_owner`, AutoScout24 `prevownersid=1`; blocket, av.by — нет); каждый параметр проверен по изменению числа | этот коммит |
+| 10-10 | Claude | Marktplaats / 2dehands (§5f): BMW 2/3/4/5/6/8 — вся серия с кузовами вместо одних GT / Gran Coupé / Active Tourer, двигатель с кузовом — этот кузов; у 2dehands свои ключи мощности (`enginePowerKW`, кВт), мест (`numberOfSeatsBE`), дверей (`aantaldeurenBE`) и гарантии (`extendedWarranty` ≈), хэтчбек/седан ≈ («Berline»); жёлтое «!» 2dehands — своё; мощность объявлений в KM; всё проверено живьём по числам API и сайта | этот коммит |

@@ -3653,23 +3653,8 @@ function estimateDeliveryInspection(bodyType, location) {
   return { transport: tariff.transport + surcharge, inspection: tariff.inspection, currency: "PLN", netto: true, rule: tariff.rule, surcharge };
 }
 
-function classifyEngineType(fuel, displacementCcm) {
-  const normalized = String(fuel || "").toLowerCase();
-  const isOver2000 = (Number(displacementCcm) || 0) > 2000;
-  const isPlugIn = /plug|\bphev\b|laddhybrid|e-hybrid/.test(normalized);
-  const burnsFuel = /benzin|benzyna|bensin|petrol|diesel|\b(?:tdi|tsi|tfsi|crdi|gdi|hdi|dci)\b/.test(normalized);
-  // "Elektro/Benzin" (AutoScout24) is a hybrid, an "Elektro-Paket" in a
-  // diesel's title is not an electric car.
-  const isElectric = /elect|elektro|elektry|\bbev\b/.test(normalized) && !burnsFuel;
-  // Any hybrid, mild ones too (MHEV, 48V, eTSI, EQ Boost), takes the reduced
-  // excise (owner, 2026-10-03). "\bhev" keeps "Chevrolet" out.
-  const isHybrid = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b/.test(normalized)
-    || /(elektro|electric)\s*\/\s*(benzin|diesel|petrol)|(benzin|diesel|petrol)\s*\/\s*(elektro|electric)/.test(normalized);
-  if (isElectric && !isHybrid) return 0;
-  if (isPlugIn) return isOver2000 ? 1 : 0;
-  if (isHybrid) return isOver2000 ? 1 : 2;
-  return isOver2000 ? 4 : 3;
-}
+// The engine class for the excise (classifyEngineType, isPluginHybridText,
+// litresInTitle) lives in src/engine-class.js, shared with the offer pages.
 
 const ENGINE_TYPE_LABELS = [
   "EL / PHEV <=2000cm³",
@@ -3732,6 +3717,18 @@ async function loadMobileDeData(sourceUrl) {
       throw new Error(errorData.detail || errorData.error || "Mobile.de import failed");
     }
     state.data = await response.json();
+    // The importer names a plug-in written as "Hybrid" a hybrid: the page's
+    // own rules (model names, "Plug-in-Hybrid" in the equipment) decide, as
+    // for every other portal.
+    const ad = state.data || {};
+    const pluginTicked = (Array.isArray(ad.equipment) ? ad.equipment : []).some((item) => /plug-?in/i.test(String(item)));
+    if (ad.fuel || ad.title) {
+      const ownIndex = classifyEngineType(`${ad.fuel || ""} ${ad.title || ""}${pluginTicked ? " plug-in" : ""}`, ad.displacementCcm || litresInTitle(ad.title));
+      if (ownIndex !== Number(ad.engineTypeIndex)) {
+        ad.engineTypeIndex = ownIndex;
+        ad.engineTypeLabel = ENGINE_TYPE_LABELS[ownIndex];
+      }
+    }
     setStatus("ready");
     applyRecognizedManualFields(state.data);
     renderData();
@@ -4306,7 +4303,9 @@ function isBlocketUrl(value) {
 }
 
 const BLOCKET_BODY_TYPES = { kombi: "estate", halvkombi: "hatchback", sedan: "sedan", suv: "suv", "coupé": "coupe", coupe: "coupe", cab: "cabrio", "småbil": "small car", familjebuss: "van", minibuss: "van", pickup: "pickup" };
-const BLOCKET_FUELS = [[/plug-in/i, "plug-in hybrid"], [/el(?!.*hybrid)/i, "electric"], [/hybrid/i, "hybrid"], [/diesel/i, "diesel"], [/bensin|etanol|gas/i, "petrol"]];
+// Order matters: "Diesel" holds "el", "Hybrid el/bensin" is a hybrid and
+// "Hybrid gas" a gas (CNG) car (audit 2026-10-10).
+const BLOCKET_FUELS = [[/plug-in|laddhybrid/i, "plug-in hybrid"], [/hybrid\s*gas|gas\s*hybrid/i, "petrol"], [/hybrid/i, "hybrid"], [/diesel/i, "diesel"], [/^el\b|\bel$|elbil|elektri/i, "electric"], [/bensin|etanol|gas/i, "petrol"]];
 
 async function loadBlocketAd(sourceUrl) {
   const c = copy[state.lang];
@@ -4345,7 +4344,11 @@ async function loadBlocketAd(sourceUrl) {
     const fuelWord = (BLOCKET_FUELS.find(([pattern]) => pattern.test(fuelLabel)) || [])[1] || "";
     const bodyLabel = field("Biltyp");
     const powerHp = Number(field("Hästkrafter", "Effekt", "Motoreffekt").replace(/[^\d]/g, "")) || null;
-    const displacementCcm = Number(field("Motorstorlek", "Motorvolym", "Slagvolym").replace(/[^\d]/g, "")) || null;
+    // "1,6 L" (litres) or "1598 cm³".
+    const sizeLabel = field("Motorstorlek", "Motorvolym", "Slagvolym");
+    const litres = sizeLabel.match(/^\s*(\d{1,2})(?:[.,](\d))?\s*(?:l|liter)\b/i);
+    const sizeCcm = litres ? Number(litres[1]) * 1000 + Number(litres[2] || 0) * 100 : Number(sizeLabel.replace(/[^\d]/g, "")) || 0;
+    const displacementCcm = sizeCcm >= 600 && sizeCcm <= 7000 ? sizeCcm : null;
     const driveLabel = field("Drivhjul");
     const sekPln = typeof sekPlnRate === "function" ? sekPlnRate() : 0.4;
     const pricePln = Math.round(priceSek * sekPln);
@@ -4694,7 +4697,10 @@ async function loadKleinanzeigenAd(sourceUrl) {
     const locality = text((html.match(/id="viewad-locality"[^>]*>([^<]+)/) || [])[1]);
     const model = String(details.Modell || "").replace(/^Weitere\s+/i, "");
     const bodyType = details.Fahrzeugtyp || "";
-    const engineTypeIndex = classifyEngineType(`${fuel} ${title}`, null);
+    // No engine size on the page: the litres of the title ("3.0 TDI") set
+    // the excise; the form keeps "Pojemność" open (litres are not exact cm³).
+    const pluginTicked = equipment.some((item) => /plug-?in/i.test(item));
+    const engineTypeIndex = classifyEngineType(`${fuel} ${title}${pluginTicked ? " plug-in" : ""}`, litresInTitle(title));
     const estimate = estimateDeliveryInspection(bodyType, { country: "DE", postalCode: locality.slice(0, 5), city: locality.replace(/^\d{5}\s*/, "") });
     state.data = {
       sourceUrl,
@@ -4796,7 +4802,7 @@ async function loadParuvenduAd(sourceUrl) {
     const ccm = Number((text(html).match(/Cylindr[ée]e\s*:?\s*(\d{3,4})\b/i) || [])[1]) || null;
     const displacementCcm = ccm && ccm >= 600 && ccm <= 7000 ? ccm : null;
     const vat = /TVA\s+r[ée]cup[ée]rable/i.test(html);
-    const engineTypeIndex = classifyEngineType(`${fuel} ${title}`, displacementCcm);
+    const engineTypeIndex = classifyEngineType(`${fuel} ${title}`, displacementCcm || litresInTitle(title));
     const estimate = estimateDeliveryInspection(bodyType, { country: "FR", postalCode, city });
     const sellerType = String(vehicle?.offers?.seller?.["@type"] || "");
     state.data = {
