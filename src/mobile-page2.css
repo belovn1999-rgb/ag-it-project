@@ -999,3 +999,30 @@ a.mobileLinkedCarChip:hover {
 .isReportCapture .agSpecDate.isDataAge {
   display: none;
 }
+
+/* 10.10 (audit): the manager's hint under the conclusion (not in the
+   client's picture), and the one year of all offers above the chart. */
+.mobileMarketConclusion p.mobileMarketConclusionHint {
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--color-line, #d9dee7);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  font-style: italic;
+}
+
+.mobileMarketChartTitleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+}
+
+.mobileMarketSingleYear {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-surface-muted, #eef2f7);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 800;
+}

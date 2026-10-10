@@ -307,10 +307,19 @@
       trendTitle: "Mediana ceny w czasie",
       trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
       adPrice: "cena w ogłoszeniu",
-      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu — ok. {transport} netto\n+ Przeciętnego kosztu oględzin — ok. {inspection} netto\n+ Akcyzy według rodzaju i pojemności silnika — {excise}\n+ Tłumaczeń dokumentów — 250 zł\n+ Przeglądu technicznego — 150 zł\n+ Stałego wynagrodzenia AUTOGOOD — 1 829,27 zł + 1% ceny auta, netto (+ VAT 23%).\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
+      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu — ok. {transport} netto\n+ Przeciętnego kosztu oględzin — ok. {inspection} netto\n+ Akcyzy według rodzaju i pojemności silnika — {excise}\n+ Tłumaczeń dokumentów — 250 zł\n+ Przeglądu technicznego — 150 zł\n+ Wynagrodzenia AUTOGOOD — 2 250 zł + 1,23% ceny auta (kwoty z VAT).\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
+      singleYearNote: "Wszystkie oferty z rocznika {year}",
       conclusionHeading: "Wniosek",
-      conclusionCheaper: "Nawet po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) taniej niż w Polsce.",
-      conclusionDearer: "Po doliczeniu wszystkich kosztów auto {country} wychodzi średnio o {amount} ({percent}%) drożej niż w Polsce.",
+      oneMarketPrice: "Za takie auto {from} zapłacisz zwykle około {median} — razem ze wszystkimi kosztami sprowadzenia do Polski*.",
+      oneMarketPricePl: "W Polsce takie auto kosztuje zwykle około {median}.",
+      oneMarketRange: "Połowa aut — {count} z {total} — kosztuje od {low} do {high}.",
+      oneMarketCheap: "{count} z {total} ofert kosztuje mniej niż {low} — od nich warto zacząć, ale każdą trzeba dokładnie sprawdzić.",
+      severalMarketLine: "Auto {from}: zwykle około {median} razem z kosztami sprowadzenia do Polski*, najtańsze od {min}.",
+      cheapestMarket: "Najtaniej wychodzi auto {from} — zwykle o {amount} mniej niż auto {other}.",
+      oneMarketBenefits: "Każde auto sprawdzamy przed zakupem — wiesz, co kupujesz, zanim zapłacisz.",
+      conclusionAddPoland: "Wskazówka: włącz Polskę (otomoto) w „Aktualne oferty”, a wniosek pokaże klientowi, ile zyskuje w porównaniu z zakupem w Polsce.",
+      conclusionCheaper: "Auto {country} — razem ze wszystkimi kosztami sprowadzenia — kosztuje zwykle o {amount} mniej niż podobne auto w Polsce ({percent}% taniej).",
+      conclusionDearer: "Auto {country} — razem ze wszystkimi kosztami sprowadzenia — kosztuje zwykle o {amount} więcej niż podobne auto w Polsce ({percent}% drożej).",
       countryGermany: "z Niemiec",
       countrySweden: "ze Szwecji",
       countryFrance: "z Francji",
@@ -326,24 +335,24 @@
       accidentShare: "Bezwypadkowe",
       afterAccidentShort: "po wypadku: {percent}%",
       briefAccidents: "Wypadki",
-      polishAccidents: "Tylko {percent}% sprzedających ({count} z {total}) deklaruje auto jako bezwypadkowe, {after}% przyznaje, że auto miało wypadek, a w {silent}% ogłoszeń nie ma tej informacji. To tylko deklaracja sprzedającego — otomoto jej nie sprawdza.",
+      polishAccidents: "Tylko {percent}% sprzedających ({count} z {total}) pisze, że auto nie miało wypadku, {after}% przyznaje, że miało, a w {silent}% ogłoszeń nie ma o tym ani słowa. Nikt tego nie sprawdza — to tylko słowa sprzedającego.",
       briefPrice: "Cena",
       briefMileage: "Przebieg",
       briefSafety: "Bezpieczeństwo",
       briefHistory: "Historia",
       briefOrigin: "Pochodzenie",
-      conclusionTooFew: "Za mało ofert, żeby rzetelnie porównać rynki: Polska — {pl}, {portal} — {foreign} (potrzeba co najmniej {min} na każdym rynku). Poszerz filtry, np. rocznik albo przebieg.",
-      conclusionSameCarCheaper: "Takie samo auto ({year} r., {mileage}) {from} kosztuje na gotowo ok. {foreign}, w Polsce ok. {pl} — o {amount} ({percent}%) taniej.",
-      conclusionSameCarDearer: "Takie samo auto ({year} r., {mileage}) {from} kosztuje na gotowo ok. {foreign}, w Polsce ok. {pl} — o {amount} ({percent}%) drożej.",
-      sameCarNote: "„Takie samo auto”: cena liczona osobno na każdym rynku z cen ofert, zależnie od rocznika i przebiegu (wyposażenie i stan nie są uwzględnione). Mediany wszystkich ofert: Polska {pl}, na gotowo {foreign}.",
-      mediansNote: "Porównanie median wszystkich ofert. Do porównania aut z tym samym rocznikiem i przebiegiem potrzeba co najmniej {min} ofert na każdym rynku.",
-      mileageLower: "Auta {from} mają średnio {foreign} przebiegu, w Polsce {pl} — o {diff} ({percent}%) mniej. Mniejszy przebieg to mniejsze zużycie, mniejsze ryzyko przebytych szkód i lepszy stan techniczny, a przy odsprzedaży takie auto lepiej trzyma wartość.",
-      mileageHigher: "Auta {from} mają średnio {foreign} przebiegu, w Polsce {pl} — o {diff} ({percent}%) więcej.",
-      conclusionBenefits: "Do tego zwykle mniejsze ryzyko, lepszy stan i udokumentowana historia serwisowa — każde auto sprawdzamy przed zakupem.",
-      polishCepik: "Tylko {percent}% ogłoszeń ({count} z {total}) ma historię pojazdu potwierdzoną w CEPiK. W pozostałych przebieg i historia to wyłącznie deklaracja sprzedającego.",
-      polishImported: "{percent}% aut z podanym krajem pochodzenia ({count} z {total}) to auta sprowadzone z zagranicy. Komis sprowadził je wcześniej i dolicza do ceny swoją marżę.",
-      polishImportedFrom: "{percent}% aut z podanym krajem pochodzenia ({count} z {total}) to auta sprowadzone, najczęściej {from}. Komis sprowadził je wcześniej i dolicza do ceny swoją marżę.",
-      polishOffer: "Z AUTOGOOD sprowadzasz auto bezpośrednio od sprzedającego za granicą: sprawdzone przed zakupem, z udokumentowaną historią i bez marży komisu.",
+      conclusionTooFew: "Na razie jest za mało ofert, żeby uczciwie porównać ceny: w Polsce {pl}, {portal} — {foreign}. Poszerz wyszukiwanie, np. o rocznik albo przebieg.",
+      conclusionSameCarCheaper: "Takie samo auto ({year} r., {mileage}) {from} kosztuje razem ze wszystkimi kosztami ok. {foreign}, a w Polsce ok. {pl}. To o {amount} mniej ({percent}%).",
+      conclusionSameCarDearer: "Takie samo auto ({year} r., {mileage}) {from} kosztuje razem ze wszystkimi kosztami ok. {foreign}, a w Polsce ok. {pl}. To o {amount} więcej ({percent}%).",
+      sameCarNote: "Porównujemy auta z tym samym rocznikiem i podobnym przebiegiem; wyposażenie i stan mogą zmienić cenę. Typowa cena wszystkich ofert: w Polsce {pl}, z zagranicy razem z kosztami {foreign}.",
+      mediansNote: "To porównanie typowych cen wszystkich znalezionych ofert, a nie jednego konkretnego auta.",
+      mileageLower: "Auta {from} mają średnio o {diff} mniejszy przebieg ({foreign} wobec {pl} w Polsce). Mniej kilometrów to mniej zużyte auto, które przy sprzedaży jest więcej warte.",
+      mileageHigher: "Auta {from} mają średnio o {diff} większy przebieg ({foreign} wobec {pl} w Polsce).",
+      conclusionBenefits: "Auta z zagranicy mają zwykle udokumentowaną historię serwisową, a każde z nich sprawdzamy przed zakupem.",
+      polishCepik: "Tylko w {count} z {total} ogłoszeń ({percent}%) historię auta potwierdza państwowa baza CEPiK. W pozostałych o przebiegu i przeszłości auta wiesz tylko tyle, ile powie sprzedający.",
+      polishImported: "Wśród ogłoszeń, które podają kraj pochodzenia, {percent}% ({count} z {total}) to auta już sprowadzone z zagranicy — komis kupił je wcześniej i doliczył do ceny swój zarobek.",
+      polishImportedFrom: "Wśród ogłoszeń, które podają kraj pochodzenia, {percent}% ({count} z {total}) to auta już sprowadzone, najczęściej {from} — komis kupił je wcześniej i doliczył do ceny swój zarobek.",
+      polishOffer: "Z AUTOGOOD kupujesz auto prosto od sprzedającego za granicą: sprawdzone przed zakupem, z historią i bez dopłaty dla komisu.",
       originFrom: { d: "z Niemiec", b: "z Belgii", nl: "z Holandii", f: "z Francji", i: "z Włoch", a: "z Austrii", ch: "ze Szwajcarii", s: "ze Szwecji", dk: "z Danii", cz: "z Czech", usa: "z USA", cdn: "z Kanady", gb: "z Wielkiej Brytanii", l: "z Luksemburga", e: "z Hiszpanii", kr: "z Korei", n: "z Norwegii", fin: "z Finlandii", sk: "ze Słowacji", h: "z Węgier", lt: "z Litwy" },
       ccmProgress: "Sprawdzam pojemność silnika w ogłoszeniach mobile.de (akcyza): {done} z {total}…",
       ccmUnknown: "Bez pojemności silnika w ogłoszeniu: {count} {offers} — akcyza liczona jak dla silnika do 2000 cm³.",
@@ -521,9 +530,9 @@
       sourceParuvendu: "ParuVendu",
       sourceAvby: "av.by",
       marketsHeading: "Rynki",
-      toneHigher: "najwyżej",
-      toneLower: "najniżej",
-      toneLegend: "▲ najwyżej · ▼ najniżej spośród porównywanych rynków (cena w Polsce: na gotowo albo z ogłoszenia; przebieg)",
+      toneHigher: "najdrożej",
+      toneLower: "najtaniej",
+      toneLegend: "▲ najdrożej · ▼ najtaniej spośród porównywanych rynków",
       marketOtomoto: "Polska",
       compareHeading: "Porównanie rynków",
       compareHint: "ceny na gotowo*, zł — ta sama skala co wykresy poniżej",
@@ -568,12 +577,12 @@
       bookmarkletInstall: "Zakładka do mobile.de:",
       bookmarkletInstallHint: "przeciągnij na pasek zakładek",
       yourCar: "Porównywane auto",
-      yourCarVerdict: "Porównywane auto: {price} — taniej niż {share}% ofert, {diff} mediany.",
+      yourCarVerdict: "Porównywane auto: {price} — taniej niż {share}% ofert, {diff} typowej ceny.",
       belowMedian: "{pct}% poniżej",
       aboveMedian: "{pct}% powyżej",
       atMedian: "na poziomie",
-      yourCarMileageVerdict: "Przy takim przebiegu mediana to około {reference} — cena tego auta jest {diff} mediany.",
-      yourCarYearVerdict: "Dla tego rocznika mediana to około {reference} — cena tego auta jest {diff} mediany.",
+      yourCarMileageVerdict: "Auta z podobnym przebiegiem kosztują zwykle około {reference} — to auto jest {diff} typowej ceny.",
+      yourCarYearVerdict: "Auta z tego rocznika kosztują zwykle około {reference} — to auto jest {diff} typowej ceny.",
       axisYear: "Oś pozioma: rok",
       historyPin: "Zapisz na stałe",
       historyPinned: "Zapisane na stałe",
@@ -934,10 +943,19 @@
       trendTitle: "Медиана цены во времени",
       trendNeedsTwo: "График появится после второго замера цен.",
       adPrice: "цена в объявлении",
-      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки — ок. {transport} нетто\n+ Средней стоимости осмотра — ок. {inspection} нетто\n+ Акциза по типу и объёму двигателя — {excise}\n+ Переводов документов — 250 PLN\n+ Техосмотра — 150 PLN\n+ Фиксированного вознаграждения AUTOGOOD — 1 829,27 PLN + 1% цены авто, нетто (+ VAT 23%).\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
+      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки — ок. {transport} нетто\n+ Средней стоимости осмотра — ок. {inspection} нетто\n+ Акциза по типу и объёму двигателя — {excise}\n+ Переводов документов — 250 PLN\n+ Техосмотра — 150 PLN\n+ Вознаграждения AUTOGOOD — 2 250 PLN + 1,23% цены авто (суммы с VAT).\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
+      singleYearNote: "Все объявления {year} года",
       conclusionHeading: "Вывод",
-      conclusionCheaper: "Даже с учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дешевле, чем в Польше.",
-      conclusionDearer: "С учётом всех расходов авто {country} выходит в среднем на {amount} ({percent}%) дороже, чем в Польше.",
+      oneMarketPrice: "Такое авто {from} обойдётся обычно примерно в {median} — со всеми расходами на пригон в Польшу*.",
+      oneMarketPricePl: "В Польше такое авто стоит обычно около {median}.",
+      oneMarketRange: "Половина авто — {count} из {total} — стоит от {low} до {high}.",
+      oneMarketCheap: "{count} из {total} стоят дешевле {low} — с них стоит начать, но каждое нужно внимательно проверить.",
+      severalMarketLine: "Авто {from}: обычно около {median} со всеми расходами на пригон в Польшу*, самые дешёвые — от {min}.",
+      cheapestMarket: "Дешевле всего выходит авто {from} — обычно на {amount} меньше, чем авто {other}.",
+      oneMarketBenefits: "Каждое авто мы проверяем перед покупкой — вы знаете, что покупаете, ещё до оплаты.",
+      conclusionAddPoland: "Подсказка: включите Польшу (otomoto) в «Aktualne oferty» — вывод покажет клиенту, сколько он выигрывает по сравнению с покупкой в Польше.",
+      conclusionCheaper: "Авто {country} — со всеми расходами на пригон — обычно стоит на {amount} меньше, чем похожее авто в Польше ({percent}% дешевле).",
+      conclusionDearer: "Авто {country} — со всеми расходами на пригон — обычно стоит на {amount} больше, чем похожее авто в Польше ({percent}% дороже).",
       countryGermany: "из Германии",
       countrySweden: "из Швеции",
       countryFrance: "из Франции",
@@ -953,24 +971,24 @@
       accidentShare: "Без аварий",
       afterAccidentShort: "после аварии: {percent}%",
       briefAccidents: "Аварии",
-      polishAccidents: "Только {percent}% продавцов ({count} из {total}) указывают, что авто без аварий, {after}% признают, что авто было в аварии, а в {silent}% объявлений этой информации нет. Это лишь слова продавца — otomoto их не проверяет.",
+      polishAccidents: "Только {percent}% продавцов ({count} из {total}) пишут, что авто не было в аварии, {after}% признают, что было, а в {silent}% объявлений об этом ни слова. Никто это не проверяет — это только слова продавца.",
       briefPrice: "Цена",
       briefMileage: "Пробег",
       briefSafety: "Надёжность",
       briefHistory: "История",
       briefOrigin: "Происхождение",
-      conclusionTooFew: "Слишком мало предложений для надёжного сравнения рынков: Польша — {pl}, {portal} — {foreign} (нужно не меньше {min} на каждом рынке). Расширьте фильтры, например год или пробег.",
-      conclusionSameCarCheaper: "Такое же авто ({year} г., {mileage}) {from} под ключ стоит около {foreign}, в Польше — около {pl}: на {amount} ({percent}%) дешевле.",
-      conclusionSameCarDearer: "Такое же авто ({year} г., {mileage}) {from} под ключ стоит около {foreign}, в Польше — около {pl}: на {amount} ({percent}%) дороже.",
-      sameCarNote: "«Такое же авто»: цена считается отдельно на каждом рынке по ценам предложений в зависимости от года и пробега (комплектация и состояние не учитываются). Медианы всех предложений: Польша {pl}, под ключ {foreign}.",
-      mediansNote: "Сравнение медиан всех предложений. Чтобы сравнить авто того же года и пробега, нужно не меньше {min} предложений на каждом рынке.",
-      mileageLower: "У авто {from} средний пробег {foreign}, в Польше {pl} — на {diff} ({percent}%) меньше. Меньший пробег — это меньший износ, меньше риск пережитых ДТП и лучше техническое состояние, а при перепродаже такое авто лучше держит цену.",
-      mileageHigher: "У авто {from} средний пробег {foreign}, в Польше {pl} — на {diff} ({percent}%) больше.",
-      conclusionBenefits: "Кроме того, обычно меньше рисков, лучше состояние и подтверждённая сервисная история — каждое авто мы проверяем перед покупкой.",
-      polishCepik: "Только у {percent}% объявлений ({count} из {total}) история авто подтверждена в CEPiK. В остальных пробег и история — только слова продавца.",
-      polishImported: "{percent}% авто с указанной страной происхождения ({count} из {total}) пригнаны из-за границы. Комис уже привёз их и добавляет к цене свою наценку.",
-      polishImportedFrom: "{percent}% авто с указанной страной происхождения ({count} из {total}) пригнаны, чаще всего {from}. Комис уже привёз их и добавляет к цене свою наценку.",
-      polishOffer: "С AUTOGOOD вы привозите авто напрямую от продавца за границей: проверенное перед покупкой, с подтверждённой историей и без наценки комиса.",
+      conclusionTooFew: "Пока слишком мало объявлений, чтобы честно сравнить цены: в Польше {pl}, {portal} — {foreign}. Расширьте поиск, например по году или пробегу.",
+      conclusionSameCarCheaper: "Такое же авто ({year} г., {mileage}) {from} со всеми расходами стоит около {foreign}, а в Польше — около {pl}. Это на {amount} меньше ({percent}%).",
+      conclusionSameCarDearer: "Такое же авто ({year} г., {mileage}) {from} со всеми расходами стоит около {foreign}, а в Польше — около {pl}. Это на {amount} больше ({percent}%).",
+      sameCarNote: "Сравниваем авто того же года и с похожим пробегом; комплектация и состояние могут изменить цену. Обычная цена всех объявлений: в Польше {pl}, из-за границы со всеми расходами {foreign}.",
+      mediansNote: "Это сравнение обычных цен всех найденных объявлений, а не одного конкретного авто.",
+      mileageLower: "У авто {from} пробег в среднем на {diff} меньше ({foreign} против {pl} в Польше). Меньше километров — меньше износ, и при продаже такое авто стоит дороже.",
+      mileageHigher: "У авто {from} пробег в среднем на {diff} больше ({foreign} против {pl} в Польше).",
+      conclusionBenefits: "У авто из-за границы обычно подтверждённая сервисная история, а каждое из них мы проверяем перед покупкой.",
+      polishCepik: "Только в {count} из {total} объявлений ({percent}%) историю авто подтверждает государственная база CEPiK. В остальных о пробеге и прошлом авто вы знаете только со слов продавца.",
+      polishImported: "Среди объявлений, где указана страна происхождения, {percent}% ({count} из {total}) — уже пригнанные из-за границы авто: комис купил их раньше и добавил к цене свой заработок.",
+      polishImportedFrom: "Среди объявлений, где указана страна происхождения, {percent}% ({count} из {total}) — уже пригнанные авто, чаще всего {from}: комис купил их раньше и добавил к цене свой заработок.",
+      polishOffer: "С AUTOGOOD вы покупаете авто напрямую у продавца за границей: проверенное перед покупкой, с историей и без доплаты комису.",
       originFrom: { d: "из Германии", b: "из Бельгии", nl: "из Нидерландов", f: "из Франции", i: "из Италии", a: "из Австрии", ch: "из Швейцарии", s: "из Швеции", dk: "из Дании", cz: "из Чехии", usa: "из США", cdn: "из Канады", gb: "из Великобритании", l: "из Люксембурга", e: "из Испании", kr: "из Кореи", n: "из Норвегии", fin: "из Финляндии", sk: "из Словакии", h: "из Венгрии", lt: "из Литвы" },
       ccmProgress: "Уточняю объём двигателя в объявлениях mobile.de (акциз): {done} из {total}…",
       ccmUnknown: "Без объёма двигателя в объявлении: {count} {offers} — акциз считается как для двигателя до 2000 см³.",
@@ -1148,9 +1166,9 @@
       sourceParuvendu: "ParuVendu",
       sourceAvby: "av.by",
       marketsHeading: "Рынки",
-      toneHigher: "выше всех",
-      toneLower: "ниже всех",
-      toneLegend: "▲ выше всех · ▼ ниже всех среди сравниваемых рынков (цена в Польше: под ключ или из объявления; пробег)",
+      toneHigher: "дороже всех",
+      toneLower: "дешевле всех",
+      toneLegend: "▲ дороже всех · ▼ дешевле всех среди сравниваемых рынков",
       marketOtomoto: "Польша",
       compareHeading: "Сравнение рынков",
       compareHint: "цены под ключ*, zł — та же шкала, что у графиков ниже",
@@ -1195,12 +1213,12 @@
       bookmarkletInstall: "Закладка для mobile.de:",
       bookmarkletInstallHint: "перетащи на панель закладок",
       yourCar: "Сравниваемое авто",
-      yourCarVerdict: "Сравниваемое авто: {price} — дешевле {share}% объявлений, {diff} медианы.",
+      yourCarVerdict: "Сравниваемое авто: {price} — дешевле {share}% объявлений, {diff} обычной цены.",
       belowMedian: "на {pct}% ниже",
       aboveMedian: "на {pct}% выше",
       atMedian: "на уровне",
-      yourCarMileageVerdict: "При таком пробеге медиана около {reference} — цена этого авто {diff} медианы.",
-      yourCarYearVerdict: "Для этого года медиана около {reference} — цена этого авто {diff} медианы.",
+      yourCarMileageVerdict: "Авто с похожим пробегом обычно стоят около {reference} — это авто {diff} обычной цены.",
+      yourCarYearVerdict: "Авто этого года обычно стоят около {reference} — это авто {diff} обычной цены.",
       axisYear: "Горизонтальная ось: год",
       historyPin: "Сохранить навсегда",
       historyPinned: "Сохранено навсегда",
@@ -7682,6 +7700,14 @@
         <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-pdf>${escapeMarketHtml(c.pdfButton)}</button>
       </div>`;
     let reportActionsInTitle = false;
+    // Every offer of one year (audit 10.10): no "Rok" axis (a column of dots
+    // says nothing), the year stated once above the chart instead.
+    let singleYear = 0;
+    if (hasListings) {
+      const offerYears = new Set(marketListings.map((listing) => listing.year).filter((year) => Number.isFinite(year) && year > 0));
+      singleYear = offerYears.size === 1 ? [...offerYears][0] : 0;
+      if (singleYear && chartAxis === "year") chartAxis = "rank";
+    }
     if (hasListings) {
       const statistics = marketStatistics(marketListings);
       const domainMinimum = statistics.min;
@@ -8243,7 +8269,8 @@
       ];
       const compared = statRows.length > 1;
       const tone = (column, row, index) => {
-        if (!compared || index === 0 || index === 5) return "";
+        // Prices only (audit 10.10): cheapest, dearest, median, middle range.
+        if (!compared || index < 1 || index > 4) return "";
         const values = statRows.map((item) => column.value(item));
         const value = column.value(row);
         if (Math.max(...values) === Math.min(...values)) return "";
@@ -8329,6 +8356,41 @@
       }) : polish ? foreignRows.flatMap((row) => importConclusion(row)) : [];
       // The brief ends with what buying through AUTOGOOD gives (owner 2026-10-03).
       if (!byMode && polish && conclusions.some((item) => item.compared)) conclusions.push({ label: c.briefSafety, text: c.conclusionBenefits });
+      // No Polish market to compare with (audit 10.10): what the car costs,
+      // what most cost and where the cheap ones start, in plain words; two or
+      // more foreign markets: each one, and which comes out cheapest.
+      if (!byMode && !(polish && foreignRows.length)) {
+        const withPrices = statRows.filter((row) => row.inPln.count >= 3);
+        // Foreign markets in "na gotowo"; Poland only when it stands alone.
+        const foreignPriced = withPrices.filter((row) => row.turnkeyStats);
+        const priced = foreignPriced.length ? foreignPriced : withPrices.filter((row) => row.source === "otomoto");
+        if (priced.length === 1) {
+          const [row] = priced;
+          const stats = row.inPln;
+          const own = row.turnkeyStats ? c.oneMarketPrice.replace("{from}", fromLabel(row.source)) : c.oneMarketPricePl;
+          conclusions.unshift(
+            { label: c.briefPrice, text: own.replace("{median}", plnText(stats.median)) },
+            ...(stats.count >= COMPARE_MIN ? [
+              { text: c.oneMarketRange.replace("{count}", String(stats.middleCount)).replace("{total}", String(stats.count)).replace("{low}", plnText(stats.middleLow)).replace("{high}", plnText(stats.middleHigh)) },
+              ...(stats.lowCount ? [{ text: c.oneMarketCheap.replace("{count}", String(stats.lowCount)).replace("{total}", String(stats.count)).replace("{low}", plnText(stats.middleLow)) }] : []),
+            ] : []),
+          );
+        } else if (priced.length > 1) {
+          const ordered = [...priced].sort((left, right) => left.inPln.median - right.inPln.median);
+          conclusions.unshift(
+            ...ordered.map((row, index) => ({
+              label: index === 0 ? c.briefPrice : "",
+              text: c.severalMarketLine.replace("{from}", fromLabel(row.source)).replace("{median}", plnText(row.inPln.median)).replace("{min}", plnText(row.inPln.min)),
+            })),
+            { text: c.cheapestMarket.replace("{from}", fromLabel(ordered[0].source)).replace("{other}", fromLabel(ordered[1].source)).replace("{amount}", plnText(ordered[1].inPln.median - ordered[0].inPln.median)) },
+          );
+        }
+        if (priced.some((row) => row.turnkeyStats)) {
+          conclusions.push({ label: c.briefSafety, text: c.oneMarketBenefits });
+          // For the manager only, not in the client's picture.
+          if (!polish) conclusions.push({ hint: true, text: c.conclusionAddPoland });
+        }
+      }
       // Otomoto alone: how much of the Polish market is unverified or imported.
       if (polishShares && (polishShares.cepik || polishShares.imported || polishShares.accident)) {
         const percentOf = (share) => String(Math.round((share.count / share.total) * 100));
@@ -8347,6 +8409,8 @@
       if (conclusions.length) {
         const conclusionLine = (item) => (typeof item === "string"
           ? `<p>${escapeMarketHtml(item)}</p>`
+          : item.hint
+          ? `<p class="mobileMarketConclusionHint" data-report-hide>${escapeMarketHtml(item.text)}</p>`
           : `<p>${item.label ? `<b>${escapeMarketHtml(item.label)}.</b> ` : ""}${escapeMarketHtml(item.text)}${item.note ? `<small class="mobileMarketConclusionNote">${escapeMarketHtml(item.note)}</small>` : ""}</p>`);
         summaryContent = `
           <section class="mobileMarketCard mobileMarketSummaryCard" aria-label="${escapeMarketHtml(c.conclusionHeading)}" data-report-list-hide>
@@ -8391,7 +8455,7 @@
           </label>
           <div class="mobileMarketControls" data-report-hide>
             <div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.axisLabel)}">
-              ${[["rank", c.axisRank], ["mileage", c.axisMileageShort], ["year", c.axisYearShort]].map(([axis, label]) => `
+              ${[["rank", c.axisRank], ["mileage", c.axisMileageShort], ...(singleYear ? [] : [["year", c.axisYearShort]])].map(([axis, label]) => `
                 <button class="mobileMarketAxisButton" type="button" data-mobile-market-axis="${axis}" aria-pressed="${chartAxis === axis ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
             </div>
             ${compareMarkets ? `<div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.scaleLabel)}">
@@ -8858,7 +8922,7 @@
         ${segmentsContent}
 
         <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
-          ${hasListings ? blockTitle("gauge", c.distributionHeading) : ""}
+          ${hasListings ? `<div class="mobileMarketChartTitleRow">${blockTitle("gauge", c.distributionHeading)}${singleYear ? `<span class="mobileMarketSingleYear">${escapeMarketHtml(c.singleYearNote.replace("{year}", String(singleYear)))}</span>` : ""}</div>` : ""}
           ${marketContent}
         </section>
 
