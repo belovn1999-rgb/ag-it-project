@@ -8440,7 +8440,9 @@
                 const cellHtml = column.html(row);
                 const opener = '<span class="mobileMarketStatsTurnkey">';
                 const marked = mark && cellHtml.startsWith(opener) ? `${opener}${mark}${cellHtml.slice(opener.length)}` : `${mark}${cellHtml}`;
-                return `<b class="${column.wide ? "isWide" : ""}${column.cls ? ` ${column.cls}` : ""}${column.cat ? ` ${column.cat}` : toneClass}" role="cell">${marked}${note}</b>`;
+                // data-label: the column's name above the value on a phone, where
+                // every market is a card (audit 10.10).
+                return `<b class="${column.wide ? "isWide" : ""}${column.cls ? ` ${column.cls}` : ""}${column.cat ? ` ${column.cat}` : toneClass}" role="cell" data-label="${escapeMarketHtml(column.label)}">${marked}${note}</b>`;
               }).join("")}
             </div>`).join("")}
         </div>
@@ -10187,8 +10189,12 @@
     // A favourite of the other language opens the check in its language.
     const favoriteLang = marketHistory.find((item) => item.id === id)?.lang || "pl";
     if (favoriteLang !== currentLanguage()) document.querySelector(`.mobileTopbar [data-lang-button="${favoriteLang}"]`)?.click();
-    // The picked favourite clicked again lets it go and clears this page.
-    if (event.currentTarget === favoritesBar && id === selectedFavorite()?.id) {
+    // The picked favourite clicked again lets it go and clears this page —
+    // on page 2 only once its analysis is on the screen: clicked while it was
+    // still opening after a reload, it let go and left page 2 empty (audit
+    // 10.10, seen on a phone).
+    const shownHere = currentPage() !== "analysis" || (activeAnalysis?.historyId === id && !analysisView.hidden);
+    if (event.currentTarget === favoritesBar && id === selectedFavorite()?.id && shownHere) {
       releaseSelectedFavorite();
       return;
     }
