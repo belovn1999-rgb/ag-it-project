@@ -174,6 +174,10 @@
       monitoringOnlyVat: "tylko VAT do odliczenia",
       monitoringResultFiltersTitle: "Pokazuj w wynikach tylko",
       monitoringStatsUnit: "na gotowo w Polsce, zł · wszystkie wybrane rynki",
+      monitoringSummaryTitle: "Ceny na gotowo w Polsce (auta pasujące do wyszukiwania)",
+      monitoringSummaryCheapest: "najtaniej",
+      monitoringSummaryCount: "{count} aut",
+      monitoringSummaryVs: "vs {date}",
       monitoringStatsChanged: "zmienione parametry, budżet lub rynki — nowa baza",
       monitoringStatsEmpty: "Brak monitoringów z ofertami pasującymi do wyszukiwania.",
       monitoringStatsPortals: "odpowiedziały inne portale niż poprzednio — liczby bez porównania",
@@ -836,6 +840,10 @@
       monitoringOnlyVat: "только НДС к вычету",
       monitoringResultFiltersTitle: "Показывать в результатах только",
       monitoringStatsUnit: "под ключ в Польше, зл · все выбранные рынки",
+      monitoringSummaryTitle: "Цены под ключ в Польше (машины, подходящие под поиск)",
+      monitoringSummaryCheapest: "дешевле всего",
+      monitoringSummaryCount: "{count} авто",
+      monitoringSummaryVs: "к {date}",
       monitoringStatsChanged: "изменены параметры, бюджет или рынки — новая база",
       monitoringStatsEmpty: "Нет мониторингов с предложениями под этот поиск.",
       monitoringStatsPortals: "ответили другие порталы, чем в прошлый раз — числа без сравнения",
@@ -4780,9 +4788,27 @@
   // the cars that fit the search (budget with its margin, VAT, dealers);
   // all countries together, or the country picked above the tiles.
   const COUNTRY_LINE_COLORS = { "": "#12233f", de: "#f56a00", nl: "#0d8aa8", be: "#c2185b", pl: "#1d5fd0", se: "#d0101a", fr: "#6b3fb8", by: "#13804a" };
+  // One check a day (audit p. 19, owner 2026-10-10): checks run by hand
+  // the same day (six on 5.10) are folded into the best of that day — the one
+  // with most portals answered, the latest of those.
+  const localDay = (iso) => {
+    const date = new Date(iso);
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+  };
+  const portalsAnswered = (record) => new Set([...Object.keys(record?.markets || {}), ...(record?.answered || [])]).size;
+  function oneCheckPerDay(items, recordOf = (item) => item) {
+    const best = new Map();
+    items.forEach((item) => {
+      const day = localDay(item.at);
+      const kept = best.get(day);
+      if (!kept || portalsAnswered(recordOf(item)) >= portalsAnswered(recordOf(kept))) best.set(day, item);
+    });
+    return [...best.values()].sort((left, right) => left.at.localeCompare(right.at));
+  }
+
   function monitoringStatsRows(entry, byDate) {
     const fits = offerFitsSearch(entry.id);
-    const records = [...byDate.values()].filter((record) => record.scope).sort((left, right) => left.at.localeCompare(right.at));
+    const records = oneCheckPerDay([...byDate.values()].filter((record) => record.scope));
     const changes = (entry.priceLog || []).filter((point) => point.filtersChange);
     return records.map((record, index) => {
       const offers = Object.entries(record.markets || {}).flatMap(([source, market]) => (market.offers || [])
@@ -5049,9 +5075,12 @@
   function offerHistoryBodyHtml(entry, byDate) {
     const c = copy();
     const numbers = numberFormat();
-    const checks = (entry.priceLog || []).filter((point) => !point.filtersChange && MARKET_SOURCES.some((source) => point[source]));
-    const withOffers = checks.filter((point) => byDate.has(point.at));
+    // One date a day (audit p. 19): the day's best check.
+    const checks = oneCheckPerDay((entry.priceLog || []).filter((point) => !point.filtersChange && MARKET_SOURCES.some((source) => point[source]) && byDate.has(point.at)), (point) => byDate.get(point.at));
+    const withOffers = checks;
     if (!withOffers.length) return `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerHistoryNone)}</p>`;
+    if (offerHistoryState.at && !checks.some((point) => point.at === offerHistoryState.at)) offerHistoryState.at = "";
+    if (offerHistoryState.compareAt && !checks.some((point) => point.at === offerHistoryState.compareAt)) offerHistoryState.compareAt = null;
     if (offerHistoryState.id !== entry.id) Object.assign(offerHistoryState, { id: entry.id, at: "", compareAt: null, filter: "all" });
     if (!byDate.has(offerHistoryState.at)) offerHistoryState.at = withOffers[withOffers.length - 1].at;
     const at = offerHistoryState.at;
@@ -6452,11 +6481,49 @@
     // 100 cars at a time (AutoScout24 alone can bring 2 000).
     const shownRows = rows.slice(0, monitoringState.limit);
     rowsForDetails = new Map(shownRows.map((row) => [row.offer.key, row]));
+    // Audit p. 7 (owner 2026-10-10): the prices in the middle — per country
+    // the cheapest and the median "na gotowo w Polsce" of this monitoring
+    // (cars that fit the search), against the day before.
+    const summaryHtml = (() => {
+      const days = monitoringStatsRows(entry, byDate).filter((row) => row.scope === record.scope);
+      const today = days[days.length - 1];
+      if (!today) return "";
+      const yesterday = days.length > 1 && !today.changed ? days[days.length - 2] : null;
+      const keys = monitoringState.country ? [monitoringState.country]
+        : ["", ...MARKET_GROUPS.map((group) => group.key).filter((key) => today.offers.some((item) => item.country === key))];
+      const stats = (row, key) => (row ? statsOfOffers(row.offers.filter((item) => !key || item.country === key)) : null);
+      const zl = (value) => escapeMarketHtml(formatPlainPrice(Math.round(value), "PLN"));
+      const move = (now, then) => {
+        if (!Number.isFinite(then) || !then) return "";
+        const pct = ((now - then) / then) * 100;
+        if (Math.abs(pct) < 0.5) return `<em class="isFlat">= ${escapeMarketHtml(c.monitoringSummaryVs.replace("{date}", shortDate(yesterday.at)))}</em>`;
+        return `<em class="${pct < 0 ? "isGood" : "isBad"}">${pct > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.round(Math.abs(pct) * 10) / 10))}% ${escapeMarketHtml(c.monitoringSummaryVs.replace("{date}", shortDate(yesterday.at)))}</em>`;
+      };
+      const cards = keys.map((key) => {
+        const now = stats(today, key);
+        if (!now) return "";
+        // Only against a day the same portals answered (9.10 without mobile.de
+        // would show Germany 13 % cheaper).
+        const portalsOf = (row) => [...new Set((row?.offers || []).filter((item) => !key || item.country === key).map((item) => item.source))].sort().join(",");
+        const then = yesterday && portalsOf(yesterday) === portalsOf(today) ? stats(yesterday, key) : null;
+        const name = key ? window.AUTOGOOD_COUNTRY_NAME?.(marketGroup(key).countries[0]) || key : c.monitoringCountryAll;
+        const cheapest = now.min.offer.url
+          ? `<a href="${escapeMarketHtml(now.min.offer.url)}" target="_blank" rel="noopener">${zl(now.min.pln)}</a>`
+          : zl(now.min.pln);
+        return `<div class="mobileMonitoringSummaryCard${key ? "" : " isAll"}">
+          <span class="mobileMonitoringSummaryName">${escapeMarketHtml(name)} <small>${escapeMarketHtml(c.monitoringSummaryCount.replace("{count}", numbers.format(now.count)))}</small></span>
+          <span><small>${escapeMarketHtml(c.monitoringSummaryCheapest)}</small><b>${cheapest}</b>${then ? move(now.min.pln, then.min.pln) : ""}</span>
+          <span><small>${escapeMarketHtml(c.median)}</small><b>${zl(now.median)}</b>${then ? move(now.median, then.median) : ""}</span>
+        </div>`;
+      }).join("");
+      return cards ? `<div class="mobileMonitoringSummaryStrip" aria-label="${escapeMarketHtml(c.monitoringStatsUnit)}"><p>${escapeMarketHtml(c.monitoringSummaryTitle)}</p><div>${cards}</div></div>` : "";
+    })();
     target.innerHTML = `
       ${changedBetween ? `<p class="mobileMarketOfferWarning">${escapeMarketHtml(c.offerFiltersBetween)}</p>` : ""}
       ${!before ? `<p class="mobileMonitoringNote">${escapeMarketHtml((newBase ? c.monitoringNewBase : c.monitoringBaseline).replace("{count}", numbers.format(perSource.reduce((sum, item) => sum + (item.current?.offers.length || 0), 0))))}</p>` : ""}
       ${countryTabs}
       <div class="mobileMonitoringTiles">${tiles}</div>
+      ${summaryHtml}
       <div class="mobileMonitoringViews" role="group">
         ${viewButton("new", c.monitoringViewNew)}${viewButton("gone", `${c.monitoringViewGone} (${c.monitoringGoneHint})`)}${viewButton("all", c.monitoringViewAll)}${viewButton("extra", c.monitoringViewExtra)}${viewButton("saved", c.monitoringViewSaved)}
         ${monitoringState.portal ? `<button class="mobileMarketImportClear" type="button" data-monitoring-portal="">${escapeMarketHtml(c.monitoringAllPortals)} ✕</button>` : ""}

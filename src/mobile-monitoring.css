@@ -985,3 +985,69 @@ button.mobileMonitoringMac {
 .mobileMonitoringTileNote.isCut {
   color: #8a4b00;
 }
+
+/* Audit p. 7: the prices in the middle, one card per country. */
+.mobileMonitoringSummaryStrip {
+  margin: 0 0 var(--space-md);
+}
+
+.mobileMonitoringSummaryStrip > p {
+  margin: 0 0 6px;
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.mobileMonitoringSummaryStrip > div {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-sm);
+}
+
+.mobileMonitoringSummaryCard {
+  display: grid;
+  gap: 6px;
+  padding: 10px 12px;
+  border: 1px solid var(--color-rule);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.mobileMonitoringSummaryCard.isAll {
+  border-color: #12233f;
+}
+
+.mobileMonitoringSummaryCard > span {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.mobileMonitoringSummaryName {
+  font-weight: 800;
+}
+
+.mobileMonitoringSummaryCard small {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+
+.mobileMonitoringSummaryCard b {
+  font-size: var(--text-lg);
+}
+
+.mobileMonitoringSummaryCard b a {
+  color: inherit;
+}
+
+.mobileMonitoringSummaryCard em {
+  font-size: var(--text-xs);
+  font-style: normal;
+  font-weight: 800;
+}
+
+.mobileMonitoringSummaryCard em.isGood { color: var(--color-success); }
+.mobileMonitoringSummaryCard em.isBad { color: var(--color-error); }
+.mobileMonitoringSummaryCard em.isFlat { color: var(--color-muted); }
