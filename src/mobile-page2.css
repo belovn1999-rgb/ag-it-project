@@ -981,3 +981,21 @@ a.mobileLinkedCarChip:hover {
 .isReportChart .mobileMarketOffersCard {
   display: none !important;
 }
+
+/* 10.10 (audit): when the prices were read, by the title; older than two
+   days in yellow. The report has its own date in the AUTOGOOD line. */
+.agSpecDate.isDataAge {
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.agSpecDate.isDataAge.isStale {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #fff4cc;
+  color: #7a5400;
+}
+
+.isReportCapture .agSpecDate.isDataAge {
+  display: none;
+}

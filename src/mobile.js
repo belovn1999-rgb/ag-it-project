@@ -1594,7 +1594,7 @@ window.AUTOGOOD_INLINE_ICON = inlineIconHtml;
 // or {heading, text}; rows without a value are left out.
 // Rows may carry a 4th item and items a target: a selector of the form field
 // they come from, so a click takes the user to that field.
-function specSheetHtml({ kicker = "", title = "", titleTarget = "", meta = "", aside = "", columns = [] }) {
+function specSheetHtml({ kicker = "", title = "", titleTarget = "", meta = "", metaClass = "", aside = "", columns = [] }) {
   const targetAttr = (target) => (target ? ` data-mobile-summary-target="${escapeHtml(target)}" role="button" tabindex="0"` : "");
   const columnHtml = columns.map((column) => {
     const rows = (column.rows || []).filter(([, value]) => value !== undefined && value !== null && String(value).trim() !== "");
@@ -1617,7 +1617,7 @@ function specSheetHtml({ kicker = "", title = "", titleTarget = "", meta = "", a
       <div class="agSpecHead">
         <div class="agSpecTitle">
           ${kicker ? `<span class="agSpecKicker">${escapeHtml(kicker)}</span>` : ""}
-          <div class="agSpecTitleLine"><strong${titleTarget ? targetAttr(titleTarget) : ' role="heading" aria-level="2"'}>${escapeHtml(title)}</strong>${meta ? `<span class="agSpecDate">${escapeHtml(meta)}</span>` : ""}</div>
+          <div class="agSpecTitleLine"><strong${titleTarget ? targetAttr(titleTarget) : ' role="heading" aria-level="2"'}>${escapeHtml(title)}</strong>${meta ? `<span class="agSpecDate${metaClass ? ` ${escapeHtml(metaClass)}` : ""}">${escapeHtml(meta)}</span>` : ""}</div>
         </div>
         ${aside ? `<div class="agSpecAside">${aside}</div>` : ""}
       </div>

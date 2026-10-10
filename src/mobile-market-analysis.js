@@ -408,6 +408,11 @@
       favoritesPick: "Wybierz auto z ulubionych albo wpisz markę i model w formularzu.",
       favoritesNoData: "brak cen",
       dataAtHint: "„Odśwież dane” zapisze nowy pomiar do historii cen.",
+      dataAge: "Dane z {date} · {age}",
+      dataAgeToday: "dzisiaj",
+      dataAgeYesterday: "wczoraj",
+      dataAgeDays: "{count} dni temu",
+      dataAgeStale: "Dane z {date} · {age} — odśwież dane",
       priceHistoryHeading: "Historia cen",
       priceHistoryFirst: "Pierwszy pomiar. Każde odświeżenie danych doda kolejny — zobaczysz, jak zmienia się mediana.",
       priceHistoryDate: "Data",
@@ -545,7 +550,7 @@
       axisRank: "Kolejność cen",
       axisMileageShort: "Przebieg",
       axisYearShort: "Rok",
-      axisRankCaption: "Miejsce oferty na liście portalu posortowanej od najtańszej",
+      axisRankCaption: "Oferty ułożone od najtańszej do najdroższej",
       axisMileageCaption: "Przebieg",
       axisYearCaption: "Rok produkcji",
       axisRankStart: "najtańsza",
@@ -1030,6 +1035,11 @@
       favoritesPick: "Выберите авто из избранного или укажите марку и модель в форме.",
       favoritesNoData: "нет цен",
       dataAtHint: "«Обновить данные» сохранит новый замер в историю цен.",
+      dataAge: "Данные от {date} · {age}",
+      dataAgeToday: "сегодня",
+      dataAgeYesterday: "вчера",
+      dataAgeDays: "{count} назад",
+      dataAgeStale: "Данные от {date} · {age} — обновите данные",
       priceHistoryHeading: "История цен",
       priceHistoryFirst: "Первый замер. Каждое обновление данных добавит следующий — будет видно, как меняется медиана.",
       priceHistoryDate: "Дата",
@@ -1167,7 +1177,7 @@
       axisRank: "Порядок цен",
       axisMileageShort: "Пробег",
       axisYearShort: "Год",
-      axisRankCaption: "Место объявления в списке портала, отсортированном от самого дешёвого",
+      axisRankCaption: "Объявления по порядку — от самого дешёвого до самого дорогого",
       axisMileageCaption: "Пробег",
       axisYearCaption: "Год выпуска",
       axisRankStart: "самое дешёвое",
@@ -2658,8 +2668,11 @@
     id: "otomoto",
     lastSources: ["otomoto"],
     async getListings({ filters, pinned = null, historyId = "", progress = null, sequential = false, wholeList = null, priceOverride = null }) {
+      // The status line only for page 2's own reading: Monitoring reads
+      // through this too (with a progress callback), in the background, and
+      // its "Przygotowuję…" stayed on page 2 (audit 10.10).
       const c = copy();
-      setAnalysisStatus(c.preparing);
+      const say = progress ? () => {} : setAnalysisStatus;
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
       // Favourites: whole lists where short enough (page 3 compares offers).
       const favorite = historyId ? marketHistory.find((entry) => entry.id === historyId) : historyEntryForFilters(filters);
@@ -2688,7 +2701,7 @@
       };
       const read = {
         otomoto: () => fetchOtomotoListings(filters, (page, pages) => {
-          setAnalysisStatus(`${c.otomotoFetching} ${page}/${pages}`);
+          say(`${c.otomotoFetching} ${page}/${pages}`);
           step("otomoto")(page, pages);
         }, whole, prices.otomoto),
         // Owner 2026-10-04: mobile.de is Germany's portal only — the
@@ -2863,7 +2876,7 @@
         messages.push(c.paruvenduFetched.replace("{count}", String(paruvenduListings.length))
           .replace("{total}", String(paruvenduResult.total || paruvenduAll.length)).replace("{duplicates}", String(paruvenduDuplicates)));
       }
-      setAnalysisStatus(messages.join(" "));
+      say(messages.join(" "));
       return [...otomotoListings, ...mobileListings, ...autoscoutListings, ...kleinanzeigenListings, ...autoscoutFrListings, ...paruvenduListings, ...local.marktplaats.listings, ...local.dehands.listings, ...blocketListings, ...avbyListings];
     },
   };
@@ -3366,6 +3379,22 @@
     if (!storeMarketHistory(updatedHistory)) return null;
     renderHistory();
     return updatedHistory[index];
+  }
+
+  // When the analysis' prices were read, on page 2 by the title (audit
+  // 10.10): older than 2 days in yellow, with a word to refresh them.
+  const DATA_STALE_DAYS = 2;
+  function dataAgeLine(value) {
+    const c = copy();
+    const date = new Date(value);
+    if (!value || Number.isNaN(date.getTime())) return null;
+    const midnight = (day) => new Date(day.getFullYear(), day.getMonth(), day.getDate()).getTime();
+    const days = Math.max(0, Math.round((midnight(new Date()) - midnight(date)) / 86400000));
+    const ru = currentLanguage() === "ru";
+    const ruDays = (count) => (count % 10 === 1 && count % 100 !== 11 ? "день" : count % 10 >= 2 && count % 10 <= 4 && (count % 100 < 10 || count % 100 >= 20) ? "дня" : "дней");
+    const age = days === 0 ? c.dataAgeToday : days === 1 ? c.dataAgeYesterday : c.dataAgeDays.replace("{count}", ru ? `${days} ${ruDays(days)}` : String(days));
+    const stale = days > DATA_STALE_DAYS;
+    return { text: (stale ? c.dataAgeStale : c.dataAge).replace("{date}", formatHistoryDate(value)).replace("{age}", age), stale };
   }
 
   function formatHistoryDate(value) {
@@ -7666,22 +7695,19 @@
       const canJudge = statistics.count >= 8 && !filters.priceFrom && !filters.priceTo;
       const numbers = numberFormat();
 
-      // Horizontal axis: rank in the price-sorted list (the offers laid out the
-      // way the site sorts them), mileage or year.
-      // Each offer sits at its share of its own marketplace's price-sorted list:
-      // the true place when the site told us (Otomoto), otherwise its order
-      // inside that marketplace's sample (imported files).
+      // Horizontal axis: place in the price-sorted list, mileage or year.
+      // The place is the offer's order in this market's own list, cheapest
+      // first (audit 10.10, owner): the portals' own places mixed mobile.de
+      // (of 67) with AutoScout24 (of 53) in one curve, and it jumped.
       const rankOf = new Map();
+      const ownOrder = new Map();
       shownSources.forEach((source) => {
         const own = marketListings.filter((listing) => listing.source === source)
           .sort((left, right) => left.price - right.price);
-        own.forEach((listing, index) => rankOf.set(listing, listing.rank && listing.marketTotal > 1
-          ? (listing.rank - 1) / (listing.marketTotal - 1)
-          : index / Math.max(1, own.length - 1)));
+        ownOrder.set(source, own);
+        own.forEach((listing, index) => rankOf.set(listing, index / Math.max(1, own.length - 1)));
       });
-      const singleRankedSource = shownSources.length === 1
-        && marketListings.every((listing) => listing.rank && listing.marketTotal > 1);
-      const marketTotal = singleRankedSource ? Math.max(...marketListings.map((listing) => listing.marketTotal)) : 0;
+      const marketTotal = shownSources.length === 1 ? marketListings.length : 0;
       const axisValueOf = (listing) => {
         if (chartAxis === "mileage") return Number.isFinite(listing.mileage) && listing.mileage > 0 ? listing.mileage : null;
         if (chartAxis === "year") return Number.isFinite(listing.year) && listing.year > 0 ? listing.year : null;
@@ -7834,7 +7860,12 @@
       // their mileage / year), pinned to the chart's edge when far off.
       const suspectPlotted = suspectListings.map((listing) => {
         let x = null;
-        if (chartAxis === "rank") x = listing.rank && listing.marketTotal > 1 ? (listing.rank - 1) / (listing.marketTotal - 1) : null;
+        if (chartAxis === "rank") {
+          // Where its price falls among the market's offers.
+          const own = ownOrder.get(listing.source) || [];
+          x = own.length ? own.filter((other) => other.price < listing.price).length / Math.max(1, own.length - 1) : null;
+          if (x !== null) x = Math.min(1, x);
+        }
         else {
           const value = chartAxis === "mileage" ? listing.mileage : listing.year;
           x = Number.isFinite(value) && value > 0 && axisSpan ? Math.min(1, Math.max(0, (value - axisMin) / axisSpan)) : null;
@@ -8050,8 +8081,7 @@
             ? points.map((point) => ({ ...point, y: verticalMarketPosition(Math.min(Math.max(point.listing.price, scale.min), scale.max), scale.min, scale.max) }))
             : points);
           const panelPlotted = onScale(plotted.filter((point) => point.listing.source === source));
-          const ranked = own.every((listing) => listing.rank && listing.marketTotal > 1);
-          const total = ranked ? Math.max(...own.map((listing) => listing.marketTotal)) : 0;
+          const total = own.length > 1 ? own.length : 0;
           const ticks = chartAxis === "rank" && total
             ? [0, 0.25, 0.5, 0.75, 1].map((x) => ({
               x,
@@ -8751,8 +8781,10 @@
       // The block's name as a heading like "Statystyki" (owner 2026-10-05).
       kicker: "",
       title: [filters.brand, filters.model, filters.version].filter(Boolean).join(" "),
-      // The date stands once, top right of the report (the data's date).
-      meta: "",
+      // The date stands once, top right of the report (the data's date); on
+      // the screen by the title, with its age (audit 10.10).
+      meta: dataAgeLine(dataDate)?.text || "",
+      metaClass: `isDataAge${dataAgeLine(dataDate)?.stale ? " isStale" : ""}`,
       // The same favourite star as on the search page.
       // "Odśwież dane" left of the favourite star.
       // "Kopiuj raport / Raport PDF" (statistics and chart) left of
@@ -8764,7 +8796,6 @@
     // form holds unsaved changes), "Analiza rynku" and the offer count with a
     // link per compared market.
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
-    const liveCount = (source) => document.querySelector({ mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", kleinanzeigen: "[data-mobile-search-count-kleinanzeigen]", paruvendu: "[data-mobile-search-count-paruvendu]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnl: "[data-mobile-search-count-autoscoutnl]", autoscoutbe: "[data-mobile-search-count-autoscoutbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" }[source])?.textContent.trim() || "—";
     // mobile.de: Germany's countries only (the Netherlands and Belgium are not read there).
     let mobileDeUrl = searchUrl;
     try {
@@ -9305,6 +9336,29 @@
   // The filters' status line is hidden while the analysis is open, so the
   // analysis repeats the latest message in its own line.
   let analysisMessage = { text: "", isError: false };
+  // Page 1's live offer count of a portal row ("—" when not known).
+  const LIVE_COUNT_SELECTORS = { mobile: "[data-mobile-search-count-mobilede]", otomoto: "[data-mobile-search-count]", blocket: "[data-mobile-search-count-blocket]", avby: "[data-mobile-search-count-avby]", autoscout: "[data-mobile-search-count-autoscout]", kleinanzeigen: "[data-mobile-search-count-kleinanzeigen]", paruvendu: "[data-mobile-search-count-paruvendu]", autoscoutfr: "[data-mobile-search-count-autoscoutfr]", autoscoutnl: "[data-mobile-search-count-autoscoutnl]", autoscoutbe: "[data-mobile-search-count-autoscoutbe]", marktplaats: "[data-mobile-search-count-marktplaats]", dehands: "[data-mobile-search-count-dehands]" };
+  function liveCount(source) {
+    return document.querySelector(LIVE_COUNT_SELECTORS[source])?.textContent.trim() || "—";
+  }
+
+  // Page 2's "Aktualne oferty" repeats page 1's live counts. These arrive
+  // after the analysis is drawn (a favourite or a history row opened), so
+  // they are copied over whenever page 1's change: page 2 showed the
+  // previous search's numbers (audit 10.10).
+  function syncAnalysisCounts() {
+    analysisContent.querySelectorAll("[data-analysis-market-row]").forEach((row) => {
+      if (row.classList.contains("isOff")) return;
+      const strong = row.querySelector("strong");
+      const value = liveCount(row.dataset.analysisMarketRow);
+      if (strong && strong.textContent !== value) strong.textContent = value;
+    });
+  }
+  {
+    const pageOneFoot = [...document.querySelectorAll(".mobileSearchSummaryFoot")].find((foot) => !analysisContent.contains(foot));
+    if (pageOneFoot) new MutationObserver(syncAnalysisCounts).observe(pageOneFoot, { subtree: true, childList: true, characterData: true });
+  }
+
   function analysisStatusHtml() {
     return `<p class="mobileMarketAnalysisStatus${analysisMessage.isError ? " isError" : ""}" aria-live="polite" data-mobile-market-analysis-status data-report-hide${analysisMessage.text ? "" : " hidden"}>${escapeMarketHtml(analysisMessage.text)}</p>`;
   }
