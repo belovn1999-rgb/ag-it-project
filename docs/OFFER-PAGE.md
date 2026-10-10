@@ -268,3 +268,5 @@ mobile.de — шкала оценки цены (6 порогов → 5 поло�
 «uczciwa cena» справа), AutoScout24 — медиана портала; плюс строки Carvago (активные похожие,
 история цены). Если нет ничего — блока нет, «Ocena AUTOGOOD» занимает строку целиком (Premium).
 Поиск рынка из этой программы не делается (владелец 10-10: здесь только оффер).
+
+- 10-10 (чат «дизайн код»): объявления AutoScout24 «smyle» (`/smyle/details/<id>/`; `/angebote/<id>` ведёт туда) читаются из `properData.carDetails` — `autoscoutAdDetails` в `src/offer-ad.js`; дилер и место — из `ocsInfo`.

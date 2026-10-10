@@ -278,10 +278,39 @@
     return raw ? JSON.parse(raw[1]) : null;
   }
 
+  // AutoScout24's own online sale "smyle" (/smyle/details/<id>/; /angebote/<id>
+  // redirects there) keeps the ad in pageProps.properData.carDetails, not in
+  // listingDetails: the same fields under other names (checked 2026-10-10).
+  // The real dealer and its place are in ocsInfo (the result list says
+  // "smyle, Helgoland").
+  function autoscoutAdDetails(props) {
+    if (props?.listingDetails) return props.listingDetails;
+    const car = props?.properData?.carDetails;
+    if (!car) return null;
+    const ocs = car.ocsInfo || {};
+    const seller = ocs.seller || {};
+    return {
+      prices: { public: { priceRaw: Number(car.price?.value?.raw) || 0 } },
+      vehicle: {
+        ...(car.vehicle || {}),
+        make: car.make,
+        model: car.model,
+        modelVersionInput: car.modelVersion,
+        rawDisplacementInCCM: car.vehicle?.displacementInCCMRaw || null,
+      },
+      location: ocs.location || {},
+      seller: { ...seller, isDealer: seller.type === "Dealer" },
+      ratings: ocs.ratings,
+      images: car.imageUrl ? [car.imageUrl] : [],
+      isNew: false,
+      smyle: true,
+    };
+  }
+
   async function readAutoscout(url, source = "autoscout") {
     const response = await fetch(`${proxy()}${url}`, { headers: { "x-respond-with": "html" } });
     if (!response.ok) throw new Error(`AutoScout24 ${response.status}`);
-    const details = nextData(await response.text())?.props?.pageProps?.listingDetails;
+    const details = autoscoutAdDetails(nextData(await response.text())?.props?.pageProps);
     if (!details) throw new Error("AutoScout24: no ad data");
     const vehicle = details.vehicle || {};
     const seller = details.seller || {};

@@ -4486,6 +4486,35 @@ function autoscoutFuel(vehicle) {
   return vehicle.fuelCategory?.formatted || "";
 }
 
+// AutoScout24's own online sale "smyle" (/smyle/details/<id>/; /angebote/<id>
+// redirects there) keeps the ad in pageProps.properData.carDetails, not in
+// listingDetails: the same fields under other names (checked 2026-10-10).
+// The real dealer and its place are in ocsInfo (the result list says
+// "smyle, Helgoland").
+function autoscoutAdDetails(props) {
+  if (props?.listingDetails) return props.listingDetails;
+  const car = props?.properData?.carDetails;
+  if (!car) return null;
+  const ocs = car.ocsInfo || {};
+  const seller = ocs.seller || {};
+  return {
+    prices: { public: { priceRaw: Number(car.price?.value?.raw) || 0 } },
+    vehicle: {
+      ...(car.vehicle || {}),
+      make: car.make,
+      model: car.model,
+      modelVersionInput: car.modelVersion,
+      rawDisplacementInCCM: car.vehicle?.displacementInCCMRaw || null,
+    },
+    location: ocs.location || {},
+    seller: { ...seller, isDealer: seller.type === "Dealer" },
+    ratings: ocs.ratings,
+    images: car.imageUrl ? [car.imageUrl] : [],
+    isNew: false,
+    smyle: true,
+  };
+}
+
 async function loadAutoscoutAd(sourceUrl) {
   const c = copy[state.lang];
   setStatus("loading");
@@ -4499,7 +4528,7 @@ async function loadAutoscoutAd(sourceUrl) {
     if (!response.ok) throw new Error(String(response.status));
     const html = await response.text();
     const raw = html.match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-    const details = raw ? JSON.parse(raw[1])?.props?.pageProps?.listingDetails : null;
+    const details = raw ? autoscoutAdDetails(JSON.parse(raw[1])?.props?.pageProps) : null;
     const prices = details?.prices?.public || {};
     const carBruttoEur = Number(prices.priceRaw) || 0;
     if (!carBruttoEur) throw new Error(c.autoscoutAdFailed);

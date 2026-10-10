@@ -172,12 +172,21 @@
       monitoringSortListed: "data pojawienia się",
       monitoringSortDir: "Zmień kierunek sortowania",
       monitoringOnlyVat: "tylko VAT do odliczenia",
+      monitoringResultFiltersTitle: "Pokazuj w wynikach tylko",
+      monitoringStatsUnit: "na gotowo w Polsce, zł · wszystkie wybrane rynki",
+      monitoringStatsChanged: "zmienione parametry, budżet lub rynki — nowa baza",
+      monitoringStatsEmpty: "Brak monitoringów z ofertami pasującymi do wyszukiwania.",
+      monitoringStatsPortals: "odpowiedziały inne portale niż poprzednio — liczby bez porównania",
+      monitoringResultFiltersHint: "Ustaw raz — liczby, nowe i zniknięte auta liczą się tylko z tych ofert.",
+      monitoringResultFiltersNote: "Filtr wyników: {filters}",
+      monitoringSetBudget: "ustaw budżet klienta, by czytać całą listę",
       monitoringOnlyDealers: "tylko dealerzy",
       monitoringBudgetCalc: "Sprawdź w kalkulatorze",
       monitoringBudgetCalcTitle: "Kalkulator z ceną auta, transportem i akcyzą, z których wyszedł budżet (Niemcy) — wszystkie pola można zmienić.",
       monitoringBudget: "Budżet klienta na gotowo w Polsce",
       monitoringBudgetShort: "budżet na gotowo",
-      monitoringBudgetHint: "Jeden budżet dla wszystkich portali: maksymalna cena auta liczona jak w kalkulatorze („Zakup bezpośredni”), transport i oględziny wg kraju sprzedawcy, akcyza wg filtrów: {engine}, kurs 1 EUR = {rate} zł. otomoto: budżet = cena w Polsce.",
+      monitoringExciseHighest: "najwyższa z wersji modelu",
+      monitoringBudgetHint: "Jeden budżet dla wszystkich portali: maksymalna cena auta liczona jak w kalkulatorze („Zakup bezpośredni”), transport i oględziny wg kraju sprzedawcy, akcyza wg parametrów wyszukiwania: {engine}, kurs 1 EUR = {rate} zł. otomoto: budżet = cena w Polsce.",
       monitoringPortalPrices: "Osobne ceny dla portali (zaawansowane)",
       monitoringGross: "brutto",
       monitoringNet: "netto",
@@ -199,7 +208,7 @@
       monitoringAt: "{day} o {time}",
       monitoringDayToday: "dziś",
       monitoringDayTomorrow: "jutro",
-      monitoringOffShort: "Monitoring wyłączony — tylko „Uruchom monitoring”.",
+      monitoringOffShort: "Wyłączony — to auto sprawdzasz tylko ręcznie przyciskiem „Uruchom monitoring”.",
       monitoringMacOn: "sprawdza ten Mac, także przy zamkniętym programie",
       monitoringMacConnect: "Sprawdzaj przy zamkniętym programie (ten Mac)",
       monitoringMacRetry: "Połącz ponownie z usługą tego Maca",
@@ -275,7 +284,7 @@
       priceHistoryComparedHint: "wybór rynków na stronie 1 „Wyszukiwanie”",
       offerHistoryHeading: "Rynek w wybranym dniu",
       offerHistoryIntro: "Wybierz datę pomiaru: wykres i lista pokazują ogłoszenia z tego dnia. „Porównaj z” nakłada drugą datę (szare kółka) i pokazuje, co się zmieniło.",
-      offerHistoryNone: "Ogłoszenia z każdego pomiaru zapisujemy od 30.09.2026. Po następnym „Odśwież dane” pojawi się tu wykres i lista ogłoszeń z tego dnia.",
+      offerHistoryNone: "Ogłoszenia z każdego monitoringu zapisujemy od 30.09.2026. Po pierwszym monitoringu tego auta („Uruchom monitoring”) pojawi się tu wykres i lista ogłoszeń z tego dnia.",
       offerHistoryNoOffers: "z tego dnia są tylko statystyki (bez listy ogłoszeń)",
       offerLoading: "Wczytuję ogłoszenia…",
       offerCompareWith: "Porównaj z",
@@ -825,12 +834,21 @@
       monitoringSortListed: "дата появления",
       monitoringSortDir: "Сменить направление сортировки",
       monitoringOnlyVat: "только НДС к вычету",
+      monitoringResultFiltersTitle: "Показывать в результатах только",
+      monitoringStatsUnit: "под ключ в Польше, зл · все выбранные рынки",
+      monitoringStatsChanged: "изменены параметры, бюджет или рынки — новая база",
+      monitoringStatsEmpty: "Нет мониторингов с предложениями под этот поиск.",
+      monitoringStatsPortals: "ответили другие порталы, чем в прошлый раз — числа без сравнения",
+      monitoringResultFiltersHint: "Задай один раз — числа, новые и исчезнувшие авто считаются только по этим предложениям.",
+      monitoringResultFiltersNote: "Фильтр результатов: {filters}",
+      monitoringSetBudget: "задай бюджет клиента, чтобы читать весь список",
       monitoringOnlyDealers: "только дилеры",
       monitoringBudgetCalc: "Проверить в калькуляторе",
       monitoringBudgetCalcTitle: "Калькулятор с ценой авто, транспортом и акцизом, из которых получен бюджет (Германия), — все поля можно менять.",
       monitoringBudget: "Бюджет клиента под ключ в Польше",
       monitoringBudgetShort: "бюджет под ключ",
-      monitoringBudgetHint: "Один бюджет для всех порталов: максимальная цена авто считается как в калькуляторе («Прямая покупка»), транспорт и осмотр по стране продавца, акциз по фильтрам: {engine}, курс 1 EUR = {rate} зл. otomoto: бюджет = цена в Польше.",
+      monitoringExciseHighest: "наибольший из версий модели",
+      monitoringBudgetHint: "Один бюджет для всех порталов: максимальная цена авто считается как в калькуляторе («Прямая покупка»), транспорт и осмотр по стране продавца, акциз по параметрам поиска: {engine}, курс 1 EUR = {rate} зл. otomoto: бюджет = цена в Польше.",
       monitoringPortalPrices: "Отдельные цены для порталов (расширенные)",
       monitoringGross: "брутто",
       monitoringNet: "нетто",
@@ -852,7 +870,7 @@
       monitoringAt: "{day} в {time}",
       monitoringDayToday: "сегодня",
       monitoringDayTomorrow: "завтра",
-      monitoringOffShort: "Мониторинг выключен — только «Запустить мониторинг».",
+      monitoringOffShort: "Выключен — это авто проверяется только вручную кнопкой «Запустить мониторинг».",
       monitoringMacOn: "проверяет этот Mac, даже при закрытой программе",
       monitoringMacConnect: "Проверять при закрытой программе (этот Mac)",
       monitoringMacRetry: "Подключиться к службе этого Mac снова",
@@ -928,7 +946,7 @@
       priceHistoryComparedHint: "выбор рынков на странице 1 «Поиск»",
       offerHistoryHeading: "Рынок в выбранный день",
       offerHistoryIntro: "Выбери дату замера: график и список показывают объявления этого дня. «Сравнить с» накладывает вторую дату (серые кружки) и показывает, что изменилось.",
-      offerHistoryNone: "Объявления каждого замера сохраняются с 30.09.2026. После следующего «Обновить данные» здесь появятся график и список объявлений этого дня.",
+      offerHistoryNone: "Объявления каждого мониторинга сохраняются с 30.09.2026. После первого мониторинга этого авто («Запустить мониторинг») здесь появятся график и список объявлений этого дня.",
       offerHistoryNoOffers: "за этот день есть только статистика (без списка объявлений)",
       offerLoading: "Загружаю объявления…",
       offerCompareWith: "Сравнить с",
@@ -1958,8 +1976,10 @@
     return /(^|\.)av\.by$/.test(url.hostname) && /\/\d{5,}\/?$/.test(url.pathname);
   }
 
+  // "/smyle/details/<id>/": AutoScout24's own online sale ("smyle", seat on
+  // Helgoland) — its links were dropped until 2026-10-10.
   function isDirectAutoscoutListingUrl(url) {
-    return /(^|\.)autoscout24\.[a-z.]+$/.test(url.hostname) && /\/(?:angebote|offerte|offres|aanbod|offers|annonces)\//.test(url.pathname);
+    return /(^|\.)autoscout24\.[a-z.]+$/.test(url.hostname) && /\/(?:angebote|offerte|offres|aanbod|offers|annonces|smyle\/details)\//.test(url.pathname);
   }
 
   function isDirectBlocketListingUrl(url) {
@@ -2392,8 +2412,22 @@
     const first = autoscout.parseSearchPage(await read(1), { page: 1 });
     if (!first.total) return { listings: [], total: 0, read: 0 };
     // The search must have found this car, not a whole make.
-    const wanted = (value) => autoscout.slug(value);
-    const matches = first.listings.filter((listing) => wanted(listing.model).startsWith(wanted(filters.model)) || wanted(filters.model).startsWith(wanted(listing.model)));
+    // Compared without spaces, hyphens and dots: the form's "RAV 4" is
+    // AutoScout24's "RAV4" (until 2026-10-10 every such model was "not found"
+    // and Germany stayed empty in Monitoring and the analysis). The model of
+    // the search path ("rav4", "cla-180") counts as well.
+    const wanted = (value) => autoscout.slug(value).replace(/[^a-z0-9]/g, "");
+    let searched = "";
+    try {
+      searched = wanted(new URL(autoscout.buildSearchUrl(filters, { countries, price })).pathname.split("/")[3] || "");
+    } catch {
+      searched = "";
+    }
+    const asked = [wanted(filters.model), searched].filter(Boolean);
+    const matches = first.listings.filter((listing) => {
+      const model = wanted(listing.model);
+      return model && asked.some((item) => model.startsWith(item) || item.startsWith(model));
+    });
     if (filters.model && first.listings.length && matches.length < first.listings.length / 2) throw new Error("model not found on AutoScout24");
     const pageCount = Math.max(1, first.pages);
     const allPages = Array.from({ length: pageCount - 1 }, (_, index) => index + 2);
@@ -2984,7 +3018,14 @@
       // The whole price history is kept, never cut.
       priceLog: Array.isArray(entry.priceLog) ? entry.priceLog.filter((point) => point && point.at) : [],
       // Scheduled checks of a favourite (run by the automation server, B5).
-      autoRefresh: entry.autoRefresh?.enabled ? { enabled: true, every: String(entry.autoRefresh.every || "daily") } : null,
+      // The whole schedule is kept, switched off too: until 2026-10-10 the
+      // time ("07:00") and a switched-off car's frequency were dropped on
+      // every save, and the car went back to every day at 9:30.
+      autoRefresh: entry.autoRefresh && typeof entry.autoRefresh === "object" ? {
+        enabled: Boolean(entry.autoRefresh.enabled),
+        every: String(entry.autoRefresh.every || "daily"),
+        ...(/^\d{2}:\d{2}$/.test(String(entry.autoRefresh.time || "")) ? { time: String(entry.autoRefresh.time) } : {}),
+      } : null,
       createdAt: String(entry.createdAt || entry.updatedAt || new Date().toISOString()),
       updatedAt: String(entry.updatedAt || entry.createdAt || new Date().toISOString()),
     };
@@ -3235,6 +3276,9 @@
       const mobileId = url.searchParams.get("id") || url.pathname.match(/\/(\d+)\.html$/)?.[1];
       if (url.hostname.endsWith("mobile.de") && mobileId) return `mobile:${mobileId}`;
       if (listing.id && ID_KEYED_HOSTS.includes(url.hostname.replace(/^www\./, ""))) return `id:${listing.id}`;
+      // smyle offers were kept under their id while the link was dropped: the
+      // key stays, or each would turn "new" (and its old copy "gone") once.
+      if (listing.id && /(^|\.)autoscout24\./.test(url.hostname) && url.pathname.startsWith("/smyle/")) return `id:${listing.id}`;
       return `${url.hostname.replace(/^www\./, "")}${url.pathname.replace(/\/$/, "")}`;
     } catch {
       return `id:${listing.id || `${listing.price}|${listing.year}|${listing.mileage}`}`;
@@ -4727,6 +4771,151 @@
       </div>`;
   }
 
+
+  // ---- Page 3: market statistics over time from every chosen market --------
+  // Owner 2026-10-10: the statistics of Monitoring come from all offers of
+  // all its chosen markets (until then: the page-1 countries only — 52
+  // AutoScout24 cars of Germany beside the 201 Monitoring followed). One
+  // row per monitoring of this car, prices "na gotowo w Polsce" (zł), only
+  // the cars that fit the search (budget with its margin, VAT, dealers);
+  // all countries together, or the country picked above the tiles.
+  const COUNTRY_LINE_COLORS = { "": "#12233f", de: "#f56a00", nl: "#0d8aa8", be: "#c2185b", pl: "#1d5fd0", se: "#d0101a", fr: "#6b3fb8", by: "#13804a" };
+  function monitoringStatsRows(entry, byDate) {
+    const fits = offerFitsSearch(entry.id);
+    const records = [...byDate.values()].filter((record) => record.scope).sort((left, right) => left.at.localeCompare(right.at));
+    const changes = (entry.priceLog || []).filter((point) => point.filtersChange);
+    return records.map((record, index) => {
+      const offers = Object.entries(record.markets || {}).flatMap(([source, market]) => (market.offers || [])
+        .filter((offer) => !offer.suspect && fits(source, offer))
+        .map((offer) => ({ source, offer, country: offerCountryKey(source, offer), pln: clientPricePln(offer, source) })));
+      const previous = records[index - 1];
+      // Another search, budget or set of markets since the row before.
+      const changed = Boolean(previous) && (previous.scope !== record.scope
+        || changes.some((point) => point.at > previous.at && point.at <= record.at));
+      // Other portals answered (one was silent, or could not read the model):
+      // the numbers are of another market, no arrows across.
+      const portals = (item) => Object.keys(item?.markets || {}).filter((source) => (item.markets[source]?.offers || []).length).sort().join(",");
+      const portalsChanged = Boolean(previous) && !changed && portals(previous) !== portals(record);
+      return { at: record.at, scope: record.scope, offers, changed, portalsChanged };
+    });
+  }
+  function statsOfOffers(items) {
+    const sorted = items.filter((item) => Number.isFinite(item.pln) && item.pln > 0).sort((left, right) => left.pln - right.pln);
+    if (!sorted.length) return null;
+    const prices = sorted.map((item) => item.pln);
+    const p25 = percentile(prices, 0.25);
+    const p75 = percentile(prices, 0.75);
+    return {
+      count: sorted.length,
+      min: sorted[0],
+      max: sorted[sorted.length - 1],
+      median: percentile(prices, 0.5),
+      p25,
+      p75,
+      middle: prices.filter((value) => value >= p25 && value <= p75).length,
+    };
+  }
+  async function fillMonitoringHistory(entry) {
+    const target = document.querySelector(`[data-monitoring-history="${CSS.escape(entry.id)}"]`);
+    const trend = document.querySelector(`[data-monitoring-trend="${CSS.escape(entry.id)}"]`);
+    if (!target && !trend) return;
+    const c = copy();
+    const byDate = await loadCheckOffers(entry.id);
+    const rows = monitoringStatsRows(entry, byDate);
+    const country = monitoringState.country || "";
+    const countryName = (key) => (key ? window.AUTOGOOD_COUNTRY_NAME?.(marketGroup(key).countries[0]) || key : c.monitoringCountryAll);
+    const numbers = numberFormat();
+    const zl = (value) => (Number.isFinite(value) ? escapeMarketHtml(formatPlainPrice(Math.round(value), "PLN")) : "—");
+    const change = (current, previous, goodWhenUp = false) => {
+      if (!Number.isFinite(current) || !Number.isFinite(previous) || !previous) return "";
+      const pct = ((current - previous) / previous) * 100;
+      if (Math.abs(pct) < 0.5) return `<em class="isFlat">=</em>`;
+      const good = goodWhenUp ? pct > 0 : pct < 0;
+      return `<em class="${good ? "isGood" : "isBad"}">${pct > 0 ? "▲" : "▼"} ${escapeMarketHtml(numbers.format(Math.round(Math.abs(pct) * 10) / 10))}%</em>`;
+    };
+    const statsAt = (row, key = country) => statsOfOffers(row.offers.filter((item) => !key || item.country === key));
+    if (target) {
+      const lines = [];
+      let previous = null;
+      rows.forEach((row) => {
+        const now = statsAt(row);
+        if (row.changed || row.portalsChanged) {
+          lines.push(`<tr class="mobileMarketHistoryFilters"><td colspan="7">${escapeMarketHtml(formatHistoryDate(row.at))} · ${escapeMarketHtml(row.changed ? c.monitoringStatsChanged : c.monitoringStatsPortals)}</td></tr>`);
+          previous = null;
+        }
+        if (!now) return;
+        const link = (item) => (item.offer.url
+          ? `<a class="agPriceLink" href="${escapeMarketHtml(item.offer.url)}" target="_blank" rel="noopener">${zl(item.pln)}<img class="agBrandMark" src="${BRAND_MARKS[item.source] || ""}" alt="" /></a>`
+          : zl(item.pln));
+        lines.push(`
+          <tr>
+            <th scope="row"><button class="mobileMarketDateLink" type="button" data-offer-date="${escapeMarketHtml(row.at)}">${escapeMarketHtml(formatHistoryDate(row.at))}</button></th>
+            <td>${now.count} ${previous ? change(now.count, previous.count, true) : ""}</td>
+            <td>${link(now.min)} ${previous ? change(now.min.pln, previous.min.pln) : ""}</td>
+            <td>${link(now.max)} ${previous ? change(now.max.pln, previous.max.pln) : ""}</td>
+            <td><b>${zl(now.median)}</b> ${previous ? change(now.median, previous.median) : ""}</td>
+            <td>${zl(now.p25)} – ${zl(now.p75)} ${previous ? change((now.p25 + now.p75) / 2, (previous.p25 + previous.p75) / 2) : ""}</td>
+            <td>${now.middle} ${previous ? change(now.middle, previous.middle, true) : ""}</td>
+          </tr>`);
+        previous = now;
+      });
+      target.innerHTML = `
+        <h2 class="agBlockTitle mobileMarketPriceHistoryMarket">${escapeMarketHtml(c.priceHistoryHeading)} · ${escapeMarketHtml(countryName(country))} <small>${escapeMarketHtml(c.monitoringStatsUnit)}</small></h2>
+        ${lines.length ? `
+        <div class="mobileMarketTableScroll">
+          <table class="mobileMarketTable mobileMarketHistoryTable">
+            <thead><tr>
+              <th scope="col">${escapeMarketHtml(c.priceHistoryDate)}</th>
+              <th scope="col">${escapeMarketHtml(c.priceHistoryOffers)}</th>
+              <th scope="col">${escapeMarketHtml(c.minimum)}</th>
+              <th scope="col">${escapeMarketHtml(c.maximum)}</th>
+              <th scope="col">${escapeMarketHtml(c.median)}</th>
+              <th scope="col">${escapeMarketHtml(c.averagePrices)}</th>
+              <th scope="col">${escapeMarketHtml(c.middleOffers)}</th>
+            </tr></thead>
+            <tbody>${lines.reverse().join("")}</tbody>
+          </table>
+        </div>` : `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.monitoringStatsEmpty)}</p>`}`;
+    }
+    if (trend) {
+      // The median of every monitoring: all countries together (dark, thick)
+      // and each country with offers.
+      const keys = ["", ...MARKET_GROUPS.map((group) => group.key).filter((key) => rows.some((row) => row.offers.some((item) => item.country === key)))];
+      const series = keys.map((key) => ({ key, points: rows.map((row, index) => ({ index, value: statsAt(row, key)?.median })).filter((item) => Number.isFinite(item.value)) }))
+        .filter((line) => line.points.length);
+      if (rows.length < 2 || !series.length) {
+        trend.innerHTML = `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.trendNeedsTwo)}</p>`;
+      } else {
+        const values = series.flatMap((line) => line.points.map((item) => item.value));
+        const low = Math.min(...values) * 0.97;
+        const high = Math.max(...values) * 1.03;
+        const width = 760;
+        const height = 240;
+        const left = 78;
+        const right = 20;
+        const top = 16;
+        const bottom = 34;
+        const x = (index) => left + (index / Math.max(1, rows.length - 1)) * (width - left - right);
+        const y = (value) => top + ((high - value) / Math.max(1, high - low)) * (height - top - bottom);
+        const ticks = [low, (low + high) / 2, high];
+        const labelEvery = Math.max(1, Math.ceil(rows.length / 6));
+        trend.innerHTML = `
+          <svg class="mobileMarketTrendChart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${escapeMarketHtml(c.trendTitle)}">
+            ${ticks.map((value) => `<line x1="${left}" x2="${width - right}" y1="${y(value)}" y2="${y(value)}" class="isGrid" /><text x="${left - 8}" y="${y(value) + 4}" text-anchor="end">${escapeMarketHtml(formatMarketPrice(value, "PLN"))}</text>`).join("")}
+            ${rows.map((row, index) => (index % labelEvery === 0 || index === rows.length - 1)
+              ? `<text x="${x(index)}" y="${height - 10}" text-anchor="middle">${escapeMarketHtml(formatHistoryDate(row.at).split(",")[0])}</text>` : "").join("")}
+            ${series.map((line) => `
+              <polyline fill="none" stroke="${COUNTRY_LINE_COLORS[line.key] || "#666"}" stroke-width="${line.key ? 2 : 3.5}" points="${line.points.map((item) => `${x(item.index)},${y(item.value)}`).join(" ")}" />
+              ${line.points.map((item) => `<circle cx="${x(item.index)}" cy="${y(item.value)}" r="${line.key ? 3.5 : 5}" fill="${COUNTRY_LINE_COLORS[line.key] || "#666"}"><title>${escapeMarketHtml(`${countryName(line.key)} · ${formatHistoryDate(rows[item.index].at)} · ${formatMarketPrice(item.value, "PLN")}`)}</title></circle>`).join("")}`).join("")}
+          </svg>
+          <div class="mobileMarketLegend">
+            ${series.map((line) => `<span><i style="background:${COUNTRY_LINE_COLORS[line.key] || "#666"}"></i>${escapeMarketHtml(countryName(line.key))}</span>`).join("")}
+            <span>${escapeMarketHtml(c.monitoringStatsUnit)}</span>
+          </div>`;
+      }
+    }
+  }
+
   // ---- Page 3: the market of one date, compared with another --------------
   // One chart per compared market: the offers of the picked date in colour,
   // those of the compared date as grey rings, each at its place in the list
@@ -5001,7 +5190,10 @@
   // and gone offers per portal), and the day-by-day history below, folded.
   // country: a country card's key ("" = all), portal: a portal ("" = all),
   // limit: how many cars of the list are drawn (100 more each click).
-  const monitoringState = { id: "", view: "new", portal: "", country: "", limit: 100, busy: "", status: "", statusError: false };
+  // autoView: the list the page picks itself (on opening a car and after a
+  // monitoring): "Nowe" when there are new cars, else "Aktualne" (owner
+  // 2026-10-05, "при входе — Nowe"); a list clicked by the manager stays.
+  const monitoringState = { id: "", view: "new", autoView: true, portal: "", country: "", limit: 100, busy: "", status: "", statusError: false };
   // Does this Mac's monitoring service answer (variant B, see syncLocalMonitoring)?
   const localMonitoring = { available: false, failedToday: false };
   // Monitoring checks waiting for the one running (see runMonitoringCheck).
@@ -5143,8 +5335,10 @@
     const c = copy();
     const numbers = numberFormat();
     const budget = monitoringScopeOf(entry.id).budget || {};
-    const engine = budgetEngineClass(entry.filters);
+    const excise = searchExcise(entry.filters);
+    const engine = excise.index;
     const rate = window.AUTOGOOD_TURNKEY?.currentRates?.().eur;
+    const ratePercent = (index) => `${String(Math.round((window.AUTOGOOD_TURNKEY?.EXCISE_RATES?.[index] ?? 0) * 1000) / 10).replace(".", ",")} %`;
     const field = (side) => `<label><span>${escapeMarketHtml(side === "from" ? c.monitoringFrom : c.monitoringTo)}</span><input type="text" inputmode="numeric" data-monitoring-budget="${side}" value="${budget[side] ? escapeMarketHtml(numbers.format(budget[side])) : ""}" placeholder="—" /><b>zł</b></label>`;
     return `
       <div class="mobileMonitoringBudget">
@@ -5155,7 +5349,7 @@
           <label class="mobileMonitoringCheck mobileMonitoringAdvanced"><input type="checkbox" data-monitoring-portal-prices${monitoringPrefs.portalPrices ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringPortalPrices)}</label>
         </div>
         <small>${escapeMarketHtml(c.monitoringBudgetHint
-          .replace("{engine}", `${typeof ENGINE_TYPE_LABELS !== "undefined" ? ENGINE_TYPE_LABELS[engine] : ""} · ${String(Math.round((window.AUTOGOOD_TURNKEY?.EXCISE_RATES?.[engine] ?? 0) * 1000) / 10).replace(".", ",")} %`)
+          .replace("{engine}", `${typeof ENGINE_TYPE_LABELS !== "undefined" ? ENGINE_TYPE_LABELS[engine] : ""} · ${ratePercent(engine)}${excise.classes.length > 1 ? ` (${c.monitoringExciseHighest}: ${excise.classes.map(ratePercent).join(", ")})` : ""}`)
           .replace("{rate}", rate ? String(rate).replace(".", ",") : "—"))}</small>
       </div>`;
   }
@@ -5210,13 +5404,61 @@
       const countries = group.key === "de" && german.length ? german : group.countries;
       const portals = [...new Set(group.rows.filter((row) => selectionRowOn(selection, row)).map((row) => portalName(rowSource(row))))];
       return `<span class="mobileMonitoringSummaryCountry">${countries.map((code) => window.AUTOGOOD_FLAG?.(code) || "").join("")} <b>${escapeMarketHtml(window.AUTOGOOD_COUNTRY_NAME?.(group.countries[0]) || group.countries[0])}</b> ${escapeMarketHtml(portals.join(", "))}</span>`;
-    }).join("");
+    }).join("") + (() => {
+      const labels = resultFilterLabels(resultFiltersOf(entry.id));
+      return labels.length ? `<span class="mobileMonitoringSummaryCountry">${escapeMarketHtml(labels.join(" · "))}</span>` : "";
+    })();
   }
 
   // Where mobile.de and AutoScout24 are searched for one favourite (page 3).
   // Default (owner, 2026-10-03): Germany, the Netherlands, Belgium, Austria,
   // Luxembourg, AutoScout24 on. Same storage rules as the history (4.6.1).
   const MONITORING_SCOPE_KEY = "autogood.mobile.monitoringScope.v1";
+  const RESULT_FILTERS = ["vat", "dealers", "drop", "deal"];
+  // The car's result filters; a car never set keeps the list's old switches
+  // (they were one set for all cars in this browser until 2026-10-10).
+  function resultFiltersOf(favoriteId) {
+    return monitoringScopeOf(favoriteId).only || {
+      vat: Boolean(monitoringPrefs.onlyVat), dealers: Boolean(monitoringPrefs.onlyDealers),
+      drop: Boolean(monitoringPrefs.onlyDrop), deal: Boolean(monitoringPrefs.onlyDeal),
+    };
+  }
+  // The price a car costs the client in Poland: "na gotowo" for an offer
+  // from abroad, the price itself in Poland; the budget's margin.
+  const BUDGET_TOLERANCE = 0.1;
+  const isVatOffer = (offer) => offer.priceType === "vat" || (offer.priceType === "net" && offer.currency === "PLN");
+  const clientPricePln = (offer, source) => Number(offer.turnkey) || priceInPln(offer.price, offer.currency || SOURCE_CURRENCY[source] || "EUR");
+  // The search's own test of an offer: the client's budget with its margin
+  // and the result filters that need no history (VAT, dealers).
+  function offerFitsSearch(favoriteId) {
+    const budget = monitoringScopeOf(favoriteId).budget || null;
+    const only = resultFiltersOf(favoriteId);
+    return (source, offer) => (!budget || source === "avby"
+      || ((!budget.to || clientPricePln(offer, source) <= budget.to * (1 + BUDGET_TOLERANCE))
+        && (!budget.from || clientPricePln(offer, source) >= budget.from * (1 - BUDGET_TOLERANCE))))
+      && (!only.vat || isVatOffer(offer)) && (!only.dealers || offer.seller === "dealer");
+  }
+  function resultFilterLabels(only) {
+    const c = copy();
+    const labels = { vat: c.monitoringOnlyVat, dealers: c.monitoringOnlyDealers, drop: c.monitoringOnlyDrop, deal: c.monitoringOnlyDeal };
+    return RESULT_FILTERS.filter((key) => only?.[key]).map((key) => labels[key]);
+  }
+  // Under the list, small: which filters are on (they live in the settings).
+  function resultFiltersNote(only) {
+    const labels = resultFilterLabels(only);
+    return labels.length ? `<span class="mobileMonitoringFilterNote">${escapeMarketHtml(copy().monitoringResultFiltersNote.replace("{filters}", labels.join(" · ")))}</span>` : "";
+  }
+  function resultFiltersHtml(entry) {
+    const c = copy();
+    const only = resultFiltersOf(entry.id);
+    const labels = { vat: c.monitoringOnlyVat, dealers: c.monitoringOnlyDealers, drop: c.monitoringOnlyDrop, deal: c.monitoringOnlyDeal };
+    return `
+      <h3 class="mobileMonitoringCountriesTitle">${escapeMarketHtml(c.monitoringResultFiltersTitle)}</h3>
+      <div class="mobileMonitoringResultFilters">
+        ${RESULT_FILTERS.map((key) => `<label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-result-filter="${key}"${only[key] ? " checked" : ""} /> ${escapeMarketHtml(labels[key])}</label>`).join("")}
+        <small>${escapeMarketHtml(c.monitoringResultFiltersHint)}</small>
+      </div>`;
+  }
   // "Dodatkowe" margin per favourite, in % (owner, 2026-10-04: 5–10 %).
   const NEAR_TOLERANCES = [0, 5, 10];
   const NEAR_DEFAULT_TOLERANCE = 10;
@@ -5261,7 +5503,12 @@
     // The client's budget "na gotowo w Polsce", PLN (owner 2026-10-05).
     const amount = (value) => (Number.isFinite(Number(value)) && Number(value) > 0 ? Math.round(Number(value)) : null);
     const budget = scope.budget && (amount(scope.budget.from) || amount(scope.budget.to)) ? { from: amount(scope.budget.from), to: amount(scope.budget.to) } : null;
-    return { countries, tolerance, ...(picked.length ? { markets: picked } : {}), ...(budget ? { budget } : {}) };
+    // Result filters set once in the settings (owner 2026-10-10): only VAT
+    // deductible, only dealers, only with a price drop, only to negotiate.
+    const only = scope.only && typeof scope.only === "object"
+      ? Object.fromEntries(RESULT_FILTERS.map((key) => [key, Boolean(scope.only[key])]))
+      : null;
+    return { countries, tolerance, ...(picked.length ? { markets: picked } : {}), ...(budget ? { budget } : {}), ...(only ? { only } : {}) };
   }
 
   // ---- One client budget for all portals (owner 2026-10-05) --------------
@@ -5275,8 +5522,72 @@
   // (advanced settings) wins.
   const BUDGET_COUNTRY = { mobile: "DE", autoscout: "DE", kleinanzeigen: "DE", marktplaats: "NL", dehands: "BE", autoscoutfr: "FR", paruvendu: "FR", blocket: "SE" };
   const PORTAL_VAT = { DE: 0.19, NL: 0.21, BE: 0.21, FR: 0.2, SE: 0.25, PL: 0.23 };
+  // The client PDF names the rates its own cars were counted with (until
+  // 2026-10-10 the filters' "3.1 % petrol" stood under an electric MX-30
+  // counted at 0 %); without a car from abroad, the search's rate.
+  function pdfExciseClasses(rows, filters) {
+    const turnkey = window.AUTOGOOD_TURNKEY;
+    const classes = rows.filter((row) => row.offer?.turnkey && turnkey?.engineInfo)
+      .map((row) => turnkey.engineInfo({ fuel: row.offer.fuel, title: row.offer.title, displacementCcm: row.offer.ccm }, filters).index);
+    return classes.length ? classes : searchExcise(filters).classes;
+  }
+
   function budgetEngineClass(filters) {
-    return window.AUTOGOOD_TURNKEY?.engineClassFor?.({}, filters) ?? 3;
+    return searchExcise(filters).index;
+  }
+
+  // The excise of a SEARCH (owner 2026-10-10: "from the search parameters"):
+  // the versions of the model in its years from the model table (B61),
+  // narrowed by the fuel and engine-size filters. Until 2026-10-10 a search
+  // without a fuel filter counted every car as "petrol up to 2000 cm³"
+  // (3.1 %), an electric MX-30 too. One class: that one; several (RAV 4:
+  // hybrid 2.5 and petrol 2.0): the budget takes the highest rate, so the
+  // client's budget is never passed, and the footnote names every rate.
+  // Models without data: the filters alone, as before.
+  const specsPending = new Set();
+  function searchExcise(filters = {}) {
+    const fallback = window.AUTOGOOD_TURNKEY?.engineClassFor?.({}, filters) ?? 3;
+    const rates = window.AUTOGOOD_TURNKEY?.EXCISE_RATES || [0, 0.093, 0.0155, 0.031, 0.186];
+    const brand = typeof canonicalBrand === "function" ? canonicalBrand(filters.brand) : String(filters.brand || "");
+    const found = brand && filters.model ? window.AUTOGOOD_MODEL_SPECS_UI?.family?.(brand, String(filters.model).trim()) : null;
+    const spec = found ? window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand]?.[found.key] : null;
+    if (!spec) {
+      // The brand's file is still loading: the page is drawn again once it is in.
+      if (brand && window.AUTOGOOD_MODEL_SPECS_INDEX?.brands?.[brand] && !window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand] && !specsPending.has(brand)) {
+        specsPending.add(brand);
+        const started = Date.now();
+        const wait = () => {
+          if (window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand]) {
+            specsPending.delete(brand);
+            if (priceHistoryId) renderPriceHistoryPage();
+          } else if (Date.now() - started < 15000) setTimeout(wait, 300);
+          else specsPending.delete(brand);
+        };
+        setTimeout(wait, 300);
+      }
+      return { index: fallback, classes: [fallback] };
+    }
+    const digits = (value) => Number(String(value || "").replace(/[^\d]/g, "")) || 0;
+    const yearFrom = digits(filters.yearFrom);
+    const yearTo = digits(filters.yearTo);
+    const gens = new Set(spec.gens.map((gen, index) => ({ index, from: gen[2], to: gen[3], mobile: gen[4] }))
+      .filter((gen) => (!found.mobile || gen.mobile === found.mobile) && (gen.from || 0) <= (yearTo || 9999) && (gen.to || 9999) >= (yearFrom || 0))
+      .map((gen) => gen.index));
+    const fuels = (filters.fuels || []).filter(Boolean);
+    const ccFrom = digits(filters.displacementFrom);
+    const ccTo = digits(filters.displacementTo);
+    let rows = spec.versions.filter((row) => gens.has(row[0]));
+    if (found.token) {
+      const narrowed = rows.filter((row) => row[8] === found.token);
+      if (narrowed.length) rows = narrowed;
+    }
+    rows = rows.filter((row) => (!fuels.length || fuels.includes(row[1]) || (row[7] && fuels.includes(row[1] === "diesel" ? "hybrid_diesel" : "hybrid_petrol")))
+      && (!ccFrom || row[2] >= ccFrom) && (!ccTo || row[2] <= ccTo));
+    if (!rows.length || typeof classifyEngineType !== "function") return { index: fallback, classes: [fallback] };
+    const fuelText = { electric: "electric", plugin: "plug-in hybrid", hybrid_petrol: "hybrid petrol", hybrid_diesel: "hybrid diesel", diesel: "diesel", petrol: "petrol" };
+    const classes = [...new Set(rows.map((row) => classifyEngineType(`${fuelText[row[1]] || row[1]}${row[7] ? " mild hybrid" : ""}`, row[2])))];
+    const index = classes.reduce((best, item) => ((rates[item] ?? 0) > (rates[best] ?? 0) ? item : best), classes[0]);
+    return { index, classes };
   }
   // The car price (in the portal's currency) that a budget in PLN allows.
   function budgetCarPrice(source, budgetPln, filters) {
@@ -5449,7 +5760,7 @@
     }
     const entry = favorites.find((item) => item.id === priceHistoryId);
     if (entry) loadFavoriteIntoForm(entry);
-    if (monitoringState.id !== (entry?.id || "")) Object.assign(monitoringState, { id: entry?.id || "", view: "new", portal: "", country: "", limit: 100, status: "", statusError: false });
+    if (monitoringState.id !== (entry?.id || "")) Object.assign(monitoringState, { id: entry?.id || "", view: "new", autoView: true, portal: "", country: "", limit: 100, status: "", statusError: false });
     const monitored = Boolean(entry?.autoRefresh?.enabled);
     // This car being checked, or waiting for another car's check.
     const busy = entry && (monitoringState.busy === entry.id || isQueued(entry.id));
@@ -5481,6 +5792,7 @@
           ${monitoringCountriesHtml(entry)}
           <h3 class="mobileMonitoringCountriesTitle">${escapeMarketHtml(c.monitoringMoreFiltersTitle)}</h3>
           <div class="mobileMonitoringMoreFilters" data-monitoring-more-filters></div>
+          ${resultFiltersHtml(entry)}
           <div class="mobileMonitoringSettingsFoot">
             <button class="mobileMarketImportClear isPrimary" type="button" data-monitoring-settings-done>${escapeMarketHtml(c.monitoringDone)} ✓</button>
           </div>
@@ -5505,13 +5817,13 @@
       ${monitoringExtended ? `
         <section class="mobileMarketCard mobileMonitoringTrend">
           ${blockTitle("gauge", c.trendTitle)}
-          ${medianTrendHtml(entry)}
+          <div data-monitoring-trend="${escapeMarketHtml(entry.id)}"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></div>
         </section>
         <section class="mobileMarketCard mobileMarketOfferHistory" data-offer-history="${escapeMarketHtml(entry.id)}">
           ${blockTitle("calendar", c.offerHistoryHeading)}
           <p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p>
         </section>
-        ${priceHistoryHtml(entry)}` : ""}` : `
+        <section class="mobileMarketCard mobileMarketPriceHistory" data-monitoring-history="${escapeMarketHtml(entry.id)}"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></section>` : ""}` : `
       <section class="mobileMarketCard mobileMarketPriceHistoryIntro">
         ${blockTitle("calendar", c.monitoringHeading)}
         <p>${escapeMarketHtml(favorites.length ? c.monitoringIntro : c.monitoringNoFavorites)}</p>
@@ -5519,7 +5831,10 @@
     if (!entry) return;
     borrowMoreFilters(priceHistoryPage.querySelector("[data-monitoring-more-filters]"));
     fillMonitoringResults(entry);
-    if (monitoringExtended) fillOfferHistory(entry);
+    if (monitoringExtended) {
+      fillOfferHistory(entry);
+      fillMonitoringHistory(entry);
+    }
   }
 
   // When a car is monitored (owner 2026-10-05: frequency and time chosen per
@@ -5621,7 +5936,9 @@
     // The free proxy's minute limit reached: the line says why it waits.
     const proxy = window.AUTOGOOD_PROXY_QUEUE?.status?.();
     const pause = proxy?.resumeAt && proxy.waiting ? `<span class="isWait">${escapeMarketHtml(c.monitoringProgressLimit.replace("{seconds}", String(Math.max(1, Math.ceil((proxy.resumeAt - Date.now()) / 1000)))))}</span>` : "";
-    return `<b>${escapeMarketHtml(monitoringPhase ? `${c.monitoringProgressTitle.replace(/:$/, "")} — ${monitoringPhase}:` : c.monitoringProgressTitle)}</b> ${parts.length ? parts.join("") : `<span>${escapeMarketHtml(c.monitoringProgressRun)}</span>`}${pause}`;
+    const running = monitoringState.busy && monitoringState.busy !== monitoringState.id ? marketHistory.find((item) => item.id === monitoringState.busy) : null;
+    const title = c.monitoringProgressTitle.replace(/:$/, "") + (running ? ` — ${monitoringTitle(running)}` : "") + (monitoringPhase ? ` — ${monitoringPhase}` : "");
+    return `<b>${escapeMarketHtml(`${title}:`)}</b> ${parts.length ? parts.join("") : `<span>${escapeMarketHtml(c.monitoringProgressRun)}</span>`}${pause}`;
   }
   // Redrawn when the proxy queue pauses or goes on.
   window.AUTOGOOD_PROXY_QUEUE?.onChange?.(() => {
@@ -5837,9 +6154,10 @@
     const firstCheckAt = [...byDate.keys()].sort()[0];
     const since = document.querySelector("[data-monitoring-since]");
     if (since && monitoringChecks.length) {
+      const sinceDays = Math.floor(daysSince(monitoringChecks[0].at));
       since.textContent = c.monitoringSince
+        .replace(sinceDays < 1 ? " · {days}" : "{days}", sinceDays < 1 ? "" : daysText(sinceDays))
         .replace("{date}", shortDate(monitoringChecks[0].at))
-        .replace("{days}", daysText(daysSince(monitoringChecks[0].at)))
         .replace("{count}", String(monitoringChecks.length));
     }
     const appearance = (offer) => {
@@ -5886,6 +6204,16 @@
     };
     const changedBetween = false;
     const newBase = !previous && (checks.length > 1 || otherChecks);
+    // What the manager follows (owner 2026-10-10): the cars that fit the
+    // search — the client's budget with its 10 % margin ("Dodatkowe" keeps
+    // the ones just outside) — and the result filters set once in the
+    // settings. Tiles, countries, lists and the market line count only them.
+    const carBudget = monitoringScopeOf(entry.id).budget || null;
+    const only = resultFiltersOf(entry.id);
+    const fitsSearch = offerFitsSearch(entry.id);
+    const passesOnly = (offer) => (!only.vat || isVatOffer(offer)) && (!only.dealers || offer.seller === "dealer")
+      && (!only.drop || liquidity(offer).dropped) && (!only.deal || liquidity(offer).deal);
+    const keepOffer = (source, offer) => fitsSearch(source, offer) && passesOnly(offer);
     // Every chosen portal has its tile, also one that never answered.
     const sources = MARKET_SOURCES.filter((source) => selection.markets.includes(source));
     const numbers = numberFormat();
@@ -5899,7 +6227,7 @@
       const current = shown ? answeredMarket(byDate.get(shown.at), source) : null;
       const compared = prior ? answeredMarket(byDate.get(prior.at), source) : null;
       const silent = !portalAnswered(record, source);
-      const rows = offerChanges(source, current, compared);
+      const rows = offerChanges(source, current, compared).filter((row) => keepOffer(source, row.offer));
       return { source, current, compared, rows, silent, shownAt: shown?.at || "", reason: silent ? portalFailure(record, source) : "" };
     });
     const carsNow = carsOf(perSource.map((item) => item.current));
@@ -5947,10 +6275,12 @@
       // AutoScout24 counts its unique offers (duplicates of mobile.de left out);
       // inside a country: the cars of that country that were read.
       const byCountry = Boolean(monitoringState.country);
-      // Second portals with duplicates dropped: their own cars (as AutoScout24).
-      const ownCount = (market) => (source === "autoscout" || Number(market?.duplicates) ? market?.offers.length || 0 : market?.total || 0);
-      const total = byCountry ? rows.filter((row) => !row.gone).length : ownCount(current);
-      const comparedTotal = byCountry ? (compared?.offers || []).filter((offer) => inCountry(source, offer)).length : ownCount(compared);
+      // The cars that fit the search, as read (owner 2026-10-10: not every
+      // ad of the portal — RAV 4 showed "687" beside 227 read).
+      const total = rows.filter((row) => !row.gone).length;
+      const comparedTotal = (compared?.offers || []).filter((offer) => inCountry(source, offer) && keepOffer(source, offer)).length;
+      // The portal holds more than was read (mobile.de: at most 240 a search).
+      const cut = Boolean(current && !current.complete && Number(current.total) > (current.offers?.length || 0));
       const delta = compared && comparedTotal ? total - comparedTotal : null;
       const certain = Boolean(current?.complete && compared?.complete);
       const active = monitoringState.portal === source;
@@ -5966,7 +6296,8 @@
             <span><small>${escapeMarketHtml(c.monitoringGone)}</small><b class="${certain ? "isGone" : "isUnsure"}">${compared ? `${certain ? "" : "≈ "}−${count("gone")}` : "—"}</b></span>
           </span>` : ""}
           ${current && silent ? `<small class="mobileMonitoringTileNote isSilent">${escapeMarketHtml(c.monitoringNoAnswerSince.replace("{date}", shortDate(latest.at)).replace("{shown}", shortDate(shownAt)))}${reason ? ` · ${escapeMarketHtml(reason)}` : ""}</small>` : ""}
-          ${compared && !certain ? `<small class="mobileMonitoringTileNote" title="${escapeMarketHtml(c.monitoringApproxTitle)}">${escapeMarketHtml(c.monitoringSample)}${byCountry ? "" : ` · ${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current?.offers.length || 0)).replace("{total}", numbers.format(current?.read && source === "autoscout" ? current.total : current?.total || 0)))}`}</small>` : ""}
+          ${cut && !byCountry ? `<small class="mobileMonitoringTileNote isCut">${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current.offers.length)).replace("{total}", numbers.format(current.total)))}${carBudget ? "" : ` · ${escapeMarketHtml(c.monitoringSetBudget)}`}</small>` : ""}
+          ${compared && !certain && !cut ? `<small class="mobileMonitoringTileNote" title="${escapeMarketHtml(c.monitoringApproxTitle)}">${escapeMarketHtml(c.monitoringSample)}${byCountry ? "" : ` · ${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current?.offers.length || 0)).replace("{total}", numbers.format(current?.read && source === "autoscout" ? current.total : current?.total || 0)))}`}</small>` : ""}
           ${current?.allCountriesTotal && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringAllCountries.replace("{count}", numbers.format(current.allCountriesTotal)))}</small>` : ""}
           ${current?.duplicates && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml((source === "autoscout" ? c.monitoringDuplicates : c.monitoringDuplicatesOther).replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
         </button>`;
@@ -5984,7 +6315,7 @@
     const extraRows = Object.entries(extra?.markets || {})
       .filter(([source]) => selection.markets.includes(source))
       // "Nowe" only against a monitoring that also looked for them.
-      .flatMap(([source, market]) => (market.offers || []).filter((offer) => chosen(source, offer)).map((offer) => ({ source, offer, extra: true, isNew: Boolean(before?.extra) && !extraBefore.has(offer.key) })));
+      .flatMap(([source, market]) => (market.offers || []).filter((offer) => chosen(source, offer) && passesOnly(offer)).map((offer) => ({ source, offer, extra: true, isNew: Boolean(before?.extra) && !extraBefore.has(offer.key) })));
     const currentByKey = new Map([
       ...perSource.flatMap(({ source, current }) => (current?.offers || []).map((offer) => [offer.key, { source, offer }])),
       ...Object.entries(extra?.markets || {}).flatMap(([source, market]) => (market.offers || []).map((offer) => [offer.key, { source, offer }])),
@@ -6002,12 +6333,14 @@
       extra: extraRows,
       saved: savedRows(saved),
     };
-    if (!before && (monitoringState.view === "new" || monitoringState.view === "gone")) monitoringState.view = "all";
+    // Until 2026-10-10 the first monitoring left "Aktualne" picked for good,
+    // and the next one with 6 new cars opened on 453 rows.
+    if (monitoringState.autoView) monitoringState.view = before && viewRows.new.length ? "new" : "all";
+    else if (!before && (monitoringState.view === "new" || monitoringState.view === "gone")) monitoringState.view = "all";
     const view = monitoringState.view;
     const statusLabel = { new: c.offerNew, firstSeen: c.offerFirstSeen, gone: c.offerGone, outside: c.offerOutside, cheaper: c.offerCheaper, dearer: c.offerDearer, same: c.offerSame };
-    // The list as the manager wants it: only VAT-deductible / dealers, sorted
-    // by price, year, mileage or the day the ad appeared.
-    const isVat = (offer) => offer.priceType === "vat" || (offer.priceType === "net" && offer.currency === "PLN");
+    // Sorted by price, year, mileage, the day the ad appeared or the drop
+    // (the filters are applied above, set in the settings).
     const sortValue = {
       price: (row) => row.offer.turnkey || priceInPln(row.offer.price, row.offer.currency),
       year: (row) => Number(row.offer.year) || 0,
@@ -6018,8 +6351,6 @@
     }[monitoringPrefs.sort] || ((row) => row.offer.price);
     const direction = monitoringPrefs.dir === "desc" ? -1 : 1;
     const rows = viewRows[view]
-      .filter((row) => (!monitoringPrefs.onlyVat || isVat(row.offer)) && (!monitoringPrefs.onlyDealers || row.offer.seller === "dealer"))
-      .filter((row) => (!monitoringPrefs.onlyDrop || liquidity(row.offer).dropped) && (!monitoringPrefs.onlyDeal || liquidity(row.offer).deal))
       .sort((left, right) => (sortValue(left) - sortValue(right)) * direction || left.offer.price - right.offer.price);
     // Belarus (av.by compared with mobile.de / AutoScout24): German offers with
     // the car's price, the price in Minsk and turnkey with customs, in USD.
@@ -6055,7 +6386,9 @@
         .replace("{saving}", formatMarketPrice(percentile(bySavings, 0.5), "USD")))}</p>`
       : "";
     const plainPriceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
-    const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isPrimary" : ""}" type="button" data-monitoring-view="${key}"${(key === "new" || key === "gone") && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${viewRows[key].length}</button>`;
+    // The list shown is marked (filled, aria-pressed): until 2026-10-10 it
+    // looked like the others.
+    const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isActive" : ""}" type="button" data-monitoring-view="${key}" aria-pressed="${view === key ? "true" : "false"}"${(key === "new" || key === "gone") && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${viewRows[key].length}</button>`;
     const withStatus = view === "all" && before;
     const columns = 5 + (withStatus ? 1 : 0);
     const dateLine = (offer) => {
@@ -6097,7 +6430,7 @@
           .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key) && !carsNow.has(carSignature(offer)) && inCountry(source, offer)) goneWeek.add(offer.key); }));
       });
       const parts = [
-        medianDays !== null ? c.monitoringLiquidityDays.replace("{days}", `${atLeast ? "≥ " : ""}${daysText(medianDays)}`) : "",
+        medianDays !== null && !(atLeast && medianDays < 1) ? c.monitoringLiquidityDays.replace("{days}", `${atLeast ? "≥ " : ""}${daysText(medianDays)}`) : "",
         c.monitoringLiquidityDrops.replace("{count}", numbers.format(dropped)).replace("{total}", numbers.format(current.length)).replace("{pct}", `${Math.round((dropped / current.length) * 100)} %`),
         deals ? c.monitoringLiquidityDeals.replace("{count}", numbers.format(deals)) : "",
         before ? c.monitoringLiquidityGone.replace("{count}", numbers.format(goneWeek.size)) : "",
@@ -6136,10 +6469,7 @@
           <select data-monitoring-sort>${sortOptions.map(([key, label]) => `<option value="${key}"${monitoringPrefs.sort === key ? " selected" : ""}>${escapeMarketHtml(label)}</option>`).join("")}</select>
         </label>
         <button class="mobileMonitoringSortDir" type="button" data-monitoring-sort-dir aria-label="${escapeMarketHtml(c.monitoringSortDir)}" title="${escapeMarketHtml(c.monitoringSortDir)}">${monitoringPrefs.dir === "desc" ? "↓" : "↑"}</button>
-        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyVat"${monitoringPrefs.onlyVat ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyVat)}</label>
-        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyDealers"${monitoringPrefs.onlyDealers ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyDealers)}</label>
-        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyDrop"${monitoringPrefs.onlyDrop ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyDrop)}</label>
-        <label class="mobileMonitoringCheck"><input type="checkbox" data-monitoring-only="onlyDeal"${monitoringPrefs.onlyDeal ? " checked" : ""} /> ${escapeMarketHtml(c.monitoringOnlyDeal)}</label>
+        ${resultFiltersNote(only)}
       </div>
       ${rows.length ? `
       <div class="mobileMarketTableScroll mobileMonitoringList">
@@ -6203,7 +6533,7 @@
             <td class="isNum">${data.priceCell(row.offer, row.source)}</td>
           </tr>`).join("")}</tbody>
       </table>
-      <p class="mobileMarketAxisNote isTurnkey">* ${turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText([window.AUTOGOOD_TURNKEY?.engineInfo?.({}, data.entry?.filters || {})?.index ?? 3]))}</p>`;
+      <p class="mobileMarketAxisNote isTurnkey">* ${turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(pdfExciseClasses(rows, data.entry?.filters || {})))}</p>`;
     const fileName = `AUTOGOOD ${c.monitoringPdfFile} ${title} ${today.toISOString().slice(0, 10)}.pdf`.replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
     await downloadReportPdf(button, "pdf", {
       live: report,
@@ -6833,6 +7163,8 @@
       if (monitoringState.id === entry.id) Object.assign(monitoringState, { status: monitoringErrorText(error), statusError: true });
     } finally {
       monitoringState.busy = "";
+      // A fresh monitoring of the car on screen opens on its new cars.
+      if (ok && monitoringState.id === entry.id) Object.assign(monitoringState, { autoView: true, limit: 100 });
       Object.keys(monitoringProgress).forEach((key) => delete monitoringProgress[key]);
       if (currentPage() === "history") renderPriceHistoryPage();
     }
@@ -7025,12 +7357,18 @@
       if (entry) fillMonitoringResults(entry);
       return;
     }
-    const only = event.target.closest("[data-monitoring-only]");
-    if (only) {
-      monitoringPrefs[only.dataset.monitoringOnly] = only.checked;
-      saveMonitoringPrefs();
+    // Result filters of the car (settings, owner 2026-10-10): stored with
+    // the car, every number below follows them at once.
+    const resultFilter = event.target.closest("[data-monitoring-result-filter]");
+    if (resultFilter && priceHistoryId) {
+      setMonitoringScope(priceHistoryId, { only: { ...resultFiltersOf(priceHistoryId), [resultFilter.dataset.monitoringResultFilter]: resultFilter.checked } });
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
-      if (entry) fillMonitoringResults(entry);
+      if (entry) {
+        const summary = document.querySelector(".mobileMonitoringSummary");
+        if (summary) summary.innerHTML = monitoringSelectionSummary(entry);
+        fillMonitoringResults(entry);
+        if (monitoringExtended) fillMonitoringHistory(entry);
+      }
       return;
     }
     const budgetField = event.target.closest("[data-monitoring-budget]");
@@ -7241,7 +7579,11 @@
       const key = countryFilter.dataset.monitoringCountryFilter;
       Object.assign(monitoringState, { country: monitoringState.country === key ? "" : key, portal: "", limit: 100 });
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
-      if (entry) fillMonitoringResults(entry);
+      if (entry) {
+        fillMonitoringResults(entry);
+        // The price history follows the country picked.
+        if (monitoringExtended) fillMonitoringHistory(entry);
+      }
       return;
     }
     if (event.target.closest("[data-monitoring-page-more]")) {
@@ -7254,6 +7596,7 @@
     if (view) {
       monitoringState.limit = 100;
       monitoringState.view = view.dataset.monitoringView;
+      monitoringState.autoView = false;
       const entry = marketHistory.find((item) => item.id === priceHistoryId);
       if (entry) fillMonitoringResults(entry);
       return;
