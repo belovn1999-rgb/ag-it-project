@@ -626,13 +626,13 @@
     updateMore();
   }
 
-  // ---- Section rail (owner 2026-10-08): on the left of pages 1 and 2 (owner
-  // 10.10), a button per section in one frame; a click takes the page to the
+  // ---- Section rail (owner 2026-10-08): on the left of pages 1, 2 and 3
+  // (owner 10.10), a button per section in one frame; a click takes the page to the
   // section's start, the section in view is marked. Icons only, the name
   // shows on hover; each section has its colour, the same as its heading's
   // icon on the page (mobile-page1.css, --ag-section-*). Names and icons come
-  // from the sections' own headings (PL / RU follow). Page 2 is drawn anew
-  // with each analysis, so the sections are looked up on every pass.
+  // from the sections' own headings (PL / RU follow). Pages 2 and 3 are drawn
+  // anew, so the sections are looked up on every pass.
   const RAIL_PAGES = [
     {
       view: "[data-mobile-method-view='manual']",
@@ -658,6 +658,18 @@
         { key: "a-chart", target: ".mobileMarketChartCard" },
         { key: "a-conclusion", target: ".mobileMarketSummaryCard" },
         { key: "a-offers", target: ".mobileMarketOffersCard" },
+      ],
+    },
+    // Page 3 "Monitoring" (owner 10.10), drawn anew like page 2.
+    {
+      view: "[data-mobile-page-view='history']",
+      sections: [
+        { key: "m-head", target: ".mobileMonitoringHead" },
+        { key: "m-settings", target: ".mobileMonitoringSettings", heading: ".mobileMonitoringSettings > summary b" },
+        { key: "m-results", target: ".mobileMonitoringResults" },
+        { key: "m-trend", target: ".mobileMonitoringTrend" },
+        { key: "m-offers", target: ".mobileMonitoringResults ~ .mobileMarketOfferHistory" },
+        { key: "m-prices", target: "[data-mobile-price-history-page] .mobileMarketPriceHistory" },
       ],
     },
   ];
@@ -696,7 +708,7 @@
       const label = name === name.toUpperCase() ? name.charAt(0) + name.slice(1).toLowerCase() : name;
       const button = railButtons[index];
       if (button.lastChild.textContent !== label) button.lastChild.textContent = label;
-      const icon = (title.closest("h2") || section.querySelector("h2"))?.querySelector("use")?.getAttribute("href");
+      const icon = (title.closest("h2, summary") || section.querySelector("h2"))?.querySelector("use")?.getAttribute("href");
       if (icon && button.querySelector("use").getAttribute("href") !== icon) button.querySelector("use").setAttribute("href", icon);
     });
   };
@@ -766,8 +778,10 @@
     const node = document.querySelector(view);
     if (node) new MutationObserver(scheduleRail).observe(node, { attributes: true, attributeFilter: ["hidden"] });
   });
-  const analysisBody = document.querySelector("[data-mobile-market-analysis-content]");
-  if (analysisBody) new MutationObserver(scheduleRail).observe(analysisBody, { childList: true });
+  ["[data-mobile-market-analysis-content]", "[data-mobile-price-history-page]"].forEach((selector) => {
+    const body = document.querySelector(selector);
+    if (body) new MutationObserver(scheduleRail).observe(body, { childList: true });
+  });
   markRail();
 
   // ---- 12. Favourites: the full name on hover when a card cuts it ----------

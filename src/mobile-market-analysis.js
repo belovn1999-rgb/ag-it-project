@@ -140,6 +140,7 @@
       monitoringMissing: "Bez danych z: {portals} — portal nie odpowiedział, ten monitoring go nie obejmuje. Spróbuj ponownie za kilka minut.",
       monitoringSwitchOn: "Monitoring włączony",
       monitoringSettings: "Ustawienia monitoringu",
+      monitoringResultsHeading: "Wyniki monitoringu",
       monitoringSince: "Monitoring od {date} · {days} · zapisanych monitoringów: {count}",
       monitoringNext: "Następny monitoring: {date}",
       monitoringNextNow: "zaraz",
@@ -792,6 +793,7 @@
       monitoringMissing: "Нет данных с: {portals} — портал не ответил, этот мониторинг его не включает. Попробуй ещё раз через несколько минут.",
       monitoringSwitchOn: "Мониторинг включён",
       monitoringSettings: "Настройки мониторинга",
+      monitoringResultsHeading: "Результаты мониторинга",
       monitoringSince: "Мониторинг с {date} · {days} · сохранено мониторингов: {count}",
       monitoringNext: "Следующий мониторинг: {date}",
       monitoringNextNow: "сейчас",
@@ -4642,7 +4644,7 @@
       const portal = portalName(source);
       return `
         <section class="mobileMarketCard mobileMarketPriceHistory is${sourceClass(source)}" aria-label="${escapeMarketHtml(`${c.priceHistoryHeading}: ${portal}`)}">
-          <h2 class="agBlockTitle mobileMarketPriceHistoryMarket">${escapeMarketHtml(c.priceHistoryHeading)} · ${marketBadge(source)} <small>${escapeMarketHtml(portal)} · ${escapeMarketHtml(SOURCE_CURRENCY[source])}</small></h2>
+          <h2 class="agBlockTitle mobileMarketBlockTitle mobileMarketPriceHistoryMarket"><svg class="mobileFieldIcon" aria-hidden="true" data-report-hide><use href="./src/mobile-icons.svg#tag"></use></svg><span>${escapeMarketHtml(c.priceHistoryHeading)}</span> · ${marketBadge(source)} <small>${escapeMarketHtml(portal)} · ${escapeMarketHtml(SOURCE_CURRENCY[source])}</small></h2>
           ${rows.length ? `
           <div class="mobileMarketTableScroll">
             <table class="mobileMarketTable mobileMarketHistoryTable">
@@ -4981,7 +4983,7 @@
     // same attribute: the day's market stayed "Wczytuję…" beside them.
     const card = document.querySelector(`section[data-offer-history="${CSS.escape(entry.id)}"]`);
     if (!card) return;
-    card.innerHTML = `${blockTitle("gauge", copy().offerHistoryHeading)}${offerHistoryBodyHtml(entry, byDate)}`;
+    card.innerHTML = `${blockTitle("calendar", copy().offerHistoryHeading)}${offerHistoryBodyHtml(entry, byDate)}`;
   }
 
   function redrawOfferHistory(scroll = false) {
@@ -5457,7 +5459,7 @@
     priceHistoryPage.innerHTML = entry ? `
       <section class="mobileMarketCard mobileMonitoringHead">
         <div class="mobileMonitoringTitleRow">
-          <h2 class="agBlockTitle">★ ${escapeMarketHtml(monitoringTitle(entry))}</h2>
+          ${blockTitle("car", monitoringTitle(entry))}
           <label class="mobileMonitoringSwitch${monitored ? " isOn" : ""}">
             <input type="checkbox" role="switch" data-monitoring-switch="${escapeMarketHtml(entry.id)}"${monitored ? " checked" : ""} />
             <i aria-hidden="true"></i><b>${escapeMarketHtml(monitored ? c.monitoringSwitchOn : c.monitoringSwitch)}</b>
@@ -5471,7 +5473,7 @@
         <p class="mobileMonitoringSince" data-monitoring-since></p>
       </section>
       <details class="mobileMonitoringSettings" data-monitoring-settings${monitoringPrefs.settingsOpen ? " open" : ""}>
-        <summary><b>${escapeMarketHtml(c.monitoringSettings)}</b><span class="mobileMonitoringSummary">${monitoringSelectionSummary(entry)}</span></summary>
+        <summary><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#settings"></use></svg><b>${escapeMarketHtml(c.monitoringSettings)}</b><span class="mobileMonitoringSummary">${monitoringSelectionSummary(entry)}</span></summary>
         <div class="mobileMonitoringSettingsBody">
           ${monitoringConverterHtml()}
           ${monitoringBudgetHtml(entry)}
@@ -5485,6 +5487,7 @@
         </div>
       </details>
       <section class="mobileMarketCard mobileMonitoringResults">
+        ${blockTitle("list", c.monitoringResultsHeading)}
         <div class="mobileMonitoringBlockHead">
           <div class="mobileMonitoringCheckInfo" data-monitoring-check-info></div>
           <div class="mobileMarketToolbarActions">
@@ -5500,12 +5503,12 @@
       </section>
       <button class="mobileMonitoringExtendedToggle" type="button" data-monitoring-extended aria-expanded="${monitoringExtended ? "true" : "false"}">${escapeMarketHtml(monitoringExtended ? c.monitoringExtendedHide : c.monitoringExtended)} ${monitoringExtended ? "▴" : "▾"}</button>
       ${monitoringExtended ? `
-        <section class="mobileMarketCard">
+        <section class="mobileMarketCard mobileMonitoringTrend">
           ${blockTitle("gauge", c.trendTitle)}
           ${medianTrendHtml(entry)}
         </section>
         <section class="mobileMarketCard mobileMarketOfferHistory" data-offer-history="${escapeMarketHtml(entry.id)}">
-          ${blockTitle("gauge", c.offerHistoryHeading)}
+          ${blockTitle("calendar", c.offerHistoryHeading)}
           <p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p>
         </section>
         ${priceHistoryHtml(entry)}` : ""}` : `

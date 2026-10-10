@@ -1706,6 +1706,13 @@
   --ag-section-a-chart: #16a34a;
   --ag-section-a-conclusion: #c2410c;
   --ag-section-a-offers: #db2777;
+  /* Page 3 "Monitoring" (owner 10.10). */
+  --ag-section-m-head: #0f766e;
+  --ag-section-m-settings: #7c3aed;
+  --ag-section-m-results: #2563eb;
+  --ag-section-m-trend: #16a34a;
+  --ag-section-m-offers: #ca8a04;
+  --ag-section-m-prices: #db2777;
 }
 
 .mobileSectionRail [data-section="link"],
@@ -1738,6 +1745,18 @@
 .mobileMarketSummaryCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-conclusion); }
 .mobileSectionRail [data-section="a-offers"],
 .mobileMarketOffersCard .mobileMarketBlockTitle { --ag-section: var(--ag-section-a-offers); }
+.mobileSectionRail [data-section="m-head"],
+.mobileMonitoringHead .mobileMarketBlockTitle { --ag-section: var(--ag-section-m-head); }
+.mobileSectionRail [data-section="m-settings"],
+.mobileMonitoringSettings > summary { --ag-section: var(--ag-section-m-settings); }
+.mobileSectionRail [data-section="m-results"],
+.mobileMonitoringResults > .mobileMarketBlockTitle { --ag-section: var(--ag-section-m-results); }
+.mobileSectionRail [data-section="m-trend"],
+.mobileMonitoringTrend .mobileMarketBlockTitle { --ag-section: var(--ag-section-m-trend); }
+.mobileSectionRail [data-section="m-offers"],
+.mobileMarketOfferHistory .mobileMarketBlockTitle { --ag-section: var(--ag-section-m-offers); }
+.mobileSectionRail [data-section="m-prices"],
+.mobileMarketPriceHistory .mobileMarketBlockTitle { --ag-section: var(--ag-section-m-prices); }
 
 /* The sections' headings on page 1: the icon in its section's colour, a
    size larger. */
@@ -1755,7 +1774,13 @@
 .mobileMarketSegmentsCard .mobileMarketBlockTitle .mobileFieldIcon,
 .mobileMarketChartCard .mobileMarketBlockTitle .mobileFieldIcon,
 .mobileMarketSummaryCard .mobileMarketBlockTitle .mobileFieldIcon,
-.mobileMarketOffersCard .mobileMarketBlockTitle .mobileFieldIcon {
+.mobileMarketOffersCard .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMonitoringHead .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMonitoringSettings > summary .mobileFieldIcon,
+.mobileMonitoringResults > .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMonitoringTrend .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMarketOfferHistory .mobileMarketBlockTitle .mobileFieldIcon,
+.mobileMarketPriceHistory .mobileMarketBlockTitle .mobileFieldIcon {
   box-sizing: content-box;
   padding: 6px;
   border-radius: var(--radius-lg);
@@ -1950,4 +1975,15 @@
   color: var(--color-muted);
   font-size: 0.75rem;
   line-height: 1.4;
+}
+
+/* Page 3: the results card's heading over its check line. */
+.mobileMonitoringResults > .mobileMarketBlockTitle {
+  margin-bottom: 0;
+}
+
+/* Page 3: the car's name keeps its own letters (not the blocks' capitals). */
+.mobileMonitoringHead .mobileMarketBlockTitle {
+  text-transform: none;
+  letter-spacing: 0;
 }
