@@ -452,6 +452,8 @@ LU 346, FR 7; у C-HR в NL/AT просто 0), но **несколько `cn` �
 
 ## 5e. Франция — AutoScout24 FR (с 2026-10-04, B47)
 
+> 10-10 (аудит, волна 2): НДС во французской выдаче — только сноска «1» у цены (`priceSuperscriptString`, без `vatLabel`); читается как «НДС к вычету» (20 из 20 совпали с `vatded=true`). PROJECT-MOBILE.md §4.5.
+
 Отдельный рынок «Francja» (ключ `autoscoutfr`, флаг FR, фиолетовый `#6b3fb8`): тот же
 `buildSearchUrl` AutoScout24, что и для Германии (§5d), но всегда `cy=F`; фильтр «Kraj»
 к нему не относится. Позже La Centrale и Leboncoin встанут в ту же строку «Francja»
@@ -470,6 +472,8 @@ LU 346, FR 7; у C-HR в NL/AT просто 0), но **несколько `cn` �
 1 владелец → 354; с повреждёнными → 1 907.
 
 ## 5f. Нидерланды и Бельгия — Marktplaats и 2dehands / 2ememain (с 2026-10-04, B47)
+
+> 10-10 (аудит, волна 2): страна продавца — `location.countryAbbreviation`; «abroad: true» без страны = другая страна пары (голландские дилеры на 2dehands); дата `date` выдачи — только у непродвигаемых (`priorityProduct` NONE); «Handgeschakeld» = механика. PROJECT-MOBILE.md §4.5.
 
 Код: `src/marktplaats-search.js` (`AUTOGOOD_MARKTPLAATS`), справочник
 `src/marktplaats-catalog.generated.js` (`scripts/generate-marktplaats-catalog.py
@@ -589,6 +593,8 @@ keyless 11913 (1334), ночное видение 443379 (88), диски 11557 
 Rear traffic alert, матовый, «niepalący», «Bezwypadkowy», «Pierwszy właściciel».
 
 ## 5g. Германия — Kleinanzeigen (с 2026-10-04, B47)
+
+> 10-10 (аудит, волна 2): «Gesuch» и другие не продажи (Suche/gesucht, Leasingübernahme, Vermietung, Ankauf, nur Tausch) отсеивает `parsePage`; в адресе поиска фильтра «только предложения» нет — у сайта это `anzeige:angebote` в пути (Toyota: 10 380 Angebote из 10 646), OPEN. Страница «IP-Bereich vorübergehend gesperrt» = «не прочитано», очередь повторяет запрос через r.jina.ai. Дата карточки — PROJECT-MOBILE.md §4.5.
 
 Код: `src/kleinanzeigen-search.js` (`AUTOGOOD_KLEINANZEIGEN`), справочник
 `src/kleinanzeigen-catalog.generated.js` (`scripts/generate-kleinanzeigen-catalog.py`,

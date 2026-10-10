@@ -719,6 +719,26 @@
   display: none;
 }
 
+/* 10.10 (audit): the chosen portals that did not answer — said plainly, the
+   statistics are without them (not "0 offers"). */
+.mobileMarketSilent {
+  margin: var(--space-lg) 0 0;
+  border-radius: var(--radius-md);
+  background: #fff4cc;
+  padding: var(--space-sm) var(--space-md);
+  color: #7a5400;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+}
+
+.mobileMarketSilent p {
+  margin: 0;
+}
+
+.mobileMarketSilent p + p {
+  margin-top: var(--space-xs, 4px);
+}
+
 .mobileMarketNotice {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

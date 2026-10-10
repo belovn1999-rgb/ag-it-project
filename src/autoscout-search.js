@@ -234,9 +234,13 @@
 
   // The offers of one result page (__NEXT_DATA__ of the HTML).
   function parseSearchPage(html, { page = 1, desc = false, total: knownTotal = 0 } = {}) {
+    // A page without the result list (a consent or captcha page, a new
+    // layout — even with code 200) is "not read", never "0 offers": until
+    // 2026-10-10 page 1 then showed "0" and the analysis went on without it.
     const raw = String(html || "").match(/<script id="__NEXT_DATA__"[^>]*>([\s\S]*?)<\/script>/);
-    if (!raw) return { total: 0, pages: 0, listings: [], models: [] };
+    if (!raw) throw new Error("AutoScout24: not a result page");
     const props = JSON.parse(raw[1])?.props?.pageProps || {};
+    if (typeof props.numberOfResults !== "number" && !Array.isArray(props.listings)) throw new Error("AutoScout24: not a result page");
     const total = Number(props.numberOfResults) || 0;
     const listings = (props.listings || []).map((item, index) => {
       const price = Number(item.price?.priceRaw);
@@ -264,9 +268,13 @@
         city: String(item.location?.city || "").slice(0, 80),
         postalCode: String(item.location?.zip || "").slice(0, 12),
         seller: item.seller?.type === "Dealer" ? "dealer" : item.seller?.type ? "private" : "",
-        // "inkl. MwSt." with footnote 1 = VAT deductible (every result of a
-        // vatded=true search carries it, 2026-10-03).
-        vatDeductible: Boolean(item.price?.vatLabel && item.price?.priceSuperscriptString),
+        // Footnote 1 at the price = VAT deductible (every result of a
+        // vatded=true search carries it, 2026-10-03). Germany writes "inkl.
+        // MwSt." beside it, France only the "1": until 2026-10-10 French
+        // dealers with VAT were read as margin (d2b19dcc…: taxDeductible, net
+        // 14 041 €). Checked 2026-10-10: Peugeot 3008 FR 20 000–21 000 €, 20 of
+        // 20 offers — "1" exactly on those the vatded=true search finds.
+        vatDeductible: /(^|\D)1(\D|$)/.test(String(item.price?.priceSuperscriptString || "")),
         // "Super Deal": AutoScout24 shows the price before the reduction
         // ("€ 12.950,-" beside € 12.500, checked 2026-10-04).
         oldPrice: Number(digits(item.superDeal?.isEligible ? item.superDeal.oldPriceFormatted : item.price?.oldSuperDealPrice)) || "",
@@ -308,6 +316,7 @@
     autoscoutfr: { count: "[data-mobile-search-count-autoscoutfr]", link: "[data-mobile-autoscoutfr-search]", countries: () => ["FR"], search: "searchFr", opening: "openingFr", countTitle: "countTitleFr" },
   };
   const proxy = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+  const noAnswer = (target, portal) => (window.AUTOGOOD_COUNT_NO_ANSWER ? window.AUTOGOOD_COUNT_NO_ANSWER(target, portal) : (target.textContent = "—"));
   const counts = new Map();
   const countRequests = {};
 
@@ -334,7 +343,8 @@
       counts.set(url, label);
       if (request === countRequests[market]) target.textContent = label;
     } catch {
-      if (request === countRequests[market]) target.textContent = "—";
+      // No answer is "—" with its reason, never "0".
+      if (request === countRequests[market]) noAnswer(target, "AutoScout24");
     }
   }
   // France, the Netherlands and Belgium are counted only while compared: a

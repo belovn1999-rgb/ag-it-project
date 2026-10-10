@@ -258,6 +258,10 @@
     const total = count ? digits(count) : 0;
     const listings = [];
     const starts = [...text.matchAll(/<div[^>]*class="blocAnnonce[^"]*"[^>]*data-id="(\d+)"/g)];
+    // No count ("0 annonces" on an empty list) and no card: not a result
+    // page — "not read", never "0 offers" (audit 2026-10-10). The cards carry
+    // no date of the ad (checked 2026-10-10): "w ofercie od" stays "brak".
+    if (!count && !starts.length) throw new Error("ParuVendu: not a result page");
     starts.forEach((match, index) => {
       const card = text.slice(match.index, starts[index + 1]?.index ?? match.index + 20000);
       const id = match[1];
@@ -349,7 +353,11 @@
       counts.set(url, label);
       if (request === countRequest) target.textContent = label;
     } catch {
-      if (request === countRequest) target.textContent = "—";
+      // No answer is "—" with its reason, never "0".
+      if (request === countRequest) {
+        if (window.AUTOGOOD_COUNT_NO_ANSWER) window.AUTOGOOD_COUNT_NO_ANSWER(target, "ParuVendu");
+        else target.textContent = "—";
+      }
     }
   }
   window.AUTOGOOD_PARUVENDU_REFRESH_COUNT = refreshCount;

@@ -441,7 +441,11 @@ async function fetchBlocketApi(url) {
   const json = text.trim().startsWith("{")
     ? text
     : new DOMParser().parseFromString(text, "text/html").body.textContent;
-  return JSON.parse(json);
+  const data = JSON.parse(json);
+  // A search answer has its docs and count: anything else is "not read",
+  // never "0 offers" (audit 2026-10-10).
+  if (!Array.isArray(data?.docs) && !data?.metadata?.result_size) throw new Error("blocket: not a result list");
+  return data;
 }
 
 window.AUTOGOOD_BLOCKET = {
@@ -487,6 +491,11 @@ window.AUTOGOOD_BLOCKET_REFRESH_COUNT = async (filters) => {
   if (!target) return;
   const show = (text) => {
     target.textContent = text;
+    // A "no answer" reason does not stay on a later number.
+    if (target.dataset.countNoAnswer) {
+      delete target.dataset.countNoAnswer;
+      target.removeAttribute("title");
+    }
   };
   if (!filters?.brand || !filters?.model) {
     show("—");
@@ -513,7 +522,11 @@ window.AUTOGOOD_BLOCKET_REFRESH_COUNT = async (filters) => {
     blocketCounts.set(url, label);
     if (request === blocketCountRequest) show(label);
   } catch {
-    if (request === blocketCountRequest) show("—");
+    // No answer is "—" with its reason, never "0".
+    if (request === blocketCountRequest) {
+      if (window.AUTOGOOD_COUNT_NO_ANSWER) window.AUTOGOOD_COUNT_NO_ANSWER(target, "blocket.se");
+      else show("—");
+    }
   }
 };
 

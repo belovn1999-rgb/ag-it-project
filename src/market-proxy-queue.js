@@ -30,6 +30,32 @@
  *    AUTOGOOD_PROXY_PER_MINUTE says it allows more.
  */
 (() => {
+  // A request that hangs must not hold its place in the queue for ever
+  // (audit 2026-10-10: no request had a time limit; a portal that never
+  // answered kept one of the 3 or 6 places until the page was closed). The
+  // caller's own cancel still works: both signals together, with a stand-in
+  // where the browser has no AbortSignal.any / AbortSignal.timeout.
+  // Also used by mobile.js (the mobile.de importer) and mobile-ad-details.js.
+  if (!window.AUTOGOOD_TIMEOUT_SIGNAL) {
+    window.AUTOGOOD_TIMEOUT_SIGNAL = (ms, signal = null) => {
+      if (typeof AbortController === "undefined") return signal || undefined;
+      let timer;
+      if (typeof AbortSignal.timeout === "function") timer = AbortSignal.timeout(ms);
+      else {
+        const controller = new AbortController();
+        setTimeout(() => controller.abort(new DOMException("The request took too long", "TimeoutError")), ms);
+        timer = controller.signal;
+      }
+      if (!signal) return timer;
+      if (typeof AbortSignal.any === "function") return AbortSignal.any([signal, timer]);
+      const both = new AbortController();
+      [signal, timer].forEach((source) => {
+        if (source.aborted) both.abort(source.reason);
+        else source.addEventListener("abort", () => both.abort(source.reason), { once: true });
+      });
+      return both.signal;
+    };
+  }
   if (window.AUTOGOOD_PROXY_QUEUE) return;
   const nativeFetch = window.fetch.bind(window);
   const STARTS_KEY = "autogood.proxyQueue.starts";
@@ -39,6 +65,13 @@
   const PAUSE_MS = 20 * 1000;
   const proxyBase = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
   const perMinute = () => Number(window.AUTOGOOD_PROXY_PER_MINUTE) || 18;
+  // Time limits (audit 2026-10-10): r.jina.ai renders the page itself and
+  // takes up to ~20 s on a heavy list; our Worker answers in 1–5 s.
+  const JINA_TIMEOUT_MS = 45 * 1000;
+  const WORKER_TIMEOUT_MS = 30 * 1000;
+  const timed = (init, ms) => ({ ...(init || {}), signal: window.AUTOGOOD_TIMEOUT_SIGNAL(ms, init?.signal || null) });
+  // Cancelled by the page itself (a newer count), not by the time limit.
+  const cancelled = (job) => Boolean(job.init?.signal?.aborted);
 
   // Our Worker (B11). Hosts measured 2026-10-05 (docs/PROJECT-MOBILE.md
   // §4.9): the same data as r.jina.ai, 2–3 times faster. Kleinanzeigen
@@ -52,6 +85,9 @@
     "autoscout24.de", "autoscout24.fr", "autoscout24.nl", "autoscout24.be", "autoscout24.at", "autoscout24.lu",
     "willhaben.at", "paruvendu.fr",
   ];
+  // Pages a portal sends with code 200 instead of the list when it refuses
+  // the Worker's address.
+  const BLOCK_PAGES = { "kleinanzeigen.de": /IP-Bereich\s+vor(?:ü|&uuml;|&#252;|ue)bergehend\s+gesperrt/i };
   const WORKER_ACTIVE = 6;
   const WORKER_STRIKES = 5;
   const WORKER_REST_MS = 10 * 60 * 1000;
@@ -166,15 +202,21 @@
     active += 1;
     stats.sent += 1;
     noteStart(at);
-    nativeFetch(job.input, job.init).then((response) => {
+    nativeFetch(job.input, timed(job.init, JINA_TIMEOUT_MS)).then((response) => {
       active -= 1;
       if ((response.status === 429 || response.status === 503) && refused(job)) return pump();
       job.resolve(response);
       pump();
     }, (error) => {
       active -= 1;
-      if (error?.name !== "AbortError" && refused(job)) return pump();
-      job.reject(error);
+      // Over time: given up at once (no 20 s + 40 s retries for a portal
+      // that does not answer); the portal then counts as "no answer".
+      const late = !cancelled(job) && (error?.name === "TimeoutError" || error?.name === "AbortError");
+      if (late) {
+        stats.failed += 1;
+        job.reject(new Error("timeout: the portal did not answer in time"));
+      } else if (error?.name !== "AbortError" && refused(job)) return pump();
+      else job.reject(error);
       pump();
     });
   }
@@ -229,10 +271,16 @@
     worker.active += 1;
     worker.sent += 1;
     // Only the signal is kept: no x-respond-with, so no CORS preflight.
-    const init = job.init?.signal ? { signal: job.init.signal } : undefined;
-    nativeFetch(`${workerBase()}${job.target}`, init).then((response) => {
+    // Over WORKER_TIMEOUT_MS the request goes on to r.jina.ai, like a refusal.
+    const init = { signal: window.AUTOGOOD_TIMEOUT_SIGNAL(WORKER_TIMEOUT_MS, job.init?.signal || null) };
+    nativeFetch(`${workerBase()}${job.target}`, init).then(async (response) => {
+      // A block page with code 200 (Kleinanzeigen "IP-Bereich vorübergehend
+      // gesperrt", 2026-10-10) is a refusal too: r.jina.ai reads the list.
+      const blocked = response.ok && BLOCK_PAGES[job.host]
+        ? await response.clone().text().then((text) => BLOCK_PAGES[job.host].test(text), () => false)
+        : false;
       worker.active -= 1;
-      if (response.status === 403 || response.status === 429 || response.status >= 500) handOn(job);
+      if (blocked || response.status === 403 || response.status === 429 || response.status >= 500) handOn(job);
       else {
         worker.ok += 1;
         worker.strikes[job.host] = 0;
@@ -241,7 +289,7 @@
       pumpWorker();
     }, (error) => {
       worker.active -= 1;
-      if (error?.name === "AbortError") job.reject(error);
+      if (cancelled(job)) job.reject(error);
       else handOn(job);
       pumpWorker();
     });

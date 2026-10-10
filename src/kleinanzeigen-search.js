@@ -233,9 +233,35 @@
   // The offers of one result page: TOP ads stand first whatever the order, so
   // their place is not their price rank. "VB" alone, "Zu verschenken" and
   // prices under 300 € are no price.
-  function parsePage(html, { page = 1, base = 0 } = {}) {
+  // The date on a result card ("25.09.2026", "Heute, 19:41", "Gestern,
+  // 17:20") is when the ad was put up or last pushed up again ("hochschieben"
+  // moves it to today). Ad ids are given out in order, so a card dated later
+  // than a newer ad (higher id) of the same page was pushed up: its date is
+  // left out ("brak"). Checked 2026-10-10: VW, page 20 — 25 of 25 dates in
+  // the order of their ids.
+  function cardDate(text, now = new Date()) {
+    const day = String(text || "").match(/(\d{2})\.(\d{2})\.((?:19|20)\d{2})/);
+    if (day) return `${day[3]}-${day[2]}-${day[1]}`;
+    const relative = String(text || "").match(/(Heute|Gestern)(?:,\s*(\d{1,2}):(\d{2}))?/);
+    if (!relative) return "";
+    const at = new Date(now.getFullYear(), now.getMonth(), now.getDate() - (relative[1] === "Gestern" ? 1 : 0), Number(relative[2] || 0), Number(relative[3] || 0));
+    return at.toISOString();
+  }
+
+  const NOT_FOR_SALE = /^\W*(?:ich\s+|wir\s+)?such(?:e|en)\b|\bgesucht\b|leasing\s*-?\s*[üu]bernahme|leasing[üu]bernehmer|\bzu\s+vermieten\b|\bvermietung\b|\bankauf\b|\bnur\s+tausch/i;
+  // Kleinanzeigen's block page ("IP-Bereich vorübergehend gesperrt", code
+  // 200; our Worker gets it on some addresses): not read. The proxy queue
+  // asks r.jina.ai instead (market-proxy-queue.js).
+  const BLOCKED = /IP-Bereich\s+vor(?:ü|&uuml;|&#252;|ue)bergehend\s+gesperrt/i;
+
+  function parsePage(html, { page = 1, base = 0, now = new Date() } = {}) {
     const text = String(html || "");
-    const total = Number((text.match(/"onsite_search_total_results":"(\d+)"/) || [])[1]) || 0;
+    if (BLOCKED.test(text)) throw new Error("Kleinanzeigen: blocked (IP-Bereich gesperrt)");
+    const totalText = (text.match(/"onsite_search_total_results":"(\d+)"/) || [])[1];
+    // Not a result page (a block "IP-Bereich gesperrt", a consent page, a new
+    // layout): "not read", never "0 offers" (audit 2026-10-10).
+    if (totalText === undefined && !/<article[^>]*data-adid=/.test(text)) throw new Error("Kleinanzeigen: not a result page");
+    const total = Number(totalText) || 0;
     const listings = [];
     let position = 0;
     for (const match of text.matchAll(/<article([\s\S]*?)<\/article>/g)) {
@@ -251,9 +277,14 @@
       const price = Number((priceText.match(/([\d.]+)\s*€/) || [])[1]?.replace(/\./g, "")) || 0;
       if (price < 300) continue;
       const details = [...card.matchAll(/<span data-dhl-promotion[^>]*>([\s\S]*?)<\/span>/g)].map((item) => item[1].replace(/<[^>]+>/g, "").trim());
+      // Not a car for sale (audit 2026-10-10): a "Gesuch" (someone looking to
+      // buy — "Suche RAV4" at 25 000 € stood in the market), a leasing
+      // takeover, a rental, a swap only, a buyer of cars ("Ankauf").
+      if (details.includes("Gesuch") || NOT_FOR_SALE.test(title)) continue;
       const mileage = Number((details.find((item) => /km$/.test(item)) || "").replace(/[^\d]/g, "")) || "";
       const registration = (details.join(" ").match(/EZ\s*(\d{1,2})\/((?:19|20)\d{2})/) || []);
       const place = ((card.match(/<span>\s*(\d{5}\s+[^<]+)<\/span>/) || [])[1] || "").trim();
+      const dated = (card.match(/<span>\s*((?:\d{2}\.\d{2}\.(?:19|20)\d{2})|(?:Heute|Gestern)[^<]*)<\/span>/) || [])[1] || "";
       listings.push({
         id,
         url: href ? new URL(href, SITE).toString() : "",
@@ -270,8 +301,17 @@
         city: place.slice(6).slice(0, 80),
         rank: top ? null : base + (page - 1) * PAGE_SIZE + position,
         marketTotal: total,
+        listedAt: cardDate(dated, now),
       });
     }
+    // Pushed up: a newer ad of this page has an earlier date (a day of slack).
+    listings.forEach((listing) => {
+      const at = Date.parse(listing.listedAt);
+      if (!Number.isFinite(at)) return;
+      const pushed = listings.some((other) => other !== listing && BigInt(other.id) > BigInt(listing.id)
+        && Number.isFinite(Date.parse(other.listedAt)) && Date.parse(other.listedAt) < at - 24 * 3600 * 1000);
+      if (pushed) listing.listedAt = "";
+    });
     return { total, listings };
   }
 
@@ -314,7 +354,11 @@
       counts.set(url, label);
       if (request === countRequest) target.textContent = label;
     } catch {
-      if (request === countRequest) target.textContent = "—";
+      // No answer is "—" with its reason, never "0".
+      if (request === countRequest) {
+        if (window.AUTOGOOD_COUNT_NO_ANSWER) window.AUTOGOOD_COUNT_NO_ANSWER(target, "Kleinanzeigen");
+        else target.textContent = "—";
+      }
     }
   }
   window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT = refreshCount;
@@ -350,6 +394,7 @@
     searchParts,
     buildSearchUrl,
     parsePage,
+    cardDate,
     fetchPage,
     skippedFilterLabels: (filters) => searchParts(filters).skipped,
   };

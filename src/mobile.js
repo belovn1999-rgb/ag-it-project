@@ -31,6 +31,7 @@ const copy = {
     calculatorsLink: "Kalkulatory",
     offerCountNeedModel: "Wybierz markę i model, aby zobaczyć liczbę ofert.",
     offerCountMobileOffline: "mobile.de: serwer importu nie odpowiada — liczba niedostępna. Oferty można pobrać zakładką AUTOGOOD.",
+    offerCountNoAnswer: "{portal} nie odpowiedział — liczba nieznana (to nie znaczy 0 ofert). Spróbuj ponownie za chwilę.",
     vehicleDataLabel: "DANE PODSTAWOWE POJAZDU",
     drivetrainLabel: "NAPĘD I SKRZYNIA",
     conditionLabel: "WNĘTRZE I STAN",
@@ -375,6 +376,7 @@ const copy = {
     calculatorsLink: "Калькуляторы",
     offerCountNeedModel: "Выбери марку и модель, чтобы увидеть число объявлений.",
     offerCountMobileOffline: "mobile.de: сервер импорта не отвечает — число недоступно. Объявления можно загрузить закладкой AUTOGOOD.",
+    offerCountNoAnswer: "{portal} не ответил — число неизвестно (это не 0 объявлений). Попробуй ещё раз через минуту.",
     vehicleDataLabel: "ОСНОВНЫЕ ДАННЫЕ АВТОМОБИЛЯ",
     drivetrainLabel: "ПРИВОД И КОРОБКА ПЕРЕДАЧ",
     conditionLabel: "САЛОН И СОСТОЯНИЕ",
@@ -1528,6 +1530,15 @@ function readMobileDeApiUrl() {
   } catch {
     return importerAddress(queryUrl) ? queryUrl : "";
   }
+}
+
+// The importer's requests give up after a while (audit 2026-10-10): a dead
+// tunnel used to keep page 2 and Monitoring waiting without end. One ad or a
+// count ~3–10 s, a whole list of 12 pages ~3–30 s (measured 2026-10-10).
+const IMPORTER_TIMEOUT_MS = 45 * 1000;
+const IMPORTER_LIST_TIMEOUT_MS = 90 * 1000;
+function importerSignal(ms) {
+  return typeof window.AUTOGOOD_TIMEOUT_SIGNAL === "function" ? window.AUTOGOOD_TIMEOUT_SIGNAL(ms) : undefined;
 }
 
 // No importer known in this browser: as unreachable as a dead tunnel.
@@ -3711,7 +3722,7 @@ async function loadMobileDeData(sourceUrl) {
   renderData();
 
   try {
-    const response = await fetch(`${mobileDeImporterUrl()}?url=${encodeURIComponent(sourceUrl)}`);
+    const response = await fetch(`${mobileDeImporterUrl()}?url=${encodeURIComponent(sourceUrl)}`, { signal: importerSignal(IMPORTER_TIMEOUT_MS) });
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
       throw new Error(errorData.detail || errorData.error || "Mobile.de import failed");
@@ -3930,9 +3941,24 @@ const offerCounts = new Map();
 let offerCountRequest = 0;
 let offerCountTimer = 0;
 
-function renderOfferCount(value) {
-  if (els.searchCount) els.searchCount.textContent = value;
+function renderOfferCount(value, reason = "") {
+  if (!els.searchCount) return;
+  els.searchCount.textContent = value;
+  if (reason) els.searchCount.title = reason;
+  else if (els.searchCount.dataset.countNoAnswer) els.searchCount.removeAttribute("title");
+  if (reason) els.searchCount.dataset.countNoAnswer = "1";
+  else delete els.searchCount.dataset.countNoAnswer;
 }
+
+// A portal count that could not be read (audit 2026-10-10): "—" with the
+// reason on hover, never "0" — a page that is not a result list (captcha,
+// consent, a block) throws in its parser instead of giving 0 offers.
+window.AUTOGOOD_COUNT_NO_ANSWER = (target, portal) => {
+  if (!target) return;
+  target.textContent = "—";
+  target.title = copy[state.lang].offerCountNoAnswer.replace("{portal}", portal);
+  target.dataset.countNoAnswer = "1";
+};
 
 // ---- Mobile.de search through the local importer --------------------------
 // The importer reads mobile.de in the user's own Chrome (servers are refused);
@@ -3944,14 +3970,14 @@ function mobileDeApiBase() {
 // One mobile.de ad read by the importer (price net/gross, VAT, equipment,
 // power, transport estimate) — page 3 "Monitoring" uses it per offer.
 window.AUTOGOOD_MOBILEDE_IMPORT = async (adUrl) => {
-  const response = await fetch(`${mobileDeImporterUrl()}?url=${encodeURIComponent(adUrl)}`);
+  const response = await fetch(`${mobileDeImporterUrl()}?url=${encodeURIComponent(adUrl)}`, { signal: importerSignal(IMPORTER_TIMEOUT_MS) });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.detail || payload.error || "Mobile.de import failed");
   return payload;
 };
 
 window.AUTOGOOD_MOBILEDE_SEARCH = async (searchUrl, { countOnly = false, pages = 0 } = {}) => {
-  const response = await fetch(`${mobileDeImporterUrl().replace(/\/mobilede\/import\/?$/, "")}/mobilede/search?${countOnly ? "count=1&" : ""}${pages ? `pages=${pages}&` : ""}url=${encodeURIComponent(searchUrl)}`);
+  const response = await fetch(`${mobileDeImporterUrl().replace(/\/mobilede\/import\/?$/, "")}/mobilede/search?${countOnly ? "count=1&" : ""}${pages ? `pages=${pages}&` : ""}url=${encodeURIComponent(searchUrl)}`, { signal: importerSignal(pages && !countOnly ? IMPORTER_LIST_TIMEOUT_MS : IMPORTER_TIMEOUT_MS) });
   const payload = await response.json().catch(() => ({}));
   if (!response.ok) throw new Error(payload.detail || payload.error || "Mobile.de search failed");
   return payload;
@@ -4050,7 +4076,7 @@ async function refreshOfferCount() {
     offerCounts.set(key, label);
     if (request === offerCountRequest) renderOfferCount(label);
   } catch {
-    if (request === offerCountRequest) renderOfferCount("—");
+    if (request === offerCountRequest) renderOfferCount("—", copy[state.lang].offerCountNoAnswer.replace("{portal}", "otomoto"));
   }
 }
 

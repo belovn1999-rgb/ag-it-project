@@ -320,10 +320,45 @@
     return `${site.host}${path}#${hash.join("|")}`;
   }
 
+  // The list's "date" ("Vandaag", "Gisteren", "Eergisteren", "6 okt 26";
+  // 2ememain in French) is the day the ad was placed — or pushed up again by
+  // a paid "Dagtopper"/"Topadvertentie" (then "Vandaag" for an ad of August).
+  // Checked 2026-10-10 against the ad's own stats.since: 4 of 4 unpromoted ads
+  // the same day or ≤ 3 days later, 2 of 2 Dagtoppers today. So only
+  // unpromoted ads keep it, as "at the latest" (an earlier check still wins).
+  const MONTHS = { jan: 0, feb: 1, mrt: 2, maa: 2, apr: 3, mei: 4, jun: 5, jul: 6, aug: 7, sep: 8, okt: 9, nov: 10, dec: 11,
+    janv: 0, fevr: 1, févr: 1, mars: 2, avr: 3, mai: 4, juin: 5, juil: 6, aout: 7, août: 7, sept: 8, oct: 9, déc: 11 };
+  function listDate(value, now = new Date()) {
+    const text = String(value || "").trim().toLowerCase();
+    const back = { vandaag: 0, gisteren: 1, eergisteren: 2, "aujourd'hui": 0, hier: 1, "avant-hier": 2 }[text];
+    const iso = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    if (back !== undefined) return iso(new Date(now.getFullYear(), now.getMonth(), now.getDate() - back));
+    const day = text.match(/^(\d{1,2})\s+([a-zéû]+)\.?\s*'?(\d{2}|\d{4})?$/);
+    if (!day || MONTHS[day[2]] === undefined) return "";
+    const year = day[3] ? (day[3].length === 2 ? 2000 + Number(day[3]) : Number(day[3])) : now.getFullYear();
+    return iso(new Date(year, MONTHS[day[2]], Number(day[1])));
+  }
+  const promoted = (item) => (item?.priorityProduct && item.priorityProduct !== "NONE") || (item?.traits || []).some((trait) => /TOPPER|TOP_AD|TOPADVERTENTIE/i.test(trait));
+
+  // The seller's country. A Dutch dealer on 2dehands (or a Belgian one on
+  // Marktplaats) comes "abroad: true" with no country at all (2dehands VW
+  // dealers 2026-10-10: Gorredijk, Schijndel, Roggel, Tilburg — all Dutch —
+  // and one Belgian, Oudsbergen): until 2026-10-10 they took the site's own
+  // country. Abroad without a country = the other country of the two.
+  function sellerCountry(item, site) {
+    const code = String(item?.location?.countryAbbreviation || "").toUpperCase();
+    if (code) return code;
+    if (item?.location?.abroad === true) return site.country === "BE" ? "NL" : "BE";
+    return site.country;
+  }
+
   // Only a fixed asking price is a price: bids ("Bieden", MIN_BID), "op aanvraag"
   // and "zie omschrijving" are left out of the market.
-  function parseListings(market, data, { offset = 0, desc = false, total = 0 } = {}) {
+  function parseListings(market, data, { offset = 0, desc = false, total = 0, now = new Date() } = {}) {
     const site = SITES[market];
+    // Not the search API's answer (an error page, a block): "not read",
+    // never "0 offers" (audit 2026-10-10).
+    if (!data || typeof data !== "object" || !Array.isArray(data.listings)) throw new Error(`${site.name}: not a result list`);
     const all = total || Number(data?.totalResultCount) || 0;
     return (data?.listings || []).map((item, index) => {
       if (item?.priceInfo?.priceType !== "FIXED") return null;
@@ -352,13 +387,14 @@
         fuel: value("fuel").slice(0, 40),
         gearbox: value("transmission").slice(0, 20),
         body: value("body").slice(0, 40),
-        country: String(item.location?.countryAbbreviation || site.country).toUpperCase(),
+        country: sellerCountry(item, site),
         city: String(item.location?.cityName || "").slice(0, 80),
         seller: /bedrijf|professionnel|professional/i.test(advertiser) ? "dealer" : /particulier/i.test(advertiser) ? "private" : "",
         sellerName: String(item.sellerInformation?.sellerName || "").slice(0, 80),
         // "BTW verrekenbaar": the price includes VAT the buyer can deduct.
         vatDeductible: options.some((option) => /btw verrekenbaar/i.test(option)) || /btw verrekenbaar/i.test(value("btwv")),
         displacementCcm: Number(digits(value("engineDisplacement"))) || null,
+        listedAt: promoted(item) ? "" : listDate(item.date, now),
         rank: all ? (desc ? all - position + 1 : position) : position,
         marketTotal: all,
       };
@@ -371,7 +407,11 @@
     if (!response.ok) throw new Error(String(response.status));
     const text = await response.text();
     const json = text.trim().startsWith("{") ? text : new DOMParser().parseFromString(text, "text/html").body.textContent;
-    return JSON.parse(json);
+    const data = JSON.parse(json);
+    // An answer without the result count is not a search result: "not
+    // read", never "0 offers" (audit 2026-10-10).
+    if (!Number.isFinite(Number(data?.totalResultCount))) throw new Error("Marktplaats: not a result list");
+    return data;
   }
 
   // ---- Page 1: live count and the search link -------------------------------------
@@ -404,7 +444,11 @@
       counts.set(url, label);
       if (request === countRequests[market]) target.textContent = label;
     } catch {
-      if (request === countRequests[market]) target.textContent = "—";
+      // No answer is "—" with its reason, never "0".
+      if (request === countRequests[market]) {
+        if (window.AUTOGOOD_COUNT_NO_ANSWER) window.AUTOGOOD_COUNT_NO_ANSWER(target, SITES[market].name);
+        else target.textContent = "—";
+      }
     }
   }
   // Counted only while compared: every count is a proxy request.
@@ -449,6 +493,8 @@
     buildApiUrl,
     buildSearchUrl,
     parseListings,
+    listDate,
+    sellerCountry,
     fetchJson,
     // Each site its own list: 2dehands takes the warranty, hatchback and
     // sedan only approximately.
