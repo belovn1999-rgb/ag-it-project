@@ -134,6 +134,7 @@
       monitoringAutoscout: "AutoScout24 — tylko ogłoszenia, których nie ma na mobile.de (ta sama cena i przebieg = duplikat)",
       monitoringAutoscoutNeedsMobile: "AutoScout24 działa w parze z mobile.de — włącz mobile.de.",
       monitoringDuplicates: "{count} duplikatów z mobile.de pominięto",
+      monitoringDuplicatesOther: "{count} tych samych aut co na mobile.de / AutoScout24 — policzone tam",
       monitoringNoScopeCheck: "Brak monitoringu z tymi portalami i krajami. Następny monitoring będzie bazą do porównań.",
       monitoringAllCountries: "{count} na mobile.de we wszystkich krajach",
       monitoringMissing: "Bez danych z: {portals} — portal nie odpowiedział, ten monitoring go nie obejmuje. Spróbuj ponownie za kilka minut.",
@@ -784,6 +785,7 @@
       monitoringAutoscout: "AutoScout24 — только объявления, которых нет на mobile.de (та же цена и пробег = дубликат)",
       monitoringAutoscoutNeedsMobile: "AutoScout24 работает в паре с mobile.de — включи mobile.de.",
       monitoringDuplicates: "пропущено дубликатов с mobile.de: {count}",
+      monitoringDuplicatesOther: "те же машины, что на mobile.de / AutoScout24, посчитаны там: {count}",
       monitoringNoScopeCheck: "Нет мониторинга с этими порталами и странами. Следующий мониторинг станет базой для сравнения.",
       monitoringAllCountries: "{count} на mobile.de во всех странах",
       monitoringMissing: "Нет данных с: {portals} — портал не ответил, этот мониторинг его не включает. Попробуй ещё раз через несколько минут.",
@@ -2739,6 +2741,7 @@
       const say = progress ? () => {} : setAnalysisStatus;
       const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
       this.lastAnswered = [];
+      this.lastDuplicates = {};
       // Favourites: whole lists where short enough (page 3 compares offers).
       const favorite = historyId ? marketHistory.find((entry) => entry.id === historyId) : historyEntryForFilters(filters);
       const ownPrices = pinned ?? Boolean(favorite?.pinned);
@@ -2894,6 +2897,9 @@
       const paruvenduResult = paruvendu.status === "fulfilled" ? paruvendu.value : null;
       const paruvenduAll = (paruvenduResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal }));
       const { unique: paruvenduListings, duplicates: paruvenduDuplicates } = dropCountryDuplicates("paruvendu", paruvenduAll, autoscoutFrListings);
+      // Second portals' cars already counted on the country's main portal:
+      // Monitoring does not take them for cars that went away.
+      this.lastDuplicates = { marktplaats: local.marktplaats.duplicates, dehands: local.dehands.duplicates, kleinanzeigen: kleinanzeigenDuplicates, paruvendu: paruvenduDuplicates };
       if (!otomotoListings.length && !mobileListings.length && !blocketListings.length && !avbyListings.length && !autoscoutListings.length && !autoscoutFrListings.length
         && !local.marktplaats.listings.length && !local.dehands.listings.length && !kleinanzeigenListings.length && !paruvenduListings.length) throw new Error(c.otomotoFailed);
       this.lastSources = [
@@ -3323,6 +3329,14 @@
     return { total, complete: offers.length >= total * COMPLETE_SHARE, offers };
   }
 
+  // A second portal's list without the cars it shares with the country's
+  // main portal is still whole: read + duplicates = its total (2dehands said
+  // "przeczytano 5 z 6" every day for one mobile.de car).
+  function withDuplicates(market) {
+    const dropped = Number(market.duplicates) || 0;
+    return dropped && !market.complete && market.offers.length + dropped >= market.total * COMPLETE_SHARE ? { ...market, complete: true } : market;
+  }
+
   // Adds the offers of the given markets to the check of that date.
   async function saveCheckOffers(historyId, at, sources, listings, filters, notes = {}) {
     const markets = {};
@@ -3330,8 +3344,8 @@
       if (source === "scope") return;
       // notes: what the list alone cannot tell (AutoScout24's duplicates of
       // mobile.de, its completeness before they were dropped, countries).
-      const market = { ...compactOffers(listings, source, filters), ...(notes?.[source] || {}) };
-      if (market.offers.length) markets[source] = market;
+      const market = withDuplicates({ ...compactOffers(listings, source, filters), ...(notes?.[source] || {}) });
+      if (market.offers.length || market.duplicates) markets[source] = market;
     });
     if (!Object.keys(markets).length) return;
     try {
@@ -4805,6 +4819,13 @@
     return Array.isArray(record.answered) && record.answered.includes(source);
   }
   const answeredMarket = (record, source) => record.markets?.[source] || { total: 0, complete: true, offers: [] };
+  // The same car on another portal: price and mileage, as the duplicates are
+  // told apart (dropMobileDuplicates). A car that left one portal's list but
+  // is counted on another (once AutoScout24 answered, Marktplaats kept 1 of 7)
+  // has not gone away.
+  const carSignature = (offer) => (Number(offer?.mileage) ? `${Math.round(Number(offer.price))}|${Number(offer.mileage)}` : "");
+  const carsOf = (markets) => new Set(markets.flatMap((market) => (market?.offers || []).map(carSignature)).filter(Boolean));
+  const stillListed = (cars) => (row) => !row.gone || !cars.has(carSignature(row.offer));
   // Why a portal gave nothing, in the manager's words ("" = no answer).
   function portalFailure(record, source) {
     const c = copy();
@@ -4858,6 +4879,7 @@
     }).join("");
     const pct = (value) => `${value > 0 ? "+" : ""}${numbers.format(Math.round(value * 10) / 10)}%`;
     const allRows = [];
+    const carsThatDay = carsOf(Object.values(record.markets || {}));
     const markets = sources.map((source) => {
       // A portal without an answer that day (or not asked then) has no list:
       // neither its offers "gone" nor all of them "new" (audit 2026-10-10).
@@ -4872,7 +4894,7 @@
           <h3>${marketBadge(source)} <small>${escapeMarketHtml(c.offerNoData)}${reason ? ` · ${escapeMarketHtml(reason)}` : ""}</small></h3>
         </div>`;
       }
-      const rows = offerChanges(source, current, compared);
+      const rows = offerChanges(source, current, compared).filter(stillListed(carsThatDay));
       allRows.push(...rows);
       const count = (group) => rows.filter((row) => row.group === group).length;
       const cheaper = rows.filter((row) => row.group === "cheaper");
@@ -5873,6 +5895,10 @@
       const rows = offerChanges(source, current, compared);
       return { source, current, compared, rows, silent, shownAt: shown?.at || "", reason: silent ? portalFailure(record, source) : "" };
     });
+    const carsNow = carsOf(perSource.map((item) => item.current));
+    perSource.forEach((item) => {
+      item.rows = item.rows.filter(stillListed(carsNow));
+    });
     const silentNames = perSource.filter((item) => item.silent).map((item) => portalName(item.source));
     if (info && silentNames.length) {
       info.insertAdjacentHTML("beforeend", `<small class="mobileMonitoringSilent">${escapeMarketHtml(c.monitoringSilentInfo.replace("{portals}", silentNames.join(", ")))}</small>`);
@@ -5914,8 +5940,10 @@
       // AutoScout24 counts its unique offers (duplicates of mobile.de left out);
       // inside a country: the cars of that country that were read.
       const byCountry = Boolean(monitoringState.country);
-      const total = byCountry ? rows.filter((row) => !row.gone).length : source === "autoscout" ? current?.offers.length || 0 : current?.total || 0;
-      const comparedTotal = byCountry ? (compared?.offers || []).filter((offer) => inCountry(source, offer)).length : source === "autoscout" ? compared?.offers.length || 0 : compared?.total || 0;
+      // Second portals with duplicates dropped: their own cars (as AutoScout24).
+      const ownCount = (market) => (source === "autoscout" || Number(market?.duplicates) ? market?.offers.length || 0 : market?.total || 0);
+      const total = byCountry ? rows.filter((row) => !row.gone).length : ownCount(current);
+      const comparedTotal = byCountry ? (compared?.offers || []).filter((offer) => inCountry(source, offer)).length : ownCount(compared);
       const delta = compared && comparedTotal ? total - comparedTotal : null;
       const certain = Boolean(current?.complete && compared?.complete);
       const active = monitoringState.portal === source;
@@ -5933,7 +5961,7 @@
           ${current && silent ? `<small class="mobileMonitoringTileNote isSilent">${escapeMarketHtml(c.monitoringNoAnswerSince.replace("{date}", shortDate(latest.at)).replace("{shown}", shortDate(shownAt)))}${reason ? ` · ${escapeMarketHtml(reason)}` : ""}</small>` : ""}
           ${compared && !certain ? `<small class="mobileMonitoringTileNote" title="${escapeMarketHtml(c.monitoringApproxTitle)}">${escapeMarketHtml(c.monitoringSample)}${byCountry ? "" : ` · ${escapeMarketHtml(c.monitoringReadOf.replace("{read}", numbers.format(current?.offers.length || 0)).replace("{total}", numbers.format(current?.read && source === "autoscout" ? current.total : current?.total || 0)))}`}</small>` : ""}
           ${current?.allCountriesTotal && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringAllCountries.replace("{count}", numbers.format(current.allCountriesTotal)))}</small>` : ""}
-          ${current?.duplicates && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml(c.monitoringDuplicates.replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
+          ${current?.duplicates && !byCountry ? `<small class="mobileMonitoringTileNote">${escapeMarketHtml((source === "autoscout" ? c.monitoringDuplicates : c.monitoringDuplicatesOther).replace("{count}", numbers.format(current.duplicates)))}</small>` : ""}
         </button>`;
     }).join("");
     const chosen = (source, offer) => (!monitoringState.portal || source === monitoringState.portal) && inCountry(source, offer);
@@ -6059,7 +6087,7 @@
       perSource.filter(({ source, current: market }) => market?.complete && (!monitoringState.portal || source === monitoringState.portal)).forEach(({ source, current: market }) => {
         const now = new Set((market.offers || []).map((offer) => offer.key));
         monitoringChecks.filter((item) => item.scope === record.scope && item.at !== record.at && Date.parse(item.at) >= weekAgo && item.markets?.[source]?.complete)
-          .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key) && inCountry(source, offer)) goneWeek.add(offer.key); }));
+          .forEach((item) => item.markets[source].offers.forEach((offer) => { if (!now.has(offer.key) && !carsNow.has(carSignature(offer)) && inCountry(source, offer)) goneWeek.add(offer.key); }));
       });
       const parts = [
         medianDays !== null ? c.monitoringLiquidityDays.replace("{days}", `${atLeast ? "≥ " : ""}${daysText(medianDays)}`) : "",
@@ -6531,6 +6559,7 @@
     let sourcesOk = [...(provider.lastSources || [])];
     // Answered, an empty list included: the rest is "no answer" in the record.
     let answered = [...(provider.lastAnswered || provider.lastSources || [])];
+    let duplicates = { ...(provider.lastDuplicates || {}) };
     let errors = { ...(provider.lastErrors || {}) };
     let autoscoutMeta = provider.lastAutoscout || null;
     const pricesKey = provider.lastPrices ?? null;
@@ -6540,6 +6569,10 @@
       try {
         let more = await readMarkets(retry);
         const nowOk = provider.lastSources || [];
+        // Duplicates dropped inside this second round (its own main portals).
+        retry.forEach((source) => {
+          if (provider.lastDuplicates?.[source]) duplicates[source] = provider.lastDuplicates[source];
+        });
         // A second portal asked again alone (AutoScout24, Kleinanzeigen,
         // Marktplaats, 2dehands): its country's main portals read in the first
         // round are in "raw", their duplicates are dropped here too.
@@ -6547,9 +6580,10 @@
           const mainsBefore = raw.filter((listing) => SECOND_PORTALS[source].against.includes(listingSource(listing)));
           if (!mainsBefore.length) return;
           const own = more.filter((listing) => listingSource(listing) === source);
-          const { unique, duplicates } = dropCountryDuplicates(source, own, mainsBefore);
+          const { unique, duplicates: dropped } = dropCountryDuplicates(source, own, mainsBefore);
           more = [...more.filter((listing) => listingSource(listing) !== source), ...unique];
-          if (source === "autoscout" && provider.lastAutoscout) provider.lastAutoscout = { ...provider.lastAutoscout, duplicates, deduplicated: true };
+          if (source === "autoscout" && provider.lastAutoscout) provider.lastAutoscout = { ...provider.lastAutoscout, duplicates: dropped, deduplicated: true };
+          else duplicates[source] = (duplicates[source] || 0) + dropped;
         });
         raw = [...raw, ...more];
         sourcesOk = [...sourcesOk, ...nowOk];
@@ -6569,7 +6603,7 @@
     provider.lastPrices = pricesKey;
     // Each portal that did not answer, with its reason (shown on its tile).
     const failed = Object.fromEntries(markets.filter((source) => !answered.includes(source)).map((source) => [source, String(errors[source] || "").slice(0, 120)]));
-    return { raw, searchFilters, base, sourcesOk, answered, failed, errors };
+    return { raw, searchFilters, base, sourcesOk, answered, failed, errors, duplicates };
   }
 
   // ---- Automation (B43): Monitoring without a manager's browser ------------
@@ -6611,10 +6645,14 @@
     const scope = monitoringScopeKey({ countries }, markets);
     const sources = read.sourcesOk.filter((source) => markets.includes(source));
     const notes = { autoscout: provider.lastAutoscout || undefined, mobile: markets.includes("mobile") ? { countries } : undefined };
+    Object.entries(read.duplicates || {}).forEach(([source, count]) => {
+      if (count && markets.includes(source)) notes[source] = { ...(notes[source] || {}), duplicates: count };
+    });
     const record = { key: `${job.id}|${at}`, historyId: String(job.id), at, scope, markets: {}, answered: read.answered, failed: read.failed, by: "automation", signature: searchSignature(job.filters), prices: provider.lastPrices ?? null, errors: read.errors };
-    sources.forEach((source) => {
-      const market = { ...compactOffers(fetched, source, job.filters), ...(notes[source] || {}) };
-      if (market.offers.length) record.markets[source] = market;
+    // Also a portal whose every car is a duplicate of the main portal's.
+    [...new Set([...sources, ...read.answered])].forEach((source) => {
+      const market = withDuplicates({ ...compactOffers(fetched, source, job.filters), ...(notes[source] || {}) });
+      if (market.offers.length || market.duplicates) record.markets[source] = market;
     });
     // The dated row of the price history: statistics of page 1's countries.
     const analysisCountries = (job.filters.countries || []).filter(Boolean);
@@ -6728,10 +6766,16 @@
       const notes = { scope: monitoringScopeKey(scope, markets), answered: read.answered, failed: read.failed };
       if (provider.lastAutoscout) notes.autoscout = provider.lastAutoscout;
       if (markets.includes("mobile")) notes.mobile = { countries: scope.countries };
+      // Cars of Marktplaats, 2dehands, Kleinanzeigen, ParuVendu counted on the
+      // country's main portal: said on the tile, not taken for gone ones.
+      Object.entries(read.duplicates || {}).forEach(([source, count]) => {
+        if (count && markets.includes(source)) notes[source] = { ...(notes[source] || {}), duplicates: count };
+      });
       refreshMarketHistory();
       const current = marketHistory.find((item) => item.id === entry.id) || entry;
       measureNextSnapshot(provider.lastSources || markets, true, provider.lastPrices ?? null, {
-        sources: provider.lastSources || markets,
+        // Also a portal whose every car is a duplicate of the main portal's.
+        sources: [...new Set([...(provider.lastSources || markets), ...read.answered])],
         listings: fetched,
         notes,
       });
