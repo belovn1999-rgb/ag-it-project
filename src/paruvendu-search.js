@@ -198,6 +198,8 @@
     if (filters.trailerCoupling && !["any", ""].includes(filters.trailerCoupling)) skip(c.trailerCouplingLabel || "Hak");
     (filters.features || []).forEach((feature) => skip(optionLabel(typeof els === "object" ? els.features : [], feature)));
     if (selection.words) add("fulltext", selection.words);
+    // "Wersja" goes as words of the ad ("fulltext"): only ads that write it.
+    if (String(filters.version || "").trim()) skip(`${c.versionLabel || "Wersja"} ≈`);
     return { selection, params, skipped };
   }
 

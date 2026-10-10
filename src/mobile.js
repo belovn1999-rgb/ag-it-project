@@ -875,11 +875,16 @@ const mobileDeFuelValues = {
   electric: "ELECTRICITY",
 };
 
+// mobile.de (and AutoScout24, Kleinanzeigen) has no hatchback: "Limousine"
+// holds saloons and hatchbacks alike (VW Golf, dealers DE 2026-10-10: Limousine
+// 20 402, Kleinwagen 588 of 31 900), "Kleinwagen" (SmallCar) is a small car.
+// So "Hatchback" = Kleinwagen or Limousine (20 990), "Sedan" = Limousine;
+// both named as approximate (mobileDeSkippedFilterLabels).
 const mobileDeBodyValues = {
   limousine: "Limousine",
   estate: "EstateCar",
   suv: "OffRoad",
-  hatchback: "SmallCar",
+  hatchback: ["SmallCar", "Limousine"],
   coupe: "SportsCar",
   cabrio: "Cabrio",
   van_minibus: "Van",
@@ -2752,8 +2757,8 @@ function buildMobileDeSearchUrl(filters) {
   if (filters.model && !filters.brand) throw new Error(c.marketSearchChooseBrand);
   [mobileDeModelSelection(filters)].flat().filter(Boolean).forEach((selection) => params.append("ms", selection));
 
-  const body = mobileDeBodyValues[filters.body];
-  if (body) params.set("c", body);
+  // Several "c" = any of them (Golf: Limousine 20 402 + Kleinwagen 588 = 20 990).
+  [mobileDeBodyValues[filters.body]].flat().filter(Boolean).forEach((body) => params.append("c", body));
 
   appendMobileDeRange(params, "p", filters.priceFrom, String(filters.priceTo || "").trim().endsWith("+") ? "" : filters.priceTo);
   appendMobileDeRange(params, "ml", filters.mileageFrom, filters.mileageTo);
@@ -2955,8 +2960,13 @@ function otomotoModelSelection(brand, model) {
   if (!makeSlug) return { slugs: [], broad: false, unsupported: true };
 
   if (brand === "BMW") {
+    // A whole series with its Gran Turismo, as mobile.de's "3er" (otomoto
+    // keeps "3gt", "5gt", "6gt" apart from "seria-3/5/6").
     const baseSeries = cleanModel.match(/^([1-8])$/)?.[1];
-    if (baseSeries) return validatedOtomotoModel(makeSlug, `seria-${baseSeries}`);
+    if (baseSeries) {
+      const gt = (window.AUTOGOOD_OTOMOTO_CATALOG?.modelsByMake?.[makeSlug] || []).some((item) => item.id === `${baseSeries}gt`);
+      return validatedOtomotoModel(makeSlug, [`seria-${baseSeries}`, gt ? `${baseSeries}gt` : ""]);
+    }
 
     const numberedSeries = cleanModel.match(/^([1-8])(?:\d{2}|er\b)/i)?.[1]
       || cleanModel.match(/^ActiveHybrid\s+([1-8])$/i)?.[1]
@@ -2984,14 +2994,46 @@ function otomotoModelSelection(brand, model) {
   if (alias !== undefined) {
     const { slugs, broad = false } = typeof alias === "object" && !Array.isArray(alias) ? alias : { slugs: alias };
     if (![slugs].flat().length) return { slugs: [], broad: false, unsupported: true };
-    return validatedOtomotoModel(makeSlug, slugs, broad);
+    const single = [slugs].flat().length === 1 && !broad ? [slugs].flat()[0] : "";
+    return validatedOtomotoModel(makeSlug, single ? [single, ...otomotoBodyVariants(brand, makeSlug, cleanModel, single)] : slugs, broad);
   }
   if (otomotoMakeModels[brand]) return validatedOtomotoModel(makeSlug, otomotoMakeModels[brand], true);
   const matches = matchedOtomotoModels(makeSlug, cleanModel);
+  if (matches.slugs.length === 1 && !matches.broad) {
+    return validatedOtomotoModel(makeSlug, [...matches.slugs, ...otomotoBodyVariants(brand, makeSlug, cleanModel, matches.slugs[0])]);
+  }
   if (matches.slugs.length) return validatedOtomotoModel(makeSlug, matches.slugs, matches.broad);
   const fallback = otomotoModelFallback(brand, cleanModel);
   if (fallback.length) return validatedOtomotoModel(makeSlug, fallback, true);
   return validatedOtomotoModel(makeSlug, otomotoSlug(cleanModel));
+}
+
+// otomoto files body versions as models of their own ("golf-variant",
+// "golf-cabrio", "q3-sportback", "leon-sportstourer"), mobile.de keeps them in
+// the model (its "Golf" is every Golf but Plus and Sportsvan). The form's model
+// takes them all, as mobile.de (owner 2026-10-10 "include everything"): VW Golf,
+// dealers — golf 871, + alltrack, cabrio, variant 1 085. Only body words after
+// the model's slug, and only when our list has no model of that name
+// ("Golf Plus", "Passat Variant", "Tiguan Allspace" stay apart).
+const OTOMOTO_BODY_WORDS = new Set(["variant", "avant", "sportback", "limousine", "cabrio", "cabriolet", "roadster", "spyder",
+  "spider", "sportwagon", "sw", "st", "sportstourer", "sports", "tourer", "combi", "kombi", "touring", "alltrack", "allroad",
+  "shooting", "brake", "cc", "coupe", "estate", "grandtour", "gran"]);
+
+function otomotoBodyVariants(brand, makeSlug, model, slug) {
+  const catalogModels = window.AUTOGOOD_OTOMOTO_CATALOG?.modelsByMake?.[makeSlug] || [];
+  const groups = typeof modelGroupsForBrand === "function" ? modelGroupsForBrand(brand) : [];
+  if (!groups.length) return [];
+  const ours = new Set(groups.flatMap((group) => group.models || []).map(otomotoModelToken));
+  // "Q6 e-tron" -> q6 + q6-sportback-e-tron; "Q8" stays without the electric one.
+  const electric = /e-?tron/i.test(model);
+  return catalogModels
+    .filter((candidate) => candidate.id.startsWith(`${slug}-`))
+    .filter((candidate) => {
+      const words = candidate.id.slice(slug.length + 1).replace(electric ? /-?e-tron$/ : /$^/, "").split("-").filter(Boolean);
+      return words.length && words.every((word) => OTOMOTO_BODY_WORDS.has(word));
+    })
+    .filter((candidate) => !ours.has(otomotoModelToken(candidate.id)) && !ours.has(otomotoModelToken(candidate.name)))
+    .map((candidate) => candidate.id);
 }
 
 // Model families Otomoto keeps under one name: generations, old numbering, T-series vans.
@@ -3196,6 +3238,24 @@ function otomotoSkippedFilterLabels(filters) {
   return labels;
 }
 
+// Portals whose body list has no hatchback/saloon split: mobile.de,
+// AutoScout24 and Kleinanzeigen "Limousine", ParuVendu and 2dehands "Berline"
+// (otomoto, Marktplaats, Blocket and av.by tell them apart). There "Hatchback"
+// and "Sedan" go out wider and are named "Nadwozie ≈" in the yellow "!"
+// (owner 2026-10-10); pick-ups share a category with SUVs on most of them.
+const BODY_APPROXIMATE = {
+  mobile: ["hatchback", "limousine", "pickup"],
+  autoscout: ["hatchback", "limousine", "pickup"],
+  kleinanzeigen: ["hatchback", "limousine", "pickup"],
+  paruvendu: ["hatchback", "limousine", "van_minibus"],
+  dehands: ["hatchback", "limousine", "pickup"],
+  marktplaats: ["pickup"],
+};
+
+function bodyApproximateOn(portal, body) {
+  return Boolean(body) && (BODY_APPROXIMATE[portal] || []).includes(body);
+}
+
 function mobileDeSkippedFilterLabels(filters) {
   const labels = (filters.features || [])
     .filter((feature) => mobileDeUnsupportedFeatures.has(feature) || mobileDeApproximateFeatures.has(feature))
@@ -3204,6 +3264,9 @@ function mobileDeSkippedFilterLabels(filters) {
     .map(optionLabelText);
   // mobile.de has no accident-free filter (only "damaged: hide", always sent).
   if (filters.accidentFree) labels.push(copy[state.lang].accidentFreeLabel);
+  // No hatchback/saloon split ("Limousine" is both) and pick-ups go with the
+  // SUVs ("SUV/Geländewagen/Pickup"): sent, but wider than chosen.
+  if (bodyApproximateOn("mobile", filters.body)) labels.push(`${copy[state.lang].bodyLabel} ≈`);
   const { from, to } = doorRangeBounds(filters);
   const group = mobileDeDoorGroup(filters);
   if ((from !== null || to !== null) && ((from ?? 2) !== 2 || (to ?? 7) !== 7)
@@ -3314,13 +3377,69 @@ function normalizeBody(value) {
   if (/pickup/.test(joined) && !/suv|gelande|offroad/.test(joined)) return "pickup";
   if (/kombi|estate|touring|avant|variant|wagon|combi/.test(joined)) return "estate";
   if (/suv|offroad|gelande|terenow|crossover/.test(joined)) return "suv";
-  if (/smallcar|kleinwagen|hatch|compact|kompakt|citycar|miejsk|maly/.test(joined)) return "hatchback";
+  if (/smallcar|kleinwagen|hatch|compact|kompakt|citycar|miejsk|maly|stadsauto/.test(joined)) return "hatchback";
   if (/sportscar|sportwagen|coupe|coupé|coup/.test(joined)) return "coupe";
   if (/cabrio|convertible|roadster|kabriolet/.test(joined)) return "cabrio";
   if (/van|minibus|bus|mpv|minivan/.test(joined)) return "van_minibus";
-  if (/limousine|sedan|saloon/.test(joined)) return "limousine";
+  if (/limousine|sedan|saloon|berline/.test(joined)) return "limousine";
   return value ? "other" : "";
 }
+
+// ---- Hatchback or saloon of a recognised ad (owner 2026-10-10) ---------------
+// mobile.de, AutoScout24 and Kleinanzeigen call a hatchback "Limousine" too,
+// ParuVendu and 2dehands/2ememain "Berline": set as "Sedan", a Golf found 1
+// otomoto car instead of 94 (otomoto tells them apart). So such an ad's body
+// comes from the model table (B61, src/model-specs): a model only built as a
+// hatchback in that year is a hatchback (Golf), only as a saloon a sedan
+// (Passat, BMW 3), both (Audi A3, Mercedes A) — the ad's title decides when it
+// says "Sportback" / "Limousine", otherwise "Dowolne" and a line in the yellow
+// "!" says why. otomoto, Marktplaats, Blocket and av.by name the body exactly.
+let recognizedBodyHint = null;
+const BODY_EXACT_SOURCES = /otomoto\.pl|marktplaats\.nl|blocket\.se|av\.by/i;
+
+function ambiguousRecognizedBody(data, body) {
+  return body === "limousine" && !BODY_EXACT_SOURCES.test(String(data?.sourceUrl || ""));
+}
+
+async function resolveRecognizedBody({ brand, model, year, title, raw }) {
+  const hint = { brand, model, raw: String(raw || "").trim(), kind: "" };
+  recognizedBodyHint = hint;
+  let types = null;
+  try {
+    types = await window.AUTOGOOD_MODEL_SPECS_UI?.bodyTypes?.(brand, model, year);
+  } catch {
+    types = null;
+  }
+  if (recognizedBodyHint !== hint) return;
+  const hatch = types?.has("hatchback");
+  const saloon = types?.has("limousine");
+  // The title only when the model has both: VW dealers write "Golf Lim." for a hatchback.
+  const words = normalizeToken(title);
+  const titleBody = /sportback|hatchback|fliessheck|fließheck|\b[35]\s?-?turer\b/.test(words) ? "hatchback"
+    : /\blimousine\b|\bsedan\b|\bsaloon\b|stufenheck/.test(words) ? "limousine" : "";
+  let body = "";
+  if (hatch && !saloon) body = "hatchback";
+  else if (saloon && !hatch) body = "limousine";
+  else if (hatch && saloon) body = titleBody;
+  hint.kind = body ? "" : hatch && saloon ? "both" : "unknown";
+  const sameForm = canonicalBrand(els.brand.value) === brand && els.model.value === model && !els.body.value;
+  if (body && sameForm) {
+    els.body.value = body;
+    setBodyDisplay(body);
+    updateSelectedFiltersSummary();
+  }
+  if (!hint.kind) recognizedBodyHint = null;
+  document.querySelector(".mobileManualForm")?.dispatchEvent(new Event("change", { bubbles: true }));
+}
+
+// The yellow "!" line for a recognised "Limousine" left open: while the form
+// still shows that car with "Dowolne".
+window.AUTOGOOD_BODY_HINT = () => {
+  const hint = recognizedBodyHint;
+  if (!hint?.kind || !els.body || els.body.value) return null;
+  if (canonicalBrand(els.brand.value) !== hint.brand || els.model.value !== hint.model) return null;
+  return hint;
+};
 
 function recognizedEquipmentFilters(data) {
   const normalizeEquipment = (value) => normalizeToken(String(value || "").replace(/[łŁ]/g, "l").replace(/ß/g, "ss"));
@@ -3459,6 +3578,8 @@ function applyRecognizedManualFields(data) {
   const powerHp = compactNumber(data?.powerHp ?? data?.horsepower ?? data?.powerPs);
   const mileageKm = Number(compactNumber(data?.mileageKm));
   const equipment = recognizedEquipmentFilters(data);
+  const recognizedBody = normalizeBody(data?.bodyType);
+  const bodyFromTable = ambiguousRecognizedBody(data, recognizedBody);
   const next = {
     brand: brandMatch?.value || "",
     model,
@@ -3466,7 +3587,8 @@ function applyRecognizedManualFields(data) {
       normalizeFuel(data?.fuel, title),
       normalizePlugin(data?.fuel, title) === "yes" ? "plugin" : "",
     ].filter(Boolean),
-    body: normalizeBody(data?.bodyType),
+    // "Limousine" / "Berline" waits for the model table (resolveRecognizedBody).
+    body: bodyFromTable ? "" : recognizedBody,
     // ±30,000 km, rounded to whole tens of thousands like the portals' own
     // steps: 43,727 km → 10,000–70,000 km.
     mileageFrom: mileageKm > 0 ? String(Math.max(0, Math.round((mileageKm - 30000) / 10000) * 10000)) : "",
@@ -3533,8 +3655,12 @@ function applyRecognizedManualFields(data) {
   renderModelOptions(next.model);
   updateFuelSummary();
   updateSelectedFiltersSummary();
+  recognizedBodyHint = null;
   // Counts, folded cards and the history follow like after a manual change.
   document.querySelector(".mobileManualForm")?.dispatchEvent(new Event("change", { bubbles: true }));
+  if (bodyFromTable) {
+    resolveRecognizedBody({ brand: next.brand, model: next.model, year: next.yearFrom, title, raw: data?.bodyType });
+  }
 }
 
 function calculatorUrl(scenario) {
@@ -4610,7 +4736,7 @@ function isMarktplaatsUrl(value) {
 const MARKTPLAATS_FUELS = [[/plug-?in/i, "Plug-in-Hybrid (Benzin/Elektro)"], [/hybride?.*diesel/i, "Hybrid (Diesel/Elektro)"], [/hybride?/i, "Hybrid (Benzin/Elektro)"],
   [/elektri|électri/i, "Elektro"], [/diesel/i, "Diesel"], [/benzine|essence|lpg|cng/i, "Benzin"]];
 // 2ememain (French): the same body types in French.
-const MARKTPLAATS_BODIES = [[/^break/i, "Stationwagon"], [/^berline/i, "Sedan"], [/monospace/i, "MPV"], [/tout-terrain|^suv/i, "SUV"], [/^cabriolet/i, "Cabriolet"], [/^coup/i, "Coupé"]];
+const MARKTPLAATS_BODIES = [[/^break/i, "Stationwagon"], [/^berline/i, "Berline"], [/monospace/i, "MPV"], [/tout-terrain|^suv/i, "SUV"], [/^cabriolet/i, "Cabriolet"], [/^coup/i, "Coupé"]];
 
 async function loadMarktplaatsAd(sourceUrl) {
   const c = copy[state.lang];
@@ -4779,8 +4905,8 @@ function isParuvenduUrl(value) {
 
 const PARUVENDU_MONTHS = { janvier: 1, fevrier: 2, février: 2, mars: 3, avril: 4, mai: 5, juin: 6, juillet: 7, aout: 8, août: 8, septembre: 9, octobre: 10, novembre: 11, decembre: 12, décembre: 12 };
 // "Carrosserie" in the words normalizeBody knows; "Berline" is a hatchback
-// or a saloon alike, so it leaves the body open.
-const PARUVENDU_BODIES = [[/break/i, "Kombi"], [/4x4|suv/i, "SUV"], [/cabriolet/i, "Cabrio"], [/coup/i, "Coupe"], [/monospace/i, "Van"], [/pick/i, "Pickup"]];
+// or a saloon alike: the model table decides (resolveRecognizedBody).
+const PARUVENDU_BODIES = [[/berline/i, "Berline"], [/break/i, "Kombi"], [/4x4|suv/i, "SUV"], [/cabriolet/i, "Cabrio"], [/coup/i, "Coupe"], [/monospace/i, "Van"], [/pick/i, "Pickup"]];
 
 async function loadParuvenduAd(sourceUrl) {
   const c = copy[state.lang];

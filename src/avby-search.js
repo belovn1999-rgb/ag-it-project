@@ -412,6 +412,8 @@ function avbySkippedFilterLabels(filters) {
   const selection = avbyModelSelection(filters.brand, filters.model, filters.version);
   if (selection.unsupported) add(c.brandLabel);
   if (selection.broad) add(c.modelLabel);
+  // "Wersja" goes as words of the ad ("description"): only ads that write it.
+  if (String(filters.version || "").trim()) add(`${c.versionLabel} ≈`);
   if (manualFuelValues(filters).includes("plugin")) add(c.fuelLabel);
   if (avbyRangeSet(filters.seatsFrom, filters.seatsTo) && !avbySeatValues(filters).length) add(c.seatsRangeLabel);
   if (avbyRangeSet(filters.doorsFrom, filters.doorsTo)) add(avbyText("avbyDoors"));

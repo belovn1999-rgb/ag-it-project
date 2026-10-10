@@ -14,10 +14,16 @@
     pl: {
       title: "Portale nie przyjmą dokładnie wszystkich filtrów",
       autoscoutKeys: { drive: "Napęd", version: "Wersja", "plugin≈hybrid": "Plug-in (≈ hybryda)" },
+      body: "Nadwozie z ogłoszenia",
+      bodyBoth: "„{raw}” to na tym portalu hatchback albo sedan, a {model} ma oba — zostawiono „Dowolne”, wybierz sam, jeśli trzeba.",
+      bodyUnknown: "„{raw}” to na tym portalu hatchback albo sedan, a nie znamy nadwozi modelu {model} — zostawiono „Dowolne”, wybierz sam, jeśli trzeba.",
     },
     ru: {
       title: "Не все фильтры порталы примут точно",
       autoscoutKeys: { drive: "Привод", version: "Версия", "plugin≈hybrid": "Plug-in (≈ гибрид)" },
+      body: "Кузов из объявления",
+      bodyBoth: "«{raw}» на этом портале — и хэтчбек, и седан, а у {model} есть оба — оставлено «Любой», выберите сами, если нужно.",
+      bodyUnknown: "«{raw}» на этом портале — и хэтчбек, и седан, а кузова {model} нам неизвестны — оставлено «Любой», выберите сами, если нужно.",
     },
   };
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
@@ -106,6 +112,19 @@
         return left.length ? { name, country: window.AUTOGOOD_MARKET_COUNTRY?.[key] || "", left } : null;
       })
       .filter(Boolean);
+    // A recognised "Limousine" / "Berline" the model table could not settle
+    // (mobile.js resolveRecognizedBody): first, without a portal.
+    let hint = null;
+    try {
+      hint = window.AUTOGOOD_BODY_HINT?.() || null;
+    } catch {
+      hint = null;
+    }
+    if (hint) {
+      const t = TEXT[lang()];
+      const model = [hint.brand, hint.model].filter(Boolean).join(" ");
+      lines.unshift({ name: t.body, country: "", left: [(hint.kind === "both" ? t.bodyBoth : t.bodyUnknown).replace("{raw}", hint.raw || "Limousine").replace("{model}", model)] });
+    }
     const key = JSON.stringify([lang(), lines]);
     if (box.dataset.key === key) return;
     box.dataset.key = key;

@@ -75,7 +75,7 @@ Kia Sportage (2848 без фильтров, 21.09): все 76 фильтров �
 | Марка | `ms` (числовой ID) ✅ | путь `/osobowe/<make>` ✅ | otomoto-алиасы: KGM→`ssangyong`, ORA→`gwm` (только `ora-03`,`ora-07`), Corvette→`chevrolet`+`corvette`, Asia Motors→`asia`, DS→`ds-automobiles`, Mercedes/VW коммерческие → основная марка. Нет в каталоге otomoto → ✗ «Marka» |
 | Модель | `ms` ID модели или группы ✅ | `search[filter_enum_model]` ✅/≈ | см. §5 |
 | Wersja (текст; с 10-04 — список линий выбранного поколения + свой текст, B61) | 4-й сегмент `ms` ✅ | ≈ подмодель / ✗ | у otomoto нет свободного текста. С 10-03: если слово версии (≥ 3 букв) совпадает с частью подмодели otomoto этой модели — ищутся только они (Sportback → `a3-sportback`, Limousine → `a3-limousine`, Variant → `golf-variant`), и «Wersja» не считается пропущенной (`otomotoVersionSlugs`, `src/mobile.js`); иначе ✗ |
-| Nadwozie | `c` ✅ | `filter_enum_body_type` ✅ | limousine→`Limousine`/`sedan`, estate→`EstateCar`/`combi`, suv→`OffRoad`/`suv`, hatchback→`SmallCar`/`compact`, coupe→`SportsCar`/`coupe`, cabrio→`Cabrio`/`cabrio`, van→`Van`/`minivan`. **pickup** → mobile.de `OffRoad`, otomoto ✗; **other** → `OtherCar`, otomoto ✗ |
+| Nadwozie | `c` ✅ / ≈ (хэтчбек, седан, пикап) | `filter_enum_body_type` ✅ | limousine (Sedan)→`Limousine` ≈/`sedan`, estate→`EstateCar`/`combi`, suv→`OffRoad`/`suv`, hatchback→**`SmallCar` + `Limousine`** ≈ (с 10-10, было только `SmallCar`)/`compact`+`city-car`, coupe→`SportsCar`/`coupe`, cabrio→`Cabrio`/`cabrio`, van→`Van`/`minivan`. **pickup** → mobile.de `OffRoad` ≈, otomoto ✗; **other** → `OtherCar`, otomoto ✗. Хэтчбек и седан на всех порталах — §4.7 |
 | Liczba miejsc | `sc=от:до` ✅ | `filter_float_nr_seats:from/to` ✅ | |
 | Liczba drzwi (с 10-02 — один выбор **Dowolna / 2/3 / 4/5 / 6/7**, как на mobile.de) | `door=TWO_OR_THREE / FOUR_OR_FIVE / SIX_OR_SEVEN` ✅ | `filter_enum_door_count` — оба числа группы ✅; **7 нет** на otomoto → у 6/7 только 6 + предупреждение | Выбор (`data-mobile-doors-group`) пишет диапазон в скрытые `doorsFrom/doorsTo` — их читают все поиски и история, формат записей не менялся. Старая запись с диапазоном через группы открывается группой нижней границы (`doorGroupOf`) |
 | Drzwi przesuwne (Dowolne / z prawej / z lewej / z obu stron) | `sld=SLIDING_DOOR_RIGHT / _LEFT / _BOTH_SIDED` ✅ (проверено 10-02: VW 246 019 → right 26 221, both 14 017) | ✗ → предупреждение | поле `slidingDoor`: `right` / `left` / `both` |
@@ -171,6 +171,50 @@ night vision, диски, распознавание знаков, ambient, ци
 | Kolor wnętrza | `icol` (`other`→`OTHER_INTERIOR_COLOR`) ✅ | ✗ |
 | Matowy / Metallic | `fe=MATTE_COLOR` / `fe=METALLIC` ✅ | `filter_enum_colour_type` = `matt` / `metallic` ✅ |
 
+### 4.7 Хэтчбек и седан (с 10-10, решение владельца)
+
+**Где различаются.** otomoto (`sedan` ↔ `compact` + `city-car`), Marktplaats NL (483 Sedan ↔
+481 Hatchback), blocket.se (Sedan 3 ↔ Halvkombi 1, 2), av.by (седан 5 ↔ хэтчбек 3, 24) — ✅.
+**Где одна категория:** mobile.de, AutoScout24, Kleinanzeigen — «Limousine» (и седаны, и
+хэтчбеки; «Kleinwagen» — маленькие машины), ParuVendu и 2dehands / 2ememain — «Berline».
+Golf у них почти весь «Limousine»: mobile.de, дилеры DE — Limousine 20 402, Kleinwagen 588
+из 31 900; AutoScout24 DE — Limousine 18 524, Kleinwagen 1 357 из 29 821.
+
+**Поиск (форма → портал без разделения).** «Hatchback» = Kleinwagen **или** Limousine,
+«Sedan» = Limousine; в жёлтом «!» этого портала — «Nadwozie ≈» (`BODY_APPROXIMATE`,
+`bodyApproximateOn` в `src/mobile.js`):
+
+| Портал | Hatchback: было → стало | Sedan |
+|---|---|---|
+| mobile.de | `c=SmallCar` → `c=SmallCar&c=Limousine` (Golf, дилеры: 588 → 20 990) | `c=Limousine` ≈ |
+| AutoScout24 (DE/NL/BE/FR) | `body=1` → `body=1,6` (Golf DE 1 357 → 19 881) | `body=6` ≈ |
+| Kleinanzeigen | `kleinwagen` → `kleinwagen,limousine` (Golf 4 466 без повреждённых) | `limousine` ≈ |
+| ParuVendu | `TO` ≈ (было) | `TO` ≈ (было) |
+| 2dehands | 481 + 483 ≈ (было) | 483 ≈ (было) |
+
+**Ссылка на объявление.** Раньше «Limousine» / «Berline» ставило в форме «Sedan», а otomoto
+искало `body_type=sedan`: Golf 2020, дилеры — 0 объявлений вместо 33 (`compact` + `city-car`
+— 20). Выбор (вопрос владельца «предупредить или самим поправить»): **поправить по
+справочнику моделей, а не предупреждать.** Предупреждение при пустой выдаче приходит уже
+после ошибки и требует от менеджера знать, что «Limousine» значит «хэтчбек»; справочник
+кузовов поколений (B61, `src/model-specs/*`) знает это точно для 398 моделей. Поэтому
+(`resolveRecognizedBody`, `src/mobile.js`; `bodyTypes` в `src/mobile-model-specs.js`):
+1. у ссылки mobile.de / AutoScout24 / Kleinanzeigen / ParuVendu / 2dehands / 2ememain кузов
+   «Limousine» / «Berline» не ставится сразу; справочник смотрит поколения модели в год
+   регистрации: есть только хэтчбек → **Hatchback** (Golf, BMW 1), только седан → **Sedan**
+   (Passat, BMW 3 / 320, Octavia — так в таблице);
+2. у модели есть оба (Audi A3, Mercedes A) — решает название объявления: «Sportback»,
+   «Hatchback», «3-/5-Türer» → Hatchback, «Limousine», «Sedan», «Stufenheck» → Sedan
+   (название смотрится только здесь: дилеры VW пишут «Golf Lim.» про хэтчбек);
+3. иначе — **«Dowolne»** и первая строка жёлтого «!»: «Nadwozie z ogłoszenia: „Limousine” to
+   na tym portalu hatchback albo sedan, a Audi A3 ma oba — zostawiono „Dowolne”…»; то же,
+   если модели нет в справочнике. Строка пропадает, когда менеджер выбрал кузов или модель.
+
+У otomoto, Marktplaats NL, Blocket, av.by кузов из ссылки берётся как есть.
+Проверено в браузере (10-10): Golf 2020 → Hatchback, Passat 2018 → Sedan, «A3 Sportback» →
+Hatchback, «A3 Limousine» → Sedan, «A3 35 TFSI S line» → Dowolne + строка «!», BMW 320d с
+Kleinanzeigen → Sedan, otomoto «sedan» → Sedan.
+
 ## 5. Модели: как mobile.de-модель находит otomoto-модель
 
 Порядок в `otomotoModelSelection` (первое сработавшее побеждает):
@@ -191,6 +235,24 @@ night vision, диски, распознавание знаков, ambient, ци
    VW T1–T2 → `transporter`, T3–T7 → transporter/multivan/caravelle/california.
 9. Электро-двойник «ë-C4 X» → `c4x` ≈. Mini «Cooper SD» = «Cooper S»; трим-модели
    Mini (cooper, one, JCW) уступают моделям кузова (Countryman и т.д.).
+
+10. **Кузова-модели otomoto (с 10-10, владелец: «включай всё в поиск автоматом»).** otomoto
+   держит кузова отдельными моделями (`golf-variant`, `golf-cabrio`, `q3-sportback`,
+   `leon-sportstourer`), а mobile.de — внутри модели (его «Golf» — все Golf, кроме Plus и
+   Sportsvan). Модель формы, найденная одной моделью otomoto (точно или алиасом), берёт и
+   её «хвосты» из слов кузова (`OTOMOTO_BODY_WORDS`: variant, avant, sportback, limousine,
+   cabrio, roadster, spyder, sportwagon, sw, st, sportstourer, alltrack, allroad,
+   shooting-brake, cc…), если такой модели **нет в нашем списке** (`otomotoBodyVariants`):
+   Golf → `golf` + `golf-alltrack` + `golf-cabrio` + `golf-variant` (дилеры: 871 → 1 085;
+   «Golf Plus», «Golf Sportsvan» — свои модели формы); Passat — только `passat` (у формы
+   есть «Passat Variant», «Passat Alltrack», «Passat CC»); Octavia, Astra, A4 (у otomoto
+   уже без «голой» модели — все кузова) не меняются. Ещё: Audi Q3/Q4/Q5 + Sportback, S3,
+   S4, S5, RS4–RS6, TT + Roadster, Q6 e-tron + Sportback e-tron, e-tron + Sportback; Seat Leon,
+   Ibiza, Exeo + ST/Sportstourer; Cupra Leon + ST; Ford Focus + SW/CC, Mondeo + SW; Peugeot
+   206/207/307/308 + CC; Alfa 156/159/33 + Sportwagon; Arteon + Shooting Brake.
+   «Wersja» по-прежнему сужает до кузова: Golf + «Variant» → только `golf-variant`.
+   BMW серия целиком берёт и Gran Turismo: «3» → `seria-3` + `3gt` (дилеры 972 → 1 023),
+   «5» → + `5gt`, «6» → + `6gt`.
 
 Каждый результат проверяется по каталогу otomoto (`validatedOtomotoModel`): нет в
 каталоге → «нет аналога». Итог 21.09: 2715 комбинаций собирают обе ссылки,
@@ -306,7 +368,7 @@ Blocket, все неотправленные названы пользовате
 | Поле формы | av.by | Примечание |
 |---|---|---|
 | Марка / модель | `brands[i][brand]`, `brands[i][model]` ✅/≈ | несколько моделей = «или». Модели av.by — уровень серии: BMW 320 → «3 серия» ≈, Mercedes C 200 → «C-Класс» ≈, C 63 AMG → «C-Класс AMG» ≈, Lexus RX 450h → RX ≈, MINI Cooper S → Hatch ≈, VW T6 Multivan → Multivan ≈, Porsche 991 → 911 ≈. Точно: «3» → 3 серия, Golf (+GTI, R… — у нас нет отдельно), A4, X5, Sportage и т.п. Нет марки → ✗ «Marka», текстом |
-| Wersja | `description` (слова в объявлении) ✅ | |
+| Wersja | `description` (слова в объявлении) ≈ — с 10-10 «Wersja ≈» в жёлтом «!»: только объявления, где продавец это написал | |
 | Nadwozie | `body_type` ✅ | sedan 5, kombi 2, SUV 6+23, hatchback 3+24, coupe 1, cabrio 7+18, van 4+11, pickup 8, other 19 |
 | Cena | `price_usd{min,max}` ✅ | EUR → USD по Walutomat |
 | Przebieg, Rok, Pojemność, Moc (KM = л.с.) | `mileage_km`, `year`, `engine_capacity` (см³), `engine_power_hp` ✅ | любые значения, не только шаги списка |
@@ -380,7 +442,8 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   наружу (122 л. с. = 89,7 кВт → 89–90),
   `fuel=B,D,2,3,E` (запятая = ИЛИ; plug-in → `2` приблизительно),
   `gear=A|M`, `body=1 Kleinwagen,2 Cabrio,3 Coupé,4 SUV/Pickup,5 Kombi,
-  6 Limousine,12 Van,7 Sonstige`, `custtype=D|P`, `prevownersid=1` (≤ 1 владелец, с 10-04). Коды — из `taxonomy`
+  6 Limousine,12 Van,7 Sonstige` (несколько через запятую = «или»; Hatchback = `1,6` ≈,
+  Sedan = `6` ≈, pickup = `4` ≈ — §4.7), `custtype=D|P`, `prevownersid=1` (≤ 1 владелец, с 10-04). Коды — из `taxonomy`
   в `__NEXT_DATA__`.
 - **С 10-04 (B48) переносится всё остальное** — имена параметров взяты из кода поиска
   AutoScout24 (`driveTrain=dtrain`, `paintwork=ptype`, `upholstery=uph`, `version=version0`,
@@ -389,10 +452,10 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   | Поле формы | AutoScout24 | Проверка |
   |---|---|---|
   | Napęd | `dtrain=4` (4x4) / `F` / `R` | Golf 1 463 / 23 469 / 25 |
-  | Pojemność | `ccmfrom/ccmto` (см³) | 1900–2000: 10 077 |
+  | Pojemność | `ccmfrom/ccmto` (см³); «< 5000» в «od» = `ccmto=5000`, «> 5000» в «do» = `ccmfrom=5000` (`rangeBounds`, с 10-10 и для FR/NL/BE; до 10-10 «< 5000» уходило как `ccmfrom=5000`: Golf DE 1 машина вместо 28 590) | 1900–2000: 10 077 |
   | Liczba miejsc | `seatsfrom/seatsto` | 7–7: 1 |
   | Liczba drzwi 2/3 · 4/5 · 6/7 | `doorto=3` · `doorfrom=4&doorto=5` · `doorfrom=6` | 2–3: 2 029; 4–5: 27 778 |
-  | Wersja | `version0=<текст>` (своё поле версии AutoScout24) | Golf + «gti»: 3 263 |
+  | Wersja | модель AutoScout24, если «Wersja» её называет (с 10-10, см. ниже), иначе `version0=<текст>` (своё поле версии продавца) ≈ | Golf + «gti»: 3 263 |
   | VAT odliczany | `vatded=true` (VAT marża — фильтра нет → предупреждение) | 15 465 |
   | Metallic | `ptype=M` (матового нет → предупреждение) | 18 315 |
   | Kolor nadwozia (несколько = «или») | `bcol`: beige 1, blue 2, brown 3, yellow 5, gold 16, green 7, grey 6, orange 15, red 10, black 11, silver 12, purple 13, white 14 | black 6 677; black+white 11 363 |
@@ -413,6 +476,20 @@ parseSearchPage`, счётчик и ссылка стр. 1), чтение — `f
   Проверено 10-04: каждый из 45 id по отдельности уменьшает выдачу VW DE (147 329) и не
   обнуляет её — от 406 (лазер) до 129 588 (датчики сзади); сдвижные двери: справа 17 308,
   слева 8 546, обе 7 766.
+- **«Wersja» → модель (с 10-10, `versionModel`).** `version0` находит только продавцов,
+  вписавших этот текст: BMW «3» + «320d» → 817 машин, а 320-х дизелей в DE 3 063.
+  AutoScout24 ведёт BMW и Mercedes по моторам (`320`, `C 220`, `C 43 AMG`), VW — по
+  кузовам и версиям внутри «Golf (alle)» (`Golf GTI`, `Golf Variant`, `Golf R`…), список
+  в `SUB_MODELS` (taxonomy `/lst/<марка>`, 10-10). Если «Wersja» начинается с такой модели
+  семейства формы, она уходит в путь, а не в текст: «320d» → `/lst/bmw/320` + `fuel=D`
+  (буква мотора: d / CDI / BlueTEC → дизель, i → бензин, если топливо в форме не выбрано)
+  — 3 063; «M340i» → `340`; Mercedes «C» + «220 d» → `c-220` + дизель; «C 43 AMG» →
+  `c-43-amg` (522); Golf + «GTI» → `golf-gti` (3 231). Точно — без предупреждения. Хвост
+  после модели («320d xDrive», «GTI Performance») — модель шире, «Wersja ≈». Не модель
+  («Highline», «M Sport») — `version0` как раньше и «Wersja ≈» в жёлтом «!».
+- **«Golf» = «Golf (alle)».** `/lst/volkswagen/golf` = `golf-alle` (29 820): Golf, Variant,
+  GTI, GTD, GTE, R, Cabriolet, e-Golf **и Golf Plus, Golf Sportsvan** (у mobile.de и в форме
+  — свои модели). Владелец 10-10: «включай всё» — оставлено как есть.
 - **Не переносится (предупреждение при открытии AutoScout24):** память сидений,
   «комфортные сиденья», галоген, Rear traffic alert, матовый цвет, VAT marża,
   «Bezwypadkowy»; ≈ (отправляется приблизительно): «оба передних электросиденья»,
@@ -512,7 +589,7 @@ LU 346, FR 7; у C-HR в NL/AT просто 0), но **несколько `cn` �
 | Paliwo | benzyna 473, diesel 474, elektryk 11756, hybryda benzyna 13838, hybryda diesel 13839; plug-in — группа «Type hybride» 13956 (только если выбран один plug-in, иначе ≈) | бензин 4736, дизель 348, электро 53, гибрид 828, plug-in 561 |
 | Skrzynia | automat 534, manual 535 | 3240 / 2699 |
 | Napęd | FWD 13943, RWD 13944, AWD 13945 | 5277 / 10 / 364 |
-| Nadwozie | hatchback 481, kombi 484, sedan 483, SUV (и pickup ≈) 488, van 482, cabrio 485, coupé 486; **2dehands:** hatchback 481 + 483 ≈, sedan 483 ≈ (см. различия) | hatchback 5499, kombi 170, sedan 2, SUV 1, MPV 20, cabrio 235, coupé 1 |
+| Nadwozie | hatchback 481, kombi 484, sedan 483, SUV (и pickup ≈ — с 10-10 называется в жёлтом «!» обоих сайтов) 488, van 482, cabrio 485, coupé 486; **2dehands:** hatchback 481 + 483 ≈, sedan 483 ≈ (см. различия) | hatchback 5499, kombi 170, sedan 2, SUV 1, MPV 20, cabrio 235, coupé 1 |
 | Sprzedawca | dealer 10899, prywatny 10898 | 4261 / 1644 |
 | Nowy / używany | 30 / 14049 | 48 / 3818 |
 | VAT odliczany | «BTW verrekenbaar» 13149 (marża — нет, предупреждение) | 689 |
@@ -592,7 +669,7 @@ Rear traffic alert, матовый, «niepalący», «Bezwypadkowy», «Pierwszy
 
 Код: `src/kleinanzeigen-search.js` (`AUTOGOOD_KLEINANZEIGEN`), справочник
 `src/kleinanzeigen-catalog.generated.js` (`scripts/generate-kleinanzeigen-catalog.py`,
-64 марки, 1 635 моделей), чтение — `fetchKleinanzeigenListings` в
+64 марки, 1 827 моделей), чтение — `fetchKleinanzeigenListings` в
 `src/mobile-market-analysis.js`. Рынок `kleinanzeigen` — **второй портал Германии**:
 в анализе и Monitoring только объявления, которых нет на mobile.de / AutoScout24 (та же
 цена и пробег), статистика — в общей строке «Niemcy» (mobile.de + AutoScout24 +
@@ -605,6 +682,25 @@ Kleinanzeigen). В основном частные продавцы: VW Golf —
   (Golf + Golf Plus: 9 972 + 1 841 = 11 813), атрибуты и опции `autos.<опция>_b:true` —
   «и» (подогрев сидений 4 470, + навигация 2 553). Читается через прокси (без CORS;
   частые прямые запросы блокируются).
+- **Только предложения (с 10-10):** в пути всегда `anzeige:angebote` (сразу после марки).
+  Без него в выдаче и в числе стр. 1 были и «Gesuche» («куплю»): Toyota 10 649 →
+  10 383 — ровно 266 Gesuche; частники 5 826 → 5 595.
+- **Справочник моделей обязан быть полным (с 10-10).** Неизвестный `model_s` Kleinanzeigen
+  молча игнорирует (выдаёт всю марку). Страница марки перечисляет только 100 моделей с
+  наибольшим числом объявлений — у BMW и Mercedes справочник был обрезан: GLC шёл как
+  `glc_220/250/300` (1 007 объявлений вместо 1 499: нет `glc_200`, `glc_43_amg`,
+  `glc_63_amg`, `glc_350/400/450`, `glc_klasse` «Weitere GLC-Klasse»). Фильтры-атрибуты
+  список моделей не меняют (Mercedes + `elektro` + `limousine` — те же 100), а поиск по
+  словам меняет: генератор для полной марки читает ещё страницы по названиям серий
+  (`KEYWORDS`: BMW `1er`…`8er`, `x1`…`x7`, `z4`; Mercedes `a-klasse`…`r-klasse`, `cla`,
+  `clk`, `cls`, `gla`…`gls`, `ml`, `sl`, `slk`, `slc`) и объединяет; модели прежнего файла
+  не теряются. BMW 100 → 123 моделей, Mercedes 100 → 269. Запуск только этих марок:
+  `python3 scripts/generate-kleinanzeigen-catalog.py --makes "BMW,Mercedes Benz" --proxy
+  https://ag-proxy.autogood-crm.workers.dev/ --origin http://127.0.0.1:4173 --cache <папка>`
+  (39 запросов). Теперь серия формы: C — 15 моторов + «Weitere C-Klasse» (+ `c_160`,
+  `c_240`), E — 15 (+ `e_270`, `e_53_amg`), 3 — 14 (с 320/330/318 Gran Turismo и `m340i`:
+  мотор с «M» впереди тоже в серии, как «3er» mobile.de), 5 — 13 (с M550), X3 — `x3` (X3 M, X3 M50 —
+  свои модели).
 - **Страницы:** 25 на страницу, не больше 50 страниц (51-я — переадресация), сортировки
   «сначала дорогие» нет. Длинный список читается «лесенкой»: окно из 50 страниц, затем
   `preis:<последняя цена>:` — новое окно; место объявления = всего − в новом окне +
@@ -627,7 +723,7 @@ Kleinanzeigen). В основном частные продавцы: VW Golf —
 | Moc (л. с.) | `autos.power_i:110,150` | 2 585 |
 | Paliwo | `autos.fuel_s`: benzin 7 234, diesel 2 318, hybrid 36 (оба гибрида; plug-in ≈), elektro 7 | |
 | Skrzynia | `autos.shift_s`: automatik 2 079, manuell 7 426 | |
-| Nadwozie | `autos.typ_s`: kleinwagen (hatchback) 2 591, kombi 1 597, limousine 3 027, cabrio 494, coupe, suv (и pickup ≈), bus (van), andere | |
+| Nadwozie | `autos.typ_s`: hatchback = kleinwagen + limousine ≈ (с 10-10; kleinwagen 2 591 + limousine 3 027), sedan = limousine ≈, kombi 1 597, cabrio 494, coupe, suv (и pickup ≈), bus (van), andere — §4.7 | |
 | Liczba drzwi | `autos.anzahl_tueren_s`: 2_3 — 2 458, 4_5 — 6 596, 6_7 | |
 | Tapicerka | `autos.material_innenausstattung_s`: volleder 688, teilleder + alcantara 755, stoff, velours | |
 | Kolor nadwozia | `global.farbe`: schwarz 2 227, weiß 867, grau + silber 2 866, blau, rot, grün, braun, beige, gelb, orange, gold, violet | |
@@ -690,7 +786,7 @@ właściciel», остальные опции.
 | Liczba drzwi | `npo[]`: 2, 3 («2 portes avec hayon»), 4, 5 («4 portes avec hayon»); 6–7 — нет | 3 → 238, 5 → 1 905, 3+5 → 2 142 |
 | Nadwozie | `r1` (одно значение; `TO,BR` не работает): TO berline (хэтчбек и седан ≈), BR break, 4X SUV, CA cabriolet, CO coupé, MO monospace (van ≈), PU pick-up | TO 1 760, BR 85, CA 188, CO 17, MO 149 |
 | Sprzedawca | `codPro=on` дилер / `off` частник | 2 185 / 135 (сумма = 2 320); Passat 227 / 23 |
-| Wersja | `fulltext=` | «gti» 270, «r line» 244, «gti performance» 110 |
+| Wersja | `fulltext=` ≈ (только объявления с этими словами; с 10-10 «Wersja ≈» в жёлтом «!») | «gti» 270, «r line» 244, «gti performance» 110 |
 
 **Нет на ParuVendu (жёлтое «!»):** мощность в л. с. (на сайте только налоговая `pf0/pf1`,
 CV: 5–7 CV → 835), привод, объём, места, цвета, салон, опции и оснащение, металлик,
@@ -730,4 +826,5 @@ CV: 5–7 CV → 835), привод, объём, места, цвета, сал�
 | 09-29 | Codex | Значение продавца по умолчанию — `dealer` («Dealer / komis»): mobile.de `st=DEALER`, otomoto `private_business=business`, blocket `dealer_segment=2`; явный выбор пользователя и старые сохранённые фильтры не меняются | этот коммит |
 | 10-02 | Claude | av.by: четвёртая площадка — каталог, перенос всех фильтров (138 вариантов = ссылке самого av.by), предупреждения, счётчик, объявления, анализ, стр. 4, аудит | этот коммит |
 | 10-04 | Claude | «Bezwypadkowy» (otomoto `filter_enum_no_accident`; mobile.de, AutoScout24, blocket, av.by — нет, предупреждение) и «Pierwszy właściciel» (mobile.de `pvo=1`, otomoto `filter_enum_original_owner`, AutoScout24 `prevownersid=1`; blocket, av.by — нет); каждый параметр проверен по изменению числа | этот коммит |
+| 10-10 | Claude | Волна 2 аудита, фильтры: хэтчбек/седан (§4.7) — у mobile.de, AutoScout24, Kleinanzeigen «Hatchback» = Kleinwagen + Limousine ≈, «Sedan» ≈; кузов из ссылки «Limousine»/«Berline» — по справочнику моделей, иначе «Dowolne» + строка «!»; AutoScout24 — «< 5000»/«> 5000» объёма через `rangeBounds`, «Wersja» → модель портала (320d → 320 + дизель), иначе «Wersja ≈»; otomoto — модель с кузовами-моделями (Golf + Variant/Alltrack/Cabrio, BMW 3 + 3gt); Kleinanzeigen — полный справочник BMW/Mercedes (поиск по сериям), только предложения `anzeige:angebote`; Marktplaats pickup ≈, ParuVendu и av.by «Wersja ≈»; всё проверено живьём числами | этот коммит |
 | 10-10 | Claude | Marktplaats / 2dehands (§5f): BMW 2/3/4/5/6/8 — вся серия с кузовами вместо одних GT / Gran Coupé / Active Tourer, двигатель с кузовом — этот кузов; у 2dehands свои ключи мощности (`enginePowerKW`, кВт), мест (`numberOfSeatsBE`), дверей (`aantaldeurenBE`) и гарантии (`extendedWarranty` ≈), хэтчбек/седан ≈ («Berline»); жёлтое «!» 2dehands — своё; мощность объявлений в KM; всё проверено живьём по числам API и сайта | этот коммит |

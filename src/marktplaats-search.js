@@ -205,7 +205,9 @@
     group(DRIVE[filters.drive] || []);
     const bodyIds = site.body?.[filters.body];
     group(bodyIds || BODY[filters.body] || []);
-    if (bodyIds) skip(`${c.bodyLabel || "Nadwozie"} ≈`);
+    // 2dehands: no hatchback/saloon split; both sites: pick-ups are filed with
+    // the SUVs (488 "SUV of terreinwagen").
+    if (bodyIds || filters.body === "pickup") skip(`${c.bodyLabel || "Nadwozie"} ≈`);
     group(SELLER[filters.seller] || []);
     group(CONDITION[filters.newUsed] || []);
     if (filters.vat === "reclaimable") group([VAT]);
