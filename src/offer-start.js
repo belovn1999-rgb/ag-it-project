@@ -535,25 +535,33 @@
     const id = store.newId();
     const page = new URL("oferta.html", window.location.href);
     page.searchParams.set("id", id);
-    page.searchParams.set("new", "1");
-    // The tab opens on the click itself; the calculator's picture takes a
-    // moment, and the offer page waits for its draft.
-    const tab = window.open(page.toString(), "_blank");
+    // The draft is saved first (under a second), then the page opens: a
+    // browser that opens it in this very tab (the app's own browser does)
+    // would otherwise leave this page before the draft exists — the offer
+    // page then said "Nie znaleziono tej oferty" (owner 2026-10-11). The
+    // calculator's picture follows in a moment (the open offer redraws).
     try {
       const draft = await makeDraft(id);
       const frame = carBox.querySelector("[data-os-calc]");
+      let shoot = false;
       if (CALC && frame?.contentDocument) {
         try {
           const read = CALC.read(frame.contentDocument);
           const methodKey = chosenMethod();
           draft.calc = { tab: CALC.TABS[methodKey], method: methodKey, methodLabel: "", rows: read.rows, total: read.total, rate: read.rate, lang, at: new Date().toISOString() };
-          if (fullCalc) draft.calcImage = await CALC.capture(frame);
+          shoot = fullCalc;
         } catch {
           // The calculator not ready: the offer starts from the estimate.
         }
       }
       await store.put(draft);
+      // The picture before the page opens when it is quick (a browser that
+      // opens the page in this tab stops this script); a slow one follows.
+      const picture = shoot ? CALC.capture(frame).then((image) => (image ? store.update(id, { calcImage: image }) : null)).catch(() => null) : null;
+      if (picture) await Promise.race([picture, new Promise((resolve) => window.setTimeout(resolve, 3500))]);
+      const tab = window.open(page.toString(), "_blank");
       if (!tab) window.location.href = page.toString();
+      else if (picture) await picture;
       showRecent();
     } catch (error) {
       setStatus(t("makeFailed", { reason: String(error?.message || error) }), true);

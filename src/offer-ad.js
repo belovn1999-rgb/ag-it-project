@@ -219,6 +219,8 @@
         countryVersion: /deutsche/i.test(attributes.countryVersion || "") ? "wersja niemiecka" : attributes.countryVersion || "",
         trim: attributes.trimLine || "",
         availability: /sofort/i.test(attributes.availability || "") ? "od ręki" : attributes.availability || "",
+        rangeKm: number(Object.entries(attributes).find(([tag]) => /range|reichweite/i.test(tag))?.[1]),
+        batteryKwh: number(Object.entries(attributes).find(([tag, value]) => /batter|capacit/i.test(tag) && /kwh/i.test(String(value)))?.[1]),
         ...conditionPl(attributes.damageCondition || data.condition),
       },
       features: [...(ad?.features || (Array.isArray(data.equipment) ? data.equipment : [])), ...attributeOptions(attributes, { drive })],
@@ -364,6 +366,7 @@
         fuel: fuelPl(vehicle.fuelCategory?.formatted),
         gearbox: gearboxPl(vehicle.transmissionType),
         gears: Number(vehicle.gears) || 0,
+        rangeKm: Number(vehicle.electricRangeWithFallback?.raw || vehicle.electricRange?.raw) || 0,
         drive,
         body: bodyPl(vehicle.bodyType),
         color: colorPl(vehicle.bodyColor, vehicle.paintType),
@@ -1570,6 +1573,8 @@
 
     const version = `${listing.title || ""} ${value("trim")}`;
     const fuel = marktplaatsFuel(value("fuel") || vehicle.vehicleEngine?.fuelType, value("hybridType"), version, number(value("batteryCapacity")));
+    const batteryKwh = number(value("batteryCapacity"));
+    const rangeKm = number(value("range") || value("actionRadius") || value("electricRange"));
     const powers = value("powerInKiloWatt") ? power(`${value("powerInKiloWatt")} kW`) : power(value("powerInHorsePower") ? `${value("powerInHorsePower")} PS` : "");
     // Litres ("2.0") unless the dealer's feed wrote the exact cm³ that agrees with them.
     const litres = number(value("cylinderCapacity"));
@@ -1626,6 +1631,8 @@
       description,
       specs: {
         firstRegistration,
+        batteryKwh,
+        rangeKm,
         mileage: number(value("mileage")) || Number(vehicle.mileageFromOdometer?.value) || 0,
         ccm,
         powerKw: powers.kw,
@@ -1724,7 +1731,28 @@
 
   // The portals an ad can be read from for the offer.
   const SOURCES = ["mobile", "autoscout", "autoscoutfr", "paruvendu", "kleinanzeigen", "marktplaats", "dehands", "otomoto", "blocket", "avby"];
-  async function read(source, url, { importer = "" } = {}) {
+  // Electric cars and hybrids (owner 2026-10-11): range and battery from the
+  // seller's text when the portal's fields have none ("Reichweite 409 km",
+  // "Batteriekapazität 75 kWh", "zasięg", "autonomie", "räckvidd", "запас хода").
+  function energyFromText(ad) {
+    const specs = ad?.specs;
+    if (!specs || !/elektr|hybr|plug/i.test(specs.fuel || "")) return ad;
+    const text = `${ad.title || ""}\n${ad.description || ""}`;
+    if (!specs.rangeKm) {
+      const range = text.match(/(?:reichweite|range|zasi[ęe]g|autonomie|r[äa]ckvidd|actieradius|запас хода)[^\d\n]{0,25}(\d{2,4})\s*km/i);
+      if (range && Number(range[1]) >= 20 && Number(range[1]) <= 1200) specs.rangeKm = Number(range[1]);
+    }
+    if (!specs.batteryKwh) {
+      const battery = text.match(/(\d{1,3}(?:[.,]\d)?)\s*kwh(?!\s*\/)/i);
+      const value = battery ? Number(battery[1].replace(",", ".")) : 0;
+      if (value >= 4 && value <= 200) specs.batteryKwh = value;
+    }
+    return ad;
+  }
+  async function read(source, url, options = {}) {
+    return energyFromText(await readSource(source, url, options));
+  }
+  async function readSource(source, url, { importer = "" } = {}) {
     if (source === "mobile") return readMobile(url, importer);
     if (source === "autoscout" || source === "autoscoutfr") return readAutoscout(url, source);
     if (source === "paruvendu") return readParuvendu(url);

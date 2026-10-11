@@ -175,6 +175,8 @@
       interior: val(specs.interior || ""),
       owners: specs.owners,
       hu: val(specs.hu || ""),
+      rangeKm: Number(specs.rangeKm) || 0,
+      batteryKwh: Number(specs.batteryKwh) || 0,
       powerHp,
       powerKw,
       country,
@@ -525,12 +527,15 @@
       [L("Skrzynia biegów", "Коробка передач"), view.gearbox],
       [L("Napęd", "Привод"), view.drive],
       [L("Kolor", "Цвет"), view.color],
+      // Owner 2026-10-11: the upholstery, and for electric cars and hybrids the range and the battery.
+      [L("Wnętrze", "Салон"), view.interior],
+      [L("Zasięg", "Запас хода"), view.rangeKm ? `${numbers.format(view.rangeKm)} ${L("km", "км")}` : ""],
+      [L("Bateria", "Батарея"), view.batteryKwh ? `${String(view.batteryKwh).replace(".", ",")} kWh` : ""],
       [L("Właściciele", "Владельцы"), view.owners === 0 ? L("brak (auto nowe)", "нет (новое авто)") : view.owners ? String(view.owners) : ""],
       [L("Nadwozie", "Кузов"), view.body],
       [L("Przegląd", "Техосмотр"), view.hu],
-      [L("Wnętrze", "Салон"), view.interior],
       [L("Lokalizacja", "Местонахождение"), [view.city, countryName(view.country)].filter(Boolean).join(", ")],
-    ].filter(([, value]) => value).slice(0, 8);
+    ].filter(([, value]) => value).slice(0, 9);
     const seller = offer.ad?.seller || null;
     const adAge = adHistory();
     const listedAt = adAge.kind === "listed" ? adAge.since : "";

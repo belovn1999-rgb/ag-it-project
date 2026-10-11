@@ -1353,7 +1353,9 @@ function extractAdDetails(html) {
       .map((uri) => `https://${uri}?rule=mo-1024`)
       .slice(0, 40),
     attributes: Object.fromEntries((listing.attributes || [])
-      .filter((item) => item?.tag && !String(item.tag).startsWith("envkv"))
+      // The energy label (envkv*) stays out, but for its range and battery
+      // (the offer shows them for electric cars and hybrids, owner 2026-10-11).
+      .filter((item) => item?.tag && (!String(item.tag).startsWith("envkv") || /range|reichweite|batter|capacit/i.test(String(item.tag))))
       .map((item) => [item.tag, Array.isArray(item.value) ? item.value.join(", ") : String(item.value ?? "")])),
     features: (listing.features || []).map((item) => String(item)).filter(Boolean),
     description: description.slice(0, 30000),
