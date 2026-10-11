@@ -77,13 +77,16 @@
     const km = Number(car.mileage) || 0;
     if (!year && !km) return null;
     const steps = [[1, 0.35, 20000], [2, 0.6, 30000]];
-    for (const [years, share, least] of steps) {
+    for (const [index, [years, share, least]] of steps.entries()) {
       const span = Math.max(least, km * share);
       const subset = pool.filter(({ offer }) => (!year || (Number(offer.year) && Math.abs(Number(offer.year) - year) <= years))
         && (!km || (Number(offer.mileage) && Math.abs(Number(offer.mileage) - km) <= span)));
       if (subset.length >= MIN_SIMILAR) {
         return {
+          // 1 — the narrow step, 2 — the wide one (the offer says so, O9).
+          step: index + 1,
           rule: {
+            step: index + 1,
             yearFrom: year ? year - years : null,
             yearTo: year ? year + years : null,
             kmFrom: km ? Math.max(0, Math.round((km - span) / 1000) * 1000) : null,
@@ -97,6 +100,38 @@
   }
 
   const priceOf = ({ offer }) => Number(offer.price) || 0;
+
+  // How far the comparison can be trusted (O9, owner 2026-10-11; after
+  // autoscout-analyser's confidence range and used-car-deal-finder's spread
+  // rule). "high": the similar cars were found at the narrow step (year ±1,
+  // mileage ±35 %), in the ad's own country, at least ten of them, and half
+  // of their prices sit within 35 % of the median — the offer may say
+  // "tańsze niż 81 % z 14 podobnych ofert". "medium": similar cars found, but
+  // at the wide step, across countries, fewer than ten, or spread up to 75 %
+  // — the offer says "orientacyjnie". "low": no similar cars at all (the
+  // whole search speaks) or a spread so wide the median says little — no
+  // figure, only words. Works on a saved market too (no `step`: the rule's
+  // width tells the step).
+  const SPREAD_NARROW = 0.35;
+  const SPREAD_WIDE = 0.75;
+  const CONFIDENT_COUNT = 10;
+  function confidence(own) {
+    if (!own?.stats?.count) return null;
+    const near = own.similar?.stats?.count >= MIN_SIMILAR ? own.similar : null;
+    const stats = near ? near.stats : own.stats;
+    const spread = stats.median ? (stats.p75 - stats.p25) / stats.median : 1;
+    const rule = near?.rule || {};
+    const step = rule.step || (rule.yearFrom && rule.yearTo ? (rule.yearTo - rule.yearFrom) / 2 : 2);
+    const reasons = [];
+    if (!near) reasons.push("noSimilar");
+    if (spread > SPREAD_WIDE) reasons.push("spreadWide");
+    else if (spread > SPREAD_NARROW) reasons.push("spread");
+    if (near && step > 1) reasons.push("wideStep");
+    if (own.scope !== "country") reasons.push("allCountries");
+    if (near && stats.count < CONFIDENT_COUNT) reasons.push("few");
+    const level = !near || spread > SPREAD_WIDE ? "low" : reasons.length ? "medium" : "high";
+    return { level, spread, count: stats.count, similar: Boolean(near), reasons };
+  }
 
   // The ad's own market: offers in euro from the same country, or every
   // country of the check when that country alone is too thin.
@@ -118,7 +153,7 @@
     const near = similar(pool, car.offer);
     const nearPrices = near ? near.items.map(priceOf) : [];
     const nearStats = near ? summary(nearPrices) : null;
-    return {
+    const own = {
       currency: car.offer.currency || "EUR",
       country,
       scope,
@@ -134,6 +169,8 @@
         vsMedian: nearStats?.median ? price / nearStats.median - 1 : null,
       } : null,
     };
+    own.confidence = confidence(own);
+    return own;
   }
 
   // Poland: otomoto in the same check (PLN) against the car's turnkey price.
@@ -260,7 +297,7 @@
     };
   }
 
-  const api = { EUR_SOURCES, NEGOTIATION_DAYS, percentile, summary, findOffer, similar, snapshot, adLiquidity, countryOf };
+  const api = { EUR_SOURCES, NEGOTIATION_DAYS, MIN_SIMILAR, percentile, summary, findOffer, similar, confidence, snapshot, adLiquidity, countryOf };
   if (typeof window !== "undefined") window.AUTOGOOD_OFFER_MARKET = api;
   if (typeof globalThis !== "undefined") globalThis.AUTOGOOD_OFFER_MARKET = api;
 })();

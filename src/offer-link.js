@@ -143,7 +143,7 @@
       url: offer.url || "",
       importer: importerUrl(),
       car: { ...offer },
-      market: market ? { at: market.at, extra: market.extra, own: market.market, poland: market.poland, ad: market.ad, pace: market.pace } : null,
+      market: market ? { at: market.at, latestAt: market.latestAt, extra: market.extra, own: market.market, poland: market.poland, ad: market.ad, pace: market.pace } : null,
       estimate: estimate(offer, filters),
       manager: store.manager(),
       company: store.company(),
