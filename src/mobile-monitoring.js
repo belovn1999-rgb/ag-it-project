@@ -1650,7 +1650,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     // p. 8: the first photo, the portal's own price mark; p. 9: opened / sent.
     const offerPhoto = (row) => (row.offer.photo
       ? `<a class="mobileMonitoringPhoto" href="${escapeMarketHtml(row.offer.url || row.offer.photo)}" target="_blank" rel="noopener"${row.offer.url ? ` data-monitoring-open="${escapeMarketHtml(row.offer.key)}"` : ""}><img src="${escapeMarketHtml(row.offer.photo)}" alt="" loading="lazy" referrerpolicy="no-referrer" /></a>`
-      : `<span class="mobileMonitoringPhoto isEmpty" aria-hidden="true"></span>`);
+      : "");
     const ratingBadge = (row) => {
       const label = { verygood: c.monitoringRatingVeryGood, good: c.monitoringRatingGood, fair: c.monitoringRatingFair, increased: c.monitoringRatingIncreased, high: c.monitoringRatingHigh }[row.offer.rating];
       if (!label || row.gone) return "";

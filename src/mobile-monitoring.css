@@ -1150,7 +1150,7 @@ button.mobileMonitoringMac {
 .mobileMonitoringViews { gap: 0; flex-wrap: wrap; }
 .mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view] { border-radius: 0; margin-left: -1px; }
 .mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view]:first-child { border-radius: calc(var(--radius-xl) - 1px) 0 0 calc(var(--radius-xl) - 1px); margin-left: 0; }
-.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view="saved"] { border-radius: 0 calc(var(--radius-xl) - 1px) calc(var(--radius-xl) - 1px) 0; }
+.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view="sent"] { border-radius: 0 calc(var(--radius-xl) - 1px) calc(var(--radius-xl) - 1px) 0; }
 .mobileMonitoringViews .mobileMonitoringPdfButton { margin-left: auto; }
 .mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view="extra"]:not(.isActive) { color: var(--mon-extra-ink); }
 
@@ -1349,5 +1349,43 @@ button.mobileMonitoringMac {
 
   .mobileMonitoringTable .mobileMarketTableTitle {
     padding-right: 30px;
+  }
+}
+
+/* Re-audit follow-up (owner 2026-10-11): on a phone the seven lists are one
+   line that scrolls sideways (they wrapped into ~300 px), and the star is a
+   44 px target (the mark itself stays 18 px). */
+@media (max-width: 40rem) {
+  .mobileMonitoringViews {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobileMonitoringViews > * {
+    flex: none;
+  }
+
+  .mobileMonitoringViews > .mobileMarketImportClear {
+    width: auto;
+    min-height: 36px;
+    padding: 6px 12px;
+    white-space: nowrap;
+  }
+
+  .mobileMonitoringViews .mobileMonitoringPdfButton {
+    margin-left: 8px;
+  }
+
+  .mobileMonitoringActions .mobileMonitoringStar.isCorner {
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+  }
+
+  .mobileMonitoringTable .mobileMarketTableTitle {
+    padding-right: 44px;
   }
 }
