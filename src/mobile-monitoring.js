@@ -20,7 +20,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
-    sourceClass, statsOfOffers, stillListed, storeMarketHistory, turnkeyByFor, turnkeyFootnoteHtml,
+    sourceClass, statsOfOffers, stillListed, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates
   } = ctx;
 
@@ -1676,8 +1676,10 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       return `<small class="mobileMonitoringMark${mark.sent ? " isSent" : ""}">${mark.sent ? "✉" : "✓"} ${escapeMarketHtml(text)}</small>`;
     };
     const currentNow = viewRows.all.filter((row) => !row.gone);
+    // Out of the statistics (overseas, suspect price, "licytacja od"): listed,
+    // never in the median or "Do mediany" (re-audit 2026-10-11).
     const medianOf = (items) => {
-      const prices = items.map((row) => clientPricePln(row.offer, row.source)).filter((value) => Number.isFinite(value) && value > 0).sort((a, b) => a - b);
+      const prices = items.filter((row) => !row.offer.suspect && !row.offer.bid).map((row) => clientPricePln(row.offer, row.source)).filter((value) => Number.isFinite(value) && value > 0).sort((a, b) => a - b);
       return prices.length ? percentile(prices, 0.5) : 0;
     };
     // Owner 2026-10-11 (re-audit p. 1): a change of the euro is not a car
@@ -1694,7 +1696,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     };
     const medianNow = medianOf(currentNow);
     const toMedian = (row) => {
-      if (!medianNow) return "";
+      if (!medianNow || row.offer.suspect || row.offer.bid) return "";
       const share = (clientPricePln(row.offer, row.source) - medianNow) / medianNow;
       if (!Number.isFinite(share)) return "";
       const pct = Math.round(share * 100);
@@ -1891,7 +1893,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
             return `
             <tr class="${row.gone ? "isGone" : ""}${row.offer.miss ? " isExtra" : ""}">
               <td class="isNum mobileMarketRowNumber">${index + 1}</td>
-              <td class="mobileMarketTableTitle"><div class="mobileMonitoringOffer">${offerPhoto(row)}<div class="mobileMonitoringOfferText">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener" data-monitoring-open="${escapeMarketHtml(row.offer.key)}"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.gone ? "" : dealBadge(row.offer)}${row.isNew || (view !== "new" && row.group === "new") ? ` <span class="mobileMarketOfferStatus isNew">${escapeMarketHtml(c.offerNew)}</span>` : ["cheaper", "dearer"].includes(row.status) ? ` <span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status])}</span>` : ""}${row.offer.miss ? `<small class="mobileMonitoringMiss" title="${escapeMarketHtml(row.offer.miss.kind === "options" ? c.monitoringMissOptionsTitle : c.monitoringMissTitle)}">≈ ${escapeMarketHtml(nearMissText(row.offer.miss))}</small>` : ""}<small class="mobileMonitoringMeta">${offerCountryBadge(row.source, row.offer.country)} ${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.gone ? "" : dropLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}${markLine(row)}${!row.gone && row.source !== "otomoto" && row.source !== "avby" ? `<button class="mobileMonitoringPolandButton" type="button" data-monitoring-poland="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringPoland)}</button>` : ""}</div></div></td>
+              <td class="mobileMarketTableTitle"><div class="mobileMonitoringOffer">${offerPhoto(row)}<div class="mobileMonitoringOfferText">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener" data-monitoring-open="${escapeMarketHtml(row.offer.key)}"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.gone ? "" : dealBadge(row.offer)}${row.isNew || (view !== "new" && row.group === "new") ? ` <span class="mobileMarketOfferStatus isNew">${escapeMarketHtml(c.offerNew)}</span>` : ["cheaper", "dearer"].includes(row.status) ? ` <span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status])}</span>` : ""}${row.offer.suspect && !row.gone ? `<small class="mobileMonitoringMiss mobileMonitoringSuspect">≈ ${escapeMarketHtml(suspectTagOf(row.offer))}</small>` : ""}${row.offer.miss ? `<small class="mobileMonitoringMiss" title="${escapeMarketHtml(row.offer.miss.kind === "options" ? c.monitoringMissOptionsTitle : c.monitoringMissTitle)}">≈ ${escapeMarketHtml(nearMissText(row.offer.miss))}</small>` : ""}<small class="mobileMonitoringMeta">${offerCountryBadge(row.source, row.offer.country)} ${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.gone ? "" : dropLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}${markLine(row)}${!row.gone && row.source !== "otomoto" && row.source !== "avby" ? `<button class="mobileMonitoringPolandButton" type="button" data-monitoring-poland="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringPoland)}</button>` : ""}</div></div></td>
               <td class="isNum">${priceCell(row.offer, row.source)}${ratingBadge(row)}</td>
               <td class="isNum mobileMonitoringToMedian">${row.gone ? "" : toMedian(row)}</td>
               <td class="mobileMonitoringActions"><button class="mobileMonitoringStar isCorner${isSaved ? " isOn" : ""}" type="button" data-monitoring-save="${escapeMarketHtml(row.offer.key)}" aria-pressed="${isSaved ? "true" : "false"}" title="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}" aria-label="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}">${isSaved ? "★" : "☆"}</button><button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button>${!row.gone && window.AUTOGOOD_CALC_POPUP?.importable(row.source) ? `<button class="agCalcButton" type="button" data-monitoring-calc="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringCalc)}</button>` : ""}${!row.gone && window.AUTOGOOD_OFFER_LINK?.offerable(row.source) ? `<button class="agOfferButton" type="button" data-offer-create data-offer-history="${escapeMarketHtml(entry.id)}" data-offer-key="${escapeMarketHtml(row.offer.key)}" data-offer-source="${escapeMarketHtml(row.source)}">${escapeMarketHtml(c.monitoringOffer)}</button>` : ""}</td>

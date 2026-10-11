@@ -737,6 +737,9 @@
       snapshotSaved: "Nowa kontrola zapisana w historii cen ({date}).",
       suspectsSkipped: "Poza statystyką: {count} {offers} (uszkodzone, na części, cesja / leasing albo cena poza 1/3–3× mediany) — szare kółka na wykresie.",
       suspectTag: "poza statystyką",
+      suspectOverseas: "sprowadzany z {country} — cena bez przywozu, poza statystyką",
+      suspectCountryUsa: "USA",
+      suspectCountryCanada: "Kanady",
       suspectShort: "+{count} poza statystyką",
       offerForms: ["oferta", "oferty", "ofert"],
       offerFormsAcc: ["ofertę", "oferty", "ofert"],
@@ -1469,6 +1472,9 @@
       snapshotSaved: "Новая проверка сохранена в истории цен ({date}).",
       suspectsSkipped: "Вне статистики: {count} {offers} (повреждённые, на запчасти, цессия / лизинг или цена вне 1/3–3× медианы) — серые кружки на графике.",
       suspectTag: "вне статистики",
+      suspectOverseas: "пригоняется из {country} — цена без ввоза, вне статистики",
+      suspectCountryUsa: "США",
+      suspectCountryCanada: "Канады",
       suspectShort: "+{count} вне статистики",
       offerForms: ["объявление", "объявления", "объявлений"],
       offerFormsAcc: ["объявление", "объявления", "объявлений"],
@@ -2373,6 +2379,10 @@
         fuel: String(shown.fuel_type || "").slice(0, 40),
         displacementCcm: Number(parameters.engine_capacity) || null,
         city: String(node.location?.city?.name || "").slice(0, 80),
+        // "Kraj pochodzenia" (usa, canada…): a car brought from overseas is often
+        // priced before shipping and customs (re-audit 2026-10-11: RAV4 2021
+        // for 54 990 zł "in transit from the USA" was "najtaniej Polska").
+        origin: String(parameters.country_origin || "").slice(0, 20),
         // "isGross: false" comes with "INCLUDE_VAT": the price is gross and
         // a company may deduct the VAT ("Możliwość odliczenia VAT"; checked on
         // 132 offers 2026-10-03, the ads say "49.999 zł brutto, 40.649 netto").
@@ -3650,6 +3660,7 @@
       fuel: String(listing.fuel || "").slice(0, 20) || undefined,
       turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage(turnkeyInput(listing, listing.price, listing.currency || SOURCE_CURRENCY[source]), filters).total) : null,
       suspect: flagged.has(listing) || undefined,
+      origin: overseasOf(listing) || undefined,
       bid: listing.bid || undefined,
       photo: listing.photo || undefined,
       rating: listing.rating || undefined,
@@ -5520,7 +5531,7 @@
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
-    sourceClass, statsOfOffers, stillListed, storeMarketHistory, turnkeyByFor, turnkeyFootnoteHtml,
+    sourceClass, statsOfOffers, stillListed, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates,
     get BRAND_LOGOS() { return BRAND_LOGOS; },
     get activeAnalysis() { return activeAnalysis; },
@@ -5814,6 +5825,18 @@
     };
   }
 
+  // Cars brought from North America: their otomoto price usually comes before
+  // shipping, customs and excise — not a price in Poland (owner 2026-10-11).
+  const OVERSEAS_ORIGINS = { usa: "usa", "stany-zjednoczone": "usa", canada: "canada", kanada: "canada" };
+  const overseasOf = (listing) => OVERSEAS_ORIGINS[String(listing?.origin || "").toLowerCase()] || "";
+  // Why an offer is out of the statistics, in the manager's words.
+  function suspectTagOf(listing) {
+    const c = copy();
+    const overseas = overseasOf(listing);
+    if (overseas) return c.suspectOverseas.replace("{country}", overseas === "usa" ? c.suspectCountryUsa : c.suspectCountryCanada);
+    return c.suspectTag;
+  }
+
   function suspectOffers(listings, valueOf) {
     const medianOf = (items) => (items.length >= 5 ? percentile(items.map(valueOf).sort((left, right) => left - right), 0.5) : 0);
     const overall = medianOf(listings);
@@ -5832,9 +5855,12 @@
       // "Licytacja od" (Marktplaats / 2dehands MIN_BID): a floor, not a price.
       if (listing.bid) return true;
       if (SUSPECT_WORDS.test(`${listing.title || ""} ${listing.subtitle || ""}`)) return true;
+      if (overseasOf(listing)) return true;
       const price = valueOf(listing);
       const median = peerMedian(Number(listing.year) || 0);
-      return median > 0 && (price < median / 3 || price > median * 3);
+      // Below half the cars of the same years (was a third until 2026-10-11:
+      // RAV4 2021 at 38 % of the Polish median passed as the cheapest).
+      return median > 0 && (price < median / 2 || price > median * 3);
     }));
   }
 
@@ -6350,7 +6376,7 @@
                 <strong>${escapeMarketHtml(formatMarketPrice(listing.price))}${listing.turnkeyPln ? ` <small>${escapeMarketHtml(turnkeyLabel)}</small>` : ""}${original ? ` <small>(${escapeMarketHtml(original)})</small>` : ""}</strong>
                 ${details ? `<em>${escapeMarketHtml(details)}</em>` : ""}
                 ${listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln ? `<em class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(listing.originalPrice, listing.source))}</em>` : ""}
-                <b class="is${sourceClass(listing.source)}">${marketBadge(listing.source)} <small>${escapeMarketHtml(sourceName(listing.portal || listing.source))}</small>${listing.suspect ? ` · ${escapeMarketHtml(c.suspectTag)}` : ""}</b>
+                <b class="is${sourceClass(listing.source)}">${marketBadge(listing.source)} <small>${escapeMarketHtml(sourceName(listing.portal || listing.source))}</small>${listing.suspect ? ` · ${escapeMarketHtml(suspectTagOf(listing))}` : ""}</b>
               </span>`;
           const attributes = `class="mobileMarketPoint is${sourceClass(listing.source)}${listing.suspect ? " isSuspect" : ""}${tooltipClass}" data-market-key="${escapeMarketHtml(listingKey(listing))}" aria-label="${escapeMarketHtml(label)}" style="--x:${x.toFixed(4)};top:${y}%"`;
           return listing.url
@@ -7226,7 +7252,7 @@
             const on = carCompareKeys.includes(listingKey(listing));
             return `<input type="checkbox" data-mobile-market-compare-pick="${escapeMarketHtml(listingKey(listing))}"${on ? " checked" : ""}${!on && pickedFull ? " disabled" : ""} aria-label="${escapeMarketHtml(c.carComparePick.replace("{title}", [fullTitle(listing) || sourceName(listing.portal || listing.source), listing.year, formatMarketPrice(listing.price)].filter(Boolean).join(", ")))}" />`;
           }
-          case "title": return `${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(c.suspectTag)}</small>` : ""}`;
+          case "title": return `${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(suspectTagOf(listing))}</small>` : ""}`;
           case "year": return escapeMarketHtml(listing.year ? String(listing.year) : "—");
           case "mileage": return escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} ${kmUnit()}` : "—");
           case "powerKm": {
