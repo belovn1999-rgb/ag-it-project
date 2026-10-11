@@ -74,10 +74,24 @@ Dégrafé — отщёлкнуто · Sans dégâts — без поврежде�
 
 **Позиции:** AVG/AVD/ARG/ARD — перед лев./прав., зад лев./прав.; M — средний; Mil — средняя стойка.
 
+### 5а. Ссылки Macadam и третий вид — «Rapport de Remarketing» (10-11)
+
+Все 4 ссылки владельца открываются **без входа** (обычный GET, 200). Ссылки и PDF лежат вне репозитория:
+`~/cloude/auction-reports-samples/macadam/LINKS.txt`, `remarketing-sample.pdf`.
+
+| Адрес | Вид | Как читать | Что есть сверх PDF |
+|---|---|---|---|
+| `reports.macadam.eu/reports/<uuid>?culture=fr-FR` | А «Rapport d'inspection» (веб) | Blazor: данные в HTML base64-JSON (`parameterValues`, массив повреждений `assessmentDamageId…`); видимый текст пререндерен частично | **Калькуляция Macadam на каждое повреждение**: `finalPrice` (без НДС), `finalPriceWithVat`, `vatPercentage`, `priceParts`, `pricePaint`, `totalLabourCost`, `paintLabourHours`, `repairLabourHours`, `isChargeable`, `devaluationAmount`, фото. Названия — id меток (`damageLocationTextLabelId`…), текст в HTML. **`culture=pl-PL` отдаёт польские названия** («Zderzak przedni»). Двигателя и версии нет и тут |
+| `portal.macadam.eu/reports/remarketing?id=…` | **В «Rapport de Remarketing»** (новый) | серверный HTML, весь текст сразу; PDF = печать этой страницы (7 стр.) | версия + кВт; **полное оснащение по VIN от производителя** («Équipement correspondant au NIV», «Détails du NIV»); «Contrôles»: техпаспорт (2 части), **CoC**, «Entretien OK / over N km», вид сервисной книжки, ключи, кабели зарядки, сброс до заводских; повреждения со статусом **«Réparé»** (бывший ремонт) и **«Grêlé / Forfait grêle»** (град); зона (Avant/Arrière/Gauche/Intérieur/Toit); сумм нет; языки EN/NL/FR/DE/IT/ES (польского нет) |
+| `www4.macadam.eu/Manager/SinglePage/AppraisalWebview?AssessmentFileId=…` | Б «AppraisalPdf» (веб) | серверный HTML, текст как в PDF вида Б: «Элемент, тип, ремонт» строками | то же, что PDF Б; встречается тип **«Mauvaise réparation»** (плохой прошлый ремонт) |
+
+Вывод для вкладки: **ссылка богаче PDF** (А — суммы, В — оснащение по VIN, CoC, сервис). Читать через наш Worker-прокси (как порталы) — проверить, что Macadam его пускает.
+Новые коды: `Réparé` / `Pas de réparation` — уже ремонтировалось; `Grêlé` / `Forfait grêle` — град; `Mauvaise réparation` — плохой ремонт; `Vide` — пусто; `Endommagé` — повреждено.
+
 ## 7. Следующий чат — с чего начать
 
 1. Прочитать этот файл и `docs/OFFER-PAGE.md` §8 (программа 06, способ 1 «Z ogłoszenia dealera» — как сделана вкладка, `src/offer-start.js`, `src/offer-ad.js`).
-2. Попросить у владельца **2–3 ссылки на отчёты Macadam** (те же авто, что в образцах, если есть): открываются ли без входа, отдают ли HTML/JSON с данными, есть ли там двигатель и версия (в виде А их нет в PDF).
+2. Ссылки получены и разобраны (§5а): три вида — А (веб, с суммами Macadam), Б (веб = PDF), В «Remarketing» (оснащение по VIN). Брифы-эталоны есть только для PDF А и Б — для ссылок сделать эталоны заново.
 3. Сделать вкладку «Z raportu aukcji»: поле ссылки + загрузка PDF → определение вида (А «Rapport d'inspection» / Б «AppraisalPdf» / ссылка) → шаблон §4 → карточка авто и бриф (коды §5).
 4. Затем вид оффера для аукциона (структура отличается от дилерского: состояние, повреждения с фото, ремонт, вердикт; цены авто до торгов нет — расчёт «przy stawce X»).
 Образцы PDF: `~/cloude/auction-reports-samples/macadam/` (4 файла + брифы-эталоны для сверки скрипта).
@@ -86,5 +100,6 @@ Dégrafé — отщёлкнуто · Sans dégâts — без поврежде�
 
 | Дата | Что | Коммит |
 |---|---|---|
-| 10-11 | Шаблон v1 утверждён, ответы владельца; следующий чат — вкладка загрузки PDF/ссылок и вид оффера (§7) | этот коммит |
+| 10-11 | Ссылки Macadam: открываются без входа; 3 вида (А веб с калькуляцией на каждое повреждение, Б веб, новый В «Remarketing» с оснащением по VIN, CoC, сервисом); польский у вида А (§5а) | этот коммит |
+| 10-11 | Шаблон v1 утверждён, ответы владельца; следующий чат — вкладка загрузки PDF/ссылок и вид оффера (§7) | 74d39fe |
 | 10-11 | Kickoff: цель, решения, план; 4 отчёта Macadam разобраны вручную, брифы-черновики (вне репозитория), словарь кодов | 377154b |
