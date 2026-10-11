@@ -468,9 +468,6 @@
   // Without Monitoring (an offer made from a link, program 06): the portal's
   // own scale of prices — mobile.de's five bands from "bardzo dobra" to
   // "wysoka cena", AutoScout24's median — and Carvago's lines.
-  // Three looks of the market card for the owner to choose (2026-10-11,
-  // ?marketLook=columns|scale|bottom); none of them until chosen.
-  const MARKET_LOOK = ["columns", "scale", "bottom"].includes(params.get("marketLook")) ? params.get("marketLook") : "";
   const BANDS_PL = ["bardzo dobra cena", "dobra cena", "uczciwa cena", "podwyższona cena", "wysoka cena"];
   const BANDS_RU = ["очень хорошая цена", "хорошая цена", "справедливая цена", "повышенная цена", "высокая цена"];
   const RATING_BAND = { VERY_GOOD_PRICE: 0, GOOD_PRICE: 1, REASONABLE_PRICE: 2, INCREASED_PRICE: 3, HIGH_PRICE: 4 };
@@ -505,13 +502,17 @@
       body = `${field("marketLead", L(`Mediana podobnych ofert wg AutoScout24: ${money(rating.median, "EUR")} — to auto ${share <= 0 ? `${percent(share)} taniej` : `${percent(share)} drożej`}.`, `Медиана похожих предложений по AutoScout24: ${money(rating.median, "EUR")} — это авто ${share <= 0 ? `на ${percent(share)} дешевле` : `на ${percent(share)} дороже`}.`), "p", "ofMarketLead")}`;
     }
     const carvago = carvagoLines();
-    // Variant "scale" (owner's choice pending, 2026-10-11): without Carvago's
-    // lines the whole scale of the portal, band by band, where the car stands.
-    if (MARKET_LOOK === "scale" && !carvago && body.includes("ofBands")) {
-      const BANDS = ru() ? BANDS_RU : BANDS_PL;
-      const limitsList = (rating?.thresholds || []).map(euroNumber);
+    // Under the portal's bar (owner 2026-10-11): how this car's price moved,
+    // when Carvago knows it — dates and percent only, never Carvago's prices;
+    // otherwise the portal's whole scale, band by band, and where the car is.
+    if (body.includes("ofBands")) {
       body = body.replace(/<p[^>]*class="[^"]*ofMarketLead[^"]*"[^>]*>[\s\S]*?<\/p>/, "");
-      body += `<ul class="ofBandList">${BANDS.map((name, index) => `<li class="${index === RATING_BAND[rating?.rating] ? "isHere" : ""}"><i class="ofBand is${index}"></i><span>${esc(name.charAt(0).toUpperCase() + name.slice(1))}</span><b>${numbers.format(limitsList[index])}–${numbers.format(limitsList[index + 1])} €</b>${index === RATING_BAND[rating?.rating] ? `<em>${L("← to auto", "← это авто")}</em>` : ""}</li>`).join("")}</ul>`;
+      const moves = carvagoMoves();
+      if (moves) body += moves;
+      else {
+        const here = RATING_BAND[rating?.rating];
+        body += `<ul class="ofBandList">${BANDS.map((name, index) => `<li class="${index === here ? "isHere" : ""}"><i class="ofBand is${index}"></i><span>${esc(name.charAt(0).toUpperCase() + name.slice(1))}</span><b>${numbers.format(limits[index])}–${numbers.format(limits[index + 1])} €</b>${index === here ? `<em>${L("← to auto", "← это авто")}</em>` : ""}</li>`).join("")}</ul>`;
+      }
     }
     if (!body && !carvago && adHistory().days === null) return "";
     return `
@@ -618,10 +619,10 @@
       ? L(`To auto: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> w sprzedaży${!listedAt && adAge?.kind === "atLeast" ? " (co najmniej)" : ""}${adAge?.dropped ? `, cena obniżona ${adAge.drops}× (−${percent(adAge.share)})` : adAge?.changes?.length ? "" : ", cena bez zmian"}.`,
         `Это авто: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> в продаже${!listedAt && adAge?.kind === "atLeast" ? " (как минимум)" : ""}${adAge?.dropped ? `, цена снижена ${adAge.drops}× (−${percent(adAge.share)})` : adAge?.changes?.length ? "" : ", цена без изменений"}.`)
       : "";
-    const adAgeHtml = adAgeText && !isHidden("adAge") ? `<div class="ofAdAge">${hideToggle("adAge")}<p>${adAgeText}</p>${priceMovesHtml(adAge.changes)}</div>` : "";
+    const adAgeHtml = adAgeText && !isHidden("adAge") && !portalCard.includes("ofMoveList") ? `<div class="ofAdAge">${hideToggle("adAge")}<p>${adAgeText}</p>${priceMovesHtml(adAge.changes)}</div>` : "";
     return `
       <div class="ofSheet" data-sheet="1">
-        <article class="ofPage${styleClass()}${MARKET_LOOK ? ` isMarket-${MARKET_LOOK}` : ""}" data-page="1" lang="${ru() ? "ru" : "pl"}">
+        <article class="ofPage${styleClass()}" data-page="1" lang="${ru() ? "ru" : "pl"}">
           ${headHtml(1, view)}
           <section class="ofHero">
             <div class="ofPhotoColumn">
@@ -738,6 +739,20 @@
       changes: carvago?.changes || [],
       history: carvago?.history || [],
     };
+  }
+
+  // The ad's price changes from Carvago as the market card's list: on sale
+  // since, then each change with its date and percent (the last six).
+  function carvagoMoves() {
+    if (!offer.carvago?.found || isHidden("carvago")) return "";
+    const moves = (offer.carvago.changes || []).filter((change) => change.at && Number.isFinite(change.share) && change.share !== 0);
+    if (!moves.length) return "";
+    // On sale since: the earliest date any source knows, with the days (the
+    // card's own "N dni w sprzedaży" line is left out then).
+    const age = adHistory();
+    const sinceAt = age.since || offer.carvago.listedSince;
+    const since = sinceAt ? `<li class="isSince"><i></i><span>${L("W sprzedaży od", "В продаже с")} ${esc(dateText(sinceAt))}</span><b>${age.days !== null && age.days !== undefined ? `${numbers.format(age.days)} ${daysWord(age.days)}` : ""}</b></li>` : "";
+    return `<p class="ofMoveHead">${L("Zmiany ceny tego auta", "Изменения цены этого авто")}</p><ul class="ofBandList ofMoveList">${since}${moves.slice(-6).map((change) => `<li class="${change.share < 0 ? "isDown" : "isUp"}"><i aria-hidden="true">${change.share < 0 ? "↓" : "↑"}</i><span>${esc(dateText(change.at))}</span><b>${change.share < 0 ? "−" : "+"}${(Math.abs(change.share) * 100).toFixed(1).replace(".", ",")}%</b></li>`).join("")}</ul>`;
   }
 
   // Each price change of the ad, oldest first: ↓ green when it dropped, ↑ red
@@ -873,7 +888,7 @@
     const costsHtml = calcShot ? `
  <section class="ofCard ofCostsCard ofCalcShotCard${blockClass("costs")}" data-block="costs">
         ${hideToggle("costs")}
-        <p class="ofCardHead">${icon("receipt")}${L("Kalkulacja", "Расчёт")} — ${esc(L(METHODS[offerMethod()].short, METHODS[offerMethod()].shortRu))}</p>
+        <p class="ofCardHead">${icon("receipt")}${L("Kalkulacja na gotowo", "Расчёт «под ключ»")}</p>
         <img class="ofCalcShot" src="${esc(calcShot)}" alt="${esc(L("Kalkulacja AUTOGOOD", "Расчёт AUTOGOOD"))}" />
       </section>` : costView ? `
       <section class="ofCard ofCostsCard${blockClass("costs")}" data-block="costs">
@@ -1177,17 +1192,32 @@
     const one = stage.querySelector('[data-page="1"]');
     if (one) {
       const checks = () => [...one.querySelectorAll(".ofCheck:not(.ofBlockHidden)")];
+      // A line or an option goes only when that makes the sheet shorter (a
+      // card beside a taller one changes nothing; owner 2026-10-11).
       while (overflow(one) > 0 && checks().length > 3) {
         const lines = checks();
         const drop = [...lines].reverse().find((line) => line.classList.contains("isOk") || line.classList.contains("isInfo")) || lines[lines.length - 1];
+        const before = overflow(one);
+        const place = [drop.parentNode, drop.nextSibling];
         drop.remove();
+        if (overflow(one) >= before) {
+          place[0].insertBefore(drop, place[1]);
+          break;
+        }
       }
-      // Then the weakest of the ten options (longer names in Russian), six at least.
+      // Then the weakest of the ten options (longer names in Russian), eight at least.
       const options = () => [...one.querySelectorAll(".ofOptions .ofOption")];
       const more = one.querySelector(".ofOptionsMore[data-all]");
       let cut = false;
       while (overflow(one) > 0 && options().length > 8) {
-        options().pop().remove();
+        const before = overflow(one);
+        const last = options().pop();
+        const parent = last.parentNode;
+        last.remove();
+        if (overflow(one) >= before) {
+          parent.append(last);
+          break;
+        }
         cut = true;
       }
       if (cut && more) more.textContent = optionsMore(Number(more.dataset.all) - options().length, more.dataset.list === "1");

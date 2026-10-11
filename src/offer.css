@@ -1040,17 +1040,8 @@
 .ofPage:not(.isPremium):not(.isRaport) .ofPriceFacts { border-top-color: var(--of-line); }
 .ofCalcShotCard .ofCardHead { margin: 6px 6px 8px; }
 .ofContactCard .ofTrust { margin-top: 10px; }
-/* The market card's three looks for the owner to choose (?marketLook=…, 2026-10-11). */
-.isPremium[data-page="1"].isMarket-columns {
-  grid-template-rows: auto auto auto auto auto auto auto auto 1fr auto;
-  grid-template-areas: "head head" "photo photo" "link price" "specs price" "specs chips" "market verdict" "equipment verdict" "equipment seller" ". ." "foot foot";
-}
-.isPremium[data-page="1"].isMarket-columns:not(:has(.ofChips)) {
-  grid-template-rows: auto auto auto auto auto auto auto 1fr auto;
-  grid-template-areas: "head head" "photo photo" "link price" "specs price" "market verdict" "equipment verdict" "equipment seller" ". ." "foot foot";
-}
-.isMarket-bottom [data-block="market"] { display: flex; flex-direction: column; }
-.isMarket-bottom [data-block="market"] .ofAdAge { margin-top: auto; }
+/* Under the portal's bar (owner 2026-10-11): its whole scale band by band, or
+   this car's price changes when Carvago knows them. */
 .ofBandList { list-style: none; margin: 8px 0 0; padding: 8px 0 0; border-top: 1px dashed var(--of-line); display: grid; gap: 4px; font-size: 11px; }
 .ofBandList li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto auto; align-items: center; gap: 7px; color: var(--of-muted); }
 .ofBandList i { width: 10px; height: 10px; border-radius: 3px; }
@@ -1061,3 +1052,14 @@
 .ofPriceFacts > div { font-size: 12.5px; }
 .ofCalcShot[style*="height"] { width: auto; max-width: 100%; margin: 0 auto; }
 .ofBandList { gap: 2px; margin-top: 6px; padding-top: 6px; font-size: 11px; }
+.ofMoveHead { margin: 8px 0 0; padding-top: 6px; border-top: 1px dashed var(--of-line); font-size: 11px; font-weight: 700; color: var(--of-ink); }
+.ofMoveList { margin-top: 2px; padding-top: 2px; border-top: 0; grid-template-columns: none; }
+.ofMoveList li { grid-template-columns: 14px minmax(0, 1fr) auto; }
+.ofMoveList i { width: auto; height: auto; font-style: normal; font-weight: 800; text-align: center; }
+.ofMoveList li.isDown i, .ofMoveList li.isDown b { color: #1d6a3b; }
+.ofMoveList li.isUp i, .ofMoveList li.isUp b { color: #b4442b; }
+.ofMoveList li.isSince b { color: var(--of-ink); }
+/* The price plate a little narrower (owner 2026-10-11), right-aligned. */
+.isPremium[data-page="1"] .ofPriceBox { width: 88%; justify-self: end; }
+.ofPage .ofPrice { white-space: nowrap; }
+.ofPage .ofPrice .ofPriceAd { white-space: normal; }
