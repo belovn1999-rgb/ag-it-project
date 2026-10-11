@@ -20,7 +20,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
-    sourceClass, statsOfOffers, stillListed, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
+    sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates
   } = ctx;
 
@@ -1476,8 +1476,9 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       return { source, current, compared, rows, silent, shownAt: shown?.at || "", reason: silent ? portalFailure(record, source) : "" };
     });
     const carsNow = carsOf(perSource.map((item) => item.current));
+    const carsBefore = carsOf(perSource.map((item) => item.compared));
     perSource.forEach((item) => {
-      item.rows = item.rows.filter(stillListed(carsNow));
+      item.rows = notNewIfListedBefore(item.rows.filter(stillListed(carsNow)), carsBefore);
     });
     const silentNames = perSource.filter((item) => item.silent).map((item) => portalName(item.source));
     if (info && silentNames.length) {

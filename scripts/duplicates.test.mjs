@@ -20,7 +20,7 @@ function functionSource(name) {
   throw new Error(`${name}: no end`);
 }
 const preference = source.match(/const OFFER_PREFERENCE = [^\n]+/)[0];
-const { sameCarKey, uniqueOffers, dropMobileDuplicates } = new Function(`const listingSource = (listing) => listing.source;\n${preference}\n${["sameCarKey", "uniqueOffers", "dropMobileDuplicates"].map(functionSource).join("\n")}\nreturn { sameCarKey, uniqueOffers, dropMobileDuplicates };`)();
+const { sameCarKey, uniqueOffers, dropMobileDuplicates, notNewIfListedBefore } = new Function(`const listingSource = (listing) => listing.source;\n${preference}\n${["sameCarKey", "uniqueOffers", "dropMobileDuplicates", "notNewIfListedBefore"].map(functionSource).join("\n")}\nreturn { sameCarKey, uniqueOffers, dropMobileDuplicates, notNewIfListedBefore };`)();
 
 const car = (source, price, mileage, year, extra = {}) => ({ source, price, mileage, year, currency: "EUR", url: `https://${source}/${price}-${mileage}-${year}`, ...extra });
 
@@ -51,4 +51,14 @@ test("the copy kept is the main portal's", () => {
   const kept = uniqueOffers([car("kleinanzeigen", 16690, 92500, 2020), car("mobile", 16690, 92500, 2020)]);
   assert.equal(kept.length, 1);
   assert.equal(kept[0].source, "mobile");
+});
+
+test("a car the last check showed on another portal is not new (N1, KONA 08→09.10)", () => {
+  const yesterday = new Set([sameCarKey(car("mobile", 15440, 74559, 2020))]);
+  const rows = notNewIfListedBefore([
+    { source: "autoscout", offer: car("autoscout", 15440, 74559, 2020), group: "new", status: "new" },
+    { source: "autoscout", offer: car("autoscout", 16990, 41000, 2021), group: "new", status: "new" },
+    { source: "autoscout", offer: car("autoscout", 15440, 74559, 2020), gone: true, group: "gone", status: "gone" },
+  ], yesterday);
+  assert.deepEqual(rows.map((row) => row.group), ["same", "new", "gone"]);
 });

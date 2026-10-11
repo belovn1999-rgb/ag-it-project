@@ -5335,6 +5335,12 @@
   const carSignature = (offer) => sameCarKey(offer);
   const carsOf = (markets) => new Set(markets.flatMap((market) => (market?.offers || []).map(carSignature)).filter(Boolean));
   const stillListed = (cars) => (row) => !row.gone || !cars.has(carSignature(row.offer));
+  // The other side (N1, 2026-10-11): a car the compared check had on another
+  // portal is not "new" — one car, one offer, and which portal's copy is kept
+  // can change between checks (KONA 08→09.10: 9 of 16 "new" were such cars).
+  function notNewIfListedBefore(rows, carsBefore) {
+    return rows.map((row) => (row.group === "new" && carsBefore.has(sameCarKey(row.offer)) ? { ...row, group: "same", status: "" } : row));
+  }
   // Why a portal gave nothing, in the manager's words ("" = no answer).
   function portalFailure(record, source) {
     const c = copy();
@@ -5399,6 +5405,7 @@
     const pct = (value) => `${value > 0 ? "+" : ""}${numbers.format(Math.round(value * 10) / 10)}%`;
     const allRows = [];
     const carsThatDay = carsOf(Object.values(record.markets || {}));
+    const carsBefore = compareRecord ? carsOf(Object.values(compareRecord.markets || {})) : new Set();
     const markets = sources.map((source) => {
       // A portal without an answer that day (or not asked then) has no list:
       // neither its offers "gone" nor all of them "new" (audit 2026-10-10).
@@ -5414,8 +5421,8 @@
         </div>`;
       }
       // Checks of other budget borders: only the cars inside both (p. 18).
-      const rows = withinBothBands(offerChanges(source, current, compared), bandAt(at, source), compared ? bandAt(compareAt, source) : null, SOURCE_CURRENCY[source])
-        .filter(stillListed(carsThatDay));
+      const rows = notNewIfListedBefore(withinBothBands(offerChanges(source, current, compared), bandAt(at, source), compared ? bandAt(compareAt, source) : null, SOURCE_CURRENCY[source])
+        .filter(stillListed(carsThatDay)), carsBefore);
       allRows.push(...rows);
       const count = (group) => rows.filter((row) => row.group === group).length;
       const cheaper = rows.filter((row) => row.group === "cheaper");
@@ -5531,7 +5538,7 @@
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
-    sourceClass, statsOfOffers, stillListed, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
+    sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates,
     get BRAND_LOGOS() { return BRAND_LOGOS; },
     get activeAnalysis() { return activeAnalysis; },
