@@ -355,6 +355,9 @@ def main():
             # Negative: the same engine was also sold without it (the ad has to say it; no lower excise by itself).
             if mild and "бывает и без него" in row["Топливо: примечание"]:
                 mild = -mild
+            # The portals file a mild hybrid under petrol / diesel (owner 2026-10-11): so do the page's lists.
+            if mild:
+                fuel = {"hybrid_petrol": "petrol", "hybrid_diesel": "diesel"}.get(fuel, fuel)
             entry["versions"].add((gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
                                    int(row["Мощность, кВт"] or 0), GEARBOX.get(row["Коробка"], ""),
                                    DRIVE.get(row["Привод"], ""), mild, token(row["Марка"], row["Версия"])))

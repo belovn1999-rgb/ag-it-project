@@ -5806,7 +5806,7 @@
       const narrowed = rows.filter((row) => row[8] === found.token);
       if (narrowed.length) rows = narrowed;
     }
-    rows = rows.filter((row) => (!fuels.length || fuels.includes(row[1]) || (row[7] && fuels.includes(row[1] === "diesel" ? "hybrid_diesel" : "hybrid_petrol")))
+    rows = rows.filter((row) => (!fuels.length || fuels.includes(row[1]))
       && (!ccFrom || row[2] >= ccFrom) && (!ccTo || row[2] <= ccTo));
     if (!rows.length || typeof classifyEngineType !== "function") return { index: fallback, classes: [fallback], settled: true };
     const fuelText = { electric: "electric", plugin: "plug-in hybrid", hybrid_petrol: "hybrid petrol", hybrid_diesel: "hybrid diesel", diesel: "diesel", petrol: "petrol" };

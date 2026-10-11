@@ -362,6 +362,8 @@
       const named = makeModel([ad.make, ad.model].filter(Boolean).join(" ") || ad.title);
       const fromTitle = named.brand ? named : makeModel(ad.title);
       current = { source, url, ad, adKey: adKeyOf(source, url), brand: fromTitle.brand || ad.make || "", model: fromTitle.model || ad.model || "" };
+      // The model table of the make (mild hybrids, B61) before the offer counts its excise.
+      await window.AUTOGOOD_MODEL_SPECS_UI?.ready?.(current.brand);
       method = "";
       carBox.innerHTML = carHtml();
       carBox.hidden = false;
@@ -397,7 +399,14 @@
     const price = currency === "EUR" ? gross : currency === "SEK" ? (gross * rates.sek) / rates.eur : currency === "PLN" ? gross / rates.eur : 0;
     if (!price) return null;
     const tariff = ad.tariff || { transport: turnkey.AVERAGE_TRANSPORT_NETTO, inspection: turnkey.AVERAGE_INSPECTION_NETTO, rule: "average" };
-    const engine = turnkey.engineInfo({ fuel: ad.specs?.fuel, title: ad.title, displacementCcm: ad.specs?.ccm }, {});
+    // Make, model, year, power and gearbox find a mild hybrid in the model table (B61): its excise is
+    // the hybrid's in all of Poland (owner 2026-10-11).
+    const engine = turnkey.engineInfo({
+      fuel: ad.specs?.fuel, title: ad.title, displacementCcm: ad.specs?.ccm,
+      brand: current?.brand, model: current?.model, year: ad.specs?.firstRegistration,
+      power: ad.specs?.powerHp ? `${ad.specs.powerHp} PS` : ad.specs?.powerKw ? `${ad.specs.powerKw} kW` : "",
+      gearbox: ad.specs?.gearbox,
+    }, {});
     const result = turnkey.turnkeyDirect({
       carBruttoEur: price,
       rate: rates.eur,

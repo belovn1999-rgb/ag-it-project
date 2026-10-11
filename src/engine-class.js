@@ -50,7 +50,7 @@ function classifyEngineType(fuel, displacementCcm) {
   const isElectric = /elect|[eé]lectr|elektro|elektri|elektry|\bbev\b/.test(normalized) && !burnsFuel;
   // Any hybrid, mild ones too (MHEV, 48V, eTSI, EQ Boost), takes the reduced
   // excise (owner, 2026-10-03). "\bhev" keeps "Chevrolet" out.
-  const isHybrid = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b/.test(normalized)
+  const isHybrid = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b|ecodynamics|\be-tec\b|\be-skyactiv/.test(normalized)
     || /(elektro|electric)\s*\/\s*(benzin|diesel|petrol)|(benzin|diesel|petrol)\s*\/\s*(elektro|electric)/.test(normalized);
   if (isElectric && !isHybrid) return 0;
   if (isPlugIn) return isOver2000 ? 1 : 0;

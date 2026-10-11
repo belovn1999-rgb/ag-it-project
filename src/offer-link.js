@@ -84,7 +84,9 @@
     const tariff = typeof estimateDeliveryInspection === "function"
       ? estimateDeliveryInspection(offer.body || "", { country: offer.country || "DE", postalCode: offer.zip || "", city: offer.city || "" })
       : { transport: turnkey.AVERAGE_TRANSPORT_NETTO, inspection: turnkey.AVERAGE_INSPECTION_NETTO, rule: "average" };
-    const engine = turnkey.engineInfo({ fuel: offer.fuel, title: offer.title, displacementCcm: offer.ccm }, filters || {});
+    const engine = turnkey.engineInfo({
+      fuel: offer.fuel, title: offer.title, displacementCcm: offer.ccm, year: offer.year || offer.reg, power: offer.power, gearbox: offer.gearbox,
+    }, filters || {});
     const price = Number(offer.price) || 0;
     const currency = offer.currency || "EUR";
     const carBruttoEur = currency === "EUR" ? price : currency === "SEK" ? (price * rates.sek) / rates.eur : price / rates.eur;

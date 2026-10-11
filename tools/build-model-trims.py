@@ -504,6 +504,15 @@ def main():
                 "brand": brand, "model": model, "label": label, "code": code, "phase": phase, "years": years,
                 "trims": trims, "sport": sport, "special": special, "sources": sources, "status": status, "note": note,
             })
+    # The 333 stage-6 models (autocentrum, variants A and B): read from pl/de Wikipedia by
+    # tools/collect-trims-wiki.py (owner 2026-10-10); the hand-collected rows above win.
+    wiki_path = os.path.join(ROOT, "data", "model-trims-wiki.json")
+    wiki_rows = []
+    if os.path.exists(wiki_path):
+        with open(wiki_path, encoding="utf8") as handle:
+            taken = {(brand, model) for brand, model, _label in TRIMS}
+            wiki_rows = [r for r in json.load(handle)["rows"] if (r["brand"], r["model"]) not in taken]
+    rows += wiki_rows
     with open(os.path.join(ROOT, "data", "model-trims.json"), "w", encoding="utf8") as handle:
         json.dump({"generatedAt": today, "market": "EU (PL/DE)", "rows": rows}, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
@@ -543,6 +552,23 @@ def main():
             if note:
                 trims_text += f"<br><small>{note}</small>"
             lines.append(f"| {code} | {phase} | {years} | {trims_text} | {', '.join(sport) or '—'} | {', '.join(special) or '—'} | {status} | {src} |")
+        lines.append("")
+    if wiki_rows:
+        lines += [
+            "", "## Новые модели — из Википедии (этап 6, 10-10)", "",
+            f"> {len(wiki_rows)} строк по {len({(r['brand'], r['model']) for r in wiki_rows})} моделям, собраны "
+            "`tools/collect-trims-wiki.py` из разделов «Wersje wyposażeniowe» (pl) и «Ausstattungsvarianten /",
+            "> -linien» (de) статьи того поколения (годы выпуска из карточки статьи). «проверено» — обе Википедии",
+            "> называют хотя бы одну и ту же линейку; «частично проверено» — один язык. Однобуквенные линейки",
+            "> (Kia S / M / L) не берутся: такого слова в объявлении не найти. Линейки Германии (de) с месяцами",
+            "> продаж — только в тех этапах, когда продавались.", "",
+            "| Марка | Модель | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии | Статус | Источники |",
+            "|---|---|---|---|---|---|---|---|---|---|",
+        ]
+        for r in wiki_rows:
+            src = ", ".join(f"[{i + 1}]({url})" for i, url in enumerate(r["sources"])) or "—"
+            lines.append(f"| {r['brand']} | {r['label']} | {r['code']} | {r['phase']} | {r['years']} | {', '.join(r['trims']) or '—'} | "
+                         f"{', '.join(r['sport']) or '—'} | {', '.join(r['special']) or '—'} | {r['status']} | {src} |")
         lines.append("")
     with open(os.path.join(ROOT, "docs", "MODEL-TRIMS.md"), "w", encoding="utf8") as handle:
         handle.write("\n".join(lines).rstrip("\n") + "\n")

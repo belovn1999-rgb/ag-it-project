@@ -22,9 +22,9 @@ import re
 # Words a version name uses for a mild hybrid. Not "Hybrid" alone: that is a
 # full hybrid (Toyota, Kia HEV, Ford FHEV) or a Stellantis 48 V "Hybrid", which
 # our table already files under "гибрид".
-MILD_NAME = re.compile(r"mild[- ]?hybrid|\bmhev\b|\bm[- ]?hybrid\b|\b48 ?v\b|\be-?tsi\b|\be-?tec\b|eq[- ]?boost|"
+MILD_NAME = re.compile(r"mild[- ]?hybrid|mild[- ]?hev|\bmhev\b|\bm[- ]?hybrid\b|\b48 ?v\b|\be-?tsi\b|\be-?tec\b|eq[- ]?boost|"
                        r"ecoboost (\d+ ?hp )?hybrid|ecoblue hybrid|hybrid ?assist|e-skyactiv|\bmh\b|\bisg\b", re.I)
-FULL_HYBRID_NAME = re.compile(r"\b(f?hev|hsd|full hybrid|e-tech|hybrid dynamic|plug|phev|activehybrid)\b", re.I)
+FULL_HYBRID_NAME = re.compile(r"(?<!mild )(?<!mild-)\b(f?hev|hsd|full hybrid|e-tech|hybrid dynamic|plug|phev|activehybrid)\b", re.I)
 
 M, A = "m", "a"
 
@@ -72,7 +72,9 @@ RULES = [
     R("Audi", ["A3"], "petrol", [116, 150], None, A, 2020, None, "48V", "Audi MediaCenter 2020",
       ["8Y"], "de: Audi A3 8Y — «35 TFSI mit Doppelkupplungsgetriebe … 48-V-Bordnetz für den Mildhybridantrieb»; Tabelle 116 PS (2024)"),
     R("Audi", ["Q3"], "petrol", [150], 1.5, A, 2025, None, "48V", "Audi MediaCenter 2025", ["FJ"]),
-    R("Audi", ["A5"], None, [204, 367], 2.0, None, 2024, None, "48V", "Audi MediaCenter 2024", ["B10"]),
+    # A5 B10: "MHEV plus" for the TDI and the S5 V6 only; the 2.0 TFSI has none (Audi MediaCenter 2024).
+    R("Audi", ["A5"], "diesel", [204], 2.0, None, 2024, None, "48V", "Audi MediaCenter 2024", ["B10"]),
+    R("Audi", ["A5"], "petrol", [367], 3.0, None, 2024, None, "48V", "Audi MediaCenter 2024", ["B10"]),
     # BMW
     R("BMW", ["Seria 3"], "diesel", [150, 190, 286, 340], None, None, 2020, None, "48V", "BMW PressClub 03/2020",
       ["G20"], "de: BMW G20 — 318d/320d «ab 02/2020», 330d/M340d «ab 11/2020 mit 48V Mild-Hybrid-Technologie»"),

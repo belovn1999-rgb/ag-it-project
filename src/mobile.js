@@ -3811,8 +3811,8 @@ function estimateDeliveryInspection(bodyType, location) {
 
 const ENGINE_TYPE_LABELS = [
   "EL / PHEV <=2000cm³",
-  "PHEV / HEV >2000cm³",
-  "HEV <=2000cm³",
+  "PHEV / HEV / MHEV >2000cm³",
+  "HEV / MHEV <=2000cm³",
   "Spalinowy <=2000cm³",
   "Spalinowy >2000cm³",
 ];

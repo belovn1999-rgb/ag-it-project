@@ -103,7 +103,7 @@
 
   // Any hybrid named anywhere (mild ones too: MHEV, 48V, eTSI, EQ Boost)
   // takes the reduced excise (owner, 2026-10-03). Plug-ins only when named.
-  const HYBRID_WORDS = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b/;
+  const HYBRID_WORDS = /hybrid|hybryd|\b[mp]?hev\b|mild|\b48\s?v\b|\be-?tsi\b|eq[\s-]?boost|\bshvs\b|ecodynamics|\be-tec\b|\be-skyactiv/;
   // The model names of plug-ins (eHybrid, GTE, TFSI e, 330e…): one list
   // with the link reader (src/mobile.js isPluginHybridText).
   const PLUGIN_WORDS = /plug|\bphev\b|laddhybrid|e-hybrid/;

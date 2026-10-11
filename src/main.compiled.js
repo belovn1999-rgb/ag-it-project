@@ -351,16 +351,16 @@ const engineTypes = [{
   rate: 0
 }, {
   label: {
-    pl: "PHEV / HEV >2000cm³",
-    ru: "PHEV / HEV >2000см³",
-    en: "PHEV / HEV >2000cc"
+    pl: "PHEV / HEV / MHEV >2000cm³",
+    ru: "PHEV / HEV / MHEV >2000см³",
+    en: "PHEV / HEV / MHEV >2000cc"
   },
   rate: 0.093
 }, {
   label: {
-    pl: "HEV <=2000cm³",
-    ru: "HEV <=2000см³",
-    en: "HEV <=2000cc"
+    pl: "HEV / MHEV <=2000cm³",
+    ru: "HEV / MHEV <=2000см³",
+    en: "HEV / MHEV <=2000cc"
   },
   rate: 0.0155
 }, {

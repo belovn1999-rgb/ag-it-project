@@ -443,6 +443,7 @@ SPEEDS = re.compile(r"\b\d+[ -]?(speeds?|sp|g)\b\.?", re.I)
 
 # Full hybrids the source keeps under "Petrol Engines" (Toyota Hybrid, Renault E-Tech, Mondeo Hybrid...).
 FULL_HYBRID = re.compile(r"(\bhybrid\b(?!4)|activehybrid|\bf?hev\b|\bfull hybrid\b|\be-tech\b(?! plug)|\bhsd\b)", re.I)
+DIESEL_NAME = re.compile(r"\b(crdi|tdi|cdti|dci|hdi|bluehdi|ecoblue|d-4d|d-4t|diesel)\b|\b\d{3} ?d\b", re.I)
 # Checked first: "M340i Mild Hybrid", Ford "EcoBoost Hybrid" (48 V) are mild hybrids.
 MILD_HYBRID = re.compile(r"(\bmhev\b|mild[- ]?hybrid|\betsi\b|\b48 ?v\b|eq boost|\bmild\b|ecoboost (\d+hp )?hybrid)", re.I)
 
@@ -613,6 +614,13 @@ def main():
                 print(f"   autocentrum: {name}: {count}")
         # Mild hybrids (since 2016): the makers' rules checked against both databases and Wikipedia
         # (tools/mild_hybrids.py). Only a confirmed one counts; the rest goes to docs/MODEL-MILD-HYBRIDS.md.
+        # A diesel the source files under petrol (Kia Sportage "1.6 CRDi MHEV", Mercedes "220d EQ Boost",
+        # Renault "1.5 dCi"): its name decides (owner 2026-10-11: a mild diesel must find its row).
+        for row in rows:
+            if row["Топливо"] in ("бензин", "гибрид") and DIESEL_NAME.search(row["Версия"]):
+                row["Топливо"] = "дизель" if row["Топливо"] == "бензин" else "гибрид (дизель)"
+                row["Топливо: примечание"] = (row["Топливо: примечание"] + "; " if row["Топливо: примечание"] else "") + \
+                    "дизель по названию версии (в источнике бензин)"
         decisions = mild_hybrids.classify(rows, ac)
         for row in rows:
             found = decisions.get(id(row))
@@ -717,7 +725,7 @@ def write_mild_report(rows, decisions):
         "de.wikipedia — только с 12/2023 (взято 2024); Mazda2 — M Hybrid с рестайлинга 2020 у Mazda, с 10/2021 в",
         "de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взято 2021). Везде, где источники расходятся, взята",
         "более поздняя дата: акциз в расчёте тогда не занижается. 12-вольтовые системы (Audi 4-цилиндровые, Renault 1.3 TCe, Nissan 1.3/1.5) — тоже",
-        "мягкие гибриды, но признание их гибридом для акциза спорнее, чем 48 В: решает владелец (сейчас — льготно).",
+        "мягкие гибриды: льготный акциз, как у 48 В (решение владельца 2026-10-11 — любой MHEV во всей Польше).",
         "",
         "| Марка | Модель | Поколение | Топливо | Объём, л | Л.с. | С года | Система | Коробка | Пример версии | Статус | Источники |",
         "|---|---|---|---|---|---|---|---|---|---|---|---|",

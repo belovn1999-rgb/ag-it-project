@@ -337,8 +337,8 @@ const copy = {
 
 const engineTypes = [
   { label: { pl: "EL / PHEV <=2000cm³", ru: "Электро / PHEV <=2000см³", en: "Electric / PHEV <=2000cc" }, rate: 0 },
-  { label: { pl: "PHEV / HEV >2000cm³", ru: "PHEV / HEV >2000см³", en: "PHEV / HEV >2000cc" }, rate: 0.093 },
-  { label: { pl: "HEV <=2000cm³", ru: "HEV <=2000см³", en: "HEV <=2000cc" }, rate: 0.0155 },
+  { label: { pl: "PHEV / HEV / MHEV >2000cm³", ru: "PHEV / HEV / MHEV >2000см³", en: "PHEV / HEV / MHEV >2000cc" }, rate: 0.093 },
+  { label: { pl: "HEV / MHEV <=2000cm³", ru: "HEV / MHEV <=2000см³", en: "HEV / MHEV <=2000cc" }, rate: 0.0155 },
   { label: { pl: "Spalinowy <=2000cm³", ru: "ДВС <=2000см³", en: "Combustion <=2000cc" }, rate: 0.031 },
   { label: { pl: "Spalinowy >2000cm³", ru: "ДВС >2000см³", en: "Combustion >2000cc" }, rate: 0.186 },
 ];

@@ -202,10 +202,10 @@
     };
   }
 
+  // A mild hybrid is petrol / diesel here, as on every portal (owner 2026-10-11): "Hybryda"
+  // means a full hybrid, so the lists and the portal counts stay as they were.
   function fuelMatches(row, fuels) {
-    if (!fuels.length) return true;
-    if (fuels.includes(row[1])) return true;
-    return Boolean(row[7]) && fuels.includes(row[1] === "diesel" ? "hybrid_diesel" : "hybrid_petrol");
+    return !fuels.length || fuels.includes(row[1]);
   }
 
   function filtered(sel, { fuel = true, size = true, power = true } = {}) {
@@ -374,6 +374,7 @@
   }
 
   function enhance(sets) {
+    if (!hasForm()) return sets;
     const sel = selection();
     if (!sel) return { ...sets, version: [] };
     return {
@@ -410,6 +411,7 @@
   // Values of a page-1 list (doors, seats, sliding door) no body of the model
   // has: dimmed in the list (mobile.js asks while drawing it).
   function unavailableOptions(setName) {
+    if (!hasForm()) return null;
     const sel = selection();
     const bodies = sel ? bodiesOf(sel) : [];
     if (!bodies.length) return null;
@@ -426,7 +428,11 @@
   }
   window.AUTOGOOD_COMBO_UNAVAILABLE = unavailableOptions;
 
+  // Pages without the page-1 form (oferty.html) use only mildHybridFor() / ready().
+  const hasForm = () => typeof els !== "undefined" && Boolean(els?.brand);
+
   function refresh() {
+    if (!hasForm()) return;
     const sel = selection();
     const bodyInputs = Array.from(document.querySelectorAll("[data-mobile-body-choice]"));
     if (!sel) {
@@ -445,7 +451,6 @@
     const fuels = new Set();
     fuelRows.forEach((row) => {
       fuels.add(row[1]);
-      if (row[7]) fuels.add(row[1] === "diesel" ? "hybrid_diesel" : "hybrid_petrol");
     });
     dim(els.fuels, fuelRows.length ? fuels : null);
     const rows = filtered(sel);

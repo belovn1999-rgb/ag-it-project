@@ -20,7 +20,7 @@
  */
 (() => {
   const VAT_RATES = { DE: 0.19, AT: 0.2, FR: 0.2, NL: 0.21, BE: 0.21, LU: 0.17, IT: 0.22, ES: 0.21, SE: 0.25, DK: 0.25, CZ: 0.21, SK: 0.23 };
-  const ENGINE_LABELS = ["EL / PHEV ≤2000 cm³", "PHEV / HEV >2000 cm³", "HEV ≤2000 cm³", "Spalinowy ≤2000 cm³", "Spalinowy >2000 cm³"];
+  const ENGINE_LABELS = ["EL / PHEV ≤2000 cm³", "PHEV / HEV / MHEV >2000 cm³", "HEV / MHEV ≤2000 cm³", "Spalinowy ≤2000 cm³", "Spalinowy >2000 cm³"];
   const TABS = [
     { tab: 0, key: "direct" },
     { tab: 3, key: "vat" },
