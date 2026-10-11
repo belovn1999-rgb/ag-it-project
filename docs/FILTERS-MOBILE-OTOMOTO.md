@@ -812,6 +812,22 @@ CV: 5–7 CV → 835), привод, объём, места, цвета, сал�
 | AutoScout24 DE/NL/BE/FR | `atype=X` (= `/lst-transporter`; Sprinter DE 730) | slug модели, как у легковых | все, кроме перечисленных справа | кузов, двери, оснащение `eq`, обивка, цвет салона, тип краски |
 | Kleinanzeigen, Marktplaats, 2dehands, Blocket, ParuVendu, av.by | в программе нет | — | — | в режиме «Dostawcze» не читаются, на стр. 1 «—» с подсказкой |
 
+**Фильтры фургонов (волна 2, 10-11)** — карточка «Dostawczy» на стр. 1, видна только в режиме «Dostawcze»:
+
+| Поле формы | mobile.de | otomoto | AutoScout24 |
+|---|---|---|---|
+| Typ zabudowy (`vanBody`) | `c`: furgon = BoxTypeDeliveryVan + High…/Long…/HighAndLong…, skrzynia = StakeBodyVan, plandeka = StakeBodyWithTarpaulinVan, wywrotka = TipperVan, chłodnia = RefrigeratorBox + RefrigeratorBodyVan, kontener = BoxVan, mikrobus = EstateMinibusUpTo9SeatsVan, podwozie = ChassisVan, autolaweta = CarCarrierVan; podwójna kabina = `dc=DOUBLE_CABIN` | часть пути: `/dostawcze/<марка>/furgon-blaszak/q-<модель>` (skrzynia, plandeka, wywrotka, chlodnia-izoterma, kontener, mikrobus, doka, do-zabudowy, autolaweta); параметр `filter_enum_body_type` даёт 0 | ✗ (`body=204` даёт 0) |
+| DMC, kg (`vanGvwFrom/To`) | `lw` | `filter_float_max_cargo_weight` | ✗ |
+| Ładowność, kg (`vanPayloadFrom/To`) | ✗ (нет фильтра) | `filter_float_max_weight` | ✗ |
+| Pojemność ładunkowa, m³ (`vanVolumeFrom/To`) | ✗ | `filter_float_max_cargo` | ✗ |
+| Długość L1–L5 (`vanLength`) | `lt` | ✗ | ✗ |
+| Wysokość H1–H3 (`vanHeight`) | `ht` | ✗ | ✗ |
+
+Проверено 2026-10-11 (Ford Transit, дилер): otomoto furgon + DMC ≤ 3 500 + ładowność ≥ 1 000 = 114; mobile.de
+Kastenwagen + `lw=:3500` + L3 = 223; mobile.de по отдельности: Kastenwagen 4 402, Pritsche 449, Kombi до 9 мест 490,
+Kipper 88, Doppelkabine 485, DMC ≤ 3 500 — 4 546, L3 — 579, H2 — 501. Названия фильтров mobile.de — из описания
+фильтров страницы поиска (`queryParameter`), прочитанного через Chrome импортера.
+
 **Родственные модели.** Описание mobile.de и слова otomoto находят и модели с тем же началом: «Transit» ⊃ Transit
 Custom / Connect / Courier. Число на стр. 1 = число по модели − числа родственных (`vanSiblingModels`, Transit 2019+
 дизель механика дилер на otomoto: 442 − 217 = 225); в анализе и Monitoring объявления с названием родственной модели

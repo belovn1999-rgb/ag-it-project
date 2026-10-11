@@ -348,9 +348,12 @@ klienta».** Из найденного в Monitoring объявления кно
   оффере.
 - История и избранное: поле `category` в фильтрах записи (старые записи — легковые), «Dostawcze» первым в строке
   параметров; ссылка объявления из `/dostawcze/` или AutoScout24 Transporter включает «Dostawcze».
-- Не сделано (волна 2): фильтры фургонов (масса, грузоподъёмность, длина/высота L/H, объём груза), «Oba» (оба
-  раздела сразу), разделы фургонов Kleinanzeigen / Marktplaats / 2dehands / Blocket / ParuVendu, комплектации
-  коммерческих моделей.
+- Волна 2 (10-11): карточка «Dostawczy» (только в режиме «Dostawcze») — Typ zabudowy, DMC, ładowność, pojemność
+  ładunkowa, długość L1–L5, wysokość H1–H3; у каждого поля подписано, какой портал его принимает (FILTERS §5i).
+  AutoScout24 эти фильтры не принимает. Комплектации коммерческих — из прайс-листов и прессы производителей
+  (`data/model-trims-commercial.json`).
+- Не сделано: «Oba» (оба раздела сразу), разделы фургонов Kleinanzeigen / Marktplaats / 2dehands / Blocket /
+  ParuVendu, фильтры фургонов AutoScout24.
 
 ### 4.2g Франция — ParuVendu (с 10-05, B47)
 - Рынок `paruvendu` — второй портал Франции (~90 % дилеры): стр. 1 (логотип в колонке
@@ -2051,6 +2054,7 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-11 | Claude | **B75, волна 2 — фильтры фургонов:** карточка «Dostawczy» (`data-mobile-van-card`, поля `vanBody`, `vanGvwFrom/To`, `vanPayloadFrom/To`, `vanVolumeFrom/To`, `vanLength`, `vanHeight`, `VAN_BODY` в `mobile.js`): mobile.de `c` / `dc` / `lw` / `lt` / `ht`, otomoto — кузов частью пути, DMC / ładowność / objętość; тест mobile.de дополнен; проверено по числам (FILTERS §5i) | этот коммит |
 | 10-11 | Claude | **B75 — коммерческие, волна 1:** переключатель «Osobowe / Dostawcze» (`filters.category`, `showCategory`, `isVanSearch` в `mobile.js`); mobile.de `s=Truck&vc=VanUpTo7500` + модель описанием, otomoto `/dostawcze/<марка>/q-<модель>`, AutoScout24 `atype=X`; остальные порталы в режиме фургонов не читаются (`VAN_SOURCES`), «—» на стр. 1; числа без родственных моделей (`vanSiblingModels`), объявления родственных отброшены (`vanTitleFits`); акциз — класс 5 «Dostawczy N1» 0 % (`turnkey-estimate.js`, калькулятор, окно, сноска, оффер), пассажирские по названию — как легковые; «Dostawcze» в строке истории. Проверено по числам: Transit 2019+ дизель механика дилер — otomoto 442 − 217 = 225, AutoScout24 274, mobile.de 3 767 (до вычета) | этот коммит |
 | 11-10 | Claude | **Monitoring: год в причине «Blisko filtrów» без пробела** («rok 2019 … od 2020», было «2 019» — регрессия волны 2, `useGrouping: "always"`); `nearMissText` в `mobile-monitoring.js`, пробег и мощность по-прежнему с пробелами. Найдено повторным аудитом 11.10 | этот коммит |
 | 10-11 | Claude | **B61 — комплектации, второй проход:** у 185 моделей без списка — французская, итальянская и нидерландская Википедия («Finitions», «Allestimenti», «Uitvoeringen»; названия, которыми пишут объявления порталов Франции и Нидерландов), блоки поколений и по заголовкам с годами; английская Википедия не берётся (линейки США/Китая/Индии), статьи других рынков («Arkana (Russie)») и общие статьи нескольких марок (Berlingo/Combo/Rifter) отброшены, цвета и опции отсеяны. Итог: 375 строк, 188 из 333 новых моделей (Sportage, Tucson/Kona, Niro, Taigo, ID.4/5/7, up!, Micra, Koleos, Rafale, EQA, C5 X, EX30…); у 145 списков нет ни в одной Википедии | этот коммит |

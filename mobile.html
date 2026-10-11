@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <link rel="stylesheet" href="./src/mobile-page1.css?v=rail-dim-1110" />
-    <link rel="stylesheet" href="./src/mobile-model-specs.css?v=van2-1011" />
+    <link rel="stylesheet" href="./src/mobile-model-specs.css?v=van3-1011" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=fix3-1011" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
     <link rel="stylesheet" href="./src/offer-link.css?v=b71-1" />
@@ -261,6 +261,69 @@
                     </div>
                   </label>
                 </div>
+              </div>
+            </section>
+            <section class="mobileFilterCard mobileVanCard" aria-labelledby="mobile-filter-group-van" data-mobile-van-card hidden>
+              <h2 id="mobile-filter-group-van" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="filterGroupVan">Dostawczy</span></h2>
+              <div class="mobileFilterCardBody">
+                <fieldset class="mobileField mobileChoiceField mobileWideField">
+                  <legend class="mobileFieldLegend"><span data-i18n="vanBodyLabel">Typ zabudowy</span> <small class="mobileVanPortals">otomoto, mobile.de</small></legend>
+                  <div class="mobileChoiceGroup mobileInlineChoiceGroup">
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="" checked /> <span data-i18n="vanAny">Dowolna</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="furgon" /> <span data-i18n="vanBodyFurgon">Furgon (blaszak)</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="skrzynia" /> <span data-i18n="vanBodySkrzynia">Skrzynia</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="plandeka" /> <span data-i18n="vanBodyPlandeka">Plandeka</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="wywrotka" /> <span data-i18n="vanBodyWywrotka">Wywrotka</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="chlodnia" /> <span data-i18n="vanBodyChlodnia">Chłodnia / izoterma</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="kontener" /> <span data-i18n="vanBodyKontener">Kontener</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="mikrobus" /> <span data-i18n="vanBodyMikrobus">Mikrobus / kombi do 9 miejsc</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="doka" /> <span data-i18n="vanBodyDoka">Podwójna kabina</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="podwozie" /> <span data-i18n="vanBodyPodwozie">Podwozie do zabudowy</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-body name="mobile-van-body" type="radio" value="autolaweta" /> <span data-i18n="vanBodyAutolaweta">Autolaweta</span></label>
+                  </div>
+                </fieldset>
+                <div class="mobileField mobileRangeField">
+                  <span class="mobileFieldLabel"><span data-i18n="vanGvwLabel">DMC (dopuszczalna masa całkowita)</span> <small class="mobileVanPortals">otomoto, mobile.de</small></span>
+                  <div class="mobileRangePair">
+                    <div class="mobileComboControl"><input data-mobile-van-gvw-from inputmode="numeric" autocomplete="off" placeholder="od" /><em>kg</em></div>
+                    <div class="mobileComboControl"><input data-mobile-van-gvw-to inputmode="numeric" autocomplete="off" placeholder="do" /><em>kg</em></div>
+                  </div>
+                </div>
+                <div class="mobileField mobileRangeField">
+                  <span class="mobileFieldLabel"><span data-i18n="vanPayloadLabel">Ładowność</span> <small class="mobileVanPortals">otomoto</small></span>
+                  <div class="mobileRangePair">
+                    <div class="mobileComboControl"><input data-mobile-van-payload-from inputmode="numeric" autocomplete="off" placeholder="od" /><em>kg</em></div>
+                    <div class="mobileComboControl"><input data-mobile-van-payload-to inputmode="numeric" autocomplete="off" placeholder="do" /><em>kg</em></div>
+                  </div>
+                </div>
+                <div class="mobileField mobileRangeField">
+                  <span class="mobileFieldLabel"><span data-i18n="vanVolumeLabel">Pojemność ładunkowa</span> <small class="mobileVanPortals">otomoto</small></span>
+                  <div class="mobileRangePair">
+                    <div class="mobileComboControl"><input data-mobile-van-volume-from inputmode="decimal" autocomplete="off" placeholder="od" /><em>m³</em></div>
+                    <div class="mobileComboControl"><input data-mobile-van-volume-to inputmode="decimal" autocomplete="off" placeholder="do" /><em>m³</em></div>
+                  </div>
+                </div>
+                <fieldset class="mobileField mobileChoiceField">
+                  <legend class="mobileFieldLegend"><span data-i18n="vanLengthLabel">Długość</span> <small class="mobileVanPortals">mobile.de</small></legend>
+                  <div class="mobileChoiceGroup mobileInlineChoiceGroup">
+                    <label class="mobileChoiceOption"><input data-mobile-van-length name="mobile-van-length" type="radio" value="" checked /> <span data-i18n="vanAny">Dowolna</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-length name="mobile-van-length" type="radio" value="L1" /> <span>L1</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-length name="mobile-van-length" type="radio" value="L2" /> <span>L2</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-length name="mobile-van-length" type="radio" value="L3" /> <span>L3</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-length name="mobile-van-length" type="radio" value="L4" /> <span>L4</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-length name="mobile-van-length" type="radio" value="L5" /> <span>L5</span></label>
+                  </div>
+                </fieldset>
+                <fieldset class="mobileField mobileChoiceField">
+                  <legend class="mobileFieldLegend"><span data-i18n="vanHeightLabel">Wysokość</span> <small class="mobileVanPortals">mobile.de</small></legend>
+                  <div class="mobileChoiceGroup mobileInlineChoiceGroup">
+                    <label class="mobileChoiceOption"><input data-mobile-van-height name="mobile-van-height" type="radio" value="" checked /> <span data-i18n="vanAny">Dowolna</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-height name="mobile-van-height" type="radio" value="H1" /> <span>H1</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-height name="mobile-van-height" type="radio" value="H2" /> <span>H2</span></label>
+                    <label class="mobileChoiceOption"><input data-mobile-van-height name="mobile-van-height" type="radio" value="H3" /> <span>H3</span></label>
+                  </div>
+                </fieldset>
+                <small class="mobileFieldNote mobileWideField" data-i18n="vanFiltersNote">AutoScout24 nie przyjmuje tych filtrów — liczy wszystkie dostawcze modelu. Pola z nazwą portalu działają tylko na nim.</small>
               </div>
             </section>
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-engine">
@@ -739,7 +802,7 @@
     <script src="./src/model-specs/index.js?v=trims2-1011"></script>
     <script src="./src/mobile-model-specs.js?v=mhev3-1011"></script>
     <script src="./src/engine-class.js?v=mhev3-1011"></script>
-    <script src="./src/mobile.js?v=van-1011"></script>
+    <script src="./src/mobile.js?v=van3-1011"></script>
     <script src="./src/blocket-search.js?v=w2-1010"></script>
     <script src="./src/marktplaats-catalog.generated.js?v=w2-1010"></script>
     <script src="./src/marktplaats-search.js?v=photo-1011"></script>

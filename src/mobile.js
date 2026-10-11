@@ -58,6 +58,25 @@ const copy = {
     gearboxAny: "Dowolny",
     bodyAny: "Dowolne",
     filterGroupVehicle: "Pojazd",
+    filterGroupVan: "Dostawczy",
+    vanAny: "Dowolna",
+    vanBodyLabel: "Typ zabudowy",
+    vanBodyFurgon: "Furgon (blaszak)",
+    vanBodySkrzynia: "Skrzynia",
+    vanBodyPlandeka: "Plandeka",
+    vanBodyWywrotka: "Wywrotka",
+    vanBodyChlodnia: "Chłodnia / izoterma",
+    vanBodyKontener: "Kontener",
+    vanBodyMikrobus: "Mikrobus / kombi do 9 miejsc",
+    vanBodyDoka: "Podwójna kabina",
+    vanBodyPodwozie: "Podwozie do zabudowy",
+    vanBodyAutolaweta: "Autolaweta",
+    vanGvwLabel: "DMC (dopuszczalna masa całkowita)",
+    vanPayloadLabel: "Ładowność",
+    vanVolumeLabel: "Pojemność ładunkowa",
+    vanLengthLabel: "Długość",
+    vanHeightLabel: "Wysokość",
+    vanFiltersNote: "AutoScout24 nie przyjmuje tych filtrów — liczy wszystkie dostawcze modelu. Pola z nazwą portalu działają tylko na nim.",
     categoryCars: "Osobowe",
     categoryVans: "Dostawcze",
     categoryHint: "Dostawcze: dział aut dostawczych portali (otomoto, mobile.de, AutoScout24); inne portale ich nie mają",
@@ -408,6 +427,25 @@ const copy = {
     gearboxAny: "Любая",
     bodyAny: "Любой",
     filterGroupVehicle: "Автомобиль",
+    filterGroupVan: "Фургон",
+    vanAny: "Любая",
+    vanBodyLabel: "Тип кузова",
+    vanBodyFurgon: "Цельнометаллический фургон",
+    vanBodySkrzynia: "Бортовой",
+    vanBodyPlandeka: "Тент",
+    vanBodyWywrotka: "Самосвал",
+    vanBodyChlodnia: "Рефрижератор / изотерм",
+    vanBodyKontener: "Будка (контейнер)",
+    vanBodyMikrobus: "Микроавтобус / комби до 9 мест",
+    vanBodyDoka: "Двойная кабина",
+    vanBodyPodwozie: "Шасси под надстройку",
+    vanBodyAutolaweta: "Эвакуатор / автовоз",
+    vanGvwLabel: "Полная масса (DMC)",
+    vanPayloadLabel: "Грузоподъёмность",
+    vanVolumeLabel: "Объём грузового отсека",
+    vanLengthLabel: "Длина",
+    vanHeightLabel: "Высота",
+    vanFiltersNote: "AutoScout24 эти фильтры не принимает — считает все фургоны модели. Поля с названием портала работают только на нём.",
     categoryCars: "Легковые",
     categoryVans: "Коммерческие",
     categoryHint: "Коммерческие: раздел фургонов порталов (otomoto, mobile.de, AutoScout24); у других порталов его в программе нет",
@@ -1474,6 +1512,16 @@ const els = {
   powerTo: document.querySelector("[data-mobile-power-to]"),
   powerUnit: document.querySelector("[data-mobile-power-unit]"),
   category: document.querySelector("[data-mobile-category]"),
+  vanBodies: Array.from(document.querySelectorAll("[data-mobile-van-body]")),
+  vanLengths: Array.from(document.querySelectorAll("[data-mobile-van-length]")),
+  vanHeights: Array.from(document.querySelectorAll("[data-mobile-van-height]")),
+  vanGvwFrom: document.querySelector("[data-mobile-van-gvw-from]"),
+  vanGvwTo: document.querySelector("[data-mobile-van-gvw-to]"),
+  vanPayloadFrom: document.querySelector("[data-mobile-van-payload-from]"),
+  vanPayloadTo: document.querySelector("[data-mobile-van-payload-to]"),
+  vanVolumeFrom: document.querySelector("[data-mobile-van-volume-from]"),
+  vanVolumeTo: document.querySelector("[data-mobile-van-volume-to]"),
+  vanCard: document.querySelector("[data-mobile-van-card]"),
   seatsFrom: document.querySelector("[data-mobile-seats-from]"),
   seatsTo: document.querySelector("[data-mobile-seats-to]"),
   doorsFrom: document.querySelector("[data-mobile-doors-from]"),
@@ -2225,6 +2273,16 @@ function defaultManualFields() {
   return {
     // "" = passenger cars, "van" = the portals' van sections (B75, owner 2026-10-11).
     category: "",
+    // Van filters (B75 wave 2), used only when category is "van".
+    vanBody: "",
+    vanGvwFrom: "",
+    vanGvwTo: "",
+    vanPayloadFrom: "",
+    vanPayloadTo: "",
+    vanVolumeFrom: "",
+    vanVolumeTo: "",
+    vanLength: "",
+    vanHeight: "",
     brand: "",
     model: "",
     version: "",
@@ -2335,6 +2393,11 @@ function renderManualOptions(keepValues = true) {
   els.displacementTo.value = current.displacementTo || "";
   showPowerUnit(current.powerUnit === "kw" ? "kw" : "");
   showCategory(current.category);
+  setCheckedValue(els.vanBodies, current.vanBody || "");
+  setCheckedValue(els.vanLengths, current.vanLength || "");
+  setCheckedValue(els.vanHeights, current.vanHeight || "");
+  [["vanGvwFrom"], ["vanGvwTo"], ["vanPayloadFrom"], ["vanPayloadTo"], ["vanVolumeFrom"], ["vanVolumeTo"]]
+    .forEach(([key]) => { if (els[key]) els[key].value = current[key] || ""; });
   els.powerFrom.value = (current.powerUnit === "kw" ? current.powerKwFrom : current.powerFrom) || "";
   els.powerTo.value = (current.powerUnit === "kw" ? current.powerKwTo : current.powerTo) || "";
   els.seatsFrom.value = current.seatsFrom || "";
@@ -2390,6 +2453,15 @@ function readManualFields() {
     powerTo: els.powerUnit?.value === "kw" ? kwToKm(els.powerTo?.value) : els.powerTo?.value || "",
     powerUnit: els.powerUnit?.value === "kw" ? "kw" : "",
     category: isVanSearch({ category: els.category?.value }) ? "van" : "",
+    vanBody: checkedValue(els.vanBodies) || "",
+    vanLength: checkedValue(els.vanLengths) || "",
+    vanHeight: checkedValue(els.vanHeights) || "",
+    vanGvwFrom: digitsOnly(els.vanGvwFrom?.value),
+    vanGvwTo: digitsOnly(els.vanGvwTo?.value),
+    vanPayloadFrom: digitsOnly(els.vanPayloadFrom?.value),
+    vanPayloadTo: digitsOnly(els.vanPayloadTo?.value),
+    vanVolumeFrom: String(els.vanVolumeFrom?.value || "").replace(",", ".").replace(/[^\d.]/g, ""),
+    vanVolumeTo: String(els.vanVolumeTo?.value || "").replace(",", ".").replace(/[^\d.]/g, ""),
     powerKwFrom: els.powerUnit?.value === "kw" ? els.powerFrom?.value || "" : "",
     powerKwTo: els.powerUnit?.value === "kw" ? els.powerTo?.value || "" : "",
     seatsFrom: els.seatsFrom?.value || "",
@@ -2889,6 +2961,13 @@ function vanMobileDeParams(params, filters) {
   if (makeId) params.append("ms", `${makeId};;;${[filters.model, filters.version].map((v) => String(v || "").trim()).filter(Boolean).join(" ")}`);
   ["c", "door", "sc", "sld", "it", "clim", "tct", "spc", "ecol", "icol", "fe", "pa", "cc", "dt"].forEach((key) => params.delete(key));
   if (manualFuelValues(filters).includes("plugin")) params.append("fe", "HYBRID_PLUGIN");
+  // Van filters (wave 2): body (c / Fahrerhaus dc), DMC (lw, kg), length and height type (lt, ht).
+  const body = VAN_BODY[filters.vanBody];
+  (body?.mobile || []).forEach((value) => params.append("c", value));
+  if (body?.mobileCab) params.set("dc", body.mobileCab);
+  appendMobileDeRange(params, "lw", filters.vanGvwFrom, filters.vanGvwTo);
+  if (/^L[1-5]$/.test(filters.vanLength || "")) params.set("lt", filters.vanLength);
+  if (/^H[1-3]$/.test(filters.vanHeight || "")) params.set("ht", filters.vanHeight);
 }
 
 function otomotoSlug(value) {
@@ -3264,7 +3343,17 @@ function vanOtomotoUrl(params, filters, makeSlug) {
     if (OTOMOTO_VAN_KEYS.includes(name)) kept.append(key, value);
   });
   const words = otomotoSlug([filters.model, filters.version].filter(Boolean).join(" "));
-  const path = ["https://www.otomoto.pl/dostawcze", makeSlug, words ? `q-${words}` : ""].filter(Boolean).join("/");
+  // Van filters (wave 2): the body as a path part (/dostawcze/ford/furgon-blaszak/q-transit,
+  // the parameter finds nothing), DMC, payload (kg) and cargo volume (m³).
+  const range = (key, from, to) => {
+    if (from) kept.set(`search[${key}:from]`, from);
+    if (to) kept.set(`search[${key}:to]`, to);
+  };
+  range("filter_float_max_cargo_weight", filters.vanGvwFrom, filters.vanGvwTo);
+  range("filter_float_max_weight", filters.vanPayloadFrom, filters.vanPayloadTo);
+  range("filter_float_max_cargo", filters.vanVolumeFrom, filters.vanVolumeTo);
+  const body = VAN_BODY[filters.vanBody]?.otomoto || "";
+  const path = ["https://www.otomoto.pl/dostawcze", makeSlug, body, words ? `q-${words}` : ""].filter(Boolean).join("/");
   return `${path}?${kept.toString()}`;
 }
 
@@ -5396,7 +5485,26 @@ function showCategory(category) {
     button.setAttribute("aria-pressed", String(button.dataset.mobileCategoryChoice === els.category.value));
   });
   document.body.classList.toggle("isVanSearch", els.category.value === "van");
+  if (els.vanCard) els.vanCard.hidden = els.category.value !== "van";
 }
+
+function digitsOnly(value) {
+  return String(value || "").replace(/[^\d]/g, "");
+}
+
+// The form's van body as each portal names it (checked on counts 2026-10-11).
+const VAN_BODY = {
+  furgon: { mobile: ["BoxTypeDeliveryVan", "HighBoxTypeDeliveryVan", "LongBoxTypeDeliveryVan", "HighAndLongBoxTypeDeliveryVan"], otomoto: "furgon-blaszak" },
+  skrzynia: { mobile: ["StakeBodyVan"], otomoto: "skrzynia" },
+  plandeka: { mobile: ["StakeBodyWithTarpaulinVan"], otomoto: "plandeka" },
+  wywrotka: { mobile: ["TipperVan"], otomoto: "wywrotka" },
+  chlodnia: { mobile: ["RefrigeratorBox", "RefrigeratorBodyVan"], otomoto: "chlodnia-izoterma" },
+  kontener: { mobile: ["BoxVan"], otomoto: "kontener" },
+  mikrobus: { mobile: ["EstateMinibusUpTo9SeatsVan"], otomoto: "mikrobus" },
+  doka: { mobileCab: "DOUBLE_CABIN", otomoto: "doka" },
+  podwozie: { mobile: ["ChassisVan"], otomoto: "do-zabudowy" },
+  autolaweta: { mobile: ["CarCarrierVan"], otomoto: "autolaweta" },
+};
 
 document.querySelectorAll("[data-mobile-category-choice]").forEach((button) => {
   button.addEventListener("click", () => {

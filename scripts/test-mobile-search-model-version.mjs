@@ -55,6 +55,7 @@ const context = {
   mobileDeAirConditioningValues: {},
   mobileDeTrailerCouplingValues: {},
   doorsOptions: ["2", "3", "4", "5", "6", "7"],
+  VAN_BODY: { furgon: { mobile: ["BoxTypeDeliveryVan"], otomoto: "furgon-blaszak" }, doka: { mobileCab: "DOUBLE_CABIN", otomoto: "doka" } },
   mobileDeDoorGroups: [
     { from: 2, to: 3, value: "TWO_OR_THREE" },
     { from: 4, to: 5, value: "FOUR_OR_FIVE" },
@@ -125,6 +126,11 @@ assert.equal(vanUrl.searchParams.get("s"), "Truck", "a van search uses the truck
 assert.equal(vanUrl.searchParams.get("vc"), "VanUpTo7500", "a van search uses vans up to 7.5 t");
 assert.equal(vanUrl.searchParams.get("ms"), "16800;;;6", "a van model goes as the description");
 assert.equal(vanUrl.searchParams.get("c"), null, "no car body in a van search");
+const vanBodyUrl = new URL(context.buildMobileDeSearchUrl({ ...baseFilters, category: "van", vanBody: "furgon", vanGvwTo: "3500", vanLength: "L3", vanHeight: "H2" }));
+assert.equal(vanBodyUrl.searchParams.get("c"), "BoxTypeDeliveryVan", "the van body goes as its category");
+assert.equal(vanBodyUrl.searchParams.get("lw"), ":3500", "DMC up to 3500 kg");
+assert.equal(vanBodyUrl.searchParams.get("lt"), "L3", "length type");
+assert.equal(vanBodyUrl.searchParams.get("ht"), "H2", "height type");
 
 const versionUrl = new URL(context.buildMobileDeSearchUrl({ ...baseFilters, version: "Kombi" }));
 assert.equal(versionUrl.searchParams.get("ms"), "16800;7;;Kombi", "only the Version value may occupy the Version segment");
