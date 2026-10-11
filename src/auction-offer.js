@@ -224,6 +224,9 @@
     return [...new Set([...known, ...rest])].slice(0, 10);
   }
 
+  // Strong options in bold and first (§8: "как у дилера").
+  const strong = (name) => (/skór|кож|nawigac|навигац|kamera|камера|led|ксенон|ksenon|panoram|панорам|szyberdach|люк|head-up|проекц|tempomat aktywny|адаптивн|podgrzew|подогрев|hak|фаркоп|elektryczna klapa|электропривод багаж|elektryczne fotele|электросид/i.test(name) ? 1 : 0);
+
   // ---- Block 2 and 3 from the assessment ------------------------------------------------------
   const CATEGORY = { kosmetyczne: ["kosmetyczne", "косметическое"], użytkowe: ["użytkowe", "эксплуатационное"], konstrukcyjne: ["konstrukcyjne", "конструктивное"] };
   const DEGREE = { lekkie: ["lekkie", "лёгкое"], średnie: ["średnie", "среднее"], poważne: ["poważne", "серьёзное"] };
@@ -324,7 +327,7 @@
         ${groupHtml("color", "palette", L("Kolor i wyposażenie", "Цвет и оснащение"), [
           [L("Kolor", "Цвет"), esc(color), L("brak w raporcie", "нет в отчёте")],
           [L("Wnętrze", "Салон"), esc(interior), L("brak w raporcie", "нет в отчёте")],
-          [L("Wyposażenie", "Оснащение"), options.length ? `<span class="aoOptions">${options.map((item) => `<i>${esc(item)}</i>`).join("")}</span>` : "", L("brak w raporcie", "нет в отчёте")],
+          [L("Wyposażenie", "Оснащение"), options.length ? `<span class="aoOptions">${[...options].sort((a, b) => strong(b) - strong(a)).map((item) => `<i${strong(item) ? ' class="isStrong"' : ""}>${esc(item)}</i>`).join("")}</span>` : "", L("brak w raporcie", "нет в отчёте")],
         ])}
         ${groupHtml("state", "clipboard", L("Stan przy oględzinach", "Состояние при осмотре"), [
           [L("Uruchamia się / jeździ / akumulator", "Заводится / едет / АКБ"), esc(stateLine()), L("brak w raporcie", "нет в отчёте")],

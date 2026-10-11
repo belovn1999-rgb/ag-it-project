@@ -135,7 +135,8 @@ body.aoBody { margin: 0; min-width: 320px; background: #ece9f3; color: var(--ao-
 .aoGroup dd { margin: 0; color: var(--ao-ink); font-size: 11px; font-weight: 700; overflow-wrap: anywhere; }
 .aoGroup dd small { color: var(--ao-muted); font-weight: 600; }
 .aoOptions { display: flex; flex-wrap: wrap; gap: 3px; }
-.aoOptions i { padding: 1px 6px; border-radius: 6px; background: #fff; font-style: normal; font-weight: 600; font-size: 10px; }
+.aoOptions i { padding: 1px 6px; border-radius: 6px; background: #fff; font-style: normal; font-weight: 500; font-size: 10px; }
+.aoOptions i.isStrong { font-weight: 800; color: var(--ao-violet-deep); }
 
 /* Block 2: one table. */
 .aoBlockHead { display: flex; align-items: center; gap: 7px; margin: 0 0 6px; color: var(--ao-violet-deep); font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
