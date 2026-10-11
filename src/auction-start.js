@@ -65,7 +65,7 @@
       groups: "Podsumowanie", noDamages: "Raport nie wymienia uszkodzeń.", badRepair: "Uwaga: raport wskazuje złą wcześniejszą naprawę ({n}).", warning: "Uwaga: kontrolka błędu na desce ({text}).",
       miss: { version: "wersja i silnik", power: "moc", fuel: "rodzaj paliwa", gearbox: "skrzynia biegów", drive: "napęd", inspectionDate: "data oględzin", inspectionPlace: "miejsce oględzin", serviceBook: "książka serwisowa", registration: "dowód rejestracyjny", tyres: "opony" },
       missHint: "Sprawdź na stronie aukcji albo po VIN (program „VIN”).",
-      offerTitle: "Oferta dla klienta", auctionCountry: "Kraj aukcji", auctionDate: "Data licytacji", auctionTime: "Godzina", makeOffer: "Przygotuj ofertę PDF",
+      offerTitle: "Oferta dla klienta", offerLang: "Język oferty", recent: "Ostatnie sprawdzone raporty", offerOf: "oferta {n}", remove: "Usuń z listy", removeAsk: "Usunąć raport {n} z listy?", reopen: "Pokaż raport", equipmentAll: "Wyposażenie", auctionCountry: "Kraj aukcji", auctionDate: "Data licytacji", auctionTime: "Godzina", makeOffer: "Przygotuj ofertę PDF",
       offerHint: "Kraj, data i godzina licytacji trafią do oferty obok linku do raportu.", offerFailed: "Nie udało się zapisać oferty w tej przeglądarce.",
       summaryArea: "Uszkodzenia wg strefy",
     },
@@ -97,7 +97,7 @@
       groups: "Итог", noDamages: "В отчёте нет повреждений.", badRepair: "Внимание: отчёт отмечает плохой прошлый ремонт ({n}).", warning: "Внимание: горит лампа ошибки ({text}).",
       miss: { version: "версия и двигатель", power: "мощность", fuel: "топливо", gearbox: "коробка", drive: "привод", inspectionDate: "дата осмотра", inspectionPlace: "место осмотра", serviceBook: "сервисная книжка", registration: "техпаспорт", tyres: "шины" },
       missHint: "Проверьте на странице аукциона или по VIN (программа «VIN»).",
-      offerTitle: "Предложение для клиента", auctionCountry: "Страна торгов", auctionDate: "Дата торгов", auctionTime: "Время", makeOffer: "Подготовить PDF-предложение",
+      offerTitle: "Предложение для клиента", offerLang: "Язык предложения", recent: "Последние проверенные отчёты", offerOf: "предложение {n}", remove: "Убрать из списка", removeAsk: "Убрать отчёт {n} из списка?", reopen: "Показать отчёт", equipmentAll: "Оснащение", auctionCountry: "Страна торгов", auctionDate: "Дата торгов", auctionTime: "Время", makeOffer: "Подготовить PDF-предложение",
       offerHint: "Страна, дата и время торгов попадут в предложение рядом со ссылкой на отчёт.", offerFailed: "Не удалось сохранить предложение в этом браузере.",
       summaryArea: "Повреждения по зонам",
     },
@@ -135,7 +135,8 @@
     });
     dealerParts.forEach((node) => {
       if (mode === "auction") {
-        node.dataset.arWasHidden = node.hidden ? "1" : "";
+        // Only on entering this way: a second call must not take our own hiding for the page's.
+        if (node.dataset.arWasHidden === undefined) node.dataset.arWasHidden = node.hidden ? "1" : "";
         node.hidden = true;
       } else if (node.dataset.arWasHidden !== undefined) {
         node.hidden = node.dataset.arWasHidden === "1";
@@ -143,6 +144,7 @@
       }
     });
     inputCard.hidden = mode !== "auction";
+    showRecent();
     box.hidden = mode !== "auction" || !current;
     try {
       localStorage.setItem(MODE_KEY, mode);
@@ -309,6 +311,7 @@
       // Too big or private window: shown, not kept.
     }
     showKind(`${report.firm} · ${report.layoutName}`);
+    remember(report, from);
     render();
     box.hidden = false;
     setStatus(t("done", { time: new Date().toLocaleTimeString(lang === "ru" ? "ru-RU" : "pl-PL", { hour: "2-digit", minute: "2-digit" }) }));
@@ -359,6 +362,11 @@
   };
   // Macadam keeps a small copy of every photo: the list shows it, a click opens the full one.
   const thumb = (src) => String(src || "").replace(/\/picture\//i, "/thumbnail/").replace(/\/files\/Original\//i, "/files/Thumbnail/");
+  // A document's or check's value in the page's language, the French one small beside it.
+  const labelValue = (text) => {
+    const translated = REPORT.labelValue(text, lang);
+    return translated && translated !== String(text) ? `${esc(translated)} <small class="arFr">${esc(text)}</small>` : esc(text);
+  };
   const row = (label, html, missing = false) => `<li><span>${esc(label)}</span><b${missing ? ' class="arMiss"' : ""}>${html || `<i>${esc(TEXT[lang].missing.toLowerCase())}</i>`}</b></li>`;
   function render() {
     const { report, from } = current;
@@ -404,13 +412,26 @@
     const keyText = report.keys.keys !== undefined && report.keys.keys !== null ? `${report.keys.keys}${report.keys.remotes ? ` (${report.keys.remotes} ${t("remotes")})` : ""}` : "";
     const docsList = [
       row(t("keys"), esc(keyText), !keyText),
-      ...report.documents.map((item) => row(item.label, value(item.value))),
-      report.spare.length ? row(t("spare"), report.spare.map((item) => `${esc(item.label)}: ${value(item.value)}`).join("<br>")) : "",
+      ...report.documents.map((item) => row(REPORT.labelName(item.label, lang), labelValue(item.value))),
+      report.spare.length ? row(t("spare"), report.spare.map((item) => `${esc(REPORT.labelName(item.label, lang))}: ${labelValue(item.value)}`).join("<br>")) : "",
     ].join("");
 
-    const options = report.options.length ? `<ul class="osOptions">${report.options.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>` : `<p class="osMuted">${esc(t("none"))}</p>`;
-    const factory = report.factoryEquipment.length ? `<h4>${esc(t("factory", { n: report.factoryEquipment.length }))}</h4><ul class="osOptions">${report.factoryEquipment.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>` : "";
-    const factoryMore = report.factoryDetails.length ? `<details class="arMore"><summary>${esc(t("factoryMore", { n: report.factoryDetails.length }))}</summary><ul class="osOptions">${report.factoryDetails.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></details>` : "";
+    // Equipment in one full-width block (owner 2026-10-11: the column grew to screens):
+    // the names in the page's language, the strong ones first and bold.
+    const equipmentItems = (list) => {
+      const pairs = list.map((item) => [REPORT.equipmentName(item, lang), String(item).replace(/:\s*oui$/i, "")]).filter(([name]) => name);
+      const strong = (name) => (/skór|кож|nawigac|навигац|kamera|камера|led|ксенон|ksenon|panoram|панорам|szyberdach|люк|head-up|tempomat|круиз|podgrzew|подогрев|hak|фаркоп|elektryczna klapa|электропривод|elektryczne fotele|электросид/i.test(name) ? 1 : 0);
+      return [...new Map(pairs.map((pair) => [pair[0], pair])).values()].sort((a, b) => strong(b[0]) - strong(a[0]))
+        .map(([name, original]) => `<li${strong(name) ? ' class="isStrong"' : ""}>${esc(name)}${name !== original ? ` <small class="arFr">${esc(original)}</small>` : ""}</li>`).join("");
+    };
+    const equipment = `
+      <section class="arBlock arEquipment"><h3>${icon("check")}${esc(t("equipmentAll"))}</h3>
+        <div class="arEquipGrid">
+          <div><h4>${esc(t("inspector"))}</h4>${report.options.length ? `<ul class="arChecks">${equipmentItems(report.options)}</ul>` : `<p class="osMuted">${esc(t("none"))}</p>`}</div>
+          ${report.factoryEquipment.length ? `<div><h4>${esc(t("factory", { n: report.factoryEquipment.length }))}</h4><ul class="arChecks">${equipmentItems(report.factoryEquipment)}</ul></div>` : ""}
+        </div>
+        ${report.factoryDetails.length ? `<details class="arMore"><summary>${esc(t("factoryMore", { n: report.factoryDetails.length }))}</summary><ul class="arChecks isLong">${report.factoryDetails.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></details>` : ""}
+      </section>`;
 
     const positions = { AVG: lang === "ru" ? "ПЛ" : "LP", AVD: lang === "ru" ? "ПП" : "PP", ARG: lang === "ru" ? "ЗЛ" : "LT", ARD: lang === "ru" ? "ЗП" : "PT" };
     const tyres = report.tyres.length ? `<table class="arTable arTyres"><thead><tr><th>${esc(t("position"))}</th><th>${esc(t("depth"))}</th><th>${esc(t("brand"))}</th><th>${esc(t("size"))}</th><th>${esc(t("season"))}</th></tr></thead><tbody>${
@@ -458,26 +479,27 @@
           <small>${esc(car.firstRegistration || "")}${per ? ` · ${esc(t("perYear", { km: numbers.format(per.perYear) }))}` : ""}</small>
         </div>
       </header>
-      <div class="osCols arCols">
+      <div class="osCols arCols isThree">
         <section><h3>${icon("car")}${esc(t("car"))}</h3><ul>${carList}</ul></section>
         <section><h3>${icon("calendar")}${esc(t("inspection"))}</h3><ul>${inspList}</ul>
           <p class="arChecked"><b>${esc(t("checked"))}:</b> ${esc(t("checkedList"))}.</p>
           <p class="arChecked is-not"><b>${esc(t("notChecked"))}:</b> ${esc(t("notCheckedList"))}.</p></section>
         <section><h3>${icon("receipt")}${esc(t("keysDocs"))}</h3><ul>${docsList}</ul></section>
-        <section><h3>${icon("check")}${esc(t("equipment"))}</h3><h4>${esc(t("inspector"))}</h4>${options}${factory}${factoryMore}</section>
       </div>
-      <section class="arBlock"><h3>${icon("gauge")}${esc(t("tyres"))}</h3>${tyres}</section>
-      <section class="arBlock"><h3>${icon("alert")}${esc(t("damages"))} (${report.damages.length})</h3>${damages}</section>
-      ${missing}
-      ${other}
       <form class="arOffer" data-ar-offer>
         <h3>${icon("receipt")}${esc(t("offerTitle"))}</h3>
         <label>${esc(t("auctionCountry"))}<select name="country">${COUNTRY_CODES.map((code) => `<option value="${code}"${(auctionFields.country || report.country || "FR") === code ? " selected" : ""}>${esc(countryLabel(code))}</option>`).join("")}</select></label>
         <label>${esc(t("auctionDate"))}<input type="date" name="date" value="${esc(auctionFields.date || "")}" /></label>
         <label>${esc(t("auctionTime"))}<input type="time" name="time" value="${esc(auctionFields.time || "")}" /></label>
+        <label>${esc(t("offerLang"))}<select name="lang">${["pl", "ru"].map((code) => `<option value="${code}"${(auctionFields.lang || lang) === code ? " selected" : ""}>${code === "pl" ? "Polski" : "Русский"}</option>`).join("")}</select></label>
         <button class="osPrimary" type="submit">${esc(t("makeOffer"))}</button>
         <p class="arOfferHint">${esc(t("offerHint"))}</p>
-      </form>`;
+      </form>
+      ${equipment}
+      <section class="arBlock"><h3>${icon("gauge")}${esc(t("tyres"))}</h3>${tyres}</section>
+      <section class="arBlock"><h3>${icon("alert")}${esc(t("damages"))} (${report.damages.length})</h3>${damages}</section>
+      ${missing}
+      ${other}`;
   }
 
   // ---- The offer: the auction's country, date and time, then oferta-aukcja.html ---------------
@@ -498,7 +520,7 @@
     const form = event.target.closest("[data-ar-offer]");
     if (!form || !current) return;
     event.preventDefault();
-    const auction = Object.fromEntries(new FormData(form));
+    const { lang: offerLang, ...auction } = Object.fromEntries(new FormData(form));
     // Every write re-reads the drafts first: nothing made in another tab is lost.
     let all;
     try {
@@ -514,7 +536,7 @@
       id,
       number: `A${count}`,
       createdAt: now.toISOString(),
-      lang,
+      lang: offerLang === "ru" ? "ru" : "pl",
       layout: "hero",
       auction,
       report: current.report,
@@ -525,7 +547,86 @@
     } catch {
       return setStatus(t("offerFailed"), true);
     }
+    remember(current.report, current.from, { id, number: `A${count}` });
     window.open(`./oferta-aukcja.html?id=${encodeURIComponent(id)}`, "_blank", "noopener");
+  });
+
+  // ---- History of checked reports (owner 2026-10-11: like the dealer way's list) ---------------
+  // Every report read is kept with its data (it opens again without the link);
+  // "×" sets it aside (archived), nothing is erased — the rules of user data.
+  const HISTORY_KEY = "autogood.offer.auctionHistory.v1";
+  const recentBox = document.querySelector("[data-ar-recent]");
+  const recentList = document.querySelector("[data-ar-recent-list]");
+  function readHistory() {
+    try {
+      const data = JSON.parse(localStorage.getItem(HISTORY_KEY) || "{}");
+      return data && Array.isArray(data.items) ? data : { items: [] };
+    } catch {
+      return { items: [] };
+    }
+  }
+  function writeHistory(data) {
+    try {
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(data));
+    } catch {
+      // Full storage: the list stays as it was.
+    }
+  }
+  const sameCar = (item, report) => (report.sourceUrl && item.sourceUrl === report.sourceUrl) || (report.car?.vin && item.vin === report.car.vin && item.firm === report.firm);
+  function remember(report, from, offer = null) {
+    const data = readHistory();
+    let item = data.items.find((entry) => sameCar(entry, report));
+    if (!item) {
+      item = { id: `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 5)}`, offers: [] };
+      data.items.unshift(item);
+    } else {
+      data.items = [item, ...data.items.filter((entry) => entry !== item)];
+    }
+    Object.assign(item, {
+      at: new Date().toISOString(), from, archived: false,
+      title: report.title, firm: report.firm, layoutName: report.layoutName, sourceUrl: report.sourceUrl || "", fileName: report.fileName || "",
+      vin: report.car?.vin || "", plate: report.car?.plate || "", mileageKm: report.car?.mileageKm || null, year: (report.car?.firstRegistrationIso || "").slice(0, 4),
+      damages: report.damages?.length || 0, report,
+    });
+    if (offer) item.offers = [...(item.offers || []).filter((entry) => entry.id !== offer.id), offer];
+    writeHistory(data);
+    showRecent();
+  }
+  function showRecent() {
+    if (!recentBox) return;
+    const items = readHistory().items.filter((item) => !item.archived);
+    recentBox.hidden = mode !== "auction" || !items.length;
+    recentBox.querySelector("[data-ar-text]").textContent = t("recent");
+    recentList.innerHTML = items.slice(0, 24).map((item) => {
+      const date = new Date(item.at);
+      const when = Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit", year: "numeric" });
+      const facts = [item.year, item.mileageKm ? `${numbers.format(item.mileageKm)} km` : "", item.plate].filter(Boolean).join(" · ");
+      const offers = (item.offers || []).map((offer) => `<a class="arOfferLink" href="./oferta-aukcja.html?id=${encodeURIComponent(offer.id)}" target="_blank" rel="noopener">${esc(t("offerOf", { n: offer.number }))} ↗</a>`).join(" ");
+      return `<li><button class="arRecentOpen" type="button" data-ar-open="${esc(item.id)}" title="${esc(t("reopen"))}"><b>${esc(item.firm || "")}</b><span>${esc(titleOf(item.title))}</span>${facts ? `<em>${esc(facts)}</em>` : ""}<small>${esc([when, item.layoutName, TEXT[lang].from[item.from] || ""].filter(Boolean).join(" · "))}</small></button>${offers ? `<p class="arRecentOffers">${offers}</p>` : ""}<button class="osRemove" type="button" data-ar-remove="${esc(item.id)}" title="${esc(t("remove"))}" aria-label="${esc(`${t("remove")}: ${item.title || ""}`)}">×</button></li>`;
+    }).join("");
+  }
+  const titleOf = (text) => String(text || "").toLowerCase().replace(/(^|[\s-])(\p{L})/gu, (_, gap, letter) => gap + letter.toUpperCase()).replace(/\b(Bmw|Vw|Ds)\b/g, (word) => word.toUpperCase());
+  recentList?.addEventListener("click", (event) => {
+    const remove = event.target.closest("[data-ar-remove]");
+    if (remove) {
+      const data = readHistory();
+      const item = data.items.find((entry) => entry.id === remove.dataset.arRemove);
+      if (!item || !window.confirm(t("removeAsk", { n: titleOf(item.title) }))) return;
+      item.archived = true;
+      item.archivedAt = new Date().toISOString();
+      writeHistory(data);
+      return showRecent();
+    }
+    const open = event.target.closest("[data-ar-open]");
+    if (open) {
+      const item = readHistory().items.find((entry) => entry.id === open.dataset.arOpen);
+      if (!item?.report) return;
+      current = { report: item.report, from: item.from };
+      auctionFields = {};
+      render();
+      box.hidden = false;
+      box.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   });
 
   // ---- Start: the last way and the last report of this browser ---------------------------

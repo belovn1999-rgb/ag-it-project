@@ -21,7 +21,7 @@
 | Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
-| Отчёты аукционов → бриф → оффер «Z raportu aukcji» | `oferty.html` (способ 2), `oferta-aukcja.html`, позже сервер | [PROJECT-AUCTION-REPORTS.md](PROJECT-AUCTION-REPORTS.md) | Чтение отчётов Macadam / DEKRA / TÜV в единый шаблон, коды и словари, сравнение видов, **методика проверки отчёта (§9)**, оценка, вердикт, оффер с аукциона (§10), образцы вне репозитория |
+| Отчёты аукционов → бриф → оффер «Z raportu aukcji» | `oferty.html` (способ 2), `oferta-aukcja.html`, позже сервер | [PROJECT-AUCTION-REPORTS.md](PROJECT-AUCTION-REPORTS.md) | Чтение отчётов Macadam / DEKRA / TÜV в единый шаблон, коды и словари, сравнение видов (DEKRA — §11), **методика проверки отчёта (§9)**, оценка, вердикт, оффер с аукциона (§10), образцы вне репозитория |
 | Проверка VIN | `partslink24.html` | [PARTSLINK24_VIN_CHECK.md](PARTSLINK24_VIN_CHECK.md) | Поля, марки, логика отчёта |
 | Отчёты Auto1 | `auto1.html`, `auctions.html` | [auto1-pdf-learning/structured-editor.md](auto1-pdf-learning/structured-editor.md) | Как редактируется PDF отчёта |
 | Выкладка | все | [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md) | Pages + конвертер на Render, smoke-тесты |
@@ -67,7 +67,7 @@
 
 | Дата | Решение | Статус |
 |---|---|---|
-| 2026-10-11 | Шаблон отчёта аукциона v2 (Macadam + DEKRA): те же 3 блока; в 1d — объём осмотра, замер краски, задокументированные ремонты, сервис, примечания (если есть в отчёте); зелёная плашка «Bez napraw — pomiar lakieru» — `docs/PROJECT-AUCTION-REPORTS.md` §9 | CONFIRMED |
+| 2026-10-11 | Шаблон отчёта аукциона v2 (Macadam + DEKRA): те же 3 блока; в 1d — объём осмотра, замер краски, задокументированные ремонты, сервис, примечания (если есть в отчёте); зелёная плашка «Bez napraw — pomiar lakieru» — `docs/PROJECT-AUCTION-REPORTS.md` §11 | CONFIRMED |
 | 2026-10-11 | Оффер «Z raportu aukcji» (чат «оффер аукционы»): 1 стр. A4, блоки 1 Informacje o aucie / 2 Uszkodzenia + ocena + koszt / 3 Wniosek с рисками; + фото повреждений, плашки-итоги, дата отчёта — `docs/PROJECT-AUCTION-REPORTS.md` §8 | CONFIRMED |
 | 2026-10-11 | Коммерческие: поиск фургонов переключателем «Dostawcze» на стр. 1 `mobile.html`; акциз N1 = 0 % во всех программах | CONFIRMED |
 | 2026-10-11 | Мягкий гибрид (MHEV, 12 В и 48 В) — всегда льготный акциз как гибрид, для всех авто и всех программ (калькуляторы, mobile.html, оффер) | CONFIRMED |
@@ -83,9 +83,10 @@
 
 ## 8. Журнал
 
+- 2026-10-11 — оффер с аукциона, правки владельца: главное фото — перед авто слева по метке Macadam, история проверенных отчётов, оснащение отдельным блоком, документы по-польски/по-русски, язык оффера в форме; PDF — крупное фото, «Potwierdzone dane auta» (только подтверждённое), шины таблицей, брендовые цвета, второй лист вместо мелкого шрифта (`docs/PROJECT-AUCTION-REPORTS.md` §10а) (Claude).
 - 2026-10-11 — инструкция для чата «Oferta»: решения владельца по O1–O12 и порядок — O9, O8, O3, O6 без ИИ, O2 архив по выбору, O12 оффер на 2–3 авто, затем ИИ-слой O4/O5 (`docs/handoff/handoff-offer-reference-ideas-2026-10-11.md`) (Claude).
 - 2026-10-11 — B71 оффер, волна 9: программа 06 показывает оффер страницей (разделы по очереди, как отчёт аукциона) с настройками справа, переключатель «страница / листы PDF», ссылка для клиента с оффером внутри ссылки (без сервера) (Claude).
-- 2026-10-11 — отчёты аукционов: DEKRA — 3 вида (NL «Rapportage voertuigstaat», DE «Vermarktungsbericht» с замером краски и подъёмником, FR/BE с заводским оснащением), 7 брифов; шаблон оффера не меняется, дополняется (`docs/PROJECT-AUCTION-REPORTS.md` §9) (Claude).
+- 2026-10-11 — отчёты аукционов: DEKRA — 3 вида (NL «Rapportage voertuigstaat», DE «Vermarktungsbericht» с замером краски и подъёмником, FR/BE с заводским оснащением), 7 брифов; шаблон оффера не меняется, дополняется (`docs/PROJECT-AUCTION-REPORTS.md` §11) (Claude).
 - 2026-10-11 — B71 оффер, волна 8: «Авто от дилера» в шапке PDF; программа 06 показывает само предложение (оба листа, настройки, правка текстов, PDF, e-mail) прямо на странице, изменения способа, клиента, языка и калькулятора попадают в него сразу (Claude).
 <!-- Новые сверху. Здесь 30 последних записей, более ранние — docs/archive/PROJECT_BRAIN-journal.md (переносит куратор). Подробный журнал mobile.html — PROJECT-MOBILE.md §7. -->
 - 2026-10-11 — mobile.html, Monitoring (волна 1, N1): машина, показанная прошлой проверкой с другого портала, больше не «новая» в списке стр. 3; порог «Okazja» — 15 % (решение владельца) (Claude).

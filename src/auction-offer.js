@@ -100,6 +100,7 @@
     risk: '<circle cx="12" cy="12" r="9"/><path d="m8.5 8.5 7 7M15.5 8.5l-7 7"/>',
     tool: '<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/>',
     shield: '<path d="M12 3 4 6v6c0 4.5 3.4 8 8 9 4.6-1 8-4.5 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-4.5"/>',
+    tyre: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="M12 3v5M12 16v5M3 12h5M16 12h5"/>',
     clipboard: '<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9zM9 11h6M9 15h4"/>',
   };
   const icon = (name) => `<svg class="aoIcon" viewBox="0 0 24 24" aria-hidden="true">${ICON[name] || ""}</svg>`;
@@ -163,7 +164,7 @@
     const report = offer.report;
     return new Set([...(report.photos || []), ...(report.damages || []).flatMap((damage) => damage.photos || [])]).size;
   }
-  const mainPhoto = () => offer.photo || offer.report.photos?.[0] || offer.report.damages?.find((damage) => damage.photos?.length)?.photos[0] || "";
+  const mainPhoto = () => offer.photo || offer.report.mainPhoto || offer.report.photos?.[0] || offer.report.damages?.find((damage) => damage.photos?.length)?.photos[0] || "";
 
   // Tyres in one line: "letnie Bridgestone 18″: przód 225/45 — 6,0 mm, tył 255/40 — 4,3–4,5 mm".
   function tyresLine() {
@@ -214,18 +215,17 @@
     }
     return parts.join(" · ");
   }
+  // Only the main options (owner 2026-10-11: green ticks as on page 1 of the search):
+  // the strong ones; when the report has none, its known equipment.
   function equipmentList() {
     const report = offer.report;
-    const source = report.factoryEquipment?.length ? report.factoryEquipment : report.options || [];
-    // Known names first (translated), French leftovers after them.
+    const source = [...(report.factoryEquipment || []), ...(report.options || [])];
     const pairs = source.map((item) => [REPORT.equipmentName(item, lang()), String(item).replace(/:\s*oui$/i, "")]).filter(([name]) => name);
-    const known = pairs.filter(([name, original]) => name !== original).map(([name]) => name);
-    const rest = pairs.filter(([name, original]) => name === original).map(([name]) => name);
-    return [...new Set([...known, ...rest])].slice(0, 10);
+    const known = [...new Set(pairs.filter(([name, original]) => name !== original).map(([name]) => name))];
+    const main = known.filter((name) => strong(name));
+    return (main.length >= 3 ? main : [...main, ...known.filter((name) => !main.includes(name))]).slice(0, 8);
   }
-
-  // Strong options in bold and first (§8: "как у дилера").
-  const strong = (name) => (/skór|кож|nawigac|навигац|kamera|камера|led|ксенон|ksenon|panoram|панорам|szyberdach|люк|head-up|проекц|tempomat aktywny|адаптивн|podgrzew|подогрев|hak|фаркоп|elektryczna klapa|электропривод багаж|elektryczne fotele|электросид/i.test(name) ? 1 : 0);
+  const strong = (name) => (/skór|кож|nawigac|навигац|kamera|камера|led|ксенон|ksenon|panoram|панорам|szyberdach|люк|head-up|проекц|tempomat|круиз|podgrzew|подогрев|hak|фаркоп|elektryczna klapa|электропривод багаж|elektryczne fotele|электросид|czujniki parkowania|парктроник/i.test(name) ? 1 : 0);
 
   // ---- Block 2 and 3 from the assessment ------------------------------------------------------
   const CATEGORY = { kosmetyczne: ["kosmetyczne", "косметическое"], użytkowe: ["użytkowe", "эксплуатационное"], konstrukcyjne: ["konstrukcyjne", "конструктивное"] };
@@ -287,16 +287,18 @@
   ];
   const layout = () => (LAYOUTS.some(([key]) => key === offer.layout) ? offer.layout : "hero");
 
-  function groupHtml(key, iconName, title, rows) {
-    const visible = rows.filter(([, value]) => value !== null);
-    return `<section class="aoGroup" data-group="${key}">
+  // A group of facts: only what the report confirms (owner 2026-10-11 — nothing unconfirmed is written).
+  function groupHtml(key, iconName, title, rows, className = "") {
+    const visible = rows.filter(([, value]) => value);
+    if (!visible.length) return "";
+    return `<section class="aoGroup ${className}" data-group="${key}">
       <h3>${icon(iconName)}<span>${esc(title)}</span></h3>
-      <dl>${visible.map(([label, value, note]) => value
-        ? `<div><dt>${esc(label)}</dt><dd>${value}</dd></div>`
-        : `<div class="aoEmpty"><dt>${esc(label)}</dt><dd><span class="aoFillMe" data-offer-hide>${esc(note || L("uzupełnij po VIN", "дополнить по VIN"))}</span></dd></div>`).join("")}</dl>
+      <dl>${visible.map(([label, value, wide]) => `<div${wide ? ' class="isWide"' : ""}><dt>${esc(label)}</dt><dd>${value}</dd></div>`).join("")}</dl>
     </section>`;
   }
 
+  // Block 1 (owner 2026-10-11): Identyfikacja · Potwierdzone dane auta (two a line) · Wyposażenie,
+  // full width, shallow; the tyres in their own table.
   function blockOne() {
     const report = offer.report;
     const car = report.car || {};
@@ -305,8 +307,9 @@
     const body = [word("value", car.body), car.doors ? `${car.doors} ${L(plural(Number(car.doors), "drzwi", "drzwi", "drzwi"), plural(Number(car.doors), "дверь", "двери", "дверей"))}` : "", car.seats ? `${car.seats} ${L(plural(Number(car.seats), "miejsce", "miejsca", "miejsc"), plural(Number(car.seats), "место", "места", "мест"))}` : ""].filter(Boolean).join(", ");
     const color = [word("value", car.color), car.paint ? word("value", car.paint).toLowerCase() : ""].filter(Boolean).join(" ");
     const interior = [word("value", car.interior), car.upholstery ? word("value", car.upholstery).toLowerCase() : ""].filter(Boolean).join(", ");
-    const options = equipmentList();
+    const colorInterior = [color, interior ? `${L("wnętrze", "салон")}: ${interior.toLowerCase()}` : ""].filter(Boolean).join("; ");
     const firstReg = (car.firstRegistration || "").replace(/\//g, ".");
+    const options = equipmentList();
     return `
       <div class="aoBlock aoBlockOne">
         ${groupHtml("id", "id", L("Identyfikacja", "Идентификация"), [
@@ -314,30 +317,43 @@
           ["VIN", car.vin ? `<span class="aoMono">${esc(car.vin)}</span>` : ""],
           [L("Przebieg", "Пробег"), car.mileageKm ? `${thousands(car.mileageKm)} km${mileage ? ` <small>(${L("ok.", "ок.")} ${thousands(Math.round(mileage.perYear / 1000))} ${L("tys. km/rok", "тыс. км/год")})</small>` : ""}` : ""],
           [L("Pierwsza rejestracja", "1-я регистрация"), esc(firstReg)],
-          [L("Wersja", "Версия"), esc(view.version)],
+        ], "isId")}
+        ${groupHtml("confirmed", "engine", L("Potwierdzone dane auta", "Подтверждённые данные авто"), [
+          [L("Wersja", "Версия"), esc(view.version), true],
           [L("Nadwozie", "Кузов"), esc(body)],
-        ])}
-        ${groupHtml("drive", "engine", L("Napęd", "Двигатель и привод"), [
+          [L("Kolor i wnętrze", "Цвет и салон"), esc(colorInterior)],
           [L("Silnik", "Двигатель"), esc(view.engine)],
           [L("Paliwo", "Топливо"), esc(view.fuel)],
           [L("Skrzynia", "Коробка"), esc(view.gearbox)],
           [L("Moc", "Мощность"), esc(view.power)],
-          [L("Napęd", "Привод"), esc(view.drive), L("brak w raporcie", "нет в отчёте")],
-        ])}
-        ${groupHtml("color", "palette", L("Kolor i wyposażenie", "Цвет и оснащение"), [
-          [L("Kolor", "Цвет"), esc(color), L("brak w raporcie", "нет в отчёте")],
-          [L("Wnętrze", "Салон"), esc(interior), L("brak w raporcie", "нет в отчёте")],
-          [L("Wyposażenie", "Оснащение"), options.length ? `<span class="aoOptions">${[...options].sort((a, b) => strong(b) - strong(a)).map((item) => `<i${strong(item) ? ' class="isStrong"' : ""}>${esc(item)}</i>`).join("")}</span>` : "", L("brak w raporcie", "нет в отчёте")],
-        ])}
-        ${groupHtml("state", "clipboard", L("Stan przy oględzinach", "Состояние при осмотре"), [
-          [L("Uruchamia się / jeździ / akumulator", "Заводится / едет / АКБ"), esc(stateLine()), L("brak w raporcie", "нет в отчёте")],
-          [L("Klucze i dokumenty", "Ключи и документы"), esc(keysLine()), L("brak w raporcie", "нет в отчёте")],
-          [L("Opony", "Шины"), esc(tyresLine()), L("brak w raporcie", "нет в отчёте")],
-        ])}
+          [L("Napęd", "Привод"), esc(view.drive)],
+          [L("Uruchamia się / jeździ / akumulator", "Заводится / едет / АКБ"), esc(stateLine())],
+          [L("Klucze i dokumenty", "Ключи и документы"), esc(keysLine()), true],
+        ], "isConfirmed")}
+        ${options.length ? `<section class="aoGroup isEquipment" data-group="equipment">
+          <h3>${icon("check")}<span>${L("Wyposażenie", "Оснащение")}</span></h3>
+          <ul class="aoChecks">${options.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
+        </section>` : ""}
       </div>`;
   }
 
-  function blockTwo(assessment) {
+  // Tyres as a table, as on the report's page (owner 2026-10-11).
+  function tyresHtml() {
+    const tyres = offer.report.tyres || [];
+    if (!tyres.length) return "";
+    const positions = { AVG: L("przód lewa", "перед. левая"), AVD: L("przód prawa", "перед. правая"), ARG: L("tył lewa", "зад. левая"), ARD: L("tył prawa", "зад. правая") };
+    const mm = (value) => (typeof value === "number" ? `${String(value).replace(".", ",")} mm` : "—");
+    const brand = (value) => (!value || /^autre$/i.test(value) ? "—" : value);
+    return `<section class="aoBlock aoTyres">
+      <h2 class="aoBlockHead">${icon("tyre")}<span>${L("Opony", "Шины")}</span></h2>
+      <table class="aoTable aoTyreTable"><thead><tr><th>${L("Koło", "Колесо")}</th><th>${L("Bieżnik", "Протектор")}</th><th>${L("Marka", "Марка")}</th><th>${L("Rozmiar", "Размер")}</th><th>${L("Sezon", "Сезон")}</th></tr></thead>
+      <tbody>${tyres.map((tyre) => `<tr><td>${esc(positions[tyre.position] || tyre.position)}</td><td class="${typeof tyre.depth === "number" && tyre.depth < 4 ? "aoLow" : ""}">${mm(tyre.depth)}</td><td>${esc(brand(tyre.brand))}</td><td>${esc(tyre.size || tyre.sizeShort || "—")}</td><td>${esc(word("value", tyre.season) || "—")}</td></tr>`).join("")}</tbody></table>
+    </section>`;
+  }
+
+  // part: undefined — the whole block; { upTo: n } — its head with the first n rows (page 1);
+  // { from: n } — the rest of the rows, the total and the traces (page 2).
+  function blockTwo(assessment, part) {
     const showCost = Boolean(offer.showCost);
     const light = (damage) => damage.assessment.degree === "lekkie" && damage.assessment.category === "kosmetyczne" && !damage.assessment.flags.length;
     const folded = compact ? assessment.rows.filter(light) : [];
@@ -352,13 +368,17 @@
       return "";
     };
     const minor = assessment.minor.map((damage) => REPORT.partName(damage.element, lang()) || damage.element);
+    const head = !part || part.upTo !== undefined;
+    const tail = !part || part.from !== undefined;
+    const shown = part?.upTo !== undefined ? rows.slice(0, part.upTo) : part?.from !== undefined ? rows.slice(part.from) : rows;
+    const foldedHere = tail ? folded : [];
     return `
-      <section class="aoBlock aoBlockTwo">
-        <h2 class="aoBlockHead">${icon("tool")}<span>${field("damagesTitle", L("Uszkodzenia, ocena i koszt naprawy", "Повреждения, оценка и стоимость ремонта"))}</span><small>${assessment.rows.length} ${L(plural(assessment.rows.length, "pozycja", "pozycje", "pozycji"), plural(assessment.rows.length, "позиция", "позиции", "позиций"))}</small></h2>
-        ${badgesHtml(assessment)}
-        ${rows.length || folded.length ? `<table class="aoTable${showCost ? " hasCost" : ""}"><colgroup><col class="cEl"><col class="cDm"><col class="cCat"><col class="cRep">${showCost ? '<col class="cCost">' : ""}</colgroup>
+      <section class="aoBlock aoBlockTwo${part ? (head ? " isHead" : " isTail") : ""}">
+        ${head ? `<h2 class="aoBlockHead">${icon("tool")}<span>${field("damagesTitle", L("Uszkodzenia, ocena i koszt naprawy", "Повреждения, оценка и стоимость ремонта"))}</span><small>${assessment.rows.length} ${L(plural(assessment.rows.length, "pozycja", "pozycje", "pozycji"), plural(assessment.rows.length, "позиция", "позиции", "позиций"))}</small></h2>
+        ${badgesHtml(assessment)}` : `<p class="aoContinuedTable">${L("Uszkodzenia — ciąg dalszy", "Повреждения — продолжение")}</p>`}
+        ${shown.length || foldedHere.length ? `<table class="aoTable${showCost ? " hasCost" : ""}"><colgroup><col class="cEl"><col class="cDm"><col class="cCat"><col class="cRep">${showCost ? '<col class="cCost">' : ""}</colgroup>
           <thead><tr><th>${L("Element", "Элемент")}</th><th>${L("Uszkodzenie", "Повреждение")}</th><th>${L("Kategoria · stopień", "Категория · степень")}</th><th>${L("Naprawa", "Ремонт")}</th>${showCost ? `<th class="aoNum">${L("Koszt w Polsce", "Стоимость в Польше")}</th>` : ""}</tr></thead>
-          <tbody>${rows.map((damage) => {
+          <tbody>${shown.map((damage) => {
             const a = damage.assessment;
             return `<tr class="is-${a.degree === "poważne" ? "hard" : a.degree === "średnie" ? "mid" : "soft"}">
               <td><b>${esc(REPORT.partName(damage.element, lang()) || damage.element)}</b>${flagNote(damage)}</td>
@@ -367,10 +387,10 @@
               <td>${esc(REPORT.repairName(damage.group, lang()) || damage.repair)}</td>
               ${showCost ? `<td class="aoNum">${a.cost ? zl(a.cost) : "—"}</td>` : ""}
             </tr>`;
-          }).join("")}${folded.length ? `<tr class="is-soft aoFolded"><td colspan="2"><b>${L("Drobne naprawy kosmetyczne", "Мелкий косметический ремонт")} (${folded.length})</b><span>${esc(someNames(foldedNames, 6))}</span></td><td class="aoCatCell"><span class="aoCat is-cosm">${esc(pick(CATEGORY, "kosmetyczne"))}</span> · <span class="aoDeg is-soft">${esc(pick(DEGREE, "lekkie"))}</span></td><td>${L("polerowanie, PDR, lakierowanie, smart repair", "полировка, PDR, покраска, smart repair")}</td>${showCost ? `<td class="aoNum">${zl(foldedCost.map((value) => Math.round(value / 50) * 50))}</td>` : ""}</tr>` : ""}</tbody>
-          ${showCost ? `<tfoot><tr><td colspan="4">${L("Razem — naprawa w Polsce (szacunek)", "Итого — ремонт в Польше (оценка)")}</td><td class="aoNum">${zl(assessment.total)}</td></tr></tfoot>` : ""}
+          }).join("")}${foldedHere.length ? `<tr class="is-soft aoFolded"><td colspan="2"><b>${L("Drobne naprawy kosmetyczne", "Мелкий косметический ремонт")} (${folded.length})</b><span>${esc(someNames(foldedNames, 6))}</span></td><td class="aoCatCell"><span class="aoCat is-cosm">${esc(pick(CATEGORY, "kosmetyczne"))}</span> · <span class="aoDeg is-soft">${esc(pick(DEGREE, "lekkie"))}</span></td><td>${L("polerowanie, PDR, lakierowanie, smart repair", "полировка, PDR, покраска, smart repair")}</td>${showCost ? `<td class="aoNum">${zl(foldedCost.map((value) => Math.round(value / 50) * 50))}</td>` : ""}</tr>` : ""}</tbody>
+          ${showCost && tail ? `<tfoot><tr><td colspan="4">${L("Razem — naprawa w Polsce (szacunek)", "Итого — ремонт в Польше (оценка)")}</td><td class="aoNum">${zl(assessment.total)}</td></tr></tfoot>` : ""}
         </table>` : `<p class="aoNone">${L("Raport nie wymienia uszkodzeń do naprawy.", "В отчёте нет повреждений под ремонт.")}</p>`}
-        ${minor.length ? `<p class="aoMinor">${field("minorLine", `<b>${L("Drobne ślady bez naprawy", "Мелкие следы без ремонта")}:</b> ${esc(someNames(minor))}.`, "span")}</p>` : ""}
+        ${minor.length && tail ? `<p class="aoMinor">${field("minorLine", `<b>${L("Drobne ślady bez naprawy", "Мелкие следы без ремонта")}:</b> ${esc(someNames(minor))}.`, "span")}</p>` : ""}
       </section>`;
   }
   // Summary badges over the table (owner 2026-10-11, CONFIRMED): green when none, orange when some.
@@ -431,8 +451,7 @@
         <p class="aoAuctionHead">${icon("gavel")}<span>${L("Licytacja", "Торги")}</span></p>
         <p class="aoAuctionWhen">${parts.length ? parts.join('<i aria-hidden="true">·</i>') : `<span class="aoFillMe" data-offer-hide>${L("uzupełnij kraj, datę i godzinę", "укажите страну, дату и время")}</span>`}</p>
         <p class="aoReportLine">${reportLine()}</p>
-        ${url ? `<a class="aoReportLink" href="${esc(url)}" target="_blank" rel="noopener">${icon("link")}<span>${esc(shortUrl(url))}</span></a>
-        <button class="aoCopyLink" type="button" data-offer-hide data-copy-link>${L("Kopiuj link", "Копировать ссылку")}</button>` : ""}
+        ${url ? `<a class="aoReportLink" href="${esc(url)}" target="_blank" rel="noopener">${icon("link")}<span>${esc(shortUrl(url))}</span></a>` : ""}
       </div>`;
   }
 
@@ -475,88 +494,111 @@
     </header>`;
   }
 
-  function sheetHtml() {
-    const assessment = ASSESS.assess(offer.report);
+  // The top of page 1 by layout; the blocks below it are the same in every layout.
+  function topHtml() {
     const view = layout();
-    let body;
-    if (view === "columns") {
-      body = `
-        <section class="aoTop">
-          ${photoHtml("isSide")}
-          <div class="aoTopSide">${titleHtml()}${auctionCard()}</div>
-        </section>
-        ${blockOne()}
-        ${blockTwo(assessment)}
-        ${galleryHtml(assessment)}
-        ${blockThree(assessment)}`;
-    } else if (view === "report") {
-      body = `
-        <section class="aoBand">${titleHtml()}${auctionCard("isBand")}</section>
-        <section class="aoTop">${photoHtml("isSide")}${blockOne()}</section>
-        ${blockTwo(assessment)}
-        ${galleryHtml(assessment)}
-        ${blockThree(assessment)}`;
-    } else {
-      body = `
-        <section class="aoHero">
-          ${photoHtml("isWide")}
-          <div class="aoHeroText">${titleHtml()}</div>
-          ${auctionCard("isPlate")}
-        </section>
-        ${blockOne()}
-        ${blockTwo(assessment)}
-        ${galleryHtml(assessment)}
-        ${blockThree(assessment)}`;
+    if (view === "columns") return `<section class="aoTop">${photoHtml("isSide")}<div class="aoTopSide">${titleHtml()}${auctionCard()}</div></section>`;
+    if (view === "report") return `<section class="aoBand">${titleHtml()}${auctionCard("isBand")}</section>${photoHtml("isWide isReportPhoto")}`;
+    return `<section class="aoHero">${photoHtml("isWide")}<div class="aoHeroText">${titleHtml()}</div>${auctionCard("isPlate")}</section>`;
+  }
+  // galleryLast: on two pages the verdict stays on page 1 and the damage photos go over.
+  function sections(galleryLast = false, tableRows = null) {
+    const assessment = ASSESS.assess(offer.report);
+    // The table cut between the pages: its first rows on page 1, the rest on page 2.
+    if (tableRows !== null) {
+      return [
+        ["one", blockOne()],
+        ["tyres", tyresHtml()],
+        ["damages", blockTwo(assessment, { upTo: tableRows })],
+        ["damagesTail", blockTwo(assessment, { from: tableRows })],
+        ["verdict", blockThree(assessment)],
+        ["gallery", galleryHtml(assessment)],
+      ].filter(([, html]) => html);
     }
-    return `<div class="aoSheet"><article class="aoPage isLayout-${view}" data-page="1" lang="${lang()}">
+    const gallery = ["gallery", galleryHtml(assessment)];
+    const verdict = ["verdict", blockThree(assessment)];
+    return [
+      ["one", blockOne()],
+      ["tyres", tyresHtml()],
+      ["damages", blockTwo(assessment)],
+      ...(galleryLast ? [verdict, gallery] : [gallery, verdict]),
+    ].filter(([, html]) => html);
+  }
+  function pageHtml(number, total, body) {
+    const view = carView();
+    return `<div class="aoSheet"><article class="aoPage isLayout-${layout()}" data-page="${number}" lang="${lang()}">
       ${headHtml()}
+      ${number > 1 ? `<p class="aoContinued">${esc(view.name)}${view.year ? ` · ${esc(view.year)}` : ""} — ${L("ciąg dalszy", "продолжение")}</p>` : ""}
       <div class="aoContent">${body}</div>
-      <footer class="aoFoot"><span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")} · autogood.pl</span><span>${L("Dane z raportu firmy oględzin; koszty w Polsce — szacunek AUTOGOOD.", "Данные из отчёта фирмы осмотра; стоимость в Польше — оценка AUTOGOOD.")}</span></footer>
+      <footer class="aoFoot"><span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")} · autogood.pl</span><span>${L("Dane z raportu firmy oględzin; koszty w Polsce — szacunek AUTOGOOD.", "Данные из отчёта фирмы осмотра; стоимость в Польше — оценка AUTOGOOD.")}${total > 1 ? ` · ${number} / ${total}` : ""}</span></footer>
     </article></div>`;
   }
+  // split: how many blocks stay on page 1; the rest go to page 2 (owner 2026-10-11:
+  // too much — a second page, not smaller type).
+  function sheetHtml(split = Infinity, galleryLast = false, tableRows = null) {
+    const list = sections(galleryLast, tableRows);
+    const first = list.slice(0, split).map(([, html]) => html).join("");
+    const rest = list.slice(split).map(([, html]) => html).join("");
+    const total = rest ? 2 : 1;
+    return pageHtml(1, total, topHtml() + first) + (rest ? pageHtml(2, total, rest) : "");
+  }
 
-  // One page (owner): the sheet gets tighter step by step until it fits —
-  // first without the extra photos, then smaller type, then light cosmetic
-  // repairs folded into one row.
+  function overflows(page) {
+    const content = page?.querySelector(".aoContent");
+    return Boolean(page) && (page.scrollHeight > PAGE_H + 1 || content.scrollHeight > content.clientHeight + 1);
+  }
+  // A page made to fit by the steps given; false when it still does not.
+  function settle(page, steps) {
+    for (const step of steps) {
+      if (!overflows(page)) return true;
+      page.classList.add(step);
+    }
+    return !overflows(page);
+  }
   function fit() {
-    const steps = ["isGalleryTwo", "isTight", "isTighter", "isTightest", "isNoGallery"];
-    let page;
-    let over;
+    const count = sections().length;
     for (const fold of [false, true]) {
       compact = fold;
-      drawSheet();
-      page = stage.querySelector(".aoPage");
-      if (!page) return;
-      const content = page.querySelector(".aoContent");
-      over = () => page.scrollHeight > PAGE_H + 1 || content.scrollHeight > content.clientHeight + 1;
-      // Folded rows leave room: the photos may come back.
-      for (const step of steps) {
-        if (!over()) break;
-        page.classList.add(step);
-      }
-      if (!over()) break;
-    }
-    if (compact && !over()) {
-      // With rows folded, give back what still fits (larger type first).
-      for (const step of [...steps].reverse()) {
-        if (!page.classList.contains(step)) continue;
-        page.classList.remove(step);
-        if (over()) {
-          page.classList.add(step);
-          break;
-        }
+      for (let split = count; split >= 1; split -= 1) {
+        // On one page the photos sit under the table; once a page 2 is needed, after the verdict.
+        drawSheet(split, split < count);
+        const [one, two] = stage.querySelectorAll(".aoPage");
+        // Page 1 keeps its type: the damage photos down to two, a little less room between blocks.
+        if (!settle(one, ["isGalleryTwo", "isSnug", "isGallerySmall"])) continue;
+        const list = sections(split < count);
+        // The whole table went over: as many of its rows as fit stay on page 1.
+        if (two && list[split]?.[0] === "damages" && cutTable(split)) return done();
+        if (!two || settle(two, ["isGalleryTwo", "isTight", "isTighter", "isTightest", "isNoGallery"])) return done();
+        break;
       }
     }
-    if (over()) setStatus(L("Treść nie mieści się na jednej stronie — ukryj część ryzyk lub skróć teksty.", "Текст не помещается на одну страницу — скройте часть рисков или сократите тексты."), true);
-    else if (statusLine.classList.contains("isError") && /jednej stronie|одну страницу/.test(statusLine.textContent)) setStatus("");
+    setStatus(L("Treść nie mieści się na dwóch stronach — ukryj część ryzyk lub skróć teksty.", "Текст не помещается на две страницы — скройте часть рисков или сократите тексты."), true);
   }
-  function drawSheet() {
-    stage.innerHTML = sheetHtml();
+  function done() {
+    if (statusLine.classList.contains("isError") && /stron|страниц/.test(statusLine.textContent)) setStatus("");
+  }
+  // The most rows (at least three) that fit on page 1 under the blocks; false if none.
+  function cutTable(split) {
+    const rows = ASSESS.assess(offer.report).rows.length;
+    for (let upTo = rows - 1; upTo >= 3; upTo -= 1) {
+      drawSheet(split + 1, true, upTo);
+      const [one, two] = stage.querySelectorAll(".aoPage");
+      if (!settle(one, ["isSnug"])) continue;
+      if (!two || settle(two, ["isGalleryTwo", "isTight", "isTighter", "isTightest", "isNoGallery"])) return true;
+      return false;
+    }
+    return false;
+  }
+  function drawSheet(split, galleryLast, tableRows = null) {
+    stage.innerHTML = sheetHtml(split, galleryLast, tableRows);
     scale();
   }
 
   // ---- The manager's panel ----------------------------------------------------------------------
   function panelHtml() {
+    return `<details class="aoAdvanced"${offer.panelOpen ? " open" : ""}><summary>${L("Ustawienia zaawansowane", "Расширенные настройки")}</summary>${panelCards()}</details>`;
+  }
+  function panelCards() {
     const auction = offer.auction || {};
     const fill = offer.fill || {};
     const report = offer.report;
@@ -603,31 +645,23 @@
   }
   // The sheet at its real size, smaller on a narrow screen.
   function scale() {
-    const sheet = stage.querySelector(".aoSheet");
-    const page = stage.querySelector(".aoPage");
-    if (!sheet || !page) return;
     const room = stage.clientWidth - 8;
     const factor = Math.min(1, room / PAGE_W);
-    page.style.transform = factor < 1 ? `scale(${factor})` : "";
-    sheet.style.height = `${PAGE_H * factor}px`;
-    sheet.style.width = `${PAGE_W * factor}px`;
+    stage.querySelectorAll(".aoSheet").forEach((sheet) => {
+      const page = sheet.querySelector(".aoPage");
+      page.style.transform = factor < 1 ? `scale(${factor})` : "";
+      sheet.style.height = `${PAGE_H * factor}px`;
+      sheet.style.width = `${PAGE_W * factor}px`;
+    });
   }
   window.addEventListener("resize", scale);
 
-  stage.addEventListener("click", async (event) => {
+  stage.addEventListener("click", (event) => {
     const hide = event.target.closest("[data-hide]");
     if (hide) {
       save({ hidden: [...new Set([...(offer.hidden || []), hide.dataset.hide])] });
       render();
       return;
-    }
-    if (event.target.closest("[data-copy-link]")) {
-      try {
-        await navigator.clipboard.writeText(reportUrl());
-        setStatus(L("Link do raportu skopiowany.", "Ссылка на отчёт скопирована."));
-      } catch {
-        setStatus(L("Przeglądarka nie pozwoliła skopiować — link jest w ofercie.", "Браузер не дал скопировать — ссылка есть в предложении."), true);
-      }
     }
   });
   // Edited texts are kept with the offer.
@@ -663,6 +697,10 @@
       render();
     }
   });
+  // Advanced settings stay open or closed as the manager left them.
+  panel.addEventListener("toggle", (event) => {
+    if (event.target.matches?.(".aoAdvanced")) save({ panelOpen: event.target.open });
+  }, true);
   panel.addEventListener("change", (event) => {
     const target = event.target;
     if (target.matches("[data-auction]")) save({ auction: { ...(offer.auction || {}), [target.dataset.auction]: target.value } });
@@ -745,9 +783,8 @@
     return photoCache.get(src);
   }
   let photoMissing = false;
-  async function captureSheet() {
+  async function captureSheet(live) {
     await loadScript("./vendor/html-to-image-exact.js?v=1.11.11-exact", "htmlToImage");
-    const live = stage.querySelector(".aoPage");
     const holder = document.createElement("div");
     holder.setAttribute("aria-hidden", "true");
     holder.style.cssText = `position:fixed;left:-20000px;top:0;width:${PAGE_W}px;height:${PAGE_H}px;pointer-events:none;`;
@@ -841,7 +878,8 @@
       const width = 595.28;
       const height = 841.89;
       const k = width / PAGE_W;
-      const shot = await captureSheet();
+      for (const live of stage.querySelectorAll(".aoPage")) {
+      const shot = await captureSheet(live);
       const page = pdf.addPage([width, height]);
       page.drawImage(await pdf.embedJpg(shot.canvas.toDataURL("image/jpeg", 0.9)), { x: 0, y: 0, width, height });
       if (font) {
@@ -865,6 +903,7 @@
         A: { Type: "Action", S: "URI", URI: PDFString.of(link.url) },
       })));
       if (annotations.length) page.node.set(PDFName.of("Annots"), pdf.context.obj(annotations));
+      }
       const view = carView();
       pdf.setTitle(`AUTOGOOD — ${L("oferta z aukcji", "предложение с аукциона")} ${offer.number || ""} — ${view.name}`);
       pdf.setAuthor("AUTOGOOD");

@@ -382,6 +382,7 @@
       return true;
     });
     report.options = unique(report.options);
+    if (report.mainPhoto) report.photos = [report.mainPhoto, ...report.photos.filter((src) => src !== report.mainPhoto)];
     report.photos = unique(report.photos);
     const groups = {};
     for (const damage of report.damages) groups[damage.group] = (groups[damage.group] || 0) + 1;
@@ -491,6 +492,10 @@
     const damagePhotos = new Set(report.damages.flatMap((damage) => damage.photos));
     report.photos = findAll(tree, (el) => el.tag === "img").map((img) => img.attrs.src || "")
       .filter((src) => /\/original\//i.test(src)).map((src) => absolute(src, base)).filter((src) => !damagePhotos.has(src));
+    // The main photo (owner 2026-10-11): the car's front from the left, nose to the left —
+    // Macadam's picture type 4 ("Avant gauche 3/4"), first in its carousel.
+    const front = blazorFrontPhoto(html);
+    if (front) report.mainPhoto = absolute(front, base);
     // The car's name: the line above "Immatriculation" in the head block.
     const texts = [];
     walk(tree, (el) => {
@@ -533,6 +538,22 @@
       }
     }
     return costs;
+  }
+
+  // The commercial photo of picture type 4 from the page's Blazor data.
+  function blazorFrontPhoto(html) {
+    for (const match of String(html || "").matchAll(/<!--Blazor:(\{[\s\S]*?\})-->/g)) {
+      try {
+        const values = JSON.parse(match[1]).parameterValues;
+        if (!values || values.length < 200) continue;
+        const text = fromBase64(values);
+        const found = text.match(/"source":"(files\/Original\/[^"]+)","thumbnailSource":"[^"]*","pictureType":\{"value":4\}/);
+        if (found) return found[1];
+      } catch {
+        // Not this block.
+      }
+    }
+    return "";
   }
 
   function inspectionTyre(report, label, value) {
@@ -621,6 +642,9 @@
     // Commercial photos: the links before the vehicle title.
     const damagePhotos = new Set(report.damages.flatMap((damage) => damage.photos));
     report.photos = pictureLinks(tree).filter((href) => !damagePhotos.has(href));
+    // The report's own main picture (front from the left).
+    const main = findOne(tree, (el) => el.tag === "img" && el.attrs.id === "mainPicture");
+    if (main?.attrs.src) report.mainPhoto = main.attrs.src.replace(/\?originalpicture=true$/i, "");
     // Prices are shown only when the link asked for them.
     if (!/withprices=true/i.test(url || "")) {
       report.costTotal = report.costTotal ?? null;
@@ -714,6 +738,9 @@
     const damagePhotos = new Set(report.damages.flatMap((damage) => damage.photos));
     report.photos = findAll(tree, (el) => el.tag === "img" && /\/picture\//.test(el.attrs.src || "") && !/damage-picture/.test(el.attrs.class || ""))
       .map((img) => img.attrs.src.replace(/\/thumbnail\//i, "/picture/")).filter((src) => !damagePhotos.has(src));
+    // Photos carry their angle in alt: the front from the left first.
+    const front = findAll(tree, (el) => el.tag === "img" && /avant gauche 3\/4/i.test(el.attrs.alt || ""))[0];
+    if (front?.attrs.src) report.mainPhoto = front.attrs.src.replace(/\/thumbnail\//i, "/picture/");
     return finish(report);
   }
 
@@ -1036,6 +1063,38 @@
     if (Object.prototype.hasOwnProperty.call(EQUIPMENT, key)) return EQUIPMENT[key] ? EQUIPMENT[key][lang === "ru" ? 1 : 0] : "";
     return String(value || "").replace(/:\s*oui$/i, "");
   }
+  // Labels of documents, checks and the spare kit.
+  const LABELS = {
+    "certificat d'immatriculation partie domicile": ["Dowód rejestracyjny — część z adresem", "Техпаспорт — часть с адресом"],
+    "certificat d'immatriculation partie vehicule": ["Dowód rejestracyjny — część pojazdu", "Техпаспорт — часть об авто"],
+    "certificat immatriculation (original)": ["Dowód rejestracyjny (oryginał)", "Техпаспорт (оригинал)"],
+    "certificat de conformite": ["Świadectwo zgodności (CoC)", "Сертификат соответствия (CoC)"],
+    entretien: ["Serwis", "Обслуживание"], "carnet d'entretien": ["Książka serwisowa", "Сервисная книжка"],
+    "type de carnet d'entretien": ["Rodzaj książki serwisowej", "Вид сервисной книжки"],
+    "manuel d'utilisation": ["Instrukcja obsługi", "Инструкция"],
+    "nbr cable de charge (220v)": ["Kable ładowania (220 V)", "Кабели зарядки (220 В)"],
+    "nbr cable de charge (charge rapide)": ["Kable szybkiego ładowania", "Кабели быстрой зарядки"],
+    "reinitialisation des parametres d'usine": ["Przywrócenie ustawień fabrycznych", "Сброс до заводских настроек"],
+    galette: ["Koło dojazdowe", "Докатка"], cric: ["Podnośnik", "Домкрат"], runflat: ["Opony run-flat", "Шины run-flat"],
+    "kit reparation": ["Zestaw naprawczy", "Ремкомплект"], "kit reparation pneu": ["Zestaw naprawczy opon", "Ремкомплект шин"],
+    compresseur: ["Kompresor", "Компрессор"], "roue de secours": ["Koło zapasowe", "Запасное колесо"],
+  };
+  const LABEL_VALUES = {
+    "over 16100 km": null, "oui, le vehicule a ete reinitialise aux parametres d'usine": ["Tak", "Да"],
+  };
+  function labelName(label, lang = "pl") {
+    const hit = LABELS[keyOf(label)];
+    return hit ? hit[lang === "ru" ? 1 : 0] : String(label || "");
+  }
+  // A value of those rows: "over 16100 km" → "ponad 16 100 km", the rest as the field values.
+  function labelValue(value, lang = "pl") {
+    const text = String(value || "");
+    const over = text.match(/^over\s+(\d+)\s*km$/i);
+    if (over) return `${lang === "ru" ? "более" : "ponad"} ${Number(over[1]).toLocaleString("pl-PL").replace(/\u00a0/g, " ")} km`;
+    const hit = LABEL_VALUES[plain(text)];
+    if (hit) return hit[lang === "ru" ? 1 : 0];
+    return word("value", text, lang);
+  }
   const langIndex = (lang) => (lang === "ru" ? 1 : 0);
   function word(kind, value, lang = "pl") {
     const table = kind === "type" ? DAMAGE_TYPES : VALUES;
@@ -1072,7 +1131,7 @@
 
   return {
     detectLink, detectPdf, fromHtml, fromPdf, mileagePerYear, repairGroup, plain, numberOf,
-    word, repairName, partName, equipmentName,
+    word, repairName, partName, equipmentName, labelName, labelValue,
     // For tests and the server.
     parseHtml, textClean, joinFragments, LAYOUTS,
   };
