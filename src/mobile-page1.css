@@ -1862,8 +1862,8 @@
   position: relative;
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: var(--rule-thin) solid color-mix(in srgb, var(--ag-section) 30%, var(--color-rule));
   border-radius: 11px;
   background: rgba(255, 255, 255, 0.78);
@@ -1891,8 +1891,8 @@
 }
 
 .mobileSectionRail svg {
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   fill: none;
   stroke: currentColor;
   stroke-width: 2;
@@ -1987,4 +1987,17 @@
 .mobileMonitoringHead .mobileMarketBlockTitle {
   text-transform: none;
   letter-spacing: 0;
+}
+
+/* Owner 11.10: the rail a touch smaller (buttons 36 px, icons 18 px) and its
+   colours a touch duller. */
+.mobileSectionRail {
+  gap: 8px;
+  padding: 7px;
+  border-radius: 18px;
+}
+
+.mobileSectionRail button {
+  border-radius: 10px;
+  filter: saturate(0.72) brightness(1.04);
 }
