@@ -1,0 +1,523 @@
+<title>Оффер: идеи O1–O12</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+/* Layout: a working memo for the owner — decisions first, then the check table,
+   then mock A4 sheet fragments drawn in the offer's own Premium tokens. */
+:root {
+  --bg: #eef2f5;
+  --paper: #ffffff;
+  --ink: #17222c;
+  --text: #2b3640;
+  --muted: #5b6a78;
+  --faint: #8794a1;
+  --line: #dbe3ea;
+  --soft: #f4f7fa;
+  --navy: #0f3d5e;
+  --brand: #145a85;
+  --brand-soft: #e6eff6;
+  --gold: #b39256;
+  --gold-soft: #d9c08a;
+  --green: #1d6a3b;
+  --green-bg: #e8f4ec;
+  --amber: #855700;
+  --amber-bg: #fbf1dc;
+  --red: #a12b2b;
+  --red-bg: #fbeaea;
+  --desk: #e2e8ee;
+  --font: "Public Sans", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --display: "Source Serif 4", Georgia, "Times New Roman", serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f161d; --paper: #17212b; --ink: #e8eef3; --text: #cfd9e2; --muted: #9aabba; --faint: #7a8b9a;
+    --line: #2a3846; --soft: #1d2935; --brand: #6aaedb; --brand-soft: #1b3346; --navy: #9cc8e6;
+    --green: #7fd09c; --green-bg: #173325; --amber: #e7b65a; --amber-bg: #3a2d14; --red: #f08a8a; --red-bg: #3c1d1d;
+    --desk: #0b1117; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f161d; --paper: #17212b; --ink: #e8eef3; --text: #cfd9e2; --muted: #9aabba; --faint: #7a8b9a;
+  --line: #2a3846; --soft: #1d2935; --brand: #6aaedb; --brand-soft: #1b3346; --navy: #9cc8e6;
+  --green: #7fd09c; --green-bg: #173325; --amber: #e7b65a; --amber-bg: #3a2d14; --red: #f08a8a; --red-bg: #3c1d1d;
+  --desk: #0b1117; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 var(--font); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-inline: 20px; padding-block: 28px 64px; display: grid; gap: 34px; }
+h1, h2 { font-family: var(--display); color: var(--ink); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(26px, 4vw, 38px); line-height: 1.15; }
+h2 { font-size: 24px; line-height: 1.2; }
+h3 { margin: 0; font-size: 15px; color: var(--ink); }
+p { margin: 0; max-width: 70ch; }
+.eyebrow { font-size: 12px; letter-spacing: .08em; text-transform: uppercase; font-weight: 700; color: var(--gold); }
+.lead { color: var(--muted); }
+section { display: grid; gap: 14px; }
+.head { display: grid; gap: 10px; border-bottom: 1px solid var(--gold-soft); padding-bottom: 20px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+
+/* Decisions the owner answers by number */
+.asks { display: grid; gap: 10px; counter-reset: ask; margin: 0; padding: 0; list-style: none; }
+.asks li { counter-increment: ask; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.asks li::before { content: counter(ask); width: 28px; height: 28px; border-radius: 50%; background: var(--navy); color: var(--paper); font-weight: 700; display: grid; place-items: center; font-size: 14px; }
+.asks b { color: var(--ink); }
+.asks .rec { display: inline-block; margin-top: 4px; font-size: 13px; color: var(--green); font-weight: 600; }
+
+/* Check table */
+.tableBox { overflow-x: auto; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; }
+table.check { border-collapse: collapse; width: 100%; min-width: 1080px; font-size: 13px; line-height: 1.45; }
+.check th, .check td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.check th { background: var(--soft); color: var(--muted); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; position: sticky; top: 0; }
+.check td:first-child { font-weight: 700; color: var(--ink); white-space: nowrap; }
+.check td.time { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.check tr.skip td { color: var(--faint); }
+.tag { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; white-space: nowrap; }
+.tag.ok { background: var(--green-bg); color: var(--green); }
+.tag.part { background: var(--amber-bg); color: var(--amber); }
+.tag.no { background: var(--red-bg); color: var(--red); }
+code { font-size: 12px; background: var(--soft); padding: 0 4px; border-radius: 4px; overflow-wrap: anywhere; }
+
+/* Mock sheets: the offer's own Premium look, fixed 794 px wide, scaled */
+.mocks { display: grid; gap: 22px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 520px), 1fr)); }
+.mock { display: grid; gap: 10px; min-width: 0; }
+.mock header { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.mock header .tag { font-size: 12px; }
+.mock .why { font-size: 13.5px; color: var(--muted); }
+.desk { background: var(--desk); border-radius: 12px; padding: 14px; overflow-x: auto; }
+.sheet { --s: .66; zoom: var(--s); width: 794px; background: #fff; color: #17222c; font-family: var(--font); box-shadow: 0 6px 24px rgba(10, 22, 34, .16); border-radius: 2px; padding: 26px 34px 24px; display: grid; gap: 14px; }
+.wide .sheet { --s: .9; }
+@media (max-width: 700px) { .sheet { --s: .42; } .wide .sheet { --s: .42; } }
+.sheet .sh-head { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #b39256; padding-bottom: 8px; font-size: 11px; color: #5b6a78; }
+.sheet .logo { display: flex; gap: 8px; align-items: center; font-weight: 800; color: #0f3d5e; letter-spacing: .04em; font-size: 13px; }
+.sheet .logo i { width: 22px; height: 22px; border-radius: 5px; background: #0f3d5e; color: #d9c08a; font-style: normal; font-size: 10px; display: grid; place-items: center; }
+.sheet .pill { padding: 2px 9px; border-radius: 999px; background: #0f3d5e; color: #fff; font-size: 10px; font-weight: 600; }
+.sheet .note { font-size: 10px; color: #8794a1; }
+.sheet .ghost { border: 1px dashed #cfd8e1; border-radius: 12px; padding: 10px 14px; color: #8794a1; font-size: 11px; background: repeating-linear-gradient(135deg, #fafbfc 0 8px, #f4f7fa 8px 16px); }
+.sheet .new { outline: 2px solid #b39256; outline-offset: 4px; border-radius: 14px; position: relative; }
+.sheet .new::after { content: "НОВОЕ"; position: absolute; top: -12px; right: 10px; background: #b39256; color: #fff; font-size: 9px; font-weight: 800; letter-spacing: .08em; padding: 1px 6px; border-radius: 4px; }
+.photo { border-radius: 14px; background: linear-gradient(160deg, #5d7486 0%, #2c3e4d 55%, #18242e 100%); position: relative; overflow: hidden; color: #fff; display: flex; flex-direction: column; justify-content: flex-end; padding: 16px 20px; }
+.photo::before { content: ""; position: absolute; left: 18%; right: 18%; bottom: 22%; height: 26%; border-radius: 40% 46% 12% 12% / 70% 70% 18% 18%; background: rgba(255, 255, 255, .13); }
+.photo small { color: #d9c08a; font-size: 11px; font-weight: 600; position: relative; }
+.photo b { font-size: 24px; position: relative; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+.priceBox { background: #0f3d5e; color: #fff; border-radius: 12px; padding: 12px 16px; display: grid; gap: 2px; }
+.priceBox span { color: #d9c08a; font-size: 10px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+.priceBox b { font-size: 26px; line-height: 1.1; }
+.priceBox small { color: rgba(255,255,255,.82); font-size: 10.5px; }
+.specs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 12px; }
+.spec span { display: block; font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; color: #8794a1; font-weight: 600; }
+.spec b { display: block; font-size: 12.5px; color: #17222c; }
+.row2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; align-items: start; }
+.heroRow { display: grid; grid-template-columns: minmax(0, 1fr) 260px; gap: 16px; align-items: start; }
+.card { background: #f4f7fa; border-radius: 14px; padding: 12px 14px; display: grid; gap: 8px; }
+.cardHead { display: flex; gap: 6px; align-items: center; font-size: 12.5px; font-weight: 800; color: #0f3d5e; letter-spacing: .02em; }
+.cardHead::before { content: ""; width: 10px; height: 10px; border-radius: 3px; background: #b39256; }
+.verdict { justify-self: start; padding: 3px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; background: #e8f4ec; color: #1d6a3b; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 5px; font-size: 11.5px; line-height: 1.4; }
+.checks li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 6px; }
+.checks li::before { content: "✓"; color: #1d6a3b; font-weight: 800; }
+.checks li.warn::before { content: "!"; color: #855700; text-align: center; }
+.checks li.info::before { content: "·"; color: #8794a1; text-align: center; }
+.facts { display: grid; gap: 0; font-size: 11.5px; }
+.fact { display: grid; grid-template-columns: 112px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 5px 0; border-bottom: 1px solid #e2e8ee; }
+.fact:last-child { border-bottom: 0; }
+.fact span { color: #5b6a78; font-weight: 600; }
+.fact b { color: #17222c; font-weight: 600; }
+.fact b.unknown { color: #855700; font-weight: 500; }
+.src { font-size: 9.5px; color: #8794a1; white-space: nowrap; }
+.strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; background: #f4f7fa; border-radius: 14px; padding: 10px 14px; }
+.strip .cell { padding: 4px 10px; border-left: 1px solid #e2e8ee; display: grid; gap: 1px; }
+.strip .cell:nth-child(3n+1) { border-left: 0; padding-left: 0; }
+.strip .cell span { font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; color: #8794a1; font-weight: 600; }
+.strip .cell b { font-size: 12px; color: #17222c; }
+.strip .cell b.unknown { color: #855700; font-weight: 500; }
+.strip .cell em { font-style: normal; font-size: 9.5px; color: #8794a1; }
+.req { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; font-size: 11px; }
+.req > span:first-child { font-weight: 800; color: #0f3d5e; font-size: 11.5px; margin-right: 2px; }
+.chip { padding: 2px 9px; border-radius: 999px; background: #fff; border: 1px solid #dfe7ef; font-weight: 600; color: #17222c; }
+.chip.ok { border-color: #c9e3d2; background: #e8f4ec; color: #1d6a3b; }
+.chip.q { border-color: #f0dcb0; background: #fbf1dc; color: #855700; }
+.chip.ok::before { content: "✓ "; }
+.chip.q::before { content: "? "; }
+.opts { display: flex; flex-wrap: wrap; gap: 5px; }
+.opt { padding: 2px 8px; border-radius: 999px; background: #fff; border: 1px solid #dfe7ef; font-size: 10.5px; font-weight: 600; color: #0f3d5e; }
+.opt.strong { background: #e6eff6; border-color: #e6eff6; }
+
+/* O12 columns */
+.cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.col { display: grid; gap: 8px; background: #f4f7fa; border-radius: 14px; padding: 8px 8px 12px; position: relative; }
+.col.best { background: #fff; box-shadow: 0 0 0 2px #b39256; }
+.col .ribbon { position: absolute; top: 14px; left: 14px; z-index: 2; background: #b39256; color: #fff; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; }
+.col .photo { height: 120px; padding: 10px 12px; border-radius: 10px; }
+.col .photo b { font-size: 15px; }
+.col .photo small { font-size: 10px; }
+.col .priceBox { padding: 8px 10px; border-radius: 10px; }
+.col .priceBox b { font-size: 19px; }
+.col .inner { display: grid; gap: 7px; padding: 0 4px; }
+.kv { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 2px 8px; font-size: 11px; }
+.kv span { color: #8794a1; }
+.kv b { color: #17222c; font-weight: 600; text-align: right; }
+.mini { font-size: 10.5px; color: #5b6a78; line-height: 1.4; }
+.mini b { color: #1d6a3b; }
+.mini.warnTxt b { color: #855700; }
+.cmp { width: 100%; border-collapse: collapse; font-size: 11px; }
+.cmp th, .cmp td { padding: 5px 8px; border-bottom: 1px solid #e2e8ee; text-align: left; }
+.cmp th { font-size: 9.5px; letter-spacing: .05em; text-transform: uppercase; color: #8794a1; font-weight: 700; width: 150px; }
+.cmp td { font-weight: 600; color: #17222c; width: calc((100% - 150px) / 3); }
+.cmp td.win { background: #e8f4ec; color: #1d6a3b; }
+.cmp tr.group th { color: #0f3d5e; padding-top: 10px; border-bottom: 1px solid #b39256; }
+.cmp td.na { color: #8794a1; font-weight: 400; }
+.cmpPhotos { display: grid; grid-template-columns: 150px repeat(3, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+.cmpPhotos .photo { height: 108px; padding: 10px 12px; border-radius: 10px; }
+.cmpPhotos .photo b { font-size: 14px; }
+.cmpPhotos .lbl { font-size: 11px; color: #5b6a78; align-self: end; }
+.sheet2 { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 14px; }
+.steps { display: grid; gap: 6px; font-size: 11px; }
+.steps div { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 6px; align-items: center; }
+.steps i { font-style: normal; width: 20px; height: 20px; border-radius: 50%; background: #1d6a3b; color: #fff; font-size: 10px; font-weight: 700; display: grid; place-items: center; }
+.steps div:nth-child(n+4) i { background: #145a85; }
+.steps div:nth-child(n+7) i { background: #0f3d5e; }
+.calc3 { width: 100%; border-collapse: collapse; font-size: 11px; }
+.calc3 th, .calc3 td { padding: 4px 6px; border-bottom: 1px solid #e2e8ee; text-align: right; font-variant-numeric: tabular-nums; }
+.calc3 th:first-child, .calc3 td:first-child { text-align: left; color: #5b6a78; }
+.calc3 tr.total td { font-weight: 800; color: #0f3d5e; border-bottom: 0; }
+
+/* AI and waves */
+.grid2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.box { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 8px; min-width: 0; }
+.box ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+.price { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+.price th, .price td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; }
+.price td.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.price th { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.price tr.pick td { background: var(--green-bg); color: var(--green); font-weight: 700; }
+.waves { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.waves li { display: grid; grid-template-columns: 92px minmax(0, 1fr) auto; gap: 12px; align-items: baseline; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.waves li > b { color: var(--navy); font-size: 13px; text-transform: uppercase; letter-spacing: .06em; }
+.waves li > span:last-child { font-size: 13px; color: var(--muted); white-space: nowrap; font-variant-numeric: tabular-nums; }
+@media (max-width: 620px) { .waves li { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+.found { display: grid; gap: 8px; margin: 0; padding-left: 20px; }
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <span class="eyebrow">AUTOGOOD · программа 06 «Oferta» · проверка идей</span>
+    <h1>Идеи из похожих проектов для оффера: что проверили, что предлагаем, где это будет</h1>
+    <p class="lead">Оффер дилера (06 и стр. 3 Monitoring) и оффер с аукциона. Проверено у источника (4 проекта на GitHub) и в нашем коде 11.10.2026. Код не меняли: он появится после вашего «да». Ниже на макетах — пример, не настоящее объявление.</p>
+    <div class="meta"><span>Источники: deal-finder, autoscout-analyser (MIT), used-car-deal-finder, autoscout24-trends (MIT)</span><span>У двух проектов лицензии нет: берём только идеи, код не копируем</span></div>
+  </header>
+
+  <section id="asks">
+    <span class="eyebrow">Что нужно от вас</span>
+    <h2>7 решений, ответьте по номерам</h2>
+    <ol class="asks">
+      <li><div><b>O3 — какой макет «Co wiemy z ogłoszenia»:</b> А (отдельная полоса из 6 фактов под данными авто) или Б (факты внутри «Ocena AUTOGOOD», без нового блока).<br><span class="rec">Предлагаю Б: лист 1 и так полный, а ответы на вопросы клиента собраны в одном месте.</span></div></li>
+      <li><div><b>O3 на аукционе:</b> в оффере с аукциона действует правило «клиенту только подтверждённое, без „sprawdzimy“». Оставляем его там, а «nie podano — sprawdzimy na oględzinach» пишем только в оффере дилера?<br><span class="rec">Предлагаю да: у аукциона нет осмотра до торгов, обещание было бы неправдой.</span></div></li>
+      <li><div><b>O6 — несовпадения (✗):</b> показывать клиенту или скрывать?<br><span class="rec">Предлагаю по умолчанию скрывать: менеджер видит ✗ в панели и сам решает, писать ли «hak — brak, możemy domontować».</span></div></li>
+      <li><div><b>O2 — как сохранять страницу объявления:</b> (а) своя «Karta ogłoszenia» PDF из прочитанных данных: все поля, описание как есть, все фото, ссылка, дата, работает для всех порталов без Mac; (б) печать оригинальной страницы в PDF через Chrome импортера на Mac, только когда Mac включён (mobile.de точно, другие порталы проверю).<br><span class="rec">Предлагаю (а) для всех порталов плюс (б) для mobile.de.</span></div></li>
+      <li><div><b>O12 — какой макет «Porównanie 2–3 aut»:</b> А «Колонки» или Б «Таблица». Машины в сравнение берутся из уже готовых офферов (галочки в «Ostatnie oferty» → «Porównaj»), без нового чтения объявлений.<br><span class="rec">Предлагаю А для 2–3 машин: каждая машина целиком в своей колонке, клиенту проще.</span></div></li>
+      <li><div><b>ИИ — где работает и какая модель:</b> наш Cloudflare Worker (ключ — его секрет, работает без Mac) или служба на Mac; модель Opus 5.5 (~0,26 zł за оффер), Sonnet 5.5 (~0,13 zł) или Haiku 5.5 (меньше 0,01 zł). Ключ API вы вносите сами, я его не вижу.<br><span class="rec">Предлагаю Worker + Opus 5.5: самый точный с цитатами на DE/NL/FR, а при 300 офферах в месяц это ~80 zł.</span></div></li>
+      <li><div><b>Порядок волн</b> (внизу страницы): начать с 1 (O9 + O8, без макетов) сегодня, пока вы смотрите макеты O3, O6 и O12?<br><span class="rec">Предлагаю да.</span></div></li>
+    </ol>
+  </section>
+
+  <section id="table">
+    <span class="eyebrow">Отчёт §5</span>
+    <h2>По каждому пункту: у источника, у нас, что делаем</h2>
+    <div class="tableBox">
+      <table class="check">
+        <thead><tr><th>Пункт</th><th>Как у источника</th><th>Что уже есть у нас</th><th>Что делаем</th><th>Где (лист / панель)</th><th>Аукцион</th><th>От вас</th><th>Время</th></tr></thead>
+        <tbody>
+          <tr><td>O9 надёжность цены</td>
+            <td>autoscout-analyser: вывод зависит от типичной ошибки на уровне комплектации → модели → марки, нужно ≥ 20 образцов, иначе 12 %; «Great deal» только когда отклонение больше двух разбросов. used-car-deal-finder: ≥ 6 похожих, если разброс больше 75 % медианы — медиане не верим</td>
+            <td><span class="tag part">частично</span> ≥ 6 похожих, две ступени (год ± 1 / пробег ± 35 %, потом ± 2 / ± 60 %), меньше 8 в стране → вся Европа. Клиент видит N и страну словами. <b>Не видит</b> ступень, список стран, порталы и дату рынка (дата теряется в черновике). В 06 подпись портала у шкалы цен вырезана</td>
+            <td>3 уровня уверенности: точная фраза «X % poniżej mediany» только при 1-й ступени, своей стране и узком разбросе; иначе «orientacyjnie poniżej typowej ceny»; меньше 6 — без сравнения. Подпись «na podstawie N podobnych ofert z Niemiec · mobile.de, AutoScout24 · 11.10.2026». В 06 — «Skala cen mobile.de, stan na …»</td>
+            <td>Лист 1, «Cena na tle rynku» (и страница-оффер)</td>
+            <td>Рынка нет — не нужно</td>
+            <td>—</td>
+            <td class="time">0,5 дня</td></tr>
+          <tr><td>O8 торг</td>
+            <td>autoscout-analyser: первое появление и история цены. used-car-deal-finder: «вернулось» — объявление пропадало и появилось снова</td>
+            <td><span class="tag part">частично</span> Дни в продаже и снижения на листе 1. «Potencjał negocjacji» считает основания (дни, снижения, место в рынке), но <b>не показывает их</b>. «Wróciło» нет нигде: пункт M3 в Monitoring ещё не сделан. Дни в продаже av.by читаются и не используются</td>
+            <td>Строка-основание в торге: «w sprzedaży 74 dni · cena obniżona 2× (−4 %) · cena powyżej typowej». Когда Monitoring сделает M3 — допишем «ogłoszenie wystawione ponownie» (своей логики не пишем). Дни av.by — в расчёт</td>
+            <td>Лист 2, «Potencjał negocjacji»</td>
+            <td>Торгов цены нет (ставки) — не нужно</td>
+            <td>—</td>
+            <td class="time">0,5 дня<br>+1 ч после M3</td></tr>
+          <tr><td>O3 Co wiemy</td>
+            <td>deal-finder: вопрос за вопросом, ответ только из данных объявления, иначе ровно «not stated»; все поля объявления одним текстом «ключ: значение»</td>
+            <td><span class="tag part">разбросано</span> Аварийность, сервисная книжка, владельцы, гарантия, ТО читаются (по-разному у 8 порталов) и стоят строками в «Ocena AUTOGOOD» и в данных авто. Прочитаны, но <b>не показаны</b>: гарантия производителя (otomoto), сертификаты (AutoScout24), известные повреждения и ремонты (Blocket), Carfax, дата прошлого ТО</td>
+            <td>6 строк: Wypadki · Historia serwisowa · Właściciele · Gwarancja · Przegląd · Uszkodzenia; у каждой значение и источник; пусто → «nie podano — sprawdzimy na oględzinach». Повторы убираем из «Ocena» и «Dane auta». ИИ позже отвечает на те же 6 вопросов по описанию</td>
+            <td>Лист 1 — <a href="#o3">макеты А / Б</a></td>
+            <td>Блок 1 отчёта уже это делает; «sprawdzimy» там запрещено правилом — без изменений (вопрос 2)</td>
+            <td>Выбор макета, вопрос 2</td>
+            <td class="time">1 день</td></tr>
+          <tr><td>O6 требования</td>
+            <td>deal-finder: каждое требование проверяется отдельно; ответ PASS / FAIL / UNKNOWN; «о чём текст молчит — никогда не FAIL»; фото — только если текст молчит и фото может ответить</td>
+            <td><span class="tag no">нет</span> Поля требований нет. Есть: 31 сильная опция с синонимами на 6 языках; фильтры избранного (год, пробег, топливо, коробка, привод, цена) уже копируются в оффер из Monitoring; заметка клиента в истории в оффер не попадает</td>
+            <td>Панель «Wymagania klienta»: опции из списка сильных + своё слово; параметры: rok od, przebieg do, paliwo, skrzynia, napęd, budżet «na gotowo». Из Monitoring — подставляются из фильтров и заметки. На листе — строка «Pana wymagania» ✓ / ? (✗ — по выбору менеджера). Сохраняется в оффере</td>
+            <td>Панель + лист 1 (строка под данными авто, <a href="#o3">на макетах</a>)</td>
+            <td>Позже тем же модулем: опции по VIN есть только у одного вида Macadam</td>
+            <td>Вопрос 3</td>
+            <td class="time">1,5 дня</td></tr>
+          <tr><td>O2 архив</td>
+            <td>autoscout24-trends: скриншот всей раскрытой страницы (куки закрыты, блоки раскрыты) → WebP, плюс сырые данные объявления; фото в WebP без повторов (по хешу)</td>
+            <td><span class="tag no">нет</span> Фото — только ссылки, байты читаются при каждом PDF. Оффер в IndexedDB, контроля объёма нет. Импортер mobile.de держит Chrome (CDP) — печать страницы в PDF добавляется одной командой</td>
+            <td>«Zachowaj ogłoszenie» → ☐ Karta ogłoszenia PDF ☐ wszystkie zdjęcia (☐ oryginalna strona — mobile.de через Mac). Фото в IndexedDB рядом с оффером, показ объёма (30 фото ≈ 6–9 МБ), «Pobierz archiwum» одним PDF. Проверка на снятом объявлении</td>
+            <td>Панель оффера; список «Ostatnie oferty» — значок «zarchiwizowane»</td>
+            <td><b>Нужнее, чем у дилера</b>: фото Macadam — только ссылки, отчёт не сохраняется. Сохранять исходный PDF и фото в IndexedDB</td>
+            <td>Вопрос 4</td>
+            <td class="time">1,5–2 дня<br>+1 день Mac</td></tr>
+          <tr><td>O12 2–3 авто</td>
+            <td>autoscout-analyser: та же марка и модель, год ± 2, та же страна; сортировка по выгоде; перед показом проверяет, что объявление ещё живо, и показывает 3 первых живых</td>
+            <td><span class="tag no">нет</span> Блоки листов уже собираются по частям, но всё держится на одном оффере в памяти — для 2–3 машин нужен отдельный вывод</td>
+            <td>Шаблон «Porównanie 2–3 aut»: лист 1 — машины рядом, лист 2 — процесс и контакт один раз, расчёт «na gotowo» по каждой. Машины — из готовых офферов. «3 alternatywy» в Monitoring делает чат Monitoring (передам задание)</td>
+            <td>Новый режим <code>oferta.html</code> — <a href="#o12">макеты А / Б</a></td>
+            <td>Позже: можно смешивать аукцион и дилера</td>
+            <td>Вопрос 5</td>
+            <td class="time">2–3 дня</td></tr>
+          <tr><td>O4 перевод</td>
+            <td>deal-finder: если язык совпадает — без вызова; ИИ недоступен — уходит оригинал с пометкой</td>
+            <td><span class="tag no">нет</span> Значения и опции переводятся словарями; описание продавца — нет. На аукционе свободный текст отчёта (замечания, зоны) остаётся по-французски</td>
+            <td>Панель «Opis sprzedawcy — tłumaczenie» (PL / RU); 2–3 предложения на лист по выбору менеджера, «wg sprzedawcy»</td>
+            <td>Панель + лист 1 по выбору</td>
+            <td>Перевод замечаний отчёта тем же вызовом</td>
+            <td>Вопрос 6</td>
+            <td class="time" rowspan="2">ИИ-слой<br>2–3 дня</td></tr>
+          <tr><td>O5 ИИ-флаги</td>
+            <td>autoscout-analyser: ИИ ищет «тревоги» в описании со словами рынка каждой страны (Unfallwagen, Bastler, Export; tellerunit, APK); тревога только при реальной проблеме; при сбое — спокойный ответ без текста</td>
+            <td><span class="tag ok">правила есть</span> Флаги с цитатами на DE/EN/FR/RU/NL/SE/PL/IT, отрицания, сверено на 40 C-HR</td>
+            <td>ИИ дополняет правила, не заменяет: новые флаги с меткой «AI» и цитатой, менеджер подтверждает. Сверка на тех же 40 C-HR: ложных не больше, чем у правил</td>
+            <td>Панель «Z ogłoszenia» + «Ocena AUTOGOOD»</td>
+            <td>Правила оценки аукциона остаются, ИИ — только перевод</td>
+            <td>Вопрос 6</td></tr>
+          <tr class="skip"><td>O1, O7, O10, O11</td><td colspan="7">Не делаем по вашему решению 11.10: O1 покрывает Monitoring (M1, M3), O7 и O10 не выбраны, O11 (av.by) — пока нет.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="o3">
+    <span class="eyebrow">Макет O3 + O6</span>
+    <h2>«Co wiemy z ogłoszenia» и «Pana wymagania» на листе 1</h2>
+    <p class="lead">Показана нижняя половина листа 1 (Premium) под фото. Золотой рамкой отмечено новое. Строка требований одинакова в обоих вариантах.</p>
+    <div class="mocks">
+      <div class="mock">
+        <header><h3>А · отдельная полоса фактов</h3><span class="tag part">виднее, лист длиннее на ~1 строку</span></header>
+        <div class="desk"><div class="sheet">
+          <div class="heroRow">
+            <div class="specs">
+              <div class="spec"><span>Nadwozie</span><b>SUV</b></div>
+              <div class="spec"><span>Silnik</span><b>2.0 Hybrid</b></div>
+              <div class="spec"><span>Moc</span><b>184 KM</b></div>
+              <div class="spec"><span>Skrzynia</span><b>Automat</b></div>
+              <div class="spec"><span>Napęd</span><b>Przedni</b></div>
+              <div class="spec"><span>Kolor</span><b>Szary metalik</b></div>
+            </div>
+            <div class="priceBox"><span>Cena na gotowo w Polsce*</span><b>111 900 zł</b><small>Cena w ogłoszeniu 23 490 € · Przez AUTOGOOD · VAT marża</small></div>
+          </div>
+          <div class="strip new">
+            <div class="cell"><span>Wypadki</span><b>Bezwypadkowy</b><em>wg sprzedawcy</em></div>
+            <div class="cell"><span>Historia serwisowa</span><b>Pełna, w ASO</b><em>z ogłoszenia</em></div>
+            <div class="cell"><span>Właściciele</span><b>1</b><em>z ogłoszenia</em></div>
+            <div class="cell"><span>Gwarancja</span><b>12 mies. dealera</b><em>z ogłoszenia</em></div>
+            <div class="cell"><span>Przegląd (TÜV)</span><b>do 04.2027</b><em>z ogłoszenia</em></div>
+            <div class="cell"><span>Uszkodzenia</span><b class="unknown">nie podano</b><em>sprawdzimy na oględzinach</em></div>
+          </div>
+          <div class="req new"><span>Pana wymagania</span><span class="chip ok">Automat</span><span class="chip ok">Rok od 2020</span><span class="chip ok">Do 80 000 km</span><span class="chip ok">Na gotowo do 115 000 zł</span><span class="chip ok">Kamera cofania</span><span class="chip q">Hak — sprawdzimy</span></div>
+          <div class="row2">
+            <div class="card"><div class="cardHead">Cena na tle rynku</div><div class="mini">6 % poniżej mediany podobnych ofert<br>To auto: 41 dni w sprzedaży, cena obniżona 1× (−3 %)</div><div class="note">na podstawie 14 podobnych ofert z Niemiec · mobile.de, AutoScout24 · 11.10.2026</div></div>
+            <div class="card"><div class="cardHead">Ocena AUTOGOOD</div><span class="verdict">Rekomendujemy do dalszego sprawdzenia*</span><ul class="checks"><li>Dobra cena na tle rynku</li><li>Atrakcyjny przebieg: 58 000 km</li><li>Dealer od wielu lat na rynku, dobre opinie</li></ul></div>
+          </div>
+          <div class="ghost">Wyposażenie — najważniejsze · Sprzedawca (bez zmian)</div>
+        </div></div>
+        <p class="why">Факты — отдельной полосой сразу под ценой, их видно первыми. «Właściciele» и «Przegląd» уходят из «Dane auta» в полосу, «Ocena» становится короче. Минус: лист длиннее примерно на одну строку, при подгонке под A4 раньше уйдут опции.</p>
+      </div>
+
+      <div class="mock">
+        <header><h3>Б · факты внутри «Ocena AUTOGOOD»</h3><span class="tag ok">предлагаю</span></header>
+        <div class="desk"><div class="sheet">
+          <div class="heroRow">
+            <div class="specs">
+              <div class="spec"><span>Nadwozie</span><b>SUV</b></div>
+              <div class="spec"><span>Silnik</span><b>2.0 Hybrid</b></div>
+              <div class="spec"><span>Moc</span><b>184 KM</b></div>
+              <div class="spec"><span>Skrzynia</span><b>Automat</b></div>
+              <div class="spec"><span>Napęd</span><b>Przedni</b></div>
+              <div class="spec"><span>Kolor</span><b>Szary metalik</b></div>
+            </div>
+            <div class="priceBox"><span>Cena na gotowo w Polsce*</span><b>111 900 zł</b><small>Cena w ogłoszeniu 23 490 € · Przez AUTOGOOD · VAT marża</small></div>
+          </div>
+          <div class="req new"><span>Pana wymagania</span><span class="chip ok">Automat</span><span class="chip ok">Rok od 2020</span><span class="chip ok">Do 80 000 km</span><span class="chip ok">Na gotowo do 115 000 zł</span><span class="chip ok">Kamera cofania</span><span class="chip q">Hak — sprawdzimy</span></div>
+          <div class="row2">
+            <div class="card"><div class="cardHead">Cena na tle rynku</div><div class="mini">6 % poniżej mediany podobnych ofert<br>To auto: 41 dni w sprzedaży, cena obniżona 1× (−3 %)</div><div class="note">na podstawie 14 podobnych ofert z Niemiec · mobile.de, AutoScout24 · 11.10.2026</div></div>
+            <div class="card new"><div class="cardHead">Ocena AUTOGOOD</div><span class="verdict">Rekomendujemy do dalszego sprawdzenia*</span>
+              <div class="facts">
+                <div class="fact"><span>Wypadki</span><b>Bezwypadkowy</b><i class="src">wg sprzedawcy</i></div>
+                <div class="fact"><span>Serwis</span><b>Pełna historia w ASO</b><i class="src">z ogłoszenia</i></div>
+                <div class="fact"><span>Właściciele</span><b>1</b><i class="src">z ogłoszenia</i></div>
+                <div class="fact"><span>Gwarancja</span><b>12 mies. dealera</b><i class="src">z ogłoszenia</i></div>
+                <div class="fact"><span>Przegląd</span><b>TÜV do 04.2027</b><i class="src">z ogłoszenia</i></div>
+                <div class="fact"><span>Uszkodzenia</span><b class="unknown">nie podano — sprawdzimy na oględzinach</b><i class="src"></i></div>
+              </div>
+              <ul class="checks"><li>Dobra cena · atrakcyjny przebieg 58 000 km</li></ul>
+            </div>
+          </div>
+          <div class="ghost">Wyposażenie — najważniejsze · Sprzedawca (bez zmian)</div>
+        </div></div>
+        <p class="why">Нового блока нет: «Ocena AUTOGOOD» отвечает на 6 первых вопросов клиента, у каждой строки источник справа. Цена и пробег сжаты в одну строку внизу. Высота листа почти не меняется. «Dane auta» теряет «Właściciele» и «Przegląd» (они теперь здесь).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="o12">
+    <span class="eyebrow">Макет O12</span>
+    <h2>«Porównanie 2–3 aut»: лист 1</h2>
+    <p class="lead">Лист 2 общий для обоих вариантов: процесс «Co dalej» и контакт один раз, расчёт «na gotowo» по каждой машине тремя колонками (показан внизу). Звезду «Nasza rekomendacja» ставит менеджер, можно не ставить.</p>
+    <div class="mocks">
+      <div class="mock wide">
+        <header><h3>А · колонки</h3><span class="tag ok">предлагаю для 2–3 авто</span></header>
+        <div class="desk"><div class="sheet">
+          <div class="sh-head"><span class="logo"><i>AG</i>AUTOGOOD <span class="pill">Porównanie 3 aut</span></span><span>11.10.2026</span></div>
+          <div><b style="font-size:20px;color:#0f3d5e">Toyota C-HR 2.0 Hybrid — 3 propozycje dla Pana Piotra</b><div class="note" style="font-size:11px">Wszystkie spełniają Pana główne wymagania. Ceny na gotowo w Polsce, z transportem, akcyzą i usługą AUTOGOOD.</div></div>
+          <div class="cols">
+            <div class="col">
+              <div class="photo"><small>2021 · 58 000 km · Niemcy</small><b>C-HR 2.0 Hybrid GR Sport</b></div>
+              <div class="priceBox"><span>Na gotowo*</span><b>111 900 zł</b><small>w ogłoszeniu 23 490 €</small></div>
+              <div class="inner">
+                <div class="kv"><span>Moc</span><b>184 KM</b><span>Skrzynia</span><b>Automat</b><span>Napęd</span><b>Przedni</b><span>Właściciele</span><b>1</b><span>Serwis</span><b>Pełny, ASO</b><span>Gwarancja</span><b>12 mies.</b></div>
+                <div class="opts"><span class="opt strong">Kamera 360°</span><span class="opt strong">JBL</span><span class="opt">ACC</span><span class="opt">Podgrz. fotele</span></div>
+                <div class="mini"><b>6 % poniżej typowej ceny</b> · 41 dni w sprzedaży</div>
+                <div class="mini"><b>Wymagania 5 / 6 ✓</b> · hak — sprawdzimy</div>
+              </div>
+            </div>
+            <div class="col best">
+              <span class="ribbon">Nasza rekomendacja</span>
+              <div class="photo"><small>2022 · 34 000 km · Belgia</small><b>C-HR 2.0 Hybrid Premiere</b></div>
+              <div class="priceBox"><span>Na gotowo*</span><b>122 700 zł</b><small>w ogłoszeniu 25 900 €</small></div>
+              <div class="inner">
+                <div class="kv"><span>Moc</span><b>184 KM</b><span>Skrzynia</span><b>Automat</b><span>Napęd</span><b>Przedni</b><span>Właściciele</span><b>1</b><span>Serwis</span><b>Pełny, ASO</b><span>Gwarancja</span><b>Toyota Relax</b></div>
+                <div class="opts"><span class="opt strong">Skóra</span><span class="opt strong">Head-Up</span><span class="opt strong">Kamera 360°</span><span class="opt">ACC</span></div>
+                <div class="mini"><b>Cena typowa dla rynku</b> · 12 dni w sprzedaży</div>
+                <div class="mini"><b>Wymagania 6 / 6 ✓</b></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="photo"><small>2020 · 79 000 km · Holandia</small><b>C-HR 2.0 Hybrid Style</b></div>
+              <div class="priceBox"><span>Na gotowo*</span><b>104 700 zł</b><small>w ogłoszeniu 21 750 €</small></div>
+              <div class="inner">
+                <div class="kv"><span>Moc</span><b>184 KM</b><span>Skrzynia</span><b>Automat</b><span>Napęd</span><b>Przedni</b><span>Właściciele</span><b>2</b><span>Serwis</span><b style="color:#855700">nie podano</b><span>Gwarancja</span><b>BOVAG 12 mies.</b></div>
+                <div class="opts"><span class="opt strong">Kamera cofania</span><span class="opt">Nawigacja</span><span class="opt">Podgrz. fotele</span></div>
+                <div class="mini warnTxt"><b>Orientacyjnie poniżej typowej ceny</b> · 88 dni, obniżona 2×</div>
+                <div class="mini"><b>Wymagania 4 / 6 ✓</b> · serwis i hak — sprawdzimy</div>
+              </div>
+            </div>
+          </div>
+          <div class="note">* Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD. Szczegółowa kalkulacja każdego auta na stronie 2.</div>
+        </div></div>
+        <p class="why">Каждая машина целиком в своей колонке: фото, цена «na gotowo», 6 параметров, 4 сильные опции, место на рынке, сколько требований выполнено. Клиент сравнивает «сверху вниз», без таблицы.</p>
+      </div>
+
+      <div class="mock wide">
+        <header><h3>Б · таблица сравнения</h3><span class="tag part">лучше, если важны детали</span></header>
+        <div class="desk"><div class="sheet">
+          <div class="sh-head"><span class="logo"><i>AG</i>AUTOGOOD <span class="pill">Porównanie 3 aut</span></span><span>11.10.2026</span></div>
+          <b style="font-size:20px;color:#0f3d5e">Toyota C-HR 2.0 Hybrid — porównanie propozycji</b>
+          <div class="cmpPhotos">
+            <span class="lbl">Zielone — najlepsza wartość w wierszu</span>
+            <div class="photo"><small>Niemcy</small><b>GR Sport · 2021</b></div>
+            <div class="photo"><small>Belgia · ★ rekomendacja</small><b>Premiere · 2022</b></div>
+            <div class="photo"><small>Holandia</small><b>Style · 2020</b></div>
+          </div>
+          <table class="cmp">
+            <tr class="group"><th>Cena</th><td></td><td></td><td></td></tr>
+            <tr><th>Na gotowo w Polsce</th><td>111 900 zł</td><td>122 700 zł</td><td class="win">104 700 zł</td></tr>
+            <tr><th>Na tle rynku</th><td class="win">6 % poniżej</td><td>typowa</td><td>orientacyjnie poniżej</td></tr>
+            <tr><th>W sprzedaży</th><td>41 dni</td><td>12 dni</td><td class="win">88 dni, obniżona 2×</td></tr>
+            <tr class="group"><th>Auto</th><td></td><td></td><td></td></tr>
+            <tr><th>Rok · przebieg</th><td>2021 · 58 000 km</td><td class="win">2022 · 34 000 km</td><td>2020 · 79 000 km</td></tr>
+            <tr><th>Właściciele</th><td class="win">1</td><td class="win">1</td><td>2</td></tr>
+            <tr><th>Serwis</th><td>Pełny, ASO</td><td>Pełny, ASO</td><td class="na">nie podano — sprawdzimy</td></tr>
+            <tr><th>Gwarancja</th><td>12 mies. dealera</td><td class="win">Toyota Relax</td><td>BOVAG 12 mies.</td></tr>
+            <tr class="group"><th>Wyposażenie</th><td></td><td></td><td></td></tr>
+            <tr><th>Kamera 360°</th><td>✓</td><td>✓</td><td class="na">—</td></tr>
+            <tr><th>Skóra · Head-Up</th><td class="na">—</td><td class="win">✓ · ✓</td><td class="na">—</td></tr>
+            <tr><th>Pana wymagania</th><td>5 / 6 ✓</td><td class="win">6 / 6 ✓</td><td>4 / 6 ✓</td></tr>
+          </table>
+          <div class="note">* Szczegółowa kalkulacja każdego auta na stronie 2.</div>
+        </div></div>
+        <p class="why">Строки — признаки, колонки — машины, лучшее значение в строке зелёным. Точнее для внимательного клиента, но больше текста и меньше фото.</p>
+      </div>
+    </div>
+
+    <div class="mock wide">
+      <header><h3>Лист 2 (для обоих вариантов)</h3></header>
+      <div class="desk"><div class="sheet">
+        <div class="sheet2">
+          <div class="card"><div class="cardHead">Co dalej: od pierwszej rozmowy do odbioru kluczyków</div>
+            <div class="steps"><div><i>1</i>Rozmowa — wybór auta z porównania</div><div><i>2</i>Sprawdzenie informacji</div><div><i>3</i>Umowa i depozyt 2 000 zł</div><div><i>4</i>Rezerwacja</div><div><i>5</i>Oględziny</div><div><i>6</i>Negocjacje i umowa</div><div><i>7</i>Płatność za auto</div><div><i>8</i>Transport i kontrola</div><div><i>9</i>Dokumenty</div><div><i>10</i>Odbiór auta</div></div>
+          </div>
+          <div style="display:grid;gap:12px;align-content:start">
+            <div class="card"><div class="cardHead">Kalkulacja na gotowo</div>
+              <table class="calc3"><tr><th></th><th>Niemcy</th><th>Belgia ★</th><th>Holandia</th></tr><tr><td>Auto</td><td>101 010</td><td>111 370</td><td>93 530</td></tr><tr><td>Transport i oględziny</td><td>4 300</td><td>4 600</td><td>4 700</td></tr><tr><td>Akcyza 1,55 %</td><td>1 570</td><td>1 730</td><td>1 450</td></tr><tr><td>Usługa AUTOGOOD</td><td>3 500</td><td>3 500</td><td>3 500</td></tr><tr><td>Przegląd i dokumenty</td><td>1 520</td><td>1 500</td><td>1 520</td></tr><tr class="total"><td>Razem</td><td>111 900</td><td>122 700</td><td>104 700</td></tr></table>
+              <div class="note">zł · kurs 4,30 · wartości przykładowe na makiecie</div></div>
+            <div class="card"><div class="cardHead">Kontakt</div><div class="mini">Nikodem z AUTOGOOD · +48 531 900 775 · info@autogood.pl<br>ul. Kolejowa 102, Łomianki · ★ 4,9 (126 opinii Google)</div></div>
+          </div>
+        </div>
+      </div></div>
+    </div>
+  </section>
+
+  <section id="ai">
+    <span class="eyebrow">ИИ-слой (O4, O5, O3 и O6 по описанию)</span>
+    <h2>Документ решения: где, какая модель, сколько стоит</h2>
+    <div class="grid2">
+      <div class="box"><h3>Как устроено</h3><ul>
+        <li><b>Один вызов на объявление</b> → ответ по схеме: перевод описания (PL или RU), ответы на 6 вопросов O3 с цитатой, предупреждения O5 с цитатой, проверка каждого требования O6 (✓ / ✗ / ?) с цитатой.</li>
+        <li>В ИИ уходит <b>только публичный текст объявления</b> и список требований. Имени, телефона и e-mail клиента нет.</li>
+        <li>«Молчание ≠ ✗»: чего нет в тексте — «?», никогда не «нет».</li>
+        <li><b>ИИ никогда не блокирует оффер</b>: при ошибке PDF собирается как сейчас, панель пишет «analiza AI niedostępna».</li>
+        <li>Каждое утверждение ИИ менеджер подтверждает, на листе пометка «wg opisu sprzedawcy».</li>
+        <li>Ответ сохраняется в оффере: повторное открытие не платит.</li>
+        <li>Аукцион: тем же вызовом переводятся замечания отчёта (FR/NL/DE).</li>
+      </ul></div>
+      <div class="box"><h3>Где работает</h3><ul>
+        <li><b>Наш Cloudflare Worker</b> (тот же, что читает порталы) — ключ хранится как его секрет, работает для всех сотрудников и без включённого Mac. Нужна выкладка Worker с вашего согласия; ключ вы вносите сами одной командой. <b>Предлагаю.</b></li>
+        <li>Служба на Mac рядом с импортером — только когда Mac включён.</li>
+        <li>Будущий сервер — перенос без изменений в оффере (адрес в одном месте).</li>
+      </ul></div>
+      <div class="box"><h3>Цена одного оффера</h3>
+        <table class="price"><tr><th>Модель</th><th>за оффер</th><th>300 в месяц</th></tr>
+          <tr class="pick"><td>Opus 5.5 — точнее всего</td><td class="n">~0,26 zł</td><td class="n">~80 zł</td></tr>
+          <tr><td>Sonnet 5.5</td><td class="n">~0,13 zł</td><td class="n">~40 zł</td></tr>
+          <tr><td>Haiku 5.5 — быстрый, проще</td><td class="n">&lt; 0,01 zł</td><td class="n">~2 zł</td></tr></table>
+        <p style="font-size:12.5px;color:var(--muted)">Оценка: ~5 тыс. токенов на вход (поля и описание) и ~2,5 тыс. на выход (перевод и ответы); цены Anthropic на 10.2026, курс 3,7 zł за $. Точную цену покажу после первых 20 объявлений.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="waves">
+    <span class="eyebrow">Финальный список</span>
+    <h2>Волны внедрения</h2>
+    <ol class="waves">
+      <li><b>Волна 1</b><span>O9 надёжность цены + O8 основания в торге, дни av.by, дата рынка в черновике. Макеты не нужны.</span><span>1 день</span></li>
+      <li><b>Волна 2</b><span>O3 «Co wiemy» (выбранный макет) + O6 «Wymagania klienta» (панель, строка на листе, из Monitoring — фильтры и заметка).</span><span>2,5 дня</span></li>
+      <li><b>Волна 3</b><span>O2 архив: «Karta ogłoszenia» PDF и фото в IndexedDB для дилера и аукциона; оригинал mobile.de через Mac — если выберете.</span><span>2–3 дня</span></li>
+      <li><b>Волна 4</b><span>O12 «Porównanie 2–3 aut» (выбранный макет) из готовых офферов; задание чату Monitoring на «3 alternatywy» и «Do porównania».</span><span>2–3 дня</span></li>
+      <li><b>Волна 5</b><span>ИИ-слой после решения и ключа: Worker, O4 перевод, O5 флаги, O3 и O6 по описанию; перевод замечаний аукциона. Сверка на 40 C-HR.</span><span>2–3 дня</span></li>
+      <li><b>Потом</b><span>«Wróciło» в торге — когда Monitoring сделает M3.</span><span>1 час</span></li>
+    </ol>
+  </section>
+
+  <section id="found">
+    <span class="eyebrow">Нашлось попутно</span>
+    <h2>Что заметили в коде</h2>
+    <ul class="found">
+      <li>Оффер с аукциона хранится в localStorage; если место кончилось, сохранение <b>молча не происходит</b> — это против правила «данные не теряются» (§4.6.1). Отдельная задача для чата аукционов.</li>
+      <li>Основания торга считаются, но не выводятся — войдёт в волну 1.</li>
+      <li>Сигналы доверия (гарантия, сервисная книжка, «некурящий») описаны в словаре опций, но нигде не используются — пойдут в O3.</li>
+      <li>Дни в продаже av.by и дата последнего рынка читаются и теряются — волна 1.</li>
+      <li>Оффер с аукциона и оффер дилера держат копии одного кода PDF и фото; при архиве (O2) вынесем общую часть.</li>
+    </ul>
+  </section>
+</div>
