@@ -79,6 +79,7 @@ const copy = {
     vanFiltersNote: "AutoScout24 nie przyjmuje tych filtrów — liczy wszystkie dostawcze modelu. Pola z nazwą portalu działają tylko na nim.",
     categoryCars: "Osobowe",
     categoryVans: "Dostawcze",
+    categoryBoth: "Oba",
     categoryHint: "Dostawcze: dział aut dostawczych portali (otomoto, mobile.de, AutoScout24); inne portale ich nie mają",
     categoryChip: "Dostawcze",
     categoryUnsupported: "Ten portal w programie szuka tylko osobowych",
@@ -448,6 +449,7 @@ const copy = {
     vanFiltersNote: "AutoScout24 эти фильтры не принимает — считает все фургоны модели. Поля с названием портала работают только на нём.",
     categoryCars: "Легковые",
     categoryVans: "Коммерческие",
+    categoryBoth: "Оба",
     categoryHint: "Коммерческие: раздел фургонов порталов (otomoto, mobile.de, AutoScout24); у других порталов его в программе нет",
     categoryChip: "Коммерческие",
     categoryUnsupported: "Этот портал в программе ищет только легковые",
@@ -828,6 +830,21 @@ const popularModelsByBrand = {
     "Tiguan",
     "Touran",
   ],
+};
+
+// The most sold vans of each make (B75, owner 2026-10-11): pinned in "Model"
+// — all of them in the "Dostawcze" mode, the first two also among the cars.
+const popularVanModelsByBrand = {
+  "Mercedes-Benz": ["Sprinter", "Vito", "Citan"],
+  Ford: ["Transit Custom", "Transit", "Transit Connect"],
+  Volkswagen: ["Crafter", { value: "T6", pl: "T6 (Multivan, Transporter)", ru: "T6 (Multivan, Transporter)" }, "Caddy"],
+  Peugeot: ["Boxer", "Expert", "Partner"],
+  Citroen: ["Jumper", "Jumpy", "Berlingo"],
+  Renault: ["Master", "Trafic", "Kangoo"],
+  Opel: ["Vivaro", "Movano", "Combo"],
+  Fiat: ["Ducato", "Doblo", "Talento"],
+  Toyota: ["Proace", "Proace City", "Hilux"],
+  Nissan: ["Primastar", "Interstar", "NV200"],
 };
 
 const brandAliases = {
@@ -1868,7 +1885,12 @@ function modelGroupsForBrand(brand) {
 // Pinned copies of models the brand's list already has; they also stay in
 // their own group, so typing a filter shows only the regular entry.
 function popularModelOptions(brand, catalogModels) {
-  const entries = popularModelsByBrand[canonicalBrand(brand)] || [];
+  const vans = popularVanModelsByBrand[canonicalBrand(brand)] || [];
+  const cars = popularModelsByBrand[canonicalBrand(brand)] || [];
+  const key = (entry) => normalizeToken(typeof entry === "string" ? entry : entry.value);
+  const entries = els.category?.value === "van"
+    ? vans
+    : [...cars, ...(cars.length ? vans.slice(0, 2) : [])].filter((entry, index, list) => list.findIndex((other) => key(other) === key(entry)) === index);
   return entries
     .map((entry) => (typeof entry === "string"
       ? { value: entry, label: entry }
@@ -2452,7 +2474,7 @@ function readManualFields() {
     powerFrom: els.powerUnit?.value === "kw" ? kwToKm(els.powerFrom?.value) : els.powerFrom?.value || "",
     powerTo: els.powerUnit?.value === "kw" ? kwToKm(els.powerTo?.value) : els.powerTo?.value || "",
     powerUnit: els.powerUnit?.value === "kw" ? "kw" : "",
-    category: isVanSearch({ category: els.category?.value }) ? "van" : "",
+    category: ["van", "both"].includes(els.category?.value) ? els.category.value : "",
     vanBody: checkedValue(els.vanBodies) || "",
     vanLength: checkedValue(els.vanLengths) || "",
     vanHeight: checkedValue(els.vanHeights) || "",
@@ -4300,7 +4322,7 @@ async function refreshMobileDeCount(filters) {
   }
   let key;
   try {
-    key = buildMobileDeSearchUrl(filters);
+    key = `${buildMobileDeSearchUrl(filters)}|${filters.category || ""}`;
   } catch {
     show("—", copy[state.lang].offerCountNeedModel);
     return;
@@ -4320,13 +4342,16 @@ async function refreshMobileDeCount(filters) {
         : [await window.AUTOGOOD_MOBILEDE_SEARCH(buildMobileDeSearchUrl(base), { countOnly: true })];
       return totals.reduce((sum, item) => sum + (Number(item?.total) || 0), 0);
     };
-    let total = await countOf(filters);
     // Vans: the description "Transit" also finds Transit Custom / Connect /
-    // Courier — their own counts come off (B75).
-    if (isVanSearch(filters)) {
-      const siblings = await Promise.all(vanSiblingModels(filters.brand, filters.model).map((model) => countOf({ ...filters, model })));
-      total = Math.max(0, total - siblings.reduce((sum, value) => sum + value, 0));
-    }
+    // Courier — their own counts come off (B75). "Oba": cars + vans.
+    const vanCount = async (base) => {
+      const all = await countOf(base);
+      const siblings = await Promise.all(vanSiblingModels(base.brand, base.model).map((model) => countOf({ ...base, model })));
+      return Math.max(0, all - siblings.reduce((sum, value) => sum + value, 0));
+    };
+    let total;
+    if (isBothSearch(filters)) total = (await countOf({ ...filters, category: "" })) + (await vanCount({ ...filters, category: "van" }));
+    else total = isVanSearch(filters) ? await vanCount(filters) : await countOf(filters);
     const label = new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "pl-PL").format(Number(total) || 0);
     mobileDeCounts.set(key, label);
     if (request === mobileDeCountRequest) show(label);
@@ -4367,7 +4392,7 @@ async function refreshOfferCount() {
   }
   let key;
   try {
-    key = buildOtomotoSearchUrl(filters);
+    key = `${buildOtomotoSearchUrl(filters)}|${filters.category || ""}`;
   } catch {
     renderOfferCount("—");
     return;
@@ -5478,14 +5503,20 @@ function isVanSearch(filters) {
   return filters?.category === "van";
 }
 
+// "Oba": the car and the van sections of each portal together.
+function isBothSearch(filters) {
+  return filters?.category === "both";
+}
+
 function showCategory(category) {
   if (!els.category) return;
-  els.category.value = category === "van" ? "van" : "";
+  els.category.value = category === "van" || category === "both" ? category : "";
   document.querySelectorAll("[data-mobile-category-choice]").forEach((button) => {
     button.setAttribute("aria-pressed", String(button.dataset.mobileCategoryChoice === els.category.value));
   });
   document.body.classList.toggle("isVanSearch", els.category.value === "van");
-  if (els.vanCard) els.vanCard.hidden = els.category.value !== "van";
+  // The van card applies to the van part of "Oba" too.
+  if (els.vanCard) els.vanCard.hidden = !els.category.value;
 }
 
 function digitsOnly(value) {
@@ -5508,9 +5539,10 @@ const VAN_BODY = {
 
 document.querySelectorAll("[data-mobile-category-choice]").forEach((button) => {
   button.addEventListener("click", () => {
-    const category = button.dataset.mobileCategoryChoice === "van" ? "van" : "";
+    const category = ["van", "both"].includes(button.dataset.mobileCategoryChoice) ? button.dataset.mobileCategoryChoice : "";
     if (category === (els.category?.value || "")) return;
     showCategory(category);
+    if (typeof renderComboMenus === "function") renderComboMenus();
     els.category.dispatchEvent(new Event("change", { bubbles: true }));
     updateSelectedFiltersSummary();
     scheduleOfferCount();
@@ -5536,7 +5568,7 @@ function vanTitleFits(title, brand, model) {
   if (!text.includes(normalizeToken(model))) return false;
   return !vanSiblingModels(brand, model).some((other) => text.includes(normalizeToken(other)));
 }
-window.AUTOGOOD_VAN = { isVanSearch, vanSiblingModels, vanTitleFits };
+window.AUTOGOOD_VAN = { isVanSearch, isBothSearch, vanSiblingModels, vanTitleFits };
 
 function showPowerUnit(unit) {
   if (!els.powerUnit) return;

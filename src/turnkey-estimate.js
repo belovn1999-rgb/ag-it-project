@@ -128,7 +128,8 @@
   function engineInfo(listing = {}, filters = {}) {
     // Vans (B75, "Dostawcze"): an N1 van pays no excise; one that reads as a
     // passenger car (Tourneo, 9-Sitzer, Caravelle, camper) is counted as a car.
-    if (filters.category === "van" && !PASSENGER_VAN.test(`${listing.title || ""} ${listing.subtitle || ""} ${listing.bodyType || ""}`)) {
+    const vanAd = filters.category === "van" || (filters.category === "both" && (listing.vanSection || listing.van));
+    if (vanAd && !PASSENGER_VAN.test(`${listing.title || ""} ${listing.subtitle || ""} ${listing.bodyType || ""}`)) {
       return { index: 5, ccm: Number(listing.displacementCcm) || 0, source: "n1", mild: null };
     }
     const fuelsWanted = typeof manualFuelValues === "function" ? manualFuelValues(filters) : (filters.fuels || []);

@@ -352,8 +352,15 @@ klienta».** Из найденного в Monitoring объявления кно
   ładunkowa, długość L1–L5, wysokość H1–H3; у каждого поля подписано, какой портал его принимает (FILTERS §5i).
   AutoScout24 эти фильтры не принимает. Комплектации коммерческих — из прайс-листов и прессы производителей
   (`data/model-trims-commercial.json`).
-- Не сделано: «Oba» (оба раздела сразу), разделы фургонов Kleinanzeigen / Marktplaats / 2dehands / Blocket /
-  ParuVendu, фильтры фургонов AutoScout24.
+- «Oba» (10-11, владелец): переключатель из трёх положений — Osobowe / Dostawcze / Oba (`category: "both"`).
+  Порталы с разделом фургонов читаются дважды (легковые + фургоны), списки и числа складываются; объявления из
+  раздела фургонов помечены (`vanSection`, в Monitoring `offer.van`) — акциз N1 0 % только у них; родственные
+  модели отбрасываются только в части фургонов. Карточка «Dostawczy» в режиме «Oba» действует на часть фургонов.
+- Популярные фургоны (10-11, владелец): `popularVanModelsByBrand` — по 3 фургона у Mercedes (Sprinter, Vito,
+  Citan), Ford, VW, Peugeot, Citroën, Renault, Opel, Fiat, Toyota, Nissan; в режиме «Dostawcze» список «Najbardziej
+  popularne» — эти фургоны, в легковом режиме к закреплённым моделям добавлены первые два.
+- Не сделано: разделы фургонов Kleinanzeigen / Marktplaats / 2dehands / Blocket / ParuVendu (в работе),
+  фильтры фургонов AutoScout24.
 
 ### 4.2g Франция — ParuVendu (с 10-05, B47)
 - Рынок `paruvendu` — второй портал Франции (~90 % дилеры): стр. 1 (логотип в колонке
@@ -2054,6 +2061,7 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-11 | Claude | **B75 — «Oba» и популярные фургоны:** третье положение переключателя; mobile.de / otomoto / AutoScout24 — две выборки (легковые + фургоны), числа стр. 1 складываются (`isBothSearch`, `readerFor` в `getListings`), N1 0 % по отметке `vanSection`; популярные фургоны марок в «Model» | этот коммит |
 | 10-11 | Claude | **B75, волна 2 — комплектации коммерческих:** 79 строк по 30 моделям (Ford Transit / Custom / Connect / Courier / Tourneo, Sprinter, Citan, T-Class, Crafter, Master, Movano, Vivaro, Combo, Boxer, Expert, Partner, Rifter, Jumper, Jumpy, SpaceTourer, NV200, Evalia, Primastar, Interstar, Townstar, Proace City, Hilux, Hiace, H-1, Dyna) из прайс-листов производителей PL/DE, ADAC Autokatalog, autokatalog.pl и прессы; 51 строка — два источника; `data/model-trims-commercial.json`, `build-model-trims.py` (раздел «Коммерческие» в `docs/MODEL-TRIMS.md`). Без линеек (только пакеты): Sprinter до 2023, Citan W415, Crafter I, Movano B, Boxer/Expert/Movano после 2024 | этот коммит |
 | 10-11 | Claude | **B75, волна 2 — фильтры фургонов:** карточка «Dostawczy» (`data-mobile-van-card`, поля `vanBody`, `vanGvwFrom/To`, `vanPayloadFrom/To`, `vanVolumeFrom/To`, `vanLength`, `vanHeight`, `VAN_BODY` в `mobile.js`): mobile.de `c` / `dc` / `lw` / `lt` / `ht`, otomoto — кузов частью пути, DMC / ładowność / objętość; тест mobile.de дополнен; проверено по числам (FILTERS §5i) | этот коммит |
 | 10-11 | Claude | **B75 — коммерческие, волна 1:** переключатель «Osobowe / Dostawcze» (`filters.category`, `showCategory`, `isVanSearch` в `mobile.js`); mobile.de `s=Truck&vc=VanUpTo7500` + модель описанием, otomoto `/dostawcze/<марка>/q-<модель>`, AutoScout24 `atype=X`; остальные порталы в режиме фургонов не читаются (`VAN_SOURCES`), «—» на стр. 1; числа без родственных моделей (`vanSiblingModels`), объявления родственных отброшены (`vanTitleFits`); акциз — класс 5 «Dostawczy N1» 0 % (`turnkey-estimate.js`, калькулятор, окно, сноска, оффер), пассажирские по названию — как легковые; «Dostawcze» в строке истории. Проверено по числам: Transit 2019+ дизель механика дилер — otomoto 442 − 217 = 225, AutoScout24 274, mobile.de 3 767 (до вычета) | этот коммит |

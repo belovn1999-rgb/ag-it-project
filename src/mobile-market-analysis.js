@@ -2980,6 +2980,7 @@
       const say = progress ? () => {} : setAnalysisStatus;
       // Vans (B75): only the portals with a van section in the program.
       const van = window.AUTOGOOD_VAN?.isVanSearch(filters);
+      const both = window.AUTOGOOD_VAN?.isBothSearch(filters);
       const selected = (filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]))
         .filter((source) => !van || VAN_SOURCES.includes(source));
       this.lastAnswered = [];
@@ -3009,7 +3010,7 @@
           throw error;
         });
       };
-      const read = {
+      const readerFor = (filters) => ({
         otomoto: () => fetchOtomotoListings(filters, (page, pages) => {
           say(`${c.otomotoFetching} ${page}/${pages}`);
           step("otomoto")(page, pages);
@@ -3077,7 +3078,33 @@
         paruvendu: () => fetchParuvenduListings(filters, { price: prices.paruvendu || null, whole, everyPage: typeof progress === "function", onProgress: step("paruvendu") }),
         marktplaats: () => fetchMarktplaatsListings("marktplaats", filters, { price: prices.marktplaats || null, whole, everyPage: typeof progress === "function", onProgress: step("marktplaats") }),
         dehands: () => fetchMarktplaatsListings("dehands", filters, { price: prices.dehands || null, whole, everyPage: typeof progress === "function", onProgress: step("dehands") }),
-      };
+      });
+      // Vans (B75): the van sections' offers are marked (no excise for N1);
+      // "Oba" reads the car and the van section of each van portal and adds
+      // their lists and totals up.
+      const markVan = (result) => (result ? { ...result, listings: (result.listings || []).map((listing) => ({ ...listing, vanSection: true })) } : result);
+      const read = readerFor(filters);
+      if (van) VAN_SOURCES.forEach((source) => {
+        const own = read[source];
+        read[source] = async () => markVan(await own());
+      });
+      if (both) VAN_SOURCES.forEach((source) => {
+        const cars = readerFor({ ...filters, category: "" })[source];
+        const vans = readerFor({ ...filters, category: "van" })[source];
+        read[source] = async () => {
+          const [car, vanPart] = await Promise.allSettled([cars(), vans()]);
+          if (car.status === "rejected" && vanPart.status === "rejected") throw car.reason;
+          const parts = [car.status === "fulfilled" ? car.value : null, vanPart.status === "fulfilled" ? markVan(vanPart.value) : null].filter(Boolean);
+          if (!parts.length) return null;
+          return {
+            ...parts[0],
+            listings: parts.flatMap((part) => part.listings || []),
+            total: parts.reduce((sum, part) => sum + (Number(part.total) || 0), 0),
+            read: parts.reduce((sum, part) => sum + (Number(part.read) || 0), 0),
+            pluginIds: parts.some((part) => part.pluginIds) ? new Set(parts.flatMap((part) => [...(part.pluginIds || [])])) : null,
+          };
+        };
+      });
       // Monitoring reads the portals of the free reader proxy one after
       // another (otomoto, AutoScout24, blocket), so they do not ask it all at
       // once; mobile.de (own importer) and av.by (own API) go alongside.
@@ -3105,7 +3132,7 @@
       this.lastSilent = selected.filter((source) => !this.lastAnswered.includes(source));
       // A van model found by keyword (otomoto) or description (mobile.de) brings
       // its longer namesakes too ("Transit" -> Transit Custom): left out.
-      const vanFits = (listing) => !van || window.AUTOGOOD_VAN.vanTitleFits(listing.title, filters.brand, filters.model);
+      const vanFits = (listing) => !listing.vanSection || window.AUTOGOOD_VAN.vanTitleFits(listing.title, filters.brand, filters.model);
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []).filter(vanFits) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const pluginDropped = {};
@@ -3566,6 +3593,9 @@
       year: listing.year || listing.firstRegistration || null,
       power: listing.power || "",
       gearbox: listing.gearbox || "",
+      // A van section's offer (B75): N1, no excise unless it reads as a passenger car.
+      vanSection: Boolean(listing.vanSection || listing.van),
+      bodyType: listing.bodyType || listing.body || "",
     };
   }
 
@@ -3580,6 +3610,7 @@
       price: listing.price,
       currency: listing.currency || SOURCE_CURRENCY[source],
       year: listing.year || null,
+      van: listing.vanSection || undefined,
       mileage: Number(listing.mileage) || null,
       rank: listing.rank || null,
       power: powerInKm(listing.power),
@@ -3872,7 +3903,8 @@
     }[filters.gearbox || "any"] || c.gearboxAny;
     return [
       // A van search (B75) says so first.
-      window.AUTOGOOD_VAN?.isVanSearch(filters) ? (currentLanguage() === "ru" ? "Коммерческие" : "Dostawcze") : "",
+      window.AUTOGOOD_VAN?.isVanSearch(filters) ? (currentLanguage() === "ru" ? "Коммерческие" : "Dostawcze")
+        : window.AUTOGOOD_VAN?.isBothSearch(filters) ? (currentLanguage() === "ru" ? "Легковые + коммерческие" : "Osobowe + dostawcze") : "",
       rangeSummary(c.price, filters.priceFrom, filters.priceTo, "EUR"),
       rangeSummary(c.year, filters.yearFrom, filters.yearTo),
       rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, kmUnit()),
@@ -8980,6 +9012,14 @@
   document.querySelector(".mobileManualForm")?.addEventListener("change", scheduleAutoLog);
   // Used by the sticky panel to show how many offers the filters match.
   window.AUTOGOOD_MOBILE_OTOMOTO_COUNT = async (filters) => {
+    // "Oba" (B75): /osobowe + /dostawcze.
+    if (window.AUTOGOOD_VAN?.isBothSearch(filters)) {
+      const [cars, vans] = await Promise.all([
+        window.AUTOGOOD_MOBILE_OTOMOTO_COUNT({ ...filters, category: "" }),
+        window.AUTOGOOD_MOBILE_OTOMOTO_COUNT({ ...filters, category: "van" }),
+      ]);
+      return cars + vans;
+    }
     const total = (await fetchOtomotoPage(buildOtomotoSearchUrl(filters), 1)).total;
     if (!window.AUTOGOOD_VAN?.isVanSearch(filters)) return total;
     // Vans by keyword: "q-transit" also finds Transit Custom… — their counts come off (B75).

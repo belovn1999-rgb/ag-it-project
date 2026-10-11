@@ -434,7 +434,10 @@
       target.textContent = "—";
       return;
     }
-    const url = buildSearchUrl(filters, { countries: spec.countries(filters) });
+    // "Oba" (B75): cars and vans, two counts added up.
+    const parts = filters.category === "both" ? [{ ...filters, category: "" }, { ...filters, category: "van" }] : [filters];
+    const urls = parts.map((part) => buildSearchUrl(part, { countries: spec.countries(filters) }));
+    const url = urls.join(" + ");
     if (counts.has(url)) {
       target.textContent = counts.get(url);
       return;
@@ -442,9 +445,12 @@
     const request = (countRequests[market] = (countRequests[market] || 0) + 1);
     target.textContent = "…";
     try {
-      const response = await fetch(`${proxy()}${url}`, { headers: { "x-respond-with": "html" } });
-      if (!response.ok) throw new Error(String(response.status));
-      const label = new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(parseSearchPage(await response.text()).total);
+      const totals = await Promise.all(urls.map(async (one) => {
+        const response = await fetch(`${proxy()}${one}`, { headers: { "x-respond-with": "html" } });
+        if (!response.ok) throw new Error(String(response.status));
+        return parseSearchPage(await response.text()).total;
+      }));
+      const label = new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(totals.reduce((sum, value) => sum + value, 0));
       counts.set(url, label);
       if (request === countRequests[market]) target.textContent = label;
     } catch {

@@ -411,7 +411,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
   function pdfExciseClasses(rows, filters) {
     const turnkey = window.AUTOGOOD_TURNKEY;
     const classes = rows.filter((row) => row.offer?.turnkey && turnkey?.engineInfo)
-      .map((row) => turnkey.engineInfo({ fuel: row.offer.fuel, title: row.offer.title, displacementCcm: row.offer.ccm, year: row.offer.year, power: row.offer.power }, filters).index);
+      .map((row) => turnkey.engineInfo({ fuel: row.offer.fuel, title: row.offer.title, displacementCcm: row.offer.ccm, year: row.offer.year, power: row.offer.power, van: row.offer.van }, filters).index);
     return classes.length ? classes : searchExcise(filters).classes;
   }
 

@@ -713,6 +713,7 @@
         year: offer.year,
         power: offer.power,
         gearbox: offer.gearbox,
+        van: offer.van,
       }, entry.filters).total
       : null;
     const market = latestMedian(entry, offer.source);
