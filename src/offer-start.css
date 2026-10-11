@@ -174,5 +174,22 @@ a { color: inherit; }
 .osRecentList em { grid-column: 2; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-ink); font-size: var(--text-xs); font-style: normal; font-weight: 600; }
 .osRecentList b { grid-row: span 3; }
 /* A long value wraps inside its column, never over the next one. */
+.osCols li { flex-wrap: wrap; column-gap: var(--space-sm); row-gap: 2px; }
 .osCols li span { flex: none; }
-.osCols li b { min-width: 0; overflow-wrap: anywhere; }
+.osCols li b { min-width: 0; margin-left: auto; overflow-wrap: break-word; }
+
+/* ---- Owner 2026-10-11, round 3: three blocks after the link -----------------
+ * How the car is bought, the client and the offer's language; the car; the
+ * calculation with "full calculation" beside its title; the PDF button. */
+.osCarStack { display: grid; gap: var(--space-lg); }
+.osCarStack[hidden] { display: none; }
+.osDealCard { display: grid; gap: var(--space-sm); }
+.osDealCard .osMethods { margin-top: 0; padding-top: 0; border-top: 0; }
+.osDealCard .osClient { margin-top: 0; }
+.osDealCard .osMethodsLabel { min-width: 150px; }
+.osCalcCard .osCalcHead { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); flex-wrap: wrap; }
+.osCalcCard .osFull { margin-left: 0; }
+.osCalcCard .osMuted { margin-top: 6px; }
+.osCarStack > .osCarFoot { margin-top: 0; padding-top: 0; border-top: 0; justify-content: flex-end; }
+@media (max-width: 560px) { .osDealCard .osMethodsLabel { min-width: 0; width: 100%; } }
+.osCols .osOptions li { flex-wrap: nowrap; }

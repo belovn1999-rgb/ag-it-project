@@ -1063,3 +1063,27 @@
 .isPremium[data-page="1"] .ofPriceBox { width: 88%; justify-self: end; }
 .ofPage .ofPrice { white-space: nowrap; }
 .ofPage .ofPrice .ofPriceAd { white-space: normal; }
+/* Round 3 (owner 2026-10-11): the plate as tall as its content — the ad's
+   price right under the sum (no line between), the way of buying, then the
+   line and the footnote. */
+.isPremium[data-page="1"] .ofPriceBox { align-self: start; display: block; }
+.isPremium[data-page="1"] .ofPriceBox .ofPriceFoot { margin-top: 10px; }
+.ofPriceFacts { margin: 6px 0 0; padding-top: 0; border-top: 0; gap: 5px; }
+.ofPriceFacts > div { font-size: 12px; align-items: baseline; }
+.ofPriceFacts dd { white-space: normal; }
+/* Round 3: the room to negotiate and the manager's card tighter, so the
+   right column ends above the orange time note of the steps. */
+.ofNegoCard, .ofContactCard { padding: 10px 13px 11px; }
+.ofNegoCard .ofCardHead { margin-bottom: 4px; }
+.ofNegoCard p { margin: 0; }
+.ofNegoCard .ofSmall { line-height: 1.35; }
+.ofContactCard .ofContactMini { gap: 10px; }
+.ofContactCard .ofContactLines { gap: 1px; }
+.ofContactCard .ofCompanyLine { margin-top: 6px; }
+.ofContactCard .ofHours { margin-top: 2px; line-height: 1.35; }
+.ofContactCard .ofTrust { margin-top: 7px; padding: 5px 9px; }
+.ofSideCol { gap: 10px; }
+.ofPriceFacts dt { white-space: nowrap; }
+.ofPriceFacts dd span { display: block; text-align: right; }
+.ofPriceFacts > div:first-child dd span { white-space: nowrap; }
+.ofPriceFacts dd { display: grid; justify-items: end; }

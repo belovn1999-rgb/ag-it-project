@@ -213,10 +213,10 @@
   // car net) or on a VAT margin invoice (the car gross). It picks the cost
   // lines, the calculator's tab and steps 7 and 9 of the process.
   const METHODS = {
-    direct: { tab: 0, label: "Zakup bezpośredni", labelRu: "Прямая покупка", short: "zakup bezpośredni", shortRu: "прямая покупка" },
+    direct: { tab: 0, label: "Zakup bezpośredni", labelRu: "Прямая покупка", short: "bezpośrednio od dealera", shortRu: "напрямую у дилера" },
     // Owner 2026-10-11: "Zakup przez AUTOGOOD …" / "Покупка через AUTOGOOD …".
-    vat: { tab: 3, label: "Zakup przez AUTOGOOD · faktura VAT 23%", labelRu: "Покупка через AUTOGOOD · счёт-фактура с НДС 23%", short: "zakup przez AUTOGOOD · VAT 23%", shortRu: "покупка через AUTOGOOD · НДС 23%" },
-    margin: { tab: 4, label: "Zakup przez AUTOGOOD · faktura VAT marża", labelRu: "Покупка через AUTOGOOD · счёт-фактура «НДС-маржа»", short: "zakup przez AUTOGOOD · VAT marża", shortRu: "покупка через AUTOGOOD · НДС-маржа" },
+    vat: { tab: 3, label: "Zakup przez AUTOGOOD · faktura VAT 23%", labelRu: "Покупка через AUTOGOOD · счёт-фактура с НДС 23%", short: "przez AUTOGOOD · VAT 23%", shortRu: "через AUTOGOOD · НДС 23%" },
+    margin: { tab: 4, label: "Zakup przez AUTOGOOD · faktura VAT marża", labelRu: "Покупка через AUTOGOOD · счёт-фактура «НДС-маржа»", short: "przez AUTOGOOD · VAT marża", shortRu: "через AUTOGOOD · НДС-маржа" },
   };
   // A dealer selling only to firms or for export: never straight (owner 2026-10-11).
   const businessOnly = () => Boolean(FACTS && offer?.ad && FACTS.read(offer.ad).business);
@@ -545,13 +545,35 @@
   // Under the turnkey price (owner 2026-10-11: the plate deeper, down to the
   // car's data): how it is bought, the ad's gross price when the plate shows
   // the net one, the dealer's fee inside the sum.
+  // Owner 2026-10-11, round 3: a short plate — the turnkey price, right
+  // under it the ad's price, the way of buying ("przez AUTOGOOD …", no second
+  // "zakup"), the dealer's fee when there is one; then the line and what the
+  // sum takes in, for this way of buying.
   function priceFacts(view) {
     const method = METHODS[offerMethod()];
     const short = L(method.short, method.shortRu);
-    const rows = [[L("Sposób zakupu", "Способ покупки"), short.charAt(0).toUpperCase() + short.slice(1)]];
-    if (offerMethod() === "vat" && netEur() > 0) rows.push([L("Cena w ogłoszeniu", "Цена в объявлении"), `${money(view.price, view.currency)} ${L("brutto", "брутто")}`]);
+    const net = offerMethod() === "vat" && netEur() > 0;
+    // Net and gross one under the other (one line broke inside a sum).
+    const adPrice = net
+      ? [`${money(netEur(), "EUR")} ${L("netto", "нетто")}`, `${money(view.price, view.currency)} ${L("brutto", "брутто")}`]
+      : [`${money(view.price, view.currency)} ${L("brutto", "брутто")}`];
+    const rows = [
+      [L("Cena w ogłoszeniu", "Цена в объявлении"), adPrice],
+      [L("Sposób zakupu", "Способ покупки"), short.charAt(0).toUpperCase() + short.slice(1)],
+    ];
     if (view.facts.fee?.amount) rows.push([L("W tym opłata dealera", "В т. ч. сбор дилера"), `${money(view.facts.fee.amount, "EUR")}${view.facts.fee.net ? ` ${L("netto", "нетто")}` : ""}`]);
-    return `<dl class="ofPriceFacts">${rows.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join("")}</dl>`;
+    return `<dl class="ofPriceFacts">${rows.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${[].concat(value).map((part) => `<span>${esc(part)}</span>`).join("")}</dd></div>`).join("")}</dl>`;
+  }
+  // What the turnkey sum takes in: translations only straight from the dealer,
+  // the 23% VAT only on the VAT 23% way (net), the dealer's fee when there is one.
+  function priceFootText(view) {
+    const method = offerMethod();
+    const items = L(["transport", "oględziny", "akcyzę", "usługę AUTOGOOD", "przegląd techniczny"], ["транспорт", "осмотр", "акциз", "услугу AUTOGOOD", "техосмотр"]);
+    if (method === "direct") items.push(L("tłumaczenie dokumentów", "перевод документов"));
+    if (view.facts.fee) items.push(L("opłatę dealera za wydanie auta", "сбор дилера за выдачу авто"));
+    if (method === "vat") items.push(L("VAT 23%", "НДС 23%"));
+    const last = items.pop();
+    return `${L("*Obejmuje", "*Учитывает")} ${items.join(", ")} ${L("i", "и")} ${last}.`;
   }
 
   // Over the name on the photo: the year (or "new") and the mileage.
@@ -639,12 +661,10 @@
               </div>
               ${costView ? `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}*</p>
-                <p class="ofPrice">${esc(money(costView.total, "PLN"))} <span class="ofPriceAd">(${offerMethod() === "vat" && netEur() > 0 ? `${esc(money(netEur(), "EUR"))} ${L("netto", "нетто")}` : `${esc(money(view.price, view.currency))} ${L("brutto", "брутто")}`})</span></p>
+                <p class="ofPrice">${esc(money(costView.total, "PLN"))}</p>
                 ${buyAsText(view) ? field("buyAs", buyAsText(view), "p", "ofBuyAs") : ""}
                 ${priceFacts(view)}
-                ${field(view.facts.fee ? "priceFootFee" : "priceFoot", view.facts.fee
-                  ? L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, opłata dealera za wydanie auta, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, сбор дилера за выдачу авто, другие расходы.")
-                  : L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, другие расходы."), "p", "ofPriceFoot")}
+                ${field(`priceFoot:${offerMethod()}${view.facts.fee ? ":fee" : ""}`, priceFootText(view), "p", "ofPriceFoot")}
               </div>` : `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena w ogłoszeniu", "Цена в объявлении")}</p>
                 <p class="ofPrice">${esc(money(view.price, view.currency))}</p>

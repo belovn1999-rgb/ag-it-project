@@ -62,7 +62,7 @@
       other: "Inne informacje", country: "Kraj", condition: "Stan", damaged: "uszkodzony", accidentFree: "bezwypadkowy (wg sprzedawcy)", color: "Kolor", seller: "Sprzedawca",
       basic: "Odczytano podstawowe dane. Zdjęcia, wyposażenie i sprzedawca pojawią się po pełnym odczycie (dla mobile.de potrzebny jest importer na Macu).",
       missing: "Nie udało się odczytać: {list}. Uzupełnisz to na stronie oferty (Edytuj teksty).", missingWords: ["marka", "cena", "przebieg", "rok"],
-      footLabel: "Oferta dla klienta · po polsku", make: "Przygotuj ofertę PDF",
+      make: "Przygotuj ofertę PDF",
       method: "Sposób zakupu", methodDirect: "Zakup bezpośredni", methodVat: "Przez AUTOGOOD · VAT 23% (netto)", methodMargin: "Przez AUTOGOOD · VAT marża (brutto)",
       vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
       client: "Klient", clientName: "imię i nazwisko (do e-maila)", calcTitle: "Kalkulacja", calcHint: "Popraw transport i oględziny — suma trafi do oferty jako cena na gotowo.",
@@ -94,7 +94,7 @@
       other: "Другое", country: "Страна", condition: "Состояние", damaged: "повреждён", accidentFree: "без ДТП (по словам продавца)", color: "Цвет", seller: "Продавец",
       basic: "Прочитаны основные данные. Фото, оснащение и продавец появятся после полного чтения (для mobile.de нужен импортер на Маке).",
       missing: "Не удалось прочитать: {list}. Допишете на странице предложения (Edytuj teksty).", missingWords: ["марка", "цена", "пробег", "год"],
-      footLabel: "Предложение для клиента · на русском", make: "Подготовить PDF-предложение",
+      make: "Подготовить PDF-предложение",
       method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · НДС 23% (нетто)", methodMargin: "Через AUTOGOOD · НДС-маржа (брутто)",
       vatOnly: "только авто с НДС к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или с НДС 23%", fullCalc: "Полный расчёт в предложении (стр. 2)",
       client: "Клиент", clientName: "имя и фамилия (для письма)", calcTitle: "Расчёт", calcHint: "Поправьте транспорт и осмотр — сумма попадёт в предложение как цена «под ключ».",
@@ -319,7 +319,7 @@
     const est = current && estimate(current.ad, current.source);
     if (!CALC || !est) return "";
     const src = CALC.url({ method: chosenMethod(), lang, gross: est.carBruttoEur, net: est.netEur, engine: est.engine.index, transport: est.transportNetto, inspection: est.inspectionNetto, extra: feeLine(chosenMethod()), offer: true });
-    return `<section class="osCalc"><h3>${esc(t("calcTitle"))}</h3><p class="osMuted">${esc(t("calcHint"))}</p><iframe class="osCalcFrame" title="${esc(t("calcTitle"))} AUTOGOOD" src="${esc(src)}" data-os-calc></iframe></section>`;
+    return `<iframe class="osCalcFrame" title="${esc(t("calcTitle"))} AUTOGOOD" src="${esc(src)}" scrolling="no" data-os-calc></iframe>`;
   }
 
   function rows(list) {
@@ -360,7 +360,28 @@
     const battery = Number(specs.batteryKwh) ? `${String(specs.batteryKwh).replace(".", ",")} ${t("kwh")}` : "";
     const available = facts.availability ? FACTS.availabilityText(facts.availability, lang) : "";
     // The calculator of the chosen way (owner 2026-10-11), filled from the ad.
+    // Owner 2026-10-11: three blocks — how the car is bought, for whom and in
+    // which language (first: it is chosen at the start); the car; the
+    // calculation with the "full calculation" box beside its title.
+    const frame = calcFrameHtml();
     return `
+      <section class="osCard osDealCard" aria-label="${esc(t("method"))}">
+        <div class="osMethods" role="radiogroup" aria-label="${esc(t("method"))}">
+          <span class="osMethodsLabel">${esc(t("method"))}</span>
+          ${[["direct", t("methodDirect"), !facts.business, t("businessOnly")], ["vat", t("methodVat"), canNet, t("vatOnly")], ["margin", t("methodMargin"), !canNet, t("marginOnly")]].map(([key, label, enabled, why]) => `
+            <label class="osMethod${enabled ? "" : " isOff"}"${enabled ? "" : ` title="${esc(why)}"`}><input type="radio" name="osMethod" value="${key}" data-os-method${key === chosenMethod() ? " checked" : ""}${enabled ? "" : " disabled"} /><span>${esc(label)}</span></label>`).join("")}
+        </div>
+        <div class="osClient">
+          <span class="osMethodsLabel">${esc(t("client"))}</span>
+          <select data-os-salutation aria-label="${esc(t("client"))}">${["Pan", "Pani", "Państwo"].map((form) => `<option${client.salutation === form ? " selected" : ""}>${form}</option>`).join("")}</select>
+          <input type="text" data-os-client value="${esc(client.name)}" placeholder="${esc(t("clientName"))}" aria-label="${esc(t("clientName"))}" />
+        </div>
+        <div class="osClient">
+          <span class="osMethodsLabel">${esc(t("langLabel"))}</span>
+          <div class="osLang" role="group" aria-label="${esc(t("langLabel"))}">${["pl", "ru"].map((code) => `<button type="button" data-os-lang="${code}" class="${lang === code ? "isActive" : ""}" aria-pressed="${lang === code}">${code.toUpperCase()}</button>`).join("")}</div>
+        </div>
+      </section>
+      <section class="osCard osCarCard">
       <div class="osCarHead">
         ${ad.images?.[0] ? `<img class="osCarPhoto" src="${esc(ad.images[0])}" alt="" loading="lazy" referrerpolicy="no-referrer" />` : ""}
         <div class="osCarName">
@@ -394,20 +415,17 @@
       </div>
       ${!ad.complete ? `<p class="osNote">${esc(t("basic"))}</p>` : ""}
       ${missing.length ? `<p class="osNote">${esc(t("missing", { list: missing.join(", ") }))}</p>` : ""}
-      <div class="osMethods" role="radiogroup" aria-label="${esc(t("method"))}">
-        <span class="osMethodsLabel">${esc(t("method"))}</span>
-        ${[["direct", t("methodDirect"), !facts.business, t("businessOnly")], ["vat", t("methodVat"), canNet, t("vatOnly")], ["margin", t("methodMargin"), !canNet, t("marginOnly")]].map(([key, label, enabled, why]) => `
-          <label class="osMethod${enabled ? "" : " isOff"}"${enabled ? "" : ` title="${esc(why)}"`}><input type="radio" name="osMethod" value="${key}" data-os-method${key === chosenMethod() ? " checked" : ""}${enabled ? "" : " disabled"} /><span>${esc(label)}</span></label>`).join("")}
-        <label class="osFull"><input type="checkbox" data-os-full${fullCalc ? " checked" : ""} /><span>${esc(t("fullCalc"))}</span></label>
-      </div>
-      <div class="osClient">
-        <span class="osMethodsLabel">${esc(t("client"))}</span>
-        <select data-os-salutation aria-label="${esc(t("client"))}">${["Pan", "Pani", "Państwo"].map((form) => `<option${client.salutation === form ? " selected" : ""}>${form}</option>`).join("")}</select>
-        <input type="text" data-os-client value="${esc(client.name)}" placeholder="${esc(t("clientName"))}" aria-label="${esc(t("clientName"))}" />
-      </div>
-      ${calcFrameHtml()}
+      </section>
+      ${frame ? `
+      <section class="osCard osCalcCard">
+        <div class="osCalcHead">
+          <h2 class="osCardTitle">${icon("receipt")}<span>${esc(t("calcTitle"))}</span></h2>
+          <label class="osFull"><input type="checkbox" data-os-full${fullCalc ? " checked" : ""} /><span>${esc(t("fullCalc"))}</span></label>
+        </div>
+        <p class="osMuted">${esc(t("calcHint"))}</p>
+        ${frame}
+      </section>` : ""}
       <div class="osCarFoot">
-        <span class="osCarFootLabel">${esc(t("footLabel"))}</span>
         <button class="osPrimary" type="button" data-os-make>${esc(t("make"))} <i aria-hidden="true">&#8594;</i></button>
       </div>`;
   }
@@ -613,7 +631,9 @@
     // the frame shrinks too when the calculator gets shorter.
     const fit = () => {
       const style = doc.defaultView.getComputedStyle(doc.body);
-      const height = Math.ceil(doc.body.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom));
+      // + the frame's own border (a pixel short made the calculator scroll).
+      const border = frame.offsetHeight - frame.clientHeight;
+      const height = Math.ceil(doc.body.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom)) + border + 1;
       if (height > 200 && Math.abs(height - frame.offsetHeight) > 1) frame.style.height = `${height}px`;
     };
     fit();
@@ -629,12 +649,23 @@
   carBox.addEventListener("change", (event) => {
     if (event.target.matches("[data-os-method]")) {
       method = event.target.value;
-      const old = carBox.querySelector(".osCalc");
+      const old = carBox.querySelector("[data-os-calc]");
       const html = calcFrameHtml();
       if (old && html) old.outerHTML = html;
     }
     if (event.target.matches("[data-os-full]")) fullCalc = event.target.checked;
     if (event.target.matches("[data-os-salutation]")) client.salutation = event.target.value;
+  });
+  carBox.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-os-lang]");
+    if (!button) return;
+    lang = button.dataset.osLang === "ru" && RU ? "ru" : "pl";
+    try {
+      localStorage.setItem(LANG_KEY, lang);
+    } catch {
+      // Only this visit then.
+    }
+    applyLang();
   });
   carBox.addEventListener("input", (event) => {
     if (event.target.matches("[data-os-client]")) client.name = event.target.value.trim();
