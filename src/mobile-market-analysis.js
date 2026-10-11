@@ -1967,19 +1967,27 @@
   // twice): same price, same mileage, same year → kept once, on the chart, in
   // the statistics and in the list (owner 2026-10-09). The copy with a link
   // and from the main portal stays.
+  // The one test of "the same car" for every rule (owner 2026-10-11, audit
+  // p. 14): the same year, the same mileage and the same price in the same
+  // currency. A car under 1000 km (new, demo) or without a price is never a
+  // duplicate: dealers list the same new model many times.
+  function sameCarKey(listing) {
+    const mileage = Math.round(Number(listing?.mileage) || 0);
+    const price = Math.round(Number(listing?.price) || 0);
+    if (mileage < 1000 || !price) return "";
+    return `${String(listing.currency || "EUR").toUpperCase()}|${price}|${mileage}|${Number(listing.year) || ""}`;
+  }
   const OFFER_PREFERENCE = ["mobile", "otomoto", "autoscout", "blocket", "marktplaats", "dehands", "autoscoutfr", "paruvendu", "kleinanzeigen", "avby"];
   function uniqueOffers(listings) {
     const rank = (listing) => (listing.url ? 0 : 100) + Math.max(0, OFFER_PREFERENCE.indexOf(listingSource(listing)));
     const kept = new Map();
     const out = [];
     (listings || []).forEach((listing) => {
-      const mileage = Number(listing.mileage) || 0;
-      const price = Math.round(Number(listing.price) || 0);
-      if (mileage < 1000 || !price) {
+      const key = sameCarKey(listing);
+      if (!key) {
         out.push(listing);
         return;
       }
-      const key = `${String(listing.currency || "EUR").toUpperCase()}|${price}|${Math.round(mileage)}|${Number(listing.year) || ""}`;
       const seen = kept.get(key);
       if (!seen) {
         kept.set(key, { listing, index: out.length });
@@ -2759,12 +2767,11 @@
   }
 
   function dropMobileDuplicates(autoscoutListings, mobileListings) {
-    const keyOf = (listing) => {
-      const mileage = Number(listing.mileage) || 0;
-      return mileage ? `${Math.round(Number(listing.price))}|${mileage}` : "";
-    };
-    const onMobile = new Set(mobileListings.map(keyOf).filter(Boolean));
-    const unique = autoscoutListings.filter((listing) => !onMobile.has(keyOf(listing)));
+    // Same year, mileage and price (sameCarKey): price and mileage alone took
+    // two different cars for one (audit 2026-10-10: Golf VIII 2021 and Golf 7
+    // 2020, both 9 590 € / 193 000 km).
+    const onMobile = new Set(mobileListings.map(sameCarKey).filter(Boolean));
+    const unique = autoscoutListings.filter((listing) => !onMobile.has(sameCarKey(listing)));
     return { unique, duplicates: autoscoutListings.length - unique.length };
   }
 
@@ -5169,11 +5176,11 @@
     return Array.isArray(record.answered) && record.answered.includes(source);
   }
   const answeredMarket = (record, source) => record.markets?.[source] || { total: 0, complete: true, offers: [] };
-  // The same car on another portal: price and mileage, as the duplicates are
-  // told apart (dropMobileDuplicates). A car that left one portal's list but
+  // The same car on another portal: year, mileage and price, as the
+  // duplicates are told apart (sameCarKey). A car that left one portal's list but
   // is counted on another (once AutoScout24 answered, Marktplaats kept 1 of 7)
   // has not gone away.
-  const carSignature = (offer) => (Number(offer?.mileage) ? `${Math.round(Number(offer.price))}|${Number(offer.mileage)}` : "");
+  const carSignature = (offer) => sameCarKey(offer);
   const carsOf = (markets) => new Set(markets.flatMap((market) => (market?.offers || []).map(carSignature)).filter(Boolean));
   const stillListed = (cars) => (row) => !row.gone || !cars.has(carSignature(row.offer));
   // Why a portal gave nothing, in the manager's words ("" = no answer).
