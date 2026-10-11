@@ -973,3 +973,28 @@
 .isProcessWide .ofTimeStep { margin-bottom: 5px; }
 .isPremium[data-page="1"] .ofSpecs { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr); }
 .ofSpec b { font-size: 14px; }
+
+/* ---- Owner 2026-10-11 ---------------------------------------------------------
+ * Card headings one size up on both pages; year and mileage over the name on
+ * the photo (gold, as before); the rest of the data half a size up; the way of
+ * buying as a coloured subheading over the price; the calculator's own picture
+ * on page 2; the time it takes in orange; settings under one closed group; the
+ * client's e-mail line. */
+.ofCardHead { font-size: 11.5px; }
+.ofCardHead svg { width: 16px; height: 16px; }
+.isPremium[data-page="1"] .ofKicker { display: block; margin-bottom: 2px; font-size: 12px; letter-spacing: 0.06em; color: var(--of-gold-soft); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.35); }
+.ofSpec span { font-size: 11px; }
+.ofSpec b { font-size: 15px; }
+.ofPage .ofMethodLine { margin: 0 0 4px; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; text-transform: none; color: #f2b45c; }
+.ofCalcShotCard { padding: 6px; }
+.ofCalcShot { display: block; width: 100%; height: auto; border-radius: 8px; }
+.ofPage .ofProcessNote { background: #fff1e0; color: #a1520a; border: 1px solid #f6cf9f; }
+.isPremium .ofProcessNote { background: #fff1e0; }
+.ofAdvanced { border: 1px solid var(--of-line); border-radius: 12px; background: #ffffff; }
+.ofAdvanced > summary { cursor: pointer; padding: 12px 14px; font-weight: 700; font-size: 13px; color: var(--of-navy); }
+.ofAdvanced[open] > summary { border-bottom: 1px solid var(--of-line); }
+.ofAdvanced > .ofPanelCard { margin: 10px; }
+.offerMailRow { display: flex; align-items: flex-end; gap: 8px; flex-basis: 100%; justify-content: flex-end; padding-top: 8px; }
+.offerMailRow[hidden] { display: none; }
+.offerMailRow label { display: grid; gap: 3px; font-size: 11.5px; color: var(--of-muted); font-weight: 600; }
+.offerMailRow input { min-width: 260px; min-height: 34px; padding: 0 10px; border: 1px solid var(--of-line); border-radius: 8px; font: inherit; }

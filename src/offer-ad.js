@@ -307,6 +307,33 @@
     };
   }
 
+  // AutoScout24 marks a price with VAT to deduct by "¹" (the footnote
+  // "MwSt. ausweisbar"): taxDeductible. It rarely gives the net price, so it
+  // is counted from the gross by the seller country's VAT (owner 2026-10-11:
+  // "¹" = can be bought net; no "¹" = a margin car).
+  const AUTOSCOUT_VAT = { DE: 19, AT: 20, FR: 20, NL: 21, BE: 21, LU: 17, IT: 22, ES: 21, CZ: 21, PL: 23, SE: 25, DK: 25 };
+  function autoscoutVat(prices, country) {
+    const gross = Number(prices.priceRaw) || 0;
+    const deductible = Boolean(prices.taxDeductible);
+    const rate = Number(prices.vatRate) || (deductible ? AUTOSCOUT_VAT[country] || 19 : 0);
+    const given = Number(prices.netPriceRaw) || 0;
+    const net = given || (deductible && gross && rate ? Math.round(gross / (1 + rate / 100)) : 0);
+    return { deductible, rate, net, gross, netCounted: deductible && !given && net > 0 };
+  }
+  // AutoScout24's own price scale: evaluationRanges, categories 1 (top price)
+  // to 5 (high price) — as mobile.de's five bands; 0 and 6 are outside.
+  const AUTOSCOUT_RATING = { 1: "VERY_GOOD_PRICE", 2: "GOOD_PRICE", 3: "REASONABLE_PRICE", 4: "INCREASED_PRICE", 5: "HIGH_PRICE" };
+  function autoscoutRating(prices) {
+    const ranges = (prices.evaluationRanges || []).filter((range) => range.category >= 1 && range.category <= 5).sort((left, right) => left.category - right.category);
+    const median = Number(prices.median) || 0;
+    if (ranges.length === 5 && ranges.every((range) => range.minimum > 0) && ranges[4].maximum > 0) {
+      const thresholds = [...ranges.map((range) => range.minimum), ranges[4].maximum + 1].map((value) => `${value} €`);
+      const rating = AUTOSCOUT_RATING[prices.category] || "";
+      return { portal: "AutoScout24", median, category: prices.category ?? null, rating, label: rating ? MOBILE_RATING[rating] : "", thresholds };
+    }
+    return median > 0 ? { portal: "AutoScout24", median, category: prices.category ?? null } : null;
+  }
+
   async function readAutoscout(url, source = "autoscout") {
     const response = await fetch(`${proxy()}${url}`, { headers: { "x-respond-with": "html" } });
     if (!response.ok) throw new Error(`AutoScout24 ${response.status}`);
@@ -370,8 +397,8 @@
         stock: null,
       },
       listedAt: details.createdTimestampWithOffset || "",
-      portalPrice: Number(prices.median) > 0 ? { portal: "AutoScout24", median: Number(prices.median), category: prices.category ?? null } : null,
-      vat: { deductible: Boolean(prices.taxDeductible), rate: Number(prices.vatRate) || 0, net: Number(prices.netPriceRaw) || 0, gross: Number(prices.priceRaw) || 0 },
+      portalPrice: autoscoutRating(prices),
+      vat: autoscoutVat(prices, String(details.location?.countryCode || details.seller?.address?.countryCode || (source === "autoscoutfr" ? "FR" : "DE")).toUpperCase()),
       flags: {
         damaged: (vehicle.damageConditions || []).length > 0,
         rental: vehicle.isRental === true,

@@ -63,7 +63,9 @@
       missing: "Nie udało się odczytać: {list}. Uzupełnisz to na stronie oferty (Edytuj teksty).", missingWords: ["marka", "cena", "przebieg", "rok"],
       footLabel: "Oferta dla klienta · po polsku", make: "Przygotuj ofertę PDF",
       method: "Sposób zakupu", methodDirect: "Zakup bezpośredni", methodVat: "Przez AUTOGOOD · VAT 23% (netto)", methodMargin: "Przez AUTOGOOD · VAT marża (brutto)",
-      vatOnly: "tylko auto z VAT do odliczenia", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
+      vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
+      client: "Klient", clientName: "imię i nazwisko (do e-maila)", calcTitle: "Kalkulacja", calcHint: "Popraw transport i oględziny - suma trafi do oferty jako cena na gotowo.",
+      remove: "Usuń z listy", removeAsk: "Usunąć ofertę {n} z listy?",
       fromLink: "z linku", fromMonitoring: "z Monitoringu",
     },
     ru: {
@@ -84,7 +86,9 @@
       missing: "Не удалось прочитать: {list}. Допишете на странице предложения (Edytuj teksty).", missingWords: ["марка", "цена", "пробег", "год"],
       footLabel: "Предложение для клиента · на русском", make: "Подготовить PDF-предложение",
       method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · VAT 23% (нетто)", methodMargin: "Через AUTOGOOD · VAT marża (брутто)",
-      vatOnly: "только авто с VAT к вычету", fullCalc: "Полный расчёт в предложении (стр. 2)",
+      vatOnly: "только авто с VAT к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или по VAT 23%", fullCalc: "Полный расчёт в предложении (стр. 2)",
+      client: "Клиент", clientName: "имя и фамилия (для письма)", calcTitle: "Расчёт", calcHint: "Поправьте транспорт и осмотр - сумма попадёт в предложение как цена «под ключ».",
+      remove: "Удалить из списка", removeAsk: "Удалить предложение {n} из списка?",
       fromLink: "из ссылки", fromMonitoring: "из Monitoring",
     },
   };
@@ -259,11 +263,26 @@
   // possible, else straight from the dealer.
   let method = "";
   let fullCalc = true;
+  // With a net price: straight or on VAT 23%; without: straight or on margin
+  // (owner 2026-10-11). Default: VAT 23% when possible, else straight.
   const chosenMethod = () => {
     const vat = current?.ad?.vat || {};
-    if (method === "vat" && !(vat.deductible && vat.net)) return "direct";
-    return method || (vat.deductible && vat.net ? "vat" : "direct");
+    const canNet = Boolean(vat.deductible && vat.net);
+    if (method === "vat" && !canNet) return "direct";
+    if (method === "margin" && canNet) return "vat";
+    return method || (canNet ? "vat" : "direct");
   };
+  const client = { salutation: "Pan", name: "" };
+  const CALC = window.AUTOGOOD_OFFER_CALC;
+  // The calculators page in the card: the ad's price (net on the VAT way),
+  // its excise class and the seller's tariff; none for a car already in
+  // Poland or in Belarus (no import calculation for them).
+  function calcFrameHtml() {
+    const est = current && estimate(current.ad, current.source);
+    if (!CALC || !est) return "";
+    const src = CALC.url({ method: chosenMethod(), lang, gross: est.carBruttoEur, net: est.netEur, engine: est.engine.index, transport: est.transportNetto, inspection: est.inspectionNetto, url: current.source === "mobile" ? current.url : "" });
+    return `<section class="osCalc"><h3>${esc(t("calcTitle"))}</h3><p class="osMuted">${esc(t("calcHint"))}</p><iframe class="osCalcFrame" title="Kalkulator AUTOGOOD" src="${esc(src)}" data-os-calc></iframe></section>`;
+  }
 
   function rows(list) {
     return list.filter(([, , value]) => value !== "" && value !== null && value !== undefined)
@@ -287,6 +306,7 @@
     const missing = [!brand, !price, !specs.mileage, !specs.firstRegistration].map((gap, index) => (gap ? t("missingWords")[index] : "")).filter(Boolean);
     const option = (label) => (lang === "ru" && RU ? RU.option(label) : label);
     const canNet = Boolean(vat.deductible && vat.net);
+    // The calculator of the chosen way (owner 2026-10-11), filled from the ad.
     return `
       <div class="osCarHead">
         ${ad.images?.[0] ? `<img class="osCarPhoto" src="${esc(ad.images[0])}" alt="" loading="lazy" referrerpolicy="no-referrer" />` : ""}
@@ -321,10 +341,16 @@
       ${missing.length ? `<p class="osNote">${esc(t("missing", { list: missing.join(", ") }))}</p>` : ""}
       <div class="osMethods" role="radiogroup" aria-label="${esc(t("method"))}">
         <span class="osMethodsLabel">${esc(t("method"))}</span>
-        ${[["direct", t("methodDirect"), true], ["vat", t("methodVat"), canNet], ["margin", t("methodMargin"), true]].map(([key, label, enabled]) => `
-          <label class="osMethod${enabled ? "" : " isOff"}"${enabled ? "" : ` title="${esc(t("vatOnly"))}"`}><input type="radio" name="osMethod" value="${key}" data-os-method${key === chosenMethod() ? " checked" : ""}${enabled ? "" : " disabled"} /><span>${esc(label)}</span></label>`).join("")}
+        ${[["direct", t("methodDirect"), true, ""], ["vat", t("methodVat"), canNet, t("vatOnly")], ["margin", t("methodMargin"), !canNet, t("marginOnly")]].map(([key, label, enabled, why]) => `
+          <label class="osMethod${enabled ? "" : " isOff"}"${enabled ? "" : ` title="${esc(why)}"`}><input type="radio" name="osMethod" value="${key}" data-os-method${key === chosenMethod() ? " checked" : ""}${enabled ? "" : " disabled"} /><span>${esc(label)}</span></label>`).join("")}
         <label class="osFull"><input type="checkbox" data-os-full${fullCalc ? " checked" : ""} /><span>${esc(t("fullCalc"))}</span></label>
       </div>
+      <div class="osClient">
+        <span class="osMethodsLabel">${esc(t("client"))}</span>
+        <select data-os-salutation aria-label="${esc(t("client"))}">${["Pan", "Pani", "Państwo"].map((form) => `<option${client.salutation === form ? " selected" : ""}>${form}</option>`).join("")}</select>
+        <input type="text" data-os-client value="${esc(client.name)}" placeholder="${esc(t("clientName"))}" />
+      </div>
+      ${calcFrameHtml()}
       <div class="osCarFoot">
         <span class="osCarFootLabel">${esc(t("footLabel"))}</span>
         <button class="osPrimary" type="button" data-os-make>${esc(t("make"))} <i aria-hidden="true">&#8594;</i></button>
@@ -480,7 +506,7 @@
       estimate: estimate(ad, source),
       manager: store.manager(),
       company: store.company(),
-      client: { salutation: "Pan", name: "" },
+      client: { ...client },
       edits: {},
       // Without the full calculation page 2 shows the steps wide (owner 2026-10-10).
       hidden: fullCalc ? [] : ["costs"],
@@ -490,8 +516,17 @@
   }
 
   carBox.addEventListener("change", (event) => {
-    if (event.target.matches("[data-os-method]")) method = event.target.value;
+    if (event.target.matches("[data-os-method]")) {
+      method = event.target.value;
+      const old = carBox.querySelector(".osCalc");
+      const html = calcFrameHtml();
+      if (old && html) old.outerHTML = html;
+    }
     if (event.target.matches("[data-os-full]")) fullCalc = event.target.checked;
+    if (event.target.matches("[data-os-salutation]")) client.salutation = event.target.value;
+  });
+  carBox.addEventListener("input", (event) => {
+    if (event.target.matches("[data-os-client]")) client.name = event.target.value.trim();
   });
   carBox.addEventListener("click", async (event) => {
     const button = event.target.closest("[data-os-make]");
@@ -500,9 +535,24 @@
     const id = store.newId();
     const page = new URL("oferta.html", window.location.href);
     page.searchParams.set("id", id);
+    page.searchParams.set("new", "1");
+    // The tab opens on the click itself; the calculator's picture takes a
+    // moment, and the offer page waits for its draft.
+    const tab = window.open(page.toString(), "_blank");
     try {
-      await store.put(await makeDraft(id));
-      const tab = window.open(page.toString(), "_blank");
+      const draft = await makeDraft(id);
+      const frame = carBox.querySelector("[data-os-calc]");
+      if (CALC && frame?.contentDocument) {
+        try {
+          const read = CALC.read(frame.contentDocument);
+          const methodKey = chosenMethod();
+          draft.calc = { tab: CALC.TABS[methodKey], method: methodKey, methodLabel: "", rows: read.rows, total: read.total, rate: read.rate, lang, at: new Date().toISOString() };
+          if (fullCalc) draft.calcImage = await CALC.capture(frame);
+        } catch {
+          // The calculator not ready: the offer starts from the estimate.
+        }
+      }
+      await store.put(draft);
       if (!tab) window.location.href = page.toString();
       showRecent();
     } catch (error) {
@@ -522,9 +572,18 @@
       const date = new Date(offer.createdAt);
       const when = Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit", year: "numeric" });
       const from = offer.origin === "link" ? t("fromLink") : t("fromMonitoring");
-      return `<li><a href="./oferta.html?id=${encodeURIComponent(offer.id)}" target="_blank" rel="noopener"><b>${esc(offer.number || "")}</b><span>${esc(title)}</span><small>${esc([when, PORTAL[offer.source] || "", from, offer.lang === "ru" ? "RU" : "PL"].filter(Boolean).join(" · "))}</small></a></li>`;
+      return `<li><a href="./oferta.html?id=${encodeURIComponent(offer.id)}" target="_blank" rel="noopener"><b>${esc(offer.number || "")}</b><span>${esc(title)}</span><small>${esc([when, PORTAL[offer.source] || "", from, offer.lang === "ru" ? "RU" : "PL"].filter(Boolean).join(" · "))}</small></a><button class="osRemove" type="button" data-os-remove="${esc(offer.id)}" data-number="${esc(offer.number || "")}" aria-label="${esc(t("remove"))}" title="${esc(t("remove"))}">×</button></li>`;
     }).join("");
   }
+  // The manager removes an offer from the list (owner 2026-10-11): it is set
+  // aside (archived), never erased — the rules of user data.
+  recentList.addEventListener("click", async (event) => {
+    const button = event.target.closest("[data-os-remove]");
+    if (!button) return;
+    if (!window.confirm(t("removeAsk", { n: button.dataset.number }))) return;
+    await store.update(button.dataset.osRemove, { archived: true, archivedAt: new Date().toISOString() }).catch(() => null);
+    showRecent();
+  });
   applyLang();
   store.channel?.addEventListener("message", () => showRecent());
 

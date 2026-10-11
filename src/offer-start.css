@@ -143,3 +143,13 @@ a { color: inherit; }
 .osMethod.isOff { opacity: 0.45; cursor: not-allowed; }
 .osFull { display: inline-flex; align-items: center; gap: 6px; margin-left: auto; font-size: var(--text-sm); font-weight: 600; color: var(--color-muted); cursor: pointer; }
 @media (max-width: 860px) { .osFull { margin-left: 0; } }
+/* The client in one line; the calculator of the chosen way; remove from the list. */
+.osClient { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-xs); margin-top: var(--space-sm); }
+.osClient select, .osClient input { min-height: 36px; border: var(--rule-thin) solid var(--color-field); border-radius: var(--radius-lg); background: var(--color-surface); padding: 0 var(--space-sm); font: inherit; font-size: var(--text-sm); }
+.osClient input { flex: 1; min-width: 220px; max-width: 360px; }
+.osCalc { margin-top: var(--space-lg); padding-top: var(--space-md); border-top: var(--rule-thin) solid var(--color-rule); }
+.osCalc h3 { margin: 0; color: var(--color-brand-pressed); font-size: var(--text-base); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.osCalcFrame { display: block; width: 100%; max-width: 860px; height: 860px; margin: var(--space-sm) auto 0; border: var(--rule-thin) solid var(--color-rule); border-radius: var(--radius-card); background: #ffffff; }
+.osRecentList li { position: relative; }
+.osRemove { position: absolute; top: 6px; right: 6px; width: 24px; height: 24px; border: 0; border-radius: 50%; background: transparent; color: var(--color-soft); font-size: 16px; line-height: 1; cursor: pointer; }
+.osRemove:hover { background: var(--color-rule-soft); color: var(--color-error); }

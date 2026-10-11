@@ -35,7 +35,7 @@
     googleRating: "4,9",
     googleReviews: "126",
     mapsUrl: "https://www.google.com/maps/search/?api=1&query=AUTOGOOD%2C+Kolejowa+102%2C+05-092+%C5%81omianki",
-    inspectionUrl: "",
+    inspectionUrl: "https://drive.google.com/drive/folders/1_78M5vInjP4jf-t8fA4mVjmJO6_6qFwi?usp=drive_link",
   };
   const MANAGER_DEFAULTS = { name: "Nikodem", phone: "+48 531 900 775", email: "info@autogood.pl" };
   // Empty fields never hide a default.

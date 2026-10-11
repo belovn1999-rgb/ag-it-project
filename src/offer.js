@@ -212,7 +212,7 @@
         : L(`Faktura VAT${rate} - VAT do odliczenia`, `Счёт-фактура VAT${rate} - VAT к вычету`);
     }
     if (view.priceType === "private" || view.seller === "private") return L("Sprzedawca prywatny - bez faktury VAT", "Частный продавец - без счёта-фактуры VAT");
-    return L("Tylko VAT marża (bez odliczenia VAT)", "Только VAT marża (без вычета VAT)");
+    return "";
   }
 
   // How the car is bought (owner 2026-10-10, chosen when the offer is made):
@@ -248,7 +248,7 @@
       const words = ru() && calc.lang !== "ru" ? RU.calc : (text) => text;
       const rate = calc.rate ? calc.rate.toFixed(2).replace(".", ",") : "—";
       return {
-        method: words(calc.methodLabel),
+        method: words(calc.methodLabel) || methodLabel(calc.method || "direct"),
         rows: calc.rows.map((row) => ({ ...row, label: words(row.label) })),
         total: calc.total,
         note: L(`Kalkulator AUTOGOOD, kurs EUR ${rate} zł z dnia ${dateText(calc.at)}.`, `Калькулятор AUTOGOOD, курс EUR ${rate} zł на ${dateText(calc.at)}.`),
@@ -464,18 +464,18 @@
     const band = RATING_BAND[rating?.rating];
     const BANDS = ru() ? BANDS_RU : BANDS_PL;
     let body = "";
-    if (rating?.portal === "mobile.de" && limits.length === 6 && limits.every((value, index) => value > 0 && (!index || value > limits[index - 1])) && band !== undefined) {
+    if (["mobile.de", "AutoScout24"].includes(rating?.portal) && limits.length === 6 && limits.every((value, index) => value > 0 && (!index || value > limits[index - 1])) && band !== undefined) {
       const low = limits[0];
       const span = limits[5] - low;
       const at = Math.min(98, Math.max(2, ((view.price - low) / span) * 100));
       const range = (index) => `${numbers.format(limits[index])}-${numbers.format(limits[index + 1])} €`;
       body = `
-        <div class="ofBands" role="img" aria-label="${esc(L("Skala cen mobile.de", "Шкала цен mobile.de"))}: ${esc(BANDS[band])}">
+        <div class="ofBands" role="img" aria-label="${esc(L(`Skala cen ${rating.portal}`, `Шкала цен ${rating.portal}`))}: ${esc(BANDS[band])}">
           ${BANDS.map((name, index) => `<span class="ofBand is${index}" style="width:${(((limits[index + 1] - limits[index]) / span) * 100).toFixed(1)}%" title="${esc(`${name}: ${range(index)}`)}"></span>`).join("")}
           <span class="ofBarCar${band >= 3 ? " isDear" : ""}" style="left:${at.toFixed(1)}%"></span>
         </div>
         <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, view.currency))}</span><span>${BANDS[2]} <b>${esc(range(2))}</b></span></div>
-        ${field("marketLead", L(`Wg skali cen mobile.de dla tego auta: „${BANDS[band]}” (${range(band)}).`, `По шкале цен mobile.de для этого авто: «${BANDS[band]}» (${range(band)}).`), "p", "ofMarketLead")}
+        ${field("marketLead", L(`Wg skali cen ${rating.portal} dla tego auta: „${BANDS[band]}” (${range(band)}).`, `По шкале цен ${rating.portal} для этого авто: «${BANDS[band]}» (${range(band)}).`), "p", "ofMarketLead")}
 `;
     } else if (rating?.portal === "AutoScout24" && rating.median > 0 && view.price > 0) {
       const share = view.price / rating.median - 1;
@@ -520,8 +520,6 @@
     if (portalLabel && /dobra|uczciwa/.test(portalLabel) && !(portalCard.includes("ofBands") && !isHidden("market"))) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(ru() ? BANDS_RU[BANDS_PL.indexOf(portalLabel)] || portalLabel : portalLabel)}</span>`);
     const hp = L("KM", "л.с.");
     const specs = [
-      [L("1. rejestracja", "1-я регистрация"), view.reg],
-      [L("Przebieg", "Пробег"), kmText(view.mileage)],
       [L("Silnik", "Двигатель"), [view.ccm ? `${String((Math.round(view.ccm / 100) / 10).toFixed(1)).replace(".", ",")} ${L("l", "л")}` : "", fuelShort(view.fuel)].filter(Boolean).join(" · ")],
       [L("Moc", "Мощность"), view.powerHp ? `${view.powerHp} ${hp} (${view.powerKw} ${L("kW", "кВт")})` : ""],
       [L("Skrzynia biegów", "Коробка передач"), view.gearbox],
@@ -567,23 +565,23 @@
                 ${photo ? `<img src="${esc(photo)}" data-source="${esc(photo)}" alt="${esc(view.title)}" crossorigin="anonymous" data-photo-main${photoFrame()} />` : `<div class="ofPhotoEmpty">${icon("car")}<span>${reading ? L("Wczytuję zdjęcie z ogłoszenia…", "Загружаю фото из объявления…") : L("Zdjęcie z ogłoszenia pojawi się po wczytaniu danych", "Фото из объявления появится после загрузки данных")}</span></div>`}
                 ${view.images.length > 1 ? `<span class="ofPhotoCount">${L(`${view.images.length} ${plural(view.images.length, "zdjęcie", "zdjęcia", "zdjęć")} w ogłoszeniu`, `${view.images.length} фото в объявлении`)}</span>` : ""}
               </figure>
-              ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>${L("Ogłoszenie na", "Объявление на")} ${esc(PORTAL[offer.source] || L("portalu", "портале"))}<small>${placeHtml(view.city, view.country)}</small></span></a>` : ""}
+              ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>${L("Ogłoszenie na", "Объявление на")} ${esc(PORTAL[offer.source] || L("portalu", "портале"))}</span></a>` : ""}
             </div>
             <div class="ofHeroInfo">
               <div class="ofHeroTitle">
+                ${[view.reg || view.year, kmText(view.mileage)].filter(Boolean).length ? `<p class="ofKicker">${esc([view.reg || view.year, kmText(view.mileage)].filter(Boolean).join(" · "))}</p>` : ""}
                 ${field("title", view.title, "h1", "ofTitle")}
               </div>
               ${costView ? `<div class="ofPriceBox">
+                <p class="ofMethodLine">${esc(methodLabel())}</p>
                 <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}*</p>
                 <p class="ofPrice">${esc(money(costView.total, "PLN"))} <span class="ofPriceAd">(${offerMethod() === "vat" && netEur() > 0 ? `${esc(money(netEur(), "EUR"))} ${L("netto", "нетто")}` : `${esc(money(view.price, view.currency))} ${L("brutto", "брутто")}`})</span></p>
-                <p class="ofMethodLine">${esc(methodLabel())}</p>
-                ${field("buyAs", buyAsText(view), "p", "ofBuyAs")}
-                ${isHidden("costs") ? field("priceAsk", L("Dokładną kalkulację przygotuje Pana opiekun - prosimy o kontakt.", "Чтобы получить точный расчёт, свяжитесь с менеджером."), "p", "ofPriceAsk") : ""}
+                ${buyAsText(view) ? field("buyAs", buyAsText(view), "p", "ofBuyAs") : ""}
                 ${field("priceFoot", L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, другие расходы."), "p", "ofPriceFoot")}
               </div>` : `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena w ogłoszeniu", "Цена в объявлении")}</p>
                 <p class="ofPrice">${esc(money(view.price, view.currency))}</p>
-                ${field("buyAs", buyAsText(view), "p", "ofBuyAs")}
+                ${buyAsText(view) ? field("buyAs", buyAsText(view), "p", "ofBuyAs") : ""}
                 ${field("priceNoteAd", L("Koszt na gotowo policzymy indywidualnie.", "Стоимость «под ключ» рассчитаем индивидуально."), "p", "ofPriceFoot")}
               </div>`}
               ${chips.length ? `<div class="ofChips${blockClass("chips")}">${chips.join("")}</div>` : ""}
@@ -690,7 +688,8 @@
   // Colour: one per group of steps, from green to deep navy (a gradient over
   // the whole way); headings only where the work, the purchase and the
   // delivery begin.
-  const PROCESS_GROUPS = ["#3a9d5d", "#23806b", "#1d6585", "#1a4d7a", "#13365c"];
+  // Owner 2026-10-11: different colours, green first.
+  const PROCESS_GROUPS = ["#2e9a5a", "#2f6db5", "#8a56c2", "#cf7a1d", "#13365c"];
   const PROCESS_STAGES = {
     2: { label: "Rozpoczęcie prac", labelRu: "Начало работ" },
     5: { label: "Zakup", labelRu: "Покупка" },
@@ -716,7 +715,7 @@
       { group: 1, title: "Oględziny", titleRu: "Осмотр",
         text: "Nasz specjalista sprawdza auto na miejscu: lakier, diagnostyka, jazda próbna, nadwozie, wnętrze i elektronika. {Pan} {v:dostaje|dostają} pełny raport z rekomendacją.",
         textRu: "Наш специалист проверяет авто на месте: ЛКП, диагностика, тест-драйв, кузов, салон, электроника. Вы получаете полный отчёт с рекомендацией.",
-        link: sample ? { url: sample, label: "Zobacz przykładowe oględziny", labelRu: "Посмотреть, как выглядит осмотр" } : null,
+        link: sample ? { url: sample, label: "Zobacz, jak wyglądają przykładowe oględziny", labelRu: "Посмотреть, как выглядит пример осмотра" } : null,
         mark: { kind: "decision", label: "{Pana} decyzja: kupujemy?", labelRu: "Ваше решение: покупаем?" } },
       { group: 2, title: "Negocjacje i umowa", titleRu: "Переговоры и договор",
         text: "Negocjujemy cenę i warunki zakupu - 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę.",
@@ -785,7 +784,12 @@
     // The full calculation is the manager's choice (owner 2026-10-10): without
     // it the steps take the page's width and the rest goes under them.
     const withCosts = Boolean(costView) && !isHidden("costs");
-    const costsHtml = costView ? `
+    const calcShot = offer.calcImage && offer.calc && (offer.calc.method || "direct") === offerMethod() ? offer.calcImage : "";
+    const costsHtml = calcShot ? `
+      <section class="ofCard ofCostsCard ofCalcShotCard${blockClass("costs")}" data-block="costs">
+        ${hideToggle("costs")}
+        <img class="ofCalcShot" src="${esc(calcShot)}" alt="${esc(L("Kalkulacja AUTOGOOD", "Расчёт AUTOGOOD"))}" />
+      </section>` : costView ? `
       <section class="ofCard ofCostsCard${blockClass("costs")}" data-block="costs">
         ${hideToggle("costs")}
         <p class="ofCardHead">${icon("receipt")}${L("Koszt na gotowo", "Стоимость «под ключ»")}</p>
@@ -834,7 +838,7 @@
         ${hideToggle("process")}
         <p class="ofCardHead">${icon("route")}${field("processTitle", L("Co dalej: od pierwszej rozmowy do odbioru kluczyków", "Что дальше: от первого разговора до получения ключей"), "span")}</p>
         ${processTimeline()}
-        ${field("processNote", L("Zwykle od 3 tygodni do 1,5 miesiąca od umowy do odbioru - zależnie od kraju i ścieżki zakupu.", "Обычно от 3 недель до 1,5 месяца от договора до получения авто - в зависимости от страны и способа покупки."), "p", "ofProcessNote")}
+        ${field("processNote", L("Zwykle około 2-3 tygodni od umowy do odbioru auta.", "Обычно около 2-3 недель от договора до получения авто."), "p", "ofProcessNote")}
       </section>`;
     const optionsHtml = allOptions.length && !isHidden("allOptions") && (offer.shown || []).includes("allOptions") ? `
       <section class="ofCard isFull" data-block="allOptions">
@@ -867,7 +871,16 @@
   }
 
   // ---- The manager's panel -------------------------------------------------------------
+  // Owner 2026-10-11: every setting under one "Rozszerzone ustawienia",
+  // closed; open stays open while the page redraws.
+  let advancedOpen = false;
+  panel.addEventListener("toggle", (event) => {
+    if (event.target.matches?.(".ofAdvanced")) advancedOpen = event.target.open;
+  }, true);
   function panelHtml(view) {
+    return `<details class="ofAdvanced"${advancedOpen ? " open" : ""}><summary>Rozszerzone ustawienia</summary>${panelCards(view)}</details>`;
+  }
+  function panelCards(view) {
     const ad = offer.ad;
     const manager = store.manager(offer.manager);
     const company = store.company(offer.company);
@@ -905,7 +918,8 @@
       </section>
       <section class="ofPanelCard">
         <h2>Carvago (dla opiekuna)</h2>
-        ${readingCarvago ? "<p>Szukam tego auta na Carvago (rok + przebieg 1:1)…</p>"
+        ${carvagoYear() && carvagoYear() < CARVAGO_FROM_YEAR ? `<p>Carvago nie ma aut zarejestrowanych przed ${CARVAGO_FROM_YEAR} r. - tego auta tam nie będzie (sprawdzone 11.10.2026).</p>`
+          : readingCarvago ? "<p>Szukam tego auta na Carvago (rok + przebieg 1:1)…</p>"
           : offer.carvago?.found ? `<p class="ofPanelOk">Znalezione ${offer.carvago.by === "id" ? "po numerze ogłoszenia" : "po roku, przebiegu i modelu"}: w sprzedaży od ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `${offer.carvago.changes.length} zmian ceny` : "cena bez zmian"}${offer.carvago.active?.count ? `, ${numbers.format(offer.carvago.active.count)} podobnych aktywnych` : ""}.</p><p><a href="${esc(offer.carvago.url)}" target="_blank" rel="noopener">Otwórz na Carvago ↗</a> W ofercie dla klienta bez nazwy i cen Carvago (konkurent, ceny z ich marżą) - tylko daty, % zmian i liczba ofert.</p>`
           : offer.carvagoError ? `<p class="ofPanelError">Carvago nie odpowiedziało (${esc(offer.carvagoError)}).</p>`
           : offer.carvago ? "<p>Tego auta nie ma na Carvago (rok + przebieg 1:1).</p>" : "<p>Jeszcze nie sprawdzone.</p>"}
@@ -969,7 +983,6 @@
           <label>Liczba opinii<input data-company="googleReviews" value="${esc(company.googleReviews || "")}" placeholder="126" /></label>
         </div>
         <label>Link Google Maps<input data-company="mapsUrl" value="${esc(company.mapsUrl || "")}" placeholder="https://maps.app.goo.gl/…" /></label>
-        <label>Link do przykładowych oględzin (krok 5)<input data-company="inspectionUrl" value="${esc(company.inspectionUrl || "")}" placeholder="https://…" /></label>
       </section>
       ${Object.keys(edits()).filter((key) => key !== "photo").length ? `<section class="ofPanelCard"><h2>Zmienione teksty</h2><p>${Object.keys(edits()).filter((key) => key !== "photo").length} zmian.</p><button class="offerButton isSmall" type="button" data-reset-edits>Przywróć teksty automatyczne</button></section>` : ""}`;
   }
@@ -1036,7 +1049,7 @@
       const options = () => [...one.querySelectorAll(".ofOptions .ofOption")];
       const more = one.querySelector(".ofOptionsMore[data-all]");
       let cut = false;
-      while (overflow(one) > 0 && options().length > 6) {
+      while (overflow(one) > 0 && options().length > 8) {
         options().pop().remove();
         cut = true;
       }
@@ -1329,7 +1342,9 @@
     try {
       const calcData = readCalculator();
       calcData.note = `Kalkulator AUTOGOOD, kurs EUR ${calcData.rate ? calcData.rate.toFixed(2).replace(".", ",") : "—"} zł z dnia ${dateText(calcData.at)}.`;
-      await save({ calc: calcData });
+      // With the full calculation on page 2: the calculator's own picture (owner 2026-10-11).
+      const calcImage = !isHidden("costs") && window.AUTOGOOD_OFFER_CALC ? await window.AUTOGOOD_OFFER_CALC.capture(calcDialog.querySelector("iframe")) : "";
+      await save({ calc: calcData, calcImage, method: calcData.method });
       calcDialog.close();
       setStatus(`Wstawiono kalkulację: ${calcData.methodLabel}, ${money(calcData.total, "PLN")}.`);
     } catch (error) {
@@ -1362,6 +1377,16 @@
   }
 
   // The same car on Carvago: dates, price history, similar cars on sale.
+  // Carvago lists cars registered from 2012 on (checked 2026-10-11: 0 for
+  // 2009-2011); for those it is read again whenever the offer opens an hour
+  // or more after the last reading, so new price changes show (owner 2026-10-11).
+  const CARVAGO_FROM_YEAR = 2012;
+  const carvagoYear = () => Number(String(carView().reg || carView().year || "").match(/(\d{4})/)?.[1]) || 0;
+  function carvagoDue() {
+    if (carvagoYear() && carvagoYear() < CARVAGO_FROM_YEAR) return false;
+    const last = Date.parse(offer.carvago?.readAt || offer.carvagoTriedAt || "");
+    return !Number.isFinite(last) || Date.now() - last > 3600000;
+  }
   let readingCarvago = false;
   async function readCarvago() {
     const CARVAGO = window.AUTOGOOD_OFFER_CARVAGO;
@@ -1385,9 +1410,11 @@
         kmFrom: rule.kmFrom,
         kmTo: rule.kmTo,
       });
-      offer = (await store.update(offer.id, { carvago: result || { found: false }, carvagoError: "" })) || offer;
+      // A car found before keeps its last known history when a new reading misses it.
+      const keep = !result?.found && offer.carvago?.found ? offer.carvago : null;
+      offer = (await store.update(offer.id, { carvago: keep || result || { found: false }, carvagoError: "", carvagoTriedAt: new Date().toISOString() })) || offer;
     } catch (error) {
-      offer = (await store.update(offer.id, { carvagoError: String(error?.message || error).slice(0, 160) })) || offer;
+      offer = (await store.update(offer.id, { carvagoError: String(error?.message || error).slice(0, 160), carvagoTriedAt: new Date().toISOString() })) || offer;
     } finally {
       readingCarvago = false;
       render();
@@ -1610,6 +1637,74 @@
     }
   }
   pdfButton?.addEventListener("click", makePdf);
+
+  // ---- E-mail to the client (owner 2026-10-11) ---------------------------------------------
+  // "Wyślij e-mail": a line for the client's address, then "Wyślij": the PDF
+  // is saved (to attach) and the computer's mail program opens a new message
+  // from the firm's mailbox to the client with the prepared text. A static
+  // page cannot write into the mailbox (autogood.pl's own mail server), so
+  // the message is left as a draft there for the manager.
+  const mailButton = document.querySelector("[data-offer-mail]");
+  const mailRow = document.querySelector("[data-offer-mail-row]");
+  const mailInput = document.querySelector("[data-offer-mail-to]");
+  const mailSend = document.querySelector("[data-offer-mail-send]");
+  // Polish vocative of a first name: Piotr → Piotrze, Marek → Marku, Anna → Anno.
+  function vocative(name, female) {
+    const word = String(name || "").trim().split(/\s+/)[0] || "";
+    if (!word) return "";
+    const lower = word.toLowerCase();
+    if (female) return /ia$/.test(lower) ? `${word.slice(0, -1)}o` : /a$/.test(lower) ? `${word.slice(0, -1)}o` : word;
+    const rules = [[/ek$/, (w) => `${w.slice(0, -2)}ku`], [/eł$/, (w) => `${w.slice(0, -2)}le`], [/ł$/, (w) => `${w.slice(0, -1)}le`], [/r$/, (w) => `${w}ze`],
+      [/t$/, (w) => `${w.slice(0, -1)}cie`], [/d$/, (w) => `${w.slice(0, -1)}dzie`], [/[nmbpfwsv]$/, (w) => `${w}ie`], [/(sz|cz|rz|ż|j|l|k|g|ch|h|x)$/, (w) => `${w}u`], [/a$/, (w) => `${w.slice(0, -1)}o`]];
+    const rule = rules.find(([pattern]) => pattern.test(lower));
+    return rule ? rule[1](word) : word;
+  }
+  function mailText() {
+    const view = carView();
+    const client = offer.client || {};
+    const form = client.salutation === "Pani" ? "Pani" : client.salutation === "Państwo" ? "Państwo" : "Pan";
+    const seller = view.seller === "private" ? L("od sprzedawcy prywatnego", "у частного продавца") : L("u dealera", "у дилера");
+    const where = ru() ? RU.countryIn(view.country) : COUNTRY_IN[view.country] || "";
+    if (ru()) {
+      const name = String(client.name || "").trim().split(/\s+/)[0] || "";
+      return {
+        subject: `Предложение авто: ${view.title}`,
+        body: `Добрый день${name ? `, ${name}` : ""}!\n\nОтправляю Вам найденное предложение авто с нужными параметрами ${seller}${where ? ` ${where}` : ""}. Во вложении Вы найдёте все детали и наше мнение. Что Вы об этом думаете?`,
+      };
+    }
+    const greeting = form === "Państwo" ? "Szanowni Państwo" : client.name ? `${form === "Pani" ? "Pani" : "Panie"} ${vocative(client.name, form === "Pani")}` : "";
+    const you = { Pan: ["Panu", "znajdzie Pan", "Co Pan o tym sądzi?"], Pani: ["Pani", "znajdzie Pani", "Co Pani o tym sądzi?"], Państwo: ["Państwu", "znajdą Państwo", "Co Państwo o tym sądzą?"] }[form];
+    return {
+      subject: `Oferta auta: ${view.title}`,
+      body: `Dzień dobry${greeting ? `, ${greeting}` : ""},\n\nprzesyłam ${you[0]} znalezioną ofertę auta o wymaganych parametrach ${seller}${where ? ` ${where}` : ""}. W załączniku ${you[1]} wszystkie szczegóły oraz naszą opinię. ${you[2]}`,
+    };
+  }
+  mailButton?.addEventListener("click", () => {
+    if (!mailRow) return;
+    mailRow.hidden = !mailRow.hidden;
+    if (!mailRow.hidden) {
+      mailInput.value = offer?.client?.email || "";
+      mailInput.focus();
+    }
+  });
+  async function sendMail() {
+    const to = mailInput.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
+      setStatus("Wpisz poprawny e-mail klienta.", true);
+      mailInput.focus();
+      return;
+    }
+    await save((stored) => ({ client: { ...(stored.client || {}), email: to } }), false);
+    await makePdf();
+    const { subject, body } = mailText();
+    window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setStatus("Otwieram wiadomość w programie pocztowym - dołącz pobrany PDF i zapisz jako szkic albo wyślij.");
+    mailRow.hidden = true;
+  }
+  mailSend?.addEventListener("click", sendMail);
+  mailInput?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") sendMail();
+  });
   // For checks in the browser console (no download): sheets and the PDF.
   window.AUTOGOOD_OFFER_PAGE = { captureSheet, buildPdf, autoFit: () => autoFit() };
   copyButton?.addEventListener("click", copyPicture);
@@ -1674,7 +1769,7 @@
     render();
     setStatus(`Oferta ${offer.number || ""} · zapisana w tej przeglądarce`);
     if (!offer.ad && !offer.adTriedAt) readAd();
-    else if (!offer.carvago && !offer.carvagoError) readCarvago();
+    else if (carvagoDue()) readCarvago();
   }
 
   // Another tab saved this offer: show its version (unless typing here).
