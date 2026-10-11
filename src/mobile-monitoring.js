@@ -2243,10 +2243,12 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     const key = `monitoringMiss${miss.kind.charAt(0).toUpperCase()}${miss.kind.slice(1)}${miss.side === "max" ? "Max" : "Min"}`;
     const unit = miss.kind === "mileage" ? ` ${kmUnit()}` : miss.kind === "power" ? ` ${powerText("KM")}` : "";
     const delta = miss.value ? Math.abs(miss.value - miss.limit) : null;
+    // A year is never grouped: "2019", not "2 019" (useGrouping "always").
+    const number = (value) => (miss.kind === "year" ? String(value) : numbers.format(value));
     return (c[key] || "")
-      .replace("{value}", miss.value ? `${numbers.format(miss.value)}${unit}` : "—")
+      .replace("{value}", miss.value ? `${number(miss.value)}${unit}` : "—")
       .replace("{delta}", delta !== null ? `${numbers.format(delta)}${unit}` : "—")
-      .replace("{limit}", miss.kind === "price" ? formatPlainPrice(miss.limit, miss.currency) : `${numbers.format(miss.limit)}${unit}`)
+      .replace("{limit}", miss.kind === "price" ? formatPlainPrice(miss.limit, miss.currency) : `${number(miss.limit)}${unit}`)
       .replace("{pct}", Number.isFinite(miss.share) ? `${Math.abs(Math.round(miss.share * 1000) / 10).toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL")} %` : "—")
       .replace("{generation}", miss.generation || "");
   }
