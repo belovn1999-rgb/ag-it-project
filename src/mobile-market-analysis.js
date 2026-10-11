@@ -8476,7 +8476,8 @@
         [t.specGearbox, filters.gearbox && filters.gearbox !== "any" ? checkedLabel("[data-mobile-gearbox]") : any, "git-branch"],
         [t.specDrive, filters.drive && filters.drive !== "any" ? checkedLabel("[data-mobile-drive]") : any, "route"],
       ] },
-      { heading: t.specEquipmentHeading, text: equipment.length ? equipment.join(" - ") : t.specNoEquipment, muted: !equipment.length },
+      // A ticked list, as on page 1 and in the offer (owner 2026-10-11).
+      { heading: t.specEquipmentHeading, items: equipment.map((text) => ({ text })), empty: t.specNoEquipment },
       { heading: t.specOtherHeading, rows: [
         [t.specCountry, countries.length ? countries.join(", ") : any, "map-pin"],
         [t.specStatus, status.length ? status.join(", ") : any, "check"],

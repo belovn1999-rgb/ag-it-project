@@ -200,7 +200,7 @@
         const text = /\p{L}/u.test(value) ? value : `${label}: ${value}`;
         items.push({ text, title: `${label}: ${value}`, target: row.dataset.mobileSummaryTarget, whole: true });
       });
-      column.querySelectorAll(".agSpecItems > span[data-mobile-summary-target]").forEach((item) => {
+      column.querySelectorAll(".agSpecItems [data-mobile-summary-target]").forEach((item) => {
         const value = item.textContent.trim();
         if (value) items.push({ text: value, title: value, target: item.dataset.mobileSummaryTarget, whole: false });
       });

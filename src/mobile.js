@@ -1646,7 +1646,8 @@ function specSheetHtml({ kicker = "", title = "", titleTarget = "", meta = "", m
     let body;
     if (column.items) {
       body = column.items.length
-        ? `<p class="agSpecText agSpecItems">${column.items.map((item) => `<span${targetAttr(item.target)}>${escapeHtml(item.text)}</span>`).join('<i aria-hidden="true"> - </i>')}</p>`
+        // A ticked list, as in the offer (owner 2026-10-11).
+        ? `<ul class="agSpecItems agSpecChecks">${column.items.map((item) => `<li${targetAttr(item.target)}>${escapeHtml(item.text)}</li>`).join("")}</ul>`
         : `<p class="agSpecText isMuted">${escapeHtml(column.empty || "")}</p>`;
     } else if (column.text !== undefined) {
       body = `<p class="agSpecText${column.muted ? " isMuted" : ""}${long ? " isClamped" : ""}">${escapeHtml(column.text)}</p>${long ? `<button class="agSpecMore" type="button" data-spec-expand>${escapeHtml(copy[state.lang].specShowAll)}</button>` : ""}`;
