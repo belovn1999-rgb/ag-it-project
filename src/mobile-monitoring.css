@@ -1429,3 +1429,26 @@ button.mobileMonitoringMac {
   .mobileMonitoringViews > .mobileMarketImportClear,
   .mobileMonitoringCountryTab { min-height: 44px; }
 }
+
+/* ---- 11.10, wave 2: "Okazja" (≥ 15 % under the median of similar cars)
+   and "wróciło" (the same car put up again). ---- */
+.mobileMonitoringOkazja,
+.mobileMonitoringRelisted {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 8px;
+  border-radius: var(--mon-radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: 1px;
+  cursor: help;
+}
+.mobileMonitoringOkazja {
+  background: rgba(22, 128, 60, 0.14);
+  color: #16803c;
+}
+.mobileMonitoringRelisted {
+  background: rgba(124, 58, 237, 0.13);
+  color: #6d28d9;
+}

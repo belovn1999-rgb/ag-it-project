@@ -20,7 +20,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
-    sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
+    sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, similarMedian, findRelisted, isOkazja, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates
   } = ctx;
 
@@ -1391,6 +1391,9 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       }));
     });
     const firstCheckAt = [...byDate.keys()].sort()[0];
+    // M3: a new offer that is the same car put up again (filled below, once
+    // the rows are known) — its days on the market count from the older ad.
+    const relistOf = new Map();
     const since = document.querySelector("[data-monitoring-since]");
     if (since && monitoringChecks.length) {
       const sinceDays = Math.floor(daysSince(monitoringChecks[0].at));
@@ -1401,7 +1404,11 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     }
     const appearance = (offer) => {
       const listed = offer.listedAt && Number.isFinite(Date.parse(offer.listedAt)) ? offer.listedAt : "";
-      const at = firstSeen.get(offer.key);
+      const older = relistOf.get(offer.key);
+      const atOlder = older ? firstSeen.get(older.offer.key) : "";
+      const atOwn = firstSeen.get(offer.key);
+      const at = atOlder && (!atOwn || atOlder < atOwn) ? atOlder : atOwn;
+      if (atOlder && at === atOlder) return { at, kind: at === firstCheckAt ? "before" : "seen" };
       // otomoto renews its date when an ad is refreshed: a monitoring that
       // saw the car earlier wins.
       if (listed && (!at || Date.parse(listed) <= Date.parse(at))) return { at: listed, kind: "listed" };
@@ -1480,6 +1487,22 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     perSource.forEach((item) => {
       item.rows = notNewIfListedBefore(item.rows.filter(stillListed(carsNow)), carsBefore);
     });
+    // M3 "wróciło": offers this search had within 30 days that are no longer
+    // listed; a new offer that is one of them under a new number is marked.
+    const keysNow = new Set(Object.values(record.markets || {}).flatMap((market) => (market.offers || []).map((offer) => offer.key)));
+    const lastSeen = new Map();
+    [...byDate.values()].filter((item) => item.scope === scopeKey && item.at <= latest.at).sort((left, right) => left.at.localeCompare(right.at)).forEach((item) => {
+      Object.entries(item.markets || {}).forEach(([source, market]) => (market.offers || []).forEach((offer) => lastSeen.set(offer.key, { offer, source, at: item.at })));
+    });
+    const monthAgo = new Date(Date.parse(latest.at) - 30 * 86400000).toISOString();
+    const goneOffers = [...lastSeen.values()].filter((item) => !keysNow.has(item.offer.key) && item.at >= monthAgo);
+    perSource.forEach((item) => item.rows.forEach((row) => {
+      if (row.group !== "new" || row.gone) return;
+      const match = findRelisted(row.offer, item.source, goneOffers);
+      if (match) relistOf.set(row.offer.key, match);
+    }));
+    // Days on the market of a car put up again count from its older ad.
+    if (relistOf.size) liquidityCache.clear();
     const silentNames = perSource.filter((item) => item.silent).map((item) => portalName(item.source));
     if (info && silentNames.length) {
       info.insertAdjacentHTML("beforeend", `<small class="mobileMonitoringSilent">${escapeMarketHtml(c.monitoringSilentInfo.replace("{portals}", silentNames.join(", ")))}</small>`);
@@ -1696,12 +1719,48 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       return ((value(now) - value(then)) / value(then)) * 100;
     };
     const medianNow = medianOf(currentNow);
+    // M2 + M6: each car against similar cars of the list (year ± 1, mileage
+    // ± 20 %, power ± 15 %, at least 6), "na gotowo" — else the whole list.
+    const basisRows = currentNow.filter((row) => !row.offer.suspect && !row.offer.bid);
+    const sourceOfOffer = new Map(basisRows.map((row) => [row.offer, row.source]));
+    const basisOffers = basisRows.map((row) => row.offer);
+    const kmOf = (offer) => Number(String(powerInKm(offer.power) || "").match(/^(\d+) KM$/)?.[1]) || 0;
+    const similarCache = new Map();
+    const similarFor = (row) => {
+      if (row.offer.suspect || row.offer.bid) return null;
+      if (!similarCache.has(row.offer)) {
+        similarCache.set(row.offer, similarMedian(row.offer, basisOffers, (offer) => clientPricePln(offer, sourceOfOffer.get(offer) || row.source), kmOf));
+      }
+      return similarCache.get(row.offer);
+    };
+    const shareOf = (row) => {
+      const similar = similarFor(row);
+      const base = similar?.median || medianNow;
+      const share = base ? (clientPricePln(row.offer, row.source) - base) / base : NaN;
+      return { similar, share };
+    };
+    const okazjaBadge = (row) => {
+      const { similar, share } = shareOf(row);
+      if (!isOkazja(clientPricePln(row.offer, row.source), similar)) return "";
+      const title = c.okazjaTitle.replace("{pct}", `−${Math.abs(Math.round(share * 100))} %`).replace("{count}", String(similar.count))
+        .replace("{price}", formatPlainPrice(Math.round(similar.median), "PLN"));
+      return ` <span class="mobileMonitoringOkazja" title="${escapeMarketHtml(title)}">${escapeMarketHtml(c.okazja)}</span>`;
+    };
+    const relistBadge = (row) => {
+      const match = relistOf.get(row.offer.key);
+      if (!match) return "";
+      const title = c.monitoringRelistedTitle.replace("{date}", shortDate(match.at)).replace("{days}", daysText(daysSince(match.at)))
+        .replace("{price}", formatPlainPrice(match.offer.price, match.offer.currency));
+      return ` <span class="mobileMonitoringRelisted" title="${escapeMarketHtml(title)}">${escapeMarketHtml(c.monitoringRelisted)}</span>`;
+    };
     const toMedian = (row) => {
       if (!medianNow || row.offer.suspect || row.offer.bid) return "";
-      const share = (clientPricePln(row.offer, row.source) - medianNow) / medianNow;
+      const { similar, share } = shareOf(row);
       if (!Number.isFinite(share)) return "";
       const pct = Math.round(share * 100);
-      return `<span class="${pct < 0 ? "isBelow" : pct > 0 ? "isAbove" : ""}">${pct > 0 ? "+" : pct < 0 ? "−" : "±"}${Math.abs(pct)} %</span><small>${escapeMarketHtml(c.monitoringColMedian.toLowerCase())}</small>`;
+      const basis = similar ? c.monitoringToSimilar.replace("{count}", String(similar.count)) : c.monitoringToAll;
+      const basisTitle = similar ? c.monitoringSimilarTitle.replace("{count}", String(similar.count)).replace("{price}", formatPlainPrice(Math.round(similar.median), "PLN")) : c.monitoringAllTitle;
+      return `<span class="${pct < 0 ? "isBelow" : pct > 0 ? "isAbove" : ""}" title="${escapeMarketHtml(basisTitle)}">${pct > 0 ? "+" : pct < 0 ? "−" : "±"}${Math.abs(pct)} %</span><small>${escapeMarketHtml(basis)}</small>`;
     };
     const dateLine = (offer) => {
       const info = appearance(offer);
@@ -1894,7 +1953,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
             return `
             <tr class="${row.gone ? "isGone" : ""}${row.offer.miss ? " isExtra" : ""}">
               <td class="isNum mobileMarketRowNumber">${index + 1}</td>
-              <td class="mobileMarketTableTitle"><div class="mobileMonitoringOffer">${offerPhoto(row)}<div class="mobileMonitoringOfferText">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener" data-monitoring-open="${escapeMarketHtml(row.offer.key)}"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.gone ? "" : dealBadge(row.offer)}${row.isNew || (view !== "new" && row.group === "new") ? ` <span class="mobileMarketOfferStatus isNew">${escapeMarketHtml(c.offerNew)}</span>` : ["cheaper", "dearer"].includes(row.status) ? ` <span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status])}</span>` : ""}${row.offer.suspect && !row.gone ? `<small class="mobileMonitoringMiss mobileMonitoringSuspect">≈ ${escapeMarketHtml(suspectTagOf(row.offer))}</small>` : ""}${row.offer.miss ? `<small class="mobileMonitoringMiss" title="${escapeMarketHtml(row.offer.miss.kind === "options" ? c.monitoringMissOptionsTitle : c.monitoringMissTitle)}">≈ ${escapeMarketHtml(nearMissText(row.offer.miss))}</small>` : ""}<small class="mobileMonitoringMeta">${offerCountryBadge(row.source, row.offer.country)} ${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.gone ? "" : dropLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}${markLine(row)}${!row.gone && row.source !== "otomoto" && row.source !== "avby" ? `<button class="mobileMonitoringPolandButton" type="button" data-monitoring-poland="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringPoland)}</button>` : ""}</div></div></td>
+              <td class="mobileMarketTableTitle"><div class="mobileMonitoringOffer">${offerPhoto(row)}<div class="mobileMonitoringOfferText">${row.offer.url ? `<a href="${escapeMarketHtml(row.offer.url)}" target="_blank" rel="noopener" data-monitoring-open="${escapeMarketHtml(row.offer.key)}"><b>${escapeMarketHtml(row.offer.title || "—")}</b></a>` : `<b>${escapeMarketHtml(row.offer.title || "—")}</b>`}${row.gone ? "" : `${okazjaBadge(row)}${dealBadge(row.offer)}${relistBadge(row)}`}${row.isNew || (view !== "new" && row.group === "new") ? ` <span class="mobileMarketOfferStatus isNew">${escapeMarketHtml(c.offerNew)}</span>` : ["cheaper", "dearer"].includes(row.status) ? ` <span class="mobileMarketOfferStatus is${row.status.charAt(0).toUpperCase()}${row.status.slice(1)}">${escapeMarketHtml(statusLabel[row.status])}</span>` : ""}${row.offer.suspect && !row.gone ? `<small class="mobileMonitoringMiss mobileMonitoringSuspect">≈ ${escapeMarketHtml(suspectTagOf(row.offer))}</small>` : ""}${row.offer.miss ? `<small class="mobileMonitoringMiss" title="${escapeMarketHtml(row.offer.miss.kind === "options" ? c.monitoringMissOptionsTitle : c.monitoringMissTitle)}">≈ ${escapeMarketHtml(nearMissText(row.offer.miss))}</small>` : ""}<small class="mobileMonitoringMeta">${offerCountryBadge(row.source, row.offer.country)} ${escapeMarketHtml(metaLine(row.offer) || "—")}</small>${dateLine(row.offer)}${row.gone ? "" : dropLine(row.offer)}${row.previous && row.previous.price !== row.offer.price ? `<small>${escapeMarketHtml(c.offerBefore)}: ${escapeMarketHtml(formatPlainPrice(row.previous.price, row.previous.currency))}</small>` : ""}${view === "saved" ? `<small>${escapeMarketHtml([row.gone ? c.monitoringSavedGone : "", row.savedAt ? c.monitoringSavedAt.replace("{date}", formatHistoryDate(row.savedAt)) : ""].filter(Boolean).join(" · "))}</small>` : ""}${markLine(row)}${!row.gone && row.source !== "otomoto" && row.source !== "avby" ? `<button class="mobileMonitoringPolandButton" type="button" data-monitoring-poland="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringPoland)}</button>` : ""}</div></div></td>
               <td class="isNum">${priceCell(row.offer, row.source)}${ratingBadge(row)}</td>
               <td class="isNum mobileMonitoringToMedian">${row.gone ? "" : toMedian(row)}</td>
               <td class="mobileMonitoringActions"><button class="mobileMonitoringStar isCorner${isSaved ? " isOn" : ""}" type="button" data-monitoring-save="${escapeMarketHtml(row.offer.key)}" aria-pressed="${isSaved ? "true" : "false"}" title="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}" aria-label="${escapeMarketHtml(isSaved ? c.monitoringUnsave : c.monitoringSave)}">${isSaved ? "★" : "☆"}</button><button class="mobileMonitoringDetailsToggle" type="button" data-monitoring-details="${escapeMarketHtml(row.offer.key)}" aria-expanded="${detailsOpen ? "true" : "false"}">${escapeMarketHtml(detailsOpen ? c.monitoringDetailsHide : c.monitoringDetails)}</button>${!row.gone && window.AUTOGOOD_CALC_POPUP?.importable(row.source) ? `<button class="agCalcButton" type="button" data-monitoring-calc="${escapeMarketHtml(row.offer.key)}">${escapeMarketHtml(c.monitoringCalc)}</button>` : ""}${!row.gone && window.AUTOGOOD_OFFER_LINK?.offerable(row.source) ? `<button class="agOfferButton" type="button" data-offer-create data-offer-history="${escapeMarketHtml(entry.id)}" data-offer-key="${escapeMarketHtml(row.offer.key)}" data-offer-source="${escapeMarketHtml(row.source)}">${escapeMarketHtml(c.monitoringOffer)}</button>` : ""}</td>

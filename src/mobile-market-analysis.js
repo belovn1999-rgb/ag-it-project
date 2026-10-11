@@ -323,6 +323,16 @@
       monitoringDropTimes: "{count}×",
       monitoringDropTitle: "Najwyższa znana cena tego ogłoszenia: z monitoringów tego auta i z portalu (otomoto: najniższa cena z 30 dni przed obniżką; AutoScout24: cena przed „Super Deal”).",
       monitoringDeal: "Do negocjacji",
+      okazja: "Okazja",
+      okazjaTitle: "{pct} od mediany {count} podobnych aut (rok ±1, przebieg ±20 %, moc ±15 %): {price} — najtańsze z nich",
+      monitoringToSimilar: "do mediany {count} podobnych",
+      monitoringToAll: "do mediany wszystkich*",
+      monitoringSimilarTitle: "Mediana {count} podobnych aut (rok ±1, przebieg ±20 %, moc ±15 %): {price} na gotowo",
+      monitoringAllTitle: "*Mniej niż 6 podobnych aut — wobec mediany wszystkich ofert listy",
+      monitoringRelisted: "wróciło",
+      monitoringRelistedTitle: "Zniknęło {date} ({days}), było {price} — to samo auto wystawione ponownie (ten sam rok, przebieg i cena ± 10 %)",
+      tableDeviationSimilar: "Wobec mediany {count} podobnych aut tego rynku (rok ±1, przebieg ±20 %, moc ±15 %): {price}",
+      tableDeviationAll: "*Mniej niż 6 podobnych aut — wobec mediany wszystkich ofert tego rynku",
       monitoringDealTitle: "W ofercie co najmniej 30 dni, a cena już spadała — sprzedawca może zgodzić się na więcej.",
       monitoringLiquidity: "Płynność rynku:",
       monitoringLiquidityDays: "mediana {days} w ofercie",
@@ -1060,6 +1070,16 @@
       monitoringDropTimes: "{count}×",
       monitoringDropTitle: "Самая высокая известная цена объявления: из мониторингов этого авто и с портала (otomoto: самая низкая цена за 30 дней до снижения; AutoScout24: цена до «Super Deal»).",
       monitoringDeal: "Для торга",
+      okazja: "Выгодно",
+      okazjaTitle: "{pct} от медианы {count} похожих авто (год ±1, пробег ±20 %, мощность ±15 %): {price} — самое дешёвое из них",
+      monitoringToSimilar: "к медиане {count} похожих",
+      monitoringToAll: "к медиане всех*",
+      monitoringSimilarTitle: "Медиана {count} похожих авто (год ±1, пробег ±20 %, мощность ±15 %): {price} под ключ",
+      monitoringAllTitle: "*Похожих авто меньше 6 — к медиане всех предложений списка",
+      monitoringRelisted: "вернулось",
+      monitoringRelistedTitle: "Исчезло {date} ({days}), было {price} — то же авто выставлено снова (тот же год, пробег и цена ± 10 %)",
+      tableDeviationSimilar: "К медиане {count} похожих авто этого рынка (год ±1, пробег ±20 %, мощность ±15 %): {price}",
+      tableDeviationAll: "*Похожих авто меньше 6 — к медиане всех предложений этого рынка",
       monitoringDealTitle: "В продаже не меньше 30 дней, и цену уже снижали — продавец может уступить ещё.",
       monitoringLiquidity: "Ликвидность рынка:",
       monitoringLiquidityDays: "медиана {days} в продаже",
@@ -2959,6 +2979,9 @@
       displacementCcm: Number.isFinite(capacity) && capacity > 0 ? Math.round(capacity * 1000) : null,
       city: String(advert.locationName || "").slice(0, 80),
       country: "BY",
+      // av.by's own count of days on sale, kept across a refresh of the ad
+      // (2026-10-11: "daysOnSale" 2, "originalDaysOnSale" 37) — "w ofercie od".
+      listedAt: Number(advert.originalDaysOnSale) > 0 ? new Date(Date.now() - Number(advert.originalDaysOnSale) * 86400000).toISOString().slice(0, 10) : "",
       rank,
       marketTotal: total,
     };
@@ -5342,6 +5365,58 @@
   // The other side (N1, 2026-10-11): a car the compared check had on another
   // portal is not "new" — one car, one offer, and which portal's copy is kept
   // can change between checks (KONA 08→09.10: 9 of 16 "new" were such cars).
+  // M2 + M6 (owner 2026-10-11): a car is weighed against similar cars of the
+  // same list — year ± 1, mileage ± 20 % (at least ± 10 000 km), power ± 15 %
+  // when both are known — not against every car of the search (a 2017 and a
+  // 2023 car in one median). Fewer than SIMILAR_MIN similar cars: no such
+  // basis (the caller falls back to the whole list and shows no "Okazja").
+  // "Okazja" = at least OKAZJA_SHARE under that median (owner: 15 %) and
+  // cheaper than every similar car: on a mixed market (Touran 2015–2018, 103
+  // private Kleinanzeigen ads of many trims) "15 % under" alone marked 18 of
+  // 124 cars; with it 4 (CLA 3, Insignia 2, Astra 2, Passat 1; 11.10 data).
+  const SIMILAR_MIN = 6;
+  const OKAZJA_SHARE = 0.15;
+  function similarMedian(target, pool, priceOf, powerOf) {
+    const year = Number(target?.year);
+    if (!year) return null;
+    const km = Number(target.mileage) || 0;
+    const hp = Number(powerOf(target)) || 0;
+    const prices = pool
+      .filter((car) => car !== target && !(target.key && car.key === target.key))
+      .filter((car) => Number(car.year) && Math.abs(Number(car.year) - year) <= 1)
+      .filter((car) => !km || !Number(car.mileage) || Math.abs(Number(car.mileage) - km) <= Math.max(km * 0.2, 10000))
+      .filter((car) => {
+        const other = Number(powerOf(car)) || 0;
+        return !hp || !other || Math.abs(other - hp) <= hp * 0.15;
+      })
+      .map((car) => priceOf(car))
+      .filter((value) => Number.isFinite(value) && value > 0)
+      .sort((left, right) => left - right);
+    if (prices.length < SIMILAR_MIN) return null;
+    const middle = Math.floor(prices.length / 2);
+    const median = prices.length % 2 ? prices[middle] : (prices[middle - 1] + prices[middle]) / 2;
+    return { median, count: prices.length, min: prices[0] };
+  }
+  // "Okazja": the price at least OKAZJA_SHARE under the similar cars' median
+  // and not above the cheapest of them.
+  const isOkazja = (price, similar) => Boolean(similar) && Number.isFinite(price)
+    && (price - similar.median) / similar.median <= -OKAZJA_SHARE && price <= similar.min;
+  // M3 (2026-10-11): the same car put up again under a new number — the same
+  // portal, year, mileage (± 1 %, at least ± 300 km) and a price within
+  // ± 10 % of an offer that left the list before. `gone`: [{offer, source,
+  // at}] of offers no longer listed; the closest mileage wins.
+  function findRelisted(offer, source, gone) {
+    const year = Number(offer?.year);
+    const km = Number(offer?.mileage);
+    const price = Number(offer?.price);
+    if (!year || !km || !price) return null;
+    return gone
+      .filter((item) => item.source === source && item.offer.key !== offer.key)
+      .filter((item) => Number(item.offer.year) === year && Number(item.offer.mileage) > 0
+        && Math.abs(Number(item.offer.mileage) - km) <= Math.max(300, km * 0.01)
+        && Math.abs(Number(item.offer.price) - price) <= price * 0.1)
+      .sort((left, right) => Math.abs(Number(left.offer.mileage) - km) - Math.abs(Number(right.offer.mileage) - km) || right.at.localeCompare(left.at))[0] || null;
+  }
   function notNewIfListedBefore(rows, carsBefore) {
     return rows.map((row) => (row.group === "new" && carsBefore.has(sameCarKey(row.offer)) ? { ...row, group: "same", status: "" } : row));
   }
@@ -5546,7 +5621,7 @@
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
-    sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
+    sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, similarMedian, findRelisted, isOkazja, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates,
     get BRAND_LOGOS() { return BRAND_LOGOS; },
     get activeAnalysis() { return activeAnalysis; },
@@ -6355,7 +6430,17 @@
       const offerHistory = offerHistoryFor(activeAnalysis.historyId);
       [...marketListings, ...suspectListings].forEach((listing) => {
         listing.powerKm = powerKmOf(listing.power);
-        listing.deviation = sourceMedian[listing.source] ? (listing.price - sourceMedian[listing.source]) / sourceMedian[listing.source] : 0;
+      });
+      // M2 + M6: against similar cars of its own market when there are enough
+      // (the ad's price, one currency); otherwise the market's median as before.
+      const byMarket = {};
+      marketListings.forEach((listing) => (byMarket[listing.source] = byMarket[listing.source] || []).push(listing));
+      [...marketListings, ...suspectListings].forEach((listing) => {
+        listing.similar = suspectListings.includes(listing) ? null
+          : similarMedian(listing, byMarket[listing.source] || [], (car) => Number(car.price), (car) => Number(car.powerKm) || 0);
+        const base = listing.similar?.median || sourceMedian[listing.source];
+        listing.deviation = base ? (listing.price - base) / base : 0;
+        listing.okazja = isOkazja(listing.price, listing.similar);
         listing.liquidity = offerLiquidity(listing, offerHistory);
         // Sort keys: days in the offer (unknown last), the drop (biggest first).
         listing.days = listing.liquidity.days ?? -1;
@@ -7176,7 +7261,14 @@
         return flag ? `<span class="mobileMarketPlaceFlag" title="${escapeMarketHtml(window.AUTOGOOD_COUNTRY_NAME?.(code) || code)}">${flag}</span>` : "";
       };
       const placeHtml = (listing) => `${escapeMarketHtml(placeText(listing) || (placeFlag(listing) ? "" : "—"))}${placeFlag(listing)}`;
-      const deviationText = (listing) => (sourceMedian[listing.source] ? percentFrom(listing.price, sourceMedian[listing.source]) : "—");
+      const deviationText = (listing) => (listing.similar ? percentFrom(listing.price, listing.similar.median)
+        : sourceMedian[listing.source] ? percentFrom(listing.price, sourceMedian[listing.source]) : "—");
+      const deviationTitle = (listing) => (listing.similar
+        ? c.tableDeviationSimilar.replace("{count}", String(listing.similar.count)).replace("{price}", formatMarketPrice(listing.similar.median))
+        : c.tableDeviationAll);
+      const okazjaHtml = (listing) => (listing.okazja
+        ? ` <span class="mobileMarketOkazja" title="${escapeMarketHtml(c.okazjaTitle.replace("{pct}", percentFrom(listing.price, listing.similar.median)).replace("{count}", String(listing.similar.count)).replace("{price}", formatMarketPrice(listing.similar.median)))}">${escapeMarketHtml(c.okazja)}</span>`
+        : "");
       const priceHtml = (listing) => (listing.byPrices ? byPriceLines(listing.byPrices) : listing.turnkeyPln
         ? `<b class="mobileMarketTurnkeyPrice">${escapeMarketHtml(formatMarketPrice(listing.turnkeyPln, turnkeyCurrency))} ${escapeMarketHtml(turnkeyLabel)}</b><small class="mobileMarketTurnkeyNote">${escapeMarketHtml(c.adPrice)}: ${escapeMarketHtml(nativePrice(convertPrice(listing.originalPrice, listing.originalCurrency || SOURCE_CURRENCY[listing.source], SOURCE_CURRENCY[listing.source]), listing.source))}</small>`
         : `<b>${escapeMarketHtml(formatMarketPrice(listing.price))}</b>`);
@@ -7267,7 +7359,7 @@
             const on = carCompareKeys.includes(listingKey(listing));
             return `<input type="checkbox" data-mobile-market-compare-pick="${escapeMarketHtml(listingKey(listing))}"${on ? " checked" : ""}${!on && pickedFull ? " disabled" : ""} aria-label="${escapeMarketHtml(c.carComparePick.replace("{title}", [fullTitle(listing) || sourceName(listing.portal || listing.source), listing.year, formatMarketPrice(listing.price)].filter(Boolean).join(", ")))}" />`;
           }
-          case "title": return `${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(suspectTagOf(listing))}</small>` : ""}`;
+          case "title": return `${fullTitle(listing) ? `<b>${escapeMarketHtml(fullTitle(listing))}</b>` : "—"}${okazjaHtml(listing)}${listing.subtitle ? `<small>${escapeMarketHtml(listing.subtitle)}</small>` : ""}${listing.suspect ? `<small class="mobileMarketSuspectTag">${escapeMarketHtml(suspectTagOf(listing))}</small>` : ""}`;
           case "year": return escapeMarketHtml(listing.year ? String(listing.year) : "—");
           case "mileage": return escapeMarketHtml(listing.mileage ? `${numbers.format(listing.mileage)} ${kmUnit()}` : "—");
           case "powerKm": {
@@ -7279,7 +7371,7 @@
           case "fuel": return escapeMarketHtml(fuelText(listing));
           case "gearbox": return escapeMarketHtml(gearboxText(listing));
           case "price": return priceHtml(listing);
-          case "deviation": return escapeMarketHtml(deviationText(listing));
+          case "deviation": return `<span title="${escapeMarketHtml(deviationTitle(listing))}">${escapeMarketHtml(deviationText(listing))}${listing.similar ? "" : "<small>*</small>"}</span>`;
           case "days": {
             const info = listing.liquidity;
             if (info?.days === null || info?.days === undefined) return "—";

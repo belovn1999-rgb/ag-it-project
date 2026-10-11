@@ -4625,3 +4625,19 @@
 .mobileMarketPanel.isParuvendu .mobileMarketPanelHead b { color: var(--market-paruvendu); }
 .mobileMarketKeyTick.isGuide.isParuvendu { color: var(--market-paruvendu); }
 .mobileMonitoringTile.isParuvendu { --tile: var(--market-paruvendu); }
+
+/* ---- 11.10, wave 2: "Okazja" in "Aktualne oferty" — at least 15 % under
+   the median of similar cars of the same market. ---- */
+.mobileMarketOkazja {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: rgba(22, 128, 60, 0.14);
+  color: #16803c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
+  vertical-align: 1px;
+  cursor: help;
+}
