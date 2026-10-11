@@ -220,7 +220,7 @@ A4; PDF 2 стр. 1,1 МБ за 1,6 с, ссылка на объявление �
 | Способ | Что делает | Статус |
 |---|---|---|
 | «Z ogłoszenia dealera» | ссылка объявления → «Rozpoznaj» → карточка авто → «Przygotuj ofertę PDF» → `oferta.html` (проверка, правки, «Pobierz PDF») | ✅ 10-10, все порталы стр. 1 |
-| «Z raportu aukcji» | ссылка или PDF отчёта аукциона → фирма и вид сами → карточка отчёта для менеджера (авто, осмотр, документы, шины, повреждения с ремонтом, фото и суммой Macadam) | ✅ 10-11 Macadam (5 видов), `src/auction-report.js`, `src/auction-start.js`; оффер из отчёта — следующий шаг (`docs/PROJECT-AUCTION-REPORTS.md`) |
+| «Z raportu aukcji» | ссылка или PDF отчёта аукциона → фирма и вид сами → карточка отчёта для менеджера → поля торгов (страна, дата, время) → `oferta-aukcja.html` (1 лист A4, фиолетовый, 3 макета, PDF) | ✅ 10-11 Macadam (5 видов): `src/auction-report.js`, `src/auction-assess.js`, `src/auction-start.js`, `src/auction-offer.js`; выбор макета — владелец (`docs/PROJECT-AUCTION-REPORTS.md` §10) |
 
 **Порталы** (`src/offer-ad.js`, `read(source, url)`, проверено 10-10 на живых объявлениях):
 

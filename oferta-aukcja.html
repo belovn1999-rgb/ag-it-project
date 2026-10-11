@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AUTOGOOD Oferta z aukcji</title>
+    <meta
+      name="description"
+      content="Wewnętrzne narzędzie AUTOGOOD: oferta dla klienta z raportu stanu auta z aukcji — dane auta, uszkodzenia z oceną i kosztem w Polsce, wniosek, termin licytacji, PDF po polsku lub po rosyjsku."
+    />
+    <meta name="theme-color" content="#3d2470" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" href="./assets/ag-opt.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
+    <link rel="stylesheet" href="./src/auction-offer.css?v=ao-1011" />
+    <script defer src="./src/global-navigation.js?v=nav-offer-1010" data-ag-global-nav data-ag-nav-follow-lang></script>
+  </head>
+  <body class="aoBody">
+    <!-- Program 06, second way (owner 2026-10-11): the offer made from an
+         auction's condition report — one A4 sheet in the auction's violet:
+         the main photo and how many the report has, the auction (country,
+         date, time — filled before the offer) with the report's link, the car
+         in four groups, damages with category, degree and cost in Poland, the
+         verdict with its risks. Three layouts to choose from.
+         docs/PROJECT-AUCTION-REPORTS.md §8–§10. -->
+    <div class="aoApp">
+      <header class="aoBar" data-offer-hide>
+        <a class="aoBack" href="./oferty.html?tryb=aukcja">← Raport z aukcji</a>
+        <div class="aoBarTitle">
+          <b data-ao-heading>Oferta z aukcji</b>
+          <span class="aoStatus" data-ao-status aria-live="polite"></span>
+        </div>
+        <div class="aoBarActions">
+          <button class="aoButton" type="button" data-ao-edit aria-pressed="false">Edytuj teksty</button>
+          <button class="aoButton isPrimary" type="button" data-ao-pdf>Pobierz PDF</button>
+        </div>
+      </header>
+      <div class="aoWork">
+        <main class="aoStage" data-ao-stage><p class="aoWaiting">Przygotowuję ofertę…</p></main>
+        <aside class="aoPanel" data-ao-panel></aside>
+      </div>
+    </div>
+    <script src="./src/market-badges.js?v=pv-1005"></script>
+    <script src="./src/auction-report.js?v=ao-1011"></script>
+    <script src="./src/auction-assess.js?v=ao-1011"></script>
+    <script src="./src/auction-offer.js?v=ao-1011"></script>
+  </body>
+</html>

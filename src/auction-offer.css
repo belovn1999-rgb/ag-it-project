@@ -1,0 +1,258 @@
+/* AUTOGOOD — the offer from an auction report (oferta-aukcja.html, owner
+ * 2026-10-11): one A4 sheet (794 × 1123 px) in the auction's violet, so the
+ * client sees at a glance it is not a dealer's car (the dealer offer is navy
+ * and gold, offer.css). Three layouts: isLayout-hero, -columns, -report. */
+@import url("../tokens.css");
+
+:root {
+  --ao-ink: #1d1830;
+  --ao-muted: #625b78;
+  --ao-soft: #8d86a3;
+  --ao-rule: #e3ddf0;
+  --ao-violet: #4a2b8a;
+  --ao-violet-deep: #2e1a5c;
+  --ao-violet-mid: #7a5cc8;
+  --ao-lavender: #f4f0fc;
+  --ao-lavender-2: #ebe4f8;
+  --ao-amber: #e9a23b;
+  --ao-good: #1f7a4d;
+  --ao-good-bg: #e5f4ec;
+  --ao-warn: #8a5300;
+  --ao-warn-bg: #fdf1dc;
+  --ao-risk: #a3271b;
+  --ao-risk-bg: #fbe6e3;
+}
+
+* { box-sizing: border-box; }
+html, body { overflow-x: clip; }
+body.aoBody { margin: 0; min-width: 320px; background: #ece9f3; color: var(--ao-ink); font-family: "Inter", var(--font-body), system-ui, sans-serif; font-variant-numeric: tabular-nums; }
+.aoApp { min-height: 100dvh; }
+
+/* ---- The manager's bar and panel (not in the PDF) ---- */
+.aoBar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 10px 20px; background: #ffffffee; border-bottom: 1px solid var(--ao-rule); backdrop-filter: blur(8px); }
+.aoBack { color: var(--ao-violet); font-size: 14px; font-weight: 700; text-decoration: none; }
+.aoBarTitle { display: grid; flex: 1; min-width: 200px; }
+.aoBarTitle b { font-size: 15px; }
+.aoStatus { color: var(--ao-muted); font-size: 13px; }
+.aoStatus.isError { color: var(--ao-risk); font-weight: 600; }
+.aoBarActions { display: flex; gap: 8px; }
+.aoButton { min-height: 40px; padding: 0 16px; border: 1px solid var(--ao-rule); border-radius: 10px; background: #fff; color: var(--ao-ink); font: inherit; font-size: 14px; font-weight: 700; cursor: pointer; }
+.aoButton.isPrimary { border-color: var(--ao-violet); background: var(--ao-violet); color: #fff; }
+.aoButton:disabled { opacity: 0.6; cursor: progress; }
+.aoButton:focus-visible, .aoPanel button:focus-visible, .aoPanel input:focus-visible, .aoPanel select:focus-visible { outline: 2px solid var(--ao-violet-mid); outline-offset: 2px; }
+.aoWork { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 20px; padding: 20px; align-items: start; }
+.aoStage { min-width: 0; display: grid; justify-items: center; }
+.aoWaiting { padding: 40px; color: var(--ao-muted); }
+.aoPanel { position: sticky; top: 76px; display: grid; gap: 12px; max-height: calc(100dvh - 96px); overflow: auto; }
+.aoCardP { display: grid; gap: 8px; padding: 14px; border: 1px solid var(--ao-rule); border-radius: 14px; background: #fff; }
+.aoCardP h2 { margin: 0; color: var(--ao-violet-deep); font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.aoCardP label { display: grid; gap: 4px; color: var(--ao-muted); font-size: 12px; font-weight: 700; }
+.aoCardP input, .aoCardP select { min-height: 36px; padding: 0 10px; border: 1px solid #d6d0e4; border-radius: 8px; background: #fff; color: var(--ao-ink); font: inherit; font-size: 14px; font-weight: 500; }
+.aoCardP .aoCheck { display: flex; align-items: center; gap: 8px; color: var(--ao-ink); font-size: 13px; font-weight: 600; }
+.aoCardP .aoCheck input { min-height: 0; width: 16px; height: 16px; accent-color: var(--ao-violet); }
+.aoHint { margin: 0; color: var(--ao-muted); font-size: 12px; line-height: 1.45; }
+.aoLayouts { display: grid; gap: 6px; }
+.aoLayouts button { display: grid; gap: 2px; padding: 8px 10px; border: 1px solid var(--ao-rule); border-radius: 10px; background: #fff; text-align: left; cursor: pointer; font: inherit; }
+.aoLayouts button b { font-size: 13px; }
+.aoLayouts button small { color: var(--ao-muted); font-size: 11px; }
+.aoLayouts button.isActive { border-color: var(--ao-violet); background: var(--ao-lavender); }
+.aoLang { display: flex; gap: 4px; }
+.aoLang button { min-width: 44px; min-height: 32px; border: 1px solid var(--ao-rule); border-radius: 8px; background: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.aoLang button.isActive { border-color: var(--ao-violet); background: var(--ao-violet); color: #fff; }
+.aoThumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+.aoThumbs button { padding: 0; border: 2px solid transparent; border-radius: 8px; background: none; cursor: pointer; overflow: hidden; }
+.aoThumbs button.isActive { border-color: var(--ao-violet); }
+.aoThumbs img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.aoLinkButton { justify-self: start; padding: 0; border: 0; background: none; color: var(--ao-violet); font: inherit; font-size: 13px; font-weight: 700; text-decoration: underline; cursor: pointer; }
+@media (max-width: 1100px) {
+  .aoWork { grid-template-columns: minmax(0, 1fr); padding: 12px; }
+  .aoPanel { position: static; max-height: none; }
+}
+
+/* ---- The sheet ---- */
+.aoSheet { position: relative; }
+.aoPage {
+  position: relative;
+  width: 794px;
+  height: 1123px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 26px 32px 18px;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(30, 20, 60, 0.08), 0 18px 40px -12px rgba(30, 20, 60, 0.25);
+  transform-origin: top left;
+  font-size: 11.5px;
+  line-height: 1.38;
+}
+.aoIcon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.aoMono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.95em; letter-spacing: 0.02em; }
+[data-edit].isEdited { box-shadow: inset 0 -2px 0 #e9a23b66; }
+[contenteditable="true"] { outline: 1px dashed var(--ao-violet-mid); outline-offset: 2px; border-radius: 3px; }
+
+.aoHead { display: flex; align-items: center; gap: 12px; padding-bottom: 12px; border-bottom: 2px solid var(--ao-violet); }
+.aoLogo { height: 22px; }
+.aoHeadTag { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border-radius: 999px; background: var(--ao-violet); color: #fff; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.aoHeadTag .aoIcon { width: 12px; height: 12px; }
+.aoHeadMeta { margin-left: auto; color: var(--ao-muted); font-size: 10.5px; }
+.aoContent { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 12px; padding-top: 12px; overflow: hidden; }
+.aoFoot { display: flex; justify-content: space-between; gap: 16px; padding-top: 8px; border-top: 1px solid var(--ao-rule); color: var(--ao-soft); font-size: 9px; }
+
+/* Photo with the count of the report's photos. */
+.aoPhoto { position: relative; margin: 0; overflow: hidden; border-radius: 12px; background: var(--ao-lavender-2); }
+.aoPhoto img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.aoPhotoEmpty { display: grid; place-items: center; width: 100%; height: 100%; min-height: 120px; color: var(--ao-violet-mid); background: var(--ao-lavender-2); }
+.aoPhotoEmpty .aoIcon { width: 44px; height: 44px; stroke-width: 1.2; }
+.aoPhotoCount { position: absolute; left: 10px; top: 10px; display: inline-flex; align-items: center; gap: 5px; padding: 4px 9px; border-radius: 999px; background: rgba(28, 16, 56, 0.72); color: #fff; font-size: 10px; font-weight: 700; }
+.aoPhotoCount .aoIcon { width: 12px; height: 12px; }
+
+.aoTitle { min-width: 0; }
+.aoKicker { margin: 0 0 2px; color: var(--ao-violet-mid); font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.aoName { margin: 0; color: var(--ao-violet-deep); font-size: 24px; font-weight: 800; line-height: 1.12; letter-spacing: -0.01em; }
+.aoVersion { margin: 3px 0 0; color: var(--ao-muted); font-size: 11.5px; font-weight: 600; }
+
+/* The auction: country, date, time, the report and its link. */
+.aoAuction { position: relative; z-index: 1; display: grid; gap: 4px; padding: 12px 14px; border-radius: 12px; background: var(--ao-violet); color: #fff; }
+.aoAuctionHead { display: flex; align-items: center; gap: 6px; margin: 0; color: #d9ccff; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; }
+.aoAuctionWhen { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0; font-size: 16px; font-weight: 800; }
+.aoAuctionWhen i { color: var(--ao-amber); font-style: normal; }
+.aoAuctionCountry { display: inline-flex; align-items: center; gap: 6px; }
+.aoAuctionCountry svg { width: 18px; height: 12px; border-radius: 2px; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4); }
+.aoReportLine { margin: 2px 0 0; color: #e8e0ff; font-size: 10.5px; }
+.aoReportLink { display: flex; align-items: center; gap: 5px; min-width: 0; color: #fff; font-size: 10.5px; font-weight: 700; text-decoration: underline; text-underline-offset: 2px; }
+.aoReportLink span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aoReportLink .aoIcon { width: 12px; height: 12px; color: var(--ao-amber); }
+.aoCopyLink { justify-self: start; padding: 3px 9px; border: 1px solid #ffffff66; border-radius: 999px; background: transparent; color: #fff; font: inherit; font-size: 10px; font-weight: 700; cursor: pointer; }
+.aoFillMe { display: inline-block; padding: 1px 7px; border-radius: 6px; background: #fff3c4; color: #7a5400; font-size: 10px; font-weight: 700; font-style: italic; }
+
+/* Block 1: four groups. */
+.aoBlockOne { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.aoGroup { min-width: 0; padding: 10px 11px; border-radius: 10px; background: var(--ao-lavender); }
+.aoGroup h3 { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; color: var(--ao-violet); font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+.aoGroup dl { display: grid; gap: 4px; margin: 0; }
+.aoGroup dl > div { display: grid; gap: 0; }
+.aoGroup dt { color: var(--ao-muted); font-size: 9.5px; font-weight: 600; }
+.aoGroup dd { margin: 0; color: var(--ao-ink); font-size: 11px; font-weight: 700; overflow-wrap: anywhere; }
+.aoGroup dd small { color: var(--ao-muted); font-weight: 600; }
+.aoOptions { display: flex; flex-wrap: wrap; gap: 3px; }
+.aoOptions i { padding: 1px 6px; border-radius: 6px; background: #fff; font-style: normal; font-weight: 600; font-size: 10px; }
+
+/* Block 2: one table. */
+.aoBlockHead { display: flex; align-items: center; gap: 7px; margin: 0 0 6px; color: var(--ao-violet-deep); font-size: 12px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.aoBlockHead small { margin-left: auto; color: var(--ao-muted); font-size: 10px; font-weight: 600; letter-spacing: 0; text-transform: none; }
+.aoTable { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 10.5px; }
+.aoTable .cEl { width: 29%; }
+.aoTable .cDm { width: 19%; }
+.aoTable .cCat { width: 23%; }
+.aoTable .cRep { width: 29%; }
+.aoTable.hasCost .cEl { width: 26%; }
+.aoTable.hasCost .cDm { width: 16%; }
+.aoTable.hasCost .cCat { width: 20%; }
+.aoTable.hasCost .cRep { width: 24%; }
+.aoTable .cCost { width: 14%; }
+.aoTable .aoCatCell { white-space: nowrap; }
+.aoTable th { padding: 5px 6px; background: var(--ao-violet); color: #fff; font-size: 9.5px; font-weight: 700; text-align: left; letter-spacing: 0.02em; }
+.aoTable th:first-child { border-top-left-radius: 8px; }
+.aoTable th:last-child { border-top-right-radius: 8px; }
+.aoTable td { padding: 4px 6px; border-bottom: 1px solid var(--ao-rule); vertical-align: top; }
+.aoTable tbody tr:nth-child(even) td { background: #faf8fe; }
+.aoTable td b { font-weight: 700; }
+.aoTable tfoot td { padding: 6px; background: var(--ao-lavender-2); font-weight: 800; color: var(--ao-violet-deep); }
+.aoNum { text-align: right; white-space: nowrap; }
+.aoCat, .aoDeg { font-weight: 700; }
+.aoCat.is-struct { color: var(--ao-risk); }
+.aoCat.is-use { color: #1d5d93; }
+.aoCat.is-cosm { color: var(--ao-muted); }
+.aoDeg.is-hard { color: var(--ao-risk); }
+.aoDeg.is-mid { color: var(--ao-warn); }
+.aoDeg.is-soft { color: var(--ao-good); }
+.aoFlag { display: block; color: var(--ao-risk); font-size: 9.5px; font-weight: 700; font-style: normal; }
+.aoFolded td:first-child > span { display: block; color: var(--ao-muted); font-size: 0.92em; }
+.aoMinor { margin: 6px 0 0; color: var(--ao-muted); font-size: 10px; }
+.aoMinor b { color: var(--ao-ink); }
+.aoNone { margin: 0; color: var(--ao-muted); font-style: italic; }
+
+/* 2–4 photos of the main damages with captions (owner 2026-10-11). */
+.aoGallery { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.aoGallery figure { margin: 0; display: grid; grid-template-rows: 92px auto; gap: 3px; min-width: 0; }
+.aoGallery img { display: block; width: 100%; height: 92px; object-fit: cover; border-radius: 8px; background: var(--ao-lavender-2); }
+.aoGallery figcaption { color: var(--ao-muted); font-size: 9px; line-height: 1.25; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aoGallery figcaption b { color: var(--ao-ink); }
+.aoPage.isGalleryTwo .aoGallery figure:nth-child(n + 3) { display: none; }
+.aoPage.isGalleryTwo .aoGallery { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.aoPage.isNoGallery .aoGallery { display: none; }
+
+/* Summary badges over the damages (owner 2026-10-11). */
+.aoBadges { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 6px; }
+.aoBadge { display: inline-flex; align-items: center; gap: 5px; padding: 3px 9px; border-radius: 999px; font-size: 10px; font-weight: 600; }
+.aoBadge .aoIcon { width: 12px; height: 12px; }
+.aoBadge.isOff { background: var(--ao-good-bg); color: var(--ao-good); }
+.aoBadge.isOn { background: #fde9cc; color: #8a4a00; }
+.aoAge { font-weight: 700; color: #fff; }
+
+/* Block 3: the verdict and its risks. */
+.aoBlockThree { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; padding: 12px 14px; border-radius: 12px; border: 2px solid var(--ao-rule); }
+.aoBlockThree.is-ok { border-color: #bfe3cf; }
+.aoBlockThree.is-check { border-color: #f1d49e; }
+.aoBlockThree.is-risky, .aoBlockThree.is-no { border-color: #efb9b1; }
+.aoVerdictLabel { display: inline-flex; align-items: center; gap: 7px; margin: 0 0 6px; padding: 6px 12px; border-radius: 10px; font-size: 13px; font-weight: 800; }
+.aoVerdictLabel.is-ok { background: var(--ao-good-bg); color: var(--ao-good); }
+.aoVerdictLabel.is-check { background: var(--ao-warn-bg); color: var(--ao-warn); }
+.aoVerdictLabel.is-risky, .aoVerdictLabel.is-no { background: var(--ao-risk-bg); color: var(--ao-risk); }
+.aoVerdictLabel .aoIcon { width: 16px; height: 16px; }
+.aoReasons, .aoRisks ul { display: grid; gap: 3px; margin: 0; padding-left: 16px; }
+.aoReasons li, .aoRisks li { position: relative; padding-right: 16px; }
+.aoRisks h3 { display: flex; align-items: center; gap: 6px; margin: 0 0 6px; color: var(--ao-warn); font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.aoInspect { margin: 8px 0 0; color: var(--ao-muted); font-size: 9.5px; font-style: italic; }
+.aoToggle { position: absolute; right: 0; top: 0; width: 14px; height: 14px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--ao-soft); font-size: 12px; line-height: 1; cursor: pointer; }
+.aoToggle:hover { background: var(--ao-risk-bg); color: var(--ao-risk); }
+
+/* ---- Layout 1 "Zdjęcie na górze": the photo full width, the auction on a plate. ---- */
+.isLayout-hero .aoHero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 270px; grid-template-rows: 232px auto; column-gap: 14px; }
+.isLayout-hero .aoPhoto.isWide { grid-column: 1 / -1; grid-row: 1; height: 232px; }
+.isLayout-hero .aoHeroText { grid-column: 1; grid-row: 2; padding-top: 10px; }
+.isLayout-hero .aoAuction.isPlate { grid-column: 2; grid-row: 1 / span 2; align-self: end; margin-top: 120px; box-shadow: 0 10px 24px -10px rgba(46, 26, 92, 0.6); }
+
+/* ---- Layout 2 "Dwie kolumny": the photo beside the auction. ---- */
+.isLayout-columns .aoTop { display: grid; grid-template-columns: 1.15fr 1fr; gap: 14px; }
+.isLayout-columns .aoPhoto.isSide { height: 230px; }
+.isLayout-columns .aoTopSide { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.isLayout-columns .aoTopSide .aoAuction { flex: 1; align-content: start; }
+.isLayout-columns .aoBlockOne { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.isLayout-columns .aoGroup dl { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 10px; }
+.isLayout-columns .aoGroup[data-group="color"] dl, .isLayout-columns .aoGroup[data-group="state"] dl { grid-template-columns: minmax(0, 1fr); }
+
+/* ---- Layout 3 "Raport": a violet band, the photo beside the data. ---- */
+.isLayout-report .aoBand { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 16px; align-items: center; padding: 14px 16px; border-radius: 12px; background: linear-gradient(120deg, var(--ao-violet-deep), var(--ao-violet)); color: #fff; }
+.isLayout-report .aoBand .aoName { color: #fff; }
+.isLayout-report .aoBand .aoKicker { color: var(--ao-amber); }
+.isLayout-report .aoBand .aoVersion { color: #d9ccff; }
+.isLayout-report .aoAuction.isBand { padding: 0 0 0 16px; border-left: 1px solid #ffffff40; border-radius: 0; background: transparent; }
+.isLayout-report .aoTop { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 12px; }
+.isLayout-report .aoPhoto.isSide { height: 100%; min-height: 220px; }
+.isLayout-report .aoBlockOne { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+
+/* ---- Fitting one page: a little tighter, step by step. ---- */
+.aoPage.isTight { font-size: 10.8px; }
+.aoPage.isTight .aoContent { gap: 9px; }
+.aoPage.isTight .aoTable td { padding: 3px 5px; }
+.aoPage.isTight .aoGroup { padding: 8px 9px; }
+.aoPage.isTight.isLayout-hero .aoHero { grid-template-rows: 200px auto; }
+.aoPage.isTight.isLayout-hero .aoPhoto.isWide { height: 200px; }
+.aoPage.isTight.isLayout-hero .aoAuction.isPlate { margin-top: 96px; }
+.aoPage.isTight.isLayout-columns .aoPhoto.isSide { height: 200px; }
+.aoPage.isTighter .aoTable { font-size: 9.6px; }
+.aoPage.isTighter .aoTable td { padding: 2px 5px; }
+.aoPage.isTighter .aoGroup dd { font-size: 10.2px; }
+.aoPage.isTighter .aoOptions i:nth-child(n + 7) { display: none; }
+.aoPage.isTighter.isLayout-hero .aoHero { grid-template-rows: 170px auto; }
+.aoPage.isTighter.isLayout-hero .aoPhoto.isWide { height: 170px; }
+.aoPage.isTighter.isLayout-hero .aoAuction.isPlate { margin-top: 66px; }
+.aoPage.isTighter.isLayout-columns .aoPhoto.isSide { height: 175px; }
+.aoPage.isTightest { font-size: 10px; }
+.aoPage.isTightest .aoTable { font-size: 9px; }
+.aoPage.isTightest .aoTable td { padding: 1px 4px; }
+.aoPage.isTightest .aoInspect { display: none; }
+.aoPage.isTightest.isLayout-hero .aoHero { grid-template-rows: 150px auto; }
+.aoPage.isTightest.isLayout-hero .aoPhoto.isWide { height: 150px; }
+.aoPage.isTightest.isLayout-hero .aoAuction.isPlate { margin-top: 40px; }

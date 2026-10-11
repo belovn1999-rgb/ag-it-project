@@ -29,6 +29,8 @@ const ALLOWED_HOSTS = [
   "av.by",
   // otomoto's photo server (B71 offer PDF: it refuses other sites now and then).
   "olxcdn.com",
+  // Macadam's condition reports and their photos (auction offer, docs/PROJECT-AUCTION-REPORTS.md §10).
+  "macadam.eu",
   "willhaben.at",
   "mobile.de",
   "ultimatespecs.com",

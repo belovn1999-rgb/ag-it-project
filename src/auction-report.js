@@ -1012,8 +1012,30 @@
   const POSITIONS = {
     avg: ["przód lewy", "перед. левый"], avd: ["przód prawy", "перед. правый"], arg: ["tył lewy", "зад. левый"], ard: ["tył prawy", "зад. правый"],
     av: ["przód", "перед"], ar: ["tył", "зад"], g: ["lewy", "левый"], d: ["prawy", "правый"], m: ["środek", "центр"], mil: ["", ""],
-    ext: ["zewn.", "наруж."], int: ["wewn.", "внутр."], "bi-ton/polychrome": ["dwukolorowa", "двухцветный"], "(sans insert)": ["", ""], tc: ["", ""],
+    ext: ["zewn.", "наруж."], int: ["wewn.", "внутр."], coffre: ["", ""], "bi-ton/polychrome": ["dwukolorowa", "двухцветный"], "(sans insert)": ["", ""], tc: ["", ""],
   };
+  // Equipment names (Macadam's lists by VIN and the inspector's), the common ones;
+  // null — not worth the client's eye (every car has it).
+  const EQUIPMENT = {
+    "accoudoir central": ["Podłokietnik", "Подлокотник"], airbag: null, "direction assistee": null, "verrouillage central": null,
+    "fonctionnement electrique des fenetres": null, "assistant de demarrage en cote": ["Asystent ruszania pod górę", "Помощь при старте в гору"],
+    "barres de toit": ["Relingi dachowe", "Рейлинги"], "capteur de pluie": ["Czujnik deszczu", "Датчик дождя"],
+    "controle de distance": ["Czujniki parkowania", "Парктроники"], gps: ["Nawigacja", "Навигация"], "stockage gps": null,
+    "interieur cuir": ["Skórzana tapicerka", "Кожаный салон"], isofix: ["Isofix", "Isofix"], "jantes alu": ["Felgi aluminiowe", "Литые диски"],
+    "retroviseurs reglables electrique": ["Elektryczne lusterka", "Электрозеркала"], "sieges chauffants av (ecs&b)": ["Podgrzewane fotele przednie", "Подогрев передних сидений"],
+    "sieges chauffants av": ["Podgrzewane fotele przednie", "Подогрев передних сидений"], telephone: ["Zestaw głośnomówiący", "Громкая связь"],
+    "volant cuir": ["Skórzana kierownica", "Кожаный руль"], "volant multifonctions": ["Kierownica wielofunkcyjna", "Мультируль"],
+    "camera de recul": ["Kamera cofania", "Камера заднего вида"], "cache bagages": ["Roleta bagażnika", "Шторка багажника"],
+    "phares xenon/led/laser": ["Reflektory LED / ksenon", "Фары LED / ксенон"], "toit ouvrant": ["Szyberdach", "Люк"], "toit panoramique": ["Dach panoramiczny", "Панорамная крыша"],
+    "regulateur de vitesse": ["Tempomat", "Круиз-контроль"], "regulateur de vitesse adaptatif": ["Tempomat aktywny", "Адаптивный круиз"], "attelage": ["Hak holowniczy", "Фаркоп"],
+    "sieges electriques": ["Elektryczne fotele", "Электросиденья"], "hayon electrique": ["Elektryczna klapa bagażnika", "Электропривод багажника"], "head-up display": ["Head-up display", "Проекция на стекло"],
+  };
+  // → the name in the offer's language, the French one when not known, "" for the trivial ones.
+  function equipmentName(value, lang = "pl") {
+    const key = plain(value).replace(/:\s*oui$/, "");
+    if (Object.prototype.hasOwnProperty.call(EQUIPMENT, key)) return EQUIPMENT[key] ? EQUIPMENT[key][lang === "ru" ? 1 : 0] : "";
+    return String(value || "").replace(/:\s*oui$/i, "");
+  }
   const langIndex = (lang) => (lang === "ru" ? 1 : 0);
   function word(kind, value, lang = "pl") {
     const table = kind === "type" ? DAMAGE_TYPES : VALUES;
@@ -1050,7 +1072,7 @@
 
   return {
     detectLink, detectPdf, fromHtml, fromPdf, mileagePerYear, repairGroup, plain, numberOf,
-    word, repairName, partName,
+    word, repairName, partName, equipmentName,
     // For tests and the server.
     parseHtml, textClean, joinFragments, LAYOUTS,
   };

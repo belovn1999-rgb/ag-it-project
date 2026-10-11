@@ -65,7 +65,8 @@
       groups: "Podsumowanie", noDamages: "Raport nie wymienia uszkodzeń.", badRepair: "Uwaga: raport wskazuje złą wcześniejszą naprawę ({n}).", warning: "Uwaga: kontrolka błędu na desce ({text}).",
       miss: { version: "wersja i silnik", power: "moc", fuel: "rodzaj paliwa", gearbox: "skrzynia biegów", drive: "napęd", inspectionDate: "data oględzin", inspectionPlace: "miejsce oględzin", serviceBook: "książka serwisowa", registration: "dowód rejestracyjny", tyres: "opony" },
       missHint: "Sprawdź na stronie aukcji albo po VIN (program „VIN”).",
-      offerSoon: "Oferta z raportu aukcji — następny krok", offerSoonHint: "Wygląd oferty z aukcji przygotujemy na tym raporcie.",
+      offerTitle: "Oferta dla klienta", auctionCountry: "Kraj aukcji", auctionDate: "Data licytacji", auctionTime: "Godzina", makeOffer: "Przygotuj ofertę PDF",
+      offerHint: "Kraj, data i godzina licytacji trafią do oferty obok linku do raportu.", offerFailed: "Nie udało się zapisać oferty w tej przeglądarce.",
       summaryArea: "Uszkodzenia wg strefy",
     },
     ru: {
@@ -96,7 +97,8 @@
       groups: "Итог", noDamages: "В отчёте нет повреждений.", badRepair: "Внимание: отчёт отмечает плохой прошлый ремонт ({n}).", warning: "Внимание: горит лампа ошибки ({text}).",
       miss: { version: "версия и двигатель", power: "мощность", fuel: "топливо", gearbox: "коробка", drive: "привод", inspectionDate: "дата осмотра", inspectionPlace: "место осмотра", serviceBook: "сервисная книжка", registration: "техпаспорт", tyres: "шины" },
       missHint: "Проверьте на странице аукциона или по VIN (программа «VIN»).",
-      offerSoon: "Предложение из отчёта аукциона — следующий шаг", offerSoonHint: "Вид предложения для аукциона сделаем на этом отчёте.",
+      offerTitle: "Предложение для клиента", auctionCountry: "Страна торгов", auctionDate: "Дата торгов", auctionTime: "Время", makeOffer: "Подготовить PDF-предложение",
+      offerHint: "Страна, дата и время торгов попадут в предложение рядом со ссылкой на отчёт.", offerFailed: "Не удалось сохранить предложение в этом браузере.",
       summaryArea: "Повреждения по зонам",
     },
   };
@@ -300,6 +302,7 @@
   }
   function show(report, from) {
     current = { report, from };
+    auctionFields = {};
     try {
       localStorage.setItem(LAST_KEY, JSON.stringify({ at: new Date().toISOString(), from, report }));
     } catch {
@@ -467,11 +470,63 @@
       <section class="arBlock"><h3>${icon("alert")}${esc(t("damages"))} (${report.damages.length})</h3>${damages}</section>
       ${missing}
       ${other}
-      <footer class="osCarFoot">
-        <span class="osCarFootLabel">${esc(t("offerSoonHint"))}</span>
-        <button class="osPrimary" type="button" disabled>${esc(t("offerSoon"))}</button>
-      </footer>`;
+      <form class="arOffer" data-ar-offer>
+        <h3>${icon("receipt")}${esc(t("offerTitle"))}</h3>
+        <label>${esc(t("auctionCountry"))}<select name="country">${COUNTRY_CODES.map((code) => `<option value="${code}"${(auctionFields.country || report.country || "FR") === code ? " selected" : ""}>${esc(countryLabel(code))}</option>`).join("")}</select></label>
+        <label>${esc(t("auctionDate"))}<input type="date" name="date" value="${esc(auctionFields.date || "")}" /></label>
+        <label>${esc(t("auctionTime"))}<input type="time" name="time" value="${esc(auctionFields.time || "")}" /></label>
+        <button class="osPrimary" type="submit">${esc(t("makeOffer"))}</button>
+        <p class="arOfferHint">${esc(t("offerHint"))}</p>
+      </form>`;
   }
+
+  // ---- The offer: the auction's country, date and time, then oferta-aukcja.html ---------------
+  const COUNTRY_CODES = ["FR", "DE", "BE", "NL", "LU", "AT", "IT", "ES", "PT", "SE", "DK", "CH", "CZ", "PL", "GB"];
+  const COUNTRY_NAMES = {
+    pl: { FR: "Francja", DE: "Niemcy", BE: "Belgia", NL: "Holandia", LU: "Luksemburg", AT: "Austria", IT: "Włochy", ES: "Hiszpania", PT: "Portugalia", SE: "Szwecja", DK: "Dania", CH: "Szwajcaria", CZ: "Czechy", PL: "Polska", GB: "Wielka Brytania" },
+    ru: { FR: "Франция", DE: "Германия", BE: "Бельгия", NL: "Нидерланды", LU: "Люксембург", AT: "Австрия", IT: "Италия", ES: "Испания", PT: "Португалия", SE: "Швеция", DK: "Дания", CH: "Швейцария", CZ: "Чехия", PL: "Польша", GB: "Великобритания" },
+  };
+  const countryLabel = (code) => COUNTRY_NAMES[lang][code] || code;
+  const OFFERS_KEY = "autogood.offer.auctionOffers.v1";
+  // What the manager typed stays while the same report is on screen.
+  let auctionFields = {};
+  box.addEventListener("input", (event) => {
+    const form = event.target.closest("[data-ar-offer]");
+    if (form) auctionFields = Object.fromEntries(new FormData(form));
+  });
+  box.addEventListener("submit", (event) => {
+    const form = event.target.closest("[data-ar-offer]");
+    if (!form || !current) return;
+    event.preventDefault();
+    const auction = Object.fromEntries(new FormData(form));
+    // Every write re-reads the drafts first: nothing made in another tab is lost.
+    let all;
+    try {
+      all = JSON.parse(localStorage.getItem(OFFERS_KEY) || "{}");
+    } catch {
+      all = {};
+    }
+    if (!all || typeof all !== "object" || !all.offers) all = { offers: {} };
+    const now = new Date();
+    const id = `${now.getTime().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+    const count = Object.keys(all.offers).length + 1;
+    all.offers[id] = {
+      id,
+      number: `A${count}`,
+      createdAt: now.toISOString(),
+      lang,
+      layout: "hero",
+      auction,
+      report: current.report,
+      from: current.from,
+    };
+    try {
+      localStorage.setItem(OFFERS_KEY, JSON.stringify(all));
+    } catch {
+      return setStatus(t("offerFailed"), true);
+    }
+    window.open(`./oferta-aukcja.html?id=${encodeURIComponent(id)}`, "_blank", "noopener");
+  });
 
   // ---- Start: the last way and the last report of this browser ---------------------------
   applyLang();

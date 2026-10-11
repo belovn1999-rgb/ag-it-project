@@ -20,7 +20,7 @@
 | Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
-| Отчёты аукционов → бриф → оффер «Z raportu aukcji» | `oferty.html` (способ 2), позже сервер | [PROJECT-AUCTION-REPORTS.md](PROJECT-AUCTION-REPORTS.md) | Чтение отчётов Macadam / TÜV / DEKRA в единый шаблон, коды Macadam, оценка, вердикт, образцы вне репозитория |
+| Отчёты аукционов → бриф → оффер «Z raportu aukcji» | `oferty.html` (способ 2), `oferta-aukcja.html`, позже сервер | [PROJECT-AUCTION-REPORTS.md](PROJECT-AUCTION-REPORTS.md) | Чтение отчётов Macadam / TÜV / DEKRA в единый шаблон, коды Macadam, **методика проверки отчёта (§9)**, оценка, вердикт, оффер с аукциона (§10), образцы вне репозитория |
 | Проверка VIN | `partslink24.html` | [PARTSLINK24_VIN_CHECK.md](PARTSLINK24_VIN_CHECK.md) | Поля, марки, логика отчёта |
 | Отчёты Auto1 | `auto1.html`, `auctions.html` | [auto1-pdf-learning/structured-editor.md](auto1-pdf-learning/structured-editor.md) | Как редактируется PDF отчёта |
 | Выкладка | все | [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md) | Pages + конвертер на Render, smoke-тесты |
@@ -78,6 +78,7 @@
 
 ## 8. Журнал
 
+- 2026-10-11 — оффер с аукциона: методика проверки отчёта эксперта записана в `docs/PROJECT-AUCTION-REPORTS.md` §9 и стала кодом (`src/auction-assess.js`: категория, степень, вилка zł, вердикт, риски); страница `oferta-aukcja.html` — поля торгов во вкладке «Z raportu aukcji», 1 лист A4 в фиолетовой гамме, 3 макета на выбор владельца, главное фото и число фото отчёта, ссылка на отчёт с датой и «N dni temu» рядом с торгами, плашки-итоги и 2–4 фото повреждений (решения владельца), PDF; фото в PDF — после выкладки Worker с `macadam.eu` (Claude).
 - 2026-10-11 — mobile.html: решение владельца — «Razem» стр. 1 = сумма объявлений, без повторов считает только стр. 2; ветка `unique-totals` не выкладывается (Claude).
 - 2026-10-11 — B71 оффер, волна 6: «Цена на фоне рынка» — история цены этого авто по Carvago (даты и %) или все вилки шкалы mobile.de; плашка цены уже; «Расчёт «под ключ»» (Claude).
 - 2026-10-11 — mobile.html: Marktplaats / 2dehands — ответ «1 объявление» (сбой портала) переспрашивается дважды, берётся полный (Claude).
