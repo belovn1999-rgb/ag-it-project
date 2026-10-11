@@ -18,7 +18,12 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/auction-offer.css?v=ao-1012" />
+    <link rel="stylesheet" href="./src/auction-offer.css?v=ao-1014" />
+    <script>
+      // Inside program 06 (embed=1): no site bar; the client's link (view=client): the page only.
+      if (new URLSearchParams(location.search).get("embed") === "1") document.documentElement.classList.add("aoEmbed");
+      if (new URLSearchParams(location.search).get("view") === "client") document.documentElement.classList.add("aoClient");
+    </script>
     <script defer src="./src/global-navigation.js?v=nav-offer-1010" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="aoBody">
@@ -38,7 +43,12 @@
         </div>
         <div class="aoBarActions">
           <button class="aoButton" type="button" data-ao-edit aria-pressed="false">Edytuj teksty</button>
+          <button class="aoButton" type="button" data-ao-link>Link dla klienta</button>
           <button class="aoButton isPrimary" type="button" data-ao-pdf>Pobierz PDF</button>
+        </div>
+        <div class="aoLinkRow" data-ao-link-row hidden>
+          <label>Link dla klienta<input type="url" readonly data-ao-link-field /></label>
+          <button class="aoButton isPrimary" type="button" data-ao-link-copy>Kopiuj</button>
         </div>
       </header>
       <div class="aoWork">
@@ -47,8 +57,8 @@
       </div>
     </div>
     <script src="./src/market-badges.js?v=pv-1005"></script>
-    <script src="./src/auction-report.js?v=ao-1012"></script>
+    <script src="./src/auction-report.js?v=ao-1013"></script>
     <script src="./src/auction-assess.js?v=ao-1012"></script>
-    <script src="./src/auction-offer.js?v=ao-1012"></script>
+    <script src="./src/auction-offer.js?v=ao-1014"></script>
   </body>
 </html>

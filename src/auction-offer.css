@@ -273,3 +273,64 @@ body.aoBody { margin: 0; min-width: 320px; background: #e8eef3; color: var(--ao-
 .aoPage.isGallerySmall .aoGallery img { height: 58px; }
 .aoPage.isGallerySmall .aoGallery { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .aoContinuedTable { margin: 0 0 6px; color: var(--ao-violet-deep); font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ---- The offer as a web page (program 06 and the client's link; owner 2026-10-11) ---- */
+.aoSheetsHold { position: absolute; left: -12000px; top: 0; width: 794px; pointer-events: none; }
+.aoStage.isWeb { display: block; position: relative; }
+.aoWeb { max-width: 920px; margin: 0 auto; }
+.aoWebPage { display: grid; gap: 16px; padding: 26px 30px 22px; border-radius: 18px; background: #fff; box-shadow: 0 2px 4px rgba(13, 40, 64, 0.06), 0 18px 40px -16px rgba(13, 40, 64, 0.25); font-size: 14px; line-height: 1.45; }
+.aoWebPage .aoHead { padding-bottom: 12px; }
+.aoWebHero { display: grid; gap: 14px; }
+.aoWebHero .aoPhoto.isWide { height: 380px; }
+.aoWebHeroText { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 340px); gap: 16px; align-items: start; }
+.aoWebPage .aoName { font-size: 30px; }
+.aoWebPage .aoVersion { font-size: 14px; }
+.aoKpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
+.aoKpi { padding: 10px 12px; border-radius: 12px; background: var(--ao-lavender); }
+.aoKpi span { display: block; color: var(--ao-muted); font-size: 11px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
+.aoKpi b { display: block; margin-top: 2px; color: var(--ao-ink); font-size: 18px; font-weight: 800; }
+.aoKpi small { color: var(--ao-muted); font-size: 12px; }
+.aoWebPage .aoGroup dt { font-size: 12px; }
+.aoWebPage .aoGroup dd { font-size: 14px; }
+.aoWebPage .aoChecks li { font-size: 13px; }
+.aoWebPage .aoGroup h3 { font-size: 12px; }
+.aoWebPair { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.aoWebFirm { margin: 0 0 8px; color: var(--ao-ink); font-weight: 700; }
+.aoChipsRow { display: flex; flex-wrap: wrap; gap: 6px; }
+.aoChip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 999px; background: var(--ao-good-bg); color: var(--ao-good); font-size: 12px; font-weight: 700; }
+.aoChip .aoIcon { width: 12px; height: 12px; }
+.aoWebPage .aoTable { font-size: 13px; }
+.aoWebPage .aoTable td { padding: 6px 8px; }
+.aoWebPage .aoBlockHead { font-size: 13px; }
+.aoWebPage .aoGallery figure { grid-template-rows: 130px auto; }
+.aoWebPage .aoGallery img { height: 130px; }
+.aoWebPage .aoGallery figcaption { font-size: 11px; }
+.aoWebPage .aoBlockThree { font-size: 14px; }
+.aoWebPage .aoFoot { font-size: 11px; }
+@media (max-width: 760px) {
+  .aoWebPage { padding: 18px 14px; border-radius: 14px; }
+  .aoWebHero .aoPhoto.isWide { height: 220px; }
+  .aoWebHeroText, .aoWebPair, .aoBlockOne, .aoBlockThree { grid-template-columns: minmax(0, 1fr); }
+  .aoWebPage .aoName { font-size: 24px; }
+  .aoWebPage .aoTable .cDm, .aoWebPage .aoTable td:nth-child(2), .aoWebPage .aoTable th:nth-child(2) { display: none; }
+  .aoWebPage .aoGallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .aoFoot { flex-direction: column; }
+}
+.aoLinkRow { display: flex; align-items: end; gap: 8px; width: 100%; }
+.aoLinkRow label { display: grid; flex: 1; gap: 4px; color: var(--ao-muted); font-size: 12px; font-weight: 700; }
+.aoLinkRow input { min-height: 36px; padding: 0 10px; border: 1px solid var(--ao-rule); border-radius: 8px; font: inherit; font-size: 13px; }
+.aoCardP.isManager { border-color: #e9cf96; background: #fffbf2; }
+.aoRaw summary { color: var(--ao-violet); font-size: 12px; font-weight: 700; cursor: pointer; }
+
+/* Inside program 06: no site bar, the settings beside the page. */
+.aoEmbed .agGlobalNav, .aoEmbed .aoBack { display: none !important; }
+.aoEmbed body { padding-top: 0 !important; background: transparent; }
+.aoEmbed .aoBar { position: static; border: 1px solid var(--ao-rule); border-radius: 12px; }
+.aoEmbed .aoWork { padding: 14px 0 0; grid-template-columns: minmax(0, 1fr) 320px; }
+.aoEmbed .aoPanel { position: relative; overflow: auto; }
+@media (max-width: 1099px) { .aoEmbed .aoWork { grid-template-columns: minmax(0, 1fr); } }
+/* The client's link: the page and "Pobierz PDF" only. */
+.aoClient .agGlobalNav, .aoClient .aoBack, .aoClient .aoPanel, .aoClient [data-ao-edit], .aoClient [data-ao-link], .aoClient .aoStatus, .aoClient .aoToggle, .aoClient [data-offer-hide]:not(.aoBar) { display: none !important; }
+.aoClient .aoWork { grid-template-columns: minmax(0, 1fr); padding: 18px 12px 40px; }
+.aoClient .aoBar { justify-content: space-between; }
+.aoLinkRow[hidden] { display: none !important; }

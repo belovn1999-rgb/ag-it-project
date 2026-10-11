@@ -65,7 +65,7 @@
       groups: "Podsumowanie", noDamages: "Raport nie wymienia uszkodzeń.", badRepair: "Uwaga: raport wskazuje złą wcześniejszą naprawę ({n}).", warning: "Uwaga: kontrolka błędu na desce ({text}).",
       miss: { version: "wersja i silnik", power: "moc", fuel: "rodzaj paliwa", gearbox: "skrzynia biegów", drive: "napęd", inspectionDate: "data oględzin", inspectionPlace: "miejsce oględzin", serviceBook: "książka serwisowa", registration: "dowód rejestracyjny", tyres: "opony" },
       missHint: "Sprawdź na stronie aukcji albo po VIN (program „VIN”).",
-      offerTitle: "Oferta dla klienta", offerLang: "Język oferty", recent: "Ostatnie sprawdzone raporty", offerOf: "oferta {n}", remove: "Usuń z listy", removeAsk: "Usunąć raport {n} z listy?", reopen: "Pokaż raport", equipmentAll: "Wyposażenie", auctionCountry: "Kraj aukcji", auctionDate: "Data licytacji", auctionTime: "Godzina", makeOffer: "Przygotuj ofertę PDF",
+      offerTitle: "Oferta dla klienta", offerLang: "Język oferty", paramsTitle: "Parametry oferty", client: "Klient", clientName: "imię i nazwisko (opcjonalnie)", previewTitle: "Oferta {n} — tak zobaczy ją klient", rawTitle: "Pełne dane raportu (dla opiekuna)", recent: "Ostatnie sprawdzone raporty", offerOf: "oferta {n}", remove: "Usuń z listy", removeAsk: "Usunąć raport {n} z listy?", reopen: "Pokaż raport", equipmentAll: "Wyposażenie", auctionCountry: "Kraj aukcji", auctionDate: "Data licytacji", auctionTime: "Godzina", makeOffer: "Przygotuj ofertę PDF",
       offerHint: "Kraj, data i godzina licytacji trafią do oferty obok linku do raportu.", offerFailed: "Nie udało się zapisać oferty w tej przeglądarce.",
       summaryArea: "Uszkodzenia wg strefy",
     },
@@ -97,7 +97,7 @@
       groups: "Итог", noDamages: "В отчёте нет повреждений.", badRepair: "Внимание: отчёт отмечает плохой прошлый ремонт ({n}).", warning: "Внимание: горит лампа ошибки ({text}).",
       miss: { version: "версия и двигатель", power: "мощность", fuel: "топливо", gearbox: "коробка", drive: "привод", inspectionDate: "дата осмотра", inspectionPlace: "место осмотра", serviceBook: "сервисная книжка", registration: "техпаспорт", tyres: "шины" },
       missHint: "Проверьте на странице аукциона или по VIN (программа «VIN»).",
-      offerTitle: "Предложение для клиента", offerLang: "Язык предложения", recent: "Последние проверенные отчёты", offerOf: "предложение {n}", remove: "Убрать из списка", removeAsk: "Убрать отчёт {n} из списка?", reopen: "Показать отчёт", equipmentAll: "Оснащение", auctionCountry: "Страна торгов", auctionDate: "Дата торгов", auctionTime: "Время", makeOffer: "Подготовить PDF-предложение",
+      offerTitle: "Предложение для клиента", offerLang: "Язык предложения", paramsTitle: "Параметры предложения", client: "Клиент", clientName: "имя и фамилия (необязательно)", previewTitle: "Предложение {n} — так его увидит клиент", rawTitle: "Полные данные отчёта (для менеджера)", recent: "Последние проверенные отчёты", offerOf: "предложение {n}", remove: "Убрать из списка", removeAsk: "Убрать отчёт {n} из списка?", reopen: "Показать отчёт", equipmentAll: "Оснащение", auctionCountry: "Страна торгов", auctionDate: "Дата торгов", auctionTime: "Время", makeOffer: "Подготовить PDF-предложение",
       offerHint: "Страна, дата и время торгов попадут в предложение рядом со ссылкой на отчёт.", offerFailed: "Не удалось сохранить предложение в этом браузере.",
       summaryArea: "Повреждения по зонам",
     },
@@ -311,7 +311,9 @@
       // Too big or private window: shown, not kept.
     }
     showKind(`${report.firm} · ${report.layoutName}`);
-    remember(report, from);
+    const offer = ensureOffer(report, from);
+    current.offerId = offer?.id || "";
+    remember(report, from, offer ? { id: offer.id, number: offer.number } : null);
     render();
     box.hidden = false;
     setStatus(t("done", { time: new Date().toLocaleTimeString(lang === "ru" ? "ru-RU" : "pl-PL", { hour: "2-digit", minute: "2-digit" }) }));
@@ -467,7 +469,7 @@
     const missing = report.missing.length ? `<section class="arMissing"><h3>${esc(t("missing"))}</h3><p>${report.missing.map((key) => esc(TEXT[lang].miss[key] || key)).join(" · ")}</p><small>${esc(t("missHint"))}</small></section>` : "";
     const other = report.other.length ? `<details class="arMore"><summary>${esc(t("other"))} (${report.other.length})</summary><ul class="arPlain">${report.other.map((item) => `<li>${esc(item.label)}: <b>${esc(item.value)}</b></li>`).join("")}</ul></details>` : "";
 
-    box.innerHTML = `
+    const rawCard = `
       <header class="osCarHead">
         ${photo ? `<img class="osCarPhoto" src="${esc(photo)}" alt="" referrerpolicy="no-referrer">` : `<span class="osCarPhoto arNoPhoto">${icon("car")}</span>`}
         <div class="osCarName">
@@ -486,20 +488,20 @@
           <p class="arChecked is-not"><b>${esc(t("notChecked"))}:</b> ${esc(t("notCheckedList"))}.</p></section>
         <section><h3>${icon("receipt")}${esc(t("keysDocs"))}</h3><ul>${docsList}</ul></section>
       </div>
-      <form class="arOffer" data-ar-offer>
-        <h3>${icon("receipt")}${esc(t("offerTitle"))}</h3>
-        <label>${esc(t("auctionCountry"))}<select name="country">${COUNTRY_CODES.map((code) => `<option value="${code}"${(auctionFields.country || report.country || "FR") === code ? " selected" : ""}>${esc(countryLabel(code))}</option>`).join("")}</select></label>
-        <label>${esc(t("auctionDate"))}<input type="date" name="date" value="${esc(auctionFields.date || "")}" /></label>
-        <label>${esc(t("auctionTime"))}<input type="time" name="time" value="${esc(auctionFields.time || "")}" /></label>
-        <label>${esc(t("offerLang"))}<select name="lang">${["pl", "ru"].map((code) => `<option value="${code}"${(auctionFields.lang || lang) === code ? " selected" : ""}>${code === "pl" ? "Polski" : "Русский"}</option>`).join("")}</select></label>
-        <button class="osPrimary" type="submit">${esc(t("makeOffer"))}</button>
-        <p class="arOfferHint">${esc(t("offerHint"))}</p>
-      </form>
       ${equipment}
       <section class="arBlock"><h3>${icon("gauge")}${esc(t("tyres"))}</h3>${tyres}</section>
       <section class="arBlock"><h3>${icon("alert")}${esc(t("damages"))} (${report.damages.length})</h3>${damages}</section>
       ${missing}
       ${other}`;
+    // As the dealer way (owner 2026-10-11): the offer's parameters, the offer itself as the
+    // client will see it (with its settings on the right), the report's raw data folded.
+    const draft = draftOf();
+    box.innerHTML = `
+      ${paramsHtml(draft)}
+      ${draft ? previewHtml(draft) : ""}
+      <details class="arRawReport"><summary>${icon("receipt")}${esc(t("rawTitle"))}</summary><div class="osCard osCarCard">${rawCard}</div></details>`;
+    const frame = box.querySelector("[data-ar-preview-frame]");
+    frame?.addEventListener("load", () => fitPreview(frame));
   }
 
   // ---- The offer: the auction's country, date and time, then oferta-aukcja.html ---------------
@@ -510,46 +512,129 @@
   };
   const countryLabel = (code) => COUNTRY_NAMES[lang][code] || code;
   const OFFERS_KEY = "autogood.offer.auctionOffers.v1";
-  // What the manager typed stays while the same report is on screen.
+  // ---- The offer made at once (as the dealer way, owner 2026-10-11) -----------------------------
+  // A report read makes its offer (or opens the one it already has: the same link,
+  // or the same VIN of the same firm); the parameters below write into it, and the
+  // offer's page in the frame shows them at once (its "storage" listener).
   let auctionFields = {};
-  box.addEventListener("input", (event) => {
-    const form = event.target.closest("[data-ar-offer]");
-    if (form) auctionFields = Object.fromEntries(new FormData(form));
-  });
-  box.addEventListener("submit", (event) => {
-    const form = event.target.closest("[data-ar-offer]");
-    if (!form || !current) return;
-    event.preventDefault();
-    const { lang: offerLang, ...auction } = Object.fromEntries(new FormData(form));
-    // Every write re-reads the drafts first: nothing made in another tab is lost.
-    let all;
+  function readOffers() {
     try {
-      all = JSON.parse(localStorage.getItem(OFFERS_KEY) || "{}");
+      const data = JSON.parse(localStorage.getItem(OFFERS_KEY) || "{}");
+      return data && typeof data === "object" && data.offers ? data : { offers: {} };
     } catch {
-      all = {};
+      return { offers: {} };
     }
-    if (!all || typeof all !== "object" || !all.offers) all = { offers: {} };
-    const now = new Date();
-    const id = `${now.getTime().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
-    const count = Object.keys(all.offers).length + 1;
-    all.offers[id] = {
-      id,
-      number: `A${count}`,
-      createdAt: now.toISOString(),
-      lang: offerLang === "ru" ? "ru" : "pl",
-      layout: "hero",
-      auction,
-      report: current.report,
-      from: current.from,
-    };
+  }
+  const sameReport = (offer, report) => (report.sourceUrl && offer.report?.sourceUrl === report.sourceUrl)
+    || (report.car?.vin && offer.report?.car?.vin === report.car.vin && offer.report?.firm === report.firm);
+  function draftOf() {
+    if (!current?.offerId) return null;
+    return readOffers().offers[current.offerId] || null;
+  }
+  // The report's offer: found again or made now; its report refreshed with this reading.
+  function ensureOffer(report, from) {
+    const all = readOffers();
+    const found = Object.values(all.offers).filter((offer) => !offer.archived && sameReport(offer, report))
+      .sort((a, b) => String(b.createdAt).localeCompare(String(a.createdAt)))[0];
+    const now = new Date().toISOString();
+    let offer = found;
+    if (offer) {
+      offer.report = report;
+      offer.from = from;
+      offer.updatedAt = now;
+    } else {
+      const id = `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 6)}`;
+      offer = { id, number: `A${Object.keys(all.offers).length + 1}`, createdAt: now, draft: true, lang, layout: "hero", auction: { country: report.country || "FR" }, client: {}, report, from };
+      all.offers[id] = offer;
+    }
     try {
       localStorage.setItem(OFFERS_KEY, JSON.stringify(all));
     } catch {
-      return setStatus(t("offerFailed"), true);
+      setStatus(t("offerFailed"), true);
+      return null;
     }
-    remember(current.report, current.from, { id, number: `A${count}` });
-    window.open(`./oferta-aukcja.html?id=${encodeURIComponent(id)}`, "_blank", "noopener");
+    return offer;
+  }
+  // One change of the parameters into the offer (re-read first: other tabs keep theirs).
+  function updateOffer(patch) {
+    if (!current?.offerId) return;
+    const all = readOffers();
+    const offer = all.offers[current.offerId];
+    if (!offer) return;
+    Object.assign(offer, patch(offer), { updatedAt: new Date().toISOString() });
+    try {
+      localStorage.setItem(OFFERS_KEY, JSON.stringify(all));
+    } catch {
+      setStatus(t("offerFailed"), true);
+    }
+  }
+  function paramsHtml(draft) {
+    const auction = draft?.auction || {};
+    const client = draft?.client || {};
+    const offerLang = draft?.lang || lang;
+    const salutations = offerLang === "ru" ? [["Pan", "господин"], ["Pani", "госпожа"], ["Państwo", "вы (на «вы»)"]] : [["Pan", "Pan"], ["Pani", "Pani"], ["Państwo", "Państwo"]];
+    return `<section class="osCard arParams" data-ar-params>
+      <h3>${icon("receipt")}${esc(t("paramsTitle"))}</h3>
+      <div class="arParamsGrid">
+        <label>${esc(t("auctionCountry"))}<select data-ar-param="country">${COUNTRY_CODES.map((code) => `<option value="${code}"${(auction.country || current.report.country || "FR") === code ? " selected" : ""}>${esc(countryLabel(code))}</option>`).join("")}</select></label>
+        <label>${esc(t("auctionDate"))}<input type="date" data-ar-param="date" value="${esc(auction.date || "")}" /></label>
+        <label>${esc(t("auctionTime"))}<input type="time" data-ar-param="time" value="${esc(auction.time || "")}" /></label>
+        <label>${esc(t("client"))}<span class="arClient"><select data-ar-param="salutation">${salutations.map(([key, label]) => `<option value="${key}"${(client.salutation || "Pan") === key ? " selected" : ""}>${esc(label)}</option>`).join("")}</select><input type="text" data-ar-param="name" value="${esc(client.name || "")}" placeholder="${esc(t("clientName"))}" /></span></label>
+        <label>${esc(t("offerLang"))}<span class="arLangSwitch" role="group">${["pl", "ru"].map((code) => `<button type="button" data-ar-lang="${code}" class="${offerLang === code ? "isActive" : ""}" aria-pressed="${offerLang === code}">${code.toUpperCase()}</button>`).join("")}</span></label>
+      </div>
+      <p class="arOfferHint">${esc(t("offerHint"))}</p>
+    </section>`;
+  }
+  function previewHtml(draft) {
+    const page = new URL("oferta-aukcja.html", window.location.href);
+    page.search = "";
+    page.searchParams.set("id", draft.id);
+    page.searchParams.set("embed", "1");
+    page.searchParams.set("view", "web");
+    return `<section class="osCard osPreviewCard arPreview">
+      <h2 class="osCardTitle">${icon("list")}<span>${esc(t("previewTitle", { n: draft.number || "" }))}</span></h2>
+      <iframe class="osPreviewFrame arPreviewFrame" title="${esc(t("previewTitle", { n: draft.number || "" }))}" src="${esc(page.toString())}" scrolling="no" allow="clipboard-write" data-ar-preview-frame></iframe>
+    </section>`;
+  }
+  box.addEventListener("change", (event) => {
+    const field = event.target.closest("[data-ar-param]");
+    if (!field) return;
+    const key = field.dataset.arParam;
+    const value = field.value.trim();
+    if (["country", "date", "time"].includes(key)) updateOffer((offer) => ({ auction: { ...(offer.auction || {}), [key]: value } }));
+    else updateOffer((offer) => ({ client: { ...(offer.client || {}), [key]: value } }));
   });
+  box.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-ar-lang]");
+    if (!button) return;
+    updateOffer(() => ({ lang: button.dataset.arLang }));
+    box.querySelectorAll("[data-ar-lang]").forEach((node) => {
+      node.classList.toggle("isActive", node === button);
+      node.setAttribute("aria-pressed", String(node === button));
+    });
+  });
+  // The frame does not scroll: as tall as its page, told where this window is (its settings follow).
+  function fitPreview(frame) {
+    const doc = frame?.contentDocument;
+    if (!doc?.body) return;
+    const fit = () => {
+      const height = Math.ceil(doc.documentElement.scrollHeight) + 2;
+      if (height > 300 && Math.abs(height - frame.offsetHeight) > 1) frame.style.height = `${height}px`;
+      tellViewport();
+    };
+    fit();
+    if (typeof ResizeObserver === "function" && !frame.dataset.fitted) {
+      frame.dataset.fitted = "1";
+      new ResizeObserver(fit).observe(doc.body);
+    }
+  }
+  function tellViewport() {
+    const frame = box.querySelector("[data-ar-preview-frame]");
+    if (!frame?.contentWindow) return;
+    frame.contentWindow.postMessage({ type: "ag-offer-viewport", top: -frame.getBoundingClientRect().top, height: window.innerHeight }, window.location.origin);
+  }
+  window.addEventListener("scroll", tellViewport, { passive: true });
+  window.addEventListener("resize", tellViewport);
 
   // ---- History of checked reports (owner 2026-10-11: like the dealer way's list) ---------------
   // Every report read is kept with its data (it opens again without the link);
@@ -623,6 +708,7 @@
       if (!item?.report) return;
       current = { report: item.report, from: item.from };
       auctionFields = {};
+      current.offerId = ensureOffer(item.report, item.from)?.id || "";
       render();
       box.hidden = false;
       box.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -634,6 +720,7 @@
   try {
     const last = JSON.parse(localStorage.getItem(LAST_KEY) || "null");
     if (last?.report) current = { report: last.report, from: last.from };
+    if (current) current.offerId = ensureOffer(current.report, current.from)?.id || "";
   } catch {
     current = null;
   }

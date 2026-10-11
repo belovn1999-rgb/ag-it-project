@@ -25,6 +25,12 @@
   const editButton = document.querySelector("[data-ao-edit]");
   const pdfButton = document.querySelector("[data-ao-pdf]");
   const params = new URLSearchParams(window.location.search);
+  // As the dealer offer (owner 2026-10-11): inside program 06 (embed=1) the page
+  // with its settings; for the client by a link (view=client, the offer packed in
+  // the link's #) the page only; the A4 sheets on their own ("Przygotuj PDF").
+  const EMBED = params.get("embed") === "1";
+  const CLIENT = params.get("view") === "client";
+  const viewMode = CLIENT || EMBED || params.get("view") === "web" ? "web" : "sheets";
   const STORE_KEY = "autogood.offer.auctionOffers.v1";
   const PAGE_W = 794;
   const PAGE_H = 1123;
@@ -45,6 +51,8 @@
   function save(patch = {}) {
     if (!offer) return;
     Object.assign(offer, patch, { updatedAt: new Date().toISOString() });
+    // The client's copy lives in the link only.
+    if (CLIENT) return;
     try {
       const all = readAll();
       all.offers[offer.id] = offer;
@@ -162,6 +170,8 @@
 
   function photoCount() {
     const report = offer.report;
+    // A client's link carries the count (its photo list is trimmed).
+    if (report.photoCount) return report.photoCount;
     return new Set([...(report.photos || []), ...(report.damages || []).flatMap((damage) => damage.photos || [])]).size;
   }
   const mainPhoto = () => offer.photo || offer.report.mainPhoto || offer.report.photos?.[0] || offer.report.damages?.find((damage) => damage.photos?.length)?.photos[0] || "";
@@ -299,7 +309,8 @@
 
   // Block 1 (owner 2026-10-11): Identyfikacja · Potwierdzone dane auta (two a line) · Wyposażenie,
   // full width, shallow; the tyres in their own table.
-  function blockOne() {
+  // web: the page shows mileage and the first registration in its figures on top (A), not twice.
+  function blockOne(web = false) {
     const report = offer.report;
     const car = report.car || {};
     const view = carView();
@@ -315,8 +326,8 @@
         ${groupHtml("id", "id", L("Identyfikacja", "Идентификация"), [
           [L("Numer rejestracyjny", "Номер"), esc(car.plate || "")],
           ["VIN", car.vin ? `<span class="aoMono">${esc(car.vin)}</span>` : ""],
-          [L("Przebieg", "Пробег"), car.mileageKm ? `${thousands(car.mileageKm)} km${mileage ? ` <small>(${L("ok.", "ок.")} ${thousands(Math.round(mileage.perYear / 1000))} ${L("tys. km/rok", "тыс. км/год")})</small>` : ""}` : ""],
-          [L("Pierwsza rejestracja", "1-я регистрация"), esc(firstReg)],
+          [L("Przebieg", "Пробег"), !web && car.mileageKm ? `${thousands(car.mileageKm)} km${mileage ? ` <small>(${L("ok.", "ок.")} ${thousands(Math.round(mileage.perYear / 1000))} ${L("tys. km/rok", "тыс. км/год")})</small>` : ""}` : ""],
+          [L("Pierwsza rejestracja", "1-я регистрация"), web ? "" : esc(firstReg)],
         ], "isId")}
         ${groupHtml("confirmed", "engine", L("Potwierdzone dane auta", "Подтверждённые данные авто"), [
           [L("Wersja", "Версия"), esc(view.version), true],
@@ -328,7 +339,7 @@
           [L("Moc", "Мощность"), esc(view.power)],
           [L("Napęd", "Привод"), esc(view.drive)],
           [L("Uruchamia się / jeździ / akumulator", "Заводится / едет / АКБ"), esc(stateLine())],
-          [L("Klucze i dokumenty", "Ключи и документы"), esc(keysLine()), true],
+          [L("Klucze i dokumenty", "Ключи и документы"), web ? "" : esc(keysLine()), true],
         ], "isConfirmed")}
         ${options.length ? `<section class="aoGroup isEquipment" data-group="equipment">
           <h3>${icon("check")}<span>${L("Wyposażenie", "Оснащение")}</span></h3>
@@ -562,7 +573,7 @@
       for (let split = count; split >= 1; split -= 1) {
         // On one page the photos sit under the table; once a page 2 is needed, after the verdict.
         drawSheet(split, split < count);
-        const [one, two] = stage.querySelectorAll(".aoPage");
+        const [one, two] = sheetsHost().querySelectorAll(".aoPage");
         // Page 1 keeps its type: the damage photos down to two, a little less room between blocks.
         if (!settle(one, ["isGalleryTwo", "isSnug", "isGallerySmall"])) continue;
         const list = sections(split < count);
@@ -582,16 +593,102 @@
     const rows = ASSESS.assess(offer.report).rows.length;
     for (let upTo = rows - 1; upTo >= 3; upTo -= 1) {
       drawSheet(split + 1, true, upTo);
-      const [one, two] = stage.querySelectorAll(".aoPage");
+      const [one, two] = sheetsHost().querySelectorAll(".aoPage");
       if (!settle(one, ["isSnug"])) continue;
       if (!two || settle(two, ["isGalleryTwo", "isTight", "isTighter", "isTightest", "isNoGallery"])) return true;
       return false;
     }
     return false;
   }
+  // The A4 sheets: on their own page, or kept out of sight under the web page (for the PDF).
+  const sheetsHost = () => stage.querySelector("[data-ao-sheets]") || stage;
   function drawSheet(split, galleryLast, tableRows = null) {
-    stage.innerHTML = sheetHtml(split, galleryLast, tableRows);
+    sheetsHost().innerHTML = sheetHtml(split, galleryLast, tableRows);
     scale();
+  }
+
+  // ---- The offer as a web page (owner 2026-10-11: variant C + A) -------------------------------
+  // The same blocks as the sheets (C) with A's figures on top and its lists of
+  // documents and of how the car was inspected; what the page shows the client
+  // sees by the link and in the PDF.
+  function kpisHtml() {
+    const car = offer.report.car || {};
+    const view = carView();
+    const mileage = ASSESS.assess(offer.report).mileage;
+    const keys = offer.report.keys?.keys;
+    const tiles = [
+      [L("Przebieg", "Пробег"), car.mileageKm ? `${thousands(car.mileageKm)} km` : "", mileage ? `${L("ok.", "ок.")} ${thousands(Math.round(mileage.perYear / 1000))} ${L("tys. km/rok", "тыс. км/год")}` : ""],
+      [L("1. rejestracja", "1-я регистрация"), (car.firstRegistration || "").replace(/\//g, "."), ""],
+      [L("Moc", "Мощность"), view.power.replace(/\s*\(.*\)$/, ""), (view.power.match(/\((.*)\)/) || [])[1] || ""],
+      [L("Silnik", "Двигатель"), view.engine, view.fuel],
+      [L("Skrzynia", "Коробка"), view.gearbox, view.drive ? `${L("napęd", "привод")} ${view.drive.toLowerCase()}` : ""],
+      [L("Kluczyki", "Ключи"), keys ? String(keys) : "", offer.report.keys?.remotes ? `${offer.report.keys.remotes} ${L("z pilotem", "с пультом")}` : ""],
+    ].filter(([, value]) => value);
+    return tiles.length ? `<div class="aoKpis">${tiles.map(([label, value, note]) => `<div class="aoKpi"><span>${esc(label)}</span><b>${esc(value)}</b>${note ? `<small>${esc(note)}</small>` : ""}</div>`).join("")}</div>` : "";
+  }
+  // Documents and service as ticks: only what the report confirms (never the registration paper's absence, §3).
+  function documentChecks() {
+    const report = offer.report;
+    const yes = (value) => /^(oui|ok)$|^oui,/i.test(String(value || "").trim());
+    const items = [];
+    const docs = report.documents || [];
+    const regParts = docs.filter((item) => /certificat d'immatriculation partie/i.test(REPORT.plain(item.label)) && yes(item.value));
+    if (regParts.length >= 2) items.push(L("Dowód rejestracyjny — obie części", "Техпаспорт — обе части"));
+    else regParts.forEach((item) => items.push(REPORT.labelName(item.label, lang())));
+    for (const item of docs) {
+      const key = REPORT.plain(item.label);
+      if (/certificat d'immatriculation partie|certificat immatriculation|cable de charge/.test(key)) continue;
+      if (/^entretien$/.test(key)) {
+        if (yes(item.value)) items.push(L("Serwis OK", "Обслуживание OK"));
+        else if (/over|km/i.test(item.value)) items.push(`${L("Serwis", "Обслуживание")}: ${REPORT.labelValue(item.value, lang())}`);
+        continue;
+      }
+      if (/type de carnet/.test(key)) {
+        items.push(/digital/i.test(item.value) ? L("Cyfrowa książka serwisowa", "Цифровая сервисная книжка") : `${REPORT.labelName(item.label, lang())}: ${REPORT.labelValue(item.value, lang())}`);
+        continue;
+      }
+      if (yes(item.value)) items.push(REPORT.labelName(item.label, lang()));
+    }
+    const spare = (report.spare || []).filter((item) => yes(item.value)).map((item) => REPORT.labelName(item.label, lang()).toLowerCase());
+    if (spare.length) items.push(`${L("Wyposażenie awaryjne", "Аварийный комплект")}: ${spare.join(", ")}`);
+    return [...new Set(items)];
+  }
+  // How the car was inspected — what was done only (owner: risks only in the verdict; §3).
+  function inspectedChips() {
+    const report = offer.report;
+    const state = report.state || {};
+    const chips = [L("oględziny na postoju", "осмотр на стоянке"), L("zdjęcia każdej szkody z miarką", "фото каждого повреждения с линейкой")];
+    if ((report.tyres || []).some((tyre) => typeof tyre.depth === "number")) chips.push(L("pomiar bieżnika", "замер протектора"));
+    if (/^oui$/i.test(state.engineRuns || "")) chips.push(L("uruchomienie silnika", "запуск двигателя"));
+    if (/^oui$/i.test(state.driveable || "")) chips.push(L("auto jeździ", "авто едет"));
+    return chips;
+  }
+  function webHtml() {
+    const assessment = ASSESS.assess(offer.report);
+    const checks = documentChecks();
+    const insp = offer.report.inspection || {};
+    const place = (insp.place || "").match(/\b\d{5}\s+([^,]+)$/)?.[1] || "";
+    return `<article class="aoWebPage" lang="${lang()}">
+      ${headHtml()}
+      <section class="aoWebHero">
+        ${photoHtml("isWide")}
+        <div class="aoWebHeroText">${titleHtml()}${auctionCard("isWebCard")}</div>
+      </section>
+      ${kpisHtml()}
+      ${blockOne(true)}
+      <div class="aoWebPair">
+        ${checks.length ? `<section class="aoGroup"><h3>${icon("clipboard")}<span>${L("Dokumenty i serwis", "Документы и обслуживание")}</span></h3><ul class="aoChecks">${checks.map((item) => `<li>${esc(item)}</li>`).join("")}</ul></section>` : ""}
+        <section class="aoGroup"><h3>${icon("shield")}<span>${L("Jak sprawdzono", "Как проверяли")}</span></h3>
+          <p class="aoWebFirm">${esc(offer.report.firm)}${insp.date ? ` · ${esc(dateText(insp.date))}` : ""}${place ? ` · ${esc(titleCase(place))}` : ""}</p>
+          <div class="aoChipsRow">${inspectedChips().map((chip) => `<span class="aoChip">${icon("check")}${esc(chip)}</span>`).join("")}</div>
+        </section>
+      </div>
+      ${tyresHtml()}
+      ${blockTwo(assessment)}
+      ${galleryHtml(assessment)}
+      ${blockThree(assessment)}
+      <footer class="aoFoot"><span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")} · autogood.pl</span><span>${L("Dane z raportu firmy oględzin; koszty w Polsce — szacunek AUTOGOOD.", "Данные из отчёта фирмы осмотра; стоимость в Польше — оценка AUTOGOOD.")}</span></footer>
+    </article>`;
   }
 
   // ---- The manager's panel ----------------------------------------------------------------------
@@ -626,9 +723,26 @@
         <p class="aoHint">${L("Naprawa w Polsce (szacunek)", "Ремонт в Польше (оценка)")}: <b>${zl(assessment.total)}</b>${macadam ? `<br>${L("Wycena Macadam (stawki francuskie, tylko dla opiekuna)", "Оценка Macadam (французские ставки, только для менеджера)")}: <b>${esc(macadam)}</b>` : ""}</p>
         ${hiddenItems.length ? `<button class="aoLinkButton" type="button" data-unhide>${L(`Przywróć ukryte (${hiddenItems.length})`, `Вернуть скрытые (${hiddenItems.length})`)}</button>` : ""}
       </section>
+      ${managerCard(assessment)}
       ${commercial.length > 1 ? `<section class="aoCardP"><h2>${L("Zdjęcie główne", "Главное фото")}</h2>
         <div class="aoThumbs">${commercial.map((src) => `<button type="button" data-photo="${esc(src)}" class="${mainPhoto() === src ? "isActive" : ""}"><img src="${esc(thumb(src))}" alt="" loading="lazy" referrerpolicy="no-referrer" /></button>`).join("")}</div>
       </section>` : ""}`;
+  }
+  // For the manager only (owner 2026-10-11): what the page leaves out — the report's raw data.
+  function managerCard(assessment) {
+    const report = offer.report;
+    const missingNames = { version: L("wersja", "версия"), power: L("moc", "мощность"), fuel: L("paliwo", "топливо"), gearbox: L("skrzynia", "коробка"), drive: L("napęd", "привод"), inspectionDate: L("data oględzin", "дата осмотра"), inspectionPlace: L("miejsce", "место"), serviceBook: L("książka serwisowa", "сервисная книжка"), registration: L("dowód rejestracyjny", "техпаспорт"), tyres: L("opony", "шины") };
+    const notChecked = L("jazda próbna, diagnostyka OBD, pomiar lakieru, podwozie na podnośniku, zawieszenie i hamulce, bateria wysokiego napięcia", "тест-драйв, диагностика OBD, замер краски, низ на подъёмнике, подвеска и тормоза, высоковольтная батарея");
+    const raw = (report.documents || []).map((item) => `${esc(item.label)}: <b>${esc(item.value)}</b>`).join("<br>");
+    return `<section class="aoCardP isManager"><h2>${L("Dla opiekuna", "Для менеджера")}</h2>
+      ${report.missing?.length ? `<p class="aoHint"><b>${L("Brak w raporcie", "Нет в отчёте")}:</b> ${report.missing.map((key) => esc(missingNames[key] || key)).join(", ")}</p>` : ""}
+      <p class="aoHint"><b>${L("Nie sprawdzono", "Не проверено")}:</b> ${esc(notChecked)}</p>
+      <p class="aoHint">${esc(report.firm)} · ${esc(report.layoutName)}${report.client ? ` · ${esc(report.client)}` : ""}${report.inspection?.dateText ? ` · ${esc(report.inspection.dateText)}` : ""}${report.inspection?.place ? `<br>${esc(report.inspection.place)}` : ""}</p>
+      ${report.costTotal ? `<p class="aoHint">${L("Wycena Macadam", "Оценка Macadam")}: <b>${numbers.format(report.costTotal)} € ${L("netto", "нетто")}</b> · ${L("nasza w Polsce", "наша в Польше")}: <b>${zl(assessment.total)}</b></p>` : ""}
+      ${raw ? `<details class="aoRaw"><summary>${L("Dokumenty — oryginał raportu", "Документы — оригинал отчёта")}</summary><p class="aoHint">${raw}</p></details>` : ""}
+      ${report.factoryDetails?.length ? `<details class="aoRaw"><summary>${L("Pełne wyposażenie wg VIN", "Полное оснащение по VIN")} (${report.factoryDetails.length})</summary><p class="aoHint">${report.factoryDetails.map(esc).join(" · ")}</p></details>` : ""}
+      ${reportUrl() ? `<p class="aoHint"><a href="${esc(reportUrl())}" target="_blank" rel="noopener">${L("Otwórz oryginalny raport", "Открыть оригинальный отчёт")} ↗</a></p>` : ""}
+    </section>`;
   }
   const thumb = (src) => String(src || "").replace(/\/picture\//i, "/thumbnail/").replace(/\/files\/Original\//i, "/files/Thumbnail/");
 
@@ -636,15 +750,26 @@
   function render() {
     document.documentElement.lang = lang();
     document.title = `AUTOGOOD ${L("Oferta z aukcji", "Предложение с аукциона")} — ${carView().name}`;
-    panel.innerHTML = panelHtml();
+    panel.innerHTML = CLIENT ? "" : panelHtml();
     editButton.textContent = editing ? L("Gotowe", "Готово") : L("Edytuj teksty", "Редактировать тексты");
     editButton.setAttribute("aria-pressed", String(editing));
-    pdfButton.textContent = L("Pobierz PDF", "Скачать PDF");
+    // In program 06 the button opens the A4 sheets (as the dealer offer: "Przygotuj PDF").
+    pdfButton.textContent = EMBED ? L("Przygotuj PDF", "Подготовить PDF") : L("Pobierz PDF", "Скачать PDF");
+    const linkButton = document.querySelector("[data-ao-link]");
+    if (linkButton) linkButton.textContent = L("Link dla klienta", "Ссылка для клиента");
+    const linkCopy = document.querySelector("[data-ao-link-copy]");
+    if (linkCopy) linkCopy.textContent = L("Kopiuj", "Копировать");
     document.querySelector("[data-ao-heading]").textContent = `${L("Oferta z aukcji", "Предложение с аукциона")} ${offer.number || ""}`;
+    stage.classList.toggle("isWeb", viewMode === "web");
+    stage.innerHTML = viewMode === "web"
+      ? `<div class="aoWeb" data-ao-web>${webHtml()}</div><div class="aoSheetsHold" data-ao-sheets aria-hidden="true"></div>`
+      : `<div class="aoSheets" data-ao-sheets></div>`;
     fit();
   }
+
   // The sheet at its real size, smaller on a narrow screen.
   function scale() {
+    if (viewMode === "web") return;
     const room = stage.clientWidth - 8;
     const factor = Math.min(1, room / PAGE_W);
     stage.querySelectorAll(".aoSheet").forEach((sheet) => {
@@ -708,6 +833,95 @@
     else if (target.matches("[data-verdict]")) save({ verdict: target.value });
     else if (target.matches("[data-show-cost]")) save({ showCost: target.checked });
     else return;
+    render();
+  });
+
+  // ---- The client's link (as the dealer offer, owner 2026-10-11) --------------------------------
+  // The whole offer packed into the link's # (deflate + base64url): no server; the
+  // report trimmed to what the page shows (main photo, a few photos per damage).
+  const toBase64Url = (bytes) => {
+    let text = "";
+    bytes.forEach((byte) => { text += String.fromCharCode(byte); });
+    return btoa(text).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  };
+  const fromBase64Url = (text) => Uint8Array.from(atob(String(text).replace(/-/g, "+").replace(/_/g, "/")), (char) => char.charCodeAt(0));
+  async function packOffer() {
+    const report = offer.report;
+    const main = mainPhoto();
+    const slimReport = {
+      ...report,
+      photos: [main, ...(report.photos || []).filter((src) => src !== main)].filter(Boolean).slice(0, 4),
+      photoCount: photoCount(),
+      damages: (report.damages || []).map(({ id, ...damage }) => ({ ...damage, photos: (damage.photos || []).slice(0, 2) })),
+      factoryDetails: [], other: [],
+    };
+    const slim = { ...offer, report: slimReport, panelOpen: false };
+    const stream = new Blob([JSON.stringify(slim)]).stream().pipeThrough(new CompressionStream("deflate-raw"));
+    return toBase64Url(new Uint8Array(await new Response(stream).arrayBuffer()));
+  }
+  async function unpackOffer(text) {
+    const stream = new Blob([fromBase64Url(text)]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    return JSON.parse(await new Response(stream).text());
+  }
+  async function clientLink() {
+    const link = new URL("oferta-aukcja.html", window.location.href);
+    link.search = "";
+    link.searchParams.set("view", "client");
+    link.hash = `o=${await packOffer()}`;
+    return link.toString();
+  }
+  const linkRow = document.querySelector("[data-ao-link-row]");
+  const linkField = document.querySelector("[data-ao-link-field]");
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      linkField?.select();
+      try {
+        return document.execCommand("copy");
+      } catch {
+        return false;
+      }
+    }
+  }
+  document.querySelector("[data-ao-link]")?.addEventListener("click", async () => {
+    if (!offer) return;
+    try {
+      const url = await clientLink();
+      linkField.value = url;
+      linkRow.hidden = false;
+      const copied = await copyText(url);
+      save({ sharedAt: new Date().toISOString(), draft: false });
+      setStatus(copied
+        ? L(`Link skopiowany (${numbers.format(url.length)} znaków) — klient zobaczy tę stronę bez ustawień.`, `Ссылка скопирована (${numbers.format(url.length)} знаков) — клиент увидит эту страницу без настроек.`)
+        : L("Skopiuj link z pola obok.", "Скопируйте ссылку из поля рядом."));
+    } catch (error) {
+      setStatus(`${L("Nie udało się przygotować linku", "Не удалось подготовить ссылку")} (${error?.message || error}).`, true);
+    }
+  });
+  document.querySelector("[data-ao-link-copy]")?.addEventListener("click", async () => {
+    if (linkField?.value && (await copyText(linkField.value))) setStatus(L("Link skopiowany.", "Ссылка скопирована."));
+  });
+  // In program 06's frame the settings follow the page's scroll (06 sends where its window is).
+  window.addEventListener("message", (event) => {
+    if (!EMBED || event.origin !== window.location.origin || event.data?.type !== "ag-offer-viewport" || !panel) return;
+    if (window.matchMedia("(max-width: 1099px)").matches) {
+      panel.style.removeProperty("top");
+      panel.style.removeProperty("max-height");
+      return;
+    }
+    const rest = panel.offsetTop - (Number.parseFloat(panel.style.top) || 0);
+    const room = Math.max(0, stage.offsetHeight - Math.min(panel.scrollHeight, event.data.height - 24));
+    panel.style.maxHeight = `${Math.max(320, event.data.height - 24)}px`;
+    panel.style.top = `${Math.max(0, Math.min(room, event.data.top + 12 - rest))}px`;
+  });
+  // What program 06 changes (auction, client, language) shows here at once.
+  window.addEventListener("storage", (event) => {
+    if (CLIENT || editing || event.key !== STORE_KEY || !offer) return;
+    const fresh = readAll().offers[offer.id];
+    if (!fresh) return;
+    offer = fresh;
     render();
   });
 
@@ -878,7 +1092,7 @@
       const width = 595.28;
       const height = 841.89;
       const k = width / PAGE_W;
-      for (const live of stage.querySelectorAll(".aoPage")) {
+      for (const live of sheetsHost().querySelectorAll(".aoPage")) {
       const shot = await captureSheet(live);
       const page = pdf.addPage([width, height]);
       page.drawImage(await pdf.embedJpg(shot.canvas.toDataURL("image/jpeg", 0.9)), { x: 0, y: 0, width, height });
@@ -924,12 +1138,29 @@
       pdfButton.disabled = false;
     }
   }
-  pdfButton.addEventListener("click", makePdf);
+  pdfButton.addEventListener("click", () => {
+    // Program 06: the A4 sheets on their own page, where "Pobierz PDF" makes the file.
+    if (EMBED) {
+      window.open(`./oferta-aukcja.html?id=${encodeURIComponent(offer.id)}`, "_blank", "noopener");
+      return;
+    }
+    makePdf();
+  });
 
   // ---- Opening ---------------------------------------------------------------------------------
   function open() {
     if (!REPORT || !ASSESS) {
       stage.innerHTML = '<p class="aoWaiting">Brak modułów raportu.</p>';
+      return;
+    }
+    if (CLIENT) {
+      unpackOffer(new URLSearchParams(window.location.hash.slice(1)).get("o") || "").then((packed) => {
+        offer = packed;
+        render();
+        if (document.fonts?.ready) document.fonts.ready.then(fit);
+      }).catch(() => {
+        stage.innerHTML = '<p class="aoWaiting">Ten link jest niepełny — poproś o nowy. / Ссылка неполная — попросите новую.</p>';
+      });
       return;
     }
     const id = params.get("id") || "";
