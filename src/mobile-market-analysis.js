@@ -94,6 +94,8 @@
       monitoringNoAnswerSince: "{date}: brak odpowiedzi — dane z {shown}",
       monitoringNoAnswerModel: "portal nie zna tego modelu",
       monitoringNoAnswerImporter: "brak połączenia z importerem mobile.de",
+      monitoringNoAnswerRefused: "portal odmówił dostępu",
+      monitoringNoAnswerPaused: "portal odmówił — przerwa do {time}",
       monitoringSilentInfo: "Bez odpowiedzi: {portals} — pokazane ich ostatnie dane.",
       offerNoData: "brak danych z tego dnia",
       offerNoCompareData: "Brak danych z dnia porównania — nowe i zniknięte nieznane.",
@@ -829,6 +831,8 @@
       monitoringNoAnswerSince: "{date}: нет ответа — данные от {shown}",
       monitoringNoAnswerModel: "портал не знает эту модель",
       monitoringNoAnswerImporter: "нет связи с импортером mobile.de",
+      monitoringNoAnswerRefused: "портал отказал в доступе",
+      monitoringNoAnswerPaused: "портал отказал — пауза до {time}",
       monitoringSilentInfo: "Без ответа: {portals} — показаны их последние данные.",
       offerNoData: "нет данных за этот день",
       offerNoCompareData: "Нет данных за день сравнения — новые и исчезнувшие неизвестны.",
@@ -5347,6 +5351,10 @@
     const detail = String(record?.failed?.[source] || record?.errors?.[source] || "");
     if (/model not found/i.test(detail)) return c.monitoringNoAnswerModel;
     if (/no mobile\.de importer/i.test(detail)) return c.monitoringNoAnswerImporter;
+    // M15: refused on both ways; after twice the portal rests 15 minutes.
+    const paused = detail.match(/portal paused: \S+ until (\d{1,2}:\d{2})/i);
+    if (paused) return c.monitoringNoAnswerPaused.replace("{time}", paused[1]);
+    if (/portal refused/i.test(detail)) return c.monitoringNoAnswerRefused;
     return "";
   }
 

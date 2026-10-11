@@ -86,8 +86,36 @@
     "willhaben.at", "paruvendu.fr",
   ];
   // Pages a portal sends with code 200 instead of the list when it refuses
-  // the Worker's address.
-  const BLOCK_PAGES = { "kleinanzeigen.de": /IP-Bereich\s+vor(?:ü|&uuml;|&#252;|ue)bergehend\s+gesperrt/i };
+  // the address (the Worker's, or r.jina.ai's — r.jina.ai answers 200 with
+  // the portal's block page inside, checked 2026-10-11 on av.by): without
+  // this a refusal read as "0 cars". Only small pages are looked at — a list
+  // page is hundreds of kilobytes.
+  const BLOCK_PAGES = [
+    /IP-Bereich\s+vor(?:ü|&uuml;|&#252;|ue)bergehend\s+gesperrt/i, // Kleinanzeigen
+    /captcha-delivery\.com/i, // DataDome
+    /\/\.safeline\//i, // SafeLine (av.by)
+    /<title>\s*Just a moment\.\.\.\s*<\/title>|\bcf-chl-/i, // Cloudflare challenge
+    /errors\.edgesuite\.net/i, // Akamai "Access Denied"
+    /Confirm You Are Human/i,
+  ];
+  const BLOCK_PAGE_MAX = 200 * 1024;
+  async function isBlockPage(response) {
+    if (!response.ok) return false;
+    const length = Number(response.headers.get("content-length")) || 0;
+    if (length > BLOCK_PAGE_MAX) return false;
+    const text = await response.clone().text().catch(() => "");
+    return text.length <= BLOCK_PAGE_MAX && BLOCK_PAGES.some((sign) => sign.test(text));
+  }
+
+  // M15 (2026-10-11, idea of used-car-deal-finder and avby-bot): a portal
+  // that refused on both ways (Worker and r.jina.ai) twice in a row gets no
+  // more requests for 15 minutes — every tab and the Mac service page
+  // (stored in localStorage, a convenience: lost = no pause). Its readers get
+  // an error at once ("portal paused: <host> until HH:MM"), the tile says it.
+  const PORTAL_PAUSE_KEY = "autogood.proxyQueue.portalPause";
+  const PORTAL_STRIKES = 2;
+  const PORTAL_PAUSE_MS = 15 * 60 * 1000;
+  const portalStrikes = {};
   const WORKER_ACTIVE = 6;
   const WORKER_STRIKES = 5;
   const WORKER_REST_MS = 10 * 60 * 1000;
@@ -202,10 +230,18 @@
     active += 1;
     stats.sent += 1;
     noteStart(at);
-    nativeFetch(job.input, timed(job.init, JINA_TIMEOUT_MS)).then((response) => {
+    nativeFetch(job.input, timed(job.init, JINA_TIMEOUT_MS)).then(async (response) => {
+      // r.jina.ai's own limit (429, 503): the whole queue waits (it counts
+      // every portal together). The portal's refusal: this portal only.
+      const limit = response.status === 429 || response.status === 503;
+      const blocked = !limit && (response.status === 403 || response.status === 451 || await isBlockPage(response));
       active -= 1;
-      if ((response.status === 429 || response.status === 503) && refused(job)) return pump();
-      job.resolve(response);
+      if (limit && refused(job)) return pump();
+      if (blocked && job.portal) refusedByPortal(job);
+      else {
+        if (response.ok && job.portal) portalStrikes[job.portal] = 0;
+        job.resolve(response);
+      }
       pump();
     }, (error) => {
       active -= 1;
@@ -228,6 +264,54 @@
   }
 
   // ---- 1. Our Worker ----------------------------------------------------------
+
+  // The portal of an address: the Worker's host name for it, else the
+  // address' own host without "www.".
+  function portalHost(target) {
+    let host;
+    try {
+      host = new URL(target).hostname.toLowerCase();
+    } catch {
+      return "";
+    }
+    return WORKER_HOSTS.find((item) => host === item || host.endsWith(`.${item}`)) || host.replace(/^www\./, "");
+  }
+  function readPauses() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(PORTAL_PAUSE_KEY) || "{}");
+      return parsed && typeof parsed === "object" ? parsed : {};
+    } catch {
+      return {};
+    }
+  }
+  function portalPausedUntil(host) {
+    const until = Number(readPauses()[host]) || 0;
+    return until > Date.now() ? until : 0;
+  }
+  function pausePortal(host) {
+    const pauses = Object.fromEntries(Object.entries(readPauses()).filter(([, until]) => Number(until) > Date.now()));
+    pauses[host] = Date.now() + PORTAL_PAUSE_MS;
+    try {
+      localStorage.setItem(PORTAL_PAUSE_KEY, JSON.stringify(pauses));
+    } catch {
+      // Storage blocked: no pause shared, the strikes start again.
+    }
+    notify();
+  }
+  const clock = (at) => new Date(at).toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" });
+  function pausedError(host, until) {
+    return new Error(`portal paused: ${host} until ${clock(until)}`);
+  }
+  // r.jina.ai (the last way) did not get the list either.
+  function refusedByPortal(job) {
+    const host = job.portal;
+    portalStrikes[host] = (portalStrikes[host] || 0) + 1;
+    if (portalStrikes[host] >= PORTAL_STRIKES) {
+      portalStrikes[host] = 0;
+      pausePortal(host);
+    }
+    job.reject(new Error(`portal refused: ${host}`));
+  }
 
   // The portal host a Worker may read, or "" (r.jina.ai then).
   function workerHost(target) {
@@ -276,14 +360,13 @@
     nativeFetch(`${workerBase()}${job.target}`, init).then(async (response) => {
       // A block page with code 200 (Kleinanzeigen "IP-Bereich vorübergehend
       // gesperrt", 2026-10-10) is a refusal too: r.jina.ai reads the list.
-      const blocked = response.ok && BLOCK_PAGES[job.host]
-        ? await response.clone().text().then((text) => BLOCK_PAGES[job.host].test(text), () => false)
-        : false;
+      const blocked = await isBlockPage(response);
       worker.active -= 1;
       if (blocked || response.status === 403 || response.status === 429 || response.status >= 500) handOn(job);
       else {
         worker.ok += 1;
         worker.strikes[job.host] = 0;
+        portalStrikes[job.portal] = 0;
         job.resolve(response);
       }
       pumpWorker();
@@ -302,9 +385,12 @@
     const base = proxyBase();
     if (!url.startsWith(base)) return nativeFetch(input, init);
     const target = url.slice(base.length);
+    const portal = portalHost(target);
+    const until = portal ? portalPausedUntil(portal) : 0;
+    if (until) return Promise.reject(pausedError(portal, until));
     const host = workerHost(target);
     return new Promise((resolve, reject) => {
-      const job = { input, init, target, host, resolve, reject, attempts: 0 };
+      const job = { input, init, target, host, portal, resolve, reject, attempts: 0 };
       if (host) {
         worker.queue.push(job);
         pumpWorker();
@@ -319,6 +405,8 @@
     status,
     // Is this portal address read by our Worker now (fast, no 18 a minute)?
     viaWorker: (target) => Boolean(workerHost(target)),
+    // Portals on a pause after refusing (M15): {host: until (ms)}.
+    pausedPortals: () => Object.fromEntries(Object.entries(readPauses()).filter(([, until]) => Number(until) > Date.now())),
     onChange(listener) {
       listeners.add(listener);
       return () => listeners.delete(listener);
