@@ -1971,12 +1971,13 @@
   // and from the main portal stays.
   // The one test of "the same car" for every rule (owner 2026-10-11, audit
   // p. 14): the same year, the same mileage and the same price in the same
-  // currency. A car under 1000 km (new, demo) or without a price is never a
-  // duplicate: dealers list the same new model many times.
+  // currency — new and demo cars (under 1000 km) too (owner 2026-10-11). An
+  // offer without a price or without a stated mileage is never a duplicate.
   function sameCarKey(listing) {
+    const stated = listing?.mileage !== null && listing?.mileage !== undefined && String(listing.mileage).trim() !== "";
     const mileage = Math.round(Number(listing?.mileage) || 0);
     const price = Math.round(Number(listing?.price) || 0);
-    if (mileage < 1000 || !price) return "";
+    if (!stated || !price) return "";
     return `${String(listing.currency || "EUR").toUpperCase()}|${price}|${mileage}|${Number(listing.year) || ""}`;
   }
   const OFFER_PREFERENCE = ["mobile", "otomoto", "autoscout", "blocket", "marktplaats", "dehands", "autoscoutfr", "paruvendu", "kleinanzeigen", "avby"];

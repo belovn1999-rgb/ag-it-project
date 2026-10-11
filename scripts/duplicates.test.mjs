@@ -36,10 +36,12 @@ test("another year is another car (audit: Golf VIII 2021 and Golf 7 2020, both 9
   assert.equal(uniqueOffers([car("mobile", 9590, 193000, 2021), car("autoscout", 9590, 193000, 2020)]).length, 2);
 });
 
-test("another price or mileage is another car; new cars and prices in other currencies never merge", () => {
+test("another price or mileage is another car; prices in other currencies never merge", () => {
   assert.equal(uniqueOffers([car("mobile", 35490, 56500, 2022), car("autoscout", 35990, 56500, 2022)]).length, 2);
   assert.equal(uniqueOffers([car("mobile", 35490, 56500, 2022), car("autoscout", 35490, 56400, 2022)]).length, 2);
-  assert.equal(uniqueOffers([car("mobile", 39900, 10, 2025), car("autoscout", 39900, 10, 2025)]).length, 2, "under 1000 km");
+  assert.equal(uniqueOffers([car("mobile", 39900, 10, 2025), car("autoscout", 39900, 10, 2025)]).length, 1, "a new car under 1000 km merges too (owner 2026-10-11)");
+  assert.equal(uniqueOffers([car("mobile", 39900, 10, 2025), car("autoscout", 39900, 15, 2025)]).length, 2, "another mileage");
+  assert.equal(uniqueOffers([car("mobile", 39900, null, 2025), car("autoscout", 39900, null, 2025)]).length, 2, "no mileage stated");
   assert.equal(uniqueOffers([car("otomoto", 89900, 120000, 2019, { currency: "PLN" }), car("mobile", 89900, 120000, 2019)]).length, 2);
 });
 
