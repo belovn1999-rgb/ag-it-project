@@ -11,8 +11,8 @@ const classifier = readFileSync(new URL("../src/engine-class.js", import.meta.ur
 const mobile = readFileSync(new URL("../src/mobile.js", import.meta.url), "utf8");
 const fuels = mobile.match(/const BLOCKET_FUELS = [^\n]+/)[0];
 const context = {};
-vm.runInNewContext(`${classifier}\n${fuels}\nthis.classify = classifyEngineType; this.litres = litresInTitle; this.plugin = isPluginHybridText; this.fuels = BLOCKET_FUELS;`, context);
-const { classify, litres, plugin } = context;
+vm.runInNewContext(`${classifier}\n${fuels}\nthis.classify = classifyEngineType; this.litres = litresInTitle; this.plugin = isPluginHybridText; this.inHybrids = isPluginInHybridSearch; this.fuels = BLOCKET_FUELS;`, context);
+const { classify, litres, plugin, inHybrids } = context;
 const blocketFuel = (label) => (context.fuels.find(([pattern]) => pattern.test(label)) || [])[1] || "";
 
 test("plug-ins named only by the model are plug-ins (0 % up to 2000 cm³)", () => {
@@ -64,4 +64,10 @@ test("litres in a name", () => {
   assert.equal(litres("Audi A6 Avant 3.0 TDI quattro"), 3000);
   assert.equal(litres("Volkswagen Passat 2.0 TDI EVO SCR 150 DSG7"), 2000);
   assert.equal(litres("VW Golf GTI"), null);
+});
+
+test("plug-ins among hybrids (a search for hybrids without plug-ins)", () => {
+  for (const name of ["Volvo XC60 T8 AWD Inscription", "Volvo XC60 T6 RechargeAWD", "Volvo V90 Twin Eng.", "Toyota RAV4 Plug-in Hybrid", "Kia Niro PHEV Spirit", "VW Passat GTE"]) assert.equal(inHybrids(name), true, name);
+  for (const name of ["Toyota RAV4 2.5 Hybrid", "Volvo XC60 B5 Mild-Hybrid", "Toyota C-HR 1.8 Hybrid Geen Plug", "Kia Niro 1.6 GDI Hybrid Spirit", "Toyota Corolla Touring Sports 1.8 Hybrid"]) assert.equal(inHybrids(name), false, name);
+  assert.equal(plugin("Toyota C-HR Hybrid geen plug-in"), false, "the name says it is none");
 });

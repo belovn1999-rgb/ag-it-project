@@ -512,6 +512,7 @@
       otomotoFailed: "Nie udało się pobrać ofert z otomoto.pl.",
       silentWithout: "Brak odpowiedzi: {portals} — statystyka i wykresy są bez ich ofert (to nie znaczy 0 ofert). Spróbuj „Odśwież dane” za kilka minut.",
       silentKept: "Brak odpowiedzi teraz: {portals} — pokazane są ich oferty z poprzedniego sprawdzenia.",
+      pluginDroppedNote: "Szukane hybrydy bez plug-in: pominięto {count} hybryd plug-in ({portals}) — rozpoznane po nazwie ogłoszenia (eHybrid, GTE, TFSI e, 330e, T8…), mobile.de także po własnym filtrze plug-in.",
       silentMobileOffline: "Bez mobile.de: importer mobile.de nie odpowiada (Mac z importerem wyłączony albo tunel nie działa) — statystyka bez mobile.de.",
       otomotoLabel: "Dane: otomoto.pl",
       mixedLabel: "Dane: otomoto.pl + mobile.de",
@@ -1205,6 +1206,7 @@
       otomotoFailed: "Не удалось загрузить объявления с otomoto.pl.",
       silentWithout: "Нет ответа: {portals} — статистика и графики без их объявлений (это не 0 объявлений). Попробуй «Odśwież dane» через несколько минут.",
       silentKept: "Сейчас нет ответа: {portals} — показаны их объявления из прошлой проверки.",
+      pluginDroppedNote: "Искали гибриды без plug-in: пропущено {count} plug-in гибридов ({portals}) — распознаны по названию объявления (eHybrid, GTE, TFSI e, 330e, T8…), на mobile.de также по его фильтру plug-in.",
       silentMobileOffline: "Без mobile.de: импортер mobile.de не отвечает (Mac с импортером выключен или туннель не работает) — статистика без mobile.de.",
       otomotoLabel: "Данные: otomoto.pl",
       mixedLabel: "Данные: otomoto.pl + mobile.de",
@@ -2717,6 +2719,37 @@
     // France (B47): AutoScout24 FR, then ParuVendu.
     paruvendu: { against: ["autoscoutfr"], country: "FR" },
   };
+  // A search for hybrids without plug-ins (owner 2026-10-11): mobile.de,
+  // AutoScout24, Marktplaats / 2dehands, Kleinanzeigen and ParuVendu put
+  // plug-ins among their hybrids (otomoto and Blocket keep them apart).
+  // mobile.de lists its plug-ins itself (fe=HYBRID_PLUGIN, read alongside and
+  // taken out by the ad id); everywhere the ad's name tells the rest
+  // (isPluginInHybridSearch, src/engine-class.js: eHybrid, GTE, TFSI e, 330e,
+  // Volvo T6/T8, Recharge…, ~90–95 % of them).
+  const PLUGIN_MIXED_SOURCES = ["mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands", "kleinanzeigen", "paruvendu"];
+  function wantsHybridsWithoutPlugins(filters) {
+    const fuels = typeof manualFuelValues === "function" ? manualFuelValues(filters) : (filters?.fuels || []);
+    return fuels.some((fuel) => /^hybrid_/.test(fuel)) && !fuels.includes("plugin") && filters?.plugin !== "yes";
+  }
+  function dropPluginsFromHybrids(source, listings, filters, pluginIds = null) {
+    if (!PLUGIN_MIXED_SOURCES.includes(source) || !wantsHybridsWithoutPlugins(filters)) return { kept: listings, dropped: 0 };
+    const isPlugin = (listing) => (pluginIds && listing.id && pluginIds.has(String(listing.id)))
+      || (typeof isPluginInHybridSearch === "function" && isPluginInHybridSearch(`${listing.title || ""} ${listing.subtitle || ""} ${listing.fuel || ""}`));
+    const kept = listings.filter((listing) => !isPlugin(listing));
+    return { kept, dropped: listings.length - kept.length };
+  }
+  // mobile.de's own list of plug-ins of the same search (up to 240).
+  async function mobileDePluginIds(filters, price) {
+    if (!wantsHybridsWithoutPlugins(filters)) return null;
+    try {
+      const fuels = typeof manualFuelValues === "function" ? manualFuelValues(filters) : (filters.fuels || []);
+      const result = await fetchMobileDeSample({ ...filters, fuels: [...fuels, "plugin"] }, true, price);
+      return new Set((result?.listings || []).map((listing) => String(listing.id || "")).filter(Boolean));
+    } catch {
+      return null;
+    }
+  }
+
   function dropCountryDuplicates(source, listings, others) {
     const rule = SECOND_PORTALS[source];
     if (!rule) return { unique: listings, duplicates: 0 };
@@ -2895,7 +2928,12 @@
         // Owner 2026-10-04: mobile.de is Germany's portal only — the
         // Netherlands and Belgium are read on AutoScout24, Marktplaats and
         // 2dehands (mobile.de had ~16 000 offers there against ~395 000).
-        mobile: () => fetchMobileDeSample({ ...filters, countries: germanCountries(filters.countries || []).length ? germanCountries(filters.countries || []) : ["DE"] }, whole, prices.mobile, step("mobile")),
+        mobile: async () => {
+          const germanFilters = { ...filters, countries: germanCountries(filters.countries || []).length ? germanCountries(filters.countries || []) : ["DE"] };
+          const result = await fetchMobileDeSample(germanFilters, whole, prices.mobile, step("mobile"));
+          if (result && wantsHybridsWithoutPlugins(filters)) result.pluginIds = await mobileDePluginIds(germanFilters, prices.mobile);
+          return result;
+        },
         blocket: () => fetchBlocketListings(filters, step("blocket"), whole, prices.blocket),
         avby: () => fetchAvbyListings(prices.avby ? { ...withoutFilterPrice(filters), avbyPriceUsd: prices.avby } : filters, whole),
         autoscout: async () => {
@@ -2978,7 +3016,13 @@
       this.lastSilent = selected.filter((source) => !this.lastAnswered.includes(source));
       const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
-      const mobileListings = (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal }));
+      const pluginDropped = {};
+      const withoutPlugins = (source, listings, ids = null) => {
+        const { kept, dropped } = dropPluginsFromHybrids(source, listings, filters, ids);
+        if (dropped) pluginDropped[source] = (pluginDropped[source] || 0) + dropped;
+        return kept;
+      };
+      const mobileListings = withoutPlugins("mobile", (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal })), mobileResult?.pluginIds || null);
       const blocketResult = blocket.status === "fulfilled" ? blocket.value : null;
       const blocketListings = blocketResult?.listings || [];
       const avbyResult = avby.status === "fulfilled" ? avby.value : null;
@@ -2986,7 +3030,7 @@
       // AutoScout24 keeps what mobile.de does not have (same price + mileage
       // = the same car); without mobile.de's offers nothing can be dropped.
       const autoscoutResult = autoscout.status === "fulfilled" ? autoscout.value : null;
-      const autoscoutAll = (autoscoutResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible }));
+      const autoscoutAll = withoutPlugins("autoscout", (autoscoutResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible })));
       const { unique: autoscoutListings, duplicates } = mobileListings.length ? dropMobileDuplicates(autoscoutAll, mobileListings) : { unique: autoscoutAll, duplicates: 0 };
       this.lastAutoscout = autoscoutResult ? {
         total: autoscoutResult.total,
@@ -2996,14 +3040,14 @@
         deduplicated: Boolean(mobileListings.length),
       } : null;
       const autoscoutFrResult = autoscoutfr.status === "fulfilled" ? autoscoutfr.value : null;
-      const autoscoutFrListings = (autoscoutFrResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible }));
+      const autoscoutFrListings = withoutPlugins("autoscoutfr", (autoscoutFrResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible })));
       // Marktplaats (NL) / 2dehands (BE): what mobile.de or AutoScout24 already
       // has in that country (same price and mileage) counts once, on them.
       const localResults = { marktplaats, dehands };
       const local = Object.fromEntries(["marktplaats", "dehands"].map((market) => {
         const result = localResults[market].status === "fulfilled" ? localResults[market].value : null;
         const country = window.AUTOGOOD_MARKTPLAATS?.SITES?.[market]?.country;
-        const all = (result?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible }));
+        const all = withoutPlugins(market, (result?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal, vatdeductible: listing.vatDeductible })));
         const there = [...mobileListings, ...autoscoutAll].filter((listing) => String(listing.country || "").toUpperCase() === country);
         const { unique, duplicates: dropped } = there.length ? dropMobileDuplicates(all, there) : { unique: all, duplicates: 0 };
         return [market, { result, listings: unique, duplicates: dropped }];
@@ -3011,13 +3055,14 @@
       // Kleinanzeigen: what mobile.de or AutoScout24 already has in Germany
       // (same price and mileage) counts once, on them.
       const kleinanzeigenResult = kleinanzeigen.status === "fulfilled" ? kleinanzeigen.value : null;
-      const kleinanzeigenAll = (kleinanzeigenResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal }));
+      const kleinanzeigenAll = withoutPlugins("kleinanzeigen", (kleinanzeigenResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal })));
       const germanOthers = [...mobileListings, ...autoscoutAll].filter((listing) => !listing.country || String(listing.country).toUpperCase() === "DE");
       const { unique: kleinanzeigenListings, duplicates: kleinanzeigenDuplicates } = germanOthers.length ? dropMobileDuplicates(kleinanzeigenAll, germanOthers) : { unique: kleinanzeigenAll, duplicates: 0 };
       // ParuVendu: what AutoScout24 FR already has (same price and mileage)
       // counts once, on AutoScout24 FR.
       const paruvenduResult = paruvendu.status === "fulfilled" ? paruvendu.value : null;
-      const paruvenduAll = (paruvenduResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal }));
+      const paruvenduAll = withoutPlugins("paruvendu", (paruvenduResult?.listings || []).map((listing) => ({ ...listing, markettotal: listing.marketTotal })));
+      this.lastPluginDropped = pluginDropped;
       const { unique: paruvenduListings, duplicates: paruvenduDuplicates } = dropCountryDuplicates("paruvendu", paruvenduAll, autoscoutFrListings);
       // Second portals' cars already counted on the country's main portal:
       // Monitoring does not take them for cars that went away.
@@ -10094,7 +10139,7 @@
           <span>${escapeMarketHtml(c.reportTitle)} · ${escapeMarketHtml(formatHistoryDate(dataDate || new Date().toISOString()))}</span>
         </div>
 
-        <div data-report-hide>${analysisStatusHtml()}${silentPortalsHtml()}</div>
+        <div data-report-hide>${analysisStatusHtml()}${silentPortalsHtml()}${pluginDroppedHtml()}</div>
 
         <section class="mobileMarketCard mobileMarketSearchCard" aria-label="${escapeMarketHtml(c.searchHeading)}">
           ${blockTitle("car", window.AUTOGOOD_SPEC_COPY?.().specSearchKicker || c.searchHeading)}
@@ -10638,6 +10683,15 @@
     return `<div class="mobileMarketSilent" role="status" data-report-hide>${lines.map((line) => `<p>${escapeMarketHtml(line)}</p>`).join("")}</div>`;
   }
 
+  // Plug-ins taken out of a search for hybrids (owner 2026-10-11).
+  function pluginDroppedHtml() {
+    const dropped = Object.entries(activeAnalysis?.pluginDropped || {}).filter(([, count]) => count > 0);
+    if (!dropped.length) return "";
+    const total = dropped.reduce((sum, [, count]) => sum + count, 0);
+    const text = copy().pluginDroppedNote.replace("{count}", String(total)).replace("{portals}", dropped.map(([source, count]) => `${portalName(source)} ${count}`).join(", "));
+    return `<p class="mobileMarketAnalysisStatus" data-report-hide>${escapeMarketHtml(text)}</p>`;
+  }
+
   function analysisStatusHtml() {
     return `<p class="mobileMarketAnalysisStatus${analysisMessage.isError ? " isError" : ""}" aria-live="polite" data-mobile-market-analysis-status data-report-hide${analysisMessage.text ? "" : " hidden"}>${escapeMarketHtml(analysisMessage.text)}</p>`;
   }
@@ -10712,6 +10766,7 @@
         historyId: snapshot?.id || savedEntry?.id || "",
         fetchedAt: provider && listings.length ? new Date().toISOString() : "",
         silent,
+        pluginDropped: provider?.lastPluginDropped || {},
       };
       analysisMessage = { text: providerError, isError: Boolean(providerError) };
       renderAnalysis();
@@ -10817,6 +10872,7 @@
         sourceFileName: "API",
         historyId: snapshot.id,
         silent: silentOf(provider),
+        pluginDropped: provider.lastPluginDropped || {},
       };
       renderAnalysis();
       setAnalysisStatus(c.snapshotSaved.replace("{date}", formatHistoryDate(new Date().toISOString())));

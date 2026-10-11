@@ -13,8 +13,21 @@
 // Land Rover P400e, Mini SE ALL4, DS E-Tense. A suffix "e-" (Peugeot e-HDi,
 // e-THP) is not one.
 const PLUGIN_HYBRID_PATTERN = /plug|\bphev\b|laddhybrid|\be-?hybrid\b|\bgte\b|\bt?fsi\s?e(?![\w])|\btsi\s+iv\b|\b(?:octavia|superb|kodiaq)\s+(?:combi\s+|rs\s+|sportline\s+)?iv\b|\b[1-8]\d{2}\s?(?:l?x?e|de)(?![\w-])|\bxdrive\s?\d{2}e\b|iperformance|eq[\s-]?power|\brecharge\b|\btwin[\s-]?engine\b|\b4xe\b|\bp\d{3}e\b|\bse\s+all4\b|\be-tense\b/;
+// "Geen plug-in" / "kein Plug-in" / "sans recharge": the name says it is none.
+const NOT_PLUGIN_PATTERN = /\b(?:geen|kein|keine|ohne|no|non|nie|sans|zonder)\s+(?:plug|phev|stekker|recharge|lade)/;
 function isPluginHybridText(text) {
-  return PLUGIN_HYBRID_PATTERN.test(String(text || "").toLowerCase());
+  const lower = String(text || "").toLowerCase();
+  return PLUGIN_HYBRID_PATTERN.test(lower) && !NOT_PLUGIN_PATTERN.test(lower);
+}
+
+// Among hybrids only (a search for "Hybryda" without plug-ins): Volvo's
+// T5 / T6 / T8 hybrids are all plug-ins (its mild hybrids are B4 / B5),
+// "Twin Eng." and a glued "RechargeAWD" too (measured 2026-10-10 on mobile.de
+// XC60: 72 % -> 97 % of the plug-ins told by the name).
+function isPluginInHybridSearch(text) {
+  const lower = String(text || "").toLowerCase();
+  if (NOT_PLUGIN_PATTERN.test(lower)) return false;
+  return PLUGIN_HYBRID_PATTERN.test(lower) || /\bt[568]\b|twin[\s-]?eng|recharge/.test(lower);
 }
 
 // Engine size written in a name: "2.0 TDI", "1,5 T-GDI", "Diesel 1.9".
