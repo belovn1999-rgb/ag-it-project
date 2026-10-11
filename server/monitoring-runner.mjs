@@ -307,7 +307,9 @@ function nextSlot(schedule, from = new Date()) {
 function keepAwake() {
   if (process.platform !== "darwin") return () => {};
   try {
-    const child = spawn("caffeinate", ["-i", "-w", String(process.pid)], { stdio: "ignore" });
+    // -s: no system sleep either while on the charger (on battery macOS
+    // still puts a closed Mac back to sleep — see sleptMs in serve()).
+    const child = spawn("caffeinate", ["-i", "-s", "-w", String(process.pid)], { stdio: "ignore" });
     return () => child.kill();
   } catch {
     return () => {};
@@ -400,9 +402,21 @@ function serve(args) {
     due.forEach((job) => state.tries.set(`${day}|${job.id}`, (state.tries.get(`${day}|${job.id}`) || 0) + 1));
     let failed = 0;
     const release = keepAwake();
+    // The Mac asleep during the run (on battery it dozes off again after the
+    // 9:25 wake; 11.10 both tries stalled on "Chrome did not answer"): the
+    // wall clock runs on, the uptime clock does not. Such a try is not
+    // counted — the car is tried again once the Mac is awake.
+    const wallStart = Date.now();
+    const awakeStart = process.hrtime.bigint();
+    const failedJobs = [];
     try {
-      await runJobs(args, due, (job, ok) => { if (!ok) failed += 1; });
-      state.lastRun = { at: new Date().toISOString(), ok: failed === 0, error: failed ? `${failed} of ${due.length} cars failed` : "" };
+      await runJobs(args, due, (job, ok) => { if (!ok) { failed += 1; failedJobs.push(job); } });
+      const sleptMs = (Date.now() - wallStart) - Number((process.hrtime.bigint() - awakeStart) / 1000000n);
+      if (failed && sleptMs > 60000) {
+        failedJobs.forEach((job) => state.tries.set(`${day}|${job.id}`, Math.max(0, (state.tries.get(`${day}|${job.id}`) || 1) - 1)));
+        log(`the Mac slept ${Math.round(sleptMs / 60000)} min during the run — ${failed} car(s) will be tried again when it is awake`);
+      }
+      state.lastRun = { at: new Date().toISOString(), ok: failed === 0, error: failed ? `${failed} of ${due.length} cars failed` : "", slept: sleptMs > 60000 || undefined };
     } catch (error) {
       state.lastRun = { at: new Date().toISOString(), ok: false, error: error.message };
       log(`run failed: ${error.message}`);
