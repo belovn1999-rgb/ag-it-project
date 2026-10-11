@@ -23,6 +23,8 @@
   const TURNKEY = window.AUTOGOOD_TURNKEY;
   const params = new URLSearchParams(window.location.search);
   const offerId = params.get("id") || "";
+  // Inside program 06 (oferty.html, owner 2026-10-11): the settings open.
+  const EMBED = params.get("embed") === "1";
   const stage = document.querySelector("[data-offer-stage]");
   const panel = document.querySelector("[data-offer-panel]");
   const statusLine = document.querySelector("[data-offer-status]");
@@ -215,8 +217,8 @@
   const METHODS = {
     direct: { tab: 0, label: "Zakup bezpośredni", labelRu: "Прямая покупка", short: "bezpośrednio od dealera", shortRu: "напрямую у дилера" },
     // Owner 2026-10-11: "Zakup przez AUTOGOOD …" / "Покупка через AUTOGOOD …".
-    vat: { tab: 3, label: "Zakup przez AUTOGOOD · faktura VAT 23%", labelRu: "Покупка через AUTOGOOD · счёт-фактура с НДС 23%", short: "przez AUTOGOOD · VAT 23%", shortRu: "через AUTOGOOD · НДС 23%" },
-    margin: { tab: 4, label: "Zakup przez AUTOGOOD · faktura VAT marża", labelRu: "Покупка через AUTOGOOD · счёт-фактура «НДС-маржа»", short: "przez AUTOGOOD · VAT marża", shortRu: "через AUTOGOOD · НДС-маржа" },
+    vat: { tab: 3, label: "Zakup przez AUTOGOOD · faktura VAT 23%", labelRu: "Покупка через AUTOGOOD · счёт-фактура с НДС 23%", short: "przez AUTOGOOD ·\u00a0VAT\u00a023%", shortRu: "через AUTOGOOD ·\u00a0НДС\u00a023%" },
+    margin: { tab: 4, label: "Zakup przez AUTOGOOD · faktura VAT marża", labelRu: "Покупка через AUTOGOOD · счёт-фактура «НДС-маржа»", short: "przez AUTOGOOD ·\u00a0VAT\u00a0marża", shortRu: "через AUTOGOOD ·\u00a0НДС-маржа" },
   };
   // A dealer selling only to firms or for export: never straight (owner 2026-10-11).
   const businessOnly = () => Boolean(FACTS && offer?.ad && FACTS.read(offer.ad).business);
@@ -428,12 +430,22 @@
     const forWhom = client.name ? `${L("Przygotowano dla", "Подготовлено для")}: <b>${esc(client.name)}</b><br>` : "";
     return `
       <header class="ofHead">
-        <img class="ofLogo" src="./assets/autogood-logo.png" alt="AUTOGOOD" />
-        <span class="ofLogoText" aria-hidden="true"><img src="./assets/ag-opt.svg" alt="" /><span>AUTOGOOD</span></span>
+        <div class="ofHeadBrand">
+          <img class="ofLogo" src="./assets/autogood-logo.png" alt="AUTOGOOD" />
+          <span class="ofLogoText" aria-hidden="true"><img src="./assets/ag-opt.svg" alt="" /><span>AUTOGOOD</span></span>
+          ${sourceTag(view)}
+        </div>
         <div class="ofHeadMeta">
           ${forWhom}${esc(dateText(offer.createdAt))}
         </div>
       </header>`;
+  }
+
+  // Beside the logo (owner 2026-10-11, as the auction offer's "Auto z aukcji"):
+  // where the car comes from — a dealer or a private seller — in the sheet's colours.
+  function sourceTag(view) {
+    const privateSeller = view?.seller === "private";
+    return `<span class="ofHeadTag">${icon("store")}${privateSeller ? L("Auto od osoby prywatnej", "Авто от частного продавца") : L("Auto od dealera", "Авто от дилера")}</span>`;
   }
 
   // Three figures beside the price ("Raport"): against the median, the share
@@ -1002,7 +1014,7 @@
   // ---- The manager's panel -------------------------------------------------------------
   // Owner 2026-10-11: every setting under one "Rozszerzone ustawienia",
   // closed; open stays open while the page redraws.
-  let advancedOpen = false;
+  let advancedOpen = EMBED;
   panel.addEventListener("toggle", (event) => {
     if (event.target.matches?.(".ofAdvanced")) advancedOpen = event.target.open;
   }, true);
@@ -1198,6 +1210,7 @@
   // checks or options), the least important lines go first — green checks
   // beyond the third, then options of the full list — and the manager is
   // told if it still does not fit.
+  let overflowWarned = false;
   function autoFit() {
     const overflow = (page) => page.scrollHeight - page.clientHeight;
     stage.querySelectorAll(".ofPage.isNoc").forEach((page) => {
@@ -1273,7 +1286,15 @@
     }
     const tooLong = [one, two].filter((page) => page && overflow(page) > 0).map((page) => page.dataset.page);
     stage.querySelectorAll(".ofPage").forEach((page) => page.classList.toggle("isOverflow", tooLong.includes(page.dataset.page)));
-    if (tooLong.length) setStatus(U(`Strona ${tooLong.join(" i ")} nie mieści się na A4 — ukryj blok lub skróć tekst (Edytuj teksty).`, `Страница ${tooLong.join(" и ")} не помещается на A4 — скройте блок или сократите текст («Править тексты»).`), true);
+    // A sheet that fits again takes its warning away (the first drawing,
+    // before the fonts, can be too tall for a moment).
+    if (tooLong.length) {
+      overflowWarned = true;
+      setStatus(U(`Strona ${tooLong.join(" i ")} nie mieści się na A4 — ukryj blok lub skróć tekst (Edytuj teksty).`, `Страница ${tooLong.join(" и ")} не помещается на A4 — скройте блок или сократите текст («Править тексты»).`), true);
+    } else if (overflowWarned) {
+      overflowWarned = false;
+      setStatus("");
+    }
   }
 
   function fitSheets() {
@@ -2020,7 +2041,8 @@
     await save((stored) => ({ client: { ...(stored.client || {}), email: to } }), false);
     await makePdf();
     const { subject, body } = mailText();
-    window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    // From the frame of program 06 the page itself opens the mail program.
+    (EMBED && window.top ? window.top : window).location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setStatus(U("Otwieram wiadomość w programie pocztowym — dołącz pobrany PDF i zapisz jako szkic albo wyślij.", "Открываю письмо в почтовой программе — приложите скачанный PDF и сохраните как черновик или отправьте."));
     mailRow.hidden = true;
   }

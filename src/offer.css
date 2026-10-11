@@ -1087,3 +1087,18 @@
 .ofPriceFacts dd span { display: block; text-align: right; }
 .ofPriceFacts > div:first-child dd span { white-space: nowrap; }
 .ofPriceFacts dd { display: grid; justify-items: end; }
+
+/* ---- Owner 2026-10-11: "Auto od dealera" beside the logo, as the auction
+ * offer's "Auto z aukcji", in this offer's own colours (navy, gold). */
+.ofHeadBrand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.ofHeadTag { display: inline-flex; align-items: center; gap: 6px; padding: 4px 11px; border-radius: 999px; background: var(--of-navy); color: #ffffff; font-size: 10.5px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+.ofHeadTag svg { width: 12px; height: 12px; color: var(--of-gold-soft, #d9c08a); }
+.isNoc[data-page="1"] .ofHeadTag { background: var(--of-gold-soft, #d9c08a); color: var(--of-night, #0e1a24); }
+.isNoc[data-page="1"] .ofHeadTag svg { color: var(--of-night, #0e1a24); }
+
+/* ---- Inside program 06 (oferta.html?embed=1): no site bar, no way back, the
+ * settings in the page's flow (the frame grows with the page). */
+.ofEmbed .agGlobalNav, .ofEmbed .offerBack { display: none !important; }
+.ofEmbed body { padding-top: 0 !important; }
+.ofEmbed .offerBar { position: static; }
+.ofEmbed .offerPanel { position: static; max-height: none; overflow: visible; }

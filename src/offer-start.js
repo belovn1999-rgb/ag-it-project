@@ -62,7 +62,9 @@
       other: "Inne informacje", country: "Kraj", condition: "Stan", damaged: "uszkodzony", accidentFree: "bezwypadkowy (wg sprzedawcy)", color: "Kolor", seller: "Sprzedawca",
       basic: "Odczytano podstawowe dane. Zdjęcia, wyposażenie i sprzedawca pojawią się po pełnym odczycie (dla mobile.de potrzebny jest importer na Macu).",
       missing: "Nie udało się odczytać: {list}. Uzupełnisz to na stronie oferty (Edytuj teksty).", missingWords: ["marka", "cena", "przebieg", "rok"],
-      make: "Przygotuj ofertę PDF",
+      make: "Pokaż ofertę do sprawdzenia", update: "Odśwież ofertę poniżej",
+      previewTitle: "Oferta {n} — sprawdź i popraw przed PDF", previewOpen: "Otwórz w osobnej karcie",
+      previewHint: "Tak wygląda PDF. Teksty poprawisz przyciskiem „Edytuj teksty”, bloki i zdjęcie — w ustawieniach obok. Sposób zakupu, klient, język i kalkulator powyżej trafiają tu od razu.",
       method: "Sposób zakupu", methodDirect: "Zakup bezpośredni", methodVat: "Przez AUTOGOOD · VAT 23% (netto)", methodMargin: "Przez AUTOGOOD · VAT marża (brutto)",
       vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
       client: "Klient", clientName: "imię i nazwisko (do e-maila)", calcTitle: "Kalkulacja", calcHint: "Popraw transport i oględziny — suma trafi do oferty jako cena na gotowo.",
@@ -94,7 +96,9 @@
       other: "Другое", country: "Страна", condition: "Состояние", damaged: "повреждён", accidentFree: "без ДТП (по словам продавца)", color: "Цвет", seller: "Продавец",
       basic: "Прочитаны основные данные. Фото, оснащение и продавец появятся после полного чтения (для mobile.de нужен импортер на Маке).",
       missing: "Не удалось прочитать: {list}. Допишете на странице предложения (Edytuj teksty).", missingWords: ["марка", "цена", "пробег", "год"],
-      make: "Подготовить PDF-предложение",
+      make: "Показать предложение для проверки", update: "Обновить предложение ниже",
+      previewTitle: "Предложение {n} — проверьте и поправьте перед PDF", previewOpen: "Открыть в отдельной вкладке",
+      previewHint: "Так выглядит PDF. Тексты правятся кнопкой «Править тексты», блоки и фото — в настройках рядом. Способ покупки, клиент, язык и калькулятор выше попадают сюда сразу.",
       method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · НДС 23% (нетто)", methodMargin: "Через AUTOGOOD · НДС-маржа (брутто)",
       vatOnly: "только авто с НДС к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или с НДС 23%", fullCalc: "Полный расчёт в предложении (стр. 2)",
       client: "Клиент", clientName: "имя и фамилия (для письма)", calcTitle: "Расчёт", calcHint: "Поправьте транспорт и осмотр — сумма попадёт в предложение как цена «под ключ».",
@@ -140,6 +144,8 @@
     portalsLine.textContent = t("portals", { list: portalList() });
     if (current) carBox.innerHTML = carHtml();
     showRecent();
+    // The shown offer speaks the new language too.
+    if (current?.draftId) syncSoon(false);
   }
   document.querySelector("[data-os-lang-group]")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-os-lang]");
@@ -426,7 +432,7 @@
         ${frame}
       </section>` : ""}
       <div class="osCarFoot">
-        <button class="osPrimary" type="button" data-os-make>${esc(t("make"))} <i aria-hidden="true">&#8594;</i></button>
+        <button class="osPrimary" type="button" data-os-make>${esc(current.draftId ? t("update") : t("make"))} <i aria-hidden="true">&#8595;</i></button>
       </div>`;
   }
 
@@ -453,6 +459,7 @@
     reading = true;
     readButton.disabled = true;
     carBox.hidden = true;
+    hidePreview();
     // What is being read, step by step (the portal answers in 5–20 s, owner 2026-10-11).
     const steps = list("steps");
     let step = 0;
@@ -655,6 +662,7 @@
     }
     if (event.target.matches("[data-os-full]")) fullCalc = event.target.checked;
     if (event.target.matches("[data-os-salutation]")) client.salutation = event.target.value;
+    if (event.target.matches("[data-os-method], [data-os-full], [data-os-salutation]")) syncSoon(event.target.matches("[data-os-method], [data-os-full]"));
   });
   carBox.addEventListener("click", (event) => {
     const button = event.target.closest("[data-os-lang]");
@@ -668,52 +676,123 @@
     applyLang();
   });
   carBox.addEventListener("input", (event) => {
-    if (event.target.matches("[data-os-client]")) client.name = event.target.value.trim();
+    if (event.target.matches("[data-os-client]")) {
+      client.name = event.target.value.trim();
+      syncSoon(false);
+    }
   });
+  // ---- The offer itself, on this page (owner 2026-10-11) ---------------------------------
+  // "Pokaż ofertę": the draft is saved and both sheets show here as the PDF
+  // will have them (oferta.html?embed=1 in a frame), with the advanced
+  // settings open, "Edytuj teksty", the PDF and the e-mail. The way of
+  // buying, the client, the language and the calculator's changes go into
+  // that offer as the manager makes them.
+  const previewBox = document.querySelector("[data-os-preview]");
+  // The calculator's lines and, with the full calculation, its picture.
+  async function calcPart() {
+    const frame = carBox.querySelector("[data-os-calc]");
+    if (!CALC || !frame?.contentDocument) return {};
+    try {
+      const read = CALC.read(frame.contentDocument);
+      const methodKey = chosenMethod();
+      const part = { calc: { tab: CALC.TABS[methodKey], method: methodKey, methodLabel: "", rows: read.rows, total: read.total, rate: read.rate, lang, at: new Date().toISOString() } };
+      if (fullCalc) {
+        const image = await Promise.race([CALC.capture(frame).catch(() => ""), new Promise((resolve) => window.setTimeout(() => resolve(""), 15000))]);
+        if (image) part.calcImage = image;
+      }
+      return part;
+    } catch {
+      // The calculator not ready: the offer keeps its estimate.
+      return {};
+    }
+  }
+  function fitPreview(frame) {
+    const doc = frame?.contentDocument;
+    if (!doc?.body) return;
+    const fit = () => {
+      const style = doc.defaultView.getComputedStyle(doc.body);
+      const border = frame.offsetHeight - frame.clientHeight;
+      const height = Math.ceil(doc.body.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom)) + border + 1;
+      if (height > 300 && Math.abs(height - frame.offsetHeight) > 1) frame.style.height = `${height}px`;
+    };
+    fit();
+    if (typeof ResizeObserver === "function" && !frame.dataset.fitted) {
+      frame.dataset.fitted = "1";
+      new ResizeObserver(fit).observe(doc.body);
+    }
+  }
+  function showPreview(id, number) {
+    const page = new URL("oferta.html", window.location.href);
+    page.searchParams.set("id", id);
+    const own = new URL(page);
+    page.searchParams.set("embed", "1");
+    previewBox.innerHTML = `
+      <section class="osCard osPreviewCard">
+        <div class="osCalcHead">
+          <h2 class="osCardTitle">${icon("list")}<span>${esc(t("previewTitle", { n: number || "" }))}</span></h2>
+          <a class="osPreviewOpen" href="${esc(own.toString())}" target="_blank" rel="noopener">${esc(t("previewOpen"))} ↗</a>
+        </div>
+        <p class="osMuted">${esc(t("previewHint"))}</p>
+        <iframe class="osPreviewFrame" title="${esc(t("previewTitle", { n: number || "" }))}" src="${esc(page.toString())}" scrolling="no" data-os-preview-frame></iframe>
+      </section>`;
+    previewBox.hidden = false;
+    const frame = previewBox.querySelector("[data-os-preview-frame]");
+    frame.addEventListener("load", () => fitPreview(frame));
+  }
+  function hidePreview() {
+    previewBox.hidden = true;
+    previewBox.innerHTML = "";
+  }
+  // What the manager chose here, into the offer already shown.
+  let syncing = null;
+  async function syncDraft({ withCalc = false } = {}) {
+    if (!current?.draftId) return;
+    const change = { lang, method: chosenMethod(), client: { ...client }, hidden: undefined };
+    if (withCalc) Object.assign(change, await calcPart());
+    await store.update(current.draftId, (stored) => {
+      const hidden = new Set(stored.hidden || []);
+      if (fullCalc) hidden.delete("costs");
+      else hidden.add("costs");
+      return { ...change, hidden: [...hidden] };
+    }).catch(() => null);
+  }
+  function syncSoon(withCalc) {
+    window.clearTimeout(syncing);
+    syncing = window.setTimeout(() => syncDraft({ withCalc }), withCalc ? 1200 : 300);
+  }
+  // A change in the calculator (transport, inspection, an own cost) goes
+  // into the shown offer a moment after the last keystroke.
+  carBox.addEventListener("load", (event) => {
+    const frame = event.target;
+    if (!frame.matches?.("[data-os-calc]")) return;
+    const doc = frame.contentDocument;
+    ["input", "change", "click"].forEach((kind) => doc?.addEventListener(kind, () => {
+      if (current?.draftId) syncSoon(true);
+    }, true));
+    if (current?.draftId) syncSoon(true);
+  }, true);
+
   carBox.addEventListener("click", async (event) => {
     const button = event.target.closest("[data-os-make]");
     if (!button || !current || button.disabled) return;
     button.disabled = true;
-    const id = store.newId();
-    const page = new URL("oferta.html", window.location.href);
-    page.searchParams.set("id", id);
-    // The tab opens at the click itself (a browser lets a page open one only
-    // then) and gets the offer's address once the draft and the calculator's
-    // picture are saved; a browser that opens no tab (the app's own) goes to
-    // the offer in this tab after both are saved — the picture was lost
-    // there before (owner 2026-10-11).
-    const tab = window.open("", "_blank");
-    try {
-      tab.document.title = "AUTOGOOD";
-      tab.document.body.textContent = t("making");
-    } catch {
-      // A tab of another kind: it just waits.
-    }
     setStatus(t("making"));
     try {
-      const draft = await makeDraft(id);
-      const frame = carBox.querySelector("[data-os-calc]");
-      let shoot = false;
-      if (CALC && frame?.contentDocument) {
-        try {
-          const read = CALC.read(frame.contentDocument);
-          const methodKey = chosenMethod();
-          draft.calc = { tab: CALC.TABS[methodKey], method: methodKey, methodLabel: "", rows: read.rows, total: read.total, rate: read.rate, lang, at: new Date().toISOString() };
-          shoot = fullCalc;
-        } catch {
-          // The calculator not ready: the offer starts from the estimate.
-        }
+      if (current.draftId) {
+        await syncDraft({ withCalc: true });
+      } else {
+        const id = store.newId();
+        const draft = { ...(await makeDraft(id)), ...(await calcPart()) };
+        await store.put(draft);
+        current.draftId = id;
+        current.draftNumber = draft.number;
+        button.innerHTML = `${esc(t("update"))} <i aria-hidden="true">&#8595;</i>`;
+        showPreview(id, draft.number);
+        showRecent();
       }
-      if (shoot) {
-        const image = await Promise.race([CALC.capture(frame).catch(() => ""), new Promise((resolve) => window.setTimeout(() => resolve(""), 15000))]);
-        if (image) draft.calcImage = image;
-      }
-      await store.put(draft);
-      if (tab) tab.location.href = page.toString();
-      else window.location.href = page.toString();
-      showRecent();
+      setStatus("");
+      previewBox.scrollIntoView({ behavior: "smooth", block: "start" });
     } catch (error) {
-      tab?.close();
       setStatus(t("makeFailed", { reason: String(error?.message || error) }), true);
     } finally {
       button.disabled = false;

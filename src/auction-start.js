@@ -15,7 +15,7 @@
 (() => {
   const REPORT = window.AUTOGOOD_AUCTION_REPORT;
   const modes = document.querySelector("[data-os-modes]");
-  const dealerParts = [...document.querySelectorAll(".osLinkCard, [data-os-car], [data-os-recent]")];
+  const dealerParts = [...document.querySelectorAll(".osLinkCard, [data-os-car], [data-os-preview], [data-os-recent]")];
   const inputCard = document.querySelector("[data-ar-input]");
   const form = document.querySelector("[data-ar-form]");
   const urlInput = document.querySelector("[data-ar-url]");
