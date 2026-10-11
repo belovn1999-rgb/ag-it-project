@@ -1,0 +1,414 @@
+{
+  "autoscout": {
+    "file": "autoscout.html",
+    "capturedAt": "2026-10-11T17:44:07.196Z",
+    "total": 257,
+    "count": 4,
+    "listings": [
+      {
+        "price": 12950,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 105295,
+        "power": "85 kW (116 PS)",
+        "country": "DE",
+        "seller": "dealer",
+        "url": "www.autoscout24.de"
+      },
+      {
+        "price": 14490,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 91499,
+        "power": "85 kW (116 PS)",
+        "country": "DE",
+        "seller": "dealer",
+        "url": "www.autoscout24.de"
+      },
+      {
+        "price": 14980,
+        "currency": "EUR",
+        "year": 2020,
+        "mileage": 194450,
+        "power": "90 kW (122 PS)",
+        "country": "DE",
+        "seller": "dealer",
+        "url": "www.autoscout24.de"
+      },
+      {
+        "price": 11980,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 114037,
+        "power": "85 kW (116 PS)",
+        "country": "DE",
+        "seller": "dealer",
+        "url": "www.autoscout24.de"
+      }
+    ]
+  },
+  "autoscoutfr": {
+    "file": "autoscoutfr.html",
+    "capturedAt": "2026-10-11T17:44:07.196Z",
+    "total": 42,
+    "count": 4,
+    "listings": [
+      {
+        "price": 13800,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 78700,
+        "power": "90 kW (122 PS)",
+        "country": "FR",
+        "seller": "private",
+        "url": "www.autoscout24.de"
+      },
+      {
+        "price": 14490,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 147079,
+        "power": "90 kW (122 PS)",
+        "country": "FR",
+        "seller": "dealer",
+        "url": "www.autoscout24.de"
+      },
+      {
+        "price": 14990,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 140200,
+        "power": "72 kW (98 PS)",
+        "country": "FR",
+        "seller": "dealer",
+        "url": "www.autoscout24.de"
+      },
+      {
+        "price": 14990,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 190000,
+        "power": "113 kW (154 PS)",
+        "country": "FR",
+        "seller": "dealer",
+        "url": "www.autoscout24.de"
+      }
+    ]
+  },
+  "otomoto": {
+    "file": "otomoto.html",
+    "capturedAt": "2026-10-11T17:44:07.196Z",
+    "total": 453,
+    "count": 4,
+    "listings": [
+      {
+        "price": 15000,
+        "currency": "PLN",
+        "year": "2020",
+        "mileage": "163400",
+        "power": "122 KM",
+        "country": "",
+        "seller": "dealer",
+        "url": "www.otomoto.pl"
+      },
+      {
+        "price": 34900,
+        "currency": "PLN",
+        "year": "2020",
+        "mileage": "259000",
+        "power": "116 KM",
+        "country": "",
+        "seller": "dealer",
+        "url": "www.otomoto.pl"
+      },
+      {
+        "price": 35500,
+        "currency": "PLN",
+        "year": "2020",
+        "mileage": "650000",
+        "power": "122 KM",
+        "country": "",
+        "seller": "dealer",
+        "url": "www.otomoto.pl"
+      },
+      {
+        "price": 36900,
+        "currency": "PLN",
+        "year": "2021",
+        "mileage": "235000",
+        "power": "116 KM",
+        "country": "",
+        "seller": "dealer",
+        "url": "www.otomoto.pl"
+      }
+    ]
+  },
+  "marktplaats": {
+    "file": "marktplaats.json",
+    "capturedAt": "2026-10-11T17:44:07.196Z",
+    "total": 204,
+    "count": 3,
+    "listings": [
+      {
+        "price": 8500,
+        "currency": "EUR",
+        "year": 2020,
+        "mileage": 202371,
+        "power": "",
+        "country": "NL",
+        "seller": "",
+        "url": "www.marktplaats.nl"
+      },
+      {
+        "price": 12950,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 201782,
+        "power": "",
+        "country": "NL",
+        "seller": "",
+        "url": "www.marktplaats.nl"
+      },
+      {
+        "price": 13450,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 241932,
+        "power": "",
+        "country": "NL",
+        "seller": "",
+        "url": "www.marktplaats.nl"
+      }
+    ]
+  },
+  "dehands": {
+    "file": "dehands.json",
+    "capturedAt": "2026-10-11T17:44:07.196Z",
+    "total": 64,
+    "count": 4,
+    "listings": [
+      {
+        "price": 12500,
+        "currency": "EUR",
+        "year": 2020,
+        "mileage": 139000,
+        "power": "",
+        "country": "BE",
+        "seller": "",
+        "url": "www.2dehands.be"
+      },
+      {
+        "price": 14950,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 96625,
+        "power": "",
+        "country": "BE",
+        "seller": "",
+        "url": "www.2dehands.be"
+      },
+      {
+        "price": 14950,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 182000,
+        "power": "98 KM",
+        "country": "BE",
+        "seller": "",
+        "url": "www.2dehands.be"
+      },
+      {
+        "price": 15300,
+        "currency": "EUR",
+        "year": 2020,
+        "mileage": 95000,
+        "power": "",
+        "country": "BE",
+        "seller": "",
+        "url": "www.2dehands.be"
+      }
+    ]
+  },
+  "paruvendu": {
+    "file": "paruvendu.html",
+    "capturedAt": "2026-10-11T17:44:07.196Z",
+    "total": 65,
+    "count": 4,
+    "listings": [
+      {
+        "price": 13980,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 142850,
+        "power": "",
+        "country": "FR",
+        "seller": "dealer",
+        "url": "www.paruvendu.fr"
+      },
+      {
+        "price": 14490,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 147079,
+        "power": "122 HP",
+        "country": "FR",
+        "seller": "dealer",
+        "url": "www.paruvendu.fr"
+      },
+      {
+        "price": 14980,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 197010,
+        "power": "",
+        "country": "FR",
+        "seller": "dealer",
+        "url": "www.paruvendu.fr"
+      },
+      {
+        "price": 15490,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 143000,
+        "power": "",
+        "country": "FR",
+        "seller": "private",
+        "url": "www.paruvendu.fr"
+      }
+    ]
+  },
+  "blocket": {
+    "file": "blocket.json",
+    "capturedAt": "2026-10-11T17:44:07.196Z",
+    "total": 164,
+    "count": 4,
+    "listings": [
+      {
+        "price": 105000,
+        "currency": "SEK",
+        "year": 2021,
+        "mileage": "442000",
+        "power": "",
+        "country": "SE",
+        "seller": "private",
+        "url": "www.blocket.se"
+      },
+      {
+        "price": 129900,
+        "currency": "SEK",
+        "year": 2019,
+        "mileage": "214730",
+        "power": "",
+        "country": "SE",
+        "seller": "dealer",
+        "url": "www.blocket.se"
+      },
+      {
+        "price": 140000,
+        "currency": "SEK",
+        "year": 2020,
+        "mileage": "257000",
+        "power": "",
+        "country": "SE",
+        "seller": "private",
+        "url": "www.blocket.se"
+      },
+      {
+        "price": 149000,
+        "currency": "SEK",
+        "year": 2019,
+        "mileage": "167400",
+        "power": "",
+        "country": "SE",
+        "seller": "dealer",
+        "url": "www.blocket.se"
+      }
+    ]
+  },
+  "avby": {
+    "file": "avby.json",
+    "capturedAt": "2026-10-11T17:44:35.699Z",
+    "total": 27,
+    "count": 4,
+    "listings": [
+      {
+        "price": 13100,
+        "currency": "USD",
+        "year": 2019,
+        "mileage": "287663",
+        "power": "132 KM",
+        "country": "BY",
+        "seller": "",
+        "url": "cars.av.by"
+      },
+      {
+        "price": 13100,
+        "currency": "USD",
+        "year": 2019,
+        "mileage": "322371",
+        "power": "132 KM",
+        "country": "BY",
+        "seller": "",
+        "url": "cars.av.by"
+      },
+      {
+        "price": 13100,
+        "currency": "USD",
+        "year": 2019,
+        "mileage": "311980",
+        "power": "122 KM",
+        "country": "BY",
+        "seller": "",
+        "url": "cars.av.by"
+      },
+      {
+        "price": 14200,
+        "currency": "USD",
+        "year": 2019,
+        "mileage": "154000",
+        "power": "116 KM",
+        "country": "BY",
+        "seller": "",
+        "url": "cars.av.by"
+      }
+    ]
+  },
+  "kleinanzeigen": {
+    "file": "kleinanzeigen.html",
+    "capturedAt": "2026-10-11T17:45:12.724Z",
+    "total": 224,
+    "count": 3,
+    "listings": [
+      {
+        "price": 8900,
+        "currency": "EUR",
+        "year": 2020,
+        "mileage": 410000,
+        "power": "",
+        "country": "DE",
+        "seller": "",
+        "url": "www.kleinanzeigen.de"
+      },
+      {
+        "price": 8999,
+        "currency": "EUR",
+        "year": 2019,
+        "mileage": 285000,
+        "power": "",
+        "country": "DE",
+        "seller": "",
+        "url": "www.kleinanzeigen.de"
+      },
+      {
+        "price": 10499,
+        "currency": "EUR",
+        "year": 2021,
+        "mileage": 270000,
+        "power": "",
+        "country": "DE",
+        "seller": "",
+        "url": "www.kleinanzeigen.de"
+      }
+    ]
+  }
+}

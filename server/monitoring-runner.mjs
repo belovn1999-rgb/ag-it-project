@@ -176,6 +176,42 @@ function notify(title, text) {
   child.on("error", () => {});
 }
 
+// M9 (2026-10-11, idea of cenomierz's "health"): the service tells about its
+// own failures — a notification when a car's check fails or a portal gave
+// nothing, once a day while it lasts, and once when it works again (11.10
+// the morning check hung on mobile.de for 50 minutes and nobody knew).
+// The state is a small file next to the records.
+const REMIND_MS = 24 * 3600 * 1000;
+const PORTAL_NAMES = {
+  mobile: "mobile.de", autoscout: "AutoScout24", autoscoutfr: "AutoScout24 FR", otomoto: "otomoto", kleinanzeigen: "Kleinanzeigen",
+  marktplaats: "Marktplaats", dehands: "2dehands", paruvendu: "ParuVendu", blocket: "Blocket", avby: "av.by",
+};
+async function healthNote(args, key, title, problem) {
+  const file = join(args.out, "health-state.json");
+  let state = {};
+  try {
+    state = JSON.parse(await readFile(file, "utf8")) || {};
+  } catch {
+    state = {};
+  }
+  const before = state[key];
+  const now = new Date();
+  if (problem) {
+    const fresh = !before || before.problem !== problem || now - Date.parse(before.notifiedAt || 0) > REMIND_MS;
+    if (!fresh) return;
+    state[key] = { since: before?.since || now.toISOString(), notifiedAt: now.toISOString(), problem };
+    log(`health — ${title}: ${problem}`);
+    if (!args.quiet) notify(title, problem);
+  } else {
+    if (!before) return;
+    delete state[key];
+    log(`health — ${title}: works again`);
+    if (!args.quiet) notify(title, "Monitoring znów działa");
+  }
+  await mkdir(args.out, { recursive: true });
+  await writeFile(file, `${JSON.stringify(state, null, 2)}\n`);
+}
+
 function summary(record) {
   const markets = Object.entries(record.markets || {}).map(([source, market]) => `${source} ${market.offers?.length || 0}/${market.total || 0}`).join(", ");
   const extra = record.extra ? Object.values(record.extra.markets || {}).reduce((sum, market) => sum + (market.offers?.length || 0), 0) : 0;
@@ -206,10 +242,14 @@ async function runJobs(args, jobs, onJob = () => {}) {
             notify(job.title || "Monitoring", text);
           }
         }
+        await healthNote(args, job.id, job.title || "Monitoring", null);
+        const silent = Object.keys(record.failed || {}).map((source) => PORTAL_NAMES[source] || source);
+        await healthNote(args, `${job.id}:portals`, job.title || "Monitoring", silent.length ? `Bez odpowiedzi: ${silent.join(", ")}` : null);
         onJob(job, true);
       } catch (error) {
         // One car failing does not stop the others.
         log(`job ${job.id} — failed: ${error.message}`);
+        await healthNote(args, job.id, job.title || "Monitoring", `Nie udało się sprawdzić: ${String(error.message || error).slice(0, 90)}`).catch(() => {});
         onJob(job, false, error);
       } finally {
         clearInterval(ticker);

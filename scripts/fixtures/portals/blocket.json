@@ -1,0 +1,268 @@
+{
+ "metadata": {
+  "result_size": {
+   "match_count": 164,
+   "group_count": 164
+  }
+ },
+ "docs": [
+  {
+   "type": "motor",
+   "id": "26995069",
+   "main_search_key": "SEARCH_ID_CAR_USED",
+   "heading": "Toyota Corolla",
+   "location": "Boden",
+   "image": {
+    "url": "https://images.blocketcdn.se/dynamic/default/item/26995069/9e66ed84-2d3e-4ea6-bd93-c946ed3857b4",
+    "path": "item/26995069/9e66ed84-2d3e-4ea6-bd93-c946ed3857b4",
+    "height": 3000,
+    "width": 4000,
+    "aspect_ratio": 1.3333333333333333
+   },
+   "flags": [],
+   "timestamp": 1790698032000,
+   "coordinates": {
+    "lat": 65.81363,
+    "lon": 21.72173,
+    "accuracy": 5
+   },
+   "ad_type": 20,
+   "labels": [],
+   "canonical_url": "https://www.blocket.se/mobility/item/26995069",
+   "extras": [],
+   "price": {
+    "amount": 105000,
+    "currency_code": "SEK",
+    "price_unit": "kr"
+   },
+   "org_id": "791888367",
+   "year": 2021,
+   "mileage": 44200,
+   "mileage_unit": "SCANDINAVIAN_MILE",
+   "dealer_segment": "Privat",
+   "service_documents": [
+    "Service"
+   ],
+   "regno": "CFK45F",
+   "make": "Toyota",
+   "model": "Corolla",
+   "model_specification": "Touring Sports Hybrid e-CVT",
+   "transmission": "Automatisk",
+   "fuel": "Hybrid bensin",
+   "registration_class": {
+    "id": 1,
+    "value": "Personbil"
+   },
+   "facade_title": "Toyota Corolla",
+   "chassis_number": "SB1Z93BE60E211136",
+   "sales_form": 1,
+   "used_car_of_the_year": [],
+   "image_urls": [
+    "https://images.blocketcdn.se/dynamic/default/item/26995069/9e66ed84-2d3e-4ea6-bd93-c946ed3857b4",
+    "https://images.blocketcdn.se/dynamic/default/item/26995069/d4cf80fc-6459-4e16-9c17-435293839982",
+    "https://images.blocketcdn.se/dynamic/default/item/26995069/6456160c-fe38-4c9d-a33f-0c418b98b074",
+    "https://images.blocketcdn.se/dynamic/default/item/26995069/41a59c8f-f094-4db8-833d-fb3d0a0bbc58",
+    "https://images.blocketcdn.se/dynamic/default/item/26995069/be295531-4d49-474c-b8f1-d100d0866e5a",
+    "https://images.blocketcdn.se/dynamic/default/item/26995069/ac8cd91e-03fa-40e8-821a-7e496d73dce4",
+    "https://images.blocketcdn.se/dynamic/default/item/26995069/ac06744c-44cf-43dc-ae71-9aceebd55600"
+   ],
+   "ad_id": 26995069
+  },
+  {
+   "type": "motor",
+   "id": "26513297",
+   "main_search_key": "SEARCH_ID_CAR_USED",
+   "heading": "Toyota Corolla",
+   "location": "Tumba",
+   "image": {
+    "url": "https://images.blocketcdn.se/dynamic/default/item/26513297/3b801d2c-c84f-4d66-b0ca-af02aa6fa04d",
+    "path": "item/26513297/3b801d2c-c84f-4d66-b0ca-af02aa6fa04d",
+    "height": 956,
+    "width": 1280,
+    "aspect_ratio": 1.3389121338912133
+   },
+   "flags": [],
+   "timestamp": 1789156569000,
+   "coordinates": {
+    "lat": 59.19538,
+    "lon": 17.82169,
+    "accuracy": 5
+   },
+   "ad_type": 20,
+   "labels": [],
+   "canonical_url": "https://www.blocket.se/mobility/item/26513297",
+   "extras": [],
+   "price": {
+    "amount": 129900,
+    "currency_code": "SEK",
+    "price_unit": "kr"
+   },
+   "org_id": "8512775",
+   "organisation_name": "B1 CARS",
+   "year": 2019,
+   "mileage": 21473,
+   "mileage_unit": "SCANDINAVIAN_MILE",
+   "dealer_segment": "Företag",
+   "service_documents": [],
+   "regno": "WCN49U",
+   "make": "Toyota",
+   "model": "Corolla",
+   "model_specification": "Hybrid e-CVT Life P-SENSOR NYSERVAD NYBES ADP-FART",
+   "transmission": "Automatisk",
+   "fuel": "Hybrid bensin",
+   "registration_class": {
+    "id": 1,
+    "value": "Personbil"
+   },
+   "facade_title": "Toyota Corolla",
+   "chassis_number": "sb1k93be90e011319",
+   "sales_form": 1,
+   "used_car_of_the_year": [],
+   "image_urls": [
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/3b801d2c-c84f-4d66-b0ca-af02aa6fa04d",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/c260d599-8c70-4879-828d-a5963dc681b2",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/3a5373a9-dfa1-4cc3-9f46-8e7cb1e09e49",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/6f10c835-b9f6-46dd-b45a-639c0201fea9",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/74b08c4c-b4e4-4971-8a0c-e4ba2e886ea4",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/1571f331-6edf-4f69-b3c5-e6274d3e1b1e",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/3ab3ff81-320b-4895-a557-a30d807c3746",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/b225534f-d41e-480e-b487-213a6e10c0a8",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/cfa698d1-934e-40be-a771-53381d7e0f13",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/51fc8962-3d3d-4dfb-a489-f312dd30a6be",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/82a79093-6c13-45d3-8eb2-a3d9dbe1ed1d",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/6c9dc923-3670-4716-8ebd-9a85c9792c70",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/569d2110-5704-477c-9eca-906b460e5a00",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/d9b1b36b-9b4f-45b1-bc80-15868f3a10d1",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/209ef308-4ec3-4561-ab81-e841fe9718c1",
+    "https://images.blocketcdn.se/dynamic/default/item/26513297/4293a9c3-f54d-41fb-ad48-4c3b84c15222"
+   ],
+   "ad_id": 26513297
+  },
+  {
+   "type": "motor",
+   "id": "25823627",
+   "main_search_key": "SEARCH_ID_CAR_USED",
+   "heading": "Toyota Corolla",
+   "location": "Askim",
+   "image": {
+    "url": "https://images.blocketcdn.se/dynamic/default/item/25823627/b870a9c6-faed-4a7c-951a-fa7a36f8360f",
+    "path": "item/25823627/b870a9c6-faed-4a7c-951a-fa7a36f8360f",
+    "height": 3024,
+    "width": 4032,
+    "aspect_ratio": 1.3333333333333333
+   },
+   "flags": [],
+   "timestamp": 1787650292000,
+   "coordinates": {
+    "lat": 57.62868,
+    "lon": 11.92012,
+    "accuracy": 5
+   },
+   "ad_type": 20,
+   "labels": [],
+   "canonical_url": "https://www.blocket.se/mobility/item/25823627",
+   "extras": [],
+   "price": {
+    "amount": 140000,
+    "currency_code": "SEK",
+    "price_unit": "kr"
+   },
+   "org_id": "1357952565",
+   "year": 2020,
+   "mileage": 25700,
+   "mileage_unit": "SCANDINAVIAN_MILE",
+   "dealer_segment": "Privat",
+   "service_documents": [],
+   "regno": "AWN13P",
+   "make": "Toyota",
+   "model": "Corolla",
+   "model_specification": "Touring Sports Hybrid e-CVT",
+   "transmission": "Automatisk",
+   "fuel": "Hybrid bensin",
+   "registration_class": {
+    "id": 1,
+    "value": "Personbil"
+   },
+   "facade_title": "Toyota Corolla",
+   "chassis_number": "SB1Z93BE10E031837",
+   "sales_form": 1,
+   "used_car_of_the_year": [],
+   "image_urls": [
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/b870a9c6-faed-4a7c-951a-fa7a36f8360f",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/67415cb2-9c42-4fae-9e55-e325a4eead21",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/f6b5b2f8-dc24-4985-85b5-4a4470e1369b",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/53628dfd-25ba-4594-a7ee-1c22dfc34920",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/2569e107-4679-406a-a176-5edda19b359c",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/337cd587-9820-4d90-ac4b-5cd8d8eba7b1",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/86146ce4-7a5c-4d00-bebd-88196a08246f",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/0f70066c-2b8f-4e99-ab92-8a006388c3eb",
+    "https://images.blocketcdn.se/dynamic/default/item/25823627/6e6d107b-b2cf-4f20-a730-6a5a36930ee1"
+   ],
+   "ad_id": 25823627
+  },
+  {
+   "type": "motor",
+   "id": "13744789",
+   "main_search_key": "SEARCH_ID_CAR_USED",
+   "heading": "Toyota Corolla",
+   "location": "Upplands Väsby",
+   "image": {
+    "url": "https://images.blocketcdn.se/dynamic/default/item/13744789/31038b71-090c-49c1-b78a-acca82735c1f",
+    "path": "item/13744789/31038b71-090c-49c1-b78a-acca82735c1f",
+    "height": 960,
+    "width": 1280,
+    "aspect_ratio": 1.3333333333333333
+   },
+   "flags": [],
+   "timestamp": 1790864108000,
+   "coordinates": {
+    "lat": 59.51691,
+    "lon": 17.93589,
+    "accuracy": 5
+   },
+   "ad_type": 20,
+   "labels": [],
+   "canonical_url": "https://www.blocket.se/mobility/item/13744789",
+   "extras": [],
+   "price": {
+    "amount": 149000,
+    "currency_code": "SEK",
+    "price_unit": "kr"
+   },
+   "org_id": "5555297",
+   "organisation_name": "Väsby Bildepå",
+   "year": 2019,
+   "mileage": 16740,
+   "mileage_unit": "SCANDINAVIAN_MILE",
+   "dealer_segment": "Företag",
+   "service_documents": [],
+   "regno": "ERW65N",
+   "make": "Toyota",
+   "model": "Corolla",
+   "model_specification": "1.8 Hybrid 122hk e-CVT / Backkamera / LDA / Nybes",
+   "transmission": "Automatisk",
+   "fuel": "Hybrid bensin",
+   "registration_class": {
+    "id": 1,
+    "value": "Personbil"
+   },
+   "facade_title": "Toyota Corolla",
+   "chassis_number": "sb1k93be40e059326",
+   "sales_form": 1,
+   "used_car_of_the_year": [],
+   "image_urls": [
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/31038b71-090c-49c1-b78a-acca82735c1f",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/7047747c-15b2-48a8-9fe9-25149efe4a38",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/8dab00f0-4755-4fc8-9f99-67fad312f5bb",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/aa85acdd-8faf-4a17-889a-45afd2ed68d3",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/fced6937-bbf8-4c61-8577-f27cf1273368",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/7c0ed917-f607-4516-a960-7ffc8d70a1d7",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/444b27a4-c663-4fb2-b635-2b466b3fd31f",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/c63c1fb4-39e9-42b6-9163-17a11772a289",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/4f2303fd-5d5f-45bc-b11e-5fefcd4b2bfc",
+    "https://images.blocketcdn.se/dynamic/default/item/13744789/f7a7887e-b46d-4771-aefc-166e22e70063"
+   ],
+   "ad_id": 13744789
+  }
+ ]
+}

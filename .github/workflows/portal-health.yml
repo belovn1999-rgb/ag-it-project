@@ -1,0 +1,34 @@
+name: Portals health
+
+# Every morning, before the 9:30 Monitoring check (M9, 2026-10-11): one known
+# search on each portal (Toyota Corolla 2019–2021) is read live, through our
+# Worker, by the page's own parsers (scripts/portals/health.mjs). A portal
+# that changed its page, refuses us or answers empty fails the run, and GitHub
+# e-mails the owner, as when CI fails. mobile.de is checked on the Mac.
+on:
+  schedule:
+    - cron: "40 5 * * *"
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/portals/**"
+      - ".github/workflows/portal-health.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portal-health
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/portals/health.mjs
