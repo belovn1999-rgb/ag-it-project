@@ -25,6 +25,10 @@
   const offerId = params.get("id") || "";
   // Inside program 06 (oferty.html, owner 2026-10-11): the settings open.
   const EMBED = params.get("embed") === "1";
+  // The offer as a web page (owner 2026-10-11): in program 06 (view=web) and
+  // for the client by a link (view=client, the offer packed in the link's #).
+  const CLIENT = params.get("view") === "client";
+  let viewMode = CLIENT || params.get("view") === "web" ? "web" : "sheets";
   const stage = document.querySelector("[data-offer-stage]");
   const panel = document.querySelector("[data-offer-panel]");
   const statusLine = document.querySelector("[data-offer-status]");
@@ -141,6 +145,12 @@
   const withFirm = (name) => (!name ? "" : /autogood/i.test(name) ? name : L(`${name} z AUTOGOOD`, `${name}, AUTOGOOD`));
   const fuelShort = (fuel) => String(fuel || "").replace(/\s*\(.*\)$/, "");
 
+  // The ad's facts; a client's link carries them read already (no description).
+  function factsOf(ad) {
+    if (ad?.packedFacts) return ad.packedFacts;
+    return FACTS && ad ? FACTS.read(ad) : { business: null, fee: null, isNew: false, availability: null };
+  }
+
   function carView() {
     const car = offer.car || {};
     const ad = offer.ad || null;
@@ -186,8 +196,9 @@
       // Only a web address is ever a link in the offer.
       url: /^https:\/\//.test(offer.url || car.url || "") ? offer.url || car.url : "",
       images: ad?.images || [],
+      imageCount: Number(ad?.imageCount) || (ad?.images || []).length,
       // What the ad says about the deal (offer-facts.js, owner 2026-10-11).
-      facts: FACTS && ad ? FACTS.read(ad) : { business: null, fee: null, isNew: false, availability: null },
+      facts: factsOf(ad),
     };
   }
 
@@ -221,7 +232,7 @@
     margin: { tab: 4, label: "Zakup przez AUTOGOOD · faktura VAT marża", labelRu: "Покупка через AUTOGOOD · счёт-фактура «НДС-маржа»", short: "przez AUTOGOOD ·\u00a0VAT\u00a0marża", shortRu: "через AUTOGOOD ·\u00a0НДС-маржа" },
   };
   // A dealer selling only to firms or for export: never straight (owner 2026-10-11).
-  const businessOnly = () => Boolean(FACTS && offer?.ad && FACTS.read(offer.ad).business);
+  const businessOnly = () => Boolean(offer?.ad && factsOf(offer.ad).business);
   const offerMethod = () => {
     const key = METHODS[offer?.method] ? offer.method : "direct";
     return key === "direct" && businessOnly() ? (netEur() > 0 ? "vat" : "margin") : key;
@@ -594,7 +605,7 @@
     return [first, kmText(view.mileage)].filter(Boolean).join(" · ");
   }
 
-  function sheetOne(view) {
+  function sheetOne(view, asParts = false) {
     const market = marketView(view);
     const portalCard = market ? "" : portalMarket(view);
     const poland = polandView();
@@ -654,24 +665,18 @@
         `Это авто: <b>${numbers.format(listedDays)} ${daysWord(listedDays)}</b> в продаже${!listedAt && adAge?.kind === "atLeast" ? " (как минимум)" : ""}${adAge?.dropped ? `, цена снижена ${adAge.drops}× (−${percent(adAge.share)})` : adAge?.changes?.length ? "" : ", цена без изменений"}.`)
       : "";
     const adAgeHtml = adAgeText && !isHidden("adAge") && !portalCard.includes("ofMoveList") ? `<div class="ofAdAge">${hideToggle("adAge")}<p>${adAgeText}</p>${priceMovesHtml(adAge.changes)}</div>` : "";
-    return `
-      <div class="ofSheet" data-sheet="1">
-        <article class="ofPage${styleClass()}" data-page="1" lang="${ru() ? "ru" : "pl"}">
-          ${headHtml(1, view)}
-          <section class="ofHero">
-            <div class="ofPhotoColumn">
-              <figure class="ofPhoto">
+    // Owner 2026-10-11: the same blocks make the A4 sheet and the web page
+    // (program 06 and the client's link), so a text edited or a block hidden
+    // is so in both.
+    const parts = {
+      photo: `              <figure class="ofPhoto">
                 ${photo ? `<img src="${esc(photo)}" data-source="${esc(photo)}" alt="${esc(view.title)}" crossorigin="anonymous" data-photo-main${photoFrame()} />` : `<div class="ofPhotoEmpty">${icon("car")}<span>${reading ? L("Wczytuję zdjęcie z ogłoszenia…", "Загружаю фото из объявления…") : L("Zdjęcie z ogłoszenia pojawi się po wczytaniu danych", "Фото из объявления появится после загрузки данных")}</span></div>`}
-                ${view.images.length > 1 ? `<span class="ofPhotoCount">${L(`${view.images.length} ${plural(view.images.length, "zdjęcie", "zdjęcia", "zdjęć")} w ogłoszeniu`, `${view.images.length} фото в объявлении`)}</span>` : ""}
-              </figure>
-              ${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>${L("Ogłoszenie na", "Объявление на")} ${esc(PORTAL[offer.source] || L("portalu", "портале"))}</span></a>` : ""}
-            </div>
-            <div class="ofHeroInfo">
-              <div class="ofHeroTitle">
-                ${kicker(view) ? `<p class="ofKicker">${esc(kicker(view))}</p>` : ""}
-                ${field("title", view.title, "h1", "ofTitle")}
-              </div>
-              ${costView ? `<div class="ofPriceBox">
+                ${view.imageCount > 1 ? `<span class="ofPhotoCount">${L(`${view.imageCount} ${plural(view.imageCount, "zdjęcie", "zdjęcia", "zdjęć")} w ogłoszeniu`, `${view.imageCount} фото в объявлении`)}</span>` : ""}
+              </figure>`,
+      adLink: `${view.url ? `<a class="ofAdLink" href="${esc(view.url)}" target="_blank" rel="noopener">${icon("link")}<span>${L("Ogłoszenie na", "Объявление на")} ${esc(PORTAL[offer.source] || L("portalu", "портале"))}</span></a>` : ""}`,
+      kicker: `${kicker(view) ? `<p class="ofKicker">${esc(kicker(view))}</p>` : ""}`,
+      title: field("title", view.title, "h1", "ofTitle"),
+      price: `${costView ? `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}*</p>
                 <p class="ofPrice">${esc(money(costView.total, "PLN"))}</p>
                 ${buyAsText(view) ? field("buyAs", buyAsText(view), "p", "ofBuyAs") : ""}
@@ -682,16 +687,13 @@
                 <p class="ofPrice">${esc(money(view.price, view.currency))}</p>
                 ${buyAsText(view) ? field("buyAs", buyAsText(view), "p", "ofBuyAs") : ""}
                 ${field("priceNoteAd", L("Koszt na gotowo policzymy indywidualnie.", "Стоимость «под ключ» рассчитаем индивидуально."), "p", "ofPriceFoot")}
-              </div>`}
-              ${chips.length ? `<div class="ofChips${blockClass("chips")}">${chips.join("")}</div>` : ""}
-              ${kpiHtml(market, poland, verdict)}
-            </div>
-          </section>
-          <section class="ofSpecs${blockClass("specs")}">
+              </div>`}`,
+      chips: `${chips.length ? `<div class="ofChips${blockClass("chips")}">${chips.join("")}</div>` : ""}`,
+      kpis: kpiHtml(market, poland, verdict),
+      specs: `<section class="ofSpecs${blockClass("specs")}">
             ${specs.map(([label, value]) => `<div class="ofSpec"><span>${esc(label)}</span><b title="${esc(value)}">${esc(value)}</b></div>`).join("")}
-          </section>
-          <div class="ofGrid">
-            ${market ? `
+          </section>`,
+      market: `${market ? `
             <section class="ofCard${blockClass("market")}" data-block="market">
               ${hideToggle("market")}
               <p class="ofCardHead">${icon("chart")}${L("Cena na tle rynku", "Цена на фоне рынка")}</p>
@@ -707,8 +709,8 @@
               ${carvagoLines()}
               ${poland ? `<div class="ofPoland${polandHidden(poland) ? " ofBlockHidden" : ""}">${field("polandLine", poland.line, "span")}</div>` : ""}
               ${adAgeHtml}
-            </section>` : portalCard.replace("<!--adAge-->", adAgeHtml)}
-            ${verdict ? `
+            </section>` : portalCard.replace("<!--adAge-->", adAgeHtml)}`,
+      verdict: `${verdict ? `
             <section class="ofCard${blockClass("verdict")}" data-block="verdict">
               ${hideToggle("verdict")}
               <p class="ofCardHead">${icon("shield")}${L("Ocena AUTOGOOD", "Оценка AUTOGOOD")}</p>
@@ -718,10 +720,8 @@
                   <li class="ofCheck is${line.level.charAt(0).toUpperCase()}${line.level.slice(1)}${blockClass(`check:${line.id}`)}">${icon(line.level === "ok" ? "check" : line.level === "info" ? "info" : line.level)}<span>${field(`check:${line.id}`, line.text)}${line.quote ? `<q>${esc(line.quote)}</q>` : ""}${hideToggle(`check:${line.id}`)}</span></li>`).join("")}
               </ul>
               ${field("inspect", `${verdict.level === "ok" ? "* " : ""}${L("Przed zakupem przeprowadzimy diagnostykę i jazdę próbną, sprawdzimy dokumenty i historię auta.", "Перед покупкой проведём диагностику и тест-драйв, перепроверим документы и историю авто.")}`, "p", "ofInspect")}
-            </section>` : ""}
-          </div>
-          <div class="ofGrid">
-            <section class="ofCard${blockClass("equipment")}" data-block="equipment">
+            </section>` : ""}`,
+      equipment: `<section class="ofCard${blockClass("equipment")}" data-block="equipment">
               ${hideToggle("equipment")}
               <p class="ofCardHead">${icon("list")}${L("Wyposażenie — najważniejsze", "Оснащение — главное")}</p>
               ${keyOptions.length
@@ -730,14 +730,43 @@
                 : `<p class="ofSmall">${reading ? L("Wczytuję wyposażenie z ogłoszenia…", "Загружаю оснащение из объявления…")
                   : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${many(allOptions.length, ["pozycja", "pozycje", "pozycji"], ["позиция", "позиции", "позиций"])} ${L("wyposażenia w ogłoszeniu", "оснащения в объявлении")}${listOnTwo ? L(" (lista na str. 2)", " (список на стр. 2)") : ""}` : L("Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.", "Продавец не отметил оснащение в списке портала - подтвердим его до покупки."))
                   : L("Wyposażenie pojawi się po wczytaniu danych z ogłoszenia.", "Оснащение появится после загрузки данных объявления.")}</p>`}
-            </section>
-            <section class="ofCard${blockClass("seller")}" data-block="seller">
+            </section>`,
+      seller: `<section class="ofCard${blockClass("seller")}" data-block="seller">
               ${hideToggle("seller")}
               <p class="ofCardHead">${icon("store")}${L("Sprzedawca", "Продавец")}</p>
               ${sellerName ? `<p class="ofSellerName">${esc(sellerName)}</p>` : ""}
               ${sellerFacts.length ? `<div class="ofSellerFacts">${sellerFacts.map(([value, word]) => `<div><b>${value}</b><span>${word}</span></div>`).join("")}</div>` : ""}
               ${seller?.city || view.city ? `<p class="ofSmall ofPlace">${placeHtml(seller?.city || view.city, seller?.country || view.country)}</p>` : ""}
-            </section>
+            </section>`,
+    };
+    if (asParts) return parts;
+    return `
+      <div class="ofSheet" data-sheet="1">
+        <article class="ofPage${styleClass()}" data-page="1" lang="${ru() ? "ru" : "pl"}">
+          ${headHtml(1, view)}
+          <section class="ofHero">
+            <div class="ofPhotoColumn">
+              ${parts.photo}
+              ${parts.adLink}
+            </div>
+            <div class="ofHeroInfo">
+              <div class="ofHeroTitle">
+                ${parts.kicker}
+                ${parts.title}
+              </div>
+              ${parts.price}
+              ${parts.chips}
+              ${parts.kpis}
+            </div>
+          </section>
+          ${parts.specs}
+          <div class="ofGrid">
+            ${parts.market}
+            ${parts.verdict}
+          </div>
+          <div class="ofGrid">
+            ${parts.equipment}
+            ${parts.seller}
           </div>
           <footer class="ofFoot">
             <span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span>
@@ -903,7 +932,7 @@
     }).join("")}</ol>`;
   }
 
-  function sheetTwo(view) {
+  function sheetTwo(view, asParts = false) {
     const costView = costs();
     const negotiation = VERDICT ? VERDICT.negotiation({ car: offer.car, ad: offer.ad, market: { ...offer.market, ad: adHistory() } }) : null;
     const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
@@ -917,12 +946,8 @@
     // The calculator's picture only in its own language (owner 2026-10-11: a
     // Russian offer all in Russian); in the other one the table of its lines.
     const calcShot = offer.calcImage && offer.calc && (offer.calc.method || "direct") === offerMethod() && (offer.calc.lang || "pl") === (ru() ? "ru" : "pl") ? offer.calcImage : "";
-    const costsHtml = calcShot ? `
- <section class="ofCard ofCostsCard ofCalcShotCard${blockClass("costs")}" data-block="costs">
-        ${hideToggle("costs")}
-        <p class="ofCardHead">${icon("receipt")}${L("Kalkulacja na gotowo", "Расчёт «под ключ»")}</p>
-        <img class="ofCalcShot" src="${esc(calcShot)}" alt="${esc(L("Kalkulacja AUTOGOOD", "Расчёт AUTOGOOD"))}" />
-      </section>` : costView ? `
+    // The web page always takes the table (text, not a picture).
+    const costsTable = costView ? `
       <section class="ofCard ofCostsCard${blockClass("costs")}" data-block="costs">
         ${hideToggle("costs")}
         <p class="ofCardHead">${icon("receipt")}${L("Koszt na gotowo", "Стоимость «под ключ»")}</p>
@@ -935,6 +960,12 @@
         </table>
         ${field("costsNote", costView.note, "p", "ofSmall")}
       </section>` : "";
+    const costsHtml = calcShot ? `
+ <section class="ofCard ofCostsCard ofCalcShotCard${blockClass("costs")}" data-block="costs">
+        ${hideToggle("costs")}
+        <p class="ofCardHead">${icon("receipt")}${L("Kalkulacja na gotowo", "Расчёт «под ключ»")}</p>
+        <img class="ofCalcShot" src="${esc(calcShot)}" alt="${esc(L("Kalkulacja AUTOGOOD", "Расчёт AUTOGOOD"))}" />
+      </section>` : costsTable;
     const negotiationHtml = negotiation ? `
       <section class="ofCard ofNegoCard${blockClass("negotiation")}" data-block="negotiation">
         ${hideToggle("negotiation")}
@@ -980,6 +1011,7 @@
         <p class="ofCardHead">${icon("list")}${L("Pełne wyposażenie z ogłoszenia", "Полное оснащение из объявления")} (${numbers.format(allOptions.length)})</p>
         <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(optionLabel(item.label))}</li>`).join("")}</ul>
       </section>` : "";
+    if (asParts) return { process: processHtml, costs: withCosts ? costsTable : "", negotiation: negotiationHtml, contact: contactHtml, options: optionsHtml };
     const body = withCosts
       ? `<div class="ofTwoCols"><div>${processHtml}</div><div class="ofSideCol">${costsHtml}${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`
       : `${processHtml}<div class="ofBottomRow">${negotiationHtml}${contactHtml}</div>${optionsHtml}`;
@@ -996,9 +1028,78 @@
       </div>`;
   }
 
+  // ---- The web page (owner 2026-10-11) ---------------------------------------------------
+  // Program 06 shows the offer as a page, section after section (as its
+  // auction report), and a client can get the same page by a link. Its blocks
+  // are the sheets' own: an edited text or a hidden block is so in both.
+  function webHtml(view) {
+    const one = sheetOne(view, true);
+    const two = sheetTwo(view, true);
+    const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
+    const fullList = allOptions.length ? `<details class="owAll"><summary>${L(`Pełne wyposażenie z ogłoszenia (${numbers.format(allOptions.length)})`, `Полное оснащение из объявления (${numbers.format(allOptions.length)})`)}</summary><ul>${allOptions.map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(optionLabel(item.label))}</li>`).join("")}</ul></details>` : "";
+    const at = one.equipment.lastIndexOf("</section>");
+    const equipment = at >= 0 ? `${one.equipment.slice(0, at)}${fullList}${one.equipment.slice(at)}` : one.equipment;
+    return `
+      <div class="ofWeb${styleClass()}" lang="${ru() ? "ru" : "pl"}">
+        ${headHtml(1, view)}
+        <section class="owHero">
+          <div class="owPhoto">${one.photo}</div>
+          <div class="owSide">
+            <div class="owTitle">${one.kicker}${one.title}${one.adLink}</div>
+            ${one.price}
+            ${one.chips}
+          </div>
+        </section>
+        ${one.specs}
+        <div class="owGrid">${one.market}${one.verdict}</div>
+        <div class="owGrid">${equipment}${one.seller}</div>
+        ${two.process}
+        <div class="owGrid">${two.costs}<div class="owStack">${two.negotiation}${two.contact}</div></div>
+        <footer class="ofFoot"><span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span><span>${esc(dateText(offer.createdAt))}</span></footer>
+      </div>`;
+  }
+
+  // ---- The client's link: the offer packed into the address (no server; it
+  // lives in the manager's browser). The calculator's picture and the long
+  // texts stay out; the page shows the calculation as a table.
+  const toBase64Url = (bytes) => {
+    let text = "";
+    bytes.forEach((byte) => { text += String.fromCharCode(byte); });
+    return btoa(text).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  };
+  const fromBase64Url = (text) => Uint8Array.from(atob(String(text).replace(/-/g, "+").replace(/_/g, "/")), (char) => char.charCodeAt(0));
+  async function packOffer(source) {
+    // The facts and the verdict read here (from the whole description), the
+    // description itself left out: a shorter link, the same page.
+    const ad = source.ad ? {
+      ...source.ad,
+      description: "",
+      packedFacts: factsOf(source.ad),
+      images: (source.ad.images || []).slice(0, 1),
+      imageCount: Number(source.ad.imageCount) || (source.ad.images || []).length,
+      flags: { ...(source.ad.flags || {}), aiSummary: "", aiInsights: [] },
+    } : null;
+    const packedVerdict = VERDICT ? VERDICT.assess({ car: source.car, ad: source.ad, market: source.market, lang: ru() ? "ru" : "pl", method: offerMethod() }) : null;
+    const slim = { ...source, ad, packedVerdict, calcImage: "", importer: "", favoriteId: "", adError: "", carvagoError: "" };
+    const stream = new Blob([JSON.stringify(slim)]).stream().pipeThrough(new CompressionStream("deflate-raw"));
+    return toBase64Url(new Uint8Array(await new Response(stream).arrayBuffer()));
+  }
+  async function unpackOffer(text) {
+    const stream = new Blob([fromBase64Url(text)]).stream().pipeThrough(new DecompressionStream("deflate-raw"));
+    return JSON.parse(await new Response(stream).text());
+  }
+  async function clientLink() {
+    const link = new URL("oferta.html", window.location.href);
+    link.search = "";
+    link.searchParams.set("view", "client");
+    link.hash = `o=${await packOffer(offer)}`;
+    return link.toString();
+  }
+
   function verdictView(view) {
     if (!VERDICT) return null;
-    const result = VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market, lang: ru() ? "ru" : "pl", method: offerMethod() });
+    // A client's link carries the verdict as the manager saw it.
+    const result = offer.packedVerdict || VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market, lang: ru() ? "ru" : "pl", method: offerMethod() });
     const level = offer.verdictLevel || result.verdict;
     const label = L({ ok: "Rekomendujemy do dalszego sprawdzenia*", check: "Do weryfikacji przed rezerwacją", risk: "Nie rekomendujemy" }, { ok: "Рекомендуем к дальнейшей проверке*", check: "Нужна проверка до резервации", risk: "Не рекомендуем" })[level];
     // Up to six lines on the sheet: the most important first.
@@ -1127,7 +1228,7 @@
         <p>${U(`${verdict.all.filter((line) => line.level === "risk").length} czerwonych, ${verdict.all.filter((line) => line.level === "warn").length} żółtych, ${verdict.all.filter((line) => line.level === "ok").length} zielonych. Linie ukrywa się w trybie „Edytuj teksty”.`, `Красных: ${verdict.all.filter((line) => line.level === "risk").length}, жёлтых: ${verdict.all.filter((line) => line.level === "warn").length}, зелёных: ${verdict.all.filter((line) => line.level === "ok").length}. Строки скрываются в режиме «Править тексты».`)}</p>
       </section>` : ""}
       <section class="ofPanelCard">
-        <h2>${U("Bloki w PDF", "Блоки в PDF")}</h2>
+        <h2>${U("Bloki na stronie i w PDF", "Блоки на странице и в PDF")}</h2>
         <div class="ofToggleList">${BLOCKS.map(([key, pl, russian]) => `<label><input type="checkbox" data-block-toggle="${key}"${(key === "poland" ? polandHidden(polandView()) : key === "allOptions" ? !(offer.shown || []).includes("allOptions") || isHidden(key) : isHidden(key)) ? "" : " checked"} /> ${esc(U(pl, russian))}</label>`).join("")}</div>
         ${polandView()?.saving < 0 ? `<p class="ofPanelError">${U(`Podobne auta w Polsce są średnio o ${esc(money(-polandView().saving, "PLN"))} tańsze niż to auto na gotowo — dlatego linia „W Polsce” jest domyślnie ukryta.`, `Похожие авто в Польше в среднем на ${esc(money(-polandView().saving, "PLN"))} дешевле, чем это авто «под ключ», — поэтому строка «В Польше» по умолчанию скрыта.`)}</p>` : ""}
       </section>
@@ -1174,7 +1275,73 @@
     if (send) send.textContent = U("Wyślij", "Отправить");
     const back = document.querySelector(".offerBack");
     if (back) back.textContent = offer?.origin === "link" ? `← ${U("Oferta", "Предложение")}` : "← Monitoring";
+    document.querySelectorAll("[data-offer-view]").forEach((button) => {
+      button.textContent = button.dataset.offerView === "web" ? U("Strona", "Страница") : U("Arkusze PDF", "Листы PDF");
+      button.setAttribute("aria-pressed", String(button.dataset.offerView === viewMode));
+    });
+    const link = document.querySelector("[data-offer-link]");
+    if (link) link.textContent = U("Link dla klienta", "Ссылка для клиента");
+    const linkLabel = document.querySelector("[data-offer-link-row] label");
+    if (linkLabel?.firstChild?.nodeType === Node.TEXT_NODE) linkLabel.firstChild.nodeValue = U("Link dla klienta", "Ссылка для клиента");
+    const linkCopy = document.querySelector("[data-offer-link-copy]");
+    if (linkCopy) linkCopy.textContent = U("Kopiuj", "Копировать");
   }
+
+  // The page or the A4 sheets; the client's link (owner 2026-10-11).
+  document.querySelector("[data-offer-views]")?.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-offer-view]");
+    if (!button || button.dataset.offerView === viewMode) return;
+    viewMode = button.dataset.offerView === "web" ? "web" : "sheets";
+    render();
+  });
+  const linkRow = document.querySelector("[data-offer-link-row]");
+  const linkField = document.querySelector("[data-offer-link-field]");
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      linkField?.select();
+      try {
+        return document.execCommand("copy");
+      } catch {
+        return false;
+      }
+    }
+  }
+  document.querySelector("[data-offer-link]")?.addEventListener("click", async () => {
+    if (!offer || !linkRow) return;
+    try {
+      const url = await clientLink();
+      linkField.value = url;
+      linkRow.hidden = false;
+      const copied = await copyText(url);
+      await save({ sharedAt: new Date().toISOString(), draft: false }, false);
+      setStatus(copied
+        ? U(`Link skopiowany (${numbers.format(url.length)} znaków) — klient zobaczy tę stronę bez ustawień.`, `Ссылка скопирована (${numbers.format(url.length)} знаков) — клиент увидит эту страницу без настроек.`)
+        : U("Skopiuj link z pola obok.", "Скопируйте ссылку из поля рядом."));
+    } catch (error) {
+      setStatus(`${U("Nie udało się przygotować linku", "Не удалось подготовить ссылку")} (${error?.message || error}).`, true);
+    }
+  });
+  document.querySelector("[data-offer-link-copy]")?.addEventListener("click", async () => {
+    if (linkField?.value && (await copyText(linkField.value))) setStatus(U("Link skopiowany.", "Ссылка скопирована."));
+  });
+
+  // In program 06's frame the settings follow the page's scroll (the frame
+  // itself does not scroll): 06 sends where its window is.
+  window.addEventListener("message", (event) => {
+    if (!EMBED || event.origin !== window.location.origin || event.data?.type !== "ag-offer-viewport" || !panel) return;
+    if (window.matchMedia("(max-width: 899px)").matches) {
+      panel.style.removeProperty("top");
+      panel.style.removeProperty("max-height");
+      return;
+    }
+    const rest = panel.offsetTop - (Number.parseFloat(panel.style.top) || 0);
+    const room = Math.max(0, stage.offsetHeight - Math.min(panel.scrollHeight, event.data.height - 24));
+    panel.style.maxHeight = `${Math.max(320, event.data.height - 24)}px`;
+    panel.style.top = `${Math.max(0, Math.min(room, event.data.top + 12 - rest))}px`;
+  });
 
   // ---- Drawing ------------------------------------------------------------------------------
   let fontsSettled = false;
@@ -1187,7 +1354,10 @@
     stage.classList.toggle("isEditing", editing);
     stage.classList.add("isScreen");
     // Real dashes (owner 2026-10-11: "пусть будет тире"; the 10-05 hyphen-only rule is dropped).
-    stage.innerHTML = sheetOne(view) + sheetTwo(view);
+    const sheets = sheetOne(view) + sheetTwo(view);
+    // The web page with the sheets kept out of sight for the PDF and its fitting.
+    stage.innerHTML = viewMode === "web" ? `${webHtml(view)}<div class="ofSheetsHold" aria-hidden="true">${sheets}</div>` : sheets;
+    stage.classList.toggle("isWeb", viewMode === "web");
     // A photo server that refuses other sites (otomoto) still shows the photo
     // on screen without CORS; the PDF reads its bytes another way (photoData).
     stage.querySelectorAll("img[data-photo-main]").forEach((image) => image.addEventListener("error", () => {
@@ -1195,7 +1365,7 @@
       image.removeAttribute("crossorigin");
       image.src = image.dataset.source;
     }, { once: true }));
-    panel.innerHTML = panelHtml(view);
+    panel.innerHTML = CLIENT ? "" : panelHtml(view);
     // Fitted again once the web fonts are in (a fallback font is wider and
     // would take options and checks off a sheet that has room for them).
     if (!fontsSettled && document.fonts?.status !== "loaded") {
@@ -1316,7 +1486,7 @@
 
   // ---- Saving --------------------------------------------------------------------------------
   async function save(change, redraw = true) {
-    if (!offer) return;
+    if (!offer || CLIENT) return;
     try {
       offer = (await store.update(offer.id, change)) || offer;
       if (redraw) render();
@@ -1925,9 +2095,11 @@
     pdfButton.disabled = true;
     setStatus(U("Przygotowuję PDF…", "Готовлю PDF…"));
     try {
+      // The sheets drawn again: a text edited on the web page is in them.
+      if (viewMode === "web" && !editing) render();
       const { bytes, name } = await buildPdf();
       download(new Blob([bytes], { type: "application/pdf" }), name);
-      await save({ exportedAt: new Date().toISOString() }, false);
+      if (!CLIENT) await save({ exportedAt: new Date().toISOString(), draft: false }, false);
       setStatus(`${U("PDF gotowy", "PDF готов")}: ${name}`);
     } catch (error) {
       setStatus(`${U("Nie udało się przygotować PDF", "Не удалось подготовить PDF")} (${error?.message || error}).`, true);
@@ -1939,6 +2111,7 @@
   async function copyPicture() {
     if (!offer) return;
     copyButton.disabled = true;
+    if (viewMode === "web" && !editing) render();
     setStatus(U("Przygotowuję obraz strony 1…", "Готовлю картинку страницы 1…"));
     const blobPromise = captureSheet(1, 2).then((shot) => new Promise((resolve, reject) => shot.canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png"))), "image/png")));
     try {
@@ -2038,7 +2211,7 @@
       mailInput.focus();
       return;
     }
-    await save((stored) => ({ client: { ...(stored.client || {}), email: to } }), false);
+    await save((stored) => ({ client: { ...(stored.client || {}), email: to }, draft: false }), false);
     await makePdf();
     const { subject, body } = mailText();
     // From the frame of program 06 the page itself opens the mail program.
@@ -2081,6 +2254,18 @@
   }
 
   async function open() {
+    if (CLIENT) {
+      document.documentElement.classList.add("ofClient");
+      try {
+        offer = await unpackOffer(new URLSearchParams(window.location.hash.slice(1)).get("o") || "");
+      } catch {
+        problem("Ten link jest niepełny — poproś o nowy. / Ссылка неполная — попросите новую.");
+        return;
+      }
+      render();
+      setStatus("");
+      return;
+    }
     if (!store) {
       problem("Ta przeglądarka nie pozwala zapisywać ofert (brak IndexedDB).");
       return;

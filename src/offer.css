@@ -1102,3 +1102,92 @@
 .ofEmbed body { padding-top: 0 !important; }
 .ofEmbed .offerBar { position: static; }
 .ofEmbed .offerPanel { position: static; max-height: none; overflow: visible; }
+
+/* ---- The offer as a web page (owner 2026-10-11) ------------------------------
+ * Program 06 (oferta.html?embed=1&view=web) and the client's link
+ * (?view=client): the sheets' blocks one after another on a white page,
+ * larger type than A4; the sheets themselves wait out of sight for the PDF. */
+.offerViewSwitch { display: inline-flex; gap: 0; }
+.offerViewSwitch .offerButton { border-radius: 0; }
+.offerViewSwitch .offerButton:first-child { border-radius: 8px 0 0 8px; }
+.offerViewSwitch .offerButton:last-child { border-radius: 0 8px 8px 0; margin-left: -1px; }
+.ofSheetsHold { position: absolute; left: -12000px; top: 0; width: 794px; visibility: hidden; pointer-events: none; }
+.offerStage.isWeb { align-items: stretch; }
+.ofWeb { box-sizing: border-box; position: relative; width: 100%; max-width: 1040px; margin: 0 auto; padding: 22px 26px 18px; border-radius: 16px; background: #ffffff; box-shadow: 0 1px 2px rgba(16, 32, 48, 0.06), 0 10px 30px -12px rgba(16, 32, 48, 0.18); color: var(--of-ink); font-size: 14px; }
+.ofWeb .ofHead { margin-bottom: 16px; }
+.ofWeb .ofCardHead { font-size: 12.5px; margin-bottom: 10px; }
+.ofWeb .ofCard { padding: 16px 18px; }
+.owHero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px; align-items: start; }
+.owPhoto .ofPhoto { aspect-ratio: 3 / 2; border-radius: 14px; }
+.owPhoto .ofPhoto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.owSide { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.owTitle .ofKicker { margin: 0 0 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--of-gold, #b39256); text-shadow: none; }
+.owTitle .ofTitle { margin: 0; font-size: 28px; line-height: 1.15; color: var(--of-navy); text-shadow: none; }
+.owTitle .ofAdLink { margin-top: 8px; display: inline-flex; }
+.ofWeb .ofPriceBox { margin: 0; width: auto; padding: 16px 18px; border-radius: 14px; background: var(--of-navy); color: #ffffff; }
+.ofWeb .ofPriceBox .ofLabel { color: var(--of-gold-soft, #d9c08a); }
+.ofWeb .ofPriceBox .ofPrice { color: #ffffff; font-size: 34px; }
+.ofWeb .ofPriceFacts > div { font-size: 13.5px; }
+.ofWeb .ofPriceFacts dt { color: var(--of-gold-soft, #d9c08a); }
+.ofWeb .ofPriceFacts dd { color: #ffffff; }
+.ofWeb .ofPriceBox .ofPriceFoot { color: rgba(255, 255, 255, 0.78); border-top-color: rgba(255, 255, 255, 0.22); font-size: 11.5px; }
+.ofWeb .ofSpecs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 18px; margin: 18px 0 4px; padding: 14px 0; border-top: 1px solid var(--of-line); border-bottom: 1px solid var(--of-line); }
+.ofWeb .ofSpec span { font-size: 11.5px; }
+.ofWeb .ofSpec b { font-size: 16px; white-space: normal; }
+.owGrid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; margin-top: 14px; align-items: start; }
+.owStack { display: grid; gap: 14px; }
+.ofWeb > .ofCard, .ofWeb > .ofProcess { margin-top: 14px; }
+.ofWeb .ofOption { font-size: 13px; }
+.ofWeb .ofChecks li { font-size: 13.5px; }
+.ofWeb .ofStepText { font-size: 13px; }
+.ofWeb .ofFoot { margin-top: 18px; }
+.owAll { margin-top: 10px; font-size: 13px; }
+.owAll summary { cursor: pointer; color: var(--of-brand); font-weight: 700; }
+.owAll ul { columns: 2; column-gap: 22px; margin: 8px 0 0; padding-left: 18px; }
+.owAll li { break-inside: avoid; margin: 2px 0; }
+.owAll li.isStrong { font-weight: 700; }
+@media (max-width: 760px) {
+  .ofWeb { padding: 16px 14px; border-radius: 0; }
+  .owHero, .owGrid { grid-template-columns: minmax(0, 1fr); }
+  .ofWeb .ofSpecs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .owTitle .ofTitle { font-size: 22px; }
+  .owAll ul { columns: 1; }
+}
+
+/* Program 06's frame: the settings to the right of the page (from 900 px),
+ * moved down with 06's scroll by offer.js. */
+.ofEmbed .offerWork { padding: 14px 0 0; gap: 16px; }
+@media (min-width: 900px) {
+  .ofEmbed .offerWork { grid-template-columns: minmax(0, 1fr) 320px; }
+  .ofEmbed .offerPanel { position: relative; overflow: auto; }
+}
+
+/* The client's page: the offer only — no site bar, tools or settings. */
+.ofClient .agGlobalNav, .ofClient .offerBack, .ofClient .offerPanel, .ofClient [data-offer-views], .ofClient [data-offer-edit],
+.ofClient [data-offer-link], .ofClient [data-offer-copy], .ofClient [data-offer-mail], .ofClient .offerStatus, .ofClient .ofHideToggle { display: none !important; }
+.ofClient .offerWork { grid-template-columns: minmax(0, 1fr); padding: 18px 12px 40px; }
+.ofClient .offerBar { justify-content: space-between; }
+/* The web page follows its own width (06's frame is narrower than a window). */
+.ofWeb { container-type: inline-size; }
+.ofWeb .ofPriceBox { min-width: 0; }
+@container (max-width: 760px) {
+  .owHero, .owGrid { grid-template-columns: minmax(0, 1fr); }
+  .ofWeb .ofSpecs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .owTitle .ofTitle { font-size: 24px; }
+  .owAll ul { columns: 1; }
+}
+/* The manager's "from the ad" list in the panel. */
+.ofPanelFacts { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 12.5px; line-height: 1.4; }
+.ofPanelFacts li { padding: 7px 9px; border-radius: 8px; background: #f3f6f9; color: var(--of-ink); overflow-wrap: anywhere; }
+.ofPanelFacts li.isWarn { background: #fbf1dc; color: #6b4300; }
+.ofPanelFacts li.isGood { background: #e6f4ea; color: #1d5b33; }
+.ofPanelFacts q { display: block; margin-top: 4px; color: var(--of-muted); font-size: 11.5px; font-style: italic; }
+/* The sheet's named grid areas (price, chips…) mean nothing on the web page. */
+.ofWeb .ofPriceBox, .ofWeb .ofChips, .ofWeb .ofKpis, .ofWeb .ofSpecs, .ofWeb .ofHeroTitle, .ofWeb .ofCard, .ofWeb .ofPhoto { grid-area: auto; }
+/* Screen-size type in the web page's cards (the sheets' own is for A4). */
+.ofWeb .ofCard { zoom: 1.12; }
+.ofWeb .ofHead { flex-wrap: wrap; gap: 8px 16px; }
+@container (max-width: 560px) {
+  .ofWeb .ofHeadBrand { flex-wrap: wrap; gap: 8px; }
+  .ofWeb .ofHeadMeta { width: 100%; text-align: left; }
+}
