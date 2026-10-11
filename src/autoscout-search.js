@@ -374,6 +374,10 @@
         oldPrice: Number(digits(item.superDeal?.isEligible ? item.superDeal.oldPriceFormatted : item.price?.oldSuperDealPrice)) || "",
         make: String(item.vehicle?.make || ""),
         model: String(item.vehicle?.model || ""),
+        // The first photo and AutoScout24's own price mark (1 "Top-Preis" …
+        // 5 "Hoher Preis"; checked 2026-10-11 on CLA 180: the cheapest are 1).
+        photo: String(item.images?.[0] || "").replace(/\/\d+x\d+\.webp$/, "/480x360.webp"),
+        rating: ["", "verygood", "good", "fair", "increased", "high"][Number(item.price?.priceEvaluation)] || "",
         rank: all ? (desc ? all - position + 1 : position) : position,
         marketTotal: all,
       };

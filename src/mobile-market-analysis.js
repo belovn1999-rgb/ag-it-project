@@ -197,6 +197,36 @@
       monitoringResultFiltersTitle: "Pokazuj w wynikach tylko",
       monitoringStatsUnit: "na gotowo w Polsce, zł · wszystkie wybrane rynki",
       monitoringSummaryTitle: "Ceny na gotowo w Polsce (auta pasujące do wyszukiwania)",
+      monitoringViewFavorites: "★ Ulubione",
+      monitoringViewSeen: "Przejrzane",
+      monitoringViewSent: "Wysłane klientowi",
+      monitoringEmptySeen: "Z tej listy nie otwarto jeszcze żadnego ogłoszenia.",
+      monitoringEmptySent: "Z tej listy nie przygotowano jeszcze oferty dla klienta.",
+      monitoringMarkSeen: "przejrzane {date}",
+      monitoringMarkSent: "wysłane klientowi {date}",
+      monitoringRatingVeryGood: "Bardzo dobra cena",
+      monitoringRatingGood: "Dobra cena",
+      monitoringRatingFair: "Cena w normie",
+      monitoringRatingIncreased: "Podwyższona cena",
+      monitoringRatingHigh: "Wysoka cena",
+      monitoringRatingBy: "{label} wg {portal}",
+      monitoringRatingTitle: "Ocena ceny podana przez sam portal",
+      monitoringPoland: "🇵🇱 Porównaj z Polską",
+      monitoringPolandLoading: "Szukam takiego samego auta na otomoto…",
+      monitoringPolandFailed: "otomoto nie odpowiedziało — spróbuj ponownie za chwilę.",
+      monitoringPolandNone: "Na otomoto nie ma takiego auta (rok {years}, przebieg {km}).",
+      monitoringPolandResult: "W Polsce (otomoto, rok {years}, przebieg {km}): {count} aut, mediana {median},",
+      monitoringPolandCheapest: "najtaniej",
+      monitoringPolandCar: "To auto na gotowo: {car} — {diff}.",
+      monitoringPolandCheaper: "taniej o {amount} ({pct})",
+      monitoringPolandDearer: "drożej o {amount} ({pct})",
+      monitoringExtraPlans: "Zapas {pct} % poszerza: {plans}. Każde auto ma na pomarańczowo, który filtr przekracza.",
+      monitoringExtraNothing: "Zapas {pct} % nie ma czego poszerzyć: w filtrach nie ma przebiegu, ceny ani mocy, a dla tego rocznika brak danych o generacji. Ustaw przebieg lub budżet.",
+      monitoringExtraKindMileage: "przebieg",
+      monitoringExtraKindPrice: "cenę",
+      monitoringExtraKindPower: "moc",
+      monitoringExtraKindYear: "rocznik (ta sama generacja)",
+      monitoringExtraKindOptions: "opcje (bez jednej)",
       monitoringMissVersion: "inna wersja: {found}",
       monitoringMissFuel: "inne paliwo: hybryda plug-in",
       monitoringSummaryCheapest: "najtaniej",
@@ -892,6 +922,36 @@
       monitoringResultFiltersTitle: "Показывать в результатах только",
       monitoringStatsUnit: "под ключ в Польше, зл · все выбранные рынки",
       monitoringSummaryTitle: "Цены под ключ в Польше (машины, подходящие под поиск)",
+      monitoringViewFavorites: "★ Избранное",
+      monitoringViewSeen: "Просмотренные",
+      monitoringViewSent: "Отправлены клиенту",
+      monitoringEmptySeen: "Из этого списка ещё не открывали ни одного объявления.",
+      monitoringEmptySent: "Из этого списка ещё не готовили оффер для клиента.",
+      monitoringMarkSeen: "просмотрено {date}",
+      monitoringMarkSent: "отправлено клиенту {date}",
+      monitoringRatingVeryGood: "Очень хорошая цена",
+      monitoringRatingGood: "Хорошая цена",
+      monitoringRatingFair: "Цена в рынке",
+      monitoringRatingIncreased: "Повышенная цена",
+      monitoringRatingHigh: "Высокая цена",
+      monitoringRatingBy: "{label} по {portal}",
+      monitoringRatingTitle: "Оценка цены от самого портала",
+      monitoringPoland: "🇵🇱 Сравнить с Польшей",
+      monitoringPolandLoading: "Ищу такую же машину на otomoto…",
+      monitoringPolandFailed: "otomoto не ответил — попробуй ещё раз чуть позже.",
+      monitoringPolandNone: "На otomoto такой машины нет (год {years}, пробег {km}).",
+      monitoringPolandResult: "В Польше (otomoto, год {years}, пробег {km}): {count} авто, медиана {median},",
+      monitoringPolandCheapest: "дешевле всего",
+      monitoringPolandCar: "Эта машина под ключ: {car} — {diff}.",
+      monitoringPolandCheaper: "дешевле на {amount} ({pct})",
+      monitoringPolandDearer: "дороже на {amount} ({pct})",
+      monitoringExtraPlans: "Запас {pct} % расширяет: {plans}. У каждой машины оранжевым — какой фильтр она превышает.",
+      monitoringExtraNothing: "Запасу {pct} % нечего расширять: в фильтрах нет пробега, цены и мощности, а для этого года нет данных о поколении. Задай пробег или бюджет.",
+      monitoringExtraKindMileage: "пробег",
+      monitoringExtraKindPrice: "цену",
+      monitoringExtraKindPower: "мощность",
+      monitoringExtraKindYear: "год (то же поколение)",
+      monitoringExtraKindOptions: "опции (без одной)",
       monitoringMissVersion: "другая версия: {found}",
       monitoringMissFuel: "другое топливо: plug-in гибрид",
       monitoringSummaryCheapest: "дешевле всего",
@@ -2085,6 +2145,10 @@
   }
 
   function normalizeListing(row, index) {
+    const PRICE_RATING_CODES = {
+      VERY_GOOD_PRICE: "verygood", GOOD_PRICE: "good", REASONABLE_PRICE: "fair", INCREASED_PRICE: "increased", HIGH_PRICE: "high",
+      VERYGOOD: "verygood", GOOD: "good", FAIR: "fair", INCREASED: "increased", HIGH: "high",
+    };
     const price = parseMarketNumber(listingValue(row, ["price", "price_eur", "cena", "preis"]));
     const urlValue = listingValue(row, ["url", "link", "listing_url", "listingurl"]);
     let url = "";
@@ -2139,6 +2203,11 @@
       // Otomoto: "1" history confirmed in CEPiK, "0" not; origin "pl" or the
       // country the car was imported from.
       cepik: String(listingValue(row, ["cepik"]) || "").slice(0, 1),
+      // The first photo and the portal's own price mark (audit p. 8, owner
+      // 2026-10-11): verygood / good / fair / increased / high; mobile.de
+      // writes VERY_GOOD_PRICE … HIGH_PRICE.
+      photo: /^https:\/\//.test(String(listingValue(row, ["photo", "image"]) || "")) ? String(listingValue(row, ["photo", "image"])).slice(0, 300) : "",
+      rating: PRICE_RATING_CODES[String(listingValue(row, ["rating", "pricerating"]) || "").toUpperCase()] || "",
       // Marktplaats / 2dehands "licytacja od": a floor, not an asking price.
       bid: listingValue(row, ["bid"]) === true || listingValue(row, ["bid"]) === "true" || undefined,
       origin: String(listingValue(row, ["origin"]) || "").slice(0, 8),
@@ -2270,6 +2339,9 @@
         id: String(node.id || node.url || ""),
         url: String(node.url || ""),
         title: String(node.title || "otomoto.pl"),
+        // The photo and otomoto's own price mark (BELOW / IN / ABOVE the market).
+        photo: String(node.thumbnail?.x1 || ""),
+        rating: { BELOW: "good", IN: "fair", ABOVE: "high" }[node.priceEvaluation?.indicator] || "",
         // The seller's own headline, the full name shown on otomoto.pl.
         subtitle: String(node.shortDescription || "").slice(0, 160),
         source: "otomoto",
@@ -3521,6 +3593,8 @@
       turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage(turnkeyInput(listing, listing.price, listing.currency || SOURCE_CURRENCY[source]), filters).total) : null,
       suspect: flagged.has(listing) || undefined,
       bid: listing.bid || undefined,
+      photo: listing.photo || undefined,
+      rating: listing.rating || undefined,
     }));
     const total = Math.max(offers.length, ...own.map((listing) => Number(listing.marketTotal) || 0));
     return { total, complete: offers.length >= total * COMPLETE_SHARE, offers };
@@ -5377,7 +5451,7 @@
     byEuSource, carSignature, carsOf, checkBandsOf, checkOffersCache, compactOffers,
     confirmHistoryChanges, convertPrice, copy, currentLanguage, currentPage, downloadReportPdf,
     dropCountryDuplicates, escapeMarketHtml, exchangeRate, exciseText, fillMonitoringHistory,
-    fillOfferHistory, filterSignature, formatHistoryDate, formatMarketPrice, formatPlainPrice,
+    fetchOtomotoListings, fillOfferHistory, filterSignature, formatHistoryDate, formatMarketPrice, formatPlainPrice,
     germanCountries, historyCarKey, historyMeta, kmUnit, listingSource, loadCheckOffers,
     marketBadge, marketGroup, marketPricePoint, measureNextSnapshot, mergeBySource,
     monitoringStatsRows, nlbeCountries, normalizeListings, numberFormat, offerChanges,

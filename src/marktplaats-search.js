@@ -386,6 +386,8 @@
         title: String(item.title || "").slice(0, 160),
         source: market,
         bid: kind === "MIN_BID" || undefined,
+        // The first photo (Marktplaats / 2dehands give no price mark).
+        photo: /^(https:)?\/\//.test(String(item.imageUrls?.[0] || "")) ? String(item.imageUrls[0]).replace(/^\/\//, "https://") : "",
         price,
         currency: "EUR",
         year: Number(value("constructionYear")) || "",

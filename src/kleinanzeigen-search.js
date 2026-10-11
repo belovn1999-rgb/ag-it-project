@@ -295,6 +295,8 @@
         url: href ? new URL(href, SITE).toString() : "",
         title: title.slice(0, 160),
         source: "kleinanzeigen",
+        // The card's photo (Kleinanzeigen gives no price mark).
+        photo: ((match[1].match(/https:\/\/img\.kleinanzeigen\.de\/api\/v1\/prod-ads\/images\/[^"'\s?]+/) || [])[0] || "").replace(/^(.+)$/, "$1?rule=$_59.AUTO"),
         price,
         currency: "EUR",
         negotiable: /\bVB\b/.test(priceText),

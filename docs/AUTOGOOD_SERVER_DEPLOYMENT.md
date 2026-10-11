@@ -179,6 +179,19 @@ records go back through `window.AUTOGOOD_MONITORING.importRecords()`. Moving
 them through this server waits for the employee login (user-owned data, see
 above). Details and the steps left: `docs/MONITORING-SERVER.md`.
 
+
+### When the server starts (owner 2026-10-11, re-audit of page 3)
+
+- The runner moves off the owner's Mac: the 9:30 check is not guaranteed on a
+  sleeping laptop on battery (11.10 both tries stalled).
+- A permanent mobile.de address instead of the quick tunnel (B6/B73): today a
+  browser check without the tunnel reads no mobile.de.
+- When mobile.de did not answer, AutoScout24 keeps its mobile.de duplicates
+  (75 instead of 40, "▼35" on the next check): drop them against the last
+  mobile.de list.
+- Notifications of new cars to Telegram or e-mail instead of macOS only.
+- Monitoring data in a server store (B26) instead of one browser.
+
 ## Frontend Connection
 
 For testing from GitHub Pages, use:

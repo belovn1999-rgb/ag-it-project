@@ -1345,6 +1345,34 @@ portalPrice / setPortalPrice / filtersPriceIn`); чтение «от новых�
      открыто после ★, сортировки, смены вида).
    - Проверено локально: прогон мониторинга RAV 4 (otomoto, mobile.de, AutoScout24) через
      модуль, все кнопки стр. 3, стр. 1–2; CI-тесты зелёные.
+32. **Повторный аудит стр. 3 (11.10, 8/10) — ответы владельца пп. 1, 7, 8, 9, 10.**
+   - **п. 1 — курс не «удешевляет» авто.** Стрелки сводки цен по странам и KPI медианы
+     сравнивают цены самих машин по сегодняшнему курсу для обоих дней (`priceMove`,
+     `carPricesToday`); 11.10 везде было «▼ 1,4 %» только от курса евро.
+   - **п. 7 — «Blisko filtrów».** У каждого авто оранжевым, какой фильтр он превышает
+     (было); сверху вида оранжевая строка: что расширяет запас («przebieg, cenę,
+     rocznik…») или почему расширять нечего (у CLA нет пробега и цены в фильтрах).
+   - **п. 8 — фото и оценка цены порталом.** Первое фото в строке (mobile.de, AutoScout24,
+     otomoto, Marktplaats/2dehands, Kleinanzeigen; ParuVendu/Blocket/av.by — позже) и
+     значок «Dobra cena wg mobile.de» (mobile.de `priceRating`, AutoScout24
+     `priceEvaluation` 1–5 — 1 = «Top-Preis», проверено на CLA, otomoto `priceEvaluation`
+     BELOW/IN/ABOVE) → `rating`: verygood/good/fair/increased/high. Поля `photo`, `rating`
+     идут парсер → `normalizeListing` → `compactOffers` (появляются с новых проверок).
+   - **п. 9 — категории.** «★ Ulubione» первой (бывшие «Zapisane», та же память
+     `savedCars`, PDF), звезда в правом верхнем углу предложения, как у избранного стр. 1;
+     «Przejrzane» — ссылка объявления открыта из списка (клик, средний клик);
+     «Wysłane klientowi» — нажато «Przygotuj ofertę» (оффер открывается `oferta.html` того же
+     сайта — та же версия программы 06). Память `autogood.mobile.carMarks.v1` (правила 4.6.1,
+     копия объявления для ушедших).
+   - **п. 10 — «🇵🇱 Porównaj z Polską»** у каждого авто не с otomoto/av.by: otomoto той же
+     модели, год ±1, пробег ±25 % (чужие версии — по `otherVersionOf`), под строкой —
+     число, медиана, самое дешёвое (ссылка) и «to auto na gotowo … taniej/drożej o … (%)».
+     `fetchOtomotoListings` добавлен в `ctx`.
+   - **Отложено до сервера (владелец 11.10, «зафиксируй на будущее»):** п. 2 повторного
+     аудита (дубли AutoScout24 в проверке без mobile.de дают «▼35»), п. 3 (проверка 9:30
+     на Mac на батарее не гарантирована), п. 4 (временный туннель mobile.de), п. 5
+     (уведомления только на этом Mac → Telegram/письмо). См. `AUTOGOOD_SERVER_DEPLOYMENT.md`
+     «Monitoring Runner».
 ### 4.7 Курс и «na gotowo»
 - **Акциз по объявлению (с 10-03):** `engineInfo()` в `turnkey-estimate.js` — объём из выдачи (mobile.de `attr.cc`, AutoScout24 `engineDisplacementInCCM`), из прочитанного объявления (`AUTOGOOD_AD_DETAILS`), из названия («2.0 TDI», «1,5 T-GDI»), затем из фильтров, иначе ≤ 2000 см³ и сноска «Bez pojemności…». Топливо — из поля топлива объявления (не из названия); гибрид — любое упоминание в топливе или названии, включая mild (MHEV, 48V, eTSI, EQ Boost); plug-in ≤ 2000 см³ — 0 %. Анализ дочитывает объявления mobile.de без объёма в фоне.
 - **Гибриды без plug-in (с 11.10, аудит п. 10, владелец: «только по названию»):** если выбрана «Hybryda benzyna/diesel» без «Plug-in», из выдачи mobile.de, AutoScout24 DE/FR, Marktplaats, 2dehands, Kleinanzeigen и ParuVendu убираются plug-in — по названию объявления (`isPluginInHybridSearch` в `src/engine-class.js`: общий шаблон plug-in + Volvo T5/T6/T8, «Twin Eng.», «Recharge»; «Geen plug» / «kein Plug-in» — не plug-in), на mobile.de ещё и по его собственному списку plug-in той же выборки (`fe=HYBRID_PLUGIN`, до 240, по id; продавцы иногда ставят отметку обычному гибриду — Toyota: 6 из 149). otomoto и Blocket держат plug-in отдельно — не трогаются. Работает в анализе и Monitoring (`getListings`, `dropPluginsFromHybrids`); на стр. 2 строка «pominięto N hybryd plug-in (портал N)». Числа стр. 1 — это число портала, plug-in в нём остаются. Замер: RAV4 2019+ NL — AutoScout24 −36, Marktplaats −121; точность по названию ~90–95 %.
@@ -2021,6 +2049,7 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 | 10-10 | Claude | **Ссылка объявления без выбора портала** (`mobile.html`, `mobile.js`): список порталов у «Link ogłoszenia» убран; портал определяет вставленная ссылка (`linkPortalOf`), его логотип — плашкой рядом с заголовком (`data-mobile-link-source-badge`); под полем — какие ссылки принимаются (PL/RU, `linkPortalsHint`); ссылка не с наших порталов — «Nie rozpoznano portalu…» (раньше уходила в mobile.de), сообщение уходит, когда вставлена правильная ссылка; стили списка удалены. **Рамка кнопок разделов — «жидкое стекло»** (полупрозрачный размытый фон `backdrop-filter`, светлая кромка, блик сверху) | этот коммит |
 | 10-10 | Claude | **Аудит порталов, волна 1 (пп. 2–5).** Акциз: один файл класса двигателя `src/engine-class.js` для `mobile.html` и страниц оффера (раньше оффер считал любую машину как 3,1 %) + тест `scripts/engine-class.test.mjs`; plug-in по названию модели (eHybrid, GTE, TFSI e, iV, 330e, 300 e/de, Recharge, 4xe…), «Elektrisch»/«Électrique» = электро, Blocket «Hybrid gas» = газ; ссылка mobile.de — класс считает страница; ссылки Kleinanzeigen/ParuVendu — литры из названия для акциза; ссылка Blocket — «Diesel» не электро, «1,6 L» = 1600 см³. Marktplaats/2dehands — FILTERS §5f. Проверено: тест 5/5, ссылка Blocket 24691249 → diesel, 1600 см³; `oferty.html`: A6 3.0 TDI → 18,6 %, Golf GTE → 0 % | этот коммит |
 | 10-10 | Claude | **B71 «Oferta»:** ссылки со всех порталов стр. 1 (новые читатели Marktplaats/2dehands, otomoto, Blocket, av.by в `src/offer-ad.js`), портал по ссылке без выбора, PL / RU — оффер на выбранном языке; `server/cloudflare-proxy/worker.js`: хост `olxcdn.com` (фото otomoto для PDF) — **нужна выкладка Worker**; подробно `docs/OFFER-PAGE.md` §8 | этот коммит |
+| 10-11 | Claude | **Monitoring, повторный аудит пп. 1, 7, 8, 9, 10 (B74, 4.6.3 п. 32):** стрелки цен без курса; оранжевая строка запаса в «Blisko filtrów»; фото и оценка цены порталом; «★ Ulubione» первой (звезда в углу), «Przejrzane», «Wysłane klientowi»; «Porównaj z Polską» | этот коммит |
 | 10-11 | Claude | **Monitoring, аудит пп. 8 и 10 (B74, 4.6.3 п. 30):** уведомление macOS от службы Mac о новых и подешевевших машинах (что новое — считает страница, `AUTOGOOD_MONITORING.news`); объявления «licytacja od» Marktplaats/2dehands читаются с пометкой и не входят в цифры | этот коммит |
 | 10-10 | Claude | **Monitoring, аудит п. 6 (B74, 4.6.3 п. 27):** у Marktplaats/2dehands/Kleinanzeigen/ParuVendu другая версия или plug-in по названию объявления — вне цифр, в «Dodatkowe» с причиной («inna wersja: 250 e») | этот коммит |
 | 10-10 | Claude | **Monitoring, аудит п. 5 (B74, 4.6.3 п. 26):** служба Mac получает машины из встроенного браузера Claude через туннель импортера — импортер пересылает 3 маршрута службы, страница пробует 127.0.0.1, затем туннель | этот коммит |
