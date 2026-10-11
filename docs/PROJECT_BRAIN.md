@@ -21,7 +21,7 @@
 | Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
-| Отчёты аукционов → бриф → оффер «Z raportu aukcji» | `oferty.html` (способ 2), `oferta-aukcja.html`, позже сервер | [PROJECT-AUCTION-REPORTS.md](PROJECT-AUCTION-REPORTS.md) | Чтение отчётов Macadam / TÜV / DEKRA в единый шаблон, коды Macadam, **методика проверки отчёта (§9)**, оценка, вердикт, оффер с аукциона (§10), образцы вне репозитория |
+| Отчёты аукционов → бриф → оффер «Z raportu aukcji» | `oferty.html` (способ 2), `oferta-aukcja.html`, позже сервер | [PROJECT-AUCTION-REPORTS.md](PROJECT-AUCTION-REPORTS.md) | Чтение отчётов Macadam / DEKRA / TÜV в единый шаблон, коды и словари, сравнение видов, **методика проверки отчёта (§9)**, оценка, вердикт, оффер с аукциона (§10), образцы вне репозитория |
 | Проверка VIN | `partslink24.html` | [PARTSLINK24_VIN_CHECK.md](PARTSLINK24_VIN_CHECK.md) | Поля, марки, логика отчёта |
 | Отчёты Auto1 | `auto1.html`, `auctions.html` | [auto1-pdf-learning/structured-editor.md](auto1-pdf-learning/structured-editor.md) | Как редактируется PDF отчёта |
 | Выкладка | все | [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md) | Pages + конвертер на Render, smoke-тесты |
@@ -82,6 +82,7 @@
 
 ## 8. Журнал
 
+- 2026-10-11 — отчёты аукционов: DEKRA — 3 вида (NL «Rapportage voertuigstaat», DE «Vermarktungsbericht» с замером краски и подъёмником, FR/BE с заводским оснащением), 7 брифов; шаблон оффера не меняется, дополняется (`docs/PROJECT-AUCTION-REPORTS.md` §9) (Claude).
 - 2026-10-11 — B71 оффер, волна 8: «Авто от дилера» в шапке PDF; программа 06 показывает само предложение (оба листа, настройки, правка текстов, PDF, e-mail) прямо на странице, изменения способа, клиента, языка и калькулятора попадают в него сразу (Claude).
 <!-- Новые сверху. Здесь 30 последних записей, более ранние — docs/archive/PROJECT_BRAIN-journal.md (переносит куратор). Подробный журнал mobile.html — PROJECT-MOBILE.md §7. -->
 - 2026-10-11 — мозг: в индексе 30 последних записей журнала (ранние — `docs/archive/PROJECT_BRAIN-journal.md`); PROJECT-MOBILE.md 466 → ~250 КБ — Monitoring в `PROJECT-MONITORING.md`, справочник моделей в `PROJECT-MODELS.md`, журнал 01–07.10 в архив; §0 обновлён на 11.10; правило номеров «B74.2», второй B73 → B73.2 (Claude).
