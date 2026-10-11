@@ -17,7 +17,11 @@
   const REGISTRATION_NETTO = 580;
   const STD_FIX = 1829.27;
   // Excise by engine class, same order as the calculator's engineTypes.
-  const EXCISE_RATES = [0, 0.093, 0.0155, 0.031, 0.186];
+  // 5: a van registered as N1 (ciężarowy / dostawczy) — no excise in Poland
+  // (owner 2026-10-11, B75; the excise is on passenger cars only).
+  const EXCISE_RATES = [0, 0.093, 0.0155, 0.031, 0.186, 0];
+  // A van-section ad that is a passenger car (M1): minibus, crew bus, camper.
+  const PASSENGER_VAN = /tourneo|caravelle|multivan|california|kombi\b|\bbus\b|minibus|mikrobus|kleinbus|\b[6-9][- ]?(sitzer|osob|miejsc|seats?|places)|tourer|traveller|spacetourer|shuttle|life\b|osobow|personen|passenger|camper|kamper|wohnmobil|reisemobil|marco polo|westfalia/i;
   const WALUTOMAT_API_URL = "https://api.walutomat.pl/api/v2.0.0/market_fx/best_offers";
   // The market analysis prices every foreign offer with average costs
   // (the owner's figures), not the seller's own tariff.
@@ -122,6 +126,11 @@
   // field (a title "el. Sitze" is no electric car); a hybrid named in the
   // title counts.
   function engineInfo(listing = {}, filters = {}) {
+    // Vans (B75, "Dostawcze"): an N1 van pays no excise; one that reads as a
+    // passenger car (Tourneo, 9-Sitzer, Caravelle, camper) is counted as a car.
+    if (filters.category === "van" && !PASSENGER_VAN.test(`${listing.title || ""} ${listing.subtitle || ""} ${listing.bodyType || ""}`)) {
+      return { index: 5, ccm: Number(listing.displacementCcm) || 0, source: "n1", mild: null };
+    }
     const fuelsWanted = typeof manualFuelValues === "function" ? manualFuelValues(filters) : (filters.fuels || []);
     const own = String(listing.fuel || "").toLowerCase()
       // Blocket (Swedish): plug-in hybrid, electric, petrol.

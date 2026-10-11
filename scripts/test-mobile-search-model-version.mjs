@@ -72,6 +72,8 @@ vm.createContext(context);
   "doorRangeBounds",
   "mobileDeDoorGroup",
   "manualFuelValues",
+  "isVanSearch",
+  "vanMobileDeParams",
   "buildMobileDeSearchUrl",
 ].forEach((name) => vm.runInContext(functionSource(name), context));
 
@@ -116,6 +118,13 @@ const baseFilters = {
 const emptyVersionUrl = new URL(context.buildMobileDeSearchUrl({ ...baseFilters, version: "" }));
 assert.equal(emptyVersionUrl.pathname, "/fahrzeuge/search.html", "a model must never use the filter-dropping SEO route");
 assert.equal(emptyVersionUrl.searchParams.get("ms"), "16800;7;;", "selected model must use its numeric Mobile.de ID");
+
+// B75: vans are searched in "Transporter bis 7,5 t", the model as description.
+const vanUrl = new URL(context.buildMobileDeSearchUrl({ ...baseFilters, version: "", category: "van", body: "estate" }));
+assert.equal(vanUrl.searchParams.get("s"), "Truck", "a van search uses the truck section");
+assert.equal(vanUrl.searchParams.get("vc"), "VanUpTo7500", "a van search uses vans up to 7.5 t");
+assert.equal(vanUrl.searchParams.get("ms"), "16800;;;6", "a van model goes as the description");
+assert.equal(vanUrl.searchParams.get("c"), null, "no car body in a van search");
 
 const versionUrl = new URL(context.buildMobileDeSearchUrl({ ...baseFilters, version: "Kombi" }));
 assert.equal(versionUrl.searchParams.get("ms"), "16800;7;;Kombi", "only the Version value may occupy the Version segment");

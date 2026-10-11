@@ -462,7 +462,7 @@
       auctionToggle: "Aukcje",
       auctionLineLabel: "Aukcja",
       auctionHint: "Oczekiwana cena na gotowo na aukcjach przy podobnych parametrach (ok. 15% poniżej mediany)",
-      exciseClasses: ["elektryczny lub plug-in do 2000 cm³", "hybryda (także miękka, MHEV) powyżej 2000 cm³", "hybryda (także miękka, MHEV) do 2000 cm³", "silnik spalinowy do 2000 cm³", "silnik spalinowy powyżej 2000 cm³"],
+      exciseClasses: ["elektryczny lub plug-in do 2000 cm³", "hybryda (także miękka, MHEV) powyżej 2000 cm³", "hybryda (także miękka, MHEV) do 2000 cm³", "silnik spalinowy do 2000 cm³", "silnik spalinowy powyżej 2000 cm³", "dostawczy N1 — bez akcyzy"],
       screenshotButton: "Kopiuj raport",
       screenshotStatsButton: "Kopiuj statystyki",
       screenshotChartButton: "Kopiuj wykres",
@@ -1187,7 +1187,7 @@
       auctionToggle: "Аукционы",
       auctionLineLabel: "Аукцион",
       auctionHint: "Ожидаемая цена под ключ на аукционах по схожим параметрам (≈ на 15% ниже медианы)",
-      exciseClasses: ["электромобиль или plug-in до 2000 см³", "гибрид (и мягкий, MHEV) больше 2000 см³", "гибрид (и мягкий, MHEV) до 2000 см³", "ДВС до 2000 см³", "ДВС больше 2000 см³"],
+      exciseClasses: ["электромобиль или plug-in до 2000 см³", "гибрид (и мягкий, MHEV) больше 2000 см³", "гибрид (и мягкий, MHEV) до 2000 см³", "ДВС до 2000 см³", "ДВС больше 2000 см³", "коммерческий N1 — без акциза"],
       screenshotButton: "Копировать отчёт",
       screenshotStatsButton: "Копировать статистику",
       screenshotChartButton: "Копировать график",
@@ -1539,6 +1539,8 @@
   // ParuVendu (2026-10-05, B47): France's classifieds, mostly dealers; only
   // what AutoScout24 FR does not have, in the row "Francja".
   const MARKET_SOURCES = ["otomoto", "mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "paruvendu", "marktplaats", "dehands", "blocket", "avby"];
+  // B75 "Dostawcze": the portals whose van section the program searches.
+  const VAN_SOURCES = ["otomoto", "mobile", "autoscout", "autoscoutfr"];
   // The portals of Germany: one statistics row "Niemcy" (B48).
   const GERMAN_SOURCES = ["mobile", "autoscout", "kleinanzeigen"];
   // EU markets that are also priced turnkey in Minsk (Belarus mode).
@@ -1898,7 +1900,7 @@
   // (owner 2026-10-05), with the class in words.
   function exciseText(indexes) {
     const c = copy();
-    const rates = window.AUTOGOOD_TURNKEY?.EXCISE_RATES || [0, 0.093, 0.0155, 0.031, 0.186];
+    const rates = window.AUTOGOOD_TURNKEY?.EXCISE_RATES || [0, 0.093, 0.0155, 0.031, 0.186, 0];
     const unique = [...new Set(indexes.filter((index) => Number.isInteger(index)))].sort((left, right) => rates[left] - rates[right]);
     if (!unique.length) unique.push(3);
     const percent = (value) => `${(value * 100).toLocaleString(currentLanguage() === "ru" ? "ru-RU" : "pl-PL", { maximumFractionDigits: 2 })}%`;
@@ -2976,7 +2978,10 @@
       // its "Przygotowuję…" stayed on page 2 (audit 10.10).
       const c = copy();
       const say = progress ? () => {} : setAnalysisStatus;
-      const selected = filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]);
+      // Vans (B75): only the portals with a van section in the program.
+      const van = window.AUTOGOOD_VAN?.isVanSearch(filters);
+      const selected = (filters.markets || MARKET_SOURCES.filter((source) => chartSources[source]))
+        .filter((source) => !van || VAN_SOURCES.includes(source));
       this.lastAnswered = [];
       this.lastDuplicates = {};
       // Favourites: whole lists where short enough (page 3 compares offers).
@@ -3098,7 +3103,10 @@
         .filter(([source, result]) => selected.includes(source) && result.status === "fulfilled" && result.value).map(([source]) => source);
       // Page 2 names the chosen portals that did not answer (audit 2026-10-10).
       this.lastSilent = selected.filter((source) => !this.lastAnswered.includes(source));
-      const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []) : [];
+      // A van model found by keyword (otomoto) or description (mobile.de) brings
+      // its longer namesakes too ("Transit" -> Transit Custom): left out.
+      const vanFits = (listing) => !van || window.AUTOGOOD_VAN.vanTitleFits(listing.title, filters.brand, filters.model);
+      const otomotoListings = otomoto.status === "fulfilled" ? (otomoto.value?.listings || []).filter(vanFits) : [];
       const mobileResult = mobile.status === "fulfilled" ? mobile.value : null;
       const pluginDropped = {};
       const withoutPlugins = (source, listings, ids = null) => {
@@ -3106,7 +3114,7 @@
         if (dropped) pluginDropped[source] = (pluginDropped[source] || 0) + dropped;
         return kept;
       };
-      const mobileListings = withoutPlugins("mobile", (mobileResult?.listings || []).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal })), mobileResult?.pluginIds || null);
+      const mobileListings = withoutPlugins("mobile", (mobileResult?.listings || []).filter(vanFits).map((listing) => ({ ...listing, source: "mobile", markettotal: listing.marketTotal })), mobileResult?.pluginIds || null);
       const blocketResult = blocket.status === "fulfilled" ? blocket.value : null;
       const blocketListings = blocketResult?.listings || [];
       const avbyResult = avby.status === "fulfilled" ? avby.value : null;
@@ -3863,6 +3871,8 @@
       any: c.gearboxAny,
     }[filters.gearbox || "any"] || c.gearboxAny;
     return [
+      // A van search (B75) says so first.
+      window.AUTOGOOD_VAN?.isVanSearch(filters) ? (currentLanguage() === "ru" ? "Коммерческие" : "Dostawcze") : "",
       rangeSummary(c.price, filters.priceFrom, filters.priceTo, "EUR"),
       rangeSummary(c.year, filters.yearFrom, filters.yearTo),
       rangeSummary(c.mileage, filters.mileageFrom, filters.mileageTo, kmUnit()),
@@ -8969,7 +8979,14 @@
   document.querySelector(".mobileManualForm")?.addEventListener("input", scheduleAutoLog);
   document.querySelector(".mobileManualForm")?.addEventListener("change", scheduleAutoLog);
   // Used by the sticky panel to show how many offers the filters match.
-  window.AUTOGOOD_MOBILE_OTOMOTO_COUNT = async (filters) => (await fetchOtomotoPage(buildOtomotoSearchUrl(filters), 1)).total;
+  window.AUTOGOOD_MOBILE_OTOMOTO_COUNT = async (filters) => {
+    const total = (await fetchOtomotoPage(buildOtomotoSearchUrl(filters), 1)).total;
+    if (!window.AUTOGOOD_VAN?.isVanSearch(filters)) return total;
+    // Vans by keyword: "q-transit" also finds Transit Custom… — their counts come off (B75).
+    const siblings = await Promise.all(window.AUTOGOOD_VAN.vanSiblingModels(filters.brand, filters.model)
+      .map(async (model) => (await fetchOtomotoPage(buildOtomotoSearchUrl({ ...filters, model }), 1)).total));
+    return Math.max(0, total - siblings.reduce((sum, value) => sum + value, 0));
+  };
   if (!window.AUTOGOOD_MOBILE_MARKET_PROVIDER) window.AUTOGOOD_MOBILE_MARKET_PROVIDER = otomotoProvider;
 
   fetch("./data/exchange-rates.json")

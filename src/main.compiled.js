@@ -377,6 +377,13 @@ const engineTypes = [{
     en: "Combustion >2000cc"
   },
   rate: 0.186
+}, {
+  label: {
+    pl: "Dostawczy N1 (bez akcyzy)",
+    ru: "Коммерческий N1 (без акциза)",
+    en: "Van N1 (no excise)"
+  },
+  rate: 0
 }];
 const tabs = [{
   id: 0,

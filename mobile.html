@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <link rel="stylesheet" href="./src/mobile-page1.css?v=rail-dim-1110" />
-    <link rel="stylesheet" href="./src/mobile-model-specs.css?v=mhev-1010" />
+    <link rel="stylesheet" href="./src/mobile-model-specs.css?v=van2-1011" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=re9-1011" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
     <link rel="stylesheet" href="./src/offer-link.css?v=b71-1" />
@@ -184,7 +184,13 @@
           </div>
           <div class="mobileManualForm">
             <section class="mobileFilterCard" aria-labelledby="mobile-filter-group-vehicle">
-              <h2 id="mobile-filter-group-vehicle" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="filterGroupVehicle">Pojazd</span></h2>
+              <h2 id="mobile-filter-group-vehicle" class="mobileFilterCardTitle"><svg class="mobileFieldIcon" aria-hidden="true"><use href="./src/mobile-icons.svg#car"></use></svg><span data-i18n="filterGroupVehicle">Pojazd</span>
+                <span class="mobileUnitToggle mobileCategoryToggle" role="group" aria-label="Osobowe / Dostawcze" data-mobile-category-toggle title="Dostawcze: dział aut dostawczych portali (otomoto, mobile.de, AutoScout24); inne portale ich nie mają">
+                  <button type="button" data-mobile-category-choice="" aria-pressed="true" data-i18n="categoryCars">Osobowe</button>
+                  <button type="button" data-mobile-category-choice="van" aria-pressed="false" data-i18n="categoryVans">Dostawcze</button>
+                </span>
+                <input data-mobile-category type="hidden" />
+              </h2>
               <div class="mobileFilterCardBody">
                 <div class="mobileVehicleTripleRow mobileWideField">
                   <label class="mobileField">
@@ -733,7 +739,7 @@
     <script src="./src/model-specs/index.js?v=trims2-1011"></script>
     <script src="./src/mobile-model-specs.js?v=mhev3-1011"></script>
     <script src="./src/engine-class.js?v=mhev3-1011"></script>
-    <script src="./src/mobile.js?v=spec-1110"></script>
+    <script src="./src/mobile.js?v=van-1011"></script>
     <script src="./src/blocket-search.js?v=w2-1010"></script>
     <script src="./src/marktplaats-catalog.generated.js?v=w2-1010"></script>
     <script src="./src/marktplaats-search.js?v=photo-1011"></script>
@@ -742,13 +748,13 @@
     <script src="./src/paruvendu-catalog.generated.js?v=w2-1010"></script>
     <script src="./src/paruvendu-search.js?v=w2-1010"></script>
     <script src="./src/avby-search.js?v=w2-1010"></script>
-    <script src="./src/autoscout-search.js?v=photo-1011"></script>
-    <script src="./src/turnkey-estimate.js?v=mhev3-1011"></script>
+    <script src="./src/autoscout-search.js?v=van2-1011"></script>
+    <script src="./src/turnkey-estimate.js?v=van2-1011"></script>
     <script src="./src/turnkey-belarus.js?v=rates-20261004"></script>
     <script src="./src/mobile-ad-details.js?v=w2data-1010"></script>
-    <script src="./src/mobile-monitoring.js?v=year-1011"></script>
-    <script src="./src/mobile-market-analysis.js?v=re9-1011"></script>
-    <script src="./src/calculator-popup.js?v=mhev3-1011"></script>
+    <script src="./src/mobile-monitoring.js?v=van2-1011"></script>
+    <script src="./src/mobile-market-analysis.js?v=van2-1011"></script>
+    <script src="./src/calculator-popup.js?v=van2-1011"></script>
     <script src="./src/offer-store.js?v=b71-looks-1"></script>
     <script src="./src/offer-market.js?v=pv-1005"></script>
     <script src="./src/offer-link.js?v=mhev3-1011"></script>

@@ -58,6 +58,11 @@ const copy = {
     gearboxAny: "Dowolny",
     bodyAny: "Dowolne",
     filterGroupVehicle: "Pojazd",
+    categoryCars: "Osobowe",
+    categoryVans: "Dostawcze",
+    categoryHint: "Dostawcze: dział aut dostawczych portali (otomoto, mobile.de, AutoScout24); inne portale ich nie mają",
+    categoryChip: "Dostawcze",
+    categoryUnsupported: "Ten portal w programie szuka tylko osobowych",
     pageTitle: "Wyszukiwanie i analiza cen",
     stepLink: "Link",
     stepFilters: "Filtry",
@@ -403,6 +408,11 @@ const copy = {
     gearboxAny: "Любая",
     bodyAny: "Любой",
     filterGroupVehicle: "Автомобиль",
+    categoryCars: "Легковые",
+    categoryVans: "Коммерческие",
+    categoryHint: "Коммерческие: раздел фургонов порталов (otomoto, mobile.de, AutoScout24); у других порталов его в программе нет",
+    categoryChip: "Коммерческие",
+    categoryUnsupported: "Этот портал в программе ищет только легковые",
     pageTitle: "Поиск и анализ цен",
     stepLink: "Ссылка",
     stepFilters: "Фильтры",
@@ -1463,6 +1473,7 @@ const els = {
   powerFrom: document.querySelector("[data-mobile-power-from]"),
   powerTo: document.querySelector("[data-mobile-power-to]"),
   powerUnit: document.querySelector("[data-mobile-power-unit]"),
+  category: document.querySelector("[data-mobile-category]"),
   seatsFrom: document.querySelector("[data-mobile-seats-from]"),
   seatsTo: document.querySelector("[data-mobile-seats-to]"),
   doorsFrom: document.querySelector("[data-mobile-doors-from]"),
@@ -1594,6 +1605,7 @@ function renderI18n() {
   document.querySelectorAll("[data-lang-button]").forEach((button) => {
     button.classList.toggle("isActive", button.dataset.langButton === state.lang);
   });
+  document.querySelectorAll("[data-mobile-category-toggle]").forEach((node) => { node.title = c.categoryHint; });
   const label = els.submit?.querySelector("span");
   if (label) label.textContent = state.status === "loading" ? c.loadingButton : c.loadButton;
   els.manualResets.forEach((button) => {
@@ -2211,6 +2223,8 @@ function normalizeGearboxChoice(value) {
 
 function defaultManualFields() {
   return {
+    // "" = passenger cars, "van" = the portals' van sections (B75, owner 2026-10-11).
+    category: "",
     brand: "",
     model: "",
     version: "",
@@ -2320,6 +2334,7 @@ function renderManualOptions(keepValues = true) {
   els.displacementFrom.value = current.displacementFrom || "";
   els.displacementTo.value = current.displacementTo || "";
   showPowerUnit(current.powerUnit === "kw" ? "kw" : "");
+  showCategory(current.category);
   els.powerFrom.value = (current.powerUnit === "kw" ? current.powerKwFrom : current.powerFrom) || "";
   els.powerTo.value = (current.powerUnit === "kw" ? current.powerKwTo : current.powerTo) || "";
   els.seatsFrom.value = current.seatsFrom || "";
@@ -2374,6 +2389,7 @@ function readManualFields() {
     powerFrom: els.powerUnit?.value === "kw" ? kwToKm(els.powerFrom?.value) : els.powerFrom?.value || "",
     powerTo: els.powerUnit?.value === "kw" ? kwToKm(els.powerTo?.value) : els.powerTo?.value || "",
     powerUnit: els.powerUnit?.value === "kw" ? "kw" : "",
+    category: isVanSearch({ category: els.category?.value }) ? "van" : "",
     powerKwFrom: els.powerUnit?.value === "kw" ? els.powerFrom?.value || "" : "",
     powerKwTo: els.powerUnit?.value === "kw" ? els.powerTo?.value || "" : "",
     seatsFrom: els.seatsFrom?.value || "",
@@ -2855,7 +2871,24 @@ function buildMobileDeSearchUrl(filters) {
 
   params.set("sb", "p");
   params.set("od", "up");
+  if (isVanSearch(filters)) vanMobileDeParams(params, filters);
   return `https://suchen.mobile.de/fahrzeuge/search.html?${params.toString()}`;
+}
+
+// mobile.de vans (B75): "Transporter bis 7,5 t" (s=Truck, vc=VanUpTo7500;
+// checked 2026-10-11: price, mileage, year, power, fuel, gearbox, VAT,
+// seller, country and "dam" work there, Sprinter 8 509 offers). The car
+// catalog's model ids find nothing in it: the make with the model as its
+// description ("17200;;;Sprinter"). Car-only filters (body, doors, seats,
+// equipment, colours, engine size) are left out.
+function vanMobileDeParams(params, filters) {
+  params.set("s", "Truck");
+  params.set("vc", "VanUpTo7500");
+  const makeId = filters.brand ? mobileDeMakeIds[filters.brand] || "" : "";
+  params.delete("ms");
+  if (makeId) params.append("ms", `${makeId};;;${[filters.model, filters.version].map((v) => String(v || "").trim()).filter(Boolean).join(" ")}`);
+  ["c", "door", "sc", "sld", "it", "clim", "tct", "spc", "ecol", "icol", "fe", "pa", "cc", "dt"].forEach((key) => params.delete(key));
+  if (manualFuelValues(filters).includes("plugin")) params.append("fe", "HYBRID_PLUGIN");
 }
 
 function otomotoSlug(value) {
@@ -3211,7 +3244,28 @@ function buildOtomotoSearchUrl(filters) {
   if (filters.firstOwner) params.set("search[filter_enum_original_owner]", "1");
 
   params.set("search[order]", "filter_float_price:asc");
+  if (isVanSearch(filters)) return vanOtomotoUrl(params, filters, makeSlug);
   return `${pathParts.join("/")}?${params.toString()}`;
+}
+
+// otomoto vans (B75): /dostawcze has no model filter (only the make), the
+// model goes as keywords: /dostawcze/ford/q-transit-custom (713 offers on
+// 2026-10-11; the make alone 2 577). Its filters: price, year, mileage, engine
+// size and power, seats, fuel, gearbox, VAT, seller, damaged, registered,
+// origin, colour, first owner, ASO, accident-free; car-only ones are left out.
+const OTOMOTO_VAN_KEYS = ["filter_float_price", "filter_float_year", "filter_float_mileage", "filter_float_engine_capacity",
+  "filter_float_engine_power", "filter_float_nr_seats", "filter_enum_fuel_type", "filter_enum_gearbox", "filter_enum_vat",
+  "filter_enum_vat_discount", "private_business", "filter_enum_damaged", "filter_enum_registered", "filter_enum_country_origin",
+  "filter_enum_color", "filter_enum_original_owner", "filter_enum_service_record", "filter_enum_no_accident", "new_used", "order"];
+function vanOtomotoUrl(params, filters, makeSlug) {
+  const kept = new URLSearchParams();
+  params.forEach((value, key) => {
+    const name = key.replace(/^search\[/, "").replace(/\](\[\d+\])?$/, "").replace(/:(from|to)$/, "");
+    if (OTOMOTO_VAN_KEYS.includes(name)) kept.append(key, value);
+  });
+  const words = otomotoSlug([filters.model, filters.version].filter(Boolean).join(" "));
+  const path = ["https://www.otomoto.pl/dostawcze", makeSlug, words ? `q-${words}` : ""].filter(Boolean).join("/");
+  return `${path}?${kept.toString()}`;
 }
 
 function otomotoSkippedFilterLabels(filters) {
@@ -3633,6 +3687,8 @@ function applyRecognizedManualFields(data) {
   els.displacementTo.value = next.displacementTo;
   // The ad's power is in KM.
   showPowerUnit("");
+  // A van ad (otomoto /dostawcze/, AutoScout24 transporter) is searched among vans (B75).
+  showCategory(/\/dostawcze\/|lst-transporter|atype=X|vc=VanUpTo7500/.test(String(data?.sourceUrl || "")) ? "van" : "");
   els.powerFrom.value = next.powerFrom;
   els.powerTo.value = next.powerTo;
   setCheckedValue(els.drive, next.drive);
@@ -3816,6 +3872,7 @@ const ENGINE_TYPE_LABELS = [
   "HEV / MHEV <=2000cm³",
   "Spalinowy <=2000cm³",
   "Spalinowy >2000cm³",
+  "Dostawczy N1 (bez akcyzy)",
 ];
 
 // An ad read on mobile.de by the bookmarklet: same shape as the import backend's answer.
@@ -4168,10 +4225,19 @@ async function refreshMobileDeCount(filters) {
   try {
     // Several countries: one count per country, added up.
     const countries = filters.countries || [];
-    const totals = countries.length > 1
-      ? await Promise.all(countries.map((country) => window.AUTOGOOD_MOBILEDE_SEARCH(buildMobileDeSearchUrl({ ...filters, countries: [country] }), { countOnly: true })))
-      : [await window.AUTOGOOD_MOBILEDE_SEARCH(key, { countOnly: true })];
-    const total = totals.reduce((sum, item) => sum + (Number(item?.total) || 0), 0);
+    const countOf = async (base) => {
+      const totals = countries.length > 1
+        ? await Promise.all(countries.map((country) => window.AUTOGOOD_MOBILEDE_SEARCH(buildMobileDeSearchUrl({ ...base, countries: [country] }), { countOnly: true })))
+        : [await window.AUTOGOOD_MOBILEDE_SEARCH(buildMobileDeSearchUrl(base), { countOnly: true })];
+      return totals.reduce((sum, item) => sum + (Number(item?.total) || 0), 0);
+    };
+    let total = await countOf(filters);
+    // Vans: the description "Transit" also finds Transit Custom / Connect /
+    // Courier — their own counts come off (B75).
+    if (isVanSearch(filters)) {
+      const siblings = await Promise.all(vanSiblingModels(filters.brand, filters.model).map((model) => countOf({ ...filters, model })));
+      total = Math.max(0, total - siblings.reduce((sum, value) => sum + value, 0));
+    }
     const label = new Intl.NumberFormat(state.lang === "ru" ? "ru-RU" : "pl-PL").format(Number(total) || 0);
     mobileDeCounts.set(key, label);
     if (request === mobileDeCountRequest) show(label);
@@ -4190,12 +4256,22 @@ async function refreshOfferCount() {
     return;
   }
   refreshMobileDeCount(filters);
-  window.AUTOGOOD_BLOCKET_REFRESH_COUNT?.(filters);
-  window.AUTOGOOD_AVBY_REFRESH_COUNT?.(filters);
   window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(filters);
-  window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(filters);
-  window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT?.(filters);
-  window.AUTOGOOD_PARUVENDU_REFRESH_COUNT?.(filters);
+  if (isVanSearch(filters)) {
+    // Vans (B75): the portals without a van section in the program show a dash.
+    ["blocket", "avby", "marktplaats", "dehands", "kleinanzeigen", "paruvendu"].forEach((portal) => {
+      document.querySelectorAll(`[data-mobile-search-count-${portal}]`).forEach((node) => {
+        node.textContent = "—";
+        node.title = copy[state.lang].categoryUnsupported;
+      });
+    });
+  } else {
+    window.AUTOGOOD_BLOCKET_REFRESH_COUNT?.(filters);
+    window.AUTOGOOD_AVBY_REFRESH_COUNT?.(filters);
+    window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(filters);
+    window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT?.(filters);
+    window.AUTOGOOD_PARUVENDU_REFRESH_COUNT?.(filters);
+  }
   if (!filters.brand || !filters.model) {
     renderOfferCount("—");
     return;
@@ -5304,6 +5380,55 @@ function kmToKw(value) {
   const number = Number(String(value || "").replace(/[^\d]/g, ""));
   return number ? String(Math.round(number * KW_PER_KM)) : "";
 }
+
+// B75 "Osobowe / Dostawcze" (owner 2026-10-11): vans are searched in the
+// portals' van sections — otomoto /dostawcze (no model filter: the model by
+// keyword), mobile.de "Transporter bis 7,5 t" (the model as description),
+// AutoScout24 /lst-transporter. The other portals keep cars only.
+function isVanSearch(filters) {
+  return filters?.category === "van";
+}
+
+function showCategory(category) {
+  if (!els.category) return;
+  els.category.value = category === "van" ? "van" : "";
+  document.querySelectorAll("[data-mobile-category-choice]").forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.mobileCategoryChoice === els.category.value));
+  });
+  document.body.classList.toggle("isVanSearch", els.category.value === "van");
+}
+
+document.querySelectorAll("[data-mobile-category-choice]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const category = button.dataset.mobileCategoryChoice === "van" ? "van" : "";
+    if (category === (els.category?.value || "")) return;
+    showCategory(category);
+    els.category.dispatchEvent(new Event("change", { bubbles: true }));
+    updateSelectedFiltersSummary();
+    scheduleOfferCount();
+  });
+});
+
+// The other models of the make whose name starts with this one ("Transit" ->
+// Transit Custom, Transit Connect, Transit Courier): a keyword search for the
+// model finds them too, so their ads are left out (counts and lists).
+function vanSiblingModels(brand, model) {
+  const name = normalizeToken(model);
+  if (!name) return [];
+  return [...new Set(modelGroupsForBrand(brand).flatMap((group) => group.models))]
+    .filter((other) => {
+      const token = normalizeToken(other);
+      return token.startsWith(`${name} `);
+    });
+}
+
+function vanTitleFits(title, brand, model) {
+  const text = normalizeToken(title);
+  if (!model) return true;
+  if (!text.includes(normalizeToken(model))) return false;
+  return !vanSiblingModels(brand, model).some((other) => text.includes(normalizeToken(other)));
+}
+window.AUTOGOOD_VAN = { isVanSearch, vanSiblingModels, vanTitleFits };
 
 function showPowerUnit(unit) {
   if (!els.powerUnit) return;

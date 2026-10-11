@@ -323,6 +323,13 @@
     if (upholstery.length) params.set("uph", upholstery.join(","));
     if (filters.metallic) params.set("ptype", "M");
     if (page > 1) params.set("page", String(page));
+    // Vans (B75, "Dostawcze"): AutoScout24's Transporter section, atype=X (the
+    // same as /lst-transporter: Sprinter DE 730, checked 2026-10-11; France too
+    // with cy=F). Body, doors and the car equipment ids are left out.
+    if (filters.category === "van") {
+      params.set("atype", "X");
+      ["body", "doorfrom", "doorto", "eq", "icol", "uph", "ptype"].forEach((key) => params.delete(key));
+    }
     return url.toString();
   }
 

@@ -432,7 +432,9 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
   const specsFailed = new Set();
   function searchExcise(filters = {}) {
     const fallback = window.AUTOGOOD_TURNKEY?.engineClassFor?.({}, filters) ?? 3;
-    const rates = window.AUTOGOOD_TURNKEY?.EXCISE_RATES || [0, 0.093, 0.0155, 0.031, 0.186];
+    // A van search (B75): N1 vans pay no excise — the engine table plays no part.
+    if (window.AUTOGOOD_VAN?.isVanSearch(filters)) return { index: fallback, classes: [fallback] };
+    const rates = window.AUTOGOOD_TURNKEY?.EXCISE_RATES || [0, 0.093, 0.0155, 0.031, 0.186, 0];
     const brand = typeof canonicalBrand === "function" ? canonicalBrand(filters.brand) : String(filters.brand || "");
     const found = brand && filters.model ? window.AUTOGOOD_MODEL_SPECS_UI?.family?.(brand, String(filters.model).trim()) : null;
     const spec = found ? window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand]?.[found.key] : null;

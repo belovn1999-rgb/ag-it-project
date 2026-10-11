@@ -341,6 +341,7 @@ const engineTypes = [
   { label: { pl: "HEV / MHEV <=2000cm³", ru: "HEV / MHEV <=2000см³", en: "HEV / MHEV <=2000cc" }, rate: 0.0155 },
   { label: { pl: "Spalinowy <=2000cm³", ru: "ДВС <=2000см³", en: "Combustion <=2000cc" }, rate: 0.031 },
   { label: { pl: "Spalinowy >2000cm³", ru: "ДВС >2000см³", en: "Combustion >2000cc" }, rate: 0.186 },
+  { label: { pl: "Dostawczy N1 (bez akcyzy)", ru: "Коммерческий N1 (без акциза)", en: "Van N1 (no excise)" }, rate: 0 },
 ];
 
 const tabs = [

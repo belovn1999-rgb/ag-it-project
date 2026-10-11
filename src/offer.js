@@ -260,7 +260,7 @@
     const estimate = offer.estimate;
     if (!estimate) return null;
     if (method !== "direct") return estimateThroughAutogood(estimate, method);
-    const engineLabel = L(["elektryczny / plug-in do 2,0 l", "hybryda / plug-in powyżej 2,0 l", "hybryda do 2,0 l", "silnik do 2,0 l", "silnik powyżej 2,0 l"], ["электро / plug-in до 2,0 л", "гибрид / plug-in свыше 2,0 л", "гибрид до 2,0 л", "двигатель до 2,0 л", "двигатель свыше 2,0 л"])[estimate.engine?.index ?? 3];
+    const engineLabel = L(["elektryczny / plug-in do 2,0 l", "hybryda / plug-in powyżej 2,0 l", "hybryda do 2,0 l", "silnik do 2,0 l", "silnik powyżej 2,0 l", "dostawczy N1 — bez akcyzy"], ["электро / plug-in до 2,0 л", "гибрид / plug-in свыше 2,0 л", "гибрид до 2,0 л", "двигатель до 2,0 л", "двигатель свыше 2,0 л", "коммерческий N1 — без акциза"])[estimate.engine?.index ?? 3];
     const rate = Number(estimate.rate || 0).toFixed(2).replace(".", ",");
     const parts = estimate.parts || {};
     const excise = String(Math.round((estimate.engine?.rate ?? 0.031) * 10000) / 100).replace(".", ",");
