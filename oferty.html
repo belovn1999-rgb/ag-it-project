@@ -18,14 +18,15 @@
     />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <link rel="stylesheet" href="./src/offer-start.css?v=b71-w6" />
+    <link rel="stylesheet" href="./src/auction-start.css?v=ar-1011" />
     <script defer src="./src/global-navigation.js?v=nav-offer-1010" data-ag-global-nav data-ag-nav-follow-lang></script>
   </head>
   <body class="osBody">
     <!-- Program 06 "Oferta" (B71, owner 2026-10-10): only offers in a nice
          wrapping for interested clients, no market analysis. First way: a
          dealer's ad link from any portal of page 1 of "Wyszukiwanie i
-         analiza" (the portal follows the link). Second way, later (its own
-         chat): an auction report read by scripts. The PL / RU switch makes
+         analiza" (the portal follows the link). Second way: an auction's
+         condition report (link or PDF), src/auction-start.js. The PL / RU switch makes
          the offer in that language. docs/OFFER-PAGE.md §8. -->
     <main class="osShell">
       <header class="osTopbar">
@@ -44,10 +45,9 @@
           <svg aria-hidden="true"><use href="./src/mobile-icons.svg#store"></use></svg>
           <span data-os-text="modeDealer">Z ogłoszenia dealera</span>
         </button>
-        <button class="osMode" type="button" role="tab" aria-selected="false" disabled data-os-mode="auction">
+        <button class="osMode" type="button" role="tab" aria-selected="false" data-os-mode="auction">
           <svg aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg>
           <span data-os-text="modeAuction">Z raportu aukcji</span>
-          <small data-os-text="soon">wkrótce</small>
         </button>
       </div>
 
@@ -70,6 +70,34 @@
 
       <section class="osCard osCarCard" data-os-car hidden aria-live="polite"></section>
 
+      <!-- Second way (owner 2026-10-11): an auction's condition report — its
+           link or its PDF; the firm and the layout are found by themselves
+           (src/auction-report.js), the report shown for the manager
+           (src/auction-start.js). docs/PROJECT-AUCTION-REPORTS.md. -->
+      <section class="osCard arInputCard" data-ar-input hidden aria-labelledby="ar-heading">
+        <div class="osLinkHead">
+          <h2 id="ar-heading" class="osCardTitle"><svg aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg><span data-ar-text="inputTitle">Raport z aukcji</span></h2>
+          <span class="osPortal" data-ar-kind hidden></span>
+        </div>
+        <form class="osSearch" data-ar-form>
+          <label class="srOnly" for="ar-url" data-ar-text="linkLabel">Link do raportu</label>
+          <div class="osSearchControl">
+            <input id="ar-url" type="url" inputmode="url" autocomplete="off" placeholder="https://reports.macadam.eu/reports/…" aria-describedby="ar-status ar-supported" data-ar-url />
+            <button type="submit" data-ar-read data-ar-text="read">Rozpoznaj</button>
+          </div>
+        </form>
+        <label class="arDrop" data-ar-drop tabindex="0">
+          <input class="srOnly" type="file" accept="application/pdf,.pdf,.html,.htm,text/html" data-ar-file />
+          <svg aria-hidden="true"><use href="./src/mobile-icons.svg#receipt"></use></svg>
+          <strong data-ar-text="dropTitle">Przeciągnij tu PDF raportu</strong>
+          <span data-ar-text="dropHint">albo kliknij i wybierz plik (PDF lub zapisana strona HTML). Plik zostaje na tym komputerze.</span>
+        </label>
+        <p id="ar-status" class="osStatus" data-ar-status aria-live="polite"></p>
+        <p id="ar-supported" class="osPortals" data-ar-supported></p>
+      </section>
+
+      <section class="osCard osCarCard arReport" data-ar-report hidden aria-live="polite"></section>
+
       <section class="osRecent" data-os-recent hidden>
         <h2 class="osRecentTitle" data-os-text="recent">Ostatnie oferty</h2>
         <ul class="osRecentList" data-os-recent-list></ul>
@@ -88,6 +116,8 @@
     <script src="./src/offer-facts.js?v=b71-w6"></script>
     <script src="./src/offer-ad.js?v=b71-w6"></script>
     <script src="./src/offer-calc.js?v=b71-w6"></script>
-    <script src="./src/offer-start.js?v=b71-w6"></script>
+    <script src="./src/offer-start.js?v=ar-1011"></script>
+    <script src="./src/auction-report.js?v=ar-1011"></script>
+    <script src="./src/auction-start.js?v=ar-1011"></script>
   </body>
 </html>

@@ -10,7 +10,7 @@
  * the ad already read and opens oferta.html, where the manager checks it and
  * downloads the PDF. The PL / RU switch (as in "Wyszukiwanie i analiza")
  * speaks this page's language and makes the offer in it (offer.lang,
- * offer-ru.js). Second way — an auction report — comes later (its own chat).
+ * offer-ru.js). Second way — an auction report — src/auction-start.js.
  * docs/OFFER-PAGE.md §8.
  */
 (() => {
@@ -136,7 +136,6 @@
       button.setAttribute("aria-pressed", String(on));
     });
     document.querySelector("[data-os-lang-group]")?.setAttribute("aria-label", t("langLabel"));
-    document.querySelector('[data-os-mode="auction"]')?.setAttribute("title", t("auctionLater"));
     document.title = `AUTOGOOD ${lang === "ru" ? "Предложение" : "Oferta"}`;
     portalsLine.textContent = t("portals", { list: portalList() });
     if (current) carBox.innerHTML = carHtml();

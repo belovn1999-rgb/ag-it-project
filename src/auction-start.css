@@ -1,0 +1,101 @@
+/* Program 06 "Oferta", second way "Z raportu aukcji" (owner 2026-10-11):
+ * the report's link or PDF and the report read from it, in the look of the
+ * first way (offer-start.css, tokens.css). */
+
+/* The PDF drop box under the link field. */
+.arDrop {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  margin-top: var(--space-md);
+  padding: var(--space-lg) var(--space-md);
+  border: 2px dashed var(--color-field);
+  border-radius: var(--radius-card);
+  background: var(--color-surface-tint, var(--color-paper));
+  color: var(--color-muted);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out);
+}
+.arDrop svg { width: 28px; height: 28px; stroke: var(--color-brand); fill: none; stroke-width: 1.6; }
+.arDrop strong { color: var(--color-ink); font-size: var(--text-base); font-weight: 800; }
+.arDrop span { max-width: 560px; font-size: var(--text-sm); }
+.arDrop:hover, .arDrop.isOver { border-color: var(--color-brand); background: var(--color-surface); }
+.arDrop:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.arDrop.isBusy { cursor: progress; opacity: 0.6; }
+
+/* The report: page 1's summary columns, then tyres and damages full width. */
+.arReport .osCarName p a { margin-left: 6px; white-space: nowrap; }
+.arNoPhoto { display: grid; place-items: center; }
+.arNoPhoto svg { width: 36px; height: 36px; stroke: var(--color-soft); fill: none; stroke-width: 1.4; }
+.arCols h3 { display: flex; align-items: center; justify-content: center; gap: 8px; }
+.arCols h3 svg, .arBlock h3 svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+.arCols h4 { margin: var(--space-sm) 0 6px; color: var(--color-muted); font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.arCols h4:first-of-type { margin-top: 0; }
+.arCols li { align-items: baseline; }
+.arCols li span { white-space: normal; }
+.arCols li b { min-width: 0; overflow-wrap: anywhere; }
+.arCols li b i, .arMiss { color: var(--color-soft); font-weight: 600; font-style: italic; }
+.arFr { display: block; color: var(--color-soft); font-size: var(--text-xs); font-weight: 500; font-style: normal; }
+.arCols li b .arFr { display: inline; margin-left: 4px; }
+.arMono { font-family: var(--font-tabular, ui-monospace, monospace); letter-spacing: 0.02em; }
+.arPer { display: block; color: var(--color-muted); font-size: var(--text-xs); font-weight: 600; }
+.arPer.is-high, .arPer.is-low { color: #9a5b00; }
+.arChecked { margin: var(--space-sm) 0 0; color: var(--color-muted); font-size: var(--text-xs); line-height: 1.45; }
+.arChecked b { color: var(--color-success); }
+.arChecked.is-not b { color: #9a5b00; }
+.arMore { margin-top: var(--space-sm); font-size: var(--text-sm); }
+.arMore summary { color: var(--color-brand); font-weight: 700; cursor: pointer; }
+.arMore ul { margin-top: var(--space-xs); }
+
+.arBlock { margin-top: var(--space-lg); padding-top: var(--space-md); border-top: var(--rule-thin) solid var(--color-rule); }
+.arBlock h3 { display: flex; align-items: center; gap: 8px; margin: 0 0 var(--space-sm); color: var(--color-brand-pressed); font-size: var(--text-base); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.arTableWrap { overflow-x: auto; }
+.arTable { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.arTable th { padding: 6px 8px; border-bottom: var(--rule-thin) solid var(--color-rule); color: var(--color-muted); font-size: var(--text-xs); font-weight: 800; letter-spacing: 0.05em; text-align: left; text-transform: uppercase; }
+.arTable td { padding: 8px; border-bottom: var(--rule-thin) solid var(--color-rule-soft); vertical-align: top; }
+.arTable td b { font-weight: 700; }
+.arTable small { color: var(--color-soft); }
+.arNum { text-align: right; white-space: nowrap; }
+.arTyres { max-width: 760px; }
+.arLow { color: var(--color-error); font-weight: 700; }
+
+/* Damages: the report's repair in colour by weight — replacement, paint, light, none. */
+.arChips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: var(--space-sm); }
+.arChip { display: inline-flex; align-items: center; gap: 6px; min-height: 28px; padding: 0 10px; border-radius: 999px; background: var(--color-rule-soft); color: var(--color-ink); font-size: var(--text-xs); font-weight: 700; }
+.arChip b { font-weight: 800; }
+.arChip.is-hard, .arRepair.is-hard { background: #fbe4e1; color: #9b2c1f; }
+.arChip.is-mid, .arRepair.is-mid { background: #fbf1dc; color: #7a4d00; }
+.arChip.is-warn, .arRepair.is-warn { background: #fde8c8; color: #8a4500; }
+.arChip.is-soft, .arRepair.is-soft { background: #e7f0fa; color: #1d4f7a; }
+.arChip.is-none, .arRepair.is-none { background: var(--color-rule-soft); color: var(--color-muted); }
+.arRepair { display: inline-block; padding: 2px 8px; border-radius: var(--radius-sm); font-size: var(--text-xs); font-weight: 700; }
+.arDamages tr.is-none td { color: var(--color-muted); }
+.arThumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; min-width: 120px; }
+.arThumbs img { display: block; width: 56px; height: 42px; object-fit: cover; border-radius: var(--radius-sm); background: var(--color-rule-soft); }
+.arThumbs small { font-size: var(--text-xs); }
+.arAlert { margin: 0 0 var(--space-xs); padding: var(--space-xs) var(--space-sm); border-radius: var(--radius-md); background: #fde8c8; color: #8a4500; font-size: var(--text-sm); font-weight: 700; }
+.arArea { margin: 0 0 var(--space-sm); color: var(--color-muted); font-size: var(--text-sm); }
+.arCost { margin: var(--space-md) 0 0; color: var(--color-ink); font-size: var(--text-base); font-weight: 800; }
+.arCost small { display: block; margin-top: 2px; color: var(--color-muted); font-size: var(--text-xs); font-weight: 500; }
+
+.arMissing { margin-top: var(--space-lg); padding: var(--space-sm) var(--space-md); border-radius: var(--radius-md); background: #fbf1dc; color: #7a4d00; }
+.arMissing h3 { margin: 0 0 4px; font-size: var(--text-sm); font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+.arMissing p { margin: 0; font-size: var(--text-sm); font-weight: 700; }
+.arMissing small { font-size: var(--text-xs); }
+.arPlain { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+
+@media (max-width: 560px) {
+  .arThumbs { min-width: 0; }
+  .arTable th:nth-child(2), .arTable td:nth-child(2) { display: none; }
+}
+
+.arInputCard .osPortal[hidden] { display: none; }
+@media (max-width: 1100px) {
+  .arCols { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--space-lg); }
+  .arCols > section:nth-child(3) { padding-left: 0; border-left: 0; }
+}
+@media (max-width: 560px) {
+  .arCols { grid-template-columns: minmax(0, 1fr); }
+  .arCols > section { padding: 0; border-left: 0; }
+}
