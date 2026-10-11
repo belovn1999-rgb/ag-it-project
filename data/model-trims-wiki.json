@@ -288,27 +288,6 @@
   },
   {
    "brand": "Citroen",
-   "model": "C1",
-   "label": "C1",
-   "code": "C1 II",
-   "phase": "весь выпуск",
-   "years": "2014–2021",
-   "trims": [
-    "Sunrise Red",
-    "Black",
-    "Grey"
-   ],
-   "sport": [],
-   "special": [],
-   "sources": [
-    "https://pl.wikipedia.org/wiki/Citroen_C1"
-   ],
-   "status": "частично проверено",
-   "note": "pl: Citroen C1",
-   "origin": "wiki"
-  },
-  {
-   "brand": "Citroen",
    "model": "C3",
    "label": "C3",
    "code": "C3 IV",
@@ -383,8 +362,6 @@
     "Exclusive",
     "Blackcherry",
     "Millenium",
-    "Code Red",
-    "Code White",
     "Passion Bleus",
     "Music Touch"
    ],
@@ -411,8 +388,6 @@
     "Exclusive",
     "Blackcherry",
     "Millenium",
-    "Code Red",
-    "Code White",
     "Passion Bleus",
     "Music Touch"
    ],
@@ -503,8 +478,6 @@
     "Exclusive",
     "Blackcherry",
     "Millenium",
-    "Code Red",
-    "Code White",
     "Passion Bleus",
     "Music Touch"
    ],
@@ -1244,7 +1217,6 @@
     "Trend",
     "Elegance",
     "FX",
-    "FX Silver",
     "FX Gold",
     "Style+",
     "Zetec",
@@ -1253,8 +1225,7 @@
     "Fusion+",
     "Flex",
     "Senso+",
-    "Collection",
-    "Black Magic"
+    "Collection"
    ],
    "sport": [],
    "special": [],
@@ -1939,7 +1910,6 @@
     "Comfort",
     "Style",
     "Premium",
-    "Blue",
     "SLX",
     "SX",
     "Trophy"
@@ -1976,7 +1946,6 @@
     "Comfort",
     "Style",
     "Premium",
-    "Blue",
     "SLX",
     "SX",
     "Trophy"
@@ -4235,8 +4204,6 @@
     "Jam",
     "Glam",
     "Slam",
-    "Black",
-    "White",
     "Twisted"
    ],
    "sport": [],
@@ -4463,7 +4430,6 @@
    "years": "2004–2014",
    "trims": [
     "Astra",
-    "Black & White",
     "Navi",
     "Innovation",
     "Endless Summer",
@@ -5556,7 +5522,6 @@
     "Initiale",
     "Gordini R.S",
     "Mauboussin",
-    "Red Bull Racing RB7",
     "YAHOO!",
     "Authentique",
     "Gordini"
@@ -5588,7 +5553,6 @@
     "Rip Curl",
     "Gordini R.S",
     "Mauboussin",
-    "Red Bull Racing RB7",
     "Authentique",
     "Expression",
     "Initiale",
@@ -5803,8 +5767,7 @@
     "Entry",
     "Reference",
     "Style",
-    "XCellence",
-    "FR Black"
+    "XCellence"
    ],
    "sport": [
     "FR"
@@ -5828,8 +5791,7 @@
     "Entry",
     "Reference",
     "Style",
-    "XCellence",
-    "FR Black"
+    "XCellence"
    ],
    "sport": [
     "FR"
@@ -5881,7 +5843,6 @@
     "Entry",
     "Reference",
     "Style",
-    "FR Black",
     "Cupra 280",
     "Cupra 290",
     "Xcellence",
@@ -5911,7 +5872,6 @@
     "Entry",
     "Reference",
     "Style",
-    "FR Black",
     "Cupra 280",
     "Cupra 290",
     "Xcellence",
@@ -6346,8 +6306,6 @@
    "trims": [
     "Aygo",
     "Plus",
-    "Black",
-    "Blue",
     "Platinum",
     "Ice",
     "Go!",
@@ -6767,25 +6725,6 @@
    ],
    "status": "частично проверено",
    "note": "pl: Volkswagen Beetle",
-   "origin": "wiki"
-  },
-  {
-   "brand": "Volkswagen",
-   "model": "CC",
-   "label": "CC",
-   "code": "CC I",
-   "phase": "весь выпуск",
-   "years": "2012–2017",
-   "trims": [
-    "Black Style"
-   ],
-   "sport": [],
-   "special": [],
-   "sources": [
-    "https://pl.wikipedia.org/wiki/Volkswagen_CC"
-   ],
-   "status": "частично проверено",
-   "note": "pl: Volkswagen CC",
    "origin": "wiki"
   },
   {
@@ -7609,28 +7548,1512 @@
    "status": "частично проверено",
    "note": "pl: Volvo V90 (2016)",
    "origin": "wiki"
+  },
+  {
+   "brand": "Peugeot",
+   "model": "307",
+   "label": "307",
+   "code": "307 II",
+   "phase": "весь выпуск",
+   "years": "2005–2012",
+   "trims": [
+    "Filou",
+    "Tendance"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Peugeot_307"
+   ],
+   "status": "частично проверено",
+   "note": "de: Peugeot 307",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q4",
+   "label": "Q4",
+   "code": "Q4",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Design",
+    "Business Executive",
+    "Avus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Audi_Q4_e-tron"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Audi Q4 e-tron",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q6 e-tron",
+   "label": "Q6 e-tron",
+   "code": "Q6 e-tron I",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Design",
+    "SQ6"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Audi_Q6_e-tron"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Audi Q6 e-tron",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q8",
+   "label": "Q8",
+   "code": "Q8",
+   "phase": "дорестайлинг",
+   "years": "2018–2023",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Black Edition",
+    "Edition Dakar"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Audi_Q8_e-tron"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Audi Q8 e-tron",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q8",
+   "label": "Q8",
+   "code": "Q8",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Edition Dakar"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Audi_Q8_e-tron"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Audi Q8 e-tron",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q8",
+   "label": "Q8",
+   "code": "Q8-e",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Black Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Audi_Q8_e-tron_Sportback"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Audi Q8 e-tron Sportback",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Audi",
+   "model": "Q8",
+   "label": "Q8",
+   "code": "SQ8",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Black Edition",
+    "Edition Dakar"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Audi_Q8_e-tron"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Audi Q8 e-tron",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Audi",
+   "model": "TT",
+   "label": "TT",
+   "code": "8S",
+   "phase": "весь выпуск",
+   "years": "2014–2024",
+   "trims": [
+    "TT",
+    "TT S-Line"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Audi_TT"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Audi TT",
+   "origin": "wiki"
+  },
+  {
+   "brand": "BMW",
+   "model": "X2",
+   "label": "X2",
+   "code": "F39",
+   "phase": "весь выпуск",
+   "years": "2017–2023",
+   "trims": [
+    "Lounge",
+    "Lounge Plus"
+   ],
+   "sport": [],
+   "special": [
+    "Premiere",
+    "Rebel Edition",
+    "GoldPlay Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/BMW_X2_I"
+   ],
+   "status": "частично проверено",
+   "note": "fr: BMW X2 I",
+   "origin": "wiki"
+  },
+  {
+   "brand": "BMW",
+   "model": "X7",
+   "label": "X7",
+   "code": "X7",
+   "phase": "дорестайлинг",
+   "years": "2018–2022",
+   "trims": [
+    "X7",
+    "X7 Exclusive",
+    "X7 M Sport",
+    "X7 M Performance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/BMW_X7"
+   ],
+   "status": "частично проверено",
+   "note": "fr: BMW X7",
+   "origin": "wiki"
+  },
+  {
+   "brand": "BMW",
+   "model": "X7",
+   "label": "X7",
+   "code": "X7",
+   "phase": "рестайлинг",
+   "years": "2022–н. в.",
+   "trims": [
+    "X7",
+    "X7 Exclusive",
+    "X7 M Sport",
+    "X7 M Performance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/BMW_X7"
+   ],
+   "status": "частично проверено",
+   "note": "fr: BMW X7",
+   "origin": "wiki"
+  },
+  {
+   "brand": "BMW",
+   "model": "Z4",
+   "label": "Z4",
+   "code": "G29",
+   "phase": "дорестайлинг",
+   "years": "2018–2023",
+   "trims": [
+    "Z4"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/BMW_Z4_%28G29%29"
+   ],
+   "status": "частично проверено",
+   "note": "fr: BMW Z4 (G29)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "BMW",
+   "model": "Z4",
+   "label": "Z4",
+   "code": "G29",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Z4"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/BMW_Z4_%28G29%29"
+   ],
+   "status": "частично проверено",
+   "note": "fr: BMW Z4 (G29)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "BMW",
+   "model": "i8",
+   "label": "i8",
+   "code": "i8 I",
+   "phase": "весь выпуск",
+   "years": "2014–2021",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Ultimate Sophisto Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/BMW_i8"
+   ],
+   "status": "частично проверено",
+   "note": "fr: BMW i8",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Citroen",
+   "model": "C-Crosser",
+   "label": "C-Crosser",
+   "code": "C-Crosser I",
+   "phase": "весь выпуск",
+   "years": "2007–2012",
+   "trims": [
+    "Ligne Prestige",
+    "Dynamique",
+    "Exclusive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://nl.wikipedia.org/wiki/Citroen_C-Crosser"
+   ],
+   "status": "частично проверено",
+   "note": "nl: Citroen C-Crosser",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Cupra",
+   "model": "Terramar",
+   "label": "Terramar",
+   "code": "Terramar",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Terramar",
+    "Terramar VZ",
+    "Terramar America’s CUP"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Cupra_Terramar"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Cupra Terramar",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
+   "model": "Capri",
+   "label": "Capri",
+   "code": "Capri",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Capri",
+    "Capri Pack Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Ford_Capri_EV"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Ford Capri EV",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
+   "model": "Crown",
+   "label": "Crown",
+   "code": "Crown Victoria II",
+   "phase": "весь выпуск",
+   "years": "1998–2011",
+   "trims": [
+    "LX",
+    "LX Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Ford_Crown_Victoria"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Ford Crown Victoria",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
+   "model": "Mustang",
+   "label": "Mustang",
+   "code": "Mustang VI",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "50th Anniversary",
+    "Shadow Edition",
+    "Blue Edition",
+    "California Special",
+    "Black Shadow Edition",
+    "Mustang55",
+    "Ice White Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Ford_Mustang"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Ford Mustang",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
+   "model": "Mustang",
+   "label": "Mustang",
+   "code": "Mustang VI",
+   "phase": "рестайлинг",
+   "years": "2018–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "50th Anniversary",
+    "Shadow Edition",
+    "Blue Edition",
+    "California Special",
+    "Black Shadow Edition",
+    "Mustang55",
+    "Ice White Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Ford_Mustang"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Ford Mustang",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
+   "model": "Mustang Mach-E",
+   "label": "Mustang Mach-E",
+   "code": "Mustang Mach-E",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "First Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Ford_Mustang_Mach-E"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Ford Mustang Mach-E",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
+   "model": "Taurus",
+   "label": "Taurus",
+   "code": "Taurus V",
+   "phase": "весь выпуск",
+   "years": "2007–2018",
+   "trims": [
+    "SE",
+    "SEL"
+   ],
+   "sport": [],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Ford_Taurus_VI"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Ford Taurus VI",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
+   "model": "Tourneo Connect",
+   "label": "Tourneo Connect",
+   "code": "Tourneo Connect I",
+   "phase": "весь выпуск",
+   "years": "2005–2013",
+   "trims": [
+    "XL",
+    "XLT"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Ford_Tourneo_Connect"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Ford Tourneo Connect",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Hyundai",
+   "model": "IONIQ 6",
+   "label": "IONIQ 6",
+   "code": "Ioniq 6",
+   "phase": "дорестайлинг",
+   "years": "2023–2026",
+   "trims": [
+    "Intuitive",
+    "Creative",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Hyundai_IONIQ_6"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Hyundai IONIQ 6",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Hyundai",
+   "model": "IONIQ 6",
+   "label": "IONIQ 6",
+   "code": "Ioniq 6",
+   "phase": "рестайлинг",
+   "years": "2026–н. в.",
+   "trims": [
+    "Intuitive",
+    "Creative",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Hyundai_IONIQ_6"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Hyundai IONIQ 6",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Hyundai",
+   "model": "KONA",
+   "label": "KONA",
+   "code": "Kona II",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Intuitive",
+    "Creative",
+    "Premium",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Hyundai_Kona_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Hyundai Kona II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Hyundai",
+   "model": "Matrix",
+   "label": "Matrix",
+   "code": "Matrix I",
+   "phase": "весь выпуск",
+   "years": "2001–2010",
+   "trims": [
+    "GLS"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Hyundai_Matrix"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Hyundai Matrix",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "EV9",
+   "label": "EV9",
+   "code": "EV9 I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "EV9",
+    "EV9 Earth",
+    "EV9 GT Line"
+   ],
+   "sport": [],
+   "special": [
+    "Earth Launch Edition",
+    "GT Line Launch Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_EV9"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia EV9",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "Niro",
+   "label": "Niro",
+   "code": "Niro I",
+   "phase": "рестайлинг",
+   "years": "2020–2022",
+   "trims": [
+    "Motion",
+    "Active",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_Niro_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia Niro II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "Sportage",
+   "label": "Sportage",
+   "code": "Sportage V",
+   "phase": "дорестайлинг",
+   "years": "2021–2025",
+   "trims": [
+    "Motion",
+    "Active",
+    "Design",
+    "GT Line Premium",
+    "LX",
+    "EX",
+    "EX Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_Sportage"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia Sportage",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "Sportage",
+   "label": "Sportage",
+   "code": "Sportage V",
+   "phase": "рестайлинг",
+   "years": "2025–н. в.",
+   "trims": [
+    "Motion",
+    "Active",
+    "Design",
+    "GT Line Premium",
+    "LX",
+    "EX",
+    "EX Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_Sportage"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia Sportage",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "Sportage",
+   "label": "Sportage",
+   "code": "Sportage IV",
+   "phase": "дорестайлинг",
+   "years": "2016–2018",
+   "trims": [
+    "Motion",
+    "Active",
+    "Design",
+    "GT Line Premium"
+   ],
+   "sport": [
+    "GT Line"
+   ],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_Sportage"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia Sportage",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "Sportage",
+   "label": "Sportage",
+   "code": "Sportage IV",
+   "phase": "рестайлинг",
+   "years": "2018–2021",
+   "trims": [
+    "Motion",
+    "Active",
+    "Design",
+    "GT Line Premium"
+   ],
+   "sport": [
+    "GT Line"
+   ],
+   "special": [
+    "Black Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_Sportage"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia Sportage",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "Sportage",
+   "label": "Sportage",
+   "code": "Sportage III",
+   "phase": "дорестайлинг",
+   "years": "2010–2014",
+   "trims": [
+    "Origins",
+    "Origins Ultimate"
+   ],
+   "sport": [],
+   "special": [
+    "Edition 7"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_Sportage"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia Sportage",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Kia",
+   "model": "Sportage",
+   "label": "Sportage",
+   "code": "Sportage III",
+   "phase": "рестайлинг",
+   "years": "2014–2016",
+   "trims": [
+    "Origins",
+    "Origins Ultimate"
+   ],
+   "sport": [],
+   "special": [
+    "Edition 7"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Kia_Sportage"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Kia Sportage",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mazda",
+   "model": "MX-30",
+   "label": "MX-30",
+   "code": "MX-30 I",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "MX-30",
+    "MX-30 Modern Confiance",
+    "MX-30 Industrial Vintage",
+    "Prime-Line",
+    "Executive-Line",
+    "Makoto"
+   ],
+   "sport": [],
+   "special": [
+    "MX-30 First Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mazda_MX-30"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mazda MX-30",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "B",
+   "label": "B",
+   "code": "W245",
+   "phase": "весь выпуск",
+   "years": "2005–2011",
+   "trims": [
+    "Pack Design",
+    "Pack Family",
+    "Pack Luxe",
+    "Pack Technologie",
+    "Pack Télématique",
+    "Pack Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mercedes-Benz_W245"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mercedes-Benz W245",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "EQA",
+   "label": "EQA",
+   "code": "EQA",
+   "phase": "дорестайлинг",
+   "years": "2021–2024",
+   "trims": [
+    "Progressive Line",
+    "Business Line",
+    "Electric Art"
+   ],
+   "sport": [
+    "AMG Line"
+   ],
+   "special": [
+    "Edition 1"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mercedes-Benz_EQA"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mercedes-Benz EQA",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "EQA",
+   "label": "EQA",
+   "code": "EQA",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Progressive Line",
+    "Business Line",
+    "Electric Art"
+   ],
+   "sport": [
+    "AMG Line"
+   ],
+   "special": [
+    "Edition 1"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mercedes-Benz_EQA"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mercedes-Benz EQA",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "EQE",
+   "label": "EQE",
+   "code": "EQE",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Electric Art",
+    "AMG"
+   ],
+   "sport": [
+    "AMG Line"
+   ],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mercedes-Benz_EQE_SUV"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mercedes-Benz EQE SUV",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "SLK",
+   "label": "SLK",
+   "code": "R172",
+   "phase": "весь выпуск",
+   "years": "2011–2015",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Final Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mercedes-Benz_R172"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mercedes-Benz R172",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Nissan",
+   "model": "Micra",
+   "label": "Micra",
+   "code": "Micra V",
+   "phase": "весь выпуск",
+   "years": "2017–2023",
+   "trims": [
+    "Visia",
+    "Visia Pack",
+    "Acenta",
+    "Tekna",
+    "Made in France",
+    "Enigma",
+    "Kiiro"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Nissan_Micra"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Nissan Micra",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Nissan",
+   "model": "Micra",
+   "label": "Micra",
+   "code": "Micra IV",
+   "phase": "дорестайлинг",
+   "years": "2010–2013",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Design Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Nissan_Micra"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Nissan Micra",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Nissan",
+   "model": "Micra",
+   "label": "Micra",
+   "code": "Micra IV",
+   "phase": "рестайлинг",
+   "years": "2013–2017",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Design Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Nissan_Micra"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Nissan Micra",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Peugeot",
+   "model": "207",
+   "label": "207",
+   "code": "207",
+   "phase": "весь выпуск",
+   "years": "2006–2013",
+   "trims": [
+    "Urban",
+    "Active",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Peugeot_207"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Peugeot 207",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Peugeot",
+   "model": "4007",
+   "label": "4007",
+   "code": "4007 I",
+   "phase": "весь выпуск",
+   "years": "2007–2012",
+   "trims": [
+    "SE",
+    "Sport XS"
+   ],
+   "sport": [
+    "GT"
+   ],
+   "special": [],
+   "sources": [
+    "https://nl.wikipedia.org/wiki/Peugeot_4007"
+   ],
+   "status": "частично проверено",
+   "note": "nl: Peugeot 4007",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Traveller",
+   "label": "Traveller",
+   "code": "Traveller",
+   "phase": "весь выпуск",
+   "years": "2016–н. в.",
+   "trims": [
+    "Feel",
+    "Shine",
+    "Business",
+    "Business Lounge",
+    "Rip Curl",
+    "Confort",
+    "Club",
+    "Traveller",
+    "Traveller Business",
+    "Pro",
+    "Premium",
+    "Premium Pro",
+    "Dynamic",
+    "Executive",
+    "Lounge",
+    "Active"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Peugeot_Traveller"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Peugeot Traveller",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Renault",
+   "model": "Express",
+   "label": "Express",
+   "code": "Express II",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Essentiel",
+    "Confort"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Renault_Express_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Renault Express II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Renault",
+   "model": "Koleos",
+   "label": "Koleos",
+   "code": "Koleos II",
+   "phase": "дорестайлинг",
+   "years": "2017–2019",
+   "trims": [
+    "Zen",
+    "Intens",
+    "Evolution",
+    "Initiale Paris"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Renault_Koleos_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Renault Koleos II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Renault",
+   "model": "Koleos",
+   "label": "Koleos",
+   "code": "Koleos II",
+   "phase": "рестайлинг",
+   "years": "2019–2023",
+   "trims": [
+    "Zen",
+    "Intens",
+    "Evolution",
+    "Initiale Paris"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Renault_Koleos_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Renault Koleos II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Renault",
+   "model": "Rafale",
+   "label": "Rafale",
+   "code": "Rafale I",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Techno",
+    "Esprit Alpine"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Renault_Rafale"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Renault Rafale",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Renault",
+   "model": "Symbioz",
+   "label": "Symbioz",
+   "code": "Symbioz I",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Evolution",
+    "Techno",
+    "Esprit Alpine",
+    "Iconic"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Renault_Symbioz"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Renault Symbioz",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Seat",
+   "model": "Tarraco",
+   "label": "Tarraco",
+   "code": "Tarraco",
+   "phase": "дорестайлинг",
+   "years": "2018–2022",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Opening Edition",
+    "Xclusive Edition",
+    "Urban"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Seat_Tarraco"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Seat Tarraco",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Seat",
+   "model": "Tarraco",
+   "label": "Tarraco",
+   "code": "Tarraco",
+   "phase": "рестайлинг",
+   "years": "2022–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Opening Edition",
+    "Xclusive Edition",
+    "Urban"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Seat_Tarraco"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Seat Tarraco",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Skoda",
+   "model": "Rapid",
+   "label": "Rapid",
+   "code": "Rapid II",
+   "phase": "дорестайлинг",
+   "years": "2012–2017",
+   "trims": [
+    "Active",
+    "Comfort"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://nl.wikipedia.org/wiki/Skoda_Rapid"
+   ],
+   "status": "частично проверено",
+   "note": "nl: Skoda Rapid",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Skoda",
+   "model": "Rapid",
+   "label": "Rapid",
+   "code": "Rapid II",
+   "phase": "рестайлинг",
+   "years": "2017–2019",
+   "trims": [
+    "Active",
+    "Comfort"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://nl.wikipedia.org/wiki/Skoda_Rapid"
+   ],
+   "status": "частично проверено",
+   "note": "nl: Skoda Rapid",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "ID.4",
+   "label": "ID.4",
+   "code": "ID.4 I",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "Pure",
+    "Pro",
+    "GTX",
+    "ID",
+    "Life Max",
+    "Édition Limitée FFF"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volkswagen_ID.4"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volkswagen ID.4",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "ID.5",
+   "label": "ID.5",
+   "code": "ID.5 I",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Pro",
+    "Pro Performance",
+    "GTX",
+    "ID",
+    "Life Max"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volkswagen_ID.5"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volkswagen ID.5",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "ID.7",
+   "label": "ID.7",
+   "code": "ID.7",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Pro Style",
+    "Pro Style Exclusive",
+    "Pro Life Max"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volkswagen_ID.7"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volkswagen ID.7",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Taigo",
+   "label": "Taigo",
+   "code": "Taigo",
+   "phase": "дорестайлинг",
+   "years": "2022–2026",
+   "trims": [
+    "Life",
+    "Style",
+    "Taigo",
+    "Life Plus"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition",
+    "VW Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volkswagen_Taigo"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volkswagen Taigo",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Taigo",
+   "label": "Taigo",
+   "code": "Taigo",
+   "phase": "рестайлинг",
+   "years": "2026–н. в.",
+   "trims": [
+    "Life",
+    "Style",
+    "Taigo",
+    "Life Plus"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition",
+    "VW Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volkswagen_Taigo"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volkswagen Taigo",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "up!",
+   "label": "up!",
+   "code": "up!",
+   "phase": "дорестайлинг",
+   "years": "2011–2016",
+   "trims": [
+    "Marionnaud",
+    "Cool Up!",
+    "Groove up!",
+    "Club",
+    "Beats Audio",
+    "Connect",
+    "IQ Drive",
+    "United",
+    "Active"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volkswagen_up%21"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volkswagen up!",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "up!",
+   "label": "up!",
+   "code": "up!",
+   "phase": "рестайлинг",
+   "years": "2016–2022",
+   "trims": [
+    "Marionnaud",
+    "Groove up!",
+    "Club",
+    "Beats Audio",
+    "Connect",
+    "IQ Drive",
+    "United",
+    "Active"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volkswagen_up%21"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volkswagen up!",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volvo",
+   "model": "C40",
+   "label": "C40",
+   "code": "C40 I",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Essential",
+    "Start",
+    "Plus",
+    "Ultimate"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volvo_C40"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volvo C40",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volvo",
+   "model": "EX30",
+   "label": "EX30",
+   "code": "EX30 I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Start",
+    "Plus",
+    "Ultra"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volvo_EX30"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volvo EX30",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC70",
+   "label": "XC70",
+   "code": "XC70 II",
+   "phase": "дорестайлинг",
+   "years": "2007–2013",
+   "trims": [
+    "Kinetic",
+    "Momentum",
+    "Ocean Race",
+    "Summum",
+    "Xenium"
+   ],
+   "sport": [],
+   "special": [
+    "Signature Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volvo_XC70"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volvo XC70",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volvo",
+   "model": "XC70",
+   "label": "XC70",
+   "code": "XC70 II",
+   "phase": "рестайлинг",
+   "years": "2013–2016",
+   "trims": [
+    "Kinetic",
+    "Momentum",
+    "Ocean Race",
+    "Summum",
+    "Xenium"
+   ],
+   "sport": [],
+   "special": [
+    "Signature Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Volvo_XC70"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Volvo XC70",
+   "origin": "wiki"
   }
  ],
  "missing": [
-  "Audi A1 A1 III: нет списка в pl/de",
-  "Audi A1 A1 II: нет списка в pl/de",
   "Audi A7 C8: нет списка в pl/de",
   "Audi A7 C7: нет списка в pl/de",
   "Audi A8 D5: нет списка в pl/de",
   "Audi A8 D4: нет списка в pl/de",
   "Audi A8 D3: нет списка в pl/de",
-  "Audi Q4 Q4: нет списка в pl/de",
-  "Audi Q6 e-tron Q6 e-tron I: нет списка в pl/de",
-  "Audi Q8 Q8: нет списка в pl/de",
-  "Audi Q8 Q8-e: нет списка в pl/de",
-  "Audi Q8 SQ8: нет списка в pl/de",
   "Audi R8 R8 II: нет списка в pl/de",
   "Audi R8 R8 I: нет списка в pl/de",
-  "Audi TT 8S: нет списка в pl/de",
   "Audi TT 8J: нет списка в pl/de",
   "Audi e-tron e-tron: нет списка в pl/de",
-  "BMW 2 F74: нет списка в pl/de",
-  "BMW 2 G42-U06: нет списка в pl/de",
   "BMW 6 G32: нет списка в pl/de",
   "BMW 6 F06-F12-F13: нет списка в pl/de",
   "BMW 6 E63-64: нет списка в pl/de",
@@ -7639,38 +9062,24 @@
   "BMW 7 F01: нет списка в pl/de",
   "BMW 8 Seria 8 II: нет списка в pl/de",
   "BMW X2 U10: нет списка в pl/de",
-  "BMW X2 F39: нет списка в pl/de",
   "BMW X4 G02: нет списка в pl/de",
   "BMW X4 G01: нет списка в pl/de",
   "BMW X6 G06: нет списка в pl/de",
   "BMW X6 F16: нет списка в pl/de",
   "BMW X6 E71: нет списка в pl/de",
-  "BMW X7 X7: нет списка в pl/de",
-  "BMW XM XM: нет списка в pl/de",
-  "BMW Z4 G29: нет списка в pl/de",
   "BMW Z4 E89: нет списка в pl/de",
   "BMW i4 i4: нет списка в pl/de",
   "BMW i5 i5: нет списка в pl/de",
   "BMW i7 i7: нет списка в pl/de",
-  "BMW i8 i8 I: нет списка в pl/de",
   "BMW iX iX: нет списка в pl/de",
   "BMW iX1 iX1 I: нет списка в pl/de",
   "BMW iX2 iX2 I: нет списка в pl/de",
   "BMW iX3 iX3 I: нет списка в pl/de",
-  "Citroen Berlingo Berlingo III: нет списка в pl/de",
-  "Citroen Berlingo Berlingo I: нет списка в pl/de",
-  "Citroen C-Crosser C-Crosser I: нет списка в pl/de",
-  "Citroen C1 C1 I: нет списка в pl/de",
-  "Citroen C3 Aircross C3 Aircross II: нет списка в pl/de",
-  "Citroen C4 C4 IV: нет списка в pl/de",
-  "Citroen C4 C4 III: нет списка в pl/de",
   "Citroen C4 Cactus C4 Cactus: нет списка в pl/de",
   "Citroen C4 SpaceTourer C4 SpaceTourer: нет списка в pl/de",
   "Citroen C4 X C4 X: нет списка в pl/de",
-  "Citroen C5 Aircross C5 Aircross II: нет списка в pl/de",
   "Citroen C5 X C5 X: нет списка в pl/de",
   "Citroen C8 C8 I: нет списка в pl/de",
-  "Citroen Grand C4 Picasso / SpaceTourer Grand C4 Picasso I: нет списка в pl/de",
   "Citroen Jumper Jumper III: нет списка в pl/de",
   "Citroen Jumper Jumper II: нет списка в pl/de",
   "Citroen Jumpy Jumpy III: нет списка в pl/de",
@@ -7680,25 +9089,13 @@
   "Cupra Born Born I: нет списка в pl/de",
   "Cupra Raval Raval I: нет списка в pl/de",
   "Cupra Tavascan Tavascan I: нет списка в pl/de",
-  "Cupra Terramar Terramar: нет списка в pl/de",
-  "Ford Capri Capri: нет списка в pl/de",
-  "Ford Crown Crown Victoria II: нет списка в pl/de",
-  "Ford EcoSport EcoSport I: нет списка в pl/de",
   "Ford Econoline Econoline IV: нет списка в pl/de",
   "Ford Escape Escape III: нет списка в pl/de",
   "Ford Escape Escape II: нет списка в pl/de",
-  "Ford Explorer Explorer I: нет списка в pl/de",
-  "Ford Explorer Explorer VI: нет списка в pl/de",
-  "Ford Ka/Ka+ Ka/Ka+: нет списка в pl/de",
-  "Ford Mustang Mustang VI: нет списка в pl/de",
   "Ford Mustang Mustang V: нет списка в pl/de",
-  "Ford Mustang Mach-E Mustang Mach-E: нет списка в pl/de",
-  "Ford Ranger Ranger VI: нет списка в pl/de",
-  "Ford Taurus Taurus V: нет списка в pl/de",
   "Ford Tourneo Connect Tourneo Connect IV: нет списка в pl/de",
   "Ford Tourneo Connect Tourneo Connect III: нет списка в pl/de",
   "Ford Tourneo Connect Tourneo Connect II: нет списка в pl/de",
-  "Ford Tourneo Connect Tourneo Connect I: нет списка в pl/de",
   "Ford Tourneo Courier Tourneo Courier I: нет списка в pl/de",
   "Ford Tourneo Custom Tourneo Custom II: нет списка в pl/de",
   "Ford Tourneo Custom Tourneo Custom I: нет списка в pl/de",
@@ -7719,19 +9116,14 @@
   "Hyundai Elantra Elantra VI: нет списка в pl/de",
   "Hyundai Elantra Elantra V: нет списка в pl/de",
   "Hyundai Elantra Elantra IV: нет списка в pl/de",
-  "Hyundai Genesis Genesis II: нет списка в pl/de",
-  "Hyundai Genesis Genesis: нет списка в pl/de",
   "Hyundai Grandeur Grandeur IV: нет списка в pl/de",
   "Hyundai H-1 H-1 II: нет списка в pl/de",
   "Hyundai INSTER Inster I: нет списка в pl/de",
   "Hyundai IONIQ Ioniq I: нет списка в pl/de",
   "Hyundai IONIQ 3 Ioniq 3 I: нет списка в pl/de",
   "Hyundai IONIQ 5 Ioniq 5: нет списка в pl/de",
-  "Hyundai IONIQ 6 Ioniq 6: нет списка в pl/de",
   "Hyundai IONIQ 9 Ioniq 9 I: нет списка в pl/de",
-  "Hyundai KONA Kona II: нет списка в pl/de",
   "Hyundai KONA Kona I: нет списка в pl/de",
-  "Hyundai Matrix Matrix I: нет списка в pl/de",
   "Hyundai SANTA FE Santa Fe V: нет списка в pl/de",
   "Hyundai SANTA FE Santa Fe IV: нет списка в pl/de",
   "Hyundai SANTA FE Santa Fe III: нет списка в pl/de",
@@ -7740,44 +9132,25 @@
   "Hyundai TUCSON Tucson IV: нет списка в pl/de",
   "Hyundai TUCSON Tucson III: нет списка в pl/de",
   "Hyundai TUCSON Tucson I: нет списка в pl/de",
-  "Hyundai i10 i10 III: нет списка в pl/de",
-  "Hyundai i20 i20 III: нет списка в pl/de",
   "Kia EV2 EV2 I: нет списка в pl/de",
   "Kia EV3 EV3 I: нет списка в pl/de",
   "Kia EV4 EV4: нет списка в pl/de",
   "Kia EV5 EV5 I: нет списка в pl/de",
   "Kia EV6 EV6 I: нет списка в pl/de",
-  "Kia EV9 EV9 I: нет списка в pl/de",
   "Kia K4 K4: нет списка в pl/de",
   "Kia Niro Niro II: нет списка в pl/de",
-  "Kia Niro Niro I: нет списка в pl/de",
   "Kia PV5 PV5: нет списка в pl/de",
-  "Kia Sorento Sorento IV: нет списка в pl/de",
-  "Kia Sorento Sorento III: нет списка в pl/de",
-  "Kia Soul Soul II: нет списка в pl/de",
-  "Kia Sportage Sportage V: нет списка в pl/de",
-  "Kia Sportage Sportage IV: нет списка в pl/de",
-  "Kia Sportage Sportage III: нет списка в pl/de",
   "Kia Sportage Sportage II: нет списка в pl/de",
-  "Kia Stinger Stinger: нет списка в pl/de",
-  "Kia Stonic Stonic II: нет списка в pl/de",
   "Kia XCeed XCeed: нет списка в pl/de",
-  "Kia cee'd / Ceed Ceed I: нет списка в pl/de",
-  "Mazda 2 Mazda 2 III: нет списка в pl/de",
   "Mazda 5 Mazda 5 II: нет списка в pl/de",
   "Mazda 5 Mazda 5 I: нет списка в pl/de",
-  "Mazda 6 Mazda 6 IV: нет списка в pl/de",
-  "Mazda CX-5 CX-5 II: нет списка в pl/de",
   "Mazda CX-9 CX-9: нет списка в pl/de",
   "Mazda MPV MPV III: нет списка в pl/de",
-  "Mazda MX-30 MX-30 I: нет списка в pl/de",
-  "Mazda MX-5 MX-5 III: нет списка в pl/de",
   "Mazda Premacy Premacy II: нет списка в pl/de",
   "Mazda RX-8 RX-8 I: нет списка в pl/de",
   "Mercedes-Benz AMG GT C190: нет списка в pl/de",
   "Mercedes-Benz B W247: нет списка в pl/de",
   "Mercedes-Benz B W246: нет списка в pl/de",
-  "Mercedes-Benz B W245: нет списка в pl/de",
   "Mercedes-Benz CL W216: нет списка в pl/de",
   "Mercedes-Benz CLC CLC I: нет списка в pl/de",
   "Mercedes-Benz CLE CLE: нет списка в pl/de",
@@ -7787,14 +9160,10 @@
   "Mercedes-Benz CLS W219: нет списка в pl/de",
   "Mercedes-Benz Citan W420: нет списка в pl/de",
   "Mercedes-Benz Citan W415: нет списка в pl/de",
-  "Mercedes-Benz EQA EQA: нет списка в pl/de",
   "Mercedes-Benz EQB EQB: нет списка в pl/de",
-  "Mercedes-Benz EQE EQE: нет списка в pl/de",
   "Mercedes-Benz EQS EQS: нет списка в pl/de",
   "Mercedes-Benz EQV A2: нет списка в pl/de",
   "Mercedes-Benz EQV A3: нет списка в pl/de",
-  "Mercedes-Benz G W465: нет списка в pl/de",
-  "Mercedes-Benz G W464: нет списка в pl/de",
   "Mercedes-Benz GL X166: нет списка в pl/de",
   "Mercedes-Benz GL X164: нет списка в pl/de",
   "Mercedes-Benz GLA GLA II: нет списка в pl/de",
@@ -7810,7 +9179,6 @@
   "Mercedes-Benz SL R231: нет списка в pl/de",
   "Mercedes-Benz SL R230/2: нет списка в pl/de",
   "Mercedes-Benz SLC SLC: нет списка в pl/de",
-  "Mercedes-Benz SLK R172: нет списка в pl/de",
   "Mercedes-Benz SLK R171: нет списка в pl/de",
   "Mercedes-Benz SLS AMG SLS AMG: нет списка в pl/de",
   "Mercedes-Benz Sprinter Sprinter IV: нет списка в pl/de",
@@ -7823,40 +9191,26 @@
   "Nissan Evalia Evalia I: нет списка в pl/de",
   "Nissan Interstar Interstar III: нет списка в pl/de",
   "Nissan Interstar Interstar II: нет списка в pl/de",
-  "Nissan Leaf Leaf II: нет списка в pl/de",
-  "Nissan Leaf Leaf I: нет списка в pl/de",
-  "Nissan Micra Micra V: нет списка в pl/de",
-  "Nissan Micra Micra IV: нет списка в pl/de",
   "Nissan Micra Micra III: нет списка в pl/de",
   "Nissan Murano Murano II: нет списка в pl/de",
   "Nissan NP 300 NP 300 I: нет списка в pl/de",
   "Nissan NV200 NV200: нет списка в pl/de",
-  "Nissan Navara Navara IV: нет списка в pl/de",
   "Nissan Pathfinder Pathfinder III: нет списка в pl/de",
   "Nissan Primastar Primastar II: нет списка в pl/de",
   "Nissan Primastar Primastar I: нет списка в pl/de",
-  "Nissan Qashqai Qashqai I: нет списка в pl/de",
   "Nissan Quest Quest III: нет списка в pl/de",
   "Nissan Skyline V36: нет списка в pl/de",
   "Nissan Townstar Townstar I: нет списка в pl/de",
   "Opel Agila Agila B: нет списка в pl/de",
-  "Opel Astra Astra L: нет списка в pl/de",
   "Opel Cascada Cascada I: нет списка в pl/de",
-  "Opel Combo Combo E: нет списка в pl/de",
   "Opel Combo Combo D: нет списка в pl/de",
   "Opel Combo Combo C: нет списка в pl/de",
-  "Opel Corsa Corsa D: нет списка в pl/de",
-  "Opel Grandland (X) Grandland B: нет списка в pl/de",
   "Opel Movano Movano III: нет списка в pl/de",
   "Opel Movano Movano II: нет списка в pl/de",
   "Opel Vivaro Vivaro C: нет списка в pl/de",
   "Opel Vivaro Vivaro B: нет списка в pl/de",
   "Opel Vivaro Vivaro A: нет списка в pl/de",
-  "Opel Zafira Zafira D: нет списка в pl/de",
   "Peugeot 107 107: нет списка в pl/de",
-  "Peugeot 207 207: нет списка в pl/de",
-  "Peugeot 307 307 II: нет списка в pl/de",
-  "Peugeot 4007 4007 I: нет списка в pl/de",
   "Peugeot 408 408 II: нет списка в pl/de",
   "Peugeot 408 P54: нет списка в pl/de",
   "Peugeot 807 807: нет списка в pl/de",
@@ -7868,30 +9222,18 @@
   "Peugeot Partner Partner III: нет списка в pl/de",
   "Peugeot Partner Partner II: нет списка в pl/de",
   "Peugeot Partner Partner I: нет списка в pl/de",
-  "Peugeot Rifter Rifter: нет списка в pl/de",
-  "Peugeot Traveller Traveller: нет списка в pl/de",
   "Renault Arkana Arkana: нет списка в pl/de",
   "Renault Austral Austral I: нет списка в pl/de",
-  "Renault Express Express II: нет списка в pl/de",
-  "Renault Kangoo Kangoo III: нет списка в pl/de",
-  "Renault Koleos Koleos II: нет списка в pl/de",
   "Renault Koleos Koleos I: нет списка в pl/de",
   "Renault Master Master IV: нет списка в pl/de",
   "Renault Master Master III: нет списка в pl/de",
   "Renault Megane E-TECH Megane E-TECH I: нет списка в pl/de",
-  "Renault Rafale Rafale I: нет списка в pl/de",
-  "Renault Symbioz Symbioz I: нет списка в pl/de",
-  "Renault Twingo Twingo III: нет списка в pl/de",
   "Renault ZOE ZOE II: нет списка в pl/de",
   "Renault ZOE ZOE I: нет списка в pl/de",
-  "Seat Alhambra Alhambra I: нет списка в pl/de",
   "Seat Exeo Exeo: нет списка в pl/de",
-  "Seat Ibiza Ibiza IV: нет списка в pl/de",
-  "Seat Tarraco Tarraco: нет списка в pl/de",
   "Skoda Elroq Elroq: нет списка в pl/de",
   "Skoda Enyaq Enyaq: нет списка в pl/de",
   "Skoda Epiq Epiq I: нет списка в pl/de",
-  "Skoda Rapid Rapid II: нет списка в pl/de",
   "Toyota Corolla Cross Corolla Cross I: нет списка в pl/de",
   "Toyota Dyna Dyna II: нет списка в pl/de",
   "Toyota FJ FJ Cruiser I: нет списка в pl/de",
@@ -7900,36 +9242,21 @@
   "Toyota Hilux Hilux VIII: нет списка в pl/de",
   "Toyota Hilux Hilux VII: нет списка в pl/de",
   "Toyota IQ IQ I: нет списка в pl/de",
-  "Toyota Land Cruiser Land Cruiser VII: нет списка в pl/de",
-  "Toyota Land Cruiser Land Cruiser IV: нет списка в pl/de",
   "Toyota Matrix Matrix II: нет списка в pl/de",
   "Toyota Previa Previa III: нет списка в pl/de",
-  "Toyota Proace (Verso) Proace I: нет списка в pl/de",
   "Toyota Proace City Proace City: нет списка в pl/de",
   "Toyota Sequoia Sequoia II: нет списка в pl/de",
-  "Toyota Sienna Sienna II: нет списка в pl/de",
   "Toyota Supra Supra V: нет списка в pl/de",
   "Toyota Tacoma Tacoma II: нет списка в pl/de",
   "Toyota Tacoma Tacoma I: нет списка в pl/de",
   "Toyota Verso-S Verso-S I: нет списка в pl/de",
   "Toyota bZ4X bZ4X I: нет списка в pl/de",
-  "Volkswagen Caddy Caddy IV: нет списка в pl/de",
   "Volkswagen Crafter Crafter I: нет списка в pl/de",
   "Volkswagen Fox Fox: нет списка в pl/de",
-  "Volkswagen ID.4 ID.4 I: нет списка в pl/de",
-  "Volkswagen ID.5 ID.5 I: нет списка в pl/de",
-  "Volkswagen ID.7 ID.7: нет списка в pl/de",
   "Volkswagen Phaeton Phaeton I: нет списка в pl/de",
-  "Volkswagen Taigo Taigo: нет списка в pl/de",
   "Volkswagen Tayron Tayron: нет списка в pl/de",
-  "Volkswagen Touareg Touareg III: нет списка в pl/de",
-  "Volkswagen Touareg Touareg I: нет списка в pl/de",
-  "Volkswagen up! up!: нет списка в pl/de",
-  "Volvo C40 C40 I: нет списка в pl/de",
   "Volvo ES90 ES90 I: нет списка в pl/de",
-  "Volvo EX30 EX30 I: нет списка в pl/de",
   "Volvo EX60 EX60: нет списка в pl/de",
-  "Volvo EX90 EX90 I: нет списка в pl/de",
-  "Volvo XC70 XC70 II: нет списка в pl/de"
+  "Volvo EX90 EX90 I: нет списка в pl/de"
  ]
 }

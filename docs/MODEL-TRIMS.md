@@ -4,7 +4,7 @@
 > Источники: польская и немецкая Википедия (разделы «Wersje wyposażeniowe», «Linie stylistyczne»,
 > «Ausstattungslinien»), страницы производителей, прессы и польских каталогов. B61, этап 5
 > (`docs/PROJECT-MOBILE.md` §4.8). Названия — как в объявлениях и у дилеров (PL/DE).
-> Строк: 491 — проверено: 177, частично проверено: 308, проверить: 6
+> Строк: 556 — проверено: 177, частично проверено: 373, проверить: 6
 > («проверить» — по знанию, источник не найден; перед подстановкой в фильтр проверить).
 
 Колонки: **линейки** — основные комплектации; **спорт** — спортивные модели и версии,
@@ -549,8 +549,10 @@
 
 ## Новые модели — из Википедии (этап 6, 10-10)
 
-> 310 строк по 144 моделям, собраны `tools/collect-trims-wiki.py` из разделов «Wersje wyposażeniowe» (pl) и «Ausstattungsvarianten /
-> -linien» (de) статьи того поколения (годы выпуска из карточки статьи). «проверено» — обе Википедии
+> 375 строк по 188 моделям, собраны `tools/collect-trims-wiki.py` из разделов «Wersje wyposażeniowe» (pl), «Ausstattungsvarianten /
+> -linien» (de), «Finitions» (fr), «Allestimenti» (it), «Uitvoeringen» (nl) статьи того поколения (годы из
+> карточки или заголовка). Английская Википедия не берётся (линейки США, Китая, Индии), статьи о версиях
+> других рынков и общие статьи нескольких марок — тоже. Цвета и опции отсеяны. «проверено» — две Википедии
 > называют хотя бы одну и ту же линейку; «частично проверено» — один язык. Однобуквенные линейки
 > (Kia S / M / L) не берутся: такого слова в объявлении не найти. Линейки Германии (de) с месяцами
 > продаж — только в тех этапах, когда продавались.
@@ -569,16 +571,15 @@
 | Citroen | Berlingo | Berlingo II | рестайлинг | 2012–2018 | Multispace, XTR, Exclusive | Sport | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citroen_Berlingo) |
 | Citroen | C-Elysée | C-Elysée II | дорестайлинг | 2012–2017 | Attraction, Seduction, More Life, Exclusive | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C-Elys%C3%A9e) |
 | Citroen | C-Elysée | C-Elysée II | рестайлинг | 2017–2021 | Attraction, Seduction, More Life, Exclusive | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C-Elys%C3%A9e) |
-| Citroen | C1 | C1 II | весь выпуск | 2014–2021 | Sunrise Red, Black, Grey | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citroen_C1) |
 | Citroen | C3 | C3 IV | весь выпуск | 2023–н. в. | You, Plus, Max | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citroen_C3) |
 | Citroen | C3 | C3 III | дорестайлинг | 2016–2020 | Live, Feel, Shine, Rip Curl | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Aircross) |
 | Citroen | C3 | C3 III | рестайлинг | 2020–2023 | Live, Feel, Shine, Rip Curl | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Aircross) |
-| Citroen | C3 | C3 II | дорестайлинг | 2009–2013 | Exclusive, Blackcherry, Millenium, Code Red, Code White, Passion Bleus, Music Touch | — | 90th Anniversary, Steel Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Picasso) |
-| Citroen | C3 | C3 II | рестайлинг | 2013–2016 | Exclusive, Blackcherry, Millenium, Code Red, Code White, Passion Bleus, Music Touch | — | 90th Anniversary, Steel Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Picasso) |
+| Citroen | C3 | C3 II | дорестайлинг | 2009–2013 | Exclusive, Blackcherry, Millenium, Passion Bleus, Music Touch | — | 90th Anniversary, Steel Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Picasso) |
+| Citroen | C3 | C3 II | рестайлинг | 2013–2016 | Exclusive, Blackcherry, Millenium, Passion Bleus, Music Touch | — | 90th Anniversary, Steel Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Picasso) |
 | Citroen | C3 | C3 I | весь выпуск | 2002–2010 | Türgriffe, Ledersitze | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Citro%C3%ABn_C3_Pluriel) |
 | Citroen | C3 Aircross | C3 Aircross I | дорестайлинг | 2017–2021 | Live, Feel, Shine, Rip Curl | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Aircross) |
 | Citroen | C3 Aircross | C3 Aircross I | рестайлинг | 2021–н. в. | Live, Feel, Shine, Rip Curl | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C3_Aircross) |
-| Citroen | C3 Picasso | C3 Picasso I | весь выпуск | 2008–2017 | Exclusive, Blackcherry, Millenium, Code Red, Code White, Passion Bleus, Music Touch | — | 90th Anniversary, Steel Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Citroen_C3_Picasso) |
+| Citroen | C3 Picasso | C3 Picasso I | весь выпуск | 2008–2017 | Exclusive, Blackcherry, Millenium, Passion Bleus, Music Touch | — | 90th Anniversary, Steel Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Citroen_C3_Picasso) |
 | Citroen | C4 | C4 II | дорестайлинг | 2010–2015 | Seduction, Exclusive, Attraction, Tendance | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C4_Aircross), [2](https://de.wikipedia.org/wiki/Citroen_C4) |
 | Citroen | C4 | C4 II | рестайлинг | 2015–2017 | Seduction, Exclusive, Attraction, Tendance | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Citro%C3%ABn_C4_Aircross), [2](https://de.wikipedia.org/wiki/Citroen_C4) |
 | Citroen | C4 | C4 I | дорестайлинг | 2004–2008 | Advance, Tendance, Exclusive | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Citro%C3%ABn_C4_Picasso) |
@@ -610,7 +611,7 @@
 | Ford | Explorer | Explorer V | весь выпуск | 2010–2016 | Base, XLT | — | Limited | частично проверено | [1](https://pl.wikipedia.org/wiki/Ford_Explorer) |
 | Ford | Explorer | Explorer IV | весь выпуск | 2006–2010 | XLT, Eddie Bauer | — | Limited | частично проверено | [1](https://pl.wikipedia.org/wiki/Ford_Explorer) |
 | Ford | Flex | Flex I | весь выпуск | 2008–2019 | SE, Titanium | — | Limited | частично проверено | [1](https://pl.wikipedia.org/wiki/Ford_Flex) |
-| Ford | Fusion | Fusion I | весь выпуск | 2002–2012 | Ambiente, Trend, Elegance, FX, FX Silver, FX Gold, Style+, Zetec, Titanium, Calero, Fusion+, Flex, Senso+, Collection, Black Magic | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Ford_Fusion_%28Europa%29), [2](https://de.wikipedia.org/wiki/Ford_Fusion_%28Europa%29) |
+| Ford | Fusion | Fusion I | весь выпуск | 2002–2012 | Ambiente, Trend, Elegance, FX, FX Gold, Style+, Zetec, Titanium, Calero, Fusion+, Flex, Senso+, Collection | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Ford_Fusion_%28Europa%29), [2](https://de.wikipedia.org/wiki/Ford_Fusion_%28Europa%29) |
 | Ford | Galaxy | Galaxy IV | дорестайлинг | 2015–2019 | Zetec, Titanium, Titanium X | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Ford_Galaxy) |
 | Ford | Galaxy | Galaxy IV | рестайлинг | 2019–2023 | Zetec, Titanium, Titanium X | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Ford_Galaxy) |
 | Ford | Galaxy | Galaxy III | рестайлинг | 2006–2015 | Trend, Ghia, Titanium | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Ford_Galaxy) |
@@ -637,8 +638,8 @@
 | Hyundai | i30 | i30 III | рестайлинг | 2020–н. в. | Classic Plus, Modern, Comfort, Style, Premium, Go, Pure, Select, Trend, Passion, Passion Plus | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i30), [2](https://de.wikipedia.org/wiki/Hyundai_i30_%28PD%29) |
 | Hyundai | i30 | i30 II | дорестайлинг | 2012–2015 | Base, Classic, Classic Plus, Comfort, Style, Premium, Trend | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i30), [2](https://de.wikipedia.org/wiki/Hyundai_i30_%28GD%29) |
 | Hyundai | i30 | i30 II | рестайлинг | 2015–2017 | Base, Classic, Classic Plus, Comfort, Style, Premium, Trend | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i30), [2](https://de.wikipedia.org/wiki/Hyundai_i30_%28GD%29) |
-| Hyundai | i30 | i30 I | дорестайлинг | 2007–2010 | Base, Base Plus, Classic, Classic Plus, Comfort, Style, Premium, Blue, SLX, SX, Trophy | Sport | Edition, Edition 20, Edition Plus, Fifa WM Edition | проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i30), [2](https://de.wikipedia.org/wiki/Hyundai_i30_%28FD%29) |
-| Hyundai | i30 | i30 I | рестайлинг | 2010–2012 | Base, Base Plus, Classic, Classic Plus, Comfort, Style, Premium, Blue, SLX, SX, Trophy | Sport | Edition, Edition 20, Edition Plus, Fifa WM Edition | проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i30), [2](https://de.wikipedia.org/wiki/Hyundai_i30_%28FD%29) |
+| Hyundai | i30 | i30 I | дорестайлинг | 2007–2010 | Base, Base Plus, Classic, Classic Plus, Comfort, Style, Premium, SLX, SX, Trophy | Sport | Edition, Edition 20, Edition Plus, Fifa WM Edition | проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i30), [2](https://de.wikipedia.org/wiki/Hyundai_i30_%28FD%29) |
+| Hyundai | i30 | i30 I | рестайлинг | 2010–2012 | Base, Base Plus, Classic, Classic Plus, Comfort, Style, Premium, SLX, SX, Trophy | Sport | Edition, Edition 20, Edition Plus, Fifa WM Edition | проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i30), [2](https://de.wikipedia.org/wiki/Hyundai_i30_%28FD%29) |
 | Hyundai | i40 | i40 | дорестайлинг | 2011–2015 | Active, Business, Classic, Comfort, Comfort Plus, Style, Premium, GL, GLS, SE | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i40) |
 | Hyundai | i40 | i40 | рестайлинг | 2015–2019 | Active, Business, Classic, Comfort, Comfort Plus, Style, Premium, GL, GLS, SE | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_i40) |
 | Hyundai | ix20 | ix20 | дорестайлинг | 2010–2015 | Classic, Classic Plus, Comfort, Style, Premium, Brasil | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Hyundai_ix20) |
@@ -734,14 +735,14 @@
 | Nissan | X-Trail | X-Trail III | дорестайлинг | 2014–2017 | VISIA, ACENTA, TEKNA | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Nissan_X-Trail) |
 | Nissan | X-Trail | X-Trail III | рестайлинг | 2017–2022 | VISIA, ACENTA, TEKNA | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Nissan_X-Trail) |
 | Nissan | X-Trail | X-Trail II | весь выпуск | 2007–2014 | XE, SE, LE | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Nissan_X-Trail) |
-| Opel | Adam | Adam | весь выпуск | 2012–2019 | Adam, Jam, Glam, Slam, Black, White, Twisted | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Opel_Adam) |
+| Opel | Adam | Adam | весь выпуск | 2012–2019 | Adam, Jam, Glam, Slam, Twisted | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Opel_Adam) |
 | Opel | Antara | Antara | дорестайлинг | 2006–2010 | Cosmo, Enjoy, Antara, Antara Cosmo | — | Antara Edition Plus | частично проверено | [1](https://pl.wikipedia.org/wiki/Opel_Antara), [2](https://de.wikipedia.org/wiki/Opel_Antara) |
 | Opel | Antara | Antara | рестайлинг | 2010–2015 | Cosmo, Enjoy, Antara, Antara Cosmo | — | Antara Edition Plus | частично проверено | [1](https://pl.wikipedia.org/wiki/Opel_Antara), [2](https://de.wikipedia.org/wiki/Opel_Antara) |
 | Opel | Astra | Astra K | дорестайлинг | 2015–2019 | Essentia, Enjoy, Dynamic, Elite, Elegance, Ultimate, Selection, Business, Active, Innovation, ON, Astra, Business Elegance | GS-Line | Edition, Business Edition, 120 Jahre Opel | проверено | [1](https://pl.wikipedia.org/wiki/Opel_Astra), [2](https://de.wikipedia.org/wiki/Opel_Astra_K) |
 | Opel | Astra | Astra K | рестайлинг | 2019–2022 | Essentia, Enjoy, Dynamic, Elite, Elegance, Ultimate, Selection, Business, Innovation, Astra, Opel 2020, Business Elegance, Design & Tech | GS-Line | Edition, Business Edition, 120 Jahre Opel | проверено | [1](https://pl.wikipedia.org/wiki/Opel_Astra), [2](https://de.wikipedia.org/wiki/Opel_Astra_K) |
 | Opel | Astra | Astra J | дорестайлинг | 2009–2012 | Essentia, Enjoy, Cosmo, Active, Energy, Business, Executive, Selection, Innovation, Cool & Sound, FUN | Sport, OPC | Edition, Design Edition, Edition Sport, 150 Jahre Opel, Color Edition | проверено | [1](https://pl.wikipedia.org/wiki/Opel_Astra), [2](https://de.wikipedia.org/wiki/Opel_Astra_J) |
 | Opel | Astra | Astra J | рестайлинг | 2012–2019 | Essentia, Enjoy, Cosmo, Active, Energy, Business, Executive, Selection, Innovation, Cool & Sound, FUN, Exclusiv, Style, Excellence, Drive | Sport, OPC | Edition Sport, 150 Jahre Opel, Color Edition | проверено | [1](https://pl.wikipedia.org/wiki/Opel_Astra), [2](https://de.wikipedia.org/wiki/Opel_Astra_J) |
-| Opel | Astra | Astra H | весь выпуск | 2004–2014 | Astra, Black & White, Navi, Innovation, Endless Summer, Elegance, Cosmo, OPC Race Camp | Sport, OPC | Edition, Edition 111 Jahre, OPC Nürburgring Edition | частично проверено | [1](https://de.wikipedia.org/wiki/Opel_Astra_H) |
+| Opel | Astra | Astra H | весь выпуск | 2004–2014 | Astra, Navi, Innovation, Endless Summer, Elegance, Cosmo, OPC Race Camp | Sport, OPC | Edition, Edition 111 Jahre, OPC Nürburgring Edition | частично проверено | [1](https://de.wikipedia.org/wiki/Opel_Astra_H) |
 | Opel | Corsa | Corsa F | дорестайлинг | 2019–2024 | Corsa, Elegance, Ultimate, Selection | GS Line | Edition, First Edition | проверено | [1](https://pl.wikipedia.org/wiki/Opel_Corsa), [2](https://de.wikipedia.org/wiki/Opel_Corsa_F) |
 | Opel | Corsa | Corsa F | рестайлинг | 2024–н. в. | Corsa, Elegance, Ultimate, Selection | GS Line | Edition, First Edition | проверено | [1](https://pl.wikipedia.org/wiki/Opel_Corsa), [2](https://de.wikipedia.org/wiki/Opel_Corsa_F) |
 | Opel | Corsa | Corsa E | весь выпуск | 2014–2019 | Essentia, Enjoy, Cosmo, Innovation, On, Selection, Active, Drive | OPC Line, OPC, GSi | Color Edition, Edition, 120 Jahre | частично проверено | [1](https://pl.wikipedia.org/wiki/Opel_Corsa), [2](https://de.wikipedia.org/wiki/Opel_Corsa_E) |
@@ -783,8 +784,8 @@
 | Renault | Modus | Modus | весь выпуск | 2004–2012 | Authentique, Expression, Dynamique, Exception | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Renault_Modus) |
 | Renault | Talisman | Talisman | дорестайлинг | 2015–2020 | Business, ZEN, Intens, Initiale Paris | — | Limited | частично проверено | [1](https://pl.wikipedia.org/wiki/Renault_Talisman_%28Europa%29) |
 | Renault | Talisman | Talisman | рестайлинг | 2020–2023 | Business, ZEN, Intens, Initiale Paris | — | Limited | частично проверено | [1](https://pl.wikipedia.org/wiki/Renault_Talisman_%28Europa%29) |
-| Renault | Twingo | Twingo II | дорестайлинг | 2007–2012 | Access, Autentique, Expression, Trend, Wind, Dynamique, Rip Curl, Initiale, Gordini R.S, Mauboussin, Red Bull Racing RB7, YAHOO!, Authentique, Gordini | GT, RS | — | проверено | [1](https://pl.wikipedia.org/wiki/Renault_Twingo), [2](https://de.wikipedia.org/wiki/Renault_Twingo) |
-| Renault | Twingo | Twingo II | рестайлинг | 2012–2014 | Access, Wind, Dynamique, Rip Curl, Gordini R.S, Mauboussin, Red Bull Racing RB7, Authentique, Expression, Initiale, Gordini | RS, GT | — | проверено | [1](https://pl.wikipedia.org/wiki/Renault_Twingo), [2](https://de.wikipedia.org/wiki/Renault_Twingo) |
+| Renault | Twingo | Twingo II | дорестайлинг | 2007–2012 | Access, Autentique, Expression, Trend, Wind, Dynamique, Rip Curl, Initiale, Gordini R.S, Mauboussin, YAHOO!, Authentique, Gordini | GT, RS | — | проверено | [1](https://pl.wikipedia.org/wiki/Renault_Twingo), [2](https://de.wikipedia.org/wiki/Renault_Twingo) |
+| Renault | Twingo | Twingo II | рестайлинг | 2012–2014 | Access, Wind, Dynamique, Rip Curl, Gordini R.S, Mauboussin, Authentique, Expression, Initiale, Gordini | RS, GT | — | проверено | [1](https://pl.wikipedia.org/wiki/Renault_Twingo), [2](https://de.wikipedia.org/wiki/Renault_Twingo) |
 | Renault | Wind | Wind I | весь выпуск | 2010–2012 | Dynamique, Night&Day | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Renault_Wind) |
 | Seat | Alhambra | Alhambra II | дорестайлинг | 2010–2015 | Reference, Style, Style Advanced, Comfortline, Highline, Trendline | FR | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Seat_Alhambra), [2](https://de.wikipedia.org/wiki/Seat_Alhambra_II) |
 | Seat | Alhambra | Alhambra II | рестайлинг | 2015–2020 | Reference, Style, Style Advanced, Comfortline, Highline, Trendline | FR | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Seat_Alhambra), [2](https://de.wikipedia.org/wiki/Seat_Alhambra_II) |
@@ -793,11 +794,11 @@
 | Seat | Arona | Arona | рестайлинг | 2021–н. в. | Arona, Reference, Style, XCELLENCE | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Seat_Arona) |
 | Seat | Ateca | Ateca | дорестайлинг | 2016–2020 | Reference, Style, XCELLENCE | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Seat_Ateca) |
 | Seat | Ateca | Ateca | рестайлинг | 2020–н. в. | Reference, Style, XCELLENCE | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Seat_Ateca) |
-| Seat | Ibiza | Ibiza V | дорестайлинг | 2017–2021 | Entry, Reference, Style, XCellence, FR Black | FR | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Seat_Ibiza) |
-| Seat | Ibiza | Ibiza V | рестайлинг | 2021–н. в. | Entry, Reference, Style, XCellence, FR Black | FR | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Seat_Ibiza) |
+| Seat | Ibiza | Ibiza V | дорестайлинг | 2017–2021 | Entry, Reference, Style, XCellence | FR | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Seat_Ibiza) |
+| Seat | Ibiza | Ibiza V | рестайлинг | 2021–н. в. | Entry, Reference, Style, XCellence | FR | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Seat_Ibiza) |
 | Seat | Leon | Leon IV | весь выпуск | 2020–н. в. | Reference, Style, Xcellence, Xcellence Plus, FR Plus | FR | Style Edition | проверено | [1](https://pl.wikipedia.org/wiki/Seat_Leon), [2](https://de.wikipedia.org/wiki/Seat_Leon_IV) |
-| Seat | Leon | Leon III | дорестайлинг | 2013–2016 | Entry, Reference, Style, FR Black, Cupra 280, Cupra 290, Xcellence, Leon, Connect | FR | — | проверено | [1](https://pl.wikipedia.org/wiki/Seat_Leon), [2](https://de.wikipedia.org/wiki/Seat_Leon_III) |
-| Seat | Leon | Leon III | рестайлинг | 2016–2020 | Entry, Reference, Style, FR Black, Cupra 280, Cupra 290, Xcellence, Leon, Connect | FR | — | проверено | [1](https://pl.wikipedia.org/wiki/Seat_Leon), [2](https://de.wikipedia.org/wiki/Seat_Leon_III) |
+| Seat | Leon | Leon III | дорестайлинг | 2013–2016 | Entry, Reference, Style, Cupra 280, Cupra 290, Xcellence, Leon, Connect | FR | — | проверено | [1](https://pl.wikipedia.org/wiki/Seat_Leon), [2](https://de.wikipedia.org/wiki/Seat_Leon_III) |
+| Seat | Leon | Leon III | рестайлинг | 2016–2020 | Entry, Reference, Style, Cupra 280, Cupra 290, Xcellence, Leon, Connect | FR | — | проверено | [1](https://pl.wikipedia.org/wiki/Seat_Leon), [2](https://de.wikipedia.org/wiki/Seat_Leon_III) |
 | Seat | Leon | Leon II | весь выпуск | 2005–2012 | Audience, Copa, Stylance, Reference, Style, Cupra R, Linea R | Sport, FR, Cupra | Cupra 310 Limited Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Seat_Leon) |
 | Seat | Mii | Mii | весь выпуск | 2011–2018 | Reference, Style | — | — | частично проверено | [1](https://de.wikipedia.org/wiki/Seat_Mii) |
 | Seat | Toledo | Toledo IV | дорестайлинг | 2012–2017 | Entry, Reference, Style, Reference 4You, Style Plus, Style 4You, Style Sun, Connect, Xcellence, FR-Line | — | — | проверено | [1](https://pl.wikipedia.org/wiki/Seat_Toledo), [2](https://de.wikipedia.org/wiki/Seat_Toledo_IV) |
@@ -813,7 +814,7 @@
 | Skoda | Yeti | Yeti | дорестайлинг | 2009–2013 | Active, Adventure, Ambition, Champion, Easy, Elegance, Experience, Fresh, Laurin & Klement, Monte Carlo, SE, SE Plus, Sochi, Street, Style, Yeti, Urban | — | Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Skoda_Yeti) |
 | Skoda | Yeti | Yeti | рестайлинг | 2013–2017 | Active, Adventure, Ambition, Champion, Easy, Elegance, Experience, Fresh, Laurin & Klement, Monte Carlo, SE, SE Plus, Sochi, Street, Style, Yeti, Urban | — | Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Skoda_Yeti) |
 | Toyota | Aygo (X) | Aygo II | весь выпуск | 2014–2021 | Selection | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Aygo) |
-| Toyota | Aygo (X) | Aygo I | весь выпуск | 2005–2014 | Aygo, Plus, Black, Blue, Platinum, Ice, Go!, Easy, Active, Premium, Chill | Sport | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Aygo) |
+| Toyota | Aygo (X) | Aygo I | весь выпуск | 2005–2014 | Aygo, Plus, Platinum, Ice, Go!, Easy, Active, Premium, Chill | Sport | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Aygo) |
 | Toyota | GT86 | GT86 I | весь выпуск | 2012–2020 | Premium, Prestige | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Toyota_GT86) |
 | Toyota | Land Cruiser | Land Cruiser VI | дорестайлинг | 2010–2014 | Prado, Premium, Invincible, Executive | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Land_Cruiser) |
 | Toyota | Land Cruiser | Land Cruiser VI | рестайлинг | 2014–2017 | Prado, Premium, Invincible, Executive | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Toyota_Land_Cruiser) |
@@ -832,7 +833,6 @@
 | Volkswagen | Arteon | Arteon | дорестайлинг | 2017–2020 | Essence, Elegance | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Arteon) |
 | Volkswagen | Arteon | Arteon | рестайлинг | 2020–н. в. | Essence, Elegance | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Arteon) |
 | Volkswagen | Beetle | Beetle | весь выпуск | 2011–2016 | Beetle, Design, GSR | Sport | Beetle 53 Edition, Final Edition SE, Final Edition SEL, Fender Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Beetle) |
-| Volkswagen | CC | CC I | весь выпуск | 2012–2017 | Black Style | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_CC) |
 | Volkswagen | Caddy | Caddy V | весь выпуск | 2021–н. в. | Caddy, Life, Style | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Caddy) |
 | Volkswagen | Caddy | Caddy III | дорестайлинг | 2004–2011 | Caddy, Startline, Trendline, Comfortline, Generation Four, Highline, Tramper, Sportline, PanAmericana, Life, Life Tramper, Beach, Family, Sprotline, Panel Van, Window Panel Van, Cross Caddy, Caddy Alltrack | — | Comfortline Edition, Edition 30 | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Caddy) |
 | Volkswagen | Caddy | Caddy III | рестайлинг | 2011–2015 | Caddy, Startline, Trendline, Comfortline, Generation Four, Highline, Tramper, Sportline, PanAmericana, Life, Life Tramper, Beach, Family, Sprotline, Panel Van, Window Panel Van, Cross Caddy, Caddy Alltrack | — | Comfortline Edition, Edition 30 | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_Caddy) |
@@ -867,3 +867,70 @@
 | Volvo | V70 | V70 III | рестайлинг | 2013–2016 | Kinetic, Momentum, Summum, Summum Inscription, Ocean Race | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Volvo_V70) |
 | Volvo | V90 | V90 II | дорестайлинг | 2016–2020 | Core, Plus Bright, Plus Dark, Ultimate Bright, Ultimate Dark, Cross Country Core | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Volvo_V90_%282016%29) |
 | Volvo | V90 | V90 II | рестайлинг | 2020–н. в. | Core, Plus Bright, Plus Dark, Ultimate Bright, Ultimate Dark, Cross Country Core | — | — | частично проверено | [1](https://pl.wikipedia.org/wiki/Volvo_V90_%282016%29) |
+| Peugeot | 307 | 307 II | весь выпуск | 2005–2012 | Filou, Tendance | Sport | — | частично проверено | [1](https://de.wikipedia.org/wiki/Peugeot_307) |
+| Audi | Q4 | Q4 | весь выпуск | 2021–н. в. | Design, Business Executive, Avus | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Audi_Q4_e-tron) |
+| Audi | Q6 e-tron | Q6 e-tron I | весь выпуск | 2024–н. в. | Design, SQ6 | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Audi_Q6_e-tron) |
+| Audi | Q8 | Q8 | дорестайлинг | 2018–2023 | — | — | Black Edition, Edition Dakar | частично проверено | [1](https://fr.wikipedia.org/wiki/Audi_Q8_e-tron) |
+| Audi | Q8 | Q8 | рестайлинг | 2023–н. в. | — | — | Edition Dakar | частично проверено | [1](https://fr.wikipedia.org/wiki/Audi_Q8_e-tron) |
+| Audi | Q8 | Q8-e | весь выпуск | 2020–н. в. | — | — | Black Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Audi_Q8_e-tron_Sportback) |
+| Audi | Q8 | SQ8 | весь выпуск | 2019–н. в. | — | — | Black Edition, Edition Dakar | частично проверено | [1](https://fr.wikipedia.org/wiki/Audi_Q8_e-tron) |
+| Audi | TT | 8S | весь выпуск | 2014–2024 | TT, TT S-Line | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Audi_TT) |
+| BMW | X2 | F39 | весь выпуск | 2017–2023 | Lounge, Lounge Plus | — | Premiere, Rebel Edition, GoldPlay Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/BMW_X2_I) |
+| BMW | X7 | X7 | дорестайлинг | 2018–2022 | X7, X7 Exclusive, X7 M Sport, X7 M Performance | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/BMW_X7) |
+| BMW | X7 | X7 | рестайлинг | 2022–н. в. | X7, X7 Exclusive, X7 M Sport, X7 M Performance | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/BMW_X7) |
+| BMW | Z4 | G29 | дорестайлинг | 2018–2023 | Z4 | Sport | — | частично проверено | [1](https://fr.wikipedia.org/wiki/BMW_Z4_%28G29%29) |
+| BMW | Z4 | G29 | рестайлинг | 2023–н. в. | Z4 | Sport | — | частично проверено | [1](https://fr.wikipedia.org/wiki/BMW_Z4_%28G29%29) |
+| BMW | i8 | i8 I | весь выпуск | 2014–2021 | — | — | Ultimate Sophisto Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/BMW_i8) |
+| Citroen | C-Crosser | C-Crosser I | весь выпуск | 2007–2012 | Ligne Prestige, Dynamique, Exclusive | — | — | частично проверено | [1](https://nl.wikipedia.org/wiki/Citroen_C-Crosser) |
+| Cupra | Terramar | Terramar | весь выпуск | 2024–н. в. | Terramar, Terramar VZ, Terramar America’s CUP | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Cupra_Terramar) |
+| Ford | Capri | Capri | весь выпуск | 2024–н. в. | Capri, Capri Pack Premium | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Ford_Capri_EV) |
+| Ford | Crown | Crown Victoria II | весь выпуск | 1998–2011 | LX, LX Sport | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Ford_Crown_Victoria) |
+| Ford | Mustang | Mustang VI | дорестайлинг | 2014–2018 | — | — | 50th Anniversary, Shadow Edition, Blue Edition, California Special, Black Shadow Edition, Mustang55, Ice White Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Ford_Mustang) |
+| Ford | Mustang | Mustang VI | рестайлинг | 2018–н. в. | — | — | 50th Anniversary, Shadow Edition, Blue Edition, California Special, Black Shadow Edition, Mustang55, Ice White Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Ford_Mustang) |
+| Ford | Mustang Mach-E | Mustang Mach-E | весь выпуск | 2021–н. в. | — | — | First Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Ford_Mustang_Mach-E) |
+| Ford | Taurus | Taurus V | весь выпуск | 2007–2018 | SE, SEL | — | Limited | частично проверено | [1](https://fr.wikipedia.org/wiki/Ford_Taurus_VI) |
+| Ford | Tourneo Connect | Tourneo Connect I | весь выпуск | 2005–2013 | XL, XLT | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Ford_Tourneo_Connect) |
+| Hyundai | IONIQ 6 | Ioniq 6 | дорестайлинг | 2023–2026 | Intuitive, Creative, Executive | — | First Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Hyundai_IONIQ_6) |
+| Hyundai | IONIQ 6 | Ioniq 6 | рестайлинг | 2026–н. в. | Intuitive, Creative, Executive | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Hyundai_IONIQ_6) |
+| Hyundai | KONA | Kona II | весь выпуск | 2023–н. в. | Intuitive, Creative, Premium, Executive | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Hyundai_Kona_II) |
+| Hyundai | Matrix | Matrix I | весь выпуск | 2001–2010 | GLS | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Hyundai_Matrix) |
+| Kia | EV9 | EV9 I | весь выпуск | 2023–н. в. | EV9, EV9 Earth, EV9 GT Line | — | Earth Launch Edition, GT Line Launch Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_EV9) |
+| Kia | Niro | Niro I | рестайлинг | 2020–2022 | Motion, Active, Premium | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_Niro_II) |
+| Kia | Sportage | Sportage V | дорестайлинг | 2021–2025 | Motion, Active, Design, GT Line Premium, LX, EX, EX Premium | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_Sportage) |
+| Kia | Sportage | Sportage V | рестайлинг | 2025–н. в. | Motion, Active, Design, GT Line Premium, LX, EX, EX Premium | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_Sportage) |
+| Kia | Sportage | Sportage IV | дорестайлинг | 2016–2018 | Motion, Active, Design, GT Line Premium | GT Line | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_Sportage) |
+| Kia | Sportage | Sportage IV | рестайлинг | 2018–2021 | Motion, Active, Design, GT Line Premium | GT Line | Black Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_Sportage) |
+| Kia | Sportage | Sportage III | дорестайлинг | 2010–2014 | Origins, Origins Ultimate | — | Edition 7 | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_Sportage) |
+| Kia | Sportage | Sportage III | рестайлинг | 2014–2016 | Origins, Origins Ultimate | — | Edition 7 | частично проверено | [1](https://fr.wikipedia.org/wiki/Kia_Sportage) |
+| Mazda | MX-30 | MX-30 I | весь выпуск | 2020–н. в. | MX-30, MX-30 Modern Confiance, MX-30 Industrial Vintage, Prime-Line, Executive-Line, Makoto | — | MX-30 First Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Mazda_MX-30) |
+| Mercedes-Benz | B | W245 | весь выпуск | 2005–2011 | Pack Design, Pack Family, Pack Luxe, Pack Technologie, Pack Télématique, Pack Sport | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Mercedes-Benz_W245) |
+| Mercedes-Benz | EQA | EQA | дорестайлинг | 2021–2024 | Progressive Line, Business Line, Electric Art | AMG Line | Edition 1 | частично проверено | [1](https://fr.wikipedia.org/wiki/Mercedes-Benz_EQA) |
+| Mercedes-Benz | EQA | EQA | рестайлинг | 2024–н. в. | Progressive Line, Business Line, Electric Art | AMG Line | Edition 1 | частично проверено | [1](https://fr.wikipedia.org/wiki/Mercedes-Benz_EQA) |
+| Mercedes-Benz | EQE | EQE | весь выпуск | 2022–н. в. | Electric Art, AMG | AMG Line | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Mercedes-Benz_EQE_SUV) |
+| Mercedes-Benz | SLK | R172 | весь выпуск | 2011–2015 | — | — | Final Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Mercedes-Benz_R172) |
+| Nissan | Micra | Micra V | весь выпуск | 2017–2023 | Visia, Visia Pack, Acenta, Tekna, Made in France, Enigma, Kiiro | — | Business Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Nissan_Micra) |
+| Nissan | Micra | Micra IV | дорестайлинг | 2010–2013 | — | — | Design Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Nissan_Micra) |
+| Nissan | Micra | Micra IV | рестайлинг | 2013–2017 | — | — | Design Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Nissan_Micra) |
+| Peugeot | 207 | 207 | весь выпуск | 2006–2013 | Urban, Active, Premium | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Peugeot_207) |
+| Peugeot | 4007 | 4007 I | весь выпуск | 2007–2012 | SE, Sport XS | GT | — | частично проверено | [1](https://nl.wikipedia.org/wiki/Peugeot_4007) |
+| Peugeot | Traveller | Traveller | весь выпуск | 2016–н. в. | Feel, Shine, Business, Business Lounge, Rip Curl, Confort, Club, Traveller, Traveller Business, Pro, Premium, Premium Pro, Dynamic, Executive, Lounge, Active | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Peugeot_Traveller) |
+| Renault | Express | Express II | весь выпуск | 2021–н. в. | Essentiel, Confort | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Renault_Express_II) |
+| Renault | Koleos | Koleos II | дорестайлинг | 2017–2019 | Zen, Intens, Evolution, Initiale Paris | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Renault_Koleos_II) |
+| Renault | Koleos | Koleos II | рестайлинг | 2019–2023 | Zen, Intens, Evolution, Initiale Paris | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Renault_Koleos_II) |
+| Renault | Rafale | Rafale I | весь выпуск | 2024–н. в. | Techno, Esprit Alpine | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Renault_Rafale) |
+| Renault | Symbioz | Symbioz I | весь выпуск | 2024–н. в. | Evolution, Techno, Esprit Alpine, Iconic | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Renault_Symbioz) |
+| Seat | Tarraco | Tarraco | дорестайлинг | 2018–2022 | — | — | Opening Edition, Xclusive Edition, Urban | частично проверено | [1](https://fr.wikipedia.org/wiki/Seat_Tarraco) |
+| Seat | Tarraco | Tarraco | рестайлинг | 2022–н. в. | — | — | Opening Edition, Xclusive Edition, Urban | частично проверено | [1](https://fr.wikipedia.org/wiki/Seat_Tarraco) |
+| Skoda | Rapid | Rapid II | дорестайлинг | 2012–2017 | Active, Comfort | — | — | частично проверено | [1](https://nl.wikipedia.org/wiki/Skoda_Rapid) |
+| Skoda | Rapid | Rapid II | рестайлинг | 2017–2019 | Active, Comfort | — | — | частично проверено | [1](https://nl.wikipedia.org/wiki/Skoda_Rapid) |
+| Volkswagen | ID.4 | ID.4 I | весь выпуск | 2020–н. в. | Pure, Pro, GTX, ID, Life Max, Édition Limitée FFF | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Volkswagen_ID.4) |
+| Volkswagen | ID.5 | ID.5 I | весь выпуск | 2022–н. в. | Pro, Pro Performance, GTX, ID, Life Max | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Volkswagen_ID.5) |
+| Volkswagen | ID.7 | ID.7 | весь выпуск | 2023–н. в. | Pro Style, Pro Style Exclusive, Pro Life Max | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Volkswagen_ID.7) |
+| Volkswagen | Taigo | Taigo | дорестайлинг | 2022–2026 | Life, Style, Taigo, Life Plus | — | First Edition, VW Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Volkswagen_Taigo) |
+| Volkswagen | Taigo | Taigo | рестайлинг | 2026–н. в. | Life, Style, Taigo, Life Plus | — | First Edition, VW Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Volkswagen_Taigo) |
+| Volkswagen | up! | up! | дорестайлинг | 2011–2016 | Marionnaud, Cool Up!, Groove up!, Club, Beats Audio, Connect, IQ Drive, United, Active | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Volkswagen_up%21) |
+| Volkswagen | up! | up! | рестайлинг | 2016–2022 | Marionnaud, Groove up!, Club, Beats Audio, Connect, IQ Drive, United, Active | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Volkswagen_up%21) |
+| Volvo | C40 | C40 I | весь выпуск | 2021–н. в. | Essential, Start, Plus, Ultimate | — | First Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Volvo_C40) |
+| Volvo | EX30 | EX30 I | весь выпуск | 2023–н. в. | Start, Plus, Ultra | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Volvo_EX30) |
+| Volvo | XC70 | XC70 II | дорестайлинг | 2007–2013 | Kinetic, Momentum, Ocean Race, Summum, Xenium | — | Signature Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Volvo_XC70) |
+| Volvo | XC70 | XC70 II | рестайлинг | 2013–2016 | Kinetic, Momentum, Ocean Race, Summum, Xenium | — | Signature Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Volvo_XC70) |

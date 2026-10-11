@@ -32,8 +32,20 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TRIM_HEADING = {
     "pl": re.compile(r"wersj\w* wyposaż|wersje wyposażenia|^wyposażenie$|wersje limitowane|wersje specjalne|edycje specjalne", re.I),
     "de": re.compile(r"ausstattungs(linien|varianten|stufen|versionen|niveaus)|^ausstattung$|sondermodell|sonderserie", re.I),
+    # Second pass (owner 2026-10-11): the 189 models pl/de have no list for; FR / NL names are what the
+    # French and Dutch portals' ads use.
+    "en": re.compile(r"trim|equipment level|specification level|^grades?$|special edition", re.I),
+    "fr": re.compile(r"finition|séries? spéciales?|séries? limitées?", re.I),
+    "it": re.compile(r"allestiment|serie speciali|versioni speciali", re.I),
+    "nl": re.compile(r"uitvoering|uitrustingsniveau|uitrusting", re.I),
 }
-SPECIAL_HEADING = re.compile(r"limitowan|specjaln|sondermodell|sonderserie", re.I)
+# en.wikipedia lists the trims of every market (US "LX / EX / SX", Chinese, Indian ones): not used.
+LANGS = ("pl", "de", "fr", "it", "nl")
+BRANDS = ("Audi", "BMW", "Citroën", "Citroen", "Cupra", "Dacia", "DS", "Fiat", "Ford", "Hyundai", "Kia", "Mazda", "Mercedes",
+          "Nissan", "Opel", "Peugeot", "Renault", "Seat", "Škoda", "Skoda", "Toyota", "Vauxhall", "Volkswagen", "Volvo")
+OTHER_MARKET = re.compile(r"russ|chin|brazil|brésil|brasil|india|inde\b|amérique|america|usa|mexi|austral|japan|japon|"
+                          r"korea|corée|iran|argentin|türkei|turquie|ägypt|égypt|afri", re.I)
+SPECIAL_HEADING = re.compile(r"limitowan|specjaln|sondermodell|sonderserie|special edition|séries? (spéciale|limitée)|serie speciali|versioni speciali", re.I)
 SPORT = re.compile(r"^(gti|gtd|gte|gt|gt[- ]?line|gs[- ]?line|gsi|opc|opc[- ]line|n|n[- ]line|n performance|fr|r[- ]line|st|st[- ]line|"
                    r"rs|r\.s\.|rs line|nismo|mps|r|r-design|polestar.*|sport|sportive|vxr|type r|cupra|s|amg line|m sport|"
                    r"gt line|n-line|xr|xr2|vtr|vts|gsi line|e-sport)$", re.I)
@@ -44,11 +56,21 @@ NOT_A_NAME = re.compile(
     r"erhältlich|sind|ist|gibt|angeboten|verfügbar|optional\w*|zusätzlich|jeweils|dostępn\w*|oferowan\w*|"
     r"klimatyzac\w*|poduszk\w*|elektryczn\w*|system\w*|radio\w*|felg\w*|reflektor\w*|lusterk\w*|szyb\w*|czujnik\w*|"
     r"tempomat\w*|nawigac\w*|kamer\w*|skórzan\w*|alarm\w*|kierownic\w*|komputer\w*|zamek|fotel\w*|airbag\w*|"
+    r"and|with|the|for|from|was|were|are|has|have|available|offered|standard|optional|"
+    r"et|avec|pour|des|les|une|est|sont|disponible|proposée?s?|"
+    r"con|per|dei|delle|della|sono|disponibil\w*|"
+    r"met|voor|het|van|zijn|wordt|"
     r"klimaanlage|navigation\w*|leichtmetall\w*|räder|scheinwerfer\w*|sitz\w*|lenkrad|bordcomputer|zentralverriegelung)\b",
     re.I)
 EQUIPMENT = re.compile(r"scheinwerfer|sensor|leuchte|spiegel|fensterheber|anlage|räder|felge|heizung|verriegelung|kamera|"
                        r"assistent|lenkrad|schiebedach|airbag|tempomat|navi\w*system|klima|einparkhilfe|dachreling|"
-                       r"czujnik|światł|lusterk|podgrzew|klimatyzac|felg|kamer|nawigac|tempomat|poduszk", re.I)
+                       r"czujnik|światł|lusterk|podgrzew|klimatyzac|felg|kamer|nawigac|tempomat|poduszk|"
+                       r"climatis|jantes|caméra|radar|siège|climatizzat|cerchi|sensori|navigat|wheels?\b|alloy|"
+                       r"air condition|headlight|headlamp|cruise|keyless|leather|sunroof|parking|velgen|stoel|"
+                       r"cuir|écran|screen|bluetooth|usb|android|carplay", re.I)
+# Paint colours a French article lists with the trims ("Blanc Nacré", "Kaschmirsilber metallic").
+COLOR = re.compile(r"\b(blanc|noir|gris|rouge|bleu|vert|jaune|argent|marron|beige|nacré|métallisé|metallic|weiß|schwarz|"
+                   r"silber|bianco|nero|grigio|rosso|blu|wit|zwart|grijs)\b", re.I)
 ENGINE = re.compile(r"\d[.,]\d|\b\d{2,3} ?(km|ps|kw|hp|ch)\b|\b(tdi|tsi|tfsi|crdi|cdti|dci|hdi|bluehdi|puretech|t-gdi|gdi|mpi|"
                     r"skyactiv\w*|ecoboost|tce|cdi|vti|thp|e-hdi|cvt|dsg|edc|automat\w*|manual\w*)\b", re.I)
 BODY = re.compile(r"^(kombi|sedan|limuzyna|hatchback|coupe|coupé|cabrio\w*|kabriolet|van|kombivan|furgon|pick-?up|suv|"
@@ -97,7 +119,9 @@ def name_of(item):
     # engine versions ("SLK 200 BlueEFFICIENCY", "CLS 63 AMG") and arrows are no lines.
     if re.search(r"assist|sense|\bL\dH\d\b|→|blueefficiency|bluemotion|\bfurgon\b|\bkombi\b|\bcab\b|\bmaxi\b", name, re.I) \
             or re.match(r"^[A-Z]{1,4} \d{2,3}(\s|$)", name) or re.fullmatch(r"\d+", name) \
-            or re.fullmatch(r"deutschland|frankreich|niederlande|österreich|schweiz|belgien|italien|spanien|großbritannien|"
+            or COLOR.search(name) or re.search(r"\s(en|et|e|und|i)\s|\bde base\b|\bde \d|[{}]|mains libres|sellerie|vitres|"
+                                                 r"hayon|démarrage|one pedal|modèle", name, re.I) \
+            or re.fullmatch(r"intérieur|autres|options?|pack|base|v6|v8|deutschland|frankreich|niederlande|österreich|schweiz|belgien|italien|spanien|großbritannien|"
                             r"polska|niemcy|francja|specjalne|biturbo|hybrid|full ?led|standard|basis", name, re.I):
         return None
     if not name or len(name) < 2 or len(name) > 28 or len(name.split()) > 4:
@@ -123,34 +147,49 @@ def sections(text):
     return out
 
 
+INFOBOX = {
+    "pl": (r"\{\{Auto infobox(.*?)\n\}\}", r"\|\s*okres produkcji\s*=\s*([^\n]*)"),
+    "en": (r"\{\{Infobox automobile(.*?)\n\}\}", r"\|\s*production\s*=\s*([^\n]*)"),
+    "fr": (r"\{\{Infobox Automobile(.*?)\n\}\}", r"\|\s*ann[ée]es[^=\n]*=\s*([^\n]*)"),
+    "nl": (r"\{\{Infobox autotype(.*?)\n\}\}", r"\|\s*jaren\s*=\s*([^\n]*)"),
+}
+
+
 def blocks(text, lang):
-    """Generation blocks of an article: [(from, to, start, end)] by its infoboxes."""
-    if lang == "pl":
-        boxes = [(m.start(), m.group(1)) for m in re.finditer(r"\{\{Auto infobox(.*?)\n\}\}", text, re.S)]
-        periods = []
-        for start, body in boxes:
-            field = re.search(r"\|\s*okres produkcji\s*=\s*([^\n]*)", body)
-            periods.append((start, years_in(clean(field.group(1))) if field else None))
-    else:
-        boxes = [(m.start(), m.group(1)) for m in re.finditer(r"\{\{Infobox PKW-Modell(.*?)\n\}\}", text, re.S)]
-        periods = []
-        for start, body in boxes:
+    """Generation blocks of an article: [(from, to, start, end)] by its infoboxes, and by the headings that
+    carry years ("== Quinta serie (2021-) ==", "=== Fifth generation (NQ5; 2021) ===")."""
+    periods = []
+    if lang == "de":
+        for m in re.finditer(r"\{\{Infobox PKW-Modell(.*?)\n\}\}", text, re.S):
+            body = m.group(1)
             von = re.search(r"\|\s*von\s*=\s*([^\n|]*)", body)
             bis = re.search(r"\|\s*bis\s*=\s*([^\n|]*)", body)
             first = years_in(clean(von.group(1))) if von else None
             last = years_in(clean(bis.group(1))) if bis and clean(bis.group(1)) else None
-            periods.append((start, (first[0], last[1] if last else 2100.0) if first else None))
+            periods.append((m.start(), (first[0], last[1] if last else 2100.0) if first else None))
+    elif lang in INFOBOX:
+        box, field_re = INFOBOX[lang]
+        for m in re.finditer(box, text, re.S):
+            field = re.search(field_re, m.group(1))
+            value = clean(field.group(1)) if field else ""
+            value = re.split(r"\(|<|;", value)[0]  # "2004–2009 (Brazil 2005–2019)": the first market
+            periods.append((m.start(), years_in(value) if value else None))
     out = []
     for i, (start, period) in enumerate(periods):
-        # The block starts at the heading above its infobox (pl) and runs to the next block.
+        # The block starts at the heading above its infobox and runs to the next block.
         head = text.rfind("\n==", 0, start)
-        begin = head if head >= 0 and lang == "pl" else start
+        begin = head if head >= 0 and lang != "de" else start
         end = periods[i + 1][0] if i + 1 < len(periods) else len(text)
-        if lang == "pl" and i + 1 < len(periods):
+        if lang != "de" and i + 1 < len(periods):
             nxt = text.rfind("\n==", 0, periods[i + 1][0])
             end = nxt if nxt > begin else end
         if period:
             out.append((period[0], period[1], begin, end))
+    for title, level, start, end in sections(text):
+        if level <= 3 and re.search(r"(19|20)\d{2}", title) and not TRIM_HEADING[lang].search(title):
+            years = years_in(title)
+            if years and years[0] >= 1990:
+                out.append((years[0], years[1] if years[1] > years[0] + 1 else 2100.0, start, end))
     return out
 
 
@@ -174,7 +213,8 @@ def trims_in(text, start, end, lang):
             names = []
         if not names:
             prose = clean(body)
-            match = re.search(r"(wersjach(?: wyposażeniowych)?|Ausstattungs(?:linien|varianten|stufen|versionen)|Linien)[^.:]*?[:]?\s*"
+            match = re.search(r"(wersjach(?: wyposażeniowych)?|Ausstattungs(?:linien|varianten|stufen|versionen)|Linien|"
+                              r"trim levels?|trims|finitions?|allestimenti|uitvoeringen)[^.:]*?[:]?\s*"
                               r"([^.]{3,240})\.", prose)
             if match:
                 parts = re.split(r",\s*|\s+(?:i|oraz|und|sowie|or|lub)\s+", re.sub(r"\([^)]*\)", "", match.group(2)))
@@ -186,7 +226,8 @@ def trims_in(text, start, end, lang):
         # No trim section: a sentence naming the lines ("Neben dem Basismodell wurden vier weitere
         # Ausstattungspakete angeboten: „Advantage“, „Luxury Line“, „Sport Line“ und „M Sport“").
         prose = clean(re.sub(r"\{\|.*?\n\|\}", " ", text[start:end], flags=re.S))
-        for match in re.finditer(r"(Ausstattungs(?:linien|pakete|varianten|stufen|versionen)|wersj\w* wyposażeniow\w*)"
+        for match in re.finditer(r"(Ausstattungs(?:linien|pakete|varianten|stufen|versionen)|wersj\w* wyposażeniow\w*|"
+                                 r"trim levels?|finitions?|allestimenti|uitvoeringen)"
                                  r"[^.:]{0,80}?:\s*([^.]{3,240})\.", prose):
             parts = re.split(r",\s*|\s+(?:i|oraz|und|sowie|or|lub)\s+", re.sub(r"\([^)]*\)", "", match.group(2)))
             names = [n for n in (name_of(p) for p in parts) if n]
@@ -250,8 +291,12 @@ def articles(brand, names, lang, codes=()):
     named = [re.compile(r"(?<![\w-])" + re.escape(name) + r"(?![\w])", re.I) for name in names]
     for title in titles[:14]:
         text = wiki_engines.wikitext(title, lang)
-        if not text or text.lstrip().lower().startswith(("#redirect", "#patrz", "#tarjoaa")):
+        if not text or text.lstrip().lower().startswith(("#redirect", "#patrz", "#tarjoaa", "#redirection", "#rinvia", "#doorverwijzing")):
             continue
+        if OTHER_MARKET.search(title):
+            continue  # "Renault Arkana (Russie)" is another car
+        if any(other.lower() in title.lower() for other in BRANDS if other != brand and other.lower() not in brand.lower()):
+            continue  # "Peugeot Rifter / Citroën Berlingo / Opel Combo": the lines of three makes in one list
         # An article found by a generation code must speak of this model ("Baureihe 247" leads to the GLA).
         by_name = any(title_starts(title, f"{brand} {name}") for name in names)
         if not by_name and not any(pattern.search(text[:4000]) for pattern in named):
@@ -293,6 +338,24 @@ def page_models():
     return out
 
 
+# One French article for three makes (Citroën Berlingo / Opel Combo / Peugeot Rifter): its list mixes them.
+SHARED_FR = {("Opel", "Combo"), ("Peugeot", "Rifter")}
+EN_COLOR = re.compile(r"\b(white|black|grey|gray|red|blue|green|silver|bronze)\b|dakar", re.I)
+
+
+def clean_rows(rows):
+    """The last sieve over the rows: English paint names, rally cars, shared French lists."""
+    out = []
+    for row in rows:
+        if (row["brand"], row["model"]) in SHARED_FR and any("fr.wikipedia" in url for url in row["sources"]):
+            continue
+        for kind in ("trims", "sport", "special"):
+            row[kind] = [name for name in row[kind] if not EN_COLOR.search(name) or re.search(r"edition|line", name, re.I)]
+        if row["trims"] or row["sport"] or row["special"]:
+            out.append(row)
+    return out
+
+
 def main():
     with open(os.path.join(ROOT, "data", "model-trims.json"), encoding="utf8") as handle:
         done = {(r["brand"], r["model"]) for r in json.load(handle)["rows"] if r.get("origin") != "wiki"}
@@ -311,7 +374,7 @@ def main():
             continue
         names = model_names(brand, model)
         codes = list(dict.fromkeys(gen[0] for gen in spec["gens"] if (gen[3] or 2100) >= 2010))
-        sources = {lang: articles(brand, names, lang, codes) for lang in ("pl", "de")}
+        sources = {lang: articles(brand, names, lang, codes) for lang in LANGS}
         gens = {}
         for code, phase, start, end, _mobile, _lift in spec["gens"]:
             gens.setdefault(code, []).append((phase, start, end))
@@ -337,9 +400,13 @@ def main():
             if not per_lang:
                 report.append(f"{brand} {model} {code}: нет списка в pl/de")
                 continue
-            shared = set()
-            if len(per_lang) == 2:
-                shared = {n.lower() for n, _w, _s in per_lang["pl"][2]} & {n.lower() for n, _w, _s in per_lang["de"][2]}
+            # The same line named by two languages' articles.
+            seen, shared = {}, set()
+            for lang, best in per_lang.items():
+                for name in {norm(n) for n, _w, _s in best[2]}:
+                    if name in seen and seen[name] != lang:
+                        shared.add(name)
+                    seen.setdefault(name, lang)
             status = "проверено" if shared else "частично проверено"
             urls = [f"https://{lang}.wikipedia.org/wiki/{urllib.parse.quote(best[1].replace(' ', '_'))}"
                     for lang, best in per_lang.items()]
@@ -367,7 +434,7 @@ def main():
         print("\n".join(report))
         return
     with open(os.path.join(ROOT, "data", "model-trims-wiki.json"), "w", encoding="utf8") as handle:
-        json.dump({"rows": kept + rows, "missing": report}, handle, ensure_ascii=False, indent=1)
+        json.dump({"rows": clean_rows(kept + rows), "missing": report}, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
     print(f"rows={len(rows)} missing={len(report)}")
 
