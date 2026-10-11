@@ -512,7 +512,17 @@ def main():
         with open(wiki_path, encoding="utf8") as handle:
             taken = {(brand, model) for brand, model, _label in TRIMS}
             wiki_rows = [r for r in json.load(handle)["rows"] if (r["brand"], r["model"]) not in taken]
-    rows += wiki_rows
+    # Commercial vehicles (B75, owner 2026-10-11): no lists in any Wikipedia — collected from the makers'
+    # Polish / German price lists and press (data/model-trims-commercial.json, every row with its sources).
+    commercial_path = os.path.join(ROOT, "data", "model-trims-commercial.json")
+    commercial_rows = []
+    if os.path.exists(commercial_path):
+        with open(commercial_path, encoding="utf8") as handle:
+            taken = {(brand, model) for brand, model, _label in TRIMS}
+            commercial_rows = [{**r, "origin": "commercial"} for r in json.load(handle)["rows"] if (r["brand"], r["model"]) not in taken]
+        own = {(r["brand"], r["model"]) for r in commercial_rows}
+        wiki_rows = [r for r in wiki_rows if (r["brand"], r["model"]) not in own]
+    rows += wiki_rows + commercial_rows
     with open(os.path.join(ROOT, "data", "model-trims.json"), "w", encoding="utf8") as handle:
         json.dump({"generatedAt": today, "market": "EU (PL/DE)", "rows": rows}, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
@@ -552,6 +562,21 @@ def main():
             if note:
                 trims_text += f"<br><small>{note}</small>"
             lines.append(f"| {code} | {phase} | {years} | {trims_text} | {', '.join(sport) or '—'} | {', '.join(special) or '—'} | {status} | {src} |")
+        lines.append("")
+    if commercial_rows:
+        lines += [
+            "", "## Коммерческие — прайс-листы и пресса производителей (B75, 10-11)", "",
+            f"> {len(commercial_rows)} строк по {len({(r['brand'], r['model']) for r in commercial_rows})} моделям; в Википедии списков",
+            "> нет. Источники — прайс-листы и конфигураторы производителей (PL / DE) и пресса, у каждой строки ссылки;",
+            "> «проверено» — два независимых источника, иначе «частично проверено».", "",
+            "| Марка | Модель | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии | Статус | Источники |",
+            "|---|---|---|---|---|---|---|---|---|---|",
+        ]
+        for r in commercial_rows:
+            src = ", ".join(f"[{i + 1}]({url})" for i, url in enumerate(r["sources"])) or "—"
+            trims_text = (", ".join(r["trims"]) or "—") + (f"<br><small>{r['note']}</small>" if r.get("note") else "")
+            lines.append(f"| {r['brand']} | {r['label']} | {r['code']} | {r['phase']} | {r['years']} | {trims_text} | "
+                         f"{', '.join(r['sport']) or '—'} | {', '.join(r['special']) or '—'} | {r['status']} | {src} |")
         lines.append("")
     if wiki_rows:
         lines += [

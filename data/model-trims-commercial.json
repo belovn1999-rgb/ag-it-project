@@ -1,0 +1,1836 @@
+{
+ "collected": "2026-10-11",
+ "note": "Commercial vehicles (B75): makers' PL/DE price lists, ADAC Autokatalog, autokatalog.pl and press; every row names its sources.",
+ "rows": [
+  {
+   "brand": "Ford",
+   "model": "Transit",
+   "label": "Transit",
+   "code": "Transit VI",
+   "phase": "весь выпуск",
+   "years": "2006–2013",
+   "trims": [
+    "Basis",
+    "Trend",
+    "Limited"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Anniversary",
+    "Economy"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit/6generation/",
+    "https://www.otomoto.pl/news/katalog-samochodow/dane-spalania/ford/transit/gen-vi-2006/furgon"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC): фургон — Basis (без названия линии) и Trend; Kombi — Trend, Limited с 09/2011. PL (каталог otomoto): Trend, Limited (2011–2014), Sport (Sport Van — спортивная версия, 2008–2014), спецверсии Anniversary / Anniversary+ (2011–2012), Economy и ECOnetic (экономичные версии). В PL базовая версия обычно без названия. Trend и Limited совпадают в двух источниках."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit",
+   "label": "Transit",
+   "code": "Transit VII",
+   "phase": "весь выпуск",
+   "years": "2014–2019",
+   "trims": [
+    "Basis",
+    "Ambiente",
+    "Trend"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit/7generation/",
+    "https://cars-data.com/en/ford/transit/2014-van",
+    "https://autokatalog.pl/ford/transit/iv-v363-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC, фургон 2016–2019): Basis (без названия линии) и Trend. Ambiente — базовая линия в ряде рынков ЕС (cars-data), в PL так же называется база Ford того периода. Trend подтверждён двумя источниками. Рестайлинг 2019 (с 06/2019) добавил фургону линию Limited, а с 2020/2021 — Trail; эти линии отнесены к строке Transit VIII. Пассажирские версии продавались как Tourneo (Trend, Titanium) — отдельной строкой не собирались."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit",
+   "label": "Transit",
+   "code": "Transit VIII",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "Basis",
+    "Trend",
+    "Limited",
+    "Trail"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit/7generation-facelift/",
+    "https://www.ford.pl/content/dam/guxeu/pl/pl_pl/documents/price-list/cv-wyprzedaz-2025/PL-transit_V363_2_kwietnia_MY2026_50_van.pdf",
+    "https://autokatalog.pl/ford/transit/iv-v363-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "Это рестайлинг V363 (с 06/2019). Прайс Ford PL MY2026.50: фургон и бригадный — Trend и Limited. Trail в PL был (autokatalog: 350 L3H2 Trail, до 2020) и в DE (ADAC: 01/2021–03/2024). DE: Basis (без названия), Trend, Limited, Trail. В UK базовая линия называется Leader — в PL/DE не встречается. Active для большого Transit заявлялся в 2020 (пресс-релизы), но в каталогах PL/DE не найден."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Custom",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "phase": "дорестайлинг",
+   "years": "2012–2018",
+   "trims": [
+    "Basis",
+    "Ambiente",
+    "Trend",
+    "Limited",
+    "Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation/",
+    "https://autokatalog.pl/ford/transit-custom/i-v362-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC): Basis (без названия линии), Trend, Limited, Sport (Sport с 06/2016). PL (autokatalog): Ambiente (база), Trend, Limited, Sport. Ambiente = польское/европейское имя базы, в DE база без названия. В нашей таблице поколение указано 2014–2023, реально V362 продаётся с 2012."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Custom",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "phase": "рестайлинг",
+   "years": "2018–2023",
+   "trims": [
+    "Basis",
+    "Ambiente",
+    "Trend",
+    "Limited",
+    "Sport",
+    "Trail"
+   ],
+   "sport": [],
+   "special": [
+    "Nugget"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/",
+    "https://autokatalog.pl/ford/transit-custom/i-v362-ciezarowy/dane-techniczne",
+    "https://www.otomoto.pl/news/katalog-samochodow/dane-spalania/ford/transit-custom/furgon"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC, фургон 01/2018–07/2023): Basis (без названия), Trend, Limited, Sport, Trail (с 11/2020). PL: Trend, Limited (каталог otomoto 2020–2022), Ambiente и Sport (autokatalog). Nugget — кемпер на базе Transit/Tourneo Custom (встречается в объявлениях вместе с Trend/Limited/Premium). Active в 2020 анонсирован для Tourneo Custom; для фургона Transit Custom I в каталогах PL/DE не найден."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Custom",
+   "label": "Transit Custom",
+   "code": "Transit Custom II",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Basis",
+    "Trend",
+    "Limited",
+    "Trail",
+    "Sport"
+   ],
+   "sport": [
+    "MS-RT"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.ford.pl/content/dam/guxeu/pl/pl_pl/documents/price-list/cv-wyprzedaz-2025/PL-transit_custom_van_bragadowy_2_kwietnia_2026_MY2026_50.pdf",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/2generation/",
+    "https://autokatalog.pl/ford/transit-custom/ii-v710-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "Прайс Ford PL (фургон/бригадный, MY2026.50): Trend, Trail, Limited, Sport, MS-RT. Прайс PL Transit Custom Kombi: Trend, Limited. DE (ADAC): Basis (07/2023–10/2026), Trend, Limited, Trail, Sport (с 09/2023), MS-RT (с 03/2024). Реальный старт V710 — 2023. Active встречается в австрийском обзоре и у Tourneo Custom, для фургона в PL/DE не подтверждён. Nugget — отдельный кемпер."
+  },
+  {
+   "brand": "Ford",
+   "model": "Tourneo Custom",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "phase": "дорестайлинг",
+   "years": "2012–2018",
+   "trims": [
+    "Trend",
+    "Limited",
+    "Titanium",
+    "Sport"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition",
+    "Euroline"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation/",
+    "https://autokatalog.pl/ford/tourneo-custom/i-v362/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC): Trend (2012–2018), Limited (только 08/2012–06/2013, затем заменён на Titanium), Titanium (с 06/2013), Sport (с 06/2016); спецверсии Business Edition и Euroline / Trend Euroline (08/2017–01/2018). PL (autokatalog, поколение целиком): Trend, Titanium, Sport, Active. Trend, Titanium, Sport совпадают в двух источниках."
+  },
+  {
+   "brand": "Ford",
+   "model": "Tourneo Custom",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "phase": "рестайлинг",
+   "years": "2018–2023",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Titanium",
+    "Titanium X",
+    "Sport",
+    "Active"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/",
+    "https://autokatalog.pl/ford/tourneo-custom/i-v362/dane-techniczne",
+    "https://de.wikipedia.org/wiki/Ford_Transit_Custom"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC): Ambiente (01/2018–07/2020), Trend, Titanium, Titanium X, Sport (01/2018–07/2023), Active (01/2021–07/2023). PL (autokatalog): Trend, Titanium, Sport, Active. Active (кроссовер-стиль) — с 2020/2021."
+  },
+  {
+   "brand": "Ford",
+   "model": "Tourneo Custom",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom II",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Trend",
+    "Titanium",
+    "Titanium X",
+    "Active",
+    "Sport"
+   ],
+   "sport": [
+    "MS-RT"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/2generation/",
+    "https://autokatalog.pl/ford/tourneo-custom/ii-v710/dane-techniczne",
+    "https://www.autobild.de/artikel/ford-tourneo-custom-active-test-18432923.html"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC): Trend, Titanium (с 07/2023), Active, Sport, Titanium X (с 09/2023), MS-RT (с 01/2026). PL (autokatalog): Titanium, Titanium X, Active. Trail у Tourneo Custom не предлагается (это линия Transit Custom). Реальный старт V710 — 2023."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Connect",
+   "label": "Transit Connect",
+   "code": "Transit Connect I",
+   "phase": "рестайлинг",
+   "years": "2009–2013",
+   "trims": [
+    "Basis",
+    "Trend"
+   ],
+   "sport": [],
+   "special": [
+    "City Light",
+    "Economy"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-connect/1generation-facelift/",
+    "https://autokatalog.pl/ford/transit-connect/i-fl-v227-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "Рестайлинг первого поколения (V227). DE (ADAC, фургон): Basis, Trend (06/2009–07/2013), City Light (облегчённая версия, 05/2010–07/2013). PL (autokatalog): Trend, Economy; также кузов Tourneo (Kombi). Trend совпадает в двух источниках."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Connect",
+   "label": "Transit Connect",
+   "code": "Transit Connect II",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [
+    "Basis",
+    "Ambiente",
+    "Trend",
+    "Limited"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-connect/2generation/",
+    "https://www.ford.nl/content/dam/guxeu/nl/documents/pricelists/commercial-vehicles/PL-new_ford_transit_connect.pdf",
+    "https://autokatalog.pl/ford/transit-connect/ii-v408-ciezarowy/dane-techniczne"
+   ],
+   "status": "частично проверено",
+   "note": "V408 до рестайлинга. DE (ADAC): Kombi — Trend, фургон — база без названия (Basis). Прайс Ford NL: Ambiente, Trend, Limited. PL (autokatalog, поколение 2013–2024 целиком): Ambiente, Limited, Sport, Active — без разбивки по годам. Sport появился в 2018 (см. рестайлинг)."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Connect",
+   "label": "Transit Connect",
+   "code": "Transit Connect III",
+   "phase": "весь выпуск",
+   "years": "2018–2024",
+   "trims": [
+    "Basis",
+    "Ambiente",
+    "Trend",
+    "Limited",
+    "Sport",
+    "Active"
+   ],
+   "sport": [],
+   "special": [
+    "HP"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-connect/2generation-facelift/",
+    "https://autokatalog.pl/ford/transit-connect/ii-v408-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "Реально это рестайлинг V408 (06/2018–05/2024); в нашей таблице — «Transit Connect III» 2020–. DE (ADAC, фургон): Basis, Trend, Sport (06/2018–), Limited и Active (с 01/2021), Basis HP / Trend HP (с 11/2021, утяжелённая версия). PL (autokatalog): Ambiente, Trend, Limited, Sport, Active."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Connect",
+   "label": "Transit Connect",
+   "code": "Transit Connect IV",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Trend",
+    "Limited",
+    "Active"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-connect/3generation/",
+    "https://autokatalog.pl/ford/transit-connect/iii-v761-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "Новое поколение V761 на базе VW Caddy (фургон с 05/2024; Tourneo Connect — с 2022). DE (ADAC): Trend, Limited, Active (Active — с 07/2024, Flexcab). PL (autokatalog): Trend, Limited, Active. Grand, Flexcab, AWD — кузов/привод, не линии."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Courier",
+   "label": "Transit Courier",
+   "code": "Transit Courier I",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [
+    "Basis",
+    "Ambiente",
+    "Trend",
+    "Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-courier/1generation/",
+    "https://autokatalog.pl/ford/transit-courier/i-b460-ciezarowy/dane-techniczne",
+    "https://www.auto-swiat.pl/katalog-samochodow/ford-transit-courier-b460-ambiente-10-101km-74kw/ltycrmr"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC): Basis (без названия), Trend (06/2014–04/2018), Sport (02/2017–04/2018). PL: Ambiente (база), Trend, Sport; в PL было 3 линии (auto-swiat). Trend и Sport совпадают в двух источниках."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Courier",
+   "label": "Transit Courier",
+   "code": "Transit Courier I",
+   "phase": "рестайлинг",
+   "years": "2018–2023",
+   "trims": [
+    "Basis",
+    "Ambiente",
+    "Trend",
+    "Sport",
+    "Limited"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-courier/1generation-facelift/",
+    "https://autokatalog.pl/ford/transit-courier/i-b460-ciezarowy/dane-techniczne",
+    "https://media.ford.com/content/dam/fordmedia/Europe/de/2018/00_Roadshow2018/A%20Texte/18_Ford_Courier-Familie.docx"
+   ],
+   "status": "проверено",
+   "note": "В нашей таблице поколение указано до 2018; рестайлинг 05/2018–09/2023 добавлен отдельной строкой. DE (ADAC): Basis, Trend, Sport, Limited; пресс-релиз Ford DE 2018: к линиям добавлен Limited, Sport остаётся. PL (autokatalog): Ambiente, Trend, Sport, Limited. В UK база называлась Leader."
+  },
+  {
+   "brand": "Ford",
+   "model": "Transit Courier",
+   "label": "Transit Courier",
+   "code": "Transit Courier II",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Basis",
+    "Trend",
+    "Limited",
+    "Active"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-courier/2generation/",
+    "https://autokatalog.pl/ford/transit-courier/ii-v769-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC, с 10/2023): Basis, Trend, Active, Limited. PL (autokatalog; прайс Ford PL MY2025.50 по выдаче поиска, файл сейчас снят с сайта): Trend, Limited, Active — в PL нет отдельной базы Basis."
+  },
+  {
+   "brand": "Ford",
+   "model": "Tourneo Courier",
+   "label": "Tourneo Courier",
+   "code": "Tourneo Courier I",
+   "phase": "весь выпуск",
+   "years": "2014–2023",
+   "trims": [
+    "Ambiente",
+    "Trend",
+    "Titanium",
+    "Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-courier/1generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-courier/1generation-facelift/",
+    "https://autokatalog.pl/ford/tourneo-courier/i-b460/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "DE (ADAC): Ambiente, Trend, Titanium (2014–), Sport (с 02/2017); после рестайлинга 05/2018 — те же четыре, Ambiente до 11/2020; выпуск до 03/2022. PL (autokatalog): Ambiente, Trend, Titanium, Sport. Названия в PL и DE совпадают."
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "Sprinter",
+   "label": "Sprinter",
+   "code": "Sprinter III",
+   "phase": "весь выпуск",
+   "years": "2006–2018",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "WORKER"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/906-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/906/",
+    "https://autokatalog.pl/mercedes/sprinter/ncv3-ciezarowy/dane-techniczne"
+   ],
+   "status": "частично проверено",
+   "note": "Это W906 (NCV3), в нашей таблице объединён с W907 как «Sprinter III» 2014–. Линий комплектации нет: базовая машина + пакеты и опции (в объявлениях пишут только индекс 213/313/316/516 CDI). Единственное повторяющееся название — спецверсия WORKER (удешевлённая, ADAC 06/2016–05/2018). PL-каталог тоже без линий."
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "Sprinter",
+   "label": "Sprinter",
+   "code": "Sprinter III",
+   "phase": "весь выпуск",
+   "years": "2018–2023",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "WORKER"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/907-910/",
+    "https://autokatalog.pl/mercedes/sprinter/vs30-ciezarowy/dane-techniczne"
+   ],
+   "status": "частично проверено",
+   "note": "Это W907/W910 (VS30) до рестайлинга, в нашей таблице — «Sprinter III» 2014–. До 02/2024 в DE линий нет (база + пакеты), есть спецверсия WORKER (10/2019–10/2021). PL autokatalog для поколения VS30 целиком показывает BASE/PRO/SELECT, но в DE они появились только с рестайлингом — см. Sprinter IV. В UK были свои линии (Progressive/Premium) — для PL/DE не подходят."
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "Sprinter",
+   "label": "Sprinter",
+   "code": "Sprinter IV",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "BASE",
+    "PRO",
+    "SELECT"
+   ],
+   "sport": [],
+   "special": [
+    "30 Jahre Sprinter"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/907-910/",
+    "https://autokatalog.pl/mercedes/sprinter/vs30-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "Реально это рестайлинг W907 (продажи с 01–02/2024). DE (ADAC): база без названия, Pro, Select (с 02/2024), спецверсия «30 Jahre Sprinter» (с 02/2025). PL (autokatalog): BASE, PRO, SELECT. В объявлениях пишут PRO/SELECT заглавными или Pro/Select."
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "Citan",
+   "label": "Citan",
+   "code": "W415",
+   "phase": "весь выпуск",
+   "years": "2012–2021",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/citan/415/",
+    "https://autokatalog.pl/mercedes/citan/w415-ciezarowy/dane-techniczne"
+   ],
+   "status": "частично проверено",
+   "note": "Линий комплектации нет: фургон, Kombi/Tourer, Mixto как кузова + пакеты; в PL-каталоге версии только по индексу (108/109/111/112 CDI). DE (ADAC, Tourer): спецверсия Edition (05/2015–12/2020) и вариант CREW (кузов с рядом сидений). В итальянском прайсе встречаются Pro/Select для Tourer 2019+, в PL/DE не подтверждено."
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "Citan",
+   "label": "Citan",
+   "code": "W420",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "BASE",
+    "PRO",
+    "SELECT"
+   ],
+   "sport": [],
+   "special": [
+    "Worker Plus"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/citan/420/",
+    "https://de.motor1.com/news/528793/mercedes-citan-2021-transporter-vorstellung/",
+    "https://autokatalog.pl/mercedes/citan/vs11-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "DE (motor1, ADAC): фургон и Tourer в линиях BASE и PRO; спецверсия Worker Plus (Tourer 10/2021–07/2022). PL (autokatalog): Base, Pro, Select. SELECT в DE-каталоге ADAC не найден — вероятно, только отдельные рынки/eCitan."
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "T-Class",
+   "label": "T-Class",
+   "code": "Klasa T I",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Style",
+    "Progressive"
+   ],
+   "sport": [],
+   "special": [
+    "Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/t-klasse/420/",
+    "https://mbpassion.de/2022/05/t-klasse-nun-ab-29-31446-euro-bestellbar/"
+   ],
+   "status": "проверено",
+   "note": "DE (mbpassion, ADAC): база без названия, линии Style и Progressive (доплата), стартовая спецверсия Edition (на базе Progressive). PL-названия по польским источникам не подтверждены (один дилерский сайт пишет Style / Prestige — похоже на ошибку). AMG Line для T-Klasse не найдена."
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Crafter",
+   "label": "Crafter",
+   "code": "Crafter I",
+   "phase": "весь выпуск",
+   "years": "2006–2016",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/i-facelift/",
+    "https://www.autobild.de/marken-modelle/vw/crafter/1/",
+    "https://autokatalog.pl/volkswagen/crafter"
+   ],
+   "status": "частично проверено",
+   "note": "Первое поколение (2006–2016, рестайлинг 2011). Линий комплектации нет: базовая машина (Kasten/Kombi/Pritsche/Fahrgestell) + опции; в каталогах версии различаются только 30/35/50, крышей, базой и мотором (BlueMotion — экономичная версия мотора). В нашей таблице «Crafter I» 2006– объединяет оба поколения."
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "Crafter",
+   "label": "Crafter",
+   "code": "Crafter I",
+   "phase": "весь выпуск",
+   "years": "2017–н. в.",
+   "trims": [
+    "Trendline",
+    "Highline"
+   ],
+   "sport": [],
+   "special": [
+    "Plus"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/ii/",
+    "https://autokatalog.pl/volkswagen/crafter/ii-ciezarowy/dane-techniczne",
+    "https://www.fleetnews.co.uk/news/van-news/2017/01/23/new-volkswagen-crafter-priced-from-23-920"
+   ],
+   "status": "частично проверено",
+   "note": "Реально это Crafter II (SY/SZ), в нашей таблице — «Crafter I» 2006–. DE (ADAC): база без названия, Trendline (03/2017–08/2023), «Kastenwagen Plus» (2018–2023, улучшенный фургон). PL (autokatalog): 35/50 Trendline и база без названия. Highline — в UK (Startline/Trendline/Highline) и в немецком обзоре pkw.de, в ADAC не найден. После обновления 2023 в DE линии в названиях почти не пишутся."
+  },
+  {
+   "brand": "Renault",
+   "model": "Master",
+   "label": "Master",
+   "code": "Master III",
+   "phase": "весь выпуск",
+   "years": "2003–2010",
+   "trims": [
+    "Komfort",
+    "Business",
+    "Pack Clim"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/ii-facelift/",
+    "https://www.otomoto.pl/news/katalog-samochodow/dane-spalania/renault/master/gen-iii-2003-2010/furgon"
+   ],
+   "status": "проверено",
+   "note": "По нашей таблице «Master III» = Master II после рестайлинга (2003–2010) в нумерации Renault/ADAC. DE (ADAC, Combi): база без названия и Komfort. PL (каталог otomoto, furgon): Business, Komfort, Pack Clim (в т. ч. «SL Pack Clim», «PackClim Quick»). Komfort совпадает в двух источниках."
+  },
+  {
+   "brand": "Renault",
+   "model": "Master",
+   "label": "Master",
+   "code": "Master IV",
+   "phase": "дорестайлинг",
+   "years": "2010–2019",
+   "trims": [
+    "Business",
+    "Pack Clim"
+   ],
+   "sport": [],
+   "special": [
+    "Ecoline"
+   ],
+   "sources": [
+    "https://www.otomoto.pl/news/katalog-samochodow/dane-spalania/renault/master/gen-iv-2010-master/furgon",
+    "https://autokatalog.pl/renault/master/iii-ciezarowy/dane-techniczne",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift/"
+   ],
+   "status": "проверено",
+   "note": "В нумерации Renault/ADAC это Master III (2010–2024). PL (otomoto, autokatalog): Business и Pack Clim. DE: база без названия, экономичная версия Ecoline (ADAC 2014–2019); Komfort в DE для этих лет не найден. В UK — Business / Business+."
+  },
+  {
+   "brand": "Renault",
+   "model": "Master",
+   "label": "Master",
+   "code": "Master IV",
+   "phase": "рестайлинг",
+   "years": "2019–2024",
+   "trims": [
+    "Business",
+    "Pack Clim",
+    "Komfort",
+    "Extra",
+    "Advance"
+   ],
+   "sport": [],
+   "special": [
+    "Ecoline"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift-2/",
+    "https://www.otomoto.pl/news/katalog-samochodow/dane-spalania/renault/master/gen-iv-2010-master/furgon",
+    "https://autokatalog.pl/renault/master/iii-ciezarowy/dane-techniczne"
+   ],
+   "status": "частично проверено",
+   "note": "Рестайлинг 2019. PL: Business, Pack Clim (2019–2022), Extra (с 2022), Advance (autokatalog). DE (ADAC, фургон 10/2019–08/2024): база без названия, Komfort, Ecoline. Т. е. PL «Pack Clim» ≈ DE «Komfort» (уровень с кондиционером)."
+  },
+  {
+   "brand": "Renault",
+   "model": "Master",
+   "label": "Master",
+   "code": "Master IV",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Start",
+    "Advance",
+    "Extra"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iv/",
+    "https://www.auto-swiat.pl/wiadomosci/aktualnosci/zupelnie-nowe-renault-master-wchodzi-do-sprzedazy-w-polsce-to-hit-wsrod-aut/7vc3ftf",
+    "https://autokatalog.pl/renault/master/iv-ciezarowy/dane-techniczne"
+   ],
+   "status": "проверено",
+   "note": "Совершенно новый Master (в нумерации Renault — Master IV), продажи с 2024; в нашей таблице входит в «Master IV» 2010–, поэтому отдельная строка. PL: на старте только Extra (auto-swiat 07/2024), затем Advance и Extra (autokatalog). DE (ADAC): база без названия, Advance, Extra (с 09/2024). Start — база в NL (пресс-релиз Renault NL); в PL/DE не встречается."
+  },
+  {
+   "brand": "Hyundai",
+   "model": "H-1",
+   "label": "H-1",
+   "code": "H-1 II",
+   "phase": "дорестайлинг",
+   "years": "2008–2018",
+   "trims": [
+    "Classic",
+    "Comfort",
+    "Style",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://autokatalog.pl/hyundai/h-1/ii-ciezarowy/dane-techniczne",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/h-1/2generation/",
+    "https://www.automobile.at/magazin/24343"
+   ],
+   "status": "частично проверено",
+   "note": "PL (autokatalog): Classic, Comfort, Style. DE: H-1 Travel — Classic (база), Comfort, Premium (Premium сначала как лимитированная спецверсия 2009, потом линия); H-1 Cargo — без линий (Flügeltür/Heckklappe, 3/6 мест). Comfort и Classic совпадают в PL и DE."
+  },
+  {
+   "brand": "Hyundai",
+   "model": "H-1",
+   "label": "H-1",
+   "code": "H-1 II",
+   "phase": "рестайлинг",
+   "years": "2018–2021",
+   "trims": [
+    "Select",
+    "Trend",
+    "Premium",
+    "Eco",
+    "Profi"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.automobile.at/magazin/352439",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/h-1/2generation-facelift/"
+   ],
+   "status": "проверено",
+   "note": "Рестайлинг 2018 (в DE продажи 09/2018–07/2020). DE: H-1 Travel (пассажирский) — Select, Trend, Premium; H-1 Cargo (фургон) — Eco, Profi (подтверждено ADAC и automobile.at). PL-названия для рестайлинга не найдены."
+  },
+  {
+   "brand": "Toyota",
+   "model": "Hilux",
+   "label": "Hilux",
+   "code": "Hilux VII",
+   "phase": "дорестайлинг",
+   "years": "2005–2011",
+   "trims": [
+    "DLX",
+    "DLX+",
+    "SR",
+    "SR5",
+    "Sol",
+    "Executive",
+    "Heavy Duty"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://autokatalog.pl/toyota/hilux/vii-ciezarowy/dane-techniczne",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hilux/n25/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hilux/n25-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "PL (autokatalog): DLX, DLX+, SR, SR5. DE (ADAC): Heavy Duty (Single Cab, 2005–2006), Sol, Executive (с 2007), в 2011 Sol заменён на Life. Названия PL и DE разные — у каждого рынка по одному источнику."
+  },
+  {
+   "brand": "Toyota",
+   "model": "Hilux",
+   "label": "Hilux",
+   "code": "Hilux VII",
+   "phase": "рестайлинг",
+   "years": "2011–2016",
+   "trims": [
+    "DL",
+    "DLX",
+    "DLX+",
+    "SR",
+    "SR+",
+    "SR5",
+    "Life",
+    "Comfort",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.motonews.pl/toyota/news-8457-toyota-hilux-2012.html",
+    "https://autokatalog.pl/toyota/hilux/vii-fl-ciezarowy/dane-techniczne",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hilux/n25-facelift-2/"
+   ],
+   "status": "проверено",
+   "note": "PL: на 2012 модельный год DLX, DLX+, SR, SR+ (motonews); в каталоге также DL и SR5. DE (ADAC): Life (12/2011–08/2014), Comfort (08/2014–08/2016), Executive. PL-набор подтверждён двумя польскими источниками."
+  },
+  {
+   "brand": "Toyota",
+   "model": "Hilux",
+   "label": "Hilux",
+   "code": "Hilux VIII",
+   "phase": "дорестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "DL",
+    "DLX",
+    "SR",
+    "SR5",
+    "Duty",
+    "Duty Comfort",
+    "Comfort",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [
+    "Dakar"
+   ],
+   "sources": [
+    "https://www.motonews.pl/toyota/news-11427-toyota-rozpoczyna-przedsprzedaz-nowego-hiluxa-2020.html",
+    "https://autokatalog.pl/toyota/hilux/viii-ciezarowy/dane-techniczne",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hilux/an1p/"
+   ],
+   "status": "проверено",
+   "note": "PL: DL, DLX, SR, SR5 и лимитированная Dakar (motonews, autokatalog). DE (ADAC): Duty, Duty Comfort, Comfort, Executive. Invincible в PL появился только с рестайлингом 2020."
+  },
+  {
+   "brand": "Toyota",
+   "model": "Hilux",
+   "label": "Hilux",
+   "code": "Hilux VIII",
+   "phase": "рестайлинг",
+   "years": "2020–2025",
+   "trims": [
+    "DL",
+    "DLX",
+    "SR",
+    "SR5",
+    "Invincible",
+    "Live",
+    "Active",
+    "Executive",
+    "Duty",
+    "Comfort"
+   ],
+   "sport": [
+    "GR Sport"
+   ],
+   "special": [
+    "Selection",
+    "Arctic Trucks"
+   ],
+   "sources": [
+    "https://www.motonews.pl/toyota/news-11427-toyota-rozpoczyna-przedsprzedaz-nowego-hiluxa-2020.html",
+    "https://autokatalog.pl/toyota/hilux/viii-ciezarowy/dane-techniczne",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hilux/an1p-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "PL: после рестайлинга 2020 — DL, DLX, SR, SR5 и новая топовая Invincible (вместо Dakar); позже в каталоге Live, Active, Executive, спецверсия Selection, GR Sport (II); спецверсия Hilux Arctic Trucks (AT35, motonews 2021). DE (ADAC): Duty, Comfort, Executive, Invincible, GR SPORT (с 05/2022). Mountain в польских/немецких источниках не найден. С 2025 — новое поколение Hilux IX (PL: Live, Active, Executive, Invincible)."
+  },
+  {
+   "brand": "Toyota",
+   "model": "Hiace",
+   "label": "Hiace",
+   "code": "Hiace V",
+   "phase": "весь выпуск",
+   "years": "2004–2012",
+   "trims": [
+    "Base",
+    "Terra",
+    "GL"
+   ],
+   "sport": [],
+   "special": [
+    "Top"
+   ],
+   "sources": [
+    "https://autokatalog.pl/toyota/hiace/iv-fl-ii-ciezarowy/dane-techniczne",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hiace/h1-facelift-3/",
+    "https://www.eurotransport.de/fahrzeuge/lkw/test-hiace-gl-auch-mit-allradantrieb/"
+   ],
+   "status": "частично проверено",
+   "note": "Европейский Hiace (H100, поздние рестайлинги). PL (autokatalog): Base, Terra (Terra A/C, Terra AWD), Top. DE (ADAC, eurotransport): Combi и Combi GL (GL — комфортная линия, в т. ч. 4x4). Названия PL и DE не пересекаются."
+  },
+  {
+   "brand": "Toyota",
+   "model": "Proace City",
+   "label": "Proace City",
+   "code": "Proace City",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "Life",
+    "Active",
+    "Comfort",
+    "Combi",
+    "Business",
+    "Family",
+    "Duty",
+    "Duty Comfort",
+    "Meister",
+    "Shuttle",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [
+    "Team Deutschland"
+   ],
+   "sources": [
+    "https://autokatalog.pl/toyota/proace-city/i-ciezarowy/dane-techniczne",
+    "https://www.autocentrum.pl/nowe/toyota/proace-city/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/proace-city/e/"
+   ],
+   "status": "частично проверено",
+   "note": "PL фургон: Life (2019–2022), Active, Comfort (autokatalog, otomoto — совпадают). PL Verso (пассажирский): Combi, Business, Family (autocentrum.pl). DE Kastenwagen: Duty, Duty Comfort (autohaus/auto-motor-und-sport), Meister (carwow/autobild — не перепроверено). DE Verso (ADAC): Combi, Shuttle, Team Deutschland, Executive. Рестайлинг 2024 — линии в PL сохранились (Active, Comfort)."
+  },
+  {
+   "brand": "Citroen",
+   "model": "Jumper",
+   "label": "Jumper",
+   "code": "Jumper II",
+   "phase": "весь выпуск",
+   "years": "2004–2015",
+   "trims": [
+    "Confort",
+    "Club",
+    "Business"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.auto-selection.com/fiche-technique/citroen/jumper-fg/2006/30-l2h2-hdi100-club-895951",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumper/2generation/207662",
+    "https://www.sixt.fr/location-citroen/jumper"
+   ],
+   "status": "частично проверено",
+   "note": "Названия французского рынка (фургон Confort / Club / Business; Business — ближе к концу выпуска). В Германии ADAC знает у Kombi только «Confort», у фургона линий в названии нет (есть «Service», «Schreiner» — переоборудование). Польские названия в источниках не найдены (autokatalog.pl даёт «Comfort Max» без подтверждения)."
+  },
+  {
+   "brand": "Citroen",
+   "model": "Jumper",
+   "label": "Jumper",
+   "code": "Jumper III",
+   "phase": "дорестайлинг",
+   "years": "2014–2019",
+   "trims": [
+    "Start",
+    "Profi",
+    "Business"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.meinauto.de/testberichte/citroen-jumper-kawa-im-test-2019-die-franzosen-frischen-ihren-grossen-lieferwagen-auf",
+    "https://www.mobile.de/auto/citroen/jumper/2006/van/modell/"
+   ],
+   "status": "частично проверено",
+   "note": "Германия: Start / Profi / Business (mobile.de, обзор модели). meinauto.de подтверждает Profi и Business до 2019 г. Польские названия не найдены; в каталоге auto-swiat.pl встречается «Business» (Jumper 33 L2H2 Business)."
+  },
+  {
+   "brand": "Citroen",
+   "model": "Jumper",
+   "label": "Jumper",
+   "code": "Jumper III",
+   "phase": "дорестайлинг",
+   "years": "2019–2023",
+   "trims": [
+    "Control",
+    "Club",
+    "Driver",
+    "Worker"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.motonews.pl/citroen/news-10712.html",
+    "https://www.meinauto.de/testberichte/citroen-jumper-kawa-im-test-2019-die-franzosen-frischen-ihren-grossen-lieferwagen-auf",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumper/2generation-facelift/"
+   ],
+   "status": "проверено",
+   "note": "С модельного года 2020 (лето 2019) в PL и DE одинаково: Control (база, бывший Profi), Club (бывший Business), Driver (на базе Club) и Worker (на базе Control, тяжёлые версии). ADAC: Control/Club в названиях 09/19–06/24. Это та же генерация Jumper III, отдельная строка — смена названий линий."
+  },
+  {
+   "brand": "Citroen",
+   "model": "Jumper",
+   "label": "Jumper",
+   "code": "Jumper III",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "First",
+    "Plus",
+    "Max"
+   ],
+   "sport": [],
+   "special": [
+    "Type H"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumper/2generation-facelift-2/",
+    "https://www.motonews.pl/auta-nowe/nowy-citroen-jumper.html",
+    "https://www.media.stellantis.com/fr-fr/download-price-lists/201"
+   ],
+   "status": "частично проверено",
+   "note": "После рестайлинга 07/2024 линий нет: ADAC (DE) и motonews.pl (PL) называют версии только по кузову/мотору, в Нидерландах «1 uitvoering», опции — пакетами (Drive Assist и др.). Во Франции с MY26 (прайс Stellantis 02.03.2026) введены 3 уровня FIRST / PLUS / MAX; для PL/DE не подтверждено. «Type H» — юбилейная серия (Франция, 2025)."
+  },
+  {
+   "brand": "Citroen",
+   "model": "Jumpy",
+   "label": "Jumpy",
+   "code": "Jumpy II",
+   "phase": "весь выпуск",
+   "years": "2007–2016",
+   "trims": [
+    "Confort",
+    "Club",
+    "Business"
+   ],
+   "sport": [],
+   "special": [
+    "District"
+   ],
+   "sources": [
+    "https://www.largus.fr/fiche-technique/Citroen/Jumpy+Fg/2007.html",
+    "https://www.largus.fr/fiche-technique/Citroen/Jumpy+Fg/2010.html",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumpy/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "Франция: фургон Confort / Club / District (2007), Business (около 2010). В Германии ADAC знает только «District» (фургон 02/07–10/08), после 2012 у фургона линий в названиях нет. Пассажирский Jumpy Multispace/Kombi имел свои названия — не собраны. Польские названия не найдены."
+  },
+  {
+   "brand": "Citroen",
+   "model": "Jumpy",
+   "label": "Jumpy",
+   "code": "Jumpy III",
+   "phase": "весь выпуск",
+   "years": "2016–2023",
+   "trims": [
+    "Confort",
+    "Club",
+    "Business",
+    "Profi",
+    "Control",
+    "Driver",
+    "Worker"
+   ],
+   "sport": [],
+   "special": [
+    "Komfort Plus",
+    "Eco"
+   ],
+   "sources": [
+    "https://www.largus.fr/actualite-automobile/prix-citroen-jumpy-2016-les-tarifs-du-nouveau-fourgon-citroen-7852397.html",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumpy/3generation/",
+    "https://www.auto-swiat.pl/katalog-samochodow/citroen-jumpy-iii-xl-club-eat-20-bluehdi-146-km-107-kw/pw3zjnx"
+   ],
+   "status": "проверено",
+   "note": "У нас в таблице «Jumpy III» 2021–2023, данные за весь выпуск 2016–2023. 2016–2019: Франция Confort / Club / Business; Германия Profi / Business (ADAC 09/16–05/19), у Doppelkabine «Komfort Plus», «Eco». С 06/2019 как у Jumper: Control / Club / Driver / Worker (ADAC DE; в PL Club — auto-swiat.pl, Control / Comfort / Worker — autokatalog.pl). Польское «Comfort» = французское «Confort»."
+  },
+  {
+   "brand": "Citroen",
+   "model": "Jumpy",
+   "label": "Jumpy",
+   "code": "Jumpy III",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Pack Premium Connect",
+    "Type H",
+    "XTR"
+   ],
+   "sources": [
+    "https://www.largus.fr/actualite-automobile/prix-citroen-jumpy-restyle-2024-tarifs-et-gamme-du-fourgon-aux-chevrons-30034618.html",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumpy/3generation-facelift/"
+   ],
+   "status": "проверено",
+   "note": "После рестайлинга 2024 линий комплектации нет: одна версия, различия — длина M/XL, кузов, мотор и пакеты (L'argus: «Pack Premium Connect» — пакет опций). ADAC (DE): «Type-H Pack» 09/25–07/26 и «XTR» с 07/26 — спецверсии. autokatalog.pl показывает у Jumpy III «First / Plus / Max» — вероятно новая схема MY26, как у Jumper во Франции; не подтверждено вторым источником."
+  },
+  {
+   "brand": "Citroen",
+   "model": "SpaceTourer",
+   "label": "SpaceTourer",
+   "code": "SpaceTourer",
+   "phase": "дорестайлинг",
+   "years": "2016–2024",
+   "trims": [
+    "Feel",
+    "Shine",
+    "Business",
+    "Business Lounge"
+   ],
+   "sport": [],
+   "special": [
+    "Rip Curl"
+   ],
+   "sources": [
+    "https://www.motor.es/noticias/precio-citroen-spacetourer-2016-201629651.html",
+    "https://www.automobilrevue.cz/priloha/61b3534d97991/cenik-citroen-spacetourer-61df0c81e26fd.pdf",
+    "https://www.largus.fr/actualite-automobile/citroen-spacetourer-rip-curl-apres-le-concept-la-serie-speciale-9203401.html"
+   ],
+   "status": "проверено",
+   "note": "Общеевропейские названия: Feel и Shine — для частных клиентов, Business и Business Lounge — для перевозчиков (Испания 2016, Чехия 2021, прайс DE 2022 с Shine). Rip Curl — серия на базе Feel. Польский прайс не найден, названия на рынке те же."
+  },
+  {
+   "brand": "Citroen",
+   "model": "SpaceTourer",
+   "label": "SpaceTourer",
+   "code": "SpaceTourer",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Plus",
+    "Max",
+    "Business",
+    "Business Lounge"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://business.citroen.de/content/dam/citroen/germany/b2c/pricelists/Preisliste-Spacetourer_01072025.pdf",
+    "https://www.citroen.at/content/dam/citroen/austria/downloads/preislisten/12-25/SpaceTourer_Produktblatt_12_2025.pdf",
+    "https://carleasepolska.pl/blog/310/citroen-spacetourer-cennik-wyposazenie-i-finansowanie-ktora-opcja-sie-oplaca"
+   ],
+   "status": "частично проверено",
+   "note": "Германия (прайс 01.07.2025): Plus и Max; Австрия (12.2025, 07.2026): также Business и Business Lounge; в Польше встречается «XL Plus» (Car Lease Polska). В 2024 г. рестайлинг сначала продавался только как ë-SpaceTourer, дизель вернулся в 2025 г."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Boxer",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "phase": "весь выпуск",
+   "years": "2006–2014",
+   "trims": [
+    "Confort",
+    "CD Clim",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.auto-selection.com/fiche-technique/peugeot/boxer-fg/2006/330-l2h1-hdi100-cd-clim-896449",
+    "https://www.largus.fr/fiche-technique/Peugeot/Boxer+Fg/2007.html",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "Франция: фургон «Confort» (Cft) и «Pack CD Clim» (CD Clim). «Premium» — по объявлению из Швейцарии 2008 г. В Германии ADAC линий в названиях не показывает (2006–2014). Польские названия не найдены."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Boxer",
+   "label": "Boxer",
+   "code": "Boxer III",
+   "phase": "весь выпуск",
+   "years": "2014–2024",
+   "trims": [
+    "Standard",
+    "Komfort",
+    "Komfort Plus",
+    "Pro",
+    "Premium",
+    "Grip",
+    "Asphalt"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/",
+    "https://www.largus.fr/actualite-automobile/peugeot-boxer-les-evolutions-de-2019-9830396.html",
+    "https://www.meinauto.de/news/peugeot-boxer-neue-motoren-und-versionen"
+   ],
+   "status": "проверено",
+   "note": "Германия (ADAC): Standard 09/14–12/18, Komfort и Komfort Plus 09/14–09/17, Pro и Premium с 09/2017 (Premium до 01/23, Pro до 06/24). С 2019 г. к Pro / Premium добавлены отраслевые версии Grip (стройка, тяжёлые грузы) и Asphalt (большие пробеги) — L'argus, meinauto, пресс-релиз Stellantis; ADAC 10/21–07/22. Польские названия не найдены (вероятно, те же Pro / Premium / Grip / Asphalt)."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Boxer",
+   "label": "Boxer",
+   "code": "Boxer III",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.motonews.pl/auta-nowe/nowy-peugeot-boxer.html",
+    "https://www.auto-motor-und-sport.de/neuheiten/peugeot-boxer-2024/"
+   ],
+   "status": "проверено",
+   "note": "Рестайлинг 07/2024 (платформа Ducato): линий комплектации нет, версии различаются кузовом, массой и мотором (motonews.pl, PL; ADAC/ams, DE), опции — пакетами и за доплату."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Expert",
+   "label": "Expert",
+   "code": "Expert II",
+   "phase": "весь выпуск",
+   "years": "2007–2016",
+   "trims": [
+    "Confort",
+    "Pack CD Clim"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.largus.fr/fiche-technique/Peugeot/Expert+Fg/2007.html",
+    "https://www.auto-selection.com/fiche-technique/peugeot/expert-fg/2007/227-l1h1-hdi120-confort-912805"
+   ],
+   "status": "частично проверено",
+   "note": "Фургон, Франция: Confort и Pack CD Clim (2007). Немецкие и польские названия фургона не найдены (ADAC у фургона линий не показывает). Пассажирский Expert Tepee — отдельная строка."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Expert",
+   "label": "Expert Tepee",
+   "code": "Expert II",
+   "phase": "весь выпуск",
+   "years": "2007–2016",
+   "trims": [
+    "Tendance",
+    "Esplanade",
+    "Premium",
+    "Access",
+    "Active",
+    "Allure"
+   ],
+   "sport": [],
+   "special": [
+    "Vagabond",
+    "Cool in",
+    "Patagonia"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/expert/2generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/expert/2generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "Германия (ADAC): 2007–07/2011 Tendance / Esplanade / Prémium, с 07/2011 Access / Active / Allure (до 09/2015). Vagabond, Cool in — серии; Patagonia — кемпер Westfalia 2014–2016. Один источник."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Expert",
+   "label": "Expert",
+   "code": "Expert III",
+   "phase": "весь выпуск",
+   "years": "2016–2024",
+   "trims": [
+    "Premium",
+    "Premium Pack",
+    "Pro",
+    "Grip",
+    "Asphalt"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.auto-selection.com/fiche-technique/peugeot/expert-fg/2016/standard-20-bluehdi-120ch-premium-pack-ss-1564717",
+    "https://www.media.stellantis.com/em-en/peugeot/press/new-range-peugeot-expert-as-from-1st-april",
+    "https://www.autozine.nl/peugeot/nieuws/peugeot-bedrijfswagens-grip-en-asphalt"
+   ],
+   "status": "проверено",
+   "note": "У нас в таблице «Expert III» 2020–, здесь весь выпуск с 2016 г. Франция 2016–2019: Premium и Premium Pack (Standard/Compact/Long — длины, не линии). С 01.04.2019: Pro и Premium + отраслевые Grip и Asphalt (пресс-релиз Stellantis, autozine.nl; в DE Premium подтверждён объявлением). Польские названия не найдены."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Expert",
+   "label": "Expert",
+   "code": "Expert III",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.motonews.pl/auta-nowe/nowy-peugeot-expert.html",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/expert/3generation-facelift/"
+   ],
+   "status": "проверено",
+   "note": "Рестайлинг 04/2024: линий комплектации нет, версии — Standard / Long / Brygadowy (длина и кабина) и мотор (motonews.pl, PL; ADAC, DE)."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Partner",
+   "label": "Partner",
+   "code": "Partner II",
+   "phase": "весь выпуск",
+   "years": "2008–2018",
+   "trims": [
+    "Komfort",
+    "Komfort Plus",
+    "Pro",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.autohled.cz/wiki/peugeot/partner/2generation-facelift-2-2015/",
+    "https://www.autobild.de/artikel/peugeot-partner-facelift-2015-preise-5707438.html",
+    "https://suchen.mobile.de/auto/peugeot-partner-premium.html"
+   ],
+   "status": "частично проверено",
+   "note": "Фургон (Kastenwagen). Названия линий — немецкий рынок, по каталогу autohled.cz (немецкие названия вариантов, рестайлинг 2015–2018); «Komfort Plus» подтверждает autobild.de (2015), «Premium» встречается в объявлениях mobile.de. ADAC Autokatalog у фургона линий не показывает. Для 2008–2015 и для польского рынка названия линий фургона в надёжных источниках не найдены."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Partner",
+   "label": "Partner Tepee",
+   "code": "Partner II",
+   "phase": "дорестайлинг",
+   "years": "2008–2012",
+   "trims": [
+    "Esplanade",
+    "Tendance",
+    "Escapade",
+    "Prémium",
+    "Outdoor"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/partner/2generation/",
+    "https://www.autobild.de/artikel/preise-peugeot-partner-692873.html"
+   ],
+   "status": "проверено",
+   "note": "Пассажирская версия, рынок DE (ADAC + autobild.de, старт продаж 05.2008). Escapade и Outdoor — «внедорожное» оформление (защита, увеличенный клиренс). В объявлениях Польши встречаются Tendance и Premium (без диакритики)."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Partner",
+   "label": "Partner Tepee",
+   "code": "Partner II",
+   "phase": "рестайлинг",
+   "years": "2012–2018",
+   "trims": [
+    "Access",
+    "Active",
+    "Outdoor",
+    "Allure"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/partner/2generation-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/partner/2generation-facelift-2/",
+    "https://www.autohled.cz/wiki/peugeot/partner/2generation-facelift-2-2015/"
+   ],
+   "status": "проверено",
+   "note": "Охватывает оба рестайлинга (2012 и 2015) — линии одинаковые. Те же названия в Польше (Active и Outdoor в объявлениях otomoto, тест motonews.pl «Tepee Outdoor»). Outdoor — с Grip Control и увеличенным клиренсом."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Partner",
+   "label": "Partner",
+   "code": "Partner III",
+   "phase": "дорестайлинг",
+   "years": "2018–2024",
+   "trims": [
+    "Pro",
+    "Premium",
+    "Grip",
+    "Asphalt"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/partner/3generation/",
+    "https://www.media.stellantis.com/uploads/at/attachment/4186/preislistepeugeotpartnerepartner_oktober_2021_-61710d3a0d288.pdf",
+    "https://www.carwow.de/peugeot/partner-kastenwagen"
+   ],
+   "status": "проверено",
+   "note": "Фургон K9, рынок DE/AT (ADAC, прайс Австрии 10.2021, carwow.de). Grip — для стройки (Grip Control, защита), Asphalt — топ для большого пробега. В Польше Asphalt встречается в каталогах; полный польский список линий не найден. «Standard»/«Long» в польских прайсах — длина кузова, не линия. В Великобритании другие названия (S, Professional)."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Partner",
+   "label": "Partner",
+   "code": "Partner III",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Active",
+    "Control",
+    "Tech"
+   ],
+   "sport": [],
+   "special": [
+    "Pro Skill"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/partner/3generation-facelift/",
+    "https://www.meinauto.de/news/2026/10/peugeot-partner-2027-neue-ausstattung-mehr-optionen-und-bis-zu-354-km-reichweite",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/partner/3generation-facelift/344786/"
+   ],
+   "status": "проверено",
+   "note": "Рынок DE. Control и Tech введены к модельному году 2027 (с 10.2026, meinauto.de), Active — с 2024. Pro Skill — спецсерия с 08.2025 (пакет для стройки, Grip Control, увеличенный клиренс), есть и в польских объявлениях («PRO SKILL»). В Великобритании другие названия (Professional, Professional Plus, Asphalt). Польский список линий после рестайлинга не найден."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Rifter",
+   "label": "Rifter",
+   "code": "Rifter",
+   "phase": "дорестайлинг",
+   "years": "2018–2024",
+   "trims": [
+    "Access",
+    "Active",
+    "Active Pack",
+    "Allure",
+    "Allure Pack"
+   ],
+   "sport": [
+    "GT Line",
+    "GT"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/rifter/1generation/",
+    "https://autoblog.spidersweb.pl/peugeot-rifter-2018-ceny"
+   ],
+   "status": "проверено",
+   "note": "Польша (07.2018): Active, Allure, GT Line. Германия (ADAC): Access, Active, Active Pack, Allure, Allure Pack, GT. Active/Allure совпадают в обоих источниках. GT Line и GT вынесены в «sport»: это верхние линии со спортивным оформлением (17\" диски, отделка), GT позже заменила GT Line. С 2022 в DE пассажирский Rifter только электрический (e-Rifter)."
+  },
+  {
+   "brand": "Peugeot",
+   "model": "Rifter",
+   "label": "Rifter",
+   "code": "Rifter",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Allure"
+   ],
+   "sport": [
+    "GT"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/rifter/1generation-facelift/",
+    "https://www.motonews.pl/auta-nowe/nowy-peugeot-rifter.html",
+    "https://insideevs.de/news/695019/peugeot-erifter-facelift-2024/"
+   ],
+   "status": "проверено",
+   "note": "С 03.2024 только две линии: Allure и GT (PL — motonews.pl, с ДВС; DE — ADAC и insideevs, в DE в основном e-Rifter). GT в «sport» по той же логике, что и в дорестайлинге."
+  },
+  {
+   "brand": "Opel",
+   "model": "Combo",
+   "label": "Combo",
+   "code": "Combo D",
+   "phase": "весь выпуск",
+   "years": "2011–2018",
+   "trims": [
+    "Enjoy",
+    "Cosmo"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition",
+    "30 Jahre Edition"
+   ],
+   "sources": [
+    "https://www.auto-swiat.pl/katalog-samochodow/opel-combo-combo-tour-d-enjoy-14-95km-70kw/m5h8h5c",
+    "https://motoryzacja.interia.pl/testy/news-opel-combo-tour-1-6-cdti-enjoy-test,nId,996580",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/combo/d/"
+   ],
+   "status": "проверено",
+   "note": "Enjoy и Cosmo — польский рынок, Combo Tour (auto-swiat.pl, interia.pl). Business Edition — польский пакет к Enjoy (кондиционер, CD, окрашенные бамперы). 30 Jahre Edition — немецкая спецсерия фургона (ADAC). Других немецких линий ADAC не показывает; в Испании были Expression/Selective/Excellence — не для PL/DE."
+  },
+  {
+   "brand": "Opel",
+   "model": "Combo",
+   "label": "Combo",
+   "code": "Combo E",
+   "phase": "дорестайлинг",
+   "years": "2018–2023",
+   "trims": [
+    "Selection",
+    "Edition"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/combo/e/",
+    "https://www.carwow.de/opel/combo-cargo"
+   ],
+   "status": "проверено",
+   "note": "Combo Cargo (фургон), рынок DE: две линии Selection и Edition (ADAC, carwow.de). В Польше каталог autokatalog.pl даёт Edition, Edition+, Elegance+ для Combo Van E (годы не уточнены); в Швейцарии встречается Essentia. Польский список не подтверждён вторым источником."
+  },
+  {
+   "brand": "Opel",
+   "model": "Combo",
+   "label": "Combo Life",
+   "code": "Combo E",
+   "phase": "дорестайлинг",
+   "years": "2018–2023",
+   "trims": [
+    "Enjoy",
+    "Elite",
+    "Edition",
+    "Innovation",
+    "Elegance",
+    "Ultimate"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.auto-swiat.pl/katalog-samochodow/opel-combo-combo-life-e-elite-xl-sands-aut-131km-96kw/eypvqwb",
+    "https://suchen.mobile.de/auto/opel-combo-life-2018.html",
+    "https://www.autouncle.de/de/gebrauchtwagen/Opel/Combo%20Life/y-2019"
+   ],
+   "status": "частично проверено",
+   "note": "Пассажирская версия. Польша: Enjoy, Elite (каталог auto-swiat.pl, объявления «Enjoy XL»). Германия: Edition и Innovation в объявлениях 2018–2019; Elegance и Ultimate — в объявлениях более поздних лет (вероятно после обновления гаммы около 2021). Официального прайса не найдено, порядок появления линий не подтверждён."
+  },
+  {
+   "brand": "Opel",
+   "model": "Combo",
+   "label": "Combo",
+   "code": "Combo E",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Start",
+    "Advance",
+    "Ultra"
+   ],
+   "sport": [],
+   "special": [
+    "Tech"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/combo/e-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "Combo Cargo после рестайлинга 2024 (ADAC называет его «Combo E (1. Facelift)», отдельного «Combo F» нет). Start, Advance, Ultra и спецсерия «Sonderserie Tech» — у ADAC только для вариантов с 09–10.2026 (модельный год 2027); как назывались линии в 2024–2026, не найдено. Второго источника нет."
+  },
+  {
+   "brand": "Opel",
+   "model": "Combo",
+   "label": "Combo Life",
+   "code": "Combo E",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Edition"
+   ],
+   "sport": [
+    "GS"
+   ],
+   "special": [],
+   "sources": [
+    "https://autokatalog.pl/blog/2026/opel-combo-2026-z-silnikiem-benzynowym-cena-w-polsce",
+    "https://www.motonews.pl/auta-nowe/nowy-opel-combo-electric-life.html"
+   ],
+   "status": "проверено",
+   "note": "Польша: Edition и GS (autokatalog.pl, 2026; motonews.pl — GS Electric Life). GS — спортивная линия Opel, поэтому в «sport». Немецкие линии пассажирского Combo после рестайлинга у ADAC не раскрыты."
+  },
+  {
+   "brand": "Opel",
+   "model": "Movano",
+   "label": "Movano",
+   "code": "Movano III",
+   "phase": "весь выпуск",
+   "years": "2010–2021",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "Movano B (база Renault Master, рестайлинг 2019). Линий комплектаций нет: в каталоге ADAC варианты различаются только длиной/высотой, массой, мотором, приводом (Heckantrieb) и коробкой (Easytronic); оснащение — опциями и пакетами. Польских линий тоже не найдено. Код «Movano III» задан по заданию для обеих машин."
+  },
+  {
+   "brand": "Opel",
+   "model": "Movano",
+   "label": "Movano",
+   "code": "Movano III",
+   "phase": "дорестайлинг",
+   "years": "2021–2024",
+   "trims": [
+    "Selection",
+    "Edition"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/c/",
+    "https://www.autouncle.de/de/gebrauchtwagen/Opel/Movano/t-Edition",
+    "https://www.superauto.pl/artykuly/opel-movano-dane-techniczne-wersje-wyposazenie-cena-finansowanie"
+   ],
+   "status": "проверено",
+   "note": "Movano C (база Fiat Ducato / Stellantis). Selection и Edition — рынок DE (ADAC, объявления «Movano Edition»). В Польше линий нет: базовая версия и пакеты (Visibility Plus, Techno, Ultimate, Winter, Cargo и др. — это пакеты, не линии). «verstärkt», «voll verglast» — исполнения, не линии."
+  },
+  {
+   "brand": "Opel",
+   "model": "Movano",
+   "label": "Movano",
+   "code": "Movano III",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/c-facelift/",
+    "https://www.superauto.pl/artykuly/opel-movano-dane-techniczne-wersje-wyposazenie-cena-finansowanie"
+   ],
+   "status": "проверено",
+   "note": "Movano C после рестайлинга (DE с 01.2024, PL — осень 2023). Линий комплектаций нет ни в DE (ADAC: только кузова/высоты/массы), ни в PL (только пакеты: Visibility Plus, Handsfree, Ultimate, Techno, Winter, Cargo, Premium VAN). «Ultimate» здесь — пакет, не линия."
+  },
+  {
+   "brand": "Opel",
+   "model": "Vivaro",
+   "label": "Vivaro",
+   "code": "Vivaro B",
+   "phase": "весь выпуск",
+   "years": "2014–2019",
+   "trims": [
+    "Essentia",
+    "Edition",
+    "Elegance"
+   ],
+   "sport": [],
+   "special": [
+    "Sport"
+   ],
+   "sources": [
+    "https://www.auto-swiat.pl/wiadomosci/aktualnosci/opel-vivaro-w-polsce-znamy-ceny/ced40th",
+    "https://www.autocentrum.pl/newsy/informacje-prasowe/mozna-juz-skladac-zamowienia-na-ople-vivaro-kombi-elegance-i-tourer/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/vivaro/b/"
+   ],
+   "status": "частично проверено",
+   "note": "Польша: фургон Essentia (10.2014), Kombi Edition (10.2014), Kombi Elegance (10.2017). Tourer и Combi+ — пассажирские исполнения (не линии), Tourer у ADAC отдельной моделью 2017–2018. Sport — спецверсия с 2016 (17\" диски, полосы; autosprint.ch, carscoops). В Германии у фургона ADAC линий не показывает. Каждое название — один источник."
+  },
+  {
+   "brand": "Opel",
+   "model": "Vivaro",
+   "label": "Vivaro",
+   "code": "Vivaro C",
+   "phase": "дорестайлинг",
+   "years": "2019–2024",
+   "trims": [
+    "Enjoy",
+    "Selection",
+    "Edition",
+    "Innovation",
+    "Elegance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/vivaro/c/",
+    "https://autokult.pl/opel-vivaro-kombi-juz-w-salonach-ceny-modelu-w-polsce,6807683349304961a",
+    "https://www.auto-swiat.pl/katalog-samochodow/opel-vivaro-c-long-enjoy-15-cdti-102km-75kw/c8md5qj"
+   ],
+   "status": "проверено",
+   "note": "Польша: Enjoy (Kombi — единственная линия, autokult.pl 05.2020; фургон Long Enjoy — каталог auto-swiat.pl); базовый польский фургон без названия линии. Германия (Cargo, ADAC): Selection, Edition, Innovation, Elegance; Selection/Edition подтверждает pkw.de. В Великобритании Edition/Sportive/Elite — не для PL/DE. Пассажирский Zafira Life — отдельная модель."
+  },
+  {
+   "brand": "Opel",
+   "model": "Vivaro",
+   "label": "Vivaro",
+   "code": "Vivaro C",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [],
+   "sport": [
+    "Sportive"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/vivaro/c-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "Рестайлинг с Opel Vizor (2024). У ADAC (DE, Cargo) базовые варианты без названия линии, единственная названная — Sportive (с 2.2 Diesel и автоматом), поэтому она в «sport». Польский список линий после рестайлинга не найден (пресс-релиз даёт только цену «bogato wyposażonej wersji» от 123 400 zł netto)."
+  },
+  {
+   "brand": "Nissan",
+   "model": "NV200",
+   "label": "NV200",
+   "code": "NV200",
+   "phase": "весь выпуск",
+   "years": "2010–2023",
+   "trims": [
+    "Basic",
+    "Pro",
+    "Comfort",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.motonews.pl/nissan/news-6695-nissan-nv200-juz-w-polsce.html",
+    "https://www.firmenauto.de/branche/firmenauto-preise-fuer-nissan-nv200-stehen-fest/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/nv200/m20m-m20n/307127/"
+   ],
+   "status": "проверено",
+   "note": "Польша (премьера 05.2010): Basic и Comfort для фургона и Combi (у autokatalog.pl тоже Basic/Comfort); пакеты Safety (ESP, боковые подушки) и Cargo — пакеты, не линии. Германия: Kastenwagen Pro (только фургон), Comfort, Premium; Kombi Comfort и Premium; ADAC даёт Comfort 05/11–08/19. Британские SE/Acenta/Tekna и Visia/Acenta/Tekna у e-NV200 — не наш рынок. Польских названий после ~2014 не нашли."
+  },
+  {
+   "brand": "Nissan",
+   "model": "Evalia",
+   "label": "Evalia",
+   "code": "Evalia I",
+   "phase": "весь выпуск",
+   "years": "2013–2020",
+   "trims": [
+    "Acenta",
+    "Tekna"
+   ],
+   "sport": [],
+   "special": [
+    "Premium"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/nv200/m20m-m20n/238285/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/nv200/m20m/249669",
+    "https://autokatalog.pl/nissan/evalia/i-m20"
+   ],
+   "status": "проверено",
+   "note": "Acenta и Tekna — в ADAC (Германия, «NV200 Evalia», 08/13–08/18) и на autokatalog.pl (Польша). Premium — пакет поверх Acenta (на auto-swiat.pl «Acenta Premium», в немецких объявлениях «Evalia … Premium 7-Sitze»); отдельной страницы Premium в ADAC не нашли. В Германии до 2013 машина продавалась как NV200 Evalia/Kombi (Comfort, Premium)."
+  },
+  {
+   "brand": "Nissan",
+   "model": "Primastar",
+   "label": "NV300",
+   "code": "Primastar II",
+   "phase": "весь выпуск",
+   "years": "2016–2021",
+   "trims": [
+    "Pro",
+    "Comfort",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.autoplenum.de/auto/nissan/nv300/transporter-2016/l2h1-2-9t-dci-125-1-6-125-ps",
+    "https://www.autohaus.de/nachrichten/autohersteller/nissan-nv300-fahrgestell-vielseitiger-transporteur-2720743",
+    "https://www.auto-swiat.pl/katalog-samochodow/nissan-nv300-i-l1h1-comfort-16-dci-95-km-70-kw/2e4jh3c"
+   ],
+   "status": "проверено",
+   "note": "Продавался как Nissan NV300 (предшественник Primastar 2022). Германия: Pro, Comfort, Premium (Premium в основном у Kombi; у Fahrgestell только Pro и Comfort). Польша: в каталоге auto-swiat.pl есть Comfort, сказано о трёх версиях, остальные польские названия не нашли. Kombi после обновления 05.2021 — Acenta / N-Connecta / Tekna (automobile.at), они же у Primastar 2022. Visia/Acenta/Tekna — Великобритания, Optima — Нидерланды/Испания, не наш рынок."
+  },
+  {
+   "brand": "Nissan",
+   "model": "Primastar",
+   "label": "Primastar",
+   "code": "Primastar II",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Acenta",
+    "N-Connecta",
+    "Tekna",
+    "Business",
+    "Business Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.autouncle.de/de/gebrauchtwagen/Nissan/Primastar/t-Acenta",
+    "https://autoblog.spidersweb.pl/nissan-primastar-20-dci-tekna-test-2025",
+    "https://autokatalog.pl/nissan/primastar/iii-ciezarowy"
+   ],
+   "status": "проверено",
+   "note": "Германия: Acenta, N-Connecta, Tekna (немецкие объявления, те же линии у Combi в прайсе L'argus, Франция). Польша: Business, Business Plus (средняя), Tekna (верхняя) — тест spidersweb 12.2025; autokatalog.pl даёт Business и Business Plus для модели 2025 г. Польские названия 2022–2024 не подтверждены. Visia / Tekna+ — британский рынок."
+  },
+  {
+   "brand": "Nissan",
+   "model": "Interstar",
+   "label": "Interstar",
+   "code": "Interstar III",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Acenta",
+    "N-Connecta",
+    "Tekna",
+    "Business",
+    "Business Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.caradisiac.com/nissan-interstar-2024-les-equipements-trois-finitions-au-choix-212366.htm",
+    "https://autokatalog.pl/nissan/interstar/iii-ciezarowy",
+    "https://carleasepolska.pl/blog/389/nissan-interstar-ile-potrafi-i-dla-kogo-to-auto-test-praktyczny"
+   ],
+   "status": "частично проверено",
+   "note": "Германия/Франция: Acenta, N-Connecta, Tekna (Caradisiac; немецкие объявления mobile.de 2024 с Acenta и N-Connecta; немецкий прайс Fahrgestell с N-Connecta). Польша (продажи с 2025): Business Plus подтверждён двумя источниками; Business и Tekna — только autokatalog.pl, там же Visia (не подтверждена, не включена)."
+  },
+  {
+   "brand": "Nissan",
+   "model": "Interstar",
+   "label": "NV400",
+   "code": "Interstar II",
+   "phase": "весь выпуск",
+   "years": "2011–2021",
+   "trims": [
+    "Pro",
+    "Comfort",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.pkw.de/autokatalog/nissan/nv400",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/nv400/m/249682/",
+    "https://www.auto-swiat.pl/katalog-samochodow/nissan-nv400-i-l2h2-comfort-dci-163-km-120-kw/cz355fh"
+   ],
+   "status": "проверено",
+   "note": "Продавался как Nissan NV400 (на базе Renault Master III). Германия: Kastenwagen Pro и Comfort (pkw.de, немецкие объявления), Premium — у Kombi (ADAC, 07/15–08/18). Польша: в каталоге auto-swiat.pl Comfort; польские статьи о премьере 2011 г. линий не называют. Acenta / N-Connecta / Optima встречаются в объявлениях Великобритании и Франции, для PL/DE не подтверждены."
+  },
+  {
+   "brand": "Nissan",
+   "model": "Townstar",
+   "label": "Townstar",
+   "code": "Townstar I",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Visia",
+    "Acenta",
+    "Business",
+    "Business Plus",
+    "N-Connecta",
+    "Tekna"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.firmenauto.de/fahrzeuge/pkw/nissan-townstar-preis-ab-19-250-euro/",
+    "https://www.auto-swiat.pl/ev/wiadomosci/nissan-townstar-van-ev-znamy-jego-ceny-w-polsce/xf6556d",
+    "https://www.auto-swiat.pl/wiadomosci/premiery/nissan-townstar-debiutuje-w-polsce-odmiana-osobowa-od-103-tys-900-zl/3rfe595"
+   ],
+   "status": "проверено",
+   "note": "Германия: Kastenwagen Visia, Acenta, N-Connecta, Tekna; Kombi Acenta, N-Connecta, Tekna; Visia снята в 2025 (electrive.net, база — Acenta). Польша: Combi Acenta, Business, Tekna (премьера 01.2022); Van EV Visia, Business, N-Connecta, Tekna; Business Plus — только autokatalog.pl."
+  },
+  {
+   "brand": "Toyota",
+   "model": "Dyna",
+   "label": "Dyna",
+   "code": "Dyna II",
+   "phase": "весь выпуск",
+   "years": "2008–2011",
+   "trims": [],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.autocentrum.pl/toyota/dyna/ii/pojedyncza-kabina-skrzynia/silnik-diesla-3.0-d-4d-136km-2008-2011/",
+    "https://vans.honestjohn.co.uk/toyota/dyna"
+   ],
+   "status": "частично проверено",
+   "note": "Линий комплектаций у европейской Dyna 3.0 D-4D не нашли: варианты различаются только грузоподъёмностью (в объявлениях Dyna 100 / 150), кабиной (одинарная / двойная) и кузовом (шасси, борт, самосвал). Прайс-листов PL/DE с названиями линий не нашли."
+  }
+ ]
+}
