@@ -33,3 +33,13 @@
   justify-content: flex-end;
   padding: 0 20px;
 }
+
+/* The offer's picture of the calculator (owner 2026-10-11): the first line
+   in two rows — the price in EUR over the price in PLN — and "Razem" with
+   PLN on top, EUR under it. */
+.agEmbed .resultLine.isPrimaryLine > .resultLinePrefix { grid-column: -2 / -1; grid-row: 1; justify-self: end; align-self: end; }
+.agEmbed .resultLine.isPrimaryLine > .resultLineAmount { grid-column: -2 / -1; grid-row: 2; justify-self: end; }
+.agEmbed .resultLine.isPrimaryLine > .resultLineBody { grid-row: 1 / span 2; grid-column: 3 / -2; align-self: center; justify-self: start; text-align: left; }
+.agEmbed .resultLine.isPrimaryLine > .resultLineMarker,
+.agEmbed .resultLine.isPrimaryLine > .marginAuctionDragHandle { grid-row: 1 / span 2; }
+.agEmbed .totalBarValueRow { flex-direction: column; align-items: flex-end; gap: 2px; }

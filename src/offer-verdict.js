@@ -137,6 +137,15 @@
       else lines.push({ level: "warn", id: "price:high", text: T(`Cena powyżej typowego przedziału (+${pct(ratio - 1)} do mediany)`, `Цена выше типичного диапазона (+${pct(ratio - 1)} к медиане)`) });
     }
 
+    // Without a market of our own: the portal's own price scale (mobile.de,
+    // AutoScout24) when it calls the price good (owner 2026-10-11).
+    const portal = ad?.portalPrice;
+    if (!basis?.median && portal?.rating && ["VERY_GOOD_PRICE", "GOOD_PRICE"].includes(portal.rating)) {
+      lines.push({ level: "ok", id: "price:portal", text: portal.rating === "VERY_GOOD_PRICE"
+        ? T(`Bardzo dobra cena na tle rynku (wg ${portal.portal})`, `Очень хорошая цена на фоне рынка (по ${portal.portal})`)
+        : T(`Dobra cena na tle rynku (wg ${portal.portal})`, `Хорошая цена на фоне рынка (по ${portal.portal})`) });
+    }
+
     // ---- Seller.
     if (seller.type === "private" || car.seller === "private") {
       lines.push({ level: "warn", id: "seller:private", text: T("Sprzedaje osoba prywatna — bez faktury i rękojmi dealera", "Продаёт частное лицо — без счёта-фактуры и гарантии дилера") });
@@ -179,6 +188,8 @@
       const perYear = km / age;
       if (perYear > 35000) lines.push({ level: "warn", id: "car:mileageHigh", text: T(`Duży przebieg: ok. ${Math.round(perYear / 1000) * 1000} km rocznie`, `Большой пробег: около ${Math.round(perYear / 1000) * 1000} км в год`) });
       else if (age >= 2 && perYear < 1500) lines.push({ level: "warn", id: "car:mileageLow", text: T("Bardzo mały przebieg jak na wiek — sprawdzimy historię licznika", "Очень маленький пробег для такого возраста — проверим историю одометра") });
+      // Owner 2026-10-11: up to about 100 000 km is an attractive mileage.
+      else if (km <= 100000) lines.push({ level: "ok", id: "car:mileageGood", text: T(`Atrakcyjny przebieg: ${km.toLocaleString("pl-PL")} km`, `Привлекательный пробег: ${km.toLocaleString("pl-PL")} км`) });
     }
 
     // ---- What the seller writes (title, description) and mobile.de's own summary.
@@ -197,7 +208,10 @@
     const verdict = risks ? "risk" : warns >= 3 ? "check" : "ok";
     // Most important first: risks, warnings, then the good news.
     const order = { risk: 0, warn: 1, ok: 2, info: 3 };
-    lines.sort((left, right) => order[left.level] - order[right.level]);
+    // Among the good news the price and the mileage first: a full sheet keeps them.
+    const first = ["price:portal", "price:good", "price:fair", "car:mileageGood", "seller:dealer"];
+    const rank = (line) => (first.includes(line.id) ? first.indexOf(line.id) : first.length);
+    lines.sort((left, right) => order[left.level] - order[right.level] || rank(left) - rank(right));
     return { verdict, lines };
   }
 

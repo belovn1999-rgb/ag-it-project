@@ -521,20 +521,20 @@
     const portalLabel = offer.ad?.portalPrice?.label || "";
     if (portalLabel && /dobra|uczciwa/.test(portalLabel) && !(portalCard.includes("ofBands") && !isHidden("market"))) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(ru() ? BANDS_RU[BANDS_PL.indexOf(portalLabel)] || portalLabel : portalLabel)}</span>`);
     const hp = L("KM", "л.с.");
+    // Owner 2026-10-11: body first, then engine, power, gearbox, drive, colour,
+    // upholstery; electric cars and hybrids their range and battery; owners and inspection.
     const specs = [
+      [L("Nadwozie", "Кузов"), view.body],
       [L("Silnik", "Двигатель"), [view.ccm ? `${String((Math.round(view.ccm / 100) / 10).toFixed(1)).replace(".", ",")} ${L("l", "л")}` : "", fuelShort(view.fuel)].filter(Boolean).join(" · ")],
       [L("Moc", "Мощность"), view.powerHp ? `${view.powerHp} ${hp} (${view.powerKw} ${L("kW", "кВт")})` : ""],
       [L("Skrzynia biegów", "Коробка передач"), view.gearbox],
       [L("Napęd", "Привод"), view.drive],
       [L("Kolor", "Цвет"), view.color],
-      // Owner 2026-10-11: the upholstery, and for electric cars and hybrids the range and the battery.
       [L("Wnętrze", "Салон"), view.interior],
       [L("Zasięg", "Запас хода"), view.rangeKm ? `${numbers.format(view.rangeKm)} ${L("km", "км")}` : ""],
       [L("Bateria", "Батарея"), view.batteryKwh ? `${String(view.batteryKwh).replace(".", ",")} kWh` : ""],
       [L("Właściciele", "Владельцы"), view.owners === 0 ? L("brak (auto nowe)", "нет (новое авто)") : view.owners ? String(view.owners) : ""],
-      [L("Nadwozie", "Кузов"), view.body],
       [L("Przegląd", "Техосмотр"), view.hu],
-      [L("Lokalizacja", "Местонахождение"), [view.city, countryName(view.country)].filter(Boolean).join(", ")],
     ].filter(([, value]) => value).slice(0, 9);
     const seller = offer.ad?.seller || null;
     const adAge = adHistory();
@@ -578,7 +578,6 @@
                 ${field("title", view.title, "h1", "ofTitle")}
               </div>
               ${costView ? `<div class="ofPriceBox">
-                <p class="ofMethodLine">${esc(methodLabel())}</p>
                 <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}*</p>
                 <p class="ofPrice">${esc(money(costView.total, "PLN"))} <span class="ofPriceAd">(${offerMethod() === "vat" && netEur() > 0 ? `${esc(money(netEur(), "EUR"))} ${L("netto", "нетто")}` : `${esc(money(view.price, view.currency))} ${L("brutto", "брутто")}`})</span></p>
                 ${buyAsText(view) ? field("buyAs", buyAsText(view), "p", "ofBuyAs") : ""}
@@ -694,11 +693,12 @@
   // the whole way); headings only where the work, the purchase and the
   // delivery begin.
   // Owner 2026-10-11: different colours, green first.
-  const PROCESS_GROUPS = ["#2e9a5a", "#2f6db5", "#8a56c2", "#cf7a1d", "#13365c"];
+  const PROCESS_GROUPS = ["#2e9a5a", "#2f6db5", "#8a56c2", "#cf7a1d", "#d4a514"];
   const PROCESS_STAGES = {
     2: { label: "Rozpoczęcie prac", labelRu: "Начало работ" },
     5: { label: "Zakup", labelRu: "Покупка" },
-    7: { label: "Dostawa i odbiór", labelRu: "Доставка и получение" },
+    7: { label: "Dostawa", labelRu: "Доставка" },
+    8: { label: "Dokumenty i odbiór", labelRu: "Документы и получение" },
   };
   const viaAutogood = () => offerMethod() !== "direct";
   function processSteps() {
@@ -738,11 +738,11 @@
         text: "Przywozimy auto lawetą na nasz plac w Łomiankach - w transporcie jest w pełni ubezpieczone. Po rozładunku ponownie porównujemy stan auta z raportem z oględzin.",
         textRu: "Привозим авто автовозом на нашу площадку в Ломянках. Авто полностью застраховано во время перевозки. После разгрузки повторно сверяем состояние авто с отчётом осмотра." },
       viaAutogood()
-        ? { group: 4, title: "Dokumenty i odbiór", titleRu: "Документы и получение",
+        ? { group: 4, title: "Dokumenty", titleRu: "Документы",
           text: "Robimy przegląd techniczny i akcyzę. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji - {Panu} zostaje rejestracja i OC.",
           textRu: "Делаем ТО и акциз. Готовим окончательный расчёт авто к выдаче и высылаем пакет документов к регистрации. Вам остаются регистрация и страховка OC.",
           mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" } }
-        : { group: 4, title: "Dokumenty i odbiór", titleRu: "Документы и получение",
+        : { group: 4, title: "Dokumenty", titleRu: "Документы",
           text: "Robimy przegląd techniczny i tłumaczenia, pomagamy w akcyzie. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji - {Panu} zostaje rejestracja i OC.",
           textRu: "Делаем ТО и переводы, помогаем в оформлении акциза. Готовим окончательный расчёт авто к выдаче и высылаем пакет документов к регистрации. Вам остаются регистрация и страховка OC.",
           mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" } },
@@ -841,6 +841,7 @@
     const processHtml = `
       <section class="ofCard ofProcess${blockClass("process")}" data-block="process">
         ${hideToggle("process")}
+        <p class="ofProcessMethod">${esc(methodLabel())}</p>
         <p class="ofCardHead">${icon("route")}${field("processTitle", L("Co dalej: od pierwszej rozmowy do odbioru kluczyków", "Что дальше: от первого разговора до получения ключей"), "span")}</p>
         ${processTimeline()}
         ${field("processNote", L("Zwykle około 2-3 tygodni od umowy do odbioru auta.", "Обычно около 2-3 недель от договора до получения авто."), "p", "ofProcessNote")}

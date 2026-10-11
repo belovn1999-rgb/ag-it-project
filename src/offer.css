@@ -998,3 +998,6 @@
 .offerMailRow[hidden] { display: none; }
 .offerMailRow label { display: grid; gap: 3px; font-size: 11.5px; color: var(--of-muted); font-weight: 600; }
 .offerMailRow input { min-width: 260px; min-height: 34px; padding: 0 10px; border: 1px solid var(--of-line); border-radius: 8px; font: inherit; }
+/* The way of buying at the head of the steps, black (owner 2026-10-11). */
+.ofPage .ofProcessMethod { margin: 0 0 6px; font-size: 13px; font-weight: 700; color: #111a22; }
+.ofTimeline::before { background: linear-gradient(180deg, #2e9a5a 0%, #2f6db5 22%, #8a56c2 52%, #cf7a1d 72%, #d4a514 86%, #d4a514 100%); }
