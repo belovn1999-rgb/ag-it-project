@@ -40,7 +40,12 @@ SKIP = {"Autres", "Divers"}
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--proxy", default="", help="reader proxy put before the address, e.g. https://r.jina.ai/")
+# B75: the vans ("Utilitaire léger", r=VVU00000: Transit VVUFOSIT, Sprinter VVUMESPR…) -> their own file.
+parser.add_argument("--vans", action="store_true", help="the van section instead of the cars")
 args = parser.parse_args()
+SECTION = "VVU00000" if args.vans else "VVO00000"
+if args.vans:
+    OUTPUT = ROOT / "src" / "paruvendu-van-catalog.generated.js"
 
 
 def get(params):
@@ -68,7 +73,7 @@ def token(value):
     return re.sub(r"[^a-z0-9]+", "", plain)
 
 
-top = get({"tt": "1", "r": "VVO00000"})
+top = get({"tt": "1", "r": SECTION})
 catalog = {}
 for make in top.get("marque", []):
     name = label(make.get("lib")).strip()
@@ -76,7 +81,7 @@ for make in top.get("marque", []):
     if not name or not code or name in SKIP:
         continue
     time.sleep(1.5)
-    page = get({"tt": "1", "r": "VVO00000", "r2": code})
+    page = get({"tt": "1", "r": SECTION, "r2": code})
     groups = page.get("modele", {})
     # A make with few models gets a plain list, others "Modèles populaires"
     # (repeats) and "Tous les modèles".
@@ -105,11 +110,11 @@ for make in top.get("marque", []):
         models.append(entry)
     catalog[name] = {"code": code, **({"ours": MAKE_ALIASES[name]} if name in MAKE_ALIASES else {}), "models": models}
 
-if len(catalog) < 60:
+if len(catalog) < (10 if args.vans else 60):
     raise SystemExit(f"Only {len(catalog)} makes: ParuVendu answered unexpectedly.")
 lines = [
     "/* Generated from the ParuVendu search form lists (scripts/generate-paruvendu-catalog.py). Do not hand-edit. */",
-    "window.AUTOGOOD_PARUVENDU_CATALOG = {",
+    f"window.{'AUTOGOOD_PARUVENDU_VAN_CATALOG' if args.vans else 'AUTOGOOD_PARUVENDU_CATALOG'} = {{",
     f'  "generatedFrom": {json.dumps(SITE)},',
     f'  "generatedAt": {json.dumps(datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"))},',
     '  "makes": {',

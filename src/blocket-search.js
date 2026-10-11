@@ -323,10 +323,17 @@ function blocketSearchParams(filters) {
   selection.ids.forEach((id) => params.append("variant", id));
   if (selection.q) params.set("q", selection.q);
 
-  (blocketBodyValues[filters.body] || []).forEach((value) => params.append("body_type", value));
+  // Vans (B75): Blocket files them with the cars, under the same model ids
+  // (Transit-Serie, Sprinter-Klass, Master-Serie; checked 2026-10-11) — the
+  // car body means nothing then; the van body: Skåpbil 10, minibus 5.
+  const van = filters.category === "van";
+  if (van) ({ furgon: ["10"], mikrobus: ["5"] }[filters.vanBody] || []).forEach((value) => params.append("body_type", value));
+  else (blocketBodyValues[filters.body] || []).forEach((value) => params.append("body_type", value));
   const priceTo = String(filters.priceTo || "").trim().endsWith("+") ? "" : filters.priceTo;
   const rate = eurSekRate();
-  blocketRange(params, "price", filters.priceFrom, priceTo, (eur) => Math.round(eur * rate));
+  // Auction firms list vans at 1–1 000 SEK (a starting bid): a van search starts at 10 000 SEK.
+  const priceFrom = van && !(Number(String(filters.priceFrom || "").replace(/[^\d]/g, "")) * rate >= 10000) ? String(Math.ceil(10000 / rate)) : filters.priceFrom;
+  blocketRange(params, "price", priceFrom, priceTo, (eur) => Math.round(eur * rate));
   // Km to mil, never narrower than asked: "from" rounds down, "to" rounds up.
   blocketRange(params, "mileage", filters.mileageFrom, filters.mileageTo, (km, side) => (
     side === "from" ? Math.floor(km / BLOCKET_KM_PER_MIL) : Math.ceil(km / BLOCKET_KM_PER_MIL)

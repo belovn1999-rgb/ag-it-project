@@ -34,6 +34,27 @@
   };
   const KW_PER_HP = 0.73549875;
   const CARS = 91;
+  // Vans (B75, "Dostawcze"; checked 2026-10-11): "Bestelauto's" / "Bestelwagens
+  // en Lichte vracht" is l2 95 of "Auto's" on both sites; the make there is an
+  // attribute (the same ids on both), the model only title words ("transit"
+  // also finds Transit Custom — its words go negated: exact on Marktplaats,
+  // approximate on 2dehands, so the analysis drops namesakes by title too).
+  // No van filters (payload, GVW, body, L/H) on either site.
+  const VANS = 95;
+  const VAN_MAKE = { Ford: 592, "Mercedes-Benz": 593, Renault: 594, Volkswagen: 595, Citroen: 596, Fiat: 597, Opel: 599, Peugeot: 600,
+    Iveco: 604, Nissan: 607, Toyota: 609, MAN: 13233 };
+  const VAN_PATH = { marktplaats: "/l/auto-s/bestelauto-s/", dehands: "/l/auto-s/bestelwagens-en-lichte-vracht/" };
+  const isVan = (filters) => filters?.category === "van";
+  const vanBrand = (filters) => (typeof canonicalBrand === "function" ? canonicalBrand(filters.brand) : filters.brand) || filters.brand || "";
+  function vanWords(filters) {
+    const model = [filters.model, filters.version].map((value) => String(value || "").trim()).filter(Boolean).join(" ");
+    const own = new Set(model.toLowerCase().split(/\s+/));
+    const siblings = window.AUTOGOOD_VAN?.vanSiblingModels?.(vanBrand(filters), filters.model) || [];
+    const negated = [...new Set(siblings.flatMap((name) => name.toLowerCase().split(/\s+/)).filter((word) => !own.has(word)))];
+    const brandWords = VAN_MAKE[vanBrand(filters)] ? "" : vanBrand(filters);
+    return [brandWords, model, ...negated.map((word) => `-${word}`)].filter(Boolean).join(" ").toLowerCase();
+  }
+  const vanFilters = (filters) => ({ ...filters, model: "", version: "", body: "", doorsFrom: "", doorsTo: "", doorsGroup: "" });
   const PAGE_SIZE = 100;
   // Results beyond this offset are not served in one sort order (2026-10-04:
   // offset 2000 answers, 3000 is empty): longer lists are read from both ends.
@@ -293,9 +314,14 @@
 
   function buildApiUrl(market, filters, { offset = 0, limit = PAGE_SIZE, desc = false, price = null } = {}) {
     const site = SITES[market];
-    const parts = searchParts(filters, { price, market });
+    const van = isVan(filters);
+    const parts = searchParts(van ? vanFilters(filters) : filters, { price, market });
+    if (van) parts.query = vanWords(filters);
     const query = [`l1CategoryId=${CARS}`];
-    if (parts.selection.makeId) query.push(`l2CategoryIds=${parts.selection.makeId}`);
+    if (van) {
+      query.push(`l2CategoryIds=${VANS}`);
+      if (VAN_MAKE[vanBrand(filters)]) query.push(`attributesById[]=${VAN_MAKE[vanBrand(filters)]}`);
+    } else if (parts.selection.makeId) query.push(`l2CategoryIds=${parts.selection.makeId}`);
     // "Te koop" (not lease), as the site shows by default.
     query.push("attributesById[]=10882");
     parts.groups.flat().forEach((id) => query.push(`attributesById[]=${id}`));
@@ -308,8 +334,14 @@
   // The site's own link: the same search in the hash of the make's page.
   function buildSearchUrl(market, filters) {
     const site = SITES[market];
-    const parts = searchParts(filters, { market });
-    const path = parts.selection.makeKey ? `/l/auto-s/${parts.selection.makeKey}/` : "/l/auto-s/";
+    const van = isVan(filters);
+    const parts = searchParts(van ? vanFilters(filters) : filters, { market });
+    if (van) parts.query = "";
+    const vanMake = VAN_MAKE[vanBrand(filters)];
+    const vanQuery = van ? vanWords(filters) : "";
+    const path = van
+      ? `${VAN_PATH[market]}${vanQuery ? `q/${encodeURIComponent(vanQuery).replace(/%20/g, "+")}/` : ""}${vanMake ? `f/${String(vanBrand(filters)).toLowerCase().replace(/[^a-z0-9]+/g, "-")}/${vanMake}/` : ""}`
+      : parts.selection.makeKey ? `/l/auto-s/${parts.selection.makeKey}/` : "/l/auto-s/";
     const hash = [];
     const ids = parts.groups.flat();
     if (ids.length) hash.push(`f:${ids.join(",")}`);
@@ -435,8 +467,12 @@
       return;
     }
     let url;
+    let urls;
     try {
-      url = buildApiUrl(market, filters, { limit: 1 });
+      // "Oba" (B75): the car and the van section, added up.
+      const parts = filters.category === "both" ? [{ ...filters, category: "" }, { ...filters, category: "van" }] : [filters];
+      urls = parts.map((part) => buildApiUrl(market, part, { limit: 1 }));
+      url = urls.join(" + ");
     } catch {
       target.textContent = "—";
       return;
@@ -448,8 +484,8 @@
     const request = (countRequests[market] = (countRequests[market] || 0) + 1);
     target.textContent = "…";
     try {
-      const data = await fetchJson(url);
-      const label = new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(Number(data?.totalResultCount) || 0);
+      const totals = await Promise.all(urls.map(async (one) => Number((await fetchJson(one))?.totalResultCount) || 0));
+      const label = new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(totals.reduce((sum, value) => sum + value, 0));
       counts.set(url, label);
       if (request === countRequests[market]) target.textContent = label;
     } catch {

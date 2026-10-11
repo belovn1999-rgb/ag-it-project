@@ -359,8 +359,11 @@ klienta».** Из найденного в Monitoring объявления кно
 - Популярные фургоны (10-11, владелец): `popularVanModelsByBrand` — по 3 фургона у Mercedes (Sprinter, Vito,
   Citan), Ford, VW, Peugeot, Citroën, Renault, Opel, Fiat, Toyota, Nissan; в режиме «Dostawcze» список «Najbardziej
   popularne» — эти фургоны, в легковом режиме к закреплённым моделям добавлены первые два.
-- Не сделано: разделы фургонов Kleinanzeigen / Marktplaats / 2dehands / Blocket / ParuVendu (в работе),
-  фильтры фургонов AutoScout24.
+- Остальные порталы (10-11): Marktplaats / 2dehands — «Bestelauto's» (l2 95), марка атрибутом, модель словами;
+  ParuVendu — раздел «Utilitaire léger» со своим каталогом; Kleinanzeigen и Blocket держат фургоны среди легковых
+  (тот же поиск; Blocket — Skåpbil / minibus и цена от 10 000 SEK). «Oba» читает дважды только порталы с отдельным
+  разделом (`VAN_SECTION_SOURCES`). av.by — только легковые. Подробно — FILTERS §5i.
+- Не сделано: фильтры фургонов AutoScout24, Marktplaats / 2dehands (у них таких фильтров нет).
 
 ### 4.2g Франция — ParuVendu (с 10-05, B47)
 - Рынок `paruvendu` — второй портал Франции (~90 % дилеры): стр. 1 (логотип в колонке
@@ -2090,6 +2093,7 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-11 | Claude | **B75 — фургоны на всех порталах:** Marktplaats / 2dehands (`VANS = 95`, `VAN_MAKE`, `vanWords` в `marktplaats-search.js`), ParuVendu (`r=VVU00000`, `paruvendu-van-catalog.generated.js`, ссылки `/a/utilitaire-occasion/`), Kleinanzeigen и Blocket — тем же поиском (Blocket: кузов фургона, цена ≥ 10 000 SEK); «Oba» складывает числа и у них. Проверено: Ford Transit 2019+ дизель дилер — Marktplaats 576, ParuVendu 125 | этот коммит |
 | 11-10 | Claude | **Повторный аудит стр. 3, доводка (§4.6.3 п. 33):** телефон — до первой машины ~1 880 px вместо 2 680, KPI скрыты, страны и порталы строкой вбок, кнопки 44 px; плитка единственного портала страны без пометок не повторяет страну; «Pierwszy monitoring» один раз, «Czytam oferty dodatkowe…», подсказка у неактивных «Nowe / Zniknęły», выборка AutoScout24 в прогрессе; подсказки первого запуска и бюджета, кнопка на пустой стр. 3; вкладки WAI-ARIA; 57 размеров шрифта на токенах. Код: `mobile-monitoring.js`, `.css`, строки и прогресс в `mobile-market-analysis.js` | этот коммит |
 | 10-11 | Claude | **B75 — «Oba» и популярные фургоны:** третье положение переключателя; mobile.de / otomoto / AutoScout24 — две выборки (легковые + фургоны), числа стр. 1 складываются (`isBothSearch`, `readerFor` в `getListings`), N1 0 % по отметке `vanSection`; популярные фургоны марок в «Model» | этот коммит |
 | 10-11 | Claude | **B75, волна 2 — комплектации коммерческих:** 79 строк по 30 моделям (Ford Transit / Custom / Connect / Courier / Tourneo, Sprinter, Citan, T-Class, Crafter, Master, Movano, Vivaro, Combo, Boxer, Expert, Partner, Rifter, Jumper, Jumpy, SpaceTourer, NV200, Evalia, Primastar, Interstar, Townstar, Proace City, Hilux, Hiace, H-1, Dyna) из прайс-листов производителей PL/DE, ADAC Autokatalog, autokatalog.pl и прессы; 51 строка — два источника; `data/model-trims-commercial.json`, `build-model-trims.py` (раздел «Коммерческие» в `docs/MODEL-TRIMS.md`). Без линеек (только пакеты): Sprinter до 2023, Citan W415, Crafter I, Movano B, Boxer/Expert/Movano после 2024 | этот коммит |

@@ -60,8 +60,10 @@
   const lang = () => (document.documentElement.lang === "ru" ? "ru" : "pl");
 
   // ---- Make and model ----------------------------------------------------------
-  function catalogMake(brand) {
-    const makes = window.AUTOGOOD_PARUVENDU_CATALOG?.makes || {};
+  // Vans (B75): "Utilitaire léger" (r=VVU00000) has its own makes and models
+  // (Transit VVUFOSIT, Sprinter VVUMESPR — src/paruvendu-van-catalog.generated.js).
+  function catalogMake(brand, van = false) {
+    const makes = (van ? window.AUTOGOOD_PARUVENDU_VAN_CATALOG?.makes : window.AUTOGOOD_PARUVENDU_CATALOG?.makes) || {};
     const wanted = blocketToken(brand);
     const name = Object.keys(makes).find((candidate) => blocketToken(makes[candidate].ours || candidate) === wanted)
       || Object.keys(makes).find((candidate) => blocketToken(candidate) === wanted);
@@ -69,10 +71,10 @@
   }
 
   // { makeCode, codes, words, broad, unsupported }
-  function modelSelection(brand, model, version = "") {
+  function modelSelection(brand, model, version = "", van = false) {
     const cleanModel = String(model || "").trim();
     const cleanVersion = String(version || "").trim();
-    const make = brand ? catalogMake(brand) : null;
+    const make = brand ? catalogMake(brand, van) : null;
     if (!brand || !make) return { makeCode: "", codes: [], words: [brand, cleanModel, cleanVersion].filter(Boolean).join(" "), broad: false, unsupported: Boolean(brand) };
     const base = { makeCode: make.code, codes: [], words: cleanVersion, broad: false, unsupported: false };
     if (!cleanModel) return base;
@@ -129,7 +131,7 @@
       const input = (list || []).find((item) => item.value === value);
       return input && typeof optionLabelText === "function" ? optionLabelText(input) : value;
     };
-    const selection = modelSelection(filters.brand, filters.model, filters.version);
+    const selection = modelSelection(filters.brand, filters.model, filters.version, filters.category === "van");
     if (selection.unsupported) skip(c.brandLabel || "Marka");
     if (selection.broad) skip(c.modelLabel || "Model");
     const params = [];
@@ -204,8 +206,9 @@
   }
 
   function query(filters, { price = null, page = 1, count = false } = {}) {
-    const parts = searchParts(filters, { price });
-    const params = [["tt", "1"], ["r", "VO"]];
+    // Vans: the car body and doors mean nothing in "Utilitaire léger".
+    const parts = searchParts(filters.category === "van" ? { ...filters, body: "", doorsFrom: "", doorsTo: "", doorsGroup: "" } : filters, { price });
+    const params = [["tt", "1"], ["r", filters.category === "van" ? "VVU00000" : "VO"]];
     if (parts.selection.makeCode) params.push(["r2", parts.selection.makeCode]);
     if (parts.selection.codes.length) params.push(["md", parts.selection.codes.join(",")]);
     params.push(...parts.params);
@@ -268,7 +271,7 @@
       const card = text.slice(match.index, starts[index + 1]?.index ?? match.index + 20000);
       const id = match[1];
       const position = index + 1;
-      const link = card.match(/href="(https:\/\/www\.paruvendu\.fr\/a\/voiture-occasion\/[^"]+)"[^>]*title="([^"]*)"/);
+      const link = card.match(/href="(https:\/\/www\.paruvendu\.fr\/a\/(?:voiture|utilitaire)-occasion\/[^"]+)"[^>]*title="([^"]*)"/);
       const priceText = decode((card.match(/encoded-lnk[^>]*>\s*<div>([\s\S]*?)<\/div>/) || [])[1]);
       if (!/€/.test(priceText) || /mois/i.test(priceText)) return;
       const price = digits(priceText.split("€")[0]);
@@ -337,8 +340,11 @@
       return;
     }
     let url;
+    let urls;
     try {
-      url = buildCountUrl(filters);
+      // "Oba" (B75): cars + vans.
+      urls = (filters.category === "both" ? [{ ...filters, category: "" }, { ...filters, category: "van" }] : [filters]).map((part) => buildCountUrl(part));
+      url = urls.join(" + ");
     } catch {
       target.textContent = "—";
       return;
@@ -350,7 +356,7 @@
     const request = ++countRequest;
     target.textContent = "…";
     try {
-      const total = await fetchCount(url);
+      const total = (await Promise.all(urls.map((one) => fetchCount(one)))).reduce((sum, value) => sum + value, 0);
       const label = new Intl.NumberFormat(lang() === "ru" ? "ru-RU" : "pl-PL").format(total);
       counts.set(url, label);
       if (request === countRequest) target.textContent = label;

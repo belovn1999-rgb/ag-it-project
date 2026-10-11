@@ -80,9 +80,9 @@ const copy = {
     categoryCars: "Osobowe",
     categoryVans: "Dostawcze",
     categoryBoth: "Oba",
-    categoryHint: "Dostawcze: dział aut dostawczych portali (otomoto, mobile.de, AutoScout24); inne portale ich nie mają",
+    categoryHint: "Dostawcze: działy aut dostawczych portali; Kleinanzeigen i Blocket mają je wśród osobowych; av.by — tylko osobowe",
     categoryChip: "Dostawcze",
-    categoryUnsupported: "Ten portal w programie szuka tylko osobowych",
+    categoryUnsupported: "av.by (Białoruś) — tylko osobowe",
     pageTitle: "Wyszukiwanie i analiza cen",
     stepLink: "Link",
     stepFilters: "Filtry",
@@ -450,9 +450,9 @@ const copy = {
     categoryCars: "Легковые",
     categoryVans: "Коммерческие",
     categoryBoth: "Оба",
-    categoryHint: "Коммерческие: раздел фургонов порталов (otomoto, mobile.de, AutoScout24); у других порталов его в программе нет",
+    categoryHint: "Коммерческие: разделы фургонов порталов; у Kleinanzeigen и Blocket они среди легковых; av.by — только легковые",
     categoryChip: "Коммерческие",
-    categoryUnsupported: "Этот портал в программе ищет только легковые",
+    categoryUnsupported: "av.by (Беларусь) — только легковые",
     pageTitle: "Поиск и анализ цен",
     stepLink: "Ссылка",
     stepFilters: "Фильтры",
@@ -4373,7 +4373,11 @@ async function refreshOfferCount() {
   window.AUTOGOOD_AUTOSCOUT_REFRESH_COUNT?.(filters);
   if (isVanSearch(filters)) {
     // Vans (B75): the portals without a van section in the program show a dash.
-    ["blocket", "avby", "marktplaats", "dehands", "kleinanzeigen", "paruvendu"].forEach((portal) => {
+    window.AUTOGOOD_MARKTPLAATS_REFRESH_COUNT?.(filters);
+    window.AUTOGOOD_BLOCKET_REFRESH_COUNT?.(filters);
+    window.AUTOGOOD_KLEINANZEIGEN_REFRESH_COUNT?.(filters);
+    window.AUTOGOOD_PARUVENDU_REFRESH_COUNT?.(filters);
+    ["avby"].forEach((portal) => {
       document.querySelectorAll(`[data-mobile-search-count-${portal}]`).forEach((node) => {
         node.textContent = "—";
         node.title = copy[state.lang].categoryUnsupported;

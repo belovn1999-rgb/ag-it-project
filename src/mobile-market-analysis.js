@@ -1554,7 +1554,10 @@
   // what AutoScout24 FR does not have, in the row "Francja".
   const MARKET_SOURCES = ["otomoto", "mobile", "autoscout", "kleinanzeigen", "autoscoutfr", "paruvendu", "marktplaats", "dehands", "blocket", "avby"];
   // B75 "Dostawcze": the portals whose van section the program searches.
-  const VAN_SOURCES = ["otomoto", "mobile", "autoscout", "autoscoutfr"];
+  // Kleinanzeigen and Blocket keep vans among the cars (same search); the
+  // others have a van section of their own — "Oba" reads those twice.
+  const VAN_SOURCES = ["otomoto", "mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands", "paruvendu", "kleinanzeigen", "blocket"];
+  const VAN_SECTION_SOURCES = ["otomoto", "mobile", "autoscout", "autoscoutfr", "marktplaats", "dehands", "paruvendu"];
   // The portals of Germany: one statistics row "Niemcy" (B48).
   const GERMAN_SOURCES = ["mobile", "autoscout", "kleinanzeigen"];
   // EU markets that are also priced turnkey in Minsk (Belarus mode).
@@ -3104,7 +3107,7 @@
         const own = read[source];
         read[source] = async () => markVan(await own());
       });
-      if (both) VAN_SOURCES.forEach((source) => {
+      if (both) VAN_SECTION_SOURCES.forEach((source) => {
         const cars = readerFor({ ...filters, category: "" })[source];
         const vans = readerFor({ ...filters, category: "van" })[source];
         read[source] = async () => {
