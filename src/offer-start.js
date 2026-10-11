@@ -61,10 +61,8 @@
       equipment: "Wyposażenie", moreIn: "+ {n} w ogłoszeniu", noEquipment: "brak listy wyposażenia w ogłoszeniu", equipmentLater: "wyposażenie po pełnym odczycie",
       other: "Inne informacje", country: "Kraj", condition: "Stan", damaged: "uszkodzony", accidentFree: "bezwypadkowy (wg sprzedawcy)", color: "Kolor", seller: "Sprzedawca",
       basic: "Odczytano podstawowe dane. Zdjęcia, wyposażenie i sprzedawca pojawią się po pełnym odczycie (dla mobile.de potrzebny jest importer na Macu).",
-      missing: "Nie udało się odczytać: {list}. Uzupełnisz to na stronie oferty (Edytuj teksty).", missingWords: ["marka", "cena", "przebieg", "rok"],
-      previewTitle: "Oferta {n} — tak zobaczy ją klient", previewOpen: "Otwórz w osobnej karcie",
-      previewHint: "Tę stronę klient zobaczy pod „Link dla klienta”, PDF — „Pobierz PDF” (podgląd: „Arkusze PDF”). Ustawienia po prawej zmieniają i stronę, i PDF; teksty — „Edytuj teksty”. Sposób zakupu, klient, język i kalkulator trafiają tu od razu.",
-      reused: "To ogłoszenie jest już w ofercie {n} z {date} — pokazuję ją, zmiany zapisują się w niej.", newOffer: "Zrób nową ofertę",
+      missing: "Nie udało się odczytać: {list}. Uzupełnisz to w ofercie poniżej (Edytuj ofertę).", missingWords: ["marka", "cena", "przebieg", "rok"],
+      previewTitle: "Oferta {n}", opened: "Oferta {n} z {date}.", notFound: "Nie znaleziono tej oferty w tej przeglądarce.",
       method: "Sposób zakupu", methodDirect: "Zakup bezpośredni", methodVat: "Przez AUTOGOOD · VAT 23% (netto)", methodMargin: "Przez AUTOGOOD · VAT marża (brutto)",
       vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
       client: "Klient", clientName: "imię i nazwisko (do e-maila)", calcTitle: "Kalkulacja", calcHint: "Popraw transport i oględziny — suma trafi do oferty jako cena na gotowo.",
@@ -95,10 +93,8 @@
       equipment: "Оснащение", moreIn: "+ {n} в объявлении", noEquipment: "в объявлении нет списка оснащения", equipmentLater: "оснащение после полного чтения",
       other: "Другое", country: "Страна", condition: "Состояние", damaged: "повреждён", accidentFree: "без ДТП (по словам продавца)", color: "Цвет", seller: "Продавец",
       basic: "Прочитаны основные данные. Фото, оснащение и продавец появятся после полного чтения (для mobile.de нужен импортер на Маке).",
-      missing: "Не удалось прочитать: {list}. Допишете на странице предложения (Edytuj teksty).", missingWords: ["марка", "цена", "пробег", "год"],
-      previewTitle: "Предложение {n} — так его увидит клиент", previewOpen: "Открыть в отдельной вкладке",
-      previewHint: "Эту страницу клиент увидит по кнопке «Ссылка для клиента», PDF — «Скачать PDF» (предпросмотр: «Листы PDF»). Настройки справа меняют и страницу, и PDF; тексты — «Править тексты». Способ покупки, клиент, язык и калькулятор попадают сюда сразу.",
-      reused: "Это объявление уже есть в предложении {n} от {date} — показываю его, изменения сохраняются в нём.", newOffer: "Сделать новое предложение",
+      missing: "Не удалось прочитать: {list}. Допишете в предложении ниже («Править предложение»).", missingWords: ["марка", "цена", "пробег", "год"],
+      previewTitle: "Предложение {n}", opened: "Предложение {n} от {date}.", notFound: "Это предложение не найдено в этом браузере.",
       method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · НДС 23% (нетто)", methodMargin: "Через AUTOGOOD · НДС-маржа (брутто)",
       vatOnly: "только авто с НДС к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или с НДС 23%", fullCalc: "Полный расчёт в предложении (стр. 2)",
       client: "Клиент", clientName: "имя и фамилия (для письма)", calcTitle: "Расчёт", calcHint: "Поправьте транспорт и осмотр — сумма попадёт в предложение как цена «под ключ».",
@@ -153,6 +149,7 @@
   document.querySelector("[data-os-lang-group]")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-os-lang]");
     if (!button) return;
+    if (current) current.opened = false;
     lang = button.dataset.osLang === "ru" && RU ? "ru" : "pl";
     try {
       localStorage.setItem(LANG_KEY, lang);
@@ -327,7 +324,9 @@
   function calcFrameHtml() {
     const est = current && estimate(current.ad, current.source);
     if (!CALC || !est) return "";
-    const src = CALC.url({ method: chosenMethod(), lang, gross: est.carBruttoEur, net: est.netEur, engine: est.engine.index, transport: est.transportNetto, inspection: est.inspectionNetto, extra: feeLine(chosenMethod()), offer: true });
+    // The manager's own values from before (an offer opened again, a new
+    // language or way of buying): the same calculation, not the estimate's.
+    const src = CALC.url({ method: chosenMethod(), lang, gross: est.carBruttoEur, net: est.netEur, engine: est.engine.index, transport: est.transportNetto, inspection: est.inspectionNetto, extra: feeLine(chosenMethod()), offer: true, kept: current.calcInputs || null });
     return `<iframe class="osCalcFrame" title="${esc(t("calcTitle"))} AUTOGOOD" src="${esc(src)}" scrolling="no" data-os-calc></iframe>`;
   }
 
@@ -376,7 +375,6 @@
     return `
       <section class="osCard osDealCard" aria-label="${esc(t("method"))}">
         ${factChips()}
-        ${current.duplicate ? `<p class="osNote">${esc(t("reused", { n: current.duplicate.number || "", date: current.duplicate.date }))} <button class="osLinkButton" type="button" data-os-new-offer>${esc(t("newOffer"))}</button></p>` : ""}
         ${!ad.complete ? `<p class="osNote">${esc(t("basic"))}</p>` : ""}
         ${missing.length ? `<p class="osNote">${esc(t("missing", { list: missing.join(", ") }))}</p>` : ""}
         <div class="osMethods" role="radiogroup" aria-label="${esc(t("method"))}">
@@ -616,6 +614,7 @@
   }, true);
 
   carBox.addEventListener("change", (event) => {
+    if (current) current.opened = false;
     if (event.target.matches("[data-os-method]")) {
       method = event.target.value;
       const old = carBox.querySelector("[data-os-calc]");
@@ -629,6 +628,7 @@
   carBox.addEventListener("click", (event) => {
     const button = event.target.closest("[data-os-lang]");
     if (!button) return;
+    if (current) current.opened = false;
     lang = button.dataset.osLang === "ru" && RU ? "ru" : "pl";
     try {
       localStorage.setItem(LANG_KEY, lang);
@@ -658,7 +658,10 @@
     try {
       const read = CALC.read(frame.contentDocument);
       const methodKey = chosenMethod();
-      const part = { calc: { tab: CALC.TABS[methodKey], method: methodKey, methodLabel: "", rows: read.rows, total: read.total, rate: read.rate, lang, at: new Date().toISOString() } };
+      // The fields as the manager left them: the calculator opens with them
+      // again (a new language, the offer opened from the list).
+      current.calcInputs = { method: methodKey, ...(CALC.fields ? CALC.fields(frame.contentDocument) : {}), rate: read.rate };
+      const part = { calc: { tab: CALC.TABS[methodKey], method: methodKey, methodLabel: "", rows: read.rows, total: read.total, rate: read.rate, lang, at: new Date().toISOString() }, calcInputs: current.calcInputs };
       if (fullCalc) {
         const image = await Promise.race([CALC.capture(frame).catch(() => ""), new Promise((resolve) => window.setTimeout(() => resolve(""), 15000))]);
         if (image) part.calcImage = image;
@@ -702,16 +705,13 @@
   function showPreview(id, number) {
     const page = new URL("oferta.html", window.location.href);
     page.searchParams.set("id", id);
-    const own = new URL(page);
     page.searchParams.set("embed", "1");
     page.searchParams.set("view", "web");
+    // Owner 2026-10-11: the offer's number only, no hints; the PDF's sheets
+    // open from its own "Przygotuj PDF".
     previewBox.innerHTML = `
       <section class="osCard osPreviewCard">
-        <div class="osCalcHead">
-          <h2 class="osCardTitle">${icon("list")}<span>${esc(t("previewTitle", { n: number || "" }))}</span></h2>
-          <a class="osPreviewOpen" href="${esc(own.toString())}" target="_blank" rel="noopener">${esc(t("previewOpen"))} ↗</a>
-        </div>
-        <p class="osMuted">${esc(t("previewHint"))}</p>
+        <h2 class="osCardTitle">${icon("list")}<span>${esc(t("previewTitle", { n: number || "" }))}</span></h2>
         <iframe class="osPreviewFrame" title="${esc(t("previewTitle", { n: number || "" }))}" src="${esc(page.toString())}" scrolling="no" allow="clipboard-write" data-os-preview-frame></iframe>
       </section>`;
     placePreview();
@@ -747,44 +747,109 @@
     if (!frame.matches?.("[data-os-calc]")) return;
     const doc = frame.contentDocument;
     ["input", "change", "click"].forEach((kind) => doc?.addEventListener(kind, () => {
-      if (current?.draftId) syncSoon(true);
+      if (!current?.draftId) return;
+      current.opened = false;
+      syncSoon(true);
     }, true));
-    if (current?.draftId) syncSoon(true);
+    if (current?.draftId && !current.opened) syncSoon(true);
   }, true);
 
   // The offer of this ad: the one made before from a link (fresh ad data,
   // the manager's choices kept), else a new one — a draft, off the list of
-  // offers until it is sent (PDF, link, e-mail).
-  async function openOffer({ fresh = false } = {}) {
+  // offers until it is sent (PDF, link, e-mail). Owner 2026-10-11: no note
+  // about it — the same ad simply opens its offer.
+  async function openOffer() {
     if (!current) return;
-    const before = !fresh ? (await (store.byAdKey ? store.byAdKey(current.adKey) : Promise.resolve([])).catch(() => [])).find((offer) => offer.origin === "link" && !offer.error && !offer.archived) : null;
+    const before = (await (store.byAdKey ? store.byAdKey(current.adKey) : Promise.resolve([])).catch(() => [])).find((offer) => offer.origin === "link" && !offer.error && !offer.archived);
     if (before) {
       current.draftId = before.id;
-      current.duplicate = { id: before.id, number: before.number, date: new Date(before.createdAt).toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit", year: "numeric" }) };
-      if (before.method) method = before.method;
-      if (before.client) Object.assign(client, { salutation: before.client.salutation || client.salutation, name: before.client.name || "" });
-      if (before.hidden) fullCalc = !before.hidden.includes("costs");
+      takeChoices(before);
+      // The ad read again: its price, not the one typed before.
+      if (current.calcInputs) current.calcInputs = { ...current.calcInputs, car: "", rate: 0 };
       if (before.lang && before.lang !== lang) {
         lang = before.lang;
         applyLang();
       } else carBox.innerHTML = carHtml();
       await store.update(before.id, { ad: current.ad, adTriedAt: new Date().toISOString(), estimate: estimate(current.ad, current.source), car: { ...(before.car || {}), title: current.title || before.car?.title, titleClean: current.title || before.car?.titleClean } }).catch(() => null);
       showPreview(before.id, before.number);
+      inAddress(before.id);
       return;
     }
-    current.duplicate = null;
     const id = store.newId();
     const draft = { ...(await makeDraft(id)), draft: true };
     await store.put(draft);
     current.draftId = id;
     showPreview(id, draft.number);
+    inAddress(id);
   }
-  carBox.addEventListener("click", async (event) => {
-    if (!event.target.closest("[data-os-new-offer]") || !current) return;
+  // The manager's choices kept with an offer: the way of buying, the client,
+  // the full calculation and the calculator's own fields.
+  function takeChoices(stored) {
+    method = stored.method || "";
+    Object.assign(client, { salutation: stored.client?.salutation || "Pan", name: stored.client?.name || "" });
+    fullCalc = !(stored.hidden || []).includes("costs");
+    // An offer made before its fields were kept: at least the rate it was counted at.
+    current.calcInputs = stored.calcInputs || (Number(stored.calc?.rate) > 0 ? { method: stored.calc.method || stored.method || "direct", rate: stored.calc.rate } : null);
+  }
+  // The offer shown stays in the address: a reload or a shared tab opens it again.
+  function inAddress(id) {
+    const address = new URL(window.location.href);
+    address.searchParams.delete("url");
+    address.searchParams.set("oferta", id);
+    window.history.replaceState(null, "", address.toString());
+  }
+
+  // ---- An offer made before, opened again with the whole page (owner 2026-10-11) -------------
+  // From the list of offers (or ?oferta=): the deal block, the offer and the
+  // calculator as they were left — the ad as read then, not read again.
+  // An offer from Monitoring whose ad was never read gets its car's data.
+  function adFromCar(stored) {
+    const car = stored.car || {};
+    const estimateOf = stored.estimate;
+    return {
+      title: car.title || stored.favoriteTitle || "",
+      currency: car.currency || "EUR",
+      vat: { gross: Number(car.price) || 0, net: Number(car.netPrice) || 0, deductible: car.priceType === "vat" },
+      specs: { mileage: car.mileage, firstRegistration: car.reg || (car.year ? String(car.year) : ""), fuel: car.fuel, ccm: car.ccm, body: car.body },
+      seller: { type: car.seller, country: car.country, city: car.city, zip: car.zip },
+      tariff: estimateOf ? { transport: estimateOf.transportNetto, inspection: estimateOf.inspectionNetto, rule: estimateOf.tariffRule } : undefined,
+      features: [],
+      images: [],
+      complete: true,
+    };
+  }
+  async function openStored(id) {
+    const stored = await store.get(id).catch(() => null);
+    if (!stored || stored.error) {
+      setStatus(t("notFound"), true);
+      return;
+    }
+    const ad = stored.ad || adFromCar(stored);
+    const source = stored.source || "mobile";
+    const url = stored.url || stored.car?.url || "";
+    // opened: the calculation stays as it was saved until the manager changes
+    // something here (opening alone never counts it again at today's rate).
+    current = { source, url, ad, adKey: stored.adKey || stored.car?.key || adKeyOf(source, url), brand: stored.filters?.brand || "", model: stored.filters?.model || "", draftId: stored.id, opened: true };
+    if (!current.brand) Object.assign(current, makeModel(ad.title || stored.car?.title || ""));
+    await window.AUTOGOOD_MODEL_SPECS_UI?.ready?.(current.brand);
+    current.facts = FACTS ? FACTS.read(ad) : {};
+    current.title = stored.car?.titleClean || stored.car?.title || (FACTS ? FACTS.cleanTitle(ad.title || "") : ad.title) || "";
+    takeChoices(stored);
+    input.value = url;
+    showPortal(source);
     hidePreview();
-    current.draftId = null;
-    await openOffer({ fresh: true });
-  });
+    if (stored.lang && stored.lang !== lang && (stored.lang !== "ru" || RU)) {
+      lang = stored.lang;
+      applyLang();
+    }
+    carBox.innerHTML = carHtml();
+    carBox.hidden = false;
+    showPreview(stored.id, stored.number);
+    inAddress(stored.id);
+    const date = new Date(stored.createdAt);
+    setStatus(t("opened", { n: stored.number || "", date: Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit", year: "numeric" }) }));
+    carBox.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   // ---- Offers made before (here and from Monitoring) ------------------------------------
   async function showRecent() {
@@ -805,12 +870,19 @@
       const who = offer.client?.name ? `${offer.client.salutation && offer.lang !== "ru" ? `${offer.client.salutation} ` : ""}${offer.client.name}` : "";
       const facts = [who, total ? t("turnkey", { price: money(total, "PLN") }) : ""].filter(Boolean).join(" · ");
       const label = `${t("remove")}: ${offer.number || ""} ${title}`;
-      return `<li><a href="./oferta.html?id=${encodeURIComponent(offer.id)}" target="_blank" rel="noopener"><b>${esc(offer.number || "")}</b><span>${esc(title)}</span>${facts ? `<em>${esc(facts)}</em>` : ""}<small>${esc([when, PORTAL[offer.source] || "", from, offer.lang === "ru" ? "RU" : "PL"].filter(Boolean).join(" · "))}</small></a><button class="osRemove" type="button" data-os-remove="${esc(offer.id)}" data-number="${esc(offer.number || "")}" aria-label="${esc(label)}" title="${esc(t("remove"))}">×</button></li>`;
+      return `<li><a href="./oferty.html?oferta=${encodeURIComponent(offer.id)}" data-os-open="${esc(offer.id)}"><b>${esc(offer.number || "")}</b><span>${esc(title)}</span>${facts ? `<em>${esc(facts)}</em>` : ""}<small>${esc([when, PORTAL[offer.source] || "", from, offer.lang === "ru" ? "RU" : "PL"].filter(Boolean).join(" · "))}</small></a><button class="osRemove" type="button" data-os-remove="${esc(offer.id)}" data-number="${esc(offer.number || "")}" aria-label="${esc(label)}" title="${esc(t("remove"))}">×</button></li>`;
     }).join("");
   }
   // The manager removes an offer from the list (owner 2026-10-11): it is set
   // aside (archived), never erased — the rules of user data.
   recentList.addEventListener("click", async (event) => {
+    // The whole page of that offer, here (a new tab with Ctrl / Cmd: the link).
+    const open = event.target.closest("[data-os-open]");
+    if (open && !event.metaKey && !event.ctrlKey && !event.shiftKey && event.button === 0) {
+      event.preventDefault();
+      if (!reading) openStored(open.dataset.osOpen);
+      return;
+    }
     const button = event.target.closest("[data-os-remove]");
     if (!button) return;
     if (!window.confirm(t("removeAsk", { n: button.dataset.number }))) return;
@@ -820,9 +892,12 @@
   applyLang();
   store.channel?.addEventListener("message", () => showRecent());
 
-  // A link given in the address (?url=…) is read at once.
+  // A link given in the address (?url=…) is read at once; an offer
+  // (?oferta=…) opens with its whole page.
   if (params.get("url")) {
     input.value = params.get("url");
     recognise();
+  } else if (params.get("oferta") && !/aukcj|auction/i.test(params.get("tryb") || "")) {
+    openStored(params.get("oferta"));
   }
 })();

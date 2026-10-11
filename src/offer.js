@@ -28,7 +28,9 @@
   // The offer as a web page (owner 2026-10-11): in program 06 (view=web) and
   // for the client by a link (view=client, the offer packed in the link's #).
   const CLIENT = params.get("view") === "client";
-  let viewMode = CLIENT || params.get("view") === "web" ? "web" : "sheets";
+  // One view per place (owner 2026-10-11): the page in program 06 and for the
+  // client, the A4 sheets on their own page ("Przygotuj PDF" opens it).
+  const viewMode = CLIENT || EMBED || params.get("view") === "web" ? "web" : "sheets";
   const stage = document.querySelector("[data-offer-stage]");
   const panel = document.querySelector("[data-offer-panel]");
   const statusLine = document.querySelector("[data-offer-status]");
@@ -113,6 +115,23 @@
   const edits = () => offer?.edits || {};
   const hidden = () => new Set(offer?.hidden || []);
   const isHidden = (key) => hidden().has(key);
+  // The ad's equipment without the options the manager took off the offer
+  // (owner 2026-10-11, "Edytuj ofertę"): the next strongest takes the place.
+  const removedOptions = () => new Set(offer?.removedOptions || []);
+  function features() {
+    const all = offer?.ad?.features || [];
+    const removed = removedOptions();
+    if (!removed.size || !EQUIPMENT) return all;
+    const gone = new Set(EQUIPMENT.keyOptions(all, 99).filter((item) => removed.has(item.id)).map((item) => item.from));
+    return all.filter((name) => !gone.has(String(name || "").replace(/\s+/g, " ").trim()));
+  }
+  const keyOptionsShown = (limit) => (EQUIPMENT ? EQUIPMENT.keyOptions(features(), 99).filter((item) => !removedOptions().has(item.id)).slice(0, limit) : []);
+  const allOptionsShown = () => (EQUIPMENT ? EQUIPMENT.list(features()) : []);
+  // The manager's and the firm's details written on the page itself (owner
+  // 2026-10-11, instead of the panel's cards): fields in "Edytuj ofertę",
+  // kept in this browser for the next offers too (offer-store.js).
+  const liveEditing = () => editing && !CLIENT;
+  const live = (group, key, value, placeholder, tag = "span", className = "") => `<${tag} class="ofLive${className ? ` ${className}` : ""}" data-live="${group}:${key}" data-placeholder="${esc(placeholder)}" contenteditable="true" spellcheck="false">${esc(value || "")}</${tag}>`;
 
   function field(name, fallback, tag = "span", className = "") {
     // A text edited in Polish stays Polish: each language keeps its own edits.
@@ -611,8 +630,8 @@
     const poland = polandView();
     const costView = costs();
     const verdict = verdictView(view);
-    const keyOptions = EQUIPMENT ? EQUIPMENT.keyOptions(offer.ad?.features || [], 12) : [];
-    const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
+    const keyOptions = keyOptionsShown(12);
+    const allOptions = allOptionsShown();
     // The full list is on page 2 only when the manager shows it there.
     const listOnTwo = !isHidden("allOptions") && (offer.shown || []).includes("allOptions");
     const salutation = SALUTATION[offer.client?.salutation] || SALUTATION.Pan;
@@ -715,6 +734,10 @@
               ${hideToggle("verdict")}
               <p class="ofCardHead">${icon("shield")}${L("Ocena AUTOGOOD", "Оценка AUTOGOOD")}</p>
               <span class="ofVerdict is${verdict.level === "ok" ? "Ok" : verdict.level === "check" ? "Check" : "Risk"}">${icon(verdict.level === "ok" ? "check" : verdict.level === "check" ? "warn" : "risk")}${field("verdictLabel", verdict.label, "span")}</span>
+              ${liveEditing() ? `<label class="ofLiveSelect" data-offer-hide>${U("Werdykt", "Вердикт")}<select data-verdict-level>
+                <option value="">${U("Automatycznie", "Автоматически")} (${esc(U({ ok: "rekomendujemy", check: "do weryfikacji", risk: "nie rekomendujemy" }, { ok: "рекомендуем", check: "на проверку", risk: "не рекомендуем" })[verdict.auto])})</option>
+                ${[["ok", "Rekomendujemy do dalszego sprawdzenia", "Рекомендуем к дальнейшей проверке"], ["check", "Do weryfikacji przed rezerwacją", "Нужна проверка до резервации"], ["risk", "Nie rekomendujemy", "Не рекомендуем"]].map(([key, pl, russian]) => `<option value="${key}"${offer.verdictLevel === key ? " selected" : ""}>${U(pl, russian)}</option>`).join("")}
+              </select></label>` : ""}
               <ul class="ofChecks">
                 ${verdict.lines.map((line) => `
                   <li class="ofCheck is${line.level.charAt(0).toUpperCase()}${line.level.slice(1)}${blockClass(`check:${line.id}`)}">${icon(line.level === "ok" ? "check" : line.level === "info" ? "info" : line.level)}<span>${field(`check:${line.id}`, line.text)}${line.quote ? `<q>${esc(line.quote)}</q>` : ""}${hideToggle(`check:${line.id}`)}</span></li>`).join("")}
@@ -725,11 +748,12 @@
               ${hideToggle("equipment")}
               <p class="ofCardHead">${icon("list")}${L("Wyposażenie — najważniejsze", "Оснащение — главное")}</p>
               ${keyOptions.length
-                ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(optionLabel(item.label))}</span>`).join("")}</div>
+                ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(optionLabel(item.label))}${liveEditing() ? `<button class="ofOptionRemove" type="button" data-remove-option="${esc(item.id)}" data-offer-hide aria-label="${esc(`${U("Usuń z oferty", "Убрать из предложения")}: ${optionLabel(item.label)}`)}" title="${esc(U("Usuń z oferty", "Убрать из предложения"))}">×</button>` : ""}</span>`).join("")}</div>
                    <p class="ofOptionsMore" data-all="${allOptions.length}" data-list="${listOnTwo ? 1 : 0}">${esc(optionsMore(allOptions.length - keyOptions.length, listOnTwo))}</p>`
                 : `<p class="ofSmall">${reading ? L("Wczytuję wyposażenie z ogłoszenia…", "Загружаю оснащение из объявления…")
                   : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${many(allOptions.length, ["pozycja", "pozycje", "pozycji"], ["позиция", "позиции", "позиций"])} ${L("wyposażenia w ogłoszeniu", "оснащения в объявлении")}${listOnTwo ? L(" (lista na str. 2)", " (список на стр. 2)") : ""}` : L("Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.", "Продавец не отметил оснащение в списке портала - подтвердим его до покупки."))
                   : L("Wyposażenie pojawi się po wczytaniu danych z ogłoszenia.", "Оснащение появится после загрузки данных объявления.")}</p>`}
+              ${liveEditing() && removedOptions().size ? `<button class="ofLiveLink" type="button" data-restore-options data-offer-hide>${esc(U(`Przywróć usunięte opcje (${removedOptions().size})`, `Вернуть убранные опции (${removedOptions().size})`))}</button>` : ""}
             </section>`,
       seller: `<section class="ofCard${blockClass("seller")}" data-block="seller">
               ${hideToggle("seller")}
@@ -935,7 +959,7 @@
   function sheetTwo(view, asParts = false) {
     const costView = costs();
     const negotiation = VERDICT ? VERDICT.negotiation({ car: offer.car, ad: offer.ad, market: { ...offer.market, ad: adHistory() } }) : null;
-    const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
+    const allOptions = allOptionsShown();
     const salutation = SALUTATION[offer.client?.salutation] || SALUTATION.Pan;
     const manager = store.manager(offer.manager);
     const company = store.company(offer.company);
@@ -981,21 +1005,29 @@
     const rating = company.googleRating && company.googleReviews
       ? `<p class="ofTrust">${icon("star")}<b>${esc(company.googleRating)}</b> ${esc(L(`średnia ocena z ${company.googleReviews} opinii w Google`, `средняя оценка из ${company.googleReviews} отзывов в Google`))}</p>` : "";
     const address = [company.name || "AUTOGOOD", company.address].filter(Boolean).join(" · ");
+    // "Edytuj ofertę": the manager and the firm written here (owner 2026-10-11).
+    const writing = liveEditing();
     const contactHtml = `
       <section class="ofCard ofContactCard${blockClass("contact")}" data-block="contact">
         ${hideToggle("contact")}
         <div class="ofContactMini">
           <div class="ofAvatar">${esc(initials)}</div>
           <div class="ofContactLines">
-            <b>${esc(withFirm(manager.name) || "AUTOGOOD")}</b>
+            ${writing ? live("manager", "name", manager.name, U("Imię i nazwisko opiekuna", "Имя и фамилия менеджера"), "b") : `<b>${esc(withFirm(manager.name) || "AUTOGOOD")}</b>`}
             <span class="ofSmall">${L(`${esc(salutation.owner)} opiekun`, "Ваш менеджер")}</span>
-            ${manager.phone ? `<a class="ofContactLink" href="tel:${esc(String(manager.phone).replace(/[^\d+]/g, ""))}">${icon("phone")}${esc(manager.phone)}</a>` : ""}
-            ${manager.email ? `<a class="ofContactLink" href="mailto:${esc(manager.email)}">${icon("mail")}${esc(manager.email)}</a>` : ""}
+            ${writing ? `<span class="ofContactLink">${icon("phone")}${live("manager", "phone", manager.phone, U("Telefon", "Телефон"))}</span>`
+              : manager.phone ? `<a class="ofContactLink" href="tel:${esc(String(manager.phone).replace(/[^\d+]/g, ""))}">${icon("phone")}${esc(manager.phone)}</a>` : ""}
+            ${writing ? `<span class="ofContactLink">${icon("mail")}${live("manager", "email", manager.email, "E-mail")}</span>`
+              : manager.email ? `<a class="ofContactLink" href="mailto:${esc(manager.email)}">${icon("mail")}${esc(manager.email)}</a>` : ""}
           </div>
         </div>
-        <p class="ofCompanyLine">${mapsUrl ? `<a href="${esc(mapsUrl)}" target="_blank" rel="noopener">${icon("pin")}<span>${esc(address)}</span></a>` : `${icon("pin")}<span>${esc(address)}</span>`}</p>
+        ${writing ? `<p class="ofCompanyLine">${icon("pin")}<span>${esc(company.name || "AUTOGOOD")} · ${live("company", "address", company.address, U("Adres", "Адрес"))}</span></p>
+        <p class="ofSmall ofLiveRow" data-offer-hide>${U("Link do mapy Google", "Ссылка на карту Google")}: ${live("company", "mapsUrl", company.mapsUrl, "https://maps.app.goo.gl/…")}</p>
+        <p class="ofSmall ofHours">${live("company", "hours", company.hours, U("Godziny pracy", "Часы работы"))}</p>
+        <p class="ofTrust">${icon("star")}${live("company", "googleRating", company.googleRating, "4,9", "b")} ${esc(L("średnia ocena z", "средняя оценка из"))} ${live("company", "googleReviews", company.googleReviews, "126")} ${esc(L("opinii w Google", "отзывов в Google"))}</p>`
+          : `<p class="ofCompanyLine">${mapsUrl ? `<a href="${esc(mapsUrl)}" target="_blank" rel="noopener">${icon("pin")}<span>${esc(address)}</span></a>` : `${icon("pin")}<span>${esc(address)}</span>`}</p>
         ${company.hours ? `<p class="ofSmall ofHours">${esc(ru() && company.hours === store.COMPANY_DEFAULTS?.hours ? "пн–пт 9:00–17:00, сб по предварительной договорённости" : company.hours)}</p>` : ""}
-        ${rating}
+        ${rating}`}
       </section>`;
     const processHtml = `
       <section class="ofCard ofProcess${blockClass("process")}" data-block="process">
@@ -1035,7 +1067,7 @@
   function webHtml(view) {
     const one = sheetOne(view, true);
     const two = sheetTwo(view, true);
-    const allOptions = EQUIPMENT ? EQUIPMENT.list(offer.ad?.features || []) : [];
+    const allOptions = allOptionsShown();
     const fullList = allOptions.length ? `<details class="owAll"><summary>${L(`Pełne wyposażenie z ogłoszenia (${numbers.format(allOptions.length)})`, `Полное оснащение из объявления (${numbers.format(allOptions.length)})`)}</summary><ul>${allOptions.map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(optionLabel(item.label))}</li>`).join("")}</ul></details>` : "";
     const at = one.equipment.lastIndexOf("</section>");
     const equipment = at >= 0 ? `${one.equipment.slice(0, at)}${fullList}${one.equipment.slice(at)}` : one.equipment;
@@ -1134,12 +1166,15 @@
     const block = BLOCKS.find(([name]) => name === key);
     return block ? U(block[1], block[2]) : key;
   }
+  // Owner 2026-10-11: only the look, the ad's data and the blocks; the way
+  // of buying, the client, the language and the calculator are program 06's
+  // (above and under the offer), the verdict, the manager and the firm are
+  // written on the page itself ("Edytuj ofertę"), Carvago is read by itself
+  // (the status line says whether the ad is there). An offer from Monitoring
+  // opened on its own keeps its language, client and calculation here.
   function panelCards(view) {
     const ad = offer.ad;
-    const manager = store.manager(offer.manager);
-    const company = store.company(offer.company);
     const client = offer.client || {};
-    const verdict = verdictView(view);
     const priceChanged = ad?.vat?.gross && Math.abs(ad.vat.gross - view.price) >= 1 ? ad.vat.gross : 0;
     const adState = reading
       ? `<p>${U("Czytam ogłoszenie…", "Читаю объявление…")}</p>`
@@ -1152,9 +1187,10 @@
     const focus = [["center", "Środek", "Центр"], ["left", "Lewa strona", "Левая сторона"], ["right", "Prawa strona", "Правая сторона"], ["top", "Góra", "Верх"], ["bottom", "Dół", "Низ"]];
     const styles = { light: ["Jasny", "zdjęcie obok ceny, karty w ramkach", "Светлый", "фото рядом с ценой, карточки в рамках"], premium: ["Premium", "zdjęcie na całą szerokość, cena na granatowej plakietce", "Premium", "фото на всю ширину, цена на тёмно-синей плашке"], magazyn: ["Magazyn", "kremowa kolumna z ceną i danymi, tytuły szeryfowe", "Журнал", "кремовая колонка с ценой и данными, заголовки с засечками"], raport: ["Raport", "liczby na górze, rynek na całą szerokość", "Отчёт", "цифры сверху, рынок на всю ширину"], noc: ["Noc", "ciemny nagłówek z ceną, zdjęcie pod nim", "Ночь", "тёмная шапка с ценой, фото под ней"] };
     const methodName = (key) => U(METHODS[key].label, METHODS[key].labelRu);
-    const carvagoFound = offer.carvago?.found;
-    const facts = view.facts || {};
+    const editedCount = Object.keys(edits()).filter((key) => key !== "photo").length;
+    const own = !EMBED && offer.origin !== "link";
     return `
+      ${own ? `
       <section class="ofPanelCard">
         <h2>${U("Oferta", "Предложение")} ${esc(offer.number || "")}</h2>
         <p>${U("Utworzona", "Создано")} ${esc(dateText(offer.createdAt))} ${esc(timeText(offer.createdAt))} ${offer.origin === "link"
@@ -1167,29 +1203,10 @@
           <label>${U("Zwrot", "Обращение (PL)")}<select data-client-salutation>${Object.keys(SALUTATION).map((key) => `<option${client.salutation === key ? " selected" : ""}>${esc(key)}</option>`).join("")}</select></label>
           <label>${U("Klient (opcjonalnie)", "Клиент (необязательно)")}<input data-client-name value="${esc(client.name || "")}" placeholder="${esc(U("np. Jan Kowalski", "напр. Иван Петров"))}" /></label>
         </div>
-      </section>
-      ${facts.business || facts.fee || facts.isNew || facts.availability ? `
-      <section class="ofPanelCard">
-        <h2>${U("Z ogłoszenia (dla opiekuna)", "Из объявления (для менеджера)")}</h2>
-        <ul class="ofPanelFacts">
-          ${facts.business ? `<li class="isWarn">${esc(U("Dealer sprzedaje tylko firmom / na eksport — tylko przez AUTOGOOD", "Дилер продаёт только фирмам / на экспорт — только через AUTOGOOD"))}<q>${esc(facts.business.quote)}</q></li>` : ""}
-          ${facts.fee ? `<li class="isWarn">${esc(facts.fee.amount ? U(`Opłata dealera za wydanie: ${money(facts.fee.amount, "EUR")}${facts.fee.net ? " netto" : ""} — w szacunku i w kalkulatorze programu 06`, `Сбор дилера за выдачу: ${money(facts.fee.amount, "EUR")}${facts.fee.net ? " нетто" : ""} — в оценке и в калькуляторе программы 06`) : U("Dealer dolicza opłatę za wydanie — kwota nieznana, dopisz ją w kalkulatorze", "Дилер добавляет сбор за выдачу — сумма неизвестна, впишите её в калькулятор"))}<q>${esc(facts.fee.quote)}</q></li>` : ""}
-          ${facts.isNew ? `<li class="isGood">${esc(U("Nowe auto — w ocenie „nowe” i gwarancja fabryczna, bez pytania o książkę serwisową", "Новое авто — в оценке «новое» и заводская гарантия, без вопроса о сервисной книжке"))}</li>` : ""}
-          ${facts.availability ? `<li>${esc(facts.availability.inStock ? U("Auto dostępne od ręki", "Авто в наличии") : U(`Dostępność: ${facts.availability.pl}`, `Наличие: ${facts.availability.ru}`))}${facts.availability.quote ? `<q>${esc(facts.availability.quote)}</q>` : ""}</li>` : ""}
-        </ul>
       </section>` : ""}
       <section class="ofPanelCard">
         <h2>${U("Wygląd oferty", "Вид предложения")}</h2>
         <div class="ofToggleList ofStyleList">${STYLES.map(([key]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> <span><b>${esc(U(styles[key][0], styles[key][2]))}</b><small>${esc(U(styles[key][1], styles[key][3]))}</small></span></label>`).join("")}</div>
-      </section>
-      <section class="ofPanelCard">
-        <h2>${U("Carvago (dla opiekuna)", "Carvago (для менеджера)")}</h2>
-        ${carvagoYear() && carvagoYear() < CARVAGO_FROM_YEAR ? `<p>${U(`Carvago nie ma aut zarejestrowanych przed ${CARVAGO_FROM_YEAR} r. — tego auta tam nie będzie (sprawdzone 11.10.2026).`, `На Carvago нет авто, зарегистрированных до ${CARVAGO_FROM_YEAR} г., — этого авто там не будет (проверено 11.10.2026).`)}</p>`
-          : readingCarvago ? `<p>${U("Szukam tego auta na Carvago (marka, model, rok i przebieg 1:1)…", "Ищу это авто на Carvago (марка, модель, год и пробег 1:1)…")}</p>`
-          : carvagoFound ? `<p class="ofPanelOk">${U(`Znalezione ${offer.carvago.by === "id" ? "po numerze ogłoszenia" : "po roku, przebiegu i modelu"}: w sprzedaży od ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `${offer.carvago.changes.length} zmian ceny` : "cena bez zmian"}${offer.carvago.active?.count ? `, ${numbers.format(offer.carvago.active.count)} podobnych aktywnych` : ""}.`, `Найдено ${offer.carvago.by === "id" ? "по номеру объявления" : "по году, пробегу и модели"}: в продаже с ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `изменений цены: ${offer.carvago.changes.length}` : "цена без изменений"}${offer.carvago.active?.count ? `, похожих активных: ${numbers.format(offer.carvago.active.count)}` : ""}.`)}</p><p><a href="${esc(offer.carvago.url)}" target="_blank" rel="noopener">${U("Otwórz na Carvago", "Открыть на Carvago")} ↗</a> ${U("W ofercie dla klienta bez nazwy i cen Carvago (konkurent, ceny z ich marżą) — tylko daty, % zmian i liczba ofert.", "В предложении клиенту без названия и цен Carvago (конкурент, цены с их наценкой) — только даты, % изменений и число предложений.")}</p>`
-          : offer.carvagoError ? `<p class="ofPanelError">${U("Carvago nie odpowiedziało", "Carvago не ответило")} (${esc(offer.carvagoError)}).</p>`
-          : offer.carvago ? `<p>${U("Tego auta nie ma na Carvago (marka, model, rok i przebieg 1:1; nowe — marka, model i przebieg).", "Этого авто нет на Carvago (марка, модель, год и пробег 1:1; новое — марка, модель и пробег).")}</p>` : `<p>${U("Jeszcze nie sprawdzone.", "Ещё не проверено.")}</p>`}
-        <button class="offerButton isSmall" type="button" data-read-carvago${readingCarvago ? " disabled" : ""}>${U("Sprawdź na Carvago", "Проверить на Carvago")}</button>
       </section>
       <section class="ofPanelCard">
         <h2>${U("Dane z ogłoszenia", "Данные объявления")}</h2>
@@ -1206,6 +1223,7 @@
         ${ad?.description ? `<details><summary>${U("Opis sprzedawcy (oryginał)", "Описание продавца (оригинал)")}</summary><div class="ofDescription">${esc(ad.description)}</div></details>` : ""}
         ${ad?.flags?.aiSummary ? `<details><summary>${U("Podsumowanie mobile.de (AI portalu)", "Сводка mobile.de (ИИ портала)")}</summary><div class="ofDescription">${esc([ad.flags.aiTags.join(" · "), ad.flags.aiSummary.replace(/\*\*/g, ""), ...(ad.flags.aiInsights || []).map((item) => `• ${item.title} — ${item.subtitle}`)].filter(Boolean).join("\n\n"))}</div></details>` : ""}
       </section>
+      ${own ? `
       <section class="ofPanelCard">
         <h2>${U("Kalkulacja", "Расчёт")}</h2>
         ${offer.calc && (offer.calc.method || "direct") === offerMethod()
@@ -1215,43 +1233,13 @@
         ${businessOnly() ? `<p class="ofPanelError">${U("Dealer sprzedaje tylko firmom / na eksport — zakup bezpośredni wyłączony.", "Дилер продаёт только фирмам / на экспорт — прямая покупка отключена.")}</p>` : ""}
         <button class="offerButton isSmall" type="button" data-calc-open>${offer.calc ? U("Zmień w kalkulatorze", "Изменить в калькуляторе") : U("Otwórz kalkulator", "Открыть калькулятор")}</button>
         ${offer.calc ? `<button class="offerButton isSmall" type="button" data-calc-drop>${U("Wróć do szacunku", "Вернуться к оценке")}</button>` : ""}
-      </section>
-      ${verdict ? `
-      <section class="ofPanelCard">
-        <h2>${U("Ocena", "Оценка")}</h2>
-        <label>${U("Werdykt", "Вердикт")}<select data-verdict-level>
-          <option value="">${U("Automatycznie", "Автоматически")} (${esc(U({ ok: "rekomendujemy", check: "do weryfikacji", risk: "nie rekomendujemy" }, { ok: "рекомендуем", check: "на проверку", risk: "не рекомендуем" })[verdict.auto])})</option>
-          <option value="ok"${offer.verdictLevel === "ok" ? " selected" : ""}>${U("Rekomendujemy do dalszego sprawdzenia", "Рекомендуем к дальнейшей проверке")}</option>
-          <option value="check"${offer.verdictLevel === "check" ? " selected" : ""}>${U("Do weryfikacji przed rezerwacją", "Нужна проверка до резервации")}</option>
-          <option value="risk"${offer.verdictLevel === "risk" ? " selected" : ""}>${U("Nie rekomendujemy", "Не рекомендуем")}</option>
-        </select></label>
-        <p>${U(`${verdict.all.filter((line) => line.level === "risk").length} czerwonych, ${verdict.all.filter((line) => line.level === "warn").length} żółtych, ${verdict.all.filter((line) => line.level === "ok").length} zielonych. Linie ukrywa się w trybie „Edytuj teksty”.`, `Красных: ${verdict.all.filter((line) => line.level === "risk").length}, жёлтых: ${verdict.all.filter((line) => line.level === "warn").length}, зелёных: ${verdict.all.filter((line) => line.level === "ok").length}. Строки скрываются в режиме «Править тексты».`)}</p>
       </section>` : ""}
       <section class="ofPanelCard">
         <h2>${U("Bloki na stronie i w PDF", "Блоки на странице и в PDF")}</h2>
         <div class="ofToggleList">${BLOCKS.map(([key, pl, russian]) => `<label><input type="checkbox" data-block-toggle="${key}"${(key === "poland" ? polandHidden(polandView()) : key === "allOptions" ? !(offer.shown || []).includes("allOptions") || isHidden(key) : isHidden(key)) ? "" : " checked"} /> ${esc(U(pl, russian))}</label>`).join("")}</div>
+        ${editedCount ? `<p>${U("Zmienione teksty", "Изменённые тексты")}: ${editedCount}. <button class="offerButton isSmall" type="button" data-reset-edits>${U("Przywróć teksty automatyczne", "Вернуть автоматические тексты")}</button></p>` : ""}
         ${polandView()?.saving < 0 ? `<p class="ofPanelError">${U(`Podobne auta w Polsce są średnio o ${esc(money(-polandView().saving, "PLN"))} tańsze niż to auto na gotowo — dlatego linia „W Polsce” jest domyślnie ukryta.`, `Похожие авто в Польше в среднем на ${esc(money(-polandView().saving, "PLN"))} дешевле, чем это авто «под ключ», — поэтому строка «В Польше» по умолчанию скрыта.`)}</p>` : ""}
-      </section>
-      <section class="ofPanelCard">
-        <h2>${U("Opiekun klienta", "Менеджер клиента")}</h2>
-        <p${manager.name && manager.phone ? "" : ' class="ofPanelError"'}>${manager.name && manager.phone ? U("Zapisywany w tej przeglądarce i w nowych ofertach.", "Сохраняется в этом браузере и в новых предложениях.") : U("Uzupełnij imię i telefon — klient zobaczy je w ofercie. Zapisują się w tej przeglądarce.", "Заполните имя и телефон — клиент увидит их в предложении. Сохраняются в этом браузере.")}</p>
-        <label>${U("Imię i nazwisko", "Имя и фамилия")}<input data-manager="name" value="${esc(manager.name || "")}" /></label>
-        <label>${U("Telefon", "Телефон")}<input data-manager="phone" value="${esc(manager.phone || "")}" inputmode="tel" /></label>
-        <label>E-mail<input data-manager="email" value="${esc(manager.email || "")}" inputmode="email" /></label>
-      </section>
-      <section class="ofPanelCard">
-        <h2>${U("Dane firmy", "Данные фирмы")}</h2>
-        <label>${U("Adres", "Адрес")}<input data-company="address" value="${esc(company.address || "")}" /></label>
-        <label>${U("Telefon firmy", "Телефон фирмы")}<input data-company="phone" value="${esc(company.phone || "")}" placeholder="${esc(U("do potwierdzenia", "уточнить"))}" /></label>
-        <label>E-mail<input data-company="email" value="${esc(company.email || "")}" /></label>
-        <label>${U("Godziny", "Часы работы")}<input data-company="hours" value="${esc(company.hours || "")}" /></label>
-        <div class="ofPanelRow">
-          <label>${U("Ocena Google", "Оценка Google")}<input data-company="googleRating" value="${esc(company.googleRating || "")}" placeholder="4,9" /></label>
-          <label>${U("Liczba opinii", "Число отзывов")}<input data-company="googleReviews" value="${esc(company.googleReviews || "")}" placeholder="126" /></label>
-        </div>
-        <label>${U("Link Google Maps", "Ссылка Google Maps")}<input data-company="mapsUrl" value="${esc(company.mapsUrl || "")}" placeholder="https://maps.app.goo.gl/…" /></label>
-      </section>
-      ${Object.keys(edits()).filter((key) => key !== "photo").length ? `<section class="ofPanelCard"><h2>${U("Zmienione teksty", "Изменённые тексты")}</h2><p>${U("Zmian", "Изменений")}: ${Object.keys(edits()).filter((key) => key !== "photo").length}.</p><button class="offerButton isSmall" type="button" data-reset-edits>${U("Przywróć teksty automatyczne", "Вернуть автоматические тексты")}</button></section>` : ""}`;
+      </section>`;
   }
 
   function adErrorText() {
@@ -1264,9 +1252,10 @@
   // The page's own buttons in the offer's language (owner 2026-10-11).
   function chrome() {
     document.documentElement.lang = ru() ? "ru" : "pl";
-    if (editButton) editButton.textContent = editing ? U("Zakończ edycję", "Закончить правку") : U("Edytuj teksty", "Править тексты");
+    if (editButton) editButton.textContent = editing ? U("Zakończ edycję", "Закончить правку") : U("Edytuj ofertę", "Править предложение");
     if (copyButton) copyButton.textContent = U("Kopiuj obraz", "Копировать картинку");
-    if (pdfButton) pdfButton.textContent = U("Pobierz PDF", "Скачать PDF");
+    // In program 06 the button opens the A4 sheets (owner 2026-10-11: "Przygotuj PDF").
+    if (pdfButton) pdfButton.textContent = EMBED ? U("Przygotuj PDF", "Подготовить PDF") : U("Pobierz PDF", "Скачать PDF");
     const mail = document.querySelector("[data-offer-mail]");
     if (mail) mail.textContent = U("Wyślij e-mail", "Отправить e-mail");
     const mailLabel = document.querySelector("[data-offer-mail-row] label");
@@ -1275,10 +1264,6 @@
     if (send) send.textContent = U("Wyślij", "Отправить");
     const back = document.querySelector(".offerBack");
     if (back) back.textContent = offer?.origin === "link" ? `← ${U("Oferta", "Предложение")}` : "← Monitoring";
-    document.querySelectorAll("[data-offer-view]").forEach((button) => {
-      button.textContent = button.dataset.offerView === "web" ? U("Strona", "Страница") : U("Arkusze PDF", "Листы PDF");
-      button.setAttribute("aria-pressed", String(button.dataset.offerView === viewMode));
-    });
     const link = document.querySelector("[data-offer-link]");
     if (link) link.textContent = U("Link dla klienta", "Ссылка для клиента");
     const linkLabel = document.querySelector("[data-offer-link-row] label");
@@ -1287,13 +1272,7 @@
     if (linkCopy) linkCopy.textContent = U("Kopiuj", "Копировать");
   }
 
-  // The page or the A4 sheets; the client's link (owner 2026-10-11).
-  document.querySelector("[data-offer-views]")?.addEventListener("click", (event) => {
-    const button = event.target.closest("[data-offer-view]");
-    if (!button || button.dataset.offerView === viewMode) return;
-    viewMode = button.dataset.offerView === "web" ? "web" : "sheets";
-    render();
-  });
+  // The client's link (owner 2026-10-11).
   const linkRow = document.querySelector("[data-offer-link-row]");
   const linkField = document.querySelector("[data-offer-link-field]");
   async function copyText(text) {
@@ -1411,18 +1390,22 @@
       // Then the weakest of the ten options (longer names in Russian), eight at least.
       const options = () => [...one.querySelectorAll(".ofOptions .ofOption")];
       const more = one.querySelector(".ofOptionsMore[data-all]");
+      // One option off the end of a row may not shorten the sheet, the
+      // whole row does: they go one by one, and those that gave nothing come back.
       let cut = false;
+      let best = overflow(one);
+      let idle = [];
       while (overflow(one) > 0 && options().length > 8) {
-        const before = overflow(one);
         const last = options().pop();
-        const parent = last.parentNode;
+        idle.push([last, last.parentNode]);
         last.remove();
-        if (overflow(one) >= before) {
-          parent.append(last);
-          break;
+        if (overflow(one) < best) {
+          best = overflow(one);
+          idle = [];
+          cut = true;
         }
-        cut = true;
       }
+      idle.reverse().forEach(([node, parent]) => parent.append(node));
       if (cut && more) more.textContent = optionsMore(Number(more.dataset.all) - options().length, more.dataset.list === "1");
     }
     const two = stage.querySelector('[data-page="2"]');
@@ -1460,7 +1443,7 @@
     // before the fonts, can be too tall for a moment).
     if (tooLong.length) {
       overflowWarned = true;
-      setStatus(U(`Strona ${tooLong.join(" i ")} nie mieści się na A4 — ukryj blok lub skróć tekst (Edytuj teksty).`, `Страница ${tooLong.join(" и ")} не помещается на A4 — скройте блок или сократите текст («Править тексты»).`), true);
+      setStatus(U(`Strona ${tooLong.join(" i ")} nie mieści się na A4 — ukryj blok lub skróć tekst (Edytuj ofertę).`, `Страница ${tooLong.join(" и ")} не помещается на A4 — скройте блок или сократите текст («Править предложение»).`), true);
     } else if (overflowWarned) {
       overflowWarned = false;
       setStatus("");
@@ -1496,26 +1479,74 @@
     }
   }
 
+  // A change is saved half a second after the last key; leaving the editing
+  // (or making the PDF) saves the ones still waiting first.
   const editTimers = new Map();
+  function later(key, run) {
+    window.clearTimeout(editTimers.get(key)?.timer);
+    editTimers.set(key, { run, timer: window.setTimeout(() => {
+      editTimers.delete(key);
+      run();
+    }, 500) });
+  }
+  async function flushEdits() {
+    const waiting = [...editTimers.values()];
+    editTimers.clear();
+    waiting.forEach((item) => window.clearTimeout(item.timer));
+    for (const item of waiting) await item.run();
+  }
   stage.addEventListener("input", (event) => {
+    const field = event.target.closest("[data-live]");
+    if (field && editing) {
+      later(field.dataset.live, () => saveLive(field));
+      return;
+    }
     const target = event.target.closest("[data-edit]");
     if (!target || !editing) return;
     const key = target.dataset.edit;
-    window.clearTimeout(editTimers.get(key));
-    editTimers.set(key, window.setTimeout(() => {
+    later(key, () => {
       const text = target.innerText.replace(/ /g, " ").trim();
       target.classList.add("isEdited");
-      save((stored) => ({ edits: { ...(stored.edits || {}), [key]: text } }), false);
-    }, 500));
+      return save((stored) => ({ edits: { ...(stored.edits || {}), [key]: text } }), false);
+    });
   });
   stage.addEventListener("keydown", (event) => {
     // One line per field: Enter ends the edit.
-    if (event.key === "Enter" && event.target.closest("[data-edit]")) {
+    if (event.key === "Enter" && event.target.closest("[data-edit], [data-live]")) {
       event.preventDefault();
-      event.target.closest("[data-edit]").blur();
+      event.target.closest("[data-edit], [data-live]").blur();
     }
   });
+  // The manager's or the firm's detail written on the page: this offer and
+  // the next ones (offer-store.js keeps it in this browser).
+  function saveLive(node) {
+    const [group, key] = String(node.dataset.live || "").split(":");
+    if (!["manager", "company"].includes(group) || !key) return;
+    const change = { [key]: node.innerText.replace(/\u00a0/g, " ").replace(/\s+/g, " ").trim() };
+    try {
+      if (group === "manager") store.setManager(change);
+      else store.setCompany(change);
+    } catch {
+      // Kept with this offer even when the browser refuses to store it.
+    }
+    return save((stored) => ({ [group]: { ...(stored[group] || {}), ...change } }), false);
+  }
+  stage.addEventListener("change", (event) => {
+    if (event.target.matches("[data-verdict-level]")) save({ verdictLevel: event.target.value || null });
+  });
   stage.addEventListener("click", (event) => {
+    const remove = event.target.closest("[data-remove-option]");
+    if (remove) {
+      event.preventDefault();
+      const id = remove.dataset.removeOption;
+      save((stored) => ({ removedOptions: [...new Set([...(stored.removedOptions || []), id])] }));
+      return;
+    }
+    if (event.target.closest("[data-restore-options]")) {
+      event.preventDefault();
+      save({ removedOptions: [] });
+      return;
+    }
     const toggle = event.target.closest("[data-hide]");
     if (toggle) {
       event.preventDefault();
@@ -1558,28 +1589,10 @@
         // Only the default for new offers.
       }
       save({ style: target.dataset.style });
-    } else if (target.matches("[data-verdict-level]")) {
-      save({ verdictLevel: target.value || null });
     } else if (target.matches("[data-client-salutation]")) {
       save((stored) => ({ client: { ...(stored.client || {}), salutation: target.value } }));
     } else if (target.matches("[data-client-name]")) {
       save((stored) => ({ client: { ...(stored.client || {}), name: target.value.trim() } }));
-    } else if (target.matches("[data-manager]")) {
-      const change = { [target.dataset.manager]: target.value.trim() };
-      try {
-        store.setManager(change);
-      } catch {
-        // Kept with this offer even when the browser refuses to store it.
-      }
-      save((stored) => ({ manager: { ...(stored.manager || {}), ...change } }));
-    } else if (target.matches("[data-company]")) {
-      const change = { [target.dataset.company]: target.value.trim() };
-      try {
-        store.setCompany(change);
-      } catch {
-        // As above.
-      }
-      save((stored) => ({ company: { ...(stored.company || {}), ...change } }));
     } else if (target.matches("[data-photo]")) {
       const url = target.value.trim();
       save((stored) => {
@@ -1597,8 +1610,7 @@
     }
   });
   panel.addEventListener("click", (event) => {
-    if (event.target.closest("[data-read-carvago]")) readCarvago();
-    else if (event.target.closest("[data-calc-open]")) openCalculator(defaultTab());
+    if (event.target.closest("[data-calc-open]")) openCalculator(defaultTab());
     else if (event.target.closest("[data-calc-drop]")) save({ calc: null });
     else if (event.target.closest("[data-read-ad]")) readAd();
     else if (event.target.closest("[data-reset-edits]")) save((stored) => ({ edits: stored.edits?.photo ? { photo: stored.edits.photo } : {} }));
@@ -1623,12 +1635,13 @@
     return { car, estimate: { ...estimate, carBruttoEur: price, parts: result.parts, total: result.total } };
   }
 
-  editButton?.addEventListener("click", () => {
-    editing = !editing;
-    editButton.setAttribute("aria-pressed", editing ? "true" : "false");
-    editButton.textContent = editing ? U("Zakończ edycję", "Закончить правку") : U("Edytuj teksty", "Править тексты");
+  async function setEditing(on) {
+    if (!on) await flushEdits();
+    editing = on;
+    editButton?.setAttribute("aria-pressed", editing ? "true" : "false");
     render();
-  });
+  }
+  editButton?.addEventListener("click", () => setEditing(!editing));
 
   // ---- The calculator (wave 3) ------------------------------------------------------------
   // The calculators page itself in a window (calculators.html?embed=1, as
@@ -1788,12 +1801,27 @@
     const last = Date.parse(offer.carvago?.readAt || offer.carvagoTriedAt || "");
     return !Number.isFinite(last) || Date.now() - last > 3600000;
   }
+  // What Carvago gave, for the status line (owner 2026-10-11: no panel card —
+  // found, its dates and price changes are in the offer; not, a notice only).
+  function carvagoNotice() {
+    if (!offer || CLIENT) return "";
+    if (carvagoYear() && carvagoYear() < CARVAGO_FROM_YEAR) return U(`Carvago: tego ogłoszenia nie ma (Carvago ma auta od ${CARVAGO_FROM_YEAR} r.).`, `Carvago: этого объявления нет (на Carvago авто с ${CARVAGO_FROM_YEAR} г.).`);
+    if (offer.carvago?.found) {
+      const moves = (offer.carvago.changes || []).filter((change) => change.at && Number(change.share)).length;
+      return moves
+        ? U(`Carvago: ogłoszenie znalezione, w ofercie ${moves} ${plural(moves, "zmiana", "zmiany", "zmian")} ceny.`, `Carvago: объявление найдено, в предложении изменений цены: ${moves}.`)
+        : U("Carvago: ogłoszenie znalezione — cena bez zmian.", "Carvago: объявление найдено — цена без изменений.");
+    }
+    if (offer.carvagoError) return U(`Carvago nie odpowiedziało (${offer.carvagoError}).`, `Carvago не ответило (${offer.carvagoError}).`);
+    if (offer.carvago) return U("Carvago: tego ogłoszenia nie znaleziono.", "Carvago: это объявление не найдено.");
+    return "";
+  }
   let readingCarvago = false;
   async function readCarvago() {
     const CARVAGO = window.AUTOGOOD_OFFER_CARVAGO;
     if (!offer || readingCarvago || !CARVAGO) return;
     readingCarvago = true;
-    render();
+    setStatus(U("Szukam tego ogłoszenia na Carvago…", "Ищу это объявление на Carvago…"));
     try {
       const view = carView();
       const rule = offer.market?.own?.similar?.rule || {};
@@ -1820,6 +1848,7 @@
     } finally {
       readingCarvago = false;
       render();
+      setStatus(carvagoNotice());
     }
   }
 
@@ -2095,8 +2124,9 @@
     pdfButton.disabled = true;
     setStatus(U("Przygotowuję PDF…", "Готовлю PDF…"));
     try {
-      // The sheets drawn again: a text edited on the web page is in them.
-      if (viewMode === "web" && !editing) render();
+      // The sheets drawn again without the editing marks: what was typed last is in them.
+      if (editing) await setEditing(false);
+      else render();
       const { bytes, name } = await buildPdf();
       download(new Blob([bytes], { type: "application/pdf" }), name);
       if (!CLIENT) await save({ exportedAt: new Date().toISOString(), draft: false }, false);
@@ -2111,7 +2141,8 @@
   async function copyPicture() {
     if (!offer) return;
     copyButton.disabled = true;
-    if (viewMode === "web" && !editing) render();
+    if (editing) await setEditing(false);
+    else render();
     setStatus(U("Przygotowuję obraz strony 1…", "Готовлю картинку страницы 1…"));
     const blobPromise = captureSheet(1, 2).then((shot) => new Promise((resolve, reject) => shot.canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png"))), "image/png")));
     try {
@@ -2130,7 +2161,16 @@
       copyButton.disabled = false;
     }
   }
-  pdfButton?.addEventListener("click", makePdf);
+  // Program 06: the A4 sheets on their own page, where the PDF is saved
+  // (owner 2026-10-11: one view here, the PDF "as before").
+  pdfButton?.addEventListener("click", async () => {
+    if (!EMBED) return makePdf();
+    if (editing) await setEditing(false);
+    const sheets = new URL("oferta.html", window.location.href);
+    sheets.search = "";
+    sheets.searchParams.set("id", offer?.id || offerId);
+    window.open(sheets.toString(), "_blank", "noopener");
+  });
 
   // ---- E-mail to the client (owner 2026-10-11) ---------------------------------------------
   // "Wyślij e-mail": a line for the client's address, then "Wyślij": the PDF
@@ -2288,16 +2328,16 @@
       clean.searchParams.delete("new");
       window.history.replaceState(null, "", clean.toString());
     }
-    // An offer made from a link goes back to program 06 "Oferta".
+    // An offer made from a link goes back to its whole page in program 06 "Oferta".
     if (offer.origin === "link") {
       const back = document.querySelector(".offerBack");
       if (back) {
-        back.href = "./oferty.html";
+        back.href = `./oferty.html?oferta=${encodeURIComponent(offer.id)}`;
         back.textContent = `← ${U("Oferta", "Предложение")}`;
       }
     }
     render();
-    setStatus(`${U("Oferta", "Предложение")} ${offer.number || ""} · ${U("zapisana w tej przeglądarce", "сохранено в этом браузере")}`);
+    setStatus(carvagoNotice() || `${U("Oferta", "Предложение")} ${offer.number || ""} · ${U("zapisana w tej przeglądarce", "сохранено в этом браузере")}`);
     if (!offer.ad && !offer.adTriedAt) readAd();
     else if (carvagoDue()) readCarvago();
   }

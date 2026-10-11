@@ -1270,18 +1270,22 @@ function customFinalItem(label, currency) {
     currency
   };
 }
+// name: the field's key ("transport", "inspection"…), read by the offer of
+// program 06 to open the same calculation again (owner 2026-10-11).
 function NumInput({
   label,
   value,
   onChange,
   suffix,
-  className = ""
+  className = "",
+  name
 }) {
   return /*#__PURE__*/React.createElement("label", {
     className: `field ${className}`
   }, /*#__PURE__*/React.createElement("span", null, label), /*#__PURE__*/React.createElement("div", {
     className: "inputWrap"
   }, /*#__PURE__*/React.createElement("input", {
+    name: name,
     inputMode: "decimal",
     type: "text",
     value: value,
@@ -1295,7 +1299,8 @@ function OptionalAmountInput({
   checked,
   onToggle,
   onChange,
-  suffix
+  suffix,
+  name
 }) {
   return /*#__PURE__*/React.createElement("label", {
     className: `field optionalAmountField ${checked ? "isChecked" : ""}`
@@ -1308,6 +1313,7 @@ function OptionalAmountInput({
   }), /*#__PURE__*/React.createElement("span", null, label)), checked && /*#__PURE__*/React.createElement("div", {
     className: "inputWrap"
   }, /*#__PURE__*/React.createElement("input", {
+    name: name,
     inputMode: "decimal",
     type: "text",
     value: value,
@@ -3303,6 +3309,7 @@ function App() {
     onToggle: setCustomsDutyEnabled
   }), tab.fields.map(field => field.optional ? /*#__PURE__*/React.createElement(OptionalAmountInput, {
     key: field.key,
+    name: field.key,
     label: field.label[lang],
     checked: Boolean(values[`${field.key}Enabled`]),
     value: values[field.key] || "",
@@ -3311,6 +3318,7 @@ function App() {
     suffix: field.currency
   }) : /*#__PURE__*/React.createElement(NumInput, {
     key: field.key,
+    name: field.key,
     label: field.label[lang],
     value: values[field.key] || "",
     onChange: value => setField(field.key, value),

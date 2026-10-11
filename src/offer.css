@@ -1107,10 +1107,6 @@
  * Program 06 (oferta.html?embed=1&view=web) and the client's link
  * (?view=client): the sheets' blocks one after another on a white page,
  * larger type than A4; the sheets themselves wait out of sight for the PDF. */
-.offerViewSwitch { display: inline-flex; gap: 0; }
-.offerViewSwitch .offerButton { border-radius: 0; }
-.offerViewSwitch .offerButton:first-child { border-radius: 8px 0 0 8px; }
-.offerViewSwitch .offerButton:last-child { border-radius: 0 8px 8px 0; margin-left: -1px; }
 .ofSheetsHold { position: absolute; left: -12000px; top: 0; width: 794px; visibility: hidden; pointer-events: none; }
 .offerStage.isWeb { align-items: stretch; }
 .ofWeb { box-sizing: border-box; position: relative; width: 100%; max-width: 1040px; margin: 0 auto; padding: 22px 26px 18px; border-radius: 16px; background: #ffffff; box-shadow: 0 1px 2px rgba(16, 32, 48, 0.06), 0 10px 30px -12px rgba(16, 32, 48, 0.18); color: var(--of-ink); font-size: 14px; }
@@ -1123,7 +1119,7 @@
 .owSide { display: grid; gap: 12px; align-content: start; min-width: 0; }
 .owTitle .ofKicker { margin: 0 0 4px; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--of-gold, #b39256); text-shadow: none; }
 .owTitle .ofTitle { margin: 0; font-size: 28px; line-height: 1.15; color: var(--of-navy); text-shadow: none; }
-.owTitle .ofAdLink { margin-top: 8px; display: inline-flex; }
+.owTitle .ofAdLink { position: static; margin-top: 8px; display: inline-flex; padding: 0; background: transparent; }
 .ofWeb .ofPriceBox { margin: 0; width: auto; padding: 16px 18px; border-radius: 14px; background: var(--of-navy); color: #ffffff; }
 .ofWeb .ofPriceBox .ofLabel { color: var(--of-gold-soft, #d9c08a); }
 .ofWeb .ofPriceBox .ofPrice { color: #ffffff; font-size: 34px; }
@@ -1163,7 +1159,7 @@
 }
 
 /* The client's page: the offer only — no site bar, tools or settings. */
-.ofClient .agGlobalNav, .ofClient .offerBack, .ofClient .offerPanel, .ofClient [data-offer-views], .ofClient [data-offer-edit],
+.ofClient .agGlobalNav, .ofClient .offerBack, .ofClient .offerPanel, .ofClient [data-offer-edit],
 .ofClient [data-offer-link], .ofClient [data-offer-copy], .ofClient [data-offer-mail], .ofClient .offerStatus, .ofClient .ofHideToggle { display: none !important; }
 .ofClient .offerWork { grid-template-columns: minmax(0, 1fr); padding: 18px 12px 40px; }
 .ofClient .offerBar { justify-content: space-between; }
@@ -1191,3 +1187,17 @@
   .ofWeb .ofHeadBrand { flex-wrap: wrap; gap: 8px; }
   .ofWeb .ofHeadMeta { width: 100%; text-align: left; }
 }
+/* Written on the page in "Edytuj ofertę" (owner 2026-10-11): the manager, the
+ * firm and the verdict instead of the panel's cards; an option taken off the
+ * offer with its "×" (the next strongest takes its place). Screen only: the
+ * PDF's copy of a sheet drops [data-offer-hide]. */
+.isEditing .ofLive { outline: 1px dashed #9fb6c8; outline-offset: 2px; border-radius: 3px; cursor: text; min-width: 2ch; }
+.isEditing .ofLive:focus { outline: 2px solid var(--of-brand); background: #fbfdff; }
+.ofLive:empty::before { content: attr(data-placeholder); color: #8a99a8; font-weight: 400; }
+.isEditing .ofOption { display: inline-flex; align-items: center; gap: 2px; }
+.ofOptionRemove { min-width: 18px; margin: -2px -5px -2px 0; padding: 0 3px; border: 0; border-radius: 999px; background: none; color: inherit; font: 700 13px/18px var(--of-font); opacity: 0.6; cursor: pointer; }
+.ofOptionRemove:hover, .ofOptionRemove:focus-visible { opacity: 1; background: #fde8e6; color: #b42318; }
+.ofLiveLink { display: inline-block; margin-top: 8px; border: 0; padding: 0; background: none; color: var(--of-brand); font: 600 11px var(--of-font); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.ofLiveSelect { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 6px 0 2px; color: var(--of-muted); font-size: 11px; font-weight: 600; }
+.ofLiveSelect select { max-width: 100%; padding: 2px 4px; border: 1px solid var(--of-line-strong); border-radius: 6px; background: #ffffff; color: var(--of-ink); font: 600 11.5px var(--of-font); }
+.ofLiveRow { color: var(--of-muted); overflow-wrap: anywhere; }

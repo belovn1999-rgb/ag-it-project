@@ -6,7 +6,7 @@
  * goes onto page 2 as a picture, one to one as the calculator draws it.
  * The offer page's "Kalkulacja" window uses the same reading.
  *
- * window.AUTOGOOD_OFFER_CALC: TABS, url(input), read(doc), capture(frame).
+ * window.AUTOGOOD_OFFER_CALC: TABS, url(input), read(doc), fields(doc), capture(frame).
  */
 (() => {
   // The calculator's tabs for the three ways of buying (src/main.jsx).
@@ -15,12 +15,23 @@
   // input: { method, lang, gross, net (EUR), engine, transport, inspection, url,
   // extra: { label, amount, currency, vat } — the dealer's delivery fee as the
   // calculator's own line, offer: true — the page-06 look (embed=offer: no
-  // print / screenshot / save, no second link field; owner 2026-10-11) }
-  function url({ method = "direct", lang = "pl", gross = 0, net = 0, engine = 3, transport = 0, inspection = 0, url: adUrl = "", extra = null, offer = false } = {}) {
+  // print / screenshot / save, no second link field; owner 2026-10-11),
+  // kept: the manager's own values from the calculator before (its fields as
+  // typed: car, transport, inspection, discount, germanCommission; and its
+  // rate) — an offer opened again shows the same calculation }
+  function url({ method = "direct", lang = "pl", gross = 0, net = 0, engine = 3, transport = 0, inspection = 0, url: adUrl = "", extra = null, offer = false, kept = null } = {}) {
     const tab = TABS[method] ?? 0;
     const params = new URLSearchParams({ embed: offer ? "offer" : "1", tab: String(tab), lang: lang === "ru" ? "ru" : "pl", car: String(Math.round(tab === 3 ? net : gross)), engine: String(engine) });
     if (transport) params.set("transport", String(Math.round(transport)));
     if (inspection) params.set("inspection", String(Math.round(inspection)));
+    // The car's price only on its own way of buying (net on VAT 23%, gross else).
+    const own = kept && (kept.method || "direct") === method;
+    ["transport", "inspection", "discount", ...(own ? ["car", "germanCommission"] : [])].forEach((key) => {
+      const value = String(kept?.[key] ?? "").trim();
+      if (value) params.set(key, value);
+      else if (kept && key in kept && key !== "car") params.delete(key);
+    });
+    if (Number(kept?.rate) > 0) params.set("rate", String(kept.rate));
     if (adUrl) params.set("mobileUrl", adUrl);
     if (extra?.amount > 0 && extra.label) {
       params.set("extraLabel", extra.label);
@@ -45,6 +56,15 @@
     if (!rows.length || !total) throw new Error("kalkulator jeszcze liczy — spróbuj za chwilę");
     const rate = Number(String(text(doc.querySelector(".totalBarRate")).match(/(\d+[.,]\d+)/)?.[1] || "").replace(",", ".")) || 0;
     return { rows, total, rate };
+  }
+  // The manager's own values in the calculator's fields (main.jsx names them).
+  function fields(doc) {
+    const kept = {};
+    ["car", "transport", "inspection", "discount", "germanCommission"].forEach((key) => {
+      const input = doc?.querySelector(`input[name="${key}"]`);
+      if (input) kept[key] = String(input.value || "").trim();
+    });
+    return kept;
   }
 
   // The result panel as a JPEG data URL, drawn inside the calculator's own
@@ -132,5 +152,5 @@
     }
   }
 
-  window.AUTOGOOD_OFFER_CALC = { TABS, url, read, capture };
+  window.AUTOGOOD_OFFER_CALC = { TABS, url, read, fields, capture };
 })();

@@ -1098,12 +1098,15 @@ function customFinalItem(label, currency) {
   };
 }
 
-function NumInput({ label, value, onChange, suffix, className = "" }) {
+// name: the field's key ("transport", "inspection"…), read by the offer of
+// program 06 to open the same calculation again (owner 2026-10-11).
+function NumInput({ label, value, onChange, suffix, className = "", name }) {
   return (
     <label className={`field ${className}`}>
       <span>{label}</span>
       <div className="inputWrap">
         <input
+          name={name}
           inputMode="decimal"
           type="text"
           value={value}
@@ -1116,7 +1119,7 @@ function NumInput({ label, value, onChange, suffix, className = "" }) {
   );
 }
 
-function OptionalAmountInput({ label, value, checked, onToggle, onChange, suffix }) {
+function OptionalAmountInput({ label, value, checked, onToggle, onChange, suffix, name }) {
   return (
     <label className={`field optionalAmountField ${checked ? "isChecked" : ""}`}>
       <span className="optionalAmountLabel">
@@ -1130,6 +1133,7 @@ function OptionalAmountInput({ label, value, checked, onToggle, onChange, suffix
       {checked && (
         <div className="inputWrap">
           <input
+            name={name}
             inputMode="decimal"
             type="text"
             value={value}
@@ -3200,6 +3204,7 @@ function App() {
             field.optional ? (
               <OptionalAmountInput
                 key={field.key}
+                name={field.key}
                 label={field.label[lang]}
                 checked={Boolean(values[`${field.key}Enabled`])}
                 value={values[field.key] || ""}
@@ -3210,6 +3215,7 @@ function App() {
             ) : (
               <NumInput
                 key={field.key}
+                name={field.key}
                 label={field.label[lang]}
                 value={values[field.key] || ""}
                 onChange={(value) => setField(field.key, value)}
