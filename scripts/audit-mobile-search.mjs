@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const mobileSource = await fs.readFile(path.join(repoRoot, "src/mobile.js"), "utf8");
-const marketAnalysisSource = await fs.readFile(path.join(repoRoot, "src/mobile-market-analysis.js"), "utf8");
+// Page 3 "Monitoring" moved to its own file (2026-10-11): both are searched.
+const marketAnalysisSource = (await Promise.all(["src/mobile-market-analysis.js", "src/mobile-monitoring.js"]
+  .map((file) => fs.readFile(path.join(repoRoot, file), "utf8")))).join("\n");
 const mobileHtml = await fs.readFile(path.join(repoRoot, "mobile.html"), "utf8");
 const generatedSource = await fs.readFile(
   path.join(repoRoot, "src/mobile-model-catalog.generated.js"),

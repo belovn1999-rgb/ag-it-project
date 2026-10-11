@@ -5,7 +5,9 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-const source = readFileSync(new URL("../src/mobile-market-analysis.js", import.meta.url), "utf8");
+// Page 3 lives in its own file since 2026-10-11: both files are searched.
+const source = ["mobile-market-analysis.js", "mobile-monitoring.js"]
+  .map((name) => readFileSync(new URL(`../src/${name}`, import.meta.url), "utf8")).join("\n");
 function functionSource(name) {
   const start = source.indexOf(`function ${name}(`);
   assert.ok(start >= 0, `${name} not found`);

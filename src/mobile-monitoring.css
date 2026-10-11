@@ -3,6 +3,33 @@
    stylesheets, so these rules win on source order. The smallest-text rule
    also covers page 2 "Analiza" (owner: "apply there too where similar"). */
 
+/* ---- Tokens of page 3 (audit wave 3, 2026-10-11) -------------------------
+   Every colour and radius below comes from here. Neutral, green, red and the
+   radii are tokens.css; page 3 adds its own states: blue = the picked choice,
+   yellow = "Do negocjacji", orange = near the filters ("Blisko filtrów"). */
+:root {
+  --mon-surface: var(--color-surface);
+  --mon-on-pick: var(--color-accent-ink);
+  --mon-ink-strong: var(--color-ink);
+  --mon-good: var(--color-success);
+  --mon-good-wash: color-mix(in srgb, var(--color-success) 6%, transparent);
+  --mon-pick: #1d5fd0;
+  --mon-pick-wash: rgba(29, 95, 208, 0.07);
+  --mon-deal-line: #d9a400;
+  --mon-deal-wash: #fff8e1;
+  --mon-deal-tint: rgba(184, 138, 0, 0.12);
+  --mon-deal-badge: #fff3cd;
+  --mon-deal-ink: #6b4e00;
+  --mon-near: #e8710a;
+  --mon-near-wash: #fff6ee;
+  --mon-near-badge: #ffdcc0;
+  --mon-near-ink: #8a3d08;
+  --mon-extra-ink: #8a4b00;
+  --mon-swatch-edge: rgb(0 0 0 / 0.25);
+  --mon-radius-pill: 999px;
+  --mon-radius-bar: 2px;
+}
+
 /* ---- Readable text: nothing below 12px, the list at 14px ---------------- */
 [data-mobile-page-view="history"],
 .mobileMarketAnalysisView {
@@ -41,8 +68,8 @@
   margin-top: var(--space-md);
   padding: 8px 14px;
   border: 1px solid var(--color-rule);
-  border-radius: 10px;
-  background: #fff;
+  border-radius: var(--radius-xl);
+  background: var(--mon-surface);
   color: var(--color-ink);
   font: inherit;
   font-size: 0.875rem;
@@ -57,13 +84,13 @@
 
 .mobileMonitoringParamsLine b {
   flex: none;
-  color: #1d5fd0;
+  color: var(--mon-pick);
   font-size: 0.8125rem;
   white-space: nowrap;
 }
 
 .mobileMonitoringParamsLine:hover {
-  border-color: #1d5fd0;
+  border-color: var(--mon-pick);
 }
 
 .mobileMonitoringSince {
@@ -80,8 +107,8 @@
 .mobileMonitoringSettings {
   margin-top: var(--space-lg);
   border: 1px solid var(--color-rule);
-  border-radius: 12px;
-  background: #fff;
+  border-radius: var(--radius-card);
+  background: var(--mon-surface);
 }
 
 .mobileMonitoringSettings > summary {
@@ -124,8 +151,8 @@
   gap: 6px 14px;
   margin-top: var(--space-sm);
   padding: 8px 12px;
-  border-radius: 8px;
-  background: rgba(29, 95, 208, 0.07);
+  border-radius: var(--radius-lg);
+  background: var(--mon-pick-wash);
   color: var(--color-ink);
   font-size: 0.8125rem;
 }
@@ -161,7 +188,7 @@
   min-height: 32px;
   padding: 4px 8px;
   border: 1px solid var(--color-rule);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font: inherit;
 }
 
@@ -174,8 +201,8 @@
   width: 32px;
   height: 32px;
   border: 1px solid var(--color-rule);
-  border-radius: 8px;
-  background: #fff;
+  border-radius: var(--radius-lg);
+  background: var(--mon-surface);
   color: var(--color-ink);
   font-size: 1rem;
   cursor: pointer;
@@ -221,7 +248,7 @@
 }
 
 .mobileMonitoringDate.isListed {
-  color: #0d6447;
+  color: var(--mon-good);
 }
 
 .mobileMonitoringTable td.isNum:has(.mobileMonitoringAdPrice) {
@@ -236,12 +263,12 @@
 .mobileMonitoringStar {
   width: 32px;
   height: 32px;
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font-size: 1.25rem;
 }
 
 .mobileMonitoringStar:hover {
-  background: rgba(184, 138, 0, 0.12);
+  background: var(--mon-deal-tint);
 }
 
 .mobileMonitoringDetailsToggle,
@@ -252,15 +279,15 @@
   margin-top: 6px;
   padding: 0 10px;
   border: 1px solid var(--color-rule);
-  border-radius: 8px;
-  background: #fff;
+  border-radius: var(--radius-lg);
+  background: var(--mon-surface);
   font-size: 0.8125rem;
   text-decoration: none;
 }
 
 .mobileMonitoringDetailsToggle:hover,
 .mobileMonitoringMore:hover {
-  border-color: #1d5fd0;
+  border-color: var(--mon-pick);
 }
 
 .mobileMonitoringCountry {
@@ -339,7 +366,7 @@
 /* ---- The client PDF (drawn off screen, never shown on the page) --------- */
 .mobileMonitoringClientReport {
   padding: 32px 36px;
-  background: #fff;
+  background: var(--mon-surface);
   color: var(--color-ink);
 }
 
@@ -388,7 +415,7 @@
 .mobileMonitoringClientTable a {
   display: inline-block;
   margin-top: 4px;
-  color: #1d5fd0;
+  color: var(--mon-pick);
   font-size: 0.8125rem;
 }
 
@@ -400,8 +427,8 @@
   gap: 4px 14px;
   margin: 0 0 var(--space-sm);
   padding: 8px 12px;
-  border-radius: 8px;
-  background: rgba(13, 100, 71, 0.06);
+  border-radius: var(--radius-lg);
+  background: var(--mon-good-wash);
   color: var(--color-ink);
   font-size: 0.8125rem;
 }
@@ -412,7 +439,7 @@
 }
 
 .mobileMonitoringDrop {
-  color: #0d6447;
+  color: var(--mon-good);
   font-weight: 600;
 }
 
@@ -420,9 +447,9 @@
   display: inline-block;
   margin-left: 6px;
   padding: 1px 8px;
-  border-radius: 999px;
-  background: #fff3cd;
-  color: #6b4e00;
+  border-radius: var(--mon-radius-pill);
+  background: var(--mon-deal-badge);
+  color: var(--mon-deal-ink);
   font-size: 0.75rem;
   font-weight: 700;
   white-space: nowrap;
@@ -446,36 +473,36 @@
   min-height: 32px;
   padding: 4px 8px;
   border: 1px solid var(--color-rule);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   font: inherit;
 }
 
 .mobileMonitoringExtraNote {
   margin: 0 0 var(--space-sm);
   padding: 8px 12px;
-  border-left: 3px solid #d9a400;
-  border-radius: 0 8px 8px 0;
-  background: #fff8e1;
+  border-left: 3px solid var(--mon-deal-line);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  background: var(--mon-deal-wash);
   color: var(--color-ink);
   font-size: 0.8125rem;
 }
 
 /* Owner 2026-10-05: orange marks what is just outside the filters. */
 .mobileMonitoringTable tr.isExtra > td {
-  background: #fff6ee;
+  background: var(--mon-near-wash);
 }
 
 .mobileMonitoringTable tr.isExtra > td:first-child {
-  box-shadow: inset 3px 0 0 #e8710a;
+  box-shadow: inset 3px 0 0 var(--mon-near);
 }
 
 .mobileMonitoringTable .mobileMarketTableTitle small.mobileMonitoringMiss {
   display: inline-block;
   margin: 4px 0 2px;
   padding: 2px 8px;
-  border-radius: 6px;
-  background: #ffdcc0;
-  color: #8a3d08;
+  border-radius: var(--radius-sm);
+  background: var(--mon-near-badge);
+  color: var(--mon-near-ink);
   font-weight: 700;
 }
 
@@ -501,8 +528,8 @@
   min-height: 32px;
   padding: 4px 8px;
   border: 1px solid var(--color-rule);
-  border-radius: 8px;
-  background: #fff;
+  border-radius: var(--radius-lg);
+  background: var(--mon-surface);
   color: var(--color-ink);
   font: inherit;
   font-weight: 700;
@@ -535,9 +562,9 @@ button.mobileMonitoringMac {
   min-height: 30px;
   padding: 0 10px;
   border: 1px dashed var(--color-rule);
-  border-radius: 8px;
-  background: #fff;
-  color: #1d5fd0;
+  border-radius: var(--radius-lg);
+  background: var(--mon-surface);
+  color: var(--mon-pick);
   font: inherit;
   font-size: 0.8125rem;
   font-weight: 600;
@@ -568,7 +595,7 @@ button.mobileMonitoringMac {
 .mobileMonitoringSummaryCountry .agFlag {
   display: inline-block;
   vertical-align: -1px;
-  border-radius: 2px;
+  border-radius: var(--mon-radius-bar);
 }
 
 .mobileMonitoringSummaryCountry b {
@@ -589,8 +616,8 @@ button.mobileMonitoringMac {
   gap: 6px 8px;
   margin: 0;
   padding: 6px 10px;
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--color-brand) 5%, #fff);
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--color-brand) 5%, var(--mon-surface));
   font-size: 0.8125rem;
 }
 
@@ -604,7 +631,7 @@ button.mobileMonitoringMac {
   min-height: 28px;
   padding: 2px 8px;
   border: 1px solid var(--color-rule);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font: inherit;
   text-align: right;
 }
@@ -613,7 +640,7 @@ button.mobileMonitoringMac {
   min-height: 28px;
   padding: 2px 6px;
   border: 1px solid var(--color-rule);
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font: inherit;
 }
 
@@ -726,8 +753,8 @@ button.mobileMonitoringMac {
   min-height: 26px;
   padding: 0 8px;
   border: 1px solid var(--color-rule);
-  border-radius: 999px;
-  background: #fff;
+  border-radius: var(--mon-radius-pill);
+  background: var(--mon-surface);
   color: var(--color-muted);
   font: inherit;
   font-size: 0.75rem;
@@ -742,7 +769,7 @@ button.mobileMonitoringMac {
 
 .mobileMonitoringSubCountries .agFlag {
   display: block;
-  border-radius: 2px;
+  border-radius: var(--mon-radius-bar);
 }
 
 .mobileMonitoringSettingsFoot {
@@ -765,8 +792,8 @@ button.mobileMonitoringMac {
   min-height: 36px;
   padding: 0 12px;
   border: 1px solid var(--color-rule);
-  border-radius: 999px;
-  background: #fff;
+  border-radius: var(--mon-radius-pill);
+  background: var(--mon-surface);
   color: var(--color-ink);
   font: inherit;
   font-size: 0.875rem;
@@ -775,13 +802,13 @@ button.mobileMonitoringMac {
 }
 
 .mobileMonitoringCountryTab:hover {
-  border-color: #1d5fd0;
+  border-color: var(--mon-pick);
 }
 
 .mobileMonitoringCountryTab.isActive {
-  border-color: #1d5fd0;
-  background: #1d5fd0;
-  color: #fff;
+  border-color: var(--mon-pick);
+  background: var(--mon-pick);
+  color: var(--mon-on-pick);
 }
 
 .mobileMonitoringCountryTab b {
@@ -803,7 +830,7 @@ button.mobileMonitoringMac {
 }
 
 .mobileMonitoringCountryTab.isActive em {
-  color: #fff;
+  color: var(--mon-on-pick);
 }
 
 .mobileMonitoringCountryFlags {
@@ -813,8 +840,8 @@ button.mobileMonitoringMac {
 
 .mobileMonitoringCountryFlags .agFlag {
   display: block;
-  border-radius: 2px;
-  box-shadow: 0 0 0 0.5px rgb(0 0 0 / 0.25);
+  border-radius: var(--mon-radius-bar);
+  box-shadow: 0 0 0 0.5px var(--mon-swatch-edge);
 }
 
 .mobileMonitoringShowMore {
@@ -849,8 +876,8 @@ button.mobileMonitoringMac {
   gap: 4px;
   padding: 10px 12px;
   border: 1px solid color-mix(in srgb, var(--color-brand) 35%, var(--color-rule));
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--color-brand) 4%, #fff);
+  border-radius: var(--radius-xl);
+  background: color-mix(in srgb, var(--color-brand) 4%, var(--mon-surface));
 }
 
 .mobileMonitoringBudgetHead {
@@ -898,7 +925,7 @@ button.mobileMonitoringMac {
 }
 
 .mobileMonitoringBudgetLine.isOwn {
-  color: #8a3d08;
+  color: var(--mon-near-ink);
 }
 
 .mobileMonitoringBudgetLine.isNone {
@@ -930,7 +957,7 @@ button.mobileMonitoringMac {
 .mobileMonitoringTileSilent {
   display: grid;
   gap: 2px;
-  color: #8a3d08;
+  color: var(--mon-near-ink);
 }
 
 .mobileMonitoringTileSilent b {
@@ -939,12 +966,12 @@ button.mobileMonitoringMac {
 
 .mobileMonitoringTileSilent small,
 .mobileMonitoringTileNote.isSilent {
-  color: #8a3d08;
+  color: var(--mon-near-ink);
   font-weight: 600;
 }
 
 .mobileMonitoringCheckInfo .mobileMonitoringSilent {
-  color: #8a3d08;
+  color: var(--mon-near-ink);
   font-weight: 600;
 }
 
@@ -983,7 +1010,7 @@ button.mobileMonitoringMac {
 }
 
 .mobileMonitoringTileNote.isCut {
-  color: #8a4b00;
+  color: var(--mon-extra-ink);
 }
 
 /* Audit p. 7: the prices in the middle, one card per country. */
@@ -1009,12 +1036,12 @@ button.mobileMonitoringMac {
   gap: 6px;
   padding: 10px 12px;
   border: 1px solid var(--color-rule);
-  border-radius: 10px;
-  background: #fff;
+  border-radius: var(--radius-xl);
+  background: var(--mon-surface);
 }
 
 .mobileMonitoringSummaryCard.isAll {
-  border-color: #12233f;
+  border-color: var(--mon-ink-strong);
 }
 
 .mobileMonitoringSummaryCard > span {
@@ -1068,7 +1095,7 @@ button.mobileMonitoringMac {
 }
 .mobileMonitoringKpi {
   border: var(--rule-thin) solid var(--color-rule);
-  border-radius: 12px;
+  border-radius: var(--radius-card);
   background: var(--color-surface);
   padding: 10px 12px;
   min-width: 0;
@@ -1120,13 +1147,16 @@ button.mobileMonitoringMac {
 /* States as one segmented control. */
 .mobileMonitoringViews { gap: 0; flex-wrap: wrap; }
 .mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view] { border-radius: 0; margin-left: -1px; }
-.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view]:first-child { border-radius: 9px 0 0 9px; margin-left: 0; }
-.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view="saved"] { border-radius: 0 9px 9px 0; }
+.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view]:first-child { border-radius: calc(var(--radius-xl) - 1px) 0 0 calc(var(--radius-xl) - 1px); margin-left: 0; }
+.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view="saved"] { border-radius: 0 calc(var(--radius-xl) - 1px) calc(var(--radius-xl) - 1px) 0; }
 .mobileMonitoringViews .mobileMonitoringPdfButton { margin-left: auto; }
-.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view="extra"]:not(.isActive) { color: #8a4b00; }
+.mobileMonitoringViews .mobileMarketImportClear[data-monitoring-view="extra"]:not(.isActive) { color: var(--mon-extra-ink); }
 
 /* The list: no box of its own (the page scrolls), compact rows. */
 .mobileMonitoringList { max-height: none !important; max-block-size: none !important; overflow: visible !important; }
+/* Never wider than its card: a sideways scroll as the last resort (1024 px: the
+   table was 1 051 px in a 917 px card, the actions out of sight). */
+.mobileMonitoringList { overflow-x: auto !important; }
 .mobileMonitoringTable td { padding-top: 7px; padding-bottom: 7px; vertical-align: middle; }
 .mobileMonitoringTable .mobileMarketTableTitle small { display: inline; margin-right: 8px; }
 .mobileMonitoringTable .mobileMarketTableTitle small.mobileMonitoringMeta { display: block; }
@@ -1142,6 +1172,12 @@ button.mobileMonitoringMac {
 .mobileMonitoringConverterBox { margin: 6px 0 10px; }
 .mobileMonitoringConverterBox > summary { cursor: pointer; color: var(--color-brand-pressed); font-size: 0.8125rem; font-weight: 800; }
 
+/* From 641 to 1280 px the three actions stand in a column (phones have cards). */
+@media (min-width: 40.0625rem) and (max-width: 80rem) {
+  .mobileMonitoringActions { white-space: normal; width: 1%; }
+  .mobileMonitoringActions button { display: block; width: 100%; margin: 3px 0; white-space: nowrap; }
+}
+
 @media (max-width: 60rem) {
   .mobileMonitoringKpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mobileMonitoringActions { white-space: normal; }
@@ -1156,7 +1192,7 @@ button.mobileMonitoringMac {
   gap: 4px 12px;
   padding: 6px 12px;
   border-width: 1px;
-  border-radius: 10px;
+  border-radius: var(--radius-xl);
 }
 .mobileMonitoringTiles .mobileMonitoringTileStats { display: flex; align-items: baseline; gap: 10px; }
 .mobileMonitoringTiles .mobileMonitoringTileStats > span { display: inline-flex; align-items: baseline; gap: 4px; }

@@ -32,7 +32,7 @@ function functionSource(source, name) {
   }
   throw new Error(`${name}: no end`);
 }
-const analysis = read("mobile-market-analysis.js");
+const analysis = `${read("mobile-market-analysis.js")}\n${read("mobile-monitoring.js")}`;
 const names = ["parseMarketNumber", "listingValue", "isDirectOtomotoListingUrl", "isDirectAvbyListingUrl", "isDirectAutoscoutListingUrl",
   "isDirectBlocketListingUrl", "isDirectSecondPortalListingUrl", "isDirectMobileListingUrl", "gearboxKind", "listingSource", "normalizeListing", "parseOtomotoPage"];
 const { normalizeListing, gearboxKind, parseOtomotoPage } = new Function(`${names.map((name) => functionSource(analysis, name)).join("\n")}\nreturn { ${names.join(", ")} };`)();

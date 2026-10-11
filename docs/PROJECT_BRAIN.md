@@ -25,7 +25,7 @@
 | Выкладка | все | [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md) | Pages + конвертер на Render, smoke-тесты |
 | Переезд на сервер | все | [AUTOGOOD_SERVER_DEPLOYMENT.md](AUTOGOOD_SERVER_DEPLOYMENT.md) | Требования к серверу, данные пользователей |
 | Инфраструктура чтения порталов (B73) | `mobile.html` | [PORTAL-INFRASTRUCTURE.md](PORTAL-INFRASTRUCTURE.md) | Worker-прокси, Chrome-узел mobile.de, постоянный адрес, ключи сотрудников, очередь и кэш, варианты с ценами, этапы |
-| Monitoring на сервере (B43) | `mobile.html` | [MONITORING-SERVER.md](MONITORING-SERVER.md) | Задания из браузера → раннер с Chrome → записи → браузер; что осталось при запуске сервера |
+| Monitoring на сервере (B43) | `mobile.html` (код стр. 3 — `src/mobile-monitoring.js`) | [MONITORING-SERVER.md](MONITORING-SERVER.md) | Задания из браузера → раннер с Chrome → записи → браузер; что осталось при запуске сервера |
 | Похожие open source проекты | `mobile.html`, оффер (06 и стр. 3) | [REFERENCE-PROJECTS.md](REFERENCE-PROJECTS.md) | Паспорт 9 проектов; **единый список M1–M19** (уведомления, «okazja», «wróciło», «почему отсеяно», проверка парсеров, облако для порталов) и **для оффера O1–O12** (слежение после отправки, архив объявления, «Co wiemy z ogłoszenia», ИИ-этап); порядок внедрения |
 | Калькуляторы | `calculators.html` | OPEN: отдельного документа нет | Формулы живут в `src/main.jsx` |
 | Договоры и документы | `umowy.html`, `pdf.html`, `umowa-sprzedazy.html`, `oswiadczenie-o-braku-tablic.html` | OPEN: отдельного документа нет | Распознавание данных и DOCX→PDF: `*.mdf`-выгрузки в `docs/` |
@@ -74,6 +74,7 @@
 
 ## 8. Журнал
 
+- 2026-10-11 — mobile.html, стр. 3 Monitoring, волна 3 аудита: код страницы — свой файл `src/mobile-monitoring.js` (анализ стал на 2 950 строк меньше, правки мониторинга больше не конфликтуют с анализом), цвета и радиусы стр. 3 — через токены (Claude).
 - 2026-10-11 — mobile.html, стр. 1 и 2: блок параметров как в оффере — оснащение списком с галочками, отступ от разделителя в каждой категории, текст на полразмера крупнее (Claude).
 - 2026-10-11 — mobile.html: правило дублей (год + пробег + цена) и для новых и демо-машин до 1000 км (Claude).
 - 2026-10-11 — mobile.html, стр. 3 Monitoring, аудит пп. 8 и 10: уведомление macOS о новых и подешевевших машинах после утренней проверки службы Mac; объявления «licytacja od» Marktplaats/2dehands видны с пометкой, но не входят в цифры (Claude).

@@ -1,16 +1,16 @@
 // Monitoring: the client's budget border fixed in the portal's currency
 // (audit 2026-10-10, p. 18, docs/PROJECT-MOBILE.md 4.6.3 p. 25). Runs the
-// pure block "monitoring-budget" of src/mobile-market-analysis.js with the
+// pure block "monitoring-budget" of src/mobile-monitoring.js with the
 // calculator's own formula (src/turnkey-estimate.js carForTurnkey).
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
-const source = readFileSync(new URL("../src/mobile-market-analysis.js", import.meta.url), "utf8");
+const source = readFileSync(new URL("../src/mobile-monitoring.js", import.meta.url), "utf8");
 const begin = source.indexOf("  // ==== monitoring-budget: begin");
 const end = source.indexOf("  // ==== monitoring-budget: end");
-assert.ok(begin > 0 && end > begin, "the monitoring-budget block is in mobile-market-analysis.js");
+assert.ok(begin > 0 && end > begin, "the monitoring-budget block is in mobile-monitoring.js");
 const block = source.slice(begin, end);
 
 const turnkeySource = readFileSync(new URL("../src/turnkey-estimate.js", import.meta.url), "utf8");
