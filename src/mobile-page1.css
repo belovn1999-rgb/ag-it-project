@@ -1808,7 +1808,8 @@
   position: fixed;
   z-index: 800;
   top: 50%;
-  left: max(6px, calc((100vw - 1200px) / 2 - 86px));
+  /* Owner 11.10: almost flush with the window's left edge, on every page. */
+  left: 10px;
   transform: translateY(-50%);
   display: grid;
   gap: 9px;
