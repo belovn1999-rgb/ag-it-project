@@ -76,7 +76,7 @@
       businessOnly: "dealer sprzedaje tylko firmom — kupujemy przez AUTOGOOD",
       duplicate: "Na to ogłoszenie jest już oferta {n} z {date}.", openIt: "Otwórz ofertę {n}",
       steps: ["Łączę się z portalem…", "Czytam zdjęcia i dane auta…", "Czytam wyposażenie i sprzedawcę…", "Jeszcze chwila — portal odpowiada wolniej…"],
-      turnkey: "{price} na gotowo",
+      turnkey: "{price} na gotowo", making: "Przygotowuję ofertę i obraz kalkulacji…",
     },
     ru: {
       title: "Предложение для клиента", langLabel: "Язык предложения", modeDealer: "Из объявления дилера", modeAuction: "Из отчёта аукциона", soon: "скоро",
@@ -108,7 +108,7 @@
       businessOnly: "дилер продаёт только фирмам — покупаем через AUTOGOOD",
       duplicate: "На это объявление уже есть предложение {n} от {date}.", openIt: "Открыть предложение {n}",
       steps: ["Подключаюсь к порталу…", "Читаю фото и данные авто…", "Читаю оснащение и продавца…", "Ещё немного — портал отвечает медленнее…"],
-      turnkey: "{price} под ключ",
+      turnkey: "{price} под ключ", making: "Готовлю предложение и картинку расчёта…",
     },
   };
   const t = (key, values = {}) => String(TEXT[lang][key] ?? TEXT.pl[key] ?? key).replace(/\{(\w+)\}/g, (_, name) => values[name] ?? "");
@@ -609,9 +609,12 @@
   function fitCalc(frame) {
     const doc = frame?.contentDocument;
     if (!doc?.body) return;
+    // The body's own height (the document's is never less than the frame):
+    // the frame shrinks too when the calculator gets shorter.
     const fit = () => {
-      const height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
-      if (height > 200) frame.style.height = `${height + 2}px`;
+      const style = doc.defaultView.getComputedStyle(doc.body);
+      const height = Math.ceil(doc.body.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom));
+      if (height > 200 && Math.abs(height - frame.offsetHeight) > 1) frame.style.height = `${height}px`;
     };
     fit();
     if (typeof ResizeObserver === "function" && !frame.dataset.fitted) {
@@ -643,11 +646,19 @@
     const id = store.newId();
     const page = new URL("oferta.html", window.location.href);
     page.searchParams.set("id", id);
-    // The draft is saved first (under a second), then the page opens: a
-    // browser that opens it in this very tab (the app's own browser does)
-    // would otherwise leave this page before the draft exists — the offer
-    // page then said "Nie znaleziono tej oferty" (owner 2026-10-11). The
-    // calculator's picture follows in a moment (the open offer redraws).
+    // The tab opens at the click itself (a browser lets a page open one only
+    // then) and gets the offer's address once the draft and the calculator's
+    // picture are saved; a browser that opens no tab (the app's own) goes to
+    // the offer in this tab after both are saved — the picture was lost
+    // there before (owner 2026-10-11).
+    const tab = window.open("", "_blank");
+    try {
+      tab.document.title = "AUTOGOOD";
+      tab.document.body.textContent = t("making");
+    } catch {
+      // A tab of another kind: it just waits.
+    }
+    setStatus(t("making"));
     try {
       const draft = await makeDraft(id);
       const frame = carBox.querySelector("[data-os-calc]");
@@ -662,16 +673,16 @@
           // The calculator not ready: the offer starts from the estimate.
         }
       }
+      if (shoot) {
+        const image = await Promise.race([CALC.capture(frame).catch(() => ""), new Promise((resolve) => window.setTimeout(() => resolve(""), 15000))]);
+        if (image) draft.calcImage = image;
+      }
       await store.put(draft);
-      // The picture before the page opens when it is quick (a browser that
-      // opens the page in this tab stops this script); a slow one follows.
-      const picture = shoot ? CALC.capture(frame).then((image) => (image ? store.update(id, { calcImage: image }) : null)).catch(() => null) : null;
-      if (picture) await Promise.race([picture, new Promise((resolve) => window.setTimeout(resolve, 3500))]);
-      const tab = window.open(page.toString(), "_blank");
-      if (!tab) window.location.href = page.toString();
-      else if (picture) await picture;
+      if (tab) tab.location.href = page.toString();
+      else window.location.href = page.toString();
       showRecent();
     } catch (error) {
+      tab?.close();
       setStatus(t("makeFailed", { reason: String(error?.message || error) }), true);
     } finally {
       button.disabled = false;

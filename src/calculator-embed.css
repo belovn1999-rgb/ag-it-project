@@ -39,7 +39,8 @@
    PLN on top, EUR under it. */
 .agEmbed .resultLine.isPrimaryLine > .resultLinePrefix { grid-column: -2 / -1; grid-row: 1; justify-self: end; align-self: end; }
 .agEmbed .resultLine.isPrimaryLine > .resultLineAmount { grid-column: -2 / -1; grid-row: 2; justify-self: end; }
-.agEmbed .resultLine.isPrimaryLine > .resultLineBody { grid-row: 1 / span 2; grid-column: 3 / -2; align-self: center; justify-self: start; text-align: left; }
+/* The car's line starts where every other line's label starts (owner 2026-10-11). */
+.agEmbed .resultLine.isPrimaryLine > .resultLineBody { grid-row: 1 / span 2; grid-column: 2 / -2; align-self: center; justify-self: start; text-align: left; }
 .agEmbed .resultLine.isPrimaryLine > .resultLineMarker,
 .agEmbed .resultLine.isPrimaryLine > .marginAuctionDragHandle { grid-row: 1 / span 2; }
 .agEmbed .totalBarValueRow { flex-direction: column; align-items: flex-end; gap: 2px; }
@@ -62,3 +63,7 @@
 @media (max-width: 760px) {
   .agEmbedOffer .grid:not(.finalGrid) { grid-template-columns: minmax(0, 1fr); padding: 16px 14px 0; }
 }
+/* As tall as its content, no taller (body's 100vh kept the frame at least as
+   tall as it already was: empty space under the calculator, owner 2026-10-11). */
+.agEmbedOffer body { min-height: 0 !important; }
+.agEmbedOffer .grid:not(.finalGrid) { align-items: start; }

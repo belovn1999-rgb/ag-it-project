@@ -16,7 +16,7 @@
  * __NEXT_DATA__ of the page): search, the car's page (`priceHistoryData`),
  * and the similar-cars search for the count. 2–3 requests per offer.
  *
- * window.AUTOGOOD_OFFER_CARVAGO.find({ brand, model, year, mileage, source,
+ * window.AUTOGOOD_OFFER_CARVAGO.find({ brand, model, year, mileage, isNew, source,
  * url, adKey, price, kmFrom, kmTo, yearFrom, yearTo }) → result | null
  */
 (() => {
@@ -81,11 +81,26 @@
     const year = Number(String(input.year || "").match(/(\d{4})/)?.[1]) || 0;
     const km = Math.round(Number(input.mileage) || 0);
     const make = slug(input.brand);
-    if (!make || !year || !km) return null;
-    const query = new URLSearchParams({ "registration-date-from": String(year), "registration-date-to": String(year), "mileage-from": String(km), "mileage-to": String(km) });
-    const search = await page(`${BASE}/samochody/${make}?${query.toString()}`);
+    const modelSlug = slug(input.model);
+    // A new car has no registration year: make, model and the exact mileage
+    // (owner 2026-10-11: always the make, the model, the year and the mileage
+    // when there is one; a new EX30 was never looked for before).
+    if (!make || !km || (!year && !input.isNew)) return null;
+    const query = new URLSearchParams({ "mileage-from": String(km), "mileage-to": String(km) });
+    if (year) {
+      query.set("registration-date-from", String(year));
+      query.set("registration-date-to", String(year));
+    }
+    // The make and the model in the address; the make alone when Carvago does
+    // not know the model (it then sends the search back to the make).
+    let searched = modelSlug ? `${BASE}/samochody/${make}/${modelSlug}?${query.toString()}` : `${BASE}/samochody/${make}?${query.toString()}`;
+    let search = await page(searched);
+    if (modelSlug && (search.routerState?.query?.filters || []).length < 2) {
+      searched = `${BASE}/samochody/${make}?${query.toString()}`;
+      search = await page(searched);
+    }
     const found = pick(search.searchResults?.cars || [], input);
-    if (!found) return { found: false, searched: `${BASE}/samochody/${make}?${query.toString()}` };
+    if (!found) return { found: false, searched };
     const { car } = found;
     const carUrl = `${BASE}/samochod/${car.id}/${car.slug}`;
     let detail = null;
@@ -98,17 +113,19 @@
     // Similar cars on sale now: the same model, the years and mileage of the
     // offer's market comparison (or year ±1, mileage ±35 %).
     let active = null;
-    const modelSlug = slug(car.model?.label);
-    if (modelSlug) {
+    const carModel = slug(car.model?.label);
+    if (carModel) {
       const span = Math.max(20000, km * 0.35);
+      // A new car: this year and last, up to 1 000 km.
+      const thisYear = new Date().getFullYear();
       const similar = new URLSearchParams({
-        "registration-date-from": String(input.yearFrom || year - 1),
-        "registration-date-to": String(input.yearTo || year + 1),
-        "mileage-from": String(Math.max(0, Math.round(input.kmFrom ?? km - span))),
-        "mileage-to": String(Math.round(input.kmTo ?? km + span)),
+        "registration-date-from": String(input.yearFrom || (year ? year - 1 : thisYear - 1)),
+        "registration-date-to": String(input.yearTo || (year ? year + 1 : thisYear)),
+        "mileage-from": String(year ? Math.max(0, Math.round(input.kmFrom ?? km - span)) : 0),
+        "mileage-to": String(year ? Math.round(input.kmTo ?? km + span) : 1000),
       });
       try {
-        const result = await page(`${BASE}/samochody/${make}/${modelSlug}?${similar.toString()}`);
+        const result = await page(`${BASE}/samochody/${make}/${carModel}?${similar.toString()}`);
         // A model Carvago does not know sends the search back to the make.
         const filters = result.routerState?.query?.filters || [];
         if (filters.length >= 2 && Number.isFinite(Number(result.searchResults?.total))) {

@@ -70,7 +70,9 @@
         undo.push(() => { node.nodeValue = before; });
       }
     });
-    panel.querySelectorAll(".marginAuctionBreakdownSummary").forEach((node) => {
+    // The offer writes its own heading over the picture ("Расчёт — …"), as
+    // its other cards (owner 2026-10-11): no calculator title or logo here.
+    panel.querySelectorAll(".marginAuctionBreakdownSummary, .calcEyebrow, .resultCornerLogo").forEach((node) => {
       const display = node.style.display;
       node.style.display = "none";
       undo.push(() => { node.style.display = display; });
@@ -102,6 +104,17 @@
     if (!win.htmlToImage) return "";
     const lang = new URLSearchParams(win.location.search).get("lang") === "ru" ? "ru" : "pl";
     let restore = () => {};
+    // The picture at one width, whatever the window (940 px: two columns, the
+    // result panel narrow enough to fill page 2's column, owner 2026-10-11): a
+    // narrow frame laid it out in one tall column (a 292 px strip that pushed
+    // page 2 off the A4, 2026-10-11).
+    const width = frame.style.width;
+    const height = frame.style.height;
+    frame.style.width = "940px";
+    frame.style.height = `${Math.max(frame.offsetHeight, 1400)}px`;
+    // A pause, not an animation frame: a hidden or background tab never draws one.
+    void doc.body.offsetHeight;
+    await new Promise((resolve) => window.setTimeout(resolve, 80));
     try {
       await doc.fonts?.ready;
       restore = forClient(panel, doc, lang);
@@ -114,6 +127,8 @@
       return "";
     } finally {
       restore();
+      frame.style.width = width;
+      frame.style.height = height;
     }
   }
 

@@ -1024,3 +1024,40 @@
 .ofAdvanced[open] > summary::after { content: attr(data-close); background: #ffffff; color: var(--of-navy); box-shadow: inset 0 0 0 1px var(--of-line-strong); }
 .ofAdvanced > summary:focus-visible { outline: 2px solid var(--of-brand); outline-offset: 2px; border-radius: 12px; }
 .ofFacts { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 10px; }
+
+/* ---- Owner 2026-10-11, round 2 ----------------------------------------------
+ * The price plate down to the bottom of the car's data, with how the car is
+ * bought, the ad's gross price and the dealer's fee; the footnote at its
+ * foot. The calculation's picture under a heading like the steps'. */
+.isPremium[data-page="1"] .ofPriceBox { align-self: stretch; display: flex; flex-direction: column; }
+.isPremium[data-page="1"] .ofPriceBox .ofPriceFoot { margin-top: auto; }
+.ofPriceFacts { display: grid; gap: 5px; margin: 10px 0 12px; padding: 10px 0 0; border-top: 1px solid rgba(255, 255, 255, 0.22); }
+.ofPriceFacts > div { display: flex; justify-content: space-between; gap: 10px; font-size: 11.5px; line-height: 1.3; }
+.ofPriceFacts dt { color: var(--of-gold-soft); font-weight: 600; }
+.ofPriceFacts dd { margin: 0; color: #ffffff; font-weight: 700; text-align: right; }
+.ofPage:not(.isPremium):not(.isRaport) .ofPriceFacts dt { color: var(--of-muted); }
+.ofPage:not(.isPremium):not(.isRaport) .ofPriceFacts dd { color: var(--of-ink); }
+.ofPage:not(.isPremium):not(.isRaport) .ofPriceFacts { border-top-color: var(--of-line); }
+.ofCalcShotCard .ofCardHead { margin: 6px 6px 8px; }
+.ofContactCard .ofTrust { margin-top: 10px; }
+/* The market card's three looks for the owner to choose (?marketLook=…, 2026-10-11). */
+.isPremium[data-page="1"].isMarket-columns {
+  grid-template-rows: auto auto auto auto auto auto auto auto 1fr auto;
+  grid-template-areas: "head head" "photo photo" "link price" "specs price" "specs chips" "market verdict" "equipment verdict" "equipment seller" ". ." "foot foot";
+}
+.isPremium[data-page="1"].isMarket-columns:not(:has(.ofChips)) {
+  grid-template-rows: auto auto auto auto auto auto auto 1fr auto;
+  grid-template-areas: "head head" "photo photo" "link price" "specs price" "market verdict" "equipment verdict" "equipment seller" ". ." "foot foot";
+}
+.isMarket-bottom [data-block="market"] { display: flex; flex-direction: column; }
+.isMarket-bottom [data-block="market"] .ofAdAge { margin-top: auto; }
+.ofBandList { list-style: none; margin: 8px 0 0; padding: 8px 0 0; border-top: 1px dashed var(--of-line); display: grid; gap: 4px; font-size: 11px; }
+.ofBandList li { display: grid; grid-template-columns: 10px minmax(0, 1fr) auto auto; align-items: center; gap: 7px; color: var(--of-muted); }
+.ofBandList i { width: 10px; height: 10px; border-radius: 3px; }
+.ofBandList b { color: var(--of-text); font-weight: 600; }
+.ofBandList li.isHere span, .ofBandList li.isHere b { color: var(--of-ink); font-weight: 800; }
+.ofBandList em { font-style: normal; font-weight: 700; color: #1d6a3b; }
+.ofPriceFacts { gap: 8px; margin: 12px 0 14px; padding-top: 12px; }
+.ofPriceFacts > div { font-size: 12.5px; }
+.ofCalcShot[style*="height"] { width: auto; max-width: 100%; margin: 0 auto; }
+.ofBandList { gap: 2px; margin-top: 6px; padding-top: 6px; font-size: 11px; }
