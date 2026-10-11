@@ -931,18 +931,19 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
         ${monitoringState.status ? `<p class="mobileMonitoringStatus${monitoringState.statusError ? " isError" : ""}">${escapeMarketHtml(monitoringState.status)}</p>` : ""}
         <div data-monitoring-results="${escapeMarketHtml(entry.id)}"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></div>
       </section>
-      <section class="mobileMarketCard mobileMonitoringTabPanel mobileMonitoringTrend" data-monitoring-panel="history" hidden>
+      <section class="mobileMarketCard mobileMonitoringTabPanel mobileMonitoringTrend" role="tabpanel" id="monitoring-panel-history" aria-labelledby="monitoring-tab-history" data-monitoring-panel="history" hidden>
         ${blockTitle("gauge", c.trendTitle)}
         <div data-monitoring-trend="${escapeMarketHtml(entry.id)}"><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></div>
       </section>
-      <section class="mobileMarketCard mobileMonitoringTabPanel mobileMarketPriceHistory" data-monitoring-panel="history" data-monitoring-history="${escapeMarketHtml(entry.id)}" hidden><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></section>
-      <section class="mobileMarketCard mobileMonitoringTabPanel mobileMarketOfferHistory" data-monitoring-panel="market" data-offer-history="${escapeMarketHtml(entry.id)}" hidden>
+      <section class="mobileMarketCard mobileMonitoringTabPanel mobileMarketPriceHistory" role="tabpanel" aria-labelledby="monitoring-tab-history" data-monitoring-panel="history" data-monitoring-history="${escapeMarketHtml(entry.id)}" hidden><p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p></section>
+      <section class="mobileMarketCard mobileMonitoringTabPanel mobileMarketOfferHistory" role="tabpanel" id="monitoring-panel-market" aria-labelledby="monitoring-tab-market" data-monitoring-panel="market" data-offer-history="${escapeMarketHtml(entry.id)}" hidden>
         ${blockTitle("calendar", c.offerHistoryHeading)}
         <p class="mobileMarketTrendEmpty">${escapeMarketHtml(c.offerLoading)}</p>
       </section>` : `
       <section class="mobileMarketCard mobileMarketPriceHistoryIntro">
         ${blockTitle("calendar", c.monitoringHeading)}
         <p>${escapeMarketHtml(favorites.length ? c.monitoringIntro : c.monitoringNoFavorites)}</p>
+        ${favorites.length ? "" : `<button class="mobileMarketImportClear" type="button" data-monitoring-go-search>${escapeMarketHtml(c.monitoringGoSearch)}</button>`}
       </section>`;
     if (!entry) return;
     borrowMoreFilters(priceHistoryPage.querySelector("[data-monitoring-more-filters]"));
@@ -958,6 +959,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       const on = button.dataset.monitoringTab === tab;
       button.classList.toggle("isActive", on);
       button.setAttribute("aria-selected", on ? "true" : "false");
+      button.tabIndex = on ? 0 : -1;
     });
     document.querySelectorAll("[data-monitoring-list-panel]").forEach((panel) => { panel.hidden = tab !== "list"; });
     document.querySelectorAll("[data-monitoring-panel]").forEach((panel) => { panel.hidden = panel.dataset.monitoringPanel !== tab; });
@@ -1058,7 +1060,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
         : info.state === "fail" ? c.monitoringProgressFail
         : info.state === "wait" ? c.monitoringProgressWait
           : Number.isFinite(info.done) && Number.isFinite(info.total)
-            ? (info.unit === "countries" ? c.monitoringProgressCountries : c.monitoringProgressPages).replace("{done}", info.done).replace("{total}", info.total)
+            ? `${info.label ? `${info.label} ` : ""}${(info.unit === "countries" ? c.monitoringProgressCountries : c.monitoringProgressPages).replace("{done}", info.done).replace("{total}", info.total)}`
             : c.monitoringProgressRun;
       return `<span class="is${info.state === "ok" ? "Done" : info.state === "fail" ? "Fail" : info.state === "wait" ? "Wait" : "Run"}"><b>${escapeMarketHtml(portalName(source))}</b> ${escapeMarketHtml(text)}</span>`;
     });
@@ -1369,7 +1371,12 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
         : "";
     }
     if (!latest) {
-      target.innerHTML = `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(otherChecks ? c.monitoringNoScopeCheck : c.monitoringNeverChecked)}</p>`;
+      // Re-audit 2026-10-11: the two ways to start, and the budget before the
+      // first check (without it mobile.de reads a part of its list).
+      const hasBudget = Boolean(monitoringScopeOf(entry.id).budget);
+      target.innerHTML = `<p class="mobileMarketTrendEmpty">${escapeMarketHtml(otherChecks ? c.monitoringNoScopeCheck : c.monitoringNeverChecked)}</p>
+        <p class="mobileMonitoringNote">${escapeMarketHtml(c.monitoringStartHint.replace("{run}", c.monitoringCheck).replace("{on}", c.monitoringSwitch))}</p>
+        ${hasBudget ? "" : `<p class="mobileMonitoringNote mobileMonitoringBudgetFirst">${escapeMarketHtml(c.monitoringBudgetFirst)} <button class="mobileMarketImportClear" type="button" data-monitoring-budget-focus>${escapeMarketHtml(c.monitoringBudgetFirstButton)}</button></p>`}`;
       return;
     }
     const record = byDate.get(latest.at);
@@ -1507,6 +1514,9 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
         }).join("")}
       </div>`;
     })();
+    // Re-audit 2026-10-11: otomoto, Blocket and av.by are their country's only
+    // portal — with nothing to add, their tile repeated the country's number.
+    const SOLO_PORTALS = ["otomoto", "blocket", "avby"];
     const tiles = shownSources.map(({ source, current, compared, rows: allSourceRows, silent, shownAt, reason }) => {
       const rows = allSourceRows.filter((row) => inCountry(source, row.offer));
       const count = (group) => rows.filter((row) => row.group === group).length;
@@ -1524,6 +1534,8 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       const active = monitoringState.portal === source;
       const german = germanCountries(selection.countries);
       const flagsOf = byCountry ? (monitoringState.country === "de" && german.length ? german : marketGroup(monitoringState.country).countries) : current?.countries || record.markets.mobile?.countries || [];
+      const saysNothingNew = SOLO_PORTALS.includes(source) && current && !silent && !cut && !(compared && !certain) && !current.duplicates && !current.allCountriesTotal;
+      if (saysNothingNew && !active) return "";
       return `
         <button class="mobileMonitoringTile is${sourceClass(source)}${active ? " isActive" : ""}" type="button" data-monitoring-portal="${source}" aria-pressed="${active ? "true" : "false"}">
           <span class="mobileMonitoringTileHead">${monitoringPortalBadge(source, flagsOf)}</span>
@@ -1642,7 +1654,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     const plainPriceCell = (offer) => `<b class="mobileMonitoringAdPrice">${escapeMarketHtml(formatPlainPrice(offer.price, offer.currency))}</b><small class="mobileMonitoringVat is${(offer.priceType || "gross").charAt(0).toUpperCase()}${(offer.priceType || "gross").slice(1)}">${escapeMarketHtml(vatLabel(offer))}</small>${offer.turnkey ? `<small class="mobileMarketTurnkeyNote">${escapeMarketHtml(formatPlainPrice(offer.turnkey, "PLN"))} ${escapeMarketHtml(c.turnkeyShort)}</small>` : ""}`;
     // The list shown is marked (filled, aria-pressed): until 2026-10-10 it
     // looked like the others.
-    const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isActive" : ""}" type="button" data-monitoring-view="${key}" aria-pressed="${view === key ? "true" : "false"}"${(key === "new" || key === "gone") && !before ? " disabled" : ""}>${escapeMarketHtml(label)} · ${numbers.format(viewRows[key].length)}</button>`;
+    const viewButton = (key, label) => `<button class="mobileMarketImportClear${view === key ? " isActive" : ""}" type="button" data-monitoring-view="${key}" aria-pressed="${view === key ? "true" : "false"}"${(key === "new" || key === "gone") && !before ? ` disabled title="${escapeMarketHtml(c.monitoringViewWaitTitle)}"` : ""}>${escapeMarketHtml(label)} · ${numbers.format(viewRows[key].length)}</button>`;
     // Wave 2: the status is a badge (new / cheaper / dearer), the market a
     // flag in the car's line, the median a column of its own.
     const withStatus = false;
@@ -1744,7 +1756,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       saved: c.monitoringEmptySaved,
       seen: c.monitoringEmptySeen,
       sent: c.monitoringEmptySent,
-      extra: extra ? c.monitoringExtraEmpty.replace("{pct}", String(extra.tolerance)) : c.monitoringExtraNone,
+      extra: extra ? c.monitoringExtraEmpty.replace("{pct}", String(extra.tolerance)) : monitoringState.busy === entry.id ? c.monitoringExtraReading : c.monitoringExtraNone,
     }[view] || c.monitoringEmptyList;
     // What the extra list is, and why the year got no margin.
     // No description (owner 2026-10-05): the orange mark on each car says it.
@@ -1818,10 +1830,11 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
       const totalLabel = carBudget ? c.monitoringKpiTotal : c.monitoringKpiTotalNoBudget;
       const sinceDate = before ? formatHistoryDate(before.at) : "";
       const sentence = [
-        before ? c.monitoringSentenceSince.replace("{date}", sinceDate) : c.monitoringSentenceFirst,
+        before ? c.monitoringSentenceSince.replace("{date}", sinceDate) : newBase ? "" : c.monitoringSentenceFirst,
         before ? c.monitoringSentenceChanges.replace("{new}", numbers.format(viewRows.new.length)).replace("{gone}", numbers.format(viewRows.gone.length)) : "",
         medianNow ? c.monitoringSentenceMarket.replace("{label}", totalLabel).replace("{total}", count(currentNow.length)).replace("{median}", zl(medianNow)).replace("{move}", move) : "",
         deals ? c.monitoringSentenceDeals.replace("{deals}", numbers.format(deals)) : "",
+        before || newBase ? "" : c.monitoringSentenceFirstNext,
       ].filter(Boolean).join(" ");
       const totalThen = comparable ? thenRows.length : null;
       const tile = (cls, label, value, note) => `<div class="mobileMonitoringKpi${cls}"><small>${escapeMarketHtml(label)}</small><b>${value}</b>${note ? `<span>${note}</span>` : ""}</div>`;
@@ -1837,17 +1850,17 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     })();
     const tabsHtml = `
       <div class="mobileMonitoringTabs" role="tablist">
-        ${[["list", c.monitoringTabList], ["history", c.monitoringTabHistory], ["market", c.monitoringTabMarket]].map(([key, label]) => `<button type="button" role="tab" data-monitoring-tab="${key}" aria-selected="${(monitoringState.tab || "list") === key ? "true" : "false"}"${(monitoringState.tab || "list") === key ? ' class="isActive"' : ""}>${escapeMarketHtml(label)}</button>`).join("")}
+        ${[["list", c.monitoringTabList], ["history", c.monitoringTabHistory], ["market", c.monitoringTabMarket]].map(([key, label]) => `<button type="button" role="tab" id="monitoring-tab-${key}" aria-controls="monitoring-panel-${key}" tabindex="${(monitoringState.tab || "list") === key ? "0" : "-1"}" data-monitoring-tab="${key}" aria-selected="${(monitoringState.tab || "list") === key ? "true" : "false"}"${(monitoringState.tab || "list") === key ? ' class="isActive"' : ""}>${escapeMarketHtml(label)}</button>`).join("")}
       </div>`;
     target.innerHTML = `
       ${changedBetween ? `<p class="mobileMarketOfferWarning">${escapeMarketHtml(c.offerFiltersBetween)}</p>` : ""}
-      ${!before ? `<p class="mobileMonitoringNote">${escapeMarketHtml((newBase ? c.monitoringNewBase : c.monitoringBaseline).replace("{count}", numbers.format(perSource.reduce((sum, item) => sum + (item.current?.offers.length || 0), 0))))}</p>` : ""}
+      ${!before && (newBase || !kpiHtml) ? `<p class="mobileMonitoringNote">${escapeMarketHtml((newBase ? c.monitoringNewBase : c.monitoringBaseline).replace("{count}", numbers.format(perSource.reduce((sum, item) => sum + (item.current?.offers.length || 0), 0))))}</p>` : ""}
       ${kpiHtml}
       ${countryTabs}
       ${summaryHtml}
       <div class="mobileMonitoringTiles">${tiles}</div>
       ${tabsHtml}
-      <div data-monitoring-list-panel>
+      <div data-monitoring-list-panel role="tabpanel" id="monitoring-panel-list" aria-labelledby="monitoring-tab-list">
       <div class="mobileMonitoringViews" role="group">
         ${viewButton("saved", c.monitoringViewFavorites)}${viewButton("new", c.monitoringViewNew)}${viewButton("gone", c.monitoringViewGone)}${viewButton("all", c.monitoringViewAll)}${viewButton("extra", c.monitoringViewExtraShort)}${viewButton("seen", c.monitoringViewSeen)}${viewButton("sent", c.monitoringViewSent)}
         ${monitoringState.portal ? `<button class="mobileMarketImportClear" type="button" data-monitoring-portal="">${escapeMarketHtml(c.monitoringAllPortals)} ✕</button>` : ""}
@@ -2922,7 +2935,32 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     if (event.button === 1) markFromEvent(event);
   }, true);
 
+  // Tabs as the WAI-ARIA pattern: arrows, Home and End move and open.
+  priceHistoryPage?.addEventListener("keydown", (event) => {
+    const tab = event.target.closest?.('[role="tab"][data-monitoring-tab]');
+    if (!tab || !["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    const tabs = [...tab.parentElement.querySelectorAll('[role="tab"]')];
+    const at = tabs.indexOf(tab);
+    const next = event.key === "Home" ? 0 : event.key === "End" ? tabs.length - 1
+      : (at + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+    event.preventDefault();
+    tabs[next].focus();
+    tabs[next].click();
+  });
+
   priceHistoryPage?.addEventListener("click", (event) => {
+    if (event.target.closest("[data-monitoring-go-search]")) {
+      showPage("search");
+      return;
+    }
+    if (event.target.closest("[data-monitoring-budget-focus]")) {
+      const settings = priceHistoryPage.querySelector("[data-monitoring-settings]");
+      if (settings && !settings.open) settings.open = true;
+      const field = priceHistoryPage.querySelector('[data-monitoring-budget="to"]');
+      field?.scrollIntoView({ block: "center" });
+      field?.focus();
+      return;
+    }
     if (event.target.closest("[data-monitoring-sort-dir]")) {
       monitoringPrefs.dir = monitoringPrefs.dir === "desc" ? "asc" : "desc";
       saveMonitoringPrefs();

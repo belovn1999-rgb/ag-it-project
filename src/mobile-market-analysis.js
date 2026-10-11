@@ -118,6 +118,13 @@
       monitoringKpiDealsHint: "≥ 30 dni i obniżka",
       monitoringSentenceSince: "Od {date}:",
       monitoringSentenceFirst: "Pierwszy monitoring:",
+      monitoringSentenceFirstNext: "Nowe i zniknięte pokaże następny monitoring.",
+      monitoringViewWaitTitle: "Nowe i zniknięte pojawią się po drugim monitoringu.",
+      monitoringExtraReading: "Czytam oferty dodatkowe…",
+      monitoringStartHint: "„{run}” sprawdza raz teraz, „{on}” — sam, według harmonogramu.",
+      monitoringBudgetFirst: "Najpierw ustaw budżet klienta: bez niego mobile.de czyta tylko część listy.",
+      monitoringBudgetFirstButton: "Ustaw budżet",
+      monitoringGoSearch: "Przejdź do wyszukiwania →",
       monitoringSentenceChanges: "nowe auta: {new}, zniknęło: {gone}.",
       monitoringSentenceMarket: "{label}: {total}, mediana na gotowo {median}{move}.",
       monitoringSentenceDeals: "Do negocjacji: {deals}.",
@@ -843,6 +850,13 @@
       monitoringKpiDealsHint: "≥ 30 дней и снижение",
       monitoringSentenceSince: "С {date}:",
       monitoringSentenceFirst: "Первый мониторинг:",
+      monitoringSentenceFirstNext: "Новые и исчезнувшие покажет следующий мониторинг.",
+      monitoringViewWaitTitle: "Новые и исчезнувшие появятся после второго мониторинга.",
+      monitoringExtraReading: "Читаю дополнительные предложения…",
+      monitoringStartHint: "«{run}» — одна проверка сейчас, «{on}» — сам по расписанию.",
+      monitoringBudgetFirst: "Сначала задай бюджет клиента: без него mobile.de читает только часть списка.",
+      monitoringBudgetFirstButton: "Задать бюджет",
+      monitoringGoSearch: "Перейти к поиску →",
       monitoringSentenceChanges: "новых авто: {new}, исчезло: {gone}.",
       monitoringSentenceMarket: "{label}: {total}, медиана под ключ {median}{move}.",
       monitoringSentenceDeals: "Для торга: {deals}.",
@@ -3037,7 +3051,9 @@
             // Monitoring follows each portal's progress; the analysis does not
             // wait minutes for a whole AutoScout24 list.
             everyPage: typeof progress === "function",
-            onProgress: step("autoscout"),
+            // Re-audit 2026-10-11: each sample counts its own pages ("25/37"
+            // then "4/24" looked like going back), so the line names it.
+            onProgress: (done, total) => progress?.("autoscout", { state: "run", done, total, unit: "pages", label: list.join(" + ") }),
           });
           // B69: Germany (with Austria / Luxembourg) and NL + BE are read as
           // two samples, one after the other: in one list sorted by price

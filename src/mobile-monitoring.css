@@ -30,6 +30,10 @@
   --mon-swatch-edge: rgb(0 0 0 / 0.25);
   --mon-radius-pill: 999px;
   --mon-radius-bar: 2px;
+  /* Type sizes of page 3 not in tokens.css (re-audit 2026-10-11). */
+  --mon-text-list: 0.875rem;
+  --mon-text-kpi: 1.375rem;
+  --mon-text-title: 1.5rem;
 }
 
 /* ---- Readable text: nothing below 12px, the list at 14px ---------------- */
@@ -52,7 +56,7 @@
 .mobileMarketAnalysisView .agSpecColumn dd,
 .mobileMarketAnalysisView .agSpecText,
 .mobileMarketAnalysisView .agSpecKicker {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 /* ---- Header: the car, the switch, one line of parameters ---------------- */
@@ -74,7 +78,7 @@
   background: var(--mon-surface);
   color: var(--color-ink);
   font: inherit;
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
   text-align: left;
   cursor: pointer;
 }
@@ -87,7 +91,7 @@
 .mobileMonitoringParamsLine b {
   flex: none;
   color: var(--mon-pick);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   white-space: nowrap;
 }
 
@@ -98,7 +102,7 @@
 .mobileMonitoringSince {
   margin: 6px 0 0;
   color: var(--color-muted);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringSince:empty {
@@ -121,7 +125,7 @@
   padding: 0 16px;
   color: var(--color-ink);
   font-weight: 700;
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
   list-style: none;
   cursor: pointer;
 }
@@ -156,7 +160,7 @@
   border-radius: var(--radius-lg);
   background: var(--mon-pick-wash);
   color: var(--color-ink);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringProgress[hidden] {
@@ -175,7 +179,7 @@
   gap: 8px 16px;
   margin: 0 0 var(--space-sm);
   color: var(--color-ink);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringListTools label {
@@ -206,7 +210,7 @@
   border-radius: var(--radius-lg);
   background: var(--mon-surface);
   color: var(--color-ink);
-  font-size: 1rem;
+  font-size: var(--text-md);
   cursor: pointer;
 }
 
@@ -222,7 +226,7 @@
 .mobileMonitoringTable {
   min-width: 0;
   table-layout: auto;
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
 }
 
 .mobileMonitoringTable .mobileMarketTableTitle {
@@ -232,13 +236,13 @@
 }
 
 .mobileMonitoringTable .mobileMarketTableTitle b {
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
 }
 
 .mobileMonitoringTable .mobileMarketTableTitle small {
   display: block;
   margin-top: 2px;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringMeta {
@@ -259,14 +263,14 @@
 
 .mobileMonitoringTable .mobileMonitoringVat,
 .mobileMonitoringTable .mobileMarketTurnkeyNote {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .mobileMonitoringStar {
   width: 32px;
   height: 32px;
   border-radius: var(--radius-lg);
-  font-size: 1.25rem;
+  font-size: var(--text-lg);
 }
 
 .mobileMonitoringStar:hover {
@@ -283,7 +287,7 @@
   border: 1px solid var(--color-rule);
   border-radius: var(--radius-lg);
   background: var(--mon-surface);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   text-decoration: none;
 }
 
@@ -295,11 +299,11 @@
 .mobileMonitoringCountry {
   min-height: 28px;
   padding: 3px 10px;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringTileNote {
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .mobileMonitoringTable .mobileMarketTableTitle,
@@ -388,18 +392,18 @@
 
 .mobileMonitoringClientHead h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: var(--mon-text-title);
 }
 
 .mobileMonitoringClientHead p {
   margin: 4px 0 0;
   color: var(--color-muted);
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
 }
 
 .mobileMonitoringClientTable {
   width: 100%;
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
 }
 
 .mobileMonitoringClientTable td {
@@ -411,14 +415,14 @@
   display: block;
   margin-top: 3px;
   color: var(--color-muted);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringClientTable a {
   display: inline-block;
   margin-top: 4px;
   color: var(--mon-pick);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 /* ---- Liquidity (B22): days on the market, price drops ------------------- */
@@ -432,7 +436,7 @@
   border-radius: var(--radius-lg);
   background: var(--mon-good-wash);
   color: var(--color-ink);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringLiquidity span + span::before {
@@ -452,7 +456,7 @@
   border-radius: var(--mon-radius-pill);
   background: var(--mon-deal-badge);
   color: var(--mon-deal-ink);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 700;
   white-space: nowrap;
   vertical-align: 1px;
@@ -467,7 +471,7 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
   font-weight: 600;
 }
 
@@ -486,7 +490,7 @@
   border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
   background: var(--mon-deal-wash);
   color: var(--color-ink);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 /* Owner 2026-10-05: orange marks what is just outside the filters. */
@@ -515,7 +519,7 @@
   align-items: center;
   gap: 8px 16px;
   margin-top: var(--space-sm);
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
 }
 
 .mobileMonitoringSchedule label {
@@ -552,7 +556,7 @@
 }
 
 .mobileMonitoringMac {
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringMac.isOn {
@@ -568,7 +572,7 @@ button.mobileMonitoringMac {
   background: var(--mon-surface);
   color: var(--mon-pick);
   font: inherit;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
 }
@@ -586,7 +590,7 @@ button.mobileMonitoringMac {
   flex-wrap: wrap;
   gap: 4px 14px;
   color: var(--color-muted);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 500;
 }
 
@@ -620,7 +624,7 @@ button.mobileMonitoringMac {
   padding: 6px 10px;
   border-radius: var(--radius-lg);
   background: color-mix(in srgb, var(--color-brand) 5%, var(--mon-surface));
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringConverter.isCompact .mobileMonitoringConverterLabel {
@@ -650,7 +654,7 @@ button.mobileMonitoringMac {
   display: inline-flex;
   flex-wrap: wrap;
   gap: 2px 10px;
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
 }
 
 .mobileMonitoringConverter.isCompact .mobileMonitoringConverterOut * {
@@ -660,13 +664,13 @@ button.mobileMonitoringMac {
 .mobileMonitoringConverter.isCompact small {
   margin-left: auto;
   color: var(--color-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
 }
 
 .mobileMonitoringCountriesTitle {
   margin: 4px 0 0;
   color: var(--color-ink);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 800;
   letter-spacing: 0.03em;
   text-transform: uppercase;
@@ -696,7 +700,7 @@ button.mobileMonitoringMac {
 }
 
 .mobileMonitoringCountryCard .agMarketColumnName {
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
 }
 
 .mobileMonitoringCountryRow {
@@ -759,7 +763,7 @@ button.mobileMonitoringMac {
   background: var(--mon-surface);
   color: var(--color-muted);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   cursor: pointer;
 }
 
@@ -798,7 +802,7 @@ button.mobileMonitoringMac {
   background: var(--mon-surface);
   color: var(--color-ink);
   font: inherit;
-  font-size: 0.875rem;
+  font-size: var(--mon-text-list);
   font-weight: 700;
   cursor: pointer;
 }
@@ -819,7 +823,7 @@ button.mobileMonitoringMac {
 
 .mobileMonitoringCountryTab em {
   font-style: normal;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 800;
 }
 
@@ -891,30 +895,30 @@ button.mobileMonitoringMac {
 
 .mobileMonitoringBudgetHead > b {
   color: var(--color-ink);
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
 }
 
 .mobileMonitoringBudgetHead .mobileMonitoringPrice input {
   width: 110px;
   min-height: 32px;
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
   font-weight: 700;
 }
 
 .mobileMonitoringAdvanced {
   margin-left: auto;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringBudget > small {
   color: var(--color-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   line-height: 1.4;
 }
 
 .mobileMonitoringBudgetLine {
   color: var(--color-ink);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 700;
   text-align: right;
 }
@@ -922,7 +926,7 @@ button.mobileMonitoringMac {
 .mobileMonitoringBudgetLine small {
   display: block;
   color: var(--color-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 500;
 }
 
@@ -1082,11 +1086,11 @@ button.mobileMonitoringMac {
 .mobileMonitoringSummaryCard em.isFlat { color: var(--color-muted); }
 
 /* ===== Wave 2 (10.10, owner: variant A + the sentence of B) ===== */
-.mobileMonitoringHead .agBlockTitle { text-transform: none; letter-spacing: 0; font-size: 1.25rem; }
+.mobileMonitoringHead .agBlockTitle { text-transform: none; letter-spacing: 0; font-size: var(--text-lg); }
 .mobileMonitoringSentence {
   margin: 4px 0 12px;
   color: var(--color-ink);
-  font-size: 1rem;
+  font-size: var(--text-md);
   line-height: 1.5;
 }
 .mobileMonitoringKpis {
@@ -1105,13 +1109,13 @@ button.mobileMonitoringMac {
 .mobileMonitoringKpi small {
   display: block;
   color: var(--color-muted);
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   letter-spacing: 0.03em;
   text-transform: uppercase;
 }
-.mobileMonitoringKpi b { display: block; margin-top: 2px; color: var(--color-ink); font-size: 1.375rem; font-weight: 800; white-space: nowrap; }
-.mobileMonitoringKpi span { display: block; color: var(--color-muted); font-size: 0.75rem; font-weight: 700; }
+.mobileMonitoringKpi b { display: block; margin-top: 2px; color: var(--color-ink); font-size: var(--mon-text-kpi); font-weight: 800; white-space: nowrap; }
+.mobileMonitoringKpi span { display: block; color: var(--color-muted); font-size: var(--text-xs); font-weight: 700; }
 .mobileMonitoringKpi.isNew b { color: var(--color-success); }
 .mobileMonitoringKpi.isGone b { color: var(--color-error); }
 .mobileMonitoringKpi em { font-style: normal; font-weight: 800; }
@@ -1123,7 +1127,7 @@ button.mobileMonitoringMac {
 .mobileMonitoringTile { padding: 6px 10px; min-height: 0; }
 .mobileMonitoringTile .mobileMonitoringTileStats { gap: 10px; }
 .mobileMonitoringTile .mobileMonitoringTileStats small { display: none; }
-.mobileMonitoringTile .mobileMonitoringTileStats b { font-size: 1rem; }
+.mobileMonitoringTile .mobileMonitoringTileStats b { font-size: var(--text-md); }
 
 /* Tabs of the results. */
 .mobileMonitoringTabs {
@@ -1138,7 +1142,7 @@ button.mobileMonitoringMac {
   color: var(--color-muted);
   padding: 8px 2px;
   font: inherit;
-  font-size: 0.9375rem;
+  font-size: var(--text-base);
   font-weight: 800;
   cursor: pointer;
 }
@@ -1172,7 +1176,7 @@ button.mobileMonitoringMac {
 
 /* Converter folded in the settings. */
 .mobileMonitoringConverterBox { margin: 6px 0 10px; }
-.mobileMonitoringConverterBox > summary { cursor: pointer; color: var(--color-brand-pressed); font-size: 0.8125rem; font-weight: 800; }
+.mobileMonitoringConverterBox > summary { cursor: pointer; color: var(--color-brand-pressed); font-size: var(--text-sm); font-weight: 800; }
 
 /* From 641 to 1280 px the three actions stand in a column (phones have cards). */
 @media (min-width: 40.0625rem) and (max-width: 80rem) {
@@ -1198,11 +1202,11 @@ button.mobileMonitoringMac {
 }
 .mobileMonitoringTiles .mobileMonitoringTileStats { display: flex; align-items: baseline; gap: 10px; }
 .mobileMonitoringTiles .mobileMonitoringTileStats > span { display: inline-flex; align-items: baseline; gap: 4px; }
-.mobileMonitoringTiles .mobileMonitoringTileStats b { font-size: 0.9375rem; }
-.mobileMonitoringTiles .mobileMonitoringTileNote { flex-basis: 100%; font-size: 0.75rem; }
+.mobileMonitoringTiles .mobileMonitoringTileStats b { font-size: var(--text-base); }
+.mobileMonitoringTiles .mobileMonitoringTileNote { flex-basis: 100%; font-size: var(--text-xs); }
 .mobileMonitoringToMedian small { display: none; }
 @media (max-width: 40rem) {
-  .mobileMonitoringToMedian small { display: inline; margin-left: 4px; font-size: 12px; color: var(--color-muted); }
+  .mobileMonitoringToMedian small { display: inline; margin-left: 4px; font-size: var(--text-xs); color: var(--color-muted); }
 }
 
 
@@ -1242,7 +1246,7 @@ button.mobileMonitoringMac {
   margin-top: 4px;
   padding: 1px 7px;
   border-radius: var(--mon-radius-pill);
-  font-size: 0.6875rem;
+  font-size: var(--text-xs); /* 12 px: nothing smaller on page 3 */
   font-weight: 800;
   white-space: nowrap;
 }
@@ -1269,7 +1273,7 @@ button.mobileMonitoringMac {
   background: none;
   color: var(--color-brand-pressed);
   font: inherit;
-  font-size: 0.75rem;
+  font-size: var(--text-xs);
   font-weight: 800;
   cursor: pointer;
 }
@@ -1280,7 +1284,7 @@ button.mobileMonitoringMac {
 
 .mobileMonitoringPoland {
   margin: 0;
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
 }
 
 .mobileMonitoringPoland .isGood { color: var(--mon-good); }
@@ -1292,7 +1296,7 @@ button.mobileMonitoringMac {
   border-radius: var(--radius-sm);
   background: var(--mon-near-wash);
   color: var(--mon-near-ink);
-  font-size: 0.8125rem;
+  font-size: var(--text-sm);
   font-weight: 700;
 }
 
@@ -1388,4 +1392,40 @@ button.mobileMonitoringMac {
   .mobileMonitoringTable .mobileMarketTableTitle {
     padding-right: 44px;
   }
+}
+
+/* Re-audit follow-up (2026-10-11, owner: "телефон: кнопки и длина"): on a
+   phone the first car came 2 680 px down. The five numbers are the sentence
+   above them, so they go; the country cards and the portal tiles are one line
+   that scrolls sideways; every control is a 44 px target. */
+@media (max-width: 40rem) {
+  .mobileMonitoringKpis { display: none; }
+
+  .mobileMonitoringSummaryStrip > div,
+  .mobileMonitoringTiles {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobileMonitoringSummaryStrip .mobileMonitoringSummaryCard {
+    flex: 0 0 min(78%, 260px);
+    scroll-snap-align: start;
+  }
+
+  .mobileMonitoringTiles .mobileMonitoringTile {
+    flex: none;
+    max-width: 82%;
+    scroll-snap-align: start;
+  }
+
+  .mobileMonitoringSortDir { width: 44px; height: 44px; }
+  .mobileMonitoringListTools select { min-height: 44px; }
+  .mobileMonitoringActions button,
+  .mobileMonitoringActions .mobileMonitoringDetailsToggle,
+  .mobileMonitoringViews > .mobileMarketImportClear,
+  .mobileMonitoringCountryTab { min-height: 44px; }
 }
