@@ -20,6 +20,7 @@
 | Новые порталы стран (B47) | `mobile.html` | [PORTALS-EXPANSION.md](PORTALS-EXPANSION.md) | Кандидаты DE/NL/BE/AT/LU/SE/FR: доступ, данные, объём, порядок добавления |
 | Импорт выборки рынка | `mobile.html` | [mobile-market-import.md](mobile-market-import.md) | Импорт CSV/JSON в анализ рынка |
 | Цена «pod klucz» vs Польша | `mobile.html` | [turnkey-market-comparison.md](turnkey-market-comparison.md) | План сравнения |
+| Отчёты аукционов → бриф → оффер «Z raportu aukcji» | `oferty.html` (способ 2), позже сервер | [PROJECT-AUCTION-REPORTS.md](PROJECT-AUCTION-REPORTS.md) | Чтение отчётов Macadam / TÜV / DEKRA в единый шаблон, коды Macadam, оценка, вердикт, образцы вне репозитория |
 | Проверка VIN | `partslink24.html` | [PARTSLINK24_VIN_CHECK.md](PARTSLINK24_VIN_CHECK.md) | Поля, марки, логика отчёта |
 | Отчёты Auto1 | `auto1.html`, `auctions.html` | [auto1-pdf-learning/structured-editor.md](auto1-pdf-learning/structured-editor.md) | Как редактируется PDF отчёта |
 | Выкладка | все | [RELEASE_RUNBOOK.md](RELEASE_RUNBOOK.md) | Pages + конвертер на Render, smoke-тесты |
@@ -76,6 +77,7 @@
 
 ## 8. Журнал
 
+- 2026-10-11 — отчёты аукционов (новая область): kickoff, первый тип Macadam (2 вида вёрстки, Франция), 4 отчёта разобраны вручную в единый шаблон брифа, словарь кодов ремонта; механизм — наши скрипты на JS, потом сервер (`docs/PROJECT-AUCTION-REPORTS.md`) (Claude).
 - 2026-10-11 — mobile.html, B75 волна 2: фильтры фургонов (тип кузова, DMC, ładowność, объём, L1–L5, H1–H3) для mobile.de и otomoto; комплектации 30 коммерческих моделей из прайс-листов производителей PL/DE и ADAC (79 строк с источниками) (Claude).
 - 2026-10-11 — B71 оффер, аудит программы 06 и PDF на Volvo EX30: 5 критичных (только для фирм, новое авто, доплата дилера не в цене, ошибка «к.», сырой заголовок), 14 предупреждений — `docs/OFFER-AUDIT-2026-10-11.md` (Claude).
 - 2026-10-11 — mobile.html, B75: переключатель «Osobowe / Dostawcze» — фургоны в разделах фургонов mobile.de, otomoto, AutoScout24 (раньше видели 5–10 % рынка: Transit на otomoto 235 из 2 812); акциз N1 — 0 % (калькулятор, анализ, Monitoring, оффер) (Claude).
