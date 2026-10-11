@@ -77,6 +77,10 @@ node server/monitoring-runner.mjs --jobs jobs.json --out data/monitoring --daily
 Claude), страница ходит на `<туннель импортера>/monitoring/{health,jobs,records}` —
 импортер пересылает только эти три маршрута (PROJECT-MOBILE §4.6.3 п. 26).
 
+**Уведомление (с 11.10):** после проверки с новыми или подешевевшими машинами служба
+показывает уведомление macOS (`osascript`); что новое — `AUTOGOOD_MONITORING.news`
+страницы (PROJECT-MOBILE §4.6.3). На сервере уведомление заменит письмо или Telegram.
+
 ## 4. Что осталось при запуске сервера
 
 1. **Где Chrome и с какого адреса (B6).** mobile.de отказывает датацентрам и

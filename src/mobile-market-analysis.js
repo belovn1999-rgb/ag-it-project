@@ -137,6 +137,7 @@
       monitoringVatMargin: "VAT marża",
       monitoringVatPrivate: "osoba prywatna · bez VAT",
       monitoringVatGross: "brutto",
+      monitoringPriceBid: "licytacja od (cena minimalna)",
       monitoringDetails: "Wyposażenie…",
       monitoringDetailsHide: "Zwiń",
       monitoringDetailsLoading: "Wczytuję ogłoszenie…",
@@ -831,6 +832,7 @@
       monitoringVatMargin: "VAT marża (маржа)",
       monitoringVatPrivate: "частное лицо · без НДС",
       monitoringVatGross: "брутто",
+      monitoringPriceBid: "торг от (минимальная цена)",
       monitoringDetails: "Оснащение…",
       monitoringDetailsHide: "Свернуть",
       monitoringDetailsLoading: "Загружаю объявление…",
@@ -2136,6 +2138,8 @@
       // Otomoto: "1" history confirmed in CEPiK, "0" not; origin "pl" or the
       // country the car was imported from.
       cepik: String(listingValue(row, ["cepik"]) || "").slice(0, 1),
+      // Marktplaats / 2dehands "licytacja od": a floor, not an asking price.
+      bid: listingValue(row, ["bid"]) === true || listingValue(row, ["bid"]) === "true" || undefined,
       origin: String(listingValue(row, ["origin"]) || "").slice(0, 8),
     };
     listing.source = listingSource({ ...listing, source: listingValue(row, ["source", "zrodlo"]) });
@@ -3515,6 +3519,7 @@
       fuel: String(listing.fuel || "").slice(0, 20) || undefined,
       turnkey: TURNKEY_SOURCES.includes(source) && turnkey ? Math.round(turnkey.turnkeyAverage(turnkeyInput(listing, listing.price, listing.currency || SOURCE_CURRENCY[source]), filters).total) : null,
       suspect: flagged.has(listing) || undefined,
+      bid: listing.bid || undefined,
     }));
     const total = Math.max(offers.length, ...own.map((listing) => Number(listing.marketTotal) || 0));
     return { total, complete: offers.length >= total * COMPLETE_SHARE, offers };
@@ -4950,7 +4955,7 @@
     const changes = (entry.priceLog || []).filter(isBaseChange);
     return records.map((record, index) => {
       const offers = Object.entries(record.markets || {}).flatMap(([source, market]) => (market.offers || [])
-        .filter((offer) => !offer.suspect && fits(source, offer))
+        .filter((offer) => !offer.suspect && !offer.bid && fits(source, offer))
         .map((offer) => ({ source, offer, country: offerCountryKey(source, offer), pln: clientPricePln(offer, source) })));
       const previous = records[index - 1];
       // Another search, budget or set of markets since the row before.
@@ -6540,6 +6545,7 @@
 
   function vatLabel(offer) {
     const c = copy();
+    if (offer.bid) return c.monitoringPriceBid;
     // Otomoto offers saved before 2026-10-03 as "net" are gross, VAT deductible.
     if (offer.priceType === "net" && offer.currency === "PLN") return c.monitoringVatDeductible.replace("{net}", formatPlainPrice(Math.round(offer.price / 1.23), offer.currency));
     if (offer.priceType === "vat") return offer.netPrice ? c.monitoringVatDeductible.replace("{net}", formatPlainPrice(offer.netPrice, offer.currency)) : c.monitoringVatDeductibleOnly;
@@ -7646,9 +7652,35 @@
     return result;
   }
 
+  // Audit p. 8 (owner 2026-10-10): what the Mac's service tells in its
+  // notification after a check — by the page's own rules: each portal against
+  // its previous answer, a car still listed on another portal is not new, a
+  // car of another version (p. 6) or a suspect price does not count.
+  function monitoringNews(job, previous, record) {
+    const result = { fresh: 0, cheaper: 0, gone: 0, bySource: {} };
+    if (!previous || !record || previous.scope !== record.scope) return result;
+    const counted = (source, offer) => !offer.suspect && !offer.bid && !otherVersionOf(job?.filters, source, offer);
+    const before = carsOf(Object.values(previous.markets || {}));
+    const now = carsOf(Object.values(record.markets || {}));
+    MARKET_SOURCES.filter((source) => portalAnswered(record, source) && portalAnswered(previous, source)).forEach((source) => {
+      const then = new Map((answeredMarket(previous, source).offers || []).map((offer) => [offer.key, offer]));
+      const current = (answeredMarket(record, source).offers || []).filter((offer) => counted(source, offer));
+      const keys = new Set(current.map((offer) => offer.key));
+      const fresh = current.filter((offer) => !then.has(offer.key) && !before.has(carSignature(offer))).length;
+      const cheaper = current.filter((offer) => then.has(offer.key) && offer.price < then.get(offer.key).price).length;
+      const gone = [...then.values()].filter((offer) => counted(source, offer) && !keys.has(offer.key) && !now.has(carSignature(offer))).length;
+      if (fresh || cheaper || gone) result.bySource[portalName(source)] = { fresh, cheaper, gone };
+      result.fresh += fresh;
+      result.cheaper += cheaper;
+      result.gone += gone;
+    });
+    return result;
+  }
+
   window.AUTOGOOD_MONITORING = {
     jobs: monitoringJobs,
     run: runMonitoringJob,
+    news: monitoringNews,
     importRecords: importMonitoringRecords,
     progress: () => ({ ...runnerProgress }),
     runner: RUNNER_MODE,
@@ -8571,6 +8603,8 @@
       return medianByYear.get(year);
     };
     return new Set(listings.filter((listing) => {
+      // "Licytacja od" (Marktplaats / 2dehands MIN_BID): a floor, not a price.
+      if (listing.bid) return true;
       if (SUSPECT_WORDS.test(`${listing.title || ""} ${listing.subtitle || ""}`)) return true;
       const price = valueOf(listing);
       const median = peerMedian(Number(listing.year) || 0);

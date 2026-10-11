@@ -50,6 +50,7 @@ function parseArgs(argv) {
     else if (name === "--serve") args.serve = Number(value());
     else if (name === "--site") args.sites.push(value());
     else if (name === "--daily") args.daily = true;
+    else if (name === "--no-notify") args.quiet = true;
     else throw new Error(`Unknown option ${name}`);
   }
   if (!args.apps.length && process.env.MONITORING_APP_URL) args.apps.push(process.env.MONITORING_APP_URL);
@@ -148,6 +149,33 @@ async function ranSince(out, jobId, since) {
   }
 }
 
+// The car's record just before this one (this service's own records).
+async function previousRecord(out, jobId, at) {
+  try {
+    const dir = join(out, safeName(jobId));
+    const stamp = (name) => Date.parse(name.replace(/\.json$/, "").replace(/T(\d\d)-(\d\d)-(\d\d)/, "T$1:$2:$3"));
+    const before = (await readdir(dir)).filter((name) => name.endsWith(".json") && stamp(name) < Date.parse(at)).sort((left, right) => stamp(left) - stamp(right));
+    return before.length ? JSON.parse(await readFile(join(dir, before[before.length - 1]), "utf8")) : null;
+  } catch {
+    return null;
+  }
+}
+
+// Audit p. 8 (owner 2026-10-10): after a check with new or cheaper cars a
+// macOS notification ("CLA 180 Shooting Brake: +2 nowe, 1 taniej"). What is
+// new is told by the page (AUTOGOOD_MONITORING.news), as page 3 shows it.
+function newsText(news) {
+  const parts = [news.fresh ? `+${news.fresh} nowe` : "", news.cheaper ? `${news.cheaper} taniej` : "", news.gone ? `${news.gone} zniknęło` : ""].filter(Boolean);
+  const portals = Object.entries(news.bySource || {}).map(([name, item]) => `${name} ${[item.fresh ? `+${item.fresh}` : "", item.cheaper ? `↓${item.cheaper}` : ""].filter(Boolean).join(" ")}`.trim()).filter((text) => /[+↓]/.test(text));
+  return `${parts.join(", ")}${portals.length ? ` (${portals.join(", ")})` : ""}`;
+}
+function notify(title, text) {
+  if (process.platform !== "darwin") return;
+  const quote = (value) => `"${String(value).replace(/["\\]/g, "").slice(0, 180)}"`;
+  const child = spawn("/usr/bin/osascript", ["-e", `display notification ${quote(text)} with title "AUTOGOOD Monitoring" subtitle ${quote(title)} sound name "Glass"`], { stdio: "ignore" });
+  child.on("error", () => {});
+}
+
 function summary(record) {
   const markets = Object.entries(record.markets || {}).map(([source, market]) => `${source} ${market.offers?.length || 0}/${market.total || 0}`).join(", ");
   const extra = record.extra ? Object.values(record.extra.markets || {}).reduce((sum, market) => sum + (market.offers?.length || 0), 0) : 0;
@@ -167,8 +195,17 @@ async function runJobs(args, jobs, onJob = () => {}) {
       }, 30000);
       try {
         const record = await page.evaluate(`window.AUTOGOOD_MONITORING.run(${JSON.stringify(job)})`, JOB_TIMEOUT_MS);
+        const previous = await previousRecord(args.out, job.id, record.at);
         const file = await writeRecord(args.out, record);
         log(`job ${job.id} — ${summary(record)} → ${file}`);
+        if (previous && !args.quiet) {
+          const news = await page.evaluate(`window.AUTOGOOD_MONITORING.news?.(${JSON.stringify(job)}, ${JSON.stringify(previous)}, ${JSON.stringify(record)}) || null`, 30000).catch(() => null);
+          if (news && (news.fresh || news.cheaper)) {
+            const text = newsText(news);
+            log(`job ${job.id} — news: ${text}`);
+            notify(job.title || "Monitoring", text);
+          }
+        }
         onJob(job, true);
       } catch (error) {
         // One car failing does not stop the others.

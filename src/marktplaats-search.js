@@ -363,7 +363,11 @@
     if (!data || typeof data !== "object" || !Array.isArray(data.listings)) throw new Error(`${site.name}: not a result list`);
     const all = total || Number(data?.totalResultCount) || 0;
     return (data?.listings || []).map((item, index) => {
-      if (item?.priceInfo?.priceType !== "FIXED") return null;
+      // "Bieden vanaf" / "licytacja od" (MIN_BID): kept with its floor price
+      // and marked (audit p. 10, 2026-10-10: 2dehands read "5 z 6" every day);
+      // Monitoring leaves it out of the cheapest and the median.
+      const kind = item?.priceInfo?.priceType;
+      if (kind !== "FIXED" && kind !== "MIN_BID") return null;
       const price = Number(item.priceInfo.priceCents) / 100;
       if (!Number.isFinite(price) || price < 300) return null;
       const attr = (key) => [...(item.attributes || []), ...(item.extendedAttributes || [])].find((entry) => entry.key === key);
@@ -381,6 +385,7 @@
         url: item.vipUrl ? new URL(item.vipUrl, site.host).toString() : "",
         title: String(item.title || "").slice(0, 160),
         source: market,
+        bid: kind === "MIN_BID" || undefined,
         price,
         currency: "EUR",
         year: Number(value("constructionYear")) || "",
