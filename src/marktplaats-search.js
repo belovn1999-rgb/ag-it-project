@@ -443,7 +443,21 @@
   }
 
   const proxy = () => window.AUTOGOOD_MARKET_PROXY || "https://r.jina.ai/";
+  // Marktplaats now and then answers a whole search with one offer (Ford
+  // Transit vans: 1 instead of 711 for the same address a minute later,
+  // 2026-10-11). A list of 0–1 offers is asked again twice, 1.5 s apart, and
+  // the fullest answer wins: a real "1 offer" stays 1.
   async function fetchJson(url) {
+    let best = await fetchJsonOnce(url);
+    for (let attempt = 0; attempt < 2 && Number(best.totalResultCount) <= 1; attempt += 1) {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const again = await fetchJsonOnce(url).catch(() => null);
+      if (again && Number(again.totalResultCount) > Number(best.totalResultCount)) best = again;
+    }
+    return best;
+  }
+
+  async function fetchJsonOnce(url) {
     const response = await fetch(`${proxy()}${url}`, { headers: { "x-respond-with": "text" } });
     if (!response.ok) throw new Error(String(response.status));
     const text = await response.text();
