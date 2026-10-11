@@ -200,3 +200,8 @@ a { color: inherit; }
 .osDealCard .osFacts { margin-top: 0; }
 .osDealCard .osNote { margin-top: 0; }
 .osPreviewFrame { background: transparent; border: 0; border-radius: 0; }
+/* The portals read, as the field's own hint (owner 2026-10-12). */
+.osSearchControl input::placeholder { color: var(--color-soft); font-size: var(--text-xs); opacity: 1; }
+/* A hidden part of program 06 stays hidden whatever its own display says
+ * (the auction report's card showed under the dealer's offer, 2026-10-12). */
+.osShell > [hidden] { display: none !important; }

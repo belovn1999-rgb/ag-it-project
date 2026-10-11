@@ -304,6 +304,7 @@
         method: words(calc.methodLabel) || methodLabel(calc.method || "direct"),
         rows: calc.rows.map((row) => ({ ...row, label: ruTax(words(row.label)), sub: ruTax(row.sub) })),
         total: calc.total,
+        shares: calc.lang === (ru() ? "ru" : "pl") ? calc.shares || [] : [],
         note: L(`Kalkulator AUTOGOOD, kurs EUR ${rate} zł z dnia ${dateText(calc.at)}.`, `Калькулятор AUTOGOOD, курс EUR ${rate} zł на ${dateText(calc.at)}.`),
         exact: true,
       };
@@ -1022,10 +1023,15 @@
     // The full calculation is the manager's choice (owner 2026-10-10): without
     // it the steps take the page's width and the rest goes under them.
     const withCosts = Boolean(costView) && !isHidden("costs");
-    // The calculator's picture only in its own language (owner 2026-10-11: a
-    // Russian offer all in Russian); in the other one the table of its lines.
-    const calcShot = offer.calcImage && offer.calc && (offer.calc.method || "direct") === offerMethod() && (offer.calc.lang || "pl") === (ru() ? "ru" : "pl") ? offer.calcImage : "";
-    // The web page always takes the table (text, not a picture).
+    // The page and the PDF take the same table (owner 2026-10-11: no picture
+    // of the calculator), with the calculator's coloured bar of what the price
+    // is made of under it.
+    const shares = costView?.shares || [];
+    const sharesHtml = shares.length ? `
+        <div class="ofShares">
+          <div class="ofSharesBar" aria-hidden="true">${shares.map((item) => `<span style="width:${Math.max(0.4, item.share)}%;background:${esc(item.color)}"></span>`).join("")}</div>
+          <ul class="ofSharesLegend">${shares.map((item) => `<li><i style="background:${esc(item.color)}"></i>${esc(ruTax(item.label))} <b>${esc(String(item.share).replace(".", ","))}%</b></li>`).join("")}</ul>
+        </div>` : "";
     const costsTable = costView ? `
       <section class="ofCard ofCostsCard${blockClass("costs")}" data-block="costs">
         ${hideToggle("costs")}
@@ -1037,14 +1043,10 @@
             <tr class="isTotal"><td>${L("Razem na gotowo", "Итого «под ключ»")}</td><td>${esc(money(costView.total, "PLN"))}</td></tr>
           </tbody>
         </table>
+        ${sharesHtml}
         ${field("costsNote", costView.note, "p", "ofSmall")}
       </section>` : "";
-    const costsHtml = calcShot ? `
- <section class="ofCard ofCostsCard ofCalcShotCard${blockClass("costs")}" data-block="costs">
-        ${hideToggle("costs")}
-        <p class="ofCardHead">${icon("receipt")}${L("Kalkulacja na gotowo", "Расчёт «под ключ»")}</p>
-        <img class="ofCalcShot" src="${esc(calcShot)}" alt="${esc(L("Kalkulacja AUTOGOOD", "Расчёт AUTOGOOD"))}" />
-      </section>` : costsTable;
+    const costsHtml = costsTable;
     const negotiationHtml = negotiation ? `
       <section class="ofCard ofNegoCard${blockClass("negotiation")}" data-block="negotiation">
         ${hideToggle("negotiation")}
@@ -1242,7 +1244,6 @@
     const zooms = [["1", "Całe zdjęcie", "Всё фото"], ["1.15", "Przybliż 15%", "Приблизить на 15%"], ["1.3", "Przybliż 30%", "Приблизить на 30%"], ["1.45", "Przybliż 45%", "Приблизить на 45%"]];
     const focus = [["center", "Środek", "Центр"], ["left", "Lewa strona", "Левая сторона"], ["right", "Prawa strona", "Правая сторона"], ["top", "Góra", "Верх"], ["bottom", "Dół", "Низ"]];
     const styles = { light: ["Jasny", "zdjęcie obok ceny, karty w ramkach", "Светлый", "фото рядом с ценой, карточки в рамках"], premium: ["Premium", "zdjęcie na całą szerokość, cena na granatowej plakietce", "Premium", "фото на всю ширину, цена на тёмно-синей плашке"], magazyn: ["Magazyn", "kremowa kolumna z ceną i danymi, tytuły szeryfowe", "Журнал", "кремовая колонка с ценой и данными, заголовки с засечками"], raport: ["Raport", "liczby na górze, rynek na całą szerokość", "Отчёт", "цифры сверху, рынок на всю ширину"], noc: ["Noc", "ciemny nagłówek z ceną, zdjęcie pod nim", "Ночь", "тёмная шапка с ценой, фото под ней"] };
-    const methodName = (key) => U(METHODS[key].label, METHODS[key].labelRu);
     const editedCount = Object.keys(edits()).filter((key) => key !== "photo").length;
     const own = !EMBED && offer.origin !== "link";
     return `
@@ -1260,6 +1261,7 @@
           <label>${U("Klient (opcjonalnie)", "Клиент (необязательно)")}<input data-client-name value="${esc(client.name || "")}" placeholder="${esc(U("np. Jan Kowalski", "напр. Иван Петров"))}" /></label>
         </div>
       </section>` : ""}
+      ${calcCard(own)}
       <section class="ofPanelCard">
         <h2>${U("Wygląd oferty", "Вид предложения")}</h2>
         <div class="ofToggleList ofStyleList">${STYLES.map(([key]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> <span><b>${esc(U(styles[key][0], styles[key][2]))}</b><small>${esc(U(styles[key][1], styles[key][3]))}</small></span></label>`).join("")}</div>
@@ -1279,17 +1281,6 @@
         ${ad?.description ? `<details><summary>${U("Opis sprzedawcy (oryginał)", "Описание продавца (оригинал)")}</summary><div class="ofDescription">${esc(ad.description)}</div></details>` : ""}
         ${ad?.flags?.aiSummary ? `<details><summary>${U("Podsumowanie mobile.de (AI portalu)", "Сводка mobile.de (ИИ портала)")}</summary><div class="ofDescription">${esc([ad.flags.aiTags.join(" · "), ad.flags.aiSummary.replace(/\*\*/g, ""), ...(ad.flags.aiInsights || []).map((item) => `• ${item.title} — ${item.subtitle}`)].filter(Boolean).join("\n\n"))}</div></details>` : ""}
       </section>
-      ${own ? `
-      <section class="ofPanelCard">
-        <h2>${U("Kalkulacja", "Расчёт")}</h2>
-        ${offer.calc && (offer.calc.method || "direct") === offerMethod()
-          ? `<p class="ofPanelOk">${U("Z kalkulatora", "Из калькулятора")}: ${esc(methodName(offer.calc.method || "direct"))}, ${esc(money(offer.calc.total, "PLN"))} (${esc(dateText(offer.calc.at))} ${esc(timeText(offer.calc.at))}).</p>`
-          : `<p>${U(`Teraz: szacunek „${esc(METHODS[offerMethod()].label)}” z taryfą miejsca sprzedawcy.${offer.calc ? " Wstawiona kalkulacja dotyczy innego sposobu zakupu — nie jest pokazana." : ""} Wstaw dokładną kalkulację z kalkulatora.`, `Сейчас: оценка «${esc(METHODS[offerMethod()].labelRu)}» с тарифом места продавца.${offer.calc ? " Вставленный расчёт относится к другому способу покупки — не показан." : ""} Вставьте точный расчёт из калькулятора.`)}</p>`}
-        <label>${U("Sposób zakupu (zmienia koszt, plakietkę ceny i kroki 7 i 9)", "Способ покупки (меняет стоимость, плашку цены и шаги 7 и 9)")}<select data-calc-method>${Object.keys(METHODS).map((key) => `<option value="${key}"${key === offerMethod() ? " selected" : ""}${(key === "vat" && !(netEur() > 0)) || (key === "direct" && businessOnly()) ? " disabled" : ""}>${esc(methodName(key))}</option>`).join("")}</select></label>
-        ${businessOnly() ? `<p class="ofPanelError">${U("Dealer sprzedaje tylko firmom / na eksport — zakup bezpośredni wyłączony.", "Дилер продаёт только фирмам / на экспорт — прямая покупка отключена.")}</p>` : ""}
-        <button class="offerButton isSmall" type="button" data-calc-open>${offer.calc ? U("Zmień w kalkulatorze", "Изменить в калькуляторе") : U("Otwórz kalkulator", "Открыть калькулятор")}</button>
-        ${offer.calc ? `<button class="offerButton isSmall" type="button" data-calc-drop>${U("Wróć do szacunku", "Вернуться к оценке")}</button>` : ""}
-      </section>` : ""}
       <section class="ofPanelCard">
         <h2>${U("Bloki na stronie i w PDF", "Блоки на странице и в PDF")}</h2>
         <div class="ofToggleList">${BLOCKS.map(([key, pl, russian]) => `<label><input type="checkbox" data-block-toggle="${key}"${(key === "poland" ? polandHidden(polandView()) : key === "allOptions" ? !(offer.shown || []).includes("allOptions") || isHidden(key) : isHidden(key)) ? "" : " checked"} /> ${esc(U(pl, russian))}</label>`).join("")}</div>
@@ -1365,17 +1356,27 @@
 
   // In program 06's frame the settings follow the page's scroll (the frame
   // itself does not scroll): 06 sends where its window is.
+  // Its bar with the buttons stays on top under the site's bar (owner 2026-10-11).
+  const offerBar = document.querySelector(".offerBar");
   window.addEventListener("message", (event) => {
     if (!EMBED || event.origin !== window.location.origin || event.data?.type !== "ag-offer-viewport" || !panel) return;
+    const seen = (Number(event.data.top) || 0) + (Number(event.data.nav) || 0);
+    const barHeight = offerBar?.offsetHeight || 0;
+    if (offerBar) {
+      const shift = Math.max(0, Math.min(seen, document.body.scrollHeight - barHeight - 120));
+      offerBar.style.transform = shift > 0 ? `translateY(${shift}px)` : "";
+      offerBar.classList.toggle("isStuck", shift > 0);
+    }
     if (window.matchMedia("(max-width: 899px)").matches) {
       panel.style.removeProperty("top");
       panel.style.removeProperty("max-height");
       return;
     }
+    const height = event.data.height - (Number(event.data.nav) || 0) - barHeight - 24;
     const rest = panel.offsetTop - (Number.parseFloat(panel.style.top) || 0);
-    const room = Math.max(0, stage.offsetHeight - Math.min(panel.scrollHeight, event.data.height - 24));
-    panel.style.maxHeight = `${Math.max(320, event.data.height - 24)}px`;
-    panel.style.top = `${Math.max(0, Math.min(room, event.data.top + 12 - rest))}px`;
+    const room = Math.max(0, stage.offsetHeight - Math.min(panel.scrollHeight, height));
+    panel.style.maxHeight = `${Math.max(320, height)}px`;
+    panel.style.top = `${Math.max(0, Math.min(room, seen + barHeight + 12 - rest))}px`;
   });
 
   // ---- Drawing ------------------------------------------------------------------------------
@@ -1400,7 +1401,9 @@
       image.removeAttribute("crossorigin");
       image.src = image.dataset.source;
     }, { once: true }));
-    panel.innerHTML = CLIENT ? "" : panelHtml(view);
+    keepFocus(panel, () => {
+      panel.innerHTML = CLIENT ? "" : panelHtml(view);
+    });
     // Fitted again once the web fonts are in (a fallback font is wider and
     // would take options and checks off a sheet that has room for them).
     if (!fontsSettled && document.fonts?.status !== "loaded") {
@@ -1409,6 +1412,29 @@
     }
     fitSheets();
     autoFit();
+    scheduleCalc();
+  }
+
+  // The panel is drawn again after each change: the field being typed in
+  // keeps its focus, its text and its caret.
+  function keepFocus(root, draw) {
+    const active = document.activeElement;
+    const typing = active && root.contains(active) && (active.tagName === "TEXTAREA" || (active.tagName === "INPUT" && !["checkbox", "radio"].includes(active.type)));
+    if (!typing) return draw();
+    const name = [...active.attributes].find((item) => item.name.startsWith("data-") && item.name !== "data-extra");
+    const row = active.closest("[data-extra]");
+    const selector = name ? `${row ? `[data-extra="${row.dataset.extra}"] ` : ""}[${name.name}="${CSS.escape(name.value)}"]` : "";
+    const { value, selectionStart, selectionEnd } = active;
+    draw();
+    const next = selector ? root.querySelector(selector) : null;
+    if (!next) return;
+    next.value = value;
+    next.focus();
+    try {
+      next.setSelectionRange(selectionStart, selectionEnd);
+    } catch {
+      // Not a text field.
+    }
   }
 
   // Each sheet is one A4 page: when the content is taller (long names, many
@@ -1471,13 +1497,6 @@
       two.classList.remove("isTight", "isTighter");
       if (overflow(two) > 0) two.classList.add("isTight");
       if (overflow(two) > 0) two.classList.add("isTighter");
-      // Still too tall: the calculator's picture a little smaller (centred).
-      const shot = two.querySelector(".ofCalcShot");
-      if (shot) shot.style.removeProperty("height");
-      if (shot && overflow(two) > 0 && shot.getBoundingClientRect().height > 200) {
-        const scale = two.getBoundingClientRect().height / two.offsetHeight || 1;
-        shot.style.height = `${Math.max(200, shot.getBoundingClientRect().height / scale - overflow(two) - 2)}px`;
-      }
       const list = two.querySelector(".ofAllOptions");
       let dropped = 0;
       while (list && overflow(two) > 0 && list.children.length > 12) {
@@ -1638,6 +1657,14 @@
       save({ lang: target.value === "ru" ? "ru" : "pl" });
     } else if (target.matches("[data-calc-method]")) {
       save({ method: METHODS[target.value] ? target.value : "direct" });
+    } else if (target.matches("[data-calc-set]")) {
+      calcSetting(target);
+    } else if (target.matches("[data-calc-german]")) {
+      const on = target.checked;
+      save((stored) => ({ calcInputs: { ...(stored.calcInputs || {}), germanOn: on, germanCommission: on ? stored.calcInputs?.germanCommission ?? "" : "" } }));
+    } else if (target.matches("[data-extra-field]")) {
+      const extras = extrasFromPanel();
+      save((stored) => ({ calcInputs: { ...(stored.calcInputs || {}), extras } }));
     } else if (target.matches("[data-style]")) {
       try {
         localStorage.setItem(STYLE_KEY, target.dataset.style);
@@ -1666,9 +1693,14 @@
     }
   });
   panel.addEventListener("click", (event) => {
-    if (event.target.closest("[data-calc-open]")) openCalculator(defaultTab());
-    else if (event.target.closest("[data-calc-drop]")) save({ calc: null });
-    else if (event.target.closest("[data-read-ad]")) readAd();
+    if (event.target.closest("[data-extra-add]")) {
+      const extras = [...extrasFromPanel(), { label: "", amount: "", currency: "PLN", vat: false }];
+      save((stored) => ({ calcInputs: { ...(stored.calcInputs || {}), extras } })).then(() => panel.querySelector("[data-extra]:last-of-type [data-extra-field='label']")?.focus());
+    } else if (event.target.closest("[data-extra-remove]")) {
+      const index = Number(event.target.closest("[data-extra-remove]").dataset.extraRemove);
+      const extras = extrasFromPanel().filter((item, at) => at !== index);
+      save((stored) => ({ calcInputs: { ...(stored.calcInputs || {}), extras } }));
+    } else if (event.target.closest("[data-read-ad]")) readAd();
     else if (event.target.closest("[data-reset-edits]")) save((stored) => ({ edits: stored.edits?.photo ? { photo: stored.edits.photo } : {} }));
     else if (event.target.closest("[data-use-ad-price]")) {
       const price = Number(event.target.closest("[data-use-ad-price]").dataset.useAdPrice) || 0;
@@ -1699,17 +1731,28 @@
   }
   editButton?.addEventListener("click", () => setEditing(!editing));
 
-  // ---- The calculator (wave 3) ------------------------------------------------------------
-  // The calculators page itself in a window (calculators.html?embed=1, as
-  // "Oblicz na gotowo"), on the method the manager picks; "Wstaw do oferty"
-  // copies its lines and total as shown — the live rate, its tariffs and any
-  // change made there included — into the offer.
-  const CALC_TABS = [
-    { tab: 0, key: "direct", label: "Zakup bezpośredni", labelRu: "Прямая покупка" },
-    { tab: 3, key: "vat", label: "Dealerzy VAT 23%", labelRu: "Дилеры, НДС 23%" },
-    { tab: 4, key: "margin", label: "Dealerzy VAT marża", labelRu: "Дилеры, НДС-маржа" },
-  ];
+  // ---- The calculation (owner 2026-10-11) ---------------------------------------------------
+  // The calculators page itself counts the offer out of sight (a hidden frame
+  // with calculators.html?embed=offer, offer-calc.js): the ad's price on the
+  // way of buying, the estimate's engine class and tariff, the dealer's fee
+  // from the ad and what the manager sets in the panel on the right —
+  // commission, engine, transport, inspection, registration, the German
+  // firm's commission, own costs, the rate (offer.calcInputs). Its lines,
+  // total, rate and the cost's shares are kept with the offer (offer.calc)
+  // and drawn as a table with a coloured bar on the page and in the PDF. It
+  // is counted again only when something it depends on changes (calc.source):
+  // opening an offer never counts it again at today's rate.
+  const CALC = window.AUTOGOOD_OFFER_CALC;
   const VAT_RATES = { DE: 0.19, AT: 0.2, FR: 0.2, NL: 0.21, BE: 0.21, LU: 0.17, IT: 0.22, ES: 0.21, SE: 0.25, DK: 0.25, CZ: 0.21, SK: 0.23 };
+  // The calculator's engine classes (src/main.jsx engineTypes), its excise.
+  const ENGINES = [
+    ["EL / PHEV ≤2000 cm³", "Электро / PHEV ≤2000 см³", "0%"],
+    ["PHEV / HEV / MHEV >2000 cm³", "PHEV / HEV / MHEV >2000 см³", "9,3%"],
+    ["HEV / MHEV ≤2000 cm³", "HEV / MHEV ≤2000 см³", "1,55%"],
+    ["Spalinowy ≤2000 cm³", "ДВС ≤2000 см³", "3,1%"],
+    ["Spalinowy >2000 cm³", "ДВС >2000 см³", "18,6%"],
+    ["Dostawczy N1 (bez akcyzy)", "Коммерческий N1 (без акциза)", "0%"],
+  ];
   function calcInput() {
     const view = carView();
     const vat = view.priceType === "vat" || Boolean(offer.ad?.vat?.deductible);
@@ -1724,105 +1767,218 @@
       url: offer.source === "mobile" ? view.url : "",
     };
   }
-  // An offer with VAT to deduct opens on "Dealerzy VAT 23%", others on "Zakup bezpośredni".
-  const defaultTab = () => METHODS[offerMethod()].tab;
-  function calcUrl(tab) {
-    const input = calcInput();
-    const params = new URLSearchParams({ embed: "1", tab: String(tab), lang: ru() ? "ru" : "pl", car: String(Math.round(tab === 3 ? input.net : input.gross)), engine: String(input.engine) });
-    if (input.transport) params.set("transport", String(Math.round(input.transport)));
-    if (input.inspection) params.set("inspection", String(Math.round(input.inspection)));
-    if (input.url) params.set("mobileUrl", input.url);
-    // The dealer's delivery fee as the calculator's own line (owner 2026-10-11).
+  const calcSettings = () => offer?.calcInputs || {};
+  const isSet = (value) => value !== undefined && value !== null && String(value).trim() !== "";
+  // The dealer's delivery fee as the calculator's own line (owner 2026-10-11):
+  // on VAT 23% net (AUTOGOOD's invoice adds the Polish VAT), else gross.
+  function feeExtra(method) {
     const fee = carView().facts?.fee;
-    if (fee?.amount) {
-      const sellerVat = Number(offer.ad?.vat?.rate) || 19;
-      const viaVat = tab === 3;
-      const amount = viaVat ? (fee.net ? fee.amount : fee.amount / (1 + sellerVat / 100)) : fee.net ? fee.amount * (1 + sellerVat / 100) : fee.amount;
-      params.set("extraLabel", L("Opłata dealera za wydanie auta", "Сбор дилера за выдачу авто"));
-      params.set("extraAmount", String(Math.round(amount * 100) / 100));
-      params.set("extraCurrency", "EUR");
-      if (viaVat) params.set("extraVat", "1");
-    }
-    return `./calculators.html?${params.toString()}`;
+    if (!fee?.amount) return null;
+    const sellerVat = Number(offer.ad?.vat?.rate) || 19;
+    const viaVat = method === "vat";
+    const amount = viaVat ? (fee.net ? fee.amount : fee.amount / (1 + sellerVat / 100)) : fee.net ? fee.amount * (1 + sellerVat / 100) : fee.amount;
+    return { label: L("Opłata dealera za wydanie auta", "Сбор дилера за выдачу авто"), amount: Math.round(amount * 100) / 100, currency: "EUR", vat: viaVat };
   }
-  let calcDialog = null;
-  let calcTab = 0;
-  function openCalculator(tab = defaultTab()) {
-    calcTab = tab;
+  // The calculator's address for these settings: the same address, the same count.
+  function calcSource(settings = calcSettings(), rate = settings.rate) {
+    if (!CALC || !offer?.estimate) return "";
     const input = calcInput();
-    if (!calcDialog) {
-      calcDialog = document.createElement("dialog");
-      calcDialog.className = "agCalcPopup ofCalcDialog";
-      calcDialog.setAttribute("aria-labelledby", "ofCalcTitle");
-      document.body.append(calcDialog);
-      calcDialog.addEventListener("click", (event) => {
-        if (event.target === calcDialog || event.target.closest("[data-calc-close]")) calcDialog.close();
-        const pick = event.target.closest("[data-calc-tab]");
-        if (pick && !pick.disabled) openCalculator(Number(pick.dataset.calcTab));
-        if (event.target.closest("[data-calc-insert]")) insertCalculation();
-      });
-      calcDialog.addEventListener("close", () => {
-        const frame = calcDialog.querySelector("iframe");
-        if (frame) frame.src = "about:blank";
-      });
+    const method = offerMethod();
+    if (method === "vat" && !(input.net > 0)) return "";
+    return CALC.url({
+      method,
+      lang: ru() ? "ru" : "pl",
+      gross: input.gross,
+      net: input.net,
+      engine: isSet(settings.engine) ? Number(settings.engine) : input.engine,
+      transport: isSet(settings.transport) ? settings.transport : input.transport,
+      inspection: isSet(settings.inspection) ? settings.inspection : input.inspection,
+      url: input.url,
+      extra: feeExtra(method),
+      extras: settings.extras || [],
+      registration: Boolean(settings.registration),
+      commission: settings.commission || "standard",
+      germanCommission: settings.germanCommission,
+      rate,
+      car: settings.method === method ? settings.car : "",
+      discount: settings.discount,
+    });
+  }
+  const calcFailed = new Set();
+  function calcDue() {
+    if (CLIENT || !offer || offer.error) return false;
+    const source = calcSource();
+    if (!source || calcFailed.has(source)) return false;
+    if (offer.calc?.source) return offer.calc.source !== source;
+    // Never counted: an offer of program 06 at once, one from Monitoring when
+    // the manager sets something (until then its estimate, as it was sent).
+    return !offer.calc && (offer.origin === "link" || Boolean(offer.calcInputs));
+  }
+  let calcTimer = null;
+  let calcRunning = "";
+  function scheduleCalc() {
+    if (CLIENT) return;
+    window.clearTimeout(calcTimer);
+    calcTimer = window.setTimeout(ensureCalc, 250);
+  }
+  async function ensureCalc() {
+    if (CLIENT || !CALC || !offer) return;
+    // Counted before the settings were kept here: with its fields known
+    // (wave 10) counted again at its own rate — the same sum, now with the
+    // bar of shares; without them kept as it is when it is for this way and
+    // language (a new count keeps its rate).
+    if (offer.calc && !offer.calc.source) {
+      const inputs = { ...calcSettings(), rate: Number(calcSettings().rate) || Number(offer.calc.rate) || 0 };
+      const source = calcSource(inputs);
+      const same = (offer.calc.method || "direct") === offerMethod() && (offer.calc.lang || "pl") === (ru() ? "ru" : "pl");
+      if (source && same && !isSet(offer.calcInputs?.transport)) {
+        await save((stored) => ({ calcInputs: inputs, calc: { ...stored.calc, source } }));
+        return;
+      }
+      await save((stored) => ({ calcInputs: inputs, calc: { ...stored.calc, source: "legacy" } }), false);
     }
-    calcDialog.innerHTML = `
-      <div class="agCalcPopupHead">
-        <div>
-          <p class="agCalcPopupKicker">${U("Kalkulacja do oferty", "Расчёт для предложения")} ${esc(offer.number || "")}</p>
-          <h2 id="ofCalcTitle">${esc(carView().title)}</h2>
-          <p class="agCalcPopupFacts">${esc(money(input.gross, "EUR"))} ${U("brutto", "брутто")}${input.vat ? ` · ${U("VAT do odliczenia", "НДС к вычету")} · ${esc(money(input.net, "EUR"))} ${U("netto", "нетто")}` : ""} · ${U("transport", "транспорт")} ${esc(numbers.format(input.transport))} + ${U("oględziny", "осмотр")} ${esc(numbers.format(input.inspection))} zł ${U("netto", "нетто")}</p>
-        </div>
-        <div class="ofCalcActions">
-          <button class="offerButton isPrimary" type="button" data-calc-insert>${U("Wstaw do oferty", "Вставить в предложение")}</button>
-          <button class="agCalcPopupClose" type="button" data-calc-close aria-label="${esc(U("Zamknij", "Закрыть"))}">×</button>
-        </div>
-      </div>
-      <div class="agCalcPopupTabs" role="tablist">
-        ${CALC_TABS.map((item) => `<button type="button" role="tab" data-calc-tab="${item.tab}" aria-selected="${item.tab === tab ? "true" : "false"}"${item.key === "vat" && !input.vat ? ` disabled title="${esc(U("Tylko dla auta z VAT do odliczenia", "Только для авто с НДС к вычету"))}"` : item.key === "direct" && businessOnly() ? ` disabled title="${esc(U("Dealer sprzedaje tylko firmom", "Дилер продаёт только фирмам"))}"` : ""}>${esc(U(item.label, item.labelRu))}</button>`).join("")}
-      </div>
-      <p class="agCalcPopupNote" data-calc-note>${U("Popraw w kalkulatorze, co trzeba (transport, oględziny, rabat), i kliknij „Wstaw do oferty” — oferta pokaże dokładnie te linie i tę kwotę.", "Поправьте в калькуляторе, что нужно (транспорт, осмотр, скидка), и нажмите «Вставить в предложение» — предложение покажет именно эти строки и эту сумму.")}</p>
-      <iframe class="agCalcPopupFrame" title="${esc(U("Kalkulator AUTOGOOD", "Калькулятор AUTOGOOD"))}" src="${esc(calcUrl(tab))}"></iframe>`;
-    if (!calcDialog.open) calcDialog.showModal();
+    if (!calcDue()) return;
+    const baseline = calcSource();
+    if (calcRunning === baseline) return;
+    calcRunning = baseline;
+    const settings = calcSettings();
+    setStatus(U("Liczę kalkulację…", "Считаю расчёт…"));
+    try {
+      // The rate fixed with the count: the calculator's live one, or the one set.
+      let rate = Number(settings.rate) || 0;
+      if (!rate) {
+        await TURNKEY?.calculatorRate?.().catch(() => null);
+        rate = Number(TURNKEY?.currentRates?.().eur) || Number(offer.estimate?.rate) || 0;
+      }
+      const source = calcSource(settings, rate);
+      const result = await countIn(source);
+      // The manager changed something meanwhile: the next count takes it.
+      if (calcSource() !== baseline) return;
+      const method = offerMethod();
+      const kept = { ...settings, rate: result.rate || rate };
+      await save({
+        calcInputs: kept,
+        calc: { tab: CALC.TABS[method], method, methodLabel: "", rows: result.rows, total: result.total, rate: result.rate || rate, shares: result.shares, lang: ru() ? "ru" : "pl", at: new Date().toISOString(), source: calcSource(kept) },
+      });
+      setStatus(`${U("Kalkulacja", "Расчёт")}: ${money(result.total, "PLN")} · ${U("kurs EUR", "курс EUR")} ${String(result.rate || rate).replace(".", ",")}`);
+    } catch (error) {
+      calcFailed.add(baseline);
+      setStatus(`${U("Nie udało się policzyć kalkulacji", "Не удалось посчитать расчёт")} (${error?.message || error}).`, true);
+    } finally {
+      calcRunning = "";
+      if (calcDue()) scheduleCalc();
+    }
+  }
+  // The calculator in a hidden frame: read when its numbers stand still.
+  let calcFrame = null;
+  const pause = (ms) => new Promise((resolve) => window.setTimeout(resolve, ms));
+  function countIn(source) {
+    return new Promise((resolve, reject) => {
+      calcFrame?.remove();
+      const frame = document.createElement("iframe");
+      calcFrame = frame;
+      frame.setAttribute("aria-hidden", "true");
+      frame.tabIndex = -1;
+      frame.title = "Kalkulator AUTOGOOD";
+      frame.style.cssText = "position:fixed;left:-20000px;top:0;width:940px;height:1400px;border:0;visibility:hidden;pointer-events:none;";
+      const done = (error, value) => {
+        if (calcFrame === frame) calcFrame = null;
+        frame.remove();
+        if (error) reject(error);
+        else resolve(value);
+      };
+      frame.addEventListener("load", async () => {
+        let last = "";
+        let same = 0;
+        for (let step = 0; step < 48; step += 1) {
+          await pause(250);
+          try {
+            const read = CALC.read(frame.contentDocument);
+            const key = `${read.total}|${read.rate}|${read.rows.length}`;
+            same = key === last ? same + 1 : 0;
+            last = key;
+            if (same >= 2) return done(null, { ...read, shares: CALC.shares(frame.contentDocument) });
+          } catch {
+            // Still drawing.
+          }
+        }
+        done(new Error(U("kalkulator nie odpowiada", "калькулятор не отвечает")));
+      }, { once: true });
+      frame.src = source;
+      document.body.append(frame);
+    });
   }
 
-  const amountOf = (text) => {
-    const digits = String(text || "").replace(/[^\d,-]/g, "").replace(",", ".");
-    return Number(digits) || 0;
-  };
-  function readCalculator() {
-    const frame = calcDialog?.querySelector("iframe");
-    const doc = frame?.contentDocument;
-    if (!doc) throw new Error("kalkulator nie jest gotowy");
-    const text = (node) => (node?.textContent || "").replace(/\s+/g, " ").trim();
-    const rows = [...doc.querySelectorAll(".resultsList .resultLine")].map((line) => ({
-      label: text(line.querySelector(".resultLineLabel")),
-      sub: [text(line.querySelector(".resultLinePrefix")).replace(/\s*=\s*$/, ""), text(line.querySelector(".resultLineSub"))].filter(Boolean).join(" · "),
-      value: amountOf(text(line.querySelector(".resultLineAmount"))),
-    })).filter((row) => row.label && row.value);
-    const total = amountOf(text(doc.querySelector(".totalBarValue")));
-    if (!rows.length || !total) throw new Error("kalkulator jeszcze liczy — spróbuj za chwilę");
-    const rate = Number(String(text(doc.querySelector(".totalBarRate")).match(/(\d+[.,]\d+)/)?.[1] || "").replace(",", ".")) || 0;
-    const item = CALC_TABS.find((entry) => entry.tab === calcTab) || CALC_TABS[0];
-    // The calculator speaks the offer's language (calcUrl): its lines are kept so.
-    return { tab: calcTab, method: item.key, methodLabel: methodLabel(item.key), rows, total, rate, lang: ru() ? "ru" : "pl", at: new Date().toISOString() };
+  // The panel's "Kalkulacja" (owner 2026-10-11): what the calculator below
+  // the offer had, set here.
+  function calcCard(own) {
+    if (!CALC || !offer.estimate) return "";
+    const settings = calcSettings();
+    const input = calcInput();
+    const method = offerMethod();
+    const calc = offer.calc?.source ? offer.calc : null;
+    const fee = feeExtra(method);
+    const commission = settings.commission || "standard";
+    const commissions = [["standard", "Standard", "Стандарт"], ["financed", "Finansowanie", "Финансирование"], ...(method === "vat" ? [["direct", "Bezpośrednio", "Напрямую"]] : [])];
+    const extras = Array.isArray(settings.extras) ? settings.extras : [];
+    const german = isSet(settings.germanCommission) || settings.germanOn;
+    const number = (value) => (isSet(value) ? String(value) : "");
+    return `
+      <section class="ofPanelCard ofCalcCard">
+        <h2>${U("Kalkulacja", "Расчёт")}</h2>
+        ${calcRunning ? `<p>${U("Liczę…", "Считаю…")}</p>`
+          : calc ? `<p class="ofPanelOk">${U("Kalkulator AUTOGOOD", "Калькулятор AUTOGOOD")}: ${esc(money(calc.total, "PLN"))} · ${U("kurs", "курс")} ${esc(String(calc.rate || "").replace(".", ","))} (${esc(dateText(calc.at))} ${esc(timeText(calc.at))}).</p>`
+          : `<p>${U("Teraz szacunek — zmień ustawienie, a policzy kalkulator.", "Сейчас оценка — измените настройку, и посчитает калькулятор.")}</p>`}
+        ${own ? `<label>${U("Sposób zakupu", "Способ покупки")}<select data-calc-method>${Object.keys(METHODS).map((key) => `<option value="${key}"${key === method ? " selected" : ""}${(key === "vat" && !(netEur() > 0)) || (key === "direct" && businessOnly()) ? " disabled" : ""}>${esc(U(METHODS[key].label, METHODS[key].labelRu))}</option>`).join("")}</select></label>` : ""}
+        ${method !== "direct" ? `<div class="ofCalcField"><span>${U("Rodzaj prowizji", "Тип комиссии")}</span><div class="ofSegment" role="radiogroup">${commissions.map(([key, pl, russian]) => `<label><input type="radio" name="ofCommission" value="${key}" data-calc-set="commission"${commission === key ? " checked" : ""} /><span>${esc(U(pl, russian))}</span></label>`).join("")}</div></div>` : ""}
+        <label>${U("Typ silnika", "Тип двигателя")}<select data-calc-set="engine">${ENGINES.map(([pl, russian, rate], index) => `<option value="${index}"${Number(isSet(settings.engine) ? settings.engine : input.engine) === index ? " selected" : ""}>${esc(U(pl, russian))} — ${rate}</option>`).join("")}</select></label>
+        <div class="ofPanelRow">
+          <label>${U("Oględziny, zł netto", "Осмотр, zł нетто")}<input data-calc-set="inspection" inputmode="decimal" value="${esc(number(isSet(settings.inspection) ? settings.inspection : Math.round(input.inspection)))}" /></label>
+          <label>${U("Transport, zł netto", "Транспорт, zł нетто")}<input data-calc-set="transport" inputmode="decimal" value="${esc(number(isSet(settings.transport) ? settings.transport : Math.round(input.transport)))}" /></label>
+        </div>
+        <label class="ofCheckRow"><input type="checkbox" data-calc-set="registration"${settings.registration ? " checked" : ""} /> ${U("Rejestracja", "Регистрация")}</label>
+        ${method !== "direct" ? `<label class="ofCheckRow"><input type="checkbox" data-calc-german${german ? " checked" : ""} /> ${U("Prowizja firmy niemieckiej", "Комиссия немецкой фирмы")}</label>
+        ${german ? `<label>${U("Prowizja firmy niemieckiej, EUR", "Комиссия немецкой фирмы, EUR")}<input data-calc-set="germanCommission" inputmode="decimal" value="${esc(number(settings.germanCommission))}" placeholder="0" /></label>` : ""}` : ""}
+        <div class="ofCalcField">
+          <span>${U("Własne koszty", "Свои расходы")}</span>
+          ${fee ? `<p class="ofCalcFee">${esc(fee.label)}: ${esc(money(fee.amount, "EUR"))}${fee.vat ? ` ${U("netto + VAT", "нетто + НДС")}` : ""} · ${U("z ogłoszenia", "из объявления")}</p>` : ""}
+          ${extras.map((item, index) => `
+          <div class="ofExtra" data-extra="${index}">
+            <input data-extra-field="label" value="${esc(item.label || "")}" placeholder="${esc(U("Nazwa kosztu", "Название расхода"))}" aria-label="${esc(U("Nazwa kosztu", "Название расхода"))}" />
+            <input data-extra-field="amount" inputmode="decimal" value="${esc(number(item.amount))}" placeholder="0" aria-label="${esc(U("Kwota", "Сумма"))}" />
+            <select data-extra-field="currency" aria-label="${esc(U("Waluta", "Валюта"))}"><option${item.currency !== "EUR" ? " selected" : ""}>PLN</option><option${item.currency === "EUR" ? " selected" : ""}>EUR</option></select>
+            <label class="ofExtraVat"><input type="checkbox" data-extra-field="vat"${item.vat ? " checked" : ""} /> VAT</label>
+            <button class="ofExtraRemove" type="button" data-extra-remove="${index}" aria-label="${esc(U("Usuń koszt", "Удалить расход"))}" title="${esc(U("Usuń koszt", "Удалить расход"))}">×</button>
+          </div>`).join("")}
+          <button class="offerButton isSmall" type="button" data-extra-add>+ ${U("Dodaj własny koszt", "Добавить свой расход")}</button>
+        </div>
+        <label>${U("Kurs EUR (puste — aktualny)", "Курс EUR (пусто — текущий)")}<input data-calc-set="rate" inputmode="decimal" value="${esc(number(settings.rate))}" placeholder="${esc(String(TURNKEY?.currentRates?.().eur || "").replace(".", ","))}" /></label>
+      </section>`;
   }
-  async function insertCalculation() {
-    const note = calcDialog?.querySelector("[data-calc-note]");
-    try {
-      const calcData = readCalculator();
-      calcData.note = `Kalkulator AUTOGOOD, kurs EUR ${calcData.rate ? calcData.rate.toFixed(2).replace(".", ",") : "—"} zł z dnia ${dateText(calcData.at)}.`;
-      // With the full calculation on page 2: the calculator's own picture (owner 2026-10-11).
-      const calcImage = !isHidden("costs") && window.AUTOGOOD_OFFER_CALC ? await window.AUTOGOOD_OFFER_CALC.capture(calcDialog.querySelector("iframe")) : "";
-      await save({ calc: calcData, calcImage, method: calcData.method });
-      calcDialog.close();
-      setStatus(`${U("Wstawiono kalkulację", "Расчёт вставлен")}: ${calcData.methodLabel}, ${money(calcData.total, "PLN")}.`);
-    } catch (error) {
-      if (note) {
-        note.textContent = `${U("Nie udało się odczytać kalkulatora", "Не удалось прочитать калькулятор")}: ${error?.message || error}.`;
-        note.classList.add("ofPanelError");
-      }
-    }
+  // A setting changed in the panel: kept with the offer, counted again.
+  const decimal = (value) => {
+    const text = String(value || "").replace(/\s/g, "").replace(",", ".");
+    return text === "" ? "" : Number.isFinite(Number(text)) ? Number(text) : "";
+  };
+  function calcSetting(target) {
+    const key = target.dataset.calcSet;
+    let value;
+    if (target.type === "checkbox") value = target.checked;
+    else if (key === "commission" || key === "engine") value = target.value;
+    else value = decimal(target.value);
+    save((stored) => {
+      const next = { ...(stored.calcInputs || {}), [key]: value };
+      if (key === "engine") next.engine = Number(value);
+      return { calcInputs: next };
+    });
+  }
+  function extrasFromPanel() {
+    return [...panel.querySelectorAll("[data-extra]")].map((row) => ({
+      label: row.querySelector('[data-extra-field="label"]').value.trim(),
+      amount: decimal(row.querySelector('[data-extra-field="amount"]').value),
+      currency: row.querySelector('[data-extra-field="currency"]').value === "EUR" ? "EUR" : "PLN",
+      vat: row.querySelector('[data-extra-field="vat"]').checked,
+    }));
   }
 
   // ---- Reading the ad -----------------------------------------------------------------------

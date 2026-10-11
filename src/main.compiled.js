@@ -971,10 +971,33 @@ function readCalculatorPrefill() {
     mobileDeUrl: params.get("mobileUrl") || params.get("url") || "",
     // A line of its own from the offer (program 06, owner 2026-10-11): the
     // dealer's delivery fee, as "Dodaj własny koszt" would add it.
-    extraRows: n(params.get("extraAmount")) > 0 && String(params.get("extraLabel") || "").trim()
-      ? [{ id: "custom-offer-fee", label: String(params.get("extraLabel")).trim(), amount: String(n(params.get("extraAmount"))), currency: params.get("extraCurrency") === "PLN" ? "PLN" : "EUR", vat: params.get("extraVat") === "1" }]
-      : []
+    extraRows: [...(n(params.get("extraAmount")) > 0 && String(params.get("extraLabel") || "").trim() ? [{
+      id: "custom-offer-fee",
+      label: String(params.get("extraLabel")).trim(),
+      amount: String(n(params.get("extraAmount"))),
+      currency: params.get("extraCurrency") === "PLN" ? "PLN" : "EUR",
+      vat: params.get("extraVat") === "1"
+    }] : []),
+    // The manager's own costs from the offer's settings (owner 2026-10-11):
+    // extras=[{label, amount, currency, vat}] as JSON.
+    ...offerExtras(params.get("extras"))]
   };
+}
+// The offer's own costs (program 06's settings) as "Dodaj własny koszt" rows.
+function offerExtras(text) {
+  let list = [];
+  try {
+    list = JSON.parse(text || "[]");
+  } catch {
+    list = [];
+  }
+  return (Array.isArray(list) ? list : []).filter(item => item && n(item.amount) > 0 && String(item.label || "").trim()).slice(0, 12).map((item, index) => ({
+    id: `custom-offer-${index + 1}`,
+    label: String(item.label).trim(),
+    amount: String(n(item.amount)),
+    currency: item.currency === "EUR" ? "EUR" : "PLN",
+    vat: Boolean(item.vat)
+  }));
 }
 function historySignature(item) {
   return JSON.stringify({

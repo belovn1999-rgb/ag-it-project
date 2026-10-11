@@ -27,7 +27,6 @@
   const readButton = document.querySelector("[data-os-read]");
   const status = document.querySelector("[data-os-status]");
   const portalBadge = document.querySelector("[data-os-portal]");
-  const portalsLine = document.querySelector("[data-os-portals]");
   const carBox = document.querySelector("[data-os-car]");
   const recentBox = document.querySelector("[data-os-recent]");
   const recentList = document.querySelector("[data-os-recent-list]");
@@ -49,7 +48,7 @@
     pl: {
       title: "Oferta dla klienta", langLabel: "Język oferty", modeDealer: "Z ogłoszenia dealera", modeAuction: "Z raportu aukcji", soon: "wkrótce",
       linkTitle: "Link ogłoszenia", read: "Rozpoznaj", recent: "Ostatnie oferty", auctionLater: "Przygotujemy w osobnym kroku",
-      portals: "Wklej link z: {list}. Portal rozpoznajemy po linku.",
+      portals: "Link z: {list}",
       fullLink: "Wklej pełny link ogłoszenia (https://…).", unknownPortal: "Nie rozpoznaję portalu z tego linku. Obsługujemy: {list}.",
       reading: "Czytam ogłoszenie z {portal}: zdjęcia, dane, wyposażenie, sprzedawca…", read_ok: "Dane z ogłoszenia wczytane {time}.",
       importerDown: "Nie udało się odczytać ogłoszenia mobile.de: importer na Macu nie odpowiada ({reason}). Uruchom go albo otwórz stronę z ?mobiledeApi=…",
@@ -64,15 +63,15 @@
       missing: "Nie udało się odczytać: {list}. Uzupełnisz to w ofercie poniżej (Edytuj ofertę).", missingWords: ["marka", "cena", "przebieg", "rok"],
       previewTitle: "Oferta {n}", opened: "Oferta {n} z {date}.", notFound: "Nie znaleziono tej oferty w tej przeglądarce.",
       method: "Sposób zakupu", methodDirect: "Zakup bezpośredni", methodVat: "Przez AUTOGOOD · VAT 23% (netto)", methodMargin: "Przez AUTOGOOD · VAT marża (brutto)",
-      vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
-      client: "Klient", clientName: "imię i nazwisko (do e-maila)", calcTitle: "Kalkulacja", calcHint: "Popraw transport i oględziny — suma trafi do oferty jako cena na gotowo.",
+      vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%",
+      client: "Klient", clientName: "imię i nazwisko (do e-maila)",
       remove: "Usuń z listy", removeAsk: "Usunąć ofertę {n} z listy?",
       fromLink: "z linku", fromMonitoring: "z Monitoringu",
       newCar: "nowe (bez rejestracji)", range: "Zasięg", battery: "Bateria", kwh: "kWh", interior: "Wnętrze", availability: "Dostępność", inStock: "od ręki",
       whoBusiness: "tylko firmom", whoTrade: "tylko firmom i handlarzom", whoExport: "tylko na eksport",
       flagBusiness: "Dealer sprzedaje {who} — kupujemy tylko przez AUTOGOOD", flagNew: "Nowe auto · gwarancja fabryczna",
       flagAvailable: "U dealera {when}", flagInStock: "Dostępne od ręki", flagFee: "Opłata dealera za wydanie: {amount} — dodana do kalkulacji",
-      flagFeeUnknown: "Dealer dolicza opłatę za wydanie — dopisz kwotę w kalkulatorze", feeLabel: "Opłata dealera za wydanie auta",
+      flagFeeUnknown: "Dealer dolicza opłatę za wydanie — dopisz kwotę jako własny koszt w kalkulacji (po prawej)", feeLabel: "Opłata dealera za wydanie auta",
       businessOnly: "dealer sprzedaje tylko firmom — kupujemy przez AUTOGOOD",
       duplicate: "Na to ogłoszenie jest już oferta {n} z {date}.", openIt: "Otwórz ofertę {n}",
       steps: ["Łączę się z portalem…", "Czytam zdjęcia i dane auta…", "Czytam wyposażenie i sprzedawcę…", "Jeszcze chwila — portal odpowiada wolniej…"],
@@ -81,7 +80,7 @@
     ru: {
       title: "Предложение для клиента", langLabel: "Язык предложения", modeDealer: "Из объявления дилера", modeAuction: "Из отчёта аукциона", soon: "скоро",
       linkTitle: "Ссылка на объявление", read: "Распознать", recent: "Последние предложения", auctionLater: "Сделаем отдельным шагом",
-      portals: "Вставьте ссылку с: {list}. Портал определяем по ссылке.",
+      portals: "Ссылка с: {list}",
       fullLink: "Вставьте полную ссылку на объявление (https://…).", unknownPortal: "Не узнаю портал по этой ссылке. Поддерживаем: {list}.",
       reading: "Читаю объявление с {portal}: фото, данные, оснащение, продавец…", read_ok: "Данные объявления загружены в {time}.",
       importerDown: "Не удалось прочитать объявление mobile.de: импортер на Маке не отвечает ({reason}). Запустите его или откройте страницу с ?mobiledeApi=…",
@@ -96,15 +95,15 @@
       missing: "Не удалось прочитать: {list}. Допишете в предложении ниже («Править предложение»).", missingWords: ["марка", "цена", "пробег", "год"],
       previewTitle: "Предложение {n}", opened: "Предложение {n} от {date}.", notFound: "Это предложение не найдено в этом браузере.",
       method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · НДС 23% (нетто)", methodMargin: "Через AUTOGOOD · НДС-маржа (брутто)",
-      vatOnly: "только авто с НДС к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или с НДС 23%", fullCalc: "Полный расчёт в предложении (стр. 2)",
-      client: "Клиент", clientName: "имя и фамилия (для письма)", calcTitle: "Расчёт", calcHint: "Поправьте транспорт и осмотр — сумма попадёт в предложение как цена «под ключ».",
+      vatOnly: "только авто с НДС к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или с НДС 23%",
+      client: "Клиент", clientName: "имя и фамилия (для письма)",
       remove: "Удалить из списка", removeAsk: "Удалить предложение {n} из списка?",
       fromLink: "из ссылки", fromMonitoring: "из Monitoring",
       newCar: "новое (без регистрации)", range: "Запас хода", battery: "Батарея", kwh: "кВт·ч", interior: "Салон", availability: "Наличие", inStock: "в наличии",
       whoBusiness: "только фирмам", whoTrade: "только фирмам и перекупщикам", whoExport: "только на экспорт",
       flagBusiness: "Дилер продаёт {who} — покупаем только через AUTOGOOD", flagNew: "Новое авто · заводская гарантия",
       flagAvailable: "У дилера {when}", flagInStock: "В наличии", flagFee: "Сбор дилера за выдачу: {amount} — добавлен в расчёт",
-      flagFeeUnknown: "Дилер добавляет сбор за выдачу — впишите сумму в расчёт", feeLabel: "Сбор дилера за выдачу авто",
+      flagFeeUnknown: "Дилер добавляет сбор за выдачу — впишите сумму своим расходом в расчёте (справа)", feeLabel: "Сбор дилера за выдачу авто",
       businessOnly: "дилер продаёт только фирмам — покупаем через AUTOGOOD",
       duplicate: "На это объявление уже есть предложение {n} от {date}.", openIt: "Открыть предложение {n}",
       steps: ["Подключаюсь к порталу…", "Читаю фото и данные авто…", "Читаю оснащение и продавца…", "Ещё немного — портал отвечает медленнее…"],
@@ -137,19 +136,20 @@
     });
     document.querySelector("[data-os-lang-group]")?.setAttribute("aria-label", t("langLabel"));
     document.title = `AUTOGOOD ${lang === "ru" ? "Предложение" : "Oferta"}`;
-    portalsLine.textContent = t("portals", { list: portalList() });
+    // The portals read, in small type inside the empty field (owner 2026-10-12: no line under it).
+    input.placeholder = t("portals", { list: portalList() });
+    input.title = input.placeholder;
     if (current) {
       carBox.innerHTML = carHtml();
       if (!previewBox.hidden) placePreview();
     }
     showRecent();
     // The shown offer speaks the new language too.
-    if (current?.draftId) syncSoon(false);
+    if (current?.draftId) syncSoon();
   }
   document.querySelector("[data-os-lang-group]")?.addEventListener("click", (event) => {
     const button = event.target.closest("[data-os-lang]");
     if (!button) return;
-    if (current) current.opened = false;
     lang = button.dataset.osLang === "ru" && RU ? "ru" : "pl";
     try {
       localStorage.setItem(LANG_KEY, lang);
@@ -289,7 +289,6 @@
   // the VAT 23% way only for a car with VAT to deduct. Default: VAT 23% when
   // possible, else straight from the dealer.
   let method = "";
-  let fullCalc = true;
   // With a net price: straight or on VAT 23%; without: straight or on margin
   // (owner 2026-10-11). Default: VAT 23% when possible, else straight.
   // A dealer selling only to firms or for export (offer-facts.js, owner
@@ -303,33 +302,7 @@
     if (current?.facts?.business && (method || "direct") === "direct") return through;
     return method || (canNet ? "vat" : "direct");
   };
-  // The dealer's delivery fee as the calculator's own line, in the way of
-  // buying: straight or on margin the client pays it with the seller's VAT;
-  // on VAT 23% net (AUTOGOOD's invoice adds the Polish VAT).
-  function feeLine(methodKey) {
-    const fee = current?.facts?.fee;
-    if (!fee?.amount) return null;
-    const rate = Number(current.ad?.vat?.rate) || 19;
-    const gross = fee.net ? fee.amount * (1 + rate / 100) : fee.amount;
-    const net = fee.net ? fee.amount : fee.amount / (1 + rate / 100);
-    return methodKey === "vat"
-      ? { label: t("feeLabel"), amount: Math.round(net * 100) / 100, currency: fee.currency || "EUR", vat: true }
-      : { label: t("feeLabel"), amount: Math.round(gross * 100) / 100, currency: fee.currency || "EUR", vat: false };
-  }
   const client = { salutation: "Pan", name: "" };
-  const CALC = window.AUTOGOOD_OFFER_CALC;
-  // The calculators page in the card: the ad's price (net on the VAT way),
-  // its excise class and the seller's tariff; none for a car already in
-  // Poland or in Belarus (no import calculation for them).
-  function calcFrameHtml() {
-    const est = current && estimate(current.ad, current.source);
-    if (!CALC || !est) return "";
-    // The manager's own values from before (an offer opened again, a new
-    // language or way of buying): the same calculation, not the estimate's.
-    const src = CALC.url({ method: chosenMethod(), lang, gross: est.carBruttoEur, net: est.netEur, engine: est.engine.index, transport: est.transportNetto, inspection: est.inspectionNetto, extra: feeLine(chosenMethod()), offer: true, kept: current.calcInputs || null });
-    return `<iframe class="osCalcFrame" title="${esc(t("calcTitle"))} AUTOGOOD" src="${esc(src)}" scrolling="no" data-os-calc></iframe>`;
-  }
-
   function rows(list) {
     return list.filter(([, , value]) => value !== "" && value !== null && value !== undefined)
       .map(([iconName, label, value, before = ""]) => `<li><span>${icon(iconName)}${esc(label)}</span><b>${before}${esc(value)}</b></li>`).join("");
@@ -367,11 +340,9 @@
     const canNet = Boolean(vat.deductible && vat.net);
     const battery = Number(specs.batteryKwh) ? `${String(specs.batteryKwh).replace(".", ",")} ${t("kwh")}` : "";
     const available = facts.availability ? FACTS.availabilityText(facts.availability, lang) : "";
-    // The calculator of the chosen way (owner 2026-10-11), filled from the ad.
-    // Owner 2026-10-11: three blocks — how the car is bought, for whom and in
-    // which language (first: it is chosen at the start); the car; the
-    // calculation with the "full calculation" box beside its title.
-    const frame = calcFrameHtml();
+    // Owner 2026-10-11: how the car is bought, for whom and in which language
+    // (first: it is chosen at the start), then the offer itself; its
+    // calculation is set in the offer's panel on the right (no calculator here).
     return `
       <section class="osCard osDealCard" aria-label="${esc(t("method"))}">
         ${factChips()}
@@ -394,15 +365,6 @@
       </section>
       <!-- The offer as the client sees it (owner 2026-10-11): the report, with the settings on its right. -->
       <div data-os-report-slot></div>
-      ${frame ? `
-      <section class="osCard osCalcCard">
-        <div class="osCalcHead">
-          <h2 class="osCardTitle">${icon("receipt")}<span>${esc(t("calcTitle"))}</span></h2>
-          <label class="osFull"><input type="checkbox" data-os-full${fullCalc ? " checked" : ""} /><span>${esc(t("fullCalc"))}</span></label>
-        </div>
-        <p class="osMuted">${esc(t("calcHint"))}</p>
-        ${frame}
-      </section>` : ""}
 `;
   }
 
@@ -456,7 +418,8 @@
       current.title = FACTS ? FACTS.cleanTitle(ad.title, { trims: trimsOf(current.brand, current.model) }) : ad.title;
       method = "";
       carBox.innerHTML = carHtml();
-      carBox.hidden = false;
+      toDealer();
+    carBox.hidden = false;
       await openOffer();
       setStatus(t("read_ok", { time: new Date().toLocaleTimeString("pl-PL", { hour: "2-digit", minute: "2-digit" }) }));
     } catch (error) {
@@ -584,51 +547,20 @@
       client: { ...client },
       edits: {},
       // Without the full calculation page 2 shows the steps wide (owner 2026-10-10).
-      hidden: fullCalc ? [] : ["costs"],
+      hidden: [],
       ad,
       adTriedAt: now.toISOString(),
     };
   }
 
-  // The calculator as tall as its content: one scroll, the page's (owner 2026-10-11).
-  function fitCalc(frame) {
-    const doc = frame?.contentDocument;
-    if (!doc?.body) return;
-    // The body's own height (the document's is never less than the frame):
-    // the frame shrinks too when the calculator gets shorter.
-    const fit = () => {
-      const style = doc.defaultView.getComputedStyle(doc.body);
-      // + the frame's own border (a pixel short made the calculator scroll).
-      const border = frame.offsetHeight - frame.clientHeight;
-      const height = Math.ceil(doc.body.getBoundingClientRect().height + parseFloat(style.marginTop) + parseFloat(style.marginBottom)) + border + 1;
-      if (height > 200 && Math.abs(height - frame.offsetHeight) > 1) frame.style.height = `${height}px`;
-    };
-    fit();
-    if (typeof ResizeObserver === "function" && !frame.dataset.fitted) {
-      frame.dataset.fitted = "1";
-      new ResizeObserver(fit).observe(doc.body);
-    }
-  }
-  carBox.addEventListener("load", (event) => {
-    if (event.target.matches?.("[data-os-calc]")) fitCalc(event.target);
-  }, true);
-
   carBox.addEventListener("change", (event) => {
-    if (current) current.opened = false;
-    if (event.target.matches("[data-os-method]")) {
-      method = event.target.value;
-      const old = carBox.querySelector("[data-os-calc]");
-      const html = calcFrameHtml();
-      if (old && html) old.outerHTML = html;
-    }
-    if (event.target.matches("[data-os-full]")) fullCalc = event.target.checked;
+    if (event.target.matches("[data-os-method]")) method = event.target.value;
     if (event.target.matches("[data-os-salutation]")) client.salutation = event.target.value;
-    if (event.target.matches("[data-os-method], [data-os-full], [data-os-salutation]")) syncSoon(event.target.matches("[data-os-method], [data-os-full]"));
+    if (event.target.matches("[data-os-method], [data-os-salutation]")) syncSoon();
   });
   carBox.addEventListener("click", (event) => {
     const button = event.target.closest("[data-os-lang]");
     if (!button) return;
-    if (current) current.opened = false;
     lang = button.dataset.osLang === "ru" && RU ? "ru" : "pl";
     try {
       localStorage.setItem(LANG_KEY, lang);
@@ -640,38 +572,17 @@
   carBox.addEventListener("input", (event) => {
     if (event.target.matches("[data-os-client]")) {
       client.name = event.target.value.trim();
-      syncSoon(false);
+      syncSoon();
     }
   });
   // ---- The offer itself, on this page (owner 2026-10-11) ---------------------------------
   // After "Rozpoznaj" the offer is made at once (or the one this ad already
   // has is opened again) and shown here as the client will see it — section
   // after section (oferta.html?embed=1&view=web in a frame), its settings on
-  // the right acting on the page and the PDF; "Arkusze PDF", "Pobierz PDF",
-  // "Link dla klienta" and the e-mail sit on its bar. The way of buying, the
-  // client, the language and the calculator's changes go into it at once.
+  // the right acting on the page and the PDF (its calculation too, owner
+  // 2026-10-11); "Przygotuj PDF", "Link dla klienta" and the e-mail sit on
+  // its bar. The way of buying, the client and the language go into it at once.
   const previewBox = document.querySelector("[data-os-preview]");
-  // The calculator's lines and, with the full calculation, its picture.
-  async function calcPart() {
-    const frame = carBox.querySelector("[data-os-calc]");
-    if (!CALC || !frame?.contentDocument) return {};
-    try {
-      const read = CALC.read(frame.contentDocument);
-      const methodKey = chosenMethod();
-      // The fields as the manager left them: the calculator opens with them
-      // again (a new language, the offer opened from the list).
-      current.calcInputs = { method: methodKey, ...(CALC.fields ? CALC.fields(frame.contentDocument) : {}), rate: read.rate };
-      const part = { calc: { tab: CALC.TABS[methodKey], method: methodKey, methodLabel: "", rows: read.rows, total: read.total, rate: read.rate, lang, at: new Date().toISOString() }, calcInputs: current.calcInputs };
-      if (fullCalc) {
-        const image = await Promise.race([CALC.capture(frame).catch(() => ""), new Promise((resolve) => window.setTimeout(() => resolve(""), 15000))]);
-        if (image) part.calcImage = image;
-      }
-      return part;
-    } catch {
-      // The calculator not ready: the offer keeps its estimate.
-      return {};
-    }
-  }
   function fitPreview(frame) {
     const doc = frame?.contentDocument;
     if (!doc?.body) return;
@@ -683,21 +594,28 @@
       tellViewport();
     };
     fit();
-    if (typeof ResizeObserver === "function" && !frame.dataset.fitted) {
-      frame.dataset.fitted = "1";
-      new ResizeObserver(fit).observe(doc.body);
+    // Each document the frame loads (it loads again when moved in the page)
+    // is watched for its own height.
+    // The frame's own observer: one made here does not see a change in it.
+    const Observer = doc.defaultView.ResizeObserver;
+    if (typeof Observer === "function" && !doc.body.dataset.agFitted) {
+      doc.body.dataset.agFitted = "1";
+      new Observer(fit).observe(doc.body);
     }
   }
-  // The frame does not scroll: it is told where this window is, so its
-  // settings stay in view on the right.
+  // The frame does not scroll: it is told where this window is (and where
+  // the site's bar ends), so its own bar stays on top and its settings in
+  // view on the right (owner 2026-10-11).
   function tellViewport() {
     const frame = previewBox.querySelector("[data-os-preview-frame]");
     if (!frame?.contentWindow) return;
-    frame.contentWindow.postMessage({ type: "ag-offer-viewport", top: -frame.getBoundingClientRect().top, height: window.innerHeight }, window.location.origin);
+    const nav = document.querySelector(".agGlobalNav");
+    const navBottom = nav && /sticky|fixed/.test(getComputedStyle(nav).position) ? Math.max(0, nav.getBoundingClientRect().bottom) : 0;
+    frame.contentWindow.postMessage({ type: "ag-offer-viewport", top: -frame.getBoundingClientRect().top, height: window.innerHeight, nav: navBottom }, window.location.origin);
   }
   window.addEventListener("scroll", tellViewport, { passive: true });
   window.addEventListener("resize", tellViewport);
-  // The report sits between the way of buying and the calculator.
+  // The offer sits under the way of buying.
   function placePreview() {
     const slot = carBox.querySelector("[data-os-report-slot]");
     if (slot && previewBox.parentNode !== slot.parentNode) slot.replaceWith(previewBox);
@@ -723,36 +641,18 @@
     previewBox.hidden = true;
     previewBox.innerHTML = "";
   }
-  // What the manager chose here, into the offer shown.
+  // What the manager chose here, into the offer shown (the offer counts its
+  // calculation again itself when the way of buying or the language changes).
   let syncing = null;
-  async function syncDraft({ withCalc = false } = {}) {
+  async function syncDraft() {
     if (!current?.draftId) return;
     const change = { lang, method: chosenMethod(), client: { ...client } };
-    if (withCalc) Object.assign(change, await calcPart());
-    await store.update(current.draftId, (stored) => {
-      const hidden = new Set(stored.hidden || []);
-      if (fullCalc) hidden.delete("costs");
-      else hidden.add("costs");
-      return { ...change, hidden: [...hidden] };
-    }).catch(() => null);
+    await store.update(current.draftId, change).catch(() => null);
   }
-  function syncSoon(withCalc) {
+  function syncSoon() {
     window.clearTimeout(syncing);
-    syncing = window.setTimeout(() => syncDraft({ withCalc }), withCalc ? 1200 : 300);
+    syncing = window.setTimeout(syncDraft, 300);
   }
-  // A change in the calculator (transport, inspection, an own cost) goes
-  // into the offer a moment after the last keystroke.
-  carBox.addEventListener("load", (event) => {
-    const frame = event.target;
-    if (!frame.matches?.("[data-os-calc]")) return;
-    const doc = frame.contentDocument;
-    ["input", "change", "click"].forEach((kind) => doc?.addEventListener(kind, () => {
-      if (!current?.draftId) return;
-      current.opened = false;
-      syncSoon(true);
-    }, true));
-    if (current?.draftId && !current.opened) syncSoon(true);
-  }, true);
 
   // The offer of this ad: the one made before from a link (fresh ad data,
   // the manager's choices kept), else a new one — a draft, off the list of
@@ -764,8 +664,6 @@
     if (before) {
       current.draftId = before.id;
       takeChoices(before);
-      // The ad read again: its price, not the one typed before.
-      if (current.calcInputs) current.calcInputs = { ...current.calcInputs, car: "", rate: 0 };
       if (before.lang && before.lang !== lang) {
         lang = before.lang;
         applyLang();
@@ -782,14 +680,10 @@
     showPreview(id, draft.number);
     inAddress(id);
   }
-  // The manager's choices kept with an offer: the way of buying, the client,
-  // the full calculation and the calculator's own fields.
+  // The manager's choices kept with an offer: the way of buying and the client.
   function takeChoices(stored) {
     method = stored.method || "";
     Object.assign(client, { salutation: stored.client?.salutation || "Pan", name: stored.client?.name || "" });
-    fullCalc = !(stored.hidden || []).includes("costs");
-    // An offer made before its fields were kept: at least the rate it was counted at.
-    current.calcInputs = stored.calcInputs || (Number(stored.calc?.rate) > 0 ? { method: stored.calc.method || stored.method || "direct", rate: stored.calc.rate } : null);
   }
   // The offer shown stays in the address: a reload or a shared tab opens it again.
   function inAddress(id) {
@@ -818,6 +712,13 @@
       complete: true,
     };
   }
+  // A dealer's ad or offer opened (a link, ?url=, ?oferta=, the list) shows
+  // the dealer's way, not the auction's left from the last visit (owner 2026-10-12:
+  // both were drawn one under the other).
+  function toDealer() {
+    const button = document.querySelector('[data-os-mode="dealer"]');
+    if (button && !button.classList.contains("isActive")) button.click();
+  }
   async function openStored(id) {
     const stored = await store.get(id).catch(() => null);
     if (!stored || stored.error) {
@@ -827,9 +728,7 @@
     const ad = stored.ad || adFromCar(stored);
     const source = stored.source || "mobile";
     const url = stored.url || stored.car?.url || "";
-    // opened: the calculation stays as it was saved until the manager changes
-    // something here (opening alone never counts it again at today's rate).
-    current = { source, url, ad, adKey: stored.adKey || stored.car?.key || adKeyOf(source, url), brand: stored.filters?.brand || "", model: stored.filters?.model || "", draftId: stored.id, opened: true };
+    current = { source, url, ad, adKey: stored.adKey || stored.car?.key || adKeyOf(source, url), brand: stored.filters?.brand || "", model: stored.filters?.model || "", draftId: stored.id };
     if (!current.brand) Object.assign(current, makeModel(ad.title || stored.car?.title || ""));
     await window.AUTOGOOD_MODEL_SPECS_UI?.ready?.(current.brand);
     current.facts = FACTS ? FACTS.read(ad) : {};
@@ -843,6 +742,7 @@
       applyLang();
     }
     carBox.innerHTML = carHtml();
+    toDealer();
     carBox.hidden = false;
     showPreview(stored.id, stored.number);
     inAddress(stored.id);
