@@ -115,8 +115,10 @@
     "Adaptacyjne reflektory": "Адаптивные фары", "Regulacja odcinka lędźwiowego": "Регулировка поясничного подпора", "Składana kanapa": "Складное заднее сиденье",
     "Auto Hold": "Auto Hold", "Opony letnie na felgach aluminiowych": "Летние шины на литых дисках", "Opony zimowe na felgach aluminiowych": "Зимние шины на литых дисках",
   };
-  function option(label) {
-    const text = String(label || "");
+  // { fuel }: an electric car's cabin heater is no fuel heater (offer-equipment.js forFuel).
+  function option(label, { fuel = "" } = {}) {
+    const text = String(globalThis.AUTOGOOD_OFFER_EQUIPMENT?.forFuel ? globalThis.AUTOGOOD_OFFER_EQUIPMENT.forFuel(label || "", fuel) : label || "");
+    if (/^Wstępne ogrzewanie kabiny/.test(text)) return text.replace(/^Wstępne ogrzewanie kabiny/, "Предпрогрев салона").replace(/ z timerem$/, " с таймером");
     if (OPTIONS[text]) return OPTIONS[text];
     const audio = text.match(/^Audio (.+)$/);
     return audio ? `Аудиосистема ${audio[1]}` : text;
@@ -141,7 +143,7 @@
     "Cena pojazdu": "Цена автомобиля", "Cena pojazdu netto": "Цена авто netto", "Cena pojazdu brutto": "Цена авто brutto",
     "Oględziny specjalisty": "Осмотр специалиста", "Oględziny specjalisty netto": "Осмотр специалиста netto", "Oględziny": "Осмотр",
     "Transport na lawecie": "Транспорт на автовозе", "Transport na lawecie netto": "Транспорт на автовозе netto", "Dostawa na lawecie": "Доставка на автовозе",
-    "Transport": "Транспорт", "Akcyza": "Акциз", "Prowizja AUTOGOOD": "Комиссия AUTOGOOD", "Prowizja firmy niemieckiej": "Комиссия немецкой фирмы",
+    "Transport": "Транспорт", "Akcyza": "Акциз", "Prowizja AUTOGOOD": "Комиссия AUTOGOOD", "Opłata dealera za wydanie auta": "Сбор дилера за выдачу авто", "Prowizja firmy niemieckiej": "Комиссия немецкой фирмы",
     "Przegląd techniczny": "Техосмотр", "Tłumaczenie dokumentów": "Перевод документов", "Rejestracja": "Регистрация", "Rabat": "Скидка",
     "Opłata aukcyjna": "Аукционный сбор", "Opłata aukcyjna netto": "Аукционный сбор netto", "Pozostałe opłaty": "Прочие сборы", "Razem": "Итого",
   };

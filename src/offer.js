@@ -19,6 +19,7 @@
   const EQUIPMENT = window.AUTOGOOD_OFFER_EQUIPMENT;
   const VERDICT = window.AUTOGOOD_OFFER_VERDICT;
   const RU = window.AUTOGOOD_OFFER_RU;
+  const FACTS = window.AUTOGOOD_OFFER_FACTS;
   const TURNKEY = window.AUTOGOOD_TURNKEY;
   const params = new URLSearchParams(window.location.search);
   const offerId = params.get("id") || "";
@@ -36,13 +37,16 @@
   let reading = false;
 
   // ---- Words and numbers -------------------------------------------------------
-  const numbers = new Intl.NumberFormat("pl-PL");
+  // Every thousand with a space, also "1 300" (pl-PL leaves four digits whole).
+  const numbers = { format: (value) => String(Math.round(Number(value) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0") };
   const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
   const SYMBOL = { EUR: "€", PLN: "zł", SEK: "kr", USD: "$" };
   const money = (value, currency = "PLN") => (Number(value) > 0 ? `${numbers.format(Math.round(Number(value)))} ${SYMBOL[currency] || currency}` : "—");
   const kmText = (value) => (Number(value) > 0 ? `${numbers.format(Math.round(Number(value)))} ${L("km", "км")}` : "");
   const thousands = (value) => numbers.format(Math.round(Number(value) / 1000));
   const percent = (share) => `${Math.round(Math.abs(share) * 100)}%`;
+  // "1850 PLN" in a calculator's line → "1 850 PLN" (a year or a date stays whole).
+  const spaced = (text) => String(text ?? "").replace(/(?<![\d.,])(\d)(\d{3})(?!\d)(?!\.\d)/g, "$1\u00a0$2");
   const dateText = (iso) => {
     const date = new Date(iso);
     return Number.isNaN(date.getTime()) ? "" : `${String(date.getDate()).padStart(2, "0")}.${String(date.getMonth() + 1).padStart(2, "0")}.${date.getFullYear()}`;
@@ -56,6 +60,10 @@
   // through offer-ru.js (val); edits are kept per language (field).
   const ru = () => offer?.lang === "ru" && Boolean(RU);
   const L = (pl, russian) => (ru() ? russian : pl);
+  // The manager's own words (toolbar, panel) speak the offer's language too
+  // (owner 2026-10-11: the interface and the offer are Polish or Russian).
+  const U = L;
+  const range = (from, to, unit = "") => `${from}–${to}${unit}`;
   const val = (text) => (ru() ? RU.value(text) : text ?? "");
   const many = (count, plForms, ruForms) => (ru() ? RU.plural(count, ...ruForms) : plural(count, ...plForms));
   const countryName = (code) => (ru() ? RU.country(code) : COUNTRY[String(code || "").toUpperCase()]) || String(code || "");
@@ -107,26 +115,12 @@
     const classes = [className, Object.prototype.hasOwnProperty.call(edits(), key) ? "isEdited" : ""].filter(Boolean).join(" ");
     return `<${tag}${classes ? ` class="${classes}"` : ""} data-edit="${esc(key)}"${editing ? ` contenteditable="true" spellcheck="true" lang="${ru() ? "ru" : "pl"}"` : ""}>${esc(value)}</${tag}>`;
   }
-  const hideToggle = (key) => `<button class="ofHideToggle" type="button" data-hide="${esc(key)}" data-offer-hide>${isHidden(key) ? "Pokaż" : "Ukryj"}</button>`;
+  const hideToggle = (key) => `<button class="ofHideToggle" type="button" data-hide="${esc(key)}" data-offer-hide aria-label="${esc(`${isHidden(key) ? U("Pokaż", "Показать") : U("Ukryj", "Скрыть")}: ${blockName(key)}`)}">${isHidden(key) ? U("Pokaż", "Показать") : U("Ukryj", "Скрыть")}</button>`;
   const blockClass = (key) => (isHidden(key) ? " ofBlockHidden" : "");
 
-  // A dealer's name of an ad without its keyword list:
-  // "Toyota C-HR 2.0 Hybrid Team D Navi Alarm SHZ Totwinkel" → "Toyota C-HR 2.0 Hybrid Team D",
-  // "Toyota C-HR 2,0-l Hybrid Team D*Allwetter"Carplay"R-Kam" → "Toyota C-HR 2,0-l Hybrid Team D".
-  const TITLE_NOISE = /^(navi|navigation|alarm|shz|sitzhzg|sitzheizung|totwinkel|kamera|cam|r-?kam|rfk|acc|led|bi-?led|full-?led|matrix|xenon|ahk|pdc|klima|klimaautomatik|carplay|android|apple|garantie|scheckheft|mwst|netto|brutto|vat|tüv|hu|neu|top|voll|euro\s?\d|allwetter|winter|alu|lm|panorama|pano|leder|teilleder|keyless|virtual|cockpit|head-?up|hud|dab|tempomat|lane|assist|spur|sport-?paket|1\.?\s?hand|unfallfrei|scheckheftgepflegt|finanzierung|leasing|sofort|lieferbar)$/i;
-  function cleanTitle(title) {
-    const text = String(title || "").replace(/\s+/g, " ").trim();
-    const first = (text.split(/\s*[*+|"!#•,;/]+\s*|\s{2,}|\s+-\s+(?=[A-ZÄÖÜ])/)[0] || text).trim();
-    const words = first.split(" ");
-    const kept = [];
-    for (const word of words) {
-      if (kept.length >= 3 && TITLE_NOISE.test(word.replace(/[.:()]/g, ""))) break;
-      kept.push(word);
-      if (kept.length >= 8) break;
-    }
-    const result = kept.join(" ").replace(/[.,;:\s-]+$/, "");
-    return (result.length >= 8 ? result : text).slice(0, 70);
-  }
+  // The ad's name as the client reads it: no sales words, the version written
+  // out (offer-facts.js; program 06 keeps it cleaned with the model's trims).
+  const cleanTitle = (title) => (FACTS ? FACTS.cleanTitle(title) : String(title || "").slice(0, 80));
   // Polish plural: 1 opinia, 2–4 opinie (not 12–14), 5+ opinii.
   function plural(count, one, few, many) {
     const n = Math.abs(Math.round(Number(count) || 0));
@@ -162,7 +156,7 @@
     return {
       brand: filters.brand || "",
       model: filters.model || "",
-      title: cleanTitle(ad?.title || car.title),
+      title: car.titleClean || cleanTitle(ad?.title || car.title),
       year,
       reg,
       mileage: specs.mileage || Number(car.mileage) || 0,
@@ -190,6 +184,8 @@
       // Only a web address is ever a link in the offer.
       url: /^https:\/\//.test(offer.url || car.url || "") ? offer.url || car.url : "",
       images: ad?.images || [],
+      // What the ad says about the deal (offer-facts.js, owner 2026-10-11).
+      facts: FACTS && ad ? FACTS.read(ad) : { business: null, fee: null, isNew: false, availability: null },
     };
   }
 
@@ -197,23 +193,18 @@
     if (view.priceType === "vat" || offer.ad?.vat?.deductible) {
       const rate = view.vatRate ? ` ${view.vatRate}%` : "";
       const net = view.netPrice ? L(` (netto ${money(view.netPrice, view.currency)})`, ` (нетто ${money(view.netPrice, view.currency)})`) : "";
-      return L(`brutto · faktura VAT${rate}${net}`, `брутто · счёт-фактура VAT${rate}${net}`);
+      return L(`brutto · faktura VAT${rate}${net}`, `брутто · счёт-фактура с НДС${rate}${net}`);
     }
-    if (view.priceType === "margin") return L("brutto · faktura VAT marża", "брутто · счёт-фактура VAT marża");
-    if (view.priceType === "private" || view.seller === "private") return L("osoba prywatna (bez faktury VAT)", "частное лицо (без счёта-фактуры VAT)");
+    if (view.priceType === "margin") return L("brutto · faktura VAT marża", "брутто · счёт-фактура «НДС-маржа»");
+    if (view.priceType === "private" || view.seller === "private") return L("osoba prywatna (bez faktury VAT)", "частное лицо (без счёта-фактуры)");
     return L("brutto", "брутто");
   }
 
-  // Under the price (owner 2026-10-10): can the car be bought net (VAT to
-  // deduct) or on a margin invoice only.
+  // Under the price: only a private seller (no invoice). The net price is no
+  // line of its own any more (owner 2026-10-11): straight from the dealer a
+  // private client cannot buy net, and on the VAT 23% way it is beside the price.
   function buyAsText(view) {
-    if (view.priceType === "vat" || offer.ad?.vat?.deductible) {
-      const rate = view.vatRate ? ` ${view.vatRate}%` : "";
-      return view.netPrice
-        ? L(`Można kupić netto: ${money(view.netPrice, view.currency)} (VAT${rate} do odliczenia)`, `Можно купить по нетто: ${money(view.netPrice, view.currency)} (VAT${rate} к вычету)`)
-        : L(`Faktura VAT${rate} - VAT do odliczenia`, `Счёт-фактура VAT${rate} - VAT к вычету`);
-    }
-    if (view.priceType === "private" || view.seller === "private") return L("Sprzedawca prywatny - bez faktury VAT", "Частный продавец - без счёта-фактуры VAT");
+    if (view.priceType === "private" || view.seller === "private") return L("Sprzedawca prywatny — bez faktury VAT", "Частный продавец — без счёта-фактуры");
     return "";
   }
 
@@ -223,10 +214,15 @@
   // lines, the calculator's tab and steps 7 and 9 of the process.
   const METHODS = {
     direct: { tab: 0, label: "Zakup bezpośredni", labelRu: "Прямая покупка" },
-    vat: { tab: 3, label: "Przez AUTOGOOD · faktura VAT 23%", labelRu: "Через AUTOGOOD · счёт-фактура VAT 23%" },
-    margin: { tab: 4, label: "Przez AUTOGOOD · faktura VAT marża", labelRu: "Через AUTOGOOD · счёт-фактура VAT marża" },
+    vat: { tab: 3, label: "Przez AUTOGOOD · faktura VAT 23%", labelRu: "Через AUTOGOOD · счёт-фактура с НДС 23%" },
+    margin: { tab: 4, label: "Przez AUTOGOOD · faktura VAT marża", labelRu: "Через AUTOGOOD · счёт-фактура «НДС-маржа»" },
   };
-  const offerMethod = () => (METHODS[offer?.method] ? offer.method : "direct");
+  // A dealer selling only to firms or for export: never straight (owner 2026-10-11).
+  const businessOnly = () => Boolean(FACTS && offer?.ad && FACTS.read(offer.ad).business);
+  const offerMethod = () => {
+    const key = METHODS[offer?.method] ? offer.method : "direct";
+    return key === "direct" && businessOnly() ? (netEur() > 0 ? "vat" : "margin") : key;
+  };
   const methodLabel = (key = offerMethod()) => L(METHODS[key].label, METHODS[key].labelRu);
   // The car's net price in EUR (VAT 23% way): the draft's, else the ad's.
   function netEur() {
@@ -237,6 +233,27 @@
     if (!net || !estimate.rate) return currency === "EUR" ? net : 0;
     const rates = TURNKEY?.currentRates?.() || {};
     return currency === "EUR" ? net : currency === "SEK" && rates.sek ? (net * rates.sek) / estimate.rate : currency === "PLN" ? net / estimate.rate : 0;
+  }
+
+  // A Russian offer says НДС, брутто, нетто (owner 2026-10-11: all in Russian).
+  const ruTax = (text) => (ru() ? String(text ?? "").replace(/\bbrutto\b/g, "брутто").replace(/\bnetto\b/g, "нетто").replace(/\bVAT mar(?:ż|z)a\b/gi, "НДС-маржа").replace(/\bVAT\b/g, "НДС") : text);
+  // The dealer's delivery fee (offer-facts.js) as a line of the estimate: with
+  // the seller's VAT straight or on margin, net plus 23% through AUTOGOOD on VAT.
+  function feeRow(method, rate) {
+    const fee = carView().facts?.fee;
+    if (!fee?.amount || !(rate > 0)) return null;
+    const sellerVat = Number(offer.ad?.vat?.rate) || 19;
+    const net = fee.net ? fee.amount : fee.amount / (1 + sellerVat / 100);
+    const gross = fee.net ? fee.amount * (1 + sellerVat / 100) : fee.amount;
+    const label = L("Opłata dealera za wydanie auta", "Сбор дилера за выдачу авто");
+    return method === "vat"
+      ? { label, sub: L(`${money(net, "EUR")} netto + VAT 23%`, `${money(net, "EUR")} нетто + НДС 23%`), value: Math.round(net * rate * 1.23) }
+      : { label, sub: L(`${money(gross, "EUR")} brutto`, `${money(gross, "EUR")} брутто`), value: Math.round(gross * rate) };
+  }
+  function withFee(result, method) {
+    if (!result || result.exact) return result;
+    const row = feeRow(method, Number(offer.estimate?.rate) || 0);
+    return row ? { ...result, rows: [...result.rows, row], total: Math.round((result.total + row.value) / 50) * 50 } : result;
   }
 
   // The cost lines: the calculator's (wave 3) or the estimate made with the draft.
@@ -251,7 +268,7 @@
       const rate = calc.rate ? calc.rate.toFixed(2).replace(".", ",") : "—";
       return {
         method: words(calc.methodLabel) || methodLabel(calc.method || "direct"),
-        rows: calc.rows.map((row) => ({ ...row, label: words(row.label) })),
+        rows: calc.rows.map((row) => ({ ...row, label: ruTax(words(row.label)), sub: ruTax(row.sub) })),
         total: calc.total,
         note: L(`Kalkulator AUTOGOOD, kurs EUR ${rate} zł z dnia ${dateText(calc.at)}.`, `Калькулятор AUTOGOOD, курс EUR ${rate} zł на ${dateText(calc.at)}.`),
         exact: true,
@@ -259,7 +276,7 @@
     }
     const estimate = offer.estimate;
     if (!estimate) return null;
-    if (method !== "direct") return estimateThroughAutogood(estimate, method);
+    if (method !== "direct") return withFee(estimateThroughAutogood(estimate, method), method);
     const engineLabel = L(["elektryczny / plug-in do 2,0 l", "hybryda / plug-in powyżej 2,0 l", "hybryda do 2,0 l", "silnik do 2,0 l", "silnik powyżej 2,0 l", "dostawczy N1 — bez akcyzy"], ["электро / plug-in до 2,0 л", "гибрид / plug-in свыше 2,0 л", "гибрид до 2,0 л", "двигатель до 2,0 л", "двигатель свыше 2,0 л", "коммерческий N1 — без акциза"])[estimate.engine?.index ?? 3];
     const rate = Number(estimate.rate || 0).toFixed(2).replace(".", ",");
     const parts = estimate.parts || {};
@@ -269,10 +286,10 @@
       { label: L("Transport do Polski", "Транспорт в Польшу"), sub: L("laweta, ubezpieczony", "автовоз, со страховкой"), value: parts.transport },
       { label: L("Oględziny przed zakupem", "Осмотр перед покупкой"), sub: L("rzeczoznawca u sprzedawcy", "эксперт у продавца"), value: parts.inspection },
       { label: L(`Akcyza ${excise}%`, `Акциз ${excise}%`), sub: engineLabel, value: parts.excise },
-      { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 1% ceny auta, netto + VAT", "1 829,27 zł + 1% цены авто, нетто + VAT"), value: parts.commission },
+      { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 1% ceny auta, netto + VAT", "1 829,27 zł + 1% цены авто, нетто + НДС"), value: parts.commission },
       { label: L("Tłumaczenia i przegląd techniczny", "Переводы и техосмотр"), sub: "250 zł + 150 zł", value: parts.fees },
     ];
-    return { method: methodLabel("direct"), rows, total: estimate.total, note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rate} zł z dnia oferty.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rate} zł на дату предложения.`), exact: false };
+    return withFee({ method: methodLabel("direct"), rows, total: estimate.total, note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rate} zł z dnia oferty.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rate} zł на дату предложения.`), exact: false }, "direct");
   }
 
   // Through AUTOGOOD, as the calculator counts it (src/main.jsx calculate(),
@@ -305,12 +322,12 @@
           { label: L("Transport do Polski", "Транспорт в Польшу"), sub: L("laweta, ubezpieczony · netto", "автовоз, со страховкой · нетто"), value: round(transport) },
           { label: L("Oględziny przed zakupem", "Осмотр перед покупкой"), sub: L("rzeczoznawca u sprzedawcy · netto", "эксперт у продавца · нетто"), value: round(inspection) },
           { label: L(`Akcyza ${exciseText}%`, `Акциз ${exciseText}%`), sub: "", value: round(excise) },
-          { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 2% ceny auta z VAT · netto", "1 829,27 zł + 2% цены авто с VAT · нетто"), value: round(fee) },
+          { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 2% ceny auta z VAT · netto", "1 829,27 zł + 2% цены авто с НДС · нетто"), value: round(fee) },
           { label: L("Przegląd techniczny", "Техосмотр"), sub: L("netto", "нетто"), value: TO },
-          { label: "VAT 23%", sub: L(`23% × ${money(base, "PLN")}`, `23% × ${money(base, "PLN")}`), value: round(vat) },
+          { label: L("VAT 23%", "НДС 23%"), sub: `23% × ${money(base, "PLN")}`, value: round(vat) },
         ],
         total: Math.round((base + vat) / 50) * 50,
-        note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rateText} zł z dnia oferty. Faktura VAT 23% od AUTOGOOD.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rateText} zł на дату предложения. Счёт-фактура VAT 23% от AUTOGOOD.`),
+        note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rateText} zł z dnia oferty. Faktura VAT 23% od AUTOGOOD.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rateText} zł на дату предложения. Счёт-фактура с НДС 23% от AUTOGOOD.`),
         exact: false,
       };
     }
@@ -324,14 +341,14 @@
       method: methodLabel("margin"),
       rows: [
         { label: L("Cena auta", "Цена авто"), sub: L(`${money(gross, "EUR")} brutto × ${rateText} zł`, `${money(gross, "EUR")} брутто × ${rateText} zł`), value: round(car) },
-        { label: L("Transport do Polski", "Транспорт в Польшу"), sub: L("laweta, ubezpieczony · z VAT", "автовоз, со страховкой · с VAT"), value: round(transport * 1.23) },
-        { label: L("Oględziny przed zakupem", "Осмотр перед покупкой"), sub: L("rzeczoznawca u sprzedawcy · z VAT", "эксперт у продавца · с VAT"), value: round(inspection * 1.23) },
-        { label: L(`Akcyza ${exciseText}%`, `Акциз ${exciseText}%`), sub: L("z VAT", "с VAT"), value: round(excise * 1.23) },
-        { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 2% ceny auta, netto + VAT", "1 829,27 zł + 2% цены авто, нетто + VAT"), value: round(fee * 1.23) },
-        { label: L("Przegląd techniczny", "Техосмотр"), sub: L("z VAT", "с VAT"), value: round(TO * 1.23) },
+        { label: L("Transport do Polski", "Транспорт в Польшу"), sub: L("laweta, ubezpieczony · z VAT", "автовоз, со страховкой · с НДС"), value: round(transport * 1.23) },
+        { label: L("Oględziny przed zakupem", "Осмотр перед покупкой"), sub: L("rzeczoznawca u sprzedawcy · z VAT", "эксперт у продавца · с НДС"), value: round(inspection * 1.23) },
+        { label: L(`Akcyza ${exciseText}%`, `Акциз ${exciseText}%`), sub: L("z VAT", "с НДС"), value: round(excise * 1.23) },
+        { label: L("Usługa AUTOGOOD", "Услуга AUTOGOOD"), sub: L("1 829,27 zł + 2% ceny auta, netto + VAT", "1 829,27 zł + 2% цены авто, нетто + НДС"), value: round(fee * 1.23) },
+        { label: L("Przegląd techniczny", "Техосмотр"), sub: L("z VAT", "с НДС"), value: round(TO * 1.23) },
       ],
       total: Math.round(total / 50) * 50,
-      note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rateText} zł z dnia oferty. Faktura VAT marża od AUTOGOOD.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rateText} zł на дату предложения. Счёт-фактура VAT marża от AUTOGOOD.`),
+      note: L(`Szacunek kalkulatora AUTOGOOD, kurs EUR ${rateText} zł z dnia oferty. Faktura VAT marża od AUTOGOOD.`, `Оценка калькулятора AUTOGOOD, курс EUR ${rateText} zł на дату предложения. Счёт-фактура «НДС-маржа» от AUTOGOOD.`),
       exact: false,
     };
   }
@@ -457,7 +474,7 @@
   function carvagoLines() {
     if (!offer.carvago?.found || isHidden("carvago")) return "";
     const active = offer.carvago.active;
-    const scope = active?.kind === "search" ? L(` (rok ${active.yearFrom}-${active.yearTo}, przebieg ${thousands(active.kmFrom)}-${thousands(active.kmTo)} tys. km)`, ` (год ${active.yearFrom}-${active.yearTo}, пробег ${thousands(active.kmFrom)}-${thousands(active.kmTo)} тыс. км)`) : "";
+    const scope = active?.kind === "search" ? L(` (rok ${range(active.yearFrom, active.yearTo)}, przebieg ${range(thousands(active.kmFrom), thousands(active.kmTo))} tys. km)`, ` (год ${range(active.yearFrom, active.yearTo)}, пробег ${range(thousands(active.kmFrom), thousands(active.kmTo))} тыс. км)`) : "";
     return active?.count ? `<p class="ofActive">${field("carvagoActive", L(`Aktywnych podobnych ofert w Europie: ${numbers.format(active.count)}${scope}`, `Активных похожих предложений в Европе: ${numbers.format(active.count)}${scope}`), "span")}</p>` : "";
   }
   function portalMarket(view) {
@@ -470,18 +487,18 @@
       const low = limits[0];
       const span = limits[5] - low;
       const at = Math.min(98, Math.max(2, ((view.price - low) / span) * 100));
-      const range = (index) => `${numbers.format(limits[index])}-${numbers.format(limits[index + 1])} €`;
+      const bandRange = (index) => `${numbers.format(limits[index])}–${numbers.format(limits[index + 1])} €`;
       body = `
         <div class="ofBands" role="img" aria-label="${esc(L(`Skala cen ${rating.portal}`, `Шкала цен ${rating.portal}`))}: ${esc(BANDS[band])}">
-          ${BANDS.map((name, index) => `<span class="ofBand is${index}" style="width:${(((limits[index + 1] - limits[index]) / span) * 100).toFixed(1)}%" title="${esc(`${name}: ${range(index)}`)}"></span>`).join("")}
+          ${BANDS.map((name, index) => `<span class="ofBand is${index}" style="width:${(((limits[index + 1] - limits[index]) / span) * 100).toFixed(1)}%" title="${esc(`${name}: ${bandRange(index)}`)}"></span>`).join("")}
           <span class="ofBarCar${band >= 3 ? " isDear" : ""}" style="left:${at.toFixed(1)}%"></span>
         </div>
-        <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, view.currency))}</span><span>${BANDS[2]} <b>${esc(range(2))}</b></span></div>
-        ${field("marketLead", L(`Wg skali cen ${rating.portal} dla tego auta: „${BANDS[band]}” (${range(band)}).`, `По шкале цен ${rating.portal} для этого авто: «${BANDS[band]}» (${range(band)}).`), "p", "ofMarketLead")}
+        <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, view.currency))}</span><span>${BANDS[2]} <b>${esc(bandRange(2))}</b></span></div>
+        ${field("marketLead", L(`Wg skali cen ${rating.portal} dla tego auta: „${BANDS[band]}” (${bandRange(band)}).`, `По шкале цен ${rating.portal} для этого авто: «${BANDS[band]}» (${bandRange(band)}).`), "p", "ofMarketLead")}
 `;
     } else if (rating?.portal === "AutoScout24" && rating.median > 0 && view.price > 0) {
       const share = view.price / rating.median - 1;
-      body = `${field("marketLead", L(`Mediana podobnych ofert wg AutoScout24: ${money(rating.median, "EUR")} - to auto ${share <= 0 ? `${percent(share)} taniej` : `${percent(share)} drożej`}.`, `Медиана похожих предложений по AutoScout24: ${money(rating.median, "EUR")} - это авто ${share <= 0 ? `на ${percent(share)} дешевле` : `на ${percent(share)} дороже`}.`), "p", "ofMarketLead")}`;
+      body = `${field("marketLead", L(`Mediana podobnych ofert wg AutoScout24: ${money(rating.median, "EUR")} — to auto ${share <= 0 ? `${percent(share)} taniej` : `${percent(share)} drożej`}.`, `Медиана похожих предложений по AutoScout24: ${money(rating.median, "EUR")} — это авто ${share <= 0 ? `на ${percent(share)} дешевле` : `на ${percent(share)} дороже`}.`), "p", "ofMarketLead")}`;
     }
     const carvago = carvagoLines();
     if (!body && !carvago && adHistory().days === null) return "";
@@ -495,11 +512,27 @@
             </section>`;
   }
 
+  // An option's name for the client: in Russian, and an electric car's
+  // "Standheizung" as cabin pre-heating (offer-equipment.js forFuel).
+  const optionLabel = (label) => {
+    const fuel = offer.ad?.specs?.fuel || offer.car?.fuel || "";
+    return ru() ? RU.option(label, { fuel }) : EQUIPMENT?.forFuel ? EQUIPMENT.forFuel(label, fuel) : label;
+  };
+
   // "+ 46 pozycji więcej w ogłoszeniu" — also redrawn by autoFit when it
   // takes options off a full sheet.
   function optionsMore(rest, listOnTwo) {
     if (rest <= 0) return L("Z listy wyposażenia w ogłoszeniu", "Из списка оснащения в объявлении");
     return `+ ${numbers.format(rest)} ${many(rest, ["pozycja", "pozycje", "pozycji"], ["позиция", "позиции", "позиций"])} ${L("więcej w ogłoszeniu", "ещё в объявлении")}${listOnTwo ? L(" (lista na str. 2)", " (список на стр. 2)") : ""}`;
+  }
+
+  // Bottom right of each sheet (owner 2026-10-11): "1 / 2".
+  const pageNumber = (page) => `<span class="ofPageNo">${page} / ${isHidden("page2") ? 1 : 2}</span>`;
+
+  // Over the name on the photo: the year (or "new") and the mileage.
+  function kicker(view) {
+    const first = view.facts.isNew ? L("Nowe", "Новое") : view.reg || view.year;
+    return [first, kmText(view.mileage)].filter(Boolean).join(" · ");
   }
 
   function sheetOne(view) {
@@ -532,9 +565,11 @@
       [L("Kolor", "Цвет"), view.color],
       [L("Wnętrze", "Салон"), view.interior],
       [L("Zasięg", "Запас хода"), view.rangeKm ? `${numbers.format(view.rangeKm)} ${L("km", "км")}` : ""],
-      [L("Bateria", "Батарея"), view.batteryKwh ? `${String(view.batteryKwh).replace(".", ",")} kWh` : ""],
-      [L("Właściciele", "Владельцы"), view.owners === 0 ? L("brak (auto nowe)", "нет (новое авто)") : view.owners ? String(view.owners) : ""],
-      [L("Przegląd", "Техосмотр"), view.hu],
+      [L("Bateria", "Батарея"), view.batteryKwh ? `${String(view.batteryKwh).replace(".", ",")} ${L("kWh", "кВт·ч")}` : ""],
+      // A new car says "Nowe" over its name and in the verdict: no owners or
+      // inspection rows; its availability is in the verdict and under the steps.
+      [L("Właściciele", "Владельцы"), view.facts.isNew ? "" : view.owners === 0 ? L("brak (auto nowe)", "нет (новое авто)") : view.owners ? String(view.owners) : ""],
+      [L("Przegląd", "Техосмотр"), view.facts.isNew ? "" : view.hu],
     ].filter(([, value]) => value).slice(0, 9);
     const seller = offer.ad?.seller || null;
     const adAge = adHistory();
@@ -574,14 +609,16 @@
             </div>
             <div class="ofHeroInfo">
               <div class="ofHeroTitle">
-                ${[view.reg || view.year, kmText(view.mileage)].filter(Boolean).length ? `<p class="ofKicker">${esc([view.reg || view.year, kmText(view.mileage)].filter(Boolean).join(" · "))}</p>` : ""}
+                ${kicker(view) ? `<p class="ofKicker">${esc(kicker(view))}</p>` : ""}
                 ${field("title", view.title, "h1", "ofTitle")}
               </div>
               ${costView ? `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena na gotowo w Polsce", "Цена «под ключ» в Польше")}*</p>
                 <p class="ofPrice">${esc(money(costView.total, "PLN"))} <span class="ofPriceAd">(${offerMethod() === "vat" && netEur() > 0 ? `${esc(money(netEur(), "EUR"))} ${L("netto", "нетто")}` : `${esc(money(view.price, view.currency))} ${L("brutto", "брутто")}`})</span></p>
                 ${buyAsText(view) ? field("buyAs", buyAsText(view), "p", "ofBuyAs") : ""}
-                ${field("priceFoot", L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, другие расходы."), "p", "ofPriceFoot")}
+                ${field(view.facts.fee ? "priceFootFee" : "priceFoot", view.facts.fee
+                  ? L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, opłata dealera za wydanie auta, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, сбор дилера за выдачу авто, другие расходы.")
+                  : L("*Transport, oględziny, akcyza, przegląd techniczny, usługa AUTOGOOD, inne koszty.", "*Транспорт, осмотр, акциз, техосмотр, услуга AUTOGOOD, другие расходы."), "p", "ofPriceFoot")}
               </div>` : `<div class="ofPriceBox">
                 <p class="ofLabel">${L("Cena w ogłoszeniu", "Цена в объявлении")}</p>
                 <p class="ofPrice">${esc(money(view.price, view.currency))}</p>
@@ -630,7 +667,7 @@
               ${hideToggle("equipment")}
               <p class="ofCardHead">${icon("list")}${L("Wyposażenie — najważniejsze", "Оснащение — главное")}</p>
               ${keyOptions.length
-                ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(ru() ? RU.option(item.label) : item.label)}</span>`).join("")}</div>
+                ? `<div class="ofOptions">${keyOptions.map((item) => `<span class="ofOption">${esc(optionLabel(item.label))}</span>`).join("")}</div>
                    <p class="ofOptionsMore" data-all="${allOptions.length}" data-list="${listOnTwo ? 1 : 0}">${esc(optionsMore(allOptions.length - keyOptions.length, listOnTwo))}</p>`
                 : `<p class="ofSmall">${reading ? L("Wczytuję wyposażenie z ogłoszenia…", "Загружаю оснащение из объявления…")
                   : offer.ad?.complete ? (allOptions.length ? `${numbers.format(allOptions.length)} ${many(allOptions.length, ["pozycja", "pozycje", "pozycji"], ["позиция", "позиции", "позиций"])} ${L("wyposażenia w ogłoszeniu", "оснащения в объявлении")}${listOnTwo ? L(" (lista na str. 2)", " (список на стр. 2)") : ""}` : L("Sprzedawca nie zaznaczył wyposażenia na liście portalu - potwierdzimy je przed zakupem.", "Продавец не отметил оснащение в списке портала - подтвердим его до покупки."))
@@ -646,6 +683,7 @@
           </div>
           <footer class="ofFoot">
             <span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span>
+            ${pageNumber(1)}
           </footer>
         </article>
       </div>`;
@@ -701,15 +739,30 @@
     8: { label: "Dokumenty i odbiór", labelRu: "Документы и получение" },
   };
   const viaAutogood = () => offerMethod() !== "direct";
+  // Under the steps: how long it takes; from the day the dealer has the car
+  // when it is not there yet (owner 2026-10-11: "по срокам доступности тоже указывай").
+  function processNoteText() {
+    const available = carView().facts.availability;
+    if (available && !available.inStock && available.pl) {
+      return available.lead
+        ? L(`Dealer podaje ${available.pl}; od wydania auta zwykle 2–3 tygodnie do odbioru.`, `Дилер указывает ${available.ru}; после выдачи авто обычно 2–3 недели до получения.`)
+        : L(`Auto będzie u dealera ${available.pl} — od tego dnia zwykle 2–3 tygodnie do odbioru.`, `Авто будет у дилера ${available.ru} — с этого дня обычно 2–3 недели до получения.`);
+    }
+    return L("Zwykle około 2–3 tygodni od umowy do odbioru auta.", "Обычно около 2–3 недель от договора до получения авто.");
+  }
   function processSteps() {
     const company = store.company(offer.company);
     const sample = /^https:\/\//.test(company.inspectionUrl || "") ? company.inspectionUrl : "";
     return [
       { group: 0, title: "Rozmowa", titleRu: "Разговор",
         text: "Omawiamy ofertę auta i wszystkie szczegóły importu.", textRu: "Обсуждаем предложение авто и все подробности импорта." },
-      { group: 0, title: "Sprawdzenie informacji", titleRu: "Проверка информации",
-        text: "Dzwonimy do dealera: dostępność, ogólny stan, VIN i historia serwisowa, prosimy o dodatkowe zdjęcia.",
-        textRu: "Звоним дилеру: уточняем наличие, общее состояние, VIN и сервисную историю, запрашиваем дополнительные фото." },
+      carView().facts.isNew
+        ? { group: 0, title: "Sprawdzenie informacji", titleRu: "Проверка информации",
+          text: "Dzwonimy do dealera: termin wydania auta, VIN, wyposażenie i warunki gwarancji, prosimy o dodatkowe zdjęcia.",
+          textRu: "Звоним дилеру: уточняем срок выдачи авто, VIN, оснащение и условия гарантии, запрашиваем дополнительные фото." }
+        : { group: 0, title: "Sprawdzenie informacji", titleRu: "Проверка информации",
+          text: "Dzwonimy do dealera: dostępność, ogólny stan, VIN i historia serwisowa, prosimy o dodatkowe zdjęcia.",
+          textRu: "Звоним дилеру: уточняем наличие, общее состояние, VIN и сервисную историю, запрашиваем дополнительные фото." },
       { group: 1, title: "Umowa i depozyt", titleRu: "Договор и депозит",
         text: "Podpisujemy umowę zdalnie lub w naszym biurze. {Pan} {v:wpłaca|wpłacają} depozyt 2000 zł na oględziny auta.",
         textRu: "Подписываем договор дистанционно или в нашем офисе. Вы вносите депозит 2000 zł на осмотр авто.",
@@ -723,8 +776,8 @@
         link: sample ? { url: sample, label: "Zobacz, jak wyglądają przykładowe oględziny", labelRu: "Посмотреть, как выглядит пример осмотра" } : null,
         mark: { kind: "decision", label: "{Pana} decyzja: kupujemy?", labelRu: "Ваше решение: покупаем?" } },
       { group: 2, title: "Negocjacje i umowa", titleRu: "Переговоры и договор",
-        text: "Negocjujemy cenę i warunki zakupu - 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę.",
-        textRu: "Торгуемся о цене и условиях покупки - 70% выторгованной скидки остаётся Вам. Проверяем договор и счёт." },
+        text: "Negocjujemy cenę i warunki zakupu — 70% wynegocjowanego rabatu zostaje dla {Pana}. Sprawdzamy umowę i fakturę.",
+        textRu: "Торгуемся о цене и условиях покупки — 70% выторгованной скидки остаётся Вам. Проверяем договор и счёт." },
       viaAutogood()
         ? { group: 2, title: "Płatność za auto", titleRu: "Оплата за авто",
           text: "{Pan} {v:przelewa|przelewają} za auto (w złotych lub euro) w ciągu 2 dni roboczych na podstawie faktury AUTOGOOD.",
@@ -735,15 +788,15 @@
           textRu: "Вы делаете перевод за авто в евро напрямую дилеру.",
           mark: { kind: "pay", label: "Płatność 2 · cena auta", labelRu: "Платёж 2 · цена авто" } },
       { group: 3, title: "Transport i kontrola", titleRu: "Транспорт и проверка",
-        text: "Przywozimy auto lawetą na nasz plac w Łomiankach - w transporcie jest w pełni ubezpieczone. Po rozładunku ponownie porównujemy stan auta z raportem z oględzin.",
+        text: "Przywozimy auto lawetą na nasz plac w Łomiankach — w transporcie jest w pełni ubezpieczone. Po rozładunku ponownie porównujemy stan auta z raportem z oględzin.",
         textRu: "Привозим авто автовозом на нашу площадку в Ломянках. Авто полностью застраховано во время перевозки. После разгрузки повторно сверяем состояние авто с отчётом осмотра." },
       viaAutogood()
         ? { group: 4, title: "Dokumenty", titleRu: "Документы",
-          text: "Robimy przegląd techniczny i akcyzę. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji - {Panu} zostaje rejestracja i OC.",
+          text: "Robimy przegląd techniczny i akcyzę. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji — {Panu} zostaje rejestracja i OC.",
           textRu: "Делаем ТО и акциз. Готовим окончательный расчёт авто к выдаче и высылаем пакет документов к регистрации. Вам остаются регистрация и страховка OC.",
           mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" } }
         : { group: 4, title: "Dokumenty", titleRu: "Документы",
-          text: "Robimy przegląd techniczny i tłumaczenia, pomagamy w akcyzie. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji - {Panu} zostaje rejestracja i OC.",
+          text: "Robimy przegląd techniczny i tłumaczenia, pomagamy w akcyzie. Przygotowujemy rozliczenie końcowe i wysyłamy komplet dokumentów do rejestracji — {Panu} zostaje rejestracja i OC.",
           textRu: "Делаем ТО и переводы, помогаем в оформлении акциза. Готовим окончательный расчёт авто к выдаче и высылаем пакет документов к регистрации. Вам остаются регистрация и страховка OC.",
           mark: { kind: "pay", label: "Płatność 3 · rozliczenie końcowe", labelRu: "Платёж 3 · окончательный расчёт" } },
       { group: 4, title: "Odbiór auta", titleRu: "Получение авто",
@@ -789,7 +842,9 @@
     // The full calculation is the manager's choice (owner 2026-10-10): without
     // it the steps take the page's width and the rest goes under them.
     const withCosts = Boolean(costView) && !isHidden("costs");
-    const calcShot = offer.calcImage && offer.calc && (offer.calc.method || "direct") === offerMethod() ? offer.calcImage : "";
+    // The calculator's picture only in its own language (owner 2026-10-11: a
+    // Russian offer all in Russian); in the other one the table of its lines.
+    const calcShot = offer.calcImage && offer.calc && (offer.calc.method || "direct") === offerMethod() && (offer.calc.lang || "pl") === (ru() ? "ru" : "pl") ? offer.calcImage : "";
     const costsHtml = calcShot ? `
       <section class="ofCard ofCostsCard ofCalcShotCard${blockClass("costs")}" data-block="costs">
         ${hideToggle("costs")}
@@ -801,7 +856,7 @@
         <span class="ofMethod">${esc(costView.method)}</span>
         <table class="ofCosts">
           <tbody>
-            ${costView.rows.map((row) => `<tr><td>${esc(row.label)}${row.sub ? `<small>${esc(String(row.sub).replace(/\s*=\s*$/, ""))}</small>` : ""}</td><td>${esc(money(row.value, "PLN"))}</td></tr>`).join("")}
+            ${costView.rows.map((row) => `<tr><td>${esc(row.label)}${row.sub ? `<small>${esc(spaced(String(row.sub).replace(/\s*=\s*$/, "")))}</small>` : ""}</td><td>${esc(money(row.value, "PLN"))}</td></tr>`).join("")}
             <tr class="isTotal"><td>${L("Razem na gotowo", "Итого «под ключ»")}</td><td>${esc(money(costView.total, "PLN"))}</td></tr>
           </tbody>
         </table>
@@ -811,9 +866,9 @@
       <section class="ofCard ofNegoCard${blockClass("negotiation")}" data-block="negotiation">
         ${hideToggle("negotiation")}
         <p class="ofCardHead">${icon("percent")}${L("Potencjał negocjacji", "Потенциал торга")}*</p>
-        <p><span class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : `${negotiation.from}-${negotiation.to}%`}</span> <span class="ofSmall">${!negotiation.amountTo ? L("cena bez dużego pola do negocjacji", "цена без большого поля для торга")
-          : negotiation.amountFrom ? L(`ok. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `ок. ${esc(money(negotiation.amountFrom, negotiation.currency))}-${esc(money(negotiation.amountTo, negotiation.currency))} меньше`)
-          : L(`do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `до ок. ${esc(money(negotiation.amountTo, negotiation.currency))} меньше`)}</span></p>
+        <p><span class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : range(negotiation.from, negotiation.to, "%")}</span> <span class="ofSmall">${!negotiation.amountTo ? L("cena bez dużego pola do negocjacji", "цена без большого поля для торга")
+          : negotiation.amountFrom ? L(`ok. ${esc(numbers.format(negotiation.amountFrom))}–${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `примерно на ${esc(numbers.format(negotiation.amountFrom))}–${esc(money(negotiation.amountTo, negotiation.currency))} дешевле`)
+          : L(`do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `дешевле примерно до ${esc(money(negotiation.amountTo, negotiation.currency))}`)}</span></p>
         ${field("negotiationNote", L("*Wartości orientacyjne, ostateczna decyzja zawsze należy do sprzedawcy.", "*Ориентировочные значения, окончательное решение всегда за продавцом."), "p", "ofSmall")}
       </section>` : "";
     // The manager, and why the firm can be trusted (owner 2026-10-10): the
@@ -830,13 +885,13 @@
           <div class="ofContactLines">
             <b>${esc(withFirm(manager.name) || "AUTOGOOD")}</b>
             <span class="ofSmall">${L(`${esc(salutation.owner)} opiekun`, "Ваш менеджер")}</span>
-            ${manager.phone ? `<span>${icon("phone")}${esc(manager.phone)}</span>` : ""}
-            ${manager.email ? `<span>${icon("mail")}${esc(manager.email)}</span>` : ""}
+            ${manager.phone ? `<a class="ofContactLink" href="tel:${esc(String(manager.phone).replace(/[^\d+]/g, ""))}">${icon("phone")}${esc(manager.phone)}</a>` : ""}
+            ${manager.email ? `<a class="ofContactLink" href="mailto:${esc(manager.email)}">${icon("mail")}${esc(manager.email)}</a>` : ""}
           </div>
         </div>
         ${rating}
         <p class="ofCompanyLine">${mapsUrl ? `<a href="${esc(mapsUrl)}" target="_blank" rel="noopener">${icon("pin")}<span>${esc(address)}</span><span class="ofMapsTag">Google Maps</span></a>` : `${icon("pin")}<span>${esc(address)}</span>`}</p>
-        ${company.hours ? `<p class="ofSmall ofHours">${esc(ru() && company.hours === store.COMPANY_DEFAULTS?.hours ? "пн-пт 9:00-17:00, сб по предварительной договорённости" : company.hours)}</p>` : ""}
+        ${company.hours ? `<p class="ofSmall ofHours">${esc(ru() && company.hours === store.COMPANY_DEFAULTS?.hours ? "пн–пт 9:00–17:00, сб по предварительной договорённости" : company.hours)}</p>` : ""}
       </section>`;
     const processHtml = `
       <section class="ofCard ofProcess${blockClass("process")}" data-block="process">
@@ -844,13 +899,13 @@
         <p class="ofProcessMethod">${esc(methodLabel())}</p>
         <p class="ofCardHead">${icon("route")}${field("processTitle", L("Co dalej: od pierwszej rozmowy do odbioru kluczyków", "Что дальше: от первого разговора до получения ключей"), "span")}</p>
         ${processTimeline()}
-        ${field("processNote", L("Zwykle około 2-3 tygodni od umowy do odbioru auta.", "Обычно около 2-3 недель от договора до получения авто."), "p", "ofProcessNote")}
+        ${field("processNote", processNoteText(), "p", "ofProcessNote")}
       </section>`;
     const optionsHtml = allOptions.length && !isHidden("allOptions") && (offer.shown || []).includes("allOptions") ? `
       <section class="ofCard isFull" data-block="allOptions">
         ${hideToggle("allOptions")}
         <p class="ofCardHead">${icon("list")}${L("Pełne wyposażenie z ogłoszenia", "Полное оснащение из объявления")} (${numbers.format(allOptions.length)})</p>
-        <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(ru() ? RU.option(item.label) : item.label)}</li>`).join("")}</ul>
+        <ul class="ofAllOptions">${allOptions.slice(0, 60).map((item) => `<li class="${item.strong ? "isStrong" : ""}">${esc(optionLabel(item.label))}</li>`).join("")}</ul>
       </section>` : "";
     const body = withCosts
       ? `<div class="ofTwoCols"><div>${processHtml}</div><div class="ofSideCol">${costsHtml}${negotiationHtml}${contactHtml}</div></div>${optionsHtml}`
@@ -862,6 +917,7 @@
           <div class="ofPageTwo">${body}</div>
           <footer class="ofFoot">
             <span><b>AUTOGOOD</b> · ${L("import aut z Europy", "импорт авто из Европы")}</span>
+            ${pageNumber(2)}
           </footer>
         </article>
       </div>`;
@@ -869,11 +925,17 @@
 
   function verdictView(view) {
     if (!VERDICT) return null;
-    const result = VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market, lang: ru() ? "ru" : "pl" });
+    const result = VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market, lang: ru() ? "ru" : "pl", method: offerMethod() });
     const level = offer.verdictLevel || result.verdict;
     const label = L({ ok: "Rekomendujemy do dalszego sprawdzenia*", check: "Do weryfikacji przed rezerwacją", risk: "Nie rekomendujemy" }, { ok: "Рекомендуем к дальнейшей проверке*", check: "Нужна проверка до резервации", risk: "Не рекомендуем" })[level];
     // Up to six lines on the sheet: the most important first.
-    return { level, label, lines: result.lines.filter((line) => line.level !== "info" || line.id === "vat:margin").slice(0, 6), all: result.lines, auto: result.verdict };
+    // Grey lines stay off the sheet, except the margin invoice and when the
+    // dealer has the car (owner 2026-10-11). "Only firms" and the dealer's fee
+    // (already in the price and its footnote) are the manager's, in the panel;
+    // a fee of unknown amount or a direct purchase from a firms-only dealer
+    // still come as warnings.
+    const shown = ["vat:margin", "ad:available"];
+    return { level, label, lines: result.lines.filter((line) => line.level !== "info" || shown.includes(line.id)).slice(0, 7), all: result.lines, auto: result.verdict };
   }
 
   // ---- The manager's panel -------------------------------------------------------------
@@ -884,7 +946,19 @@
     if (event.target.matches?.(".ofAdvanced")) advancedOpen = event.target.open;
   }, true);
   function panelHtml(view) {
-    return `<details class="ofAdvanced"${advancedOpen ? " open" : ""}><summary>Rozszerzone ustawienia</summary>${panelCards(view)}</details>`;
+    return `<details class="ofAdvanced"${advancedOpen ? " open" : ""}><summary data-open="${esc(U("Pokaż", "Показать"))}" data-close="${esc(U("Schowaj", "Скрыть"))}">${U("Rozszerzone ustawienia", "Расширенные настройки")}</summary>${panelCards(view)}</details>`;
+  }
+  // The blocks of the sheets the manager hides or shows (panel, "Ukryj" buttons).
+  const BLOCKS = [
+    ["specs", "Dane auta", "Данные авто"], ["chips", "Plakietki (rynek, Polska)", "Плашки (рынок, Польша)"], ["market", "Cena na tle rynku", "Цена на фоне рынка"], ["poland", "Linia „W Polsce”", "Строка «В Польше»"],
+    ["verdict", "Ocena AUTOGOOD", "Оценка AUTOGOOD"], ["equipment", "Wyposażenie — najważniejsze", "Оснащение — главное"], ["seller", "Sprzedawca", "Продавец"],
+    ["adAge", "Dni w sprzedaży i zmiany ceny", "Дни в продаже и изменения цены"], ["carvago", "Aktywne podobne oferty (Carvago)", "Активные похожие предложения (Carvago)"],
+    ["page2", "Strona 2 w PDF", "Страница 2 в PDF"], ["process", "Co dalej (proces)", "Что дальше (процесс)"], ["costs", "Koszt na gotowo", "Стоимость «под ключ»"], ["negotiation", "Potencjał negocjacji", "Потенциал торга"], ["contact", "Kontakt", "Контакт"], ["allOptions", "Pełne wyposażenie (str. 2)", "Полное оснащение (стр. 2)"],
+  ];
+  function blockName(key) {
+    if (String(key).startsWith("check:")) return U("linia oceny", "строка оценки");
+    const block = BLOCKS.find(([name]) => name === key);
+    return block ? U(block[1], block[2]) : key;
   }
   function panelCards(view) {
     const ad = offer.ad;
@@ -893,111 +967,140 @@
     const client = offer.client || {};
     const verdict = verdictView(view);
     const priceChanged = ad?.vat?.gross && Math.abs(ad.vat.gross - view.price) >= 1 ? ad.vat.gross : 0;
-    const blocks = [
-      ["specs", "Dane auta"], ["chips", "Plakietki (rynek, Polska)"], ["market", "Cena na tle rynku"], ["poland", "Linia „W Polsce”"],
-      ["verdict", "Ocena AUTOGOOD"], ["equipment", "Wyposażenie — najważniejsze"], ["seller", "Sprzedawca"],
-      ["adAge", "Dni w sprzedaży i zmiany ceny"], ["carvago", "Aktywne podobne oferty (Carvago)"],
-      ["page2", "Strona 2 w PDF"], ["process", "Co dalej (proces)"], ["costs", "Koszt na gotowo"], ["negotiation", "Potencjał negocjacji"], ["contact", "Kontakt"], ["allOptions", "Pełne wyposażenie (str. 2)"],
-    ];
     const adState = reading
-      ? `<p>Czytam ogłoszenie…</p>`
+      ? `<p>${U("Czytam ogłoszenie…", "Читаю объявление…")}</p>`
       : ad
-        ? `<p class="ofPanelOk">Dane z ogłoszenia: ${esc(dateText(ad.readAt))} ${esc(timeText(ad.readAt))}${ad.complete ? "" : " (podstawowe — importer bez zdjęć i opinii)"}.</p>`
+        ? `<p class="ofPanelOk">${U("Dane z ogłoszenia", "Данные объявления")}: ${esc(dateText(ad.readAt))} ${esc(timeText(ad.readAt))}${ad.complete ? "" : U(" (podstawowe — importer bez zdjęć i opinii)", " (основные — импортер без фото и отзывов)")}.</p>`
         : offer.adError
           ? `<p class="ofPanelError">${esc(adErrorText())}</p>`
-          : "<p>Dane z ogłoszenia jeszcze nie wczytane.</p>";
+          : `<p>${U("Dane z ogłoszenia jeszcze nie wczytane.", "Данные объявления ещё не загружены.")}</p>`;
+    const zooms = [["1", "Całe zdjęcie", "Всё фото"], ["1.15", "Przybliż 15%", "Приблизить на 15%"], ["1.3", "Przybliż 30%", "Приблизить на 30%"], ["1.45", "Przybliż 45%", "Приблизить на 45%"]];
+    const focus = [["center", "Środek", "Центр"], ["left", "Lewa strona", "Левая сторона"], ["right", "Prawa strona", "Правая сторона"], ["top", "Góra", "Верх"], ["bottom", "Dół", "Низ"]];
+    const styles = { light: ["Jasny", "zdjęcie obok ceny, karty w ramkach", "Светлый", "фото рядом с ценой, карточки в рамках"], premium: ["Premium", "zdjęcie na całą szerokość, cena na granatowej plakietce", "Premium", "фото на всю ширину, цена на тёмно-синей плашке"], magazyn: ["Magazyn", "kremowa kolumna z ceną i danymi, tytuły szeryfowe", "Журнал", "кремовая колонка с ценой и данными, заголовки с засечками"], raport: ["Raport", "liczby na górze, rynek na całą szerokość", "Отчёт", "цифры сверху, рынок на всю ширину"], noc: ["Noc", "ciemny nagłówek z ceną, zdjęcie pod nim", "Ночь", "тёмная шапка с ценой, фото под ней"] };
+    const methodName = (key) => U(METHODS[key].label, METHODS[key].labelRu);
+    const carvagoFound = offer.carvago?.found;
+    const facts = view.facts || {};
     return `
       <section class="ofPanelCard">
-        <h2>Oferta ${esc(offer.number || "")}</h2>
-        <p>Utworzona ${esc(dateText(offer.createdAt))} ${esc(timeText(offer.createdAt))} ${offer.origin === "link" ? `z linku ogłoszenia (program „Oferta”). Bez danych rynku - pojawią się w ofercie z Monitoringu.` : `z Monitoringu: ${esc(offer.favoriteTitle || "")}. Rynek z dnia ${esc(dateText(offer.market?.at || offer.createdAt))}.`}</p>
+        <h2>${U("Oferta", "Предложение")} ${esc(offer.number || "")}</h2>
+        <p>${U("Utworzona", "Создано")} ${esc(dateText(offer.createdAt))} ${esc(timeText(offer.createdAt))} ${offer.origin === "link"
+          ? U("z linku ogłoszenia (program „Oferta”). Bez danych rynku — pojawią się w ofercie z Monitoringu.", "из ссылки на объявление (программа «Оферта»). Без данных рынка — они будут в предложении из Monitoring.")
+          : `${U("z Monitoringu", "из Monitoring")}: ${esc(offer.favoriteTitle || "")}. ${U("Rynek z dnia", "Рынок на")} ${esc(dateText(offer.market?.at || offer.createdAt))}.`}</p>
         <div class="ofPanelRow">
-          <label>Język oferty<select data-offer-lang><option value="pl"${ru() ? "" : " selected"}>PL · polski</option><option value="ru"${ru() ? " selected" : ""}>RU · rosyjski</option></select></label>
+          <label>${U("Język oferty", "Язык предложения")}<select data-offer-lang><option value="pl"${ru() ? "" : " selected"}>PL · ${U("polski", "польский")}</option><option value="ru"${ru() ? " selected" : ""}>RU · ${U("rosyjski", "русский")}</option></select></label>
         </div>
         <div class="ofPanelRow">
-          <label>Zwrot${ru() ? " (PL)" : ""}<select data-client-salutation>${Object.keys(SALUTATION).map((key) => `<option${client.salutation === key ? " selected" : ""}>${esc(key)}</option>`).join("")}</select></label>
-          <label>Klient (opcjonalnie)<input data-client-name value="${esc(client.name || "")}" placeholder="np. Jan Kowalski" /></label>
+          <label>${U("Zwrot", "Обращение (PL)")}<select data-client-salutation>${Object.keys(SALUTATION).map((key) => `<option${client.salutation === key ? " selected" : ""}>${esc(key)}</option>`).join("")}</select></label>
+          <label>${U("Klient (opcjonalnie)", "Клиент (необязательно)")}<input data-client-name value="${esc(client.name || "")}" placeholder="${esc(U("np. Jan Kowalski", "напр. Иван Петров"))}" /></label>
         </div>
       </section>
+      ${facts.business || facts.fee || facts.isNew || facts.availability ? `
       <section class="ofPanelCard">
-        <h2>Wygląd oferty</h2>
-        <div class="ofToggleList ofStyleList">${STYLES.map(([key, label, note]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> <span><b>${esc(label)}</b><small>${esc(note)}</small></span></label>`).join("")}</div>
+        <h2>${U("Z ogłoszenia (dla opiekuna)", "Из объявления (для менеджера)")}</h2>
+        <ul class="ofPanelFacts">
+          ${facts.business ? `<li class="isWarn">${esc(U("Dealer sprzedaje tylko firmom / na eksport — tylko przez AUTOGOOD", "Дилер продаёт только фирмам / на экспорт — только через AUTOGOOD"))}<q>${esc(facts.business.quote)}</q></li>` : ""}
+          ${facts.fee ? `<li class="isWarn">${esc(facts.fee.amount ? U(`Opłata dealera za wydanie: ${money(facts.fee.amount, "EUR")}${facts.fee.net ? " netto" : ""} — w szacunku i w kalkulatorze programu 06`, `Сбор дилера за выдачу: ${money(facts.fee.amount, "EUR")}${facts.fee.net ? " нетто" : ""} — в оценке и в калькуляторе программы 06`) : U("Dealer dolicza opłatę za wydanie — kwota nieznana, dopisz ją w kalkulatorze", "Дилер добавляет сбор за выдачу — сумма неизвестна, впишите её в калькулятор"))}<q>${esc(facts.fee.quote)}</q></li>` : ""}
+          ${facts.isNew ? `<li class="isGood">${esc(U("Nowe auto — w ocenie „nowe” i gwarancja fabryczna, bez pytania o książkę serwisową", "Новое авто — в оценке «новое» и заводская гарантия, без вопроса о сервисной книжке"))}</li>` : ""}
+          ${facts.availability ? `<li>${esc(facts.availability.inStock ? U("Auto dostępne od ręki", "Авто в наличии") : U(`Dostępność: ${facts.availability.pl}`, `Наличие: ${facts.availability.ru}`))}${facts.availability.quote ? `<q>${esc(facts.availability.quote)}</q>` : ""}</li>` : ""}
+        </ul>
+      </section>` : ""}
+      <section class="ofPanelCard">
+        <h2>${U("Wygląd oferty", "Вид предложения")}</h2>
+        <div class="ofToggleList ofStyleList">${STYLES.map(([key]) => `<label><input type="radio" name="ofStyle" data-style="${key}"${currentStyle() === key ? " checked" : ""} /> <span><b>${esc(U(styles[key][0], styles[key][2]))}</b><small>${esc(U(styles[key][1], styles[key][3]))}</small></span></label>`).join("")}</div>
       </section>
       <section class="ofPanelCard">
-        <h2>Carvago (dla opiekuna)</h2>
-        ${carvagoYear() && carvagoYear() < CARVAGO_FROM_YEAR ? `<p>Carvago nie ma aut zarejestrowanych przed ${CARVAGO_FROM_YEAR} r. - tego auta tam nie będzie (sprawdzone 11.10.2026).</p>`
-          : readingCarvago ? "<p>Szukam tego auta na Carvago (rok + przebieg 1:1)…</p>"
-          : offer.carvago?.found ? `<p class="ofPanelOk">Znalezione ${offer.carvago.by === "id" ? "po numerze ogłoszenia" : "po roku, przebiegu i modelu"}: w sprzedaży od ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `${offer.carvago.changes.length} zmian ceny` : "cena bez zmian"}${offer.carvago.active?.count ? `, ${numbers.format(offer.carvago.active.count)} podobnych aktywnych` : ""}.</p><p><a href="${esc(offer.carvago.url)}" target="_blank" rel="noopener">Otwórz na Carvago ↗</a> W ofercie dla klienta bez nazwy i cen Carvago (konkurent, ceny z ich marżą) - tylko daty, % zmian i liczba ofert.</p>`
-          : offer.carvagoError ? `<p class="ofPanelError">Carvago nie odpowiedziało (${esc(offer.carvagoError)}).</p>`
-          : offer.carvago ? "<p>Tego auta nie ma na Carvago (rok + przebieg 1:1).</p>" : "<p>Jeszcze nie sprawdzone.</p>"}
-        <button class="offerButton isSmall" type="button" data-read-carvago${readingCarvago ? " disabled" : ""}>Sprawdź na Carvago</button>
+        <h2>${U("Carvago (dla opiekuna)", "Carvago (для менеджера)")}</h2>
+        ${carvagoYear() && carvagoYear() < CARVAGO_FROM_YEAR ? `<p>${U(`Carvago nie ma aut zarejestrowanych przed ${CARVAGO_FROM_YEAR} r. — tego auta tam nie będzie (sprawdzone 11.10.2026).`, `На Carvago нет авто, зарегистрированных до ${CARVAGO_FROM_YEAR} г., — этого авто там не будет (проверено 11.10.2026).`)}</p>`
+          : readingCarvago ? `<p>${U("Szukam tego auta na Carvago (rok + przebieg 1:1)…", "Ищу это авто на Carvago (год + пробег 1:1)…")}</p>`
+          : carvagoFound ? `<p class="ofPanelOk">${U(`Znalezione ${offer.carvago.by === "id" ? "po numerze ogłoszenia" : "po roku, przebiegu i modelu"}: w sprzedaży od ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `${offer.carvago.changes.length} zmian ceny` : "cena bez zmian"}${offer.carvago.active?.count ? `, ${numbers.format(offer.carvago.active.count)} podobnych aktywnych` : ""}.`, `Найдено ${offer.carvago.by === "id" ? "по номеру объявления" : "по году, пробегу и модели"}: в продаже с ${esc(dateText(offer.carvago.listedSince))}, ${offer.carvago.changes.length ? `изменений цены: ${offer.carvago.changes.length}` : "цена без изменений"}${offer.carvago.active?.count ? `, похожих активных: ${numbers.format(offer.carvago.active.count)}` : ""}.`)}</p><p><a href="${esc(offer.carvago.url)}" target="_blank" rel="noopener">${U("Otwórz na Carvago", "Открыть на Carvago")} ↗</a> ${U("W ofercie dla klienta bez nazwy i cen Carvago (konkurent, ceny z ich marżą) — tylko daty, % zmian i liczba ofert.", "В предложении клиенту без названия и цен Carvago (конкурент, цены с их наценкой) — только даты, % изменений и число предложений.")}</p>`
+          : offer.carvagoError ? `<p class="ofPanelError">${U("Carvago nie odpowiedziało", "Carvago не ответило")} (${esc(offer.carvagoError)}).</p>`
+          : offer.carvago ? `<p>${U("Tego auta nie ma na Carvago (rok + przebieg 1:1).", "Этого авто нет на Carvago (год + пробег 1:1).")}</p>` : `<p>${U("Jeszcze nie sprawdzone.", "Ещё не проверено.")}</p>`}
+        <button class="offerButton isSmall" type="button" data-read-carvago${readingCarvago ? " disabled" : ""}>${U("Sprawdź na Carvago", "Проверить на Carvago")}</button>
       </section>
       <section class="ofPanelCard">
-        <h2>Dane z ogłoszenia</h2>
+        <h2>${U("Dane z ogłoszenia", "Данные объявления")}</h2>
         ${adState}
-        ${priceChanged ? `<p class="ofPanelError">Cena w ogłoszeniu zmieniła się: ${esc(money(view.price, view.currency))} → ${esc(money(priceChanged, view.currency))}.</p><button class="offerButton isSmall" type="button" data-use-ad-price="${priceChanged}">Użyj aktualnej ceny</button>` : ""}
-        <button class="offerButton isSmall" type="button" data-read-ad${reading ? " disabled" : ""}>Wczytaj ponownie z ogłoszenia</button>
-        <label>Zdjęcie (adres, jeśli inne niż pierwsze z ogłoszenia)<input data-photo value="${esc(edits().photo || "")}" placeholder="https://…" /></label>
+        ${priceChanged ? `<p class="ofPanelError">${U("Cena w ogłoszeniu zmieniła się", "Цена в объявлении изменилась")}: ${esc(money(view.price, view.currency))} → ${esc(money(priceChanged, view.currency))}.</p><button class="offerButton isSmall" type="button" data-use-ad-price="${priceChanged}">${U("Użyj aktualnej ceny", "Взять текущую цену")}</button>` : ""}
+        <button class="offerButton isSmall" type="button" data-read-ad${reading ? " disabled" : ""}>${U("Wczytaj ponownie z ogłoszenia", "Загрузить заново из объявления")}</button>
+        <label>${U("Zdjęcie (adres, jeśli inne niż pierwsze z ogłoszenia)", "Фото (адрес, если не первое из объявления)")}<input data-photo value="${esc(edits().photo || "")}" placeholder="https://…" /></label>
         <div class="ofPanelRow">
-          <label>Kadrowanie zdjęcia<select data-photo-zoom>${ZOOMS.map(([key, label]) => `<option value="${key}"${String(offer.photoZoom || "1") === key ? " selected" : ""}>${esc(label)}</option>`).join("")}</select></label>
-          <label>Środek kadru<select data-photo-focus>${FOCUS.map(([key, label]) => `<option value="${key}"${(offer.photoFocus || "center") === key ? " selected" : ""}>${esc(label)}</option>`).join("")}</select></label>
+          <label>${U("Kadrowanie zdjęcia", "Кадрирование фото")}<select data-photo-zoom>${zooms.map(([key, pl, russian]) => `<option value="${key}"${String(offer.photoZoom || "1") === key ? " selected" : ""}>${esc(U(pl, russian))}</option>`).join("")}</select></label>
+          <label>${U("Środek kadru", "Центр кадра")}<select data-photo-focus>${focus.map(([key, pl, russian]) => `<option value="${key}"${(offer.photoFocus || "center") === key ? " selected" : ""}>${esc(U(pl, russian))}</option>`).join("")}</select></label>
         </div>
-        <p>Ramka dealera na zdjęciu (logo, telefony, ikony) znika po przybliżeniu albo wybierz inne zdjęcie.</p>
-        ${ad?.images?.length > 1 ? `<label>Wybierz zdjęcie z ogłoszenia<select data-photo-pick>${ad.images.slice(0, 20).map((url, index) => `<option value="${esc(url)}"${(edits().photo || ad.images[0]) === url ? " selected" : ""}>Zdjęcie ${index + 1}</option>`).join("")}</select></label>` : ""}
-        ${ad?.description ? `<details><summary>Opis sprzedawcy (oryginał)</summary><div class="ofDescription">${esc(ad.description)}</div></details>` : ""}
-        ${ad?.flags?.aiSummary ? `<details><summary>Podsumowanie mobile.de (AI portalu)</summary><div class="ofDescription">${esc([ad.flags.aiTags.join(" · "), ad.flags.aiSummary.replace(/\*\*/g, ""), ...(ad.flags.aiInsights || []).map((item) => `• ${item.title} — ${item.subtitle}`)].filter(Boolean).join("\n\n"))}</div></details>` : ""}
+        <p>${U("Ramka dealera na zdjęciu (logo, telefony, ikony) znika po przybliżeniu albo wybierz inne zdjęcie.", "Рамка дилера на фото (логотип, телефоны, значки) исчезает при приближении, или выберите другое фото.")}</p>
+        ${ad?.images?.length > 1 ? `<label>${U("Wybierz zdjęcie z ogłoszenia", "Выберите фото из объявления")}<select data-photo-pick>${ad.images.slice(0, 20).map((url, index) => `<option value="${esc(url)}"${(edits().photo || ad.images[0]) === url ? " selected" : ""}>${U("Zdjęcie", "Фото")} ${index + 1}</option>`).join("")}</select></label>` : ""}
+        ${ad?.description ? `<details><summary>${U("Opis sprzedawcy (oryginał)", "Описание продавца (оригинал)")}</summary><div class="ofDescription">${esc(ad.description)}</div></details>` : ""}
+        ${ad?.flags?.aiSummary ? `<details><summary>${U("Podsumowanie mobile.de (AI portalu)", "Сводка mobile.de (ИИ портала)")}</summary><div class="ofDescription">${esc([ad.flags.aiTags.join(" · "), ad.flags.aiSummary.replace(/\*\*/g, ""), ...(ad.flags.aiInsights || []).map((item) => `• ${item.title} — ${item.subtitle}`)].filter(Boolean).join("\n\n"))}</div></details>` : ""}
       </section>
       <section class="ofPanelCard">
-        <h2>Kalkulacja</h2>
+        <h2>${U("Kalkulacja", "Расчёт")}</h2>
         ${offer.calc && (offer.calc.method || "direct") === offerMethod()
-          ? `<p class="ofPanelOk">Z kalkulatora: ${esc(offer.calc.methodLabel)}, ${esc(money(offer.calc.total, "PLN"))} (${esc(dateText(offer.calc.at))} ${esc(timeText(offer.calc.at))}).</p>`
-          : `<p>Teraz: szacunek „${esc(METHODS[offerMethod()].label)}” z taryfą miejsca sprzedawcy.${offer.calc ? " Wstawiona kalkulacja dotyczy innego sposobu zakupu - nie jest pokazana." : ""} Wstaw dokładną kalkulację z kalkulatora.</p>`}
-        <label>Sposób zakupu (zmienia koszt, plakietkę ceny i kroki 7 i 9)<select data-calc-method>${Object.entries(METHODS).map(([key, item]) => `<option value="${key}"${key === offerMethod() ? " selected" : ""}${key === "vat" && !(netEur() > 0) ? " disabled" : ""}>${esc(item.label)}</option>`).join("")}</select></label>
-        <button class="offerButton isSmall" type="button" data-calc-open>${offer.calc ? "Zmień w kalkulatorze" : "Otwórz kalkulator"}</button>
-        ${offer.calc ? '<button class="offerButton isSmall" type="button" data-calc-drop>Wróć do szacunku</button>' : ""}
+          ? `<p class="ofPanelOk">${U("Z kalkulatora", "Из калькулятора")}: ${esc(methodName(offer.calc.method || "direct"))}, ${esc(money(offer.calc.total, "PLN"))} (${esc(dateText(offer.calc.at))} ${esc(timeText(offer.calc.at))}).</p>`
+          : `<p>${U(`Teraz: szacunek „${esc(METHODS[offerMethod()].label)}” z taryfą miejsca sprzedawcy.${offer.calc ? " Wstawiona kalkulacja dotyczy innego sposobu zakupu — nie jest pokazana." : ""} Wstaw dokładną kalkulację z kalkulatora.`, `Сейчас: оценка «${esc(METHODS[offerMethod()].labelRu)}» с тарифом места продавца.${offer.calc ? " Вставленный расчёт относится к другому способу покупки — не показан." : ""} Вставьте точный расчёт из калькулятора.`)}</p>`}
+        <label>${U("Sposób zakupu (zmienia koszt, plakietkę ceny i kroki 7 i 9)", "Способ покупки (меняет стоимость, плашку цены и шаги 7 и 9)")}<select data-calc-method>${Object.keys(METHODS).map((key) => `<option value="${key}"${key === offerMethod() ? " selected" : ""}${(key === "vat" && !(netEur() > 0)) || (key === "direct" && businessOnly()) ? " disabled" : ""}>${esc(methodName(key))}</option>`).join("")}</select></label>
+        ${businessOnly() ? `<p class="ofPanelError">${U("Dealer sprzedaje tylko firmom / na eksport — zakup bezpośredni wyłączony.", "Дилер продаёт только фирмам / на экспорт — прямая покупка отключена.")}</p>` : ""}
+        <button class="offerButton isSmall" type="button" data-calc-open>${offer.calc ? U("Zmień w kalkulatorze", "Изменить в калькуляторе") : U("Otwórz kalkulator", "Открыть калькулятор")}</button>
+        ${offer.calc ? `<button class="offerButton isSmall" type="button" data-calc-drop>${U("Wróć do szacunku", "Вернуться к оценке")}</button>` : ""}
       </section>
       ${verdict ? `
       <section class="ofPanelCard">
-        <h2>Ocena</h2>
-        <label>Werdykt<select data-verdict-level>
-          <option value="">Automatycznie (${esc({ ok: "rekomendujemy", check: "do weryfikacji", risk: "nie rekomendujemy" }[verdict.auto])})</option>
-          <option value="ok"${offer.verdictLevel === "ok" ? " selected" : ""}>Rekomendujemy do dalszego sprawdzenia</option>
-          <option value="check"${offer.verdictLevel === "check" ? " selected" : ""}>Do weryfikacji przed rezerwacją</option>
-          <option value="risk"${offer.verdictLevel === "risk" ? " selected" : ""}>Nie rekomendujemy</option>
+        <h2>${U("Ocena", "Оценка")}</h2>
+        <label>${U("Werdykt", "Вердикт")}<select data-verdict-level>
+          <option value="">${U("Automatycznie", "Автоматически")} (${esc(U({ ok: "rekomendujemy", check: "do weryfikacji", risk: "nie rekomendujemy" }, { ok: "рекомендуем", check: "на проверку", risk: "не рекомендуем" })[verdict.auto])})</option>
+          <option value="ok"${offer.verdictLevel === "ok" ? " selected" : ""}>${U("Rekomendujemy do dalszego sprawdzenia", "Рекомендуем к дальнейшей проверке")}</option>
+          <option value="check"${offer.verdictLevel === "check" ? " selected" : ""}>${U("Do weryfikacji przed rezerwacją", "Нужна проверка до резервации")}</option>
+          <option value="risk"${offer.verdictLevel === "risk" ? " selected" : ""}>${U("Nie rekomendujemy", "Не рекомендуем")}</option>
         </select></label>
-        <p>${verdict.all.filter((line) => line.level === "risk").length} czerwonych, ${verdict.all.filter((line) => line.level === "warn").length} żółtych, ${verdict.all.filter((line) => line.level === "ok").length} zielonych. Linie ukrywa się w trybie „Edytuj teksty”.</p>
+        <p>${U(`${verdict.all.filter((line) => line.level === "risk").length} czerwonych, ${verdict.all.filter((line) => line.level === "warn").length} żółtych, ${verdict.all.filter((line) => line.level === "ok").length} zielonych. Linie ukrywa się w trybie „Edytuj teksty”.`, `Красных: ${verdict.all.filter((line) => line.level === "risk").length}, жёлтых: ${verdict.all.filter((line) => line.level === "warn").length}, зелёных: ${verdict.all.filter((line) => line.level === "ok").length}. Строки скрываются в режиме «Править тексты».`)}</p>
       </section>` : ""}
       <section class="ofPanelCard">
-        <h2>Bloki w PDF</h2>
-        <div class="ofToggleList">${blocks.map(([key, label]) => `<label><input type="checkbox" data-block-toggle="${key}"${(key === "poland" ? polandHidden(polandView()) : key === "allOptions" ? !(offer.shown || []).includes("allOptions") || isHidden(key) : isHidden(key)) ? "" : " checked"} /> ${esc(label)}</label>`).join("")}</div>
-        ${polandView()?.saving < 0 ? `<p class="ofPanelError">Podobne auta w Polsce są średnio o ${esc(money(-polandView().saving, "PLN"))} tańsze niż to auto na gotowo — dlatego linia „W Polsce” jest domyślnie ukryta.</p>` : ""}
+        <h2>${U("Bloki w PDF", "Блоки в PDF")}</h2>
+        <div class="ofToggleList">${BLOCKS.map(([key, pl, russian]) => `<label><input type="checkbox" data-block-toggle="${key}"${(key === "poland" ? polandHidden(polandView()) : key === "allOptions" ? !(offer.shown || []).includes("allOptions") || isHidden(key) : isHidden(key)) ? "" : " checked"} /> ${esc(U(pl, russian))}</label>`).join("")}</div>
+        ${polandView()?.saving < 0 ? `<p class="ofPanelError">${U(`Podobne auta w Polsce są średnio o ${esc(money(-polandView().saving, "PLN"))} tańsze niż to auto na gotowo — dlatego linia „W Polsce” jest domyślnie ukryta.`, `Похожие авто в Польше в среднем на ${esc(money(-polandView().saving, "PLN"))} дешевле, чем это авто «под ключ», — поэтому строка «В Польше» по умолчанию скрыта.`)}</p>` : ""}
       </section>
       <section class="ofPanelCard">
-        <h2>Opiekun klienta</h2>
-        <p${manager.name && manager.phone ? "" : ' class="ofPanelError"'}>${manager.name && manager.phone ? "Zapisywany w tej przeglądarce i w nowych ofertach." : "Uzupełnij imię i telefon — klient zobaczy je w ofercie. Zapisują się w tej przeglądarce."}</p>
-        <label>Imię i nazwisko<input data-manager="name" value="${esc(manager.name || "")}" /></label>
-        <label>Telefon<input data-manager="phone" value="${esc(manager.phone || "")}" inputmode="tel" /></label>
+        <h2>${U("Opiekun klienta", "Менеджер клиента")}</h2>
+        <p${manager.name && manager.phone ? "" : ' class="ofPanelError"'}>${manager.name && manager.phone ? U("Zapisywany w tej przeglądarce i w nowych ofertach.", "Сохраняется в этом браузере и в новых предложениях.") : U("Uzupełnij imię i telefon — klient zobaczy je w ofercie. Zapisują się w tej przeglądarce.", "Заполните имя и телефон — клиент увидит их в предложении. Сохраняются в этом браузере.")}</p>
+        <label>${U("Imię i nazwisko", "Имя и фамилия")}<input data-manager="name" value="${esc(manager.name || "")}" /></label>
+        <label>${U("Telefon", "Телефон")}<input data-manager="phone" value="${esc(manager.phone || "")}" inputmode="tel" /></label>
         <label>E-mail<input data-manager="email" value="${esc(manager.email || "")}" inputmode="email" /></label>
       </section>
       <section class="ofPanelCard">
-        <h2>Dane firmy</h2>
-        <label>Adres<input data-company="address" value="${esc(company.address || "")}" /></label>
-        <label>Telefon firmy<input data-company="phone" value="${esc(company.phone || "")}" placeholder="do potwierdzenia" /></label>
+        <h2>${U("Dane firmy", "Данные фирмы")}</h2>
+        <label>${U("Adres", "Адрес")}<input data-company="address" value="${esc(company.address || "")}" /></label>
+        <label>${U("Telefon firmy", "Телефон фирмы")}<input data-company="phone" value="${esc(company.phone || "")}" placeholder="${esc(U("do potwierdzenia", "уточнить"))}" /></label>
         <label>E-mail<input data-company="email" value="${esc(company.email || "")}" /></label>
-        <label>Godziny<input data-company="hours" value="${esc(company.hours || "")}" /></label>
+        <label>${U("Godziny", "Часы работы")}<input data-company="hours" value="${esc(company.hours || "")}" /></label>
         <div class="ofPanelRow">
-          <label>Ocena Google<input data-company="googleRating" value="${esc(company.googleRating || "")}" placeholder="4,9" /></label>
-          <label>Liczba opinii<input data-company="googleReviews" value="${esc(company.googleReviews || "")}" placeholder="126" /></label>
+          <label>${U("Ocena Google", "Оценка Google")}<input data-company="googleRating" value="${esc(company.googleRating || "")}" placeholder="4,9" /></label>
+          <label>${U("Liczba opinii", "Число отзывов")}<input data-company="googleReviews" value="${esc(company.googleReviews || "")}" placeholder="126" /></label>
         </div>
-        <label>Link Google Maps<input data-company="mapsUrl" value="${esc(company.mapsUrl || "")}" placeholder="https://maps.app.goo.gl/…" /></label>
+        <label>${U("Link Google Maps", "Ссылка Google Maps")}<input data-company="mapsUrl" value="${esc(company.mapsUrl || "")}" placeholder="https://maps.app.goo.gl/…" /></label>
       </section>
-      ${Object.keys(edits()).filter((key) => key !== "photo").length ? `<section class="ofPanelCard"><h2>Zmienione teksty</h2><p>${Object.keys(edits()).filter((key) => key !== "photo").length} zmian.</p><button class="offerButton isSmall" type="button" data-reset-edits>Przywróć teksty automatyczne</button></section>` : ""}`;
+      ${Object.keys(edits()).filter((key) => key !== "photo").length ? `<section class="ofPanelCard"><h2>${U("Zmienione teksty", "Изменённые тексты")}</h2><p>${U("Zmian", "Изменений")}: ${Object.keys(edits()).filter((key) => key !== "photo").length}.</p><button class="offerButton isSmall" type="button" data-reset-edits>${U("Przywróć teksty automatyczne", "Вернуть автоматические тексты")}</button></section>` : ""}`;
   }
 
   function adErrorText() {
     if (offer.source === "mobile") {
-      return `Nie udało się przeczytać ogłoszenia mobile.de: importer na Macu nie odpowiada lub odmówił (${offer.adError}). Oferta pokazuje dane z Monitoringu; zdjęcie można wkleić adresem.`;
+      return U(`Nie udało się przeczytać ogłoszenia mobile.de: importer na Macu nie odpowiada lub odmówił (${offer.adError}). Oferta pokazuje dane z Monitoringu; zdjęcie można wkleić adresem.`, `Не удалось прочитать объявление mobile.de: импортер на Маке не отвечает или отказал (${offer.adError}). Предложение показывает данные из Monitoring; фото можно вставить адресом.`);
     }
-    return `Nie udało się przeczytać ogłoszenia (${offer.adError}). Spróbuj ponownie za chwilę.`;
+    return U(`Nie udało się przeczytać ogłoszenia (${offer.adError}). Spróbuj ponownie za chwilę.`, `Не удалось прочитать объявление (${offer.adError}). Попробуйте ещё раз чуть позже.`);
+  }
+
+  // The page's own buttons in the offer's language (owner 2026-10-11).
+  function chrome() {
+    document.documentElement.lang = ru() ? "ru" : "pl";
+    if (editButton) editButton.textContent = editing ? U("Zakończ edycję", "Закончить правку") : U("Edytuj teksty", "Править тексты");
+    if (copyButton) copyButton.textContent = U("Kopiuj obraz", "Копировать картинку");
+    if (pdfButton) pdfButton.textContent = U("Pobierz PDF", "Скачать PDF");
+    const mail = document.querySelector("[data-offer-mail]");
+    if (mail) mail.textContent = U("Wyślij e-mail", "Отправить e-mail");
+    const mailLabel = document.querySelector("[data-offer-mail-row] label");
+    if (mailLabel?.firstChild?.nodeType === Node.TEXT_NODE) mailLabel.firstChild.nodeValue = U("E-mail klienta", "E-mail клиента");
+    const send = document.querySelector("[data-offer-mail-send]");
+    if (send) send.textContent = U("Wyślij", "Отправить");
+    const back = document.querySelector(".offerBack");
+    if (back) back.textContent = offer?.origin === "link" ? `← ${U("Oferta", "Предложение")}` : "← Monitoring";
   }
 
   // ---- Drawing ------------------------------------------------------------------------------
@@ -1005,11 +1108,13 @@
   function render() {
     if (!offer) return;
     const view = carView();
-    document.title = `AUTOGOOD Oferta ${offer.number || ""} — ${view.title}`;
-    if (heading) heading.textContent = `Oferta ${offer.number || ""} · ${view.title}`;
+    document.title = `AUTOGOOD ${U("Oferta", "Предложение")} ${offer.number || ""} — ${view.title}`;
+    if (heading) heading.textContent = `${U("Oferta", "Предложение")} ${offer.number || ""} · ${view.title}`;
+    chrome();
     stage.classList.toggle("isEditing", editing);
     stage.classList.add("isScreen");
-    stage.innerHTML = (sheetOne(view) + sheetTwo(view)).replace(/[\u2013\u2014]/g, "-");
+    // Real dashes (owner 2026-10-11: "пусть будет тире"; the 10-05 hyphen-only rule is dropped).
+    stage.innerHTML = sheetOne(view) + sheetTwo(view);
     // A photo server that refuses other sites (otomoto) still shows the photo
     // on screen without CORS; the PDF reads its bytes another way (photoData).
     stage.querySelectorAll("img[data-photo-main]").forEach((image) => image.addEventListener("error", () => {
@@ -1063,6 +1168,11 @@
     }
     const two = stage.querySelector('[data-page="2"]');
     if (two) {
+      // A few pixels too tall (the VAT 23% calculation, owner 2026-10-11):
+      // the steps a little closer first, then a little closer still.
+      two.classList.remove("isTight", "isTighter");
+      if (overflow(two) > 0) two.classList.add("isTight");
+      if (overflow(two) > 0) two.classList.add("isTighter");
       const list = two.querySelector(".ofAllOptions");
       let dropped = 0;
       while (list && overflow(two) > 0 && list.children.length > 12) {
@@ -1080,7 +1190,7 @@
     }
     const tooLong = [one, two].filter((page) => page && overflow(page) > 0).map((page) => page.dataset.page);
     stage.querySelectorAll(".ofPage").forEach((page) => page.classList.toggle("isOverflow", tooLong.includes(page.dataset.page)));
-    if (tooLong.length) setStatus(`Strona ${tooLong.join(" i ")} nie mieści się na A4 — ukryj blok lub skróć tekst (Edytuj teksty).`, true);
+    if (tooLong.length) setStatus(U(`Strona ${tooLong.join(" i ")} nie mieści się na A4 — ukryj blok lub skróć tekst (Edytuj teksty).`, `Страница ${tooLong.join(" и ")} не помещается на A4 — скройте блок или сократите текст («Править тексты»).`), true);
   }
 
   function fitSheets() {
@@ -1106,9 +1216,9 @@
     try {
       offer = (await store.update(offer.id, change)) || offer;
       if (redraw) render();
-      setStatus(`Zapisano ${timeText(new Date().toISOString())}`);
+      setStatus(`${U("Zapisano", "Сохранено")} ${timeText(new Date().toISOString())}`);
     } catch {
-      setStatus("Nie udało się zapisać zmian w tej przeglądarce.", true);
+      setStatus(U("Nie udało się zapisać zmian w tej przeglądarce.", "Не удалось сохранить изменения в этом браузере."), true);
     }
   }
 
@@ -1242,7 +1352,7 @@
   editButton?.addEventListener("click", () => {
     editing = !editing;
     editButton.setAttribute("aria-pressed", editing ? "true" : "false");
-    editButton.textContent = editing ? "Zakończ edycję" : "Edytuj teksty";
+    editButton.textContent = editing ? U("Zakończ edycję", "Закончить правку") : U("Edytuj teksty", "Править тексты");
     render();
   });
 
@@ -1252,9 +1362,9 @@
   // copies its lines and total as shown — the live rate, its tariffs and any
   // change made there included — into the offer.
   const CALC_TABS = [
-    { tab: 0, key: "direct", label: "Zakup bezpośredni" },
-    { tab: 3, key: "vat", label: "Dealerzy VAT 23%" },
-    { tab: 4, key: "margin", label: "Dealerzy VAT marża" },
+    { tab: 0, key: "direct", label: "Zakup bezpośredni", labelRu: "Прямая покупка" },
+    { tab: 3, key: "vat", label: "Dealerzy VAT 23%", labelRu: "Дилеры, НДС 23%" },
+    { tab: 4, key: "margin", label: "Dealerzy VAT marża", labelRu: "Дилеры, НДС-маржа" },
   ];
   const VAT_RATES = { DE: 0.19, AT: 0.2, FR: 0.2, NL: 0.21, BE: 0.21, LU: 0.17, IT: 0.22, ES: 0.21, SE: 0.25, DK: 0.25, CZ: 0.21, SK: 0.23 };
   function calcInput() {
@@ -1279,6 +1389,17 @@
     if (input.transport) params.set("transport", String(Math.round(input.transport)));
     if (input.inspection) params.set("inspection", String(Math.round(input.inspection)));
     if (input.url) params.set("mobileUrl", input.url);
+    // The dealer's delivery fee as the calculator's own line (owner 2026-10-11).
+    const fee = carView().facts?.fee;
+    if (fee?.amount) {
+      const sellerVat = Number(offer.ad?.vat?.rate) || 19;
+      const viaVat = tab === 3;
+      const amount = viaVat ? (fee.net ? fee.amount : fee.amount / (1 + sellerVat / 100)) : fee.net ? fee.amount * (1 + sellerVat / 100) : fee.amount;
+      params.set("extraLabel", L("Opłata dealera za wydanie auta", "Сбор дилера за выдачу авто"));
+      params.set("extraAmount", String(Math.round(amount * 100) / 100));
+      params.set("extraCurrency", "EUR");
+      if (viaVat) params.set("extraVat", "1");
+    }
     return `./calculators.html?${params.toString()}`;
   }
   let calcDialog = null;
@@ -1305,20 +1426,20 @@
     calcDialog.innerHTML = `
       <div class="agCalcPopupHead">
         <div>
-          <p class="agCalcPopupKicker">Kalkulacja do oferty ${esc(offer.number || "")}</p>
+          <p class="agCalcPopupKicker">${U("Kalkulacja do oferty", "Расчёт для предложения")} ${esc(offer.number || "")}</p>
           <h2 id="ofCalcTitle">${esc(carView().title)}</h2>
-          <p class="agCalcPopupFacts">${esc(money(input.gross, "EUR"))} brutto${input.vat ? ` · VAT do odliczenia · ${esc(money(input.net, "EUR"))} netto` : ""} · transport ${esc(numbers.format(input.transport))} + oględziny ${esc(numbers.format(input.inspection))} zł netto</p>
+          <p class="agCalcPopupFacts">${esc(money(input.gross, "EUR"))} ${U("brutto", "брутто")}${input.vat ? ` · ${U("VAT do odliczenia", "НДС к вычету")} · ${esc(money(input.net, "EUR"))} ${U("netto", "нетто")}` : ""} · ${U("transport", "транспорт")} ${esc(numbers.format(input.transport))} + ${U("oględziny", "осмотр")} ${esc(numbers.format(input.inspection))} zł ${U("netto", "нетто")}</p>
         </div>
         <div class="ofCalcActions">
-          <button class="offerButton isPrimary" type="button" data-calc-insert>Wstaw do oferty</button>
-          <button class="agCalcPopupClose" type="button" data-calc-close aria-label="Zamknij">×</button>
+          <button class="offerButton isPrimary" type="button" data-calc-insert>${U("Wstaw do oferty", "Вставить в предложение")}</button>
+          <button class="agCalcPopupClose" type="button" data-calc-close aria-label="${esc(U("Zamknij", "Закрыть"))}">×</button>
         </div>
       </div>
       <div class="agCalcPopupTabs" role="tablist">
-        ${CALC_TABS.map((item) => `<button type="button" role="tab" data-calc-tab="${item.tab}" aria-selected="${item.tab === tab ? "true" : "false"}"${item.key === "vat" && !input.vat ? ' disabled title="Tylko dla auta z VAT do odliczenia"' : ""}>${esc(item.label)}</button>`).join("")}
+        ${CALC_TABS.map((item) => `<button type="button" role="tab" data-calc-tab="${item.tab}" aria-selected="${item.tab === tab ? "true" : "false"}"${item.key === "vat" && !input.vat ? ` disabled title="${esc(U("Tylko dla auta z VAT do odliczenia", "Только для авто с НДС к вычету"))}"` : item.key === "direct" && businessOnly() ? ` disabled title="${esc(U("Dealer sprzedaje tylko firmom", "Дилер продаёт только фирмам"))}"` : ""}>${esc(U(item.label, item.labelRu))}</button>`).join("")}
       </div>
-      <p class="agCalcPopupNote" data-calc-note>Popraw w kalkulatorze, co trzeba (transport, oględziny, rabat), i kliknij „Wstaw do oferty” — oferta pokaże dokładnie te linie i tę kwotę.</p>
-      <iframe class="agCalcPopupFrame" title="Kalkulator AUTOGOOD" src="${esc(calcUrl(tab))}"></iframe>`;
+      <p class="agCalcPopupNote" data-calc-note>${U("Popraw w kalkulatorze, co trzeba (transport, oględziny, rabat), i kliknij „Wstaw do oferty” — oferta pokaże dokładnie te linie i tę kwotę.", "Поправьте в калькуляторе, что нужно (транспорт, осмотр, скидка), и нажмите «Вставить в предложение» — предложение покажет именно эти строки и эту сумму.")}</p>
+      <iframe class="agCalcPopupFrame" title="${esc(U("Kalkulator AUTOGOOD", "Калькулятор AUTOGOOD"))}" src="${esc(calcUrl(tab))}"></iframe>`;
     if (!calcDialog.open) calcDialog.showModal();
   }
 
@@ -1352,10 +1473,10 @@
       const calcImage = !isHidden("costs") && window.AUTOGOOD_OFFER_CALC ? await window.AUTOGOOD_OFFER_CALC.capture(calcDialog.querySelector("iframe")) : "";
       await save({ calc: calcData, calcImage, method: calcData.method });
       calcDialog.close();
-      setStatus(`Wstawiono kalkulację: ${calcData.methodLabel}, ${money(calcData.total, "PLN")}.`);
+      setStatus(`${U("Wstawiono kalkulację", "Расчёт вставлен")}: ${calcData.methodLabel}, ${money(calcData.total, "PLN")}.`);
     } catch (error) {
       if (note) {
-        note.textContent = `Nie udało się odczytać kalkulatora: ${error?.message || error}.`;
+        note.textContent = `${U("Nie udało się odczytać kalkulatora", "Не удалось прочитать калькулятор")}: ${error?.message || error}.`;
         note.classList.add("ofPanelError");
       }
     }
@@ -1366,12 +1487,12 @@
     if (!offer || reading || !AD || !(AD.SOURCES || ["mobile", "autoscout"]).includes(offer.source) || !offer.url) return;
     reading = true;
     render();
-    setStatus("Czytam ogłoszenie: zdjęcia, wyposażenie, sprzedawca…");
+    setStatus(U("Czytam ogłoszenie: zdjęcia, wyposażenie, sprzedawca…", "Читаю объявление: фото, оснащение, продавец…"));
     try {
       const importer = params.get("mobiledeApi") || offer.importer || "";
       const ad = await AD.read(offer.source, offer.url, { importer });
       offer = (await store.update(offer.id, { ad, adError: "", adTriedAt: new Date().toISOString() })) || offer;
-      setStatus(`Dane z ogłoszenia wczytane ${timeText(ad.readAt)}.`);
+      setStatus(`${U("Dane z ogłoszenia wczytane", "Данные объявления загружены в")} ${timeText(ad.readAt)}.`);
       readCarvago();
     } catch (error) {
       offer = (await store.update(offer.id, { adError: String(error?.message || error).slice(0, 160), adTriedAt: new Date().toISOString() })) || offer;
@@ -1541,10 +1662,12 @@
         image.onerror = resolve;
       }))));
       const box = copy.getBoundingClientRect();
-      const links = [...copy.querySelectorAll("a[href^='http']")].map((link) => {
+      // Web links, the phone and the e-mail are clickable in the PDF (owner 2026-10-11).
+      const links = [...copy.querySelectorAll("a[href^='http'], a[href^='tel:'], a[href^='mailto:']")].map((link) => {
         const rect = link.getBoundingClientRect();
         return { url: link.href, left: rect.left - box.left, top: rect.top - box.top, right: rect.right - box.left, bottom: rect.bottom - box.top };
       });
+      const words = textLines(copy, box);
       const canvas = await window.htmlToImage.toCanvas(copy, {
         pixelRatio,
         backgroundColor: "#ffffff",
@@ -1553,10 +1676,61 @@
         height: PAGE_H,
         skipAutoScale: true,
       });
-      return { canvas, links };
+      return { canvas, links, words };
     } finally {
       holder.remove();
     }
+  }
+
+  // The sheet's text as lines with their place (owner 2026-10-11: the PDF's
+  // text can be selected, copied and searched): word by word, words on one
+  // line joined. Drawn invisibly over the picture in buildPdf().
+  function textLines(root, box) {
+    const lines = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: (node) => (node.nodeValue.trim() && node.parentElement && getComputedStyle(node.parentElement).visibility !== "hidden" ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT),
+    });
+    const range = document.createRange();
+    while (walker.nextNode()) {
+      const node = walker.currentNode;
+      const style = getComputedStyle(node.parentElement);
+      const upper = style.textTransform === "uppercase";
+      const fontSize = parseFloat(style.fontSize) || 12;
+      for (const match of node.nodeValue.matchAll(/\S+/g)) {
+        range.setStart(node, match.index);
+        range.setEnd(node, match.index + match[0].length);
+        const rect = [...range.getClientRects()].find((item) => item.width > 0 && item.height > 0);
+        if (!rect) continue;
+        const word = {
+          text: upper ? match[0].toUpperCase() : match[0],
+          left: rect.left - box.left,
+          right: rect.right - box.left,
+          top: rect.top - box.top,
+          bottom: rect.bottom - box.top,
+          size: fontSize,
+        };
+        if (word.top < 0 || word.top > PAGE_H) continue;
+        const last = lines[lines.length - 1];
+        // The same line: about the same height and right after the last word.
+        if (last && Math.abs(last.bottom - word.bottom) < fontSize * 0.45 && word.left >= last.right - 1 && word.left - last.right < fontSize * 1.6) {
+          last.text += ` ${word.text}`;
+          last.right = word.right;
+          last.top = Math.min(last.top, word.top);
+          last.size = Math.max(last.size, word.size);
+        } else {
+          lines.push(word);
+        }
+      }
+    }
+    return lines;
+  }
+
+  // A font with Polish and Cyrillic letters for the hidden text (the PDF
+  // draws the picture; this font only makes the text findable).
+  let textFont = null;
+  async function textFontBytes() {
+    if (!textFont) textFont = fetch("./assets/Tinos-Regular.ttf").then((response) => (response.ok ? response.arrayBuffer() : null)).catch(() => null);
+    return textFont;
   }
 
   const fileName = (extension) => {
@@ -1579,8 +1753,19 @@
   // clickable where it is drawn.
   async function buildPdf() {
     await loadScript("./vendor/pdf-lib.min.js", "PDFLib");
+    await loadScript("./vendor/fontkit.umd.min.js", "fontkit").catch(() => null);
     const { PDFDocument, PDFName, PDFString } = window.PDFLib;
     const pdf = await PDFDocument.create();
+    let font = null;
+    const fontBytes = window.fontkit ? await textFontBytes() : null;
+    if (fontBytes) {
+      try {
+        pdf.registerFontkit(window.fontkit);
+        font = await pdf.embedFont(fontBytes, { subset: true });
+      } catch {
+        font = null;
+      }
+    }
     const pageWidth = 595.28;
     const pageHeight = 841.89;
     const scale = pageWidth / PAGE_W;
@@ -1591,6 +1776,23 @@
       const jpeg = await pdf.embedJpg(shot.canvas.toDataURL("image/jpeg", 0.9));
       const page = pdf.addPage([pageWidth, pageHeight]);
       page.drawImage(jpeg, { x: 0, y: 0, width: pageWidth, height: pageHeight });
+      // The text, invisible, where the picture shows it: selectable and searchable.
+      if (font) {
+        shot.words.forEach((line) => {
+          const text = line.text.replace(/[^\u0020-\u024f\u0400-\u04ff\u00a0-\u00ff\u2010-\u2026€«»×№]/g, " ").replace(/\s+/g, " ").trim();
+          if (!text) return;
+          try {
+            const height = (line.bottom - line.top) * scale;
+            const width = (line.right - line.left) * scale;
+            let size = Math.max(4, Math.min(line.size * scale, height * 0.92));
+            const natural = font.widthOfTextAtSize(text, size);
+            if (natural > 0 && width > 0) size = Math.max(3, Math.min(size * 1.6, size * (width / natural)));
+            page.drawText(text, { x: line.left * scale, y: pageHeight - line.bottom * scale + height * 0.22, size, font, opacity: 0 });
+          } catch {
+            // A letter the font has no glyph for: that line stays picture only.
+          }
+        });
+      }
       const annotations = shot.links.map((link) => pdf.context.register(pdf.context.obj({
         Type: "Annot",
         Subtype: "Link",
@@ -1600,22 +1802,24 @@
       })));
       if (annotations.length) page.node.set(PDFName.of("Annots"), pdf.context.obj(annotations));
     }
-    pdf.setTitle(`AUTOGOOD — oferta ${offer.number || ""}`);
+    // In the offer's language (owner 2026-10-11: a Russian offer in Russian).
+    pdf.setTitle(`AUTOGOOD — ${L("oferta", "предложение")} ${offer.number || ""} — ${carView().title}`);
     pdf.setAuthor("AUTOGOOD");
+    pdf.setLanguage?.(ru() ? "ru-RU" : "pl-PL");
     return { bytes: await pdf.save(), name: fileName("pdf"), pages: pages.length };
   }
 
   async function makePdf() {
     if (!offer) return;
     pdfButton.disabled = true;
-    setStatus("Przygotowuję PDF…");
+    setStatus(U("Przygotowuję PDF…", "Готовлю PDF…"));
     try {
       const { bytes, name } = await buildPdf();
       download(new Blob([bytes], { type: "application/pdf" }), name);
       await save({ exportedAt: new Date().toISOString() }, false);
-      setStatus(`PDF gotowy: ${name}`);
+      setStatus(`${U("PDF gotowy", "PDF готов")}: ${name}`);
     } catch (error) {
-      setStatus(`Nie udało się przygotować PDF (${error?.message || error}).`, true);
+      setStatus(`${U("Nie udało się przygotować PDF", "Не удалось подготовить PDF")} (${error?.message || error}).`, true);
     } finally {
       pdfButton.disabled = false;
     }
@@ -1624,19 +1828,19 @@
   async function copyPicture() {
     if (!offer) return;
     copyButton.disabled = true;
-    setStatus("Przygotowuję obraz strony 1…");
+    setStatus(U("Przygotowuję obraz strony 1…", "Готовлю картинку страницы 1…"));
     const blobPromise = captureSheet(1, 2).then((shot) => new Promise((resolve, reject) => shot.canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error("png"))), "image/png")));
     try {
       if (!navigator.clipboard?.write || typeof ClipboardItem !== "function") throw new Error("no clipboard");
       await navigator.clipboard.write([new ClipboardItem({ "image/png": blobPromise })]);
-      setStatus("Obraz strony 1 skopiowany — wklej go w wiadomości (Ctrl+V).");
+      setStatus(U("Obraz strony 1 skopiowany — wklej go w wiadomości (Ctrl+V).", "Картинка страницы 1 скопирована — вставьте её в сообщение (Ctrl+V)."));
     } catch {
       // The browser refused the clipboard: the picture is saved instead.
       try {
         download(await blobPromise, fileName("png"));
-        setStatus("Przeglądarka nie pozwoliła skopiować obrazu — zapisano go jako plik PNG.");
+        setStatus(U("Przeglądarka nie pozwoliła skopiować obrazu — zapisano go jako plik PNG.", "Браузер не дал скопировать картинку — она сохранена файлом PNG."));
       } catch (error) {
-        setStatus(`Nie udało się przygotować obrazu (${error?.message || error}).`, true);
+        setStatus(`${U("Nie udało się przygotować obrazu", "Не удалось подготовить картинку")} (${error?.message || error}).`, true);
       }
     } finally {
       copyButton.disabled = false;
@@ -1665,24 +1869,47 @@
     const rule = rules.find(([pattern]) => pattern.test(lower));
     return rule ? rule[1](word) : word;
   }
+  // Owner 2026-10-11: the turnkey price and the ad's link in the message,
+  // then that the PDF holds our detailed assessment; no signature (the
+  // mailbox's own template adds it).
   function mailText() {
     const view = carView();
     const client = offer.client || {};
     const form = client.salutation === "Pani" ? "Pani" : client.salutation === "Państwo" ? "Państwo" : "Pan";
     const seller = view.seller === "private" ? L("od sprzedawcy prywatnego", "у частного продавца") : L("u dealera", "у дилера");
     const where = ru() ? RU.countryIn(view.country) : COUNTRY_IN[view.country] || "";
+    const total = costs()?.total || 0;
+    const price = total ? money(total, "PLN") : "";
     if (ru()) {
       const name = String(client.name || "").trim().split(/\s+/)[0] || "";
       return {
-        subject: `Предложение авто: ${view.title}`,
-        body: `Добрый день${name ? `, ${name}` : ""}!\n\nОтправляю Вам найденное предложение авто с нужными параметрами ${seller}${where ? ` ${where}` : ""}. Во вложении Вы найдёте все детали и наше мнение. Что Вы об этом думаете?`,
+        subject: `Предложение авто: ${view.title}${price ? ` — ${price} под ключ` : ""}`,
+        body: [
+          `Добрый день${name ? `, ${name}` : ""}!`,
+          "",
+          `Отправляю Вам найденное предложение авто с нужными параметрами ${seller}${where ? ` ${where}` : ""}:`,
+          view.title,
+          price ? `Цена «под ключ» в Польше: ${price}` : "",
+          view.url ? `Объявление: ${view.url}` : "",
+          "",
+          "В приложенном PDF — наша подробная оценка этого варианта, пожалуйста, ознакомьтесь. Что Вы об этом думаете?",
+        ].filter((line, index, lines) => line || lines[index - 1]).join("\n"),
       };
     }
     const greeting = form === "Państwo" ? "Szanowni Państwo" : client.name ? `${form === "Pani" ? "Pani" : "Panie"} ${vocative(client.name, form === "Pani")}` : "";
-    const you = { Pan: ["Panu", "znajdzie Pan", "Co Pan o tym sądzi?"], Pani: ["Pani", "znajdzie Pani", "Co Pani o tym sądzi?"], Państwo: ["Państwu", "znajdą Państwo", "Co Państwo o tym sądzą?"] }[form];
+    const you = { Pan: ["Panu", "znajdzie Pan", "Co Pan o tym sądzi?", "proszę się z nią zapoznać"], Pani: ["Pani", "znajdzie Pani", "Co Pani o tym sądzi?", "proszę się z nią zapoznać"], Państwo: ["Państwu", "znajdą Państwo", "Co Państwo o tym sądzą?", "prosimy się z nią zapoznać"] }[form];
     return {
-      subject: `Oferta auta: ${view.title}`,
-      body: `Dzień dobry${greeting ? `, ${greeting}` : ""},\n\nprzesyłam ${you[0]} znalezioną ofertę auta o wymaganych parametrach ${seller}${where ? ` ${where}` : ""}. W załączniku ${you[1]} wszystkie szczegóły oraz naszą opinię. ${you[2]}`,
+      subject: `Oferta auta: ${view.title}${price ? ` — ${price} na gotowo` : ""}`,
+      body: [
+        `Dzień dobry${greeting ? `, ${greeting}` : ""},`,
+        "",
+        `przesyłam ${you[0]} znalezioną ofertę auta o wymaganych parametrach ${seller}${where ? ` ${where}` : ""}:`,
+        view.title,
+        price ? `Cena na gotowo w Polsce: ${price}` : "",
+        view.url ? `Ogłoszenie: ${view.url}` : "",
+        "",
+        `W załączonym PDF ${you[1]} naszą szczegółową ocenę tego wariantu — ${you[3]}. ${you[2]}`,
+      ].filter((line, index, lines) => line || lines[index - 1]).join("\n"),
     };
   }
   mailButton?.addEventListener("click", () => {
@@ -1696,7 +1923,7 @@
   async function sendMail() {
     const to = mailInput.value.trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)) {
-      setStatus("Wpisz poprawny e-mail klienta.", true);
+      setStatus(U("Wpisz poprawny e-mail klienta.", "Введите правильный e-mail клиента."), true);
       mailInput.focus();
       return;
     }
@@ -1704,7 +1931,7 @@
     await makePdf();
     const { subject, body } = mailText();
     window.location.href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setStatus("Otwieram wiadomość w programie pocztowym - dołącz pobrany PDF i zapisz jako szkic albo wyślij.");
+    setStatus(U("Otwieram wiadomość w programie pocztowym — dołącz pobrany PDF i zapisz jako szkic albo wyślij.", "Открываю письмо в почтовой программе — приложите скачанный PDF и сохраните как черновик или отправьте."));
     mailRow.hidden = true;
   }
   mailSend?.addEventListener("click", sendMail);
@@ -1769,11 +1996,11 @@
       const back = document.querySelector(".offerBack");
       if (back) {
         back.href = "./oferty.html";
-        back.textContent = "← Oferta";
+        back.textContent = `← ${U("Oferta", "Предложение")}`;
       }
     }
     render();
-    setStatus(`Oferta ${offer.number || ""} · zapisana w tej przeglądarce`);
+    setStatus(`${U("Oferta", "Предложение")} ${offer.number || ""} · ${U("zapisana w tej przeglądarce", "сохранено в этом браузере")}`);
     if (!offer.ad && !offer.adTriedAt) readAd();
     else if (carvagoDue()) readCarvago();
   }

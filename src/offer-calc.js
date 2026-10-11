@@ -12,13 +12,22 @@
   // The calculator's tabs for the three ways of buying (src/main.jsx).
   const TABS = { direct: 0, vat: 3, margin: 4 };
 
-  // input: { method, lang, gross, net (EUR), engine, transport, inspection, url }
-  function url({ method = "direct", lang = "pl", gross = 0, net = 0, engine = 3, transport = 0, inspection = 0, url: adUrl = "" } = {}) {
+  // input: { method, lang, gross, net (EUR), engine, transport, inspection, url,
+  // extra: { label, amount, currency, vat } — the dealer's delivery fee as the
+  // calculator's own line, offer: true — the page-06 look (embed=offer: no
+  // print / screenshot / save, no second link field; owner 2026-10-11) }
+  function url({ method = "direct", lang = "pl", gross = 0, net = 0, engine = 3, transport = 0, inspection = 0, url: adUrl = "", extra = null, offer = false } = {}) {
     const tab = TABS[method] ?? 0;
-    const params = new URLSearchParams({ embed: "1", tab: String(tab), lang: lang === "ru" ? "ru" : "pl", car: String(Math.round(tab === 3 ? net : gross)), engine: String(engine) });
+    const params = new URLSearchParams({ embed: offer ? "offer" : "1", tab: String(tab), lang: lang === "ru" ? "ru" : "pl", car: String(Math.round(tab === 3 ? net : gross)), engine: String(engine) });
     if (transport) params.set("transport", String(Math.round(transport)));
     if (inspection) params.set("inspection", String(Math.round(inspection)));
     if (adUrl) params.set("mobileUrl", adUrl);
+    if (extra?.amount > 0 && extra.label) {
+      params.set("extraLabel", extra.label);
+      params.set("extraAmount", String(extra.amount));
+      params.set("extraCurrency", extra.currency === "PLN" ? "PLN" : "EUR");
+      if (extra.vat) params.set("extraVat", "1");
+    }
     return `./calculators.html?${params.toString()}`;
   }
 
@@ -40,6 +49,41 @@
 
   // The result panel as a JPEG data URL, drawn inside the calculator's own
   // page (its fonts and styles), so it looks one to one.
+  // The picture for the client (owner 2026-10-11): every thousand spaced
+  // ("1 300"), a decimal comma, in a Russian offer Russian words only, no
+  // share labels over the bar (they overlapped and summed car and taxes),
+  // the legend readable in print.
+  const RU_WORDS = [[/\bbrutto\b/g, "брутто"], [/\bnetto\b/g, "нетто"], [/\bVAT mar(?:ż|z)a\b/gi, "НДС-маржа"], [/\bVAT\b/g, "НДС"]];
+  // Changed in place for the moment of the picture and put back after (a
+  // copy would lose the calculator's layout rules); returns the undo.
+  function forClient(panel, doc, lang) {
+    const undo = [];
+    const walker = doc.createTreeWalker(panel, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach((node) => {
+      const before = node.nodeValue;
+      let text = before.replace(/(?<![\d.,])(\d)(\d{3})(?!\d)/g, "$1\u00a0$2").replace(/(\d)\.(\d{1,2})(?=\s*(?:PLN|EUR|zł|€|%))/g, "$1,$2");
+      if (lang === "ru") RU_WORDS.forEach(([pattern, word]) => { text = text.replace(pattern, word); });
+      if (text !== before) {
+        node.nodeValue = text;
+        undo.push(() => { node.nodeValue = before; });
+      }
+    });
+    panel.querySelectorAll(".marginAuctionBreakdownSummary").forEach((node) => {
+      const display = node.style.display;
+      node.style.display = "none";
+      undo.push(() => { node.style.display = display; });
+    });
+    panel.querySelectorAll(".marginAuctionBreakdownLegend").forEach((node) => {
+      const css = node.style.cssText;
+      node.style.fontSize = "14px";
+      node.style.rowGap = "6px";
+      undo.push(() => { node.style.cssText = css; });
+    });
+    return () => undo.reverse().forEach((step) => step());
+  }
+
   async function capture(frame) {
     const doc = frame?.contentDocument;
     const win = frame?.contentWindow;
@@ -56,8 +100,11 @@
       });
     }
     if (!win.htmlToImage) return "";
+    const lang = new URLSearchParams(win.location.search).get("lang") === "ru" ? "ru" : "pl";
+    let restore = () => {};
     try {
       await doc.fonts?.ready;
+      restore = forClient(panel, doc, lang);
       return await win.htmlToImage.toJpeg(panel, {
         pixelRatio: 2,
         quality: 0.9,
@@ -65,6 +112,8 @@
       });
     } catch {
       return "";
+    } finally {
+      restore();
     }
   }
 

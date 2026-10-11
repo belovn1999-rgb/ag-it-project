@@ -896,6 +896,11 @@ function readCalculatorPrefill() {
     dealerDirect: nextTab === 3 && (params.get("direct") === "1" || params.get("dealerDirect") === "1"),
     values,
     mobileDeUrl: params.get("mobileUrl") || params.get("url") || "",
+    // A line of its own from the offer (program 06, owner 2026-10-11): the
+    // dealer's delivery fee, as "Dodaj własny koszt" would add it.
+    extraRows: n(params.get("extraAmount")) > 0 && String(params.get("extraLabel") || "").trim()
+      ? [{ id: "custom-offer-fee", label: String(params.get("extraLabel")).trim(), amount: String(n(params.get("extraAmount"))), currency: params.get("extraCurrency") === "PLN" ? "PLN" : "EUR", vat: params.get("extraVat") === "1" }]
+      : [],
   };
 }
 
@@ -2459,7 +2464,7 @@ function App() {
   const [editingOverride, setEditingOverride] = useState("");
   const [manualTotalOverride, setManualTotalOverride] = useState("");
   const [editingTotal, setEditingTotal] = useState(false);
-  const [marginAuctionState, setMarginAuctionState] = useState(() => initialMarginAuctionState());
+  const [marginAuctionState, setMarginAuctionState] = useState(() => ({ ...initialMarginAuctionState(), customRows: initialPrefill.extraRows || [] }));
   const [marginAuctionDraft, setMarginAuctionDraft] = useState({ label: "", amount: "", currency: "PLN", vat: false });
   const [editingMarginAuctionText, setEditingMarginAuctionText] = useState(null);
   const [draggedMarginAuctionRow, setDraggedMarginAuctionRow] = useState("");

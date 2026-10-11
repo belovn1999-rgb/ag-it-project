@@ -18,6 +18,7 @@
   const store = window.AUTOGOOD_OFFER_STORE;
   const EQUIPMENT = window.AUTOGOOD_OFFER_EQUIPMENT;
   const RU = window.AUTOGOOD_OFFER_RU;
+  const FACTS = window.AUTOGOOD_OFFER_FACTS;
   const CATALOG = window.AUTOGOOD_MOBILE_MODEL_CATALOG?.groups || {};
   const params = new URLSearchParams(window.location.search);
 
@@ -64,9 +65,18 @@
       footLabel: "Oferta dla klienta · po polsku", make: "Przygotuj ofertę PDF",
       method: "Sposób zakupu", methodDirect: "Zakup bezpośredni", methodVat: "Przez AUTOGOOD · VAT 23% (netto)", methodMargin: "Przez AUTOGOOD · VAT marża (brutto)",
       vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%", fullCalc: "Pełna kalkulacja w ofercie (str. 2)",
-      client: "Klient", clientName: "imię i nazwisko (do e-maila)", calcTitle: "Kalkulacja", calcHint: "Popraw transport i oględziny - suma trafi do oferty jako cena na gotowo.",
+      client: "Klient", clientName: "imię i nazwisko (do e-maila)", calcTitle: "Kalkulacja", calcHint: "Popraw transport i oględziny — suma trafi do oferty jako cena na gotowo.",
       remove: "Usuń z listy", removeAsk: "Usunąć ofertę {n} z listy?",
       fromLink: "z linku", fromMonitoring: "z Monitoringu",
+      newCar: "nowe (bez rejestracji)", range: "Zasięg", battery: "Bateria", kwh: "kWh", interior: "Wnętrze", availability: "Dostępność", inStock: "od ręki",
+      whoBusiness: "tylko firmom", whoTrade: "tylko firmom i handlarzom", whoExport: "tylko na eksport",
+      flagBusiness: "Dealer sprzedaje {who} — kupujemy tylko przez AUTOGOOD", flagNew: "Nowe auto · gwarancja fabryczna",
+      flagAvailable: "U dealera {when}", flagInStock: "Dostępne od ręki", flagFee: "Opłata dealera za wydanie: {amount} — dodana do kalkulacji",
+      flagFeeUnknown: "Dealer dolicza opłatę za wydanie — dopisz kwotę w kalkulatorze", feeLabel: "Opłata dealera za wydanie auta",
+      businessOnly: "dealer sprzedaje tylko firmom — kupujemy przez AUTOGOOD",
+      duplicate: "Na to ogłoszenie jest już oferta {n} z {date}.", openIt: "Otwórz ofertę {n}",
+      steps: ["Łączę się z portalem…", "Czytam zdjęcia i dane auta…", "Czytam wyposażenie i sprzedawcę…", "Jeszcze chwila — portal odpowiada wolniej…"],
+      turnkey: "{price} na gotowo",
     },
     ru: {
       title: "Предложение для клиента", langLabel: "Язык предложения", modeDealer: "Из объявления дилера", modeAuction: "Из отчёта аукциона", soon: "скоро",
@@ -76,8 +86,8 @@
       reading: "Читаю объявление с {portal}: фото, данные, оснащение, продавец…", read_ok: "Данные объявления загружены в {time}.",
       importerDown: "Не удалось прочитать объявление mobile.de: импортер на Маке не отвечает ({reason}). Запустите его или откройте страницу с ?mobiledeApi=…",
       readFailed: "Не удалось прочитать объявление: {reason}.", makeFailed: "Не удалось подготовить предложение: {reason}.",
-      fromAd: "Авто из объявления", adOn: "объявление на {portal}", unknownPrice: "цена неизвестна", gross: "брутто", vatInvoice: "счёт-фактура VAT", net: "нетто",
-      privateSeller: "частное лицо", noVat: "без VAT к вычету", dealer: "дилер",
+      fromAd: "Авто из объявления", adOn: "объявление на {portal}", unknownPrice: "цена неизвестна", gross: "брутто", vatInvoice: "счёт-фактура с НДС", net: "нетто",
+      privateSeller: "частное лицо", noVat: "без НДС к вычету", dealer: "дилер",
       bodyEngine: "Кузов и двигатель", body: "Кузов", fuel: "Тип двигателя", ccm: "Объём", power: "Мощность", hp: "л.с.", kw: "кВт", km: "км", cm3: "см³",
       mileageDrive: "Пробег и привод", mileage: "Пробег", reg: "1-я регистрация", gearbox: "Коробка", drive: "Привод",
       equipment: "Оснащение", moreIn: "+ {n} в объявлении", noEquipment: "в объявлении нет списка оснащения", equipmentLater: "оснащение после полного чтения",
@@ -85,18 +95,30 @@
       basic: "Прочитаны основные данные. Фото, оснащение и продавец появятся после полного чтения (для mobile.de нужен импортер на Маке).",
       missing: "Не удалось прочитать: {list}. Допишете на странице предложения (Edytuj teksty).", missingWords: ["марка", "цена", "пробег", "год"],
       footLabel: "Предложение для клиента · на русском", make: "Подготовить PDF-предложение",
-      method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · VAT 23% (нетто)", methodMargin: "Через AUTOGOOD · VAT marża (брутто)",
-      vatOnly: "только авто с VAT к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или по VAT 23%", fullCalc: "Полный расчёт в предложении (стр. 2)",
-      client: "Клиент", clientName: "имя и фамилия (для письма)", calcTitle: "Расчёт", calcHint: "Поправьте транспорт и осмотр - сумма попадёт в предложение как цена «под ключ».",
+      method: "Способ покупки", methodDirect: "Прямая покупка", methodVat: "Через AUTOGOOD · НДС 23% (нетто)", methodMargin: "Через AUTOGOOD · НДС-маржа (брутто)",
+      vatOnly: "только авто с НДС к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или с НДС 23%", fullCalc: "Полный расчёт в предложении (стр. 2)",
+      client: "Клиент", clientName: "имя и фамилия (для письма)", calcTitle: "Расчёт", calcHint: "Поправьте транспорт и осмотр — сумма попадёт в предложение как цена «под ключ».",
       remove: "Удалить из списка", removeAsk: "Удалить предложение {n} из списка?",
       fromLink: "из ссылки", fromMonitoring: "из Monitoring",
+      newCar: "новое (без регистрации)", range: "Запас хода", battery: "Батарея", kwh: "кВт·ч", interior: "Салон", availability: "Наличие", inStock: "в наличии",
+      whoBusiness: "только фирмам", whoTrade: "только фирмам и перекупщикам", whoExport: "только на экспорт",
+      flagBusiness: "Дилер продаёт {who} — покупаем только через AUTOGOOD", flagNew: "Новое авто · заводская гарантия",
+      flagAvailable: "У дилера {when}", flagInStock: "В наличии", flagFee: "Сбор дилера за выдачу: {amount} — добавлен в расчёт",
+      flagFeeUnknown: "Дилер добавляет сбор за выдачу — впишите сумму в расчёт", feeLabel: "Сбор дилера за выдачу авто",
+      businessOnly: "дилер продаёт только фирмам — покупаем через AUTOGOOD",
+      duplicate: "На это объявление уже есть предложение {n} от {date}.", openIt: "Открыть предложение {n}",
+      steps: ["Подключаюсь к порталу…", "Читаю фото и данные авто…", "Читаю оснащение и продавца…", "Ещё немного — портал отвечает медленнее…"],
+      turnkey: "{price} под ключ",
     },
   };
   const t = (key, values = {}) => String(TEXT[lang][key] ?? TEXT.pl[key] ?? key).replace(/\{(\w+)\}/g, (_, name) => values[name] ?? "");
+  // A list of words (missingWords, steps) as a list: t() would join it into one string.
+  const list = (key) => TEXT[lang][key] || TEXT.pl[key] || [];
   const val = (text) => (lang === "ru" && RU ? RU.value(text) : text || "");
   const countryName = (code) => (lang === "ru" && RU ? RU.country(code) : COUNTRY[code]) || code;
   const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
-  const numbers = new Intl.NumberFormat("pl-PL");
+  // Every thousand with a space, also "1 300" (pl-PL leaves four digits whole).
+  const numbers = { format: (value) => String(Math.round(Number(value) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0") };
   const SYMBOL = { EUR: "€", PLN: "zł", SEK: "kr", USD: "$" };
   const money = (value, currency = "EUR") => (value > 0 ? `${numbers.format(Math.round(value))} ${SYMBOL[currency] || currency}` : "");
   const icon = (name) => `<svg aria-hidden="true"><use href="./src/mobile-icons.svg#${name}"></use></svg>`;
@@ -265,13 +287,30 @@
   let fullCalc = true;
   // With a net price: straight or on VAT 23%; without: straight or on margin
   // (owner 2026-10-11). Default: VAT 23% when possible, else straight.
+  // A dealer selling only to firms or for export (offer-facts.js, owner
+  // 2026-10-11): no direct purchase, only through AUTOGOOD.
   const chosenMethod = () => {
     const vat = current?.ad?.vat || {};
     const canNet = Boolean(vat.deductible && vat.net);
-    if (method === "vat" && !canNet) return "direct";
+    const through = canNet ? "vat" : "margin";
+    if (method === "vat" && !canNet) return current?.facts?.business ? "margin" : "direct";
     if (method === "margin" && canNet) return "vat";
+    if (current?.facts?.business && (method || "direct") === "direct") return through;
     return method || (canNet ? "vat" : "direct");
   };
+  // The dealer's delivery fee as the calculator's own line, in the way of
+  // buying: straight or on margin the client pays it with the seller's VAT;
+  // on VAT 23% net (AUTOGOOD's invoice adds the Polish VAT).
+  function feeLine(methodKey) {
+    const fee = current?.facts?.fee;
+    if (!fee?.amount) return null;
+    const rate = Number(current.ad?.vat?.rate) || 19;
+    const gross = fee.net ? fee.amount * (1 + rate / 100) : fee.amount;
+    const net = fee.net ? fee.amount : fee.amount / (1 + rate / 100);
+    return methodKey === "vat"
+      ? { label: t("feeLabel"), amount: Math.round(net * 100) / 100, currency: fee.currency || "EUR", vat: true }
+      : { label: t("feeLabel"), amount: Math.round(gross * 100) / 100, currency: fee.currency || "EUR", vat: false };
+  }
   const client = { salutation: "Pan", name: "" };
   const CALC = window.AUTOGOOD_OFFER_CALC;
   // The calculators page in the card: the ad's price (net on the VAT way),
@@ -280,16 +319,28 @@
   function calcFrameHtml() {
     const est = current && estimate(current.ad, current.source);
     if (!CALC || !est) return "";
-    const src = CALC.url({ method: chosenMethod(), lang, gross: est.carBruttoEur, net: est.netEur, engine: est.engine.index, transport: est.transportNetto, inspection: est.inspectionNetto, url: current.source === "mobile" ? current.url : "" });
-    return `<section class="osCalc"><h3>${esc(t("calcTitle"))}</h3><p class="osMuted">${esc(t("calcHint"))}</p><iframe class="osCalcFrame" title="Kalkulator AUTOGOOD" src="${esc(src)}" data-os-calc></iframe></section>`;
+    const src = CALC.url({ method: chosenMethod(), lang, gross: est.carBruttoEur, net: est.netEur, engine: est.engine.index, transport: est.transportNetto, inspection: est.inspectionNetto, extra: feeLine(chosenMethod()), offer: true });
+    return `<section class="osCalc"><h3>${esc(t("calcTitle"))}</h3><p class="osMuted">${esc(t("calcHint"))}</p><iframe class="osCalcFrame" title="${esc(t("calcTitle"))} AUTOGOOD" src="${esc(src)}" data-os-calc></iframe></section>`;
   }
 
   function rows(list) {
     return list.filter(([, , value]) => value !== "" && value !== null && value !== undefined)
       .map(([iconName, label, value, before = ""]) => `<li><span>${icon(iconName)}${esc(label)}</span><b>${before}${esc(value)}</b></li>`).join("");
   }
+  // The ad's own facts as chips over the data (owner 2026-10-11).
+  function factChips() {
+    const facts = current.facts || {};
+    const chips = [];
+    if (facts.business) chips.push(["isWarn", t("flagBusiness", { who: t({ export: "whoExport", trade: "whoTrade", business: "whoBusiness" }[facts.business.kind]) }), facts.business.quote]);
+    if (facts.isNew) chips.push(["isGood", t("flagNew"), ""]);
+    if (facts.availability?.inStock && facts.isNew) chips.push(["isGood", t("flagInStock"), facts.availability.quote]);
+    else if (facts.availability && !facts.availability.inStock) chips.push(["isInfo", t("flagAvailable", { when: FACTS.availabilityText(facts.availability, lang) }), facts.availability.quote]);
+    if (facts.fee) chips.push(["isWarn", facts.fee.amount ? t("flagFee", { amount: `${money(facts.fee.amount, facts.fee.currency)}${facts.fee.net ? ` ${t("net")}` : ""}` }) : t("flagFeeUnknown"), facts.fee.quote]);
+    return chips.length ? `<div class="osFacts">${chips.map(([tone, text, quote]) => `<span class="osFact ${tone}"${quote ? ` title="${esc(quote)}"` : ""}>${esc(text)}</span>`).join("")}</div>` : "";
+  }
   function carHtml() {
     const { ad, source, brand, model } = current;
+    const facts = current.facts || {};
     const specs = ad.specs || {};
     const seller = ad.seller || {};
     const vat = ad.vat || {};
@@ -303,15 +354,18 @@
       : seller.type === "private" ? t("privateSeller") : t("noVat");
     const power = specs.powerHp ? `${specs.powerHp} ${t("hp")}${specs.powerKw ? ` (${specs.powerKw} ${t("kw")})` : ""}` : "";
     const sellerLine = seller.type === "dealer" ? (seller.name || t("dealer")) : seller.type === "private" ? t("privateSeller") : seller.name || "";
-    const missing = [!brand, !price, !specs.mileage, !specs.firstRegistration].map((gap, index) => (gap ? t("missingWords")[index] : "")).filter(Boolean);
-    const option = (label) => (lang === "ru" && RU ? RU.option(label) : label);
+    // A new car has no registration year to miss.
+    const missing = [!brand, !price, !specs.mileage, !specs.firstRegistration && !facts.isNew].map((gap, index) => (gap ? list("missingWords")[index] : "")).filter(Boolean);
+    const option = (label) => (lang === "ru" && RU ? RU.option(label, { fuel: specs.fuel }) : EQUIPMENT?.forFuel ? EQUIPMENT.forFuel(label, specs.fuel) : label);
     const canNet = Boolean(vat.deductible && vat.net);
+    const battery = Number(specs.batteryKwh) ? `${String(specs.batteryKwh).replace(".", ",")} ${t("kwh")}` : "";
+    const available = facts.availability ? FACTS.availabilityText(facts.availability, lang) : "";
     // The calculator of the chosen way (owner 2026-10-11), filled from the ad.
     return `
       <div class="osCarHead">
         ${ad.images?.[0] ? `<img class="osCarPhoto" src="${esc(ad.images[0])}" alt="" loading="lazy" referrerpolicy="no-referrer" />` : ""}
         <div class="osCarName">
-          <h2>${esc(ad.title || [brand, model].filter(Boolean).join(" ") || t("fromAd"))}</h2>
+          <h2>${esc(current.title || [brand, model].filter(Boolean).join(" ") || t("fromAd"))}</h2>
           <p>${[brand, model].filter(Boolean).map(esc).join(" · ")}${brand ? " · " : ""}<a href="${esc(current.url)}" target="_blank" rel="noopener">${esc(t("adOn", { portal: PORTAL[source] || "" }))}</a></p>
         </div>
         <div class="osCarPrice">
@@ -319,14 +373,16 @@
           <small>${esc(price ? `${t("gross")} · ${vatLine}` : "")}</small>
         </div>
       </div>
+      ${factChips()}
+      ${current.duplicate ? `<p class="osNote">${esc(t("duplicate", { n: current.duplicate.number || "", date: current.duplicate.date }))} <a href="./oferta.html?id=${encodeURIComponent(current.duplicate.id)}" target="_blank" rel="noopener">${esc(t("openIt", { n: current.duplicate.number || "" }))} →</a></p>` : ""}
       <div class="osCols">
         <section>
           <h3>${esc(t("bodyEngine"))}</h3>
-          <ul>${rows([["car", t("body"), val(specs.body)], ["fuel", t("fuel"), val(specs.fuel)], ["settings", t("ccm"), specs.ccm ? `${numbers.format(specs.ccm)} ${t("cm3")}` : ""], ["zap", t("power"), power]])}</ul>
+          <ul>${rows([["car", t("body"), val(specs.body)], ["fuel", t("fuel"), val(specs.fuel)], ["settings", t("ccm"), specs.ccm ? `${numbers.format(specs.ccm)} ${t("cm3")}` : ""], ["zap", t("power"), power], ["gauge", t("range"), Number(specs.rangeKm) ? `${numbers.format(specs.rangeKm)} ${t("km")}` : ""], ["zap", t("battery"), battery]])}</ul>
         </section>
         <section>
           <h3>${esc(t("mileageDrive"))}</h3>
-          <ul>${rows([["gauge", t("mileage"), specs.mileage ? `${numbers.format(specs.mileage)} ${t("km")}` : ""], ["calendar", t("reg"), specs.firstRegistration || ""], ["git-branch", t("gearbox"), val(specs.gearbox)], ["route", t("drive"), val(specs.drive)]])}</ul>
+          <ul>${rows([["gauge", t("mileage"), specs.mileage ? `${numbers.format(specs.mileage)} ${t("km")}` : ""], ["calendar", t("reg"), specs.firstRegistration || (facts.isNew ? t("newCar") : "")], ["git-branch", t("gearbox"), val(specs.gearbox)], ["route", t("drive"), val(specs.drive)]])}</ul>
         </section>
         <section>
           <h3>${esc(t("equipment"))}</h3>
@@ -334,21 +390,21 @@
         </section>
         <section>
           <h3>${esc(t("other"))}</h3>
-          <ul>${rows([["map-pin", t("country"), [seller.city, countryName(country)].filter(Boolean).join(", "), flag], ["check", t("condition"), specs.damaged ? t("damaged") : specs.accidentFree === true ? t("accidentFree") : ""], ["palette", t("color"), val(specs.color)], ["store", t("seller"), sellerLine]])}</ul>
+          <ul>${rows([["map-pin", t("country"), [seller.city, countryName(country)].filter(Boolean).join(", "), flag], ["check", t("condition"), specs.damaged ? t("damaged") : specs.accidentFree === true ? t("accidentFree") : ""], ["palette", t("color"), val(specs.color)], ["armchair", t("interior"), val(specs.interior)], ["calendar", t("availability"), available], ["store", t("seller"), sellerLine]])}</ul>
         </section>
       </div>
       ${!ad.complete ? `<p class="osNote">${esc(t("basic"))}</p>` : ""}
       ${missing.length ? `<p class="osNote">${esc(t("missing", { list: missing.join(", ") }))}</p>` : ""}
       <div class="osMethods" role="radiogroup" aria-label="${esc(t("method"))}">
         <span class="osMethodsLabel">${esc(t("method"))}</span>
-        ${[["direct", t("methodDirect"), true, ""], ["vat", t("methodVat"), canNet, t("vatOnly")], ["margin", t("methodMargin"), !canNet, t("marginOnly")]].map(([key, label, enabled, why]) => `
+        ${[["direct", t("methodDirect"), !facts.business, t("businessOnly")], ["vat", t("methodVat"), canNet, t("vatOnly")], ["margin", t("methodMargin"), !canNet, t("marginOnly")]].map(([key, label, enabled, why]) => `
           <label class="osMethod${enabled ? "" : " isOff"}"${enabled ? "" : ` title="${esc(why)}"`}><input type="radio" name="osMethod" value="${key}" data-os-method${key === chosenMethod() ? " checked" : ""}${enabled ? "" : " disabled"} /><span>${esc(label)}</span></label>`).join("")}
         <label class="osFull"><input type="checkbox" data-os-full${fullCalc ? " checked" : ""} /><span>${esc(t("fullCalc"))}</span></label>
       </div>
       <div class="osClient">
         <span class="osMethodsLabel">${esc(t("client"))}</span>
         <select data-os-salutation aria-label="${esc(t("client"))}">${["Pan", "Pani", "Państwo"].map((form) => `<option${client.salutation === form ? " selected" : ""}>${form}</option>`).join("")}</select>
-        <input type="text" data-os-client value="${esc(client.name)}" placeholder="${esc(t("clientName"))}" />
+        <input type="text" data-os-client value="${esc(client.name)}" placeholder="${esc(t("clientName"))}" aria-label="${esc(t("clientName"))}" />
       </div>
       ${calcFrameHtml()}
       <div class="osCarFoot">
@@ -380,7 +436,19 @@
     reading = true;
     readButton.disabled = true;
     carBox.hidden = true;
-    setStatus(t("reading", { portal: PORTAL[source] }));
+    // What is being read, step by step (the portal answers in 5–20 s, owner 2026-10-11).
+    const steps = list("steps");
+    let step = 0;
+    const showStep = () => {
+      setStatus(`${t("reading", { portal: PORTAL[source] })} ${steps[Math.min(step, steps.length - 1)]}`);
+      status.style.setProperty("--os-progress", `${Math.min(92, 18 + step * 24)}%`);
+    };
+    status.classList.add("isReading");
+    showStep();
+    const timer = window.setInterval(() => {
+      step += 1;
+      showStep();
+    }, 4000);
     try {
       const importer = source === "mobile" ? await importerUrl() : "";
       const ad = await AD.read(source, url, { importer });
@@ -390,6 +458,9 @@
       current = { source, url, ad, adKey: adKeyOf(source, url), brand: fromTitle.brand || ad.make || "", model: fromTitle.model || ad.model || "" };
       // The model table of the make (mild hybrids, B61) before the offer counts its excise.
       await window.AUTOGOOD_MODEL_SPECS_UI?.ready?.(current.brand);
+      current.facts = FACTS ? FACTS.read(ad) : {};
+      current.title = FACTS ? FACTS.cleanTitle(ad.title, { trims: trimsOf(current.brand, current.model) }) : ad.title;
+      current.duplicate = await offeredBefore(current.adKey);
       method = "";
       carBox.innerHTML = carHtml();
       carBox.hidden = false;
@@ -399,9 +470,27 @@
       const reason = String(error?.message || error);
       setStatus(source === "mobile" && /importer|fetch|Failed|NetworkError|502|503/i.test(reason) ? t("importerDown", { reason }) : t("readFailed", { reason }), true);
     } finally {
+      window.clearInterval(timer);
+      status.classList.remove("isReading");
       reading = false;
       readButton.disabled = false;
     }
+  }
+
+  // The model's trims (src/model-specs, B61): what a cut word of the name stands for.
+  function trimsOf(brand, model) {
+    const specs = window.AUTOGOOD_MODEL_SPECS_LOADED?.[brand] || {};
+    const entry = specs[`${brand}|${model}`] || Object.entries(specs).find(([key]) => key.toLowerCase() === `${brand}|${model}`.toLowerCase())?.[1];
+    return [...new Set((entry?.trims || []).flatMap((item) => item[2] || []))];
+  }
+  // An offer already made from this ad (owner 2026-10-11: two offers of one
+  // ad without a word): the newest one, to open instead.
+  async function offeredBefore(adKey) {
+    const list = await (store.byAdKey ? store.byAdKey(adKey) : store.recent(50)).catch(() => []);
+    const found = list.find((offer) => offer.adKey === adKey && !offer.error && !offer.archived);
+    if (!found) return null;
+    const date = new Date(found.createdAt);
+    return { id: found.id, number: found.number, date: Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit", year: "numeric" }) };
   }
 
   form.addEventListener("submit", (event) => {
@@ -485,7 +574,9 @@
       // ad's own currency (EUR; SEK on Blocket, PLN on otomoto).
       car: {
         key: adKey,
-        title: ad.title || "",
+        // The name as the client reads it (offer-facts.js); the ad's own stays in ad.title.
+        title: current.title || ad.title || "",
+        titleClean: current.title || "",
         price: Number(vat.gross) || 0,
         currency: ad.currency || "EUR",
         priceType: vat.deductible ? "vat" : seller.type === "private" ? "private" : "",
@@ -514,6 +605,24 @@
       adTriedAt: now.toISOString(),
     };
   }
+
+  // The calculator as tall as its content: one scroll, the page's (owner 2026-10-11).
+  function fitCalc(frame) {
+    const doc = frame?.contentDocument;
+    if (!doc?.body) return;
+    const fit = () => {
+      const height = Math.max(doc.documentElement.scrollHeight, doc.body.scrollHeight);
+      if (height > 200) frame.style.height = `${height + 2}px`;
+    };
+    fit();
+    if (typeof ResizeObserver === "function" && !frame.dataset.fitted) {
+      frame.dataset.fitted = "1";
+      new ResizeObserver(fit).observe(doc.body);
+    }
+  }
+  carBox.addEventListener("load", (event) => {
+    if (event.target.matches?.("[data-os-calc]")) fitCalc(event.target);
+  }, true);
 
   carBox.addEventListener("change", (event) => {
     if (event.target.matches("[data-os-method]")) {
@@ -575,12 +684,20 @@
     const list = await store.recent(12).catch(() => []);
     const usable = list.filter((offer) => !offer.error);
     recentBox.hidden = !usable.length;
+    // Owner 2026-10-11: the client and the turnkey price on each line, the
+    // name as the client reads it.
     recentList.innerHTML = usable.map((offer) => {
-      const title = offer.ad?.title || offer.car?.title || offer.favoriteTitle || t("title");
+      const raw = offer.ad?.title || offer.car?.title || offer.favoriteTitle || "";
+      const title = offer.car?.titleClean || (FACTS && raw ? FACTS.cleanTitle(raw) : raw) || t("title");
       const date = new Date(offer.createdAt);
       const when = Number.isNaN(date.getTime()) ? "" : date.toLocaleDateString("pl-PL", { day: "2-digit", month: "2-digit", year: "numeric" });
       const from = offer.origin === "link" ? t("fromLink") : t("fromMonitoring");
-      return `<li><a href="./oferta.html?id=${encodeURIComponent(offer.id)}" target="_blank" rel="noopener"><b>${esc(offer.number || "")}</b><span>${esc(title)}</span><small>${esc([when, PORTAL[offer.source] || "", from, offer.lang === "ru" ? "RU" : "PL"].filter(Boolean).join(" · "))}</small></a><button class="osRemove" type="button" data-os-remove="${esc(offer.id)}" data-number="${esc(offer.number || "")}" aria-label="${esc(t("remove"))}" title="${esc(t("remove"))}">×</button></li>`;
+      const sameWay = !offer.calc || (offer.calc.method || "direct") === (offer.method || "direct");
+      const total = (sameWay && offer.calc?.total) || offer.estimate?.total || 0;
+      const who = offer.client?.name ? `${offer.client.salutation && offer.lang !== "ru" ? `${offer.client.salutation} ` : ""}${offer.client.name}` : "";
+      const facts = [who, total ? t("turnkey", { price: money(total, "PLN") }) : ""].filter(Boolean).join(" · ");
+      const label = `${t("remove")}: ${offer.number || ""} ${title}`;
+      return `<li><a href="./oferta.html?id=${encodeURIComponent(offer.id)}" target="_blank" rel="noopener"><b>${esc(offer.number || "")}</b><span>${esc(title)}</span>${facts ? `<em>${esc(facts)}</em>` : ""}<small>${esc([when, PORTAL[offer.source] || "", from, offer.lang === "ru" ? "RU" : "PL"].filter(Boolean).join(" · "))}</small></a><button class="osRemove" type="button" data-os-remove="${esc(offer.id)}" data-number="${esc(offer.number || "")}" aria-label="${esc(label)}" title="${esc(t("remove"))}">×</button></li>`;
     }).join("");
   }
   // The manager removes an offer from the list (owner 2026-10-11): it is set

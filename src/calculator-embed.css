@@ -43,3 +43,22 @@
 .agEmbed .resultLine.isPrimaryLine > .resultLineMarker,
 .agEmbed .resultLine.isPrimaryLine > .marginAuctionDragHandle { grid-row: 1 / span 2; }
 .agEmbed .totalBarValueRow { flex-direction: column; align-items: flex-end; gap: 2px; }
+
+/* Program 06 "Oferta" (calculators.html?embed=offer, owner 2026-10-11): the
+   calculator as part of the offer page — no print / screenshot / save (the
+   offer makes the PDF), no second ad link (the page has one), the own-cost
+   form one field per line so the amount is never squeezed away; one column
+   when the page is narrow. The frame grows with its content (offer-start.js). */
+.agEmbedOffer .topbar,
+.agEmbedOffer .mobileImport {
+  display: none !important;
+}
+.agEmbedOffer .tabsRow { padding-top: 10px; }
+.agEmbedOffer .marginAuctionWorkbenchFields {
+  grid-template-areas: "name name" "amount currency" "vat vat" "add add";
+  grid-template-columns: minmax(0, 1fr) 88px;
+}
+.agEmbedOffer .marginAuctionAddButton { width: 100%; }
+@media (max-width: 760px) {
+  .agEmbedOffer .grid:not(.finalGrid) { grid-template-columns: minmax(0, 1fr); padding: 16px 14px 0; }
+}

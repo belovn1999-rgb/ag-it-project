@@ -349,7 +349,14 @@
       .sort((left, right) => Number(right.strong) - Number(left.strong) || left.label.localeCompare(right.label, "pl"));
   }
 
-  const api = { translate, keyOptions, trustSignals, list, KEY_OPTIONS, MORE_NAMES };
+  // An electric car's "Standheizung" warms the cabin from the battery: no
+  // fuel heater (owner 2026-10-11, Volvo EX30).
+  const electric = (fuel) => /elektr|electric|электро/i.test(String(fuel || "")) && !/hybr|гибрид/i.test(String(fuel || ""));
+  function forFuel(label, fuel) {
+    return electric(fuel) && /^Ogrzewanie postojowe/.test(String(label || "")) ? String(label).replace(/^Ogrzewanie postojowe/, "Wstępne ogrzewanie kabiny") : label;
+  }
+
+  const api = { translate, keyOptions, trustSignals, list, forFuel, KEY_OPTIONS, MORE_NAMES };
   if (typeof window !== "undefined") window.AUTOGOOD_OFFER_EQUIPMENT = api;
   if (typeof globalThis !== "undefined") globalThis.AUTOGOOD_OFFER_EQUIPMENT = api;
 })();

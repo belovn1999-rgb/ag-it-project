@@ -6,7 +6,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import vm from "node:vm";
 
-for (const file of ["offer-market.js", "offer-equipment.js", "offer-ru.js", "offer-verdict.js", "offer-ad.js", "offer-carvago.js"]) {
+for (const file of ["offer-market.js", "offer-equipment.js", "offer-ru.js", "offer-facts.js", "offer-verdict.js", "offer-ad.js", "offer-carvago.js"]) {
   vm.runInThisContext(readFileSync(new URL(`../src/${file}`, import.meta.url), "utf8"), { filename: file });
 }
 const MARKET = globalThis.AUTOGOOD_OFFER_MARKET;
@@ -15,6 +15,7 @@ const VERDICT = globalThis.AUTOGOOD_OFFER_VERDICT;
 const AD = globalThis.AUTOGOOD_OFFER_AD;
 const CARVAGO = globalThis.AUTOGOOD_OFFER_CARVAGO;
 const RU = globalThis.AUTOGOOD_OFFER_RU;
+const FACTS = globalThis.AUTOGOOD_OFFER_FACTS;
 
 const offer = (key, price, year, mileage, extra = {}) => ({ key, price, currency: "EUR", year, mileage, country: "DE", ...extra });
 
@@ -869,4 +870,52 @@ test("Marktplaats options: the strong ones in Dutch (NL and BE) and French", () 
     ["panorama", "matrix", "acc", "hud", "camera360", "nav", "auxHeating", "ventSeats", "massage", "heatedSeats", "heatedWheel", "memory", "sound", "tow", "keyless", "tailgate", "digital", "blindSpot", "lane", "parkAssist", "climate"]);
   // Plain cruise control, LED day lights and "LED verlichting" are not strong options.
   assert.deepEqual(labels(["Cruise Control", "LED dagrijverlichting", "LED verlichting", "Éclairage LED", "Feux de jour LED"]), []);
+});
+
+// Owner 2026-10-11 (audit of a Volvo EX30 ad on mobile.de): what the ad says about the deal.
+const ex30 = {
+  title: "Volvo EX30 Plus Bl.Ed. P5 Long Range Nur Gewerbekunden",
+  description: "Bestellvorlauf mit einer Verfügbarkeit Oktober/November 2026. (vorbehaltlich Zwischenverkauf)<br><br>Die Kosten für das Auslieferungspaket netto 1.175,63 Euro (Überführung, Zulassung und Vollladung) werden getrennt berechnet.<br><br>Nur gültig für Gewerbekunden (keine Nebengewerbe).",
+  specs: { mileage: 50, availability: "Ab 02.11.2026", firstRegistration: "" },
+  flags: { isNew: false, isConditionNew: true, aiTags: ["Nur Gewerbekunden", "Sehr guter Preis", "Neuwagen Long Range"], aiSummary: "Dieser **Neuwagen** … richtet sich **ausschließlich an Gewerbekunden**.", aiInsights: [{ title: "Zusätzliche Auslieferungskosten", subtitle: "Überführung und Zulassung werden berechnet" }] },
+  complete: true,
+  seller: { type: "dealer" },
+  vat: { rate: 19, net: 32513, gross: 38690, deductible: true },
+};
+
+test("the deal as the ad states it: only firms, the dealer's fee with its amount, a new car, availability", () => {
+  const facts = FACTS.read(ex30, Date.parse("2026-10-11"));
+  assert.equal(facts.business.kind, "business");
+  assert.deepEqual([facts.fee.amount, facts.fee.net], [1175.63, true]);
+  assert.equal(facts.isNew, true);
+  assert.deepEqual([facts.availability.inStock, facts.availability.pl, facts.availability.ru], [false, "od 02.11.2026", "с 02.11.2026"]);
+  const kind = (text) => FACTS.business({ title: "", description: text })?.kind || null;
+  assert.deepEqual(["Verkauf nur an Händler/Export", "Nur Export!", "Réservé aux professionnels", "Tylko dla firm"].map(kind), ["trade", "export", "business", "business"]);
+  assert.deepEqual(["Scheckheftgepflegt nur beim Händler", "Nur 1 Vorbesitzer, Firmenwagen", "Auch für Gewerbekunden", "Export möglich"].map(kind), [null, null, null, null]);
+  const fee = (text) => FACTS.fee({ title: "", description: text });
+  assert.equal(fee("Preis zzgl. Überführung 990,- €").amount, 990);
+  assert.equal(fee("Inkl. Überführung und Zulassung"), null);
+  const when = (text) => FACTS.availability({ title: "", description: text }, Date.parse("2026-10-11"));
+  assert.equal(when("Verfügbarkeit im Frühjahr 2027").pl, "wiosną 2027");
+  assert.equal(when("Lieferzeit ca. 3 Monate").ru, "срок поставки ок. 3 мес.");
+  assert.equal(when("Sofort verfügbar!").inStock, true);
+  assert.equal(when("Verfügbar ab 03/2026").inStock, true, "a date already past: the car is there");
+});
+
+test("the ad's name without sales words, the version written out", () => {
+  assert.equal(FACTS.cleanTitle(ex30.title, { trims: ["Essential", "Start", "Plus", "Ultimate"] }), "Volvo EX30 Plus Black Edition P5 Long Range");
+  assert.equal(FACTS.cleanTitle("Volvo XC60 B4 D Insc. AWD Pano", { trims: ["Momentum", "Inscription", "R-Design"] }), "Volvo XC60 B4 D Inscription AWD");
+  assert.equal(FACTS.cleanTitle("Audi A4 Avant 2.0 TDI S-tron. Sport *TOP* MwSt. ausweisbar"), "Audi A4 Avant 2.0 TDI S tronic Sport");
+  assert.equal(FACTS.cleanTitle("Toyota C-HR 2,0-l Hybrid Team D*Allwetter\"Carplay\"R-Kam"), "Toyota C-HR 2,0-l Hybrid Team D");
+  assert.equal(FACTS.cleanTitle("Mercedes-Benz C 220 d T Avantg. Händler/Export"), "Mercedes-Benz C 220 d T Avantgarde");
+});
+
+test("the verdict of a new car sold only to firms: no service-book line, new and factory warranty, the deal's facts", () => {
+  const ids = (method) => VERDICT.assess({ car: { price: 38690, seller: "dealer" }, ad: ex30, now: Date.parse("2026-10-11"), method }).lines.map((line) => `${line.level}:${line.id}`);
+  const viaAutogood = ids("vat");
+  assert.ok(viaAutogood.includes("ok:car:new") && viaAutogood.includes("ok:car:factoryWarranty"));
+  assert.ok(viaAutogood.includes("info:ad:business") && viaAutogood.includes("info:ad:fee") && viaAutogood.includes("info:ad:available"));
+  assert.ok(!viaAutogood.some((id) => id.includes("serviceUnknown")), "a new car has no service book to ask about");
+  assert.ok(ids("direct").includes("risk:ad:business"), "straight from a firms-only dealer: not possible");
+  assert.equal(VERDICT.assess({ car: { price: 38690, seller: "dealer" }, ad: ex30, now: Date.parse("2026-10-11"), method: "vat" }).verdict, "ok");
 });

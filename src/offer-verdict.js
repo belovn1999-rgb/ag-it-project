@@ -29,13 +29,11 @@
     [/totalschaden|wasserschaden|hagelschaden|brandschaden|unfallwagen|unfallfahrzeug|unfallschaden|sinistrat|incidentat|accident(?:é|e)e?\b|schadeauto|powypadkow|po wypadku|zalan|alluvionat|inondé|(?:^|[^а-яё])(?:после дтп|битый|битая|аварийн[а-яё]*|утопленник)|ongevalschade|krockskad|skadebil/i, "Auto po wypadku lub uszkodzone", "Авто после аварии или повреждено"],
     [/nicht fahrbereit|nicht fahrtauglich|fahrzeug defekt|non marciante|ne roule pas|niesprawn|do naprawy|bastlerfahrzeug|не на ходу|niet rijdbaar|(?:ej|inte) körbar/i, "Auto niesprawne lub do naprawy", "Авто неисправно или требует ремонта"],
     [/western union|moneygram|vorkasse|treuhand(?:service|konto)|derzeit im ausland|befindet sich (?:derzeit )?im ausland|lieferung (?:nur )?per spedition nach zahlung|pagamento anticipato/i, "Sformułowania typowe dla oszustw (płatność z góry, auto „za granicą”)", "Формулировки, типичные для мошенничества (предоплата, авто «за границей»)"],
-    [/(?:nur|only|solo|uniquement) (?:f(?:ü|u)r |per |pour )?(?:den )?export|export only|gewerbe\s*\/\s*export|h(?:ä|a)ndler\s*\/\s*export|nur an h(?:ä|a)ndler|solo (?:a )?commercianti|marchand uniquement|alleen (?:voor )?export|endast export|только (?:на )?экспорт/i, "Sprzedaż tylko na eksport lub dla handlarzy", "Продажа только на экспорт или перекупщикам"],
   ];
   const WARN_WORDS = [
     [/ohne (?:jede )?gew(?:ä|ae)hrleistung|unter ausschluss (?:der|jeglicher) (?:sach)?m(?:ä|ae)ngelhaftung|gew(?:ä|ae)hrleistungsausschluss|sans garantie|senza garanzia|bez gwarancji|bez r(?:ę|e)kojmi/i, "Bez rękojmi sprzedawcy", "Продавец исключает ответственность за дефекты"],
     [/vorschaden|reparierte?r? (?:unfall)?schaden|instandgesetzt|nachlackiert|teilweise lackiert|riparat|réparé|naprawian|(?:^|[^а-яё])(?:крашен[а-яё]*|окрашен[а-яё]*|кузовной ремонт)|gerepareerde schade|skadan är reparerad/i, "Auto miało naprawiane szkody", "Авто ремонтировалось после повреждений"],
     [/(?<!nessun )vincolo di finanziamento|prezzo (?:promo |valido )?con finanziamento|(?:preis|price) (?:nur )?(?:bei|with) finanzierung|finanzierungspreis|prix avec financement/i, "Cena może dotyczyć tylko zakupu na kredyt", "Цена может действовать только при покупке в кредит"],
-    [/zzgl\.? (?:überführung|ueberfuehrung|zulassung|transport|bereitstellung)|(?:plus|\+) (?:überführung|ueberfuehrung)|bereitstellungskosten|spese di (?:passaggio|messa su strada)|frais de mise à la route/i, "Do ceny dochodzą opłaty dealera", "К цене добавляются сборы дилера"],
     [/\btaxi\b|mietwagen|autovermietung|rental car|fahrschule|ex-?polizei|polizeifahrzeug|noleggio|ex[- ]?location|wypożyczaln|nauki jazdy|(?:^|[^а-яё])(?:такси|прокатн[а-яё]*|автошкол[а-яё]*)|ex[- ]?huurauto|f\.d\. hyrbil/i, "Możliwe użytkowanie flotowe (taxi, wynajem, nauka jazdy)", "Возможна эксплуатация в такси, прокате или автошколе"],
     [/km[- ]?stand nicht garantiert|tachostand (?:nicht|unbekannt)|km non (?:certificati|garantiti)|kilom(?:é|e)trage non garanti|przebieg niepewny/i, "Sprzedawca nie gwarantuje przebiegu", "Продавец не гарантирует пробег"],
   ];
@@ -114,7 +112,11 @@
     return Number.isFinite(date) ? Math.max(0.5, (now - date) / (365.25 * 86400000)) : null;
   }
 
-  function assess({ car = {}, ad = null, market = null, now = Date.now(), lang = "pl" } = {}) {
+  // offer-facts.js: only firms / export, the dealer's delivery fee, a new car, availability.
+  const FACTS = () => (typeof globalThis !== "undefined" ? globalThis.AUTOGOOD_OFFER_FACTS : null);
+  const money = (value) => `${String(Math.round(Number(value) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0")}\u00a0€`;
+
+  function assess({ car = {}, ad = null, market = null, now = Date.now(), lang = "pl", method = "" } = {}) {
     const lines = [];
     // Each line in the offer's language: Polish, or Russian (owner 2026-10-10).
     const ru = lang === "ru";
@@ -146,6 +148,30 @@
         : T(`Dobra cena na tle rynku (wg ${portal.portal})`, `Хорошая цена на фоне рынка (по ${portal.portal})`) });
     }
 
+    // ---- The deal as the ad states it (owner 2026-10-11).
+    const facts = FACTS()?.read(ad, now) || {};
+    if (facts.business) {
+      const who = { export: T("tylko na eksport", "только на экспорт"), trade: T("tylko firmom i handlarzom", "только фирмам и перекупщикам"), business: T("tylko firmom", "только фирмам") }[facts.business.kind];
+      // Straight from the dealer a private client cannot buy it; through AUTOGOOD (a firm) it is fine.
+      lines.push(method === "direct"
+        ? { level: "risk", id: "ad:business", text: T(`Dealer sprzedaje ${who} — zakup bezpośredni przez osobę prywatną nie jest możliwy`, `Дилер продаёт ${who} — частное лицо не может купить напрямую`), quote: facts.business.quote }
+        : { level: "info", id: "ad:business", text: T(`Dealer sprzedaje ${who} — kupujemy przez AUTOGOOD na fakturę`, `Дилер продаёт ${who} — покупаем через AUTOGOOD по счёту-фактуре`) });
+      // Quotes only for a warning: a fact the client reads needs none.
+    }
+    if (facts.fee) {
+      lines.push(facts.fee.amount
+        ? { level: "info", id: "ad:fee", text: T(`Opłata dealera za wydanie auta: ${money(facts.fee.amount)}${facts.fee.net ? " netto" : ""} — wliczona w cenę na gotowo`, `Сбор дилера за выдачу авто: ${money(facts.fee.amount)}${facts.fee.net ? " нетто" : ""} — включён в цену «под ключ»`) }
+        : { level: "warn", id: "ad:fee", text: T("Dealer dolicza opłatę za wydanie auta — kwotę potwierdzimy", "Дилер добавляет сбор за выдачу авто — сумму уточним"), quote: facts.fee.quote });
+    }
+    if (facts.isNew) {
+      const km = Number(specs.mileage || car.mileage) || 0;
+      lines.push({ level: "ok", id: "car:new", text: km ? T(`Nowe auto, bez rejestracji (${km.toLocaleString("pl-PL")} km)`, `Новое авто, без регистрации (${km.toLocaleString("pl-PL")} км)`) : T("Nowe auto, bez rejestracji", "Новое авто, без регистрации") });
+      lines.push({ level: "ok", id: "car:factoryWarranty", text: T("Pełna gwarancja fabryczna producenta", "Полная заводская гарантия производителя") });
+    }
+    const available = facts.availability;
+    if (available && !available.inStock && available.pl) lines.push({ level: "info", id: "ad:available", text: T(`Dostępność u dealera: ${available.pl}`, `Наличие у дилера: ${available.ru}`) });
+    else if (available?.inStock && facts.isNew) lines.push({ level: "ok", id: "ad:inStock", text: T("Auto dostępne od ręki (wg dealera)", "Авто в наличии (по словам дилера)") });
+
     // ---- Seller.
     if (seller.type === "private" || car.seller === "private") {
       lines.push({ level: "warn", id: "seller:private", text: T("Sprzedaje osoba prywatna — bez faktury i rękojmi dealera", "Продаёт частное лицо — без счёта-фактуры и гарантии дилера") });
@@ -173,18 +199,18 @@
     if (specs.accidentFree === true) lines.push({ level: "ok", id: "car:accidentFree", text: T("Bezwypadkowy wg sprzedawcy — sprawdzimy grubość lakieru", "Без ДТП по словам продавца — проверим толщину ЛКП") });
     else if (specs.accidentFree === null && ad?.complete) lines.push({ level: "warn", id: "car:accidentUnknown", text: T("Sprzedawca nie podał, czy auto jest bezwypadkowe — sprawdzimy", "Продавец не указал, было ли авто в ДТП — проверим") });
     if (specs.rental || flags.rental) lines.push({ level: "warn", id: "car:rental", text: T("Auto z wypożyczalni", "Авто из проката") });
-    if (specs.owners === 1) lines.push({ level: "ok", id: "car:owner", text: T("Jeden poprzedni właściciel", "Один предыдущий владелец") });
+    if (specs.owners === 1 && !facts.isNew) lines.push({ level: "ok", id: "car:owner", text: T("Jeden poprzedni właściciel", "Один предыдущий владелец") });
     else if (specs.owners >= 4) lines.push({ level: "warn", id: "car:owners", text: T(`${specs.owners} poprzednich właścicieli`, `${specs.owners} ${pluralRu(specs.owners, "предыдущий владелец", "предыдущих владельца", "предыдущих владельцев")}`) });
     const features = (ad?.features || []).join(" | ");
     const serviceBook = specs.serviceBook === true || /scheckheft/i.test(features);
     if (serviceBook) lines.push({ level: "ok", id: "car:service", text: T("Udokumentowana historia serwisowa", "Подтверждённая сервисная история") });
-    else if (ad?.complete) lines.push({ level: "warn", id: "car:serviceUnknown", text: T("Brak informacji o książce serwisowej — zapytamy przed rezerwacją", "Нет информации о сервисной книжке — уточним до резервации") });
+    else if (ad?.complete && !facts.isNew) lines.push({ level: "warn", id: "car:serviceUnknown", text: T("Brak informacji o książce serwisowej — zapytamy przed rezerwacją", "Нет информации о сервисной книжке — уточним до резервации") });
     const warranty = ad?.warranty || (/(^|\|)\s*garantie\s*(\||$)/i.test(features) ? "tak" : null);
     if (warranty) lines.push({ level: "ok", id: "car:warranty", text: warranty === "tak" ? T("Gwarancja dealera", "Гарантия дилера") : T(`Gwarancja dealera: ${warranty}`, `Гарантия дилера: ${RU_VALUE(warranty)}`) });
     if (/świeży/.test(specs.hu || "")) lines.push({ level: "ok", id: "car:hu", text: T("Świeży przegląd techniczny (TÜV)", "Свежий техосмотр (TÜV)") });
     const age = carAge(car, ad, now);
     const km = Number(specs.mileage || car.mileage) || 0;
-    if (age && km) {
+    if (age && km && !facts.isNew) {
       const perYear = km / age;
       if (perYear > 35000) lines.push({ level: "warn", id: "car:mileageHigh", text: T(`Duży przebieg: ok. ${Math.round(perYear / 1000) * 1000} km rocznie`, `Большой пробег: около ${Math.round(perYear / 1000) * 1000} км в год`) });
       else if (age >= 2 && perYear < 1500) lines.push({ level: "warn", id: "car:mileageLow", text: T("Bardzo mały przebieg jak na wiek — sprawdzimy historię licznika", "Очень маленький пробег для такого возраста — проверим историю одометра") });
@@ -208,10 +234,14 @@
     const verdict = risks ? "risk" : warns >= 3 ? "check" : "ok";
     // Most important first: risks, warnings, then the good news.
     const order = { risk: 0, warn: 1, ok: 2, info: 3 };
-    // Among the good news the price and the mileage first: a full sheet keeps them.
-    const first = ["price:portal", "price:good", "price:fair", "car:mileageGood", "seller:dealer"];
+    // The deal's own facts (only firms, the dealer's fee, availability) go
+    // with the good news, first of them; then the price and the mileage: a
+    // full sheet keeps them.
+    const DEAL = ["ad:business", "ad:fee", "ad:available"];
+    const levelOf = (line) => (DEAL.includes(line.id) && line.level === "info" ? order.ok : order[line.level]);
+    const first = ["car:new", "car:factoryWarranty", "ad:available", "ad:business", "ad:fee", "ad:inStock", "price:portal", "price:good", "price:fair", "car:mileageGood", "seller:dealer"];
     const rank = (line) => (first.includes(line.id) ? first.indexOf(line.id) : first.length);
-    lines.sort((left, right) => order[left.level] - order[right.level] || rank(left) - rank(right));
+    lines.sort((left, right) => levelOf(left) - levelOf(right) || rank(left) - rank(right));
     return { verdict, lines };
   }
 

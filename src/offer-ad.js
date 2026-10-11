@@ -251,7 +251,8 @@
         readyToDrive: ad?.flags?.readyToDrive ?? null,
         onCustomerBehalf: Boolean(ad?.flags?.onCustomerBehalf),
         partner: ad?.flags?.partnerName || "",
-        isNew: Boolean(ad?.flags?.isNew),
+        // "Neufahrzeug": mobile.de says it in isConditionNew (isNew stays false, Volvo EX30 2026-10-11).
+        isNew: Boolean(ad?.flags?.isNew || ad?.flags?.isConditionNew || /neufahrzeug/i.test(attributes.damageCondition || "")),
         carfax: Boolean(ad?.flags?.carfaxEligible),
         aiTags: ai?.tags || [],
         aiSummary: ai?.summary || "",
