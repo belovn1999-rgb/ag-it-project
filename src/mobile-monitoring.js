@@ -19,7 +19,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     offerCountryKey, offerHistoryState, offerKey, openCheckOffersDb, openFavorite,
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
-    refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
+    refreshMarketHistory, renderFavoritesBar, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
     sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, similarMedian, findRelisted, isOkazja, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates
   } = ctx;
@@ -864,6 +864,8 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
   }
 
   function renderPriceHistoryPage() {
+    // Monitored cars first in the bar on this page (and when switched on/off).
+    renderFavoritesBar();
     const priceHistoryPage = document.querySelector("[data-mobile-price-history-page]");
     if (!priceHistoryPage) return;
     const c = copy();

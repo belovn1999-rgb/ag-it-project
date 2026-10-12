@@ -1452,3 +1452,22 @@ button.mobileMonitoringMac {
   background: rgba(124, 58, 237, 0.13);
   color: #6d28d9;
 }
+
+/* Page 3 (owner 2026-10-12): favourites with monitoring on stand first in the
+   bar and a little apart — a green edge, a light green wash, a dot. */
+.mobileFavoritesBar .mobileMarketFavoriteItem.isMonitored .mobileMarketFavorite {
+  border-color: color-mix(in srgb, var(--mon-good) 45%, var(--color-rule));
+  background: var(--mon-good-wash);
+  box-shadow: inset 4px 0 0 var(--mon-good);
+}
+
+.mobileFavoritesBar .mobileMarketFavoriteItem.isMonitored .mobileMarketFavorite b::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: var(--mon-good);
+  vertical-align: 1px;
+}

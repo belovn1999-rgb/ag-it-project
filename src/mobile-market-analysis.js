@@ -45,6 +45,7 @@
       marketPickerLabel: "Porównywane rynki",
       marketPickerLast: "Co najmniej jeden rynek musi zostać wybrany.",
       favoriteRemove: "Usuń z ulubionych",
+      favoriteMonitored: "Monitoring włączony",
       statsHeading: "Statystyki",
       turnkeyShort: "na gotowo*",
       turnkeyShortBy: "pod klucz z ocleniem*",
@@ -796,6 +797,7 @@
       marketPickerLabel: "Сравниваемые рынки",
       marketPickerLast: "Должен остаться выбран хотя бы один рынок.",
       favoriteRemove: "Убрать из избранного",
+      favoriteMonitored: "Мониторинг включён",
       statsHeading: "Статистика",
       turnkeyShort: "под ключ*",
       turnkeyShortBy: "под ключ с растаможкой*",
@@ -4815,6 +4817,12 @@
       .sort((left, right) => (rank.has(left.entry.id) ? 1 : 0) - (rank.has(right.entry.id) ? 1 : 0)
         || (rank.get(left.entry.id) ?? left.index) - (rank.get(right.entry.id) ?? right.index))
       .map(({ entry }) => entry);
+    // On page 3 "Monitoring" (owner 2026-10-12) the cars with monitoring on
+    // come first — top left, then down the columns — and stand out a little;
+    // the order set by dragging is kept among them and on the other pages.
+    const monitoringFirst = currentPage() === "history";
+    const monitored = (entry) => Boolean(entry.autoRefresh?.enabled);
+    if (monitoringFirst) favorites.sort((left, right) => Number(monitored(right)) - Number(monitored(left)));
     const count = (code) => all.filter((entry) => (entry.lang || "pl") === code).length;
     return `
       <section class="mobileMarketFavorites" data-report-hide aria-label="${escapeMarketHtml(c.favoritesHeading)}">
@@ -4829,7 +4837,7 @@
             const title = [entry.filters.brand, entry.filters.model, entry.filters.version].filter(Boolean).join(" ");
             const meta = historyMeta(entry.filters).slice(0, 2).join(" · ");
             // No prices on favourites: the car and its filters only.
-            return `<div class="mobileMarketFavoriteItem" draggable="true" data-favorite-item="${escapeMarketHtml(entry.id)}">
+            return `<div class="mobileMarketFavoriteItem${monitoringFirst && monitored(entry) ? " isMonitored" : ""}" draggable="true" data-favorite-item="${escapeMarketHtml(entry.id)}"${monitoringFirst && monitored(entry) ? ` title="${escapeMarketHtml(c.favoriteMonitored)}"` : ""}>
               <button class="mobileMarketFavorite${entry.id === activeId ? " isActive" : ""}" type="button" data-mobile-market-favorite="${escapeMarketHtml(entry.id)}"${entry.id === activeId ? ' aria-current="true"' : ""}>
                 <b>${escapeMarketHtml(title)}</b>
                 ${meta ? `<small>${escapeMarketHtml(meta)}</small>` : ""}
@@ -5630,7 +5638,7 @@
     offerCountryKey, offerHistoryState, offerKey, openCheckOffersDb, openFavorite,
     openHistoryAnalysis, percentile, pinnedFavorites, portalAnswered, portalFailure, portalName,
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
-    refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
+    renderFavoritesBar, refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
     sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, similarMedian, findRelisted, isOkazja, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
     updateMarketSnapshot, withDuplicates,
     get BRAND_LOGOS() { return BRAND_LOGOS; },
@@ -8761,6 +8769,8 @@
 
   function showPage(page) {
     if (page === "favorites") page = "history";
+    // The bar's order depends on the page (monitored cars first on page 3).
+    queueMicrotask(renderFavoritesBar);
     // Leaving Monitoring: "Więcej filtrów" goes back to page 1.
     if (page !== "history") parkMoreFilters();
     if (showSelectedFavoriteOn(page)) return;
