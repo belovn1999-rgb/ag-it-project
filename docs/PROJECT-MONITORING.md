@@ -754,3 +754,12 @@ portalPrice / setPortalPrice / filtersPriceIn`); чтение «от новых�
    AutoScout24 не отсеялись. mobile.de читается по стране отдельно (`fetchMobileDeSample`):
    теперь страна без ответа переспрашивается через 3 с, снова нет — весь mobile.de «brak
    odpowiedzi» (`mobile.de: no answer for DE`), стр. 3 показывает его прошлый полный список.
+37. **Список машин колонками (владелец 12.10).** # · Ogłoszenie (фото, название, отметки, год, мощность,
+   даты) · Przebieg · Portal (флаг + портал + страна) · Cena · Do mediany · кнопки 2×2 («Wyposażenie»,
+   «Oblicz na gotowo» / «Przygotuj ofertę», «Porównaj z Polską»), звезда «Ulubione» — в конце строки
+   справа сверху. Названия колонок сортируют (повторно — обратный порядок; `portal`, `median` —
+   новые ключи сортировки), «▾» открывает фильтр колонки: год, пробег, цена na gotowo — от/до,
+   порталы — галочки, «Do mediany» — только ниже медианы (`monitoringState.cols`, на вкладку;
+   строка «Filtry kolumn: N z M aut · Wyczyść»). На 1280 px таблица = карточка. Причины «Blisko
+   filtrów» коротко: «rok 2022 (filtr od 2023)», «przebieg +1 000 (filtr do 120 000)», «cena +4 %
+   (filtr do …)», «brak: …»; поколение — в подсказке.

@@ -1543,3 +1543,230 @@ button.mobileMonitoringMac {
   grid-auto-flow: column;
   grid-template-rows: repeat(2, auto);
 }
+
+/* Owner 2026-10-12: the list as columns — Ogłoszenie, Przebieg, Portal, Cena,
+   Do mediany — each name sorts, ▾ filters; the actions two by two; the star
+   at the very end, top right. */
+.mobileMonitoringColHead {
+  position: relative;
+  white-space: nowrap;
+}
+
+.mobileMonitoringColSort,
+.mobileMonitoringColOpen {
+  padding: 2px 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.mobileMonitoringColSort:hover {
+  color: var(--color-brand-pressed);
+}
+
+.mobileMonitoringColHead.isSorted .mobileMonitoringColSort {
+  color: var(--mon-pick);
+}
+
+.mobileMonitoringColOpen {
+  margin-left: 4px;
+  padding: 2px 4px;
+  border-radius: var(--radius-sm);
+  color: var(--color-muted);
+}
+
+.mobileMonitoringColHead.isFiltered .mobileMonitoringColOpen {
+  background: var(--mon-pick-wash);
+  color: var(--mon-pick);
+}
+
+.mobileMonitoringColPop {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5;
+  display: grid;
+  gap: 6px;
+  min-width: 180px;
+  padding: 10px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md, 8px);
+  background: var(--mon-surface);
+  box-shadow: 0 6px 18px rgb(0 0 0 / 0.12);
+  text-align: left;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+.mobileMonitoringColHead.isNum .mobileMonitoringColPop {
+  right: 0;
+  left: auto;
+}
+
+.mobileMonitoringColPop label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  font-size: var(--text-sm);
+}
+
+.mobileMonitoringColPop input[type="text"] {
+  width: 110px;
+  min-height: 32px;
+  padding: 4px 8px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  font: inherit;
+}
+
+.mobileMonitoringColNote {
+  margin: 6px 0;
+  color: var(--mon-pick);
+  font-size: var(--text-sm);
+  font-weight: 700;
+}
+
+.mobileMonitoringColReset {
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-brand-pressed);
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.mobileMonitoringKm {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.mobileMonitoringPortalCell {
+  white-space: nowrap;
+}
+
+.mobileMonitoringTable .mobileMonitoringTitleCell {
+  padding-right: 8px;
+}
+
+.mobileMonitoringTable td.mobileMonitoringActions {
+  position: relative;
+  width: 1%;
+  padding-top: 36px;
+  white-space: normal;
+}
+
+.mobileMonitoringActions > .mobileMonitoringStar.isCorner {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--mon-star);
+  font-size: 24px;
+  line-height: 1;
+}
+
+.mobileMonitoringActionGrid {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: 4px;
+  justify-content: end;
+}
+
+.mobileMonitoringActionGrid > button,
+.mobileMonitoringActions .mobileMonitoringActionGrid > button {
+  display: block;
+  width: 100%;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.mobileMonitoringActionGrid > .mobileMonitoringPolandButton {
+  min-height: 30px;
+  padding: 4px 10px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-sm);
+  background: var(--mon-surface);
+  text-decoration: none;
+}
+
+@media (max-width: 40rem) {
+  .mobileMonitoringTable td.mobileMonitoringActions {
+    position: static;
+    width: auto;
+    padding-top: 4px;
+  }
+
+  .mobileMonitoringActions > .mobileMonitoringStar.isCorner {
+    top: 0;
+    right: 0;
+    width: 44px;
+    height: 44px;
+  }
+
+  .mobileMonitoringActionGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    justify-content: stretch;
+  }
+
+  .mobileMonitoringActionGrid > button {
+    white-space: normal;
+  }
+}
+
+/* The table fits the card at 1280 px: compact two-by-two actions that may
+   wrap their words, the ad column keeps room for its name. */
+.mobileMonitoringTable .mobileMonitoringTitleCell {
+  min-width: 250px;
+}
+
+.mobileMonitoringActionGrid {
+  grid-template-columns: repeat(2, minmax(0, 104px));
+}
+
+.mobileMonitoringActionGrid > button,
+.mobileMonitoringActions .mobileMonitoringActionGrid > button {
+  min-height: 30px;
+  padding: 4px 6px;
+  font-size: 0.75rem;
+  line-height: 1.15;
+  white-space: normal;
+}
+
+.mobileMonitoringTable .mobileMonitoringRating {
+  white-space: normal;
+}
+
+.mobileMonitoringTable td.mobileMonitoringActions {
+  width: 228px;
+  min-width: 228px;
+}
+
+.mobileMonitoringActionGrid {
+  grid-template-columns: repeat(2, 108px);
+}
+
+@media (max-width: 40rem) {
+  .mobileMonitoringTable td.mobileMonitoringActions {
+    width: auto;
+    min-width: 0;
+  }
+
+  .mobileMonitoringActionGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
