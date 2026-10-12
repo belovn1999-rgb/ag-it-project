@@ -309,6 +309,9 @@
 .ofBarLegend .isCar { color: var(--of-green); font-weight: 700; }
 .ofMarketLead { margin-top: 9px; font-size: 12px; }
 .ofMarketLead b { color: var(--of-green); }
+/* O9: where the market's figures come from; O8: what the room to negotiate rests on. */
+.ofBasis { margin-top: 3px; font-size: 9.5px; color: var(--of-faint); }
+.ofNegoWhy { margin: 3px 0 2px; font-size: 11px; line-height: 1.4; color: var(--of-text); }
 .ofPoland { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--of-line); font-size: 11.5px; }
 
 /* Verdict: a seal and the checks. */

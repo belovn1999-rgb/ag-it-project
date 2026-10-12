@@ -5425,6 +5425,8 @@
         && Math.abs(Number(item.offer.price) - price) <= price * 0.1)
       .sort((left, right) => Math.abs(Number(left.offer.mileage) - km) - Math.abs(Number(right.offer.mileage) - km) || right.at.localeCompare(left.at))[0] || null;
   }
+  // The offer (offer-link.js) marks "wystawione ponownie" with the same rule.
+  window.AUTOGOOD_FIND_RELISTED = findRelisted;
   function notNewIfListedBefore(rows, carsBefore) {
     return rows.map((row) => (row.group === "new" && carsBefore.has(sameCarKey(row.offer)) ? { ...row, group: "same", status: "" } : row));
   }

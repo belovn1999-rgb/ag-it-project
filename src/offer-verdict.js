@@ -130,13 +130,19 @@
     // ---- Price against the market (the similar cars when there are enough).
     const own = market?.own || null;
     const basis = own?.similar?.stats?.median ? own.similar.stats : own?.stats;
+    // O9 (owner 2026-10-11): a figure against the median only when the
+    // comparison is sure; "medium" says it without the figure, "low" keeps
+    // only the warnings (a price far under the market is a risk anyway).
+    // Offers made before keep their lines (no confidence saved).
+    const sure = own?.confidence?.level;
     if (basis?.median && price) {
       const ratio = price / basis.median;
       if (ratio < 0.6) lines.push({ level: "risk", id: "price:bait", text: T(`Cena o ${pct(1 - ratio)} niższa niż mediana podobnych aut — typowy sygnał oszustwa lub ukrytej wady`, `Цена на ${pct(1 - ratio)} ниже медианы похожих авто — типичный признак мошенничества или скрытого дефекта`) });
       else if (ratio < 0.75) lines.push({ level: "warn", id: "price:low", text: T(`Cena dużo niższa niż rynek (−${pct(1 - ratio)}) — sprawdzimy powód`, `Цена намного ниже рынка (−${pct(1 - ratio)}) — выясним причину`) });
-      else if (price < basis.p25) lines.push({ level: "ok", id: "price:good", text: T(`Cena poniżej typowego przedziału rynku (−${pct(1 - ratio)} do mediany)`, `Цена ниже типичного диапазона рынка (−${pct(1 - ratio)} к медиане)`) });
+      else if (sure === "low") { /* too few similar cars or prices too far apart: no claim */ }
+      else if (price < basis.p25) lines.push({ level: "ok", id: "price:good", text: sure === "medium" ? T("Cena orientacyjnie poniżej typowego przedziału rynku", "Цена ориентировочно ниже типичного диапазона рынка") : T(`Cena poniżej typowego przedziału rynku (−${pct(1 - ratio)} do mediany)`, `Цена ниже типичного диапазона рынка (−${pct(1 - ratio)} к медиане)`) });
       else if (price <= basis.p75) lines.push({ level: "ok", id: "price:fair", text: T("Cena realna, w typowym przedziale rynku", "Реальная цена, в типичном диапазоне рынка") });
-      else lines.push({ level: "warn", id: "price:high", text: T(`Cena powyżej typowego przedziału (+${pct(ratio - 1)} do mediany)`, `Цена выше типичного диапазона (+${pct(ratio - 1)} к медиане)`) });
+      else lines.push({ level: "warn", id: "price:high", text: sure === "medium" ? T("Cena orientacyjnie powyżej typowego przedziału rynku", "Цена ориентировочно выше типичного диапазона рынка") : T(`Cena powyżej typowego przedziału (+${pct(ratio - 1)} do mediany)`, `Цена выше типичного диапазона (+${pct(ratio - 1)} к медиане)`) });
     }
 
     // Without a market of our own: the portal's own price scale (mobile.de,
@@ -252,14 +258,20 @@
     const price = Number(car.price) || 0;
     if (!price) return null;
     const own = market?.own || null;
-    const basis = own?.similar?.stats?.median ? own.similar.stats : own?.stats;
+    // A comparison too thin to trust (O9) says nothing about the price here either.
+    const basis = own?.confidence?.level === "low" ? null : own?.similar?.stats?.median ? own.similar.stats : own?.stats;
     const listed = ad?.listedAt && Number.isFinite(Date.parse(ad.listedAt)) ? ad.listedAt : "";
     const listedDays = listed ? Math.floor((now - Date.parse(listed)) / 86400000) : null;
-    const days = listedDays ?? market?.ad?.days ?? null;
+    // The longest any source knows (the ad's date, our checks, Carvago, av.by,
+    // the older ad of a car put up again).
+    const known = [listedDays, market?.ad?.days].filter((value) => Number.isFinite(value));
+    const days = known.length ? Math.max(...known) : null;
     const dropped = Boolean(market?.ad?.dropped);
+    // M3: the car did not sell under its first number (O8).
+    const relisted = Boolean(market?.relisted);
     let level = 1;
-    if (days !== null && (days >= 60 || (dropped && days >= 30))) level = 3;
-    else if ((days !== null && days >= 30) || dropped) level = 2;
+    if (days !== null && (days >= 60 || ((dropped || relisted) && days >= 30))) level = 3;
+    else if ((days !== null && days >= 30) || dropped || relisted) level = 2;
     else if (days !== null && days < 14) level = 0;
     if (basis?.median && price < basis.p25) level -= 1;
     if (basis?.median && price > basis.p75) level += 1;
@@ -270,6 +282,7 @@
     const reasons = [];
     if (days !== null) reasons.push({ id: "days", days, atLeast: !listed && market?.ad?.kind === "atLeast" });
     if (dropped) reasons.push({ id: "dropped", drops: market.ad.drops, share: market.ad.share });
+    if (relisted) reasons.push({ id: "relisted", at: market.relisted.at });
     if (basis?.median) reasons.push({ id: price < basis.p25 ? "cheap" : price > basis.p75 ? "dear" : "fair" });
     if (pace?.droppedShare) reasons.push({ id: "pace", share: pace.droppedShare, medianDrop: pace.medianDrop });
     const round = (value) => Math.round(value / 50) * 50;

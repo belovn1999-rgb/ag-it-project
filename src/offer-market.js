@@ -275,7 +275,29 @@
     };
   }
 
-  function snapshot(records, key, { now = Date.now() } = {}) {
+  // M3 "wróciło" (Monitoring, 2026-10-11) for the offer (O8): the ad is the
+  // same car put up again under a new number when Monitoring's own matcher
+  // (`findRelisted`, mobile-market-analysis.js — passed in, the rule stays
+  // Monitoring's) finds it among the offers this search had within 30 days
+  // that left the list before the ad first showed up.
+  function relisted(records, key, match) {
+    if (typeof match !== "function") return null;
+    const found = findOffer(records, key);
+    if (!found) return null;
+    const seen = firstSeen(records);
+    const adSeen = seen.get(key) || found.record.at;
+    const scope = found.record.scope;
+    const keysNow = new Set(offersOf(found.record).map(({ offer }) => offer.key));
+    const lastSeen = new Map();
+    byDate(records).filter((record) => record.scope === scope && record.at <= found.record.at)
+      .forEach((record) => offersOf(record).forEach(({ source, offer }) => lastSeen.set(offer.key, { offer, source, at: record.at })));
+    const monthAgo = new Date(Date.parse(found.record.at) - 30 * DAY).toISOString();
+    const gone = [...lastSeen.values()].filter((item) => !keysNow.has(item.offer.key) && item.at >= monthAgo && item.at < adSeen);
+    const hit = match(found.offer, found.source, gone);
+    return hit ? { at: hit.at, since: seen.get(hit.offer.key) || hit.at, price: Number(hit.offer.price) || 0, currency: hit.offer.currency || "" } : null;
+  }
+
+  function snapshot(records, key, { now = Date.now(), findRelisted = null } = {}) {
     const found = findOffer(records, key);
     if (!found) return null;
     const car = { source: found.source, offer: found.offer };
@@ -294,10 +316,11 @@
       poland: poland ? { at: polandRecord.at, ...poland } : null,
       ad: adLiquidity(records, found.offer, now),
       pace: marketLiquidity(records, found.record, car, now),
+      relisted: relisted(records, key, findRelisted),
     };
   }
 
-  const api = { EUR_SOURCES, NEGOTIATION_DAYS, MIN_SIMILAR, percentile, summary, findOffer, similar, confidence, snapshot, adLiquidity, countryOf };
+  const api = { EUR_SOURCES, NEGOTIATION_DAYS, MIN_SIMILAR, percentile, summary, findOffer, similar, confidence, relisted, snapshot, adLiquidity, countryOf };
   if (typeof window !== "undefined") window.AUTOGOOD_OFFER_MARKET = api;
   if (typeof globalThis !== "undefined") globalThis.AUTOGOOD_OFFER_MARKET = api;
 })();

@@ -20,6 +20,7 @@
 | 4 | «Мозги» по правилам: вердикт и красные флаги с цитатами, «Potencjał negocjacji» | ✅ 10-05 — сверено на 40 живых объявлениях C-HR (mobile.de): «ohne Papiere / Diebstahl» → 3 красных с цитатами; ложные срабатывания найдены и убраны («Diebstahlwarnanlage», «NESSUN VINCOLO DI FINANZIAMENTO», «Polizei» после кражи) |
 | 5 | Дизайн, тексты Pan/Pani, контакты, процесс импорта, проверка на живом сайте | ✅ 10-05 выбран **Premium** (остальные четыре вида остаются в панели «Wygląd oferty»); контакты по умолчанию — «Nikodem z AUTOGOOD», +48 531 900 775, info@autogood.pl, autogood.pl; 🔄 10-06: Carvago (история цены и число активных похожих), **стр. 2 — процесс «od rozmowy do kluczyków» в трёх вариантах (Oś czasu / Droga / Etapy), ждёт выбора владельца** |
 | 6 | **Программа 06 «Oferta»** (`oferty.html`): только оффер в красивой обёртке для заинтересованного клиента, без анализа рынка — способ 1 «Z ogłoszenia dealera» (ссылка с любого портала стр. 1 → данные → «Przygotuj ofertę PDF»), способ 2 «Z raportu aukcji» — в отдельном чате | ✅ 10-10: все порталы стр. 1 (mobile.de, AutoScout24 DE/FR, Kleinanzeigen, Marktplaats, 2dehands/2ememain, otomoto, Blocket, ParuVendu, av.by), портал по ссылке без выбора, **PL / RU — оффер на выбранном языке**; дизайн страницы — позже (владелец) |
+| 7 | Идеи из похожих проектов (§9), волна 1: **O9** надёжность сравнения с рынком, **O8** основания торга и «wystawione ponownie» (M3 Monitoring); дальше — O3 (макет Б) + O6, O2, O12 (макет А), ИИ — позже | ✅ 10-12 волна 1 |
 
 ## 1. Цель (владелец, 10-05)
 
@@ -195,6 +196,7 @@ A4; PDF 2 стр. 1,1 МБ за 1,6 с, ссылка на объявление �
 
 | Дата | Изменение | Коммит |
 |---|---|---|
+| 10-12 | Волна 1 идей (§9): O9 — уровень уверенности сравнения с рынком (тексты, плашка, строки оценки, подпись «na podstawie … · stan na …», подпись шкалы в 06); O8 — «Podstawa: …» в торге, «wystawione ponownie» через `findRelisted` Monitoring (M3), дни av.by; 42 теста | этот коммит |
 | 10-11 | Волна 10: в 06 только страница, «Przygotuj PDF» открывает листы; «Ostatnie oferty» открывают всю страницу 06 (`?oferta=`), калькулятор с сохранёнными полями и курсом; панель — вид, данные объявления, блоки; вердикт, менеджер, фирма и «×» у опций правятся на странице («Edytuj ofertę»); Carvago — только уведомлением; подгонка A4 убирает ряд опций целиком; ссылка на объявление в стиле Premium не уезжает вниз страницы | этот коммит |
 | 10-11 | Ответы владельца по §9 (Б, да, менеджер, оба, А, ИИ пока нет, волна 1); волна 1 начата: `confidence` рынка и `latestAt` в черновике, тексты и торг — следующим коммитом | этот коммит |
 | 10-11 | §9: идеи O1–O12 проверены у источника и в коде (дилер и аукцион), таблица, макеты O3/O6 и O12, документ по ИИ, волны — ждёт ответов владельца | этот коммит |
@@ -311,11 +313,39 @@ mobile.de — шкала оценки цены (6 порогов → 5 поло�
 Проверено у источника (deal-finder, autoscout-analyser — MIT, used-car-deal-finder,
 autoscout24-trends — MIT; у deal-finder и used-car-deal-finder лицензии нет — только идеи)
 и в нашем коде, для оффера дилера и оффера с аукциона. Таблица, макеты O3/O6 и O12, документ
-по ИИ — `docs/mockups/offer-ideas-2026-10-11.html` (артефакт для владельца). Статус: **ответы владельца получены** (§2, 11.10): волна 1 начата — `offer-market.js` считает
-уровень уверенности сравнения (`confidence`: high / medium / low, шаг похожих, разброс P25–P75 / медиана,
-страна, число), черновик хранит `latestAt`; **осталось**: тексты листа по уровню (`marketView`, плашка,
-строки `price:*`), подпись «na podstawie N ofert · portale · kraje · data», подпись шкалы в 06,
-строка-основание в «Potencjał negocjacji» (`negotiation().reasons` → текст), дни av.by, тесты.
+по ИИ — `docs/mockups/offer-ideas-2026-10-11.html` (артефакт для владельца). Статус: **ответы владельца получены** (§2, 11.10). **Волна 1 (O9 + O8) — ✅ 10-12**, дальше
+волна 2 (O3 макет Б + O6).
+
+**Волна 1 — как устроено (10-12):**
+- `offer-market.js` `confidence(own)`: **high** — похожие найдены на узком шаге (год ± 1, пробег ± 35 %),
+  в стране объявления, ≥ 10, разброс (P75 − P25) / медиана ≤ 35 %; **medium** — похожие есть, но
+  широкий шаг (± 2 / ± 60 %), другие страны, 6–9 или разброс до 75 %; **low** — похожих нет или
+  разброс > 75 %. Сохраняется в черновике (`market.own.confidence`, `similar.rule.step`); у старых
+  офферов считается так же при открытии (`marketWithConfidence` в `offer.js`, `offer-market.js`
+  теперь подключён к `oferta.html`).
+- Лист 1, «Cena na tle rynku»: high — как раньше («Tańsze niż 57 % z 14 podobnych ofert…», плашка
+  «X % poniżej mediany» и плитка «Raport»); medium — «Orientacyjnie taniej niż większość z N…» /
+  «Orientacyjnie cena w środku rynku…», без плашки с процентом; low без похожих — без шкалы:
+  «Za mało podobnych aut (ten sam rok i przebieg) na rzetelne porównanie ceny. Cenę ocenimy
+  indywidualnie.»; low с большим разбросом — «Ceny podobnych aut bardzo się różnią… orientacyjnie».
+  Под карточкой мелко: «Na podstawie 14 podobnych ofert · Niemcy · mobile.de · stan na 11.10.2026»
+  (страны, порталы, дата последней проверки — `market.latestAt`). Поля правки разные по уровню
+  (`marketLead`, `marketLead:medium`, `marketLead:low`).
+- «Ocena AUTOGOOD»: `price:good` / `price:high` с процентом только при high, при medium —
+  «orientacyjnie» без цифры, при low строк о цене нет (кроме предупреждений `price:bait` / `price:low`).
+- 06 (без рынка): под шкалой портала — «Skala cen mobile.de · stan na <дата чтения>» (у медианы
+  AutoScout24 — «Mediana AutoScout24 · …»).
+- Лист 2, «Potencjał negocjacji»: строка «Podstawa: w sprzedaży 25 dni · cena obniżona 2× (−4 %) ·
+  ogłoszenie wystawione ponownie · cena powyżej typowej dla podobnych aut · na tym rynku 40 % ofert
+  obniża cenę» (`negotiation().reasons`); при low о цене не говорит. Дни — наибольшие из известных
+  (дата портала, наши проверки, Carvago, **av.by `daysOnSale`**, первое появление прежнего объявления).
+- **«Wystawione ponownie» = M3 Monitoring**: `offer-link.js` передаёт в `snapshot()` функцию
+  Monitoring `findRelisted` (`mobile-market-analysis.js` → `window.AUTOGOOD_FIND_RELISTED`), своей
+  логики нет; `offer-market.js` `relisted()` только выбирает ушедшие за 30 дней объявления той же
+  проверки (как Monitoring). Черновик: `market.relisted {at, since, price}`; уровень торга растёт,
+  как при снижении цены.
+- Проверено локально (`127.0.0.1:4191`, тестовые офферы high / medium / low + wróciło, PL и RU,
+  лист 1 и 2, 06 со шкалой mobile.de); тесты `offer.test.mjs` 42/42.
 
 | Пункт | Что уже есть | Что делаем | Где | Аукцион |
 |---|---|---|---|---|

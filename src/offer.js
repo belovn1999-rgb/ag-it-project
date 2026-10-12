@@ -18,6 +18,7 @@
   const AD = window.AUTOGOOD_OFFER_AD;
   const EQUIPMENT = window.AUTOGOOD_OFFER_EQUIPMENT;
   const VERDICT = window.AUTOGOOD_OFFER_VERDICT;
+  const MARKET = window.AUTOGOOD_OFFER_MARKET;
   const RU = window.AUTOGOOD_OFFER_RU;
   const FACTS = window.AUTOGOOD_OFFER_FACTS;
   const TURNKEY = window.AUTOGOOD_TURNKEY;
@@ -386,27 +387,62 @@
     };
   }
 
+  // The market with how far its comparison can be trusted (O9): saved with
+  // the draft since 2026-10-11, worked out the same way for older offers.
+  function marketWithConfidence(market) {
+    const own = market?.own;
+    if (!own?.stats || own.confidence || !MARKET?.confidence) return market;
+    return { ...market, own: { ...own, confidence: MARKET.confidence(own) } };
+  }
+
   function marketView(view) {
-    const own = offer.market?.own || null;
+    const own = marketWithConfidence(offer.market)?.own || null;
     if (!own?.stats) return null;
+    const sure = own.confidence?.level || "high";
     const near = own.similar?.stats?.count >= 6 ? own.similar : null;
     const stats = near ? near.stats : own.stats;
     const dearer = near ? near.dearerShare : own.dearerShare;
     const whereIn = ru() ? RU.countryIn(own.country) : COUNTRY_IN[own.country];
-    const where = own.scope === "country" && whereIn ? whereIn : L("w Europie (kraje z wyszukiwania)", "в Европе (страны поиска)");
+    // Across countries: "w Europie" — the countries are listed in the basis line (O9).
+    const where = own.scope === "country" && whereIn ? whereIn : L("w Europie", "в Европе");
     const rule = near?.rule;
     const ruleText = rule ? [rule.yearFrom ? L(`rok ${rule.yearFrom}–${rule.yearTo}`, `год ${rule.yearFrom}–${rule.yearTo}`) : "", rule.kmTo ? L(`przebieg ${thousands(rule.kmFrom)}–${thousands(rule.kmTo)} tys. km`, `пробег ${thousands(rule.kmFrom)}–${thousands(rule.kmTo)} тыс. км`) : ""].filter(Boolean).join(", ") : "";
     const cheaperShare = dearer ?? 0;
     const count = numbers.format(stats.count);
     const rest = `${where}${ruleText ? ` (${ruleText})` : ""}`;
-    const lead = cheaperShare >= 0.5
-      ? L(`Tańsze niż ${percent(cheaperShare)} z ${count} ${near ? "podobnych ofert" : "ofert o tych parametrach"} ${rest}.`, `Дешевле, чем ${percent(cheaperShare)} из ${count} ${near ? "похожих предложений" : "предложений с такими параметрами"} ${rest}.`)
-      : L(`Cena w ${cheaperShare >= 0.25 ? "środku" : "górnej części"} rynku: ${count} ${near ? "podobnych ofert" : "ofert"} ${rest}.`, `Цена в ${cheaperShare >= 0.25 ? "середине" : "верхней части"} рынка: ${count} ${near ? "похожих предложений" : "предложений"} ${rest}.`);
+    // O9 (owner 2026-10-11): the exact share only when the comparison is
+    // sure; "orientacyjnie" when the similar cars are few, wide or from other
+    // countries; no figure when there are too few or their prices differ too much.
+    const part = cheaperShare >= 0.5 ? L("dolnej części", "нижней части") : cheaperShare >= 0.25 ? L("środku", "середине") : L("górnej części", "верхней части");
+    const lead = sure === "low"
+      ? (near
+        ? L(`Ceny podobnych aut bardzo się różnią (${count} ofert ${rest}) — orientacyjnie cena w ${part} rynku.`, `Цены похожих авто сильно различаются (${count} предложений ${rest}) — ориентировочно цена в ${part} рынка.`)
+        // No cars of this age and mileage: the whole search (other years)
+        // says nothing fair about the price — no bar, no place on it.
+        : L("Za mało podobnych aut (ten sam rok i przebieg) na rzetelne porównanie ceny. Cenę ocenimy indywidualnie.", "Похожих авто (тот же год и пробег) слишком мало для честного сравнения цены. Оценим цену индивидуально."))
+      : sure === "medium"
+        ? (cheaperShare >= 0.5
+          ? L(`Orientacyjnie taniej niż większość z ${count} podobnych ofert ${rest}.`, `Ориентировочно дешевле большинства из ${count} похожих предложений ${rest}.`)
+          : L(`Orientacyjnie cena w ${part} rynku: ${count} podobnych ofert ${rest}.`, `Ориентировочно цена в ${part} рынка: ${count} похожих предложений ${rest}.`))
+        : cheaperShare >= 0.5
+          ? L(`Tańsze niż ${percent(cheaperShare)} z ${count} ${near ? "podobnych ofert" : "ofert o tych parametrach"} ${rest}.`, `Дешевле, чем ${percent(cheaperShare)} из ${count} ${near ? "похожих предложений" : "предложений с такими параметрами"} ${rest}.`)
+          : L(`Cena w ${cheaperShare >= 0.25 ? "środku" : "górnej części"} rynku: ${count} ${near ? "podobnych ofert" : "ofert"} ${rest}.`, `Цена в ${cheaperShare >= 0.25 ? "середине" : "верхней части"} рынка: ${count} ${near ? "похожих предложений" : "предложений"} ${rest}.`);
+    // Where the figures come from, small under the card (O9): how many
+    // offers, which countries and portals, on which day.
+    const countries = (own.countries || []).map((code) => (ru() ? RU.country(code) : COUNTRY[code]) || code).filter(Boolean);
+    const portals = (own.sources || []).map((source) => PORTAL[source] || source);
+    const basisAt = offer.market?.latestAt || offer.market?.at || "";
+    const basis = [
+      `${L("Na podstawie", "На основе")} ${count} ${near ? many(stats.count, ["podobnej oferty", "podobnych ofert", "podobnych ofert"], ["похожего предложения", "похожих предложений", "похожих предложений"]) : many(stats.count, ["oferty z wyszukiwania", "ofert z wyszukiwania", "ofert z wyszukiwania"], ["предложения поиска", "предложений поиска", "предложений поиска"])}`,
+      countries.join(", "),
+      portals.join(", "),
+      basisAt ? `${L("stan na", "на")} ${dateText(basisAt)}` : "",
+    ].filter(Boolean).join(" · ");
     const lo = Math.min(stats.p25 - (stats.p75 - stats.p25) * 0.9, view.price) * 0.99;
     const hi = Math.max(stats.p75 + (stats.p75 - stats.p25) * 0.9, view.price) * 1.01;
     const at = (value) => Math.max(0, Math.min(100, ((value - lo) / (hi - lo)) * 100));
     const vsMedian = stats.median ? view.price / stats.median - 1 : 0;
-    return { stats, near, lead, at, vsMedian, where, share: cheaperShare, count: stats.count, typical: L(`Połowa ofert kosztuje ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`, `Половина предложений стоит ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`), currency: own.currency };
+    return { stats, near, lead, at, vsMedian, sure, basis, where, share: cheaperShare, count: stats.count, typical: L(`Połowa ofert kosztuje ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`, `Половина предложений стоит ${money(stats.p25, own.currency)}–${money(stats.p75, own.currency)}.`), currency: own.currency };
   }
 
   function polandView() {
@@ -482,7 +518,7 @@
   // of dearer offers or the saving against Poland, the verdict.
   function kpiHtml(market, poland, verdict) {
     const tiles = [];
-    if (market) {
+    if (market && market.sure === "high") {
       tiles.push({ label: L("Na tle rynku", "На фоне рынка"), value: `${market.vsMedian <= 0 ? "−" : "+"}${percent(market.vsMedian)}`, note: L("od mediany podobnych ofert", "от медианы похожих предложений"), tone: market.vsMedian <= -0.03 ? "isGood" : market.vsMedian > 0.05 ? "isWarn" : "" });
       if (poland?.saving >= 1000 && !polandHidden(poland)) tiles.push({ label: L("Taniej niż w Polsce", "Дешевле, чем в Польше"), value: `${L("ok.", "ок.")} ${money(Math.round(poland.saving / 500) * 500, "PLN")}`, note: L(`mediana otomoto ${money(poland.median, "PLN")}`, `медиана otomoto ${money(poland.median, "PLN")}`), tone: "isGood" });
       else tiles.push({ label: L("Tańsze niż", "Дешевле, чем"), value: percent(market.share || 0), note: L(`z ${numbers.format(market.count)} ofert`, `из ${numbers.format(market.count)} предложений`), tone: (market.share || 0) >= 0.5 ? "isGood" : "" });
@@ -556,6 +592,9 @@
         body += `<ul class="ofBandList">${BANDS.map((name, index) => `<li class="${index === here ? "isHere" : ""}"><i class="ofBand is${index}"></i><span>${esc(name.charAt(0).toUpperCase() + name.slice(1))}</span><b>${numbers.format(limits[index])}–${numbers.format(limits[index + 1])} €</b>${index === here ? `<em>${L("← to auto", "← это авто")}</em>` : ""}</li>`).join("")}</ul>`;
       }
     }
+    // O9: whose scale and from which day (the scale's own line is cut above).
+    const readAt = offer.ad?.readAt || offer.createdAt || "";
+    if (body && rating?.portal) body += field("marketBasis", `${body.includes("ofBands") ? L(`Skala cen ${rating.portal}`, `Шкала цен ${rating.portal}`) : L(`Mediana ${rating.portal}`, `Медиана ${rating.portal}`)}${readAt ? ` · ${L("stan na", "на")} ${dateText(readAt)}` : ""}`, "p", "ofSmall ofBasis");
     if (!body && !carvago && adHistory().days === null) return "";
     return `
             <section class="ofCard${blockClass("market")}" data-block="market">
@@ -638,7 +677,7 @@
     const manager = store.manager(offer.manager);
     const photo = edits().photo || view.images[0] || "";
     const chips = [];
-    if (market && market.vsMedian <= -0.03) chips.push(`<span class="ofChip isGood">${icon("down")}${L(`${percent(market.vsMedian)} poniżej mediany rynku`, `на ${percent(market.vsMedian)} ниже медианы рынка`)}</span>`);
+    if (market && market.sure === "high" && market.vsMedian <= -0.03) chips.push(`<span class="ofChip isGood">${icon("down")}${L(`${percent(market.vsMedian)} poniżej mediany rynku`, `на ${percent(market.vsMedian)} ниже медианы рынка`)}</span>`);
     if (poland?.saving >= 1000) chips.push(`<span class="ofChip isGood">${L(`ok. ${money(Math.round(poland.saving / 500) * 500, "PLN")} taniej niż w Polsce`, `ок. ${money(Math.round(poland.saving / 500) * 500, "PLN")} дешевле, чем в Польше`)}</span>`);
     const portalLabel = offer.ad?.portalPrice?.label || "";
     if (portalLabel && /dobra|uczciwa/.test(portalLabel) && !(portalCard.includes("ofBands") && !isHidden("market"))) chips.push(`<span class="ofChip">${esc(offer.ad.portalPrice.portal)}: ${esc(ru() ? BANDS_RU[BANDS_PL.indexOf(portalLabel)] || portalLabel : portalLabel)}</span>`);
@@ -716,15 +755,16 @@
             <section class="ofCard${blockClass("market")}" data-block="market">
               ${hideToggle("market")}
               <p class="ofCardHead">${icon("chart")}${L("Cena na tle rynku", "Цена на фоне рынка")}</p>
-              <div class="ofBar" role="img" aria-label="${esc(market.lead)}">
+              ${market.sure === "low" && !market.near ? "" : `<div class="ofBar" role="img" aria-label="${esc(market.lead)}">
                 <span class="ofBarTrack"></span>
                 <span class="ofBarBand" style="left:${market.at(market.stats.p25).toFixed(1)}%;width:${(market.at(market.stats.p75) - market.at(market.stats.p25)).toFixed(1)}%"></span>
                 <span class="ofBarMedian" style="left:${market.at(market.stats.median).toFixed(1)}%"></span>
                 <span class="ofBarCar${market.vsMedian > 0.03 ? " isDear" : ""}" style="left:${market.at(view.price).toFixed(1)}%"></span>
               </div>
-              <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, market.currency))}</span><span>${L("mediana", "медиана")} <b>${esc(money(market.stats.median, market.currency))}</b></span></div>
-              ${field("marketLead", market.lead, "p", "ofMarketLead")}
-              ${field("marketTypical", market.typical, "p", "ofSmall")}
+              <div class="ofBarLegend"><span class="isCar">${L("to auto", "это авто")} ${esc(money(view.price, market.currency))}</span><span>${L("mediana", "медиана")} <b>${esc(money(market.stats.median, market.currency))}</b></span></div>`}
+              ${field(`marketLead${market.sure === "high" ? "" : `:${market.sure}`}`, market.lead, "p", "ofMarketLead")}
+              ${market.sure === "low" && !market.near ? "" : field("marketTypical", market.typical, "p", "ofSmall")}
+              ${field("marketBasis", market.basis, "p", "ofSmall ofBasis")}
               ${carvagoLines()}
               ${poland ? `<div class="ofPoland${polandHidden(poland) ? " ofBlockHidden" : ""}">${field("polandLine", poland.line, "span")}</div>` : ""}
               ${adAgeHtml}
@@ -807,7 +847,10 @@
   function adHistory() {
     const own = offer.market?.ad || {};
     const carvago = offer.carvago?.found ? offer.carvago : null;
-    const dates = [offer.ad?.listedAt, carvago?.listedSince, own.since].filter((value) => value && Number.isFinite(Date.parse(value))).sort((a, b) => Date.parse(a) - Date.parse(b));
+    // av.by counts days across re-publications; M3 — the older ad's first day.
+    const avbyDays = Number(offer.ad?.flags?.daysOnSale) || 0;
+    const avbySince = avbyDays > 0 ? new Date(Date.now() - avbyDays * 86400000).toISOString() : "";
+    const dates = [offer.ad?.listedAt, carvago?.listedSince, own.since, avbySince, offer.market?.relisted?.since].filter((value) => value && Number.isFinite(Date.parse(value))).sort((a, b) => Date.parse(a) - Date.parse(b));
     const since = dates[0] || "";
     const days = since ? Math.max(0, Math.floor((Date.now() - Date.parse(since)) / 86400000)) : own.days ?? null;
     const carvagoDrops = (carvago?.changes || []).filter((change) => change.share < 0);
@@ -958,7 +1001,19 @@
 
   function sheetTwo(view, asParts = false) {
     const costView = costs();
-    const negotiation = VERDICT ? VERDICT.negotiation({ car: offer.car, ad: offer.ad, market: { ...offer.market, ad: adHistory() } }) : null;
+    const negotiation = VERDICT ? VERDICT.negotiation({ car: offer.car, ad: offer.ad, market: { ...marketWithConfidence(offer.market), ad: adHistory() } }) : null;
+    // O8 (owner 2026-10-11): what the room rests on, in facts the client can
+    // see — days on sale, price drops, the car put up again (Monitoring M3),
+    // the price against similar cars, how often prices drop on this market.
+    const negotiationWhy = (negotiation?.reasons || []).map((reason) => {
+      if (reason.id === "days") return L(`w sprzedaży ${reason.atLeast ? "co najmniej " : ""}${numbers.format(reason.days)} ${daysWord(reason.days)}`, `в продаже ${reason.atLeast ? "как минимум " : ""}${numbers.format(reason.days)} ${daysWord(reason.days)}`);
+      if (reason.id === "dropped") return L(`cena obniżona ${reason.drops}× (−${percent(reason.share)})`, `цена снижена ${reason.drops}× (−${percent(reason.share)})`);
+      if (reason.id === "relisted") return L("ogłoszenie wystawione ponownie", "объявление выставлено повторно");
+      if (reason.id === "dear") return L("cena powyżej typowej dla podobnych aut", "цена выше типичной для похожих авто");
+      if (reason.id === "cheap") return L("cena już poniżej typowej", "цена уже ниже типичной");
+      if (reason.id === "pace" && reason.share >= 0.2) return L(`na tym rynku ${percent(reason.share)} ofert obniża cenę`, `на этом рынке ${percent(reason.share)} предложений снижают цену`);
+      return "";
+    }).filter(Boolean);
     const allOptions = allOptionsShown();
     const salutation = SALUTATION[offer.client?.salutation] || SALUTATION.Pan;
     const manager = store.manager(offer.manager);
@@ -997,6 +1052,7 @@
         <p><span class="ofBig">${negotiation.from === negotiation.to ? `${negotiation.to}%` : range(negotiation.from, negotiation.to, "%")}</span> <span class="ofSmall">${!negotiation.amountTo ? L("cena bez dużego pola do negocjacji", "цена без большого поля для торга")
           : negotiation.amountFrom ? L(`ok. ${esc(numbers.format(negotiation.amountFrom))}–${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `примерно на ${esc(numbers.format(negotiation.amountFrom))}–${esc(money(negotiation.amountTo, negotiation.currency))} дешевле`)
           : L(`do ok. ${esc(money(negotiation.amountTo, negotiation.currency))} mniej`, `дешевле примерно до ${esc(money(negotiation.amountTo, negotiation.currency))}`)}</span></p>
+        ${negotiationWhy.length ? field("negotiationWhy", `${L("Podstawa", "Основания")}: ${negotiationWhy.join(" · ")}`, "p", "ofNegoWhy") : ""}
         ${field("negotiationNote", L("*Wartości orientacyjne, ostateczna decyzja zawsze należy do sprzedawcy.", "*Ориентировочные значения, окончательное решение всегда за продавцом."), "p", "ofSmall")}
       </section>` : "";
     // The manager, and why the firm can be trusted (owner 2026-10-10): the
@@ -1111,7 +1167,7 @@
       imageCount: Number(source.ad.imageCount) || (source.ad.images || []).length,
       flags: { ...(source.ad.flags || {}), aiSummary: "", aiInsights: [] },
     } : null;
-    const packedVerdict = VERDICT ? VERDICT.assess({ car: source.car, ad: source.ad, market: source.market, lang: ru() ? "ru" : "pl", method: offerMethod() }) : null;
+    const packedVerdict = VERDICT ? VERDICT.assess({ car: source.car, ad: source.ad, market: marketWithConfidence(source.market), lang: ru() ? "ru" : "pl", method: offerMethod() }) : null;
     const slim = { ...source, ad, packedVerdict, calcImage: "", importer: "", favoriteId: "", adError: "", carvagoError: "" };
     const stream = new Blob([JSON.stringify(slim)]).stream().pipeThrough(new CompressionStream("deflate-raw"));
     return toBase64Url(new Uint8Array(await new Response(stream).arrayBuffer()));
@@ -1131,7 +1187,7 @@
   function verdictView(view) {
     if (!VERDICT) return null;
     // A client's link carries the verdict as the manager saw it.
-    const result = offer.packedVerdict || VERDICT.assess({ car: offer.car, ad: offer.ad, market: offer.market, lang: ru() ? "ru" : "pl", method: offerMethod() });
+    const result = offer.packedVerdict || VERDICT.assess({ car: offer.car, ad: offer.ad, market: marketWithConfidence(offer.market), lang: ru() ? "ru" : "pl", method: offerMethod() });
     const level = offer.verdictLevel || result.verdict;
     const label = L({ ok: "Rekomendujemy do dalszego sprawdzenia*", check: "Do weryfikacji przed rezerwacją", risk: "Nie rekomendujemy" }, { ok: "Рекомендуем к дальнейшей проверке*", check: "Нужна проверка до резервации", risk: "Не рекомендуем" })[level];
     // Up to six lines on the sheet: the most important first.

@@ -108,6 +108,64 @@ test("negotiation: long listed and already cheaper means more room", () => {
   assert.deepEqual([fresh.from, fresh.to], [0, 1]);
 });
 
+// O9 (owner 2026-10-11): how far the comparison with the market can be trusted.
+test("market confidence: sure, orientative, too thin", () => {
+  const at = "2026-10-05T10:00:00.000Z";
+  // 12 German cars of the same year and mileage, prices close together.
+  const close = Array.from({ length: 12 }, (_, index) => offer(`mobile:${index}`, 20000 + index * 200, 2023, 30000));
+  const sure = MARKET.snapshot([{ at, markets: { mobile: { offers: [...close, offer("mobile:car", 20500, 2023, 30000)] } } }], "mobile:car").market;
+  assert.equal(sure.similar.rule.step, 1);
+  assert.equal(sure.confidence.level, "high");
+  // Only 7 similar cars: orientative.
+  const few = MARKET.snapshot([{ at, markets: { mobile: { offers: [...close.slice(0, 7), offer("mobile:car", 20500, 2023, 30000), ...Array.from({ length: 4 }, (_, index) => offer(`mobile:old${index}`, 9000, 2015, 160000))] } } }], "mobile:car").market;
+  assert.equal(few.confidence.level, "medium");
+  assert.ok(few.confidence.reasons.includes("few"));
+  // Similar cars only at the wide step (±2 years): orientative.
+  const wide = MARKET.snapshot([{ at, markets: { mobile: { offers: [...Array.from({ length: 12 }, (_, index) => offer(`mobile:w${index}`, 20000 + index * 200, 2021, 30000)), offer("mobile:car", 20500, 2023, 30000)] } } }], "mobile:car").market;
+  assert.equal(wide.similar.rule.step, 2);
+  assert.equal(wide.confidence.level, "medium");
+  // No similar cars at all: the whole search, no figure.
+  const none = MARKET.snapshot([{ at, markets: { mobile: { offers: [...Array.from({ length: 10 }, (_, index) => offer(`mobile:n${index}`, 9000 + index * 300, 2015, 160000)), offer("mobile:car", 20500, 2023, 30000)] } } }], "mobile:car").market;
+  assert.equal(none.similar, null);
+  assert.equal(none.confidence.level, "low");
+  // A saved market without the step (older offers): read from the rule's width.
+  assert.equal(MARKET.confidence({ scope: "country", stats: sure.stats, similar: { rule: { yearFrom: 2022, yearTo: 2024 }, stats: sure.similar.stats } }).level, "high");
+});
+
+test("verdict and negotiation follow the market's confidence", () => {
+  const stats = { median: 25000, p25: 23000, p75: 27000, count: 14 };
+  const ad = { complete: true, title: "Toyota C-HR", description: "", specs: { accidentFree: true }, seller: { type: "dealer" }, flags: {}, features: [] };
+  const line = (level) => VERDICT.assess({ car: { price: 22000, seller: "dealer" }, ad, market: { own: { stats, similar: { stats }, confidence: level ? { level } : undefined } } }).lines.find((item) => item.id.startsWith("price:"));
+  assert.match(line("high").text, /−12% do mediany/);
+  assert.match(line("medium").text, /orientacyjnie/);
+  assert.equal(line("low"), undefined, "no claim on a thin market");
+  assert.match(line(null).text, /do mediany/, "older offers keep their line");
+  // A thin market says nothing about the price in the negotiation either.
+  const now = Date.parse("2026-10-05T12:00:00.000Z");
+  const dear = VERDICT.negotiation({ car: { price: 28000 }, market: { own: { stats, confidence: { level: "low" } }, ad: { days: 20 } }, now });
+  assert.ok(!dear.reasons.some((reason) => reason.id === "dear"));
+});
+
+// O8 + Monitoring M3: a car put up again under a new number, found by Monitoring's own matcher.
+test("negotiation: the car put up again, the longest days any source knows", () => {
+  const records = [
+    { at: "2026-09-10T09:00:00.000Z", scope: "s", markets: { mobile: { offers: [offer("mobile:old", 24000, 2022, 41000)] } } },
+    { at: "2026-09-20T09:00:00.000Z", scope: "s", markets: { mobile: { offers: [offer("mobile:other", 30000, 2023, 10000)] } } },
+    { at: "2026-10-05T09:00:00.000Z", scope: "s", markets: { mobile: { offers: [offer("mobile:new", 23500, 2022, 41200)] } } },
+  ];
+  // The matcher as Monitoring's findRelisted (same portal, year, mileage ±1 %, price ±10 %).
+  const match = (ad, source, gone) => gone.find((item) => item.source === source && Number(item.offer.year) === Number(ad.year)
+    && Math.abs(item.offer.mileage - ad.mileage) <= Math.max(300, ad.mileage * 0.01) && Math.abs(item.offer.price - ad.price) <= ad.price * 0.1) || null;
+  const snapshot = MARKET.snapshot(records, "mobile:new", { findRelisted: match });
+  assert.equal(snapshot.relisted.since, "2026-09-10T09:00:00.000Z");
+  assert.equal(MARKET.snapshot(records, "mobile:new").relisted, null, "no matcher, no claim");
+  const now = Date.parse("2026-10-05T12:00:00.000Z");
+  const room = VERDICT.negotiation({ car: { price: 23500 }, ad: { listedAt: "2026-10-04T00:00:00.000Z" }, market: { relisted: snapshot.relisted, ad: { days: 25 } }, now });
+  assert.ok(room.reasons.some((reason) => reason.id === "relisted"));
+  assert.equal(room.reasons.find((reason) => reason.id === "days").days, 25, "the older ad's days, not the new number's one day");
+  assert.equal(room.from, 2, "put up again counts as a reason to negotiate (25 days alone: 1–2 %)");
+});
+
 test("Polish plural forms", () => {
   assert.equal(VERDICT.plural(1, "opinia", "opinie", "opinii"), "opinia");
   assert.equal(VERDICT.plural(104, "opinia", "opinie", "opinii"), "opinie");

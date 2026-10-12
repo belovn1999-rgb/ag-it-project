@@ -122,7 +122,7 @@
   async function makeDraft({ id, favoriteId, key, source }) {
     const favorite = favoriteOf(favoriteId);
     const records = await loadChecks(favoriteId);
-    const market = window.AUTOGOOD_OFFER_MARKET?.snapshot(records, key) || null;
+    const market = window.AUTOGOOD_OFFER_MARKET?.snapshot(records, key, { findRelisted: window.AUTOGOOD_FIND_RELISTED }) || null;
     // Saved (★) but no longer in any kept check: the saved copy.
     const offer = market?.offer || savedOffer(favoriteId, key)?.offer || null;
     if (!offer) throw new Error("ad not found in this car's monitoring");
@@ -143,7 +143,7 @@
       url: offer.url || "",
       importer: importerUrl(),
       car: { ...offer },
-      market: market ? { at: market.at, latestAt: market.latestAt, extra: market.extra, own: market.market, poland: market.poland, ad: market.ad, pace: market.pace } : null,
+      market: market ? { at: market.at, latestAt: market.latestAt, extra: market.extra, own: market.market, poland: market.poland, ad: market.ad, pace: market.pace, relisted: market.relisted } : null,
       estimate: estimate(offer, filters),
       manager: store.manager(),
       company: store.company(),
