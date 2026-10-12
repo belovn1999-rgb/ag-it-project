@@ -32,13 +32,19 @@
 // --disable-background-timer-throttling --disable-renderer-backgrounding,
 // or a hidden tab's pauses (the proxy's minute limit) stretch to a minute.
 import http from "node:http";
-import { spawn } from "node:child_process";
+import { execFile, spawn } from "node:child_process";
+import { homedir } from "node:os";
+import { promisify } from "node:util";
 import { mkdir, readFile, readdir, rename, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { readMailConfig, renderDigestMail, countsText, digestCounts } from "./monitoring-mail.mjs";
 import { sendMail } from "./monitoring-mail.mjs";
 
 const CDP_URL = (process.env.MOBILEDE_CDP_URL || "http://127.0.0.1:9333").replace(/\/$/, "");
+// The importer's Chrome (server/mobilede-import.mjs): the same profile and
+// port, so there is one such Chrome whoever started it.
+const CDP_PROFILE = process.env.MOBILEDE_CDP_PROFILE || `${homedir()}/Library/Application Support/AUTOGOOD/mobilede-chrome-profile`;
+const execFileAsync = promisify(execFile);
 const JOB_TIMEOUT_MS = 30 * 60 * 1000;
 
 function parseArgs(argv) {
@@ -77,12 +83,32 @@ const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const safeName = (value) => String(value).replace(/[^\w.-]+/g, "_").slice(0, 80);
 
 // ---- Chrome DevTools (the same protocol use as server/mobilede-import.mjs) --
+// 2026-10-12: the 9:30 run found no Chrome (the importer starts its Chrome
+// only on first use, and a Mac restarted overnight has none). The service
+// starts it itself, in the background, as the importer does.
+async function startChrome() {
+  if (process.platform !== "darwin") return false;
+  await execFileAsync("open", ["-gna", "Google Chrome", "--args", `--user-data-dir=${CDP_PROFILE}`, `--remote-debugging-port=${new URL(CDP_URL).port || "9333"}`,
+    "--no-first-run", "--no-default-browser-check", "--disable-background-timer-throttling", "--disable-renderer-backgrounding", "about:blank"], { timeout: 10000 });
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    await delay(500);
+    try {
+      if ((await fetch(`${CDP_URL}/json/version`)).ok) return true;
+    } catch {
+      // Still starting.
+    }
+  }
+  return false;
+}
 async function connectChrome() {
   let version;
   try {
     version = await (await fetch(`${CDP_URL}/json/version`)).json();
   } catch {
-    throw new Error(`No Chrome DevTools at ${CDP_URL}: start Chrome with --remote-debugging-port (the importer starts its Chrome on first use).`);
+    log(`no Chrome DevTools at ${CDP_URL} — starting Chrome`);
+    const started = await startChrome().catch((error) => { log(`Chrome did not start: ${error.message}`); return false; });
+    if (!started) throw new Error(`No Chrome DevTools at ${CDP_URL}: start Chrome with --remote-debugging-port (the importer starts its Chrome on first use).`);
+    version = await (await fetch(`${CDP_URL}/json/version`)).json();
   }
   const socket = new WebSocket(version.webSocketDebuggerUrl);
   const pending = new Map();
