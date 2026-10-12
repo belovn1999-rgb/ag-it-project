@@ -738,3 +738,11 @@ portalPrice / setPortalPrice / filtersPriceIn`); чтение «от новых�
    włączony». Среди них и на стр. 1–2 — порядок перетаскивания (`favoriteOrder.v1` не
    меняется). Полоса перерисовывается при входе на страницу (`showPage`) и при каждом
    `renderPriceHistoryPage` (рубильник); `renderFavoritesBar` добавлен в `ctx`.
+35. **Раскладка стр. 3 (владелец 12.10).** Вкладки «Lista aut / Historia cen / Rynek w
+   wybranym dniu» и список — отдельной карточкой под результатами (`[data-monitoring-list-block]`,
+   узлы переносятся из `[data-monitoring-results]` после отрисовки). Звезда «Ulubione» — в
+   правом верхнем углу блока «Ogłoszenie» (ячейка названия шире, звезда 24 px золотом и
+   пустая; на телефоне цель 44 px). «Niemcy» в ряду стран — только флаг Германии. В
+   настройках «Niemcy» — только Германия, «Austria» и «Luksemburg» — свои карточки сразу
+   за ней (mobile.de · AutoScout24; включаются, пока включена Германия; в статистике их
+   машины по-прежнему считаются в «Niemcy»).
