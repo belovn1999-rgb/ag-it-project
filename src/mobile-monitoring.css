@@ -1770,3 +1770,80 @@ button.mobileMonitoringMac {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
+
+/* 641–1280 px (owner 2026-10-12: nothing beyond the card at 1024): the
+   portal, the median note and the column names wrap, the ad column is held. */
+@media (min-width: 40.0625rem) and (max-width: 80rem) {
+  .mobileMonitoringTable .mobileMonitoringTitleCell {
+    min-width: 190px;
+    max-width: 250px;
+  }
+
+  .mobileMonitoringPortalCell,
+  .mobileMonitoringPortalCell .agMarketBadge,
+  .mobileMonitoringToMedian small,
+  .mobileMonitoringColHead {
+    white-space: normal;
+  }
+
+  .mobileMonitoringTable td.isNum:has(.mobileMonitoringAdPrice) {
+    min-width: 112px;
+  }
+
+  .mobileMonitoringTable th,
+  .mobileMonitoringTable td {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .mobileMonitoringPhoto {
+    width: 60px;
+    height: 45px;
+  }
+}
+
+/* 641–1280 px: fixed column widths, so the table never runs past the card
+   (1024 px: 1 246 → 917 px, checked on the owner's Passat 12.10). */
+@media (min-width: 40.0625rem) and (max-width: 80rem) {
+  .mobileMonitoringTable {
+    table-layout: fixed;
+    width: 100%;
+  }
+
+  .mobileMonitoringTable thead th:nth-child(1) { width: 26px; }
+  .mobileMonitoringTable thead th:nth-child(3) { width: 92px; }
+  .mobileMonitoringTable thead th:nth-child(4) { width: 112px; }
+  .mobileMonitoringTable thead th:nth-child(5) { width: 122px; }
+  .mobileMonitoringTable thead th:nth-child(6) { width: 86px; }
+  .mobileMonitoringTable thead th:nth-child(7) { width: 236px; }
+
+  .mobileMonitoringTable thead th {
+    vertical-align: bottom;
+    white-space: normal;
+  }
+
+  .mobileMonitoringColSort {
+    white-space: normal;
+    text-align: inherit;
+  }
+
+  .mobileMonitoringTable .mobileMonitoringTitleCell {
+    min-width: 0;
+    max-width: none;
+    overflow-wrap: anywhere;
+  }
+
+  .mobileMonitoringTable .mobileMonitoringToMedian {
+    white-space: normal;
+  }
+
+  .mobileMonitoringTable td.isNum:has(.mobileMonitoringAdPrice) {
+    min-width: 0;
+  }
+
+  .mobileMonitoringPortalCell .agMarketBadge {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px 4px;
+  }
+}
