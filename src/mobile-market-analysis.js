@@ -7272,56 +7272,48 @@
         const tone = !base ? "" : median < base * 0.98 ? " isBelow" : median > base * 1.02 ? " isAbove" : "";
         return `<td class="isNum${tone}"><b>${escapeMarketHtml(formatMarketPrice(median))}</b><small>${escapeMarketHtml(count)}${base ? ` · <span>${escapeMarketHtml(percentFrom(median, base))}</span>` : ""}</small></td>`;
       };
-      // Price by mileage: the first table of "Cena a parametry" (owner
-      // 2026-10-05), a row per market, the mileage groups across, ruled.
+      // "Cena a parametry" as one table (owner 2026-10-12): a row per market,
+      // every parameter's groups across — mileage first (owner 2026-10-05),
+      // then year, engine, power, gearbox — each under its own heading.
+      // Up to SEGMENT_COLUMNS groups per table, so the report page stays
+      // readable; more parameters continue in a second table of the same form.
+      const SEGMENT_COLUMNS = 10;
       const mileageIndex = segmentDimensions.findIndex((dimension) => dimension.title === c.statsMileageHeading);
-      const mileageDimension = mileageIndex >= 0 ? segmentDimensions.splice(mileageIndex, 1)[0] : null;
-      const mileageTable = mileageDimension ? `
-        <div class="mobileMarketSegmentScroll mobileMarketMileageTable">
-          <table class="mobileMarketSegmentTable isRuled">
-            <caption>${escapeMarketHtml(c.statsMileageHeading)}</caption>
+      if (mileageIndex > 0) segmentDimensions.unshift(...segmentDimensions.splice(mileageIndex, 1));
+      const segmentTables = [];
+      segmentDimensions.forEach((dimension) => {
+        const last = segmentTables[segmentTables.length - 1];
+        const used = last ? last.reduce((sum, item) => sum + item.rows.length, 0) : Infinity;
+        if (last && used + dimension.rows.length <= SEGMENT_COLUMNS) last.push(dimension);
+        else segmentTables.push([dimension]);
+      });
+      const segmentTableHtml = (dimensions) => `
+        <div class="mobileMarketSegmentScroll">
+          <table class="mobileMarketSegmentTable isRuled isCombined">
             <thead>
               <tr>
-                <th scope="col"><span class="srOnly">${escapeMarketHtml(c.marketsHeading)}</span></th>
-                ${mileageDimension.rows.map((row) => `<th scope="col" class="isNum">${escapeMarketHtml(row.label)}</th>`).join("")}
+                <th scope="col" rowspan="2"><span class="srOnly">${escapeMarketHtml(c.marketsHeading)}</span></th>
+                ${dimensions.map((dimension) => `<th scope="colgroup" colspan="${dimension.rows.length}" class="mobileMarketSegmentGroup">${escapeMarketHtml(dimension.title === c.statsMileageHeading ? c.tableMileage : dimension.title)}</th>`).join("")}
+              </tr>
+              <tr>
+                ${dimensions.map((dimension) => dimension.rows.map((row, index) => `<th scope="col" class="isNum${index === 0 ? " isGroupStart" : ""}">${escapeMarketHtml(row.label)}</th>`).join("")).join("")}
               </tr>
             </thead>
             <tbody>
               ${shownSources.map((source) => `
                 <tr>
                   <th scope="row">${marketBadge(source)}</th>
-                  ${mileageDimension.rows.map((row) => segmentCell(row.listings, source)).join("")}
+                  ${dimensions.map((dimension) => dimension.rows.map((row, index) => segmentCell(row.listings, source).replace('<td class="', `<td class="${index === 0 ? "isGroupStart " : ""}`)).join("")).join("")}
                 </tr>`).join("")}
             </tbody>
           </table>
-        </div>` : "";
+        </div>`;
       // The block opens and closes on its title (closed at first; the
       // viewer's choice is remembered in this browser).
-      segmentsContent = segmentDimensions.length || mileageTable ? `
+      segmentsContent = segmentTables.length ? `
         <details class="mobileMarketCard mobileMarketSegmentsCard" aria-label="${escapeMarketHtml(c.segmentsHeading)}" data-report-list-hide data-mobile-segments${segmentsOpen ? " open" : " data-report-hide"}>
           <summary>${blockTitle("settings", c.segmentsHeading)}<span class="mobileMarketSegmentsToggle" aria-hidden="true"></span></summary>
-          ${mileageTable}
-          <div class="mobileMarketSegments">
-            ${segmentDimensions.map((dimension) => `
-              <div class="mobileMarketSegmentScroll">
-                <table class="mobileMarketSegmentTable isRuled">
-                  <caption>${escapeMarketHtml(dimension.title)}</caption>
-                  <thead>
-                    <tr>
-                      <th scope="col"><span class="srOnly">${escapeMarketHtml(dimension.title)}</span></th>
-                      ${shownSources.map((source) => `<th scope="col" class="isNum">${shownSources.length > 1 ? marketBadge(source) : escapeMarketHtml(c.segmentMedian)}</th>`).join("")}
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${dimension.rows.map((row) => `
-                      <tr>
-                        <th scope="row">${escapeMarketHtml(row.label)}</th>
-                        ${shownSources.map((source) => segmentCell(row.listings, source)).join("")}
-                      </tr>`).join("")}
-                  </tbody>
-                </table>
-              </div>`).join("")}
-          </div>
+          <div class="mobileMarketSegmentTables">${segmentTables.map(segmentTableHtml).join("")}</div>
         </details>` : "";
 
       // ---- B21 (04.10): the columns the search leaves open -------------------

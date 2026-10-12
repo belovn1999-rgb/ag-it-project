@@ -1169,3 +1169,49 @@ a.mobileLinkedCarChip:hover {
 .agSpecChecks li[data-mobile-summary-target]:hover {
   color: var(--color-brand);
 }
+
+/* 12.10 (owner): "Cena a parametry" is one table — a row per market, each
+   parameter's groups under its heading, a thicker rule between parameters. */
+.mobileMarketSegmentTables {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.mobileMarketSegmentTable.isCombined th.mobileMarketSegmentGroup {
+  color: var(--color-ink);
+  font-weight: 800;
+  text-align: center;
+  text-transform: none;
+}
+
+.mobileMarketSegmentTable.isCombined .isGroupStart,
+.mobileMarketSegmentTable.isCombined th.mobileMarketSegmentGroup {
+  border-left: 2px solid var(--color-rule);
+}
+
+/* The report has no scroll bars: the tables fit the page. */
+.isReportCapture .mobileMarketSegmentScroll {
+  overflow: visible !important;
+  max-height: none !important;
+}
+
+.isReportCapture .mobileMarketSegmentTable {
+  min-width: 0 !important;
+}
+
+.isReportCapture .mobileMarketSegmentTable.isCombined {
+  width: 100%;
+  table-layout: fixed;
+  font-size: var(--text-xs);
+}
+
+.isReportCapture .mobileMarketSegmentTable.isCombined th,
+.isReportCapture .mobileMarketSegmentTable.isCombined td {
+  padding: 5px 6px;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.isReportCapture .mobileMarketSegmentTable.isCombined tbody th {
+  width: 110px;
+}
