@@ -2928,15 +2928,35 @@
     const countries = (filters.countries || []).filter(Boolean);
     if (countries.length <= 1) return fetchMobileDeCountry(filters, whole, price);
     const lists = [];
+    const failed = [];
+    const read = (country) => fetchMobileDeCountry({ ...filters, countries: [country] }, country === "DE" ? whole : true, price);
     for (const country of countries) {
       onProgress?.(lists.length, countries.length, "countries");
+      let result = null;
+      let failure = null;
       try {
-        const result = await fetchMobileDeCountry({ ...filters, countries: [country] }, country === "DE" ? whole : true, price);
-        if (result) lists.push({ country, ...result });
-      } catch {
-        // One country unreachable: the others still count.
+        result = await read(country);
+      } catch (error) {
+        failure = error;
       }
+      // Asked once more after a pause (12.10: Chrome just started by the
+      // Mac's service, Germany refused, Austria answered — 3 cars of 48).
+      if (failure) {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+        try {
+          result = await read(country);
+          failure = null;
+        } catch (error) {
+          failure = error;
+        }
+      }
+      if (failure) failed.push(country);
+      else if (result) lists.push({ country, ...result });
     }
+    // A country still not read: mobile.de did not answer as a whole. A list
+    // without Germany is not "the market" — Monitoring shows the last whole
+    // one ("brak odpowiedzi") instead of dozens of cars "gone".
+    if (failed.length) throw new Error(`mobile.de: no answer for ${failed.join(", ")}`);
     if (!lists.length) return null;
     const total = lists.reduce((sum, list) => sum + (Number(list.total) || list.listings.length), 0);
     const cheaperIn = (list, value) => Math.max(0, ...list.listings.filter((listing) => Number(listing.price) < value).map((listing) => Number(listing.rank) || 0));
