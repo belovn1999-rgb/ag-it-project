@@ -79,7 +79,19 @@ Claude), страница ходит на `<туннель импортера>/m
 
 **Уведомление (с 11.10):** после проверки с новыми или подешевевшими машинами служба
 показывает уведомление macOS (`osascript`); что новое — `AUTOGOOD_MONITORING.news`
-страницы (PROJECT-MOBILE §4.6.3). На сервере уведомление заменит письмо или Telegram.
+страницы (PROJECT-MOBILE §4.6.3).
+
+**Утреннее письмо (с 12.10, M1 + M12):** после прогона служба шлёт одно письмо по-русски
+на ящик из `mail.json` (решение владельца 11.10: info@autogood.pl, все категории, одно
+письмо в день): по каждой машине новые, подешевевшие, «Okazja», «wróciło» (фото, цена,
+«под ключ», % к медиане похожих, дни в продаже), исчезнувшие числом, порталы без ответа.
+Что сказать — `AUTOGOOD_MONITORING.digest(job, earlier, record)` страницы (правила стр. 3;
+`earlier` — записи службы за 30 дней, сжатые до нужных полей); письмо и SMTP —
+`server/monitoring-mail.mjs` (без зависимостей; 465 TLS, 587 STARTTLS). Не ушедшее письмо —
+`mail-pending.json` рядом с записями, уходит со следующим; сбой — уведомление macOS.
+`last-digest.json` — для тестового письма: кнопка «Wyślij testowy e-mail» на стр. 3 →
+`POST /monitoring/mail-test` (здоровье отвечает `mail: true`, когда ящик настроен), в консоли
+`--mail-test`. На сервере тот же модуль шлёт то же письмо.
 
 ## 4. Что осталось при запуске сервера
 
@@ -130,8 +142,8 @@ Claude), страница ходит на `<туннель импортера>/m
    файлы в `~/Library/Application Support/AUTOGOOD/monitoring/`. Проверка:
    `curl http://127.0.0.1:8789/monitoring/health`. Перезапуск:
    `launchctl kickstart -k gui/$(id -u)/com.autogood.monitoring`. Обновить код
-   службы: скопировать `server/monitoring-runner.mjs` в `…/monitoring/runner/` и
-   перезапустить (страницу она всегда берёт с живого сайта).
+   службы: скопировать `server/monitoring-runner.mjs` **и** `server/monitoring-mail.mjs`
+   в `…/monitoring/runner/` и перезапустить (страницу она всегда берёт с живого сайта).
 2. **Браузер владельца** — на стр. 3 у машины с включённым мониторингом нажать
    «Sprawdzaj przy zamkniętym programie (ten Mac)» (или открыть
    `…/mobile.html?localMonitoring=1#monitoring`) и на вопрос Chrome о доступе к
@@ -144,6 +156,14 @@ Claude), страница ходит на `<туннель импортера>/m
 3. **Пробуждение в 9:25** — делает владелец (нужен пароль Mac):
    `sudo pmset repeat wakeorpoweron MTWRFSU 09:25:00`. Спящий Mac на зарядке
    просыпается; выключенный — проверяет при первом включении после 9:30.
+4. **Ящик для утреннего письма** (с 12.10) — делает владелец, пароль в репозиторий не
+   попадает: файл `~/Library/Application Support/AUTOGOOD/monitoring/mail.json`:
+   `{"host":"autogood.pl","port":465,"user":"info@autogood.pl","pass":"<пароль ящика>",
+   "from":"AUTOGOOD Monitoring <info@autogood.pl>","to":["info@autogood.pl"]}`
+   (почта autogood.pl — свой сервер, MX `autogood.pl`, открыты 465 и 587). Проверка:
+   кнопка «Wyślij testowy e-mail» на стр. 3 или
+   `node …/runner/monitoring-runner.mjs --jobs …/jobs.json --out …/records --app x --mail-test`.
+   Без файла служба работает как раньше, только без письма.
 
 ## 5. Проверено 04.10 (локально)
 

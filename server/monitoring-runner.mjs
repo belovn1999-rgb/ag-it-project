@@ -19,6 +19,9 @@
 //                        sends its jobs, takes the records; checks at the time
 //   … --app <url> twice  a fallback address when the first does not load
 //   … --only <job id>    one job
+//   … --mail <file>      the mailbox for the morning e-mail (M1); by default
+//                        mail.json next to jobs.json, no file = no e-mail
+//   … --mail-test        send a test letter from the last check and exit (M12)
 //
 // jobs.json is what window.AUTOGOOD_MONITORING.jobs() gives in the manager's
 // browser. How jobs arrive and records go back (server API with the
@@ -31,7 +34,9 @@
 import http from "node:http";
 import { spawn } from "node:child_process";
 import { mkdir, readFile, readdir, rename, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { readMailConfig, renderDigestMail, countsText, digestCounts } from "./monitoring-mail.mjs";
+import { sendMail } from "./monitoring-mail.mjs";
 
 const CDP_URL = (process.env.MOBILEDE_CDP_URL || "http://127.0.0.1:9333").replace(/\/$/, "");
 const JOB_TIMEOUT_MS = 30 * 60 * 1000;
@@ -51,6 +56,8 @@ function parseArgs(argv) {
     else if (name === "--site") args.sites.push(value());
     else if (name === "--daily") args.daily = true;
     else if (name === "--no-notify") args.quiet = true;
+    else if (name === "--mail") args.mail = value();
+    else if (name === "--mail-test") args.mailTest = true;
     else throw new Error(`Unknown option ${name}`);
   }
   if (!args.apps.length && process.env.MONITORING_APP_URL) args.apps.push(process.env.MONITORING_APP_URL);
@@ -58,6 +65,7 @@ function parseArgs(argv) {
   if (args.serve && args.sites.length && !args.apps.length) {
     args.apps.push(`http://127.0.0.1:${args.serve}/app/mobile.html?runner=1&mobiledeApi=${encodeURIComponent("http://127.0.0.1:8788/mobilede/import")}`);
   }
+  if (args.jobs && !args.mail) args.mail = join(dirname(args.jobs), "mail.json");
   if (!args.jobs || !args.out || !args.apps.length) {
     throw new Error("Usage: node server/monitoring-runner.mjs --jobs <jobs.json> --out <dir> --app <mobile.html?runner=1 URL> [--app <fallback>] [--daily | --serve <port>] [--hour 9 --minute 30] [--only <id>]");
   }
@@ -161,6 +169,32 @@ async function previousRecord(out, jobId, at) {
   }
 }
 
+// This service's records of the car in the 30 days before `at`, oldest
+// first, with only what the page's digest reads of an offer (a month of
+// records whole would be megabytes through DevTools).
+const DIGEST_DAYS = 30;
+const OFFER_FIELDS = ["key", "url", "title", "price", "currency", "year", "mileage", "power", "listedAt", "country", "city", "seller", "photo", "turnkey", "suspect", "bid"];
+function compactRecord(record) {
+  const markets = {};
+  Object.entries(record.markets || {}).forEach(([source, market]) => {
+    markets[source] = { total: market.total, complete: market.complete, offers: (market.offers || []).map((offer) => Object.fromEntries(OFFER_FIELDS.filter((key) => offer[key] !== undefined && offer[key] !== "" && offer[key] !== null).map((key) => [key, offer[key]]))) };
+  });
+  return { at: record.at, scope: record.scope, answered: record.answered, failed: record.failed, markets };
+}
+async function earlierRecords(out, jobId, at) {
+  const since = Date.parse(at) - DIGEST_DAYS * 86400000;
+  const found = (await listRecords(out, [jobId], since)).filter((item) => Date.parse(item.at) < Date.parse(at));
+  const records = [];
+  for (const item of found) {
+    try {
+      records.push(compactRecord(JSON.parse(await readFile(item.file, "utf8"))));
+    } catch {
+      // A broken file is not a record.
+    }
+  }
+  return records;
+}
+
 // Audit p. 8 (owner 2026-10-10): after a check with new or cheaper cars a
 // macOS notification ("CLA 180 Shooting Brake: +2 nowe, 1 taniej"). What is
 // new is told by the page (AUTOGOOD_MONITORING.news), as page 3 shows it.
@@ -245,7 +279,17 @@ async function runJobs(args, jobs, onJob = () => {}) {
         await healthNote(args, job.id, job.title || "Monitoring", null);
         const silent = Object.keys(record.failed || {}).map((source) => PORTAL_NAMES[source] || source);
         await healthNote(args, `${job.id}:portals`, job.title || "Monitoring", silent.length ? `Bez odpowiedzi: ${silent.join(", ")}` : null);
-        onJob(job, true);
+        // M1: what the morning e-mail tells about this car (the page's rules).
+        let digest = null;
+        if (args.mail) {
+          const earlier = await earlierRecords(args.out, job.id, record.at);
+          digest = await page.evaluate(`window.AUTOGOOD_MONITORING.digest?.(${JSON.stringify(job)}, ${JSON.stringify(earlier)}, ${JSON.stringify(compactRecord(record))}) || null`, 60000).catch((error) => {
+            log(`job ${job.id} — digest failed: ${error.message}`);
+            return null;
+          });
+          if (digest) log(`job ${job.id} — digest: ${countsText(digestCounts([digest]))}`);
+        }
+        onJob(job, true, null, digest);
       } catch (error) {
         // One car failing does not stop the others.
         log(`job ${job.id} — failed: ${error.message}`);
@@ -259,6 +303,72 @@ async function runJobs(args, jobs, onJob = () => {}) {
     await page?.close();
     browser.close();
   }
+}
+
+// M1 (owner 2026-10-11): one e-mail after the run — in Russian, to the
+// mailbox of mail.json — with the digests of the cars checked. A letter that
+// did not go out (mailbox down, wrong password) is kept in mail-pending.json
+// and goes with the next one; its failure is told like any other (healthNote).
+// The last digests are kept for the test letter (M12).
+async function readJson(file, fallback) {
+  try {
+    return JSON.parse(await readFile(file, "utf8"));
+  } catch {
+    return fallback;
+  }
+}
+async function sendDigestMail(args, digests, failed = [], { test = false } = {}) {
+  const config = await readMailConfig(args.mail);
+  if (!config) {
+    log("e-mail: no mail.json — the morning letter is not sent");
+    return { ok: false, error: "no mail.json" };
+  }
+  const pendingFile = join(args.out, "mail-pending.json");
+  const pending = test ? { digests: [], dates: [] } : await readJson(pendingFile, { digests: [], dates: [] });
+  const all = [...(pending.digests || []), ...digests];
+  const date = new Date().toISOString();
+  const message = renderDigestMail(all, { date, failed, pending: pending.dates || [], test });
+  try {
+    const answer = await sendMail(config, message);
+    log(`e-mail: sent to ${config.to.join(", ")} — ${message.subject} (${answer.slice(0, 80)})`);
+    if (!test) {
+      await writeFile(pendingFile, JSON.stringify({ digests: [], dates: [] }));
+      await healthNote(args, "mail", "E-mail", null);
+    }
+    return { ok: true, to: config.to, subject: message.subject };
+  } catch (error) {
+    const reason = String(error.message || error).slice(0, 120);
+    log(`e-mail: failed — ${reason}`);
+    if (!test) {
+      await writeFile(pendingFile, JSON.stringify({ digests: all, dates: [...new Set([...(pending.dates || []), date.slice(0, 10)])] }));
+      await healthNote(args, "mail", "E-mail", `Nie udało się wysłać e-maila: ${reason}`);
+    }
+    return { ok: false, error: reason };
+  }
+}
+// After a run: the letter, and the digests kept for a test letter.
+async function afterRun(args, digests, failedJobs) {
+  if (!args.mail) return;
+  const failed = failedJobs.map((job) => job.title || job.id);
+  await writeFile(join(args.out, "last-digest.json"), JSON.stringify({ at: new Date().toISOString(), digests, failed }));
+  if (digests.length || failed.length) await sendDigestMail(args, digests, failed).catch((error) => log(`e-mail: ${error.message}`));
+}
+// M12: the test letter — the last check's digests, or, before any, the
+// latest record's first cars shown as new.
+async function sendTestMail(args) {
+  const last = await readJson(join(args.out, "last-digest.json"), null);
+  let digests = last?.digests || [];
+  if (!digests.length) {
+    const jobs = await readJobs(args);
+    for (const job of jobs) {
+      const found = await listRecords(args.out, [job.id], 0);
+      if (!found.length) continue;
+      const record = JSON.parse(await readFile(found[found.length - 1].file, "utf8"));
+      const offers = Object.entries(record.markets || {}).flatMap(([source, market]) => (market.offers || []).slice(0, 2).map((offer) => ({ ...offer, portal: PORTAL_NAMES[source] || source, days: null, similar: null })));
+      digests.push({ id: job.id, title: job.title, at: record.at, counts: { now: offers.length, gone: 0 }, silent: [], fresh: offers.slice(0, 3), cheaper: [], okazja: [], relisted: [] });
+    }
+  }
+  return sendDigestMail(args, digests, last?.failed || [], { test: true });
 }
 
 // The first address that offers the page: the live site, then a fallback.
@@ -412,7 +522,7 @@ function serve(args) {
     response.writeHead(status, {
       "content-type": "application/json; charset=utf-8",
       ...(ALLOWED_ORIGIN.test(origin) ? { "access-control-allow-origin": origin, vary: "Origin" } : {}),
-      "access-control-allow-methods": "GET, PUT, OPTIONS",
+      "access-control-allow-methods": "GET, PUT, POST, OPTIONS",
       "access-control-allow-headers": "content-type",
       // A public page (github.io) asking this Mac: Chrome's Private Network Access.
       "access-control-allow-private-network": "true",
@@ -449,14 +559,19 @@ function serve(args) {
     const wallStart = Date.now();
     const awakeStart = process.hrtime.bigint();
     const failedJobs = [];
+    const digests = [];
     try {
-      await runJobs(args, due, (job, ok) => { if (!ok) { failed += 1; failedJobs.push(job); } });
+      await runJobs(args, due, (job, ok, error, digest) => {
+        if (!ok) { failed += 1; failedJobs.push(job); }
+        if (digest) digests.push(digest);
+      });
       const sleptMs = (Date.now() - wallStart) - Number((process.hrtime.bigint() - awakeStart) / 1000000n);
       if (failed && sleptMs > 60000) {
         failedJobs.forEach((job) => state.tries.set(`${day}|${job.id}`, Math.max(0, (state.tries.get(`${day}|${job.id}`) || 1) - 1)));
         log(`the Mac slept ${Math.round(sleptMs / 60000)} min during the run — ${failed} car(s) will be tried again when it is awake`);
       }
       state.lastRun = { at: new Date().toISOString(), ok: failed === 0, error: failed ? `${failed} of ${due.length} cars failed` : "", slept: sleptMs > 60000 || undefined };
+      await afterRun(args, digests, failedJobs);
     } catch (error) {
       state.lastRun = { at: new Date().toISOString(), ok: false, error: error.message };
       log(`run failed: ${error.message}`);
@@ -482,6 +597,7 @@ function serve(args) {
         return send(request, response, 200, {
           ok: true,
           service: "autogood-monitoring",
+          mail: Boolean(args.mail && (await readMailConfig(args.mail).catch(() => null))),
           time: `${String(args.hour).padStart(2, "0")}:${String(args.minute).padStart(2, "0")}`,
           running: state.running,
           jobs: jobs.length,
@@ -509,6 +625,10 @@ function serve(args) {
         tick().catch(() => {});
         return send(request, response, 200, { ok: true, jobs: jobsOf({ clients }).length });
       }
+      if (request.method === "POST" && url.pathname === "/monitoring/mail-test") {
+        const result = await sendTestMail(args);
+        return send(request, response, result.ok ? 200 : 502, result);
+      }
       if (request.method === "GET" && url.pathname === "/monitoring/records") {
         const ids = (url.searchParams.get("ids") || "").split(",").map((id) => id.trim()).filter(Boolean).slice(0, 50);
         const since = Date.parse(url.searchParams.get("since") || "") || 0;
@@ -531,9 +651,22 @@ function serve(args) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   await mkdir(args.out, { recursive: true });
+  if (args.mailTest) {
+    const result = await sendTestMail(args);
+    log(result.ok ? `test e-mail sent to ${result.to.join(", ")}: ${result.subject}` : `test e-mail failed: ${result.error}`);
+    process.exitCode = result.ok ? 0 : 1;
+    return;
+  }
   if (args.serve) return serve(args);
+  const collect = (digests, failedJobs) => (job, ok, error, digest) => {
+    if (!ok) failedJobs.push(job);
+    if (digest) digests.push(digest);
+  };
   if (!args.daily) {
-    await runJobs(args, await readJobs(args));
+    const digests = [];
+    const failedJobs = [];
+    await runJobs(args, await readJobs(args), collect(digests, failedJobs));
+    await afterRun(args, digests, failedJobs);
     return;
   }
   // Daily: at the time; started later, it first catches up today's jobs.
@@ -543,7 +676,12 @@ async function main() {
       const jobs = await readJobs(args);
       const due = [];
       for (const job of jobs) if (!(await ranSince(args.out, job.id, start))) due.push(job);
-      if (due.length) await runJobs(args, due).catch((error) => log(`run failed: ${error.message}`));
+      if (due.length) {
+        const digests = [];
+        const failedJobs = [];
+        await runJobs(args, due, collect(digests, failedJobs)).catch((error) => log(`run failed: ${error.message}`));
+        await afterRun(args, digests, failedJobs);
+      }
     }
     const next = Date.now() < start ? start : start + 24 * 60 * 60 * 1000;
     log(`next monitoring ${new Date(next).toISOString()}`);

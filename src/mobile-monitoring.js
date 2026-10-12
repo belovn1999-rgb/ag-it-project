@@ -37,7 +37,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
   // 2026-10-05, "при входе — Nowe"); a list clicked by the manager stays.
   const monitoringState = { id: "", view: "new", autoView: true, portal: "", country: "", limit: 100, busy: "", status: "", statusError: false };
   // Does this Mac's monitoring service answer (variant B, see syncLocalMonitoring)?
-  const localMonitoring = { available: false, failedToday: false };
+  const localMonitoring = { available: false, failedToday: false, mail: false };
   // Monitoring checks waiting for the one running (see runMonitoringCheck).
   const monitoringQueue = [];
   const isQueued = (id) => monitoringQueue.some((item) => item.entry.id === id);
@@ -848,7 +848,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     // Switched off: no schedule at all (owner 2026-10-10, wave 2); the switch says it.
     if (!monitored) return "";
     const mac = !monitored ? ""
-      : localMonitoring.available ? `<span class="mobileMonitoringMac isOn">✓ ${escapeMarketHtml(c.monitoringMacOn)}</span>`
+      : localMonitoring.available ? `<span class="mobileMonitoringMac isOn">✓ ${escapeMarketHtml(c.monitoringMacOn)}</span>${localMonitoring.mail ? ` <button class="mobileMonitoringMac" type="button" data-monitoring-mail-test>${escapeMarketHtml(c.monitoringMailTest)}</button>` : ""}`
         : `<button class="mobileMonitoringMac" type="button" data-monitoring-connect>${escapeMarketHtml(localMonitoringState().enabled ? c.monitoringMacRetry : c.monitoringMacConnect)}</button>`;
     return `
       <div class="mobileMonitoringSchedule${monitored ? "" : " isOff"}">
@@ -2566,10 +2566,95 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     return result;
   }
 
+  // M1 (owner 2026-10-11): what the morning e-mail of this Mac's service tells
+  // about one car, by the rules of page 3 — new (not listed before on any
+  // portal, N1), cheaper than at the previous check, "Okazja" (told once:
+  // again only when it got cheaper), "wróciło" (the same car under a new
+  // number, M3). earlier: this search's earlier records (30 days), record:
+  // the new one. Plain data: the letter is written by server/monitoring-mail.mjs.
+  function monitoringDigest(job, earlier, record) {
+    const digest = { id: job?.id || "", title: job?.title || "", at: record?.at || "", counts: { now: 0, fresh: 0, cheaper: 0, okazja: 0, relisted: 0, gone: 0 }, silent: [], fresh: [], cheaper: [], okazja: [], relisted: [] };
+    if (!record) return digest;
+    const counted = (source, offer) => !offer.suspect && !offer.bid && !otherVersionOf(job?.filters, source, offer);
+    const sameScope = (earlier || []).filter((item) => item && item.scope === record.scope && item.at < record.at).sort((left, right) => left.at.localeCompare(right.at));
+    const previous = sameScope[sameScope.length - 1] || null;
+    const kmOf = (offer) => Number(String(powerInKm(offer.power) || "").match(/^(\d+) KM$/)?.[1]) || 0;
+    const poolOf = (item) => {
+      const pool = [];
+      const sourceOf = new Map();
+      MARKET_SOURCES.forEach((source) => (answeredMarket(item, source).offers || []).forEach((offer) => {
+        if (!counted(source, offer)) return;
+        pool.push(offer);
+        sourceOf.set(offer, source);
+      }));
+      const pricePln = (offer) => clientPricePln(offer, sourceOf.get(offer));
+      return { pool, sourceOf, pricePln, similarFor: (offer) => similarMedian(offer, pool, pricePln, kmOf) };
+    };
+    const now = poolOf(record);
+    const then = previous ? poolOf(previous) : null;
+    digest.counts.now = now.pool.length;
+    digest.silent = Object.keys(record.failed || {}).map(portalName);
+    const firstSeen = new Map();
+    const lastSeen = new Map();
+    sameScope.forEach((item) => MARKET_SOURCES.forEach((source) => (answeredMarket(item, source).offers || []).forEach((offer) => {
+      if (!firstSeen.has(offer.key)) firstSeen.set(offer.key, item.at);
+      lastSeen.set(offer.key, { offer, source, at: item.at });
+    })));
+    const carsBefore = carsOf(sameScope.flatMap((item) => Object.values(item.markets || {})));
+    const nowCars = carsOf(Object.values(record.markets || {}));
+    const keysNow = new Set(Object.values(record.markets || {}).flatMap((market) => (market.offers || []).map((offer) => offer.key)));
+    const monthAgo = new Date(Date.parse(record.at) - 30 * 86400000).toISOString();
+    const gone = [...lastSeen.values()].filter((item) => !keysNow.has(item.offer.key) && item.at >= monthAgo);
+    const daysOf = (offer) => {
+      const listed = offer.listedAt && Number.isFinite(Date.parse(offer.listedAt)) ? offer.listedAt : firstSeen.get(offer.key);
+      return listed ? Math.max(0, Math.round((Date.parse(record.at) - Date.parse(listed)) / 86400000)) : null;
+    };
+    const currencyOf = (offer, source) => offer.currency || SOURCE_CURRENCY[source] || "EUR";
+    const item = (offer, extra = {}) => {
+      const source = now.sourceOf.get(offer);
+      const similar = now.similarFor(offer);
+      const turnkey = now.pricePln(offer);
+      return {
+        key: offer.key, portal: portalName(source), title: offer.title || "", url: offer.url || "", photo: offer.photo || "",
+        price: offer.price, currency: currencyOf(offer, source), turnkey: Number.isFinite(turnkey) ? Math.round(turnkey) : 0,
+        year: offer.year || "", mileage: Number(offer.mileage) || 0, power: offer.power || "", country: offer.country || "", city: offer.city || "", seller: offer.seller || "",
+        days: daysOf(offer),
+        similar: similar ? { count: similar.count, median: Math.round(similar.median), share: (turnkey - similar.median) / similar.median } : null,
+        ...extra,
+      };
+    };
+    now.pool.forEach((offer) => {
+      const source = now.sourceOf.get(offer);
+      const comparable = Boolean(previous && portalAnswered(previous, source));
+      const before = comparable ? (answeredMarket(previous, source).offers || []).find((old) => old.key === offer.key) : undefined;
+      if (comparable && !before) {
+        const relisted = findRelisted(offer, source, gone);
+        if (relisted) digest.relisted.push(item(offer, { relisted: { at: relisted.at, price: relisted.offer.price, currency: currencyOf(relisted.offer, source) } }));
+        else if (!carsBefore.has(carSignature(offer))) digest.fresh.push(item(offer));
+      } else if (before && Number(offer.price) < Number(before.price)) {
+        digest.cheaper.push(item(offer, { before: { price: before.price, currency: currencyOf(before, source), share: (offer.price - before.price) / before.price } }));
+      }
+      const okazjaNow = isOkazja(now.pricePln(offer), now.similarFor(offer));
+      const okazjaBefore = Boolean(before) && then.pool.includes(before) && isOkazja(then.pricePln(before), then.similarFor(before));
+      if (okazjaNow && (!before || Number(offer.price) < Number(before.price) || !okazjaBefore)) digest.okazja.push(item(offer));
+    });
+    if (previous) MARKET_SOURCES.filter((source) => portalAnswered(record, source) && portalAnswered(previous, source)).forEach((source) => {
+      const keys = new Set((answeredMarket(record, source).offers || []).map((offer) => offer.key));
+      digest.counts.gone += (answeredMarket(previous, source).offers || []).filter((offer) => counted(source, offer) && !keys.has(offer.key) && !nowCars.has(carSignature(offer))).length;
+    });
+    const byPrice = (left, right) => (left.turnkey || left.price || 0) - (right.turnkey || right.price || 0);
+    ["fresh", "cheaper", "okazja", "relisted"].forEach((key) => {
+      digest[key].sort(byPrice);
+      digest.counts[key] = digest[key].length;
+    });
+    return digest;
+  }
+
   window.AUTOGOOD_MONITORING = {
     jobs: monitoringJobs,
     run: runMonitoringJob,
     news: monitoringNews,
+    digest: monitoringDigest,
     importRecords: importMonitoringRecords,
     progress: () => ({ ...runnerProgress }),
     runner: RUNNER_MODE,
@@ -2768,7 +2853,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
           break;
         }
       }
-      Object.assign(localMonitoring, { available: Boolean(health?.ok), failedToday: Boolean(health?.failedToday) });
+      Object.assign(localMonitoring, { available: Boolean(health?.ok), failedToday: Boolean(health?.failedToday), mail: Boolean(health?.mail) });
       let added = 0;
       if (health?.ok) {
         let state = localMonitoringState();
@@ -3098,6 +3183,19 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
         transport: tariff.transport,
         inspection: tariff.inspection,
       });
+      return;
+    }
+    // M12: a test of the morning e-mail from this Mac's service (what the
+    // last check found, marked as a test).
+    if (event.target.closest("[data-monitoring-mail-test]")) {
+      Object.assign(monitoringState, { status: copy().monitoringMailSending, statusError: false });
+      renderPriceHistoryPage();
+      fetch(`${monitoringServiceUrl}/mail-test`, { method: "POST" }).then((response) => response.json()).then((data) => {
+        if (!data?.ok) throw new Error(data?.error || "");
+        Object.assign(monitoringState, { status: copy().monitoringMailSent.replace("{to}", (data.to || []).join(", ")), statusError: false });
+      }).catch((error) => {
+        Object.assign(monitoringState, { status: copy().monitoringMailFailed.replace("{error}", error.message || ""), statusError: true });
+      }).finally(renderPriceHistoryPage);
       return;
     }
     // Connect this Mac's service (Chrome asks once for local access).
