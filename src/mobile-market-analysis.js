@@ -7228,7 +7228,8 @@
       if (kms.length) {
         const low = Math.min(...kms);
         const high = Math.max(...kms);
-        const step = [10000, 20000, 25000, 50000, 100000].find((size) => Math.floor(high / size) - Math.floor(low / size) + 1 <= 6) || 100000;
+        // Wide bands, at most 4 (owner 2026-10-12: fewer columns), from 20 000 km.
+        const step = [20000, 25000, 50000, 100000].find((size) => Math.floor(high / size) - Math.floor(low / size) + 1 <= 4) || 100000;
         const thousands = (value) => numbers.format(Math.round(value / 1000));
         addDimension(c.statsMileageHeading,
           (listing) => (Number(listing.mileage) > 0 ? Math.floor(Number(listing.mileage) / step) * step : null),
