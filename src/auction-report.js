@@ -151,6 +151,9 @@
     inspection: { firm: "Macadam", name: "Rapport d'inspection" },
     appraisal: { firm: "Macadam", name: "Appraisal (Macadam Manager)" },
     remarketing: { firm: "Macadam", name: "Rapport de Remarketing" },
+    "dekra-nl": { firm: "DEKRA", name: "Rapportage voertuigstaat (NL)" },
+    "dekra-de": { firm: "DEKRA", name: "Vermarktungsbericht / Zustandsbericht (DE)" },
+    "dekra-fr": { firm: "DEKRA", name: "Rapport d'inspection (BE, FR)" },
   };
   // Auctions and inspection firms we know by name but do not read yet.
   const OTHERS = [
@@ -259,6 +262,17 @@
     { test: /^p\s*-|controler/, group: "check" },
     { test: /nettoyer/, group: "clean" },
     { test: /^acceptable$|pas de reparation|sans degats/, group: "none" },
+    // DEKRA (DE, NL, FR/BE), 2026-10-12.
+    { test: /instandsetzen und lackieren|reparieren und lackieren|herstellen en spuiten/, group: "repair_paint" },
+    { test: /^herstellen$|^reparation$|^reparatur$|^instandsetzen$|^reparieren$/, group: "repair_paint" },
+    { test: /erneuern|ersetzen|vervangen|^echange$/, group: "replace" },
+    { test: /lackieren|spuiten|^peinture$/, group: "paint" },
+    { test: /polieren|polijsten/, group: "polish" },
+    { test: /reinigen|^nettoyage$/, group: "clean" },
+    { test: /forfait herstelling/, group: "flat" },
+    { test: /ausbeulen|uitdeuken/, group: "pdr" },
+    { test: /durchfuhren|uitvoeren|effectuer/, group: "service" },
+    { test: /gebrauchsspur|akzeptiert/, group: "none" },
   ];
   const repairGroup = (repair) => (REPAIRS.find((item) => item.test.test(plain(repair)))?.group) || "other";
   // A caption "Élément, type, réparation" ends with one of these.
@@ -795,6 +809,9 @@
     const text = pdfText(pages);
     const link = String(title || "").match(/(?:https?:\/\/)?[\w.-]*macadam\.eu\/[^\s]*AppraisalWebview[^\s]*/i)?.[0];
     if (link) return { firm: "Macadam", layout: "appraisal", link: /^https?:/i.test(link) ? link : `https://${link}` };
+    if (/Rapportage voertuigstaat/i.test(text)) return { firm: "DEKRA", layout: "dekra-nl", link: "" };
+    if (/DEKRA-Nr/i.test(text) && /Vermarktungsbericht|Zustandsbericht|Minderwertgutachten|Fahrzeugdaten/i.test(text)) return { firm: "DEKRA", layout: "dekra-de", link: "" };
+    if (/Dommages et corrections/i.test(text) && /[ÉE]l[ée]ments amovibles|Equipements v[ée]hicule|D[ée]tails de l'inspection/i.test(text)) return { firm: "DEKRA", layout: "dekra-fr", link: "" };
     const joined = pages.slice(0, 1).concat(pages.slice(-1)).flatMap((page) => joinFragments(page.items)).join("\n");
     if (/remarketing/i.test(title) || /Rapport de Remarketing/i.test(joined)) {
       const footer = pages.flatMap((page) => page.items.map((item) => item.str)).find((str) => /portal\.macadam\.eu\/reports\/remarketing/i.test(str));
@@ -970,8 +987,811 @@
     return finish(report);
   }
 
+  // ---- DEKRA (owner 2026-10-12, docs/PROJECT-AUCTION-REPORTS.md §11) ---------------------------
+  // Four prints read from the PDF's text: NL "Rapportage voertuigstaat", DE "Vermarktungsbericht",
+  // DE "Zustandsbericht/Minderwertgutachten-Leasing" (the same frame), FR/BE (Parc Hödlmayr).
+  // Their words are brought to the French ones of our dictionaries (Macadam's): the part
+  // ("porte AVD"), the damage ("griffe(s)"); the report's own words stay in `original`.
+
+  // A row of a page: items within 1.5 pt of one line, left to right.
+  function rowsOf(page) {
+    const rows = [];
+    for (const item of [...page.items].sort((a, b) => b.y - a.y || a.x - b.x)) {
+      const row = rows.find((candidate) => Math.abs(candidate.y - item.y) <= 1.5);
+      if (row) row.items.push(item);
+      else rows.push({ y: item.y, items: [item] });
+    }
+    for (const row of rows) {
+      row.items.sort((a, b) => a.x - b.x);
+      row.text = row.items.map((item) => item.str.trim()).join(" ").replace(/\s+/g, " ").trim();
+    }
+    return rows;
+  }
+  const dash = (value) => (/^[-–—\s]*$/.test(String(value ?? "")) ? "" : clean(value));
+  const tight = (value) => plain(value).replace(/[\s.:]+/g, "");
+
+  // Parts: the first test that matches gives the French part; the side comes from the words.
+  const DEKRA_PARTS = [
+    [/compresseur|kompressor/, "compresseur"],
+    [/motorraum|motorruimte|compartiment moteur/, "motorraum"],
+    [/bremsbel|bremsscheib|remblok|remschijf|plaquette|\bfreins?\b/, "freins"],
+    [/^(service|inspektion|wartung|onderhoud|entretien)\b|service\/inspektion/, "entretien"],
+    [/portierrubber|turdichtung|tuerdichtung|joint de porte/, "joint de porte"],
+    [/portier ?sierlijst|turzierleiste|tur(?:en)?leiste/, "moulure porte"],
+    [/chromleiste|zierleiste|sierlijst|moulure|baguette/, "moulure"],
+    [/turgriff|tuergriff|deurgreep|portiergreep|poignee/, "poignee ext porte"],
+    [/panneau de porte|turverkleidung|portierbekleding/, "garniture porte"],
+    [/entree de porte|einstiegsleiste/, "seuil de porte"],
+    [/seitenteil|zijpaneel|aile arriere/, "aile", "AR"],
+    [/kotflugel|kotfluegel|scherm\b|^aile\b/, "aile"],
+    [/einstieg|schweller|dorpel|bas de caisse/, "bas de caisse"],
+    [/montant de pavillon|dachsaule|a-saule|b-saule|\bstijl\b/, "montant de toit"],
+    [/heckklappe|kofferraumdeckel|achterklep|hayon|porte de coffre/, "coffre / hayon"],
+    [/frontscheibe|windschutzscheibe|voorruit|pare-brise/, "pare-brise"],
+    [/scheibe|\bruit\b|vitre|glace/, "vitre"],
+    [/motorhaube|motorkap|capot/, "capot"],
+    [/stossfanger|stoßfanger|bumper|pare-chocs/, "pare-chocs"],
+    [/spiegel|retroviseur/, "retroviseur"],
+    [/^(dach|dak|toit|pavillon)\b/, "toit"],
+    [/felge|velg|jante/, "jante"],
+
+    [/scheinwerfer|koplamp|phare|projecteur/, "phare"],
+    [/ruckleuchte|heckleuchte|achterlicht|\bfeu\b/, "feu"],
+    [/spoiler|frontlippe|becquet/, "spoiler"],
+    [/kuhlergrill|grill|calandre/, "calandre"],
+    [/lenkrad|stuur|volant/, "volant"],
+    [/^(sitz|stoel|siege)|sitzbezug/, "siege"],
+    [/tapis|fussmatte|\bmat(ten)?\b/, "tapis"],
+    [/cache bagages|laderaumrollo|hoedenplank|plage arriere/, "cache bagages"],
+    [/recharge kit|kit secours|kit reparation|reifendichtmittel|pannenset|mobiliteitsset/, "kit reparation pneu"],
+    [/reifen|\bband(en)?\b|\bpneus?\b/, "pneu"],
+    [/lautsprecher|mittelkonsole|armaturen|dashboard|innenraum|interieur|verkleidung|bekleding/, "interieur"],
+    [/carrosserie|karosserie/, "carrosserie"],
+    [/^(tur|portier|porte)\b|\btur (vorne?|hinten)/, "porte"],
+  ];
+  // The side: "vorne rechts", "Rechtsachter", "Arrière Droit" → "ARD".
+  function sideOf(text, fallbackFront = "") {
+    const words = plain(text).replace(/(links|rechts)(voor|achter)/g, "$1 $2");
+    const front = /\b(vorne?|vorn|voor|avant|av)\b/.test(words);
+    const rear = /\b(hinten|achter|arriere|ar)\b/.test(words);
+    const left = /\b(links|gauche|li)\b/.test(words);
+    const right = /\b(rechts|droite?|re)\b/.test(words);
+    const axis = front && !rear ? "AV" : rear && !front ? "AR" : fallbackFront;
+    const side = left && !right ? "G" : right && !left ? "D" : "";
+    return `${axis}${side}`;
+  }
+  // "Tür vorne rechts" → "porte AVD"; "" when the part is not known.
+  function dekraPart(text) {
+    const key = plain(text);
+    const hit = DEKRA_PARTS.find(([test]) => test.test(key));
+    if (!hit) return "";
+    const side = sideOf(text, hit[2] || "");
+    return side ? `${hit[1]} ${side}` : hit[1];
+  }
+  const DEKRA_TYPES = [
+    [/slechte herstelling|malfacon|mangelhaft|schlechte reparatur/, "mauvaise reparation"],
+    [/hagel|grele/, "grele"],
+    [/tierverbiss|marderbiss|marder|knaagschade/, "tierverbiss"],
+    [/deuk met lakschade/, "bosse(s) et griffe(s)"],
+    [/umweltschaden|chemische afzetting|vogelkot|harz/, "degats environnement"],
+    [/kratzer|zerkratzt|verkratzt|\bkras\b|rayure|griffe/, "griffe(s)"],
+    [/steinschlag|steenslag|eclat/, "eclat(s)"],
+    [/\bdelle\b|eingedellt|\bdeuk\b|enfoncement|\bbeule\b|verbeult/, "bosse(s)"],
+    [/verformt|deformiert|vervormd|deforme/, "deforme / force"],
+    [/gerissen|eingerissen|\briss\b|gescheurd|dechire/, "dechirure"],
+    [/gebrochen|zerbrochen|gebroken|\bcasse\b|defekt/, "casse"],
+    [/\bfehlt\b|ontbreekt|manquant/, "manque"],
+    [/verschlissen|abgefahren|versleten|\buse\b/, "use"],
+    [/fehlermeldung/, "message d'erreur"],
+    [/warnleuchte|kontrollleuchte/, "allume"],
+    [/uberfallig|faellig|\bfallig\b/, "en retard"],
+    [/verschmutzt|\bvuil\b|\bsale\b/, "sale"],
+    [/auto-?collants|aufkleber|sticker/, "autocollants"],
+    [/lackschaden|lakschade/, "degats peinture"],
+  ];
+  const dekraType = (text) => (DEKRA_TYPES.find(([test]) => test.test(plain(text)))?.[1]) || "";
+
+  function dekraDamage(report, { part, type, repair, original, area = "", page = null, refs = [], accepted = false }) {
+    const element = dekraPart(part) || clean(part) || "";
+    if (!element) return;
+    const key = dekraType(type) || plain(type);
+    report.damages.push({
+      id: "",
+      element,
+      original: oneLine(original || [part, type].filter(Boolean).join(", ")),
+      type: key,
+      typeOriginal: oneLine(type),
+      repair: oneLine(repair),
+      group: accepted ? "none" : repairGroup(repair),
+      cost: null,
+      area: oneLine(area),
+      page,
+      photos: [],
+      photoRefs: refs,
+      accepted,
+    });
+  }
+
+  // Fuel, gearbox, drive, body in the three languages → the French words of VALUES.
+  function dekraFuel(text) {
+    const key = plain(text);
+    if (!key) return "";
+    if (/rechargeable|plug-?in|phev/.test(key)) return "hybride rechargeable";
+    if (/hybr.*(benzin|essence)|(benzin|essence).*hybr/.test(key)) return "hybride essence";
+    if (/hybr.*diesel|diesel.*hybr/.test(key)) return "hybride diesel";
+    if (/hybr/.test(key)) return "hybride";
+    if (/elektr|electr|^ev$/.test(key)) return "electrique";
+    if (/diesel/.test(key)) return "diesel";
+    if (/benzin|essence|petrol/.test(key)) return "essence";
+    if (/lpg|autogas|gpl/.test(key)) return "gpl";
+    return clean(text);
+  }
+  function dekraGearbox(text) {
+    const key = plain(text);
+    if (/automa/.test(key)) return "automatique";
+    if (/handmatig|manuel|schalt|manual/.test(key)) return "manuelle";
+    return clean(text).replace(/\s*\/\s*$/, "");
+  }
+  function dekraDrive(text) {
+    const key = plain(text);
+    if (/allrad|4wd|awd|quatre roues|4x4|integrale|vierwiel/.test(key)) return "integrale";
+    if (/front|avant|fwd|voorwiel/.test(key)) return "avant";
+    if (/heck|arriere|rwd|achterwiel/.test(key)) return "arriere";
+    return clean(text);
+  }
+  const BODIES = { gelandewagen: "suv", "suv": "suv", kombi: "break", stationwagen: "break", "station wagon": "break", limousine: "berline", sedan: "berline", hatchback: "berline", schragheck: "berline", coupe: "coupe", cabrio: "cabriolet", cabriolet: "cabriolet", "mpv": "monospace", van: "monospace", "personenkraftwagen": "" };
+  const dekraBody = (text) => (Object.prototype.hasOwnProperty.call(BODIES, plain(text)) ? BODIES[plain(text)] : clean(text));
+  // "Grau / Metallic / A90", "BURSTING BLUE Metallic", "Grijs Metallic" → color + paint.
+  function dekraColor(report, text) {
+    const value = clean(text);
+    if (!value) return;
+    if (/metal/.test(plain(value))) report.car.paint ||= "metallise";
+    if (/perl|nacr|parelmoer/.test(plain(value))) report.car.paint ||= "nacre";
+    report.car.color ||= value.split("/")[0].replace(/(^|\s)(metallic|m[eé]tallis[eé]e?|metaal(lak)?)(?=\s|$)/gi, " ").replace(/\s+/g, " ").trim();
+  }
+  // Model and version from the maker's name: "X3 (G01)(12.2017->) / X3 xDrive20d Luxury Line (EURO 6d-TEMP)".
+  const MODEL_WORDS = /^(sportback|limousine|avant|touring|kombi|coupe|coupé|cabrio|cabriolet|variant|estate|allroad|gran|grand|active|tourer|sportbrake|sw|shooting|break|electric)$/i;
+  function dekraModel(report, text, make = "") {
+    const value = clean(text).replace(new RegExp(`^${make.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s+`, "i"), "");
+    if (!value) return;
+    report.car.version ||= value;
+    if (/\(/.test(value)) {
+      const head = value.split("(")[0].trim();
+      report.car.model ||= head;
+      const tail = /\//.test(value.replace(/\([^)]*\)/g, ""))
+        ? value.split("/").slice(1).join("/")
+        : value.replace(/^[^(]*/, "").replace(/^(\([^)]*\)\s*)+/, "");
+      report.car.versionDetails ||= tail.replace(/\(EURO[^)]*\)/i, "").replace(/\(MOTEUR.*?KW[^)]*\)/i, "").replace(/\b\d\s+PORTES\b/i, "").replace(/\s+/g, " ").trim();
+      return;
+    }
+    const words = value.split(/\s+/);
+    let count = 1;
+    while (count < words.length && MODEL_WORDS.test(words[count])) count += 1;
+    report.car.model ||= words.slice(0, count).join(" ");
+    report.car.versionDetails ||= words.slice(count).join(" ");
+  }
+
+  // Documents, keys and the spare kit named in the three languages.
+  function dekraItem(report, text) {
+    const key = plain(text);
+    const doc = (label, value = "Oui") => report.documents.push({ label, value });
+    const spare = (label) => report.spare.push({ label, value: "Oui" });
+    if (/conformit/.test(key)) doc("Certificat de conformité");
+    else if (/immatriculation|kentekenbewijs|zulassungsbescheinigung|fz-schein/.test(key)) doc("Certificat immatriculation (original)");
+    else if (/carnet de garantie|garantieboek/.test(key)) doc("Carnet de garantie");
+    else if (/carnet d'entretien|canet d'entretien|onderhoudsboek|serviceheft|scheckheft/.test(key)) doc("Carnet d'entretien");
+    else if (/manuel|handleiding|bedienungsanleitung|betriebsanleitung/.test(key)) doc("Manuel d'utilisation");
+    else if (/cable de charge|laadkabel|ladekabel/.test(key)) doc("Câble de recharge");
+    else if (/thuislader|wallbox|chargeur/.test(key)) doc("Chargeur domestique");
+    else if (/reservesleutel|double de cle|ersatzschlussel/.test(key)) report.keys.keys = Math.max(report.keys.keys || 1, 2);
+    else if (/afstandsbediening|telecommande|cle plip|funkschlussel/.test(key)) report.keys.remotes = Math.max(report.keys.remotes || 0, 1);
+    else if (/^sleutel$|^cle$/.test(key)) report.keys.keys ||= 1;
+    else if (/compresseur|kompressor/.test(key)) spare("Compresseur");
+    else if (/kit reparation|recharge kit|mobiliteitsset|pannenset|reifendichtmittel/.test(key)) spare("Kit réparation pneu");
+    else if (/^cric$|wagenheber|krik/.test(key)) spare("Cric");
+    else if (/roue de secours|reserverad|reservewiel/.test(key)) spare("Roue de secours");
+    else if (/attelage|trekhaak|anhangerkupplung/.test(key)) report.options.push("Attelage");
+  }
+
+  // Equipment: brands of other makers are catalogue errors of DEKRA-FR (owner: filter, caretaker confirms).
+  const BRANDS = ["cadillac", "audi", "mercedes", "bmw", "volkswagen", "skoda", "seat", "cupra", "porsche", "volvo", "renault", "peugeot", "citroen", "toyota", "lexus", "ford", "opel", "kia", "hyundai", "mazda", "nissan", "jaguar", "land rover", "tesla"];
+  const GROUPS = { audi: ["volkswagen", "skoda", "seat", "cupra", "porsche"], volkswagen: ["audi", "skoda", "seat", "cupra"] };
+  function foreignBrand(item, make) {
+    const key = plain(item);
+    const own = plain(make);
+    const allowed = [own, ...(GROUPS[own] || [])];
+    return BRANDS.find((brand) => new RegExp(`\\b${brand}\\b`).test(key) && !allowed.some((name) => name && (name.includes(brand) || brand.includes(name)))) || "";
+  }
+
+  function dekraFinish(report) {
+    const once = (list) => list.filter((item, at) => list.findIndex((other) => other.label === item.label && other.value === item.value) === at);
+    report.documents = once(report.documents);
+    report.spare = once(report.spare);
+    report.options = unique(report.options);
+    if (!report.car.drive) {
+      const drive = report.factoryDetails.find((item) => /antriebsart|mode de transmission|aandrijving/i.test(item));
+      if (drive) report.car.drive = dekraDrive(drive);
+    }
+    return finish(report);
+  }
+  function dekraEmpty(layout) {
+    const country = { "dekra-nl": "NL", "dekra-de": "DE", "dekra-fr": "BE" }[layout];
+    const language = { "dekra-nl": "nl", "dekra-de": "de", "dekra-fr": "fr" }[layout];
+    const report = emptyReport(layout, { readFrom: "pdf", country, language });
+    report.firm = "DEKRA";
+    report.remarks = [];
+    report.checks = [];
+    report.catalogErrors = [];
+    return report;
+  }
+
+  // NL "Rapportage voertuigstaat": label / value columns, lists, damages in two columns of cards.
+  const NL_FIELDS = {
+    chassisnr: "vin", kenteken: "plate", inschrijvingsdatum: "firstRegistration", kmstand: "mileage", brandstof: "fuel",
+    aantalzitplaatsen: "seats", aantalportieren: "doors", merk: "make", model: "model", bouwjaar: "modelYear",
+    cylinderinhoud: "displacement", carrosseriesoort: "body", transmissie: "gearbox", aantalversnellingen: "gears",
+    onderhoudsdatum: "serviceDate", kmstandonderh: "serviceKm", kleur: "color", interieurkleur: "interior",
+    apkdatum: "apk", uitstoot: "emission", inspectiedatum: "inspectedAt", terminal: "terminal",
+  };
+  const NL_DAMAGE = ["onderdeel", "positie", "type", "omvang", "bewerking"];
+  function fromDekraNl(pages) {
+    const report = dekraEmpty("dekra-nl");
+    report.layoutName = "Rapportage voertuigstaat";
+    const values = {};
+    pages.forEach((page, index) => {
+      const labels = page.items.filter((item) => NL_FIELDS[tight(item.str)]);
+      for (const label of labels) {
+        const right = labels.filter((other) => other.x > label.x + 5 && Math.abs(other.y - label.y) < 3).map((other) => other.x);
+        const limit = right.length ? Math.min(...right) : page.width;
+        const below = labels.filter((other) => Math.abs(other.x - label.x) < 3 && other.y < label.y - 3).map((other) => other.y);
+        const floor = below.length ? Math.max(...below) + 2 : label.y - 12;
+        const value = page.items.filter((item) => !NL_FIELDS[tight(item.str)] && item.x > label.x + label.w && item.x < limit - 2 && item.y <= label.y + 2 && item.y > floor)
+          .sort((a, b) => b.y - a.y || a.x - b.x).map((item) => item.str.trim()).join(" ");
+        values[NL_FIELDS[tight(label.str)]] ??= dash(value);
+      }
+      // Lists: Accessoires · Verwijderbare items · Documentenlijst, each in its column.
+      const heads = page.items.filter((item) => /^(accessoires|verwijderbare items|documentenlijst)$/.test(plain(item.str)));
+      const stop = page.items.filter((item) => /^(banden|exterieur schade|interieur schade)$/.test(plain(item.str)) && heads.some((head) => item.y < head.y)).map((item) => item.y);
+      const floor = Math.max(40, ...stop);
+      for (const head of heads) {
+        const next = heads.filter((other) => other.x > head.x + 5).map((other) => other.x);
+        const limit = next.length ? Math.min(...next) : page.width;
+        const list = page.items.filter((item) => item.x >= head.x - 2 && item.x < limit - 2 && item.y < head.y - 3 && item.y > floor && !/^page \d/i.test(item.str.trim()))
+          .sort((a, b) => b.y - a.y).map((item) => item.str.trim());
+        const name = plain(head.str);
+        if (name === "accessoires") report.options.push(...list);
+        else list.forEach((item) => dekraItem(report, item));
+      }
+      // Tyres: "Continental 205/55/17 Zomer 3.0" + "mm" — two a row: the first row the front.
+      const tyreHead = page.items.find((item) => plain(item.str) === "banden");
+      if (tyreHead) {
+        const end = page.items.filter((item) => /exterieur schade|interieur schade/.test(plain(item.str)) && item.y < tyreHead.y).map((item) => item.y);
+        const floorY = end.length ? Math.max(...end) : 40;
+        const cells = page.items.filter((item) => item.y < tyreHead.y - 3 && item.y > floorY);
+        const rows = [];
+        for (const cell of cells.filter((item) => /\d{3}\/\d{2}\/\d{2}/.test(item.str)).sort((a, b) => b.y - a.y)) {
+          const row = rows.find((candidate) => Math.abs(candidate.y - cell.y) < 3);
+          if (row) row.cells.push(cell);
+          else rows.push({ y: cell.y, cells: [cell] });
+        }
+        rows.slice(0, 2).forEach((row, axle) => {
+          row.cells.sort((a, b) => a.x - b.x).slice(0, 2).forEach((cell, side) => {
+            const text = clean(cell.str);
+            const match = text.match(/^(.*?)\s*(\d{3}\/\d{2}\/\d{2})\s+(\S+)\s+([\d.,]+)/);
+            if (!match) return;
+            report.tyres.push({
+              position: `${axle ? "AR" : "AV"}${side ? "D" : "G"}`,
+              brand: match[1], size: match[2], depth: numberOf(match[4]),
+              season: { zomer: "ete", winter: "hiver", "all-season": "toutes saisons", allseason: "toutes saisons", "4-seizoenen": "toutes saisons" }[plain(match[3])] || match[3],
+            });
+          });
+        });
+      }
+      // Damages: "Onderdeel / Positie / Type / Omvang / Bewerking" cards, two columns.
+      for (const head of page.items.filter((item) => tight(item.str) === "onderdeel")) {
+        const bound = head.x < page.width / 2 ? page.items.filter((item) => tight(item.str) === "onderdeel" && item.x > head.x + 50).map((item) => item.x)[0] || page.width / 2 + 100 : page.width;
+        const fields = {};
+        let cursor = head;
+        const labels = [head];
+        for (const name of NL_DAMAGE.slice(1)) {
+          const next = page.items.filter((item) => tight(item.str) === name && Math.abs(item.x - head.x) < 3 && item.y < cursor.y && cursor.y - item.y < 25).sort((a, b) => b.y - a.y)[0];
+          if (!next) break;
+          labels.push(next);
+          cursor = next;
+        }
+        labels.forEach((label, at) => {
+          const lower = labels[at + 1] ? labels[at + 1].y + 2 : label.y - 6;
+          fields[tight(label.str)] = dash(page.items.filter((item) => item.x > label.x + 20 && item.x < bound - 5 && item.y <= label.y + 2 && item.y > lower && !NL_DAMAGE.includes(tight(item.str)) && !/^\d{1,2}$/.test(item.str.trim()))
+            .sort((a, b) => b.y - a.y || a.x - b.x).map((item) => item.str.trim()).join(" "));
+        });
+        // A note under the card in the labels' column ("gerookt in auto").
+        const note = page.items.filter((item) => Math.abs(item.x - head.x) < 3 && item.y < cursor.y - 3 && cursor.y - item.y < 16 && !NL_DAMAGE.includes(tight(item.str)) && tight(item.str) !== "onderdeel")
+          .map((item) => item.str.trim()).join(" ");
+        if (note) report.remarks.push(note);
+        const where = [fields.onderdeel, fields.positie].filter(Boolean).join(" ");
+        dekraDamage(report, {
+          part: where,
+          type: fields.type,
+          repair: fields.bewerking,
+          original: [fields.onderdeel, fields.positie].filter(Boolean).join(" · "),
+          area: [fields.omvang, note].filter(Boolean).join("; "),
+          page: index + 1,
+        });
+      }
+    });
+    const car = report.car;
+    car.vin = (values.vin || "").replace(/\s+/g, "");
+    car.plate = values.plate || "";
+    car.firstRegistration = values.firstRegistration || "";
+    if (values.mileage) car.mileage = values.mileage;
+    car.make = values.make || "";
+    dekraModel(report, values.model || "", car.make);
+    car.fuel = dekraFuel(values.fuel);
+    car.gearbox = dekraGearbox(values.gearbox);
+    if (values.gears) car.gears = numberOf(values.gears);
+    if (values.displacement) car.displacement = numberOf(values.displacement);
+    if (values.modelYear) car.modelYear = values.modelYear;
+    car.body = dekraBody(values.body);
+    if (values.doors) car.doors = values.doors;
+    if (values.seats) car.seats = values.seats;
+    dekraColor(report, values.color);
+    if (values.interior) car.interior = values.interior;
+    if (values.inspectedAt) {
+      report.inspection.date = isoDate(values.inspectedAt);
+      report.inspection.dateText = values.inspectedAt;
+    }
+    if (values.terminal) report.inspection.place = values.terminal;
+    if (values.serviceDate || values.serviceKm) report.documents.push({ label: "Dernier entretien", value: [values.serviceDate, values.serviceKm].filter(Boolean).join(", "), date: isoDate(values.serviceDate), km: numberOf(values.serviceKm) });
+    if (values.apk) report.other.push({ label: "APK", value: values.apk, section: "Voertuig gegevens" });
+    // The field of the gearbox wins over the ticked list (owner: a note for the caretaker).
+    if (car.gearbox === "manuelle" && report.options.some((item) => /automatische versnellingsbak/i.test(item))) {
+      report.remarks.push("Transmissie: Handmatig, a w liście akcesoriów: Automatische versnellingsbak — sprawdzić po VIN.");
+    }
+    return dekraFinish(report);
+  }
+
+  // DE "Vermarktungsbericht" and "Zustandsbericht/Minderwertgutachten-Leasing": one stream of lines.
+  const DE_FIELDS = {
+    erstzulassung: "firstRegistration", letztezulassung: "lastRegistration", hersteller: "make", "typ/verkaufsbez": "model",
+    aufbauart: "body", turen: "doors", sitzplatze: "seats", "fahrzeug-ident-nr": "vin", "hsn/tsn": "hsn", "schlussel-nr": "keyNo",
+    "km-standabgelesen": "mileage", "nachstehu§29stvzo": "hu", "energiequelle/kraftstoff": "fuel", zylinderanzahl: "cylinders",
+    "leistung(kw)": "power", "hubraum(ccm)": "displacement", schadstoffklasse: "emission", antriebsart: "drive",
+    "getriebe/gange": "gearbox", getriebe: "gearbox", felgen: "rims", farbe: "color", "polster/farbe": "upholstery",
+    fahrzeugart: "kind", "dat€uropa-code®": "dat", datmarktindex: "datIndex",
+  };
+  const DE_SECTIONS = [
+    [/^vorgang$/, "vorgang"], [/^bemerkungen$/, "remarks"], [/^fahrzeugdaten$/, "car"], [/^rader \/ reifen$/, "tyres"],
+    [/^serienausstattung$/, "serie"], [/^sonderausstattung$/, "extra"], [/^allgemeinzustand und wartung$/, "state"],
+    [/^nicht akzeptierter zustand/, "damages"], [/^akzeptierter zustand/, "accepted"],
+  ];
+  function fromDekraDe(pages) {
+    const first = rowsOf(pages[0]).map((row) => row.text);
+    // The title line ("Der im Zustandsbericht festgestellte…" is in every remark).
+    const leasing = /^(Zustandsbericht|Minderwertgutachten)/i.test(first.find((text) => /^(Vermarktungsbericht|Zustandsbericht|Minderwertgutachten)/i.test(text)) || "");
+    const report = dekraEmpty("dekra-de");
+    report.layoutName = leasing ? "Zustandsbericht / Minderwertgutachten-Leasing" : "Vermarktungsbericht";
+    const head = first.find((text) => /^DEKRA-Nr/i.test(text)) || "";
+    report.reportNumber = head.match(/DEKRA-Nr:\s*([^v]+?)\s+vom/i)?.[1] || "";
+    // All lines in order, without the page heads and the company's footer; the photo pages apart.
+    const lines = [];
+    const photos = [];
+    pages.forEach((page, index) => {
+      const rows = rowsOf(page);
+      const isPhotos = rows.some((row) => /^Bild \d+\s*:/.test(row.text));
+      for (const row of rows) {
+        if (/^DEKRA-Nr/i.test(row.text) || /^Seite \d+ von \d+$/.test(row.text) || row.y < 75 && /DEKRA Automobil|Handwerkstraße|Telefon|Telefax|www\.dekra|D-70565|Stefan Kölbl|Seite \d/.test(row.text)) continue;
+        if (row.y < 75 && /IBAN|BIC|Geschäftsführer|Aufsichtsrat|Fehlauer|Bausch|Kutschera/.test(row.text)) continue;
+        if (isPhotos) {
+          const caption = row.text.match(/^Bild (\d+)\s*:\s*(.*)$/);
+          if (caption) photos.push({ n: Number(caption[1]), caption: caption[2], page: index + 1, y: row.y });
+          const count = row.text.match(/besteht aus (\d+) digital/);
+          if (count) report.photoCount = Number(count[1]);
+          continue;
+        }
+        lines.push({ ...row, page: index + 1 });
+      }
+    });
+    report.photoCaptions = photos;
+    let section = "";
+    const bySection = {};
+    for (const line of lines) {
+      const hit = DE_SECTIONS.find(([test]) => test.test(plain(line.text)));
+      if (hit) {
+        section = hit[1];
+        continue;
+      }
+      (bySection[section] ||= []).push(line);
+    }
+    const textOf = (name) => (bySection[name] || []).map((line) => line.text).join(" ").replace(/\s+/g, " ");
+    // Vorgang: the client and the day.
+    for (const line of bySection.vorgang || []) {
+      const [label, ...rest] = line.items;
+      const value = rest.map((item) => item.str.trim()).join(" ");
+      if (/^auftraggeber$/i.test(label.str.trim())) report.client = value.split(",")[0];
+      if (/^besichtigung$/i.test(label.str.trim())) {
+        report.inspection.date = isoDate(value);
+        report.inspection.dateText = value;
+      }
+    }
+    // Fahrzeugdaten: labels at the left of both columns, values wrapping below.
+    const values = {};
+    const lastOf = {};
+    for (const line of bySection.car || []) {
+      if (/Es wird unterstellt/.test(line.text)) continue;
+      let current = null;
+      for (const item of line.items) {
+        const field = DE_FIELDS[tight(item.str).replace(/^dat€uropa-code®$/, "dat€uropa-code®")];
+        const column = item.x < 300 ? "left" : "right";
+        if (field) {
+          current = { field, column };
+          values[field] ??= "";
+          lastOf[column] = field;
+          continue;
+        }
+        const target = current?.column === column ? current.field : lastOf[column];
+        if (target) values[target] = clean(`${values[target]} ${item.str}`);
+      }
+    }
+    const car = report.car;
+    car.make = values.make || "";
+    dekraModel(report, values.model || "", car.make);
+    car.firstRegistration = values.firstRegistration || "";
+    car.vin = (values.vin || "").replace(/\s+/g, "");
+    if (values.mileage) car.mileage = values.mileage;
+    car.fuel = dekraFuel(values.fuel);
+    if (values.power) car.power = values.power;
+    if (values.displacement) car.displacement = numberOf(values.displacement);
+    const gearbox = String(values.gearbox || "").split("/");
+    car.gearbox = dekraGearbox(gearbox[0]);
+    if (numberOf(gearbox[1])) car.gears = numberOf(gearbox[1]);
+    if (values.drive) car.drive = dekraDrive(values.drive);
+    car.body = dekraBody(values.body);
+    if (values.doors) car.doors = values.doors;
+    if (values.seats) car.seats = values.seats;
+    dekraColor(report, values.color);
+    if (values.upholstery) {
+      const [stuff, color] = values.upholstery.split("/").map((part) => part.trim());
+      car.upholstery = stuff;
+      if (color) car.interior = color;
+    }
+    for (const [field, label] of [["hu", "Nächste HU"], ["lastRegistration", "Letzte Zulassung"], ["hsn", "HSN / TSN"], ["keyNo", "Schlüssel-Nr."], ["cylinders", "Zylinderanzahl"], ["emission", "Schadstoffklasse"], ["rims", "Felgen"], ["dat", "DAT €uropa-Code"]]) {
+      if (values[field]) report.other.push({ label, value: values[field], section: "Fahrzeugdaten" });
+    }
+    if (values.hu) report.inspection.nextHu = values.hu;
+    // Bemerkungen: paint, earlier repairs, how the car was seen, keys, papers.
+    const remarks = textOf("remarks");
+    const paint = remarks.match(/Lackschichtdicken von\s*(\d+)\s*[μµ]m bis\s*(\d+)\s*[μµ]m/);
+    if (paint) report.inspection.paint = { min: Number(paint[1]), max: Number(paint[2]), repainted: [], none: /keine Hinweise auf\s+Nachlackierungen/i.test(remarks) };
+    const remarkLines = (bySection.remarks || []).map((line) => line.text);
+    const start = remarkLines.findIndex((text) => /folgenden Karosserieteilen festgestellt:?$/.test(text));
+    if (start >= 0 && report.inspection.paint) {
+      for (const text of remarkLines.slice(start + 1)) {
+        if (/^(Ohne|Das Fahrzeug|Die vorgefundenen|Für die|Instandgesetzter|Es wurde|Bei der|Wartung|Abgas|\d+ Hauptschl|Diese)/.test(text)) break;
+        const byClient = /Laut Kunde/i.test(text);
+        const um = text.match(/(\d+)\s*[μµ]m/)?.[1];
+        const part = text.replace(/\(Laut Kunde\)/i, "").replace(/\d+\s*[μµ]m/, "").replace(/[.\s]+$/, "").trim();
+        if (part) report.inspection.paint.repainted.push({ part, element: dekraPart(part), um: um ? Number(um) : null, byClient });
+      }
+    }
+    report.inspection.repaired = [...remarks.matchAll(/Instandgesetzter Schaden\s*\(([^)]+)\)\s*in Schadensh[öo]he von\s*\(?([\d.,]+)\)?\s*EUR/gi)]
+      .map((match) => ({ part: match[1].trim(), element: dekraPart(match[1]), amount: numberOf(match[2]) }));
+    report.inspection.lift = /Hebeb[üu]hne/i.test(remarks);
+    report.inspection.fromBelow = /von unten besichtigt/i.test(remarks);
+    report.inspection.engineRun = /Probelauf des Motors/i.test(remarks);
+    if (/nass|eingeschr[äa]nkt/i.test(remarks)) report.inspection.limited = /nass/i.test(remarks) ? "wet" : "limited";
+    report.inspection.batteryNotChecked = /keine [ÜU]berpr[üu]fung der Batterien/i.test(remarks);
+    const keys = remarks.match(/(\d+)\s+Hauptschl[üu]ssel/i);
+    if (keys) report.keys.keys = Number(keys[1]);
+    const papers = remarks.match(/zur Verf[üu]gung:\s*-\s*(.+?)(?=\s+\d+\s+Hauptschl|\s+Die |\s+Das |$)/i)?.[1];
+    if (papers) report.inspection.papers = papers.trim();
+    const serviceNote = remarks.match(/Wartung lt\. Anzeige f[äa]llig\.[^.]*\.?[^.]*durchgef[üu]hrt\./i)?.[0] || remarks.match(/Wartung lt\. Anzeige f[äa]llig\./i)?.[0];
+    if (serviceNote) report.remarks.push(serviceNote);
+    // Tyres: "1 links 245 / 50 R 19 105 W Continental / EcoContact 6 * S /O 4 mm".
+    let axle = 0;
+    for (const line of bySection.tyres || []) {
+      if (/Pannenset/i.test(line.text)) {
+        report.spare.push({ label: "Kit réparation pneu", value: "Oui" });
+        continue;
+      }
+      const number = line.items.find((item) => /^[12]$/.test(item.str.trim()) && item.x < 75);
+      if (number) axle = Number(number.str.trim());
+      const side = line.items.find((item) => /^(links|rechts)$/i.test(item.str.trim()));
+      if (!side) continue;
+      const at = (from, to) => line.items.filter((item) => item.x >= from && item.x < to).map((item) => item.str.trim()).join(" ");
+      const art = at(455, 515);
+      report.tyres.push({
+        position: `${axle === 2 ? "AR" : "AV"}${/links/i.test(side.str) ? "G" : "D"}`,
+        size: at(140, 270), brand: at(270, 455).split("/")[0].trim(), depth: numberOf(at(515, 600)),
+        season: /^S/.test(art) ? "ete" : /^W/.test(art) ? "hiver" : /^(G|A)/.test(art) ? "toutes saisons" : art,
+        runflat: /\/F/.test(art) ? "Oui" : "",
+      });
+    }
+    // Serienausstattung: one list after "Serie:"; Sonderausstattung: code + name a row.
+    const serie = textOf("serie").replace(/^Serie:\s*/i, "");
+    report.factoryDetails = serie.split(/,\s+(?![^()]*\))/).map((item) => item.trim()).filter(Boolean);
+    let lastExtra = null;
+    for (const line of bySection.extra || []) {
+      if (/^Code Bezeichnung$/i.test(line.text)) continue;
+      const code = line.items[0] && line.items[0].x < 100 && /^\d+$/.test(line.items[0].str.trim()) ? line.items[0].str.trim() : "";
+      const name = line.items.filter((item) => item.x >= 100).map((item) => item.str.trim()).join(" ");
+      if (!name) continue;
+      // A wrapped name: no code and a lower-case or bracket start.
+      if (!code && lastExtra !== null && /^[(a-zäöü]/.test(name)) {
+        report.factoryEquipment[lastExtra] = `${report.factoryEquipment[lastExtra]} ${name}`;
+        continue;
+      }
+      report.factoryEquipment.push(name);
+      lastExtra = report.factoryEquipment.length - 1;
+    }
+    // The strong ones of the series list too (LED, head-up…), after the extras.
+    report.factoryEquipment.push(...report.factoryDetails.filter((item) => equipmentName(item) && equipmentName(item) !== item));
+    // Allgemeinzustand und Wartung.
+    const state = {};
+    for (const line of bySection.state || []) {
+      const label = line.items[0]?.str.trim().replace(/:$/, "");
+      const value = line.items.slice(1).map((item) => item.str.trim()).join(" ");
+      if (value) state[plain(label)] = value;
+    }
+    if (state.wartungsnachweis) {
+      const proof = plain(state.wartungsnachweis);
+      report.documents.push({ label: "Type de carnet d'entretien", value: /digital/.test(proof) ? "Entretien digital" : /luckenhaft/.test(proof) ? "incomplet" : /vollstandig/.test(proof) ? "complet" : state.wartungsnachweis });
+    }
+    if (state["letzte wartung"]) {
+      const last = state["letzte wartung"];
+      report.documents.push({ label: "Dernier entretien", value: last, date: isoDate(last), km: numberOf(last.match(/Kilometerstand\s*([\d.]+)/)?.[1]) });
+    }
+    if (state["bis wartung verbleiben"]) {
+      const left = state["bis wartung verbleiben"];
+      report.documents.push({ label: "Prochain entretien", value: left, km: numberOf(left.match(/([\d.]+)\s*km/)?.[1]), days: numberOf(left.match(/(\d+)\s*Tage/)?.[1]) });
+    }
+    // Damages: "1. Einstieg hinten links Kratzer, smart repair (Bild 8, 9)", wrapped on several lines.
+    const items = (name) => {
+      const list = [];
+      for (const line of bySection[name] || []) {
+        if (/^Bezeichnung des Schadens/i.test(line.text) || /^Folgende Schäden sind|^einzustufen\.?$/i.test(line.text)) continue;
+        const numbered = line.text.match(/^(\d+)\.\s*(.*)$/);
+        const startsNew = numbered || name === "accepted" && (!list.length || /[,)]\s*$/.test(list[list.length - 1].text) && /^[A-ZÄÖÜ]/.test(line.text));
+        if (startsNew) list.push({ text: numbered ? numbered[2] : line.text, page: line.page });
+        else if (list.length) list[list.length - 1].text += ` ${line.text}`;
+        else list.push({ text: line.text, page: line.page });
+      }
+      return list;
+    };
+    const readItem = ({ text, page }, accepted) => {
+      const refs = [...text.matchAll(/\(Bild\s*([\d,\s]+)\)/gi)].flatMap((match) => match[1].split(/[,\s]+/).filter(Boolean).map(Number));
+      const body = text.replace(/\(Bild[^)]*\)?/gi, "").replace(/[,\s]+$/, "").trim();
+      const tokens = body.split(/\s*,\s*/).filter(Boolean);
+      let repair = "";
+      const last = tokens[tokens.length - 1] || "";
+      if (tokens.length > 1 && (repairGroup(last) !== "other" || /gebrauchsspur/i.test(last))) repair = tokens.pop();
+      let typeAt = tokens.findIndex((token, at) => at > 0 && dekraType(token));
+      let part;
+      let type;
+      if (typeAt > 0) {
+        part = tokens.slice(0, typeAt).join(", ");
+        type = tokens.slice(typeAt).join(", ");
+      } else {
+        // The type inside the first piece: "Einstieg hinten links Kratzer".
+        const words = (tokens[0] || "").split(/\s+/);
+        const at = words.findIndex((word, index) => index > 0 && dekraType(word));
+        if (at < 0) {
+          if (!repair && !accepted) return;
+          part = tokens[0] || "";
+          type = tokens.slice(1).join(", ");
+        } else {
+          part = words.slice(0, at).join(" ");
+          type = [words.slice(at).join(" "), ...tokens.slice(1)].join(", ");
+        }
+      }
+      const where = part.replace(/\bLackierung\b/gi, "").replace(/[,\s]+$/, "").trim();
+      dekraDamage(report, { part: where || part, type, repair: accepted ? "Gebrauchsspur" : repair, original: body, area: /Lackierung/i.test(part) ? "Lackierung" : "", page, refs, accepted });
+    };
+    items("damages").forEach((item) => readItem(item, false));
+    items("accepted").forEach((item) => readItem(item, true));
+    // Photos by their number: the captions of the attachment.
+    for (const damage of report.damages) damage.photoCaptions = damage.photoRefs.map((n) => photos.find((photo) => photo.n === n)?.caption).filter(Boolean);
+    return dekraFinish(report);
+  }
+
+  // FR/BE (Parc Hödlmayr): label above its value, three columns of equipment, a table of damages.
+  const FR_FIELDS = {
+    "n°d'immatriculation": "plate", "nd'immatriculation": "plate", "datede1ere": "firstRegistration", odometre: "mileage", couleur: "color", anneemodele: "modelYear",
+    capitonnage: "upholstery", nombredeportes: "doors", nombredesieges: "seats", generation: "generation", cylindree: "displacement",
+    typedeboite: "gearbox", motorisation: "motor", energie: "fuel", nombredevitesses: "gears", rouesmotrices: "drive", puissance: "power",
+  };
+  const tyreSide = (text) => {
+    const key = plain(text);
+    const match = key.match(/^(avant|arriere) (gauche|droite?)$/);
+    return match ? `${match[1] === "avant" ? "AV" : "AR"}${match[2] === "gauche" ? "G" : "D"}` : "";
+  };
+  function fromDekraFr(pages) {
+    const report = dekraEmpty("dekra-fr");
+    report.layoutName = "Rapport d'inspection (Hödlmayr)";
+    const first = pages[0];
+    const top = first.items.filter((item) => item.y > first.height - 140 && item.x < 200).sort((a, b) => b.y - a.y);
+    const make = top[0]?.str.trim() || "";
+    const full = top.find((item) => item !== top[0] && !/^VIN:/i.test(item.str.trim()))?.str.trim() || "";
+    const vin = top.find((item) => /^VIN:/i.test(item.str.trim()))?.str.replace(/^VIN:\s*/i, "").trim() || "";
+    report.car.make = make;
+    report.car.vin = vin;
+    dekraModel(report, full, make);
+    // Description: the value under its label, in the label's column.
+    const values = {};
+    const labels = first.items.filter((item) => FR_FIELDS[tight(item.str)]);
+    for (const label of labels) {
+      const lower = labels.filter((other) => Math.abs(other.x - label.x) < 6 && other.y < label.y - 3).map((other) => other.y);
+      const floor = lower.length ? Math.max(...lower) + 2 : label.y - 35;
+      values[FR_FIELDS[tight(label.str)]] = dash(first.items.filter((item) => Math.abs(item.x - label.x) < 6 && item.y < label.y - 3 && item.y > floor && !FR_FIELDS[tight(item.str)] && plain(item.str) !== "immatriculation")
+        .sort((a, b) => b.y - a.y).map((item) => item.str.trim()).join(" "));
+    }
+    const car = report.car;
+    car.plate = values.plate || "";
+    car.firstRegistration = values.firstRegistration || "";
+    if (values.mileage) car.mileage = values.mileage;
+    dekraColor(report, values.color);
+    if (values.modelYear) car.modelYear = values.modelYear;
+    if (values.upholstery) car.upholstery = values.upholstery;
+    if (values.doors) car.doors = values.doors;
+    if (values.seats) car.seats = values.seats;
+    if (values.displacement) car.displacement = numberOf(values.displacement);
+    car.gearbox = dekraGearbox(values.gearbox);
+    if (values.gears) car.gears = numberOf(values.gears);
+    car.fuel = /hybride|electrique/i.test(plain(values.motor)) ? dekraFuel(values.motor) : dekraFuel(values.fuel);
+    if (values.drive) car.drive = dekraDrive(values.drive);
+    if (values.power) car.power = values.power;
+    // The whole document as a stream of rows, page by page, without the legal footer.
+    const rows = [];
+    pages.forEach((page, index) => rowsOf(page).forEach((row) => {
+      if (row.y < 22) return;
+      rows.push({ ...row, page: index + 1 });
+    }));
+    const find = (test, from = 0) => rows.findIndex((row, at) => at >= from && test.test(plain(row.text)));
+    // Equipment: "Série" and "Optionnel", three columns; a wrapped name continues 8–11 pt lower.
+    const equipment = (from, to) => {
+      const columns = [[], [], []];
+      const last = [null, null, null];
+      for (const row of rows.slice(from, to)) {
+        for (const item of row.items) {
+          const column = item.x < 200 ? 0 : item.x < 380 ? 1 : 2;
+          const text = item.str.trim();
+          const previous = last[column];
+          const gap = previous ? (previous.page === row.page ? previous.y - row.y : 99) : 99;
+          const carried = previous && previous.page !== row.page && /\b(au|de|du|des|à|avec|et|pour|:|en)$/i.test(columns[column][columns[column].length - 1]);
+          if (previous && (gap <= 11 || carried)) columns[column][columns[column].length - 1] += ` ${text}`;
+          else columns[column].push(text);
+          last[column] = { y: row.y, page: row.page };
+        }
+      }
+      return columns.flat().map((item) => item.replace(/\s+/g, " ").trim()).filter(Boolean);
+    };
+    const serie = find(/^serie$/);
+    const optional = find(/^optionnel$/);
+    const details = find(/^details de l'inspection$/);
+    const keep = (list) => list.filter((item) => {
+      const brand = foreignBrand(item, make);
+      if (brand) report.catalogErrors.push(item);
+      return !brand;
+    });
+    if (serie >= 0) report.factoryDetails = keep(equipment(serie + 1, optional >= 0 ? optional : details));
+    if (optional >= 0) report.factoryEquipment = keep(equipment(optional + 1, details));
+    report.factoryEquipment.push(...report.factoryDetails.filter((item) => equipmentName(item) && equipmentName(item) !== item));
+    // Inspection: place and dates under their labels.
+    if (details >= 0) {
+      const labelRow = rows[details + 1];
+      const valueRow = rows[details + 2];
+      if (labelRow && valueRow) {
+        const at = (x) => valueRow.items.filter((item) => Math.abs(item.x - x) < 6).map((item) => item.str.trim()).join(" ");
+        const place = labelRow.items.find((item) => /^lieu/i.test(plain(item.str)));
+        const date = labelRow.items.find((item) => /^date de l'inspection/i.test(plain(item.str)));
+        if (place) report.inspection.place = at(place.x);
+        if (date) {
+          report.inspection.dateText = at(date.x);
+          report.inspection.date = isoDate(report.inspection.dateText);
+        }
+      }
+    }
+    // Contrôles: "Moteur / Bruit Ok".
+    const controls = find(/^controles$/);
+    const damagesAt = find(/^dommages et corrections$/);
+    if (controls >= 0) {
+      for (const row of rows.slice(controls + 1, damagesAt >= 0 ? damagesAt : controls + 6)) {
+        if (/^problemes detectes$/.test(plain(row.text))) continue;
+        for (let at = 0; at < row.items.length - 1; at += 2) report.checks.push({ label: row.items[at].str.trim(), value: row.items[at + 1].str.trim() });
+      }
+    }
+    // Damages: "# Élément Dommage Correction"; a footnote number beside the element.
+    let columns = null;
+    const notes = {};
+    const removable = find(/^elements amovibles$/);
+    const tyresAt = find(/^pneus principaux$/);
+    const comments = find(/^commentaires$/);
+    const photosAt = find(/^photos$/);
+    const damageRows = damagesAt >= 0 ? rows.slice(damagesAt + 1, removable >= 0 ? removable : tyresAt >= 0 ? tyresAt : rows.length) : [];
+    const found = [];
+    for (const row of damageRows) {
+      const header = row.items.find((item) => item.str.trim() === "#");
+      if (header) {
+        const pick = (test) => row.items.find((item) => test.test(plain(item.str)))?.x;
+        columns = { element: pick(/^element$/), damage: pick(/^dommage$/), fix: pick(/^correction$/) };
+        continue;
+      }
+      if (!columns) continue;
+      const number = row.items.find((item) => /^\d{3}$/.test(item.str.trim()) && item.x < columns.element - 10);
+      if (number) {
+        const pageRows = damageRows.filter((other) => other.page === row.page);
+        const near = pageRows.flatMap((other) => other.items.map((item) => ({ ...item, rowY: other.y })))
+          .filter((item) => item.x >= columns.element - 5 && item.x < columns.damage - 4 && item.rowY - row.y <= 12 && item.rowY - row.y >= -3 && !/:/.test(item.str) && !/^\d$/.test(item.str.trim()) && /\//.test(item.str))
+          .sort((a, b) => Math.abs(a.rowY - row.y) - Math.abs(b.rowY - row.y));
+        const sameRow = (from, to) => row.items.filter((item) => item.x >= from - 4 && item.x < to - 4).map((item) => item.str.trim()).join(" ");
+        const note = row.items.find((item) => /^\d$/.test(item.str.trim()) && item.x > columns.element && item.x < columns.damage - 4);
+        found.push({ element: near[0]?.str.trim() || sameRow(columns.element, columns.damage), type: sameRow(columns.damage, columns.fix), fix: sameRow(columns.fix, 700), note: note?.str.trim() || "", page: row.page });
+        continue;
+      }
+      // Footnotes: "1" then its text.
+      const footnote = row.items.length >= 2 && /^\d$/.test(row.items[0].str.trim()) && row.items[0].x < columns.element ? row.items[0].str.trim() : "";
+      if (footnote) notes[footnote] = row.items.slice(1).map((item) => item.str.trim()).join(" ");
+      else if (row.items.length === 1 && /^\d$/.test(row.items[0].str.trim()) && row.items[0].x < columns.element) notes._pending = row.items[0].str.trim();
+      else if (notes._pending && row.items[0].x < columns.element) {
+        notes[notes._pending] = row.text;
+        delete notes._pending;
+      }
+    }
+    for (const item of found) {
+      const [name, ...where] = item.element.split("/").map((part) => part.trim()).filter((part) => part && part !== "-");
+      dekraDamage(report, {
+        part: `${name} ${where.join(" ")}`,
+        type: item.type,
+        repair: item.fix,
+        original: item.element,
+        area: item.note && notes[item.note] ? notes[item.note] : "",
+        page: item.page,
+        accepted: /^acceptable$/i.test(item.fix),
+      });
+    }
+    // Removable items: three columns of what is in the car.
+    if (removable >= 0) {
+      const end = [tyresAt, comments, photosAt].filter((at) => at > removable);
+      for (const row of rows.slice(removable + 1, end.length ? Math.min(...end) : removable + 12)) row.items.forEach((item) => dekraItem(report, item.str));
+      report.keys.keys ||= 1;
+    }
+    // Pneus principaux: "Avant Gauche PIRELLI 265/50/19 5 mm" (+ "Été" below).
+    if (tyresAt >= 0) {
+      const end = [comments, photosAt].filter((at) => at > tyresAt);
+      const list = rows.slice(tyresAt + 1, end.length ? Math.min(...end) : tyresAt + 12);
+      list.forEach((row, at) => {
+        const position = tyreSide(row.items[0]?.str);
+        if (!position) return;
+        const rest = row.items.slice(1).map((item) => item.str.trim());
+        const depth = rest.find((text) => /mm$/i.test(text));
+        const size = rest.find((text) => /\d{3}\s*\/\s*\d{2}/.test(text)) || "";
+        const below = list[at + 1] && !tyreSide(list[at + 1].items[0]?.str) ? list[at + 1].text : "";
+        const season = (size.split("/").slice(3).join("/") || below).trim();
+        report.tyres.push({
+          position, brand: rest[0] || "", size: size.split("/").slice(0, 3).map((part) => part.trim()).join("/"), depth: numberOf(depth),
+          season: { ete: "ete", hiver: "hiver", "4 saisons": "toutes saisons", "toutes saisons": "toutes saisons" }[plain(season)] || season,
+        });
+      });
+    }
+    if (comments >= 0) {
+      const end = photosAt > comments ? photosAt : rows.length;
+      const text = rows.slice(comments + 1, end).filter((row) => row.page === rows[comments].page).map((row) => row.text).join(" ").trim();
+      if (text) report.remarks.push(text);
+    }
+    // Photos: captions of the photo pages ("Avant gauche", "Jante / Avant Gauche / Rayure").
+    if (photosAt >= 0) {
+      const captions = rows.slice(photosAt + 1).flatMap((row) => row.items.map((item) => ({ caption: item.str.trim(), page: row.page, x: item.x, y: row.y })));
+      report.photoCaptions = captions;
+      report.photoCount = captions.length;
+    }
+    report.keys.keys ||= null;
+    return dekraFinish(report);
+  }
+
   function fromPdf({ title = "", pages = [] } = {}) {
     const kind = detectPdf({ title, pages });
+    if (kind.layout === "dekra-nl") return { kind, report: fromDekraNl(pages) };
+    if (kind.layout === "dekra-de") return { kind, report: fromDekraDe(pages) };
+    if (kind.layout === "dekra-fr") return { kind, report: fromDekraFr(pages) };
     if (kind.layout === "inspection") return { kind, report: fromInspectionPdf(pages) };
     if (kind.layout === "appraisal") return { kind, report: fromAppraisalPdf(pages) };
     return { kind, report: null };
@@ -998,6 +1818,13 @@
     "clim. automatique": ["Klimatyzacja automatyczna", "Климат-контроль"], "clim. manuelle": ["Klimatyzacja manualna", "Кондиционер"],
     "tissu / autre": ["Tkanina / inne", "Ткань / другое"], cuir: ["Skóra", "Кожа"], "tissu / autre / cuir": ["Tkanina / skóra", "Ткань / кожа"],
     "entretien digital": ["Cyfrowa książka serwisowa", "Цифровая сервисная книжка"],
+    complet: ["kompletna", "полная"], incomplet: ["z lukami", "с пробелами"], "hybride electrique": ["Hybryda", "Гибрид"],
+    // DEKRA DE / NL words that reach the page as they are.
+    schwarz: ["Czarny", "Чёрный"], zwart: ["Czarny", "Чёрный"], weiss: ["Biały", "Белый"], "weiß": ["Biały", "Белый"], wit: ["Biały", "Белый"],
+    grau: ["Szary", "Серый"], grijs: ["Szary", "Серый"], blau: ["Niebieski", "Синий"], blauw: ["Niebieski", "Синий"], rot: ["Czerwony", "Красный"], rood: ["Czerwony", "Красный"],
+    silber: ["Srebrny", "Серебристый"], zilver: ["Srebrny", "Серебристый"], grun: ["Zielony", "Зелёный"], groen: ["Zielony", "Зелёный"], braun: ["Brązowy", "Коричневый"], bruin: ["Brązowy", "Коричневый"],
+    anthrazit: ["Antracytowy", "Антрацит"], antraciet: ["Antracytowy", "Антрацит"],
+    leder: ["Skóra", "Кожа"], stoff: ["Tkanina", "Ткань"], "teilleder": ["Półskóra", "Полукожа"], "leder/stoff": ["Skóra / tkanina", "Кожа / ткань"],
   };
   const DAMAGE_TYPES = {
     "griffe(s)": ["Rysy", "Царапины"], "bosse(s)": ["Wgniecenia", "Вмятины"], "bosse(s) et griffe(s)": ["Wgniecenia i rysy", "Вмятины и царапины"],
@@ -1005,14 +1832,16 @@
     use: ["Zużyte", "Изношено"], "hors tolerance": ["Poza normą (zużyte)", "Вне допуска (износ)"], tache: ["Plama", "Пятно"], manque: ["Brak", "Отсутствует"],
     vide: ["Puste / zużyte", "Пусто / использовано"], degrafe: ["Odpięte", "Отщёлкнуто"], "sans degats": ["Bez uszkodzeń", "Без повреждений"], allume: ["Świeci się", "Горит"],
     "eclat(s)": ["Odpryski", "Сколы"], grele: ["Grad", "Град"], repare: ["Naprawiane wcześniej", "Ранее ремонтировалось"], endommage: ["Uszkodzone", "Повреждено"],
-    "mauvaise reparation": ["Zła wcześniejsza naprawa", "Плохой прошлый ремонт"], rouille: ["Korozja", "Ржавчина"], fissure: ["Pęknięcie", "Трещина"], "impact(s)": ["Uderzenie", "Удар"],
+    "mauvaise reparation": ["Zła wcześniejsza naprawa", "Плохой прошлый ремонт"],
+    tierverbiss: ["Pogryzione przez zwierzę (kuna)", "Погрызено животным (куница)"], "degats environnement": ["Uszkodzenie lakieru (czynniki zewnętrzne)", "Повреждение лака (внешняя среда)"],
+    "degats peinture": ["Uszkodzenie lakieru", "Повреждение лака"], "en retard": ["Przeterminowany", "Просрочено"], "message d'erreur": ["Komunikat o błędzie", "Сообщение об ошибке"], autocollants: ["Naklejki", "Наклейки"], sale: ["Zabrudzenie", "Загрязнение"], rouille: ["Korozja", "Ржавчина"], fissure: ["Pęknięcie", "Трещина"], "impact(s)": ["Uderzenie", "Удар"],
   };
   const REPAIR_NAMES = {
     replace_paint: ["Wymiana + lakierowanie", "Замена + покраска"], repair_paint: ["Naprawa + lakierowanie", "Ремонт + покраска"],
     replace: ["Wymiana", "Замена"], paint: ["Lakierowanie", "Покраска"], pdr: ["Usuwanie wgnieceń bez lakierowania (PDR)", "Вмятина без покраски (PDR)"],
     smart: ["Naprawa miejscowa (smart repair)", "Локальный ремонт (smart repair)"], polish: ["Polerowanie", "Полировка"], hail: ["Ryczałt za grad", "Град (фикс. сумма)"],
     glass: ["Naprawa szyby", "Ремонт стекла"], flat: ["Naprawa / wymiana (ryczałt)", "Ремонт / замена (фикс.)"], refit: ["Demontaż / montaż", "Снять / поставить"],
-    check: ["Do sprawdzenia", "Проверить"], clean: ["Czyszczenie", "Чистка"], none: ["Bez naprawy (dopuszczalne)", "Без ремонта (допустимо)"], other: ["", ""],
+    check: ["Do sprawdzenia", "Проверить"], service: ["Wykonanie przeglądu", "Выполнить ТО"], clean: ["Czyszczenie", "Чистка"], none: ["Bez naprawy (dopuszczalne)", "Без ремонта (допустимо)"], other: ["", ""],
   };
   // Parts of a car (longest first when matched).
   const PARTS = [
@@ -1035,6 +1864,9 @@
     ["voyant defaut", "Kontrolka błędu na desce", "Лампа ошибки на панели"], ["clef de contact", "Kluczyk", "Ключ"], ["compresseur", "Kompresor", "Компрессор"],
     ["kit reparation pneu", "Zestaw naprawczy opon", "Ремкомплект шин"], ["bas de caisse", "Próg", "Порог"], ["phare", "Reflektor", "Фара"], ["feu", "Lampa", "Фонарь"],
     ["vitre", "Szyba", "Стекло"], ["siege", "Fotel", "Сиденье"],
+    ["joint de porte", "Uszczelka drzwi", "Уплотнитель двери"], ["moulure", "Listwa ozdobna", "Молдинг"], ["seuil de porte", "Listwa progowa", "Накладка порога"],
+    ["tapis", "Dywanik", "Коврик"], ["motorraum", "Komora silnika", "Моторный отсек"], ["freins", "Hamulce", "Тормоза"],
+    ["entretien", "Przegląd serwisowy", "Техобслуживание"], ["coffre / hayon", "Klapa bagażnika", "Крышка багажника"],
   ].sort((a, b) => b[0].length - a[0].length);
   const POSITIONS = {
     avg: ["przód lewy", "перед. левый"], avd: ["przód prawy", "перед. правый"], arg: ["tył lewy", "зад. левый"], ard: ["tył prawy", "зад. правый"],
@@ -1057,10 +1889,45 @@
     "regulateur de vitesse": ["Tempomat", "Круиз-контроль"], "regulateur de vitesse adaptatif": ["Tempomat aktywny", "Адаптивный круиз"], "attelage": ["Hak holowniczy", "Фаркоп"],
     "sieges electriques": ["Elektryczne fotele", "Электросиденья"], "hayon electrique": ["Elektryczna klapa bagażnika", "Электропривод багажника"], "head-up display": ["Head-up display", "Проекция на стекло"],
   };
+  // Names in any language of the reports (DEKRA DE / NL / FR lists) by their words; "" — trivial.
+  const EQUIPMENT_WORDS = [
+    [/zentralverriegelung|centrale vergrendeling|fensterheber|bedienbare ramen|audiosysteem|metaallak|metallic-lackierung|peinture metallisee|automatische versnellingsbak|lichtmetalen velgen|leichtmetall|jantes alliage|airbag|abs\b|wegfahrsperre|servolenkung/, null],
+    [/head-?up/, ["Head-up display", "Проекция на стекло"]],
+    [/panorama|sky lounge/, ["Dach panoramiczny", "Панорамная крыша"]],
+    [/schiebedach|open dak|toit ouvrant/, ["Szyberdach", "Люк"]],
+    [/harman|bowers|burmester|bang ?& ?olufsen|premium sound|sound-?system|high performance sound/, ["Nagłośnienie premium", "Премиальная аудиосистема"]],
+    [/360|surround view|area view|vue a 360/, ["Kamera 360°", "Камера 360°"]],
+    [/(kamera|camera|caméra).*(pare-brise|multifonction|frontscheibe)|(camera|caméra) av\b|frontkamera/, null],
+    [/kamera|camera|caméra/, ["Kamera cofania", "Камера заднего вида"]],
+    [/luftfahrwerk|luftfederung|ressort pneumatique|air suspension|four-c/, ["Zawieszenie pneumatyczne", "Пневмоподвеска"]],
+    [/massage/, ["Fotele z masażem", "Сиденья с массажем"]],
+    [/sitzbelueft|sitzbelüft|belüftete sitze|siege ventile|stoelventilatie/, ["Wentylowane fotele", "Вентиляция сидений"]],
+    [/lenkradheizung|lenkrad beheizbar|volant de direction chauffant|stuurverwarming/, ["Podgrzewana kierownica", "Подогрев руля"]],
+    [/sitzheizung|stoelverwarming|siege chauffant|sieges chauffants|confort chaleur/, ["Podgrzewane fotele", "Подогрев сидений"]],
+    [/navigatie|navigation|navi\b|google maps|navigationssystem/, ["Nawigacja", "Навигация"]],
+    [/matrix|laser|led-?scheinwerfer|scheinwerfer led|led verlichting|projecteur led|xenon|thors hammer/, ["Reflektory LED / ksenon", "Фары LED / ксенон"]],
+    [/anhangerkupplung|trekhaak|attelage/, ["Hak holowniczy", "Фаркоп"]],
+    [/half ?leder|teilleder|semi-cuir/, ["Półskórzana tapicerka", "Полукожаный салон"]],
+    [/^(lederen bekleding|leder\b)|polsterung: leder|sellerie : cuir|sitzbezug.*leder|interieur cuir/, ["Skórzana tapicerka", "Кожаный салон"]],
+    [/adaptive cruise|abstandsregel|driving assistant|regulateur de vitesse avec fonction freinage|active cruise|acc\b/, ["Tempomat aktywny", "Адаптивный круиз"]],
+    [/cruise control|tempomat|geschwindigkeits-regelanlage|regulateur de vitesse/, ["Tempomat", "Круиз-контроль"]],
+    [/keyless|komfortzugang|deverrouillage de porte sans cle|sans cle/, ["Dostęp bezkluczykowy", "Бесключевой доступ"]],
+    [/heckklappenautomatik|heckklappenbetatigung automatisch|hayon electrique|elektrische achterklep/, ["Elektryczna klapa bagażnika", "Электропривод багажника"]],
+    [/park(ing)? ?assist|parkassistent|active park assist/, ["Asystent parkowania", "Ассистент парковки"]],
+    [/park-?distance|pdc|parkeersensoren|einparkhilfe|aide au stationnement|parktronic/, ["Czujniki parkowania", "Парктроники"]],
+    [/live cockpit|virtual cockpit|digitale instrument|combine d'instruments digital/, ["Cyfrowe zegary", "Цифровая приборная панель"]],
+    [/sitze.*elektr|elektr.*sitz|sieges? .*reglages electriques|elektrisch verstelbare stoel/, ["Elektryczne fotele", "Электросиденья"]],
+    [/sportsitz|sieges? sport/, ["Fotele sportowe", "Спортивные сиденья"]],
+    [/soft-?close/, ["Domykanie drzwi (Soft-Close)", "Доводчики дверей"]],
+    [/apple carplay|android auto|smartphone interface/, ["Apple CarPlay / Android Auto", "Apple CarPlay / Android Auto"]],
+    [/klimaautomatik|airconditioning \(automatisch\)|climatisation automatique/, ["Klimatyzacja automatyczna", "Климат-контроль"]],
+  ];
   // → the name in the offer's language, the French one when not known, "" for the trivial ones.
   function equipmentName(value, lang = "pl") {
     const key = plain(value).replace(/:\s*oui$/, "");
     if (Object.prototype.hasOwnProperty.call(EQUIPMENT, key)) return EQUIPMENT[key] ? EQUIPMENT[key][lang === "ru" ? 1 : 0] : "";
+    const hit = EQUIPMENT_WORDS.find(([test]) => test.test(key));
+    if (hit) return hit[1] ? hit[1][lang === "ru" ? 1 : 0] : "";
     return String(value || "").replace(/:\s*oui$/i, "");
   }
   // Labels of documents, checks and the spare kit.
@@ -1078,6 +1945,9 @@
     galette: ["Koło dojazdowe", "Докатка"], cric: ["Podnośnik", "Домкрат"], runflat: ["Opony run-flat", "Шины run-flat"],
     "kit reparation": ["Zestaw naprawczy", "Ремкомплект"], "kit reparation pneu": ["Zestaw naprawczy opon", "Ремкомплект шин"],
     compresseur: ["Kompresor", "Компрессор"], "roue de secours": ["Koło zapasowe", "Запасное колесо"],
+    "dernier entretien": ["Ostatni serwis", "Последнее ТО"], "prochain entretien": ["Do następnego serwisu", "До следующего ТО"],
+    "carnet de garantie": ["Książka gwarancyjna", "Гарантийная книжка"], "cable de recharge": ["Kabel do ładowania", "Зарядный кабель"],
+    "chargeur domestique": ["Ładowarka domowa", "Домашняя зарядка"],
   };
   const LABEL_VALUES = {
     "over 16100 km": null, "oui, le vehicule a ete reinitialise aux parametres d'usine": ["Tak", "Да"],
@@ -1098,7 +1968,7 @@
   const langIndex = (lang) => (lang === "ru" ? 1 : 0);
   function word(kind, value, lang = "pl") {
     const table = kind === "type" ? DAMAGE_TYPES : VALUES;
-    const hit = table[plain(value)];
+    const hit = table[plain(value)] || (kind === "type" ? DAMAGE_TYPES[dekraType(value)] : null);
     return hit ? hit[langIndex(lang)] : String(value ?? "");
   }
   const repairName = (group, lang = "pl") => REPAIR_NAMES[group]?.[langIndex(lang)] || "";
@@ -1133,6 +2003,6 @@
     detectLink, detectPdf, fromHtml, fromPdf, mileagePerYear, repairGroup, plain, numberOf,
     word, repairName, partName, equipmentName, labelName, labelValue,
     // For tests and the server.
-    parseHtml, textClean, joinFragments, LAYOUTS,
+    parseHtml, textClean, joinFragments, LAYOUTS, dekraPart, dekraType,
   };
 });

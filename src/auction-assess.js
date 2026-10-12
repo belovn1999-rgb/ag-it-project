@@ -21,6 +21,10 @@
 
   // ---- What a part is ---------------------------------------------------------------------
   const KINDS = [
+    // DEKRA's technical items (2026-10-12): the engine bay, the brakes, a due service.
+    ["engineBay", /^motorraum/],
+    ["mechanical", /^freins/],
+    ["service", /^entretien\b/],
     ["structure", /^(montant de toit|montant|longeron|bas de caisse|plancher|traverse|passage de roue|tablier|doublure)/],
     ["warning", /^voyant/],
     ["tyre", /^pneu\b/],
@@ -45,7 +49,7 @@
     ["wheelArch", /^(protect\. pass\. roue|garn pass roue|elargisseur)/],
     ["steering", /^volant/],
     ["seat", /^(revetement|siege|protect\. dossier)/],
-    ["trim", /^(garn|garnit|garniture|tableau de bord|couvercle boite|ciel de toit|console|tapis|accoudoir|interieur|grille vent)/],
+    ["trim", /^(garn|garnit|garniture|tableau de bord|couvercle boite|ciel de toit|console|tapis|accoudoir|interieur|grille vent|seuil)/],
     ["body", /^carrosserie/],
   ];
   const kindOf = (element) => KINDS.find(([, test]) => test.test(plain(element)))?.[0] || "other";
@@ -65,9 +69,12 @@
     mirror: { replace_paint: [400, 900], replace: [300, 800], paint: [200, 400], polish: [50, 150] },
     handle: { replace: [150, 400], paint: [100, 250], polish: [50, 150] },
     wheelArch: { replace: [150, 400], flat: [100, 300], refit: [50, 150] },
-    hail: { hail: [1500, 4000], "*": [1500, 4000] },
-    structure: { "*": [1500, 5000] },
-    body: { "*": [300, 1500] },
+    hail: { hail: [1500, 4000], paint: [1500, 2500], repair_paint: [1500, 2500], flat: [300, 800], smart: [200, 500], polish: [100, 300], clean: [100, 300], "*": [1500, 4000] },
+    structure: { repair_paint: [700, 1200], "*": [1500, 5000] },
+    body: { clean: [300, 700], "*": [300, 1500] },
+    engineBay: { "*": [1500, 3500] },
+    mechanical: { replace: [500, 900], "*": [400, 1200] },
+    service: { "*": [1200, 2200] },
     rim: { replace: [700, 2000], flat: [200, 400], repair: [200, 400], "*": [150, 350] },
     hubcap: { "*": [50, 150] },
     glass: { glass: [100, 250], replace: [1200, 3500], "*": [100, 250] },
@@ -102,18 +109,22 @@
     if (/^repare$/.test(type)) flags.push("repaired");
     if (/grele/.test(type) || group === "hail") flags.push("hail");
     if (kind === "warning") flags.push("warning");
+    if (/tierverbiss/.test(type)) flags.push("animal");
     // No repair in the report: a trace only (one line "Drobne ślady bez naprawy").
     // A dent in the structure (a pillar, a sill) is never a mere trace, even without a repair.
     const structural = kind === "structure" && /bosse|deforme|casse|fissure|rouille|impact/.test(type);
     if (group === "none" && !flags.length && !structural) return { kind, category: "kosmetyczne", degree: "lekkie", cost: null, flags, minor: true };
     let category = "kosmetyczne";
-    if (["tyre", "glass", "lamp", "key", "kit", "warning", "steering"].includes(kind)) category = "użytkowe";
+    if (["tyre", "glass", "lamp", "key", "kit", "warning", "steering", "engineBay", "mechanical", "service"].includes(kind)) category = "użytkowe";
     if (structural) category = "konstrukcyjne";
     let degree = "lekkie";
     if (["replace_paint", "repair_paint", "hail"].includes(group) || flags.includes("badRepair")) degree = "średnie";
     if (kind === "tyre" && /usee?|hors tolerance|dechirure|crevaison/.test(type)) degree = "średnie";
-    if (kind === "warning" || (kind === "glass" && group === "replace")) degree = "średnie";
-    if (category === "konstrukcyjne") degree = group === "none" ? "średnie" : "poważne";
+    if (kind === "warning" || (kind === "glass" && group === "replace") || ["engineBay", "mechanical", "service"].includes(kind)) degree = "średnie";
+    // Scratches and chips repaired and painted stay light (DEKRA NL "Herstellen", 2026-10-12).
+    if (group === "repair_paint" && /^(griffe\(s\)|eclat\(s\)|degats environnement|degats peinture)$/.test(type) && !flags.length) degree = "lekkie";
+    // A structural part: serious when it is to be replaced or broken; a dent repaired — medium (owner's briefs).
+    if (category === "konstrukcyjne") degree = ["replace", "replace_paint"].includes(group) || /deforme|casse|fissure/.test(type) ? "poważne" : "średnie";
     if (["bumper", "bonnet", "tailgate"].includes(kind) && group === "replace_paint") degree = "średnie";
     let cost;
     if (group === "none") cost = null;
@@ -122,7 +133,8 @@
       const tyre = (report.tyres || []).find((item) => item.position === position) || (report.tyres || [])[0];
       cost = tyreCost(tyre?.size || tyre?.sizeShort);
     } else {
-      const table = COSTS[kind] || COSTS.other;
+      // A structural part with a surface damage costs as a body panel.
+      const table = kind === "structure" && !structural ? COSTS.fender : COSTS[kind] || COSTS.other;
       cost = table[group] || table["*"] || COSTS.other[group] || [150, 400];
     }
     return { kind, category, degree, cost: cost ? [...cost] : null, flags, outside: OUTSIDE.has(kind) };
@@ -171,7 +183,11 @@
     if (replaced >= 2) raise("risky", { key: "impacts", n: replaced });
     else if (replaced === 1) raise("check", { key: "impact", n: 1 });
     if (has("warning")) raise(replaced ? "risky" : "check", { key: "warning" });
-    if (has("badRepair")) raise("check", { key: "badRepair", n: count((damage) => damage.assessment.flags.includes("badRepair")) });
+    // A bad repair to be polished or cleaned only is a trace, not a reason (DEKRA FR "Malfaçon · Lustrage").
+    const badRepairs = count((damage) => damage.assessment.flags.includes("badRepair") && !["polish", "clean", "none"].includes(damage.group));
+    if (badRepairs) raise("check", { key: "badRepair", n: badRepairs });
+    const remarks = (report?.remarks || []).join(" ");
+    if (/gerookt|geraucht|raucherfahrzeug|fumeur|odeur de tabac/i.test(remarks)) raise("check", { key: "smoke" });
     if (has("repaired")) raise("check", { key: "repaired", n: count((damage) => damage.assessment.flags.includes("repaired")) });
     if (has("hail")) raise("check", { key: "hail" });
     if (total[1] > 15000) raise("risky", { key: "costHigh", min: total[0], max: total[1] });
@@ -185,13 +201,18 @@
 
     // Risks (only in the last block): what can cost money later.
     const risks = [];
+    if (has("animal")) risks.push({ key: "animal" });
     if (has("warning")) risks.push({ key: "warning" });
     if (lowTyres.length && !tyreDamages) risks.push({ key: "tyresLow", depths: lowTyres.map((tyre) => tyre.depth), cost: tyreCostFor(lowTyres) });
     if (keys === 1) risks.push({ key: "oneKey" });
     if (mileage?.flag === "high") risks.push({ key: "mileageHigh", perYear: mileage.perYear });
     if (electric) risks.push({ key: "battery" });
     if (has("hail")) risks.push({ key: "hail" });
-    if (has("badRepair") || has("repaired")) risks.push({ key: "pastRepair" });
+    const inspection = report?.inspection || {};
+    const repainted = inspection.paint?.repainted || [];
+    if (has("badRepair") || has("repaired") || inspection.repaired?.length || repainted.some((item) => !item.byClient)) risks.push({ key: "pastRepair" });
+    else if (repainted.length) risks.push({ key: "repaintClaimed", parts: repainted.map((item) => item.element || item.part) });
+    if (inspection.limited) risks.push({ key: "inspectionLimited", why: inspection.limited });
     if (replaced) risks.push({ key: "hiddenDamage" });
     if (!serviceKnown) risks.push({ key: "serviceUnknown" });
     return { damages, rows, minor, total, level, reasons: reasons.slice(0, 2), risks: risks.slice(0, 4), counts: { replaced, painted, structural, rows: rows.length, minor: minor.length }, mileage, electric };

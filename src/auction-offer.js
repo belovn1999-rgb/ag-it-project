@@ -132,13 +132,14 @@
     const name = [make, titleCase(rawModel)].filter(Boolean).join(" ") || titleCase(report.title);
     const versionAuto = car.versionDetails || (car.version && !/\//.test(car.version) ? car.version : "");
     const powerAuto = car.powerKw ? `${Math.round(car.powerKw * 1.35962)} ${L("KM", "л.с.")} (${car.powerKw} ${L("kW", "кВт")})` : car.powerHpFromVersion ? `${car.powerHpFromVersion} ${L("KM", "л.с.")}` : "";
-    const engineAuto = (versionAuto.match(/\b\d[.,]\d\b/)?.[0] || "").replace(".", ",");
+    const engineAuto = (versionAuto.match(/\b\d[.,]\d\b/)?.[0] || (car.displacement > 500 ? (Math.round(car.displacement / 100) / 10).toFixed(1) : "")).replace(".", ",");
+    const gearboxAuto = [word("value", car.gearbox), car.gears ? `${car.gears} ${L(plural(Number(car.gears), "bieg", "biegi", "biegów"), "ступ.")}` : ""].filter(Boolean).join(", ");
     return {
       name, year,
       version: fill.version || versionAuto,
       engine: fill.engine || (engineAuto ? `${engineAuto} ${L("l", "л")}` : ""),
       fuel: fill.fuel || word("value", car.fuel),
-      gearbox: fill.gearbox || word("value", car.gearbox),
+      gearbox: fill.gearbox || gearboxAuto,
       power: fill.power || powerAuto,
       drive: word("value", car.drive),
     };
@@ -168,6 +169,17 @@
     }
   };
 
+  // Photos cut out of a PDF (DEKRA) live in this browser's IndexedDB: their object URLs,
+  // found before the first drawing (the sheets are drawn again and again while they fit).
+  const localUrls = new Map();
+  const shownSrc = (src) => (/^idb:/.test(src || "") ? localUrls.get(src) || "" : src);
+  async function warmPhotos() {
+    const PHOTOS = window.AUTOGOOD_AUCTION_PHOTOS;
+    const report = offer?.report;
+    if (!PHOTOS || !report) return;
+    const all = [offer.photo, report.mainPhoto, ...(report.photos || []), ...(report.damages || []).flatMap((damage) => damage.photos || [])].filter((src) => PHOTOS.isLocal(src));
+    await Promise.all([...new Set(all)].map(async (src) => localUrls.set(src, await PHOTOS.url(src))));
+  }
   function photoCount() {
     const report = offer.report;
     // A client's link carries the count (its photo list is trimmed).
@@ -231,7 +243,9 @@
     const report = offer.report;
     const source = [...(report.factoryEquipment || []), ...(report.options || [])];
     const pairs = source.map((item) => [REPORT.equipmentName(item, lang()), String(item).replace(/:\s*oui$/i, "")]).filter(([name]) => name);
-    const known = [...new Set(pairs.filter(([name, original]) => name !== original).map(([name]) => name))];
+    let known = [...new Set(pairs.filter(([name, original]) => name !== original).map(([name]) => name))];
+    // The adaptive one says it all.
+    if (known.includes(REPORT.equipmentName("adaptive cruise control", lang()))) known = known.filter((name) => name !== REPORT.equipmentName("tempomat", lang()));
     const main = known.filter((name) => strong(name));
     return (main.length >= 3 ? main : [...main, ...known.filter((name) => !main.includes(name))]).slice(0, 8);
   }
@@ -266,6 +280,7 @@
         ? L(`Nadwozie i wnętrze praktycznie bez uszkodzeń (${n} ${words(n, ["drobna pozycja", "drobne pozycje", "drobnych pozycji"], [])}).`, `Кузов и салон практически без повреждений (${n} ${words(n, [], ["мелкая позиция", "мелкие позиции", "мелких позиций"])}).`)
         : L("Nadwozie i wnętrze bez uszkodzeń.", "Кузов и салон без повреждений.");
       case "bodyLight": return L(`Drobne naprawy lakiernicze (${n}).`, `Небольшой покрасочный ремонт (${n}).`);
+      case "smoke": return L("W aucie palono — zapach obniża cenę i zainteresowanie kupujących.", "В салоне курили — запах снижает цену и интерес покупателей.");
       case "keysRunning": return L(`${n} ${words(n, ["kluczyk", "kluczyki", "kluczyków"], [])}, auto sprawne przy oględzinach.`, `${n} ${words(n, [], ["ключ", "ключа", "ключей"])}, авто исправно при осмотре.`);
       default: return "";
     }
@@ -284,6 +299,9 @@
       case "hail": return L("Grad — liczba wgnieceń do potwierdzenia na zdjęciach; niższa cena przy odsprzedaży.", "Град — число вмятин уточнить по фото; ниже цена при перепродаже.");
       case "pastRepair": return L("Wcześniejsze naprawy — jakość ocenimy przy odbiorze auta.", "Прошлые ремонты — качество оценим при получении авто.");
       case "hiddenDamage": return L("Za elementami do wymiany mogą być ukryte uszkodzenia (mocowania, wzmocnienia).", "За элементами под замену могут быть скрытые повреждения (крепления, усилители).");
+      case "animal": return L("Ślady kuny w komorze silnika — przewody i węże pod maską do sprawdzenia przy odbiorze.", "Следы куницы в моторном отсеке — проводку и шланги под капотом проверим при получении.");
+      case "repaintClaimed": return L("Lakierowanie wg deklaracji klienta — przyczyna nieznana.", "Перекрас по словам клиента — причина не указана.");
+      case "inspectionLimited": return risk.why === "wet" ? L("Auto oglądano mokre — drobne wady lakieru mogły być niewidoczne.", "Авто осматривали мокрым — мелкие дефекты лака могли быть не видны.") : L("Oględziny były ograniczone.", "Осмотр был ограничен.");
       case "serviceUnknown": return L("Historia serwisowa — raport jej nie podaje.", "История обслуживания — в отчёте её нет.");
       default: return "";
     }
@@ -319,7 +337,7 @@
     const color = [word("value", car.color), car.paint ? word("value", car.paint).toLowerCase() : ""].filter(Boolean).join(" ");
     const interior = [word("value", car.interior), car.upholstery ? word("value", car.upholstery).toLowerCase() : ""].filter(Boolean).join(", ");
     const colorInterior = [color, interior ? `${L("wnętrze", "салон")}: ${interior.toLowerCase()}` : ""].filter(Boolean).join("; ");
-    const firstReg = (car.firstRegistration || "").replace(/\//g, ".");
+    const firstReg = (car.firstRegistration || "").replace(/[/-]/g, ".");
     const options = equipmentList();
     return `
       <div class="aoBlock aoBlockOne">
@@ -345,6 +363,7 @@
           <h3>${icon("check")}<span>${L("Wyposażenie", "Оснащение")}</span></h3>
           <ul class="aoChecks">${options.map((item) => `<li>${esc(item)}</li>`).join("")}</ul>
         </section>` : ""}
+        ${web ? "" : groupHtml("inspection", "shield", L("Stan przy oględzinach", "Состояние при осмотре"), inspectionFacts().map(([label, value]) => [label, esc(value), true]), "isInspection")}
       </div>`;
   }
 
@@ -408,12 +427,19 @@
   function badgesHtml(assessment) {
     const all = assessment.damages;
     const painted = all.filter((damage) => ["replace_paint", "repair_paint", "paint"].includes(damage.group)).length;
-    const repaired = all.some((damage) => damage.assessment.flags.some((flag) => flag === "repaired" || flag === "badRepair"));
+    const insp = offer.report.inspection || {};
+    const repainted = insp.paint?.repainted || [];
+    const repaired = all.some((damage) => damage.assessment.flags.some((flag) => flag === "repaired" || flag === "badRepair")) || Boolean(insp.repaired?.length) || repainted.some((item) => !item.byClient);
+    const claimed = !repaired && repainted.length > 0;
     const hail = all.some((damage) => damage.assessment.flags.includes("hail"));
     const badge = (on, text) => `<span class="aoBadge ${on ? "isOn" : "isOff"}">${icon(on ? "warn" : "check")}${text}</span>`;
+    // Measured paint and no repair at all: the strong green (owner 2026-10-11, §11).
+    const pastLine = insp.paint && !repaired && !claimed
+      ? badge(false, `<b>${L("Bez napraw — pomiar lakieru", "Без ремонтов — замер краски")}</b>`)
+      : badge(repaired || claimed, `${L("Wcześniejsze naprawy", "Прошлые ремонты")}: <b>${repaired ? L("tak", "да") : claimed ? L("lakierowanie wg deklaracji klienta", "перекрас по словам клиента") : L("nie", "нет")}</b>`);
     return `<div class="aoBadges">
       ${badge(painted > 0, `${L("Nadwozie", "Кузов")}: <b>${painted ? `${painted} ${L(plural(painted, "element", "elementy", "elementów"), plural(painted, "элемент", "элемента", "элементов"))} ${L("do lakierowania", "под покраску")}` : L("bez lakierowania", "без покраски")}</b>`)}
-      ${badge(repaired, `${L("Wcześniejsze naprawy", "Прошлые ремонты")}: <b>${repaired ? L("tak", "да") : L("nie", "нет")}</b>`)}
+      ${pastLine}
       ${badge(hail, `${L("Grad", "Град")}: <b>${hail ? L("tak", "да") : L("nie", "нет")}</b>`)}
     </div>`;
   }
@@ -470,7 +496,7 @@
     const src = mainPhoto();
     const count = photoCount();
     return `<figure class="aoPhoto ${className}">
-      ${src ? `<img src="${esc(src)}" data-source="${esc(src)}" alt="" referrerpolicy="no-referrer" />` : `<div class="aoPhotoEmpty">${icon("car")}</div>`}
+      ${src ? `<img src="${esc(shownSrc(src))}" data-source="${esc(src)}" alt="" referrerpolicy="no-referrer" />` : `<div class="aoPhotoEmpty">${icon("car")}</div>`}
       ${count ? `<span class="aoPhotoCount">${icon("camera")}${count} ${L(plural(count, "zdjęcie", "zdjęcia", "zdjęć"), plural(count, "фото", "фото", "фото"))} ${L("w raporcie", "в отчёте")}</span>` : ""}
     </figure>`;
   }
@@ -487,7 +513,7 @@
     const shots = picked.map((damage) => [damage, damage.photos[0]]);
     if (shots.length === 1 && picked[0].photos[1]) shots.push([picked[0], picked[0].photos[1]]);
     if (shots.length < 2) return "";
-    return `<section class="aoGallery" data-gallery>${shots.map(([damage, src]) => `<figure><img src="${esc(src)}" data-source="${esc(src)}" alt="" referrerpolicy="no-referrer" /><figcaption><b>${esc(REPORT.partName(damage.element, lang()) || damage.element)}</b> — ${esc(word("type", damage.type).toLowerCase())}</figcaption></figure>`).join("")}</section>`;
+    return `<section class="aoGallery" data-gallery>${shots.map(([damage, src]) => `<figure><img src="${esc(shownSrc(src))}" data-source="${esc(src)}" alt="" referrerpolicy="no-referrer" /><figcaption><b>${esc(REPORT.partName(damage.element, lang()) || damage.element)}</b> — ${esc(word("type", damage.type).toLowerCase())}</figcaption></figure>`).join("")}</section>`;
   }
   function titleHtml() {
     const view = carView();
@@ -618,7 +644,7 @@
     const keys = offer.report.keys?.keys;
     const tiles = [
       [L("Przebieg", "Пробег"), car.mileageKm ? `${thousands(car.mileageKm)} km` : "", mileage ? `${L("ok.", "ок.")} ${thousands(Math.round(mileage.perYear / 1000))} ${L("tys. km/rok", "тыс. км/год")}` : ""],
-      [L("1. rejestracja", "1-я регистрация"), (car.firstRegistration || "").replace(/\//g, "."), ""],
+      [L("1. rejestracja", "1-я регистрация"), (car.firstRegistration || "").replace(/[/-]/g, "."), ""],
       [L("Moc", "Мощность"), view.power.replace(/\s*\(.*\)$/, ""), (view.power.match(/\((.*)\)/) || [])[1] || ""],
       [L("Silnik", "Двигатель"), view.engine, view.fuel],
       [L("Skrzynia", "Коробка"), view.gearbox, view.drive ? `${L("napęd", "привод")} ${view.drive.toLowerCase()}` : ""],
@@ -643,6 +669,16 @@
         else if (/over|km/i.test(item.value)) items.push(`${L("Serwis", "Обслуживание")}: ${REPORT.labelValue(item.value, lang())}`);
         continue;
       }
+      if (/^dernier entretien$/.test(key)) {
+        const parts = [item.date ? dateText(item.date) : "", item.km ? `${thousands(item.km)} km` : ""].filter(Boolean);
+        if (parts.length) items.push(`${L("Ostatni serwis", "Последнее ТО")}: ${parts.join(", ")}`);
+        continue;
+      }
+      if (/^prochain entretien$/.test(key)) {
+        const parts = [item.km ? `${thousands(item.km)} km` : "", item.days ? L(`${item.days} dni`, `${item.days} дн.`) : ""].filter(Boolean);
+        if (parts.length) items.push(`${L("Do następnego serwisu", "До следующего ТО")}: ${parts.join(L(" lub ", " или "))}`);
+        continue;
+      }
       if (/type de carnet/.test(key)) {
         items.push(/digital/i.test(item.value) ? L("Cyfrowa książka serwisowa", "Цифровая сервисная книжка") : `${REPORT.labelName(item.label, lang())}: ${REPORT.labelValue(item.value, lang())}`);
         continue;
@@ -657,11 +693,53 @@
   function inspectedChips() {
     const report = offer.report;
     const state = report.state || {};
+    const insp = report.inspection || {};
+    if (report.firm === "DEKRA") {
+      const chips = [insp.lift ? L("oględziny z góry i od spodu na podnośniku", "осмотр сверху и снизу на подъёмнике") : insp.fromBelow ? L("oględziny z góry i od spodu", "осмотр сверху и снизу") : L("oględziny wzrokowe", "визуальный осмотр")];
+      if (insp.engineRun) chips.push(L("uruchomienie silnika", "запуск двигателя"));
+      if (insp.paint) chips.push(`${L("pomiar grubości lakieru", "замер толщины краски")} ${insp.paint.min}–${insp.paint.max} µm`);
+      for (const check of report.checks || []) {
+        if (!/^ok$/i.test(check.value)) continue;
+        const name = /moteur/i.test(check.label) ? L("silnik i hałas", "двигатель и шум") : /etanch/i.test(check.label) ? L("szczelność", "герметичность") : /echappement/i.test(check.label) ? L("układ wydechowy", "выхлоп") : check.label;
+        chips.push(`${name}: OK`);
+      }
+      if ((report.tyres || []).some((tyre) => typeof tyre.depth === "number")) chips.push(L("pomiar bieżnika", "замер протектора"));
+      return chips;
+    }
     const chips = [L("oględziny na postoju", "осмотр на стоянке"), L("zdjęcia każdej szkody z miarką", "фото каждого повреждения с линейкой")];
     if ((report.tyres || []).some((tyre) => typeof tyre.depth === "number")) chips.push(L("pomiar bieżnika", "замер протектора"));
     if (/^oui$/i.test(state.engineRuns || "")) chips.push(L("uruchomienie silnika", "запуск двигателя"));
     if (/^oui$/i.test(state.driveable || "")) chips.push(L("auto jeździ", "авто едет"));
     return chips;
+  }
+  // Template v2 (owner 2026-10-11, §11) 1d: paint measured, documented repairs, conditions, remarks.
+  function inspectionFacts() {
+    const report = offer.report;
+    const insp = report.inspection || {};
+    const part = (item) => (REPORT.partName(item.element, lang()) || item.part || "").toLowerCase();
+    const rows = [];
+    if (insp.paint) {
+      const repainted = insp.paint.repainted || [];
+      const list = repainted.map((item) => `${part(item)}${item.um ? ` (${item.um} µm)` : ""}${item.byClient ? ` — ${L("wg deklaracji klienta", "по словам клиента")}` : ""}`);
+      rows.push([L("Pomiar lakieru", "Замер краски"), `${insp.paint.min}–${insp.paint.max} µm; ${repainted.length ? `${L("lakierowane", "перекрашено")}: ${list.join(", ")}` : L("bez śladów wcześniejszych napraw i lakierowania", "без следов прошлых ремонтов и перекраса")}`]);
+    }
+    if (insp.repaired?.length) {
+      rows.push([L("Naprawy udokumentowane", "Задокументированные ремонты"), insp.repaired.map((item) => `${part(item)}${item.amount ? ` — ${numbers.format(item.amount)} €` : ""}`).join("; ")]);
+    }
+    if (insp.limited) rows.push([L("Warunki oględzin", "Условия осмотра"), insp.limited === "wet" ? L("auto było mokre — oględziny lakieru ograniczone", "авто было мокрым — осмотр лака ограничен") : L("oględziny ograniczone", "осмотр ограничен")]);
+    const remarks = (report.remarks || []).map(remarkText).filter(Boolean);
+    if (remarks.length) rows.push([L("Uwagi", "Примечания"), remarks.join(" ")]);
+    return rows;
+  }
+  // Remarks of the inspector the client may read (known ones only; the rest — for the caretaker).
+  function remarkText(text) {
+    if (/gerookt|geraucht|raucherfahrzeug|fumeur|odeur de tabac/i.test(text)) return L("W aucie palono (zapach tytoniu).", "В салоне курили (запах табака).");
+    if (/ingeschreven in Nederland|immatricul\S* aux pays-bas/i.test(text)) return L("Auto zarejestrowane w Holandii.", "Авто зарегистрировано в Нидерландах.");
+    return "";
+  }
+  function factsHtml() {
+    const rows = inspectionFacts();
+    return rows.length ? `<dl class="aoFacts">${rows.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${esc(value)}</dd></div>`).join("")}</dl>` : "";
   }
   function webHtml() {
     const assessment = ASSESS.assess(offer.report);
@@ -681,6 +759,7 @@
         <section class="aoGroup"><h3>${icon("shield")}<span>${L("Jak sprawdzono", "Как проверяли")}</span></h3>
           <p class="aoWebFirm">${esc(offer.report.firm)}${insp.date ? ` · ${esc(dateText(insp.date))}` : ""}${place ? ` · ${esc(titleCase(place))}` : ""}</p>
           <div class="aoChipsRow">${inspectedChips().map((chip) => `<span class="aoChip">${icon("check")}${esc(chip)}</span>`).join("")}</div>
+          ${factsHtml()}
         </section>
       </div>
       ${tyresHtml()}
@@ -725,19 +804,28 @@
       </section>
       ${managerCard(assessment)}
       ${commercial.length > 1 ? `<section class="aoCardP"><h2>${L("Zdjęcie główne", "Главное фото")}</h2>
-        <div class="aoThumbs">${commercial.map((src) => `<button type="button" data-photo="${esc(src)}" class="${mainPhoto() === src ? "isActive" : ""}"><img src="${esc(thumb(src))}" alt="" loading="lazy" referrerpolicy="no-referrer" /></button>`).join("")}</div>
+        <div class="aoThumbs">${commercial.map((src) => `<button type="button" data-photo="${esc(src)}" class="${mainPhoto() === src ? "isActive" : ""}"><img src="${esc(shownSrc(thumb(src)))}" data-source="${esc(src)}" alt="" loading="lazy" referrerpolicy="no-referrer" /></button>`).join("")}</div>
       </section>` : ""}`;
   }
   // For the manager only (owner 2026-10-11): what the page leaves out — the report's raw data.
   function managerCard(assessment) {
     const report = offer.report;
     const missingNames = { version: L("wersja", "версия"), power: L("moc", "мощность"), fuel: L("paliwo", "топливо"), gearbox: L("skrzynia", "коробка"), drive: L("napęd", "привод"), inspectionDate: L("data oględzin", "дата осмотра"), inspectionPlace: L("miejsce", "место"), serviceBook: L("książka serwisowa", "сервисная книжка"), registration: L("dowód rejestracyjny", "техпаспорт"), tyres: L("opony", "шины") };
-    const notChecked = L("jazda próbna, diagnostyka OBD, pomiar lakieru, podwozie na podnośniku, zawieszenie i hamulce, bateria wysokiego napięcia", "тест-драйв, диагностика OBD, замер краски, низ на подъёмнике, подвеска и тормоза, высоковольтная батарея");
+    const insp = report.inspection || {};
+    const notChecked = report.firm === "DEKRA"
+      ? [L("jazda próbna", "тест-драйв"), L("diagnostyka OBD", "диагностика OBD"), insp.paint ? "" : L("pomiar lakieru", "замер краски"), insp.lift ? "" : L("podwozie na podnośniku", "низ на подъёмнике"), insp.engineRun ? "" : L("uruchomienie silnika", "запуск двигателя"), L("bateria wysokiego napięcia", "высоковольтная батарея")].filter(Boolean).join(", ")
+      : L("jazda próbna, diagnostyka OBD, pomiar lakieru, podwozie na podnośniku, zawieszenie i hamulce, bateria wysokiego napięcia", "тест-драйв, диагностика OBD, замер краски, низ на подъёмнике, подвеска и тормоза, высоковольтная батарея");
+    const photosMissing = report.firm === "DEKRA" && !(report.photos || []).length && !(report.damages || []).some((damage) => damage.photos?.length);
     const raw = (report.documents || []).map((item) => `${esc(item.label)}: <b>${esc(item.value)}</b>`).join("<br>");
     return `<section class="aoCardP isManager"><h2>${L("Dla opiekuna", "Для менеджера")}</h2>
       ${report.missing?.length ? `<p class="aoHint"><b>${L("Brak w raporcie", "Нет в отчёте")}:</b> ${report.missing.map((key) => esc(missingNames[key] || key)).join(", ")}</p>` : ""}
       <p class="aoHint"><b>${L("Nie sprawdzono", "Не проверено")}:</b> ${esc(notChecked)}</p>
       <p class="aoHint">${esc(report.firm)} · ${esc(report.layoutName)}${report.client ? ` · ${esc(report.client)}` : ""}${report.inspection?.dateText ? ` · ${esc(report.inspection.dateText)}` : ""}${report.inspection?.place ? `<br>${esc(report.inspection.place)}` : ""}</p>
+      ${(report.remarks || []).length ? `<p class="aoHint"><b>${L("Uwagi w raporcie", "Примечания в отчёте")}:</b> ${report.remarks.map(esc).join(" · ")}</p>` : ""}
+      ${(report.catalogErrors || []).length ? `<p class="aoHint"><b>${L("Pominięte w wyposażeniu (inna marka — błąd katalogu)", "Убрано из оснащения (другая марка — ошибка каталога)")}:</b> ${report.catalogErrors.map(esc).join(" · ")}</p>` : ""}
+      ${insp.papers ? `<p class="aoHint"><b>${L("Dokumenty okazane", "Предъявленные документы")}:</b> ${esc(insp.papers)}</p>` : ""}
+      ${insp.nextHu ? `<p class="aoHint"><b>${L("Następny przegląd (HU)", "Следующий техосмотр (HU)")}:</b> ${esc(insp.nextHu)}</p>` : ""}
+      ${photosMissing ? `<p class="aoHint"><b>${L("Zdjęcia", "Фото")}:</b> ${L("PDF bez zdjęć do oferty — poproś o załącznik ze zdjęciami", "в PDF нет фото для оффера — попросите приложение с фото")}${report.photoCount ? ` (${L("raport ma", "в отчёте")} ${report.photoCount})` : ""}.</p>` : ""}
       ${report.costTotal ? `<p class="aoHint">${L("Wycena Macadam", "Оценка Macadam")}: <b>${numbers.format(report.costTotal)} € ${L("netto", "нетто")}</b> · ${L("nasza w Polsce", "наша в Польше")}: <b>${zl(assessment.total)}</b></p>` : ""}
       ${raw ? `<details class="aoRaw"><summary>${L("Dokumenty — oryginał raportu", "Документы — оригинал отчёта")}</summary><p class="aoHint">${raw}</p></details>` : ""}
       ${report.factoryDetails?.length ? `<details class="aoRaw"><summary>${L("Pełne wyposażenie wg VIN", "Полное оснащение по VIN")} (${report.factoryDetails.length})</summary><p class="aoHint">${report.factoryDetails.map(esc).join(" · ")}</p></details>` : ""}
@@ -765,7 +853,18 @@
       ? `<div class="aoWeb" data-ao-web>${webHtml()}</div><div class="aoSheetsHold" data-ao-sheets aria-hidden="true"></div>`
       : `<div class="aoSheets" data-ao-sheets></div>`;
     fit();
+    // Photos cut out of a PDF (DEKRA) live in this browser's IndexedDB: once found, drawn again.
+    const PHOTOS = window.AUTOGOOD_AUCTION_PHOTOS;
+    const missing = PHOTOS && [offer.photo, offer.report?.mainPhoto, ...(offer.report?.damages || []).flatMap((damage) => damage.photos || [])].some((src) => PHOTOS.isLocal(src) && !localUrls.has(src));
+    if (missing && !warming) {
+      warming = true;
+      warmPhotos().then(() => {
+        warming = false;
+        render();
+      });
+    }
   }
+  let warming = false;
 
   // The sheet at its real size, smaller on a narrow screen.
   function scale() {
@@ -847,15 +946,18 @@
   const fromBase64Url = (text) => Uint8Array.from(atob(String(text).replace(/-/g, "+").replace(/_/g, "/")), (char) => char.charCodeAt(0));
   async function packOffer() {
     const report = offer.report;
-    const main = mainPhoto();
+    const shared = (src) => Boolean(src) && !/^idb:/.test(src);
+    const main = shared(mainPhoto()) ? mainPhoto() : "";
     const slimReport = {
       ...report,
-      photos: [main, ...(report.photos || []).filter((src) => src !== main)].filter(Boolean).slice(0, 4),
+      mainPhoto: shared(report.mainPhoto) ? report.mainPhoto : "",
+      photos: [main, ...(report.photos || []).filter((src) => src !== main)].filter(shared).slice(0, 4),
       photoCount: photoCount(),
-      damages: (report.damages || []).map(({ id, ...damage }) => ({ ...damage, photos: (damage.photos || []).slice(0, 2) })),
+      photoCaptions: [],
+      damages: (report.damages || []).map(({ id, ...damage }) => ({ ...damage, photos: (damage.photos || []).filter(shared).slice(0, 2), photoCaptions: [] })),
       factoryDetails: [], other: [],
     };
-    const slim = { ...offer, report: slimReport, panelOpen: false };
+    const slim = { ...offer, photo: shared(offer.photo) ? offer.photo : "", report: slimReport, panelOpen: false };
     const stream = new Blob([JSON.stringify(slim)]).stream().pipeThrough(new CompressionStream("deflate-raw"));
     return toBase64Url(new Uint8Array(await new Response(stream).arrayBuffer()));
   }
@@ -1014,6 +1116,13 @@
     try {
       await Promise.all([...copy.querySelectorAll("img")].map(async (image) => {
         const src = image.dataset.source || image.getAttribute("src") || "";
+        // A photo cut out of the report's PDF (DEKRA): kept in this browser.
+        if (/^idb:/.test(src)) {
+          const data = await window.AUTOGOOD_AUCTION_PHOTOS?.dataUrl(src);
+          if (data) image.setAttribute("src", data);
+          else image.replaceWith(Object.assign(document.createElement("div"), { className: "aoPhotoEmpty", innerHTML: icon("car") }));
+          return;
+        }
         if (!/^https:\/\//.test(src)) return;
         const data = await photoData(src);
         if (data) image.setAttribute("src", data);

@@ -40,14 +40,14 @@
     pl: {
       inputTitle: "Raport z aukcji", linkLabel: "Link do raportu", read: "Rozpoznaj",
       dropTitle: "Przeciągnij tu PDF raportu", dropHint: "albo kliknij i wybierz plik (PDF lub zapisana strona HTML). Plik zostaje na tym komputerze.",
-      supported: "Rozpoznajemy sami: Macadam — linki reports.macadam.eu, portal.macadam.eu (remarketing), …macadam.eu/…/AppraisalWebview i ich wydruki PDF. Wkrótce: TÜV, DEKRA, raporty samych aukcji.",
+      supported: "Rozpoznajemy sami: Macadam — linki reports.macadam.eu, portal.macadam.eu (remarketing), …macadam.eu/…/AppraisalWebview i ich wydruki PDF; DEKRA — PDF z Holandii (Rapportage voertuigstaat), Niemiec (Vermarktungsbericht, Zustandsbericht-Leasing) i Belgii (Hödlmayr). Wkrótce: TÜV, raporty samych aukcji.",
       fullLink: "Wklej pełny link do raportu (https://…).",
-      unknownLink: "Nie rozpoznaję raportu z tego linku. Obsługujemy teraz raporty Macadam.",
+      unknownLink: "Nie rozpoznaję raportu z tego linku. Obsługujemy teraz raporty Macadam i DEKRA (PDF).",
       firmLater: "To raport {firm} — tego formatu jeszcze nie czytamy. Prześlij przykład, dodamy go.",
       macadamOther: "To link Macadam, ale innego rodzaju niż znane nam trzy. Prześlij go, dodamy.",
-      readingLink: "Czytam raport {firm} z linku…", readingPdf: "Czytam PDF {name}…", pdfLink: "PDF zawiera link do pełnego raportu — czytam go (ceny napraw, zdjęcia, wyposażenie)…",
+      readingLink: "Czytam raport {firm} z linku…", readingPdf: "Czytam PDF {name}…", pdfPhotos: "Wycinam zdjęcia z PDF (główne i uszkodzeń)…", pdfLink: "PDF zawiera link do pełnego raportu — czytam go (ceny napraw, zdjęcia, wyposażenie)…",
       linkFailed: "Nie udało się odczytać linku ({reason}).", linkFallback: "Nie udało się odczytać linku z PDF ({reason}) — pokazuję dane z samego PDF.",
-      pdfFailed: "Nie udało się odczytać pliku: {reason}.", pdfUnknown: "Nie rozpoznaję tego raportu{firm}. Obsługujemy teraz raporty Macadam.",
+      pdfFailed: "Nie udało się odczytać pliku: {reason}.", pdfUnknown: "Nie rozpoznaję tego raportu{firm}. Obsługujemy teraz raporty Macadam i DEKRA (PDF).",
       remarketingPdf: "To wydruk raportu remarketingowego Macadam — czytamy go z linku w stopce, a linku nie udało się odczytać ({reason}).",
       done: "Raport odczytany {time}.", notPdf: "To nie jest PDF ani zapisana strona HTML.",
       from: { link: "z linku", pdf: "z PDF", html: "z zapisanej strony" }, open: "Otwórz raport",
@@ -72,14 +72,14 @@
     ru: {
       inputTitle: "Отчёт с аукциона", linkLabel: "Ссылка на отчёт", read: "Распознать",
       dropTitle: "Перетащите сюда PDF отчёта", dropHint: "или нажмите и выберите файл (PDF или сохранённая страница HTML). Файл остаётся на этом компьютере.",
-      supported: "Определяем сами: Macadam — ссылки reports.macadam.eu, portal.macadam.eu (remarketing), …macadam.eu/…/AppraisalWebview и их PDF-распечатки. Скоро: TÜV, DEKRA, отчёты самих аукционов.",
+      supported: "Определяем сами: Macadam — ссылки reports.macadam.eu, portal.macadam.eu (remarketing), …macadam.eu/…/AppraisalWebview и их PDF-распечатки; DEKRA — PDF из Нидерландов (Rapportage voertuigstaat), Германии (Vermarktungsbericht, Zustandsbericht-Leasing) и Бельгии (Hödlmayr). Скоро: TÜV, отчёты самих аукционов.",
       fullLink: "Вставьте полную ссылку на отчёт (https://…).",
-      unknownLink: "Не узнаю отчёт по этой ссылке. Сейчас читаем отчёты Macadam.",
+      unknownLink: "Не узнаю отчёт по этой ссылке. Сейчас читаем отчёты Macadam и DEKRA (PDF).",
       firmLater: "Это отчёт {firm} — этот формат пока не читаем. Пришлите пример, добавим.",
       macadamOther: "Это ссылка Macadam, но не из трёх известных видов. Пришлите её, добавим.",
-      readingLink: "Читаю отчёт {firm} по ссылке…", readingPdf: "Читаю PDF {name}…", pdfLink: "В PDF есть ссылка на полный отчёт — читаю её (цены ремонта, фото, оснащение)…",
+      readingLink: "Читаю отчёт {firm} по ссылке…", readingPdf: "Читаю PDF {name}…", pdfPhotos: "Вырезаю фото из PDF (главное и повреждений)…", pdfLink: "В PDF есть ссылка на полный отчёт — читаю её (цены ремонта, фото, оснащение)…",
       linkFailed: "Не удалось прочитать ссылку ({reason}).", linkFallback: "Не удалось прочитать ссылку из PDF ({reason}) — показываю данные самого PDF.",
-      pdfFailed: "Не удалось прочитать файл: {reason}.", pdfUnknown: "Не узнаю этот отчёт{firm}. Сейчас читаем отчёты Macadam.",
+      pdfFailed: "Не удалось прочитать файл: {reason}.", pdfUnknown: "Не узнаю этот отчёт{firm}. Сейчас читаем отчёты Macadam и DEKRA (PDF).",
       remarketingPdf: "Это распечатка remarketing-отчёта Macadam — читаем его по ссылке в подвале, а ссылку прочитать не удалось ({reason}).",
       done: "Отчёт прочитан в {time}.", notPdf: "Это не PDF и не сохранённая страница HTML.",
       from: { link: "по ссылке", pdf: "из PDF", html: "из сохранённой страницы" }, open: "Открыть отчёт",
@@ -102,8 +102,8 @@
       summaryArea: "Повреждения по зонам",
     },
   };
-  const GROUP_ORDER = ["replace_paint", "replace", "repair_paint", "paint", "pdr", "smart", "polish", "hail", "glass", "flat", "refit", "check", "clean", "none", "other"];
-  const GROUP_TONE = { replace_paint: "hard", replace: "hard", repair_paint: "mid", paint: "mid", hail: "mid", pdr: "soft", smart: "soft", polish: "soft", glass: "soft", flat: "soft", refit: "soft", check: "warn", clean: "soft", none: "none", other: "soft" };
+  const GROUP_ORDER = ["replace_paint", "replace", "repair_paint", "paint", "pdr", "smart", "polish", "hail", "glass", "flat", "refit", "check", "service", "clean", "none", "other"];
+  const GROUP_TONE = { replace_paint: "hard", replace: "hard", repair_paint: "mid", paint: "mid", hail: "mid", pdr: "soft", smart: "soft", polish: "soft", glass: "soft", flat: "soft", refit: "soft", check: "warn", service: "warn", clean: "soft", none: "none", other: "soft" };
 
   let lang = "pl";
   const readLang = () => {
@@ -246,7 +246,115 @@
           .map((item) => ({ str: item.str, x: item.transform[4], y: item.transform[5], w: item.width, h: item.height })),
       });
     }
-    return { title: meta?.info?.Title || "", pages };
+    return { title: meta?.info?.Title || "", pages, doc, lib };
+  }
+
+  // ---- Photos inside the PDF (DEKRA, 2026-10-12) ----------------------------------------------
+  // Where the pictures are drawn on a page: the unit square through the current matrix.
+  async function imageBoxes(lib, page) {
+    const list = await page.getOperatorList();
+    const OPS = lib.OPS;
+    const paints = new Set([OPS.paintImageXObject, OPS.paintJpegXObject, OPS.paintInlineImageXObject, OPS.paintImageXObjectRepeat].filter((op) => op !== undefined));
+    let ctm = [1, 0, 0, 1, 0, 0];
+    const stack = [];
+    const boxes = [];
+    const times = (m, n) => [m[0] * n[0] + m[2] * n[1], m[1] * n[0] + m[3] * n[1], m[0] * n[2] + m[2] * n[3], m[1] * n[2] + m[3] * n[3], m[0] * n[4] + m[2] * n[5] + m[4], m[1] * n[4] + m[3] * n[5] + m[5]];
+    list.fnArray.forEach((fn, at) => {
+      if (fn === OPS.save) stack.push(ctm);
+      else if (fn === OPS.restore) ctm = stack.pop() || ctm;
+      else if (fn === OPS.transform) ctm = times(ctm, list.argsArray[at]);
+      else if (paints.has(fn)) {
+        const xs = [ctm[4], ctm[4] + ctm[0], ctm[4] + ctm[2], ctm[4] + ctm[0] + ctm[2]];
+        const ys = [ctm[5], ctm[5] + ctm[1], ctm[5] + ctm[3], ctm[5] + ctm[1] + ctm[3]];
+        const box = { x: Math.min(...xs), y: Math.min(...ys), w: Math.max(...xs) - Math.min(...xs), h: Math.max(...ys) - Math.min(...ys), image: list.argsArray[at][0] };
+        if (box.w > 80 && box.h > 60) boxes.push(box);
+      }
+    });
+    return boxes;
+  }
+  // The picture over a caption: the nearest box above it that covers the caption's x.
+  function boxOver(boxes, caption) {
+    return boxes.filter((box) => box.y >= caption.y - 4 && box.y - caption.y < 80 && (caption.x === undefined || (caption.x >= box.x - 30 && caption.x <= box.x + box.w)))
+      .sort((a, b) => (a.y - caption.y) - (b.y - caption.y))[0] || null;
+  }
+  // A picture object of the PDF → something a canvas can draw (a bitmap, or RGB / RGBA pixels).
+  function pdfImage(page, image) {
+    const read = typeof image === "string"
+      ? new Promise((resolve) => {
+        const store = image.startsWith("g_") ? page.commonObjs : page.objs;
+        try {
+          store.get(image, resolve);
+        } catch {
+          resolve(null);
+        }
+      })
+      : Promise.resolve(image);
+    const timeout = new Promise((resolve) => setTimeout(() => resolve(null), 8000));
+    return Promise.race([read, timeout]).then((object) => {
+      if (!object) return null;
+      if (object.bitmap) return object.bitmap;
+      if (!object.data || !object.width || !object.height) return null;
+      const { width, height, data } = object;
+      const pixels = new Uint8ClampedArray(width * height * 4);
+      const kind = object.kind || (data.length === width * height * 4 ? 3 : data.length === width * height * 3 ? 2 : 0);
+      if (kind === 3) pixels.set(data.subarray(0, pixels.length));
+      else if (kind === 2) for (let from = 0, to = 0; to < pixels.length; from += 3, to += 4) {
+        pixels[to] = data[from];
+        pixels[to + 1] = data[from + 1];
+        pixels[to + 2] = data[from + 2];
+        pixels[to + 3] = 255;
+      }
+      else return null;
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext("2d").putImageData(new ImageData(pixels, width, height), 0, 0);
+      return canvas;
+    });
+  }
+  // DEKRA PDF: the main photo (front, left when said) and one photo per damage → IndexedDB.
+  async function attachPdfPhotos(data, report) {
+    const PHOTOS = window.AUTOGOOD_AUCTION_PHOTOS;
+    const captions = report.photoCaptions || [];
+    if (!PHOTOS || !data.doc || !captions.length) return 0;
+    const plainOf = REPORT.plain;
+    const wanted = [];
+    const main = captions.find((item) => /^(avant gauche|diagonal von vorne)/.test(plainOf(item.caption))) || captions.find((item) => /vorne|avant|voor/.test(plainOf(item.caption))) || captions[0];
+    if (main) wanted.push({ caption: main, use: "main" });
+    const damages = report.damages.filter((damage) => !damage.accepted);
+    for (const damage of damages) {
+      const own = damage.photoRefs?.length
+        ? damage.photoRefs.map((n) => captions.find((item) => item.n === n)).filter(Boolean)
+        : captions.filter((item) => plainOf(item.caption) === plainOf(`${damage.original} / ${damage.typeOriginal}`));
+      own.slice(0, damages.length === 1 ? 2 : 1).forEach((caption) => wanted.push({ caption, use: damage }));
+    }
+    const key = `${report.firm}:${report.car?.vin || report.fileName || "pdf"}`;
+    const boxesOf = new Map();
+    let count = 0;
+    for (const want of wanted.slice(0, 14)) {
+      const number = want.caption.page;
+      if (!boxesOf.has(number)) boxesOf.set(number, data.doc.getPage(number).then((page) => imageBoxes(data.lib, page).then((boxes) => ({ page, boxes }))));
+      const { page, boxes } = await boxesOf.get(number);
+      const box = boxOver(boxes, want.caption);
+      if (!box) continue;
+      const picture = await pdfImage(page, box.image);
+      if (!picture) continue;
+      const limit = want.use === "main" ? 1400 : 900;
+      const scale = Math.min(1, limit / picture.width);
+      const cut = document.createElement("canvas");
+      cut.width = Math.round(picture.width * scale);
+      cut.height = Math.round(picture.height * scale);
+      cut.getContext("2d").drawImage(picture, 0, 0, cut.width, cut.height);
+      const blob = await new Promise((resolve) => cut.toBlob(resolve, "image/jpeg", 0.82));
+      if (!blob) continue;
+      const src = await PHOTOS.put(`${key}:${number}:${Math.round(box.x)}:${Math.round(box.y)}`, blob);
+      if (want.use === "main") {
+        report.mainPhoto = src;
+        report.photos = [src, ...report.photos.filter((item) => item !== src)];
+      } else if (!want.use.photos.includes(src)) want.use.photos.push(src);
+      count += 1;
+    }
+    return count;
   }
   async function readFile(file) {
     if (!file || busy) return;
@@ -291,6 +399,16 @@
       const { report } = REPORT.fromPdf(data);
       if (!report) throw new Error(t("pdfUnknown", { firm: kind.firm ? ` (${kind.firm})` : "" }));
       report.fileName = file.name;
+      // DEKRA: the photos are inside the PDF — cut out the main one and the damages' ones.
+      if (report.firm === "DEKRA" && report.photoCaptions?.length) {
+        setStatus(t("pdfPhotos"));
+        try {
+          // Never longer than 40 s: the offer works without its photos.
+          await Promise.race([attachPdfPhotos(data, report), new Promise((resolve) => setTimeout(resolve, 40000))]);
+        } catch {
+          // Without photos the offer still works.
+        }
+      }
       show(report, "pdf");
     } catch (error) {
       setStatus(t("pdfFailed", { reason: error?.message || error }), true);
@@ -451,9 +569,9 @@
     const sorted = [...report.damages].sort((a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group));
     const damageRows = sorted.map((damage) => {
       const part = REPORT.partName(damage.element, lang);
-      const thumbs = damage.photos.slice(0, 3).map((src) => `<a href="${esc(src)}" target="_blank" rel="noopener"><img src="${esc(thumb(src))}" alt="" loading="lazy" referrerpolicy="no-referrer"></a>`).join("");
+      const thumbs = damage.photos.slice(0, 3).map((src) => (/^idb:/.test(src) ? `<img src="${esc(src)}" alt="" />` : `<a href="${esc(src)}" target="_blank" rel="noopener"><img src="${esc(thumb(src))}" alt="" loading="lazy" referrerpolicy="no-referrer"></a>`)).join("");
       return `<tr class="is-${GROUP_TONE[damage.group]}">
-        <td>${part ? `<b>${esc(part)}</b><small class="arFr">${esc(damage.element)}</small>` : `<b>${esc(damage.element)}</b>`}${damage.area ? `<small class="arFr">${esc(damage.area)}</small>` : ""}</td>
+        <td>${part ? `<b>${esc(part)}</b><small class="arFr">${esc(damage.original || damage.element)}</small>` : `<b>${esc(damage.original || damage.element)}</b>`}${damage.area ? `<small class="arFr">${esc(damage.area)}</small>` : ""}</td>
         <td>${value(damage.type, "type")}</td>
         <td><span class="arRepair is-${GROUP_TONE[damage.group]}">${esc(REPORT.repairName(damage.group, lang) || damage.repair)}</span><small class="arFr">${esc(damage.repair)}</small></td>
         ${hasCost ? `<td class="arNum">${damage.cost ? `${euros.format(damage.cost)} €` : "—"}</td>` : ""}
@@ -500,6 +618,7 @@
       ${paramsHtml(draft)}
       ${draft ? previewHtml(draft) : ""}
       <details class="arRawReport"><summary>${icon("receipt")}${esc(t("rawTitle"))}</summary><div class="osCard osCarCard">${rawCard}</div></details>`;
+    window.AUTOGOOD_AUCTION_PHOTOS?.resolve(box);
     const frame = box.querySelector("[data-ar-preview-frame]");
     frame?.addEventListener("load", () => fitPreview(frame));
   }

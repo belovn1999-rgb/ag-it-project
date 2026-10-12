@@ -334,3 +334,11 @@ body.aoBody { margin: 0; min-width: 320px; background: #e8eef3; color: var(--ao-
 .aoClient .aoWork { grid-template-columns: minmax(0, 1fr); padding: 18px 12px 40px; }
 .aoClient .aoBar { justify-content: space-between; }
 .aoLinkRow[hidden] { display: none !important; }
+
+/* DEKRA (2026-10-12): the inspection's facts — paint measured, documented repairs, conditions, remarks (template v2, §11). */
+.aoGroup.isInspection { grid-column: 1 / -1; }
+.aoGroup.isInspection dl { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; }
+.aoFacts { display: grid; gap: 8px; margin: 12px 0 0; }
+.aoFacts > div { display: grid; gap: 1px; }
+.aoFacts dt { color: var(--ao-muted); font-size: 12px; font-weight: 600; }
+.aoFacts dd { margin: 0; color: var(--ao-ink); font-size: 14px; font-weight: 700; overflow-wrap: anywhere; }
