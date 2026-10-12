@@ -1965,6 +1965,113 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
           ${tile(" isDeal", c.monitoringKpiDeals, escapeMarketHtml(numbers.format(deals)), escapeMarketHtml(c.monitoringKpiDealsHint))}
         </div>`;
     })();
+    // Variant A (owner 2026-10-12): one head instead of the sentence, five
+    // tiles, the country chips, the price cards and the portal tiles — what
+    // changed, three numbers, a table of countries with their portals, each
+    // portal a link to its whole list for this search.
+    const headHtml = (() => {
+      const marketRows = perSource.flatMap(({ rows: list }) => list.filter((row) => !row.gone));
+      if (!marketRows.length && !before) return "";
+      const zl = (value) => escapeMarketHtml(formatPlainPrice(Math.round(value), "PLN"));
+      const statsOf = (list) => {
+        const priced = list.filter((row) => !row.offer.suspect && !row.offer.bid).map((row) => ({ row, pln: clientPricePln(row.offer, row.source) }))
+          .filter((item) => item.pln > 0).sort((left, right) => left.pln - right.pln);
+        return { count: list.length, min: priced[0] || null, median: priced.length ? percentile(priced.map((item) => item.pln), 0.5) : 0 };
+      };
+      const allStats = statsOf(marketRows);
+      const freshCount = perSource.reduce((sum, item) => sum + item.rows.filter((row) => row.group === "new" && !row.gone).length, 0);
+      const goneCount = perSource.reduce((sum, item) => sum + item.rows.filter((row) => row.gone).length, 0);
+      const okazje = marketRows.filter((row) => isOkazja(clientPricePln(row.offer, row.source), similarFor(row))).length;
+      const deals = marketRows.filter((row) => liquidity(row.offer).deal).length;
+      const sinceDate = before ? formatHistoryDate(before.at) : "";
+      const title = !before ? c.monitoringHeadFirst
+        : freshCount || goneCount ? c.monitoringHeadChanges.replace("{new}", numbers.format(freshCount)).replace("{gone}", numbers.format(goneCount)).replace("{date}", sinceDate)
+          : c.monitoringHeadSame.replace("{date}", sinceDate);
+      const sub = c.monitoringHeadSub.replace("{date}", formatHistoryDate(latest.at))
+        .replace("{count}", numbers.format(allStats.count)).replace("{label}", carBudget ? c.monitoringHeadInBudget : c.monitoringHeadFitting)
+        .replace("{median}", allStats.median ? formatPlainPrice(Math.round(allStats.median), "PLN") : "—");
+      if (info) {
+        info.innerHTML = `<b class="mobileMonitoringHeadTitle">${escapeMarketHtml(title)}</b><small>${escapeMarketHtml(sub)}</small>${silentNames.length ? `<small class="mobileMonitoringSilent">${escapeMarketHtml(c.monitoringSilentInfo.replace("{portals}", silentNames.join(", ")))}</small>` : ""}`;
+      }
+      // The whole list of one portal in one country: the search's filters and
+      // this car's price on that portal, as Monitoring reads it.
+      const prices = monitoringPrices(entry);
+      const listUrl = (source, key) => {
+        try {
+          // A favourite saved before a newer form field: that field empty.
+          const filters = { ...blankFilters(), ...entry.filters };
+          const price = prices[source] || null;
+          const eur = price && !["otomoto", "blocket", "avby"].includes(source)
+            ? { ...filters, priceFrom: price.from ? String(Math.round(price.from)) : "", priceTo: price.to ? String(Math.round(price.to)) : "" } : filters;
+          const german = germanCountries(selection.countries);
+          const countries = key === "de" ? (german.length ? german : ["DE"]) : marketGroup(key)?.countries || ["DE"];
+          if (source === "mobile") return typeof buildMobileDeSearchUrl === "function" ? buildMobileDeSearchUrl({ ...eur, countries: ["DE"] }) : "";
+          if (source === "autoscout") return window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries, price }) || "";
+          if (source === "autoscoutfr") return window.AUTOGOOD_AUTOSCOUT?.buildSearchUrl(filters, { countries: ["FR"], price }) || "";
+          if (source === "marktplaats" || source === "dehands") return window.AUTOGOOD_MARKTPLAATS?.buildSearchUrl(source, eur) || "";
+          if (source === "kleinanzeigen") return window.AUTOGOOD_KLEINANZEIGEN?.buildSearchUrl(eur) || "";
+          if (source === "paruvendu") return window.AUTOGOOD_PARUVENDU?.buildSearchUrl(eur) || "";
+          if (source === "otomoto") return typeof buildOtomotoSearchUrl === "function" ? buildOtomotoSearchUrl(filters) : "";
+          if (source === "blocket") return window.AUTOGOOD_BLOCKET?.buildSearchUrl(filters) || "";
+          if (source === "avby") return window.AUTOGOOD_AVBY?.buildSearchUrl(filters) || "";
+        } catch {
+          // No link: the portal's name alone.
+        }
+        return "";
+      };
+      const groupSources = (group) => [...new Set(group.rows.filter((row) => selectionRowOn(selection, row)).map(rowSource))];
+      const pill = (source, key, count) => {
+        const silent = perSource.find((item) => item.source === source)?.silent;
+        const url = listUrl(source, key);
+        const text = `${portalName(source)} ${silent ? c.monitoringNoAnswerShort : numbers.format(count)}`;
+        const titleText = c.monitoringPortalLinkTitle.replace("{portal}", portalName(source));
+        return url
+          ? `<a class="mobileMonitoringPortalPill${silent ? " isSilent" : ""}" href="${escapeMarketHtml(url)}" target="_blank" rel="noopener" title="${escapeMarketHtml(titleText)}">${escapeMarketHtml(text)} ↗</a>`
+          : `<span class="mobileMonitoringPortalPill${silent ? " isSilent" : ""}">${escapeMarketHtml(text)}</span>`;
+      };
+      const groups = MARKET_GROUPS.filter((group) => selectionGroupOn(selection, group) || marketRows.some((row) => offerCountryKey(row.source, row.offer) === group.key));
+      const rowsOf = (key) => marketRows.filter((row) => offerCountryKey(row.source, row.offer) === key);
+      const withCars = groups.filter((group) => rowsOf(group.key).length);
+      const empty = groups.filter((group) => !rowsOf(group.key).length);
+      const nameOf = (group) => window.AUTOGOOD_COUNTRY_NAME?.(group.countries[0]) || group.countries[0];
+      const cheapest = (stats) => (stats.min ? (stats.min.row.offer.url
+        ? `<a href="${escapeMarketHtml(stats.min.row.offer.url)}" target="_blank" rel="noopener">${zl(stats.min.pln)}</a>` : zl(stats.min.pln)) : "—");
+      const tr = (key, label, list, pills) => {
+        const stats = statsOf(list);
+        const active = monitoringState.country === key;
+        return `<tr class="${active ? "isActive" : ""}">
+          <td><button type="button" class="mobileMonitoringCountryName" data-monitoring-country-filter="${key}" aria-pressed="${active ? "true" : "false"}">${label}</button></td>
+          <td class="isNum">${escapeMarketHtml(numbers.format(stats.count))}</td>
+          <td class="isNum">${cheapest(stats)}</td>
+          <td class="isNum">${stats.median ? zl(stats.median) : "—"}</td>
+          <td>${pills}</td>
+        </tr>`;
+      };
+      const kpi = (label, value, note, cls = "") => `<div class="mobileMonitoringHeadKpi${cls}"><small>${escapeMarketHtml(label)}</small><b>${value}</b>${note ? `<span>${escapeMarketHtml(note)}</span>` : ""}</div>`;
+      return `
+        <div class="mobileMonitoringHeadKpis">
+          ${kpi(before ? c.monitoringHeadNewSince.replace("{date}", shortDate(before.at) === shortDate(latest.at) ? formatHistoryDate(before.at).split(", ")[1] || sinceDate : sinceDate) : c.monitoringKpiNew, before ? escapeMarketHtml(numbers.format(freshCount)) : "—", before ? c.monitoringHeadGoneNote.replace("{gone}", numbers.format(goneCount)) : "", freshCount ? " isNew" : "")}
+          ${kpi(c.okazja, escapeMarketHtml(numbers.format(okazje)), c.monitoringHeadOkazjaNote, okazje ? " isGood" : "")}
+          ${kpi(c.monitoringKpiDeals, escapeMarketHtml(numbers.format(deals)), c.monitoringKpiDealsHint)}
+        </div>
+        <div class="mobileMarketTableScroll mobileMonitoringHeadTable">
+          <table class="mobileMarketTable">
+            <thead><tr>
+              <th scope="col">${escapeMarketHtml(c.monitoringHeadCountry)}</th>
+              <th scope="col" class="isNum">${escapeMarketHtml(c.monitoringHeadCars)}</th>
+              <th scope="col" class="isNum">${escapeMarketHtml(c.monitoringSummaryCheapest)}</th>
+              <th scope="col" class="isNum">${escapeMarketHtml(c.median)}</th>
+              <th scope="col">${escapeMarketHtml(c.monitoringHeadPortals)}</th>
+            </tr></thead>
+            <tbody>
+              ${withCars.length > 1 || monitoringState.country ? tr("", escapeMarketHtml(c.monitoringCountryAll), marketRows, "") : ""}
+              ${withCars.map((group) => tr(group.key, `${window.AUTOGOOD_FLAG?.(group.countries[0]) || ""} ${escapeMarketHtml(nameOf(group))}`, rowsOf(group.key),
+                groupSources(group).map((source) => pill(source, group.key, rowsOf(group.key).filter((row) => row.source === source).length)).join(""))).join("")}
+              ${empty.length ? `<tr class="isEmpty"><td colspan="5">${escapeMarketHtml(c.monitoringHeadEmpty.replace("{countries}", empty.map(nameOf).join(", ")))} ${empty.flatMap((group) => groupSources(group).map((source) => pill(source, group.key, 0))).join("")}</td></tr>` : ""}
+            </tbody>
+          </table>
+        </div>`;
+    })();
     const tabsHtml = `
       <div class="mobileMonitoringTabs" role="tablist">
         ${[["list", c.monitoringTabList], ["history", c.monitoringTabHistory], ["market", c.monitoringTabMarket]].map(([key, label]) => `<button type="button" role="tab" id="monitoring-tab-${key}" aria-controls="monitoring-panel-${key}" tabindex="${(monitoringState.tab || "list") === key ? "0" : "-1"}" data-monitoring-tab="${key}" aria-selected="${(monitoringState.tab || "list") === key ? "true" : "false"}"${(monitoringState.tab || "list") === key ? ' class="isActive"' : ""}>${escapeMarketHtml(label)}</button>`).join("")}
@@ -1972,10 +2079,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     target.innerHTML = `
       ${changedBetween ? `<p class="mobileMarketOfferWarning">${escapeMarketHtml(c.offerFiltersBetween)}</p>` : ""}
       ${!before && (newBase || !kpiHtml) ? `<p class="mobileMonitoringNote">${escapeMarketHtml((newBase ? c.monitoringNewBase : c.monitoringBaseline).replace("{count}", numbers.format(perSource.reduce((sum, item) => sum + (item.current?.offers.length || 0), 0))))}</p>` : ""}
-      ${kpiHtml}
-      ${countryTabs}
-      ${summaryHtml}
-      <div class="mobileMonitoringTiles">${tiles}</div>
+      ${headHtml}
       ${tabsHtml}
       <div data-monitoring-list-panel role="tabpanel" id="monitoring-panel-list" aria-labelledby="monitoring-tab-list">
       <div class="mobileMonitoringViews" role="group">

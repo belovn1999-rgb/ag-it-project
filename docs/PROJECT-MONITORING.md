@@ -763,3 +763,14 @@ portalPrice / setPortalPrice / filtersPriceIn`); чтение «от новых�
    строка «Filtry kolumn: N z M aut · Wyczyść»). На 1280 px таблица = карточка. Причины «Blisko
    filtrów» коротко: «rok 2022 (filtr od 2023)», «przebieg +1 000 (filtr do 120 000)», «cena +4 %
    (filtr do …)», «brak: …»; поколение — в подсказке.
+38. **Шапка результатов — вариант A (владелец 12.10, после design-critique: «ужасно сделано»).**
+   Было: фраза + 5 KPI + ряд стран + карточки цен + плитки порталов (одни и те же числа три
+   раза, нули наравне с данными). Стало (`headHtml`): заголовок «Bez zmian od …» / «N nowe ·
+   M zniknęło od …» и строка «Monitoring … · N aut w budżecie · mediana na gotowo …» (в
+   `[data-monitoring-check-info]`, там же «Bez odpowiedzi: …»); три числа — «Nowe od …»
+   (zniknęło), «Okazja», «Do negocjacji»; таблица стран: «Wszystkie», страны с машинами
+   (кол-во, najtaniej — ссылка на объявление, mediana na gotowo), порталы — **ссылки на
+   полную выдачу портала** (фильтры машины и её цена портала, `listUrl`; mobile.de — DE,
+   AutoScout24 — страны строки; «— brak odp.» оранжевым у не ответившего), страны без машин —
+   одной строкой. Нажатие на страну фильтрует список (`data-monitoring-country-filter`). На
+   телефоне строки таблицы — блоки, порталы под ними.

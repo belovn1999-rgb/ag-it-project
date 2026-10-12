@@ -1847,3 +1847,174 @@ button.mobileMonitoringMac {
     gap: 2px 4px;
   }
 }
+
+/* Variant A (owner 2026-10-12): the head — what changed, three numbers, the
+   table of countries with links to each portal's whole list. */
+.mobileMonitoringCheckInfo .mobileMonitoringHeadTitle {
+  font-size: var(--text-lg, 1.125rem);
+  font-weight: 800;
+  color: var(--mon-ink-strong);
+}
+
+.mobileMonitoringHeadKpis {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin: 12px 0;
+}
+
+.mobileMonitoringHeadKpi {
+  display: grid;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md, 8px);
+  background: var(--color-surface-muted, rgb(0 0 0 / 0.035));
+}
+
+.mobileMonitoringHeadKpi small {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.mobileMonitoringHeadKpi b {
+  font-size: 1.5rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.mobileMonitoringHeadKpi span {
+  color: var(--color-muted);
+  font-size: var(--text-xs);
+}
+
+.mobileMonitoringHeadKpi.isNew b {
+  color: var(--mon-pick);
+}
+
+.mobileMonitoringHeadKpi.isGood b {
+  color: var(--mon-good);
+}
+
+.mobileMonitoringHeadTable {
+  margin: 0 0 6px;
+}
+
+.mobileMonitoringHeadTable table {
+  width: 100%;
+}
+
+.mobileMonitoringHeadTable th,
+.mobileMonitoringHeadTable td {
+  padding: 8px 10px;
+  vertical-align: middle;
+}
+
+.mobileMonitoringHeadTable td.isNum {
+  white-space: nowrap;
+  font-weight: 700;
+}
+
+.mobileMonitoringHeadTable tr.isActive td {
+  background: var(--mon-pick-wash);
+}
+
+.mobileMonitoringHeadTable tr.isEmpty td {
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.mobileMonitoringCountryName {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--mon-ink-strong);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.mobileMonitoringCountryName:hover {
+  color: var(--color-brand-pressed);
+  text-decoration: underline;
+}
+
+.mobileMonitoringPortalPill {
+  display: inline-block;
+  margin: 2px 6px 2px 0;
+  padding: 3px 9px;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--mon-radius-pill);
+  color: var(--color-brand-pressed);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.mobileMonitoringPortalPill:hover {
+  border-color: var(--color-brand-pressed);
+}
+
+.mobileMonitoringPortalPill.isSilent {
+  border-color: var(--mon-near);
+  background: var(--mon-near-wash);
+  color: var(--mon-near-ink);
+}
+
+@media (max-width: 40rem) {
+  .mobileMonitoringHeadKpis {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .mobileMonitoringHeadKpi b {
+    font-size: 1.2rem;
+  }
+
+  .mobileMonitoringHeadTable th:nth-child(4),
+  .mobileMonitoringHeadTable td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* Phones: each country one block — name, cars, cheapest; its portals below. */
+@media (max-width: 40rem) {
+  .mobileMonitoringHeadTable thead {
+    display: none;
+  }
+
+  .mobileMonitoringHeadTable table,
+  .mobileMonitoringHeadTable tbody {
+    display: block;
+    width: 100%;
+  }
+
+  .mobileMonitoringHeadTable tr {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 2px 10px;
+    align-items: center;
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--color-rule);
+  }
+
+  .mobileMonitoringHeadTable td {
+    display: block;
+    padding: 2px 0;
+    border: 0;
+  }
+
+  .mobileMonitoringHeadTable td:nth-child(5),
+  .mobileMonitoringHeadTable tr.isEmpty td {
+    grid-column: 1 / -1;
+  }
+
+  .mobileMonitoringHeadTable td:nth-child(5):empty {
+    display: none;
+  }
+}
