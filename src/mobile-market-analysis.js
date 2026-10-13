@@ -436,7 +436,7 @@
       trendTitle: "Mediana ceny w czasie",
       trendNeedsTwo: "Wykres pojawi się po drugim pomiarze cen.",
       adPrice: "cena w ogłoszeniu",
-      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCeny brutto z ogłoszenia\n+ Przeciętnego kosztu transportu — ok. {transport} netto\n+ Przeciętnego kosztu oględzin — ok. {inspection} netto\n+ Akcyzy według rodzaju i pojemności silnika — {excise}\n+ Tłumaczeń dokumentów — 250 zł\n+ Przeglądu technicznego — 150 zł\n+ Wynagrodzenia AUTOGOOD — 2 250 zł + 1,23% ceny auta (kwoty z VAT).\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
+      turnkeyFootnote: "Cena „na gotowo” składa się z:\nCena brutto z ogłoszenia\n+ Transport (średnio) — ok. {transport} netto\n+ Oględziny (średnio) — ok. {inspection} netto\n+ Akcyza (rodzaj i pojemność silnika) — {excise}\n+ Tłumaczenia dokumentów — 250 zł\n+ Przegląd techniczny — 150 zł\n+ Wynagrodzenie AUTOGOOD — 2 250 zł + 1,23% ceny auta (z VAT)\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
       singleYearNote: "Wszystkie oferty z rocznika {year}",
       conclusionHeading: "Wniosek",
       oneMarketPrice: "Za takie auto {from} zapłacisz zwykle około {median} — razem ze wszystkimi kosztami sprowadzenia do Polski*.",
@@ -1216,7 +1216,7 @@
       trendTitle: "Медиана цены во времени",
       trendNeedsTwo: "График появится после второго замера цен.",
       adPrice: "цена в объявлении",
-      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦены брутто в объявлении\n+ Средней стоимости доставки — ок. {transport} нетто\n+ Средней стоимости осмотра — ок. {inspection} нетто\n+ Акциза по типу и объёму двигателя — {excise}\n+ Переводов документов — 250 PLN\n+ Техосмотра — 150 PLN\n+ Вознаграждения AUTOGOOD — 2 250 PLN + 1,23% цены авто (суммы с VAT).\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
+      turnkeyFootnote: "Цена «под ключ» складывается из:\nЦена брутто в объявлении\n+ Доставка (в среднем) — ок. {transport} нетто\n+ Осмотр (в среднем) — ок. {inspection} нетто\n+ Акциз (тип и объём двигателя) — {excise}\n+ Переводы документов — 250 PLN\n+ Техосмотр — 150 PLN\n+ Вознаграждение AUTOGOOD — 2 250 PLN + 1,23% цены авто (с VAT)\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
       singleYearNote: "Все объявления {year} года",
       conclusionHeading: "Вывод",
       oneMarketPrice: "Такое авто {from} обойдётся обычно примерно в {median} — со всеми расходами на пригон в Польшу*.",
@@ -2020,6 +2020,9 @@
     return unique.map((index) => `${percent(rates[index])} (${c.exciseClasses[index]})`).join(", ");
   }
 
+  // The "na gotowo" footnote as a small table, like the offer's calculation
+  // (owner 2026-10-13): "+" and the cost on the left, the amount on the
+  // right; several excise rates one under another.
   function turnkeyFootnoteHtml(text, excise = exciseText([3])) {
     // The average transport and inspection from turnkey-estimate.js, so the
     // note and the calculation never differ.
@@ -2033,7 +2036,18 @@
     const [first, ...items] = lines;
     const lead = String(first).match(/^(.*?[”»])([\s\S]*)$/);
     const head = lead ? `<b>${escapeMarketHtml(lead[1])}</b>${escapeMarketHtml(lead[2])}` : escapeMarketHtml(first);
-    return [head, ...items.map(escapeMarketHtml), ...(contact ? [`<em>${escapeMarketHtml(contact)}</em>`] : [])].join("<br>");
+    const valueHtml = (value) => {
+      // "1,55% (hybryda (także miękka, MHEV) do 2000 cm³), 9,3% (…)": one rate a line.
+      const rates = String(value).split(/,\s(?=\d[\d,.]*\s?%)/).map((item) => item.match(/^(\d[\d,.]*\s?%)\s*\((.*)\)$/));
+      if (!rates.every(Boolean)) return escapeMarketHtml(value);
+      return rates.map(([, rate, kind]) => `<span class="mobileMarketCostRate"><b>${escapeMarketHtml(rate)}</b> <small>${escapeMarketHtml(kind)}</small></span>`).join("");
+    };
+    const rows = items.map((line) => {
+      const plus = line.startsWith("+ ");
+      const [label, ...rest] = (plus ? line.slice(2) : line).split(" — ");
+      return `<tr><td class="mobileMarketCostSign">${plus ? "+" : ""}</td><th scope="row">${escapeMarketHtml(label)}</th><td class="mobileMarketCostValue">${rest.length ? valueHtml(rest.join(" — ")) : ""}</td></tr>`;
+    }).join("");
+    return `<p class="mobileMarketCostHead">* ${head}</p><table class="mobileMarketCostTable"><tbody>${rows}</tbody></table>${contact ? `<p class="mobileMarketCostContact"><em>${escapeMarketHtml(contact)}</em></p>` : ""}`;
   }
 
   // A price on the price scale: the number, the currency under it (owner
@@ -7185,9 +7199,9 @@
           ${carVerdict ? `<li>${escapeMarketHtml(carVerdict)}</li>` : ""}
           ${carLocalVerdict ? `<li>${escapeMarketHtml(carLocalVerdict)}</li>` : ""}
         </ul>` : ""}
-          ${marketListings.some((listing) => listing.turnkeyPln) ? `<p class="mobileMarketAxisNote isTurnkey">* ${byMode
-            ? escapeMarketHtml(c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD")))
-            : turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(marketListings.filter((listing) => listing.turnkeyPln && listing.engine).map((listing) => listing.engine.index)))}</p>` : ""}
+          ${marketListings.some((listing) => listing.turnkeyPln) ? `<div class="mobileMarketAxisNote isTurnkey">${byMode
+            ? `<p>* ${escapeMarketHtml(c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD")))}</p>`
+            : turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(marketListings.filter((listing) => listing.turnkeyPln && listing.engine).map((listing) => listing.engine.index)))}</div>` : ""}
           ${ccmProgress ? `<p class="mobileMarketAxisNote" data-ccm-progress data-report-hide>${escapeMarketHtml(c.ccmProgress.replace("{done}", String(ccmProgress.done)).replace("{total}", String(ccmProgress.total)))}</p>` : ""}
           ${unknownEngine.length && !ccmProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.ccmUnknown, unknownEngine.length))}</p>` : ""}
           ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}

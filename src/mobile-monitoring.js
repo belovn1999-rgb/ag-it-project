@@ -2166,7 +2166,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
             <td class="isNum">${data.priceCell(row.offer, row.source)}</td>
           </tr>`).join("")}</tbody>
       </table>
-      <p class="mobileMarketAxisNote isTurnkey">* ${turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(pdfExciseClasses(rows, data.entry?.filters || {})))}</p>`;
+      <div class="mobileMarketAxisNote isTurnkey">${turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(pdfExciseClasses(rows, data.entry?.filters || {})))}</div>`;
     const fileName = `AUTOGOOD ${c.monitoringPdfFile} ${title} ${today.toISOString().slice(0, 10)}.pdf`.replace(/[\\/:*?"<>|']+/g, "").replace(/\s+/g, " ");
     await downloadReportPdf(button, "pdf", {
       live: report,
