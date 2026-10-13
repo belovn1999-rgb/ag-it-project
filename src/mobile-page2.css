@@ -1215,3 +1215,21 @@ a.mobileLinkedCarChip:hover {
 .isReportCapture .mobileMarketSegmentTable.isCombined tbody th {
   width: 110px;
 }
+
+/* 13.10 (owner): the parameters down, a column per market — the table fits
+   the page; each parameter starts with its heading row. */
+.mobileMarketSegmentTable.isCombined .mobileMarketSegmentGroupRow th {
+  background: color-mix(in srgb, var(--color-brand) 10%, var(--color-surface));
+  color: var(--color-ink);
+  font-weight: 800;
+  text-align: left;
+}
+
+.mobileMarketSegmentTable.isCombined tbody th[scope="row"] {
+  width: 34%;
+  white-space: nowrap;
+}
+
+.mobileMarketSegmentsCard .mobileMarketSegmentScroll {
+  overflow-x: visible;
+}

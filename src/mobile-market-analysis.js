@@ -631,6 +631,7 @@
       segmentMileage: "Przebieg",
       segmentDisplacement: "Pojemność silnika",
       segmentPower: "Moc",
+      mileageOver: "ponad {km}",
       segmentGearbox: "Skrzynia biegów",
       segmentMedian: "Mediana",
       thousandKm: "tys. km",
@@ -1410,6 +1411,7 @@
       segmentMileage: "Пробег",
       segmentDisplacement: "Объём двигателя",
       segmentPower: "Мощность",
+      mileageOver: "более {km}",
       segmentGearbox: "Коробка передач",
       segmentMedian: "Медиана",
       thousandKm: "тыс. км",
@@ -7224,17 +7226,20 @@
             (start) => (size === 1 ? String(start) : `${start}–${start + size - 1}`));
         }
       }
-      const kms = marketListings.map((listing) => Number(listing.mileage)).filter((km) => km > 0);
-      if (kms.length) {
-        const low = Math.min(...kms);
-        const high = Math.max(...kms);
-        // Wide bands, at most 4 (owner 2026-10-12: fewer columns), from 20 000 km.
-        const step = [20000, 25000, 50000, 100000].find((size) => Math.floor(high / size) - Math.floor(low / size) + 1 <= 4) || 100000;
-        const thousands = (value) => numbers.format(Math.round(value / 1000));
-        addDimension(c.statsMileageHeading,
-          (listing) => (Number(listing.mileage) > 0 ? Math.floor(Number(listing.mileage) / step) * step : null),
-          (start) => `${thousands(start)}–${thousands(start + step)} ${c.thousandKm}`);
-      }
+      // Mileage in fixed bands (owner 2026-10-13): 0–40, 40–80, 80–120,
+      // 120–150, 150–200 thousand km, then "over 200 000 km".
+      const MILEAGE_BANDS = [0, 40000, 80000, 120000, 150000, 200000];
+      const bandKm = (value) => numbers.format(value);
+      addDimension(c.statsMileageHeading,
+        (listing) => {
+          const km = Number(listing.mileage);
+          if (!(km > 0)) return null;
+          return [...MILEAGE_BANDS].reverse().find((start) => km >= start);
+        },
+        (start) => {
+          const next = MILEAGE_BANDS[MILEAGE_BANDS.indexOf(start) + 1];
+          return next ? `${bandKm(start)} – ${bandKm(next)} km` : c.mileageOver.replace("{km}", `${bandKm(start)} km`);
+        });
       if (!fixedRange(filters.displacementFrom, filters.displacementTo)) {
         addDimension(c.segmentDisplacement,
           (listing) => (Number(listing.displacementCcm) > 500 ? Math.round(Number(listing.displacementCcm) / 100) : null),
@@ -7273,39 +7278,32 @@
         const tone = !base ? "" : median < base * 0.98 ? " isBelow" : median > base * 1.02 ? " isAbove" : "";
         return `<td class="isNum${tone}"><b>${escapeMarketHtml(formatMarketPrice(median))}</b><small>${escapeMarketHtml(count)}${base ? ` · <span>${escapeMarketHtml(percentFrom(median, base))}</span>` : ""}</small></td>`;
       };
-      // "Cena a parametry" as one table (owner 2026-10-12): a row per market,
-      // every parameter's groups across — mileage first (owner 2026-10-05),
-      // then year, engine, power, gearbox — each under its own heading.
-      // Up to SEGMENT_COLUMNS groups per table, so the report page stays
-      // readable; more parameters continue in a second table of the same form.
-      const SEGMENT_COLUMNS = 10;
-      const mileageIndex = segmentDimensions.findIndex((dimension) => dimension.title === c.statsMileageHeading);
-      if (mileageIndex > 0) segmentDimensions.unshift(...segmentDimensions.splice(mileageIndex, 1));
-      const segmentTables = [];
-      segmentDimensions.forEach((dimension) => {
-        const last = segmentTables[segmentTables.length - 1];
-        const used = last ? last.reduce((sum, item) => sum + item.rows.length, 0) : Infinity;
-        if (last && used + dimension.rows.length <= SEGMENT_COLUMNS) last.push(dimension);
-        else segmentTables.push([dimension]);
-      });
+      // "Cena a parametry" as one table that fits the page (owner 2026-10-13):
+      // the parameters' groups down — mileage, then power, then year, then
+      // the rest, each under its heading row — and a column per market.
+      const segmentOrder = [c.statsMileageHeading, c.segmentPower, c.segmentYear];
+      const segmentRank = (dimension) => (segmentOrder.includes(dimension.title) ? segmentOrder.indexOf(dimension.title) : segmentOrder.length);
+      const orderedDimensions = [...segmentDimensions].sort((left, right) => segmentRank(left) - segmentRank(right));
+      const segmentTables = orderedDimensions.length ? [orderedDimensions] : [];
       const segmentTableHtml = (dimensions) => `
         <div class="mobileMarketSegmentScroll">
           <table class="mobileMarketSegmentTable isRuled isCombined">
             <thead>
               <tr>
-                <th scope="col" rowspan="2"><span class="srOnly">${escapeMarketHtml(c.marketsHeading)}</span></th>
-                ${dimensions.map((dimension) => `<th scope="colgroup" colspan="${dimension.rows.length}" class="mobileMarketSegmentGroup">${escapeMarketHtml(dimension.title === c.statsMileageHeading ? c.tableMileage : dimension.title)}</th>`).join("")}
-              </tr>
-              <tr>
-                ${dimensions.map((dimension) => dimension.rows.map((row, index) => `<th scope="col" class="isNum${index === 0 ? " isGroupStart" : ""}">${escapeMarketHtml(row.label)}</th>`).join("")).join("")}
+                <th scope="col"><span class="srOnly">${escapeMarketHtml(c.segmentsHeading)}</span></th>
+                ${shownSources.map((source) => `<th scope="col" class="isNum">${shownSources.length > 1 ? marketBadge(source) : escapeMarketHtml(c.segmentMedian)}</th>`).join("")}
               </tr>
             </thead>
             <tbody>
-              ${shownSources.map((source) => `
-                <tr>
-                  <th scope="row">${marketBadge(source)}</th>
-                  ${dimensions.map((dimension) => dimension.rows.map((row, index) => segmentCell(row.listings, source).replace('<td class="', `<td class="${index === 0 ? "isGroupStart " : ""}`)).join("")).join("")}
-                </tr>`).join("")}
+              ${dimensions.map((dimension) => `
+                <tr class="mobileMarketSegmentGroupRow">
+                  <th scope="rowgroup" colspan="${shownSources.length + 1}">${escapeMarketHtml(dimension.title === c.statsMileageHeading ? c.tableMileage : dimension.title)}</th>
+                </tr>
+                ${dimension.rows.map((row) => `
+                  <tr>
+                    <th scope="row">${escapeMarketHtml(row.label)}</th>
+                    ${shownSources.map((source) => segmentCell(row.listings, source)).join("")}
+                  </tr>`).join("")}`).join("")}
             </tbody>
           </table>
         </div>`;
