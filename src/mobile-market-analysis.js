@@ -7203,7 +7203,6 @@
             ? `<p>* ${escapeMarketHtml(c.turnkeyFootnoteBy.replace("{date}", byRates.date ? byRates.date.split("-").reverse().join(".") : "—").replace("{saving}", formatMarketPrice(bySaving, "USD")))}</p>`
             : turnkeyFootnoteHtml(c.turnkeyFootnote, exciseText(marketListings.filter((listing) => listing.turnkeyPln && listing.engine).map((listing) => listing.engine.index)))}</div>` : ""}
           ${ccmProgress ? `<p class="mobileMarketAxisNote" data-ccm-progress data-report-hide>${escapeMarketHtml(c.ccmProgress.replace("{done}", String(ccmProgress.done)).replace("{total}", String(ccmProgress.total)))}</p>` : ""}
-          ${unknownEngine.length && !ccmProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.ccmUnknown, unknownEngine.length))}</p>` : ""}
           ${suspectListings.length ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.suspectsSkipped, suspectListings.length))}</p>` : ""}
           ${hiddenByAxis ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(withCount(c.hiddenNoAxis, hiddenByAxis))}</p>` : ""}
 
@@ -7299,28 +7298,29 @@
       const segmentRank = (dimension) => (segmentOrder.includes(dimension.title) ? segmentOrder.indexOf(dimension.title) : segmentOrder.length);
       const orderedDimensions = [...segmentDimensions].sort((left, right) => segmentRank(left) - segmentRank(right));
       const segmentTables = orderedDimensions.length ? [orderedDimensions] : [];
-      const segmentTableHtml = (dimensions) => `
-        <div class="mobileMarketSegmentScroll">
-          <table class="mobileMarketSegmentTable isRuled isCombined">
-            <thead>
+      // Each parameter its own band (owner 2026-10-13): a heading row across
+      // the width, the parameter's groups as columns under it, a row per
+      // market — then the next parameter the same way. Compact and no scroll.
+      const segmentTableHtml = (dimensions) => dimensions.map((dimension) => `
+        <table class="mobileMarketSegmentTable isRuled isCombined isBand">
+          <colgroup><col class="mobileMarketSegmentLabelCol" /><col span="${dimension.rows.length}" /></colgroup>
+          <thead>
+            <tr class="mobileMarketSegmentGroupRow">
+              <th scope="colgroup" colspan="${dimension.rows.length + 1}">${escapeMarketHtml(dimension.title === c.statsMileageHeading ? c.tableMileage : dimension.title)}</th>
+            </tr>
+            <tr>
+              <th scope="col"><span class="srOnly">${escapeMarketHtml(c.marketsHeading)}</span></th>
+              ${dimension.rows.map((row) => `<th scope="col" class="isNum">${escapeMarketHtml(row.label)}</th>`).join("")}
+            </tr>
+          </thead>
+          <tbody>
+            ${shownSources.map((source) => `
               <tr>
-                <th scope="col"><span class="srOnly">${escapeMarketHtml(c.segmentsHeading)}</span></th>
-                ${shownSources.map((source) => `<th scope="col" class="isNum">${shownSources.length > 1 ? marketBadge(source) : escapeMarketHtml(c.segmentMedian)}</th>`).join("")}
-              </tr>
-            </thead>
-            <tbody>
-              ${dimensions.map((dimension) => `
-                <tr class="mobileMarketSegmentGroupRow">
-                  <th scope="rowgroup" colspan="${shownSources.length + 1}">${escapeMarketHtml(dimension.title === c.statsMileageHeading ? c.tableMileage : dimension.title)}</th>
-                </tr>
-                ${dimension.rows.map((row) => `
-                  <tr>
-                    <th scope="row">${escapeMarketHtml(row.label)}</th>
-                    ${shownSources.map((source) => segmentCell(row.listings, source)).join("")}
-                  </tr>`).join("")}`).join("")}
-            </tbody>
-          </table>
-        </div>`;
+                <th scope="row">${shownSources.length > 1 ? marketBadge(source) : escapeMarketHtml(c.segmentMedian)}</th>
+                ${dimension.rows.map((row) => segmentCell(row.listings, source)).join("")}
+              </tr>`).join("")}
+          </tbody>
+        </table>`).join("");
       // The block opens and closes on its title (closed at first; the
       // viewer's choice is remembered in this browser).
       segmentsContent = segmentTables.length ? `

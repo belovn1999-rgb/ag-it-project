@@ -1280,3 +1280,44 @@ a.mobileLinkedCarChip:hover {
 .mobileMarketAxisNote.isTurnkey .mobileMarketCostContact {
   margin: 8px 0 0;
 }
+
+/* 13.10 (owner): each parameter a band — heading row, its groups as
+   columns, a row per market; the bands stacked with no gap, no scroll. */
+.mobileMarketSegmentTables:has(.isBand) {
+  gap: 0;
+}
+
+.mobileMarketSegmentTable.isBand {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.mobileMarketSegmentTable.isBand + .mobileMarketSegmentTable.isBand {
+  border-top: 0;
+}
+
+.mobileMarketSegmentTable.isBand tbody th[scope="row"],
+.mobileMarketSegmentTable.isBand thead tr:last-child th:first-child {
+  width: 150px;
+  white-space: nowrap;
+}
+
+.mobileMarketSegmentTable.isBand thead tr:last-child th {
+  white-space: normal;
+}
+
+/* The footnote's amounts near their names, not at the far edge. */
+.mobileMarketCostTable {
+  width: auto;
+  max-width: 100%;
+}
+
+.mobileMarketCostTable td.mobileMarketCostValue {
+  padding-left: 32px;
+  text-align: left;
+}
+
+/* Every band's market column the same width, so the bands line up. */
+.mobileMarketSegmentTable.isBand col.mobileMarketSegmentLabelCol {
+  width: 150px;
+}
