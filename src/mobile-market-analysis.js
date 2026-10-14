@@ -438,6 +438,17 @@
       adPrice: "cena w ogłoszeniu",
       turnkeyFootnote: "Cena „na gotowo” składa się z:\nCena brutto z ogłoszenia\n+ Transport (średnio) — ok. {transport} netto\n+ Oględziny (średnio) — ok. {inspection} netto\n+ Akcyza (rodzaj i pojemność silnika) — {excise}\n+ Tłumaczenia dokumentów — 250 zł\n+ Przegląd techniczny — 150 zł\n+ Wynagrodzenie AUTOGOOD — 2 250 zł + 1,23% ceny auta (z VAT)\nŻeby poznać dokładną wycenę konkretnej oferty, proszę się skontaktować z nami bezpośrednio.",
       singleYearNote: "Wszystkie oferty z rocznika {year}",
+      clientBudget: "Budżet klienta (zł)",
+      clientBudgetPlaceholder: "np. 120 000",
+      budgetLineLabel: "Budżet klienta",
+      chanceHeading: "Szansa zakupu w budżecie",
+      chanceLevels: ["bardzo niska", "niska", "umiarkowana", "wysoka", "bardzo wysoka"],
+      chanceLine: "{fit} z {total} ofert w budżecie",
+      chanceTitle: "Ile ofert dealerów z tymi parametrami mieści się w budżecie klienta (cena na gotowo w Polsce). Bardzo niska — brak lub 1–2 oferty, niska — tylko najtańsze (poniżej P25), umiarkowana — do mediany, wysoka — do P75, bardzo wysoka — powyżej P75.",
+      layoutLabel: "Układ wykresów",
+      layoutTwo: "Osobne wykresy",
+      layoutOne: "Jeden wykres",
+      overlayLegend: "linia — mediana rynku, pasek po prawej — średnie ceny (P25–P75)",
       conclusionHeading: "Wniosek",
       oneMarketPrice: "Za takie auto {from} zapłacisz zwykle około {median} — razem ze wszystkimi kosztami sprowadzenia do Polski*.",
       oneMarketPricePl: "W Polsce takie auto kosztuje zwykle około {median}.",
@@ -1218,6 +1229,17 @@
       adPrice: "цена в объявлении",
       turnkeyFootnote: "Цена «под ключ» складывается из:\nЦена брутто в объявлении\n+ Доставка (в среднем) — ок. {transport} нетто\n+ Осмотр (в среднем) — ок. {inspection} нетто\n+ Акциз (тип и объём двигателя) — {excise}\n+ Переводы документов — 250 PLN\n+ Техосмотр — 150 PLN\n+ Вознаграждение AUTOGOOD — 2 250 PLN + 1,23% цены авто (с VAT)\nЧтобы узнать точную стоимость конкретного предложения, свяжитесь с нами напрямую.",
       singleYearNote: "Все объявления {year} года",
+      clientBudget: "Бюджет клиента (zł)",
+      clientBudgetPlaceholder: "напр. 120 000",
+      budgetLineLabel: "Бюджет клиента",
+      chanceHeading: "Шанс покупки в бюджете",
+      chanceLevels: ["очень низкий", "низкий", "умеренный", "высокий", "очень высокий"],
+      chanceLine: "{fit} из {total} объявлений в бюджете",
+      chanceTitle: "Сколько предложений дилеров с этими параметрами укладывается в бюджет клиента (цена под ключ в Польше). Очень низкий — нет или 1–2 предложения, низкий — только самые дешёвые (ниже P25), умеренный — до медианы, высокий — до P75, очень высокий — выше P75.",
+      layoutLabel: "Вид графиков",
+      layoutTwo: "Отдельные графики",
+      layoutOne: "Один график",
+      overlayLegend: "линия — медиана рынка, полоса справа — средние цены (P25–P75)",
       conclusionHeading: "Вывод",
       oneMarketPrice: "Такое авто {from} обойдётся обычно примерно в {median} — со всеми расходами на пригон в Польшу*.",
       oneMarketPricePl: "В Польше такое авто стоит обычно около {median}.",
@@ -1889,7 +1911,68 @@
       return "shared";
     }
   })();
+  // Several markets: a chart each ("two", the default) or all on one chart
+  // ("one", owner 2026-10-14). A viewer's preference, kept in this browser.
+  const CHART_LAYOUT_KEY = "autogood.mobile.chartLayout";
+  let chartLayout = (() => {
+    try {
+      return localStorage.getItem(CHART_LAYOUT_KEY) === "one" ? "one" : "two";
+    } catch {
+      return "two";
+    }
+  })();
+  // The client's budget "na gotowo w Polsce" (owner 2026-10-14), per search,
+  // kept in this browser; without one, Monitoring's budget of that car.
+  const CLIENT_BUDGET_KEY = "autogood.mobile.clientBudget.v1";
+  function readClientBudgets() {
+    try {
+      const value = JSON.parse(localStorage.getItem(CLIENT_BUDGET_KEY) || "{}");
+      return value && typeof value === "object" ? value : {};
+    } catch {
+      return {};
+    }
+  }
+  function clientBudgetFor(analysis) {
+    if (!analysis) return 0;
+    if (analysis.budget !== undefined) return Number(analysis.budget) || 0;
+    const own = Number(readClientBudgets()[analysis.historyId]) || 0;
+    if (own > 0) return own;
+    try {
+      const scope = JSON.parse(localStorage.getItem("autogood.mobile.monitoringScope.v1") || "{}")[analysis.historyId];
+      return Number(scope?.budget?.to) || 0;
+    } catch {
+      return 0;
+    }
+  }
+  function saveClientBudget(historyId, value) {
+    if (!historyId) return;
+    // Read again right before writing: another tab may have saved one.
+    const all = readClientBudgets();
+    if (value > 0) all[historyId] = value;
+    else delete all[historyId];
+    try {
+      localStorage.setItem(CLIENT_BUDGET_KEY, JSON.stringify(all));
+    } catch {
+      // Kept for this page only.
+    }
+  }
+  // How likely a dealer's car fits the budget: 0 very low … 4 very high,
+  // by where the budget falls among the market's prices (its zones).
+  function budgetChance(stats, prices, budget) {
+    const fit = prices.filter((price) => price <= budget).length;
+    let level = 0;
+    if (fit > 2) {
+      if (budget < stats.middleLow) level = 1;
+      else if (budget < stats.median) level = 2;
+      else if (budget < stats.middleHigh) level = 3;
+      else level = 4;
+    }
+    return { level, fit, total: prices.length };
+  }
+
   let displayCurrency = "EUR";
+  // The chance per market within the client's budget, from the last drawing.
+  let budgetChances = [];
   // Mobile.de offers that arrived before the analysis was opened.
   let pendingMobile = null;
 
@@ -6408,6 +6491,10 @@
         <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-pdf>${escapeMarketHtml(c.pdfButton)}</button>
       </div>`;
     let reportActionsInTitle = false;
+    // The client's budget (PLN "na gotowo"): only where the chart is in PLN.
+    const budgetAllowed = !byMode && displayCurrency === "PLN";
+    const budgetPln = budgetAllowed ? clientBudgetFor(activeAnalysis) : 0;
+    budgetChances = [];
     // Every offer of one year (audit 10.10): no "Rok" axis (a column of dots
     // says nothing), the year stated once above the chart instead.
     let singleYear = 0;
@@ -6750,7 +6837,7 @@
       // One chart: its own P25, median and P75 (labelled), the dots given, and
       // other markets' medians as thin dashed guides. Every chart shares the
       // price scale, so two markets side by side compare at a glance.
-      const chartBody = ({ panelStats, panelPlotted, panelSuspects, trendHtml, car, source = "", guides = [], ticks = xTicks, scale = null, auctionKey = "" }) => {
+      const chartBody = ({ panelStats, panelPlotted, panelSuspects, trendHtml, car, source = "", guides = [], ticks = xTicks, scale = null, auctionKey = "", overlay = null }) => {
         const domainMinimum = scale ? scale.min : sharedMinimum;
         const domainMaximum = scale ? scale.max : sharedMaximum;
         // The car's price on the scale (yellow); scale labels it would cover give way.
@@ -6767,18 +6854,38 @@
         const colour = source ? ` is${sourceClass(source)}` : "";
         const dots = [...panelSuspects, ...[...panelPlotted].sort((left, right) => right.listing.price - left.listing.price)]
           .map(renderPoint).join("");
+        const yOf = (value) => verticalMarketPosition(Math.min(Math.max(value, domainMinimum), domainMaximum), domainMinimum, domainMaximum);
+        // The client's budget across the chart (owner 2026-10-14).
+        const budgetHtml = budgetPln > 0 ? `<div class="mobileMarketBudgetLine" style="top:${yOf(budgetPln)}%" aria-hidden="true"></div><span class="mobileMarketKeyTick isBudget" style="top:${yOf(budgetPln)}%">${escapeMarketHtml(c.budgetLineLabel)} · ${escapeMarketHtml(formatMarketPrice(budgetPln))}</span>` : "";
+        // All markets on one chart: each market's median in its colour, its
+        // middle half (P25–P75) as a bar at the right edge, no zones.
+        const overlayHtml = overlay ? (() => {
+          const placed = [];
+          return overlay.map((item, index) => {
+            const position = yOf(item.stats.median);
+            const near = placed.some((other) => Math.abs(other - position) < 3.2);
+            placed.push(position);
+            const auction = auctionLines.has(auctionKey) && item.foreign ? (() => {
+              const value = item.stats.median * AUCTION_SHARE;
+              return `<div class="mobileMarketAuctionLine is${sourceClass(item.source)}" style="top:${yOf(value)}%" aria-hidden="true"></div><span class="mobileMarketKeyTick isAuction isLeftLabel" style="top:${yOf(value)}%">${escapeMarketHtml(c.auctionLineLabel)} · ${escapeMarketHtml(marketName(item.source))} · ${escapeMarketHtml(formatMarketPrice(Math.round(value / 50) * 50))}</span>`;
+            })() : "";
+            return `<div class="mobileMarketMedian is${sourceClass(item.source)}" style="top:${position}%" aria-hidden="true"></div>
+              <span class="mobileMarketOverlayBand is${sourceClass(item.source)}" style="top:${yOf(item.stats.middleHigh)}%;bottom:${(100 - yOf(item.stats.middleLow)).toFixed(2)}%;right:${4 + index * 9}px" title="${escapeMarketHtml(`${marketName(item.source)} · ${c.averagePrices}: ${formatMarketPrice(item.stats.middleLow)} – ${formatMarketPrice(item.stats.middleHigh)}`)}"></span>
+              <span class="mobileMarketKeyTick isMedian is${sourceClass(item.source)}${near ? " isLeftLabel" : ""}" style="top:${position}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(marketName(item.source))} · ${escapeMarketHtml(formatMarketPrice(item.stats.median))}</span>${auction}`;
+          }).join("");
+        })() : "";
         return `
         <div
-          class="mobileMarketScale${chartAxis === "rank" ? " isRankAxis" : ""}${panelPlotted.length > 150 ? " isDense" : ""}"
+          class="mobileMarketScale${chartAxis === "rank" ? " isRankAxis" : ""}${panelPlotted.length > 150 ? " isDense" : ""}${overlay ? " isOverlay" : ""}"
           role="group"
           aria-label="${escapeMarketHtml(source ? `${c.chartTitle} · ${marketName(source)}` : c.chartTitle)}"
           data-currency="${escapeMarketHtml(displayCurrency)}"
           style="--market-high-end:${high}%;--market-middle-end:${low}%"
         >
           <div class="mobileMarketAxis"></div>
-          <div class="mobileMarketBoundary" style="top:${high}%"></div>
+          ${overlay ? "" : `<div class="mobileMarketBoundary" style="top:${high}%"></div>
           <div class="mobileMarketMedian${colour}" style="top:${middle}%" aria-hidden="true"></div>
-          <div class="mobileMarketBoundary" style="top:${low}%"></div>
+          <div class="mobileMarketBoundary" style="top:${low}%"></div>`}
           ${guides.map((guide) => `<div class="mobileMarketMedian isGuide is${sourceClass(guide.source)}" style="top:${verticalMarketPosition(Math.min(Math.max(guide.value, domainMinimum), domainMaximum), domainMinimum, domainMaximum)}%" aria-hidden="true"></div>`).join("")}
           ${scaleTicks.map((price) => {
             const position = verticalMarketPosition(price, domainMinimum, domainMaximum);
@@ -6793,14 +6900,16 @@
             const guideName = guide.source === "autoscout" ? portalName(guide.source) : marketName(guide.source);
             return Math.abs(position - middle) >= 2.6 && Math.abs(position - high) >= 2.6 && Math.abs(position - low) >= 2.6 ? `<span class="mobileMarketKeyTick isGuide is${sourceClass(guide.source)}" style="top:${position}%">${escapeMarketHtml(guideName)} · ${escapeMarketHtml(formatMarketPrice(guide.value))}</span>` : "";
           }).join("")}
-          ${auctionKey && auctionLines.has(auctionKey) ? (() => {
+          ${overlayHtml}
+          ${budgetHtml}
+          ${!overlay && auctionKey && auctionLines.has(auctionKey) ? (() => {
             const value = panelStats.median * AUCTION_SHARE;
             const position = verticalMarketPosition(Math.min(Math.max(value, domainMinimum), domainMaximum), domainMinimum, domainMaximum);
             return `<div class="mobileMarketAuctionLine" style="top:${position}%" aria-hidden="true"></div><span class="mobileMarketKeyTick isAuction" style="top:${position}%">${escapeMarketHtml(c.auctionLineLabel)} · ${escapeMarketHtml(formatMarketPrice(Math.round(value / 50) * 50))}</span>`;
           })() : ""}
-          ${Math.abs(high - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${high}%">P75 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleHigh))}</span>` : ""}
-          <span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>
-          ${Math.abs(low - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${low}%">P25 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleLow))}</span>` : ""}
+          ${!overlay && Math.abs(high - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${high}%">P75 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleHigh))}</span>` : ""}
+          ${overlay ? "" : `<span class="mobileMarketKeyTick isMedian${colour}" style="top:${middle}%">${escapeMarketHtml(c.median)} · ${escapeMarketHtml(formatMarketPrice(panelStats.median))}</span>`}
+          ${!overlay && Math.abs(low - middle) >= 2.6 ? `<span class="mobileMarketKeyTick" style="top:${low}%">P25 · ${escapeMarketHtml(formatMarketPrice(panelStats.middleLow))}</span>` : ""}
           ${clearOfCar(95) ? `<span class="mobileMarketTick isLimit" style="top:95%">${tickPriceHtml(domainMinimum)}</span>` : ""}
           ${carY !== null ? `<span class="mobileMarketTick isCarPrice" style="top:${carY}%">${tickPriceHtml(carScalePrice)}</span>` : ""}
           ${top ? `<span class="mobileMarketTick isLimit isPeak${top.x > 0.85 ? " isPeakRight" : ""}" style="--x:${top.x.toFixed(4)};top:${top.y}%">${escapeMarketHtml(formatMarketPrice(top.listing.price))}</span>` : ""}
@@ -6815,7 +6924,24 @@
 
       let chartsHtml = "";
       let comparisonHtml = "";
-      if (!compareMarkets) {
+      const overlayChart = compareMarkets && chartLayout === "one";
+      if (overlayChart) {
+        // One chart, one price scale: every market's dots in its colour, its
+        // curve (or trend along mileage / year), median and middle half.
+        const overlay = shownSources.map((source) => {
+          const own = marketListings.filter((listing) => listing.source === source);
+          return own.length ? { source, stats: marketStatistics(own), foreign: own.some((listing) => listing.turnkeyPln) } : null;
+        }).filter(Boolean);
+        const trends = chartAxis === "rank"
+          ? buildTrend(plotted, shownSources).html
+          : shownSources.map((source) => buildTrend(plotted.filter((point) => point.listing.source === source), [source]).html
+            .replace('<svg class="mobileMarketTrend"', '<svg class="mobileMarketTrend isCurve"')
+            .replace("<polyline ", `<polyline class="is${sourceClass(source)}" `)).join("");
+        chartsHtml = `<div class="mobileMarketChartTools">${overlay.some((item) => item.foreign) ? auctionToggleHtml("overlay") : ""}</div>${chartBody({ panelStats: statistics, panelPlotted: plotted, panelSuspects: suspectPlotted, trendHtml: trends, car: carMarker, auctionKey: "overlay", overlay })}`;
+      }
+      if (overlayChart) {
+        // Drawn above.
+      } else if (!compareMarkets) {
         chartsHtml = `<div class="mobileMarketChartTools">${auctionToggleHtml("single")}</div>${chartBody({ panelStats: statistics, panelPlotted: plotted, panelSuspects: suspectPlotted, trendHtml: trendLine, car: carMarker, auctionKey: "single" })}`;
       } else {
         // One chart per market, side by side, on the same price scale.
@@ -7174,6 +7300,18 @@
         </div>
         ${compared ? `<p class="mobileMarketToneLegend">${escapeMarketHtml(c.toneLegend)}</p>` : ""}
         </div>`;
+      // The chance to buy within the client's budget, per market (owner
+      // 2026-10-14): written under the chart head, in the picture too.
+      const chanceRows = budgetPln > 0 ? shownSources.map((source) => {
+        const prices = marketListings.filter((listing) => listing.source === source).map((listing) => listing.price).sort((left, right) => left - right);
+        return prices.length ? { source, ...budgetChance(marketStatistics(marketListings.filter((listing) => listing.source === source)), prices, budgetPln) } : null;
+      }).filter(Boolean) : [];
+      budgetChances = chanceRows;
+      const chanceHtml = chanceRows.length ? `
+        <div class="mobileMarketChance" title="${escapeMarketHtml(c.chanceTitle)}">
+          <b>${escapeMarketHtml(c.chanceHeading)} · ${escapeMarketHtml(formatMarketPrice(budgetPln))}:</b>
+          ${chanceRows.map((row) => `<span class="mobileMarketChanceItem isLevel${row.level}">${compareMarkets ? `${marketBadge(row.source)} ` : ""}<strong>${escapeMarketHtml(c.chanceLevels[row.level])}</strong> <small>${escapeMarketHtml(c.chanceLine.replace("{fit}", String(row.fit)).replace("{total}", String(row.total)))}</small></span>`).join("")}
+        </div>` : "";
       marketContent = `
         ${comparisonHtml}
         <div class="mobileMarketChartHead">
@@ -7181,31 +7319,42 @@
             <span>${escapeMarketHtml(c.comparePrice)}</span>
             <input type="text" inputmode="numeric" autocomplete="off" data-mobile-market-compare-price placeholder="${escapeMarketHtml(c.comparePlaceholder)}" value="${escapeMarketHtml(activeAnalysis.comparePrice || "")}" />
           </label>
+          ${budgetAllowed ? `<label class="mobileMarketCompare isBudget" data-report-hide>
+            <span>${escapeMarketHtml(c.clientBudget)}</span>
+            <input type="text" inputmode="numeric" autocomplete="off" data-mobile-market-budget placeholder="${escapeMarketHtml(c.clientBudgetPlaceholder)}" value="${budgetPln > 0 ? escapeMarketHtml(numberFormat().format(budgetPln)) : ""}" />
+          </label>` : ""}
           <div class="mobileMarketControls" data-report-hide>
             <div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.axisLabel)}">
               ${[["rank", c.axisRank], ["mileage", c.axisMileageShort], ...(singleYear ? [] : [["year", c.axisYearShort]])].map(([axis, label]) => `
                 <button class="mobileMarketAxisButton" type="button" data-mobile-market-axis="${axis}" aria-pressed="${chartAxis === axis ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
             </div>
-            ${compareMarkets ? `<div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.scaleLabel)}">
+            ${compareMarkets ? `<div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.layoutLabel)}">
+              ${[["two", c.layoutTwo], ["one", c.layoutOne]].map(([layout, label]) => `
+                <button class="mobileMarketAxisButton" type="button" data-mobile-market-layout="${layout}" aria-pressed="${chartLayout === layout ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
+            </div>` : ""}
+            ${compareMarkets && !overlayChart ? `<div class="mobileMarketToggle" role="group" aria-label="${escapeMarketHtml(c.scaleLabel)}">
               ${[["shared", c.scaleShared], ["own", c.scaleOwn]].map(([scale, label]) => `
                 <button class="mobileMarketAxisButton" type="button" data-mobile-market-scale="${scale}" aria-pressed="${chartScale === scale ? "true" : "false"}">${escapeMarketHtml(label)}</button>`).join("")}
             </div>` : ""}
           </div>
         </div>
+        ${chanceHtml}
 
 
         <div class="mobileMarketLegend">
           ${shownSources.map((source) => `<span class="is${sourceClass(source)}"><i></i>${marketBadge(source)}${turnkeySources.includes(source) && marketListings.some((listing) => listing.source === source && listing.turnkeyPln) ? ` · ${escapeMarketHtml(turnkeyLabel)}` : ""}</span>`).join("")}
           ${carMarker ? `<span class="isCar"><i></i>${escapeMarketHtml(c.yourCar)}</span>` : ""}
           ${trendLine ? `<span class="isTrend"><i></i>${escapeMarketHtml(chartAxis === "rank" ? c.curveLegend : c.trendLegend)}</span>` : ""}
+          ${overlayChart ? `<span class="isOverlayNote">${escapeMarketHtml(c.overlayLegend)}</span>` : `
           <span class="isBandLow"><i></i>${escapeMarketHtml(c.lowMarket)}${compareMarkets ? "" : ` · ${statistics.lowCount}`}</span>
           <span class="isBandMiddle"><i></i>${escapeMarketHtml(c.middleMarket)}${compareMarkets ? "" : ` · ${statistics.middleCount}`}</span>
           <span class="isBandHigh"><i></i>${escapeMarketHtml(c.highMarket)}${compareMarkets ? "" : ` · ${statistics.highCount}`}</span>
-          ${compareMarkets ? `<span class="isGuide"><i></i>${escapeMarketHtml(c.guideLegend)}</span>` : ""}
+          ${compareMarkets ? `<span class="isGuide"><i></i>${escapeMarketHtml(c.guideLegend)}</span>` : ""}`}
+          ${budgetPln > 0 ? `<span class="isBudget"><i></i>${escapeMarketHtml(c.budgetLineLabel)}</span>` : ""}
         </div>
 
         ${chartsHtml}
-          ${[...auctionLines].some((key) => key === "single" ? !compareMarkets : shownSources.includes(key)) ? `<p class="mobileMarketAxisNote isAuction"><i aria-hidden="true"></i>${escapeMarketHtml(c.auctionHint)}</p>` : ""}
+          ${[...auctionLines].some((key) => key === "single" ? !compareMarkets : key === "overlay" ? overlayChart : shownSources.includes(key)) ? `<p class="mobileMarketAxisNote isAuction"><i aria-hidden="true"></i>${escapeMarketHtml(c.auctionHint)}</p>` : ""}
 
           ${byMode && byProgress ? `<p class="mobileMarketAxisNote" data-by-progress data-report-hide>${escapeMarketHtml(c.byDetailsProgress.replace("{done}", String(byProgress.done)).replace("{total}", String(byProgress.total)))}</p>` : ""}
           ${byMode && byMissing.size && !byProgress ? `<p class="mobileMarketAxisNote">${escapeMarketHtml(c.byDetailsMissing.replace("{missing}", String(byMissing.size)))}</p>` : ""}
@@ -8454,6 +8603,15 @@
   // The comparison price is applied when the field is left or Enter is
   // pressed; re-drawing on every key would take the cursor out of the field.
   analysisContent.addEventListener("change", (event) => {
+    const budget = event.target.closest("[data-mobile-market-budget]");
+    if (budget && activeAnalysis) {
+      const value = Number(budget.value.replace(/\D/g, "")) || 0;
+      activeAnalysis.budget = value;
+      saveClientBudget(activeAnalysis.historyId, value);
+      renderAnalysis();
+    }
+  });
+  analysisContent.addEventListener("change", (event) => {
     const input = event.target.closest("[data-mobile-market-compare-price]");
     if (!input || !activeAnalysis) return;
     activeAnalysis.comparePrice = input.value.replace(/[^\d\s]/g, "").trim();
@@ -8599,6 +8757,17 @@
     const axisButton = event.target.closest("[data-mobile-market-axis]");
     if (axisButton) {
       chartAxis = axisButton.dataset.mobileMarketAxis;
+      renderAnalysis();
+      return;
+    }
+    const layoutButton = event.target.closest("[data-mobile-market-layout]");
+    if (layoutButton) {
+      chartLayout = layoutButton.dataset.mobileMarketLayout === "one" ? "one" : "two";
+      try {
+        localStorage.setItem(CHART_LAYOUT_KEY, chartLayout);
+      } catch {
+        // Not remembered; the switch still works on this page.
+      }
       renderAnalysis();
       return;
     }

@@ -146,7 +146,7 @@
   // Other money boxes drawn by the pages (Monitoring budget and portal
   // prices, the favourite's prices, the converter, page 2's compared price):
   // their readers already drop the spaces, so they are only grouped as typed.
-  const MONEY_BOXES = "[data-monitoring-budget], [data-monitoring-price], [data-watch-price], [data-monitoring-convert-amount], [data-mobile-market-compare-price]";
+  const MONEY_BOXES = "[data-monitoring-budget], [data-monitoring-price], [data-watch-price], [data-monitoring-convert-amount], [data-mobile-market-compare-price], [data-mobile-market-budget]";
   document.addEventListener("input", (event) => {
     if (event.target.matches?.(MONEY_BOXES)) regroup(event.target);
   }, true);

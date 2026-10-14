@@ -1342,3 +1342,94 @@ a.mobileLinkedCarChip:hover {
   background: color-mix(in srgb, var(--color-brand) 8%, transparent);
   outline: none;
 }
+
+/* 14.10 (owner): the client's budget on the chart and the chance to buy. */
+.mobileMarketBudgetLine {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-top: 2px solid #0f7a3d;
+  pointer-events: none;
+}
+
+.mobileMarketKeyTick.isBudget {
+  color: #0f7a3d;
+  font-weight: 800;
+}
+
+.mobileMarketLegend .isBudget i {
+  display: inline-block;
+  width: 18px;
+  height: 0;
+  border-top: 2px solid #0f7a3d;
+  vertical-align: middle;
+}
+
+.mobileMarketCompare.isBudget input {
+  border-color: #0f7a3d;
+}
+
+.mobileMarketChance {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin: 8px 0 4px;
+  font-size: var(--text-sm);
+}
+
+.mobileMarketChanceItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #eef2f7;
+}
+
+.mobileMarketChanceItem strong { font-weight: 800; }
+.mobileMarketChanceItem small { color: var(--color-muted); }
+.mobileMarketChanceItem.isLevel0 { background: #fde8e6; color: #9b1c12; }
+.mobileMarketChanceItem.isLevel1 { background: #fff0dc; color: #8a4b00; }
+.mobileMarketChanceItem.isLevel2 { background: #fff8d6; color: #6f5700; }
+.mobileMarketChanceItem.isLevel3 { background: #e5f5ea; color: #16642f; }
+.mobileMarketChanceItem.isLevel4 { background: #d5f0df; color: #0d5426; }
+
+/* All markets on one chart: no zones, each market's middle half as a bar. */
+.mobileMarketScale.isOverlay {
+  background: var(--color-surface);
+}
+
+.mobileMarketOverlayBand {
+  position: absolute;
+  z-index: 2;
+  width: 6px;
+  border-radius: 3px;
+  background: currentColor;
+  opacity: 0.55;
+}
+
+.mobileMarketOverlayBand.isOtomoto { color: var(--market-otomoto); }
+.mobileMarketOverlayBand.isMobile { color: var(--market-mobile); }
+.mobileMarketOverlayBand.isBlocket { color: var(--market-blocket); }
+.mobileMarketOverlayBand.isAvby { color: var(--market-avby); }
+.mobileMarketOverlayBand.isAutoscout { color: var(--market-autoscout); }
+.mobileMarketOverlayBand.isAutoscoutFr { color: var(--market-autoscoutfr); }
+.mobileMarketOverlayBand.isMarktplaats { color: var(--market-marktplaats); }
+.mobileMarketOverlayBand.isDehands { color: var(--market-dehands); }
+.mobileMarketOverlayBand.isKleinanzeigen { color: var(--market-kleinanzeigen); }
+.mobileMarketOverlayBand.isParuvendu { color: var(--market-paruvendu); }
+
+.mobileMarketScale.isOverlay .mobileMarketKeyTick {
+  right: 40px;
+}
+
+.mobileMarketScale.isOverlay .mobileMarketKeyTick.isLeftLabel {
+  right: auto;
+  left: 70px;
+}
+
+.mobileMarketLegend .isOverlayNote {
+  color: var(--color-muted);
+}
