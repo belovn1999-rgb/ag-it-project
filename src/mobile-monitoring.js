@@ -21,7 +21,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     refreshMarketHistory, renderFavoritesBar, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
     sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, similarMedian, findRelisted, isOkazja, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
-    updateMarketSnapshot, withDuplicates
+    updateMarketSnapshot, withDuplicates, searchSpecColumns, searchSpecRange, fieldTarget
   } = ctx;
 
 
@@ -84,6 +84,27 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     ctx.historyAttached = false;
     ctx.editingBaseline = filterSignature(readManualFields());
     ctx.editingCarKey = historyCarKey(readManualFields());
+  }
+
+  // The search as on pages 1 and 2 (owner 2026-10-14): the same block of
+  // parameters, each one opens its field on page 1 and "Gotowe" comes back
+  // here (startEditFrom in the analysis). The form holds this favourite
+  // (loadFavoriteIntoForm), so the labels are the form's own.
+  function monitoringSpecHtml(entry) {
+    const f = entry.filters || {};
+    const budget = monitoringBudgetText(entry);
+    const price = f.priceFrom || f.priceTo
+      ? `<span class="agSpecPrice" data-mobile-summary-target="${escapeMarketHtml(fieldTarget("[data-mobile-price-from]"))}" role="button" tabindex="0"><b>${escapeMarketHtml(searchSpecRange(f.priceFrom, f.priceTo, "EUR"))}</b></span>`
+      : "";
+    const spec = window.AUTOGOOD_SPEC_SHEET?.({
+      title: [f.brand, f.model, f.version].filter(Boolean).join(" "),
+      titleTarget: fieldTarget("[data-mobile-brand]"),
+      meta: budget,
+      metaClass: "isBudget",
+      aside: price,
+      columns: searchSpecColumns(f, monitoringSelection(entry).markets || f.markets || []),
+    });
+    return spec ? `<div class="mobileMonitoringSpec">${spec}</div>` : "";
   }
 
   function monitoringParamsHtml() {
@@ -915,10 +936,7 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
           </label>
         </div>
         ${monitoringScheduleHtml(entry)}
-        <button class="mobileMonitoringParamsLine" type="button" data-monitoring-edit title="${escapeMarketHtml(c.monitoringEditParams)}">
-          <span>${escapeMarketHtml([...historyMeta(entry.filters), monitoringBudgetText(entry)].filter(Boolean).join(" · "))}</span>
-          <b>${escapeMarketHtml(c.monitoringEditParams)} →</b>
-        </button>
+        ${monitoringSpecHtml(entry)}
         <p class="mobileMonitoringSince" data-monitoring-since></p>
       </section>
       <details class="mobileMonitoringSettings" data-monitoring-settings${monitoringPrefs.settingsOpen ? " open" : ""}>
@@ -3515,11 +3533,6 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
         // Remembered for this page only.
       }
       renderPriceHistoryPage();
-      return;
-    }
-    // The search, in one line: edited on page 1.
-    if (event.target.closest("[data-monitoring-edit]")) {
-      showPage("search");
       return;
     }
     const date = event.target.closest("[data-offer-date]");

@@ -4641,3 +4641,81 @@
   vertical-align: 1px;
   cursor: help;
 }
+
+/* Owner 2026-10-14: a parameter on page 2 or 3 opens its field on page 1;
+   the bar at the bottom of page 1 brings the page back. */
+/* Page 3's parameters, as page 2's (mobile-page2.css). */
+.mobileMonitoringSpec [data-mobile-summary-target] {
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.mobileMonitoringSpec [data-mobile-summary-target]:hover,
+.mobileMonitoringSpec [data-mobile-summary-target]:focus-visible {
+  background: color-mix(in srgb, var(--color-brand) 8%, transparent);
+  outline: none;
+}
+
+/* A value breaks between words, not inside one ("Automatyczn-a"). */
+.mobileMarketSearchCard .agSpec dd,
+.mobileMonitoringSpec .agSpec dd {
+  overflow-wrap: normal;
+}
+
+.mobileEditReturnBar {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  max-width: calc(100vw - 32px);
+  padding: 10px 12px 10px 18px;
+  transform: translateX(-50%);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-xl);
+  background: var(--color-surface, #fff);
+  box-shadow: 0 8px 28px rgb(15 23 42 / 18%);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+}
+
+.mobileEditReturnBar[hidden] {
+  display: none;
+}
+
+.mobileEditReturnBar > span {
+  color: var(--color-muted);
+}
+
+.mobileEditReturnBar button {
+  width: auto;
+  min-height: 44px;
+  margin: 0;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .mobileEditReturnBar {
+    left: 16px;
+    right: 16px;
+    transform: none;
+  }
+
+  .mobileEditReturnBar {
+    flex-wrap: nowrap;
+    gap: var(--space-sm);
+    padding: 8px;
+  }
+
+  .mobileEditReturnBar > span {
+    display: none;
+  }
+
+  .mobileEditReturnBar [data-edit-return-done] {
+    flex: 1;
+    min-width: 0;
+    white-space: normal;
+  }
+}

@@ -73,6 +73,10 @@
       monitoringOff: "Monitoring tylko po kliknięciu „Uruchom monitoring”.",
       monitoringParams: "Parametry wyszukiwania",
       monitoringEditParams: "Zmień parametry",
+      editReturnAnalysis: "Gotowe — wróć do analizy",
+      editReturnMonitoring: "Gotowe — wróć do Monitoringu",
+      editReturnCancel: "Anuluj",
+      editReturnHint: "Zmień parametr i naciśnij „Gotowe”",
       monitoringPortals: "Portale i cena auta (brutto)",
       monitoringPortalsHint: "Puste pola = cena z filtrów (strona 1); wpisana cena działa tylko na tym portalu, w każdym monitoringu tego auta. Wybór portali działa w całym programie (strona 1 i analiza).",
       monitoringPriceChanged: "Zmienione — zadziała przy następnym monitoringu.",
@@ -892,6 +896,10 @@
       monitoringOff: "Мониторинг только по кнопке «Запустить мониторинг».",
       monitoringParams: "Параметры поиска",
       monitoringEditParams: "Изменить параметры",
+      editReturnAnalysis: "Готово — вернуться к анализу",
+      editReturnMonitoring: "Готово — вернуться в Monitoring",
+      editReturnCancel: "Отмена",
+      editReturnHint: "Измените параметр и нажмите «Готово»",
       monitoringPortals: "Порталы и цена авто (брутто)",
       monitoringPortalsHint: "Пустые поля = цена из фильтров (страница 1); введённая цена действует только на этом портале, в каждом мониторинге этого авто. Выбор порталов действует во всей программе (страница 1 и анализ).",
       monitoringPriceChanged: "Изменено — сработает при следующем мониторинге.",
@@ -5887,7 +5895,7 @@
     powerInKm, powerText, priceHistoryPage, priceInPln, redrawOfferHistory, refreshActiveAnalysis,
     renderFavoritesBar, refreshMarketHistory, restoreManualFilters, rowSource, searchSignature, sekPlnRate, showPage,
     sourceClass, statsOfOffers, stillListed, notNewIfListedBefore, similarMedian, findRelisted, isOkazja, storeMarketHistory, suspectTagOf, turnkeyByFor, turnkeyFootnoteHtml,
-    updateMarketSnapshot, withDuplicates,
+    updateMarketSnapshot, withDuplicates, searchSpecColumns, searchSpecRange, fieldTarget,
     get BRAND_LOGOS() { return BRAND_LOGOS; },
     get activeAnalysis() { return activeAnalysis; },
     get chartSources() { return chartSources; },
@@ -7919,7 +7927,7 @@
       // "Odśwież dane" left of the favourite star.
       // "Kopiuj raport / Raport PDF" (statistics and chart) left of
       // "Odśwież dane" (owner 2026-10-06).
-      aside: `${linkedCarChip(shownLinkedCar)}${hasListings ? reportActions : ""}<button class="mobileMarketImportClear mobileMarketAsideRefresh" type="button" data-mobile-market-refresh data-report-hide>${escapeMarketHtml(c.refresh)}</button><button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
+      aside: `${linkedCarChip(shownLinkedCar)}${hasListings ? reportActions : ""}<button class="mobileMarketImportClear mobileMarketAsideRefresh" type="button" data-mobile-market-refresh data-report-hide>${escapeMarketHtml(c.refresh)}</button><button class="mobileSearchCountSaveButton mobileSearchSummaryStar mobileMarketAnalysisStar${historyEntry?.pinned ? " isPinned" : ""}" type="button" data-mobile-market-analysis-star data-report-hide aria-pressed="${historyEntry?.pinned ? "true" : "false"}" aria-label="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}" title="${escapeMarketHtml(historyEntry?.pinned ? c.historyUnpin : c.historyPin)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 6 6.6 1-4.8 4.7 1.1 6.6-5.8-3.1-5.8 3.1 1.1-6.6-4.8-4.7 6.6-1z" /></svg></button>${filters.priceFrom || filters.priceTo ? `<span class="agSpecPrice" data-mobile-summary-target="${escapeMarketHtml(fieldTarget("[data-mobile-price-from]"))}" role="button" tabindex="0"><b>${escapeMarketHtml(searchSpecRange(filters.priceFrom, filters.priceTo, "EUR"))}</b></span>` : ""}`,
       columns: searchSpecColumns(filters, reportSources),
     }) || "";
     // The same bottom row as the chosen filters on page 1: "Gotowe" (when the
@@ -8793,36 +8801,8 @@
     renderAnalysis();
   });
 
-  // A parameter on page 2 opens its field on page 1; "Gotowe" there brings
-  // the analysis back with the new filters (owner 2026-10-14).
-  let returnToAnalysis = false;
-  function editAnalysisParameter(selector) {
-    if (!selector) return;
-    returnToAnalysis = true;
-    // The form must be this search's history row, so "Gotowe" saves into it.
-    const historyId = activeAnalysis?.historyId;
-    if (historyId && editingHistoryId !== historyId && marketHistory.some((entry) => entry.id === historyId)) selectHistoryEntry(historyId);
-    showPage("search");
-    setTimeout(() => {
-      if (typeof focusManualFilter === "function") focusManualFilter(selector);
-    }, 80);
-  }
-  analysisContent.addEventListener("click", (event) => {
-    const parameter = event.target.closest(".mobileMarketSearchCard [data-mobile-summary-target]");
-    if (parameter) {
-      // Not mobile.js' own handler: that one scrolls page 1 while it is hidden.
-      event.stopPropagation();
-      editAnalysisParameter(parameter.dataset.mobileSummaryTarget);
-    }
-  });
-  analysisContent.addEventListener("keydown", (event) => {
-    if (event.key !== "Enter" && event.key !== " ") return;
-    const parameter = event.target.closest?.(".mobileMarketSearchCard [data-mobile-summary-target]");
-    if (!parameter) return;
-    event.preventDefault();
-    event.stopPropagation();
-    editAnalysisParameter(parameter.dataset.mobileSummaryTarget);
-  });
+  // A parameter on page 2 (and 3) opens its field on page 1: startEditFrom,
+  // by showPage — one way back for both pages, with "Gotowe" and "Anuluj".
 
   analysisContent.addEventListener("click", (event) => {
     if (event.target.closest("[data-mobile-analysis-done]")) {
@@ -9055,11 +9035,6 @@
   manualForm?.addEventListener("change", () => setTimeout(updateManualHistoryState));
   historyDone?.addEventListener("click", () => {
     if (editingHistoryId) confirmHistoryChanges(editingHistoryId);
-    // Came from a parameter on page 2: back to the analysis, new filters.
-    if (returnToAnalysis && analysisView.hidden) {
-      returnToAnalysis = false;
-      setTimeout(() => showPage("analysis"));
-    }
   });
   const handleHistoryClick = (event) => {
     const confirmButton = event.target.closest("[data-mobile-market-history-confirm]");
@@ -9285,8 +9260,121 @@
     return false;
   }
 
+  // Owner 2026-10-14: a parameter clicked on page 2 (analysis) or page 3
+  // (Monitoring) opens page 1 at its field; the bar at the bottom brings the
+  // page back — "Gotowe" saves the changes into the favourite (the analysis
+  // is counted again for the new filters), "Anuluj" puts the form back.
+  // Leaving page 1 any other way forgets the way back.
+  let editReturn = null;
+  const editReturnBar = document.createElement("div");
+  editReturnBar.className = "mobileEditReturnBar";
+  editReturnBar.hidden = true;
+  editReturnBar.setAttribute("role", "region");
+  document.body.append(editReturnBar);
+  function renderEditReturnBar() {
+    const c = copy();
+    editReturnBar.hidden = !editReturn;
+    if (!editReturn) return;
+    editReturnBar.innerHTML = `
+      <span>${escapeMarketHtml(c.editReturnHint)}</span>
+      <button class="mobileMarketImportClear" type="button" data-edit-return-cancel>${escapeMarketHtml(c.editReturnCancel)}</button>
+      <button class="mobileMarketImportClear isPrimary" type="button" data-edit-return-done>${escapeMarketHtml(editReturn.page === "history" ? c.editReturnMonitoring : c.editReturnAnalysis)} ✓</button>`;
+  }
+  function startEditFrom(page, selector) {
+    // The row the page shows is the one "Gotowe" saves into.
+    const id = page === "history" ? priceHistoryId : activeAnalysis?.historyId || "";
+    const entry = id ? marketHistory.find((item) => item.id === id) : null;
+    if (entry?.pinned && selectedFavorite()?.id !== entry.id) setSelectedFavorite(entry.id);
+    if (entry && editingHistoryId !== entry.id) {
+      // The form already holds what the page shows: taken up, not reloaded.
+      editingHistoryId = entry.id;
+      historyAttached = false;
+      editingBaseline = filterSignature(entry.filters);
+      editingCarKey = historyCarKey(entry.filters);
+    }
+    let filters = null;
+    try {
+      filters = readManualFields();
+    } catch {
+      filters = null;
+    }
+    showPage("search");
+    editReturn = { page, filters };
+    renderEditReturnBar();
+    updateHistoryConfirm();
+    focusManualFilter(selector);
+  }
+  function finishEdit(save) {
+    const back = editReturn;
+    if (!back) return;
+    editReturn = null;
+    renderEditReturnBar();
+    if (!save && back.filters) {
+      restoreManualFilters(back.filters);
+      updateHistoryConfirm();
+    }
+    let same = false;
+    try {
+      same = Boolean(back.filters) && filterSignature(readManualFields()) === filterSignature(back.filters);
+    } catch {
+      same = false;
+    }
+    // Nothing changed: the analysis shown before comes back as it was, not
+    // counted (and read from the portals) again.
+    if (same && back.page === "analysis" && activeAnalysis) {
+      parkMoreFilters();
+      setManualViewHidden(true);
+      if (listingFrame) listingFrame.hidden = true;
+      if (historyView) historyView.hidden = true;
+      analysisView.hidden = false;
+      markCurrentPage();
+      renderFavoritesBar();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    showPage(back.page);
+  }
+  editReturnBar.addEventListener("click", (event) => {
+    if (event.target.closest("[data-edit-return-cancel]")) finishEdit(false);
+    else if (event.target.closest("[data-edit-return-done]")) {
+      // Unsaved changes: page 1's own "Gotowe" saves them and returns.
+      if (historyDone && !historyDone.hidden) historyDone.click();
+      else finishEdit(true);
+    }
+  });
+  // page 1's "Gotowe" (chosen filters) returns as well.
+  historyDone?.addEventListener("click", () => {
+    if (editReturn) setTimeout(() => finishEdit(true));
+  });
+  const editTargetOf = (event) => {
+    const target = event.target.closest?.("[data-mobile-summary-target]");
+    if (!target) return null;
+    const page = target.closest("[data-mobile-price-history-page]") ? "history" : analysisView.contains(target) ? "analysis" : "";
+    return page ? { page, selector: target.dataset.mobileSummaryTarget } : null;
+  };
+  // Before mobile.js's own handler, which only scrolls within page 1.
+  document.addEventListener("click", (event) => {
+    const hit = editTargetOf(event);
+    if (!hit) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    startEditFrom(hit.page, hit.selector);
+  }, true);
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const hit = editTargetOf(event);
+    if (!hit) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    startEditFrom(hit.page, hit.selector);
+  }, true);
+
   function showPage(page) {
     if (page === "favorites") page = "history";
+    if (page !== "search" && editReturn) {
+      editReturn = null;
+      renderEditReturnBar();
+    }
     // The bar's order depends on the page (monitored cars first on page 3).
     queueMicrotask(renderFavoritesBar);
     // Leaving Monitoring: "Więcej filtrów" goes back to page 1.
