@@ -2269,6 +2269,8 @@ window.AUTOGOOD_MONITORING_PAGE = (ctx) => {
     });
     return [...groups.values()];
   }
+  // Page 2's conclusion suggests an older year inside the same generation.
+  window.AUTOGOOD_GENERATION_GROUPS = generationGroups;
   // One year past a year bound, when that year surely belongs to the
   // generation the filter means: the one holding the bound and the year next
   // to it inside the range ("od 2019" for a BMW 3 = 2019 and 2020 = G20, so

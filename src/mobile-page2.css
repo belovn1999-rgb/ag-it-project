@@ -1433,3 +1433,68 @@ a.mobileLinkedCarChip:hover {
 .mobileMarketLegend .isOverlayNote {
   color: var(--color-muted);
 }
+
+/* 14.10 (owner): each picture's button on top of its zone, the PDF stays
+   in the search's head. */
+.mobileMarketZoneCopy {
+  margin-left: auto;
+}
+
+.isReportConclusion .mobileMarketSearchCard,
+.isReportConclusion .mobileMarketStatsCard,
+.isReportConclusion .mobileMarketSegmentsCard,
+.isReportConclusion .mobileMarketChartCard,
+.isReportConclusion .mobileMarketOffersCard {
+  display: none !important;
+}
+
+/* The conclusion in sections: a heading, a list, bold leads. */
+.mobileMarketConclusion.isSections {
+  display: grid;
+  gap: 14px;
+}
+
+.mobileMarketConclusionBlock h4 {
+  margin: 0 0 6px;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+  font-weight: 800;
+}
+
+.mobileMarketConclusionBlock ul,
+.mobileMarketConclusionBlock ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.5;
+}
+
+.mobileMarketConclusionBlock p {
+  margin: 0 0 6px;
+}
+
+.mobileMarketConclusionBlock li b {
+  font-weight: 800;
+}
+
+.mobileMarketConclusionBlock.isBudget .mobileMarketChanceList {
+  list-style: none;
+  padding-left: 0;
+}
+
+.mobileMarketConclusionBlock.isAlternatives {
+  padding: 12px 14px;
+  border-left: 4px solid #e08a00;
+  border-radius: 8px;
+  background: #fff8ec;
+}
+
+.mobileMarketConclusionBlock.isWhy {
+  color: var(--color-muted);
+}
+
+.mobileMarketConclusion .mobileMarketChanceItem strong {
+  text-transform: none;
+  letter-spacing: 0;
+}

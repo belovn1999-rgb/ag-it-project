@@ -528,6 +528,34 @@
       screenshotButton: "Kopiuj raport",
       screenshotStatsButton: "Kopiuj statystyki",
       screenshotChartButton: "Kopiuj wykres",
+      screenshotConclusionButton: "Kopiuj wniosek",
+      conclusionMarketTitle: "Ceny na rynku",
+      conclusionBudgetTitle: "Budżet klienta: {budget}",
+      conclusionChanceLine: "{fit} z {total} ofert mieści się w budżecie",
+      chanceAtDealer: "Szansa zakupu u dealera",
+      conclusionWhereTitle: "Gdzie szukać",
+      conclusionWhereBudget: "Najwięcej aut w budżecie: {market} — {fit} z {total} ofert.",
+      conclusionWhereCheapest: "Najtaniej: {market} — zwykle {median} na gotowo.",
+      conclusionAltTitle: "Co można zrobić",
+      conclusionAltIntro: "Budżet trafia w najtańszą część rynku ({market}: poniżej {p25}), więc wybór jest bardzo mały. Możliwości:",
+      altBudgetLead: "Większy budżet",
+      altBudgetText: "od ok. {p25} (o {diff} więcej) do wyboru jest tańsza ćwiartka rynku — {count} ofert.",
+      altMileageLead: "Większy przebieg",
+      altMileageData: "auta z przebiegiem {band} kosztują zwykle {median} — w budżecie mieści się {fit} z {total}.",
+      altMileageWiden: "warto poszerzyć wyszukiwanie do {km} (kolejna grupa przebiegu w tabeli) — takie auta są zwykle tańsze.",
+      altYearLead: "Starszy rocznik",
+      altYearData: "auta z {year} r. kosztują zwykle {median} — w budżecie mieści się {fit} z {total}.",
+      altYearWiden: "rocznik {years} to ta sama generacja ({generation}) — warto go dodać do wyszukiwania.",
+      altYearWidenPlain: "auto o 1–2 lata starsze (w tej samej generacji) — warto je dodać do wyszukiwania.",
+      altAuctionLead: "Aukcje",
+      altAuctionText: "z aukcji podobne auto {from} wychodzi orientacyjnie ok. {price} na gotowo — {fits}.",
+      altAuctionFits: "mieści się w budżecie",
+      altAuctionAbove: "nadal powyżej budżetu",
+      altEquipmentLead: "Mniej wymagań",
+      altEquipmentText: "bez wymagania: {options} — wybór będzie większy.",
+      conclusionWhyTitle: "Dlaczego z AUTOGOOD",
+      conclusionPolandTitle: "Rynek w Polsce",
+      conclusionBudgetHint: "Wskazówka: wpisz budżet klienta nad wykresem — wniosek pokaże szansę zakupu i co można zrobić.",
       screenshotCopied: "Raport skopiowany do schowka — wklej go w wiadomości do klienta.",
       screenshotOpened: "Przeglądarka nie pozwala kopiować obrazów — raport zapisano jako plik PNG (Pobrane).",
       screenshotFailed: "Nie udało się zrobić zrzutu raportu.",
@@ -1319,6 +1347,34 @@
       screenshotButton: "Копировать отчёт",
       screenshotStatsButton: "Копировать статистику",
       screenshotChartButton: "Копировать график",
+      screenshotConclusionButton: "Копировать вывод",
+      conclusionMarketTitle: "Цены на рынке",
+      conclusionBudgetTitle: "Бюджет клиента: {budget}",
+      conclusionChanceLine: "{fit} из {total} объявлений укладываются в бюджет",
+      chanceAtDealer: "Шанс покупки у дилера",
+      conclusionWhereTitle: "Где искать",
+      conclusionWhereBudget: "Больше всего авто в бюджете: {market} — {fit} из {total} объявлений.",
+      conclusionWhereCheapest: "Дешевле всего: {market} — обычно {median} под ключ.",
+      conclusionAltTitle: "Что можно сделать",
+      conclusionAltIntro: "Бюджет попадает в самую дешёвую часть рынка ({market}: ниже {p25}), поэтому выбор очень маленький. Варианты:",
+      altBudgetLead: "Больше бюджет",
+      altBudgetText: "от ок. {p25} (на {diff} больше) доступна дешёвая четверть рынка — {count} объявлений.",
+      altMileageLead: "Больше пробег",
+      altMileageData: "авто с пробегом {band} обычно стоят {median} — в бюджет укладываются {fit} из {total}.",
+      altMileageWiden: "стоит расширить поиск до {km} (следующая группа пробега в таблице) — такие авто обычно дешевле.",
+      altYearLead: "Год постарше",
+      altYearData: "авто {year} г. обычно стоят {median} — в бюджет укладываются {fit} из {total}.",
+      altYearWiden: "{years} г. — то же поколение ({generation}), стоит добавить в поиск.",
+      altYearWidenPlain: "авто на 1–2 года старше (в том же поколении) — стоит добавить в поиск.",
+      altAuctionLead: "Аукционы",
+      altAuctionText: "с аукциона похожее авто {from} выходит ориентировочно ок. {price} под ключ — {fits}.",
+      altAuctionFits: "укладывается в бюджет",
+      altAuctionAbove: "всё ещё выше бюджета",
+      altEquipmentLead: "Меньше требований",
+      altEquipmentText: "без требования: {options} — выбор будет больше.",
+      conclusionWhyTitle: "Почему с AUTOGOOD",
+      conclusionPolandTitle: "Рынок в Польше",
+      conclusionBudgetHint: "Подсказка: впишите бюджет клиента над графиком — вывод покажет шанс покупки и что можно сделать.",
       screenshotCopied: "Отчёт скопирован в буфер обмена — вставь его в сообщение клиенту.",
       screenshotOpened: "Браузер не даёт копировать картинки — отчёт сохранён файлом PNG (Загрузки).",
       screenshotFailed: "Не удалось сделать снимок отчёта.",
@@ -1955,6 +2011,24 @@
     } catch {
       // Kept for this page only.
     }
+  }
+  // Mileage groups of "Cena a parametry" and of the conclusion (owner
+  // 2026-10-13): 0–40, 40–80, 80–120, 120–150, 150–200 thousand km, over 200.
+  const MILEAGE_BANDS = [0, 40000, 80000, 120000, 150000, 200000];
+  // Generations of a model (Monitoring's table), read once per model; page 2
+  // is drawn again when they arrive.
+  const generationCache = new Map();
+  function generationInfo(filters) {
+    const key = `${filters?.brand || ""}|${filters?.model || ""}`;
+    if (generationCache.has(key)) return generationCache.get(key);
+    generationCache.set(key, null);
+    const load = window.AUTOGOOD_GENERATION_GROUPS;
+    if (typeof load !== "function") return null;
+    load(filters).then((groups) => {
+      generationCache.set(key, groups || []);
+      if (activeAnalysis && !analysisView.hidden && `${activeAnalysis.filters?.brand || ""}|${activeAnalysis.filters?.model || ""}` === key) renderAnalysis();
+    }).catch(() => generationCache.set(key, []));
+    return null;
   }
   // How likely a dealer's car fits the budget: 0 very low … 4 very high,
   // by where the budget falls among the market's prices (its zones).
@@ -6487,7 +6561,6 @@
     const reportActions = `
       <div class="mobileMarketReportActions" data-report-hide>
         <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot="stats">${escapeMarketHtml(c.screenshotStatsButton)}</button>
-        <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot="chart">${escapeMarketHtml(c.screenshotChartButton)}</button>
         <button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-pdf>${escapeMarketHtml(c.pdfButton)}</button>
       </div>`;
     let reportActionsInTitle = false;
@@ -7258,16 +7331,116 @@
         }
         conclusions.push({ label: c.briefSafety, text: c.polishOffer });
       }
-      if (conclusions.length) {
-        const conclusionLine = (item) => (typeof item === "string"
-          ? `<p>${escapeMarketHtml(item)}</p>`
-          : item.hint
-          ? `<p class="mobileMarketConclusionHint" data-report-hide>${escapeMarketHtml(item.text)}</p>`
-          : `<p>${item.label ? `<b>${escapeMarketHtml(item.label)}.</b> ` : ""}${escapeMarketHtml(item.text)}${item.note ? `<small class="mobileMarketConclusionNote">${escapeMarketHtml(item.note)}</small>` : ""}</p>`);
+      // The conclusion in sections (owner 2026-10-14): headings, lists and
+      // bold leads, so the client reads it at a glance — prices, the budget
+      // and the chance to buy, where to look, what can be done.
+      const sectionsOut = [];
+      const leadItem = (lead, text, note = "") => `<li>${lead ? `<b>${escapeMarketHtml(lead)}</b> ${lead.endsWith(".") ? "" : "— "}` : ""}${escapeMarketHtml(text)}${note ? `<small class="mobileMarketConclusionNote">${escapeMarketHtml(note)}</small>` : ""}</li>`;
+      const section = (title, body, cls = "") => `<section class="mobileMarketConclusionBlock${cls}"><h4>${escapeMarketHtml(title)}</h4>${body}</section>`;
+      const asLine = (item) => (typeof item === "string" ? leadItem("", item) : leadItem(item.label ? `${item.label}.` : "", item.text, item.note || ""));
+      const whyLabels = [c.briefSafety];
+      const polandLabels = [c.briefHistory, c.briefAccidents, c.briefOrigin];
+      const marketItems = conclusions.filter((item) => typeof item === "string" || (!item.hint && !whyLabels.includes(item.label) && !polandLabels.includes(item.label)));
+      const polandItems = conclusions.filter((item) => typeof item !== "string" && polandLabels.includes(item.label));
+      const whyItems = conclusions.filter((item) => typeof item !== "string" && whyLabels.includes(item.label));
+      const hints = conclusions.filter((item) => typeof item !== "string" && item.hint);
+      if (marketItems.length) sectionsOut.push(section(c.conclusionMarketTitle, `<ul>${marketItems.map(asLine).join("")}</ul>`));
+      // The client's budget: the chance at a dealer in each market.
+      const conclusionBudget = !byMode && displayCurrency === "PLN" ? clientBudgetFor(activeAnalysis) : 0;
+      const chanceOf = (row) => {
+        const prices = row.own.map((listing) => listing.price).sort((left, right) => left - right);
+        return { row, prices, stats: marketStatistics(row.own), ...budgetChance(marketStatistics(row.own), prices, conclusionBudget) };
+      };
+      const chances = conclusionBudget > 0 ? statRows.filter((row) => row.own.length).map(chanceOf) : [];
+      const marketLabel = (row) => (statRows.length > 1 ? marketBadge(row.source) : "");
+      if (chances.length) {
+        sectionsOut.push(section(c.conclusionBudgetTitle.replace("{budget}", plnText(conclusionBudget)), `<ul class="mobileMarketChanceList">${chances.map((item) => `<li>${marketLabel(item.row)}${statRows.length > 1 ? " · " : ""}${escapeMarketHtml(c.chanceAtDealer)}: <span class="mobileMarketChanceItem isLevel${item.level}"><strong>${escapeMarketHtml(c.chanceLevels[item.level])}</strong></span> — ${escapeMarketHtml(c.conclusionChanceLine.replace("{fit}", String(item.fit)).replace("{total}", String(item.total)))}</li>`).join("")}</ul>`, " isBudget"));
+      }
+      // Where to look: most cars within the budget, else the cheapest market.
+      const ranked = chances.length
+        ? [...chances].sort((left, right) => right.fit - left.fit || left.stats.median - right.stats.median)
+        : statRows.filter((row) => row.own.length).map((row) => ({ row, stats: marketStatistics(row.own) })).sort((left, right) => left.stats.median - right.stats.median);
+      if (statRows.length > 1 && ranked.length > 1) {
+        const best = ranked[0];
+        const nameOf = (row) => window.AUTOGOOD_COUNTRY_NAME?.(window.AUTOGOOD_MARKET_COUNTRY?.[row.source]) || row.portal;
+        const line = chances.length && best.fit > 0
+          ? c.conclusionWhereBudget.replace("{market}", nameOf(best.row)).replace("{fit}", String(best.fit)).replace("{total}", String(best.total))
+          : c.conclusionWhereCheapest.replace("{market}", nameOf(best.row)).replace("{median}", plnText(best.stats.median));
+        sectionsOut.push(section(c.conclusionWhereTitle, `<ul>${leadItem("", line)}</ul>`));
+      }
+      // The budget at the bottom of the market (owner 2026-10-14): what can
+      // be done, with figures from these offers only.
+      if (chances.length && ranked[0].level <= 1) {
+        const best = ranked[0];
+        const nameOf = (row) => window.AUTOGOOD_COUNTRY_NAME?.(window.AUTOGOOD_MARKET_COUNTRY?.[row.source]) || row.portal;
+        const options = [];
+        // Two facts of one option in one sentence: "…; …".
+        const joinParts = (parts) => `${parts.map((part) => part.replace(/\.$/, "")).join("; ")}.`;
+        const p25 = Math.ceil(best.stats.middleLow / 100) * 100;
+        options.push(leadItem(c.altBudgetLead, c.altBudgetText.replace("{p25}", plnText(p25)).replace("{diff}", plnText(Math.max(0, p25 - conclusionBudget))).replace("{count}", String(best.prices.filter((price) => price <= p25).length))));
+        // Mileage: the group with most cars in the budget, then one group up.
+        const bandOf = (km) => [...MILEAGE_BANDS].reverse().find((start) => km >= start);
+        const bandLabel = (start) => {
+          const next = MILEAGE_BANDS[MILEAGE_BANDS.indexOf(start) + 1];
+          return next ? `${numberFormat().format(start)} – ${numberFormat().format(next)} km` : c.mileageOver.replace("{km}", `${numberFormat().format(start)} km`);
+        };
+        const byBand = new Map();
+        best.row.own.filter((listing) => Number(listing.mileage) > 0).forEach((listing) => {
+          const band = bandOf(Number(listing.mileage));
+          byBand.set(band, [...(byBand.get(band) || []), listing.price]);
+        });
+        const bandRows = [...byBand.entries()].filter(([, prices]) => prices.length >= 3).map(([band, prices]) => ({ band, total: prices.length, fit: prices.filter((price) => price <= conclusionBudget).length, median: percentile([...prices].sort((left, right) => left - right), 0.5) }));
+        const mileageParts = [];
+        const bestBand = [...bandRows].sort((left, right) => right.fit - left.fit || left.median - right.median)[0];
+        if (bandRows.length > 1 && bestBand?.fit > 0) mileageParts.push(c.altMileageData.replace("{band}", bandLabel(bestBand.band)).replace("{median}", plnText(bestBand.median)).replace("{fit}", String(bestBand.fit)).replace("{total}", String(bestBand.total)));
+        const mileageTo = Number(String(filters.mileageTo || "").replace(/\D/g, "")) || 0;
+        const nextBand = mileageTo ? MILEAGE_BANDS.find((start) => start > mileageTo) || mileageTo + 50000 : 0;
+        if (nextBand) mileageParts.push(c.altMileageWiden.replace("{km}", `${numberFormat().format(nextBand)} km`));
+        if (mileageParts.length) options.push(leadItem(c.altMileageLead, joinParts(mileageParts)));
+        // Year: the oldest year of these offers, then 1–2 years older inside
+        // the same generation (Monitoring's table of generations).
+        const years = [...new Set(best.row.own.map((listing) => Number(listing.year)).filter((year) => year > 1900))].sort((left, right) => left - right);
+        const yearParts = [];
+        if (years.length > 1) {
+          const oldest = best.row.own.filter((listing) => Number(listing.year) === years[0]).map((listing) => listing.price).sort((left, right) => left - right);
+          if (oldest.length >= 3) yearParts.push(c.altYearData.replace("{year}", String(years[0])).replace("{median}", plnText(percentile(oldest, 0.5))).replace("{fit}", String(oldest.filter((price) => price <= conclusionBudget).length)).replace("{total}", String(oldest.length)));
+        }
+        const firstYear = Number(filters.yearFrom) || years[0] || 0;
+        if (firstYear) {
+          const groups = generationInfo(filters);
+          const group = (groups || []).find((item) => item.from <= firstYear && firstYear <= item.to);
+          if (group && group.from <= firstYear - 1) {
+            const start = Math.max(group.from, firstYear - 2);
+            yearParts.push(c.altYearWiden.replace("{years}", start === firstYear - 1 ? String(start) : `${start}–${firstYear - 1}`).replace("{generation}", group.names[group.names.length - 1] || group.code));
+          } else if (!groups || !groups.length) yearParts.push(c.altYearWidenPlain);
+        }
+        if (yearParts.length) options.push(leadItem(c.altYearLead, joinParts(yearParts)));
+        // Auctions: the owner's rule — about 15 % under the market's median.
+        const foreignChance = best.row.turnkeyStats ? best : ranked.find((item) => item.row.turnkeyStats);
+        if (foreignChance) {
+          const auction = Math.round((foreignChance.stats.median * AUCTION_SHARE) / 100) * 100;
+          options.push(leadItem(c.altAuctionLead, c.altAuctionText.replace("{from}", fromLabel(foreignChance.row.source)).replace("{price}", plnText(auction)).replace("{fits}", auction <= conclusionBudget ? c.altAuctionFits : c.altAuctionAbove)));
+        }
+        // Equipment the search insists on.
+        const wanted = ["[data-mobile-interior-material]", "[data-mobile-parking-sensor]", "[data-mobile-feature]", "[data-mobile-exterior-color]", "[data-mobile-interior-color]"]
+          .flatMap((selector) => checkedItems(selector).map((item) => item.text));
+        if (filters.trailerCoupling && filters.trailerCoupling !== "any") wanted.push(...checkedItems("[data-mobile-trailer-coupling]").map((item) => item.text));
+        if (filters.cruiseControl && filters.cruiseControl !== "any") wanted.push(...checkedItems("[data-mobile-cruise-control]").map((item) => item.text));
+        if (wanted.length) options.push(leadItem(c.altEquipmentLead, c.altEquipmentText.replace("{options}", wanted.join(", "))));
+        sectionsOut.push(section(c.conclusionAltTitle, `<p>${escapeMarketHtml(c.conclusionAltIntro.replace("{market}", nameOf(best.row)).replace("{p25}", plnText(p25)))}</p><ol>${options.join("")}</ol>`, " isAlternatives"));
+      }
+      if (polandItems.length) sectionsOut.push(section(c.conclusionPolandTitle, `<ul>${polandItems.map(asLine).join("")}</ul>`));
+      if (whyItems.length) sectionsOut.push(section(c.conclusionWhyTitle, `<ul>${whyItems.map((item) => leadItem("", item.text)).join("")}</ul>`, " isWhy"));
+      // For the manager only, not in the client's picture.
+      const hintLines = [
+        ...hints.map((item) => item.text),
+        ...(!byMode && displayCurrency === "PLN" && !conclusionBudget ? [c.conclusionBudgetHint] : []),
+      ];
+      if (sectionsOut.length) {
         summaryContent = `
           <section class="mobileMarketCard mobileMarketSummaryCard" aria-label="${escapeMarketHtml(c.conclusionHeading)}" data-report-list-hide>
-            ${blockTitle("check", c.conclusionHeading)}
-            <div class="mobileMarketConclusion">${conclusions.map(conclusionLine).join("")}</div>
+            <div class="mobileMarketChartTitleRow">${blockTitle("check", c.conclusionHeading)}<span class="mobileMarketZoneCopy" data-report-hide><button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot="conclusion">${escapeMarketHtml(c.screenshotConclusionButton)}</button></span></div>
+            <div class="mobileMarketConclusion isSections">${sectionsOut.join("")}${hintLines.map((text) => `<p class="mobileMarketConclusionHint" data-report-hide>${escapeMarketHtml(text)}</p>`).join("")}</div>
           </section>`;
       }
       statsContent = `
@@ -7402,9 +7575,7 @@
             (start) => (size === 1 ? String(start) : `${start}–${start + size - 1}`));
         }
       }
-      // Mileage in fixed bands (owner 2026-10-13): 0–40, 40–80, 80–120,
-      // 120–150, 150–200 thousand km, then "over 200 000 km".
-      const MILEAGE_BANDS = [0, 40000, 80000, 120000, 150000, 200000];
+      // Mileage in fixed bands (MILEAGE_BANDS, owner 2026-10-13).
       const bandKm = (value) => numbers.format(value);
       addDimension(c.statsMileageHeading,
         (listing) => {
@@ -7817,7 +7988,7 @@
         ${segmentsContent}
 
         <section class="mobileMarketCard mobileMarketChartCard" aria-label="${escapeMarketHtml(c.distributionHeading)}" data-report-list-hide>
-          ${hasListings ? `<div class="mobileMarketChartTitleRow">${blockTitle("gauge", c.distributionHeading)}${singleYear ? `<span class="mobileMarketSingleYear">${escapeMarketHtml(c.singleYearNote.replace("{year}", String(singleYear)))}</span>` : ""}</div>` : ""}
+          ${hasListings ? `<div class="mobileMarketChartTitleRow">${blockTitle("gauge", c.distributionHeading)}${singleYear ? `<span class="mobileMarketSingleYear">${escapeMarketHtml(c.singleYearNote.replace("{year}", String(singleYear)))}</span>` : ""}<span class="mobileMarketZoneCopy" data-report-hide><button class="mobileMarketImportClear isPrimary" type="button" data-mobile-market-screenshot="chart">${escapeMarketHtml(c.screenshotChartButton)}</button></span></div>` : ""}
           ${marketContent}
         </section>
 
@@ -7895,7 +8066,7 @@
     // Two pictures (owner 2026-10-07): the search with the statistics, and
     // the chart with its footnote; the PDF keeps the whole report.
     const copyLike = mode === "copy" || mode.startsWith("copy-");
-    stage.className = `isReportCapture ${copyLike ? "isReportCopy" : "isReportPdf"}${listMode ? " isReportList" : ""}${mode === "copy-stats" ? " isReportStats" : mode === "copy-chart" ? " isReportChart" : ""}`;
+    stage.className = `isReportCapture ${copyLike ? "isReportCopy" : "isReportPdf"}${listMode ? " isReportList" : ""}${mode === "copy-stats" ? " isReportStats" : mode === "copy-chart" ? " isReportChart" : mode === "copy-conclusion" ? " isReportConclusion" : ""}`;
     stage.setAttribute("aria-hidden", "true");
     // One report width whatever the window: the client gets the same layout
     // (two charts side by side) from a laptop or a narrow window.
@@ -7969,7 +8140,7 @@
   // A copy button waits (disabled, "Przygotowuję obraz…") until its picture
   // is ready: a click then always writes a finished image, which Chrome
   // accepts; a write waiting for the drawing is what it refused.
-  const COPY_BUTTONS = { "copy-stats": '[data-mobile-market-screenshot="stats"]', "copy-chart": '[data-mobile-market-screenshot="chart"]', "list-copy": "[data-mobile-market-list-screenshot]" };
+  const COPY_BUTTONS = { "copy-stats": '[data-mobile-market-screenshot="stats"]', "copy-chart": '[data-mobile-market-screenshot="chart"]', "copy-conclusion": '[data-mobile-market-screenshot="conclusion"]', "list-copy": "[data-mobile-market-list-screenshot]" };
   function markCopyButtons(mode, ready) {
     analysisContent.querySelectorAll(COPY_BUTTONS[mode]).forEach((button) => {
       button.classList.toggle("isPreparing", !ready);
@@ -7995,6 +8166,7 @@
     if (version === reportVersion) markCopyButtons(mode, true);
     // The two report pictures are drawn one after the other.
     if (mode === "copy-stats" && version === reportVersion) ensureReportImage("copy-chart");
+    if (mode === "copy-chart" && version === reportVersion) ensureReportImage("copy-conclusion");
   }
   function reportChanged() {
     reportVersion += 1;
@@ -8002,6 +8174,7 @@
     clearTimeout(prepareTimer);
     markCopyButtons("copy-stats", false);
     markCopyButtons("copy-chart", false);
+    markCopyButtons("copy-conclusion", false);
     markCopyButtons("list-copy", false);
     // The pointer may already rest on the buttons (no new "pointerover"):
     // the picture is drawn again for it once the report is still.
@@ -8023,7 +8196,9 @@
   const prepareOnIntent = (event) => {
     const target = event.target;
     if (!(target instanceof Element)) return;
-    if (target.closest(".agSpecAside, [data-mobile-market-screenshot], [data-mobile-market-pdf]")) ensureReportImage("copy-stats");
+    const zoneButton = target.closest("[data-mobile-market-screenshot]");
+    if (zoneButton && zoneButton.dataset.mobileMarketScreenshot !== "stats") ensureReportImage(`copy-${zoneButton.dataset.mobileMarketScreenshot}`);
+    else if (target.closest(".agSpecAside, [data-mobile-market-screenshot], [data-mobile-market-pdf]")) ensureReportImage("copy-stats");
     else if (target.closest(".mobileMarketTableHead, [data-mobile-market-list-screenshot]")) ensureReportImage("list-copy");
   };
   analysisContent.addEventListener("pointerover", prepareOnIntent);
@@ -8733,7 +8908,7 @@
     }
     const screenshot = event.target.closest("[data-mobile-market-screenshot]");
     if (screenshot) {
-      copyReportScreenshot(screenshot, screenshot.dataset.mobileMarketScreenshot === "chart" ? "copy-chart" : "copy-stats");
+      copyReportScreenshot(screenshot, { chart: "copy-chart", conclusion: "copy-conclusion" }[screenshot.dataset.mobileMarketScreenshot] || "copy-stats");
       return;
     }
     const favorite = event.target.closest("[data-mobile-market-favorite]");
