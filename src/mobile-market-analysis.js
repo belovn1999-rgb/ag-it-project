@@ -5851,6 +5851,20 @@
     return any;
   }
 
+  // Page 2's parameters open their field on page 1 (owner 2026-10-14): the
+  // same anchors as page 1's summary (summaryTargetFor, mobile.js).
+  function fieldTarget(selector) {
+    const element = document.querySelector(selector);
+    return element && typeof summaryTargetFor === "function" ? summaryTargetFor(element) : "";
+  }
+
+  // The ticked options of a list, each with its field's anchor.
+  function checkedItems(selector, prefix = "") {
+    return [...document.querySelectorAll(`${selector}:checked`)]
+      .map((input) => ({ text: `${prefix}${input.closest("label")?.textContent.trim() || ""}`, target: typeof summaryTargetFor === "function" ? summaryTargetFor(input) : "" }))
+      .filter((item) => item.text.trim());
+  }
+
   function searchSpecColumns(filters, sources) {
     const t = window.AUTOGOOD_SPEC_COPY?.() || {};
     const any = t.specAny || "—";
@@ -5858,17 +5872,17 @@
     const labelOf = (selector) => document.querySelector(selector)?.closest("label")?.textContent.trim();
     const fuels = checkedLabels("[data-mobile-fuel]");
     const equipment = [
-      ...checkedLabels("[data-mobile-interior-material]"),
-      filters.airConditioning ? checkedLabel("[data-mobile-air-conditioning]") : "",
-      ...checkedLabels("[data-mobile-parking-sensor]"),
-      filters.cruiseControl && filters.cruiseControl !== "any" ? checkedLabel("[data-mobile-cruise-control]") : "",
-      filters.trailerCoupling && filters.trailerCoupling !== "any" ? checkedLabel("[data-mobile-trailer-coupling]") : "",
-      ...checkedLabels("[data-mobile-feature]"),
-      ...checkedLabels("[data-mobile-exterior-color]"),
-      filters.metallic ? labelOf("[data-mobile-metallic]") : "",
-      filters.matte ? labelOf("[data-mobile-matte]") : "",
-      ...checkedLabels("[data-mobile-interior-color]").map((label) => `${t.interiorColorLabel || ""}: ${label}`),
-    ].filter(Boolean);
+      ...checkedItems("[data-mobile-interior-material]"),
+      ...(filters.airConditioning ? checkedItems("[data-mobile-air-conditioning]") : []),
+      ...checkedItems("[data-mobile-parking-sensor]"),
+      ...(filters.cruiseControl && filters.cruiseControl !== "any" ? checkedItems("[data-mobile-cruise-control]") : []),
+      ...(filters.trailerCoupling && filters.trailerCoupling !== "any" ? checkedItems("[data-mobile-trailer-coupling]") : []),
+      ...checkedItems("[data-mobile-feature]"),
+      ...checkedItems("[data-mobile-exterior-color]"),
+      ...(filters.metallic ? [{ text: labelOf("[data-mobile-metallic]"), target: fieldTarget("[data-mobile-metallic]") }] : []),
+      ...(filters.matte ? [{ text: labelOf("[data-mobile-matte]"), target: fieldTarget("[data-mobile-matte]") }] : []),
+      ...checkedItems("[data-mobile-interior-color]", `${t.interiorColorLabel || ""}: `),
+    ].filter((item) => item.text);
     // Each marketplace searches its own countries: say which is which, so
     // "Polska" next to a Germany-only filter does not read as a mistake.
     const mobileCountries = checkedLabels("[data-mobile-country]");
@@ -5898,24 +5912,24 @@
     ].filter(Boolean);
     return [
       { heading: t.specEngineHeading, rows: [
-        [t.specBody, filters.body ? checkedLabel("[data-mobile-body-choice]") || any : any, "car"],
-        [t.specEngineType, fuels.length ? fuels.join(", ") : any, "fuel"],
-        [t.specDisplacement, range(filters.displacementFrom, filters.displacementTo, "ccm"), "settings"],
-        [t.specPower, range(filters.powerFrom, filters.powerTo, "KM"), "zap"],
+        [t.specBody, filters.body ? checkedLabel("[data-mobile-body-choice]") || any : any, "car", fieldTarget("[data-mobile-body-choices]")],
+        [t.specEngineType, fuels.length ? fuels.join(", ") : any, "fuel", fieldTarget("[data-mobile-fuel]")],
+        [t.specDisplacement, range(filters.displacementFrom, filters.displacementTo, "ccm"), "settings", fieldTarget("[data-mobile-displacement-from]")],
+        [t.specPower, range(filters.powerFrom, filters.powerTo, "KM"), "zap", fieldTarget("[data-mobile-power-from]")],
       ] },
       { heading: t.specUsageHeading, rows: [
-        [t.specMileage, range(filters.mileageFrom, filters.mileageTo, kmUnit()), "gauge"],
-        [t.specRegistration, range(filters.yearFrom, filters.yearTo, "", true), "calendar"],
-        [t.specGearbox, filters.gearbox && filters.gearbox !== "any" ? checkedLabel("[data-mobile-gearbox]") : any, "git-branch"],
-        [t.specDrive, filters.drive && filters.drive !== "any" ? checkedLabel("[data-mobile-drive]") : any, "route"],
+        [t.specMileage, range(filters.mileageFrom, filters.mileageTo, kmUnit()), "gauge", fieldTarget("[data-mobile-mileage-from]")],
+        [t.specRegistration, range(filters.yearFrom, filters.yearTo, "", true), "calendar", fieldTarget("[data-mobile-year-from]")],
+        [t.specGearbox, filters.gearbox && filters.gearbox !== "any" ? checkedLabel("[data-mobile-gearbox]") : any, "git-branch", fieldTarget("[data-mobile-gearbox]")],
+        [t.specDrive, filters.drive && filters.drive !== "any" ? checkedLabel("[data-mobile-drive]") : any, "route", fieldTarget("[data-mobile-drive]")],
       ] },
       // A ticked list, as on page 1 and in the offer (owner 2026-10-11).
-      { heading: t.specEquipmentHeading, items: equipment.map((text) => ({ text })), empty: t.specNoEquipment },
+      { heading: t.specEquipmentHeading, items: equipment, empty: t.specNoEquipment },
       { heading: t.specOtherHeading, rows: [
-        [t.specCountry, countries.length ? countries.join(", ") : any, "map-pin"],
-        [t.specStatus, status.length ? status.join(", ") : any, "check"],
-        [t.specVat, selectedOptionText("[data-mobile-vat]") || any, "percent"],
-        [t.specSeller, selectedOptionText("[data-mobile-seller]") || any, "store"],
+        [t.specCountry, countries.length ? countries.join(", ") : any, "map-pin", fieldTarget("[data-mobile-country]")],
+        [t.specStatus, status.length ? status.join(", ") : any, "check", fieldTarget("[data-mobile-roadworthy]")],
+        [t.specVat, selectedOptionText("[data-mobile-vat]") || any, "percent", fieldTarget("[data-mobile-vat-label]")],
+        [t.specSeller, selectedOptionText("[data-mobile-seller]") || any, "store", fieldTarget("[data-mobile-seller-label]")],
       ] },
     ];
   }
@@ -7576,6 +7590,7 @@
       // The block's name as a heading like "Statystyki" (owner 2026-10-05).
       kicker: "",
       title: [filters.brand, filters.model, filters.version].filter(Boolean).join(" "),
+      titleTarget: fieldTarget("[data-mobile-brand]"),
       // The date stands once, top right of the report (the data's date); on
       // the screen by the title, with its age (audit 10.10).
       meta: dataAgeLine(dataDate)?.text || "",
@@ -8445,6 +8460,37 @@
     renderAnalysis();
   });
 
+  // A parameter on page 2 opens its field on page 1; "Gotowe" there brings
+  // the analysis back with the new filters (owner 2026-10-14).
+  let returnToAnalysis = false;
+  function editAnalysisParameter(selector) {
+    if (!selector) return;
+    returnToAnalysis = true;
+    // The form must be this search's history row, so "Gotowe" saves into it.
+    const historyId = activeAnalysis?.historyId;
+    if (historyId && editingHistoryId !== historyId && marketHistory.some((entry) => entry.id === historyId)) selectHistoryEntry(historyId);
+    showPage("search");
+    setTimeout(() => {
+      if (typeof focusManualFilter === "function") focusManualFilter(selector);
+    }, 80);
+  }
+  analysisContent.addEventListener("click", (event) => {
+    const parameter = event.target.closest(".mobileMarketSearchCard [data-mobile-summary-target]");
+    if (parameter) {
+      // Not mobile.js' own handler: that one scrolls page 1 while it is hidden.
+      event.stopPropagation();
+      editAnalysisParameter(parameter.dataset.mobileSummaryTarget);
+    }
+  });
+  analysisContent.addEventListener("keydown", (event) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    const parameter = event.target.closest?.(".mobileMarketSearchCard [data-mobile-summary-target]");
+    if (!parameter) return;
+    event.preventDefault();
+    event.stopPropagation();
+    editAnalysisParameter(parameter.dataset.mobileSummaryTarget);
+  });
+
   analysisContent.addEventListener("click", (event) => {
     if (event.target.closest("[data-mobile-analysis-done]")) {
       historyDone?.click();
@@ -8665,6 +8711,11 @@
   manualForm?.addEventListener("change", () => setTimeout(updateManualHistoryState));
   historyDone?.addEventListener("click", () => {
     if (editingHistoryId) confirmHistoryChanges(editingHistoryId);
+    // Came from a parameter on page 2: back to the analysis, new filters.
+    if (returnToAnalysis && analysisView.hidden) {
+      returnToAnalysis = false;
+      setTimeout(() => showPage("analysis"));
+    }
   });
   const handleHistoryClick = (event) => {
     const confirmButton = event.target.closest("[data-mobile-market-history-confirm]");
@@ -8706,6 +8757,50 @@
     }
   };
   historyLists.forEach((list) => list.addEventListener("click", handleHistoryClick));
+
+  // Page 2 shows the same search history under the analysis (owner
+  // 2026-10-14): a row opens its car's analysis right there, no trip to
+  // page 1. The one list is moved, not copied, so it stays one list.
+  {
+    const historySection = document.querySelector("[data-mobile-market-history]");
+    if (historySection && analysisView) {
+      const home = document.createComment("search history on page 1");
+      historySection.before(home);
+      const slot = document.createElement("div");
+      slot.className = "mobileMarketHistorySlot";
+      slot.setAttribute("data-report-hide", "");
+      analysisView.append(slot);
+      const place = () => {
+        if (!analysisView.hidden) {
+          if (historySection.parentElement !== slot) slot.append(historySection);
+        } else if (historySection.parentElement === slot) home.after(historySection);
+      };
+      new MutationObserver(place).observe(analysisView, { attributes: true, attributeFilter: ["hidden"] });
+      place();
+      // Capture: before the list's own handler, which would open page 1.
+      historySection.addEventListener("click", (event) => {
+        if (analysisView.hidden) return;
+        // ★, ×, the note and "Gotowe" work as on page 1.
+        if (event.target.closest("[data-mobile-market-history-delete], [data-mobile-market-history-pin], [data-mobile-market-history-confirm], [data-mobile-market-history-note-edit], [data-mobile-market-history-note], a, input")) return;
+        const open = event.target.closest("[data-mobile-market-history-analysis]");
+        if (open) {
+          event.stopPropagation();
+          openAnalysisFromHistory(open.dataset.mobileMarketHistoryAnalysis);
+          return;
+        }
+        const row = event.target.closest("[data-mobile-market-history-row]");
+        if (!row) return;
+        event.stopPropagation();
+        openAnalysisFromHistory(row.dataset.mobileMarketHistoryRow);
+      }, true);
+    }
+  }
+  function openAnalysisFromHistory(historyId) {
+    if (!marketHistory.some((entry) => entry.id === historyId)) return;
+    selectHistoryEntry(historyId);
+    openFavorite(historyId);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   // B67: the client's note stays folded ("+ notatka"); a click opens the field,
   // Enter or leaving it saves, Escape drops the change.

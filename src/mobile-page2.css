@@ -1321,3 +1321,24 @@ a.mobileLinkedCarChip:hover {
 .mobileMarketSegmentTable.isBand col.mobileMarketSegmentLabelCol {
   width: 150px;
 }
+
+/* 14.10 (owner): the search history under the analysis on page 2. */
+.mobileMarketHistorySlot {
+  margin-top: var(--space-lg);
+}
+
+.mobileMarketHistorySlot:empty {
+  display: none;
+}
+
+/* Page 2's parameters open their field on page 1. */
+.mobileMarketSearchCard [data-mobile-summary-target] {
+  cursor: pointer;
+  border-radius: 6px;
+}
+
+.mobileMarketSearchCard [data-mobile-summary-target]:hover,
+.mobileMarketSearchCard [data-mobile-summary-target]:focus-visible {
+  background: color-mix(in srgb, var(--color-brand) 8%, transparent);
+  outline: none;
+}
