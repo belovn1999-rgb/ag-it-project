@@ -9086,7 +9086,10 @@
       const home = document.createComment("search history on page 1");
       historySection.before(home);
       const slot = document.createElement("div");
-      slot.className = "mobileMarketHistorySlot";
+      // Page 1's look (its styles hang on the search view): the same
+      // attribute; scripts look up page 1's view first in the page.
+      slot.className = "mobileMethodView mobileMarketHistorySlot";
+      slot.dataset.mobileMethodView = "manual";
       slot.setAttribute("data-report-hide", "");
       analysisView.append(slot);
       const place = () => {
