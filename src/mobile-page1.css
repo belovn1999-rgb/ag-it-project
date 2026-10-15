@@ -2001,3 +2001,18 @@
   border-radius: 10px;
   filter: saturate(0.72) brightness(1.04);
 }
+
+/* Moving to the platform (2026-10-15): the copy button under the history and its message. */
+.mobileHistoryExportStatus {
+  margin: var(--space-xs) 0 0;
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+.mobileHistoryExportText {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-xs);
+  font: inherit;
+  font-size: var(--text-xs);
+}

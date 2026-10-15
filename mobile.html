@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="./src/mobile-market-analysis.css?v=edit3-1014" />
     <link rel="stylesheet" href="./src/mobile-favorites-watch.css?v=fav-watch-20260930" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
-    <link rel="stylesheet" href="./src/mobile-page1.css?v=rail-dim-1110" />
+    <link rel="stylesheet" href="./src/mobile-page1.css?v=export-1015" />
     <link rel="stylesheet" href="./src/mobile-model-specs.css?v=van3-1011" />
     <link rel="stylesheet" href="./src/mobile-monitoring.css?v=edit3-1014" />
     <link rel="stylesheet" href="./src/calculator-popup.css?v=b42-20261004" />
@@ -755,6 +755,9 @@
           <div class="mobileMarketHistoryList" data-mobile-market-history-list></div>
           <p class="mobileHistoryNoMatch" data-mobile-history-nomatch hidden></p>
           <button class="mobileHistoryMore" type="button" data-mobile-history-more aria-expanded="false" hidden></button>
+          <!-- Moving to the platform (2026-10-15): copies the history and favourites as text; nothing is changed here. -->
+          <button class="mobileHistoryMore mobileHistoryExport" type="button" data-mobile-history-export>Skopiuj dla platformy</button>
+          <p class="mobileHistoryExportStatus" data-mobile-history-export-status role="status" hidden></p>
         </section>
 
         <!-- Scrolled past the chosen filters: one slim line with the car, the
@@ -828,5 +831,6 @@
     <script src="./src/mobile-page1.js?v=p2e-1014"></script>
     <script src="./src/mobile-filter-warnings.js?v=w2-filters-1010"></script>
     <script src="./src/mobile-page2.js?v=page2-audit2-20261003"></script>
+    <script src="./src/platform-export.js?v=export2-1015"></script>
   </body>
 </html>
