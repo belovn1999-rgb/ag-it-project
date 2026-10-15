@@ -502,7 +502,8 @@ const saleRecognitionLabels = {
   phone: ["Telefon", "Nr. tel", "Nr tel", "Телефон", "Tel", "Phone"],
   email: ["Email", "E-mail", "Mail", "Adres email", "Adres e-mail", "Имейл"],
   vehicleMarker: ["Auto", "Pojazd", "Samochód", "Samochod", "Авто", "Автомобиль"],
-  makeModel: ["Marka i model", "Marka model", "Auto", "Pojazd", "Samochód", "Samochod"],
+  makeAndModel: ["Marka i model", "Marka/model", "Marka / model", "Marka, model", "Marka model"],
+  makeModel: ["Auto", "Pojazd", "Samochód", "Samochod"],
   make: ["Marka", "Марка"],
   model: ["Model", "Модель"],
   vin: ["VIN", "Nr VIN", "Numer VIN"],
@@ -516,148 +517,16 @@ const saleRecognitionLabels = {
 
 const saleAllLabels = Object.values(saleRecognitionLabels).flat();
 const saleLooseStopLabels = saleAllLabels.filter((label) => !saleRecognitionLabels.vehicleMarker.includes(label));
-const plus48PhonePattern = /\+48[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3}/g;
-
 function extractLabeled(text, variants) {
-  const labelPattern = variants.map(escapeRegExp).join("|");
+  // Longest first: "Przebieg do" must win over "Przebieg", or "do:" stays in the value.
+  const labelPattern = [...variants].sort((a, b) => b.length - a.length).map(escapeRegExp).join("|");
   const separatedNextPattern = saleAllLabels.map(escapeRegExp).join("|");
   const looseNextPattern = saleLooseStopLabels.map(escapeRegExp).join("|");
   const pattern = new RegExp(
-    `(?:^|[\\s,;|\\n])(?:${labelPattern})\\s*(?::|=|–|-)?\\s*(.*?)(?=(?:[\\s,;|\\n]+(?:${separatedNextPattern})\\s*(?::|=|–|-)\\s*)|(?:[\\s,;|\\n]+(?:${looseNextPattern})\\s+)|$)`,
+    `(?:^|[\\s,;|\\n])(?:${labelPattern})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)?\\s*(.*?)(?=(?:[\\s,;|\\n]+(?:${separatedNextPattern})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)\\s*)|(?:[\\s,;|\\n]+(?:${looseNextPattern})\\s+)|$)`,
     "is"
   );
   return normalizeSpace(text.match(pattern)?.[1] || "");
-}
-
-function withoutPlus48Phones(value) {
-  return String(value || "").replace(plus48PhonePattern, " ");
-}
-
-function linesFromText(text) {
-  return String(text || "")
-    .split(/\r?\n/)
-    .map(normalizeSpace)
-    .filter(Boolean);
-}
-
-function isAddressStreetLine(line) {
-  const clean = stripKnownNoise(line);
-  return /^(?:ul\.?|al\.?|pl\.?|os\.?|aleja)?\s*[\p{Lu}\p{Ll}][\p{L}.'-]+(?:\s+[\p{Lu}\p{Ll}][\p{L}.'-]+){0,4}\s+\d+[A-Za-z]?(?:[/-]\d+[A-Za-z]?)?$/u.test(clean);
-}
-
-function isPostalCityLine(line) {
-  return /^\d{2}-\d{3}\s+[\p{Lu}\p{Ll}][\p{L}.'-]+(?:\s+[\p{Lu}\p{Ll}][\p{L}.'-]+){0,4}$/u.test(stripKnownNoise(line));
-}
-
-function isClientDataMarkerLine(line) {
-  return /^(?:PESEL|NIP|DO|Dow[oó]d|Dokument|Paszport|Karta pobytu|Telefon|Tel\.?|Email|E-mail|Mail|Auto|Pojazd|Marka|Model|Cena|Rabat|VIN|Przebieg)\b/i.test(line);
-}
-
-const polishCityPattern =
-  /\b(?:Warszawa|Krak[oó]w|Ł[oó]d[zź]|Lodz|Wrocław|Wroclaw|Pozna[nń]|Gda[nń]sk|Szczecin|Bydgoszcz|Lublin|Białystok|Bialystok|Katowice|Gdynia|Częstochowa|Czestochowa|Radom|Toru[nń]|Torun|Sosnowiec|Kielce|Rzesz[oó]w|Gliwice|Zabrze|Olsztyn|Bielsko(?:-| )Biała|Bielsko(?:-| )Biala|Bytom|Zielona G[oó]ra|Rybnik|Ruda Śląska|Ruda Slaska|Opole|Tychy|Gorz[oó]w Wielkopolski|Elbląg|Elblag|Płock|Plock|Wałbrzych|Walbrzych|Włocławek|Wloclawek|Tarn[oó]w|Chorz[oó]w|Koszalin|Kalisz|Legnica|Grudziądz|Grudziadz|Słupsk|Slupsk|Jaworzno|Jastrzębie(?:-| )Zdr[oó]j|Jastrzebie(?:-| )Zdroj|Nowy Sącz|Nowy Sacz|Jelenia G[oó]ra|Siedlce|Mysłowice|Myslowice|Piła|Pila|Konin|Piotrk[oó]w Trybunalski|Inowrocław|Inowroclaw|Lubin|Ostr[oó]w Wielkopolski|Łomianki|Lomianki)\b/i;
-
-function isPolishAddressLine(line) {
-  const clean = stripKnownNoise(line);
-  if (!clean || isClientDataMarkerLine(clean)) return false;
-  if (!polishCityPattern.test(clean)) return false;
-  if (/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/.test(clean)) return false;
-  if (/\b(?:PESEL|NIP|Dow[oó]d|Dokument|Paszport|Karta pobytu|Telefon|Tel\.?|Email|E-mail|Auto|Pojazd|Marka|Model|Cena|Rabat|VIN)\b/i.test(clean)) return false;
-  return /\d{2}-\d{3}|\b(?:ul\.?|al\.?|pl\.?|os\.?|aleja)\b|\b\d+[A-Za-z]?(?:[/-]\d+[A-Za-z]?)?\b|,/.test(clean);
-}
-
-function addressFallback(text) {
-  const lines = linesFromText(text);
-
-  // A street line with the postal code and city on the line below is the shape
-  // people actually paste. Pair those two first and join them with a space:
-  // scanning for a single address-looking line would return the bare
-  // "00-950 Warszawa", losing the street, and cleanAddressValue then drops the
-  // whole thing for being incomplete.
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    if (!isAddressStreetLine(line)) continue;
-    const nextLine = lines[index + 1] || "";
-    if (isPostalCityLine(nextLine)) return `${line} ${nextLine}`;
-  }
-
-  for (const line of lines) {
-    if (isPolishAddressLine(line)) return line;
-  }
-
-  for (const line of lines) {
-    if (isAddressStreetLine(line)) return line;
-  }
-  const compact = normalizeSpace(text);
-  const postalAddress = compact.match(
-    /(?:(?:ul|al|pl|os|aleja)\.?\s+)?[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,4}\s+\d+[A-Za-z]?(?:\s*\/\s*\d+[A-Za-z]?|[,\s]+[A-Z]{1,4}\/\d+)?[,\s]+\d{2}-\d{3}\s+[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,3}/u
-  );
-  if (postalAddress) return stripKnownNoise(postalAddress[0]);
-  const cityAddressLine = lines.find((line) => isPolishAddressLine(line));
-  if (cityAddressLine) return stripKnownNoise(cityAddressLine);
-  const pattern =
-    /\b(?:ul\.?|al\.?|pl\.?|os\.?|aleja|улица|adres)\s+.*?(?=\s+(?:PESEL|NIP|Dokument|Dow[oó]d|Paszport|Karta pobytu|Telefon|Tel|Email|E-mail|Auto|Pojazd|Marka|Model|Cena|Rabat|VIN)\b|$)/i;
-  return stripKnownNoise(text.match(pattern)?.[0] || "");
-}
-
-function parseDocumentValue(text) {
-  const compact = normalizeSpace(text);
-  const shorthand = compact.match(/\b(?:DO|D\.O\.)\s*(?::|-)?\s*([A-Z]{1,4}\s*\d[A-Z0-9]{2,}|\d{5,}[A-Z0-9]*)/i);
-  if (shorthand) return normalizeSpace(`dowód osobisty ${extractDocumentNumber(shorthand[1])}`);
-  const exact = compact.match(/\b(dow[oó]d osobisty|paszport|karta pobytu)\b\s*(?::|nr|numer|seria|-)?\s*([A-Z]{1,4}\s*\d[A-Z0-9]{2,}|\d{5,}[A-Z0-9]*)/i);
-  if (exact) return normalizeSpace(`${exact[1]} ${extractDocumentNumber(exact[2])}`);
-  const labeled = extractLabeled(compact, saleRecognitionLabels.document);
-  const number = extractDocumentNumber(labeled);
-  return number ? normalizeSpace(`${normalizeDocumentType(labeled)} ${number}`) : "";
-}
-
-function extractDocumentNumber(value) {
-  return normalizeSpace(
-    String(value || "").match(/\b(?:[A-Z]{1,4}\s*\d[A-Z0-9]{2,}|\d{5,}[A-Z0-9]*)\b/i)?.[0] || ""
-  );
-}
-
-function normalizeDocumentType(value) {
-  const lower = normalizeSpace(value).toLowerCase();
-  if (/\bdow[oó]d(?: osobisty)?\b|\bdo\b|\bd\.o\.\b/.test(lower)) return "dowód osobisty";
-  if (/\bpaszport\b/.test(lower)) return "paszport";
-  if (/\bkarta pobytu\b/.test(lower)) return "karta pobytu";
-  return "";
-}
-
-function personNameOnly(value) {
-  return normalizeSpace(
-    String(value || "").match(/\b[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+\s+[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+\b/u)?.[0] || ""
-  );
-}
-
-function normalizePhoneNumber(value) {
-  return normalizeSpace(
-    String(value || "").match(/(?:\+48[\s-]?)?\d{3}[\s-]?\d{3}[\s-]?\d{3}/)?.[0] || ""
-  );
-}
-
-function cleanAddressValue(value, { phone = "", email = "", pesel = "", nip = "", document = "" } = {}) {
-  let cleaned = ` ${normalizeSpace(value)} `;
-  for (const token of [phone, email, pesel, nip, document].filter(Boolean)) {
-    cleaned = cleaned.replace(new RegExp(escapeRegExp(token), "gi"), " ");
-  }
-  cleaned = cleaned
-    .replace(/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/g, " ")
-    .replace(/(?:\+48[\s-]?)?\d{3}[\s-]?\d{3}[\s-]?\d{3}/g, " ")
-    .replace(/\b\d{11}\b/g, " ")
-    .replace(/\b(?:PESEL|NIP|Telefon|Tel\.?|Phone|Email|E-mail|Mail|Dokument|Dow[oó]d osobisty|Paszport|Karta pobytu)\b.*$/i, " ");
-  const postalAddress = normalizeSpace(cleaned).match(
-    /(?:(?:ul|al|pl|os|aleja)\.?\s+)?[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,4}\s+\d+[A-Za-z]?(?:\s*\/\s*\d+[A-Za-z]?|[,\s]+[A-Z]{1,4}\/\d+)?[,\s]+\d{2}-\d{3}\s+[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,3}/u
-  );
-  if (!postalAddress) return "";
-  // One shape whatever the paste looked like: "ul. Polna 8/12 61-001 Poznań".
-  // A comma survives only when the source had the whole address on one line,
-  // and mixing the two shapes across contracts is what looks like a mistake.
-  let address = stripKnownNoise(postalAddress[0])
-    .replace(/\s*\/\s*/g, "/")
-    .replace(/\s*,\s*/g, " ");
-  if (!/^(?:ul\.?|al\.?|pl\.?|os\.?|aleja)\s+/i.test(address)) address = `ul. ${address}`;
-  return address.replace(/^ul\.?\s*/i, "ul. ");
 }
 
 function parseMoneyValue(value) {
@@ -679,7 +548,7 @@ function moneyMatch(value) {
 function vehicleContext(text) {
   const compact = normalizeSpace(text);
   const marker = saleRecognitionLabels.vehicleMarker.map(escapeRegExp).join("|");
-  const strictMatches = [...compact.matchAll(new RegExp(`(?:^|[\\s,;|])(?:${marker})\\s*(?::|=|–|-)\\s*(.*)$`, "gis"))];
+  const strictMatches = [...compact.matchAll(new RegExp(`(?:^|[\\s,;|])(?:${marker})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)\\s*(.*)$`, "gis"))];
   if (strictMatches.length) return normalizeSpace(strictMatches.at(-1)[1]);
   const looseMatches = [...compact.matchAll(new RegExp(`(?:^|[\\s,;|])(?:${marker})\\s+(.*)$`, "gis"))];
   if (looseMatches.length) return normalizeSpace(looseMatches.at(-1)[1]);
@@ -702,118 +571,19 @@ function makeModelFallback(text) {
   return normalizeSpace(filtered.slice(0, 4).join(" "));
 }
 
-function parseBuyerType(text, { pesel = "", nip = "" } = {}) {
-  const compact = normalizeSpace(text);
-  const lower = compact.toLowerCase();
-  const labeled = extractLabeled(compact, saleRecognitionLabels.buyerType).toLowerCase();
-  const companyMarkers = ["firma", "фирм", "jdg", "sp. z o.o", "sp z oo", "spółka", "spolka", "s.a.", "krs", "regon"];
-  if (labeled.includes("firma") || labeled.includes("фирм") || labeled.includes("jdg")) return "company";
-  if (labeled.includes("osoba") || labeled.includes("fizycz") || labeled.includes("физ")) return "person";
-  if (companyMarkers.some((marker) => lower.includes(marker))) return "company";
-  if (pesel) return "person";
-  if (nip) return "company";
-  return "person";
-}
-
-function parseBuyerName(text, isCompany) {
-  const lines = linesFromText(text);
-  const compact = normalizeSpace(text);
-  const clientLine = lines.find((line) => /^(?:Kupujący|Nabywca|Zleceniodawca|Klient|Client|Клиент)\b/i.test(line));
-  if (clientLine) {
-    const candidate = stripKnownNoise(clientLine.replace(/\b(?:Kupujący|Nabywca|Zleceniodawca|Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, ""));
-    if (candidate && !isPolishAddressLine(candidate) && !isAddressStreetLine(candidate) && !isPostalCityLine(candidate) && !isClientDataMarkerLine(candidate)) {
-      return isCompany ? candidate : personNameOnly(candidate);
-    }
-  }
-
-  const labeled = extractLabeled(compact, saleRecognitionLabels.buyer);
-  if (labeled) {
-    const cleanLabeled = stripKnownNoise(labeled);
-    if (!isCompany) {
-      const personName = cleanLabeled.match(/^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+(?:\s+[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+){1,3}\b/u)?.[0];
-      if (personName) return personNameOnly(personName);
-    }
-    return cleanLabeled;
-  }
-  if (isCompany) {
-    const company = compact.match(/\b[A-Z0-9ĄĆĘŁŃÓŚŹŻ][A-Z0-9ĄĆĘŁŃÓŚŹŻ .&-]{2,}?(?:JDG|sp\.?\s*z\.?\s*o\.?o\.?|spółka|spolka|s\.a\.)\b/i)?.[0];
-    if (company) return stripKnownNoise(company);
-  }
-  const firstNameLine = lines.find((line) => {
-    const candidate = stripKnownNoise(line.replace(/\b(?:Kupujący|Nabywca|Zleceniodawca|Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, ""));
-    if (!candidate || isPolishAddressLine(candidate) || isAddressStreetLine(candidate) || isPostalCityLine(candidate) || isClientDataMarkerLine(candidate)) return false;
-    if (/@|\+48|\d{2}-\d{3}|\b\d{10,11}\b/.test(candidate)) return false;
-    const words = candidate.match(/[\p{L}'-]+/gu) || [];
-    return words.length >= 2 && words.length <= 4;
-  });
-  if (firstNameLine) return personNameOnly(firstNameLine.replace(/\b(?:Kupujący|Nabywca|Zleceniodawca|Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, ""));
-
-  const beforeAddress = compact.split(/\b(?:Adres|Адрес|PESEL|NIP|Dokument|Telefon|Email|Auto|Pojazd)\b/i)[0];
-  const upperPerson = beforeAddress.match(/[\p{Lu}]{2,}(?:\s+[\p{Lu}]{2,}){1,3}/u)?.[0];
-  if (upperPerson) return normalizeSpace(upperPerson.match(/[\p{Lu}]{2,}\s+[\p{Lu}]{2,}/u)?.[0] || "");
-  const person = beforeAddress
-    .replace(/\b(?:Kupujący|Nabywca|Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, "")
-    .match(/\b[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+(?:\s+[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+){1,3}\b/u)?.[0];
-  return personNameOnly(person || "");
-}
-
+// Name, address, PESEL/NIP, phone and e-mail follow the owner's rules in one
+// module shared with the order contract (src/client-recognition.js,
+// docs/PROJECT-UMOWY.md §6).
 function parseBuyerContactData(text) {
-  const compact = normalizeSpace(text);
-  const joined =
-    text
-      .split(/\r?\n/)
-      .map(normalizeSpace)
-      .filter(Boolean)
-      .join("\n") || compact;
-
-  let email = joined.match(/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/)?.[0] || "";
-  if (!email) email = extractLabeled(compact, saleRecognitionLabels.email);
-  email = stripKnownNoise(email);
-
-  let phone = "";
-  const labeledPhone = extractLabeled(compact, saleRecognitionLabels.phone);
-  const labeledPlus48Phone = labeledPhone.match(plus48PhonePattern) || [];
-  const plus48Phones = joined.match(plus48PhonePattern) || [];
-  const phoneMatches = labeledPhone
-    ? labeledPlus48Phone.length
-      ? labeledPlus48Phone
-      : [labeledPhone]
-    : plus48Phones.length
-      ? plus48Phones
-      : joined.match(/(?:\+48[\s-]?)?\d{3}[\s-]?\d{3}[\s-]?\d{3}/g) || [];
-  for (const candidate of phoneMatches) {
-    const digits = candidate.replace(/\D/g, "");
-    const start = joined.indexOf(candidate);
-    const before = start > 0 ? joined.slice(start - 1, start) : "";
-    const after = joined.slice(start + candidate.length, start + candidate.length + 1);
-    if ((digits.startsWith("48") || digits.length === 9) && !/\d/.test(before + after)) {
-      phone = candidate;
-      break;
-    }
-  }
-
-  const compactWithoutPhones = normalizeSpace(withoutPlus48Phones(compact));
-  const joinedWithoutPhones = normalizeSpace(withoutPlus48Phones(joined));
-  const peselValue = extractLabeled(compactWithoutPhones, saleRecognitionLabels.pesel);
-  const pesel = peselValue.match(/\b\d{11}\b/)?.[0] || joinedWithoutPhones.match(/\b\d{11}\b/)?.[0] || "";
-  const nipRaw =
-    extractLabeled(compactWithoutPhones, saleRecognitionLabels.nip) ||
-    joinedWithoutPhones.match(/\b(?:NIP[:\s]*)?(\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2})\b/i)?.[1] ||
-    "";
-  const nip = nipRaw.match(/\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2}/)?.[0]?.replace(/\D/g, "") || "";
-  const buyerType = parseBuyerType(compact, { pesel, nip });
-  const isCompany = buyerType === "company";
-  const documentValue = parseDocumentValue(compact);
-  const rawAddressValue = extractLabeled(compact, saleRecognitionLabels.address) || addressFallback(joined);
-
+  const client = window.AutogoodClientRecognition.recognizeClient(text);
   return {
-    type: buyerType,
-    name: parseBuyerName(joined, isCompany),
-    address: cleanAddressValue(rawAddressValue, { phone, email, pesel, nip, document: documentValue }),
-    identifier: isCompany ? nip : pesel,
-    identifierType: isCompany ? "nip" : "pesel",
-    phone: normalizePhoneNumber(phone),
-    email,
+    type: client.type,
+    name: client.name,
+    address: client.address,
+    identifier: client.identifier,
+    identifierType: client.type === "company" ? "nip" : "pesel",
+    phone: client.phone,
+    email: client.email,
   };
 }
 
@@ -851,7 +621,9 @@ function parseSaleData() {
   const buyer = parseBuyerContactData(text);
   const make = stripKnownNoise(extractLabeled(compact, saleRecognitionLabels.make));
   const model = stripKnownNoise(extractLabeled(compact, saleRecognitionLabels.model));
-  const makeModel = normalizeSpace(`${make} ${model}`) || stripKnownNoise(extractLabeled(compact, saleRecognitionLabels.makeModel)) || makeModelFallback(vehicleText);
+  // "Marka i model: BMW X5" is one field, not "Marka" + "model".
+  const makeAndModel = stripKnownNoise(extractLabeled(compact, saleRecognitionLabels.makeAndModel));
+  const makeModel = makeAndModel || normalizeSpace(`${make} ${model}`) || stripKnownNoise(extractLabeled(compact, saleRecognitionLabels.makeModel)) || makeModelFallback(vehicleText);
   const vin = (extractLabeled(compact, saleRecognitionLabels.vin) || compact).match(/\b[A-HJ-NPR-Z0-9]{17}\b/i)?.[0] || "";
   const priceMoney = parseMoneyValue(extractLabeled(compact, saleRecognitionLabels.price) || moneyMatch(compact));
   const discountValue = extractLabeled(compact, saleRecognitionLabels.discount);

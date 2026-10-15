@@ -1,0 +1,362 @@
+[
+ {
+  "id": "T1 стандарт",
+  "text": "Adam Kaliszewski\nŻeromskiego 3/32\n01-887 Warszawa\nDO: DBY460352\nPESEL: 79092600814\n+48 669 050 903\nadam@example.com",
+  "want": {
+   "name": "Adam Kaliszewski",
+   "address": "ul. Żeromskiego 3/32, 01-887 Warszawa",
+   "identifier": "79092600814",
+   "phone": "669050903",
+   "email": "adam@example.com",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T2 фамилия первой, адрес задом наперёд, E-mail в той же строке",
+  "text": "Kaliszewski Adam\nAdres: 01-887 Warszawa, ul. Żeromskiego 3/32 E-mail: adam@example.com\nTel. 669050903\nPESEL 79092600814",
+  "want": {
+   "name": "Adam Kaliszewski",
+   "address": "ul. Żeromskiego 3/32, 01-887 Warszawa",
+   "identifier": "79092600814",
+   "phone": "669050903",
+   "email": "adam@example.com",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T3 ФАМИЛИЯ капсом, индекс выше улицы, 0048",
+  "text": "KOWALSKA Anna\n05-092 Łomianki\nul. Kolejowa 102\ntel: 0048 601-234-567\npesel 85010112345",
+  "want": {
+   "name": "Anna Kowalska",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "identifier": "85010112345",
+   "phone": "601234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T4 фирма, NIP с дефисами, городской номер",
+  "text": "Firma ABC Sp. z o.o.\nNIP: 521-387-45-67\nAdres: ul. Marszałkowska 100, 00-026 Warszawa\nTelefon: 22 456 78 90\nbiuro@abc.pl",
+  "want": {
+   "name": "Firma ABC Sp. z o.o.",
+   "address": "ul. Marszałkowska 100, 00-026 Warszawa",
+   "identifier": "5213874567",
+   "phone": "224567890",
+   "email": "biuro@abc.pl",
+   "type": "company"
+  }
+ },
+ {
+  "id": "T5 всё одной строкой",
+  "text": "Klient: Nowak Piotr, PESEL 90010112345, tel. +48 512 345 678, adres: Polna 8 m. 12, 61-001 Poznań, e-mail piotr.nowak@wp.pl",
+  "want": {
+   "name": "Piotr Nowak",
+   "address": "ul. Polna 8/12, 61-001 Poznań",
+   "identifier": "90010112345",
+   "phone": "512345678",
+   "email": "piotr.nowak@wp.pl",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T6 второе имя",
+  "text": "Jan Maria Kowalski\nos. Słoneczne 14A/7\n35-001 Rzeszów\n512345678",
+  "want": {
+   "name": "Jan Kowalski",
+   "address": "os. Słoneczne 14A/7, 35-001 Rzeszów",
+   "phone": "512345678",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T7 Nazwisko:/Imię: раздельно",
+  "text": "Nazwisko: Wiśniewski\nImię: Tomasz\nAdres zamieszkania: Długa 7/15, 31-147 Kraków\nNr tel.: +48 600 100 200",
+  "want": {
+   "name": "Tomasz Wiśniewski",
+   "address": "ul. Długa 7/15, 31-147 Kraków",
+   "phone": "600100200",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T8 без подписей, PESEL и телефон голыми числами",
+  "text": "Marek Zieliński\n79092600814\n669050903\nKolejowa 102, 05-092 Łomianki",
+  "want": {
+   "name": "Marek Zieliński",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "identifier": "79092600814",
+   "phone": "669050903",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T9 город перед индексом, улица после",
+  "text": "Ewa Lis\nŁomianki 05-092 Kolejowa 102\n+48600200300",
+  "want": {
+   "name": "Ewa Lis",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "phone": "600200300",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T10 строчными, фамилия первой",
+  "text": "nowak anna\nul. polna 8\n61-001 Poznań\n600 700 800",
+  "want": {
+   "name": "Anna Nowak",
+   "address": "ul. Polna 8, 61-001 Poznań",
+   "phone": "600700800",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T11 «Nazwisko i imię:»",
+  "text": "Nazwisko i imię: Zielińska Katarzyna\nAdres: al. Jerozolimskie 65/79\n00-697 Warszawa\nTelefon 501 222 333",
+  "want": {
+   "name": "Katarzyna Zielińska",
+   "address": "al. Jerozolimskie 65/79, 00-697 Warszawa",
+   "phone": "501222333",
+   "type": "person"
+  }
+ },
+ {
+  "id": "T12 PESEL и телефон в одной строке без подписей",
+  "text": "Piotr Mazur 79092600814 669050903\nPolna 8, 61-001 Poznań",
+  "want": {
+   "name": "Piotr Mazur",
+   "address": "ul. Polna 8, 61-001 Poznań",
+   "identifier": "79092600814",
+   "phone": "669050903",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U1 полная вставка договора 01",
+  "text": "Klient: Jan Kowalski\nAdres: ul. Kwiatowa 12/3, 00-950 Warszawa\nPESEL: 85010112345\nTel: 601 234 567\nEmail: jan@example.com\nAuto: BMW X5, diesel, automat\nBudżet: 45000 EUR\nZaliczka: 5000 EUR",
+  "want": {
+   "name": "Jan Kowalski",
+   "address": "ul. Kwiatowa 12/3, 00-950 Warszawa",
+   "identifier": "85010112345",
+   "phone": "601234567",
+   "email": "jan@example.com",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U2 вставка договора 02 с VIN и ценой",
+  "text": "Kowalski Jan\n601 234 567\nul. Kwiatowa 12/3\n00-950 Warszawa\nPESEL 85010112345\nBMW X5\nVIN WBAFR7C50BC123456\nprzebieg 145000\ncena 124700",
+  "want": {
+   "name": "Jan Kowalski",
+   "address": "ul. Kwiatowa 12/3, 00-950 Warszawa",
+   "identifier": "85010112345",
+   "phone": "601234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U3 Pan + капс с польскими буквами",
+  "text": "Pan ŻÓŁTOWSKI Mirosław\nZAM. UL. LIPOWA 3 M. 4, 20-001 LUBLIN\nTEL. (+48) 512 345 678",
+  "want": {
+   "name": "Mirosław Żółtowski",
+   "address": "ul. Lipowa 3/4, 20-001 Lublin",
+   "phone": "512345678",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U4 двойная фамилия через дефис",
+  "text": "Anna Wiśniewska-Kowalczyk\nul. 3 Maja 5/2, 00-001 Warszawa\n+48-601-234-567",
+  "want": {
+   "name": "Anna Wiśniewska-Kowalczyk",
+   "address": "ul. 3 Maja 5/2, 00-001 Warszawa",
+   "phone": "601234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U5 Jana Pawła II, телефон 3-2-2-2",
+  "text": "Tomasz Lis\nAl. Jana Pawła II 12\n00-001 Warszawa\n601 23 45 67",
+  "want": {
+   "name": "Tomasz Lis",
+   "address": "al. Jana Pawła II 12, 00-001 Warszawa",
+   "phone": "601234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U6 деревня без улицы",
+  "text": "Krzysztof Nowicki\nZielonki 12\n05-082 Zielonki\n600100200",
+  "want": {
+   "name": "Krzysztof Nowicki",
+   "address": "Zielonki 12, 05-082 Zielonki",
+   "phone": "600100200",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U7 город из двух слов, сначала индекс",
+  "text": "05-082 Stare Babice, ul. Warszawska 5\nMagdalena Kaczmarek\ntel 700800900",
+  "want": {
+   "name": "Magdalena Kaczmarek",
+   "address": "ul. Warszawska 5, 05-082 Stare Babice",
+   "phone": "700800900",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U8 фирма, NIP с PL, телефон +48 без пробелов",
+  "text": "AUTO-HANDEL SP. Z O.O.\nNIP PL5213874567\nul. Przemysłowa 1, 61-001 Poznań\n+48612345678\nbiuro@autohandel.pl",
+  "want": {
+   "name": "AUTO-HANDEL SP. Z O.O.",
+   "address": "ul. Przemysłowa 1, 61-001 Poznań",
+   "identifier": "5213874567",
+   "phone": "612345678",
+   "email": "biuro@autohandel.pl",
+   "type": "company"
+  }
+ },
+ {
+  "id": "U9 Беларусь без индекса",
+  "text": "Siarhei Ivanou\nMinsk, ul. Lenina 10-5\npaszport MP1234567\n+375 29 123 45 67",
+  "want": {
+   "name": "Siarhei Ivanou",
+   "address": "ul. Lenina 10-5, Minsk",
+   "phone": "+375291234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U10 email первым, имя в середине",
+  "text": "anna.nowak@gmail.com\n+48 501 502 503\nNowak Anna\nKolejowa 102\n05-092 Łomianki\nPESEL:85010112345",
+  "want": {
+   "name": "Anna Nowak",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "identifier": "85010112345",
+   "phone": "501502503",
+   "email": "anna.nowak@gmail.com",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U11 всё капсом с подписями",
+  "text": "IMIĘ I NAZWISKO: KOWALCZYK PAWEŁ\nADRES: ŁOMIANKI 05-092, KOLEJOWA 102\nTELEFON: 0048601234567\nPESEL: 80010112345",
+  "want": {
+   "name": "Paweł Kowalczyk",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "identifier": "80010112345",
+   "phone": "601234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "U12 Pani, адрес одной строкой без запятой",
+  "text": "Pani Joanna Mazur\nul. Słowackiego 10/4 80-001 Gdańsk\ntel. 691 000 111",
+  "want": {
+   "name": "Joanna Mazur",
+   "address": "ul. Słowackiego 10/4, 80-001 Gdańsk",
+   "phone": "691000111",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V1 одна строка через запятые без подписей",
+  "text": "Anna Kowalska, Kolejowa 102, 05-092 Łomianki, tel +48 601 234 567, budżet 120 000 zł",
+  "want": {
+   "name": "Anna Kowalska",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "phone": "601234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V2 фамилия первой, PESEL перед адресом",
+  "text": "Kowalska Anna, PESEL 85010112345, Kolejowa 102, 05-092 Łomianki",
+  "want": {
+   "name": "Anna Kowalska",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "identifier": "85010112345",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V3 «Polska» в конце адреса",
+  "text": "Jan Nowak\nul. Kolejowa 102, 05-092 Łomianki, Polska\n601234567",
+  "want": {
+   "name": "Jan Nowak",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "phone": "601234567",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V4 e-mail и затем адрес через запятую",
+  "text": "Tomasz Wiśniewski, e-mail: t.w@onet.pl, Długa 7/15, 31-147 Kraków, tel. 600100200",
+  "want": {
+   "name": "Tomasz Wiśniewski",
+   "address": "ul. Długa 7/15, 31-147 Kraków",
+   "phone": "600100200",
+   "email": "t.w@onet.pl",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V5 lok. отдельным куском",
+  "text": "Ewa Lis\nKolejowa 102, lok. 5, 05-092 Łomianki",
+  "want": {
+   "name": "Ewa Lis",
+   "address": "ul. Kolejowa 102/5, 05-092 Łomianki",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V6 телефон, затем имя и адрес",
+  "text": "tel. 501 222 333, Katarzyna Zielińska, al. Jerozolimskie 65/79, 00-697 Warszawa",
+  "want": {
+   "name": "Katarzyna Zielińska",
+   "address": "al. Jerozolimskie 65/79, 00-697 Warszawa",
+   "phone": "501222333",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V7 индекс и город, затем улица, затем имя",
+  "text": "05-092 Łomianki, ul. Kolejowa 102, Piotr Mazur, 79092600814",
+  "want": {
+   "name": "Piotr Mazur",
+   "address": "ul. Kolejowa 102, 05-092 Łomianki",
+   "identifier": "79092600814",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V8 woj. в адресе",
+  "text": "Marek Zieliński\nWarszawska 5, 05-082 Stare Babice, woj. mazowieckie\n+48 700 800 900",
+  "want": {
+   "name": "Marek Zieliński",
+   "address": "ul. Warszawska 5, 05-082 Stare Babice",
+   "phone": "700800900",
+   "type": "person"
+  }
+ },
+ {
+  "id": "V9 фирма одной строкой",
+  "text": "AUTO-HANDEL SP. Z O.O., NIP 5213874567, ul. Marszałkowska 100, 00-026 Warszawa, tel. 22 456 78 90",
+  "want": {
+   "name": "AUTO-HANDEL SP. Z O.O.",
+   "address": "ul. Marszałkowska 100, 00-026 Warszawa",
+   "identifier": "5213874567",
+   "phone": "224567890",
+   "type": "company"
+  }
+ },
+ {
+  "id": "V10 Imię/Nazwisko с адресом в строке",
+  "text": "Imię: Adam; Nazwisko: Kaliszewski; Adres: Żeromskiego 3 m. 32, 01-887 Warszawa; PESEL: 79092600814",
+  "want": {
+   "name": "Adam Kaliszewski",
+   "address": "ul. Żeromskiego 3/32, 01-887 Warszawa",
+   "identifier": "79092600814",
+   "type": "person"
+  }
+ }
+]

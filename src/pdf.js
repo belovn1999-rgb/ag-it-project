@@ -84,6 +84,7 @@ const labels = {
   phone: ["Telefon", "Nr. tel", "Nr tel", "Телефон", "Tel", "Phone"],
   email: ["Email", "E-mail", "Mail", "Adres email", "Adres e-mail", "Имейл"],
   vehicleMarker: ["Auto", "Pojazd", "Samochód", "Samochod", "Авто", "Автомобиль"],
+  makeModel: ["Marka i model", "Marka/model", "Marka / model", "Marka, model", "Marka model", "Марка и модель", "Марка/модель"],
   make: ["Marka", "Марка"],
   model: ["Model", "Модель"],
   year: ["Rok", "Wiek", "Год", "Rocznik", "Pierwsza rejestracja"],
@@ -99,8 +100,6 @@ const labels = {
 
 const allLabels = Object.values(labels).flat();
 const looseStopLabels = allLabels.filter((label) => !labels.vehicleMarker.includes(label));
-const plus48PhonePattern = /\+48[\s-]?\d{3}[\s-]?\d{3}[\s-]?\d{3}/g;
-
 function todayISO() {
   const now = new Date();
   const offset = now.getTimezoneOffset();
@@ -178,11 +177,12 @@ function escapeRegExp(value) {
 }
 
 function extractLabeled(text, variants) {
-  const labelPattern = variants.map(escapeRegExp).join("|");
+  // Longest first: "Przebieg do" must win over "Przebieg", or "do:" stays in the value.
+  const labelPattern = [...variants].sort((a, b) => b.length - a.length).map(escapeRegExp).join("|");
   const separatedNextPattern = allLabels.map(escapeRegExp).join("|");
   const looseNextPattern = looseStopLabels.map(escapeRegExp).join("|");
   const pattern = new RegExp(
-    `(?:^|[\\s,;|\\n])(?:${labelPattern})\\s*(?::|=|–|-)?\\s*(.*?)(?=(?:[\\s,;|\\n]+(?:${separatedNextPattern})\\s*(?::|=|–|-)\\s*)|(?:[\\s,;|\\n]+(?:${looseNextPattern})\\s+)|$)`,
+    `(?:^|[\\s,;|\\n])(?:${labelPattern})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)?\\s*(.*?)(?=(?:[\\s,;|\\n]+(?:${separatedNextPattern})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)\\s*)|(?:[\\s,;|\\n]+(?:${looseNextPattern})\\s+)|$)`,
     "is"
   );
   return normalizeSpace(text.match(pattern)?.[1] || "");
@@ -190,10 +190,6 @@ function extractLabeled(text, variants) {
 
 function stripKnownNoise(value) {
   return normalizeSpace(String(value || "").replace(/^[-–—•*]+/, "").replace(/^[/:;,.\s-]+|[/:;,.\s-]+$/g, ""));
-}
-
-function withoutPlus48Phones(value) {
-  return String(value || "").replace(plus48PhonePattern, " ");
 }
 
 function parseBody(value) {
@@ -237,38 +233,6 @@ function parseGearbox(value) {
   return uniqueValues(selected);
 }
 
-function linesFromText(text) {
-  return String(text || "")
-    .split(/\r?\n/)
-    .map(normalizeSpace)
-    .filter(Boolean);
-}
-
-function isAddressStreetLine(line) {
-  const clean = stripKnownNoise(line);
-  return /^(?:ul\.?|al\.?|pl\.?|os\.?|aleja)?\s*[\p{Lu}\p{Ll}][\p{L}.'-]+(?:\s+[\p{Lu}\p{Ll}][\p{L}.'-]+){0,4}\s+\d+[A-Za-z]?(?:[/-]\d+[A-Za-z]?)?$/u.test(clean);
-}
-
-function isPostalCityLine(line) {
-  return /^\d{2}-\d{3}\s+[\p{Lu}\p{Ll}][\p{L}.'-]+(?:\s+[\p{Lu}\p{Ll}][\p{L}.'-]+){0,4}$/u.test(stripKnownNoise(line));
-}
-
-const polishCityPattern =
-  /\b(?:Warszawa|Krak[oó]w|Ł[oó]d[zź]|Lodz|Wrocław|Wroclaw|Pozna[nń]|Gda[nń]sk|Szczecin|Bydgoszcz|Lublin|Białystok|Bialystok|Katowice|Gdynia|Częstochowa|Czestochowa|Radom|Toru[nń]|Torun|Sosnowiec|Kielce|Rzesz[oó]w|Gliwice|Zabrze|Olsztyn|Bielsko(?:-| )Biała|Bielsko(?:-| )Biala|Bytom|Zielona G[oó]ra|Rybnik|Ruda Śląska|Ruda Slaska|Opole|Tychy|Gorz[oó]w Wielkopolski|Elbląg|Elblag|Płock|Plock|Wałbrzych|Walbrzych|Włocławek|Wloclawek|Tarn[oó]w|Chorz[oó]w|Koszalin|Kalisz|Legnica|Grudziądz|Grudziadz|Słupsk|Slupsk|Jaworzno|Jastrzębie(?:-| )Zdr[oó]j|Jastrzebie(?:-| )Zdroj|Nowy Sącz|Nowy Sacz|Jelenia G[oó]ra|Siedlce|Mysłowice|Myslowice|Piła|Pila|Konin|Piotrk[oó]w Trybunalski|Inowrocław|Inowroclaw|Lubin|Ostr[oó]w Wielkopolski)\b/i;
-
-function isPolishAddressLine(line) {
-  const clean = stripKnownNoise(line);
-  if (!clean || isClientDataMarkerLine(clean)) return false;
-  if (!polishCityPattern.test(clean)) return false;
-  if (/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/.test(clean)) return false;
-  if (/\b(?:PESEL|NIP|Dow[oó]d|Dokument|Paszport|Karta pobytu|Telefon|Tel\.?|Email|E-mail|Auto|Pojazd|Marka|Model|Budżet|Budzet|Zaliczka)\b/i.test(clean)) return false;
-  return /\d{2}-\d{3}|\b(?:ul\.?|al\.?|pl\.?|os\.?|aleja)\b|\b\d+[A-Za-z]?(?:[/-]\d+[A-Za-z]?)?\b|,/.test(clean);
-}
-
-function isClientDataMarkerLine(line) {
-  return /^(?:PESEL|NIP|DO|Dow[oó]d|Dokument|Paszport|Karta pobytu|Telefon|Tel\.?|Email|E-mail|Mail|Auto|Pojazd|Marka|Model|Budżet|Budzet|Zaliczka)\b/i.test(line);
-}
-
 function normalizeDocumentType(value) {
   const lower = normalizeSpace(value).toLowerCase();
   if (!lower) return "";
@@ -308,7 +272,8 @@ function composeDocumentValue(type, number) {
 
 function parseDocumentValue(text) {
   const compact = normalizeSpace(text);
-  const shorthand = compact.match(/\b(?:DO|D\.O\.)\s*(?::|-)?\s*([A-Z]{1,4}\s*\d[A-Z0-9]{2,}|\d{5,}[A-Z0-9]*)/i);
+  // "DO:" is the capitalised shorthand of dowód osobisty; "Przebieg do: 150000" is not.
+  const shorthand = compact.match(/(?<![\p{L}\d])(?:DO|D\.O\.)(?![\p{L}])\s*(?::|-)?\s*([A-Za-z]{1,4}\s*\d[A-Za-z0-9]{2,}|\d{5,}[A-Za-z0-9]*)/u);
   if (shorthand) return normalizeDocumentValue(`dowód osobisty ${shorthand[1]}`);
   const exact = compact.match(/\b(dow[oó]d osobisty|paszport|karta pobytu)\b\s*(?::|nr|numer|seria|-)?\s*([A-Z]{1,4}\s*\d[A-Z0-9]{2,}|\d{5,}[A-Z0-9]*)/i);
   if (exact) return normalizeDocumentValue(`${exact[1]} ${exact[2]}`);
@@ -348,108 +313,47 @@ function formatMoneyValue(amount, currency) {
   return `${cleanAmount} ${cleanCurrency} brutto`;
 }
 
-function addressFallback(text) {
-  const lines = linesFromText(text);
-
-  // A street line with the postal code and city on the line below is the shape
-  // people actually paste. Pair those two first and join them with a space:
-  // scanning for a single address-looking line would return the bare
-  // "00-950 Warszawa", losing the street, and cleanAddressValue then drops the
-  // whole thing for being incomplete.
-  for (let index = 0; index < lines.length; index += 1) {
-    const line = lines[index];
-    if (!isAddressStreetLine(line)) continue;
-    const nextLine = lines[index + 1] || "";
-    if (isPostalCityLine(nextLine)) return `${line} ${nextLine}`;
-  }
-
-  for (const line of lines) {
-    if (isPolishAddressLine(line)) return line;
-  }
-
-  for (const line of lines) {
-    if (isAddressStreetLine(line)) return line;
-  }
-
-  const compact = normalizeSpace(text);
-  const postalAddress = compact.match(
-    /(?:(?:ul|al|pl|os|aleja)\.?\s+)?[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,4}\s+\d+[A-Za-z]?(?:\s*\/\s*\d+[A-Za-z]?|[,\s]+[A-Z]{1,4}\/\d+)?[,\s]+\d{2}-\d{3}\s+[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,3}/u
-  );
-  if (postalAddress) return stripKnownNoise(postalAddress[0]);
-  const cityAddressLine = lines.find((line) => isPolishAddressLine(line));
-  if (cityAddressLine) return stripKnownNoise(cityAddressLine);
-  const pattern =
-    /\b(?:ul\.?|al\.?|pl\.?|os\.?|aleja|улица|adres)\s+.*?(?=\s+(?:PESEL|NIP|Dokument|Dow[oó]d|Paszport|Karta pobytu|Telefon|Tel|Email|E-mail|Auto|Pojazd|Marka|Model|Budżet|Budzet|Zaliczka)\b|$)/i;
-  return stripKnownNoise(text.match(pattern)?.[0] || "");
-}
-
-function cleanAddressValue(value, { phone = "", email = "", pesel = "", nip = "", document = "" } = {}) {
-  let cleaned = ` ${normalizeSpace(value)} `;
-  for (const token of [phone, email, pesel, nip, document].filter(Boolean)) {
-    cleaned = cleaned.replace(new RegExp(escapeRegExp(token), "gi"), " ");
-  }
-  cleaned = cleaned
-    .replace(/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/g, " ")
-    .replace(/(?:\+48[\s-]?)?\d{3}[\s-]?\d{3}[\s-]?\d{3}/g, " ")
-    .replace(/\b\d{11}\b/g, " ")
-    .replace(/\b(?:PESEL|NIP|Telefon|Tel\.?|Phone|Email|E-mail|Mail|Dokument|Dow[oó]d osobisty|Paszport|Karta pobytu)\b.*$/i, " ");
-  const postalAddress = normalizeSpace(cleaned).match(
-    /(?:(?:ul|al|pl|os|aleja)\.?\s+)?[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,4}\s+\d+[A-Za-z]?(?:\s*\/\s*\d+[A-Za-z]?|[,\s]+[A-Z]{1,4}\/\d+)?[,\s]+\d{2}-\d{3}\s+[\p{Lu}][\p{L}.'-]+(?:\s+[\p{Lu}][\p{L}.'-]+){0,3}/u
-  );
-  if (!postalAddress) return "";
-  // One shape whatever the paste looked like: "ul. Polna 8/12 61-001 Poznań".
-  // A comma survives only when the source had the whole address on one line,
-  // and mixing the two shapes across contracts is what looks like a mistake.
-  let address = stripKnownNoise(postalAddress[0])
-    .replace(/\s*\/\s*/g, "/")
-    .replace(/\s*,\s*/g, " ");
-  if (!/^(?:ul\.?|al\.?|pl\.?|os\.?|aleja)\s+/i.test(address)) address = `ul. ${address}`;
-  return address.replace(/^ul\.?\s*/i, "ul. ");
-}
-
 function documentFallback(text) {
   const compact = normalizeSpace(text);
-  const shorthand = compact.match(/\b(?:DO|D\.O\.)\s*(?::|-)?\s*([A-Z]{1,4}\s?\d[A-Z0-9]{2,}|\d{5,}[A-Z0-9]*)/i);
+  const shorthand = compact.match(/(?<![\p{L}\d])(?:DO|D\.O\.)(?![\p{L}])\s*(?::|-)?\s*([A-Za-z]{1,4}\s?\d[A-Za-z0-9]{2,}|\d{5,}[A-Za-z0-9]*)/u);
   if (shorthand) return normalizeDocumentValue(`dowód osobisty ${shorthand[1]}`);
   const full = compact.match(/\b(dow[oó]d osobisty|paszport|karta pobytu)\b\s*(?:nr|numer|seria|:|-)?\s*([A-Z]{1,4}\s*\d[A-Z0-9]{2,}|\d{5,}[A-Z0-9]*)/i);
   if (full) return normalizeDocumentValue(`${full[1]} ${full[2]}`);
   return "";
 }
 
-function personNameOnly(value) {
-  return normalizeSpace(
-    String(value || "").match(/\b[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+\s+[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+\b/u)?.[0] || ""
-  );
-}
-
-function normalizePhoneNumber(value) {
-  return normalizeSpace(
-    String(value || "").match(/(?:\+48[\s-]?)?\d{3}[\s-]?\d{3}[\s-]?\d{3}/)?.[0] || ""
-  );
-}
-
 function valueAfterMarker(text, markerVariants) {
   const labelPattern = markerVariants.map(escapeRegExp).join("|");
   const stopPattern = allLabels.map(escapeRegExp).join("|");
-  const match = normalizeSpace(text).match(new RegExp(`(?:^|[\\s,;|])(?:${labelPattern})\\s*(?::|=|–|-)?\\s*(.*?)(?=(?:\\s+(?:${stopPattern})\\s*(?::|=|–|-)?\\s*)|$)`, "is"));
+  const match = normalizeSpace(text).match(new RegExp(`(?:^|[\\s,;|])(?:${labelPattern})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)?\\s*(.*?)(?=(?:\\s+(?:${stopPattern})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)?\\s*)|$)`, "is"));
   return stripKnownNoise(match?.[1] || "");
 }
 
-function vehicleContext(text) {
-  const compact = normalizeSpace(text);
+// The text after the last "Auto:" / "Pojazd:", or "".
+function vehicleMarkerContext(compact) {
   const marker = labels.vehicleMarker.map(escapeRegExp).join("|");
-  const strictMatches = [...compact.matchAll(new RegExp(`(?:^|[\\s,;|])(?:${marker})\\s*(?::|=|–|-)\\s*(.*)$`, "gis"))];
+  const strictMatches = [...compact.matchAll(new RegExp(`(?:^|[\\s,;|])(?:${marker})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)\\s*(.*)$`, "gis"))];
   if (strictMatches.length) return normalizeSpace(strictMatches.at(-1)[1]);
   const looseMatches = [...compact.matchAll(new RegExp(`(?:^|[\\s,;|])(?:${marker})\\s+(.*)$`, "gis"))];
-  return looseMatches.length ? normalizeSpace(looseMatches.at(-1)[1]) : compact;
+  return looseMatches.length ? normalizeSpace(looseMatches.at(-1)[1]) : "";
+}
+
+// The vehicle part of the paste: after "Auto:", from the line that starts with
+// a car make ("BMW X5, 2019"), or — for fuel, gearbox, year — the whole text.
+function vehicleContext(text, makeLine = "") {
+  const compact = normalizeSpace(text);
+  const marked = vehicleMarkerContext(compact);
+  if (marked) return marked;
+  const line = normalizeSpace(makeLine);
+  return line && compact.includes(line) ? compact.slice(compact.indexOf(line)) : compact;
 }
 
 function hasVehicleSignal(text) {
   const compact = normalizeSpace(text);
   const lower = compact.toLowerCase();
   const marker = labels.vehicleMarker.map(escapeRegExp).join("|");
-  if (new RegExp(`(?:^|[\\s,;|])(?:${marker})\\s*(?::|=|–|-)`, "i").test(compact)) return true;
-  if (extractLabeled(compact, labels.make) || extractLabeled(compact, labels.model) || extractLabeled(compact, labels.fuel) || extractLabeled(compact, labels.gearbox) || extractLabeled(compact, labels.body)) return true;
+  if (new RegExp(`(?:^|[\\s,;|])(?:${marker})(?![A-Za-zÀ-ž]|-[A-Za-zÀ-ž])(?:\\s*[:=]|\\s*–|\\s+-)`, "i").test(compact)) return true;
+  if ([labels.makeModel, labels.make, labels.model, labels.mileage, labels.fuel, labels.gearbox, labels.body].some((variants) => extractLabeled(compact, variants))) return true;
   if (/\b(firma|jdg|sp\.?\s*z\.?\s*o\.?o\.?|spółka|spolka|s\.a\.|krs|regon)\b/i.test(lower)) return false;
   return new RegExp(`(?:^|[\\s,;|])(?:${marker})\\s+`, "i").test(compact);
 }
@@ -467,8 +371,12 @@ function mileageFallback(text) {
 }
 
 function makeModelFallback(text) {
-  const context = vehicleContext(text)
-    .replace(/\b(?:Rok|Wiek|Rocznik|Год|Paliwo|Топливо|Skrzynia|Коробка|Budżet|Budzet|Бюджет|Zaliczka|Депозит)\b.*$/i, "");
+  // Up to the first comma or the next label: "BMW X5, przebieg do: 150000" → "BMW X5".
+  const ownLabels = [...labels.makeModel, ...labels.make, ...labels.model];
+  const stop = looseStopLabels.filter((label) => !ownLabels.includes(label)).map(escapeRegExp).join("|");
+  const context = normalizeSpace(text)
+    .split(/[,;|]/)[0]
+    .replace(new RegExp(`(?:^|\\s)(?:${stop})(?![A-Za-zÀ-ž]).*$`, "i"), "");
   const cleaned = stripKnownNoise(
     context
       .replace(/\b(?:Marka|Model|Марка|Модель)\s*(?::|=|–|-)?\s*/gi, " ")
@@ -477,60 +385,6 @@ function makeModelFallback(text) {
   const words = cleaned.match(/[A-ZŁŚŻŹĆŃÓĘĄ0-9][\w.+-]*/gi) || [];
   const filtered = words.filter((word) => !/^(auto|pojazd|samoch[oó]d|авто|rok|paliwo|skrzynia|benzyna|diesel|hybryda|elektryk|automat|automatyczna|manual|manualna|sedan|kombi|coupe)$/i.test(word));
   return normalizeSpace(filtered.slice(0, 4).join(" "));
-}
-
-function parseClientType(text, { pesel = "", nip = "" } = {}) {
-  const compact = normalizeSpace(text);
-  const lower = compact.toLowerCase();
-  const labeled = extractLabeled(compact, labels.clientType).toLowerCase();
-  const companyMarkers = ["firma", "фирм", "jdg", "sp. z o.o", "sp z oo", "spółka", "spolka", "s.a.", "krs", "regon"];
-  if (labeled.includes("firma") || labeled.includes("фирм") || labeled.includes("jdg")) return "company";
-  if (labeled.includes("osoba") || labeled.includes("fizycz") || labeled.includes("физ")) return "person";
-  if (companyMarkers.some((marker) => lower.includes(marker))) return "company";
-  if (pesel) return "person";
-  if (nip) return "company";
-  return "person";
-}
-
-function parseName(text, isCompany) {
-  const lines = linesFromText(text);
-  const compact = normalizeSpace(text);
-  const clientLine = lines.find((line) => /^(?:Klient|Client|Клиент)\b/i.test(line));
-  if (clientLine) {
-    const candidate = stripKnownNoise(clientLine.replace(/\b(?:Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, ""));
-    if (candidate && !isPolishAddressLine(candidate) && !isAddressStreetLine(candidate) && !isPostalCityLine(candidate) && !isClientDataMarkerLine(candidate)) {
-      return isCompany ? candidate : personNameOnly(candidate);
-    }
-  }
-
-  const labeled = extractLabeled(compact, labels.client);
-  if (labeled) {
-    const cleanLabeled = stripKnownNoise(labeled);
-    if (!isCompany) {
-      const personName = cleanLabeled.match(/^[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+(?:\s+[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+){1,3}\b/u)?.[0];
-      if (personName) return personNameOnly(personName);
-    }
-    return cleanLabeled;
-  }
-  if (isCompany) {
-    const company = compact.match(/\b[A-Z0-9ĄĆĘŁŃÓŚŹŻ][A-Z0-9ĄĆĘŁŃÓŚŹŻ .&-]{2,}?(?:JDG|sp\.?\s*z\.?\s*o\.?o\.?|spółka|spolka|s\.a\.)\b/i)?.[0];
-    if (company) return stripKnownNoise(company);
-  }
-
-  const firstNameLine = lines.find((line) => {
-    const candidate = stripKnownNoise(line.replace(/\b(?:Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, ""));
-    if (!candidate || isPolishAddressLine(candidate) || isAddressStreetLine(candidate) || isPostalCityLine(candidate) || isClientDataMarkerLine(candidate)) return false;
-    if (/@|\+48|\d{2}-\d{3}|\b\d{10,11}\b/.test(candidate)) return false;
-    const words = candidate.match(/[\p{L}'-]+/gu) || [];
-    return words.length >= 2 && words.length <= 4;
-  });
-  if (firstNameLine) return personNameOnly(firstNameLine.replace(/\b(?:Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, ""));
-
-  const beforeAddress = compact.split(/\b(?:Adres|Адрес|PESEL|NIP|Dokument|Telefon|Email|Auto|Pojazd)\b/i)[0];
-  const upperPerson = beforeAddress.match(/[\p{Lu}]{2,}(?:\s+[\p{Lu}]{2,}){1,3}/u)?.[0];
-  if (upperPerson) return normalizeSpace(upperPerson.match(/[\p{Lu}]{2,}\s+[\p{Lu}]{2,}/u)?.[0] || "");
-  const person = beforeAddress.replace(/\b(?:Klient|Client|Клиент)\b\s*(?::|=|–|-)?/i, "").match(/\b[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+(?:\s+[A-ZĄĆĘŁŃÓŚŹŻ][a-ząćęłńóśźż-]+){1,3}\b/u)?.[0];
-  return personNameOnly(person || "");
 }
 
 const downloadOrder = ["docx", "pdf", "encrypted"];
@@ -919,55 +773,25 @@ function syncClientTypeRules() {
 
 function parseRawTextValue(text) {
   const compact = normalizeSpace(text);
-  const joined =
-    text
-      .split(/\r?\n/)
-      .map(normalizeSpace)
-      .filter(Boolean)
-      .join("\n") || compact;
-  const hasVehicle = hasVehicleSignal(compact);
-  const vehicleText = hasVehicle ? vehicleContext(compact) : "";
+  const makeLine = window.AutogoodClientRecognition.carMakeLine(text);
+  const hasVehicle = hasVehicleSignal(compact) || Boolean(makeLine);
+  const vehicleText = hasVehicle ? vehicleContext(compact, makeLine) : "";
 
-  let email = joined.match(/[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}/)?.[0] || "";
-  if (!email) email = extractLabeled(compact, labels.email);
-  email = stripKnownNoise(email);
-
-  let phone = "";
-  const labeledPhone = extractLabeled(compact, labels.phone);
-  const labeledPlus48Phone = labeledPhone.match(plus48PhonePattern) || [];
-  const plus48Phones = joined.match(plus48PhonePattern) || [];
-  const phoneMatches = labeledPhone ? labeledPlus48Phone.length ? labeledPlus48Phone : [labeledPhone] : plus48Phones.length ? plus48Phones : joined.match(/(?:\+48[\s-]?)?\d{3}[\s-]?\d{3}[\s-]?\d{3}/g) || [];
-  for (const candidate of phoneMatches) {
-    const digits = candidate.replace(/\D/g, "");
-    const start = joined.indexOf(candidate);
-    const before = start > 0 ? joined.slice(start - 1, start) : "";
-    const after = joined.slice(start + candidate.length, start + candidate.length + 1);
-    if ((digits.startsWith("48") || digits.length === 9) && !/\d/.test(before + after)) {
-      phone = candidate;
-      break;
-    }
-  }
-
-  const compactWithoutPhones = normalizeSpace(withoutPlus48Phones(compact));
-  const joinedWithoutPhones = normalizeSpace(withoutPlus48Phones(joined));
-  const peselValue = extractLabeled(compactWithoutPhones, labels.pesel);
-  const pesel = peselValue.match(/\b\d{11}\b/)?.[0] || joinedWithoutPhones.match(/\b\d{11}\b/)?.[0] || "";
-  const nipRaw =
-    extractLabeled(compactWithoutPhones, labels.nip) ||
-    joinedWithoutPhones.match(/\b(?:NIP[:\s]*)?(\d{3}[-\s]?\d{3}[-\s]?\d{2}[-\s]?\d{2})\b/i)?.[1] ||
-    "";
-  const nip = nipRaw.replace(/\D/g, "");
-  const clientType = parseClientType(compact, { pesel, nip });
-  const isCompany = clientType === "company";
-  const make = hasVehicle ? stripKnownNoise(extractLabeled(compact, labels.make)) : "";
-  const model = hasVehicle ? stripKnownNoise(extractLabeled(compact, labels.model)) : "";
-  const makeModel = hasVehicle ? normalizeSpace(`${make} ${model}`) || makeModelFallback(vehicleText) : "";
+  // "Marka i model: BMW X5" is one field, not "Marka" + "model".
+  const makeAndModel = hasVehicle ? stripKnownNoise(extractLabeled(compact, labels.makeModel)) : "";
+  const make = hasVehicle && !makeAndModel ? stripKnownNoise(extractLabeled(compact, labels.make)) : "";
+  const model = hasVehicle && !makeAndModel ? stripKnownNoise(extractLabeled(compact, labels.model)) : "";
+  // Without "Auto:" or a line that starts with a make the guess would take
+  // the client's name: better to recognise nothing.
+  const makeText = vehicleMarkerContext(compact) || (makeLine ? vehicleText : "");
+  const makeModel = hasVehicle ? makeAndModel || normalizeSpace(`${make} ${model}`) || (makeText && makeModelFallback(makeText)) : "";
   const budgetMoney = parseMoneyValue(extractLabeled(compact, labels.budget) || moneyMatch(valueAfterMarker(compact, labels.budget)));
   const depositMoney = parseMoneyValue(extractLabeled(compact, labels.deposit) || moneyMatch(valueAfterMarker(compact, labels.deposit)));
   const documentValue = parseDocumentValue(compact) || documentFallback(compact);
   const documentParts = splitDocumentValue(documentValue);
-  const rawAddressValue = extractLabeled(compact, labels.address) || addressFallback(joined);
-  const addressValue = cleanAddressValue(rawAddressValue, { phone, email, pesel, nip, document: documentValue });
+  // Name, address, PESEL/NIP, phone and e-mail follow the owner's rules in one
+  // shared module (src/client-recognition.js, docs/PROJECT-UMOWY.md §6).
+  const recognized = window.AutogoodClientRecognition.recognizeClient(text);
   const yearValue = hasVehicle ? extractLabeled(compact, labels.year) || firstRegistrationFallback(vehicleText) : "";
   const mileageValue = hasVehicle ? extractLabeled(compact, labels.mileage) || mileageFallback(vehicleText) : "";
   const fuelValue = hasVehicle ? extractLabeled(compact, labels.fuel) || vehicleText : "";
@@ -978,15 +802,15 @@ function parseRawTextValue(text) {
 
   return {
     client: {
-      type: clientType,
-      name: parseName(joined, isCompany),
-      address: addressValue,
-      identifier: isCompany ? nip : pesel,
-      document: isCompany ? "" : documentParts.number || documentValue,
-      document_type: isCompany ? "" : documentParts.type || "dowód osobisty",
-      document_number: isCompany ? "" : documentParts.number || documentValue,
-      phone: normalizePhoneNumber(phone),
-      email,
+      type: recognized.type,
+      name: recognized.name,
+      address: recognized.address,
+      identifier: recognized.identifier,
+      document: recognized.type === "company" ? "" : documentParts.number || documentValue,
+      document_type: recognized.type === "company" ? "" : documentParts.type || "dowód osobisty",
+      document_number: recognized.type === "company" ? "" : documentParts.number || documentValue,
+      phone: recognized.phone,
+      email: recognized.email,
     },
     budget: {
       total: budgetMoney.amount,
@@ -1020,10 +844,12 @@ function applyParsed(data) {
   $("clientPhone").value = data.client?.phone || $("clientPhone").value;
   $("clientEmail").value = data.client?.email || $("clientEmail").value;
   $("budgetTotal").value = data.budget?.total || $("budgetTotal").value;
-  $("budgetCurrency").value = data.budget?.total_currency || $("budgetCurrency").value;
+  if (data.budget?.total) $("budgetCurrency").value = data.budget.total_currency || $("budgetCurrency").value;
   $("budgetAdvance").value = data.budget?.advance || $("budgetAdvance").value;
-  $("advanceCurrency").value = data.budget?.advance_currency || $("advanceCurrency").value;
-  if (!isExportContract) applyContractCurrency(data.budget?.total_currency || data.budget?.advance_currency || $("budgetCurrency").value);
+  if (data.budget?.advance) $("advanceCurrency").value = data.budget.advance_currency || $("advanceCurrency").value;
+  if (!isExportContract && (data.budget?.total || data.budget?.advance)) {
+    applyContractCurrency((data.budget.total && data.budget.total_currency) || data.budget.advance_currency);
+  }
   syncContractCurrencyFromSelect();
   $("vehicleMakeModel").value = data.vehicle?.make_model || $("vehicleMakeModel").value;
   if (data.vehicle?.fuel) setFuel(data.vehicle.fuel);
