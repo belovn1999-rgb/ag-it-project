@@ -844,7 +844,25 @@ function parseRawTextValue(text) {
   };
 }
 
+function sameClientName(a, b) {
+  return normalizeSpace(a).toLowerCase() === normalizeSpace(b).toLowerCase();
+}
+
+// A pasted text with another client's name starts a new client: the fields
+// the text does not fill must not keep the previous client's phone or e-mail.
+function clearClientFields() {
+  for (const id of ["clientAddress", "clientIdentifier", "clientDocument", "clientPhone", "clientEmail", "fontSize_address"]) {
+    if ($(id)) $(id).value = "";
+  }
+  $("clientDocumentType").value = "paszport";
+  if ($("clientEntrepreneur")) $("clientEntrepreneur").checked = false;
+  delete lastDrawnSizes.address;
+  syncFontControls();
+}
+
 function applyParsed(data) {
+  const currentName = $("clientName").value;
+  if (data.client?.name && currentName.trim() && !sameClientName(data.client.name, currentName)) clearClientFields();
   if (data.client?.type) {
     setRadio("clientType", isExportContract ? "person" : data.client.type);
     syncClientTypeRules();

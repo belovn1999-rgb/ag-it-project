@@ -637,6 +637,12 @@ function parseSaleData() {
   const discountMoney = parseMoneyValue(discountValue);
   const fuelType = parseFuelType(extractLabeled(compact, saleRecognitionLabels.fuel) || vehicleText);
 
+  // Another buyer's name starts a new buyer: the fields this text does not
+  // fill must not keep the previous buyer's phone or e-mail.
+  const currentBuyer = form.querySelector('[name="buyerName"]').value;
+  if (buyer.name && currentBuyer.trim() && normalizeSpace(buyer.name).toLowerCase() !== normalizeSpace(currentBuyer).toLowerCase()) {
+    for (const name of ["buyerAddress", "buyerIdentifier", "buyerPhone", "buyerEmail"]) form.querySelector(`[name="${name}"]`).value = "";
+  }
   setField("buyerName", buyer.name);
   setField("buyerAddress", buyer.address);
   setField("buyerIdentifier", buyer.identifier);
