@@ -674,6 +674,7 @@ function applyFormSnapshot(snapshot) {
   syncClientTypeRules();
   updateDocumentFileName();
   updateSummary();
+  syncFontControls();
   scheduleOrderPreview();
 }
 
@@ -929,6 +930,8 @@ function collectData() {
       required_equipment: $("requiredEquipment").value.trim(),
       expected_equipment: $("expectedEquipment").value.trim(),
     },
+    // Font size (pt) picked by hand with A− / A+, 0 = automatic.
+    fonts: Object.fromEntries(Object.keys(fontSizeFields).map((key) => [key, Number($(`fontSize_${key}`)?.value) || 0])),
   };
 }
 
@@ -1420,7 +1423,60 @@ function orderContractFromData(data) {
     budget: groupDigits(data.budget.total),
     advance: groupDigits(data.budget.advance),
     advancePurposes: asArray(data.budget.advance_purposes),
+    fontSizes: data.fonts || {},
   };
+}
+
+// Long values whose size in the contract the manager may change by hand.
+// `auto`: the size the template uses for it; the page field scales with it.
+const fontSizeFields = {
+  address: { input: "clientAddress", auto: 8 },
+  link: { input: "indicatedVehicleLink", auto: 7.5 },
+  required: { input: "requiredEquipment", auto: 8 },
+  expected: { input: "expectedEquipment", auto: 8 },
+};
+const FIELD_FONT_PX = 14.5;
+let lastDrawnSizes = {};
+
+function fontSizeLimits(key) {
+  const manual = window.AutogoodOrderContractPdf?.MANUAL || { min: 5, maxCell: 9, maxInline: 8.5, step: 0.5 };
+  return { min: manual.min, max: key === "link" ? manual.maxInline : manual.maxCell, step: manual.step };
+}
+
+function formatPt(size) {
+  return String(size).replace(".", ",");
+}
+
+function syncFontControls() {
+  document.querySelectorAll(".font-size-control[data-font-field]").forEach((control) => {
+    const key = control.dataset.fontField;
+    const field = fontSizeFields[key];
+    const manual = Number($(`fontSize_${key}`)?.value) || 0;
+    const shown = manual || lastDrawnSizes[key] || field.auto;
+    const { min, max } = fontSizeLimits(key);
+    control.classList.toggle("is-manual", Boolean(manual));
+    control.querySelector(".font-size-value").textContent = manual ? `${formatPt(manual)} pt` : `auto ${formatPt(shown)}`;
+    control.querySelector('[data-font-step="-1"]').disabled = shown <= min;
+    control.querySelector('[data-font-step="1"]').disabled = shown >= max;
+    const input = $(field.input);
+    if (input) input.style.fontSize = manual ? `${((FIELD_FONT_PX * manual) / field.auto).toFixed(1)}px` : "";
+  });
+}
+
+function stepFontSize(key, step) {
+  const hidden = $(`fontSize_${key}`);
+  if (!hidden) return;
+  if (!step) {
+    hidden.value = "";
+  } else {
+    const { min, max, step: delta } = fontSizeLimits(key);
+    const current = Number(hidden.value) || lastDrawnSizes[key] || fontSizeFields[key].auto;
+    // From an automatic 6.75 pt, A− goes to 6.5 and A+ to 7.
+    const next = step < 0 ? Math.ceil(current / delta) * delta - delta : Math.floor(current / delta) * delta + delta;
+    hidden.value = String(Math.min(max, Math.max(min, next)));
+  }
+  syncFontControls();
+  scheduleOrderPreview();
 }
 
 // Field of the form behind each place in the contract, to point at the one
@@ -1457,8 +1513,10 @@ async function buildOrderContractPdf(data = collectData()) {
   }
   const [templateBytes, fontBytes] = await Promise.all([orderAsset(orderPdfTemplateUrl), orderAsset(orderPdfFontUrl)]);
   const contract = orderContractFromData(data);
+  const report = {};
   try {
     const bytes = await generator.build({
+      report,
       PDFLib: window.PDFLib,
       fontkit: window.fontkit,
       templateBytes,
@@ -1467,6 +1525,8 @@ async function buildOrderContractPdf(data = collectData()) {
       title: `Umowa zamówienia pojazdu nr ${contract.number}`,
     });
     markOrderFieldError(null);
+    lastDrawnSizes = report.sizes || {};
+    syncFontControls();
     return new Blob([bytes], { type: "application/pdf" });
   } catch (error) {
     markOrderFieldError(error);
@@ -1819,6 +1879,8 @@ function resetForm() {
   updateDocumentFileName();
   clearStatus();
   updateSummary();
+  lastDrawnSizes = {};
+  syncFontControls();
 }
 
 configureContractVariant();
@@ -1861,7 +1923,15 @@ document.querySelectorAll('input[name="contractCurrency"]').forEach((node) =>
   });
 });
 
+document.querySelectorAll(".font-size-control[data-font-field]").forEach((control) => {
+  control.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-font-step]");
+    if (button) stepFontSize(control.dataset.fontField, Number(button.dataset.fontStep));
+  });
+});
+
 syncContractCurrencyFromSelect();
 syncClientTypeRules();
 updateSummary();
+syncFontControls();
 scheduleOrderPreview();

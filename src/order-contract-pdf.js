@@ -23,6 +23,8 @@
   const DATA_SIZES = [8, 7.5, 7, 6.5];
   const INLINE_MIN = 6;
   const LINE_GAP = 1.2;
+  // Sizes the manager may pick by hand (A− / A+ next to long fields).
+  const MANUAL = { min: 5, maxCell: 9, maxInline: 8.5, step: 0.5 };
 
   // AcroForm checkboxes of the template, by what is printed next to them.
   const BOXES = {
@@ -158,9 +160,28 @@
     return lines;
   }
 
-  function fitCell(font, text, cell) {
+  // Lines of `size` that fit between the cell bounds — for a size picked by
+  // hand, which may be smaller (more lines) or larger than the automatic ones.
+  function linesThatFit(cell, size) {
+    const step = size * LINE_GAP;
+    let lines = 0;
+    while (lines < 6) {
+      const n = lines + 1;
+      const fits = cell.stack === "up" ? cell.base - step * (n - 1) - size * 0.8 >= cell.top - 0.3 : cell.base + step * (n - 1) + size * 0.25 <= cell.bottom;
+      if (!fits) break;
+      lines = n;
+    }
+    return lines;
+  }
+
+  function fitCell(font, text, cell, fixed) {
     const firstWidth = cell.right - cell.x;
     const restWidth = cell.right - (cell.nextX == null ? cell.x : cell.nextX);
+    if (fixed) {
+      const lines = wrap(font, text, fixed, firstWidth, restWidth);
+      if (lines.length <= linesThatFit(cell, fixed)) return { size: fixed, lines, step: fixed * LINE_GAP };
+      throw new ContractFitError(`Tekst w polu „${cell.label}” nie mieści się w umowie przy czcionce ${String(fixed).replace(".", ",")} pt. ${fixed > MANUAL.min ? "Zmniejsz czcionkę (A−) albo skróć tekst." : "Skróć tekst."}`, cell.key);
+    }
     for (const size of DATA_SIZES) {
       const lines = wrap(font, text, size, firstWidth, restWidth);
       if (lines.length > cell.lines) continue;
@@ -179,8 +200,12 @@
     return clean(value).replace(/^https?:\/\//i, "").replace(/^www\./i, "").replace(/\/$/, "");
   }
 
-  function fitInline(font, text, spot) {
+  function fitInline(font, text, spot, fixed) {
     const width = spot.right - spot.dots[0] - spot.gap;
+    if (fixed) {
+      if (font.widthOfTextAtSize(text, fixed) <= width) return fixed;
+      throw new ContractFitError(`Tekst w polu „${spot.label}” nie mieści się w umowie przy czcionce ${String(fixed).replace(".", ",")} pt. ${fixed > MANUAL.min ? "Zmniejsz czcionkę (A−) albo skróć tekst." : "Skróć tekst."}`, spot.key);
+    }
     for (let size = spot.size; size >= INLINE_MIN - 1e-9; size -= 0.25) {
       if (font.widthOfTextAtSize(text, size) <= width) return size;
     }
@@ -203,10 +228,13 @@
     };
   }
 
-  function drawCell(draw, font, cell, value) {
+  // `sizes`: sizes picked by hand, by field key; `used`: the size each field
+  // was drawn with (shown next to A− / A+ on the page).
+  function drawCell(draw, font, cell, value, sizes = {}, used = {}) {
     const text = oneParagraph(value);
     if (!text) return;
-    const { size, lines, step } = fitCell(font, text, cell);
+    const { size, lines, step } = fitCell(font, text, cell, manualSize(sizes[cell.key], MANUAL.maxCell));
+    used[cell.key] = size;
     const firstBase = cell.stack === "up" ? cell.base - step * (lines.length - 1) : cell.base;
     lines.forEach((line, index) => {
       const x = index === 0 ? cell.x : cell.nextX == null ? cell.x : cell.nextX;
@@ -214,10 +242,16 @@
     });
   }
 
-  function drawInline(draw, font, spot, value) {
+  function manualSize(value, max) {
+    const size = Number(value);
+    return size ? Math.min(max, Math.max(MANUAL.min, size)) : 0;
+  }
+
+  function drawInline(draw, font, spot, value, sizes = {}, used = {}) {
     const text = spot === INLINE.link ? link(value) : clean(value);
     if (!text) return;
-    const size = fitInline(font, text, spot);
+    const size = fitInline(font, text, spot, manualSize(sizes[spot.key], MANUAL.maxInline));
+    used[spot.key] = size;
     draw.cover(spot.dots[0], spot.dots[1], spot.base, spot.size);
     // The dots follow the colon directly; the value keeps a space after it.
     draw.text(text, spot.dots[0] + spot.gap, spot.base, size);
@@ -260,8 +294,10 @@
        variants: [1, 2, 3], indicatedVehicle, indicatedLink,
        vehicle: { makeModel, years, mileageTo, fuels, gearboxes, bodies, bodyOther,
                   euro, euroOther, allowRepaired, required, expected },
-       currency, budget, advance, advancePurposes } */
-  async function build({ PDFLib, fontkit, templateBytes, fontBytes, contract, title }) {
+       currency, budget, advance, advancePurposes,
+       fontSizes: { address, link, required, expected } }  // pt picked by hand, else automatic
+     report (optional) gets `sizes`: the size each value was drawn with. */
+  async function build({ PDFLib, fontkit, templateBytes, fontBytes, contract, title, report }) {
     const pdfDoc = await PDFLib.PDFDocument.load(templateBytes);
     pdfDoc.registerFontkit(fontkit);
     const font = await pdfDoc.embedFont(fontBytes, { subset: true });
@@ -294,26 +330,29 @@
     });
 
     const { client, vehicle } = contract;
+    const sizes = contract.fontSizes || {};
+    const used = {};
     drawCell(draw, font, CELLS.name, client.name);
-    drawCell(draw, font, CELLS.address, client.address);
+    drawCell(draw, font, CELLS.address, client.address, sizes, used);
     drawCell(draw, font, CELLS.identifier, client.identifier);
     drawCell(draw, font, CELLS.document, client.document);
     drawCell(draw, font, CELLS.phone, client.phone);
     drawCell(draw, font, CELLS.email, client.email);
 
-    if (contract.indicatedVehicle) drawInline(draw, font, INLINE.link, contract.indicatedLink);
+    if (contract.indicatedVehicle) drawInline(draw, font, INLINE.link, contract.indicatedLink, sizes, used);
 
     drawCell(draw, font, CELLS.makeModel, vehicle.makeModel);
     drawCell(draw, font, CELLS.years, vehicle.years);
     drawCell(draw, font, CELLS.mileageTo, vehicle.mileageTo);
     if (vehicle.bodies.includes("inne")) drawInline(draw, font, INLINE.bodyOther, vehicle.bodyOther);
     if (vehicle.euro === "inna") drawInline(draw, font, INLINE.euroOther, vehicle.euroOther);
-    drawCell(draw, font, CELLS.required, vehicle.required);
-    drawCell(draw, font, CELLS.expected, vehicle.expected);
+    drawCell(draw, font, CELLS.required, vehicle.required, sizes, used);
+    drawCell(draw, font, CELLS.expected, vehicle.expected, sizes, used);
 
     drawCell(draw, font, CELLS.budget, contract.budget);
     drawCell(draw, font, CELLS.advance, contract.advance);
 
+    if (report) report.sizes = used;
     if (title) pdfDoc.setTitle(title);
     pdfDoc.setAuthor("AUTOGOOD sp. z o.o.");
     pdfDoc.setProducer("AUTOGOOD Tools");
@@ -321,5 +360,5 @@
     return await pdfDoc.save();
   }
 
-  return { build, ContractFitError, BOXES, CELLS, INLINE };
+  return { build, ContractFitError, BOXES, CELLS, INLINE, MANUAL, DATA_SIZE };
 });

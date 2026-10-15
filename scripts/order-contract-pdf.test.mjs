@@ -79,3 +79,24 @@ test("equipment longer than its two lines is refused, not spilled into the next 
   data.vehicle = { ...data.vehicle, required: "Matrix LED, kamera 360°, hak, ".repeat(20) };
   await assert.rejects(build(data), (error) => error instanceof generator.ContractFitError && error.field === "required");
 });
+
+test("a size picked by hand (A− / A+) is used as is and reported back", async () => {
+  const data = contract({ fontSizes: { address: 6, required: 9, link: 6.5 } });
+  const report = {};
+  await generator.build({ PDFLib, fontkit, templateBytes, fontBytes, contract: data, report });
+  assert.deepEqual([report.sizes.address, report.sizes.required, report.sizes.link, report.sizes.expected], [6, 9, 6.5, undefined]);
+});
+
+test("a smaller hand-picked size lets a long value take more lines", async () => {
+  const data = contract();
+  data.vehicle = { ...data.vehicle, required: "Matrix LED, kamera 360°, hak, panorama, pakiet zimowy, wentylowane fotele, Head-Up, ACC, ".repeat(4) };
+  await assert.rejects(build(data), (error) => error.field === "required");
+  data.fontSizes = { required: 5.5 };
+  assert.equal((await PDFLib.PDFDocument.load(await build(data))).getPageCount(), 2);
+});
+
+test("a hand-picked size that is too large is refused with the field named", async () => {
+  const data = contract({ fontSizes: { address: 9 } });
+  data.client = { ...data.client, address: "ul. Generała Władysława Andersa 128/47, 03-180 Warszawa-Białołęka" };
+  await assert.rejects(build(data), (error) => error instanceof generator.ContractFitError && error.field === "address" && /9 pt/.test(error.message));
+});

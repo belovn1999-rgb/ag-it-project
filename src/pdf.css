@@ -1742,3 +1742,66 @@ body:not(.export-contract) .order-docx-step {
     flex-wrap: wrap;
   }
 }
+
+/* A− / A+ next to long fields: the size of that value in the contract PDF. */
+.order-sheet .font-fit {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.order-sheet .font-fit > input,
+.order-sheet .font-fit > textarea {
+  flex: 1 1 auto;
+}
+
+.font-size-control {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  margin-top: 4px;
+  border: 1px solid var(--order-rule);
+  border-radius: 4px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.font-size-control button {
+  min-width: 26px;
+  height: 26px;
+  padding: 0 5px;
+  border: 0;
+  background: transparent;
+  color: var(--order-label);
+  font: 700 12px/1 "Carlito", "Calibri", system-ui, sans-serif;
+  cursor: pointer;
+}
+
+.font-size-control button:hover {
+  background: var(--order-cell);
+  color: var(--order-ink);
+}
+
+.font-size-control button:focus-visible {
+  outline: 2px solid var(--order-blue);
+  outline-offset: -2px;
+}
+
+.font-size-control button:disabled {
+  color: var(--order-rule);
+  cursor: default;
+}
+
+.font-size-control .font-size-value {
+  min-width: 40px;
+  border-inline: 1px solid var(--order-rule);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+
+.font-size-control.is-manual .font-size-value {
+  color: var(--order-blue);
+  font-weight: 700;
+}
