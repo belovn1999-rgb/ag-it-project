@@ -366,6 +366,18 @@ function firstRegistrationFallback(text) {
   );
 }
 
+// Lines are joined before labels are read, so "Przebieg do: 150000" followed
+// by "diesel" on the next line reads "150000 diesel": keep only the number,
+// and of "Rok: 2019-2022 diesel" only the years.
+function yearPart(value) {
+  return normalizeSpace(normalizeSpace(value).match(/^.*?(?:19|20)\d{2}(?:\s*-\s*(?:19|20)\d{2}|\+)?/)?.[0] || value);
+}
+
+function mileagePart(value) {
+  const match = normalizeSpace(value).match(/\d[\d\s.,]*(?:\s*(?:tys\.?|тыс\.?))?(?:\s*(?:km|км))?/i);
+  return match ? normalizeSpace(match[0]).replace(/[\s.,]+$/, "") : normalizeSpace(value);
+}
+
 function mileageFallback(text) {
   return normalizeSpace(text.match(/\b\d[\d\s.,]{2,}\s*(?:km|км)\b/i)?.[0] || "");
 }
@@ -792,8 +804,8 @@ function parseRawTextValue(text) {
   // Name, address, PESEL/NIP, phone and e-mail follow the owner's rules in one
   // shared module (src/client-recognition.js, docs/PROJECT-UMOWY.md §6).
   const recognized = window.AutogoodClientRecognition.recognizeClient(text);
-  const yearValue = hasVehicle ? extractLabeled(compact, labels.year) || firstRegistrationFallback(vehicleText) : "";
-  const mileageValue = hasVehicle ? extractLabeled(compact, labels.mileage) || mileageFallback(vehicleText) : "";
+  const yearValue = hasVehicle ? yearPart(extractLabeled(compact, labels.year)) || firstRegistrationFallback(vehicleText) : "";
+  const mileageValue = hasVehicle ? mileagePart(extractLabeled(compact, labels.mileage)) || mileageFallback(vehicleText) : "";
   const fuelValue = hasVehicle ? extractLabeled(compact, labels.fuel) || vehicleText : "";
   const gearboxValue = hasVehicle ? extractLabeled(compact, labels.gearbox) || vehicleText : "";
   const bodyValue = hasVehicle ? extractLabeled(compact, labels.body) || bodyFallback(vehicleText) : "";

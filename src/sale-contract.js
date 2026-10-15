@@ -605,6 +605,13 @@ function firstRegistrationFallback(text) {
   );
 }
 
+// Lines are joined before labels are read, so "Przebieg do: 150000" followed
+// by "diesel" on the next line reads "150000 diesel": keep only the number.
+function mileagePart(value) {
+  const match = normalizeSpace(value).match(/\d[\d\s.,]*(?:\s*(?:tys\.?|тыс\.?))?(?:\s*(?:km|км))?/i);
+  return match ? normalizeSpace(match[0]).replace(/[\s.,]+$/, "") : normalizeSpace(value);
+}
+
 function mileageFallback(text) {
   return normalizeSpace(text.match(/\b\d[\d\s.,]{2,}\s*(?:km|км)\b/i)?.[0] || "");
 }
@@ -640,7 +647,7 @@ function parseSaleData() {
   if (buyer.type === "person") setField("buyerProfessional", "nie");
   setField("vehicleMakeModel", makeModel);
   setField("vehicleVin", vin.toUpperCase());
-  setField("vehicleMileage", extractLabeled(compact, saleRecognitionLabels.mileage) || mileageFallback(vehicleText));
+  setField("vehicleMileage", mileagePart(extractLabeled(compact, saleRecognitionLabels.mileage)) || mileageFallback(vehicleText));
   setField("salePrice", priceMoney.amount);
   setField("saleCurrency", priceMoney.currency);
   setField("discountBenefit", discountMoney.amount ? formatGrossAmount(discountMoney.amount, discountMoney.currency) : discountValue);
