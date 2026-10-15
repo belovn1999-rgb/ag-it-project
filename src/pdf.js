@@ -5,7 +5,11 @@ const pdfPreview = $("pdfPreview");
 const pdfPreviewMeta = $("pdfPreviewMeta");
 const pdfPreviewDownload = $("pdfPreviewDownload");
 const pdfPreviewPrint = $("pdfPreviewPrint");
+// Export contract (Belarus): DOCX template → converter. The Polish contract is
+// drawn in the browser straight onto its PDF template (src/order-contract-pdf.js).
 const templateUrl = "./contract-pdf-work/templates/Umowa_Zamowienia_Pojazdu_AG_template_signed.docx?v=20260909-1";
+const orderPdfTemplateUrl = "./contract-pdf-work/templates/Umowa_Zamowienia_Pojazdu_AG_wzor.pdf?v=20261015-1";
+const orderPdfFontUrl = "./assets/fonts/Carlito-Regular.ttf?v=20261015-1";
 const defaultPdfConverterUrl = "/api/convert-docx-to-pdf";
 const contractHistoryLimit = 20;
 const pdfConversionTimeoutMs = 120_000;
@@ -579,7 +583,9 @@ function releaseDownload(kind) {
 }
 
 function setStatus(text) {
-  statusMessageNode().textContent = text;
+  const node = statusMessageNode();
+  node.textContent = text;
+  delete node.dataset.kind;
 }
 
 function clearStatus() {
@@ -677,6 +683,8 @@ function updateSummary() {
   if (!clientNode) return;
   const data = collectData();
   $("summaryContractNumber").textContent = contractNumber(data.contract.date, data.contract.sequence);
+  const sheetNumber = $("sheetContractNumber");
+  if (sheetNumber) sheetNumber.textContent = contractNumber(data.contract.date, data.contract.sequence);
   clientNode.textContent = summaryValue(data.client.name);
   $("summaryVehicle").textContent = summaryValue(data.vehicle.make_model);
   $("summaryBudget").textContent = summaryValue(data.budget.total);
@@ -795,9 +803,12 @@ function applyFormSnapshot(snapshot) {
   for (const [name, value] of Object.entries(snapshot.radios || {})) setRadio(name, value);
   for (const [name, values] of Object.entries(snapshot.checkboxGroups || {})) setCheckedValues(name, values);
   setFuel(snapshot.fuel || []);
+  if (!isExportContract) applyContractCurrency($("budgetCurrency").value);
+  syncContractCurrencyFromSelect();
   syncClientTypeRules();
   updateDocumentFileName();
   updateSummary();
+  scheduleOrderPreview();
 }
 
 function historyTitle(entry) {
@@ -1012,6 +1023,8 @@ function applyParsed(data) {
   $("budgetCurrency").value = data.budget?.total_currency || $("budgetCurrency").value;
   $("budgetAdvance").value = data.budget?.advance || $("budgetAdvance").value;
   $("advanceCurrency").value = data.budget?.advance_currency || $("advanceCurrency").value;
+  if (!isExportContract) applyContractCurrency(data.budget?.total_currency || data.budget?.advance_currency || $("budgetCurrency").value);
+  syncContractCurrencyFromSelect();
   $("vehicleMakeModel").value = data.vehicle?.make_model || $("vehicleMakeModel").value;
   if (data.vehicle?.fuel) setFuel(data.vehicle.fuel);
   if (data.vehicle?.gearbox) setCheckedValues("gearbox", data.vehicle.gearbox);
@@ -1024,6 +1037,7 @@ function applyParsed(data) {
   syncClientTypeRules();
   updateDocumentFileName();
   updateSummary();
+  scheduleOrderPreview();
 }
 
 function collectData() {
@@ -1049,10 +1063,13 @@ function collectData() {
     agreement: {
       subjects: checkedValues("subject"),
       client_indicated_vehicle: $("clientIndicatedVehicle").checked,
+      indicated_vehicle_link: $("indicatedVehicleLink")?.value.trim() || "",
     },
     budget: {
       total: formatMoneyValue($("budgetTotal").value, $("budgetCurrency").value),
       advance: formatMoneyValue($("budgetAdvance").value, $("advanceCurrency").value),
+      total_currency: $("budgetCurrency").value,
+      advance_purposes: checkedValues("advancePurpose"),
     },
     compensation: {
       commission: checkedRadio("commissionOption") || exportDefaultCommission,
@@ -1062,6 +1079,7 @@ function collectData() {
       fuel: fuelValues(),
       gearbox: checkedValues("gearbox"),
       euro_standard: checkedRadio("euroStandard"),
+      euro_other: $("euroOther")?.value.trim() || "",
       first_registration: $("firstRegistration").value.trim(),
       mileage_to: $("mileageTo").value.trim(),
       body: {
@@ -1496,6 +1514,199 @@ async function loadTemplateBytes() {
   return await templateBytesPromise;
 }
 
+/* --- Polish contract: PDF drawn in the browser ------------------------------ */
+
+const orderAssetPromises = new Map();
+
+function orderAsset(url) {
+  if (!orderAssetPromises.has(url)) {
+    const promise = fetch(url)
+      .then((response) => {
+        if (!response.ok) throw new Error("Nie można pobrać szablonu umowy.");
+        return response.arrayBuffer();
+      })
+      .catch((error) => {
+        orderAssetPromises.delete(url);
+        throw error;
+      });
+    orderAssetPromises.set(url, promise);
+  }
+  return orderAssetPromises.get(url).then((bytes) => bytes.slice(0));
+}
+
+function polishDateText(dateValue) {
+  const date = parseDate(dateValue);
+  return `${date.getDate()} ${polishMonths[date.getMonth() + 1]} ${date.getFullYear()}`;
+}
+
+// "185000 PLN brutto" → "185 000 PLN brutto", the way numbers read in the contract.
+function groupDigits(value) {
+  return String(value || "").replace(/\d{4,}/g, (digits) => digits.replace(/\B(?=(\d{3})+(?!\d))/g, " "));
+}
+
+function orderContractFromData(data) {
+  const isCompany = data.client.type === "company";
+  const subjects = new Set(asArray(data.agreement.subjects));
+  const hasAmount = Boolean(data.budget.total || data.budget.advance);
+  return {
+    number: contractNumber(data.contract.date, data.contract.sequence),
+    date: polishDateText(data.contract.date),
+    client: {
+      name: data.client.name,
+      address: data.client.address,
+      identifier: isCompany ? data.client.nip : data.client.pesel,
+      document: isCompany ? "" : data.client.document,
+      phone: data.client.phone,
+      email: data.client.email,
+      isEntrepreneur: data.client.is_entrepreneur,
+    },
+    variants: [["mediation", 1], ["purchase_by_autogood", 2], ["financing", 3]].filter(([key]) => subjects.has(key)).map(([, number]) => number),
+    indicatedVehicle: data.agreement.client_indicated_vehicle,
+    indicatedLink: data.agreement.indicated_vehicle_link,
+    vehicle: {
+      makeModel: data.vehicle.make_model,
+      years: data.vehicle.first_registration,
+      mileageTo: groupDigits(data.vehicle.mileage_to),
+      fuels: asArray(data.vehicle.fuel),
+      gearboxes: asArray(data.vehicle.gearbox),
+      bodies: bodyTypes(data.vehicle.body),
+      bodyOther: data.vehicle.body.other,
+      euro: data.vehicle.euro_standard,
+      euroOther: data.vehicle.euro_other,
+      allowRepaired: data.vehicle.allow_collision_without_longitudinals,
+      required: data.vehicle.required_equipment,
+      expected: data.vehicle.expected_equipment,
+    },
+    // pkt 11: one currency for the whole contract; ticked once there is an amount.
+    currency: hasAmount ? data.budget.total_currency : "",
+    budget: groupDigits(data.budget.total),
+    advance: groupDigits(data.budget.advance),
+    advancePurposes: asArray(data.budget.advance_purposes),
+  };
+}
+
+// Field of the form behind each place in the contract, to point at the one
+// whose text does not fit.
+const orderFieldInputs = {
+  name: "clientName",
+  address: "clientAddress",
+  identifier: "clientIdentifier",
+  document: "clientDocument",
+  phone: "clientPhone",
+  email: "clientEmail",
+  link: "indicatedVehicleLink",
+  makeModel: "vehicleMakeModel",
+  years: "firstRegistration",
+  mileageTo: "mileageTo",
+  bodyOther: "bodyOther",
+  euroOther: "euroOther",
+  required: "requiredEquipment",
+  expected: "expectedEquipment",
+  budget: "budgetTotal",
+  advance: "budgetAdvance",
+};
+
+function markOrderFieldError(error) {
+  document.querySelectorAll(".order-sheet .is-invalid").forEach((node) => node.classList.remove("is-invalid"));
+  const input = error?.field && $(orderFieldInputs[error.field]);
+  if (input) input.classList.add("is-invalid");
+}
+
+async function buildOrderContractPdf(data = collectData()) {
+  const generator = window.AutogoodOrderContractPdf;
+  if (!generator || !window.PDFLib?.PDFDocument || !window.fontkit) {
+    throw new Error("Silnik przygotowania PDF nie został załadowany. Odśwież stronę.");
+  }
+  const [templateBytes, fontBytes] = await Promise.all([orderAsset(orderPdfTemplateUrl), orderAsset(orderPdfFontUrl)]);
+  const contract = orderContractFromData(data);
+  try {
+    const bytes = await generator.build({
+      PDFLib: window.PDFLib,
+      fontkit: window.fontkit,
+      templateBytes,
+      fontBytes,
+      contract,
+      title: `Umowa zamówienia pojazdu nr ${contract.number}`,
+    });
+    markOrderFieldError(null);
+    return new Blob([bytes], { type: "application/pdf" });
+  } catch (error) {
+    markOrderFieldError(error);
+    throw error;
+  }
+}
+
+// The document is drawn locally in a fraction of a second, so the preview
+// follows the form as it is filled in — the page and the PDF stay side by side.
+let orderPreviewTimer = null;
+let orderPreviewRun = 0;
+
+function scheduleOrderPreview() {
+  if (isExportContract) return;
+  window.clearTimeout(orderPreviewTimer);
+  orderPreviewTimer = window.setTimeout(updateOrderPreview, 450);
+}
+
+async function updateOrderPreview() {
+  const run = (orderPreviewRun += 1);
+  try {
+    const data = collectData();
+    const blob = await buildOrderContractPdf(data);
+    if (run !== orderPreviewRun) return;
+    showPdfPreview(blob, filenameFor(data, "pdf"), "Podgląd na żywo:");
+    if (statusMessageNode().dataset.kind === "fit") setStatus("");
+  } catch (error) {
+    if (run !== orderPreviewRun) return;
+    setStatus(String(error.message || error));
+    statusMessageNode().dataset.kind = "fit";
+  }
+}
+
+function converterEndpoint(path) {
+  const configuredEndpoint = String(window.AUTOGOOD_PDF_CONVERTER_URL || "").trim();
+  const endpoint = configuredEndpoint || defaultPdfConverterUrl;
+  return endpoint.replace(/\/api\/convert-docx-to-pdf\/?$/i, path);
+}
+
+async function encryptPdfBlob(pdfBlob, filename, password) {
+  const controller = new AbortController();
+  const timeoutId = window.setTimeout(() => controller.abort(), pdfConversionTimeoutMs);
+  try {
+    const response = await fetch(converterEndpoint("/api/encrypt-pdf"), {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/pdf",
+        "X-Filename": encodeURIComponent(filename),
+        "X-PDF-Password": window.AUTOGOOD_PDF_ENCRYPTION.encodePassword(password),
+      },
+      body: pdfBlob,
+      signal: controller.signal,
+    });
+    if (!response.ok) {
+      const message = await response.text().catch(() => "");
+      throw new Error(message || `Serwer szyfrowania odpowiedział błędem (${response.status}).`);
+    }
+    return await response.blob();
+  } catch (error) {
+    if (error?.name === "AbortError") throw new Error("Szyfrowanie PDF przekroczyło limit czasu.");
+    throw error;
+  } finally {
+    window.clearTimeout(timeoutId);
+  }
+}
+
+// One currency for budget and advance (pkt 11): the WALUTA choice drives both
+// amount selects, which the export contract still shows separately.
+function syncContractCurrencyFromSelect() {
+  setRadio("contractCurrency", $("budgetCurrency").value);
+}
+
+function applyContractCurrency(value) {
+  if (!value) return;
+  $("budgetCurrency").value = value;
+  $("advanceCurrency").value = value;
+}
+
 async function convertDocxBlobToPdf(docxBlob, filename, password = "") {
   const configuredEndpoint = String(window.AUTOGOOD_PDF_CONVERTER_URL || "").trim();
   const endpoint = configuredEndpoint || defaultPdfConverterUrl;
@@ -1545,7 +1756,8 @@ async function checkEncryptionSupport() {
   const endpoint = configuredEndpoint || defaultPdfConverterUrl;
   const healthEndpoint = converterHealthEndpoint(endpoint);
   const controller = new AbortController();
-  const timeout = window.setTimeout(() => controller.abort(), 15_000);
+  // The free Render instance sleeps after ~15 minutes and takes 30–50 s to wake.
+  const timeout = window.setTimeout(() => controller.abort(), 60_000);
   try {
     const response = await fetch(healthEndpoint, { signal: controller.signal });
     if (!response.ok) {
@@ -1558,9 +1770,16 @@ async function checkEncryptionSupport() {
         reason: "Backend konwertera PDF jest nieaktualny i nie obsługuje jeszcze szyfrowania (brak pdf_encryption w /api/health). Zgłoś to do administratora — wymaga wdrożenia najnowszej wersji converter/server.py.",
       };
     }
+    // The Polish contract is already a PDF: it needs /api/encrypt-pdf (converter 1.5+).
+    if (!isExportContract && !payload.pdf_encryption_endpoint) {
+      return {
+        supported: false,
+        reason: "Serwer szyfrowania jest nieaktualny (brak /api/encrypt-pdf). Zgłoś to do administratora — wymaga wdrożenia converter/server.py 1.5.",
+      };
+    }
     return { supported: true };
   } catch (error) {
-    const reason = error?.name === "AbortError" ? "Serwer PDF nie odpowiedział w 15 sekund." : "Nie można połączyć się z serwerem PDF, aby sprawdzić wsparcie szyfrowania.";
+    const reason = error?.name === "AbortError" ? "Serwer PDF nie odpowiedział w minutę." : "Nie można połączyć się z serwerem PDF, aby sprawdzić wsparcie szyfrowania.";
     return { supported: false, reason };
   } finally {
     window.clearTimeout(timeout);
@@ -1610,7 +1829,63 @@ async function generateContract() {
   });
 }
 
+async function generateOrderPdf() {
+  await withGenerationLock(async () => {
+    try {
+      setStatus("Przygotowuję PDF...");
+      saveCurrentContractData();
+      const data = collectData();
+      const blob = await buildOrderContractPdf(data);
+      setStatus("");
+      showDownload("pdf", { blob, filename: filenameFor(data, "pdf"), readyText: "PDF gotowy.", preview: true });
+    } catch (error) {
+      setStatus(`Nie udało się przygotować PDF: ${String(error.message || error)}`);
+    }
+  });
+}
+
+async function generateEncryptedOrderPdf() {
+  await withGenerationLock(async () => {
+    setStatus("Sprawdzam serwer szyfrowania (jeśli śpi, budzi się do minuty)...");
+    const support = await checkEncryptionSupport();
+    if (!support.supported) {
+      setStatus(`Nie można zaszyfrować PDF: ${support.reason}`);
+      return;
+    }
+
+    const password = await window.AUTOGOOD_PDF_ENCRYPTION.requestPassword();
+    if (!password) {
+      setStatus("");
+      return;
+    }
+
+    try {
+      setStatus("Przygotowuję zaszyfrowany PDF...");
+      saveCurrentContractData();
+      const data = collectData();
+      const filename = filenameFor(data, "pdf").replace(/\.pdf$/i, "_zaszyfrowany.pdf");
+      const pdfBlob = await encryptPdfBlob(await buildOrderContractPdf(data), filename, password);
+      if (!(await isPdfBlobEncrypted(pdfBlob))) {
+        setStatus("");
+        setDownloadMessage(
+          "encrypted",
+          "Nie udało się zaszyfrować PDF: serwer zwrócił plik BEZ hasła. NIE wysyłaj go klientowi — zgłoś to do administratora (backend PDF wymaga aktualizacji)."
+        );
+        return;
+      }
+      setStatus("");
+      showDownload("encrypted", { blob: pdfBlob, filename, readyText: "Zaszyfrowany PDF gotowy.", preview: true });
+    } catch (error) {
+      setStatus(`Nie udało się zaszyfrować PDF: ${String(error.message || error)}`);
+    }
+  });
+}
+
 async function generatePdf() {
+  if (!isExportContract) {
+    await generateOrderPdf();
+    return;
+  }
   await withGenerationLock(async () => {
     let docxReady = false;
     try {
@@ -1640,8 +1915,12 @@ async function generatePdf() {
 }
 
 async function generateEncryptedPdf() {
+  if (!isExportContract) {
+    await generateEncryptedOrderPdf();
+    return;
+  }
   await withGenerationLock(async () => {
-    setStatus("Sprawdzam wsparcie szyfrowania na serwerze...");
+    setStatus("Sprawdzam serwer szyfrowania (jeśli śpi, budzi się do minuty)...");
     const support = await checkEncryptionSupport();
     if (!support.supported) {
       setStatus(`Nie można zaszyfrować PDF: ${support.reason}`);
@@ -1691,6 +1970,8 @@ function resetForm() {
     else node.value = "";
   });
   setDefaultSelectValues();
+  syncContractCurrencyFromSelect();
+  markOrderFieldError(null);
   setRadio("clientType", "person");
   setCheckedValues("subject", ["purchase_by_autogood"]);
   setRadio("commissionOption", exportDefaultCommission);
@@ -1725,7 +2006,24 @@ $("vehicleMakeModel").addEventListener("input", updateDocumentFileName);
 document.querySelectorAll("input, textarea, select").forEach((node) => {
   node.addEventListener("input", updateSummary);
   node.addEventListener("change", updateSummary);
+  node.addEventListener("input", scheduleOrderPreview);
+  node.addEventListener("change", scheduleOrderPreview);
+});
+document.querySelectorAll('input[name="contractCurrency"]').forEach((node) =>
+  node.addEventListener("change", () => applyContractCurrency(checkedRadio("contractCurrency")))
+);
+// Typing the value next to a box ticks the box, as filling in the paper form would.
+[
+  ["indicatedVehicleLink", () => ($("clientIndicatedVehicle").checked = true)],
+  ["bodyOther", () => setCheckedValues("bodyType", [...new Set([...checkedValues("bodyType"), "inne"])])],
+  ["euroOther", () => setRadio("euroStandard", "inna")],
+].forEach(([id, tick]) => {
+  $(id)?.addEventListener("input", (event) => {
+    if (event.target.value.trim()) tick();
+  });
 });
 
+syncContractCurrencyFromSelect();
 syncClientTypeRules();
 updateSummary();
+scheduleOrderPreview();

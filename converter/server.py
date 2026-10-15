@@ -22,7 +22,7 @@ from pypdf import PdfReader, PdfWriter
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SERVER_VERSION = "AUTOGOODConverter/1.4"
+SERVER_VERSION = "AUTOGOODConverter/1.5"
 BUILD_REVISION = os.environ.get("RENDER_GIT_COMMIT") or os.environ.get("GIT_SHA") or "local"
 DEFAULT_MAX_UPLOAD_BYTES = 15 * 1024 * 1024
 DEFAULT_CONVERSION_TIMEOUT_SECONDS = 120
@@ -294,6 +294,7 @@ class Handler(SimpleHTTPRequestHandler):
             "libreoffice_ready": LIBREOFFICE.ready,
             "conversion_queue": "serial",
             "pdf_encryption": "AES-256",
+            "pdf_encryption_endpoint": "/api/encrypt-pdf",
             "version": SERVER_VERSION,
             "revision": BUILD_REVISION,
             "max_upload_bytes": max_upload_bytes(),
@@ -307,9 +308,66 @@ class Handler(SimpleHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
+    def send_failure(self, prefix: str, exc: Exception) -> None:
+        encoded = f"{prefix}: {exc}".encode("utf-8")
+        status = HTTPStatus.BAD_REQUEST if isinstance(exc, ValueError) else HTTPStatus.INTERNAL_SERVER_ERROR
+        self.send_response(status)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Content-Length", str(len(encoded)))
+        self.end_headers()
+        self.wfile.write(encoded)
+
+    def send_pdf(self, pdf: bytes, timing: str) -> None:
+        filename = sanitize_download_filename(self.headers.get("X-Filename"))
+        ascii_filename = filename.encode("ascii", "ignore").decode("ascii") or "Umowa_Zamowienia_Pojazdu.pdf"
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "application/pdf")
+        self.send_header("Content-Disposition", f"attachment; filename=\"{ascii_filename}\"; filename*=UTF-8''{quote(filename, safe='')}")
+        self.send_header("Content-Length", str(len(pdf)))
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Server-Timing", timing)
+        self.end_headers()
+        self.wfile.write(pdf)
+
+    # The Polish order contract is filled in the browser straight onto its PDF
+    # template, so there is no DOCX to convert — only the password to apply.
+    def encrypt_uploaded_pdf(self, request_started: float) -> None:
+        length = int(self.headers.get("content-length", "0"))
+        if length <= 0:
+            self.send_error(HTTPStatus.BAD_REQUEST, "Missing PDF body")
+            return
+        if length > max_upload_bytes():
+            self.send_error(HTTPStatus.REQUEST_ENTITY_TOO_LARGE, "PDF is too large")
+            return
+
+        body = self.rfile.read(length)
+        with tempfile.TemporaryDirectory(prefix="autogood-pdf-encrypt-") as temp_name:
+            temp = Path(temp_name)
+            source_path = temp / "contract.pdf"
+            encrypted_path = temp / "contract-encrypted.pdf"
+            source_path.write_bytes(body)
+            try:
+                if not body.startswith(b"%PDF-"):
+                    raise ValueError("Request body is not a PDF file.")
+                password = decode_pdf_password(self.headers.get("X-PDF-Password"))
+                if not password:
+                    raise ValueError("Missing X-PDF-Password header.")
+                encrypt_pdf(source_path, encrypted_path, password)
+                pdf = encrypted_path.read_bytes()
+            except Exception as exc:
+                self.send_failure("PDF encryption failed", exc)
+                return
+
+        total_duration_ms = (time.monotonic() - request_started) * 1000
+        self.send_pdf(pdf, f"total;dur={total_duration_ms:.1f}")
+
     def do_POST(self) -> None:
         request_started = time.monotonic()
-        if self.path.split("?", 1)[0] != "/api/convert-docx-to-pdf":
+        endpoint = self.path.split("?", 1)[0]
+        if endpoint == "/api/encrypt-pdf":
+            self.encrypt_uploaded_pdf(request_started)
+            return
+        if endpoint != "/api/convert-docx-to-pdf":
             self.send_error(HTTPStatus.NOT_FOUND, "Unknown endpoint")
             return
 
@@ -339,31 +397,11 @@ class Handler(SimpleHTTPRequestHandler):
                     pdf_path = encrypted_path
                 pdf = pdf_path.read_bytes()
             except Exception as exc:
-                message = f"PDF conversion failed: {exc}"
-                encoded = message.encode("utf-8")
-                status = HTTPStatus.BAD_REQUEST if isinstance(exc, ValueError) else HTTPStatus.INTERNAL_SERVER_ERROR
-                self.send_response(status)
-                self.send_header("Content-Type", "text/plain; charset=utf-8")
-                self.send_header("Content-Length", str(len(encoded)))
-                self.end_headers()
-                self.wfile.write(encoded)
+                self.send_failure("PDF conversion failed", exc)
                 return
 
-        filename = sanitize_download_filename(self.headers.get("X-Filename"))
-        ascii_filename = filename.encode("ascii", "ignore").decode("ascii") or "Umowa_Zamowienia_Pojazdu.pdf"
-
-        self.send_response(HTTPStatus.OK)
-        self.send_header("Content-Type", "application/pdf")
-        self.send_header("Content-Disposition", f"attachment; filename=\"{ascii_filename}\"; filename*=UTF-8''{quote(filename, safe='')}")
-        self.send_header("Content-Length", str(len(pdf)))
-        self.send_header("Cache-Control", "no-store")
         total_duration_ms = (time.monotonic() - request_started) * 1000
-        self.send_header(
-            "Server-Timing",
-            f"libreoffice;dur={conversion_duration_ms:.1f}, total;dur={total_duration_ms:.1f}",
-        )
-        self.end_headers()
-        self.wfile.write(pdf)
+        self.send_pdf(pdf, f"libreoffice;dur={conversion_duration_ms:.1f}, total;dur={total_duration_ms:.1f}")
 
 
 def main() -> None:

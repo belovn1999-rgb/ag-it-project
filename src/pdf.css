@@ -1261,3 +1261,484 @@ input[type="radio"] {
   }
 
 }
+
+/* --- Umowa zamówienia pojazdu (pdf.html): the form laid out as page 1 of
+   the contract. Colours, rules and type are taken from the PDF template so the
+   page and the document read as the same thing. Scoped to .order-sheet:
+   pdf.css is shared with the sale contract and the declaration. --- */
+@font-face {
+  font-family: "Carlito";
+  src: url("../assets/fonts/Carlito-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Carlito";
+  src: url("../assets/fonts/Carlito-Bold.ttf") format("truetype");
+  font-weight: 700 900;
+  font-display: swap;
+}
+
+.order-sheet {
+  --order-ink: #111111;
+  --order-text: #1b2128;
+  --order-label: #5b6470;
+  --order-blue: #0b70c0;
+  --order-blue-dark: #0a4f8a;
+  --order-cell: #f2f5f9;
+  --order-fee: #eaf2fa;
+  --order-rule: #d5dee8;
+  padding: 26px 30px 30px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgb(16 46 69 / 5%);
+  color: var(--order-text);
+  font-family: "Carlito", "Calibri", "Public Sans", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.35;
+  accent-color: var(--order-blue);
+}
+
+.order-sheet input,
+.order-sheet select,
+.order-sheet textarea {
+  font-family: inherit;
+}
+
+.order-sheet-head h2 {
+  margin: 0;
+  color: var(--order-ink);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.order-sheet-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 22px;
+  margin-top: 8px;
+  color: #333;
+  font-size: 14px;
+}
+
+.order-meta-number strong {
+  color: var(--order-ink);
+  font-weight: 700;
+}
+
+.order-inline-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.order-inline-field > span {
+  white-space: nowrap;
+}
+
+.order-sheet-meta .order-inline-field > span:first-child:not(:only-of-type) {
+  color: var(--order-label);
+}
+
+.order-section {
+  margin-top: 22px;
+}
+
+.order-section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--order-blue);
+}
+
+.order-section-head h3 {
+  margin: 0;
+  color: var(--order-ink);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.01em;
+}
+
+.order-num {
+  margin-right: 3px;
+  color: var(--order-blue);
+  font-size: 19px;
+}
+
+.order-label {
+  color: var(--order-label);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Inputs read as the shaded value boxes of the document. */
+.order-sheet input[type="text"],
+.order-sheet input[type="email"],
+.order-sheet input[type="number"],
+.order-sheet input[type="date"],
+.order-sheet select,
+.order-sheet textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 34px;
+  padding: 6px 9px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  outline: none;
+  background: var(--order-cell);
+  color: var(--order-ink);
+  font-size: 14.5px;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+.order-sheet input:hover,
+.order-sheet select:hover,
+.order-sheet textarea:hover {
+  border-color: var(--order-rule);
+}
+
+.order-sheet input:focus-visible,
+.order-sheet select:focus-visible,
+.order-sheet textarea:focus-visible {
+  border-color: var(--order-blue);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgb(11 112 192 / 14%);
+}
+
+.order-sheet input:disabled,
+.order-sheet select:disabled {
+  color: var(--soft);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.order-sheet textarea {
+  min-height: 52px;
+  resize: vertical;
+}
+
+.order-sheet .is-invalid {
+  border-color: #c0392b !important;
+  box-shadow: 0 0 0 3px rgb(192 57 43 / 14%) !important;
+}
+
+.order-sheet-meta input[type="number"] {
+  width: 62px;
+}
+
+.order-sheet-meta input[type="date"] {
+  width: 158px;
+}
+
+/* 1 · Zleceniodawca — label | value rows, labels bottom-aligned like the PDF. */
+.order-kind {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.order-kind label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 30px;
+  padding: 0 11px;
+  border: 1px solid var(--order-rule);
+  border-radius: 999px;
+  color: var(--order-text);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.order-kind label:has(input:checked) {
+  border-color: var(--order-blue);
+  background: var(--order-fee);
+  color: var(--order-blue-dark);
+  font-weight: 700;
+}
+
+.order-rows {
+  display: grid;
+  gap: 4px;
+}
+
+.order-row {
+  display: grid;
+  grid-template-columns: minmax(170px, 0.42fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 14px;
+}
+
+.order-row .order-label {
+  padding-bottom: 8px;
+}
+
+.order-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-top: 12px;
+  color: var(--order-text);
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.order-check input,
+.order-options input,
+.order-variant input,
+.order-check-cell input {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  margin: 1px 0 0;
+}
+
+/* 2 · Przedmiot umowy — the three variant cards of the document. */
+.order-variants {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.order-variant {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  gap: 8px 9px;
+  overflow: hidden;
+  border: 1px solid var(--order-rule);
+  border-top: 2px solid var(--order-blue);
+  border-radius: 6px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.order-variant > input {
+  margin: 12px 0 0 12px;
+}
+
+.order-variant-title {
+  padding: 10px 12px 0 0;
+  color: var(--order-ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.order-variant-title b {
+  color: var(--order-blue);
+}
+
+.order-variant-fee {
+  grid-column: 1 / -1;
+  align-self: end;
+  padding: 8px 12px;
+  background: var(--order-fee);
+  color: #333;
+  font-size: 12.5px;
+}
+
+.order-variant-fee b {
+  color: var(--order-blue-dark);
+}
+
+.order-variant:has(input:checked) {
+  border-color: var(--order-blue);
+  box-shadow: 0 0 0 2px rgb(11 112 192 / 18%);
+}
+
+.order-variant[hidden] {
+  display: none;
+}
+
+.order-variant.fixed-term {
+  cursor: default;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.order-variant.fixed-term .order-variant-title {
+  padding-left: 12px;
+  font-weight: 400;
+}
+
+body.export-contract .order-variant-fee {
+  display: none;
+}
+
+/* The export contract still runs on the old DOCX template: it has one fixed
+   subject sentence and no place for the link, other Euro norm, currency box
+   or purpose of the advance. */
+body.export-contract .order-sheet .standard-only {
+  display: none;
+}
+
+body.export-contract .order-variants {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.order-indicated {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  margin-top: 12px;
+}
+
+.order-indicated .order-check {
+  margin-top: 0;
+  align-items: center;
+}
+
+.order-indicated .order-inline-field {
+  flex: 1 1 260px;
+  color: #333;
+  font-size: 13.5px;
+}
+
+/* 3 · Kryteria — the 3-column grid of the document. */
+.order-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid var(--order-rule);
+  border-radius: 6px;
+  background: var(--order-rule);
+}
+
+.order-cell {
+  display: grid;
+  align-content: start;
+  gap: 7px;
+  min-width: 0;
+  padding: 9px 11px 11px;
+  background: #fff;
+}
+
+.order-span-2 {
+  grid-column: span 2;
+}
+
+.order-span-3 {
+  grid-column: 1 / -1;
+}
+
+.order-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 7px 14px;
+  font-size: 13.5px;
+}
+
+.order-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.order-option-input {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.order-sheet .order-option-input .inline-input {
+  width: 92px;
+  min-height: 28px;
+  padding: 3px 7px;
+  font-size: 13.5px;
+}
+
+.order-check-cell {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+/* 4 · Budżet i zaliczka — one currency for the contract (pkt 11). */
+.order-budget {
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.15fr) minmax(0, 1.15fr) minmax(0, 1.25fr);
+}
+
+body.export-contract .order-budget {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.order-sheet .amount-control {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+
+body.export-contract .order-sheet .amount-control {
+  grid-template-columns: minmax(0, 1fr) 82px;
+}
+
+body:not(.export-contract) .order-export-currency,
+body:not(.export-contract) .order-docx-step {
+  display: none;
+}
+
+.order-sheet .export-only {
+  margin-top: 14px;
+}
+
+.order-sheet .commission-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 8px;
+  font-size: 13.5px;
+}
+
+@media (max-width: 1100px) {
+  .order-variants {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .order-budget {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .order-sheet {
+    padding: 18px 16px 22px;
+  }
+
+  .order-grid,
+  .order-budget,
+  body.export-contract .order-budget {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .order-span-2,
+  .order-span-3 {
+    grid-column: auto;
+  }
+
+  .order-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 4px;
+  }
+
+  .order-row .order-label {
+    padding-bottom: 0;
+  }
+
+  .order-section-head {
+    flex-wrap: wrap;
+  }
+}

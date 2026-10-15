@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./src/pdf.css?v=history20-20260923" />
+    <link rel="stylesheet" href="./src/pdf.css?v=umowa-wzor-20261015-1" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-offer-1010" data-ag-global-nav></script>
   </head>
@@ -25,19 +25,11 @@
           <h1 class="brandTitle" aria-label="Umowa — Polska">Umowa<span class="badge-pill">Polska</span></h1>
         </div>
         <div class="actions">
-          <label class="date-field">
-            <span>Data</span>
-            <input id="contractDate" type="date" />
-          </label>
-          <label class="sequence-field">
-            <span>Nr</span>
-            <input id="sequence" type="number" min="1" value="1" />
-          </label>
           <div class="document-flow" aria-label="Proces przygotowania dokumentu">
             <button id="pullCrmDataBtn" class="secondary-top-btn" type="button" disabled title="Integracja z CRM — w przygotowaniu, jeszcze niepodłączona">Wyciągnij dane<span class="soon-badge">wkrótce</span></button>
             <span class="flow-arrow" aria-hidden="true">→</span>
-            <button id="generateBtn" class="secondary-top-btn" type="button">DOCX</button>
-            <span class="flow-arrow" aria-hidden="true">→</span>
+            <button id="generateBtn" class="secondary-top-btn order-docx-step" type="button">DOCX</button>
+            <span class="flow-arrow order-docx-step" aria-hidden="true">→</span>
             <button id="printBtn" class="primary-btn" type="button">PDF</button>
             <span class="flow-arrow" aria-hidden="true">→</span>
             <button id="encryptBtn" class="secondary-top-btn" type="button">Zaszyfruj</button>
@@ -98,161 +90,230 @@
               <svg class="button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2Z"/><path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/></svg>
             </button>
           </div>
-          <section class="contract-grid">
 
-          <div class="contract-card">
-            <div class="card-head">ZLECENIODAWCA:</div>
-            <div class="field-row client-kind">
-              <label><input type="radio" name="clientType" value="person" checked /> <span>osoba</span></label>
-              <label class="company-only"><input type="radio" name="clientType" value="company" /> <span>firma</span></label>
-            </div>
-            <label class="field">
-              <span>Imię i Nazwisko/Nazwa:</span>
-              <input id="clientName" type="text" />
-            </label>
-            <label class="checkbox-line company-only">
-              <input id="clientEntrepreneur" type="checkbox" />
-              <span>Zleceniodawca jest przedsiębiorcą, zawiera umowę o charakterze zawodowym</span>
-            </label>
-            <label class="field">
-              <span>Adres:</span>
-              <input id="clientAddress" type="text" />
-            </label>
-            <label class="field client-identifier-field">
-              <span>PESEL/NIP:</span>
-              <input id="clientIdentifier" type="text" />
-            </label>
-            <label class="field">
-              <span>Rodzaj, numer i seria dokumentu tożsamości:</span>
-              <div class="document-control">
-                <select id="clientDocumentType" aria-label="Rodzaj dokumentu">
-                  <option value="">brak dokumentu</option>
-                  <option value="dowód osobisty">dowód osobisty</option>
-                  <option value="paszport" selected>paszport</option>
-                  <option value="karta pobytu">karta pobytu</option>
-                </select>
-                <input id="clientDocument" type="text" />
+          <!-- The form is laid out like page 1 of the contract: the same sections,
+               the same order and labels, only what gets filled in. -->
+          <article class="order-sheet" aria-label="Umowa zamówienia pojazdu — dane do uzupełnienia">
+            <header class="order-sheet-head">
+              <h2>UMOWA ZAMÓWIENIA POJAZDU</h2>
+              <div class="order-sheet-meta">
+                <span class="order-meta-number">nr <strong id="sheetContractNumber">…</strong></span>
+                <label class="order-inline-field">
+                  <span>kolejna umowa tego dnia</span>
+                  <input id="sequence" type="number" min="1" value="1" />
+                </label>
+                <label class="order-inline-field">
+                  <span>Łomianki,</span>
+                  <input id="contractDate" type="date" />
+                  <span>r.</span>
+                </label>
               </div>
-            </label>
-            <div class="two-fields">
-              <label class="field">
-                <span>Nr. tel.:</span>
-                <input id="clientPhone" type="text" />
-              </label>
-              <label class="field">
-                <span>E-mail:</span>
-                <input id="clientEmail" type="email" />
-              </label>
-            </div>
+            </header>
 
-            <div class="card-head compact">PRZEDMIOT UMOWY:</div>
-            <div class="checkbox-group">
-              <label data-subject-option="mediation"><input name="subject" type="checkbox" value="mediation" /> <span>wyszukanie ofert oraz pośrednictwo w zakupie</span></label>
-              <label data-subject-option="purchase_by_autogood"><input name="subject" type="checkbox" value="purchase_by_autogood" checked /> <span>wyszukanie ofert oraz zakup przez Zleceniobiorcę</span></label>
-              <label data-subject-option="financing"><input name="subject" type="checkbox" value="financing" /> <span>zakup z finansowania</span></label>
-              <label data-subject-option="client_indicated_vehicle"><input id="clientIndicatedVehicle" type="checkbox" /> <span>pojazd wskazany przez Zleceniodawcę</span></label>
-            </div>
-
-            <div class="card-head compact">BUDŻET NA ZAKUP</div>
-            <div class="two-fields">
-              <label class="field">
-                <span>Budżet:</span>
-                <div class="amount-control">
-                  <input id="budgetTotal" type="text" inputmode="decimal" />
-                  <select id="budgetCurrency" aria-label="Waluta budżetu">
-                    <option value="PLN">PLN</option>
-                    <option value="EUR" selected>EUR</option>
-                  </select>
+            <section class="order-section">
+              <div class="order-section-head">
+                <h3><span class="order-num">1</span> ZLECENIODAWCA</h3>
+                <div class="order-kind" role="radiogroup" aria-label="Zleceniodawca">
+                  <label><input type="radio" name="clientType" value="person" checked /> <span>osoba</span></label>
+                  <label class="company-only"><input type="radio" name="clientType" value="company" /> <span>firma</span></label>
                 </div>
-              </label>
-              <label class="field">
-                <span>Zaliczka:</span>
-                <div class="amount-control">
-                  <input id="budgetAdvance" type="text" inputmode="decimal" />
-                  <select id="advanceCurrency" aria-label="Waluta zaliczki">
-                    <option value="PLN">PLN</option>
-                    <option value="EUR" selected>EUR</option>
-                  </select>
-                </div>
-              </label>
-            </div>
-
-            <div class="export-only">
-              <div class="card-head compact">WYNAGRODZENIE ZLECENIOBIORCY</div>
-              <div class="radio-group commission-options">
-                <label><input name="commissionOption" type="radio" value="200 EUR + 1% od ceny pojazdu." /> <span>200 EUR + 1% od ceny pojazdu.</span></label>
-                <label><input name="commissionOption" type="radio" value="350 EUR + 1% od ceny pojazdu." checked /> <span>350 EUR + 1% od ceny pojazdu.</span></label>
-                <label><input name="commissionOption" type="radio" value="300 EUR + 1% od ceny pojazdu." /> <span>300 EUR + 1% od ceny pojazdu.</span></label>
               </div>
-            </div>
-          </div>
-
-          <div class="contract-card">
-            <div class="card-head">KRYTERIA POSZUKIWAŃ I ZAKUPU:</div>
-            <label class="field">
-              <span>Marka i model:</span>
-              <input id="vehicleMakeModel" type="text" />
-            </label>
-
-            <div class="options-block">
-              <div class="option-title">Dopuszczalne paliwo:</div>
-              <label><input data-fuel="diesel" type="checkbox" /> <span>diesel</span></label>
-              <label><input data-fuel="benzyna" type="checkbox" /> <span>benzyna</span></label>
-              <label><input data-fuel="hybryda" type="checkbox" /> <span>hybryda</span></label>
-              <label><input data-fuel="elektryk" type="checkbox" /> <span>elektryk</span></label>
-            </div>
-
-            <div class="options-block">
-              <div class="option-title">Skrzynia biegów:</div>
-              <label><input name="gearbox" type="checkbox" value="manualna" /> <span>manualna</span></label>
-              <label><input name="gearbox" type="checkbox" value="automatyczna" /> <span>automatyczna</span></label>
-            </div>
-
-            <div class="options-block">
-              <div class="option-title">Norma spalania euro:</div>
-              <label><input name="euroStandard" type="radio" value="6" /> <span>6</span></label>
-              <label><input name="euroStandard" type="radio" value="7" /> <span>7</span></label>
-              <label><input name="euroStandard" type="radio" value="dowolna" /> <span>dowolna</span></label>
-              <label><input name="euroStandard" type="radio" value="inna" /> <span>inna</span></label>
-            </div>
-
-            <div class="two-fields">
-              <label class="field">
-                <span>Wiek:</span>
-                <input id="firstRegistration" type="text" />
+              <div class="order-rows">
+                <label class="order-row">
+                  <span class="order-label">IMIĘ I NAZWISKO/NAZWA:</span>
+                  <input id="clientName" type="text" />
+                </label>
+                <label class="order-row">
+                  <span class="order-label">ADRES ZAMIESZKANIA / SIEDZIBY:</span>
+                  <input id="clientAddress" type="text" />
+                </label>
+                <label class="order-row client-identifier-field">
+                  <span class="order-label">PESEL/NIP:</span>
+                  <input id="clientIdentifier" type="text" inputmode="numeric" />
+                </label>
+                <div class="order-row">
+                  <span class="order-label">RODZAJ, NUMER I SERIA DOKUMENTU TOŻSAMOŚCI:</span>
+                  <div class="document-control">
+                    <select id="clientDocumentType" aria-label="Rodzaj dokumentu">
+                      <option value="">brak dokumentu</option>
+                      <option value="dowód osobisty">dowód osobisty</option>
+                      <option value="paszport" selected>paszport</option>
+                      <option value="karta pobytu">karta pobytu</option>
+                    </select>
+                    <input id="clientDocument" type="text" aria-label="Numer i seria dokumentu" />
+                  </div>
+                </div>
+                <label class="order-row">
+                  <span class="order-label">NR TEL.:</span>
+                  <input id="clientPhone" type="text" inputmode="tel" />
+                </label>
+                <label class="order-row">
+                  <span class="order-label">E-MAIL DO AKCEPTACJI I KORESPONDENCJI:</span>
+                  <input id="clientEmail" type="email" />
+                </label>
+              </div>
+              <label class="order-check company-only">
+                <input id="clientEntrepreneur" type="checkbox" />
+                <span>Zleceniodawca jest przedsiębiorcą, zawiera umowę o charakterze zawodowym, bezpośrednio związaną z prowadzoną działalnością</span>
               </label>
-              <label class="field">
-                <span>Przebieg do:</span>
-                <input id="mileageTo" type="text" />
-              </label>
-            </div>
+            </section>
 
-            <div class="options-block">
-              <div class="option-title">Nadwozie:</div>
-              <label><input name="bodyType" type="checkbox" value="sedan" /> <span>sedan</span></label>
-              <label><input name="bodyType" type="checkbox" value="kombi" /> <span>kombi</span></label>
-              <label><input name="bodyType" type="checkbox" value="coupe" /> <span>coupe</span></label>
-              <span class="option-with-input">
-                <label><input name="bodyType" type="checkbox" value="inne" /> <span>inne:</span></label>
-                <input id="bodyOther" class="inline-input" type="text" aria-label="Inne nadwozie" />
-              </span>
-            </div>
+            <section class="order-section">
+              <div class="order-section-head">
+                <h3><span class="order-num">2</span> PRZEDMIOT UMOWY I WYNAGRODZENIE ZLECENIOBIORCY</h3>
+              </div>
+              <div class="order-variants">
+                <label class="order-variant" data-subject-option="mediation">
+                  <input name="subject" type="checkbox" value="mediation" />
+                  <span class="order-variant-title"><b>WARIANT 1</b> · Pośrednictwo</span>
+                  <span class="order-variant-fee">Wynagrodzenie: <b>2 250 zł brutto + 1% ceny zakupu pojazdu</b></span>
+                </label>
+                <label class="order-variant" data-subject-option="purchase_by_autogood">
+                  <input name="subject" type="checkbox" value="purchase_by_autogood" checked />
+                  <span class="order-variant-title"><b>WARIANT 2</b> · Zakup i sprzedaż</span>
+                  <span class="order-variant-fee">Wynagrodzenie: <b>2 250 zł brutto + 2% ceny zakupu pojazdu</b></span>
+                </label>
+                <label class="order-variant" data-subject-option="financing">
+                  <input name="subject" type="checkbox" value="financing" />
+                  <span class="order-variant-title"><b>WARIANT 3</b> · Zakup i sprzedaż z finansowaniem Zleceniobiorcy</span>
+                  <span class="order-variant-fee">Wynagrodzenie: <b>3 250 zł brutto + 5% ceny zakupu pojazdu</b></span>
+                </label>
+              </div>
+              <div class="order-indicated">
+                <label class="order-check" data-subject-option="client_indicated_vehicle">
+                  <input id="clientIndicatedVehicle" type="checkbox" />
+                  <span><b>Pojazd wskazany przez Zleceniodawcę.</b></span>
+                </label>
+                <label class="order-inline-field standard-only">
+                  <span>Link / VIN:</span>
+                  <input id="indicatedVehicleLink" type="text" placeholder="VIN albo krótki link (ok. 30 znaków)" />
+                </label>
+              </div>
 
-            <label class="checkbox-line">
-              <input id="allowCollision" type="checkbox" />
-              <span>dopuszczalne jest auto po kolizjach, ale bez uszkodzenia podłużnic</span>
-            </label>
+              <div class="export-only">
+                <div class="order-label">WYNAGRODZENIE ZLECENIOBIORCY</div>
+                <div class="radio-group commission-options">
+                  <label><input name="commissionOption" type="radio" value="200 EUR + 1% od ceny pojazdu." /> <span>200 EUR + 1% od ceny pojazdu.</span></label>
+                  <label><input name="commissionOption" type="radio" value="350 EUR + 1% od ceny pojazdu." checked /> <span>350 EUR + 1% od ceny pojazdu.</span></label>
+                  <label><input name="commissionOption" type="radio" value="300 EUR + 1% od ceny pojazdu." /> <span>300 EUR + 1% od ceny pojazdu.</span></label>
+                </div>
+              </div>
+            </section>
 
-            <label class="field">
-              <span>Dodatkowe wymagane cechy/wyposażenie:</span>
-              <textarea id="requiredEquipment"></textarea>
-            </label>
-            <label class="field">
-              <span>Dodatkowe oczekiwane cechy/wyposażenie:</span>
-              <textarea id="expectedEquipment"></textarea>
-            </label>
-          </div>
-          </section>
+            <section class="order-section">
+              <div class="order-section-head">
+                <h3><span class="order-num">3</span> KRYTERIA POSZUKIWAŃ I ZAKUPU</h3>
+              </div>
+              <div class="order-grid">
+                <label class="order-cell order-span-2">
+                  <span class="order-label">MARKA I MODEL:</span>
+                  <input id="vehicleMakeModel" type="text" />
+                </label>
+                <label class="order-cell">
+                  <span class="order-label">ROK PIERWSZEJ REJESTRACJI (OD – DO):</span>
+                  <input id="firstRegistration" type="text" placeholder="np. 2019 – 2022" />
+                </label>
+                <label class="order-cell">
+                  <span class="order-label">PRZEBIEG DO (KM):</span>
+                  <input id="mileageTo" type="text" inputmode="numeric" placeholder="np. 120 000" />
+                </label>
+                <div class="order-cell">
+                  <span class="order-label">DOPUSZCZALNE PALIWO:</span>
+                  <div class="order-options">
+                    <label><input data-fuel="diesel" type="checkbox" /> <span>diesel</span></label>
+                    <label><input data-fuel="benzyna" type="checkbox" /> <span>benzyna</span></label>
+                    <label><input data-fuel="hybryda" type="checkbox" /> <span>hybryda</span></label>
+                    <label><input data-fuel="elektryk" type="checkbox" /> <span>elektryk</span></label>
+                  </div>
+                </div>
+                <div class="order-cell">
+                  <span class="order-label">SKRZYNIA BIEGÓW:</span>
+                  <div class="order-options">
+                    <label><input name="gearbox" type="checkbox" value="manualna" /> <span>manualna</span></label>
+                    <label><input name="gearbox" type="checkbox" value="automatyczna" /> <span>automatyczna</span></label>
+                  </div>
+                </div>
+                <div class="order-cell">
+                  <span class="order-label">NADWOZIE:</span>
+                  <div class="order-options">
+                    <label><input name="bodyType" type="checkbox" value="sedan" /> <span>sedan</span></label>
+                    <label><input name="bodyType" type="checkbox" value="kombi" /> <span>kombi</span></label>
+                    <label><input name="bodyType" type="checkbox" value="coupe" /> <span>coupe</span></label>
+                    <span class="order-option-input">
+                      <label><input name="bodyType" type="checkbox" value="inne" /> <span>inne:</span></label>
+                      <input id="bodyOther" class="inline-input" type="text" aria-label="Inne nadwozie" />
+                    </span>
+                  </div>
+                </div>
+                <div class="order-cell">
+                  <span class="order-label">NORMA EMISJI SPALIN EURO:</span>
+                  <div class="order-options">
+                    <label><input name="euroStandard" type="radio" value="6" /> <span>6</span></label>
+                    <label><input name="euroStandard" type="radio" value="7" /> <span>7</span></label>
+                    <label><input name="euroStandard" type="radio" value="dowolna" /> <span>dowolna</span></label>
+                    <span class="order-option-input">
+                      <label><input name="euroStandard" type="radio" value="inna" /> <span>inna (podać):</span></label>
+                      <input id="euroOther" class="inline-input standard-only" type="text" aria-label="Inna norma Euro" />
+                    </span>
+                  </div>
+                </div>
+                <label class="order-cell order-check-cell">
+                  <input id="allowCollision" type="checkbox" />
+                  <span>dopuszczam pojazd po naprawionej szkodzie, bez uszkodzeń elementów konstrukcyjnych (m.in. podłużnic)</span>
+                </label>
+                <label class="order-cell order-span-3">
+                  <span class="order-label">DODATKOWE WYMAGANE CECHY/WYPOSAŻENIE:</span>
+                  <textarea id="requiredEquipment" rows="2"></textarea>
+                </label>
+                <label class="order-cell order-span-3">
+                  <span class="order-label">DODATKOWE OCZEKIWANE CECHY/WYPOSAŻENIE:</span>
+                  <textarea id="expectedEquipment" rows="2"></textarea>
+                </label>
+              </div>
+            </section>
+
+            <section class="order-section">
+              <div class="order-section-head">
+                <h3><span class="order-num">4</span> BUDŻET I ZALICZKA</h3>
+              </div>
+              <div class="order-grid order-budget">
+                <div class="order-cell standard-only">
+                  <span class="order-label">WALUTA:</span>
+                  <div class="order-options">
+                    <label><input name="contractCurrency" type="radio" value="PLN" /> <span>PLN</span></label>
+                    <label><input name="contractCurrency" type="radio" value="EUR" /> <span>EUR</span></label>
+                  </div>
+                </div>
+                <label class="order-cell">
+                  <span class="order-label">BUDŻET:</span>
+                  <span class="amount-control">
+                    <input id="budgetTotal" type="text" inputmode="decimal" placeholder="np. 120 000" />
+                    <select id="budgetCurrency" class="order-export-currency" aria-label="Waluta budżetu">
+                      <option value="PLN">PLN</option>
+                      <option value="EUR" selected>EUR</option>
+                    </select>
+                  </span>
+                </label>
+                <label class="order-cell">
+                  <span class="order-label">ZALICZKA:</span>
+                  <span class="amount-control">
+                    <input id="budgetAdvance" type="text" inputmode="decimal" placeholder="np. 10 000" />
+                    <select id="advanceCurrency" class="order-export-currency" aria-label="Waluta zaliczki">
+                      <option value="PLN">PLN</option>
+                      <option value="EUR" selected>EUR</option>
+                    </select>
+                  </span>
+                </label>
+                <div class="order-cell standard-only">
+                  <span class="order-label">PRZEZNACZENIE ZALICZKI:</span>
+                  <div class="order-options">
+                    <label><input name="advancePurpose" type="checkbox" value="ogledziny" /> <span>oględziny</span></label>
+                    <label><input name="advancePurpose" type="checkbox" value="zakup" /> <span>zakup pojazdu</span></label>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </article>
         </section>
       </section>
       <section class="contract-pdf-preview" aria-labelledby="contractPdfPreviewTitle">
@@ -297,6 +358,10 @@
 
     <script src="./src/pdf-config.js?v=contract-pdf-preview-20260909-2"></script>
     <script src="./src/pdf-encryption.js?v=20260809-pdf-encryption-1"></script>
-    <script src="./src/pdf.js?v=history20-20260923"></script>
+    <!-- Polish contract: drawn in the browser onto its PDF template (self-hosted engine, like the declaration). -->
+    <script src="./vendor/pdf-lib.min.js"></script>
+    <script src="./vendor/fontkit.umd.min.js"></script>
+    <script src="./src/order-contract-pdf.js?v=20261015-1"></script>
+    <script src="./src/pdf.js?v=umowa-wzor-20261015-1"></script>
   </body>
 </html>
