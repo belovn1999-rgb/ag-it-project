@@ -29,14 +29,14 @@
 5. Проверка до выкладки (на Mac нет системного PHP): `~/cloude/.tools/php-common/php vendor/bin/pest` (все тесты),
    `… vendor/bin/pint --test` (оформление), анализатор `… vendor/bin/phpstan analyse` — без новых замечаний.
    Ассеты для тестов: `~/cloude/.tools/node/bin/npm ci && npm run build` в `platform/`.
+6. Выкладка — только с разрешения владельца в чате: push в `main` платформы, затем на сервере `git pull --ff-only`,
+   кэши и перезапуск очередей (команды — `~/cloude/CLAUDE.md`), проверка `https://tools.mantexlab.com/up` = 200 и
+   сайта `https://autogood.mantexlab.com/` = 200. Миграции базы — только по прямому «да» владельца.
 7. **Своя рабочая копия.** Несколько чатов в одной папке `~/cloude/mantexlab-tools` делят индекс git: 16.10 коммит
    одного чата захватил незаконченные файлы другого, а коммит второго откатил работу первого (восстановлено,
    `8300860`). Поэтому: каждый чат — в своём `git worktree` (`git -C ~/cloude/mantexlab-tools worktree add …`), коммит —
    только явные пути (`git add <файлы>` или `git commit --only -- <пути>`, без `-a` и `git add .`/папок), перед коммитом
    `git diff --cached --stat`.
-6. Выкладка — только с разрешения владельца в чате: push в `main` платформы, затем на сервере `git pull --ff-only`,
-   кэши и перезапуск очередей (команды — `~/cloude/CLAUDE.md`), проверка `https://tools.mantexlab.com/up` = 200 и
-   сайта `https://autogood.mantexlab.com/` = 200. Миграции базы — только по прямому «да» владельца.
 
 ## 3. Что потерялось при переносе и волны исправлений
 
