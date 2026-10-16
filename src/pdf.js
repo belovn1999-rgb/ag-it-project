@@ -1920,6 +1920,18 @@ window.addEventListener("beforeunload", () => {
   if (currentPreviewUrl) URL.revokeObjectURL(currentPreviewUrl);
 });
 document.querySelectorAll('input[name="clientType"]').forEach((node) => node.addEventListener("change", syncClientTypeRules));
+// Owner's rule: 10 digits in PESEL/NIP is a NIP → firma, 11 is a PESEL → osoba.
+// On leaving the field, not while typing (a PESEL passes through 10 digits).
+$("clientIdentifier").addEventListener("change", () => {
+  if (isExportContract) return;
+  const digits = $("clientIdentifier").value.replace(/^PL/i, "").replace(/\D/g, "");
+  const type = digits.length === 10 ? "company" : digits.length === 11 ? "person" : "";
+  if (!type || checkedRadio("clientType") === type) return;
+  setRadio("clientType", type);
+  syncClientTypeRules();
+  updateSummary();
+  scheduleOrderPreview();
+});
 $("vehicleMakeModel").addEventListener("input", updateDocumentFileName);
 document.querySelectorAll("input, textarea, select").forEach((node) => {
   node.addEventListener("input", updateSummary);

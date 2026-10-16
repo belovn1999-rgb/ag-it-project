@@ -1552,6 +1552,18 @@ window.addEventListener("beforeunload", () => {
 form.querySelectorAll('input[name="buyerIdentifierType"]').forEach((option) => {
   option.addEventListener("change", syncBuyerIdentifierLabel);
 });
+// Owner's rule: 10 digits is a NIP (firma, profesjonalista), 11 a PESEL (osoba).
+// On leaving the field, not while typing (a PESEL passes through 10 digits).
+form.querySelector('[name="buyerIdentifier"]').addEventListener("change", (event) => {
+  const digits = event.target.value.replace(/^PL/i, "").replace(/\D/g, "");
+  if (digits.length === 10) {
+    setBuyerIdentifierType("nip");
+    setField("buyerProfessional", "tak");
+  } else if (digits.length === 11) {
+    setBuyerIdentifierType("pesel");
+    setField("buyerProfessional", "nie");
+  }
+});
 
 applyDefaultChecklistValues();
 applyDefaultFieldValues();

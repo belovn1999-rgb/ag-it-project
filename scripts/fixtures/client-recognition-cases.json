@@ -358,5 +358,31 @@
    "identifier": "79092600814",
    "type": "person"
   }
+ },
+ {
+  "id": "W1 только NIP цифрами — фирма",
+  "text": "Jan Nowak\n5213874567\nul. Polna 8, 61-001 Poznań",
+  "want": {
+   "identifier": "5213874567",
+   "type": "company",
+   "address": "ul. Polna 8, 61-001 Poznań"
+  }
+ },
+ {
+  "id": "W2 PESEL и NIP вместе — NIP, фирма",
+  "text": "Jan Nowak\nPESEL: 79092600814\nNIP: 521-387-45-67",
+  "want": {
+   "identifier": "5213874567",
+   "type": "company"
+  }
+ },
+ {
+  "id": "W3 только PESEL — физлицо",
+  "text": "Jan Nowak\n79092600814",
+  "want": {
+   "identifier": "79092600814",
+   "type": "person",
+   "name": "Jan Nowak"
+  }
  }
 ]

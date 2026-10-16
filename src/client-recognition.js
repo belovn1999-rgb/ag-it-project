@@ -484,7 +484,8 @@
       }
     }
 
-    const isCompany = Boolean(company) || (Boolean(nip) && !pesel);
+    // Owner's rule: a NIP (10 digits) means a company, a PESEL (11) a person.
+    const isCompany = Boolean(company) || Boolean(nip);
     const address = recognizeAddress(segments, usedName);
 
     return {
