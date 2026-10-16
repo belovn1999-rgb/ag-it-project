@@ -1805,3 +1805,10 @@ body:not(.export-contract) .order-docx-step {
   color: var(--order-blue);
   font-weight: 700;
 }
+
+/* PESEL/NIP: the one that does not apply is struck through, as in the PDF. */
+.client-identifier-field:not(.is-company) .identifier-nip,
+.client-identifier-field.is-company .identifier-pesel {
+  text-decoration: line-through;
+  opacity: 0.55;
+}

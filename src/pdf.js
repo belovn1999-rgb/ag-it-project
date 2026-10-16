@@ -778,6 +778,8 @@ function syncClientTypeRules() {
   }
   $("clientDocumentType").disabled = isCompany;
   $("clientDocument").disabled = isCompany;
+  // As in the contract: the number that does not apply is struck through.
+  document.querySelector(".client-identifier-field")?.classList.toggle("is-company", isCompany);
   if (isCompany) {
     $("clientDocumentType").value = "";
     $("clientDocument").value = "";
@@ -1414,6 +1416,7 @@ function orderContractFromData(data) {
       name: data.client.name,
       address: data.client.address,
       identifier: isCompany ? data.client.nip : data.client.pesel,
+      identifierType: isCompany ? "nip" : "pesel",
       document: isCompany ? "" : data.client.document,
       phone: data.client.phone,
       email: data.client.email,

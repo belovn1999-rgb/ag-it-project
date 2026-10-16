@@ -100,3 +100,9 @@ test("a hand-picked size that is too large is refused with the field named", asy
   data.client = { ...data.client, address: "ul. Generała Władysława Andersa 128/47, 03-180 Warszawa-Białołęka" };
   await assert.rejects(build(data), (error) => error instanceof generator.ContractFitError && error.field === "address" && /9 pt/.test(error.message));
 });
+
+test("PESEL/NIP: the label that does not apply is struck through", async () => {
+  const pdf = await build(contract({ client: { ...contract().client, identifier: "5213874567", identifierType: "nip" } }));
+  assert.equal((await PDFLib.PDFDocument.load(pdf)).getPageCount(), 2);
+  assert.deepEqual(generator.IDENTIFIER_LABEL.pesel.length, 2);
+});

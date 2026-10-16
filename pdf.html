@@ -10,7 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="./src/pdf.css?v=font-size-20261015-1" />
+    <link rel="stylesheet" href="./src/pdf.css?v=strike-20261016-1" />
     <link rel="stylesheet" href="./src/global-navigation.css?v=global-navigation-20260923" />
     <script defer src="./src/global-navigation.js?v=nav-offer-1010" data-ag-global-nav></script>
   </head>
@@ -128,7 +128,7 @@
                   <span class="font-fit"><input id="clientAddress" type="text" /><span class="font-size-control standard-only" data-font-field="address" role="group" aria-label="Rozmiar czcionki w umowie"><button type="button" data-font-step="-1" title="Mniejsza czcionka w umowie">A−</button><button type="button" class="font-size-value" data-font-step="0" title="Rozmiar w umowie. Kliknij — automatycznie">auto</button><button type="button" data-font-step="1" title="Większa czcionka w umowie">A+</button><input type="hidden" id="fontSize_address" /></span></span>
                 </label>
                 <label class="order-row client-identifier-field">
-                  <span class="order-label">PESEL/NIP:</span>
+                  <span class="order-label"><span class="identifier-pesel">PESEL</span>/<span class="identifier-nip">NIP</span>:</span>
                   <input id="clientIdentifier" type="text" inputmode="numeric" />
                 </label>
                 <div class="order-row">
@@ -361,8 +361,8 @@
     <!-- Polish contract: drawn in the browser onto its PDF template (self-hosted engine, like the declaration). -->
     <script src="./vendor/pdf-lib.min.js"></script>
     <script src="./vendor/fontkit.umd.min.js"></script>
-    <script src="./src/order-contract-pdf.js?v=font-size-20261015-1"></script>
+    <script src="./src/order-contract-pdf.js?v=strike-20261016-1"></script>
     <script src="./src/client-recognition.js?v=nip-20261016-1"></script>
-    <script src="./src/pdf.js?v=nip-20261016-1"></script>
+    <script src="./src/pdf.js?v=strike-20261016-1"></script>
   </body>
 </html>

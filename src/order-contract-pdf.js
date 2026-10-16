@@ -91,6 +91,10 @@
 
   for (const [key, spot] of [...Object.entries(CELLS), ...Object.entries(INLINE)]) spot.key = key;
 
+  // "PESEL/NIP:" label of the client block (7 pt, label grey): the one that
+  // does not apply is struck through, as on paper.
+  const IDENTIFIER_LABEL = { base: 163.6, size: 7, color: [0x5b / 255, 0x64 / 255, 0x70 / 255], pesel: [38.6, 55.39], nip: [58.4, 68.61] };
+
   const HEADER = { base: 61.6, size: 8.5, numberDots: [43.44, 96.22], date: [144.85, 204.64] };
   const FOOTER = { base: 824.7, size: 6.5, span: [183.35, 412.24], center: 297.8 };
 
@@ -222,6 +226,10 @@
       text(text, x, base, size, color = BLACK) {
         if (text) page.drawText(text, { x, y: H - base, size, font, color: rgb(color) });
       },
+      strike(x0, x1, base, size, color) {
+        const y = H - base + size * 0.3;
+        page.drawLine({ start: { x: x0, y }, end: { x: x1, y }, thickness: 0.6, color: rgb(color) });
+      },
       cover(x0, x1, base, size) {
         page.drawRectangle({ x: x0 - 0.4, y: H - base - size * 0.3, width: x1 - x0 + 0.8, height: size * 1.25, color: PDFLib.rgb(1, 1, 1) });
       },
@@ -290,7 +298,7 @@
 
   /* contract: {
        number, date,                         // "12/10/26/2", "12 października 2026"
-       client: { name, address, identifier, document, phone, email, isEntrepreneur },
+       client: { name, address, identifier, identifierType: "pesel" | "nip", document, phone, email, isEntrepreneur },
        variants: [1, 2, 3], indicatedVehicle, indicatedLink,
        vehicle: { makeModel, years, mileageTo, fuels, gearboxes, bodies, bodyOther,
                   euro, euroOther, allowRepaired, required, expected },
@@ -335,6 +343,11 @@
     drawCell(draw, font, CELLS.name, client.name);
     drawCell(draw, font, CELLS.address, client.address, sizes, used);
     drawCell(draw, font, CELLS.identifier, client.identifier);
+    // A person's number is a PESEL (NIP struck through), a company's a NIP.
+    if (client.identifier && client.identifierType) {
+      const struck = client.identifierType === "nip" ? IDENTIFIER_LABEL.pesel : IDENTIFIER_LABEL.nip;
+      draw.strike(struck[0], struck[1], IDENTIFIER_LABEL.base, IDENTIFIER_LABEL.size, IDENTIFIER_LABEL.color);
+    }
     drawCell(draw, font, CELLS.document, client.document);
     drawCell(draw, font, CELLS.phone, client.phone);
     drawCell(draw, font, CELLS.email, client.email);
@@ -360,5 +373,5 @@
     return await pdfDoc.save();
   }
 
-  return { build, ContractFitError, BOXES, CELLS, INLINE, MANUAL, DATA_SIZE };
+  return { build, ContractFitError, BOXES, CELLS, INLINE, IDENTIFIER_LABEL, MANUAL, DATA_SIZE };
 });
