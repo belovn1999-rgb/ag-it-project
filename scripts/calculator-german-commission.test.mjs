@@ -11,8 +11,8 @@ const context = {
   window: { location: { search: "" }, localStorage: { getItem: () => null } },
   URLSearchParams,
 };
-vm.runInNewContext(source + "\nthis.api = { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money, getProcessSteps, processStepOverrideKey };", context);
-const { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money, getProcessSteps, processStepOverrideKey } = context.api;
+vm.runInNewContext(source + "\nthis.api = { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money, getProcessSteps, processStepOverrideKey, calculationBreakdown, copy, applyManualOverrides };", context);
+const { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money, getProcessSteps, processStepOverrideKey, calculationBreakdown, copy, applyManualOverrides } = context.api;
 
 for (const tab of [3, 4]) {
   for (const lang of ["pl", "ru", "en"]) {
@@ -80,4 +80,36 @@ test("German commission preserves payment notes and manual note edits for every 
     "Płatność w PLN lub EUR",
     "Sprzedajemy na Fakturę VAT 23%",
   ]);
+});
+
+test("all calculators show every active cost in its own breakdown color", () => {
+  for (let tab = 0; tab <= 4; tab++) {
+    const values = { car: "10000", fee: "500", inspection: "100", transport: "200", registrationEnabled: true, customsDutyEnabled: true, germanCommissionEnabled: true, germanCommission: "450" };
+    const state = { customRows: [
+      { id: "custom-eur", label: "Extra EUR", amount: "100", currency: "EUR", vat: true },
+      { id: "custom-pln", label: "Extra PLN", amount: "200", currency: "PLN", vat: false },
+    ] };
+    const calc = applyFlexiblePresentation(calculate(tab, values, 4.35, 0.031, false, "pl", false, state), state, 4.35);
+    const categories = calculationBreakdown(calc, copy.pl);
+    for (const row of calc.rows.filter((item) => item.value > 0)) {
+      assert.ok(categories.some((item) => item.key === row.id && item.label === row.label), `tab ${tab}: missing ${row.label}`);
+    }
+    assert.equal(new Set(categories.map((item) => item.color)).size, categories.length);
+    const sum = categories.reduce((sum, item) => sum + item.value, 0);
+    assert.ok(Math.abs(sum - calc.total) < 1e-8, `tab ${tab}: breakdown ${sum} must match total ${calc.total}`);
+    const edited = applyManualOverrides(calc, { [`${tab}:custom-pln`]: "500" }, tab);
+    assert.equal(calculationBreakdown(edited, copy.pl).find((item) => item.key === "custom-pln").value, 500);
+  }
+});
+
+test("removed costs leave the chart and renamed costs keep distinct colors", () => {
+  const base = calculate(3, { car: "10000", inspection: "100", transport: "200", germanCommissionEnabled: true, germanCommission: "450" }, 4.35, 0.031, false, "pl");
+  const calc = applyFlexiblePresentation(base, {
+    excludedRowIds: ["standard-1"],
+    rowEdits: { "german-commission": { label: "Dealer fee" } },
+  }, 4.35);
+  const categories = calculationBreakdown(calc, copy.pl);
+  assert.ok(!categories.some((item) => item.key === "standard-1"));
+  assert.equal(categories.find((item) => item.key === "german-commission").label, "Dealer fee");
+  assert.equal(new Set(categories.map((item) => item.color)).size, categories.length);
 });

@@ -1980,6 +1980,7 @@ select {
   align-items: baseline;
   gap: 5px;
   min-width: 0;
+  max-width: 100%;
 }
 
 .marginAuctionBreakdownItem span,
@@ -1991,10 +1992,11 @@ select {
   color: var(--ag-ink-600);
   font-size: 12px;
   font-weight: 600;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .marginAuctionBreakdownItem strong {
+  flex-shrink: 0;
   color: var(--ag-ink-900);
   font-size: 12px;
   font-weight: 800;

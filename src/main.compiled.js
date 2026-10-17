@@ -1530,20 +1530,48 @@ function ProcessFlow({
     }
   }))));
 }
-function MarginAuctionBreakdown({
-  c,
-  composition
-}) {
-  const categories = [["vehicle", c.breakdownVehicle, "#2f7eea", n(composition?.vehicle)], ["taxes", c.breakdownTaxes, "#ef4444", n(composition?.taxes)], ["auctionFee", c.breakdownAuctionFee, "#14b8a6", n(composition?.auctionFee)], ["inspection", c.breakdownInspection, "#10b981", n(composition?.inspection)], ["transport", c.breakdownTransport, "#8b5cf6", n(composition?.transport)], ["commission", c.breakdownCommission, "#f59e0b", n(composition?.commission)], ["other", c.breakdownOther, "#64748b", n(composition?.other)]].map(([key, label, color, value]) => ({
-    key,
-    label,
-    color,
-    value: Math.max(0, value)
-  })).filter(item => item.value > 0);
+function calculationBreakdown(calc, c) {
+  const rows = calc.rows;
+  const colors = new Map([
+    [c.lines.car, "#2f7eea"], [c.lines.carNetto, "#2f7eea"], [c.lines.carBrutto, "#2f7eea"],
+    [c.lines.excise, "#ef4444"], [c.lines.vat, "#be185d"],
+    [c.lines.auctionFee, "#14b8a6"], [c.lines.inspection, "#10b981"],
+    [c.lines.transport, "#8b5cf6"], [c.lines.commission, "#f59e0b"],
+    [c.lines.germanCommission, "#d946ef"], [c.lines.to, "#64748b"],
+    [c.lines.doc, "#0e7490"], [c.lines.registration, "#84a328"], [c.lines.customsDuty, "#b45309"],
+  ]);
+  const usedColors = new Set();
+  let colorIndex = 0;
+  const colorFor = (label) => {
+    let color = colors.get(label);
+    while (!color || usedColors.has(color)) color = `hsl(${(colorIndex++ * 137.508 + 12) % 360} 65% 40%)`;
+    usedColors.add(color);
+    return color;
+  };
+  const categories = rows.filter((item) => n(item.value) > 0).map((item, index) => {
+    return {
+      key: item.id || `row-${index}`, label: item.label, color: colorFor(item.label), value: n(item.value),
+      vehicle: item.id === "car" || item.id === "standard-0",
+      vat: Boolean(item.derived),
+      tax: Boolean(item.derived) || item.label === c.lines.excise || item.label === c.lines.customsDuty,
+    };
+  });
+  // Custom VAT is included in its gross contribution, not the standard VAT row.
+  const customVat = calc.flexibleManaged ? 0 : rows.filter((item) => item.custom).reduce((sum, item) => sum + Math.max(0, rowContribution(item) - n(item.value)), 0);
+  if (customVat > 0) {
+    const vat = categories.find((item) => item.vat);
+    if (vat) vat.value += customVat;
+    else categories.push({ key: "custom-vat", label: c.lines.vat, color: colorFor(c.lines.vat), value: customVat, tax: true });
+  }
+  return categories.sort((a, b) => Number(Boolean(b.vehicle)) - Number(Boolean(a.vehicle)) || Number(Boolean(b.tax)) - Number(Boolean(a.tax)));
+}
+
+function MarginAuctionBreakdown({ c, calc }) {
+  const categories = calculationBreakdown(calc, c);
   const total = categories.reduce((sum, item) => sum + item.value, 0);
   if (total <= 0) return null;
-  const vehicleShare = n(composition?.vehicle) / total * 100;
-  const primaryShare = (n(composition?.vehicle) + n(composition?.taxes)) / total * 100;
+  const vehicleShare = categories.filter(item => item.vehicle).reduce((sum, item) => sum + item.value, 0) / total * 100;
+  const primaryShare = categories.filter(item => item.vehicle || item.tax).reduce((sum, item) => sum + item.value, 0) / total * 100;
   const remainingShare = Math.max(0, 100 - primaryShare);
   const remainingMidpoint = primaryShare + remainingShare / 2;
   const formatShare = value => `${value.toFixed(value < 10 ? 1 : 0).replace(".", ",")}%`;
@@ -3502,9 +3530,9 @@ function App() {
       ...current,
       [key]: html
     }))
-  }), calc.composition && /*#__PURE__*/React.createElement(MarginAuctionBreakdown, {
+  }), /*#__PURE__*/React.createElement(MarginAuctionBreakdown, {
     c: c,
-    composition: calc.composition
+    calc: calc
   }))), /*#__PURE__*/React.createElement(HistoryPanel, {
     c: c,
     history: visibleHistory,
