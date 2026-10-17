@@ -853,9 +853,10 @@ function applyManualOverrides(calc, overrides, tabId) {
 function applyFlexiblePresentation(calc, state, rate) {
   const options = normalizeMarginAuctionState(state);
   const managedByCalculation = Boolean(calc.flexibleManaged);
-  const standardRows = calc.rows.map((item, index) => item.id ? item : {
+  let standardIndex = 0;
+  const standardRows = calc.rows.map(item => item.id ? item : {
     ...item,
-    id: `standard-${index}`
+    id: `standard-${standardIndex++}`
   });
   const customRows = managedByCalculation ? [] : options.customRows.map(item => marginAuctionCustomRow(item, rate, true));
   const allRows = [...standardRows, ...customRows];
@@ -883,6 +884,31 @@ function applyFlexiblePresentation(calc, state, rate) {
       other: n(calc.composition.other) + customContribution
     },
     rows
+  };
+}
+function migrateGermanCommissionHistory(item) {
+  if (item.rowIdentityVersion === 1 || ![3, 4].includes(item.activeTab) || !item.values?.germanCommissionEnabled) return item;
+  // Older histories numbered the optional fee as standard-1, shifting later rows.
+  const remap = id => {
+    const match = /^standard-(\d+)$/.exec(id);
+    if (!match || Number(match[1]) === 0) return id;
+    return Number(match[1]) === 1 ? "german-commission" : `standard-${Number(match[1]) - 1}`;
+  };
+  const state = normalizeMarginAuctionState(item.marginAuctionState);
+  return {
+    ...item,
+    rowIdentityVersion: 1,
+    marginAuctionState: {
+      ...state,
+      excludedRowIds: state.excludedRowIds.map(remap),
+      rowOrder: state.rowOrder.map(remap),
+      rowEdits: Object.fromEntries(Object.entries(state.rowEdits).map(([id, edit]) => [remap(id), edit])),
+      removedRows: state.removedRows.map(row => ({ ...row, id: remap(row.id) }))
+    },
+    manualOverrides: Object.fromEntries(Object.entries(item.manualOverrides || {}).map(([key, value]) => {
+      const prefix = `${item.activeTab}:`;
+      return [key.startsWith(prefix) ? prefix + remap(key.slice(prefix.length)) : key, value];
+    }))
   };
 }
 function formatHistoryDate(value, lang) {
@@ -2311,7 +2337,7 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
     const vatBase = (dealerDirect ? 0 : carPln) + inspection + transport + (dealerDirect ? 0 : excise) + commissionNetto + TO_FEE + registrationNetto;
     const vat = vatBase * VAT;
     const total = dealerDirect ? carPln + inspection + transport + excise + customsDuty + commissionNetto + TO_FEE + registrationNetto + vat + germanCommissionPln : vatBase + vat + customsDuty + germanCommissionPln;
-    const rows = [row(t.carNetto, carPln, "", "", false, false, conversionPrefix(car)), ...(values.germanCommissionEnabled ? [row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission))] : []), row(t.inspection, inspection, "", ""), row(t.transport, transport, "", ""), row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`), ...(values.customsDutyEnabled ? [row(t.customsDuty, customsDuty, "", `10% × ${money(carPln)}`)] : []), row(t.commission, commissionNetto, "", commissionFormula(dealerDirect ? STD_FIX : finFix, commissionPct, commissionBase, discountText)), row(t.to, TO_FEE, "", "", false, true), ...registrationRows(t, values.registrationEnabled), row(t.vat, vat, "", `23% × ${money(vatBase)}`, false, false, "", vat, 1, true)];
+    const rows = [row(t.carNetto, carPln, "", "", false, false, conversionPrefix(car)), ...(values.germanCommissionEnabled ? [{ ...row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission)), id: "german-commission" }] : []), row(t.inspection, inspection, "", ""), row(t.transport, transport, "", ""), row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`), ...(values.customsDutyEnabled ? [row(t.customsDuty, customsDuty, "", `10% × ${money(carPln)}`)] : []), row(t.commission, commissionNetto, "", commissionFormula(dealerDirect ? STD_FIX : finFix, commissionPct, commissionBase, discountText)), row(t.to, TO_FEE, "", "", false, true), ...registrationRows(t, values.registrationEnabled), row(t.vat, vat, "", `23% × ${money(vatBase)}`, false, false, "", vat, 1, true)];
     return {
       total,
       composition: {
@@ -2338,7 +2364,7 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
   const vatBase = inspection + transport + excise + commissionNetto + TO_FEE + registrationNetto;
   const vat = vatBase * VAT;
   const total = carPln + inspectionBrutto + transportBrutto + exciseBrutto + commissionBrutto + technicalBrutto + germanCommissionPln + registrationBrutto;
-  const rows = [row(t.car, carPln, "", "", false, false, conversionPrefix(car)), ...(values.germanCommissionEnabled ? [row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission))] : []), row(t.inspection, inspection, "", "", false, false, "", inspectionBrutto, 1.23), row(t.transport, transport, "", "", false, false, "", transportBrutto, 1.23), row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`, false, false, "", exciseBrutto, 1.23), row(t.commission, commissionNetto, "", commissionFormula(finFix, finPct, carPln, discountText), false, false, "", commissionBrutto, 1.23), row(t.to, TO_FEE, "", "", false, true, "", technicalBrutto, 1.23), ...registrationRows(t, values.registrationEnabled, registrationBrutto, 1.23), row(t.vat, vat, "", `23% × ${money(vatBase)}`, false, false, "", 0, 0, true)];
+  const rows = [row(t.car, carPln, "", "", false, false, conversionPrefix(car)), ...(values.germanCommissionEnabled ? [{ ...row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission)), id: "german-commission" }] : []), row(t.inspection, inspection, "", "", false, false, "", inspectionBrutto, 1.23), row(t.transport, transport, "", "", false, false, "", transportBrutto, 1.23), row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`, false, false, "", exciseBrutto, 1.23), row(t.commission, commissionNetto, "", commissionFormula(finFix, finPct, carPln, discountText), false, false, "", commissionBrutto, 1.23), row(t.to, TO_FEE, "", "", false, true, "", technicalBrutto, 1.23), ...registrationRows(t, values.registrationEnabled, registrationBrutto, 1.23), row(t.vat, vat, "", `23% × ${money(vatBase)}`, false, false, "", 0, 0, true)];
   return {
     total,
     composition: {
@@ -2959,6 +2985,7 @@ function App() {
       engineIndex,
       financed: activeTab > 0 && financed,
       dealerDirect: activeTab === 3 && dealerDirect,
+      rowIdentityVersion: 1,
       values: normalizeHistoryValues(values),
       manualOverrides,
       manualTotalOverride,
@@ -2977,6 +3004,7 @@ function App() {
     setScreenshotStatus("saved");
   };
   const restoreHistoryItem = item => {
+    item = migrateGermanCommissionHistory(item);
     if (item.type === "final") {
       setLang(["pl", "ru", "en"].includes(item.lang) ? item.lang : "pl");
       setActiveTab(FINAL_TAB_ID);

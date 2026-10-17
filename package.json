@@ -12,7 +12,7 @@
     "converter": "python3 converter/server.py",
     "smoke:release": "node scripts/release-smoke.mjs",
     "test:mobile-search": "node scripts/test-mobile-search-model-version.mjs && node scripts/audit-mobile-search.mjs --offline",
-    "test": "node --test server/partslink24-api.test.mjs tools/partslink24/report-extraction.test.mjs scripts/auto1.test.mjs scripts/offer.test.mjs scripts/engine-class.test.mjs scripts/market-listing.test.mjs scripts/monitoring-budget.test.mjs scripts/duplicates.test.mjs scripts/auction-report.test.mjs scripts/auction-assess.test.mjs scripts/auction-dekra.test.mjs scripts/proxy-queue.test.mjs scripts/portal-parsers.test.mjs scripts/deals.test.mjs scripts/monitoring-mail.test.mjs scripts/order-contract-pdf.test.mjs scripts/client-recognition.test.mjs",
+    "test": "node --test server/partslink24-api.test.mjs tools/partslink24/report-extraction.test.mjs scripts/auto1.test.mjs scripts/offer.test.mjs scripts/engine-class.test.mjs scripts/market-listing.test.mjs scripts/monitoring-budget.test.mjs scripts/duplicates.test.mjs scripts/auction-report.test.mjs scripts/auction-assess.test.mjs scripts/auction-dekra.test.mjs scripts/proxy-queue.test.mjs scripts/portal-parsers.test.mjs scripts/deals.test.mjs scripts/monitoring-mail.test.mjs scripts/order-contract-pdf.test.mjs scripts/client-recognition.test.mjs scripts/calculator-german-commission.test.mjs",
     "verify": "pnpm run check:js && pnpm run check:python && pnpm run test:mobile-search && pnpm test",
     "health:portals": "node scripts/portals/health.mjs",
     "fixtures:portals": "node scripts/portals/capture-fixtures.mjs"

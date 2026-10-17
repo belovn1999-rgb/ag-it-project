@@ -759,7 +759,8 @@ function applyManualOverrides(calc, overrides, tabId) {
 function applyFlexiblePresentation(calc, state, rate) {
   const options = normalizeMarginAuctionState(state);
   const managedByCalculation = Boolean(calc.flexibleManaged);
-  const standardRows = calc.rows.map((item, index) => item.id ? item : { ...item, id: `standard-${index}` });
+  let standardIndex = 0;
+  const standardRows = calc.rows.map((item) => item.id ? item : { ...item, id: `standard-${standardIndex++}` });
   const customRows = managedByCalculation
     ? []
     : options.customRows.map((item) => marginAuctionCustomRow(item, rate, true));
@@ -796,6 +797,32 @@ function applyFlexiblePresentation(calc, state, rate) {
       ? calc.composition
       : { ...calc.composition, other: n(calc.composition.other) + customContribution },
     rows,
+  };
+}
+
+function migrateGermanCommissionHistory(item) {
+  if (item.rowIdentityVersion === 1 || ![3, 4].includes(item.activeTab) || !item.values?.germanCommissionEnabled) return item;
+  // Older histories numbered the optional fee as standard-1, shifting later rows.
+  const remap = (id) => {
+    const match = /^standard-(\d+)$/.exec(id);
+    if (!match || Number(match[1]) === 0) return id;
+    return Number(match[1]) === 1 ? "german-commission" : `standard-${Number(match[1]) - 1}`;
+  };
+  const state = normalizeMarginAuctionState(item.marginAuctionState);
+  return {
+    ...item,
+    rowIdentityVersion: 1,
+    marginAuctionState: {
+      ...state,
+      excludedRowIds: state.excludedRowIds.map(remap),
+      rowOrder: state.rowOrder.map(remap),
+      rowEdits: Object.fromEntries(Object.entries(state.rowEdits).map(([id, edit]) => [remap(id), edit])),
+      removedRows: state.removedRows.map((row) => ({ ...row, id: remap(row.id) })),
+    },
+    manualOverrides: Object.fromEntries(Object.entries(item.manualOverrides || {}).map(([key, value]) => {
+      const prefix = `${item.activeTab}:`;
+      return [key.startsWith(prefix) ? prefix + remap(key.slice(prefix.length)) : key, value];
+    })),
   };
 }
 
@@ -2176,7 +2203,7 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
     const total = dealerDirect ? carPln + inspection + transport + excise + customsDuty + commissionNetto + TO_FEE + registrationNetto + vat + germanCommissionPln : vatBase + vat + customsDuty + germanCommissionPln;
     const rows = [
       row(t.carNetto, carPln, "", "", false, false, conversionPrefix(car)),
-      ...(values.germanCommissionEnabled ? [row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission))] : []),
+      ...(values.germanCommissionEnabled ? [{ ...row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission)), id: "german-commission" }] : []),
       row(t.inspection, inspection, "", ""),
       row(t.transport, transport, "", ""),
       row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`),
@@ -2216,7 +2243,7 @@ function calculate(tabId, values, rate, exciseRate, financed, lang, dealerDirect
   const total = carPln + inspectionBrutto + transportBrutto + exciseBrutto + commissionBrutto + technicalBrutto + germanCommissionPln + registrationBrutto;
   const rows = [
     row(t.car, carPln, "", "", false, false, conversionPrefix(car)),
-    ...(values.germanCommissionEnabled ? [row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission))] : []),
+    ...(values.germanCommissionEnabled ? [{ ...row(t.germanCommission, germanCommissionPln, "", "", false, false, conversionPrefix(germanCommission)), id: "german-commission" }] : []),
     row(t.inspection, inspection, "", "", false, false, "", inspectionBrutto, 1.23),
     row(t.transport, transport, "", "", false, false, "", transportBrutto, 1.23),
     row(t.excise, excise, "", `${(exciseRate * 100).toFixed(2)}% × ${money(carPln)}`, false, false, "", exciseBrutto, 1.23),
@@ -2847,6 +2874,7 @@ function App() {
       engineIndex,
       financed: activeTab > 0 && financed,
       dealerDirect: activeTab === 3 && dealerDirect,
+      rowIdentityVersion: 1,
       values: normalizeHistoryValues(values),
       manualOverrides,
       manualTotalOverride,
@@ -2867,6 +2895,7 @@ function App() {
   };
 
   const restoreHistoryItem = (item) => {
+    item = migrateGermanCommissionHistory(item);
     if (item.type === "final") {
       setLang(["pl", "ru", "en"].includes(item.lang) ? item.lang : "pl");
       setActiveTab(FINAL_TAB_ID);
