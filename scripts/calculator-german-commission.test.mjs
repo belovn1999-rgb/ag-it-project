@@ -11,8 +11,8 @@ const context = {
   window: { location: { search: "" }, localStorage: { getItem: () => null } },
   URLSearchParams,
 };
-vm.runInNewContext(source + "\nthis.api = { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money };", context);
-const { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money } = context.api;
+vm.runInNewContext(source + "\nthis.api = { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money, getProcessSteps, processStepOverrideKey };", context);
+const { calculate, applyFlexiblePresentation, migrateGermanCommissionHistory, money, getProcessSteps, processStepOverrideKey } = context.api;
 
 for (const tab of [3, 4]) {
   for (const lang of ["pl", "ru", "en"]) {
@@ -59,4 +59,25 @@ test("saved dealer calculations retain removed rows, edits and manual amounts", 
   assert.equal(migrated.manualOverrides["3:standard-2"], "250");
   assert.equal(saved.marginAuctionState.excludedRowIds[0], "standard-2");
   assert.equal(migrateGermanCommissionHistory(migrated), migrated);
+});
+
+test("German commission preserves payment notes and manual note edits for every dealer mode", () => {
+  for (const id of [3, 4]) {
+    for (const lang of ["pl", "ru", "en"]) {
+      for (const [financed, direct] of [[false, false], [true, false], ...(id === 3 ? [[false, true]] : [])]) {
+        const plain = getProcessSteps({ id }, lang, financed, false, direct);
+        const withFee = getProcessSteps({ id }, lang, financed, true, direct);
+        assert.deepEqual(withFee, plain, `${id}/${lang}/${financed}/${direct}: commission must not change purchase terms`);
+        for (let i = 0; i < plain.length; i++) {
+          assert.equal(processStepOverrideKey(id, lang, financed, true, direct, i), processStepOverrideKey(id, lang, financed, false, direct, i));
+        }
+      }
+    }
+  }
+  assert.deepEqual(Array.from(getProcessSteps({ id: 3 }, "pl", false, true)), [
+    "Oddajemy 70% uzyskanego rabatu od sprzedawcy",
+    "Wpłacamy kaucję w wys. zagranicznego VAT-u",
+    "Płatność w PLN lub EUR",
+    "Sprzedajemy na Fakturę VAT 23%",
+  ]);
 });

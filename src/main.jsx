@@ -543,41 +543,6 @@ function getProcessSteps(tab, lang, financed, hasGermanCommission = false, deale
     },
   };
 
-  if (hasGermanCommission && tab.id === 3) {
-    if (lang === "ru") {
-      return (
-        financed
-          ? ["Возвращаем 70% полученной скидки от продавца", financingNotes.ru.ownContribution, financingNotes.ru.ownFundsDeposit, directSellerPayment.ru]
-          : ["Возвращаем 70% полученной скидки от продавца", "Вносим депозит в размере иностранного VAT", directSellerPayment.ru]
-      );
-    }
-    if (lang === "en") {
-      return financed
-        ? ["We return 70% of the discount received from the seller", financingNotes.en.ownContribution, financingNotes.en.ownFundsDeposit, directSellerPayment.en]
-        : ["We return 70% of the discount received from the seller", "You pay a deposit equal to the foreign VAT", directSellerPayment.en];
-    }
-    return financed
-      ? ["Oddajemy 70% uzyskanego rabatu od sprzedawcy", financingNotes.pl.ownContribution, financingNotes.pl.ownFundsDeposit, directSellerPayment.pl]
-      : ["Oddajemy 70% uzyskanego rabatu od sprzedawcy", "Wpłacamy kaucję w wys. zagranicznego VAT-u", directSellerPayment.pl];
-  }
-
-  if (hasGermanCommission && tab.id === 4) {
-    if (lang === "ru") {
-      return (
-        financed
-          ? ["Возвращаем 70% полученной скидки от продавца", financingNotes.ru.ownContribution, financingNotes.ru.ownFunds, directSellerPayment.ru]
-          : ["Возвращаем 70% полученной скидки от продавца", directSellerPayment.ru]
-      );
-    }
-    if (lang === "en") {
-      return financed
-        ? ["We return 70% of the discount received from the seller", financingNotes.en.ownContribution, financingNotes.en.ownFunds, directSellerPayment.en]
-        : ["We return 70% of the discount received from the seller", directSellerPayment.en];
-    }
-    return financed
-      ? ["Oddajemy 70% uzyskanego rabatu od sprzedawcy", financingNotes.pl.ownContribution, financingNotes.pl.ownFunds, directSellerPayment.pl]
-      : ["Oddajemy 70% uzyskanego rabatu od sprzedawcy", directSellerPayment.pl];
-  }
 
   return steps[tab.id]?.[lang] || [];
 }
@@ -671,7 +636,8 @@ function sanitizeProcessStepHtml(value) {
 }
 
 function processStepOverrideKey(tabId, lang, financed, hasGermanCommission, dealerDirect, index) {
-  return [tabId, lang, financed ? 1 : 0, hasGermanCommission ? 1 : 0, dealerDirect ? 1 : 0, index].join(":");
+  const commissionVariant = [3, 4].includes(tabId) ? false : hasGermanCommission;
+  return [tabId, lang, financed ? 1 : 0, commissionVariant ? 1 : 0, dealerDirect ? 1 : 0, index].join(":");
 }
 
 function n(value) {
