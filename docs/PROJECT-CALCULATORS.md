@@ -1,5 +1,8 @@
 # Калькуляторы AUTOGOOD
 
+> С 18.10.2026 калькуляторы переезжают на платформу Mantexlab Tools (раздел «Kalkulator»): все новые изменения — там,
+> по [PLATFORM-CALCULATOR.md](PLATFORM-CALCULATOR.md). `calculators.html` работает как есть; этот файл — описание старой версии (эталон).
+
 Страница: `calculators.html`. Формулы: `src/main.jsx`, публичное зеркало —
 `src/main.compiled.js`. После изменения обоих файлов поднимать `?v=` в HTML.
 
