@@ -66,6 +66,9 @@
       vatOnly: "tylko auto z VAT do odliczenia", marginOnly: "auto z ceną netto kupujemy bezpośrednio albo na VAT 23%",
       client: "Klient", clientName: "imię i nazwisko (do e-maila)",
       remove: "Usuń z listy", removeAsk: "Usunąć ofertę {n} z listy?",
+      export: "Skopiuj oferty dla platformy", exported: "Skopiowano ofert: {n}. Wklej na platformie: Oferty → «Przenieś ze starego programu».",
+      exportEmpty: "W tej przeglądarce nie ma ofert.", exportManual: "Skopiuj ten tekst (Ctrl+C / Cmd+C) i wklej na platformie:",
+      exportFailed: "Nie udało się odczytać ofert w tej przeglądarce: {reason}.",
       fromLink: "z linku", fromMonitoring: "z Monitoringu",
       newCar: "nowe (bez rejestracji)", range: "Zasięg", battery: "Bateria", kwh: "kWh", interior: "Wnętrze", availability: "Dostępność", inStock: "od ręki",
       whoBusiness: "tylko firmom", whoTrade: "tylko firmom i handlarzom", whoExport: "tylko na eksport",
@@ -98,6 +101,9 @@
       vatOnly: "только авто с НДС к вычету", marginOnly: "авто с ценой нетто покупаем напрямую или с НДС 23%",
       client: "Клиент", clientName: "имя и фамилия (для письма)",
       remove: "Удалить из списка", removeAsk: "Удалить предложение {n} из списка?",
+      export: "Skopiuj oferty dla platformy", exported: "Скопировано предложений: {n}. Вставьте на платформе: «Офферы» → «Перенести из старой программы».",
+      exportEmpty: "В этом браузере нет предложений.", exportManual: "Скопируйте этот текст (Ctrl+C / Cmd+C) и вставьте на платформе:",
+      exportFailed: "Не удалось прочитать предложения в этом браузере: {reason}.",
       fromLink: "из ссылки", fromMonitoring: "из Monitoring",
       newCar: "новое (без регистрации)", range: "Запас хода", battery: "Батарея", kwh: "кВт·ч", interior: "Салон", availability: "Наличие", inStock: "в наличии",
       whoBusiness: "только фирмам", whoTrade: "только фирмам и перекупщикам", whoExport: "только на экспорт",
@@ -788,6 +794,33 @@
     if (!window.confirm(t("removeAsk", { n: button.dataset.number }))) return;
     await store.update(button.dataset.osRemove, { archived: true, archivedAt: new Date().toISOString() }).catch(() => null);
     showRecent();
+  });
+  // "Skopiuj oferty dla platformy" (the platform's «Офферы» 3в.3 p. 32): every
+  // offer of this browser, archived ones too, as text the manager pastes in
+  // «Офферы» → «Перенести из старой программы». Nothing here is changed.
+  const exportButton = document.querySelector("[data-os-export]");
+  const exportStatus = document.querySelector("[data-os-export-status]");
+  exportButton?.addEventListener("click", async () => {
+    exportStatus.textContent = "";
+    let list;
+    try {
+      list = await store.all();
+    } catch (error) {
+      exportStatus.textContent = t("exportFailed", { reason: error?.message || String(error) });
+      return;
+    }
+    if (!list.length) {
+      exportStatus.textContent = t("exportEmpty");
+      return;
+    }
+    const text = JSON.stringify({ kind: "offers", version: 1, exportedAt: new Date().toISOString(), offers: list });
+    try {
+      await navigator.clipboard.writeText(text);
+      exportStatus.textContent = t("exported", { n: list.length });
+    } catch {
+      // No clipboard (an old browser, no permission): the text to copy by hand.
+      window.prompt(t("exportManual"), text);
+    }
   });
   applyLang();
   store.channel?.addEventListener("message", () => showRecent());

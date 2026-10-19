@@ -11,7 +11,7 @@
  * every write, never removed; an unreadable value is kept aside.
  *
  * window.AUTOGOOD_OFFER_STORE: get(id), put(offer), update(id, change),
- * byAdKey(key), recent(limit), manager(), setManager(change), company(),
+ * byAdKey(key), recent(limit), all(), manager(), setManager(change), company(),
  * setCompany(change), newId(), channel (BroadcastChannel "autogood-offers").
  */
 (() => {
@@ -129,6 +129,14 @@
       .slice(0, limit);
   }
 
+  // Every offer, the archived ones too: "Skopiuj oferty dla platformy" (the
+  // platform's «Офферы» 3в.3 p. 32 moves them there). Nothing is changed here.
+  async function all() {
+    const db = await open();
+    const list = await done(db.transaction(STORE).objectStore(STORE).getAll());
+    return (list || []).sort((left, right) => String(left.createdAt).localeCompare(String(right.createdAt)));
+  }
+
   // Offers made today, for the number "1005-02".
   async function madeOn(day) {
     const db = await open();
@@ -183,5 +191,5 @@
   const company = (own = {}) => ({ ...COMPANY_DEFAULTS, ...filled(readJson(COMPANY_KEY)), ...filled(own) });
   const setCompany = (change) => writeJson(COMPANY_KEY, change);
 
-  window.AUTOGOOD_OFFER_STORE = { get, put, update, byAdKey, byFavorite, recent, madeOn, newId, manager, setManager, company, setCompany, channel, COMPANY_DEFAULTS, MANAGER_DEFAULTS };
+  window.AUTOGOOD_OFFER_STORE = { get, put, update, byAdKey, byFavorite, recent, all, madeOn, newId, manager, setManager, company, setCompany, channel, COMPANY_DEFAULTS, MANAGER_DEFAULTS };
 })();
