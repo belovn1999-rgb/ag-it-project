@@ -226,12 +226,20 @@ def group_body_level(generations):
         for body in gen["bodies"]:
             group["bodies"].append({**body, "name": gen["name"], "from": gen["from"], "to": gen["to"]})
     # A generation still "teraz" while a later one of the same model page has started (Land
-    # Cruiser VII "2017 - teraz", VIII from 2024; checked 2026-10-20): it ends when the next starts.
+    # Cruiser VII "2017 - teraz", VIII from 2024; checked 2026-10-20): it ends when the next starts —
+    # unless the next is an electric sibling sold alongside (Fiat 500 II and the 500e "III", 2026-10-21):
+    # a later generation ends one with combustion engines only if it has them too.
+    def kinds(gen):
+        types = {e.get("type", "") for body in gen["bodies"] for e in body["engines"]}
+        return any(t != "Elektryczne" for t in types), "Elektryczne" in types
+
     closed = []
     for gen in out:
         page = gen["path"].rsplit("/", 2)[0]
+        combustion = kinds(gen)[0]
         later = [g["from"] for g in out if g is not gen and g["path"].rsplit("/", 2)[0] == page
-                 and g["from"] and gen["from"] and g["from"] > gen["from"]]
+                 and g["from"] and gen["from"] and g["from"] > gen["from"]
+                 and (kinds(g)[0] if combustion else kinds(g)[1])]
         closed.append({**gen, "to": min(later)} if gen["to"] is None and later else gen)
     return closed + list(pseudo.values())
 

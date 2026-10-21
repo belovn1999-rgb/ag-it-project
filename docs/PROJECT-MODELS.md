@@ -256,7 +256,9 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
      моделью (Mercedes Klasa X), год двигателя бывает один (`…-110km-2010`), поколение
      «(0 - teraz)» (VW Crafter II) — теперь читаются (`children()`, `engines_from_slugs()`).
      Поколение «teraz», после которого на той же странице началось следующее, кончается его
-     началом (`group_body_level()`: Land Cruiser VII 2017–2024, CX-5 II 2017–2026).
+     началом (`group_body_level()`: Land Cruiser VII 2017–2024, CX-5 II 2017–2026) — кроме
+     электрического «поколения», которое продавалось рядом (Fiat 500e III не кончает бензиновый 500 II):
+     поколение с ДВС кончает только следующее с ДВС, электрическое — следующее электрическое.
    - **Новые модели (20):** Yaris Cross, e-tron GT, Citroën DS3 / DS4 / DS5 (только кузова
      «(Citroen)» и DS4 Crossback), C-Zero, Bronco, F-150, Staria, Seltos, CX-6e, Pixo, Cube,
      Karl, Ampera, iOn, Twizy, Alpine A110, GR86, ID. Polo; данные появились и у Mazda Tribute,
