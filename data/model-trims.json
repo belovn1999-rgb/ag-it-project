@@ -13627,6 +13627,181 @@
   },
   {
    "brand": "Ford",
+   "model": "Bronco",
+   "label": "Bronco",
+   "code": "Bronco VI",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Big Bend",
+    "Outer Banks",
+    "Badlands",
+    "Wildtrak"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Ford_Bronco",
+    "https://fr.wikipedia.org/wiki/Ford_Bronco_%282021%29"
+   ],
+   "status": "проверено",
+   "note": "pl: Ford Bronco · fr: Ford Bronco (2021)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Opel",
+   "model": "Karl",
+   "label": "Karl",
+   "code": "Karl I",
+   "phase": "весь выпуск",
+   "years": "2015–2018",
+   "trims": [
+    "Essentia",
+    "Enjoy",
+    "Cosmo",
+    "Selection",
+    "Exklusive",
+    "ROCKS",
+    "INNOVATION"
+   ],
+   "sport": [],
+   "special": [
+    "Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Opel_Karl",
+    "https://de.wikipedia.org/wiki/Opel_Karl"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Opel Karl · de: Opel Karl",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Renault",
+   "model": "Twizy",
+   "label": "Twizy",
+   "code": "Twizy I",
+   "phase": "весь выпуск",
+   "years": "2013–2019",
+   "trims": [
+    "Urban/Life",
+    "Color",
+    "Cargo",
+    "Technic/Intens",
+    "Twizy45",
+    "Twizy80"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Renault_Twizy"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Renault Twizy",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Toyota",
+   "model": "GR86",
+   "label": "GR86",
+   "code": "GR86 I",
+   "phase": "весь выпуск",
+   "years": "2022–2024",
+   "trims": [
+    "GR86",
+    "Drift force Édition"
+   ],
+   "sport": [],
+   "special": [
+    "Special Edition",
+    "Trueno Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Toyota_GR86"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Toyota GR86",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Toyota",
+   "model": "Yaris Cross",
+   "label": "Yaris Cross",
+   "code": "Yaris Cross IV",
+   "phase": "дорестайлинг",
+   "years": "2020–2024",
+   "trims": [
+    "Dynamic",
+    "Dynamic Business",
+    "Design",
+    "Collection",
+    "Trail",
+    "GR Sport",
+    "Première"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Toyota_Yaris_Cross"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Toyota Yaris Cross",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Toyota",
+   "model": "Yaris Cross",
+   "label": "Yaris Cross",
+   "code": "Yaris Cross IV",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Dynamic",
+    "Dynamic Business",
+    "Design",
+    "Collection",
+    "Trail",
+    "GR Sport",
+    "Première"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Toyota_Yaris_Cross"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Toyota Yaris Cross",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Volkswagen",
+   "model": "ID. Polo",
+   "label": "ID. Polo",
+   "code": "ID. Polo I",
+   "phase": "весь выпуск",
+   "years": "2026–н. в.",
+   "trims": [
+    "Life",
+    "Style"
+   ],
+   "sport": [
+    "GTI"
+   ],
+   "special": [
+    "Life Premiere Edition",
+    "Style Premiere Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Volkswagen_ID._Polo"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Volkswagen ID. Polo",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Ford",
    "model": "Transit",
    "label": "Transit",
    "code": "Transit VI",

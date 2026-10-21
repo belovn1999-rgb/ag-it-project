@@ -24,7 +24,8 @@
    есть не копируем. Справочники собирает `platform/tools/portals/build-catalogs.mjs` из этого репозитория.
    Справочник моделей (B61) после каждой пересборки здесь переносится туда же (`model-specs/*.json`,
    `model-index.json`; подмодели — `App\Portals\ModelSpecs::SUBMODELS`, держать как `SUBMODELS` в
-   `src/mobile-model-specs.js`); 21.10 — 421 модель, 10 206 версий (`PROJECT-MODELS.md` п. 7).
+   `src/mobile-model-specs.js`; семейства Lexus и Mini — в `family()` обоих); 21.10 — 421 модель, 10 206 версий
+   (`PROJECT-MODELS.md` п. 7), затем волна 1 новых марок — 28 марок, 542 модели, 12 051 версия (п. 8).
 3. Защиту порталов не обходим; mobile.de с сервера не читается — только браузером менеджера (расширение).
 4. Перед работой: `git pull` в `~/cloude/mantexlab-tools`; параллельно работают чаты шефа — свести правки, сохраняя
    обе стороны. В том же коммите: `docs/contracts/portals.md` и строка/статус в `docs/board.md` платформы, здесь —

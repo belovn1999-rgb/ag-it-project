@@ -4,7 +4,7 @@
 > Источники: польская и немецкая Википедия (разделы «Wersje wyposażeniowe», «Linie stylistyczne»,
 > «Ausstattungslinien»), страницы производителей, прессы и польских каталогов. B61, этап 5
 > (`docs/PROJECT-MOBILE.md` §4.8). Названия — как в объявлениях и у дилеров (PL/DE).
-> Строк: 635 — проверено: 228, частично проверено: 401, проверить: 6
+> Строк: 642 — проверено: 229, частично проверено: 407, проверить: 6
 > («проверить» — по знанию, источник не найден; перед подстановкой в фильтр проверить).
 
 Колонки: **линейки** — основные комплектации; **спорт** — спортивные модели и версии,
@@ -638,7 +638,7 @@
 
 ## Новые модели — из Википедии (этап 6, 10-10)
 
-> 375 строк по 188 моделям, собраны `tools/collect-trims-wiki.py` из разделов «Wersje wyposażeniowe» (pl), «Ausstattungsvarianten /
+> 382 строк по 194 моделям, собраны `tools/collect-trims-wiki.py` из разделов «Wersje wyposażeniowe» (pl), «Ausstattungsvarianten /
 > -linien» (de), «Finitions» (fr), «Allestimenti» (it), «Uitvoeringen» (nl) статьи того поколения (годы из
 > карточки или заголовка). Английская Википедия не берётся (линейки США, Китая, Индии), статьи о версиях
 > других рынков и общие статьи нескольких марок — тоже. Цвета и опции отсеяны. «проверено» — две Википедии
@@ -1023,3 +1023,10 @@
 | Volvo | EX30 | EX30 I | весь выпуск | 2023–н. в. | Start, Plus, Ultra | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Volvo_EX30) |
 | Volvo | XC70 | XC70 II | дорестайлинг | 2007–2013 | Kinetic, Momentum, Ocean Race, Summum, Xenium | — | Signature Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Volvo_XC70) |
 | Volvo | XC70 | XC70 II | рестайлинг | 2013–2016 | Kinetic, Momentum, Ocean Race, Summum, Xenium | — | Signature Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Volvo_XC70) |
+| Ford | Bronco | Bronco VI | весь выпуск | 2023–н. в. | Big Bend, Outer Banks, Badlands, Wildtrak | — | First Edition | проверено | [1](https://pl.wikipedia.org/wiki/Ford_Bronco), [2](https://fr.wikipedia.org/wiki/Ford_Bronco_%282021%29) |
+| Opel | Karl | Karl I | весь выпуск | 2015–2018 | Essentia, Enjoy, Cosmo, Selection, Exklusive, ROCKS, INNOVATION | — | Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Opel_Karl), [2](https://de.wikipedia.org/wiki/Opel_Karl) |
+| Renault | Twizy | Twizy I | весь выпуск | 2013–2019 | Urban/Life, Color, Cargo, Technic/Intens, Twizy45, Twizy80 | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Renault_Twizy) |
+| Toyota | GR86 | GR86 I | весь выпуск | 2022–2024 | GR86, Drift force Édition | — | Special Edition, Trueno Edition | частично проверено | [1](https://fr.wikipedia.org/wiki/Toyota_GR86) |
+| Toyota | Yaris Cross | Yaris Cross IV | дорестайлинг | 2020–2024 | Dynamic, Dynamic Business, Design, Collection, Trail, GR Sport, Première | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Toyota_Yaris_Cross) |
+| Toyota | Yaris Cross | Yaris Cross IV | рестайлинг | 2024–н. в. | Dynamic, Dynamic Business, Design, Collection, Trail, GR Sport, Première | — | — | частично проверено | [1](https://fr.wikipedia.org/wiki/Toyota_Yaris_Cross) |
+| Volkswagen | ID. Polo | ID. Polo I | весь выпуск | 2026–н. в. | Life, Style | GTI | Life Premiere Edition, Style Premiere Edition | частично проверено | [1](https://pl.wikipedia.org/wiki/Volkswagen_ID._Polo) |

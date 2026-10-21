@@ -273,7 +273,9 @@ RULES = [
       None, "de: Mini Countryman — «Dieselmotor als Mild-Hybrid»"),
 ]
 # A plug-in (or a full hybrid) autocentrum files under "Hybrydowe" is never a mild hybrid (A8 60 TFSI e, GLA 250 e).
-PLUGIN_NAME = re.compile(r"plug-?in|\bphev\b|\btfsi ?e\b|\b\d{3} ?e\b|\b4xe\b|\brecharge\b|\bt8\b", re.I)
+PLUGIN_NAME = re.compile(r"plug-?in|\bphev\b|\btfsi ?e\b|\b4xe\b|\brecharge\b|\bt8\b", re.I)
+# "A 250 e", "E 300 de", "330e" — in the version name only and lower case: "E 300" + body "E-Class" is no plug-in.
+PLUGIN_NUMBER = re.compile(r"\b\d{2,3} ?d?e\b")
 
 
 def years_of(text):
@@ -385,7 +387,7 @@ def classify(rows, ac):
         # Mild hybrids exist since 2016 (owner); plug-ins and electric cars have their own excise already.
         _start, end = years_of(row["Годы (проверено)"])
         if (end or 2100) < 2016 or row["Топливо"] in ("плагин-гибрид", "электро") \
-                or PLUGIN_NAME.search(f"{row['Версия']} {row['Кузов']}"):
+                or PLUGIN_NAME.search(f"{row['Версия']} {row['Кузов']}") or PLUGIN_NUMBER.search(row["Версия"]):
             continue
         rules = [rule for rule in RULES if rule_matches(rule, row)]
         own = name_says(row)

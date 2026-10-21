@@ -4757,6 +4757,7 @@
         184,
         211,
         245,
+        272,
         299
        ],
        "2996": [
@@ -4792,12 +4793,6 @@
        ],
        "2987": [
         258
-       ]
-      },
-      "hybrid": {
-       "1991": [
-        211,
-        272
        ]
       }
      }
@@ -5032,6 +5027,9 @@
        "2987": [
         367
        ],
+       "2999": [
+        457
+       ],
        "3982": [
         469,
         612
@@ -5055,9 +5053,6 @@
       "hybrid": {
        "2996": [
         476
-       ],
-       "2999": [
-        457
        ]
       }
      }
@@ -7443,11 +7438,6 @@
         120,
         149,
         150
-       ]
-      },
-      "hybrid_diesel": {
-       "1461": [
-        110
        ]
       }
      }
@@ -12462,12 +12452,14 @@
        "1499": [
         122,
         136,
-        140
+        140,
+        170
        ],
        "1998": [
         156,
         178,
         184,
+        218,
         245,
         306
        ],
@@ -12492,14 +12484,6 @@
         150,
         190,
         211
-       ]
-      },
-      "hybrid": {
-       "1499": [
-        170
-       ],
-       "1998": [
-        218
        ]
       }
      }
@@ -13063,12 +13047,10 @@
         163
        ]
       },
-      "hybrid": {
+      "petrol": {
        "1499": [
         170
-       ]
-      },
-      "petrol": {
+       ],
        "1998": [
         300
        ]
@@ -16019,6 +16001,7 @@
       "petrol": {
        "2999": [
         367,
+        389,
         435
        ]
       },
@@ -16036,9 +16019,6 @@
       "hybrid": {
        "1991": [
         313
-       ],
-       "2999": [
-        389
        ]
       }
      }
@@ -16944,15 +16924,12 @@
       "Klasa G W465 Terenowy Electric (autocentrum)"
      ],
      "engines": {
-      "hybrid": {
+      "petrol": {
        "2999": [
         449
-       ],
-       "3982": [
-        585
        ]
       },
-      "hybrid_diesel": {
+      "diesel": {
        "2989": [
         367
        ]
@@ -16960,6 +16937,11 @@
       "electric": {
        "0": [
         588
+       ]
+      },
+      "hybrid": {
+       "3982": [
+        585
        ]
       }
      }
@@ -31098,7 +31080,7 @@
         328
        ]
       },
-      "hybrid_diesel": {
+      "diesel": {
        "3283": [
         200,
         254
@@ -31175,7 +31157,7 @@
         328
        ]
       },
-      "hybrid_diesel": {
+      "diesel": {
        "3283": [
         254
        ]
@@ -34777,6 +34759,8336 @@
       "hybrid_diesel": {
        "1997": [
         200
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "500",
+   "generations": [
+    {
+     "code": "500 IV",
+     "phase": "весь выпуск",
+     "years": "2023–2024",
+     "mobileModel": "500",
+     "bodies": [
+      "500 IV Cabrio (autocentrum)",
+      "500 IV Hatchback (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "998": [
+        70
+       ],
+       "999": [
+        70
+       ]
+      }
+     }
+    },
+    {
+     "code": "500 III",
+     "phase": "весь выпуск",
+     "years": "2022–2023",
+     "mobileModel": "500",
+     "bodies": [
+      "500 III 3+1 (autocentrum)",
+      "500 III Cabrio (autocentrum)",
+      "500 III Hatchback (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        118
+       ],
+       "23800": [
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "500 II",
+     "phase": "весь выпуск",
+     "years": "2007–2022",
+     "mobileModel": "500",
+     "bodies": [
+      "500 II 3+1 Electric (autocentrum)",
+      "500 II CC (autocentrum)",
+      "500 II CC Seria 1 (autocentrum)",
+      "500 II CC Seria 3 (autocentrum)",
+      "500 II CC Seria 4 (autocentrum)",
+      "500 II Cabrio Electric (autocentrum)",
+      "500 II Hatchback 3-door (autocentrum)",
+      "500 II Hatchback Electric (autocentrum)",
+      "500 II Seria 1 (autocentrum)",
+      "500 II Seria 3 (autocentrum)",
+      "500 II Seria 4 (autocentrum)",
+      "500 II Seria 4 Hybrid (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        95,
+        118
+       ]
+      },
+      "hybrid": {
+       "1242": [
+        69
+       ]
+      },
+      "petrol": {
+       "875": [
+        85,
+        105
+       ],
+       "998": [
+        70
+       ],
+       "999": [
+        70
+       ],
+       "1242": [
+        69
+       ],
+       "1368": [
+        100,
+        135
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75,
+        95
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "600",
+   "generations": [
+    {
+     "code": "600 II",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "600",
+     "bodies": [
+      "600 II Crossover (autocentrum)",
+      "600 II Crossover Hybrid (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        100,
+        136
+       ]
+      },
+      "electric": {
+       "0": [
+        156
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Doblo",
+   "generations": [
+    {
+     "code": "Doblo V",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "Doblo",
+     "bodies": [
+      "Doblo V Van Long Brygadowy Facelifting (autocentrum)",
+      "Doblo V Van Long Facelifting (autocentrum)",
+      "Doblo V Van Standard Facelifting (autocentrum)",
+      "Doblo V e-Van Long Brygadowy Facelifting (autocentrum)",
+      "Doblo V e-Van Long Facelifting (autocentrum)",
+      "Doblo V e-Van Standard Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        110
+       ]
+      },
+      "diesel": {
+       "1499": [
+        102,
+        131
+       ]
+      },
+      "electric": {
+       "0": [
+        136
+       ]
+      }
+     }
+    },
+    {
+     "code": "Doblo V",
+     "phase": "дорестайлинг",
+     "years": "2022–2023",
+     "mobileModel": "Doblo",
+     "bodies": [
+      "Doblo V Van Long (autocentrum)",
+      "Doblo V Van Long Brygadowy (autocentrum)",
+      "Doblo V Van Standard (autocentrum)",
+      "Doblo V e-Van Long (autocentrum)",
+      "Doblo V e-Van Long Brygadowy (autocentrum)",
+      "Doblo V e-Van Standard (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        110
+       ]
+      },
+      "diesel": {
+       "1499": [
+        102,
+        131
+       ]
+      },
+      "electric": {
+       "0": [
+        136
+       ]
+      }
+     }
+    },
+    {
+     "code": "Doblo IV",
+     "phase": "весь выпуск",
+     "years": "2015–2022",
+     "mobileModel": "Doblo",
+     "bodies": [
+      "Doblo IV IV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1368": [
+        95,
+        120
+       ]
+      },
+      "diesel": {
+       "1598": [
+        95,
+        105,
+        120
+       ],
+       "1956": [
+        135
+       ]
+      }
+     }
+    },
+    {
+     "code": "Doblo III",
+     "phase": "весь выпуск",
+     "years": "2010–2016",
+     "mobileModel": "Doblo",
+     "bodies": [
+      "Doblo III Cargo (autocentrum)",
+      "Doblo III Van (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1368": [
+        95,
+        120
+       ]
+      },
+      "diesel": {
+       "1248": [
+        90
+       ],
+       "1598": [
+        90,
+        105
+       ],
+       "1956": [
+        135
+       ]
+      }
+     }
+    },
+    {
+     "code": "Doblo II",
+     "phase": "весь выпуск",
+     "years": "2006–2010",
+     "mobileModel": "Doblo",
+     "bodies": [
+      "Doblo II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1368": [
+        77
+       ],
+       "1596": [
+        103
+       ],
+       "1600": [
+        92
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75,
+        85
+       ],
+       "1900": [
+        120
+       ],
+       "1910": [
+        105
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Ducato",
+   "generations": [
+    {
+     "code": "Ducato IV",
+     "phase": "рестайлинг",
+     "years": "2021–н. в.",
+     "mobileModel": "Ducato",
+     "bodies": [
+      "Ducato IV Brygadówka długa Facelifting (autocentrum)",
+      "Ducato IV Brygadówka krótka Facelifting (autocentrum)",
+      "Ducato IV Brygadówka średnia Facelifting (autocentrum)",
+      "Ducato IV Furgon Przeszklony długi Facelifting (autocentrum)",
+      "Ducato IV Furgon Przeszklony ekstra długi Facelifting (autocentrum)",
+      "Ducato IV Furgon Przeszklony krótki Facelifting (autocentrum)",
+      "Ducato IV Furgon Przeszklony średni Facelifting (autocentrum)",
+      "Ducato IV Furgon długi Facelifting (autocentrum)",
+      "Ducato IV Furgon ekstra długi Facelifting (autocentrum)",
+      "Ducato IV Furgon krótki Facelifting (autocentrum)",
+      "Ducato IV Furgon średni Facelifting (autocentrum)",
+      "Ducato IV e-Ducato Furgon długi Facelifting (autocentrum)",
+      "Ducato IV e-Ducato Furgon krótki Facelifting (autocentrum)",
+      "Ducato IV e-Ducato Furgon średni Facelifting (autocentrum)",
+      "Ducato IV e-Ducato Kabina długa Facelifting (autocentrum)",
+      "Ducato IV e-Ducato Kabina krótka Facelifting (autocentrum)",
+      "Ducato IV e-Ducato Kabina średnia Facelifting (autocentrum)",
+      "Ducato IV e-Ducato Kabina średnio-długa Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        122
+       ]
+      },
+      "diesel": {
+       "2287": [
+        120,
+        140,
+        160,
+        177
+       ],
+       "2298": [
+        140
+       ]
+      }
+     }
+    },
+    {
+     "code": "Ducato IV",
+     "phase": "дорестайлинг",
+     "years": "2014–2021",
+     "mobileModel": "Ducato",
+     "bodies": [
+      "Ducato IV Furgon (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "1956": [
+        115
+       ],
+       "2287": [
+        130,
+        148
+       ],
+       "2999": [
+        177
+       ]
+      }
+     }
+    },
+    {
+     "code": "Ducato III",
+     "phase": "весь выпуск",
+     "years": "2006–2014",
+     "mobileModel": "Ducato",
+     "bodies": [
+      "Ducato III Furgon długi (autocentrum)",
+      "Ducato III Furgon krótki (autocentrum)",
+      "Ducato III Furgon przedłużony (autocentrum)",
+      "Ducato III Furgon średni (autocentrum)",
+      "Ducato III Kabina długi (autocentrum)",
+      "Ducato III Kabina krótki (autocentrum)",
+      "Ducato III Kabina średni (autocentrum)",
+      "Ducato III Kombi krótki (autocentrum)",
+      "Ducato III Kombi średni (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2198": [
+        100
+       ],
+       "2287": [
+        120,
+        130
+       ],
+       "2999": [
+        157
+       ],
+       "3000": [
+        157
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Grande Panda",
+   "generations": [
+    {
+     "code": "Grande Panda",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "Grande Panda",
+     "bodies": [
+      "Grande Panda Crossover (autocentrum)",
+      "Grande Panda Crossover Electric (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        110
+       ],
+       "1200": [
+        100
+       ]
+      },
+      "electric": {
+       "0": [
+        113
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Panda",
+   "generations": [
+    {
+     "code": "Panda III",
+     "phase": "весь выпуск",
+     "years": "2012–н. в.",
+     "mobileModel": "Panda",
+     "bodies": [
+      "Panda III 4x4 (autocentrum)",
+      "Panda III 4x4 Seria 1 (autocentrum)",
+      "Panda III 4x4 Seria 2 (autocentrum)",
+      "Panda III 4x4 seria 3 (autocentrum)",
+      "Panda III City Cross seria 3 (autocentrum)",
+      "Panda III Cross (autocentrum)",
+      "Panda III Cross Seria 1 (autocentrum)",
+      "Panda III Cross Seria 2 (autocentrum)",
+      "Panda III Cross seria 4 (autocentrum)",
+      "Panda III Hatchback 5-door (autocentrum)",
+      "Panda III Hatchback 5-door Seria 1 (autocentrum)",
+      "Panda III Hatchback 5-door Seria 2 (autocentrum)",
+      "Panda III Hatchback 5-door seria 3 (autocentrum)",
+      "Panda III Hatchback 5-door seria 4 (autocentrum)",
+      "Panda III Hatchback 5-door seria 5 (autocentrum)",
+      "Panda III Pandina 5-door seria 5 (autocentrum)",
+      "Panda III Trekking (autocentrum)",
+      "Panda III VAN (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "875": [
+        85,
+        90
+       ],
+       "964": [
+        65
+       ],
+       "999": [
+        70
+       ],
+       "1242": [
+        69
+       ]
+      },
+      "lpg": {
+       "1242": [
+        69
+       ]
+      },
+      "diesel": {
+       "1238": [
+        95
+       ],
+       "1248": [
+        75,
+        80,
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "Panda II",
+     "phase": "весь выпуск",
+     "years": "2003–2012",
+     "mobileModel": "Panda",
+     "bodies": [
+      "Panda II Hatchback 5-door (autocentrum)",
+      "Panda II Van (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1108": [
+        54
+       ],
+       "1242": [
+        60,
+        69
+       ],
+       "1368": [
+        70,
+        78,
+        100
+       ],
+       "1400": [
+        69
+       ]
+      },
+      "diesel": {
+       "1248": [
+        70,
+        75
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Tipo",
+   "generations": [
+    {
+     "code": "Tipo II",
+     "phase": "дорестайлинг",
+     "years": "2015–2020",
+     "mobileModel": "Tipo",
+     "bodies": [
+      "Tipo II Cross (autocentrum)",
+      "Tipo II Cross Kombi (autocentrum)",
+      "Tipo II Hatchback (autocentrum)",
+      "Tipo II Sedan (autocentrum)",
+      "Tipo II Station Wagon (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        100
+       ],
+       "1368": [
+        95,
+        120
+       ],
+       "1598": [
+        110
+       ]
+      },
+      "diesel": {
+       "1248": [
+        95
+       ],
+       "1598": [
+        120,
+        130
+       ]
+      },
+      "hybrid": {
+       "1469": [
+        130
+       ]
+      },
+      "lpg": {
+       "1368": [
+        120
+       ]
+      }
+     }
+    },
+    {
+     "code": "Tipo II",
+     "phase": "рестайлинг",
+     "years": "2020–н. в.",
+     "mobileModel": "Tipo",
+     "bodies": [
+      "Tipo II Hatchback Facelifting (autocentrum)",
+      "Tipo II Sedan Facelifting (autocentrum)",
+      "Tipo II Station Wagon Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        100
+       ],
+       "1368": [
+        95
+       ],
+       "1469": [
+        130
+       ]
+      },
+      "diesel": {
+       "1248": [
+        95
+       ],
+       "1598": [
+        130
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "500L",
+   "generations": [
+    {
+     "code": "500L",
+     "phase": "весь выпуск",
+     "years": "2012–2022",
+     "mobileModel": "500L",
+     "bodies": [
+      "500L Cross Seria 6 (autocentrum)",
+      "500L Hatchback 5-door (autocentrum)",
+      "500L Hatchback 5-door Seria 1 (autocentrum)",
+      "500L Hatchback 5-door Seria 2 (autocentrum)",
+      "500L Hatchback 5-door Seria 4 (autocentrum)",
+      "500L Hatchback 5-door Seria 5 (autocentrum)",
+      "500L Hatchback 5-door seria 6 (autocentrum)",
+      "500L Living (autocentrum)",
+      "500L Living Seria 1 (autocentrum)",
+      "500L Trekking (autocentrum)",
+      "500L Trekking Seria 1 (autocentrum)",
+      "500L Trekking Seria 2 (autocentrum)",
+      "500L Trekking Seria 4 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "875": [
+        85,
+        105
+       ],
+       "1368": [
+        95,
+        120
+       ]
+      },
+      "diesel": {
+       "1248": [
+        85
+       ],
+       "1598": [
+        105,
+        120
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "500X",
+   "generations": [
+    {
+     "code": "500X",
+     "phase": "рестайлинг",
+     "years": "2018–2024",
+     "mobileModel": "500X",
+     "bodies": [
+      "500X Crossover Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        120
+       ],
+       "1332": [
+        150
+       ],
+       "1500": [
+        130
+       ],
+       "1598": [
+        110
+       ]
+      },
+      "diesel": {
+       "1248": [
+        95
+       ],
+       "1598": [
+        120
+       ],
+       "1956": [
+        150
+       ]
+      }
+     }
+    },
+    {
+     "code": "500X",
+     "phase": "дорестайлинг",
+     "years": "2014–2018",
+     "mobileModel": "500X",
+     "bodies": [
+      "500X Crossover (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1368": [
+        140,
+        170
+       ],
+       "1598": [
+        110
+       ]
+      },
+      "diesel": {
+       "1248": [
+        95
+       ],
+       "1598": [
+        120
+       ],
+       "1956": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Albea",
+   "generations": [
+    {
+     "code": "Albea II",
+     "phase": "весь выпуск",
+     "years": "2004–2010",
+     "mobileModel": "Albea",
+     "bodies": [
+      "Albea II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        80
+       ],
+       "1368": [
+        77
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Bravo",
+   "generations": [
+    {
+     "code": "Bravo II",
+     "phase": "весь выпуск",
+     "years": "2006–2015",
+     "mobileModel": "Bravo",
+     "bodies": [
+      "Bravo II Hatchback 5-door (autocentrum)",
+      "Bravo II Hatchback 5-door Seria 2 (autocentrum)",
+      "Bravo II Hatchback 5-door Seria 3 (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "1598": [
+        105,
+        120
+       ],
+       "1910": [
+        120,
+        150
+       ],
+       "1956": [
+        165
+       ]
+      },
+      "petrol": {
+       "1368": [
+        90,
+        120,
+        140,
+        150
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Croma",
+   "generations": [
+    {
+     "code": "Croma II",
+     "phase": "весь выпуск",
+     "years": "2005–2010",
+     "mobileModel": "Croma",
+     "bodies": [
+      "Croma II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1796": [
+        140
+       ],
+       "2198": [
+        147
+       ]
+      },
+      "diesel": {
+       "1910": [
+        120,
+        150
+       ],
+       "2387": [
+        200
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Fiorino",
+   "generations": [
+    {
+     "code": "Fiorino IV",
+     "phase": "весь выпуск",
+     "years": "2008–2011",
+     "mobileModel": "Fiorino",
+     "bodies": [
+      "Fiorino IV Cargo (autocentrum)",
+      "Fiorino IV Kombi (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1360": [
+        73
+       ],
+       "1368": [
+        70,
+        77
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75,
+        95
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Freemont",
+   "generations": [
+    {
+     "code": "Freemont I",
+     "phase": "весь выпуск",
+     "years": "2011–2016",
+     "mobileModel": "Freemont",
+     "bodies": [
+      "Freemont I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2360": [
+        170
+       ],
+       "3605": [
+        280
+       ]
+      },
+      "diesel": {
+       "1956": [
+        140,
+        170
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Fullback",
+   "generations": [
+    {
+     "code": "Fullback",
+     "phase": "весь выпуск",
+     "years": "2016–2018",
+     "mobileModel": "Fullback",
+     "bodies": [
+      "Fullback Podwójna kabina (autocentrum)",
+      "Fullback Przedłużona kabina (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2442": [
+        150,
+        180
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Idea",
+   "generations": [
+    {
+     "code": "Idea I",
+     "phase": "весь выпуск",
+     "years": "2004–2012",
+     "mobileModel": "Idea",
+     "bodies": [
+      "Idea I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        80
+       ],
+       "1368": [
+        77,
+        95
+       ]
+      },
+      "diesel": {
+       "1248": [
+        70,
+        90
+       ],
+       "1910": [
+        100
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Linea",
+   "generations": [
+    {
+     "code": "Linea",
+     "phase": "рестайлинг",
+     "years": "2013–2015",
+     "mobileModel": "Linea",
+     "bodies": [
+      "Linea Sedan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "1248": [
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "Linea",
+     "phase": "дорестайлинг",
+     "years": "2007–2013",
+     "mobileModel": "Linea",
+     "bodies": [
+      "Linea Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1368": [
+        77,
+        120
+       ],
+       "1400": [
+        77
+       ]
+      },
+      "diesel": {
+       "1248": [
+        90
+       ],
+       "1598": [
+        105
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Multipla",
+   "generations": [
+    {
+     "code": "Multipla II",
+     "phase": "весь выпуск",
+     "years": "2004–2010",
+     "mobileModel": "Multipla",
+     "bodies": [
+      "Multipla II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1400": [
+        77
+       ],
+       "1581": [
+        95
+       ],
+       "1596": [
+        92,
+        103
+       ]
+      },
+      "diesel": {
+       "1300": [
+        85
+       ],
+       "1910": [
+        110,
+        115,
+        120
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Punto",
+   "generations": [
+    {
+     "code": "Punto 2012",
+     "phase": "весь выпуск",
+     "years": "2012–2018",
+     "mobileModel": "Punto",
+     "bodies": [
+      "Punto 2012 Hatchback 3-door (autocentrum)",
+      "Punto 2012 Hatchback 5-door (autocentrum)",
+      "Punto 2012 VAN (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "875": [
+        85,
+        105
+       ],
+       "1242": [
+        69
+       ],
+       "1368": [
+        70,
+        77,
+        105,
+        135
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75,
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "Punto Evo",
+     "phase": "весь выпуск",
+     "years": "2010–2011",
+     "mobileModel": "Punto",
+     "bodies": [
+      "Punto Evo Hatchback 3-door (autocentrum)",
+      "Punto Evo Hatchback 5-door (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        65,
+        69
+       ],
+       "1368": [
+        77,
+        105,
+        135
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75,
+        90,
+        95
+       ],
+       "1598": [
+        120
+       ]
+      }
+     }
+    },
+    {
+     "code": "Grande Punto",
+     "phase": "весь выпуск",
+     "years": "2005–2012",
+     "mobileModel": "Punto",
+     "bodies": [
+      "Punto Grande Punto Grande Punto Cabrio (autocentrum)",
+      "Punto Grande Punto Hatchback 3-door (autocentrum)",
+      "Punto Grande Punto Hatchback 5-door (autocentrum)",
+      "Punto Grande Punto Van (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        65,
+        69
+       ],
+       "1368": [
+        77,
+        95,
+        120,
+        155
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75,
+        90
+       ],
+       "1598": [
+        120
+       ],
+       "1910": [
+        120,
+        130
+       ]
+      }
+     }
+    },
+    {
+     "code": "Punto II",
+     "phase": "весь выпуск",
+     "years": "1999–2010",
+     "mobileModel": "Punto",
+     "bodies": [
+      "Punto II Hatchback (autocentrum)",
+      "Punto II Van (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        52,
+        60,
+        80
+       ],
+       "1368": [
+        95
+       ],
+       "1747": [
+        130
+       ]
+      },
+      "diesel": {
+       "1248": [
+        70
+       ],
+       "1910": [
+        60,
+        85,
+        100
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Qubo",
+   "generations": [
+    {
+     "code": "Qubo",
+     "phase": "весь выпуск",
+     "years": "2009–2019",
+     "mobileModel": "Qubo",
+     "bodies": [
+      "Qubo Fiorino Qubo (autocentrum)",
+      "Qubo Qubo Seria 1 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1360": [
+        73
+       ],
+       "1368": [
+        77
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75,
+        80,
+        95
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Scudo",
+   "generations": [
+    {
+     "code": "Scudo II",
+     "phase": "весь выпуск",
+     "years": "2007–2016",
+     "mobileModel": "Scudo",
+     "bodies": [
+      "Scudo II Furgon (autocentrum)",
+      "Scudo II Furgon Długi (autocentrum)",
+      "Scudo II Furgon Pianale (autocentrum)",
+      "Scudo II Furgon Przeszklony (autocentrum)",
+      "Scudo II Furgon Przeszklony Długi (autocentrum)",
+      "Scudo II Furgon Wysoki Dach (autocentrum)",
+      "Scudo II Furgon Wysoki Dach Przeszklony (autocentrum)",
+      "Scudo II Kombi (autocentrum)",
+      "Scudo II Kombi Częściowo Przeszklony (autocentrum)",
+      "Scudo II Kombi Długi (autocentrum)",
+      "Scudo II Kombi Długi Częściowo Przeszklony (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "1560": [
+        90
+       ],
+       "1997": [
+        120,
+        136,
+        163
+       ]
+      },
+      "petrol": {
+       "1997": [
+        136
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Sedici",
+   "generations": [
+    {
+     "code": "Sedici I",
+     "phase": "весь выпуск",
+     "years": "2006–2014",
+     "mobileModel": "Sedici",
+     "bodies": [
+      "Sedici I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1586": [
+        107,
+        120
+       ]
+      },
+      "diesel": {
+       "1910": [
+        120
+       ],
+       "1956": [
+        135
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Seicento",
+   "generations": [
+    {
+     "code": "Seicento",
+     "phase": "весь выпуск",
+     "years": "1998–2010",
+     "mobileModel": "Seicento",
+     "bodies": [
+      "Seicento Hatchback 3-door (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1108": [
+        55
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Ulysse",
+   "generations": [
+    {
+     "code": "Ulysse II",
+     "phase": "весь выпуск",
+     "years": "2002–2010",
+     "mobileModel": "Ulysse",
+     "bodies": [
+      "Ulysse II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        136
+       ],
+       "2230": [
+        158
+       ],
+       "2946": [
+        204
+       ]
+      },
+      "diesel": {
+       "1997": [
+        109,
+        136
+       ],
+       "2179": [
+        128
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "124 Spider",
+   "generations": [
+    {
+     "code": "124 Spider I",
+     "phase": "весь выпуск",
+     "years": "2016–2019",
+     "mobileModel": "124 Spider",
+     "bodies": [
+      "124 Spider I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1368": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Avenger",
+   "generations": [
+    {
+     "code": "Avenger",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "Avenger",
+     "bodies": [
+      "Avenger SUV (autocentrum)",
+      "Avenger SUV Electric (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        100
+       ]
+      },
+      "electric": {
+       "0": [
+        156
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Compass",
+   "generations": [
+    {
+     "code": "Compass II",
+     "phase": "рестайлинг",
+     "years": "2021–н. в.",
+     "mobileModel": "Compass",
+     "bodies": [
+      "Compass II SUV Facelifting (autocentrum)",
+      "Compass II SUV Plug-In Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1332": [
+        130,
+        150
+       ],
+       "1469": [
+        130
+       ]
+      },
+      "diesel": {
+       "1598": [
+        130
+       ]
+      },
+      "plugin": {
+       "1332": [
+        190,
+        240
+       ]
+      }
+     }
+    },
+    {
+     "code": "Compass II",
+     "phase": "дорестайлинг",
+     "years": "2017–2021",
+     "mobileModel": "Compass",
+     "bodies": [
+      "Compass II SUV (autocentrum)",
+      "Compass II SUV Plug-In (autocentrum)"
+     ],
+     "engines": {
+      "plugin": {
+       "1332": [
+        190,
+        240
+       ]
+      },
+      "petrol": {
+       "1332": [
+        130,
+        150
+       ],
+       "1368": [
+        140,
+        170
+       ]
+      },
+      "diesel": {
+       "1598": [
+        120
+       ],
+       "1956": [
+        140,
+        170
+       ]
+      }
+     }
+    },
+    {
+     "code": "Compass I",
+     "phase": "рестайлинг",
+     "years": "2011–2015",
+     "mobileModel": "Compass",
+     "bodies": [
+      "Compass I SUV Facelifting (autocentrum)",
+      "Compass I SUV Facelifting 2013 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        156
+       ]
+      },
+      "diesel": {
+       "2143": [
+        163
+       ]
+      }
+     }
+    },
+    {
+     "code": "Compass I",
+     "phase": "дорестайлинг",
+     "years": "2007–2011",
+     "mobileModel": "Compass",
+     "bodies": [
+      "Compass I SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2359": [
+        170
+       ]
+      },
+      "diesel": {
+       "1968": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Gladiator",
+   "generations": [
+    {
+     "code": "Gladiator",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "Gladiator",
+     "bodies": [
+      "Gladiator Gladiator JT Seria 0 (autocentrum)",
+      "Gladiator Gladiator JT Seria 1 (autocentrum)",
+      "Gladiator Gladiator JT Seria 2 (autocentrum)",
+      "Gladiator Gladiator JT Seria 3 (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2987": [
+        264
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Grand Cherokee",
+   "generations": [
+    {
+     "code": "Grand Cherokee V",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Grand Cherokee",
+     "bodies": [
+      "Grand Cherokee V V (autocentrum)"
+     ],
+     "engines": {
+      "plugin": {
+       "1995": [
+        381
+       ]
+      }
+     }
+    },
+    {
+     "code": "Grand Cherokee IV",
+     "phase": "дорестайлинг",
+     "years": "2010–2010",
+     "mobileModel": "Grand Cherokee",
+     "bodies": [
+      "Grand Cherokee IV Terenowy (autocentrum)",
+      "Grand Cherokee IV Terenowy Trackhawk (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3604": [
+        286
+       ],
+       "5654": [
+        352
+       ],
+       "6166": [
+        700,
+        710
+       ],
+       "6417": [
+        468
+       ]
+      },
+      "diesel": {
+       "2987": [
+        190,
+        241
+       ]
+      }
+     }
+    },
+    {
+     "code": "Grand Cherokee IV",
+     "phase": "рестайлинг",
+     "years": "2010–2023",
+     "mobileModel": "Grand Cherokee",
+     "bodies": [
+      "Grand Cherokee IV Terenowy Facelifting (autocentrum)",
+      "Grand Cherokee IV Terenowy Facelifting 2016 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3604": [
+        286
+       ],
+       "5654": [
+        352
+       ],
+       "6417": [
+        468
+       ]
+      },
+      "diesel": {
+       "2987": [
+        190,
+        250
+       ]
+      }
+     }
+    },
+    {
+     "code": "Grand Cherokee III",
+     "phase": "весь выпуск",
+     "years": "2004–2010",
+     "mobileModel": "Grand Cherokee",
+     "bodies": [
+      "Grand Cherokee III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3700": [
+        210,
+        213
+       ],
+       "4701": [
+        238
+       ],
+       "5654": [
+        326,
+        362
+       ],
+       "6059": [
+        430
+       ]
+      },
+      "diesel": {
+       "2987": [
+        218
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Renegade",
+   "generations": [
+    {
+     "code": "Renegade",
+     "phase": "дорестайлинг",
+     "years": "2014–2018",
+     "mobileModel": "Renegade",
+     "bodies": [
+      "Renegade SUV (autocentrum)",
+      "Renegade SUV Plug-In Seria 2/3 (autocentrum)",
+      "Renegade SUV Seria 7/8 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        120
+       ],
+       "1368": [
+        140,
+        170
+       ],
+       "1469": [
+        130
+       ],
+       "1598": [
+        110
+       ],
+       "2360": [
+        185
+       ]
+      },
+      "diesel": {
+       "1598": [
+        120,
+        130
+       ],
+       "1956": [
+        140,
+        170
+       ]
+      },
+      "plugin": {
+       "1332": [
+        190,
+        240
+       ]
+      }
+     }
+    },
+    {
+     "code": "Renegade",
+     "phase": "рестайлинг",
+     "years": "2018–н. в.",
+     "mobileModel": "Renegade",
+     "bodies": [
+      "Renegade SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        120
+       ],
+       "1332": [
+        150,
+        180
+       ]
+      },
+      "diesel": {
+       "1598": [
+        120,
+        130
+       ],
+       "1956": [
+        140,
+        170
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Wrangler",
+   "generations": [
+    {
+     "code": "Wrangler IV",
+     "phase": "весь выпуск",
+     "years": "2018–н. в.",
+     "mobileModel": "Wrangler",
+     "bodies": [
+      "Wrangler IV 80th Anniversary 2d Seria 6 (autocentrum)",
+      "Wrangler IV 80th Anniversary 4d Seria 6 (autocentrum)",
+      "Wrangler IV 80th Anniversary Plug-In Seria 6 (autocentrum)",
+      "Wrangler IV Rubicon 2d Seria 5 (autocentrum)",
+      "Wrangler IV Rubicon 4d Seria 5 (autocentrum)",
+      "Wrangler IV Rubicon Plug-In Seria 6 (autocentrum)",
+      "Wrangler IV Rubicon Seria 6 (autocentrum)",
+      "Wrangler IV Sahara 2d Seria 5 (autocentrum)",
+      "Wrangler IV Sahara 4d Seria 5 (autocentrum)",
+      "Wrangler IV Sahara Plug-In Seria 6 (autocentrum)",
+      "Wrangler IV Sahara Seria 6 (autocentrum)",
+      "Wrangler IV Sport 2d (autocentrum)",
+      "Wrangler IV Sport 4d Seria 5 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1995": [
+        272
+       ]
+      },
+      "hybrid": {
+       "1995": [
+        381
+       ]
+      },
+      "diesel": {
+       "2184": [
+        200
+       ]
+      }
+     }
+    },
+    {
+     "code": "Wrangler III",
+     "phase": "дорестайлинг",
+     "years": "2006–2011",
+     "mobileModel": "Wrangler",
+     "bodies": [
+      "Wrangler III Rubicon 3-door (autocentrum)",
+      "Wrangler III Rubicon 5-door (autocentrum)",
+      "Wrangler III Terenowy (autocentrum)",
+      "Wrangler III Unlimited (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3605": [
+        284
+       ],
+       "3778": [
+        199,
+        200
+       ]
+      },
+      "diesel": {
+       "2777": [
+        200
+       ]
+      }
+     }
+    },
+    {
+     "code": "Wrangler III",
+     "phase": "рестайлинг",
+     "years": "2011–2018",
+     "mobileModel": "Wrangler",
+     "bodies": [
+      "Wrangler III Terenowy Facelifting (autocentrum)",
+      "Wrangler III Unlimited Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3604": [
+        286
+       ],
+       "3605": [
+        284
+       ],
+       "3778": [
+        199
+       ]
+      },
+      "diesel": {
+       "2776": [
+        200
+       ],
+       "2777": [
+        200
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Cherokee",
+   "generations": [
+    {
+     "code": "Cherokee V",
+     "phase": "рестайлинг",
+     "years": "2018–2020",
+     "mobileModel": "Cherokee",
+     "bodies": [
+      "Cherokee V Terenowy Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1994": [
+        270
+       ]
+      },
+      "diesel": {
+       "2174": [
+        195
+       ]
+      }
+     }
+    },
+    {
+     "code": "Cherokee V",
+     "phase": "дорестайлинг",
+     "years": "2014–2018",
+     "mobileModel": "Cherokee",
+     "bodies": [
+      "Cherokee V Terenowy (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2360": [
+        177
+       ],
+       "3239": [
+        272
+       ]
+      },
+      "diesel": {
+       "1956": [
+        140,
+        170
+       ],
+       "2184": [
+        200
+       ]
+      }
+     }
+    },
+    {
+     "code": "Cherokee IV",
+     "phase": "весь выпуск",
+     "years": "2008–2013",
+     "mobileModel": "Cherokee",
+     "bodies": [
+      "Cherokee IV IV (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2768": [
+        200
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Commander",
+   "generations": [
+    {
+     "code": "Commander I",
+     "phase": "весь выпуск",
+     "years": "2006–2010",
+     "mobileModel": "Commander",
+     "bodies": [
+      "Commander I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3701": [
+        213
+       ],
+       "4701": [
+        231
+       ],
+       "5654": [
+        326,
+        334
+       ]
+      },
+      "diesel": {
+       "2986": [
+        215
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "model": "Patriot",
+   "generations": [
+    {
+     "code": "Patriot",
+     "phase": "рестайлинг",
+     "years": "2011–2016",
+     "mobileModel": "Patriot",
+     "bodies": [
+      "Patriot SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2143": [
+        163
+       ]
+      }
+     }
+    },
+    {
+     "code": "Patriot",
+     "phase": "дорестайлинг",
+     "years": "2007–2011",
+     "mobileModel": "Patriot",
+     "bodies": [
+      "Patriot SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2360": [
+        170
+       ]
+      },
+      "diesel": {
+       "1968": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Civic",
+   "generations": [
+    {
+     "code": "Civic XII",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "Civic",
+     "bodies": [
+      "Civic XII Hatchback Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1993": [
+        184
+       ]
+      }
+     }
+    },
+    {
+     "code": "Civic XII",
+     "phase": "дорестайлинг",
+     "years": "2022–2024",
+     "mobileModel": "Civic",
+     "bodies": [
+      "Civic XII Hatchback (autocentrum)",
+      "Civic XII Type-R (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1993": [
+        184
+       ]
+      },
+      "petrol": {
+       "1996": [
+        329
+       ]
+      }
+     }
+    },
+    {
+     "code": "Civic X",
+     "phase": "рестайлинг",
+     "years": "2019–2021",
+     "mobileModel": "Civic",
+     "bodies": [
+      "Civic X Hatchback 5-door Facelifting (autocentrum)",
+      "Civic X Hatchback 5-door Type R Facelifting (autocentrum)",
+      "Civic X Sedan 4d Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "988": [
+        126
+       ],
+       "1498": [
+        182
+       ],
+       "1996": [
+        320
+       ]
+      },
+      "diesel": {
+       "1597": [
+        120
+       ]
+      }
+     }
+    },
+    {
+     "code": "Civic X",
+     "phase": "дорестайлинг",
+     "years": "2017–2019",
+     "mobileModel": "Civic",
+     "bodies": [
+      "Civic X Hatchback 5-door (autocentrum)",
+      "Civic X Hatchback 5-door Type R (autocentrum)",
+      "Civic X Sedan 4d (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "988": [
+        126,
+        129
+       ],
+       "1498": [
+        182
+       ],
+       "1996": [
+        320
+       ]
+      },
+      "diesel": {
+       "1597": [
+        120
+       ]
+      }
+     }
+    },
+    {
+     "code": "Civic IX",
+     "phase": "рестайлинг",
+     "years": "2014–2017",
+     "mobileModel": "Civic",
+     "bodies": [
+      "Civic IX Hatchback 5-door Facelifting (autocentrum)",
+      "Civic IX Sedan Facelifting (autocentrum)",
+      "Civic IX Tourer Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1339": [
+        100
+       ],
+       "1798": [
+        140,
+        142
+       ],
+       "1799": [
+        142
+       ],
+       "1996": [
+        310
+       ]
+      },
+      "diesel": {
+       "1597": [
+        120
+       ]
+      }
+     }
+    },
+    {
+     "code": "Civic IX",
+     "phase": "дорестайлинг",
+     "years": "2012–2014",
+     "mobileModel": "Civic",
+     "bodies": [
+      "Civic IX Hatchback 5-door (autocentrum)",
+      "Civic IX Sedan (autocentrum)",
+      "Civic IX Tourer (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1339": [
+        100
+       ],
+       "1799": [
+        142
+       ]
+      },
+      "diesel": {
+       "1597": [
+        120
+       ],
+       "2199": [
+        150
+       ]
+      }
+     }
+    },
+    {
+     "code": "Civic VIII",
+     "phase": "весь выпуск",
+     "years": "2006–2011",
+     "mobileModel": "Civic",
+     "bodies": [
+      "Civic VIII Coupe (autocentrum)",
+      "Civic VIII Hatchback 3-door (autocentrum)",
+      "Civic VIII Hatchback 5-door (autocentrum)",
+      "Civic VIII Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1339": [
+        83,
+        95,
+        100
+       ],
+       "1798": [
+        140
+       ],
+       "1799": [
+        140
+       ],
+       "1998": [
+        201
+       ]
+      },
+      "diesel": {
+       "2204": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "generations": [
+    {
+     "code": "CR-V VI",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "CR-V",
+     "bodies": [
+      "CR-V VI SUV (autocentrum)",
+      "CR-V VI SUV Plug-In (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1993": [
+        184
+       ]
+      }
+     }
+    },
+    {
+     "code": "CR-V V",
+     "phase": "рестайлинг",
+     "years": "2022–2023",
+     "mobileModel": "CR-V",
+     "bodies": [
+      "CR-V V SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1993": [
+        184
+       ]
+      }
+     }
+    },
+    {
+     "code": "CR-V V",
+     "phase": "дорестайлинг",
+     "years": "2018–2022",
+     "mobileModel": "CR-V",
+     "bodies": [
+      "CR-V V SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1498": [
+        173,
+        193
+       ]
+      },
+      "hybrid": {
+       "1993": [
+        184
+       ]
+      }
+     }
+    },
+    {
+     "code": "CR-V IV",
+     "phase": "рестайлинг",
+     "years": "2014–2018",
+     "mobileModel": "CR-V",
+     "bodies": [
+      "CR-V IV SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        155
+       ],
+       "2356": [
+        188
+       ]
+      },
+      "diesel": {
+       "1597": [
+        120,
+        160
+       ]
+      }
+     }
+    },
+    {
+     "code": "CR-V IV",
+     "phase": "дорестайлинг",
+     "years": "2012–2014",
+     "mobileModel": "CR-V",
+     "bodies": [
+      "CR-V IV SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        155
+       ],
+       "2354": [
+        185
+       ]
+      },
+      "diesel": {
+       "1597": [
+        120
+       ],
+       "2199": [
+        150
+       ]
+      }
+     }
+    },
+    {
+     "code": "CR-V III",
+     "phase": "рестайлинг",
+     "years": "2010–2012",
+     "mobileModel": "CR-V",
+     "bodies": [
+      "CR-V III SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        150
+       ],
+       "2354": [
+        170
+       ]
+      },
+      "diesel": {
+       "2199": [
+        150
+       ],
+       "2204": [
+        140
+       ]
+      }
+     }
+    },
+    {
+     "code": "CR-V III",
+     "phase": "дорестайлинг",
+     "years": "2006–2010",
+     "mobileModel": "CR-V",
+     "bodies": [
+      "CR-V III SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        150
+       ],
+       "2354": [
+        170
+       ]
+      },
+      "diesel": {
+       "2204": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "HR-V",
+   "generations": [
+    {
+     "code": "HR-V III",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "HR-V",
+     "bodies": [
+      "HR-V III SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1498": [
+        131
+       ]
+      }
+     }
+    },
+    {
+     "code": "HR-V III",
+     "phase": "дорестайлинг",
+     "years": "2021–2024",
+     "mobileModel": "HR-V",
+     "bodies": [
+      "HR-V III SUV (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1498": [
+        131
+       ]
+      }
+     }
+    },
+    {
+     "code": "HR-V II",
+     "phase": "рестайлинг",
+     "years": "2018–2021",
+     "mobileModel": "HR-V",
+     "bodies": [
+      "HR-V II SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1498": [
+        130,
+        182
+       ]
+      }
+     }
+    },
+    {
+     "code": "HR-V II",
+     "phase": "дорестайлинг",
+     "years": "2015–2018",
+     "mobileModel": "HR-V",
+     "bodies": [
+      "HR-V II SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1498": [
+        130
+       ]
+      },
+      "diesel": {
+       "1597": [
+        120
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Jazz",
+   "generations": [
+    {
+     "code": "Jazz V",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "Jazz",
+     "bodies": [
+      "Jazz V Crosstar Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1498": [
+        109
+       ]
+      }
+     }
+    },
+    {
+     "code": "Jazz V",
+     "phase": "дорестайлинг",
+     "years": "2020–2023",
+     "mobileModel": "Jazz",
+     "bodies": [
+      "Jazz V Crosstar (autocentrum)",
+      "Jazz V Mikrovan (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1498": [
+        109
+       ]
+      }
+     }
+    },
+    {
+     "code": "Jazz IV",
+     "phase": "рестайлинг",
+     "years": "2017–2020",
+     "mobileModel": "Jazz",
+     "bodies": [
+      "Jazz IV Mikrovan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1318": [
+        102
+       ],
+       "1498": [
+        130
+       ]
+      }
+     }
+    },
+    {
+     "code": "Jazz IV",
+     "phase": "дорестайлинг",
+     "years": "2015–2017",
+     "mobileModel": "Jazz",
+     "bodies": [
+      "Jazz IV Mikrovan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1318": [
+        102
+       ]
+      }
+     }
+    },
+    {
+     "code": "Jazz III",
+     "phase": "весь выпуск",
+     "years": "2008–2015",
+     "mobileModel": "Jazz",
+     "bodies": [
+      "Jazz III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1198": [
+        90
+       ],
+       "1339": [
+        100
+       ],
+       "1497": [
+        117
+       ]
+      },
+      "hybrid": {
+       "1339": [
+        88
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Prelude",
+   "generations": [
+    {
+     "code": "Prelude VI",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "Prelude",
+     "bodies": [
+      "Prelude VI VI (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1993": [
+        200
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Accord",
+   "generations": [
+    {
+     "code": "Accord VIII",
+     "phase": "рестайлинг",
+     "years": "2015–2016",
+     "mobileModel": "Accord",
+     "bodies": [
+      "Accord VIII Coupe Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2356": [
+        188
+       ],
+       "3471": [
+        282
+       ]
+      }
+     }
+    },
+    {
+     "code": "Accord VIII",
+     "phase": "дорестайлинг",
+     "years": "2007–2015",
+     "mobileModel": "Accord",
+     "bodies": [
+      "Accord VIII Coupe (autocentrum)",
+      "Accord VIII Kombi (autocentrum)",
+      "Accord VIII Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        156
+       ],
+       "2354": [
+        190,
+        201
+       ],
+       "2356": [
+        188
+       ],
+       "3471": [
+        271,
+        282
+       ]
+      },
+      "diesel": {
+       "2199": [
+        150,
+        180
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "City",
+   "generations": [
+    {
+     "code": "City VI",
+     "phase": "весь выпуск",
+     "years": "2009–2011",
+     "mobileModel": "City",
+     "bodies": [
+      "City VI VI (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1339": [
+        100
+       ]
+      }
+     }
+    },
+    {
+     "code": "City V",
+     "phase": "весь выпуск",
+     "years": "2002–2011",
+     "mobileModel": "City",
+     "bodies": [
+      "City V V (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1343": [
+        83,
+        95
+       ],
+       "1493": [
+        105
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-Z",
+   "generations": [
+    {
+     "code": "CR-Z",
+     "phase": "весь выпуск",
+     "years": "2010–2013",
+     "mobileModel": "CR-Z",
+     "bodies": [
+      "CR-Z Coupe (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1497": [
+        114
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "e",
+   "generations": [
+    {
+     "code": "e I",
+     "phase": "весь выпуск",
+     "years": "2020–2024",
+     "mobileModel": "e",
+     "bodies": [
+      "e I I (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        136,
+        154
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Element",
+   "generations": [
+    {
+     "code": "Element I",
+     "phase": "весь выпуск",
+     "years": "2003–2011",
+     "mobileModel": "Element",
+     "bodies": [
+      "Element I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2354": [
+        162
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Insight",
+   "generations": [
+    {
+     "code": "Insight",
+     "phase": "рестайлинг",
+     "years": "2012–2013",
+     "mobileModel": "Insight",
+     "bodies": [
+      "Insight Hatchback Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1339": [
+        88
+       ]
+      }
+     }
+    },
+    {
+     "code": "Insight",
+     "phase": "дорестайлинг",
+     "years": "2009–2012",
+     "mobileModel": "Insight",
+     "bodies": [
+      "Insight Hatchback (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1339": [
+        88
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Legend",
+   "generations": [
+    {
+     "code": "Legend IV",
+     "phase": "весь выпуск",
+     "years": "2006–2012",
+     "mobileModel": "Legend",
+     "bodies": [
+      "Legend IV IV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3471": [
+        295
+       ],
+       "3664": [
+        295
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "NSX",
+   "generations": [
+    {
+     "code": "NSX III",
+     "phase": "весь выпуск",
+     "years": "2016–2022",
+     "mobileModel": "NSX",
+     "bodies": [
+      "NSX III III (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "3493": [
+        581
+       ]
+      }
+     }
+    },
+    {
+     "code": "NSX II",
+     "phase": "весь выпуск",
+     "years": "2015–2016",
+     "mobileModel": "NSX",
+     "bodies": [
+      "NSX II II (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "3493": [
+        573
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Odyssey",
+   "generations": [
+    {
+     "code": "Odyssey IV",
+     "phase": "весь выпуск",
+     "years": "2011–2017",
+     "mobileModel": "Odyssey",
+     "bodies": [
+      "Odyssey IV IV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3471": [
+        252
+       ]
+      }
+     }
+    },
+    {
+     "code": "Odyssey III",
+     "phase": "весь выпуск",
+     "years": "2004–2010",
+     "mobileModel": "Odyssey",
+     "bodies": [
+      "Odyssey III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2354": [
+        160
+       ],
+       "3471": [
+        252
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "Pilot",
+   "generations": [
+    {
+     "code": "Pilot II",
+     "phase": "весь выпуск",
+     "years": "2009–2015",
+     "mobileModel": "Pilot",
+     "bodies": [
+      "Pilot II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3471": [
+        250
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "ZR-V",
+   "generations": [
+    {
+     "code": "ZR-V I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "ZR-V",
+     "bodies": [
+      "ZR-V I I (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1993": [
+        184
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "e:Ny1",
+   "generations": [
+    {
+     "code": "e:Ny1 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "e:Ny1",
+     "bodies": [
+      "e:Ny1 I I (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Ignis",
+   "generations": [
+    {
+     "code": "Ignis III",
+     "phase": "рестайлинг",
+     "years": "2020–н. в.",
+     "mobileModel": "Ignis",
+     "bodies": [
+      "Ignis III Crossover Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        83
+       ]
+      }
+     }
+    },
+    {
+     "code": "Ignis III",
+     "phase": "дорестайлинг",
+     "years": "2016–2020",
+     "mobileModel": "Ignis",
+     "bodies": [
+      "Ignis III Crossover (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        90
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Jimny",
+   "generations": [
+    {
+     "code": "Jimny IV",
+     "phase": "весь выпуск",
+     "years": "2018–н. в.",
+     "mobileModel": "Jimny",
+     "bodies": [
+      "Jimny IV Terenowy (autocentrum)",
+      "Jimny IV Terenowy N1 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1462": [
+        102
+       ]
+      }
+     }
+    },
+    {
+     "code": "Jimny III",
+     "phase": "рестайлинг",
+     "years": "2012–2017",
+     "mobileModel": "Jimny",
+     "bodies": [
+      "Jimny III Standard Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1328": [
+        82,
+        85
+       ]
+      }
+     }
+    },
+    {
+     "code": "Jimny III",
+     "phase": "дорестайлинг",
+     "years": "1998–2012",
+     "mobileModel": "Jimny",
+     "bodies": [
+      "Jimny III Cabrio (autocentrum)",
+      "Jimny III Standard (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1328": [
+        85
+       ]
+      },
+      "diesel": {
+       "1248": [
+        70
+       ],
+       "1461": [
+        86
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "(SX4) S-Cross",
+   "generations": [
+    {
+     "code": "S-Cross II",
+     "phase": "рестайлинг",
+     "years": "2016–2021",
+     "mobileModel": "(SX4) S-Cross",
+     "bodies": [
+      "S-Cross II S-cross Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "998": [
+        110
+       ],
+       "1373": [
+        129,
+        140
+       ]
+      }
+     }
+    },
+    {
+     "code": "S-Cross II",
+     "phase": "дорестайлинг",
+     "years": "2013–2016",
+     "mobileModel": "(SX4) S-Cross",
+     "bodies": [
+      "S-Cross II S-cross (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1586": [
+        120
+       ]
+      },
+      "diesel": {
+       "1589": [
+        120
+       ]
+      }
+     }
+    },
+    {
+     "code": "S-Cross I",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "(SX4) S-Cross",
+     "bodies": [
+      "S-Cross I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1373": [
+        129
+       ]
+      },
+      "hybrid": {
+       "1462": [
+        116
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Swace",
+   "generations": [
+    {
+     "code": "Swace",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "Swace",
+     "bodies": [
+      "Swace Kombi Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1798": [
+        140
+       ]
+      }
+     }
+    },
+    {
+     "code": "Swace",
+     "phase": "дорестайлинг",
+     "years": "2020–2023",
+     "mobileModel": "Swace",
+     "bodies": [
+      "Swace Kombi (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1798": [
+        122
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Swift",
+   "generations": [
+    {
+     "code": "Swift VII",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Swift",
+     "bodies": [
+      "Swift VII VII (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1197": [
+        82
+       ]
+      }
+     }
+    },
+    {
+     "code": "Swift VI",
+     "phase": "рестайлинг",
+     "years": "2020–2024",
+     "mobileModel": "Swift",
+     "bodies": [
+      "Swift VI Hatchback Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1197": [
+        83
+       ]
+      }
+     }
+    },
+    {
+     "code": "Swift VI",
+     "phase": "дорестайлинг",
+     "years": "2017–2020",
+     "mobileModel": "Swift",
+     "bodies": [
+      "Swift VI Hatchback (autocentrum)",
+      "Swift VI Sport (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "998": [
+        111
+       ],
+       "1242": [
+        90
+       ],
+       "1373": [
+        129,
+        140
+       ]
+      },
+      "hybrid": {
+       "998": [
+        111
+       ]
+      }
+     }
+    },
+    {
+     "code": "Swift V",
+     "phase": "рестайлинг",
+     "years": "2013–2016",
+     "mobileModel": "Swift",
+     "bodies": [
+      "Swift V Hatchback 3-door Facelifting (autocentrum)",
+      "Swift V Hatchback 5-door Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        94
+       ],
+       "1568": [
+        136
+       ]
+      }
+     }
+    },
+    {
+     "code": "Swift V",
+     "phase": "дорестайлинг",
+     "years": "2010–2013",
+     "mobileModel": "Swift",
+     "bodies": [
+      "Swift V Hatchback 3-door (autocentrum)",
+      "Swift V Hatchback 5-door (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1242": [
+        94
+       ],
+       "1568": [
+        136
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75
+       ]
+      }
+     }
+    },
+    {
+     "code": "Swift IV",
+     "phase": "весь выпуск",
+     "years": "2004–2010",
+     "mobileModel": "Swift",
+     "bodies": [
+      "Swift IV Hatchback 3-door (autocentrum)",
+      "Swift IV Hatchback 5-door (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1328": [
+        92
+       ],
+       "1490": [
+        102
+       ],
+       "1500": [
+        102
+       ],
+       "1586": [
+        125
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Vitara",
+   "generations": [
+    {
+     "code": "Vitara III",
+     "phase": "рестайлинг",
+     "years": "2018–н. в.",
+     "mobileModel": "Vitara",
+     "bodies": [
+      "Vitara III SUV Facelifting (autocentrum)",
+      "Vitara III SUV Facelifting 2024 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "998": [
+        111
+       ],
+       "1373": [
+        110,
+        129,
+        140
+       ]
+      },
+      "hybrid": {
+       "1462": [
+        116
+       ]
+      }
+     }
+    },
+    {
+     "code": "Vitara III",
+     "phase": "дорестайлинг",
+     "years": "2015–2018",
+     "mobileModel": "Vitara",
+     "bodies": [
+      "Vitara III SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1373": [
+        140
+       ],
+       "1586": [
+        120
+       ]
+      },
+      "diesel": {
+       "1598": [
+        120
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Alto",
+   "generations": [
+    {
+     "code": "Alto VI",
+     "phase": "весь выпуск",
+     "years": "2009–2014",
+     "mobileModel": "Alto",
+     "bodies": [
+      "Alto VI VI (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "996": [
+        68
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Baleno",
+   "generations": [
+    {
+     "code": "Baleno III",
+     "phase": "весь выпуск",
+     "years": "2016–2019",
+     "mobileModel": "Baleno",
+     "bodies": [
+      "Baleno III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "998": [
+        110
+       ],
+       "1242": [
+        90
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Grand Vitara",
+   "generations": [
+    {
+     "code": "Grand Vitara II",
+     "phase": "рестайлинг",
+     "years": "2008–2014",
+     "mobileModel": "Grand Vitara",
+     "bodies": [
+      "Grand Vitara II SUV 3-door Facelifting (autocentrum)",
+      "Grand Vitara II SUV 3-door Facelifting 2012 (autocentrum)",
+      "Grand Vitara II SUV 5-door Facelifting (autocentrum)",
+      "Grand Vitara II SUV 5-door Facelifting 2012 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1586": [
+        106
+       ],
+       "1995": [
+        140
+       ],
+       "2393": [
+        166,
+        169
+       ],
+       "3195": [
+        233
+       ]
+      },
+      "diesel": {
+       "1870": [
+        125,
+        129
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Splash",
+   "generations": [
+    {
+     "code": "Splash",
+     "phase": "рестайлинг",
+     "years": "2012–2015",
+     "mobileModel": "Splash",
+     "bodies": [
+      "Splash Hatchback 5-door Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "996": [
+        68
+       ],
+       "1242": [
+        94
+       ]
+      }
+     }
+    },
+    {
+     "code": "Splash",
+     "phase": "дорестайлинг",
+     "years": "2008–2012",
+     "mobileModel": "Splash",
+     "bodies": [
+      "Splash Hatchback (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "996": [
+        65
+       ],
+       "1242": [
+        86,
+        94
+       ]
+      },
+      "diesel": {
+       "1248": [
+        75
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "SX4",
+   "generations": [
+    {
+     "code": "SX4 I",
+     "phase": "дорестайлинг",
+     "years": "2006–2009",
+     "mobileModel": "SX4",
+     "bodies": [
+      "SX4 I Classic (autocentrum)",
+      "SX4 I Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1490": [
+        112
+       ],
+       "1586": [
+        120
+       ],
+       "1995": [
+        152
+       ]
+      },
+      "diesel": {
+       "1956": [
+        135
+       ]
+      }
+     }
+    },
+    {
+     "code": "SX4 I",
+     "phase": "рестайлинг",
+     "years": "2009–2013",
+     "mobileModel": "SX4",
+     "bodies": [
+      "SX4 I Hatchback Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1490": [
+        112
+       ],
+       "1586": [
+        120
+       ],
+       "1995": [
+        152
+       ]
+      },
+      "diesel": {
+       "1560": [
+        90
+       ],
+       "1956": [
+        135
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Across",
+   "generations": [
+    {
+     "code": "Across I",
+     "phase": "весь выпуск",
+     "years": "2020–н. в.",
+     "mobileModel": "Across",
+     "bodies": [
+      "Across I I (autocentrum)"
+     ],
+     "engines": {
+      "plugin": {
+       "2487": [
+        306
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Celerio",
+   "generations": [
+    {
+     "code": "Celerio I",
+     "phase": "весь выпуск",
+     "years": "2014–2019",
+     "mobileModel": "Celerio",
+     "bodies": [
+      "Celerio I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "998": [
+        68
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Kizashi",
+   "generations": [
+    {
+     "code": "Kizashi I",
+     "phase": "весь выпуск",
+     "years": "2009–2013",
+     "mobileModel": "Kizashi",
+     "bodies": [
+      "Kizashi I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2393": [
+        178
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Defender",
+   "generations": [
+    {
+     "code": "Defender IV",
+     "phase": "весь выпуск",
+     "years": "2019–н. в.",
+     "mobileModel": "Defender",
+     "bodies": [
+      "Defender IV 110 (autocentrum)",
+      "Defender IV 110 Plug-In (autocentrum)",
+      "Defender IV 130 (autocentrum)",
+      "Defender IV 90 (autocentrum)",
+      "Defender IV Hard Top 110 (autocentrum)",
+      "Defender IV Hard Top 90 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        300
+       ],
+       "2996": [
+        300,
+        400
+       ],
+       "4999": [
+        500,
+        525
+       ]
+      },
+      "diesel": {
+       "1999": [
+        200,
+        240
+       ],
+       "2996": [
+        200,
+        249,
+        250,
+        300
+       ],
+       "2997": [
+        249,
+        300
+       ]
+      },
+      "hybrid": {
+       "1997": [
+        404
+       ]
+      }
+     }
+    },
+    {
+     "code": "Defender III",
+     "phase": "весь выпуск",
+     "years": "2007–2016",
+     "mobileModel": "Defender",
+     "bodies": [
+      "Defender III 110 Double Cab Pick Up (autocentrum)",
+      "Defender III 110 Hard Top (autocentrum)",
+      "Defender III 110 High Capacity Pick Up (autocentrum)",
+      "Defender III 110 Pick Up (autocentrum)",
+      "Defender III 110 Single Chassis Cab (autocentrum)",
+      "Defender III 110 Station Wagon (autocentrum)",
+      "Defender III 110 Utility Station Wagon (autocentrum)",
+      "Defender III 130 Double Cab High Capacity Pick Up (autocentrum)",
+      "Defender III 130 Single Chassis Cab (autocentrum)",
+      "Defender III 90 Hard Top (autocentrum)",
+      "Defender III 90 Pick Up (autocentrum)",
+      "Defender III 90 Station Wagon (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2198": [
+        122
+       ],
+       "2200": [
+        135
+       ],
+       "2400": [
+        122
+       ],
+       "2402": [
+        122
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Discovery",
+   "generations": [
+    {
+     "code": "Discovery V",
+     "phase": "рестайлинг",
+     "years": "2021–н. в.",
+     "mobileModel": "Discovery",
+     "bodies": [
+      "Discovery V Terenowy Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1999": [
+        300
+       ],
+       "2995": [
+        360
+       ]
+      },
+      "diesel": {
+       "2996": [
+        249,
+        300
+       ]
+      }
+     }
+    },
+    {
+     "code": "Discovery V",
+     "phase": "дорестайлинг",
+     "years": "2016–2021",
+     "mobileModel": "Discovery",
+     "bodies": [
+      "Discovery V Terenowy (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        300
+       ],
+       "2995": [
+        340
+       ]
+      },
+      "diesel": {
+       "1999": [
+        180,
+        240
+       ],
+       "2993": [
+        258,
+        306
+       ]
+      }
+     }
+    },
+    {
+     "code": "Discovery IV",
+     "phase": "весь выпуск",
+     "years": "2010–2016",
+     "mobileModel": "Discovery",
+     "bodies": [
+      "Discovery IV IV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2998": [
+        340
+       ],
+       "4999": [
+        375
+       ],
+       "5000": [
+        375
+       ]
+      },
+      "diesel": {
+       "2721": [
+        177
+       ],
+       "2993": [
+        255
+       ],
+       "3000": [
+        210,
+        245
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Discovery Sport",
+   "generations": [
+    {
+     "code": "Discovery Sport",
+     "phase": "дорестайлинг",
+     "years": "2014–2019",
+     "mobileModel": "Discovery Sport",
+     "bodies": [
+      "Discovery Sport SUV (autocentrum)",
+      "Discovery Sport SUV Hybrid (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1497": [
+        309
+       ]
+      },
+      "petrol": {
+       "1998": [
+        290
+       ],
+       "1999": [
+        240
+       ]
+      },
+      "diesel": {
+       "1998": [
+        150,
+        180
+       ],
+       "1999": [
+        150,
+        240
+       ],
+       "2179": [
+        150,
+        190
+       ]
+      }
+     }
+    },
+    {
+     "code": "Discovery Sport",
+     "phase": "рестайлинг",
+     "years": "2019–н. в.",
+     "mobileModel": "Discovery Sport",
+     "bodies": [
+      "Discovery Sport SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        200,
+        250,
+        290
+       ]
+      },
+      "diesel": {
+       "1998": [
+        150,
+        180,
+        240
+       ],
+       "1999": [
+        163,
+        204
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover",
+   "generations": [
+    {
+     "code": "Range Rover V",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "Range Rover",
+     "bodies": [
+      "Range Rover V LBW PHEV (autocentrum)",
+      "Range Rover V LWB (autocentrum)",
+      "Range Rover V SWB (autocentrum)",
+      "Range Rover V SWB PHEV (autocentrum)"
+     ],
+     "engines": {
+      "plugin": {
+       "2996": [
+        440,
+        441,
+        460,
+        510,
+        550
+       ]
+      },
+      "petrol": {
+       "2996": [
+        400
+       ],
+       "4395": [
+        530
+       ]
+      },
+      "diesel": {
+       "2997": [
+        249,
+        300,
+        350
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover IV",
+     "phase": "дорестайлинг",
+     "years": "2012–2017",
+     "mobileModel": "Range Rover",
+     "bodies": [
+      "Range Rover IV Coupe SV (autocentrum)",
+      "Range Rover IV SUV (autocentrum)",
+      "Range Rover IV SUV LWB (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2995": [
+        340,
+        380
+       ],
+       "4999": [
+        565
+       ],
+       "5000": [
+        510,
+        550
+       ]
+      },
+      "diesel": {
+       "2993": [
+        258
+       ],
+       "4367": [
+        339
+       ]
+      },
+      "hybrid": {
+       "2993": [
+        354
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover IV",
+     "phase": "рестайлинг",
+     "years": "2017–2021",
+     "mobileModel": "Range Rover",
+     "bodies": [
+      "Range Rover IV SUV LWB Facelifting (autocentrum)",
+      "Range Rover IV SUV PHEV LWB Facelifting (autocentrum)",
+      "Range Rover IV SUV PHEV SWB Facelifting (autocentrum)",
+      "Range Rover IV SUV SWB Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2995": [
+        340,
+        380
+       ],
+       "2996": [
+        400
+       ],
+       "5000": [
+        525,
+        565
+       ]
+      },
+      "diesel": {
+       "2993": [
+        258,
+        275
+       ],
+       "2997": [
+        300,
+        350
+       ],
+       "4367": [
+        339
+       ],
+       "4397": [
+        339
+       ]
+      },
+      "hybrid": {
+       "1999": [
+        404
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover III",
+     "phase": "весь выпуск",
+     "years": "2001–2012",
+     "mobileModel": "Range Rover",
+     "bodies": [
+      "Range Rover III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "4196": [
+        400
+       ],
+       "4999": [
+        510
+       ]
+      },
+      "diesel": {
+       "2926": [
+        177
+       ],
+       "3628": [
+        271
+       ],
+       "4367": [
+        339
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover Evoque",
+   "generations": [
+    {
+     "code": "Range Rover Evoque II",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "Range Rover Evoque",
+     "bodies": [
+      "Range Rover Evoque II SUV Facelifting (autocentrum)",
+      "Range Rover Evoque II SUV Plug-In Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1497": [
+        160
+       ]
+      },
+      "diesel": {
+       "1997": [
+        163
+       ],
+       "1999": [
+        204
+       ]
+      },
+      "plugin": {
+       "1497": [
+        269,
+        309
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover Evoque II",
+     "phase": "дорестайлинг",
+     "years": "2019–2024",
+     "mobileModel": "Range Rover Evoque",
+     "bodies": [
+      "Range Rover Evoque II SUV (autocentrum)",
+      "Range Rover Evoque II SUV Hybrid (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1497": [
+        309
+       ]
+      },
+      "petrol": {
+       "1497": [
+        160
+       ],
+       "1997": [
+        200,
+        249,
+        300
+       ]
+      },
+      "diesel": {
+       "1997": [
+        163
+       ],
+       "1999": [
+        150,
+        180,
+        204,
+        240
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover Evoque I",
+     "phase": "дорестайлинг",
+     "years": "2011–2015",
+     "mobileModel": "Range Rover Evoque",
+     "bodies": [
+      "Range Rover Evoque I Convertible (autocentrum)",
+      "Range Rover Evoque I SUV 5-door (autocentrum)",
+      "Range Rover Evoque I SUV Coupe (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1999": [
+        240
+       ]
+      },
+      "diesel": {
+       "1999": [
+        150,
+        180,
+        240
+       ],
+       "2179": [
+        150,
+        190
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover Evoque I",
+     "phase": "рестайлинг",
+     "years": "2015–2018",
+     "mobileModel": "Range Rover Evoque",
+     "bodies": [
+      "Range Rover Evoque I SUV 5-door Facelifting (autocentrum)",
+      "Range Rover Evoque I SUV Coupe Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        290
+       ],
+       "1999": [
+        240
+       ]
+      },
+      "diesel": {
+       "1999": [
+        150,
+        180,
+        240
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover Sport",
+   "generations": [
+    {
+     "code": "Range Rover Sport III",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "Range Rover Sport",
+     "bodies": [
+      "Range Rover Sport III SUV (autocentrum)",
+      "Range Rover Sport III SUV Plug-In (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2996": [
+        400
+       ]
+      },
+      "diesel": {
+       "2997": [
+        249,
+        301,
+        351
+       ]
+      },
+      "plugin": {
+       "2996": [
+        441,
+        460,
+        510,
+        550
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover Sport II",
+     "phase": "рестайлинг",
+     "years": "2017–2022",
+     "mobileModel": "Range Rover Sport",
+     "bodies": [
+      "Range Rover Sport II SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        300
+       ],
+       "2995": [
+        340,
+        380
+       ],
+       "2996": [
+        400
+       ],
+       "5000": [
+        525,
+        575
+       ]
+      },
+      "diesel": {
+       "1999": [
+        240
+       ],
+       "2993": [
+        249,
+        258,
+        306
+       ],
+       "2997": [
+        300,
+        350
+       ],
+       "4367": [
+        339
+       ]
+      },
+      "hybrid": {
+       "1997": [
+        404
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover Sport II",
+     "phase": "дорестайлинг",
+     "years": "2013–2017",
+     "mobileModel": "Range Rover Sport",
+     "bodies": [
+      "Range Rover Sport II SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2995": [
+        340,
+        380
+       ],
+       "4999": [
+        510,
+        550
+       ]
+      },
+      "diesel": {
+       "1999": [
+        240
+       ],
+       "2993": [
+        258,
+        292,
+        306
+       ],
+       "4367": [
+        340
+       ]
+      },
+      "hybrid": {
+       "2993": [
+        354
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover Sport I",
+     "phase": "весь выпуск",
+     "years": "2005–2013",
+     "mobileModel": "Range Rover Sport",
+     "bodies": [
+      "Range Rover Sport I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "4196": [
+        390
+       ],
+       "4394": [
+        300
+       ],
+       "5000": [
+        510
+       ]
+      },
+      "diesel": {
+       "2720": [
+        190
+       ],
+       "2993": [
+        210,
+        211,
+        245,
+        255
+       ],
+       "3628": [
+        272
+       ],
+       "4367": [
+        339
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover Velar",
+   "generations": [
+    {
+     "code": "Range Rover Velar",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "Range Rover Velar",
+     "bodies": [
+      "Range Rover Velar SUV Facelifting (autocentrum)",
+      "Range Rover Velar SUV Plug -In Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2995": [
+        400
+       ]
+      },
+      "diesel": {
+       "1997": [
+        204
+       ],
+       "2996": [
+        300
+       ]
+      },
+      "hybrid": {
+       "1997": [
+        404
+       ]
+      }
+     }
+    },
+    {
+     "code": "Range Rover Velar",
+     "phase": "дорестайлинг",
+     "years": "2017–2024",
+     "mobileModel": "Range Rover Velar",
+     "bodies": [
+      "Range Rover Velar SUV (autocentrum)",
+      "Range Rover Velar SUV PHEV (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1997": [
+        404
+       ]
+      },
+      "petrol": {
+       "1997": [
+        250,
+        300
+       ],
+       "1999": [
+        250
+       ],
+       "2995": [
+        380,
+        400
+       ],
+       "4999": [
+        550
+       ]
+      },
+      "diesel": {
+       "1997": [
+        204
+       ],
+       "1999": [
+        180,
+        240
+       ],
+       "2993": [
+        275,
+        300
+       ],
+       "2996": [
+        300
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Freelander",
+   "generations": [
+    {
+     "code": "Freelander II",
+     "phase": "весь выпуск",
+     "years": "2006–2014",
+     "mobileModel": "Freelander",
+     "bodies": [
+      "Freelander II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1999": [
+        240
+       ],
+       "3192": [
+        233
+       ]
+      },
+      "diesel": {
+       "2179": [
+        150,
+        160,
+        190
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Bigster",
+   "generations": [
+    {
+     "code": "Bigster I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "Bigster",
+     "bodies": [
+      "Bigster I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        130,
+        140
+       ]
+      },
+      "lpg": {
+       "1199": [
+        140,
+        150
+       ]
+      },
+      "hybrid": {
+       "1793": [
+        157
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Duster",
+   "generations": [
+    {
+     "code": "Duster III",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Duster",
+     "bodies": [
+      "Duster III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        130
+       ]
+      },
+      "lpg": {
+       "999": [
+        100
+       ]
+      },
+      "hybrid": {
+       "1598": [
+        140
+       ]
+      }
+     }
+    },
+    {
+     "code": "Duster II",
+     "phase": "рестайлинг",
+     "years": "2021–2024",
+     "mobileModel": "Duster",
+     "bodies": [
+      "Duster II SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        90
+       ],
+       "1332": [
+        130,
+        150
+       ]
+      },
+      "lpg": {
+       "999": [
+        100
+       ]
+      },
+      "diesel": {
+       "1461": [
+        115
+       ]
+      }
+     }
+    },
+    {
+     "code": "Duster II",
+     "phase": "дорестайлинг",
+     "years": "2017–2021",
+     "mobileModel": "Duster",
+     "bodies": [
+      "Duster II SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        90,
+        101
+       ],
+       "1197": [
+        125
+       ],
+       "1333": [
+        130,
+        150
+       ],
+       "1598": [
+        115
+       ]
+      },
+      "lpg": {
+       "999": [
+        100
+       ]
+      },
+      "diesel": {
+       "1461": [
+        90,
+        95,
+        110,
+        115
+       ]
+      }
+     }
+    },
+    {
+     "code": "Duster I",
+     "phase": "дорестайлинг",
+     "years": "2010–2013",
+     "mobileModel": "Duster",
+     "bodies": [
+      "Duster I SUV (autocentrum)",
+      "Duster I Van (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "1461": [
+        90,
+        107,
+        109,
+        110
+       ]
+      },
+      "petrol": {
+       "1598": [
+        105
+       ]
+      },
+      "lpg": {
+       "1598": [
+        105
+       ]
+      }
+     }
+    },
+    {
+     "code": "Duster I",
+     "phase": "рестайлинг",
+     "years": "2013–2017",
+     "mobileModel": "Duster",
+     "bodies": [
+      "Duster I SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1197": [
+        125
+       ],
+       "1199": [
+        125
+       ],
+       "1598": [
+        105,
+        114
+       ]
+      },
+      "lpg": {
+       "1598": [
+        105,
+        109
+       ]
+      },
+      "diesel": {
+       "1461": [
+        90,
+        109,
+        110
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Jogger",
+   "generations": [
+    {
+     "code": "Jogger I",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "Jogger",
+     "bodies": [
+      "Jogger I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        110
+       ]
+      },
+      "lpg": {
+       "999": [
+        100,
+        110
+       ]
+      },
+      "hybrid": {
+       "1598": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Lodgy",
+   "generations": [
+    {
+     "code": "Lodgy",
+     "phase": "дорестайлинг",
+     "years": "2012–2017",
+     "mobileModel": "Lodgy",
+     "bodies": [
+      "Lodgy Minivan (autocentrum)",
+      "Lodgy Stepway (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1197": [
+        115
+       ],
+       "1198": [
+        115
+       ],
+       "1332": [
+        100
+       ],
+       "1333": [
+        130
+       ],
+       "1598": [
+        84,
+        102
+       ]
+      },
+      "diesel": {
+       "1461": [
+        90,
+        95,
+        109,
+        115
+       ]
+      },
+      "lpg": {
+       "1598": [
+        82
+       ]
+      }
+     }
+    },
+    {
+     "code": "Lodgy",
+     "phase": "рестайлинг",
+     "years": "2017–н. в.",
+     "mobileModel": "Lodgy",
+     "bodies": [
+      "Lodgy Minivan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1198": [
+        115
+       ],
+       "1333": [
+        102,
+        130
+       ],
+       "1598": [
+        102,
+        107
+       ]
+      },
+      "lpg": {
+       "1598": [
+        102
+       ]
+      },
+      "diesel": {
+       "1461": [
+        90,
+        95,
+        109,
+        115
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Logan",
+   "generations": [
+    {
+     "code": "Logan III",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "Logan",
+     "bodies": [
+      "Logan III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        100
+       ]
+      }
+     }
+    },
+    {
+     "code": "Logan II",
+     "phase": "дорестайлинг",
+     "years": "2012–2016",
+     "mobileModel": "Logan",
+     "bodies": [
+      "Logan II MCV (autocentrum)",
+      "Logan II MCV Stepway (autocentrum)",
+      "Logan II Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "898": [
+        90
+       ],
+       "999": [
+        100
+       ],
+       "1149": [
+        75
+       ]
+      },
+      "lpg": {
+       "898": [
+        90
+       ],
+       "999": [
+        100
+       ],
+       "1149": [
+        75
+       ]
+      },
+      "diesel": {
+       "1": [
+        95
+       ],
+       "1461": [
+        75,
+        90,
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "Logan II",
+     "phase": "рестайлинг",
+     "years": "2016–2020",
+     "mobileModel": "Logan",
+     "bodies": [
+      "Logan II MCV Facelifting (autocentrum)",
+      "Logan II Sedan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "898": [
+        90
+       ],
+       "998": [
+        73
+       ],
+       "999": [
+        73,
+        100
+       ],
+       "1149": [
+        73
+       ]
+      },
+      "lpg": {
+       "898": [
+        90
+       ],
+       "999": [
+        100
+       ]
+      },
+      "diesel": {
+       "1461": [
+        75,
+        90,
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "Logan I",
+     "phase": "весь выпуск",
+     "years": "2004–2012",
+     "mobileModel": "Logan",
+     "bodies": [
+      "Logan I MCV (autocentrum)",
+      "Logan I Pick Up (autocentrum)",
+      "Logan I Sedan (autocentrum)",
+      "Logan I Van (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1149": [
+        75
+       ],
+       "1390": [
+        75
+       ],
+       "1598": [
+        84,
+        87,
+        105
+       ]
+      },
+      "lpg": {
+       "1149": [
+        75
+       ],
+       "1598": [
+        84
+       ]
+      },
+      "diesel": {
+       "1461": [
+        68,
+        75,
+        85,
+        90
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Sandero",
+   "generations": [
+    {
+     "code": "Sandero III",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "Sandero",
+     "bodies": [
+      "Sandero III Hatchback 5-door (autocentrum)",
+      "Sandero III Stepway (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        65,
+        90,
+        110
+       ]
+      },
+      "lpg": {
+       "999": [
+        100
+       ]
+      }
+     }
+    },
+    {
+     "code": "Sandero II",
+     "phase": "рестайлинг",
+     "years": "2016–2020",
+     "mobileModel": "Sandero",
+     "bodies": [
+      "Sandero II Hatchback 5-door Facelifting (autocentrum)",
+      "Sandero II Stepway Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "898": [
+        90
+       ],
+       "998": [
+        73
+       ],
+       "999": [
+        100
+       ],
+       "1000": [
+        73
+       ],
+       "1149": [
+        73
+       ]
+      },
+      "lpg": {
+       "898": [
+        90
+       ],
+       "999": [
+        100
+       ]
+      },
+      "diesel": {
+       "1461": [
+        75,
+        90,
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "Sandero II",
+     "phase": "дорестайлинг",
+     "years": "2011–2016",
+     "mobileModel": "Sandero",
+     "bodies": [
+      "Sandero II Hatchback 5-door (autocentrum)",
+      "Sandero II Stepway (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "898": [
+        90
+       ],
+       "1149": [
+        75
+       ]
+      },
+      "lpg": {
+       "898": [
+        90
+       ],
+       "1149": [
+        75
+       ]
+      },
+      "diesel": {
+       "1461": [
+        75,
+        90
+       ]
+      }
+     }
+    },
+    {
+     "code": "Sandero I",
+     "phase": "весь выпуск",
+     "years": "2008–2012",
+     "mobileModel": "Sandero",
+     "bodies": [
+      "Sandero I Hatchback 5-door (autocentrum)",
+      "Sandero I Stepway (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1149": [
+        75
+       ],
+       "1390": [
+        75
+       ],
+       "1598": [
+        84,
+        87,
+        105
+       ]
+      },
+      "lpg": {
+       "1149": [
+        75
+       ],
+       "1598": [
+        84
+       ]
+      },
+      "diesel": {
+       "1461": [
+        68,
+        75,
+        85,
+        88
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Spring",
+   "generations": [
+    {
+     "code": "Spring",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "Spring",
+     "bodies": [
+      "Spring Crossover Cargo Facelifting 2024 (autocentrum)",
+      "Spring Crossover Facelifting (autocentrum)",
+      "Spring Crossover Facelifting 2024 (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        45,
+        65
+       ]
+      }
+     }
+    },
+    {
+     "code": "Spring",
+     "phase": "дорестайлинг",
+     "years": "2021–2023",
+     "mobileModel": "Spring",
+     "bodies": [
+      "Spring Crossover (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        45
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "model": "Dokker",
+   "generations": [
+    {
+     "code": "Dokker",
+     "phase": "рестайлинг",
+     "years": "2017–2021",
+     "mobileModel": "Dokker",
+     "bodies": [
+      "Dokker Mikrovan Facelifting (autocentrum)",
+      "Dokker Van Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1198": [
+        115
+       ],
+       "1333": [
+        102,
+        130
+       ],
+       "1598": [
+        100,
+        102
+       ]
+      },
+      "lpg": {
+       "1598": [
+        100
+       ]
+      },
+      "diesel": {
+       "1461": [
+        75,
+        90,
+        95
+       ]
+      }
+     }
+    },
+    {
+     "code": "Dokker",
+     "phase": "дорестайлинг",
+     "years": "2012–2017",
+     "mobileModel": "Dokker",
+     "bodies": [
+      "Dokker Mikrovan (autocentrum)",
+      "Dokker Van (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1198": [
+        115
+       ],
+       "1598": [
+        84,
+        102
+       ]
+      },
+      "lpg": {
+       "1598": [
+        84,
+        98
+       ]
+      },
+      "diesel": {
+       "1461": [
+        75,
+        90
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "ES",
+   "generations": [
+    {
+     "code": "ES VIII",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "ES",
+     "bodies": [
+      "ES VIII VIII (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2487": [
+        201
+       ]
+      },
+      "electric": {
+       "0": [
+        224,
+        343
+       ]
+      }
+     }
+    },
+    {
+     "code": "ES VII",
+     "phase": "рестайлинг",
+     "years": "2021–2025",
+     "mobileModel": "ES",
+     "bodies": [
+      "ES VII Sedan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2487": [
+        218
+       ]
+      }
+     }
+    },
+    {
+     "code": "ES VII",
+     "phase": "дорестайлинг",
+     "years": "2018–2021",
+     "mobileModel": "ES",
+     "bodies": [
+      "ES VII Sedan (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2487": [
+        218
+       ]
+      }
+     }
+    },
+    {
+     "code": "ES VI",
+     "phase": "рестайлинг",
+     "years": "2016–2017",
+     "mobileModel": "ES",
+     "bodies": [
+      "ES VI Sedan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        150
+       ],
+       "2494": [
+        184
+       ],
+       "3456": [
+        249
+       ]
+      }
+     }
+    },
+    {
+     "code": "ES VI",
+     "phase": "дорестайлинг",
+     "years": "2013–2016",
+     "mobileModel": "ES",
+     "bodies": [
+      "ES VI Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        150
+       ],
+       "2494": [
+        184
+       ],
+       "3456": [
+        249
+       ]
+      }
+     }
+    },
+    {
+     "code": "ES V",
+     "phase": "весь выпуск",
+     "years": "2006–2013",
+     "mobileModel": "ES",
+     "bodies": [
+      "ES V V (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3456": [
+        276
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "LC",
+   "generations": [
+    {
+     "code": "LC",
+     "phase": "рестайлинг",
+     "years": "2020–н. в.",
+     "mobileModel": "LC",
+     "bodies": [
+      "LC Cabrio Facelifting (autocentrum)",
+      "LC Coupe Facelifting (autocentrum)",
+      "LC Coupe Facelifting 2024 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "4969": [
+        464,
+        477
+       ]
+      },
+      "hybrid": {
+       "3456": [
+        359
+       ]
+      }
+     }
+    },
+    {
+     "code": "LC",
+     "phase": "дорестайлинг",
+     "years": "2017–2020",
+     "mobileModel": "LC",
+     "bodies": [
+      "LC Cabrio (autocentrum)",
+      "LC Coupe (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "4969": [
+        464,
+        471,
+        477
+       ]
+      },
+      "hybrid": {
+       "3456": [
+        354,
+        359
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "LM",
+   "generations": [
+    {
+     "code": "7-miejscowy",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "LM",
+     "bodies": [
+      "LM 7-miejscowy 7-miejscowy (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2487": [
+        250
+       ]
+      }
+     }
+    },
+    {
+     "code": "4-miejscowy",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "LM",
+     "bodies": [
+      "LM 4-miejscowy 4-miejscowy (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2487": [
+        250
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "LS",
+   "generations": [
+    {
+     "code": "LS V",
+     "phase": "рестайлинг",
+     "years": "2020–н. в.",
+     "mobileModel": "LS",
+     "bodies": [
+      "LS V Sedan Facelifting (autocentrum)",
+      "LS V Sedan Facelifting 2024 (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "3456": [
+        359
+       ]
+      }
+     }
+    },
+    {
+     "code": "LS V",
+     "phase": "дорестайлинг",
+     "years": "2017–2020",
+     "mobileModel": "LS",
+     "bodies": [
+      "LS V Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3456": [
+        359,
+        421
+       ]
+      }
+     }
+    },
+    {
+     "code": "LS IV",
+     "phase": "рестайлинг",
+     "years": "2012–2017",
+     "mobileModel": "LS",
+     "bodies": [
+      "LS IV Sedan Facelifting (autocentrum)",
+      "LS IV Sedan L Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "4608": [
+        370,
+        387
+       ],
+       "4969": [
+        445
+       ]
+      },
+      "hybrid": {
+       "4969": [
+        394,
+        445
+       ]
+      }
+     }
+    },
+    {
+     "code": "LS IV",
+     "phase": "дорестайлинг",
+     "years": "2006–2012",
+     "mobileModel": "LS",
+     "bodies": [
+      "LS IV Sedan (autocentrum)",
+      "LS IV Sedan L (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "4608": [
+        367,
+        380
+       ]
+      },
+      "hybrid": {
+       "4969": [
+        445
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "NX",
+   "generations": [
+    {
+     "code": "NX II",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "NX",
+     "bodies": [
+      "NX II SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2487": [
+        200,
+        243
+       ]
+      },
+      "plugin": {
+       "2487": [
+        292,
+        309
+       ]
+      }
+     }
+    },
+    {
+     "code": "NX II",
+     "phase": "дорестайлинг",
+     "years": "2021–2023",
+     "mobileModel": "NX",
+     "bodies": [
+      "NX II SUV (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2494": [
+        242
+       ]
+      },
+      "plugin": {
+       "2494": [
+        306
+       ]
+      }
+     }
+    },
+    {
+     "code": "NX I",
+     "phase": "рестайлинг",
+     "years": "2018–2021",
+     "mobileModel": "NX",
+     "bodies": [
+      "NX I SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        238
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        197
+       ]
+      }
+     }
+    },
+    {
+     "code": "NX I",
+     "phase": "дорестайлинг",
+     "years": "2014–2018",
+     "mobileModel": "NX",
+     "bodies": [
+      "NX I SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        238
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        197
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "RC",
+   "generations": [
+    {
+     "code": "RC",
+     "phase": "рестайлинг",
+     "years": "2018–н. в.",
+     "mobileModel": "RC",
+     "bodies": [
+      "RC Coupe F Facelifting (autocentrum)",
+      "RC Coupe F Facelifting 2023 (autocentrum)",
+      "RC Coupe Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "4969": [
+        464
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        241
+       ]
+      }
+     }
+    },
+    {
+     "code": "RC",
+     "phase": "дорестайлинг",
+     "years": "2014–2018",
+     "mobileModel": "RC",
+     "bodies": [
+      "RC Coupe (autocentrum)",
+      "RC Coupe F (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        245
+       ],
+       "3456": [
+        310
+       ],
+       "4969": [
+        463,
+        477
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        223
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "RX",
+   "generations": [
+    {
+     "code": "RX V",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "RX",
+     "bodies": [
+      "RX V V (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2393": [
+        371
+       ],
+       "2487": [
+        250
+       ]
+      },
+      "plugin": {
+       "2487": [
+        309
+       ]
+      }
+     }
+    },
+    {
+     "code": "RX IV",
+     "phase": "рестайлинг",
+     "years": "2019–2022",
+     "mobileModel": "RX",
+     "bodies": [
+      "RX IV SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        238
+       ]
+      },
+      "hybrid": {
+       "3456": [
+        313
+       ]
+      }
+     }
+    },
+    {
+     "code": "RX IV",
+     "phase": "дорестайлинг",
+     "years": "2015–2019",
+     "mobileModel": "RX",
+     "bodies": [
+      "RX IV SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "0": [
+        238
+       ]
+      },
+      "hybrid": {
+       "3456": [
+        313
+       ]
+      }
+     }
+    },
+    {
+     "code": "RX III",
+     "phase": "рестайлинг",
+     "years": "2012–2015",
+     "mobileModel": "RX",
+     "bodies": [
+      "RX III SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3456": [
+        277
+       ]
+      },
+      "hybrid": {
+       "3456": [
+        299
+       ]
+      }
+     }
+    },
+    {
+     "code": "RX III",
+     "phase": "дорестайлинг",
+     "years": "2009–2012",
+     "mobileModel": "RX",
+     "bodies": [
+      "RX III SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3456": [
+        277
+       ]
+      },
+      "hybrid": {
+       "3456": [
+        299
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "UX",
+   "generations": [
+    {
+     "code": "UX",
+     "phase": "рестайлинг",
+     "years": "2022–н. в.",
+     "mobileModel": "UX",
+     "bodies": [
+      "UX Crossover Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1987": [
+        173
+       ]
+      },
+      "hybrid": {
+       "1987": [
+        184,
+        199
+       ]
+      }
+     }
+    },
+    {
+     "code": "UX",
+     "phase": "дорестайлинг",
+     "years": "2018–2022",
+     "mobileModel": "UX",
+     "bodies": [
+      "UX Crossover (autocentrum)",
+      "UX e-Crossover (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204
+       ]
+      },
+      "petrol": {
+       "1987": [
+        171
+       ]
+      },
+      "hybrid": {
+       "1987": [
+        184
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "CT",
+   "generations": [
+    {
+     "code": "CT",
+     "phase": "рестайлинг",
+     "years": "2014–2021",
+     "mobileModel": "CT",
+     "bodies": [
+      "CT Hatchback 5-door Facelifting (autocentrum)",
+      "CT Hatchback 5-door Facelifting 2017 (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1798": [
+        136
+       ]
+      }
+     }
+    },
+    {
+     "code": "CT",
+     "phase": "дорестайлинг",
+     "years": "2010–2014",
+     "mobileModel": "CT",
+     "bodies": [
+      "CT Hatchback 5-door (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1798": [
+        136
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "GS",
+   "generations": [
+    {
+     "code": "GS IV",
+     "phase": "рестайлинг",
+     "years": "2015–2018",
+     "mobileModel": "GS",
+     "bodies": [
+      "GS IV Sedan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        245
+       ],
+       "4969": [
+        477
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        223
+       ],
+       "3456": [
+        345
+       ]
+      }
+     }
+    },
+    {
+     "code": "GS IV",
+     "phase": "дорестайлинг",
+     "years": "2012–2015",
+     "mobileModel": "GS",
+     "bodies": [
+      "GS IV Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2500": [
+        209
+       ],
+       "3456": [
+        317
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        223
+       ],
+       "3456": [
+        345
+       ]
+      }
+     }
+    },
+    {
+     "code": "GS III",
+     "phase": "весь выпуск",
+     "years": "2004–2011",
+     "mobileModel": "GS",
+     "bodies": [
+      "GS III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2995": [
+        249
+       ],
+       "3456": [
+        307,
+        345
+       ],
+       "4293": [
+        283
+       ],
+       "4608": [
+        347
+       ]
+      },
+      "hybrid": {
+       "3456": [
+        344
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "IS",
+   "generations": [
+    {
+     "code": "IS III",
+     "phase": "рестайлинг",
+     "years": "2016–2020",
+     "mobileModel": "IS",
+     "bodies": [
+      "IS III Sedan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        245
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        223
+       ]
+      }
+     }
+    },
+    {
+     "code": "IS III",
+     "phase": "дорестайлинг",
+     "years": "2013–2016",
+     "mobileModel": "IS",
+     "bodies": [
+      "IS III Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        245
+       ],
+       "2499": [
+        207
+       ]
+      },
+      "hybrid": {
+       "2494": [
+        223
+       ]
+      }
+     }
+    },
+    {
+     "code": "IS II",
+     "phase": "весь выпуск",
+     "years": "2005–2012",
+     "mobileModel": "IS",
+     "bodies": [
+      "IS II Cabrio (autocentrum)",
+      "IS II Sedan (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2500": [
+        208
+       ],
+       "3456": [
+        310
+       ],
+       "4968": [
+        423
+       ]
+      },
+      "diesel": {
+       "2231": [
+        150,
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "LX",
+   "generations": [
+    {
+     "code": "LX IV",
+     "phase": "весь выпуск",
+     "years": "2018–2021",
+     "mobileModel": "LX",
+     "bodies": [
+      "LX IV IV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "5663": [
+        367
+       ]
+      }
+     }
+    },
+    {
+     "code": "LX III",
+     "phase": "весь выпуск",
+     "years": "2008–2012",
+     "mobileModel": "LX",
+     "bodies": [
+      "LX III III (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "5663": [
+        383
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "LBX",
+   "generations": [
+    {
+     "code": "LBX I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "LBX",
+     "bodies": [
+      "LBX I I (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1490": [
+        136
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "model": "RZ",
+   "generations": [
+    {
+     "code": "RZ I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "RZ",
+     "bodies": [
+      "RZ I I (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        313
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "model": "911",
+   "generations": [
+    {
+     "code": "992",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "911",
+     "bodies": [
+      "911 992 Carrera 4 GTS Cabriolet Facelifting (autocentrum)",
+      "911 992 Carrera 4 GTS Facelifting (autocentrum)",
+      "911 992 Carrera Cabriolet Facelifting (autocentrum)",
+      "911 992 Carrera Facelifting (autocentrum)",
+      "911 992 Carrera GTS Cabriolet Facelifting (autocentrum)",
+      "911 992 Carrera GTS Facelifting (autocentrum)",
+      "911 992 Targa 4 GTS Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2981": [
+        394
+       ]
+      },
+      "hybrid": {
+       "3591": [
+        541
+       ]
+      }
+     }
+    },
+    {
+     "code": "992",
+     "phase": "дорестайлинг",
+     "years": "2019–2024",
+     "mobileModel": "911",
+     "bodies": [
+      "911 992 Carrera (autocentrum)",
+      "911 992 Carrera 4S (autocentrum)",
+      "911 992 Carrera Cabriolet (autocentrum)",
+      "911 992 Carrera GTS (autocentrum)",
+      "911 992 Carrera GTS Cabriolet (autocentrum)",
+      "911 992 Carrera S (autocentrum)",
+      "911 992 Carrera S Cabriolet (autocentrum)",
+      "911 992 Dakar (autocentrum)",
+      "911 992 GT 3 RS (autocentrum)",
+      "911 992 GT3 (autocentrum)",
+      "911 992 GT3 Touring (autocentrum)",
+      "911 992 Sport Classic (autocentrum)",
+      "911 992 Targa (autocentrum)",
+      "911 992 Targa GTS (autocentrum)",
+      "911 992 Targa S (autocentrum)",
+      "911 992 Turbo (autocentrum)",
+      "911 992 Turbo Cabriolet (autocentrum)",
+      "911 992 Turbo S (autocentrum)",
+      "911 992 Turbo S Cabriolet (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2981": [
+        385,
+        450,
+        480
+       ],
+       "3745": [
+        550,
+        580,
+        650
+       ],
+       "3996": [
+        510,
+        525
+       ]
+      }
+     }
+    },
+    {
+     "code": "991",
+     "phase": "рестайлинг",
+     "years": "2015–2019",
+     "mobileModel": "911",
+     "bodies": [
+      "911 991 4 GTS Cabrio Facelifting (autocentrum)",
+      "911 991 4 GTS Coupe Facelifting (autocentrum)",
+      "911 991 Carrera 2/2S Cabrio Facelifting (autocentrum)",
+      "911 991 Carrera 2/2S Coupe Facelifting (autocentrum)",
+      "911 991 Carrera 4/4S Cabrio Facelifting (autocentrum)",
+      "911 991 Carrera 4/4S Coupe Facelifting (autocentrum)",
+      "911 991 GT3 RS Facelifting (autocentrum)",
+      "911 991 GTS Cabrio Facelifting (autocentrum)",
+      "911 991 GTS Coupe Facelifting (autocentrum)",
+      "911 991 Targa 4 GTS Facelifting (autocentrum)",
+      "911 991 Targa 4/4S Facelifting (autocentrum)",
+      "911 991 Turbo/Turbo S Cabrio Facelifting (autocentrum)",
+      "911 991 Turbo/Turbo S Coupe Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2981": [
+        370,
+        420,
+        450
+       ],
+       "3800": [
+        540,
+        580
+       ],
+       "3996": [
+        520
+       ]
+      }
+     }
+    },
+    {
+     "code": "991",
+     "phase": "дорестайлинг",
+     "years": "2011–2015",
+     "mobileModel": "911",
+     "bodies": [
+      "911 991 50th Anniversary (autocentrum)",
+      "911 991 Carrera 2/2S Cabrio (autocentrum)",
+      "911 991 Carrera 2/2S Coupe (autocentrum)",
+      "911 991 Carrera 4/4S Cabrio (autocentrum)",
+      "911 991 Carrera 4/4S Coupe (autocentrum)",
+      "911 991 Carrera T Coupe (autocentrum)",
+      "911 991 GT2 RS (autocentrum)",
+      "911 991 GT3 (autocentrum)",
+      "911 991 GT3 RS (autocentrum)",
+      "911 991 GTS Cabrio (autocentrum)",
+      "911 991 GTS Coupe (autocentrum)",
+      "911 991 R (autocentrum)",
+      "911 991 Targa 4 GTS (autocentrum)",
+      "911 991 Targa 4/4S (autocentrum)",
+      "911 991 Turbo/Turbo S Cabrio (autocentrum)",
+      "911 991 Turbo/Turbo S Coupe (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2981": [
+        370
+       ],
+       "3436": [
+        350
+       ],
+       "3779": [
+        475
+       ],
+       "3800": [
+        400,
+        430,
+        520,
+        560,
+        700
+       ],
+       "3996": [
+        500,
+        520
+       ]
+      }
+     }
+    },
+    {
+     "code": "997",
+     "phase": "весь выпуск",
+     "years": "2005–2011",
+     "mobileModel": "911",
+     "bodies": [
+      "911 997 Cabrio (autocentrum)",
+      "911 997 Coupe (autocentrum)",
+      "911 997 Speedster (autocentrum)",
+      "911 997 Targa (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3596": [
+        325
+       ],
+       "3600": [
+        415,
+        435,
+        480,
+        530,
+        620
+       ],
+       "3614": [
+        345
+       ],
+       "3767": [
+        450
+       ],
+       "3797": [
+        435
+       ],
+       "3800": [
+        385,
+        408,
+        500,
+        530
+       ],
+       "3824": [
+        355,
+        385
+       ],
+       "3996": [
+        500
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "model": "Boxster",
+   "generations": [
+    {
+     "code": "718",
+     "phase": "весь выпуск",
+     "years": "2016–н. в.",
+     "mobileModel": "Boxster",
+     "bodies": [
+      "Boxster 718 Cabrio (autocentrum)",
+      "Boxster 718 Cabrio GTS (autocentrum)",
+      "Boxster 718 Spyder (autocentrum)",
+      "Boxster 718 Spyder RS (autocentrum)",
+      "Boxster 718 T (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1988": [
+        300
+       ],
+       "2497": [
+        350,
+        365
+       ],
+       "3995": [
+        400,
+        420
+       ],
+       "3996": [
+        500
+       ]
+      }
+     }
+    },
+    {
+     "code": "981",
+     "phase": "весь выпуск",
+     "years": "2012–2016",
+     "mobileModel": "Boxster",
+     "bodies": [
+      "Boxster 981 Cabrio (autocentrum)",
+      "Boxster 981 Spyder (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2706": [
+        265
+       ],
+       "3436": [
+        315,
+        330
+       ],
+       "3800": [
+        375
+       ]
+      }
+     }
+    },
+    {
+     "code": "987",
+     "phase": "весь выпуск",
+     "years": "2004–2012",
+     "mobileModel": "Boxster",
+     "bodies": [
+      "Boxster 987 987 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2687": [
+        245
+       ],
+       "2893": [
+        255
+       ],
+       "3387": [
+        295,
+        310
+       ],
+       "3436": [
+        320
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "model": "Cayenne",
+   "generations": [
+    {
+     "code": "Cayenne III",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "Cayenne",
+     "bodies": [
+      "Cayenne III Coupe Facelifting (autocentrum)",
+      "Cayenne III Coupe Plug-In Facelifting (autocentrum)",
+      "Cayenne III SUV Facelifting (autocentrum)",
+      "Cayenne III SUV Plug-In Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2995": [
+        353
+       ],
+       "3996": [
+        474
+       ]
+      },
+      "hybrid": {
+       "2995": [
+        470
+       ]
+      }
+     }
+    },
+    {
+     "code": "Cayenne III",
+     "phase": "дорестайлинг",
+     "years": "2017–2023",
+     "mobileModel": "Cayenne",
+     "bodies": [
+      "Cayenne III Coupe (autocentrum)",
+      "Cayenne III Coupe GTS (autocentrum)",
+      "Cayenne III Coupe Plug-In (autocentrum)",
+      "Cayenne III SUV (autocentrum)",
+      "Cayenne III SUV GTS (autocentrum)",
+      "Cayenne III SUV Plug-In (autocentrum)"
+     ],
+     "engines": {
+      "plugin": {
+       "2995": [
+        462
+       ],
+       "3996": [
+        680
+       ]
+      },
+      "petrol": {
+       "2894": [
+        440
+       ],
+       "2995": [
+        340
+       ],
+       "3996": [
+        460,
+        550,
+        640
+       ]
+      }
+     }
+    },
+    {
+     "code": "Cayenne II",
+     "phase": "рестайлинг",
+     "years": "2014–2017",
+     "mobileModel": "Cayenne",
+     "bodies": [
+      "Cayenne II SUV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3598": [
+        300
+       ],
+       "3604": [
+        420,
+        440
+       ],
+       "4806": [
+        520,
+        570
+       ]
+      },
+      "diesel": {
+       "2967": [
+        262
+       ],
+       "4134": [
+        385
+       ]
+      },
+      "hybrid": {
+       "2995": [
+        416
+       ]
+      }
+     }
+    },
+    {
+     "code": "Cayenne II",
+     "phase": "дорестайлинг",
+     "years": "2010–2014",
+     "mobileModel": "Cayenne",
+     "bodies": [
+      "Cayenne II SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3598": [
+        300
+       ],
+       "4806": [
+        400,
+        420,
+        500,
+        550
+       ]
+      },
+      "diesel": {
+       "2967": [
+        245
+       ],
+       "4134": [
+        382
+       ]
+      },
+      "hybrid": {
+       "2995": [
+        380
+       ]
+      }
+     }
+    },
+    {
+     "code": "Cayenne I",
+     "phase": "весь выпуск",
+     "years": "2002–2010",
+     "mobileModel": "Cayenne",
+     "bodies": [
+      "Cayenne I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3598": [
+        290
+       ],
+       "4511": [
+        500
+       ],
+       "4806": [
+        385,
+        405,
+        500,
+        550
+       ]
+      },
+      "diesel": {
+       "2967": [
+        240
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "model": "Cayman",
+   "generations": [
+    {
+     "code": "718",
+     "phase": "весь выпуск",
+     "years": "2016–н. в.",
+     "mobileModel": "Cayman",
+     "bodies": [
+      "Cayman 718 Coupe (autocentrum)",
+      "Cayman 718 Coupe GT4 (autocentrum)",
+      "Cayman 718 Coupe GT4 RS (autocentrum)",
+      "Cayman 718 Coupe GTS (autocentrum)",
+      "Cayman 718 T (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1988": [
+        300
+       ],
+       "2497": [
+        350,
+        365
+       ],
+       "3995": [
+        400,
+        420
+       ],
+       "3996": [
+        500
+       ]
+      }
+     }
+    },
+    {
+     "code": "981c",
+     "phase": "весь выпуск",
+     "years": "2013–2016",
+     "mobileModel": "Cayman",
+     "bodies": [
+      "Cayman 981c Coupe (autocentrum)",
+      "Cayman 981c GT4 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2706": [
+        275
+       ],
+       "3436": [
+        325,
+        340
+       ],
+       "3800": [
+        385
+       ]
+      }
+     }
+    },
+    {
+     "code": "987c",
+     "phase": "рестайлинг",
+     "years": "2010–2012",
+     "mobileModel": "Cayman",
+     "bodies": [
+      "Cayman 987c Coupe Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2893": [
+        265
+       ],
+       "3436": [
+        320,
+        330
+       ]
+      }
+     }
+    },
+    {
+     "code": "987c",
+     "phase": "дорестайлинг",
+     "years": "2005–2010",
+     "mobileModel": "Cayman",
+     "bodies": [
+      "Cayman 987c Coupe (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2687": [
+        245
+       ],
+       "2893": [
+        265
+       ],
+       "3387": [
+        295
+       ],
+       "3436": [
+        320
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "model": "Macan",
+   "generations": [
+    {
+     "code": "Macan",
+     "phase": "дорестайлинг",
+     "years": "2013–2019",
+     "mobileModel": "Macan",
+     "bodies": [
+      "Macan SUV (autocentrum)",
+      "Macan SUV Elektryczny (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        360,
+        408,
+        516,
+        639
+       ]
+      },
+      "petrol": {
+       "1984": [
+        252
+       ],
+       "2997": [
+        340,
+        360
+       ],
+       "3604": [
+        400,
+        440
+       ]
+      },
+      "diesel": {
+       "2967": [
+        258
+       ]
+      }
+     }
+    },
+    {
+     "code": "Macan",
+     "phase": "рестайлинг",
+     "years": "2019–н. в.",
+     "mobileModel": "Macan",
+     "bodies": [
+      "Macan SUV Facelifting (autocentrum)",
+      "Macan SUV Facelifting II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1984": [
+        245,
+        265
+       ],
+       "2894": [
+        380,
+        440
+       ],
+       "2995": [
+        354
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "model": "Panamera",
+   "generations": [
+    {
+     "code": "Panamera III",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Panamera",
+     "bodies": [
+      "Panamera III Liftback (autocentrum)",
+      "Panamera III Liftback 4 (autocentrum)",
+      "Panamera III Liftback 4 E-Hybrid (autocentrum)",
+      "Panamera III Liftback 4S E-Hybrid (autocentrum)",
+      "Panamera III Liftback Executive (autocentrum)",
+      "Panamera III Liftback GTS (autocentrum)",
+      "Panamera III Liftback Turbo E-Hybrid (autocentrum)",
+      "Panamera III Liftback Turbo S E-Hybrid (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2894": [
+        353
+       ],
+       "3996": [
+        500
+       ]
+      },
+      "hybrid": {
+       "2894": [
+        470,
+        544
+       ],
+       "3996": [
+        680,
+        782
+       ]
+      },
+      "plugin": {
+       "2894": [
+        470
+       ],
+       "3996": [
+        782
+       ]
+      }
+     }
+    },
+    {
+     "code": "Panamera II",
+     "phase": "рестайлинг",
+     "years": "2020–2024",
+     "mobileModel": "Panamera",
+     "bodies": [
+      "Panamera II Liftback Executive Facelifting (autocentrum)",
+      "Panamera II Liftback Executive Plug-in Hybrid Facelifting (autocentrum)",
+      "Panamera II Liftback Facelifting (autocentrum)",
+      "Panamera II Liftback GTS Facelifting (autocentrum)",
+      "Panamera II Liftback Plug-in Hybrid Facelifting (autocentrum)",
+      "Panamera II Sport Turismo Facelifting (autocentrum)",
+      "Panamera II Sport Turismo GTS Facelifting (autocentrum)",
+      "Panamera II Sport Turismo Plug-in Hybrid Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2894": [
+        330,
+        440
+       ],
+       "3996": [
+        480,
+        630
+       ]
+      },
+      "plugin": {
+       "2894": [
+        462,
+        560
+       ],
+       "3996": [
+        700
+       ]
+      }
+     }
+    },
+    {
+     "code": "Panamera II",
+     "phase": "дорестайлинг",
+     "years": "2016–2020",
+     "mobileModel": "Panamera",
+     "bodies": [
+      "Panamera II Executive (autocentrum)",
+      "Panamera II GTS (autocentrum)",
+      "Panamera II GTS Sport Turismo (autocentrum)",
+      "Panamera II Liftback (autocentrum)",
+      "Panamera II Sport Turismo (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2894": [
+        440,
+        462
+       ],
+       "2995": [
+        330
+       ],
+       "3996": [
+        460,
+        550
+       ]
+      },
+      "diesel": {
+       "3956": [
+        422
+       ]
+      },
+      "hybrid": {
+       "2894": [
+        462
+       ],
+       "3996": [
+        680
+       ]
+      }
+     }
+    },
+    {
+     "code": "Panamera I",
+     "phase": "рестайлинг",
+     "years": "2013–2016",
+     "mobileModel": "Panamera",
+     "bodies": [
+      "Panamera I Sedan Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2997": [
+        420
+       ],
+       "3605": [
+        310
+       ],
+       "4806": [
+        440,
+        520,
+        570
+       ]
+      },
+      "diesel": {
+       "2967": [
+        250,
+        300
+       ]
+      },
+      "hybrid": {
+       "2995": [
+        416
+       ]
+      }
+     }
+    },
+    {
+     "code": "Panamera I",
+     "phase": "дорестайлинг",
+     "years": "2010–2013",
+     "mobileModel": "Panamera",
+     "bodies": [
+      "Panamera I Executive (autocentrum)",
+      "Panamera I Liftback (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2997": [
+        420
+       ],
+       "3605": [
+        300
+       ],
+       "4806": [
+        400,
+        430,
+        500,
+        520,
+        550,
+        570
+       ]
+      },
+      "diesel": {
+       "2967": [
+        250
+       ]
+      },
+      "hybrid": {
+       "2995": [
+        380
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "model": "Taycan",
+   "generations": [
+    {
+     "code": "Taycan",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "Taycan",
+     "bodies": [
+      "Taycan Cross Turismo Facelifting (autocentrum)",
+      "Taycan Grand Tourer Facelifting (autocentrum)",
+      "Taycan Sport Tourismo Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        408,
+        544,
+        884,
+        1034
+       ]
+      }
+     }
+    },
+    {
+     "code": "Taycan",
+     "phase": "дорестайлинг",
+     "years": "2019–2024",
+     "mobileModel": "Taycan",
+     "bodies": [
+      "Taycan Cross Turismo (autocentrum)",
+      "Taycan Grand Tourer (autocentrum)",
+      "Taycan Sport Tourismo (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        408,
+        476,
+        517,
+        530,
+        571,
+        680,
+        761
+       ],
+       "93400": [
+        517,
+        598
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "ASX",
+   "generations": [
+    {
+     "code": "ASX II",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "ASX",
+     "bodies": [
+      "ASX II Crossover Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        114
+       ],
+       "1333": [
+        140
+       ]
+      }
+     }
+    },
+    {
+     "code": "ASX II",
+     "phase": "дорестайлинг",
+     "years": "2023–2024",
+     "mobileModel": "ASX",
+     "bodies": [
+      "ASX II Crossover (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        91
+       ],
+       "1333": [
+        140,
+        158
+       ]
+      },
+      "hybrid": {
+       "1598": [
+        143
+       ]
+      }
+     }
+    },
+    {
+     "code": "ASX I",
+     "phase": "рестайлинг",
+     "years": "2013–2021",
+     "mobileModel": "ASX",
+     "bodies": [
+      "ASX I SUV Facelifting (autocentrum)",
+      "ASX I SUV Facelifting 2015 (autocentrum)",
+      "ASX I SUV Facelifting 2016 (autocentrum)",
+      "ASX I SUV Facelifting 2019 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1590": [
+        117
+       ],
+       "1998": [
+        150
+       ]
+      },
+      "diesel": {
+       "1560": [
+        114
+       ],
+       "1798": [
+        150
+       ],
+       "2268": [
+        150
+       ]
+      }
+     }
+    },
+    {
+     "code": "ASX I",
+     "phase": "дорестайлинг",
+     "years": "2010–2013",
+     "mobileModel": "ASX",
+     "bodies": [
+      "ASX I SUV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1590": [
+        117
+       ]
+      },
+      "diesel": {
+       "1798": [
+        150
+       ],
+       "1799": [
+        116
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Colt",
+   "generations": [
+    {
+     "code": "Colt VIII",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Colt",
+     "bodies": [
+      "Colt VIII VIII (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        66,
+        91,
+        101
+       ]
+      },
+      "hybrid": {
+       "1598": [
+        143
+       ]
+      }
+     }
+    },
+    {
+     "code": "Colt VII",
+     "phase": "весь выпуск",
+     "years": "2008–2011",
+     "mobileModel": "Colt",
+     "bodies": [
+      "Colt VII Hatchback 3-door (autocentrum)",
+      "Colt VII Hatchback 3-door Ralliart (autocentrum)",
+      "Colt VII Hatchback 5-door (autocentrum)",
+      "Colt VII Hatchback 5-door Ralliart (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1124": [
+        75
+       ],
+       "1332": [
+        95
+       ],
+       "1468": [
+        150
+       ],
+       "1499": [
+        109
+       ]
+      }
+     }
+    },
+    {
+     "code": "Colt VI",
+     "phase": "весь выпуск",
+     "years": "2004–2012",
+     "mobileModel": "Colt",
+     "bodies": [
+      "Colt VI Hatchback (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1124": [
+        75
+       ],
+       "1332": [
+        95
+       ]
+      },
+      "diesel": {
+       "1493": [
+        68
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Eclipse Cross",
+   "generations": [
+    {
+     "code": "Eclipse Cross",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "Eclipse Cross",
+     "bodies": [
+      "Eclipse Cross SUV PHEV Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2360": [
+        188
+       ]
+      }
+     }
+    },
+    {
+     "code": "Eclipse Cross",
+     "phase": "дорестайлинг",
+     "years": "2017–2024",
+     "mobileModel": "Eclipse Cross",
+     "bodies": [
+      "Eclipse Cross SUV (autocentrum)",
+      "Eclipse Cross SUV PHEV (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2360": [
+        188
+       ]
+      },
+      "petrol": {
+       "1499": [
+        163
+       ]
+      },
+      "diesel": {
+       "2268": [
+        150
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "L200",
+   "generations": [
+    {
+     "code": "L200 VI",
+     "phase": "весь выпуск",
+     "years": "2019–н. в.",
+     "mobileModel": "L200",
+     "bodies": [
+      "L200 VI VI (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2268": [
+        150
+       ]
+      }
+     }
+    },
+    {
+     "code": "L200 V",
+     "phase": "весь выпуск",
+     "years": "2015–2019",
+     "mobileModel": "L200",
+     "bodies": [
+      "L200 V Club Cab (autocentrum)",
+      "L200 V Double Cab (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2442": [
+        154,
+        181
+       ]
+      }
+     }
+    },
+    {
+     "code": "L200 IV",
+     "phase": "рестайлинг",
+     "years": "2014–2015",
+     "mobileModel": "L200",
+     "bodies": [
+      "L200 IV Club Cab Facelifting (autocentrum)",
+      "L200 IV Double Cab Facelifting (autocentrum)",
+      "L200 IV Single Cab Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2477": [
+        136,
+        176,
+        178
+       ]
+      }
+     }
+    },
+    {
+     "code": "L200 IV",
+     "phase": "дорестайлинг",
+     "years": "2006–2014",
+     "mobileModel": "L200",
+     "bodies": [
+      "L200 IV Club Cab (autocentrum)",
+      "L200 IV Double Cab (autocentrum)",
+      "L200 IV Single Cab (autocentrum)"
+     ],
+     "engines": {
+      "diesel": {
+       "2477": [
+        136,
+        176,
+        178
+       ],
+       "2500": [
+        160
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Outlander",
+   "generations": [
+    {
+     "code": "Outlander IV",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "Outlander",
+     "bodies": [
+      "Outlander IV IV (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "2360": [
+        306
+       ]
+      }
+     }
+    },
+    {
+     "code": "Outlander III",
+     "phase": "рестайлинг",
+     "years": "2014–2022",
+     "mobileModel": "Outlander",
+     "bodies": [
+      "Outlander III SUV Facelifting (autocentrum)",
+      "Outlander III SUV Facelifting 2015 (autocentrum)",
+      "Outlander III SUV Facelifting 2017 (autocentrum)",
+      "Outlander III SUV PHEV Facelifting (autocentrum)",
+      "Outlander III SUV PHEV Facelifting 2017 (autocentrum)",
+      "Outlander III SUV PHEV Facelifting 2020 (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1998": [
+        203
+       ],
+       "2360": [
+        224
+       ]
+      },
+      "petrol": {
+       "1998": [
+        150,
+        203
+       ]
+      },
+      "diesel": {
+       "2268": [
+        150
+       ]
+      }
+     }
+    },
+    {
+     "code": "Outlander III",
+     "phase": "дорестайлинг",
+     "years": "2012–2014",
+     "mobileModel": "Outlander",
+     "bodies": [
+      "Outlander III SUV (autocentrum)",
+      "Outlander III SUV PHEV (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        121,
+        147
+       ]
+      },
+      "diesel": {
+       "2268": [
+        150
+       ]
+      }
+     }
+    },
+    {
+     "code": "Outlander II",
+     "phase": "весь выпуск",
+     "years": "2006–2012",
+     "mobileModel": "Outlander",
+     "bodies": [
+      "Outlander II II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        136,
+        201
+       ],
+       "2000": [
+        147
+       ],
+       "2360": [
+        170
+       ],
+       "2378": [
+        160
+       ],
+       "2998": [
+        220
+       ]
+      },
+      "diesel": {
+       "1968": [
+        140
+       ],
+       "2179": [
+        156
+       ],
+       "2200": [
+        156
+       ],
+       "2268": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Space Star",
+   "generations": [
+    {
+     "code": "Space Star",
+     "phase": "рестайлинг",
+     "years": "2018–н. в.",
+     "mobileModel": "Space Star",
+     "bodies": [
+      "Space Star Hatchback 5-door Facelifting (autocentrum)",
+      "Space Star Hatchback 5-door Facelifting II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        71
+       ],
+       "1193": [
+        71,
+        80
+       ]
+      }
+     }
+    },
+    {
+     "code": "Space Star",
+     "phase": "дорестайлинг",
+     "years": "2014–2018",
+     "mobileModel": "Space Star",
+     "bodies": [
+      "Space Star Hatchback 5-door (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "999": [
+        71
+       ],
+       "1193": [
+        80
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Galant",
+   "generations": [
+    {
+     "code": "Galant IX",
+     "phase": "весь выпуск",
+     "years": "2006–2012",
+     "mobileModel": "Galant",
+     "bodies": [
+      "Galant IX IX (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2378": [
+        158
+       ],
+       "3828": [
+        232
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Grandis",
+   "generations": [
+    {
+     "code": "Grandis I",
+     "phase": "весь выпуск",
+     "years": "2003–2011",
+     "mobileModel": "Grandis",
+     "bodies": [
+      "Grandis I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "2378": [
+        165
+       ]
+      },
+      "diesel": {
+       "1968": [
+        136
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Lancer",
+   "generations": [
+    {
+     "code": "Lancer IX",
+     "phase": "рестайлинг",
+     "years": "2015–2016",
+     "mobileModel": "Lancer",
+     "bodies": [
+      "Lancer IX Sedan Facelifting (autocentrum)",
+      "Lancer IX Sportback Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1590": [
+        117
+       ]
+      }
+     }
+    },
+    {
+     "code": "Lancer IX",
+     "phase": "дорестайлинг",
+     "years": "2007–2015",
+     "mobileModel": "Lancer",
+     "bodies": [
+      "Lancer IX Sedan (autocentrum)",
+      "Lancer IX Sedan Ralliart (autocentrum)",
+      "Lancer IX Sportback (autocentrum)",
+      "Lancer IX Sportback Ralliart (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "0": [
+        240
+       ],
+       "1496": [
+        109
+       ],
+       "1499": [
+        109
+       ],
+       "1590": [
+        117
+       ],
+       "1599": [
+        117
+       ],
+       "1798": [
+        140,
+        143
+       ],
+       "1998": [
+        156,
+        240
+       ],
+       "2360": [
+        170
+       ]
+      },
+      "diesel": {
+       "1798": [
+        150
+       ],
+       "1968": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Pajero",
+   "generations": [
+    {
+     "code": "Pajero IV",
+     "phase": "весь выпуск",
+     "years": "2006–2017",
+     "mobileModel": "Pajero",
+     "bodies": [
+      "Pajero IV SUV 3-door (autocentrum)",
+      "Pajero IV SUV 5-door (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "3828": [
+        250
+       ]
+      },
+      "diesel": {
+       "3200": [
+        170,
+        190,
+        200
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "i-MiEV",
+   "generations": [
+    {
+     "code": "i-MiEV I",
+     "phase": "весь выпуск",
+     "years": "2010–2014",
+     "mobileModel": "i-MiEV",
+     "bodies": [
+      "i-MiEV I I (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        66
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Cooper",
+   "generations": [
+    {
+     "code": "F65/F66/J01",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Cooper",
+     "bodies": [
+      "Cooper F65/F66/J01 Cooper 3D (autocentrum)",
+      "Cooper F65/F66/J01 Cooper 5D (autocentrum)",
+      "Cooper F65/F66/J01 Electric (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        184,
+        218
+       ]
+      },
+      "petrol": {
+       "1499": [
+        156
+       ],
+       "1998": [
+        204
+       ]
+      }
+     }
+    },
+    {
+     "code": "F56",
+     "phase": "рестайлинг",
+     "years": "2018–2024",
+     "mobileModel": "Cooper",
+     "bodies": [
+      "Cooper F56 Cooper S 3D Facelifting (autocentrum)",
+      "Cooper F56 Cooper S 5D Facelifting (autocentrum)",
+      "Cooper F56 Electric Facelifting (autocentrum)",
+      "Cooper F56 Hatchback 3-door Facelifting (autocentrum)",
+      "Cooper F56 Hatchback 3-door Facelifting II (autocentrum)",
+      "Cooper F56 Hatchback 5-door Facelifting (autocentrum)",
+      "Cooper F56 Hatchback 5-door Facelifting II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1499": [
+        75,
+        102,
+        136
+       ],
+       "1998": [
+        178,
+        231
+       ]
+      },
+      "electric": {
+       "0": [
+        184
+       ]
+      },
+      "diesel": {
+       "1496": [
+        95,
+        116
+       ]
+      }
+     }
+    },
+    {
+     "code": "F56",
+     "phase": "дорестайлинг",
+     "years": "2013–2018",
+     "mobileModel": "Cooper",
+     "bodies": [
+      "Cooper F56 Cooper S 3D (autocentrum)",
+      "Cooper F56 Cooper S 5D (autocentrum)",
+      "Cooper F56 Electric (autocentrum)",
+      "Cooper F56 Hatchback (autocentrum)",
+      "Cooper F56 Hatchback 5-door (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        184
+       ]
+      },
+      "petrol": {
+       "1198": [
+        75,
+        102
+       ],
+       "1499": [
+        136
+       ],
+       "1998": [
+        178,
+        192,
+        231
+       ]
+      },
+      "diesel": {
+       "1496": [
+        95,
+        116
+       ],
+       "1995": [
+        170
+       ]
+      }
+     }
+    },
+    {
+     "code": "R56",
+     "phase": "рестайлинг",
+     "years": "2010–2013",
+     "mobileModel": "Cooper",
+     "bodies": [
+      "Cooper R56 Hatchback Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        122,
+        184,
+        211
+       ]
+      },
+      "diesel": {
+       "1598": [
+        112
+       ],
+       "1995": [
+        112,
+        143
+       ]
+      }
+     }
+    },
+    {
+     "code": "R56",
+     "phase": "дорестайлинг",
+     "years": "2006–2010",
+     "mobileModel": "Cooper",
+     "bodies": [
+      "Cooper R56 Hatchback (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        120,
+        175,
+        211
+       ]
+      },
+      "diesel": {
+       "1560": [
+        110
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Cabrio",
+   "generations": [
+    {
+     "code": "F57",
+     "phase": "рестайлинг",
+     "years": "2018–н. в.",
+     "mobileModel": "Cabrio",
+     "bodies": [
+      "Cabrio F57 Cabrio Cooper S Facelifting (autocentrum)",
+      "Cabrio F57 Cabrio Facelifting (autocentrum)",
+      "Cabrio F57 Cabrio Facelifting II (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1499": [
+        102,
+        136
+       ],
+       "1998": [
+        178,
+        231
+       ]
+      },
+      "diesel": {
+       "1496": [
+        116
+       ]
+      }
+     }
+    },
+    {
+     "code": "F57",
+     "phase": "дорестайлинг",
+     "years": "2015–2018",
+     "mobileModel": "Cabrio",
+     "bodies": [
+      "Cabrio F57 Cabrio (autocentrum)",
+      "Cabrio F57 Cabrio Cooper S (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1499": [
+        136
+       ],
+       "1998": [
+        178,
+        192,
+        231
+       ]
+      },
+      "diesel": {
+       "1496": [
+        116
+       ],
+       "1995": [
+        170
+       ]
+      }
+     }
+    },
+    {
+     "code": "R57",
+     "phase": "весь выпуск",
+     "years": "2009–2015",
+     "mobileModel": "Cabrio",
+     "bodies": [
+      "Cabrio R57 R57 (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        98,
+        122,
+        184,
+        211
+       ]
+      },
+      "diesel": {
+       "1598": [
+        112
+       ],
+       "1995": [
+        112,
+        143
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Clubman",
+   "generations": [
+    {
+     "code": "F54",
+     "phase": "весь выпуск",
+     "years": "2015–н. в.",
+     "mobileModel": "Clubman",
+     "bodies": [
+      "Clubman F54 John Cooper Works (autocentrum)",
+      "Clubman F54 Kombi (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1499": [
+        102,
+        136
+       ],
+       "1998": [
+        178,
+        192,
+        231,
+        306
+       ]
+      },
+      "diesel": {
+       "1496": [
+        116
+       ],
+       "1995": [
+        150,
+        190
+       ]
+      }
+     }
+    },
+    {
+     "code": "R55",
+     "phase": "рестайлинг",
+     "years": "2010–2013",
+     "mobileModel": "Clubman",
+     "bodies": [
+      "Clubman R55 Kombi Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        98,
+        122,
+        184,
+        211
+       ]
+      },
+      "diesel": {
+       "1598": [
+        90,
+        112
+       ],
+       "1995": [
+        112,
+        143
+       ]
+      }
+     }
+    },
+    {
+     "code": "R55",
+     "phase": "дорестайлинг",
+     "years": "2007–2010",
+     "mobileModel": "Clubman",
+     "bodies": [
+      "Clubman R55 Kombi (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        122,
+        175,
+        211
+       ]
+      },
+      "diesel": {
+       "1560": [
+        110
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Countryman",
+   "generations": [
+    {
+     "code": "U25",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Countryman",
+     "bodies": [
+      "Countryman U25 SUV (autocentrum)",
+      "Countryman U25 SUV Electric (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        218
+       ]
+      },
+      "diesel": {
+       "1995": [
+        163
+       ]
+      },
+      "electric": {
+       "0": [
+        204,
+        313
+       ]
+      }
+     }
+    },
+    {
+     "code": "F60",
+     "phase": "рестайлинг",
+     "years": "2020–2024",
+     "mobileModel": "Countryman",
+     "bodies": [
+      "Countryman F60 Crossover Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1499": [
+        102,
+        136
+       ],
+       "1998": [
+        178
+       ]
+      },
+      "diesel": {
+       "1496": [
+        116
+       ],
+       "1995": [
+        150,
+        190
+       ]
+      }
+     }
+    },
+    {
+     "code": "F60",
+     "phase": "дорестайлинг",
+     "years": "2016–2020",
+     "mobileModel": "Countryman",
+     "bodies": [
+      "Countryman F60 Crossover (autocentrum)",
+      "Countryman F60 Crossover Plug-In (autocentrum)",
+      "Countryman F60 John Cooper Works (autocentrum)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1499": [
+        220
+       ]
+      },
+      "petrol": {
+       "1499": [
+        102
+       ],
+       "1500": [
+        136
+       ],
+       "1998": [
+        192,
+        231,
+        306
+       ]
+      },
+      "diesel": {
+       "1496": [
+        116
+       ],
+       "1995": [
+        150,
+        190
+       ]
+      },
+      "plugin": {
+       "1499": [
+        224
+       ]
+      }
+     }
+    },
+    {
+     "code": "R60",
+     "phase": "рестайлинг",
+     "years": "2014–2015",
+     "mobileModel": "Countryman",
+     "bodies": [
+      "Countryman R60 Crossover Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        98,
+        122,
+        190,
+        218
+       ]
+      },
+      "diesel": {
+       "1598": [
+        112
+       ],
+       "1995": [
+        112,
+        143
+       ]
+      }
+     }
+    },
+    {
+     "code": "R60",
+     "phase": "дорестайлинг",
+     "years": "2010–2014",
+     "mobileModel": "Countryman",
+     "bodies": [
+      "Countryman R60 Crossover (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        98,
+        122,
+        184,
+        190,
+        218
+       ]
+      },
+      "diesel": {
+       "1598": [
+        90,
+        112
+       ],
+       "1995": [
+        112,
+        143
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Coupe",
+   "generations": [
+    {
+     "code": "Coupe I",
+     "phase": "весь выпуск",
+     "years": "2011–2015",
+     "mobileModel": "Coupe",
+     "bodies": [
+      "Coupe I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        122,
+        184,
+        211
+       ]
+      },
+      "diesel": {
+       "1995": [
+        143
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Paceman",
+   "generations": [
+    {
+     "code": "Paceman",
+     "phase": "рестайлинг",
+     "years": "2014–2017",
+     "mobileModel": "Paceman",
+     "bodies": [
+      "Paceman Hatchback 3-door Facelifting (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        122,
+        190,
+        218
+       ]
+      },
+      "diesel": {
+       "1598": [
+        112
+       ],
+       "1995": [
+        112,
+        143
+       ]
+      }
+     }
+    },
+    {
+     "code": "Paceman",
+     "phase": "дорестайлинг",
+     "years": "2012–2014",
+     "mobileModel": "Paceman",
+     "bodies": [
+      "Paceman Hatchback 3-door (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        122,
+        184,
+        190,
+        218
+       ]
+      },
+      "diesel": {
+       "1598": [
+        112
+       ],
+       "1995": [
+        112,
+        143
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Roadster",
+   "generations": [
+    {
+     "code": "Roadster I",
+     "phase": "весь выпуск",
+     "years": "2012–2015",
+     "mobileModel": "Roadster",
+     "bodies": [
+      "Roadster I I (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1598": [
+        122,
+        184,
+        211
+       ]
+      },
+      "diesel": {
+       "1995": [
+        143
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "model": "Aceman",
+   "generations": [
+    {
+     "code": "Aceman I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Aceman",
+     "bodies": [
+      "Aceman I I (autocentrum)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        184,
+        218
        ]
       }
      }

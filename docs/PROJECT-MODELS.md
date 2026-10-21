@@ -279,8 +279,36 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
      форме. Master V у autocentrum с 2026 (одна версия). Длинных поколений без раздела
      дорест / рест осталось 143 (было 154): у autocentrum нет их кузовов «Facelifting».
    - **Комплектации 23 новых моделей** — `collect-trims-wiki.py --missing "<Марка|Модель>" …`
-     (только названные модели без строк); у первых (DS3/4/5, C-Zero, e-tron GT) в Википедии
-     списков нет; итог войдёт в следующую пересборку.
+     (только названные модели без строк): 7 строк по 5 моделям (Twizy, ID. Polo…), у 18 списков нет.
+8. ✅ **Новые марки, волна 1 (решение владельца 21.10):** Fiat, Jeep, Honda, Suzuki, Land Rover, Dacia,
+   Lexus, Porsche, Mitsubishi, Mini — 121 модель, выпускавшаяся с 2010 (список — `model-list-autocentrum.json`,
+   названия — как в каталоге mobile.de; не взяты: Jeep Liberty, Mitsubishi Lancer Evolution / Pajero Sport /
+   Eclipse (нет в каталоге или другая машина), Lexus RX L (вариант RX), Dacia Striker (нет в каталоге), Mini One
+   (то же, что хэтчбек)). Только autocentrum.pl.
+   - **Семейства в каталоге mobile.de:** Lexus «NX 300h», «RX 450», «IS-F» → серия; Mini «<мотор> <кузов>»
+     («Cooper S Clubman», «Countryman D (Cooper)») → кузов, «Cooper / One / John Cooper Works» → хэтчбек («Cooper»);
+     подмодели Fiat 500C / 500S / 500e / 500L Cross… / New Panda / Grande Punto / Punto Evo / 600e, Porsche 991 / 992 /
+     997 → 911, Plug-in Hybrid Outlander, (SX4) S-Cross (кузова `sx4/ii/` и `s-cross/`) и SX4 (`sx4/i/`). То же на
+     платформе (`ModelSpecs::family()` / `SUBMODELS`).
+   - **Поколение без римской цифры** («Grande Punto», «Punto 2012»): страница со своими кузовами — поколение, а не
+     кузов (`group_body_level()`); прежних моделей не меняет.
+   - **Мягкие гибриды новых марок** — 38 правил в `tools/mild_hybrids.py`, каждое с цитатой Википедии (de/en/it/fr,
+     проверено 21.10 по тексту статей) или техданными JLR: Suzuki SHVS 12 V / Boosterjet 48 V (Baleno, Swift, Ignis,
+     Vitara, S-Cross), Fiat 1.0 FireFly 12 V (500, Panda), 1.5 / 1.2 48 V (Tipo, 500X, 600, Grande Panda — только с eDCT),
+     Jeep e-Hybrid 48 V (Renegade, Compass, Avenger), Land Rover Ingenium 48 V (Evoque, Discovery Sport, Range Rover,
+     Sport, Velar, Defender I6, Discovery), Dacia mild hybrid 130 / 140 (Duster III, Bigster), Mitsubishi ASX II
+     (пресс-релиз; autocentrum: «1.3 M Hybrid»), Mini Countryman U25. Honda, Lexus, Porsche — мягких гибридов нет
+     (e:HEV, Lexus Hybrid, Porsche T-Hybrid — полные). Не внесено (источники расходятся): Range Rover P530 / P615,
+     Countryman JCW, Ignis Allgrip 2020+. Слово SHVS — признак MHEV в названии.
+   - **Попутно:** плагин-гибрид, который autocentrum держит в «Hybrydowe» (A8 60 TFSI e, A 250 e, GLA 250 e), больше
+     не мягкий гибрид (`PLUGIN_NAME`, `PLUGIN_NUMBER`); Mazda 2 «IV» autocentrum (Yaris Hybrid) — не MHEV (правило
+     Mazda 2 — только поколение III); подтверждённый MHEV из «Hybrydowe» (BMW 223i, CX-60 e-Skyactiv D, Mercedes
+     EQ Boost, Suzuki SHVS) в фильтрах — бензин / дизель, как пишут порталы (правило владельца 11.10).
+   - **Итог:** autocentrum — 542 модели, 1 258 поколений, 3 296 кузовов, 14 065 двигателей; таблица 23 608 версий
+     (+2 718), 931 поколение; на странице 28 марок, 542 модели, 12 051 версия (файлы 4–70 КБ, всего ≈ 650 КБ);
+     мягких гибридов 1 257 версий (+116 новых марок), «проверить» — 33 сочетания. Прежние 421 модель: строки те же,
+     поменялись только топливо / MHEV у 25 версий (выше).
+   - **Комплектации 121 модели** — `collect-trims-wiki.py --missing` в фоне (≈ 3 мин на модель), отдельной выкладкой.
 
 **Правила работы с ultimatespecs.com:**
 - `robots.txt`: **Crawl-delay: 30** — не чаще одной страницы в 30 с. Полная
