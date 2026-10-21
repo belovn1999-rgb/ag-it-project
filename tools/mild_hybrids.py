@@ -271,6 +271,30 @@ RULES = [
       None, "de: Mini Countryman — «Ottomotor als Mild-Hybrid»"),
     R("Mini", ["Countryman"], "diesel", [122, 163], 2.0, A, 2024, None, "48V", "de.wikipedia: Mini Countryman",
       None, "de: Mini Countryman — «Dieselmotor als Mild-Hybrid»"),
+    # New brands, wave 2 (owner 2026-10-21), checked 2026-10-21 (de/en wikitext, JLR WLTP / technical data sheets).
+    # Subaru e-Boxer (118 V) is left a hybrid: portals list it so, the excise is the hybrid one either way.
+    # MG Hybrid+, Jaecoo / Omoda SHS, BYD DM-i are full hybrids or plug-ins; Chevrolet, Chrysler, Dodge — none in Europe.
+    R("Alfa Romeo", ["Tonale"], "petrol", [130, 160, 174], 1.5, A, 2022, None, "48V", "de.wikipedia: Alfa Romeo Tonale",
+      None, "de: Alfa Romeo Tonale — «Die beiden 1,5-l-Ottomotoren mit einer Leistung von 96 kW (130 PS) oder 118 kW (160 PS) "
+      "haben ein 48-Volt-Bordnetz»"),
+    R("Alfa Romeo", ["Junior"], "petrol", [136, 145], 1.2, A, 2024, None, "48V", "de.wikipedia: Alfa Romeo Junior",
+      None, "de: Alfa Romeo Junior — «1,2-Liter-Dreizylinder-Ottomotor mit 100 kW (136 PS) und Mildhybridsystem»"),
+    R("Jaguar", ["E-Pace"], "petrol", [160], 1.5, A, 2020, 2024, "48V", "JLR WLTP insert E-PACE 2022",
+      None, "JLR E-PACE 2022 — «P160 P200 P250 / Mild Hybrid Electric Vehicle (MHEV) ■ ■ ■»"),
+    R("Jaguar", ["E-Pace"], "petrol", [200, 249, 300], 2.0, A, 2020, 2024, "48V", "JLR WLTP insert E-PACE 2022",
+      None, "JLR E-PACE 2022 — «P160 P200 P250 / Mild Hybrid Electric Vehicle (MHEV) ■ ■ ■»; «P300 … MHEV ■»"),
+    R("Jaguar", ["E-Pace"], "diesel", [163, 204], 2.0, A, 2020, 2024, "48V", "JLR WLTP insert E-PACE 2022",
+      None, "JLR E-PACE 2022 — «D165 D165 D200 / Mild Hybrid Electric Vehicle (MHEV) – ■ ■» (D165 z mechaniką — bez)"),
+    R("Jaguar", ["F-Pace"], "diesel", [163, 204], 2.0, A, 2020, 2025, "48V", "JLR technical data F-PACE 2021-2022",
+      None, "en: Jaguar F-Pace — «utilizing a 48 Volt belt alternator starter system»; JLR — «D165 MHEV D200 MHEV D300 MHEV»"),
+    R("Jaguar", ["F-Pace"], "diesel", [300], 3.0, A, 2020, 2025, "48V", "JLR technical data F-PACE 2022",
+      None, "en: Jaguar F-Pace — «a 3.0L inline-6 mild hybrid engine, utilizing a 48 Volt belt alternator starter system»"),
+    R("Jaguar", ["F-Pace"], "petrol", [400], 3.0, A, 2020, 2025, "48V", "JLR technical data F-PACE 2022",
+      None, "JLR F-PACE 2022 — «P250 P400 MHEV P400e PHEV P550 SVR»"),
+    R("Jaguar", ["XE", "XF"], "diesel", [204], 2.0, A, 2020, 2024, "48V", "JLR technical data XE / XF 2023",
+      None, "en: Jaguar XE — «Ingenium 2.0L engines with an additional 48 Volt belt alternator starter system»; JLR — «POWERTRAIN D200 MHEV»"),
+    R("DS", ["DS3", "DS3 Crossback", "DS4", "Nº4"], "petrol", [136, 145], 1.2, A, 2024, None, "48V", "de.wikipedia: DS 3 Crossback / DS 4",
+      None, "de: DS 4 — «Ein Mild-Hybrid mit 6-Stufen-Doppelkupplungsgetriebe folgte 2024.»; de: DS 3 Crossback — Tabelle «MHEV 136 … 04/2024»"),
 ]
 # A plug-in (or a full hybrid) autocentrum files under "Hybrydowe" is never a mild hybrid (A8 60 TFSI e, GLA 250 e).
 PLUGIN_NAME = re.compile(r"plug-?in|\bphev\b|\btfsi ?e\b|\b4xe\b|\brecharge\b|\bt8\b", re.I)

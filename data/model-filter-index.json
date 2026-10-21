@@ -415,6 +415,7 @@
       "A4 (B8)",
       "A4 (B8) Allroad",
       "A4 (B8) Avant",
+      "A4 B8 Allroad quattro (autocentrum)",
       "A4 B8 Avant (autocentrum)",
       "A4 B8 Limousine (autocentrum)"
      ],
@@ -441,6 +442,9 @@
         120,
         136,
         143,
+        170
+       ],
+       "1984": [
         170
        ],
        "2698": [
@@ -658,7 +662,10 @@
      "mobileModel": "A5",
      "bodies": [
       "A5 8T Cabrio Facelifting (autocentrum)",
+      "A5 8T Cabriolet (autocentrum)",
+      "A5 8T Coupe (autocentrum)",
       "A5 8T Coupe Facelifting (autocentrum)",
+      "A5 8T Sportback (autocentrum)",
       "A5 8T Sportback Facelifting (autocentrum)",
       "A5 Cabrio",
       "A5 Coupe",
@@ -932,6 +939,7 @@
       "A6 (C6)",
       "A6 (C6) Allroad Quattro",
       "A6 (C6) Avant",
+      "A6 C6 Avant (autocentrum)",
       "A6L (C6)"
      ],
      "engines": {
@@ -3017,7 +3025,8 @@
      "mobileModel": "X5",
      "bodies": [
       "E70 X5",
-      "X5 E70 SUV (autocentrum)"
+      "X5 E70 SUV (autocentrum)",
+      "X5 E70 SUV Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -3028,6 +3037,7 @@
         272
        ],
        "4395": [
+        407,
         408,
         555
        ],
@@ -4002,6 +4012,9 @@
         125,
         160
        ],
+       "1597": [
+        160
+       ],
        "1999": [
         145,
         203,
@@ -4543,6 +4556,9 @@
         184,
         204
        ],
+       "2996": [
+        231
+       ],
        "3498": [
         306
        ]
@@ -4569,6 +4585,7 @@
      "bodies": [
       "C Class Coupe (C204)",
       "Klasa C W204 Coupe (autocentrum)",
+      "Klasa C W204 Sedan (autocentrum)",
       "W204 Class C"
      ],
      "engines": {
@@ -7335,6 +7352,7 @@
         132
        ],
        "1397": [
+        130,
         131
        ],
        "1598": [
@@ -7348,6 +7366,7 @@
        ],
        "1998": [
         179,
+        180,
         190,
         220,
         250,
@@ -7367,6 +7386,7 @@
         131
        ],
        "1870": [
+        130,
         131
        ],
        "1995": [
@@ -7698,6 +7718,7 @@
      "mobileModel": "Fabia",
      "bodies": [
       "Fabia II",
+      "Fabia II Hatchback (autocentrum)",
       "Fabia II Hatchback Facelifting (autocentrum)",
       "Fabia II Kombi (autocentrum)",
       "Fabia II Kombi Facelifting (autocentrum)"
@@ -8169,6 +8190,7 @@
         102
        ],
        "1598": [
+        115,
         116
        ],
        "1798": [
@@ -8403,6 +8425,7 @@
       "Superb 2 Combi Facelift",
       "Superb 2 Facelift",
       "Superb II Kombi Facelifting (autocentrum)",
+      "Superb II Outdoor (autocentrum)",
       "Superb II Sedan Facelifting (autocentrum)"
      ],
      "engines": {
@@ -8519,6 +8542,7 @@
        ],
        "1598": [
         124,
+        125,
         132
        ],
        "1794": [
@@ -8530,6 +8554,7 @@
         90
        ],
        "1998": [
+        125,
         126
        ],
        "2231": [
@@ -9073,8 +9098,7 @@
        "2231": [
         136,
         150,
-        177,
-        180
+        177
        ]
       }
      }
@@ -10624,7 +10648,8 @@
         105
        ],
        "1896": [
-        105
+        105,
+        140
        ],
        "1968": [
         110,
@@ -11246,6 +11271,9 @@
         122,
         150,
         160
+       ],
+       "1395": [
+        150
        ],
        "1984": [
         170,
