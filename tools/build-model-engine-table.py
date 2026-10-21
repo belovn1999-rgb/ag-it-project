@@ -628,6 +628,10 @@ def main():
             if found and found["applied"]:
                 system = f" {found['system']}" if found["system"] else ""
                 optional = "; бывает и без него — смотреть объявление" if found["optional"] else ""
+                # A confirmed mild hybrid the source files under "Hybrydowe" (Suzuki SHVS, BMW 223i, CX-60 e-Skyactiv D)
+                # is petrol / diesel in the filters: portals list it so (owner 2026-10-11).
+                if row["Топливо"] in ("гибрид", "гибрид (дизель)") and not mild_hybrids.FULL_HYBRID_NAME.search(row["Версия"]):
+                    row["Топливо"] = "дизель" if row["Топливо"] == "гибрид (дизель)" else "бензин"
                 row["Топливо: примечание"] = f"мягкий гибрид (MHEV{system}) — {found['status']}{optional}"
                 row["Мягкий гибрид с"] = str(found["since"])
                 row["Мягкий гибрид: источники"] = " · ".join(found["sources"])

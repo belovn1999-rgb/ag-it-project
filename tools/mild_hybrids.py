@@ -23,7 +23,7 @@ import re
 # full hybrid (Toyota, Kia HEV, Ford FHEV) or a Stellantis 48 V "Hybrid", which
 # our table already files under "гибрид".
 MILD_NAME = re.compile(r"mild[- ]?hybrid|mild[- ]?hev|\bmhev\b|\bm[- ]?hybrid\b|\b48 ?v\b|\be-?tsi\b|\be-?tec\b|eq[- ]?boost|"
-                       r"ecoboost (\d+ ?hp )?hybrid|ecoblue hybrid|hybrid ?assist|e-skyactiv|\bmh\b|\bisg\b", re.I)
+                       r"ecoboost (\d+ ?hp )?hybrid|ecoblue hybrid|hybrid ?assist|e-skyactiv|\bmh\b|\bisg\b|\bshvs\b", re.I)
 FULL_HYBRID_NAME = re.compile(r"(?<!mild )(?<!mild-)\b(f?hev|hsd|full hybrid|e-tech|hybrid dynamic|plug|phev|activehybrid)\b", re.I)
 
 M, A = "m", "a"
@@ -171,7 +171,7 @@ RULES = [
     R("Mazda", ["CX-5"], "petrol", [165, 194], None, None, 2022, None, "24V", "Mazda media 2022",
       None, "de: Mazda CX-5 — «Die beiden Vierzylinder-Ottomotoren haben seitdem eine 24-Volt-Mildhybridisierung»"),
     R("Mazda", ["Mazda 2"], "petrol", [75, 90, 115], 1.5, None, 2020, None, "24V", "Mazda media 2020",
-      None, "de: Mazda2 — Tabelle «E-Skyactiv-G 90 / 115 M Hybrid»"),
+      ["Mazda 2 III"], "de: Mazda2 — Tabelle «E-Skyactiv-G 90 / 115 M Hybrid»"),
     R("Mazda", ["CX-60", "CX-80"], "diesel", [200, 254], 3.3, None, 2022, None, "48V", "Mazda media 2022",
       None, "de: Mazda CX-80 — «Der Dieselmotor ist als Mild-Hybrid ausgeführt; ein 48-Volt-Bordnetz»"),
     # Nissan, Renault, Toyota
@@ -183,7 +183,97 @@ RULES = [
       None, "de: Renault Arkana — «1,3-Liter-Ottomotor (gestaltet als 12V-Mild-Hybrid…)»; Captur II / Austral — Tabelle Mild Hybrid 140 / 160"),
     R("Toyota", ["Hilux"], "diesel", [204], 2.8, None, 2024, None, "48V", "Toyota Europe 2023",
       None, "de: Toyota Hilux — «Ab 2024 gab es den Dieselmotor 1GD-FTV mit 48-Volt-Mildhybridsystem»"),
+    # New brands, wave 1 (owner 2026-10-21), checked 2026-10-21 against the article wikitext (de/en/it/fr) and,
+    # for Land Rover, the JLR technical data sheets. Left out where sources disagree (Swift VII voltage aside —
+    # a mild hybrid either way —, Range Rover P530 / P615, Countryman JCW, Ignis Allgrip 2020+).
+    # Suzuki (SHVS)
+    R("Suzuki", ["Baleno"], "petrol", [90], 1.2, M, 2016, 2019, "12V", "en.wikipedia: Suzuki Baleno (2015)",
+      None, "en: Suzuki Baleno (2015) — «12-volt Mild Hybrid… (SHVS)»; de: Tabelle «1.2 DUALJET SHVS» 66 kW"),
+    R("Suzuki", ["Swift"], "petrol", [111], 1.0, M, 2017, 2020, "12V", "de.wikipedia: Suzuki Swift",
+      None, "de: Suzuki Swift — «Einliter-Turbomotor wird auch als Mild-Hybrid SHVS… angeboten»", optional=True),
+    R("Suzuki", ["Swift"], "petrol", [90], 1.2, M, 2017, 2020, "12V", "en.wikipedia: Suzuki Swift",
+      None, "en: Suzuki Swift — «available for regular and mild hybrid forms depending on the market»", optional=True),
+    R("Suzuki", ["Swift"], "petrol", [83], 1.2, None, 2020, None, "12V", "en.wikipedia: Suzuki Swift",
+      None, "en: Suzuki Swift — «K12D Dualjet… with 12-volt mild hybrid system and become standard engine in Europe»; "
+      "Swift VII (2024) — «only available with the 1.2-liter gasoline mild-hybrid engine»"),
+    R("Suzuki", ["Swift"], "petrol", [129], 1.4, M, 2020, 2025, "48V", "en.wikipedia: Suzuki Swift",
+      None, "en: Suzuki Swift — «Swift Sport with Suzuki's SHVS 48-volt mild hybrid technology for European market»"),
+    R("Suzuki", ["Ignis"], "petrol", [90], 1.2, M, 2017, 2020, "12V", "de.wikipedia: Suzuki Ignis",
+      None, "de: Suzuki Ignis — Tabelle «1.2 SHVS» 66 kW (neben 1.2 ohne SHVS)", optional=True),
+    R("Suzuki", ["Ignis"], "petrol", [83], 1.2, None, 2020, None, "12V", "en.wikipedia: Suzuki Ignis",
+      None, "en: Suzuki Ignis — «K12D Dualjet and became the standard engine»"),
+    R("Suzuki", ["Vitara"], "petrol", [129], 1.4, None, 2020, None, "48V", "en.wikipedia: Suzuki Vitara",
+      None, "en: Suzuki Vitara — «1.4-litre turbocharged petrol engine with a 48V mild hybrid»"),
+    R("Suzuki", ["Vitara"], "petrol", [110], 1.4, A, 2025, None, "48V", "en.wikipedia: Suzuki Vitara",
+      None, "en: Suzuki Vitara — Tabelle 81 kW «48V WA06C»"),
+    R("Suzuki", ["S-Cross"], "petrol", [129], 1.4, None, 2020, None, "48V", "en.wikipedia: Suzuki SX4 / S-Cross",
+      None, "en: Suzuki SX4 — «replaced with a turbocharged 1.4 L K14D \"Boosterjet SHVS\" mild hybrid»; "
+      "en: Suzuki S-Cross — «belt-driven 48V… mild hybrid system»"),
+    # Fiat
+    R("Fiat", ["500"], "petrol", [70], 1.0, M, 2020, 2024, "12V", "de.wikipedia: Fiat 500 (2007)",
+      None, "de: Fiat 500 (2007) — «Riemenstarter-Generator und Li-Ion-Batterie von 14 V, 11 Ah»"),
+    R("Fiat", ["500"], "petrol", [65], 1.0, M, 2025, None, "12V", "en.wikipedia: Fiat 500e",
+      None, "en: Fiat 500e — «12V-mild hybrid-assisted 1.0 Firefly petrol engine»"),
+    R("Fiat", ["Panda"], "petrol", [70], 1.0, M, 2020, 2025, "12V", "de.wikipedia: Fiat Panda",
+      None, "de: Fiat Panda — «12V-Lithium-Ionen-Batterie von 11 Ah und einem Riemen-Starter-Generator»"),
+    R("Fiat", ["Panda"], "petrol", [65], 1.0, M, 2025, None, "12V", "de.wikipedia: Fiat Panda",
+      None, "de: Fiat Panda — Tabelle «1.0 6V Mild-Hybrid… seit 10/2025» 48 kW"),
+    R("Fiat", ["Tipo", "500X"], "petrol", [130], 1.5, A, 2022, None, "48V", "en.wikipedia: Fiat Tipo (2015)",
+      None, "en: Fiat Tipo (2015) — «combined with a 48V electric motor»; de: Fiat 500X — Tabelle «1.5 GSE Mild-Hybrid» 96 kW"),
+    R("Fiat", ["600"], "petrol", [100, 110, 136, 145], 1.2, A, 2024, None, "48V", "it.wikipedia: Fiat 600 (2023)",
+      None, "it: Fiat 600 (2023) — «batteria agli ioni di litio da 48 V… DCT e 6 rapporti» (1.2 z mechaniką od 2026 — bez hybrydy)"),
+    R("Fiat", ["Grande Panda"], "petrol", [101, 110], 1.2, A, 2025, None, "48V", "it.wikipedia: Fiat Grande Panda",
+      None, "it: Fiat Grande Panda — «cambio eDCT mild hybrid 48V da 6 rapporti» (1.2 z mechaniką — «privo di ibridazione»)"),
+    # Jeep
+    R("Jeep", ["Renegade", "Compass"], "petrol", [130], 1.5, A, 2022, 2025, "48V", "de.wikipedia: Jeep Renegade / Compass",
+      None, "de: Jeep Renegade / Jeep Compass — Tabelle «1.5 GSE 48V e-Hybrid» 96 kW"),
+    R("Jeep", ["Compass"], "petrol", [145], 1.2, A, 2025, None, "48V", "de.wikipedia: Jeep Compass",
+      None, "de: Jeep Compass — «R3-Ottomotor + 48-Volt-Bordnetz»"),
+    R("Jeep", ["Avenger"], "petrol", [100, 110, 136, 145], 1.2, A, 2023, None, "48V", "en.wikipedia: Jeep Avenger",
+      None, "en: Jeep Avenger — «48 V mild-hybrid system pairing the 1.2-litre turbo petrol engine» (1.2 100 z mechaniką — bez hybrydy)"),
+    # Land Rover (Ingenium, 48 V)
+    R("Land Rover", ["Range Rover Evoque", "Discovery Sport"], "petrol", [160, 200, 249, 290, 300], None, A, 2019, None, "48V",
+      "JLR technical data MY21 (Evoque, Discovery Sport)", None,
+      "de: Range Rover Evoque — «Alle Varianten mit Allradantrieb sind als Mildhybrid… 48-Volt»; en: Land Rover Discovery Sport — "
+      "«engines equipped with 48-volt mild hybrid system»"),
+    R("Land Rover", ["Range Rover Evoque", "Discovery Sport"], "diesel", [150, 163, 180, 204, 240], 2.0, A, 2019, None, "48V",
+      "JLR technical data MY21 (Evoque, Discovery Sport)", None,
+      "de: Range Rover Evoque — «Alle Varianten mit Allradantrieb sind als Mildhybrid… 48-Volt» (D150 / D165 FWD z mechaniką — bez)"),
+    R("Land Rover", ["Range Rover", "Range Rover Sport"], "petrol", [360, 400], 3.0, None, 2019, None, "48V",
+      "JLR technical data MY22 (Range Rover)", None,
+      "en: Ingenium engine family — «Both are considered to be mild hybrid»; en: Range Rover (L405) — «3.0 L Ingenium MHEV I6»"),
+    R("Land Rover", ["Range Rover", "Range Rover Sport"], "diesel", [249, 300, 350], 3.0, None, 2020, None, "48V",
+      "JLR technical data MY22 (Range Rover)", None, "en: Ingenium engine family — AJ300D «2020–… MHEV»", optional=True),
+    R("Land Rover", ["Range Rover Velar"], "petrol", [340, 400], 3.0, None, 2020, None, "48V", "JLR technical data MY22 (Velar)",
+      None, "en: Range Rover Velar — «Mild hybrid (D200/P400)»"),
+    R("Land Rover", ["Range Rover Velar"], "diesel", [204, 300], None, None, 2020, None, "48V", "JLR technical data MY22 (Velar)",
+      None, "en: Range Rover Velar — «Mild hybrid (D200/P400)»", optional=True),
+    R("Land Rover", ["Defender"], "petrol", [400], 3.0, None, 2020, None, "48V", "JLR technical data 2023 (Defender)",
+      None, "JLR Defender 2023 — «PETROL MHEV» P400 (P300 — «PETROL»)"),
+    R("Land Rover", ["Defender"], "diesel", [200, 249, 300], 3.0, None, 2020, None, "48V", "JLR technical data 2023 (Defender)",
+      None, "en: Land Rover Defender (L663) — «in-line 6-cylinder diesel engines with mild hybrid technology… D200, D250, D300»"),
+    R("Land Rover", ["Discovery"], "petrol", [360], 3.0, None, 2020, 2024, "48V", "en.wikipedia: Land Rover Discovery",
+      None, "en: Land Rover Discovery — I6 Ingenium MHEV (P360)"),
+    R("Land Rover", ["Discovery"], "diesel", [249, 300], 3.0, None, 2020, None, "48V", "en.wikipedia: Land Rover Discovery",
+      None, "en: Land Rover Discovery — «AJ20-D6… I6 (diesel) MHEV»"),
+    # Dacia, Mitsubishi, Mini
+    R("Dacia", ["Duster"], "petrol", [130, 131], 1.2, M, 2024, None, "48V", "fr.wikipedia: Dacia Duster III",
+      None, "fr: Dacia Duster III — «TCe 130 MHEV… 3-cylindres + mild hybrid 48 V»"),
+    R("Dacia", ["Duster"], "petrol", [140], 1.2, M, 2025, None, "48V", "de.wikipedia: Dacia Duster",
+      None, "de: Dacia Duster — Tabelle «mild hybrid 140» (seit 10/2025)"),
+    R("Dacia", ["Bigster"], "petrol", [130, 131, 140], 1.2, M, 2025, None, "48V", "de.wikipedia: Dacia Bigster",
+      None, "de: Dacia Bigster — «1,2-Liter-Ottomotor mit einem 48-Volt-Mild-Hybrid-System»"),
+    R("Mitsubishi", ["ASX"], "petrol", [140], 1.3, M, 2023, None, "12V", "Mitsubishi press 2023 (automotiveworld.com)"),
+    R("Mitsubishi", ["ASX"], "petrol", [158], 1.3, A, 2023, 2025, "12V", "Mitsubishi press 2023 (automotiveworld.com)"),
+    R("Mini", ["Countryman"], "petrol", [170], 1.5, A, 2023, None, "48V", "en.wikipedia: Mini Countryman",
+      None, "en: Mini Countryman — «Petrol mild hybrid… 48 V power booster»"),
+    R("Mini", ["Countryman"], "petrol", [218], 2.0, A, 2024, None, "48V", "de.wikipedia: Mini Countryman",
+      None, "de: Mini Countryman — «Ottomotor als Mild-Hybrid»"),
+    R("Mini", ["Countryman"], "diesel", [122, 163], 2.0, A, 2024, None, "48V", "de.wikipedia: Mini Countryman",
+      None, "de: Mini Countryman — «Dieselmotor als Mild-Hybrid»"),
 ]
+# A plug-in (or a full hybrid) autocentrum files under "Hybrydowe" is never a mild hybrid (A8 60 TFSI e, GLA 250 e).
+PLUGIN_NAME = re.compile(r"plug-?in|\bphev\b|\btfsi ?e\b|\b\d{3} ?e\b|\b4xe\b|\brecharge\b|\bt8\b", re.I)
 
 
 def years_of(text):
@@ -294,7 +384,8 @@ def classify(rows, ac):
     for row in rows:
         # Mild hybrids exist since 2016 (owner); plug-ins and electric cars have their own excise already.
         _start, end = years_of(row["Годы (проверено)"])
-        if (end or 2100) < 2016 or row["Топливо"] in ("плагин-гибрид", "электро"):
+        if (end or 2100) < 2016 or row["Топливо"] in ("плагин-гибрид", "электро") \
+                or PLUGIN_NAME.search(f"{row['Версия']} {row['Кузов']}"):
             continue
         rules = [rule for rule in RULES if rule_matches(rule, row)]
         own = name_says(row)

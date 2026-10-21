@@ -1,5 +1,5 @@
 {
- "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA). 2026-10-20 (B61, item 4): 20 more models; \"bodies\" = a regex the autocentrum body path must match (a model kept as bodies of another: Yaris Cross, e-tron GT, Citroen DS3/DS4/DS5).",
+ "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA). 2026-10-20 (B61, item 4): 20 more models; \"bodies\" = a regex the autocentrum body path must match (a model kept as bodies of another: Yaris Cross, e-tron GT, Citroen DS3/DS4/DS5). 2026-10-21 (B61, new brands wave 1, owner): Fiat, Jeep, Honda, Suzuki, Land Rover, Dacia, Lexus, Porsche, Mitsubishi, Mini — their models made since 2010 (Mini/Lexus keys are families: \"Cooper S Clubman\" -> Clubman, \"NX 300h\" -> NX).",
  "models": [
   {
    "brand": "Audi",
@@ -2861,6 +2861,977 @@
     "ds/5"
    ],
    "bodies": "citroen"
+  },
+  {
+   "brand": "Fiat",
+   "label": "500",
+   "mobile": "500",
+   "paths": [
+    "fiat/500"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "600",
+   "mobile": "600",
+   "paths": [
+    "fiat/600"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Doblo",
+   "mobile": "Doblo",
+   "paths": [
+    "fiat/doblo"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Ducato",
+   "mobile": "Ducato",
+   "paths": [
+    "fiat/ducato"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Grande Panda",
+   "mobile": "Grande Panda",
+   "paths": [
+    "fiat/grande-panda"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Panda",
+   "mobile": "Panda",
+   "paths": [
+    "fiat/panda"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Tipo",
+   "mobile": "Tipo",
+   "paths": [
+    "fiat/tipo"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "500L",
+   "mobile": "500L",
+   "paths": [
+    "fiat/500l"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "500X",
+   "mobile": "500X",
+   "paths": [
+    "fiat/500x"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Albea",
+   "mobile": "Albea",
+   "paths": [
+    "fiat/albea"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Bravo",
+   "mobile": "Bravo",
+   "paths": [
+    "fiat/bravo"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Croma",
+   "mobile": "Croma",
+   "paths": [
+    "fiat/croma"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Fiorino",
+   "mobile": "Fiorino",
+   "paths": [
+    "fiat/fiorino"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Freemont",
+   "mobile": "Freemont",
+   "paths": [
+    "fiat/freemont"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Fullback",
+   "mobile": "Fullback",
+   "paths": [
+    "fiat/fullback"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Idea",
+   "mobile": "Idea",
+   "paths": [
+    "fiat/idea"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Linea",
+   "mobile": "Linea",
+   "paths": [
+    "fiat/linea"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Multipla",
+   "mobile": "Multipla",
+   "paths": [
+    "fiat/multipla"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Punto",
+   "mobile": "Punto",
+   "paths": [
+    "fiat/punto"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Qubo",
+   "mobile": "Qubo",
+   "paths": [
+    "fiat/qubo"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Scudo",
+   "mobile": "Scudo",
+   "paths": [
+    "fiat/scudo"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Sedici",
+   "mobile": "Sedici",
+   "paths": [
+    "fiat/sedici"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Seicento",
+   "mobile": "Seicento",
+   "paths": [
+    "fiat/seicento"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Ulysse",
+   "mobile": "Ulysse",
+   "paths": [
+    "fiat/ulysse"
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "124 Spider",
+   "mobile": "124 Spider",
+   "paths": [
+    "fiat/124-spider"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Avenger",
+   "mobile": "Avenger",
+   "paths": [
+    "jeep/avenger"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Compass",
+   "mobile": "Compass",
+   "paths": [
+    "jeep/compass"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Gladiator",
+   "mobile": "Gladiator",
+   "paths": [
+    "jeep/gladiator"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Grand Cherokee",
+   "mobile": "Grand Cherokee",
+   "paths": [
+    "jeep/grand-cherokee"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Renegade",
+   "mobile": "Renegade",
+   "paths": [
+    "jeep/renegade"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Wrangler",
+   "mobile": "Wrangler",
+   "paths": [
+    "jeep/wrangler"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Cherokee",
+   "mobile": "Cherokee",
+   "paths": [
+    "jeep/cherokee"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Commander",
+   "mobile": "Commander",
+   "paths": [
+    "jeep/commander"
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Patriot",
+   "mobile": "Patriot",
+   "paths": [
+    "jeep/patriot"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Civic",
+   "mobile": "Civic",
+   "paths": [
+    "honda/civic"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "CR-V",
+   "mobile": "CR-V",
+   "paths": [
+    "honda/cr-v"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "HR-V",
+   "mobile": "HR-V",
+   "paths": [
+    "honda/hr-v"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Jazz",
+   "mobile": "Jazz",
+   "paths": [
+    "honda/jazz"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Prelude",
+   "mobile": "Prelude",
+   "paths": [
+    "honda/prelude"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Accord",
+   "mobile": "Accord",
+   "paths": [
+    "honda/accord"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "City",
+   "mobile": "City",
+   "paths": [
+    "honda/city"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "CR-Z",
+   "mobile": "CR-Z",
+   "paths": [
+    "honda/cr-z"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "e",
+   "mobile": "e",
+   "paths": [
+    "honda/e"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Element",
+   "mobile": "Element",
+   "paths": [
+    "honda/element"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Insight",
+   "mobile": "Insight",
+   "paths": [
+    "honda/insight"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Legend",
+   "mobile": "Legend",
+   "paths": [
+    "honda/legend"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "NSX",
+   "mobile": "NSX",
+   "paths": [
+    "honda/nsx"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Odyssey",
+   "mobile": "Odyssey",
+   "paths": [
+    "honda/odyssey"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Pilot",
+   "mobile": "Pilot",
+   "paths": [
+    "honda/pilot"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "ZR-V",
+   "mobile": "ZR-V",
+   "paths": [
+    "honda/zr-v"
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "e:Ny1",
+   "mobile": "e:Ny1",
+   "paths": [
+    "honda/eny1"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Ignis",
+   "mobile": "Ignis",
+   "paths": [
+    "suzuki/ignis"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Jimny",
+   "mobile": "Jimny",
+   "paths": [
+    "suzuki/jimny"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "S-Cross",
+   "mobile": "(SX4) S-Cross",
+   "paths": [
+    "suzuki/sx4",
+    "suzuki/s-cross"
+   ],
+   "bodies": "sx4/ii/|s-cross/"
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Swace",
+   "mobile": "Swace",
+   "paths": [
+    "suzuki/swace"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Swift",
+   "mobile": "Swift",
+   "paths": [
+    "suzuki/swift"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Vitara",
+   "mobile": "Vitara",
+   "paths": [
+    "suzuki/vitara"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Alto",
+   "mobile": "Alto",
+   "paths": [
+    "suzuki/alto"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Baleno",
+   "mobile": "Baleno",
+   "paths": [
+    "suzuki/baleno"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Grand Vitara",
+   "mobile": "Grand Vitara",
+   "paths": [
+    "suzuki/grand-vitara"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Splash",
+   "mobile": "Splash",
+   "paths": [
+    "suzuki/splash"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "SX4",
+   "mobile": "SX4",
+   "paths": [
+    "suzuki/sx4"
+   ],
+   "bodies": "sx4/i/"
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Across",
+   "mobile": "Across",
+   "paths": [
+    "suzuki/across"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Celerio",
+   "mobile": "Celerio",
+   "paths": [
+    "suzuki/celerio"
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Kizashi",
+   "mobile": "Kizashi",
+   "paths": [
+    "suzuki/kizashi"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Defender",
+   "mobile": "Defender",
+   "paths": [
+    "land-rover/defender"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Discovery",
+   "mobile": "Discovery",
+   "paths": [
+    "land-rover/discovery"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Discovery Sport",
+   "mobile": "Discovery Sport",
+   "paths": [
+    "land-rover/discovery-sport"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover",
+   "mobile": "Range Rover",
+   "paths": [
+    "land-rover/range-rover"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover Evoque",
+   "mobile": "Range Rover Evoque",
+   "paths": [
+    "land-rover/range-rover-evoque"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover Sport",
+   "mobile": "Range Rover Sport",
+   "paths": [
+    "land-rover/range-rover-sport"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover Velar",
+   "mobile": "Range Rover Velar",
+   "paths": [
+    "land-rover/range-rover-velar"
+   ]
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Freelander",
+   "mobile": "Freelander",
+   "paths": [
+    "land-rover/freelander"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Bigster",
+   "mobile": "Bigster",
+   "paths": [
+    "dacia/bigster"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Duster",
+   "mobile": "Duster",
+   "paths": [
+    "dacia/duster"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Jogger",
+   "mobile": "Jogger",
+   "paths": [
+    "dacia/jogger"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Lodgy",
+   "mobile": "Lodgy",
+   "paths": [
+    "dacia/lodgy"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Logan",
+   "mobile": "Logan",
+   "paths": [
+    "dacia/logan"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Sandero",
+   "mobile": "Sandero",
+   "paths": [
+    "dacia/sandero"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Spring",
+   "mobile": "Spring",
+   "paths": [
+    "dacia/spring"
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Dokker",
+   "mobile": "Dokker",
+   "paths": [
+    "dacia/dokker"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "ES",
+   "mobile": "ES",
+   "paths": [
+    "lexus/es"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "LC",
+   "mobile": "LC",
+   "paths": [
+    "lexus/lc"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "LM",
+   "mobile": "LM",
+   "paths": [
+    "lexus/lm"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "LS",
+   "mobile": "LS",
+   "paths": [
+    "lexus/ls"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "NX",
+   "mobile": "NX",
+   "paths": [
+    "lexus/nx"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "RC",
+   "mobile": "RC",
+   "paths": [
+    "lexus/rc"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "RX",
+   "mobile": "RX",
+   "paths": [
+    "lexus/rx"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "UX",
+   "mobile": "UX",
+   "paths": [
+    "lexus/ux"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "CT",
+   "mobile": "CT",
+   "paths": [
+    "lexus/ct"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "GS",
+   "mobile": "GS",
+   "paths": [
+    "lexus/gs"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "IS",
+   "mobile": "IS",
+   "paths": [
+    "lexus/is"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "LX",
+   "mobile": "LX",
+   "paths": [
+    "lexus/lx"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "LBX",
+   "mobile": "LBX",
+   "paths": [
+    "lexus/lbx"
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "RZ",
+   "mobile": "RZ",
+   "paths": [
+    "lexus/rz"
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "911",
+   "mobile": "911",
+   "paths": [
+    "porsche/911"
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "Boxster",
+   "mobile": "Boxster",
+   "paths": [
+    "porsche/boxster"
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "Cayenne",
+   "mobile": "Cayenne",
+   "paths": [
+    "porsche/cayenne"
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "Cayman",
+   "mobile": "Cayman",
+   "paths": [
+    "porsche/cayman"
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "Macan",
+   "mobile": "Macan",
+   "paths": [
+    "porsche/macan"
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "Panamera",
+   "mobile": "Panamera",
+   "paths": [
+    "porsche/panamera"
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "Taycan",
+   "mobile": "Taycan",
+   "paths": [
+    "porsche/taycan"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "ASX",
+   "mobile": "ASX",
+   "paths": [
+    "mitsubishi/asx"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Colt",
+   "mobile": "Colt",
+   "paths": [
+    "mitsubishi/colt"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Eclipse Cross",
+   "mobile": "Eclipse Cross",
+   "paths": [
+    "mitsubishi/eclipse-cross"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "L200",
+   "mobile": "L200",
+   "paths": [
+    "mitsubishi/l200"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Outlander",
+   "mobile": "Outlander",
+   "paths": [
+    "mitsubishi/outlander"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Space Star",
+   "mobile": "Space Star",
+   "paths": [
+    "mitsubishi/space-star"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Galant",
+   "mobile": "Galant",
+   "paths": [
+    "mitsubishi/galant"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Grandis",
+   "mobile": "Grandis",
+   "paths": [
+    "mitsubishi/grandis"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Lancer",
+   "mobile": "Lancer",
+   "paths": [
+    "mitsubishi/lancer"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Pajero",
+   "mobile": "Pajero",
+   "paths": [
+    "mitsubishi/pajero"
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "i-MiEV",
+   "mobile": "i-MiEV",
+   "paths": [
+    "mitsubishi/i-miev"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Cooper",
+   "mobile": "Cooper",
+   "paths": [
+    "mini/mini"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Cabrio",
+   "mobile": "Cabrio",
+   "paths": [
+    "mini/cabrio"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Clubman",
+   "mobile": "Clubman",
+   "paths": [
+    "mini/clubman"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Countryman",
+   "mobile": "Countryman",
+   "paths": [
+    "mini/countryman"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Coupe",
+   "mobile": "Coupe",
+   "paths": [
+    "mini/coupe"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Paceman",
+   "mobile": "Paceman",
+   "paths": [
+    "mini/paceman"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Roadster",
+   "mobile": "Roadster",
+   "paths": [
+    "mini/roadster"
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Aceman",
+   "mobile": "Aceman",
+   "paths": [
+    "mini/aceman"
+   ]
   }
  ]
 }

@@ -214,7 +214,8 @@ def group_body_level(generations):
     Facelifting"; Focus Vignale: "Hatchback", "Kombi"). Those become one generation."""
     out, pseudo = [], collections.OrderedDict()
     for gen in generations:
-        if CODE.match(gen["name"]):
+        # A page with bodies of its own is a generation whatever its name ("Grande Punto", "Punto 2012").
+        if CODE.match(gen["name"]) or any(body["path"] != gen["path"] for body in gen["bodies"]):
             out.append(gen)
             continue
         key = gen["path"].rsplit("/", 2)[0] + "/"

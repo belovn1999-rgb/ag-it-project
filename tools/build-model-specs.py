@@ -195,13 +195,50 @@ DEFAULT_TYPE.update({
     ("Renault", "Twizy"): "hatchback", ("Renault", "Alpine A110"): "coupe", ("Toyota", "GR86"): "coupe",
     ("Volkswagen", "ID. Polo"): "hatchback", ("Audi", "e-tron GT"): "limousine",
 })
+# B61 new brands, wave 1 (owner 2026-10-21): Fiat, Jeep, Honda, Suzuki, Land Rover, Dacia, Lexus, Porsche, Mitsubishi, Mini.
+SUV_MODELS |= {
+    ("Fiat", "500X"), ("Fiat", "600"), ("Fiat", "Freemont"), ("Fiat", "Sedici"), ("Jeep", "Avenger"), ("Jeep", "Compass"),
+    ("Jeep", "Grand Cherokee"), ("Jeep", "Renegade"), ("Jeep", "Wrangler"), ("Jeep", "Cherokee"), ("Jeep", "Commander"),
+    ("Jeep", "Patriot"), ("Honda", "CR-V"), ("Honda", "HR-V"), ("Honda", "ZR-V"), ("Honda", "e:Ny1"), ("Honda", "Pilot"),
+    ("Honda", "Element"), ("Suzuki", "Vitara"), ("Suzuki", "Grand Vitara"), ("Suzuki", "(SX4) S-Cross"), ("Suzuki", "Jimny"),
+    ("Suzuki", "Across"), ("Land Rover", "Defender"), ("Land Rover", "Discovery"), ("Land Rover", "Discovery Sport"),
+    ("Land Rover", "Range Rover"), ("Land Rover", "Range Rover Evoque"), ("Land Rover", "Range Rover Sport"),
+    ("Land Rover", "Range Rover Velar"), ("Land Rover", "Freelander"), ("Dacia", "Duster"), ("Dacia", "Bigster"),
+    ("Lexus", "NX"), ("Lexus", "RX"), ("Lexus", "UX"), ("Lexus", "LX"), ("Lexus", "LBX"), ("Lexus", "RZ"),
+    ("Porsche", "Cayenne"), ("Porsche", "Macan"), ("Mitsubishi", "ASX"), ("Mitsubishi", "Eclipse Cross"),
+    ("Mitsubishi", "Outlander"), ("Mitsubishi", "Pajero"), ("Mini", "Countryman"), ("Mini", "Paceman"), ("Mini", "Aceman"),
+}
+VAN_MODELS |= {
+    ("Fiat", "Doblo"), ("Fiat", "Ducato"), ("Fiat", "Fiorino"), ("Fiat", "Qubo"), ("Fiat", "Scudo"), ("Fiat", "Ulysse"),
+    ("Fiat", "Multipla"), ("Fiat", "Idea"), ("Fiat", "500L"), ("Dacia", "Lodgy"), ("Dacia", "Jogger"), ("Dacia", "Dokker"),
+    ("Honda", "Odyssey"), ("Mitsubishi", "Grandis"), ("Lexus", "LM"),
+}
+PICKUP_MODELS |= {("Fiat", "Fullback"), ("Mitsubishi", "L200"), ("Jeep", "Gladiator")}
+DEFAULT_TYPE.update({
+    ("Fiat", "500"): "hatchback", ("Fiat", "Panda"): "hatchback", ("Fiat", "Grande Panda"): "hatchback", ("Fiat", "Tipo"): "limousine",
+    ("Fiat", "Punto"): "hatchback", ("Fiat", "Bravo"): "hatchback", ("Fiat", "Linea"): "limousine", ("Fiat", "Albea"): "limousine",
+    ("Fiat", "Croma"): "estate", ("Fiat", "Seicento"): "hatchback", ("Fiat", "124 Spider"): "cabrio",
+    ("Honda", "Civic"): "hatchback", ("Honda", "Jazz"): "hatchback", ("Honda", "CR-Z"): "coupe", ("Honda", "Insight"): "hatchback",
+    ("Honda", "e"): "hatchback", ("Honda", "Accord"): "limousine", ("Honda", "City"): "limousine", ("Honda", "Legend"): "limousine",
+    ("Honda", "NSX"): "coupe", ("Honda", "Prelude"): "coupe", ("Suzuki", "Swift"): "hatchback", ("Suzuki", "Alto"): "hatchback",
+    ("Suzuki", "Baleno"): "hatchback", ("Suzuki", "Splash"): "hatchback", ("Suzuki", "Celerio"): "hatchback",
+    ("Suzuki", "Ignis"): "hatchback", ("Suzuki", "SX4"): "hatchback", ("Suzuki", "Kizashi"): "limousine", ("Suzuki", "Swace"): "estate",
+    ("Dacia", "Logan"): "limousine", ("Dacia", "Sandero"): "hatchback", ("Dacia", "Spring"): "hatchback",
+    ("Lexus", "ES"): "limousine", ("Lexus", "LS"): "limousine", ("Lexus", "GS"): "limousine", ("Lexus", "IS"): "limousine",
+    ("Lexus", "CT"): "hatchback", ("Lexus", "RC"): "coupe", ("Lexus", "LC"): "coupe", ("Porsche", "911"): "coupe",
+    ("Porsche", "Boxster"): "cabrio", ("Porsche", "Cayman"): "coupe", ("Porsche", "Panamera"): "limousine",
+    ("Porsche", "Taycan"): "limousine", ("Mitsubishi", "Colt"): "hatchback", ("Mitsubishi", "Space Star"): "hatchback",
+    ("Mitsubishi", "Lancer"): "limousine", ("Mitsubishi", "Galant"): "limousine", ("Mitsubishi", "i-MiEV"): "hatchback",
+    ("Mini", "Cooper"): "hatchback", ("Mini", "Clubman"): "estate", ("Mini", "Coupe"): "coupe", ("Mini", "Roadster"): "cabrio",
+    ("Mini", "Cabrio"): "cabrio",
+})
 # Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
 BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
             ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
             ("Peugeot", "Expert"), ("Peugeot", "Traveller"), ("Renault", "Master"), ("Toyota", "Proace (Verso)"), ("Toyota", "Hiace"),
             ("Volkswagen", "Crafter"), ("Volkswagen", "ID. Buzz"), ("Hyundai", "H-1"), ("Opel", "Movano"), ("Opel", "Vivaro"),
             ("Nissan", "Interstar"), ("Nissan", "Primastar"), ("Citroen", "Jumper"), ("Citroen", "Jumpy"), ("Citroen", "SpaceTourer"),
-            ("Kia", "PV5"), ("Kia", "Carnival"), ("Hyundai", "STARIA")}
+            ("Kia", "PV5"), ("Kia", "Carnival"), ("Hyundai", "STARIA"), ("Fiat", "Ducato"), ("Fiat", "Scudo")}
 # Hatchbacks sold with 5 doors only (the rest: 3 or 5 unless the name says).
 FIVE_DOOR_HATCHES = {("Volkswagen", "Golf"), ("Volkswagen", "Polo"), ("Ford", "Focus"), ("Toyota", "Auris"), ("Volvo", "V40"),
                      ("Renault", "Megane"), ("Skoda", "Fabia"), ("Peugeot", "308"), ("BMW", "1")}
@@ -209,7 +246,8 @@ SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "gr
                "galaxy", "sharan", "espace", "x7", "gls", "land cruiser", "highlander", "previa", "sienna", "sequoia", "tayron",
                "rifter", "tourneo connect", "caddy", "kangoo", "ex90", "eqb", "glb", "verso", "carens", "sorento", "santa fe",
                "zafira", "alhambra", "tarraco", "cx-9", "cx-80", "x-trail", "pathfinder", "grand c4", "berlingo",
-               "evalia", "ev9", "ioniq 9")
+               "evalia", "ev9", "ioniq 9", "discovery", "lodgy", "jogger", "freemont", "pilot", "odyssey", "ulysse", "grandis",
+               "outlander", "doblo")
 # Seven-seaters whose name is also some other car's generation code ("C8" = Audi A6/A7 C8).
 SEVEN_SEAT_MODELS = {("Citroen", "C8")}
 

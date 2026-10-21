@@ -126,10 +126,21 @@
       "ë-Berlingo": ["Berlingo"], "ë-C3": ["C3"], "ë-C3 Aircross": ["C3 Aircross"], "ë-C4": ["C4"], "ë-C4 X": ["C4 X"],
       "ë-Spacetourer": ["SpaceTourer"], "DS4 Crossback": ["DS4"],
     },
+    // New brands, wave 1 (owner 2026-10-21); Lexus and Mini families — family().
+    Fiat: {
+      "500C": ["500"], "500S": ["500"], "500e": ["500"], "500L Cross": ["500L"], "500L Living": ["500L"], "500L Trekking": ["500L"],
+      "500L Urban": ["500L"], "500L Wagon": ["500L"], "New Panda": ["Panda"], "Grande Punto": ["Punto"], "Punto Evo": ["Punto"],
+      "600e": ["600"],
+    },
+    Mitsubishi: { "Plug-in Hybrid Outlander": ["Outlander"] },
+    Porsche: { 991: ["911"], 992: ["911"], 997: ["911"] },
   };
   // Mercedes catalog models are "<class> <number>" (GLA 200, CLS 350): the class is the family.
   const MERCEDES_FAMILIES = ["CLA", "CLC", "CLE", "CLK", "CLS", "CL", "GLA", "GLB", "GLC", "GLE", "GLK", "GLS", "GL", "ML",
     "SLC", "SLK", "SL", "A", "B", "C", "E", "G", "R", "S", "V", "X"];
+
+  const MINI_BODIES = { aceman: "Aceman", cabrio: "Cabrio", clubman: "Clubman", clubvan: "Clubman", countryman: "Countryman",
+    coup: "Coupe", paceman: "Paceman", roadster: "Roadster" };
 
   const text = () => TEXT[state.lang] || TEXT.pl;
   const lower = (value) => String(value || "").trim().toLowerCase();
@@ -174,6 +185,17 @@
     if (brand === "Volkswagen") {
       const transporter = model.match(/^(T[567])\b/i);
       if (transporter && findModel(brand, "T6")) return { key: findModel(brand, "T6"), token: "", mobile: transporter[1].toUpperCase() };
+    }
+    if (brand === "Lexus") {
+      // "NX 300h", "RX 450", "IS-F", "GS F" -> the series (B61 wave 1, 2026-10-21).
+      const series = model.match(/^([a-z]{2,3})(?=[\s-]?(\d{3}|f\b))/i);
+      if (series && findModel(brand, series[1].toUpperCase())) return { key: findModel(brand, series[1].toUpperCase()), token: "", mobile: "" };
+    }
+    if (brand === "Mini") {
+      // "<engine> <body>" (Cooper S Clubman, Countryman D (Cooper)): the body is the family; Cooper, One, JCW -> the hatch.
+      const body = model.match(/aceman|cabrio|clubman|clubvan|countryman|coup|paceman|roadster/i);
+      const name = body ? MINI_BODIES[body[0].toLowerCase()] : /^(cooper|one|john cooper works)\b/i.test(model) ? "Cooper" : "";
+      if (name && findModel(brand, name)) return { key: findModel(brand, name), token: "", mobile: "" };
     }
     return null;
   }

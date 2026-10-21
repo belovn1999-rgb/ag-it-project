@@ -43,7 +43,8 @@ TRIM_HEADING = {
 # en.wikipedia lists the trims of every market (US "LX / EX / SX", Chinese, Indian ones): not used.
 LANGS = ("pl", "de", "fr", "it", "nl")
 BRANDS = ("Audi", "BMW", "Citroën", "Citroen", "Cupra", "Dacia", "DS", "Fiat", "Ford", "Hyundai", "Kia", "Mazda", "Mercedes",
-          "Nissan", "Opel", "Peugeot", "Renault", "Seat", "Škoda", "Skoda", "Toyota", "Vauxhall", "Volkswagen", "Volvo")
+          "Nissan", "Opel", "Peugeot", "Renault", "Seat", "Škoda", "Skoda", "Toyota", "Vauxhall", "Volkswagen", "Volvo",
+          "Jeep", "Honda", "Suzuki", "Land Rover", "Lexus", "Porsche", "Mitsubishi", "Mini", "Chrysler", "Lancia", "Alfa Romeo")
 OTHER_MARKET = re.compile(r"russ|chin|brazil|brésil|brasil|india|inde\b|amérique|america|usa|mexi|austral|japan|japon|"
                           r"korea|corée|iran|argentin|türkei|turquie|ägypt|égypt|afri", re.I)
 SPECIAL_HEADING = re.compile(r"limitowan|specjaln|sondermodell|sonderserie|special edition|séries? (spéciale|limitée)|serie speciali|versioni speciali", re.I)
