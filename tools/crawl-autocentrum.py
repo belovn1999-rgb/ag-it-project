@@ -222,6 +222,16 @@ def engine_details(page):
     return {"configs": configs, **{k: values[k] for k in keep if k in values}}
 
 
+def keep_years(gen):
+    """A generation cut to some of its bodies (a list entry's "bodies") runs as those bodies do
+    (Yaris Cross from 2020, not Yaris IV's 2019)."""
+    starts = [b["from"] for b in gen["bodies"] if b.get("from")]
+    if starts:
+        gen["from"] = min(starts)
+        ends = [b.get("to") for b in gen["bodies"] if b.get("from")]
+        gen["to"] = None if None in ends else max(ends)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--engines", action="store_true", help="also read every engine page")
@@ -328,6 +338,8 @@ def main():
                     gen["bodies"].append(body)
                 if not gen["bodies"]:
                     continue
+                if head.get("bodies"):
+                    keep_years(gen)
                 model["generations"].append(gen)
                 print(f"{brand} {label} {gen['name']} {start}-{end or ''}: {len(gen['bodies'])} bodies, "
                       f"{sum(len(b['engines']) for b in gen['bodies'])} engines", flush=True)

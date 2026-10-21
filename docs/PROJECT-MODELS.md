@@ -167,8 +167,9 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
    - **Правила autocentrum.pl:** `robots.txt` разрешает `/dane-techniczne/`,
      crawl-delay нет (запрещены только `/*?`, `/ajax/`…); ходим не чаще 1 запроса
      в секунду, страницы двигателя отвечают ~1,5 с. Сбор поколений и кузовов
-     ≈ 40 мин, страниц двигателей ≈ 1,5 ч (2 потока), кэш `/tmp/autocentrum-pages`,
-     повтор из кэша — минуты. Особенности: нумерация поколений своя (Touran II
+     ≈ 40 мин, страниц двигателей ≈ 1,5 ч (2 потока), кэш `~/.cache/autogood/autocentrum-pages`
+     (с 21.10; `/tmp` чистится), повтор из кэша — минуты; `--reuse-engines` не читает заново
+     страницы двигателей, уже прочитанные в прошлом `autocentrum-models.json`. Особенности: нумерация поколений своя (Touran II
      = наш Touran I рестайлинг 2), у части моделей кузова прямо на странице
      модели (Kadjar, Karoq, Vignale), кузов с одним двигателем открывает сразу
      страницу двигателя; мягкие и часть плагин-гибридов — в «Hybrydowe», EcoFuel
@@ -248,6 +249,38 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
    Без данных (нестандартная разметка autocentrum, сняты в 2011–2012): Mazda Tribute,
    Nissan Sentra, Tiida. Дальше по решению владельца: комплектации новых моделей
    или следующие марки (Dacia, Fiat, Honda, Lexus, Mini, Suzuki…).
+7. ✅ **Пропущенные модели и новые поколения (пп. 4–5 оценки 20.10, решение владельца 20.10):**
+   - **Сборщик видел не всё.** Поколение или кузов с одним двигателем ссылается сразу на
+     страницу двигателя (Mazda CX-5 III `…/iii/silnik-…-od-2026/`), модель с одним двигателем
+     открывает его страницу (Opel Karl, Peugeot iOn), у части моделей двигатели прямо под
+     моделью (Mercedes Klasa X), год двигателя бывает один (`…-110km-2010`), поколение
+     «(0 - teraz)» (VW Crafter II) — теперь читаются (`children()`, `engines_from_slugs()`).
+     Поколение «teraz», после которого на той же странице началось следующее, кончается его
+     началом (`group_body_level()`: Land Cruiser VII 2017–2024, CX-5 II 2017–2026).
+   - **Новые модели (20):** Yaris Cross, e-tron GT, Citroën DS3 / DS4 / DS5 (только кузова
+     «(Citroen)» и DS4 Crossback), C-Zero, Bronco, F-150, Staria, Seltos, CX-6e, Pixo, Cube,
+     Karl, Ampera, iOn, Twizy, Alpine A110, GR86, ID. Polo; данные появились и у Mazda Tribute,
+     Nissan Sentra, Tiida. Модель, которую autocentrum держит кузовами другой (Yaris Cross —
+     `toyota/yaris/iv/cross/`, e-tron GT — «Grand Tourer» в `audi/e-tron`, DS — `ds/3`), — поле
+     `bodies` в `model-list-autocentrum.json` (регулярное выражение пути кузова), годы поколения
+     — по оставленным кузовам. Подмодели каталога: RS e-tron GT, SQ6 e-tron, Puma Gen-E, EQT
+     (→ T-Class), EX40 (→ XC40), EC40 (→ C40), NV300 (→ Primastar), DS4 Crossback (и на платформе
+     — `App\Portals\ModelSpecs::SUBMODELS`). Типы кузова новых — `build-model-specs.py`.
+   - **Новые поколения (16):** CX-5 III, Land Cruiser VIII, Master V, Prius V, Amarok II,
+     iX3 NA5, i3 NA0, Tucson V, Bayon II, Twingo IV, Mazda 2 IV, AMG GT C192, Highlander III,
+     Tourneo Courier II, Edge I, C-Elysée I; дорестайлинг / рестайлинг разделились у TT 8S, CX-9, Leaf I,
+     Aygo I–II, Prius III–IV, i8, GT86, GT-R, Ioniq, MX-30, Bayon I, Grand Santa Fe, Flex.
+   - **Итог:** autocentrum — 421 модель, 992 поколения, 2 644 кузова, 11 986 двигателей
+     (было 401 / 842 / 2 089 / 11 321); таблица 20 890 версий (было 20 351), 731 поколение
+     (было 691), на странице 421 модель 18 марок, 10 206 версий; мягких гибридов 1 149 версий.
+   - **Нет у источника:** Mustang VII, Movano C, Audi A6 e-tron, Proace Max, Alaskan, Peugeot
+     4008, Nissan NV250 / NV400, Patrol Y62; у Crafter II нет двигателей (только кузова), его
+     двигатели autocentrum держит в «Crafter I 2006–teraz». Mirai, Nexo — водород, топлива нет в
+     форме. Master V у autocentrum с 2026 (одна версия). Длинных поколений без раздела
+     дорест / рест осталось 143 (было 154): у autocentrum нет их кузовов «Facelifting».
+   - **Комплектации 23 новых моделей** — `collect-trims-wiki.py --missing "<Марка|Модель>" …`
+     (только названные модели без строк); у первых (DS3/4/5, C-Zero, e-tron GT) в Википедии
+     списков нет; итог войдёт в следующую пересборку.
 
 **Правила работы с ultimatespecs.com:**
 - `robots.txt`: **Crawl-delay: 30** — не чаще одной страницы в 30 с. Полная
