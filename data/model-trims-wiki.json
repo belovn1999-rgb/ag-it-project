@@ -9217,26 +9217,4834 @@
    "status": "частично проверено",
    "note": "pl: Volkswagen ID. Polo",
    "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Bigster",
+   "label": "Bigster",
+   "code": "Bigster I",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [
+    "Essential",
+    "Expression",
+    "Journey",
+    "Extreme"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Bigster"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Bigster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Dokker",
+   "label": "Dokker",
+   "code": "Dokker",
+   "phase": "дорестайлинг",
+   "years": "2012–2017",
+   "trims": [
+    "Access",
+    "Ambiance",
+    "Laureate",
+    "Stepway",
+    "Embleme",
+    "Celebration",
+    "Comfort",
+    "Look"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Dokker"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Dokker",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Dokker",
+   "label": "Dokker",
+   "code": "Dokker",
+   "phase": "рестайлинг",
+   "years": "2017–2021",
+   "trims": [
+    "Access",
+    "Ambiance",
+    "Laureate",
+    "Stepway",
+    "Embleme",
+    "Celebration",
+    "Comfort",
+    "Look"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Dokker"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Dokker",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Duster",
+   "label": "Duster",
+   "code": "Duster III",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Essential",
+    "Expression",
+    "Extreme",
+    "Journey",
+    "Optik",
+    "Dachgepäckträger",
+    "Bei Journey nicht modular",
+    "Kofferraum",
+    "Safari-Grüngrau",
+    "Dolomit-Grau",
+    "Sandstone",
+    "Zeder-Grün",
+    "Terracotta-Braun",
+    "Essentiel"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Duster",
+    "https://de.wikipedia.org/wiki/Dacia_Duster",
+    "https://fr.wikipedia.org/wiki/Dacia_Duster_III",
+    "https://it.wikipedia.org/wiki/Dacia_Duster"
+   ],
+   "status": "проверено",
+   "note": "pl: Dacia Duster · de: Dacia Duster · fr: Dacia Duster III · it: Dacia Duster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Duster",
+   "label": "Duster",
+   "code": "Duster II",
+   "phase": "дорестайлинг",
+   "years": "2017–2021",
+   "trims": [
+    "Access",
+    "Essential",
+    "Comfort",
+    "Prestige",
+    "Adventure"
+   ],
+   "sport": [],
+   "special": [
+    "SL CONNECTED by ORANGE",
+    "SL TECHROAD",
+    "SL CELEBRATION",
+    "SL EXTREME",
+    "Techroad",
+    "15 ans",
+    "Evasion",
+    "Camouflage Edition",
+    "CarPoint Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Duster",
+    "https://de.wikipedia.org/wiki/Dacia_Duster",
+    "https://fr.wikipedia.org/wiki/Dacia_Duster_II",
+    "https://it.wikipedia.org/wiki/Dacia_Duster"
+   ],
+   "status": "проверено",
+   "note": "pl: Dacia Duster · de: Dacia Duster · fr: Dacia Duster II · it: Dacia Duster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Duster",
+   "label": "Duster",
+   "code": "Duster II",
+   "phase": "рестайлинг",
+   "years": "2021–2024",
+   "trims": [
+    "Access",
+    "Essential",
+    "Comfort",
+    "Prestige",
+    "Adventure"
+   ],
+   "sport": [],
+   "special": [
+    "SL CONNECTED by ORANGE",
+    "SL TECHROAD",
+    "SL CELEBRATION",
+    "SL EXTREME",
+    "Techroad",
+    "Extreme",
+    "Mat Edition",
+    "Camouflage Edition",
+    "CarPoint Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Duster",
+    "https://de.wikipedia.org/wiki/Dacia_Duster",
+    "https://fr.wikipedia.org/wiki/Dacia_Duster_II",
+    "https://it.wikipedia.org/wiki/Dacia_Duster"
+   ],
+   "status": "проверено",
+   "note": "pl: Dacia Duster · de: Dacia Duster · fr: Dacia Duster II · it: Dacia Duster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Duster",
+   "label": "Duster",
+   "code": "Duster I",
+   "phase": "дорестайлинг",
+   "years": "2010–2013",
+   "trims": [
+    "Duster",
+    "Ambiance",
+    "Laureate",
+    "Blackstorm"
+   ],
+   "sport": [],
+   "special": [
+    "Adventure Edition",
+    "Black Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Duster"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Duster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Duster",
+   "label": "Duster",
+   "code": "Duster I",
+   "phase": "рестайлинг",
+   "years": "2013–2017",
+   "trims": [
+    "Duster",
+    "Ambiance",
+    "Laureate",
+    "Blackstorm"
+   ],
+   "sport": [],
+   "special": [
+    "Adventure Edition",
+    "Black Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Duster"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Duster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Jogger",
+   "label": "Jogger",
+   "code": "Jogger I",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Essential",
+    "Expression",
+    "Extreme angepasst"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Dacia_Jogger"
+   ],
+   "status": "частично проверено",
+   "note": "de: Dacia Jogger",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Lodgy",
+   "label": "Lodgy",
+   "code": "Lodgy",
+   "phase": "дорестайлинг",
+   "years": "2012–2017",
+   "trims": [
+    "Access",
+    "Ambiance",
+    "Laureate",
+    "Prestige",
+    "Stepway",
+    "Connected by Orange",
+    "Techroad",
+    "Celebration",
+    "Explorer",
+    "Advance",
+    "Série 15ans"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Lodgy",
+    "https://fr.wikipedia.org/wiki/Dacia_Lodgy"
+   ],
+   "status": "проверено",
+   "note": "pl: Dacia Lodgy · fr: Dacia Lodgy",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Lodgy",
+   "label": "Lodgy",
+   "code": "Lodgy",
+   "phase": "рестайлинг",
+   "years": "2017–н. в.",
+   "trims": [
+    "Access",
+    "Ambiance",
+    "Laureate",
+    "Prestige",
+    "Stepway",
+    "Connected by Orange",
+    "Techroad",
+    "Celebration",
+    "Explorer",
+    "Advance",
+    "Série 15ans"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Lodgy",
+    "https://fr.wikipedia.org/wiki/Dacia_Lodgy"
+   ],
+   "status": "проверено",
+   "note": "pl: Dacia Lodgy · fr: Dacia Lodgy",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Logan",
+   "label": "Logan",
+   "code": "Logan III",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Essential",
+    "Expression",
+    "Journey",
+    "XX"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Logan",
+    "https://fr.wikipedia.org/wiki/Dacia_Logan_III"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Logan · fr: Dacia Logan III",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Logan",
+   "label": "Logan",
+   "code": "Logan II",
+   "phase": "дорестайлинг",
+   "years": "2012–2016",
+   "trims": [
+    "Access",
+    "Laureate",
+    "Logan",
+    "Ambiance",
+    "Confort",
+    "Prestige",
+    "Stepway",
+    "Explorer",
+    "Advance",
+    "Anniversaire 10 ans",
+    "Stepway Techroad",
+    "Anniversaire 15 ans"
+   ],
+   "sport": [],
+   "special": [
+    "10th Anniversary Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Logan",
+    "https://fr.wikipedia.org/wiki/Dacia_Logan_II"
+   ],
+   "status": "проверено",
+   "note": "pl: Dacia Logan · fr: Dacia Logan II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Logan",
+   "label": "Logan",
+   "code": "Logan II",
+   "phase": "рестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "Access",
+    "Laureate",
+    "Logan",
+    "Ambiance",
+    "Essentiel",
+    "Confort",
+    "Prestige",
+    "Stepway",
+    "Explorer",
+    "Advance",
+    "Anniversaire 10 ans",
+    "Stepway Techroad",
+    "Anniversaire 15 ans"
+   ],
+   "sport": [],
+   "special": [
+    "10th Anniversary Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Logan",
+    "https://fr.wikipedia.org/wiki/Dacia_Logan_II"
+   ],
+   "status": "проверено",
+   "note": "pl: Dacia Logan · fr: Dacia Logan II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Logan",
+   "label": "Logan",
+   "code": "Logan I",
+   "phase": "весь выпуск",
+   "years": "2004–2012",
+   "trims": [
+    "Kiss FM",
+    "BIackIine"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Dacia_Logan_I"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Dacia Logan I",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Sandero",
+   "label": "Sandero",
+   "code": "Sandero III",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Access",
+    "Essentiel",
+    "Confort",
+    "Essential",
+    "Expression",
+    "Extreme",
+    "Journey"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Dacia_Sandero_III"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Dacia Sandero III",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Sandero",
+   "label": "Sandero",
+   "code": "Sandero II",
+   "phase": "дорестайлинг",
+   "years": "2011–2016",
+   "trims": [
+    "Sandero",
+    "Access",
+    "Essentiel",
+    "Ambiance",
+    "Lauréate",
+    "Prestige",
+    "Stepway Urban",
+    "Stepway",
+    "Stepway Ambiance",
+    "Stepway Prestige",
+    "Stepway Extrême",
+    "Stepway Explorer",
+    "Stepway Advance",
+    "Escape",
+    "City+",
+    "Urban Stepway",
+    "Evasion",
+    "15 ans",
+    "Techroad"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Dacia_Sandero_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Dacia Sandero II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Sandero",
+   "label": "Sandero",
+   "code": "Sandero II",
+   "phase": "рестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "Sandero",
+    "Access",
+    "Essentiel",
+    "Ambiance",
+    "Lauréate",
+    "Prestige",
+    "Stepway Urban",
+    "Stepway",
+    "Stepway Ambiance",
+    "Stepway Prestige",
+    "Stepway Extrême",
+    "Stepway Explorer",
+    "Stepway Advance",
+    "Escape",
+    "City+",
+    "Urban Stepway",
+    "Evasion",
+    "15 ans",
+    "Techroad"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Dacia_Sandero_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Dacia Sandero II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Spring",
+   "label": "Spring",
+   "code": "Spring",
+   "phase": "дорестайлинг",
+   "years": "2021–2023",
+   "trims": [
+    "Business",
+    "Comfort",
+    "Comfort Plus",
+    "Essential",
+    "Expression",
+    "Extreme"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Spring"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Spring",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Dacia",
+   "model": "Spring",
+   "label": "Spring",
+   "code": "Spring",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Business",
+    "Comfort",
+    "Comfort Plus",
+    "Essential",
+    "Expression",
+    "Extreme"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Dacia_Spring"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Dacia Spring",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "124 Spider",
+   "label": "124 Spider",
+   "code": "124 Spider I",
+   "phase": "весь выпуск",
+   "years": "2016–2019",
+   "trims": [
+    "124 Spider",
+    "124 Spider Lusso",
+    "Prima Edizione Lusso",
+    "Lusso",
+    "Lusso Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_124_Spider",
+    "https://fr.wikipedia.org/wiki/Fiat_124_Spider"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat 124 Spider · fr: Fiat 124 Spider",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "500",
+   "label": "500",
+   "code": "500 II",
+   "phase": "весь выпуск",
+   "years": "2007–2022",
+   "trims": [
+    "Pop",
+    "Lounge",
+    "TwinAir",
+    "TwinAir Plus",
+    "Star",
+    "Club",
+    "Urban",
+    "Rockstar"
+   ],
+   "sport": [],
+   "special": [
+    "Abarth 500",
+    "Abarth 500 Assetto Corse",
+    "Abarth 500 Cabrio Italia",
+    "Abarth 500 esseesse",
+    "Abarth 500 Opening Edition",
+    "Abarth 500 SpeedGrey",
+    "Abarth 595 Competizione",
+    "Abarth 595 Turismo",
+    "Abarth 695 Competizione",
+    "Abarth 695 Tributo Ferrari",
+    "Abarth 695 Tributo Maserati",
+    "500 120 th",
+    "500 1957 Edition",
+    "500 America",
+    "500 Anniversario",
+    "500 Aria",
+    "500 Barbie",
+    "500 BlackJack",
+    "500 Bicolore",
+    "500 by Diesel",
+    "500 by Gucci",
+    "500C GQ Edition",
+    "500 Coupe Zagato",
+    "500 Cult",
+    "500 Dolcevita",
+    "500 Felipe Massa version",
+    "500 Ferrari",
+    "500 First Edition",
+    "500 Pink",
+    "500 Prima Edizione",
+    "500 PUR-O2",
+    "500 Riva",
+    "500 Rockstar",
+    "500 Rose",
+    "500 Star",
+    "500 Start & Stop",
+    "500 Stinger",
+    "500 Vintage 57",
+    "500 La Prima",
+    "500 Hybrid Launch Edition",
+    "Riva",
+    "60th Anniversary",
+    "Mirror",
+    "Anniversario",
+    "Repetto",
+    "500 Dealers Ferrari",
+    "120th Anniversary",
+    "500 by Studio Harcourt",
+    "Dolcevita",
+    "By diesel",
+    "Gucci",
+    "Italia",
+    "America",
+    "So pink",
+    "Vintage 57",
+    "Hybrid Launch Edition",
+    "Hey Google",
+    "Web Collezione",
+    "Collezione 1957",
+    "Tributo Trepiuno",
+    "Principessa"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_500_%282007%29",
+    "https://fr.wikipedia.org/wiki/Fiat_500_%282007%29"
+   ],
+   "status": "проверено",
+   "note": "pl: Fiat 500 (2007) · fr: Fiat 500 (2007)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "500L",
+   "label": "500L",
+   "code": "500L",
+   "phase": "весь выпуск",
+   "years": "2012–2022",
+   "trims": [
+    "Urban",
+    "City Cross",
+    "Wagon",
+    "Urban Kids"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "120th Anniversary"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Fiat_500L"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Fiat 500L",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "500X",
+   "label": "500X",
+   "code": "500X",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [
+    "Pop",
+    "Pop Star",
+    "Lounge",
+    "Cross",
+    "Cross Plus",
+    "Urban",
+    "City Cross",
+    "Mirror",
+    "Club",
+    "500X",
+    "Urban Rock",
+    "Live Edizione",
+    "Ballon d'Or",
+    "Yachting",
+    "Hey Google"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "120th Anniversary",
+    "Connect Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_500X",
+    "https://fr.wikipedia.org/wiki/Fiat_500X"
+   ],
+   "status": "проверено",
+   "note": "pl: Fiat 500X · fr: Fiat 500X",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "500X",
+   "label": "500X",
+   "code": "500X",
+   "phase": "рестайлинг",
+   "years": "2018–2024",
+   "trims": [
+    "Pop",
+    "Pop Star",
+    "Lounge",
+    "Cross",
+    "Cross Plus",
+    "Urban",
+    "City Cross",
+    "Mirror",
+    "Club",
+    "500X",
+    "Urban Rock",
+    "Live Edizione",
+    "Ballon d'Or",
+    "Yachting",
+    "Hey Google"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "120th Anniversary",
+    "Connect Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_500X",
+    "https://fr.wikipedia.org/wiki/Fiat_500X"
+   ],
+   "status": "проверено",
+   "note": "pl: Fiat 500X · fr: Fiat 500X",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Bravo",
+   "label": "Bravo",
+   "code": "Bravo II",
+   "phase": "весь выпуск",
+   "years": "2006–2015",
+   "trims": [
+    "Pop",
+    "Easy",
+    "Street"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Fiat_Bravo"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Fiat Bravo",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Croma",
+   "label": "Croma",
+   "code": "Croma II",
+   "phase": "весь выпуск",
+   "years": "2005–2010",
+   "trims": [
+    "Business",
+    "Active",
+    "Dynamic",
+    "Emotion",
+    "Confort",
+    "Elegance",
+    "Collezione",
+    "Elegance GPS"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Croma_%282005%29",
+    "https://fr.wikipedia.org/wiki/Fiat_Croma_%282005%29"
+   ],
+   "status": "проверено",
+   "note": "pl: Fiat Croma (2005) · fr: Fiat Croma (2005)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Doblo",
+   "label": "Doblo",
+   "code": "Doblo III",
+   "phase": "весь выпуск",
+   "years": "2010–2016",
+   "trims": [
+    "Active",
+    "Dynamic",
+    "Emotion",
+    "Pop",
+    "Easy",
+    "Lounge",
+    "Trekking"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Doblo"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Doblo",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Ducato",
+   "label": "Ducato",
+   "code": "Ducato III",
+   "phase": "весь выпуск",
+   "years": "2006–2014",
+   "trims": [
+    "Classic",
+    "Techno",
+    "Lounge"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Ducato"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Ducato",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Fiorino",
+   "label": "Fiorino",
+   "code": "Fiorino IV",
+   "phase": "весь выпуск",
+   "years": "2008–2011",
+   "trims": [
+    "Fiorino",
+    "Elegant",
+    "Adventure",
+    "Active",
+    "Dynamic",
+    "SX",
+    "Business",
+    "Business Pro",
+    "Easy",
+    "Lounge",
+    "Trekking"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Fiorino"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Fiorino",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Freemont",
+   "label": "Freemont",
+   "code": "Freemont I",
+   "phase": "весь выпуск",
+   "years": "2011–2016",
+   "trims": [
+    "Freemont",
+    "Urban",
+    "Lounge",
+    "Cross",
+    "Park Avenue"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Freemont"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Freemont",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Fullback",
+   "label": "Fullback",
+   "code": "Fullback",
+   "phase": "весь выпуск",
+   "years": "2016–2018",
+   "trims": [
+    "Édition de lancement",
+    "Escalade",
+    "Cross"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Unlimited"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Fiat_Fullback"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Fiat Fullback",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Grande Panda",
+   "label": "Grande Panda",
+   "code": "Grande Panda",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [
+    "Pop",
+    "Icon",
+    "La prima"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Grande_Panda"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Grande Panda",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Idea",
+   "label": "Idea",
+   "code": "Idea I",
+   "phase": "весь выпуск",
+   "years": "2004–2012",
+   "trims": [
+    "Attractive",
+    "Essence",
+    "Sporting",
+    "Adventure",
+    "Skycome",
+    "ELX",
+    "HLX"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Idea"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Idea",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Linea",
+   "label": "Linea",
+   "code": "Linea",
+   "phase": "дорестайлинг",
+   "years": "2007–2013",
+   "trims": [
+    "Fresh",
+    "Actvie",
+    "Dynamic",
+    "Emotion",
+    "Tour de Pologne",
+    "Pop",
+    "Easy"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Linea"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Linea",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Linea",
+   "label": "Linea",
+   "code": "Linea",
+   "phase": "рестайлинг",
+   "years": "2013–2015",
+   "trims": [
+    "Fresh",
+    "Actvie",
+    "Dynamic",
+    "Emotion",
+    "Tour de Pologne",
+    "Pop",
+    "Easy"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Linea"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Linea",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Multipla",
+   "label": "Multipla",
+   "code": "Multipla II",
+   "phase": "весь выпуск",
+   "years": "2004–2010",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Cinecittà II",
+    "Design Collezione avril",
+    "Hobby"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Fiat_Multipla"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Fiat Multipla",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Panda",
+   "label": "Panda",
+   "code": "Panda III",
+   "phase": "весь выпуск",
+   "years": "2012–н. в.",
+   "trims": [
+    "Fresh",
+    "Easy",
+    "Pop",
+    "Lounge",
+    "4x4",
+    "Actual",
+    "Edizione Cool",
+    "Popstar",
+    "Trekking",
+    "Climbing",
+    "Cross",
+    "Pandina"
+   ],
+   "sport": [],
+   "special": [
+    "4x4 Antartica",
+    "Young",
+    "4x4 Cross",
+    "Waze",
+    "Trussardi",
+    "Antartica",
+    "Launch Edition",
+    "Garmin",
+    "4x40"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Panda",
+    "https://fr.wikipedia.org/wiki/Fiat_Panda_III",
+    "https://nl.wikipedia.org/wiki/Fiat_Panda"
+   ],
+   "status": "проверено",
+   "note": "pl: Fiat Panda · fr: Fiat Panda III · nl: Fiat Panda",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Panda",
+   "label": "Panda",
+   "code": "Panda II",
+   "phase": "весь выпуск",
+   "years": "2003–2012",
+   "trims": [
+    "Actual",
+    "Active",
+    "Active Plus",
+    "Dynamic",
+    "Dynamic Plus",
+    "Emotion",
+    "4x4",
+    "4x4 Adventure",
+    "4x4 Cross",
+    "4x4 Climbing",
+    "Fresh",
+    "My Life",
+    "Alessi",
+    "Luxury",
+    "Monster"
+   ],
+   "sport": [],
+   "special": [
+    "4x4 Glam Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Panda"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Panda",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Punto",
+   "label": "Punto",
+   "code": "Punto 2012",
+   "phase": "весь выпуск",
+   "years": "2012–2018",
+   "trims": [
+    "Fresh",
+    "Estiva",
+    "Easy",
+    "Lounge",
+    "TwinAir",
+    "Young",
+    "Mystyle",
+    "Pop"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Punto",
+    "https://de.wikipedia.org/wiki/Fiat_Punto_%28Typ_199%29",
+    "https://nl.wikipedia.org/wiki/Fiat_Punto"
+   ],
+   "status": "проверено",
+   "note": "pl: Fiat Punto · de: Fiat Punto (Typ 199) · nl: Fiat Punto",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Punto",
+   "label": "Punto",
+   "code": "Punto Evo",
+   "phase": "весь выпуск",
+   "years": "2010–2011",
+   "trims": [
+    "Fresh",
+    "Active",
+    "Estiva",
+    "Dynamic",
+    "Emotion",
+    "Energy"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Punto"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Punto",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Punto",
+   "label": "Punto",
+   "code": "Grande Punto",
+   "phase": "весь выпуск",
+   "years": "2005–2012",
+   "trims": [
+    "Mystyle",
+    "Lounge",
+    "Active",
+    "Dynamic",
+    "Emotion",
+    "Orange II"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Fiat_Punto_%28Typ_199%29",
+    "https://fr.wikipedia.org/wiki/Fiat_Punto_III"
+   ],
+   "status": "частично проверено",
+   "note": "de: Fiat Punto (Typ 199) · fr: Fiat Punto III",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Punto",
+   "label": "Punto",
+   "code": "Punto II",
+   "phase": "весь выпуск",
+   "years": "1999–2010",
+   "trims": [
+    "NOBODY",
+    "Actual",
+    "SX",
+    "ELX",
+    "HLX",
+    "Dynamic",
+    "HGT",
+    "HGT Abarth",
+    "Emotion",
+    "Sporting",
+    "Sole",
+    "Star",
+    "Stile"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Cult",
+    "GO!",
+    "S1600",
+    "Sound",
+    "Schumacher"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Punto",
+    "https://de.wikipedia.org/wiki/Fiat_Punto_%28Typ_188%29",
+    "https://it.wikipedia.org/wiki/Fiat_Punto_%281993%29",
+    "https://nl.wikipedia.org/wiki/Fiat_Punto"
+   ],
+   "status": "проверено",
+   "note": "pl: Fiat Punto · de: Fiat Punto (Typ 188) · it: Fiat Punto (1993) · nl: Fiat Punto",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Qubo",
+   "label": "Qubo",
+   "code": "Qubo",
+   "phase": "весь выпуск",
+   "years": "2009–2019",
+   "trims": [
+    "Fiorino",
+    "Elegant",
+    "Adventure",
+    "Active",
+    "Dynamic",
+    "SX",
+    "Business",
+    "Business Pro",
+    "Easy",
+    "Lounge",
+    "Trekking"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Qubo"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Qubo",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Sedici",
+   "label": "Sedici",
+   "code": "Sedici I",
+   "phase": "весь выпуск",
+   "years": "2006–2014",
+   "trims": [
+    "Fresh",
+    "Dynamic",
+    "Emotion"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Sedici"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Sedici",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Seicento",
+   "label": "Seicento",
+   "code": "Seicento",
+   "phase": "весь выпуск",
+   "years": "1998–2010",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "SX",
+    "Sporting"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Fiat_Seicento"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Fiat Seicento",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Tipo",
+   "label": "Tipo",
+   "code": "Tipo II",
+   "phase": "дорестайлинг",
+   "years": "2015–2020",
+   "trims": [
+    "Easy",
+    "Lounge verbaut",
+    "Tipo",
+    "Pop",
+    "Lounge",
+    "Life",
+    "Life Plus",
+    "Cross",
+    "Cross Plus",
+    "Cross Pack",
+    "Tipo Cross",
+    "Tipo City",
+    "Tip Top",
+    "Street",
+    "Mirror",
+    "Ballon d'Or"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Fiat_Tipo_%28Typ_356%29",
+    "https://fr.wikipedia.org/wiki/Fiat_Tipo_%282016%29"
+   ],
+   "status": "проверено",
+   "note": "de: Fiat Tipo (Typ 356) · fr: Fiat Tipo (2016)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Tipo",
+   "label": "Tipo",
+   "code": "Tipo II",
+   "phase": "рестайлинг",
+   "years": "2020–н. в.",
+   "trims": [
+    "Easy",
+    "Lounge verbaut",
+    "Tipo",
+    "Pop",
+    "Lounge",
+    "Life",
+    "Life Plus",
+    "Cross",
+    "Cross Plus",
+    "Cross Pack",
+    "Tipo Cross",
+    "Tipo City",
+    "Tip Top",
+    "Street",
+    "Mirror",
+    "Ballon d'Or",
+    "Garmin"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Fiat_Tipo_%28Typ_356%29",
+    "https://fr.wikipedia.org/wiki/Fiat_Tipo_%282016%29"
+   ],
+   "status": "проверено",
+   "note": "de: Fiat Tipo (Typ 356) · fr: Fiat Tipo (2016)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Fiat",
+   "model": "Ulysse",
+   "label": "Ulysse",
+   "code": "Ulysse II",
+   "phase": "весь выпуск",
+   "years": "2002–2010",
+   "trims": [
+    "Exclusive",
+    "Pack Luxe",
+    "Rossignol",
+    "NaviDrive",
+    "Thalassa",
+    "Image",
+    "Révélation",
+    "Collection",
+    "Airplay",
+    "Freeride",
+    "SR",
+    "SV",
+    "Premium",
+    "Premium Pack",
+    "Style",
+    "NavTech on Board",
+    "SV Pack",
+    "Native",
+    "Norwest",
+    "Family",
+    "Family Plus",
+    "Trofeo",
+    "Cinecittà",
+    "S.T. Dupont",
+    "Active",
+    "Dynamic ed Emotion",
+    "Dynamic",
+    "Emotion",
+    "Admiral"
+   ],
+   "sport": [
+    "ST"
+   ],
+   "special": [
+    "Edition",
+    "Black & Silver Edition",
+    "Swiss Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Fiat_Ulysse_II",
+    "https://it.wikipedia.org/wiki/Fiat_Ulysse",
+    "https://nl.wikipedia.org/wiki/Fiat_Ulysse"
+   ],
+   "status": "проверено",
+   "note": "fr: Fiat Ulysse II · it: Fiat Ulysse · nl: Fiat Ulysse",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Accord",
+   "label": "Accord",
+   "code": "Accord VIII",
+   "phase": "дорестайлинг",
+   "years": "2007–2015",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Executive",
+    "Executive NAVI ACC",
+    "Lifestyle",
+    "Taxi",
+    "Type-S"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Accord"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Accord",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Accord",
+   "label": "Accord",
+   "code": "Accord VIII",
+   "phase": "рестайлинг",
+   "years": "2015–2016",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Executive",
+    "Executive NAVI ACC",
+    "Lifestyle",
+    "Taxi",
+    "Type-S"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Accord"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Accord",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "label": "CR-V",
+   "code": "CR-V VI",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Executive",
+    "Advance",
+    "Advance Tech"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Honda_CR-V"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Honda CR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "label": "CR-V",
+   "code": "CR-V V",
+   "phase": "дорестайлинг",
+   "years": "2018–2022",
+   "trims": [
+    "Origin"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Honda_CR-V"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Honda CR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "label": "CR-V",
+   "code": "CR-V V",
+   "phase": "рестайлинг",
+   "years": "2022–2023",
+   "trims": [
+    "Origin"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Honda_CR-V"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Honda CR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "label": "CR-V",
+   "code": "CR-V IV",
+   "phase": "дорестайлинг",
+   "years": "2012–2014",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Elegance Plus",
+    "Lifestyle",
+    "Executive",
+    "Executive Navi",
+    "Mugen"
+   ],
+   "sport": [],
+   "special": [
+    "Black Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_CR-V"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda CR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "label": "CR-V",
+   "code": "CR-V IV",
+   "phase": "рестайлинг",
+   "years": "2014–2018",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Elegance Plus",
+    "Lifestyle",
+    "Executive",
+    "Executive Navi",
+    "Mugen"
+   ],
+   "sport": [],
+   "special": [
+    "Black Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_CR-V"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda CR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "label": "CR-V",
+   "code": "CR-V III",
+   "phase": "дорестайлинг",
+   "years": "2006–2010",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Elegance Lifestyle",
+    "Executive",
+    "Executive Navi",
+    "Taxi"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_CR-V"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda CR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-V",
+   "label": "CR-V",
+   "code": "CR-V III",
+   "phase": "рестайлинг",
+   "years": "2010–2012",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Elegance Lifestyle",
+    "Executive",
+    "Executive Navi",
+    "Taxi"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_CR-V"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda CR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "CR-Z",
+   "label": "CR-Z",
+   "code": "CR-Z",
+   "phase": "весь выпуск",
+   "years": "2010–2013",
+   "trims": [
+    "Spoon",
+    "Mugen",
+    "Mugen RR",
+    "Mugen RZ",
+    "HKS",
+    "Label Alpha"
+   ],
+   "sport": [
+    "Sport",
+    "GT"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_CR-Z"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda CR-Z",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "City",
+   "label": "City",
+   "code": "City VI",
+   "phase": "весь выпуск",
+   "years": "2009–2011",
+   "trims": [
+    "Comfort",
+    "DX",
+    "EX",
+    "EXL",
+    "Elegance",
+    "LX",
+    "SV",
+    "Mugen"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_City"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda City",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "City",
+   "label": "City",
+   "code": "City V",
+   "phase": "весь выпуск",
+   "years": "2002–2011",
+   "trims": [
+    "Comfort"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_City"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda City",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Civic",
+   "label": "Civic",
+   "code": "Civic XII",
+   "phase": "дорестайлинг",
+   "years": "2022–2024",
+   "trims": [
+    "Elegance",
+    "Advance",
+    "Type-R",
+    "Exécutive"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Civic",
+    "https://fr.wikipedia.org/wiki/Honda_Civic"
+   ],
+   "status": "проверено",
+   "note": "pl: Honda Civic · fr: Honda Civic",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Civic",
+   "label": "Civic",
+   "code": "Civic XII",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Elegance",
+    "Advance",
+    "Type-R",
+    "Exécutive"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Civic",
+    "https://fr.wikipedia.org/wiki/Honda_Civic"
+   ],
+   "status": "проверено",
+   "note": "pl: Honda Civic · fr: Honda Civic",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Civic",
+   "label": "Civic",
+   "code": "Civic X",
+   "phase": "дорестайлинг",
+   "years": "2017–2019",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Sport Plus",
+    "Executive",
+    "Prestige",
+    "Type-R"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Civic"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Civic",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Civic",
+   "label": "Civic",
+   "code": "Civic X",
+   "phase": "рестайлинг",
+   "years": "2019–2021",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Sport Plus",
+    "Executive",
+    "Prestige",
+    "Type-R"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Civic"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Civic",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "HR-V",
+   "label": "HR-V",
+   "code": "HR-V III",
+   "phase": "дорестайлинг",
+   "years": "2021–2024",
+   "trims": [
+    "Executive",
+    "Advance",
+    "Advance Style"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Honda_HR-V"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Honda HR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "HR-V",
+   "label": "HR-V",
+   "code": "HR-V III",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Executive",
+    "Advance",
+    "Advance Style"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Honda_HR-V"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Honda HR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "HR-V",
+   "label": "HR-V",
+   "code": "HR-V II",
+   "phase": "дорестайлинг",
+   "years": "2015–2018",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [
+    "Black Edition",
+    "First Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_HR-V",
+    "https://fr.wikipedia.org/wiki/Honda_HR-V"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda HR-V · fr: Honda HR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "HR-V",
+   "label": "HR-V",
+   "code": "HR-V II",
+   "phase": "рестайлинг",
+   "years": "2018–2021",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [
+    "Black Edition",
+    "First Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_HR-V",
+    "https://fr.wikipedia.org/wiki/Honda_HR-V"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda HR-V · fr: Honda HR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Insight",
+   "label": "Insight",
+   "code": "Insight",
+   "phase": "дорестайлинг",
+   "years": "2009–2012",
+   "trims": [
+    "ES",
+    "EX",
+    "Comfort",
+    "Elegance",
+    "Executive",
+    "Taxi",
+    "Mugen"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Insight"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Insight",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Insight",
+   "label": "Insight",
+   "code": "Insight",
+   "phase": "рестайлинг",
+   "years": "2012–2013",
+   "trims": [
+    "ES",
+    "EX",
+    "Comfort",
+    "Elegance",
+    "Executive",
+    "Taxi",
+    "Mugen"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Insight"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Insight",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Jazz",
+   "label": "Jazz",
+   "code": "Jazz V",
+   "phase": "дорестайлинг",
+   "years": "2020–2023",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Executive",
+    "Crosstar Executive",
+    "Exclusive"
+   ],
+   "sport": [],
+   "special": [
+    "Style",
+    "Crosstar U.R.B.A.N"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Jazz",
+    "https://fr.wikipedia.org/wiki/Honda_Jazz"
+   ],
+   "status": "проверено",
+   "note": "pl: Honda Jazz · fr: Honda Jazz",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Jazz",
+   "label": "Jazz",
+   "code": "Jazz V",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Comfort",
+    "Elegance",
+    "Executive",
+    "Crosstar Executive",
+    "Exclusive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Jazz",
+    "https://fr.wikipedia.org/wiki/Honda_Jazz"
+   ],
+   "status": "проверено",
+   "note": "pl: Honda Jazz · fr: Honda Jazz",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Jazz",
+   "label": "Jazz",
+   "code": "Jazz IV",
+   "phase": "дорестайлинг",
+   "years": "2015–2017",
+   "trims": [
+    "Trend",
+    "Comfort",
+    "Elegance",
+    "Dynamic",
+    "Mugen S",
+    "Mugen RS",
+    "EX",
+    "LX",
+    "Executive",
+    "Executive Navi",
+    "Exclusive",
+    "Exclusive Navi"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Jazz",
+    "https://fr.wikipedia.org/wiki/Honda_Jazz"
+   ],
+   "status": "проверено",
+   "note": "pl: Honda Jazz · fr: Honda Jazz",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Jazz",
+   "label": "Jazz",
+   "code": "Jazz IV",
+   "phase": "рестайлинг",
+   "years": "2017–2020",
+   "trims": [
+    "Trend",
+    "Comfort",
+    "Elegance",
+    "Dynamic",
+    "Mugen S",
+    "Mugen RS",
+    "EX",
+    "LX",
+    "Executive",
+    "Executive Navi",
+    "Exclusive",
+    "Exclusive Navi"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Jazz",
+    "https://fr.wikipedia.org/wiki/Honda_Jazz"
+   ],
+   "status": "проверено",
+   "note": "pl: Honda Jazz · fr: Honda Jazz",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Jazz",
+   "label": "Jazz",
+   "code": "Jazz III",
+   "phase": "весь выпуск",
+   "years": "2008–2015",
+   "trims": [
+    "Comfort Plus",
+    "Elegance",
+    "Executive",
+    "EV",
+    "Hybrid Comfort",
+    "Hybrid Elegance",
+    "Si",
+    "Trend",
+    "Twist"
+   ],
+   "sport": [
+    "Sport",
+    "RS"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Jazz"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Jazz",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Legend",
+   "label": "Legend",
+   "code": "Legend IV",
+   "phase": "весь выпуск",
+   "years": "2006–2012",
+   "trims": [
+    "Executive",
+    "Executive Plus",
+    "Max"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Legend"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Legend",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Odyssey",
+   "label": "Odyssey",
+   "code": "Odyssey IV",
+   "phase": "весь выпуск",
+   "years": "2011–2017",
+   "trims": [
+    "EX",
+    "EX-L",
+    "LX",
+    "Touring",
+    "Touring Elite"
+   ],
+   "sport": [],
+   "special": [
+    "Special Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Odyssey"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Odyssey",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Odyssey",
+   "label": "Odyssey",
+   "code": "Odyssey III",
+   "phase": "весь выпуск",
+   "years": "2004–2010",
+   "trims": [
+    "EX",
+    "EX-L",
+    "LX",
+    "Touring"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Odyssey"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Odyssey",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Pilot",
+   "label": "Pilot",
+   "code": "Pilot II",
+   "phase": "весь выпуск",
+   "years": "2009–2015",
+   "trims": [
+    "LX",
+    "EX",
+    "EX-L",
+    "Touring",
+    "SE"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Pilot",
+    "https://de.wikipedia.org/wiki/Honda_Pilot",
+    "https://fr.wikipedia.org/wiki/Honda_Pilot"
+   ],
+   "status": "проверено",
+   "note": "pl: Honda Pilot · de: Honda Pilot · fr: Honda Pilot",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "Prelude",
+   "label": "Prelude",
+   "code": "Prelude VI",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [
+    "Advance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Honda_Prelude"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Honda Prelude",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "ZR-V",
+   "label": "ZR-V",
+   "code": "ZR-V I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "LX",
+    "EX-L",
+    "Advance"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Honda_ZR-V"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Honda ZR-V",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Honda",
+   "model": "e:Ny1",
+   "label": "e:Ny1",
+   "code": "e:Ny1 I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Advance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Honda_e%3ANy1"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Honda e:Ny1",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Avenger",
+   "label": "Avenger",
+   "code": "Avenger",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Avenger",
+    "Longitude",
+    "Altitude",
+    "Summit"
+   ],
+   "sport": [],
+   "special": [
+    "1st Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Jeep_Avenger"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Jeep Avenger",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Cherokee",
+   "label": "Cherokee",
+   "code": "Cherokee V",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [
+    "Night Eagle",
+    "Overland",
+    "Trailhawk Trail Rated"
+   ],
+   "sport": [],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Cherokee"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Cherokee",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Cherokee",
+   "label": "Cherokee",
+   "code": "Cherokee V",
+   "phase": "рестайлинг",
+   "years": "2018–2020",
+   "trims": [
+    "Night Eagle",
+    "Overland",
+    "Trailhawk Trail Rated"
+   ],
+   "sport": [],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Cherokee"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Cherokee",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Cherokee",
+   "label": "Cherokee",
+   "code": "Cherokee IV",
+   "phase": "весь выпуск",
+   "years": "2008–2013",
+   "trims": [],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Cherokee"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Cherokee",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Commander",
+   "label": "Commander",
+   "code": "Commander I",
+   "phase": "весь выпуск",
+   "years": "2006–2010",
+   "trims": [
+    "Trail Rated",
+    "Laredo",
+    "Overland"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Commander"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Commander",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Compass",
+   "label": "Compass",
+   "code": "Compass II",
+   "phase": "дорестайлинг",
+   "years": "2017–2021",
+   "trims": [
+    "Longitude",
+    "Trailhawk",
+    "Night Eagle",
+    "Downtown",
+    "High Altitude"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "Brooklyn Edition",
+    "Opening Edition",
+    "4Xe First Edition",
+    "80th Anniversary"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Compass",
+    "https://fr.wikipedia.org/wiki/Jeep_Compass"
+   ],
+   "status": "проверено",
+   "note": "pl: Jeep Compass · fr: Jeep Compass",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Compass",
+   "label": "Compass",
+   "code": "Compass II",
+   "phase": "рестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "Longitude",
+    "Trailhawk",
+    "Night Eagle",
+    "Downtown",
+    "High Altitude"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "Brooklyn Edition",
+    "Opening Edition",
+    "4Xe First Edition",
+    "80th Anniversary"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Compass",
+    "https://fr.wikipedia.org/wiki/Jeep_Compass"
+   ],
+   "status": "проверено",
+   "note": "pl: Jeep Compass · fr: Jeep Compass",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Compass",
+   "label": "Compass",
+   "code": "Compass I",
+   "phase": "дорестайлинг",
+   "years": "2007–2011",
+   "trims": [
+    "North"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "70th Anniversary Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Compass"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Compass",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Compass",
+   "label": "Compass",
+   "code": "Compass I",
+   "phase": "рестайлинг",
+   "years": "2011–2015",
+   "trims": [
+    "North"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "70th Anniversary Edition",
+    "Altitude Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Compass"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Compass",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Gladiator",
+   "label": "Gladiator",
+   "code": "Gladiator",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Sport S",
+    "Overland",
+    "Rubicon"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Overland Launch Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Jeep_Gladiator"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Jeep Gladiator",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Grand Cherokee",
+   "label": "Grand Cherokee",
+   "code": "Grand Cherokee V",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Laredo",
+    "Overland",
+    "Summit",
+    "Trailhawk",
+    "Summit Reserve"
+   ],
+   "sport": [],
+   "special": [
+    "Limited",
+    "Exclusive Launch Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Grand_Cherokee",
+    "https://fr.wikipedia.org/wiki/Jeep_Grand_Cherokee",
+    "https://it.wikipedia.org/wiki/Jeep_Grand_Cherokee"
+   ],
+   "status": "проверено",
+   "note": "pl: Jeep Grand Cherokee · fr: Jeep Grand Cherokee · it: Jeep Grand Cherokee",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Grand Cherokee",
+   "label": "Grand Cherokee",
+   "code": "Grand Cherokee IV",
+   "phase": "рестайлинг",
+   "years": "2010–2023",
+   "trims": [
+    "Laredo",
+    "Trailhawk",
+    "Overland",
+    "Summit",
+    "SRT-8",
+    "Trackhawk",
+    "Laredo X"
+   ],
+   "sport": [],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Grand_Cherokee"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Grand Cherokee",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Grand Cherokee",
+   "label": "Grand Cherokee",
+   "code": "Grand Cherokee IV",
+   "phase": "дорестайлинг",
+   "years": "2010–2010",
+   "trims": [
+    "Laredo",
+    "Trailhawk",
+    "Overland",
+    "Summit",
+    "SRT-8",
+    "Trackhawk",
+    "Laredo X"
+   ],
+   "sport": [],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Grand_Cherokee"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Grand Cherokee",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Grand Cherokee",
+   "label": "Grand Cherokee",
+   "code": "Grand Cherokee III",
+   "phase": "весь выпуск",
+   "years": "2004–2010",
+   "trims": [
+    "Laredo",
+    "CRD Predator",
+    "Overland"
+   ],
+   "sport": [],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Grand_Cherokee"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Grand Cherokee",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Patriot",
+   "label": "Patriot",
+   "code": "Patriot",
+   "phase": "дорестайлинг",
+   "years": "2007–2011",
+   "trims": [
+    "Latitude",
+    "Altitude"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "75th Anniversary"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Patriot"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Patriot",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Patriot",
+   "label": "Patriot",
+   "code": "Patriot",
+   "phase": "рестайлинг",
+   "years": "2011–2016",
+   "trims": [
+    "Latitude",
+    "Altitude"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "75th Anniversary"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Patriot"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Jeep Patriot",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Renegade",
+   "label": "Renegade",
+   "code": "Renegade",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [
+    "Longitude",
+    "Trailhawk",
+    "Upland",
+    "Night Eagle II",
+    "Longitude Business",
+    "Renegade",
+    "Altitude",
+    "Summit",
+    "Aspen",
+    "Mopar",
+    "Deserthawk",
+    "Dawn of Justice",
+    "High Altitude",
+    "North Star"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "Orange Edition",
+    "Brooklyn Edition",
+    "Edition winter",
+    "Quicksilver Edition",
+    "4Xe First Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Renegade",
+    "https://de.wikipedia.org/wiki/Jeep_Renegade",
+    "https://fr.wikipedia.org/wiki/Jeep_Renegade"
+   ],
+   "status": "проверено",
+   "note": "pl: Jeep Renegade · de: Jeep Renegade · fr: Jeep Renegade",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Renegade",
+   "label": "Renegade",
+   "code": "Renegade",
+   "phase": "рестайлинг",
+   "years": "2018–н. в.",
+   "trims": [
+    "Longitude",
+    "Trailhawk",
+    "Upland",
+    "Night Eagle II",
+    "Longitude Business",
+    "Renegade",
+    "Altitude",
+    "Summit",
+    "Aspen",
+    "Mopar",
+    "Deserthawk",
+    "Dawn of Justice",
+    "High Altitude",
+    "North Star"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Limited",
+    "Orange Edition",
+    "Brooklyn Edition",
+    "Edition winter",
+    "Quicksilver Edition",
+    "4Xe First Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Jeep_Renegade",
+    "https://de.wikipedia.org/wiki/Jeep_Renegade",
+    "https://fr.wikipedia.org/wiki/Jeep_Renegade"
+   ],
+   "status": "проверено",
+   "note": "pl: Jeep Renegade · de: Jeep Renegade · fr: Jeep Renegade",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Wrangler",
+   "label": "Wrangler",
+   "code": "Wrangler IV",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "80th Anniversary"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Jeep_Wrangler"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Jeep Wrangler",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Wrangler",
+   "label": "Wrangler",
+   "code": "Wrangler III",
+   "phase": "дорестайлинг",
+   "years": "2006–2011",
+   "trims": [
+    "Sahara",
+    "Rubicon",
+    "Neil Young"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Nautic",
+    "Moab",
+    "Artic",
+    "XIII",
+    "Willys",
+    "Mountain",
+    "Golden Eagle",
+    "JK Edition",
+    "Platinum"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Jeep_Wrangler"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Jeep Wrangler",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Jeep",
+   "model": "Wrangler",
+   "label": "Wrangler",
+   "code": "Wrangler III",
+   "phase": "рестайлинг",
+   "years": "2011–2018",
+   "trims": [
+    "Sahara",
+    "Rubicon",
+    "Neil Young"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Nautic",
+    "Moab",
+    "Artic",
+    "XIII",
+    "Willys",
+    "Mountain",
+    "Golden Eagle",
+    "JK Edition",
+    "Platinum"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Jeep_Wrangler"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Jeep Wrangler",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Defender",
+   "label": "Defender",
+   "code": "Defender IV",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "SE",
+    "HSE",
+    "Pack Explorer",
+    "Pack Adventure",
+    "Pack Country",
+    "Pack Urban",
+    "Limitée à",
+    "En Italie"
+   ],
+   "sport": [],
+   "special": [
+    "First Edition",
+    "V8 Bond Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Land_Rover_Defender_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Land Rover Defender II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Discovery",
+   "label": "Discovery",
+   "code": "Discovery V",
+   "phase": "дорестайлинг",
+   "years": "2016–2021",
+   "trims": [
+    "SE",
+    "HSE",
+    "HSE Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Land_Rover_Discovery_Sport"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Land Rover Discovery Sport",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Discovery",
+   "label": "Discovery",
+   "code": "Discovery V",
+   "phase": "рестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "SE",
+    "HSE",
+    "HSE Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Land_Rover_Discovery_Sport"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Land Rover Discovery Sport",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Discovery",
+   "label": "Discovery",
+   "code": "Discovery IV",
+   "phase": "весь выпуск",
+   "years": "2010–2016",
+   "trims": [
+    "SE",
+    "HSE",
+    "HSE Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Land_Rover_Discovery"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Land Rover Discovery",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Discovery Sport",
+   "label": "Discovery Sport",
+   "code": "Discovery Sport",
+   "phase": "дорестайлинг",
+   "years": "2014–2019",
+   "trims": [
+    "SE",
+    "HSE",
+    "HSE Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Land_Rover_Discovery_Sport"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Land Rover Discovery Sport",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Discovery Sport",
+   "label": "Discovery Sport",
+   "code": "Discovery Sport",
+   "phase": "рестайлинг",
+   "years": "2019–н. в.",
+   "trims": [
+    "SE",
+    "HSE",
+    "HSE Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Land_Rover_Discovery_Sport"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Land Rover Discovery Sport",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Freelander",
+   "label": "Freelander",
+   "code": "Freelander II",
+   "phase": "весь выпуск",
+   "years": "2006–2014",
+   "trims": [
+    "SE",
+    "Dynamic",
+    "HSE",
+    "Metropolis"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Land_Rover_Freelander"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Land Rover Freelander",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover",
+   "label": "Range Rover",
+   "code": "Range Rover V",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Dynamic S",
+    "SE",
+    "Dynamic SE",
+    "HSE",
+    "Dynamic HSE",
+    "Autobiography",
+    "SV",
+    "SV Carbon"
+   ],
+   "sport": [],
+   "special": [
+    "Edition",
+    "Twenty Edition",
+    "Battersea Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Land_Rover_Range_Rover_Sport"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Land Rover Range Rover Sport",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover Sport",
+   "label": "Range Rover Sport",
+   "code": "Range Rover Sport III",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Dynamic S",
+    "SE",
+    "Dynamic SE",
+    "HSE",
+    "Dynamic HSE",
+    "Autobiography",
+    "SV",
+    "SV Carbon"
+   ],
+   "sport": [],
+   "special": [
+    "Edition",
+    "Twenty Edition",
+    "Battersea Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Land_Rover_Range_Rover_Sport"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Land Rover Range Rover Sport",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover Velar",
+   "label": "Range Rover Velar",
+   "code": "Range Rover Velar",
+   "phase": "дорестайлинг",
+   "years": "2017–2024",
+   "trims": [
+    "Base R-Dynamic",
+    "SE R-Dynamic",
+    "HSE R-Dynamic",
+    "Autobiography"
+   ],
+   "sport": [],
+   "special": [
+    "Première Edition",
+    "Belgravia Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Land_Rover_Range_Rover_Velar"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Land Rover Range Rover Velar",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Land Rover",
+   "model": "Range Rover Velar",
+   "label": "Range Rover Velar",
+   "code": "Range Rover Velar",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Base R-Dynamic",
+    "SE R-Dynamic",
+    "HSE R-Dynamic",
+    "Autobiography"
+   ],
+   "sport": [],
+   "special": [
+    "Première Edition",
+    "Belgravia Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Land_Rover_Range_Rover_Velar"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Land Rover Range Rover Velar",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "ES",
+   "label": "ES",
+   "code": "ES VII",
+   "phase": "дорестайлинг",
+   "years": "2018–2021",
+   "trims": [
+    "ES 300h",
+    "ES 300h Business",
+    "ES 300h Luxe",
+    "ES 300h F-Sport",
+    "ES 300h F-Sport Executive",
+    "ES 300h Executive"
+   ],
+   "sport": [],
+   "special": [
+    "ES F Track Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_ES"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus ES",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "ES",
+   "label": "ES",
+   "code": "ES VII",
+   "phase": "рестайлинг",
+   "years": "2021–2025",
+   "trims": [
+    "ES 300h",
+    "ES 300h Business",
+    "ES 300h Luxe",
+    "ES 300h F-Sport",
+    "ES 300h F-Sport Executive",
+    "ES 300h Executive"
+   ],
+   "sport": [],
+   "special": [
+    "ES F Track Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_ES"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus ES",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "ES",
+   "label": "ES",
+   "code": "ES V",
+   "phase": "весь выпуск",
+   "years": "2006–2013",
+   "trims": [
+    "Elegance"
+   ],
+   "sport": [],
+   "special": [
+    "Touring Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_ES"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus ES",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "GS",
+   "label": "GS",
+   "code": "GS IV",
+   "phase": "дорестайлинг",
+   "years": "2012–2015",
+   "trims": [
+    "Eco",
+    "Elite",
+    "Elegance",
+    "Comfort",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_GS"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus GS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "GS",
+   "label": "GS",
+   "code": "GS IV",
+   "phase": "рестайлинг",
+   "years": "2015–2018",
+   "trims": [
+    "Eco",
+    "Elite",
+    "Elegance",
+    "Comfort",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_GS"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus GS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "IS",
+   "label": "IS",
+   "code": "IS III",
+   "phase": "дорестайлинг",
+   "years": "2013–2016",
+   "trims": [
+    "Elite",
+    "Business",
+    "Elegance",
+    "Comfort",
+    "Prestige",
+    "25 Anniversario"
+   ],
+   "sport": [],
+   "special": [
+    "Sport Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_IS",
+    "https://fr.wikipedia.org/wiki/Lexus_IS"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus IS · fr: Lexus IS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "IS",
+   "label": "IS",
+   "code": "IS III",
+   "phase": "рестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "Elite",
+    "Business",
+    "Elegance",
+    "Comfort",
+    "Prestige",
+    "25 Anniversario"
+   ],
+   "sport": [],
+   "special": [
+    "Sport Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_IS",
+    "https://fr.wikipedia.org/wiki/Lexus_IS"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus IS · fr: Lexus IS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "IS",
+   "label": "IS",
+   "code": "IS II",
+   "phase": "весь выпуск",
+   "years": "2005–2012",
+   "trims": [
+    "Longueur hors tout",
+    "Largeur hors tout",
+    "Hauteur hors tout"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_IS"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus IS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "LBX",
+   "label": "LBX",
+   "code": "LBX I",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "LBX",
+    "LBX Elegant",
+    "LBX Relax",
+    "LBX Emotion",
+    "LBX Cool",
+    "Morizo RR",
+    "Omotenashi"
+   ],
+   "sport": [],
+   "special": [
+    "Vibrant Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_LBX"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus LBX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "LC",
+   "label": "LC",
+   "code": "LC",
+   "phase": "дорестайлинг",
+   "years": "2017–2020",
+   "trims": [
+    "Executive",
+    "Sport +"
+   ],
+   "sport": [],
+   "special": [
+    "Blue Edition",
+    "Yellow Edition",
+    "Kaki Edition",
+    "Hokkaido Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_LC"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus LC",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "LC",
+   "label": "LC",
+   "code": "LC",
+   "phase": "рестайлинг",
+   "years": "2020–н. в.",
+   "trims": [
+    "Executive",
+    "Sport +"
+   ],
+   "sport": [],
+   "special": [
+    "Blue Edition",
+    "Yellow Edition",
+    "Kaki Edition",
+    "Hokkaido Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_LC"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus LC",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "LS",
+   "label": "LS",
+   "code": "LS V",
+   "phase": "дорестайлинг",
+   "years": "2017–2020",
+   "trims": [
+    "LS",
+    "LS Executive",
+    "LS Executive Innovation"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_LS"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus LS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "LS",
+   "label": "LS",
+   "code": "LS V",
+   "phase": "рестайлинг",
+   "years": "2020–н. в.",
+   "trims": [
+    "LS",
+    "LS Executive",
+    "LS Executive Innovation"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_LS"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus LS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "LS",
+   "label": "LS",
+   "code": "LS IV",
+   "phase": "дорестайлинг",
+   "years": "2006–2012",
+   "trims": [
+    "Elite",
+    "Superior"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Touring Edition",
+    "Sport Special Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_LS"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus LS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "LS",
+   "label": "LS",
+   "code": "LS IV",
+   "phase": "рестайлинг",
+   "years": "2012–2017",
+   "trims": [
+    "Elite",
+    "Superior"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Touring Edition",
+    "Sport Special Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_LS"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus LS",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "NX",
+   "label": "NX",
+   "code": "NX II",
+   "phase": "дорестайлинг",
+   "years": "2021–2023",
+   "trims": [
+    "Elegance",
+    "Business",
+    "Prestige",
+    "Omotenashi",
+    "Pack Business",
+    "Luxe",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_NX",
+    "https://fr.wikipedia.org/wiki/Lexus_NX_II"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus NX · fr: Lexus NX II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "NX",
+   "label": "NX",
+   "code": "NX II",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Elegance",
+    "Business",
+    "Prestige",
+    "Omotenashi",
+    "Pack Business",
+    "Luxe",
+    "Executive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_NX",
+    "https://fr.wikipedia.org/wiki/Lexus_NX_II"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus NX · fr: Lexus NX II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "NX",
+   "label": "NX",
+   "code": "NX I",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [
+    "Elite",
+    "Elegance",
+    "Comfort",
+    "Prestige",
+    "NX",
+    "NX Pack",
+    "NX Luxe",
+    "NX F Sport",
+    "NX Executive",
+    "NX F SPORT Executive",
+    "NX Pack Business"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_NX",
+    "https://fr.wikipedia.org/wiki/Lexus_NX"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus NX · fr: Lexus NX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "NX",
+   "label": "NX",
+   "code": "NX I",
+   "phase": "рестайлинг",
+   "years": "2018–2021",
+   "trims": [
+    "Elite",
+    "Elegance",
+    "Comfort",
+    "Prestige",
+    "Omotenashi",
+    "NX",
+    "NX Pack",
+    "NX Luxe",
+    "NX F Sport",
+    "NX Executive",
+    "NX F SPORT Executive",
+    "NX Pack Business"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_NX",
+    "https://fr.wikipedia.org/wiki/Lexus_NX"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus NX · fr: Lexus NX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "RX",
+   "label": "RX",
+   "code": "RX V",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Elegance",
+    "BUSINESS",
+    "Prestige",
+    "Omotenashi",
+    "Luxe",
+    "Executive",
+    "Opéra de Paris"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_RX",
+    "https://fr.wikipedia.org/wiki/Lexus_RX"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus RX · fr: Lexus RX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "RX",
+   "label": "RX",
+   "code": "RX IV",
+   "phase": "дорестайлинг",
+   "years": "2015–2019",
+   "trims": [
+    "Elite",
+    "Elegance",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_RX"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus RX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "RX",
+   "label": "RX",
+   "code": "RX IV",
+   "phase": "рестайлинг",
+   "years": "2019–2022",
+   "trims": [
+    "Elite",
+    "Elegance",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_RX"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus RX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "RX",
+   "label": "RX",
+   "code": "RX III",
+   "phase": "дорестайлинг",
+   "years": "2009–2012",
+   "trims": [
+    "Elegance",
+    "Elite",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_RX"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus RX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "RX",
+   "label": "RX",
+   "code": "RX III",
+   "phase": "рестайлинг",
+   "years": "2012–2015",
+   "trims": [
+    "Elegance",
+    "Elite",
+    "Prestige"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Lexus_RX"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Lexus RX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "RZ",
+   "label": "RZ",
+   "code": "RZ I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Executive",
+    "Luxe"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_RZ"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus RZ",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "UX",
+   "label": "UX",
+   "code": "UX",
+   "phase": "дорестайлинг",
+   "years": "2018–2022",
+   "trims": [
+    "Pack business",
+    "Luxe",
+    "Executive",
+    "Pack Business Plus"
+   ],
+   "sport": [],
+   "special": [
+    "Premium Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_UX"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus UX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Lexus",
+   "model": "UX",
+   "label": "UX",
+   "code": "UX",
+   "phase": "рестайлинг",
+   "years": "2022–н. в.",
+   "trims": [
+    "Pack business",
+    "Luxe",
+    "Executive",
+    "Pack Business Plus"
+   ],
+   "sport": [],
+   "special": [
+    "Premium Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Lexus_UX"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Lexus UX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mini",
+   "model": "Clubman",
+   "label": "Clubman",
+   "code": "F54",
+   "phase": "весь выпуск",
+   "years": "2015–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Edition Hyde Park",
+    "Edition Kensington",
+    "Edition Canonbury",
+    "Edition Knightsbridge",
+    "Untold",
+    "Final Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mini_Clubman"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mini Clubman",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mini",
+   "model": "Cooper",
+   "label": "Cooper",
+   "code": "F65/F66/J01",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Essential",
+    "Classic",
+    "Favoured",
+    "John Cooper Works",
+    "Paul Smith",
+    "Victory Édition"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mini_Cooper_%282023-%29"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mini Cooper (2023-)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mini",
+   "model": "Countryman",
+   "label": "Countryman",
+   "code": "U25",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Essential",
+    "Classic",
+    "Favoured",
+    "John Cooper Works"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mini_Countryman"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mini Countryman",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mini",
+   "model": "Countryman",
+   "label": "Countryman",
+   "code": "F60",
+   "phase": "дорестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "One",
+    "Cooper",
+    "Cooper S",
+    "Cooper SE",
+    "JCW",
+    "Oakwood",
+    "Northwood"
+   ],
+   "sport": [],
+   "special": [
+    "Edition Longstone"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mini_Countryman"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mini Countryman",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mini",
+   "model": "Countryman",
+   "label": "Countryman",
+   "code": "F60",
+   "phase": "рестайлинг",
+   "years": "2020–2024",
+   "trims": [
+    "One",
+    "Cooper",
+    "Cooper S",
+    "Cooper SE",
+    "Northwood",
+    "Untamed"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mini_Countryman"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mini Countryman",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "ASX",
+   "label": "ASX",
+   "code": "ASX I",
+   "phase": "дорестайлинг",
+   "years": "2010–2013",
+   "trims": [
+    "Inform",
+    "Invite",
+    "Intense",
+    "Intense Plus",
+    "Intense Plus Safety",
+    "Intense Plus Navi",
+    "Insport"
+   ],
+   "sport": [],
+   "special": [
+    "Blue Sky Edition",
+    "Black Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_ASX",
+    "https://fr.wikipedia.org/wiki/Mitsubishi_ASX"
+   ],
+   "status": "проверено",
+   "note": "pl: Mitsubishi ASX · fr: Mitsubishi ASX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "ASX",
+   "label": "ASX",
+   "code": "ASX I",
+   "phase": "рестайлинг",
+   "years": "2013–2021",
+   "trims": [
+    "Inform",
+    "Invite",
+    "Intense",
+    "Intense Plus",
+    "Intense Plus Safety",
+    "Intense Plus Navi",
+    "Insport"
+   ],
+   "sport": [],
+   "special": [
+    "Blue Sky Edition",
+    "Black Edition"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_ASX",
+    "https://fr.wikipedia.org/wiki/Mitsubishi_ASX"
+   ],
+   "status": "проверено",
+   "note": "pl: Mitsubishi ASX · fr: Mitsubishi ASX",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Colt",
+   "label": "Colt",
+   "code": "Colt VI",
+   "phase": "весь выпуск",
+   "years": "2004–2012",
+   "trims": [
+    "Inform",
+    "Invite",
+    "Instyle"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Colt"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mitsubishi Colt",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Eclipse Cross",
+   "label": "Eclipse Cross",
+   "code": "Eclipse Cross",
+   "phase": "дорестайлинг",
+   "years": "2017–2024",
+   "trims": [
+    "Inform",
+    "Invite Plus",
+    "Intense",
+    "Intense Plus",
+    "Instyle",
+    "Invite",
+    "Business",
+    "Intense Design"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_Eclipse_Cross",
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Eclipse_Cross"
+   ],
+   "status": "проверено",
+   "note": "pl: Mitsubishi Eclipse Cross · fr: Mitsubishi Eclipse Cross",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Eclipse Cross",
+   "label": "Eclipse Cross",
+   "code": "Eclipse Cross",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Inform",
+    "Invite Plus",
+    "Intense",
+    "Intense Plus",
+    "Instyle",
+    "Invite",
+    "Business",
+    "Intense Design"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_Eclipse_Cross",
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Eclipse_Cross"
+   ],
+   "status": "проверено",
+   "note": "pl: Mitsubishi Eclipse Cross · fr: Mitsubishi Eclipse Cross",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "L200",
+   "label": "L200",
+   "code": "L200 V",
+   "phase": "весь выпуск",
+   "years": "2015–2019",
+   "trims": [
+    "Inform Clim",
+    "Invite",
+    "Intense",
+    "Instyle"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mitsubishi_L200"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mitsubishi L200",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "L200",
+   "label": "L200",
+   "code": "L200 IV",
+   "phase": "дорестайлинг",
+   "years": "2006–2014",
+   "trims": [
+    "Inform",
+    "Invite",
+    "Instyle"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mitsubishi_L200",
+    "https://it.wikipedia.org/wiki/Mitsubishi_L200"
+   ],
+   "status": "проверено",
+   "note": "fr: Mitsubishi L200 · it: Mitsubishi L200",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "L200",
+   "label": "L200",
+   "code": "L200 IV",
+   "phase": "рестайлинг",
+   "years": "2014–2015",
+   "trims": [
+    "Inform",
+    "Invite",
+    "Instyle"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mitsubishi_L200",
+    "https://it.wikipedia.org/wiki/Mitsubishi_L200"
+   ],
+   "status": "проверено",
+   "note": "fr: Mitsubishi L200 · it: Mitsubishi L200",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Lancer",
+   "label": "Lancer",
+   "code": "Lancer IX",
+   "phase": "дорестайлинг",
+   "years": "2007–2015",
+   "trims": [
+    "Inform",
+    "Invite",
+    "Intense",
+    "Instyle",
+    "Instyle Navi"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_Lancer"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Mitsubishi Lancer",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Lancer",
+   "label": "Lancer",
+   "code": "Lancer IX",
+   "phase": "рестайлинг",
+   "years": "2015–2016",
+   "trims": [
+    "Inform",
+    "Invite",
+    "Intense",
+    "Instyle",
+    "Instyle Navi"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_Lancer"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Mitsubishi Lancer",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Outlander",
+   "label": "Outlander",
+   "code": "Outlander III",
+   "phase": "дорестайлинг",
+   "years": "2012–2014",
+   "trims": [
+    "Invite Plus",
+    "Intense",
+    "Intense Plus",
+    "Instyle",
+    "Instyle Plus",
+    "City Style",
+    "Invite",
+    "Business"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_Outlander",
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Outlander"
+   ],
+   "status": "проверено",
+   "note": "pl: Mitsubishi Outlander · fr: Mitsubishi Outlander",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Outlander",
+   "label": "Outlander",
+   "code": "Outlander III",
+   "phase": "рестайлинг",
+   "years": "2014–2022",
+   "trims": [
+    "Invite Plus",
+    "Intense",
+    "Intense Plus",
+    "Instyle",
+    "Instyle Plus",
+    "City Style",
+    "Invite",
+    "Business"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_Outlander",
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Outlander"
+   ],
+   "status": "проверено",
+   "note": "pl: Mitsubishi Outlander · fr: Mitsubishi Outlander",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Outlander",
+   "label": "Outlander",
+   "code": "Outlander II",
+   "phase": "весь выпуск",
+   "years": "2006–2012",
+   "trims": [
+    "Intense",
+    "Instyle"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Mitsubishi_Outlander"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Mitsubishi Outlander",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Pajero",
+   "label": "Pajero",
+   "code": "Pajero IV",
+   "phase": "весь выпуск",
+   "years": "2006–2017",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Final Edition"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Pajero"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mitsubishi Pajero",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Space Star",
+   "label": "Space Star",
+   "code": "Space Star",
+   "phase": "дорестайлинг",
+   "years": "2014–2018",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Tudo Bom",
+    "Flirty 50's"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Space_Star_%28citadine%29"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mitsubishi Space Star (citadine)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Mitsubishi",
+   "model": "Space Star",
+   "label": "Space Star",
+   "code": "Space Star",
+   "phase": "рестайлинг",
+   "years": "2018–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Cross"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Mitsubishi_Space_Star_%28citadine%29"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Mitsubishi Space Star (citadine)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Porsche",
+   "model": "Boxster",
+   "label": "Boxster",
+   "code": "718",
+   "phase": "весь выпуск",
+   "years": "2016–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Boxster 25 Years"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Porsche_718_Boxster"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Porsche 718 Boxster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Porsche",
+   "model": "Cayman",
+   "label": "Cayman",
+   "code": "718",
+   "phase": "весь выпуск",
+   "years": "2016–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Boxster 25 Years"
+   ],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Porsche_718_Boxster"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Porsche 718 Boxster",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Porsche",
+   "model": "Cayman",
+   "label": "Cayman",
+   "code": "987c",
+   "phase": "дорестайлинг",
+   "years": "2005–2010",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Design außen",
+    "Design innen",
+    "Technik",
+    "Design-Zubehör"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Porsche_Cayman_%28Typ_987c%29"
+   ],
+   "status": "частично проверено",
+   "note": "de: Porsche Cayman (Typ 987c)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Porsche",
+   "model": "Cayman",
+   "label": "Cayman",
+   "code": "987c",
+   "phase": "рестайлинг",
+   "years": "2010–2012",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Design außen",
+    "Design innen",
+    "Technik",
+    "Design-Zubehör"
+   ],
+   "sources": [
+    "https://de.wikipedia.org/wiki/Porsche_Cayman_%28Typ_987c%29"
+   ],
+   "status": "частично проверено",
+   "note": "de: Porsche Cayman (Typ 987c)",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Porsche",
+   "model": "Taycan",
+   "label": "Taycan",
+   "code": "Taycan",
+   "phase": "дорестайлинг",
+   "years": "2019–2024",
+   "trims": [
+    "Taycan",
+    "Taycan 4S",
+    "Taycan GTS",
+    "Taycan Turbo",
+    "Taycan Turbo S",
+    "Taycan Turbo GT"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Porsche_Taycan"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Porsche Taycan",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Porsche",
+   "model": "Taycan",
+   "label": "Taycan",
+   "code": "Taycan",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Taycan",
+    "Taycan 4S",
+    "Taycan GTS",
+    "Taycan Turbo",
+    "Taycan Turbo S",
+    "Taycan Turbo GT"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Porsche_Taycan"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Porsche Taycan",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "(SX4) S-Cross",
+   "label": "(SX4) S-Cross",
+   "code": "S-Cross I",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Avantage",
+    "Privilège",
+    "Style"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Suzuki_S-Cross"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Suzuki S-Cross",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Baleno",
+   "label": "Baleno",
+   "code": "Baleno III",
+   "phase": "весь выпуск",
+   "years": "2016–2019",
+   "trims": [
+    "Comfort",
+    "Premium",
+    "Premium Plus",
+    "Elegance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Baleno"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Baleno",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Celerio",
+   "label": "Celerio",
+   "code": "Celerio I",
+   "phase": "весь выпуск",
+   "years": "2014–2019",
+   "trims": [
+    "Comfort",
+    "Premium",
+    "Basic",
+    "Club",
+    "Avantage",
+    "Privilège",
+    "Pack Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Celerio",
+    "https://de.wikipedia.org/wiki/Suzuki_Celerio",
+    "https://fr.wikipedia.org/wiki/Suzuki_Celerio"
+   ],
+   "status": "проверено",
+   "note": "pl: Suzuki Celerio · de: Suzuki Celerio · fr: Suzuki Celerio",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Ignis",
+   "label": "Ignis",
+   "code": "Ignis III",
+   "phase": "дорестайлинг",
+   "years": "2016–2020",
+   "trims": [
+    "Podstawowej Comfort",
+    "Premium",
+    "Avantage",
+    "Pack Allgrip",
+    "Privilège"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Ignis",
+    "https://fr.wikipedia.org/wiki/Suzuki_Ignis"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Ignis · fr: Suzuki Ignis",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Ignis",
+   "label": "Ignis",
+   "code": "Ignis III",
+   "phase": "рестайлинг",
+   "years": "2020–н. в.",
+   "trims": [
+    "Podstawowej Comfort",
+    "Premium",
+    "Avantage",
+    "Pack Allgrip",
+    "Privilège"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Ignis",
+    "https://fr.wikipedia.org/wiki/Suzuki_Ignis"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Ignis · fr: Suzuki Ignis",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Jimny",
+   "label": "Jimny",
+   "code": "Jimny IV",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [
+    "Comfort",
+    "Premium",
+    "Elegance",
+    "XLED",
+    "Jimny Avantage",
+    "Jimny Privilège",
+    "Jimny Pack",
+    "Heritage"
+   ],
+   "sport": [],
+   "special": [
+    "55 Anniversary"
+   ],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Jimny",
+    "https://fr.wikipedia.org/wiki/Suzuki_Jimny"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Jimny · fr: Suzuki Jimny",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Kizashi",
+   "label": "Kizashi",
+   "code": "Kizashi I",
+   "phase": "весь выпуск",
+   "years": "2009–2013",
+   "trims": [],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Kizashi"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Kizashi",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Swace",
+   "label": "Swace",
+   "code": "Swace",
+   "phase": "дорестайлинг",
+   "years": "2020–2023",
+   "trims": [
+    "Premium Plus",
+    "Elegance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Swace"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Swace",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Swace",
+   "label": "Swace",
+   "code": "Swace",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Premium Plus",
+    "Elegance"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Swace"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Swace",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Swift",
+   "label": "Swift",
+   "code": "Swift VII",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Avantage",
+    "Privilège"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Suzuki_Swift_IV"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Suzuki Swift IV",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Swift",
+   "label": "Swift",
+   "code": "Swift V",
+   "phase": "дорестайлинг",
+   "years": "2010–2013",
+   "trims": [
+    "Privilège",
+    "So'City",
+    "Sunburst Yellow Metallisé",
+    "Bison Brown Metallisé",
+    "Avantage"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Suzuki_Swift_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Suzuki Swift II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Swift",
+   "label": "Swift",
+   "code": "Swift V",
+   "phase": "рестайлинг",
+   "years": "2013–2016",
+   "trims": [
+    "Privilège",
+    "So'City",
+    "Sunburst Yellow Metallisé",
+    "Bison Brown Metallisé",
+    "Avantage"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://fr.wikipedia.org/wiki/Suzuki_Swift_II"
+   ],
+   "status": "частично проверено",
+   "note": "fr: Suzuki Swift II",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Vitara",
+   "label": "Vitara",
+   "code": "Vitara III",
+   "phase": "дорестайлинг",
+   "years": "2015–2018",
+   "trims": [
+    "Comfort Plus",
+    "Premium",
+    "Elegance",
+    "Elegance Sun",
+    "XLED",
+    "XLED SUN"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Vitara"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Vitara",
+   "origin": "wiki"
+  },
+  {
+   "brand": "Suzuki",
+   "model": "Vitara",
+   "label": "Vitara",
+   "code": "Vitara III",
+   "phase": "рестайлинг",
+   "years": "2018–н. в.",
+   "trims": [
+    "Comfort Plus",
+    "Premium",
+    "Elegance",
+    "Elegance Sun",
+    "XLED",
+    "XLED SUN"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://pl.wikipedia.org/wiki/Suzuki_Vitara"
+   ],
+   "status": "частично проверено",
+   "note": "pl: Suzuki Vitara",
+   "origin": "wiki"
   }
  ],
  "missing": [
-  "Audi e-tron GT e-tron GT: нет списка в pl/de",
-  "Citroen C-Zero C-Zero I: нет списка в pl/de",
-  "Citroen DS3 DS3: нет списка в pl/de",
-  "Citroen DS4 DS4 I: нет списка в pl/de",
-  "Citroen DS5 DS5: нет списка в pl/de",
-  "Ford F 150 F-150 XIII: нет списка в pl/de",
-  "Ford F 150 F-150 XII: нет списка в pl/de",
-  "Hyundai STARIA Staria I: нет списка в pl/de",
-  "Kia Seltos Seltos I: нет списка в pl/de",
-  "Mazda CX-6e CX-6e I: нет списка в pl/de",
-  "Mazda Tribute Tribute II: нет списка в pl/de",
-  "Nissan Cube Cube I: нет списка в pl/de",
-  "Nissan Pixo Pixo I: нет списка в pl/de",
-  "Nissan Sentra Sentra VI: нет списка в pl/de",
-  "Nissan Tiida Tiida: нет списка в pl/de",
-  "Opel Ampera Ampera I: нет списка в pl/de",
-  "Peugeot iOn iOn I: нет списка в pl/de",
-  "Renault Alpine A110 Alpine A110: нет списка в pl/de"
+  "Dacia Sandero Sandero I: нет списка в pl/de",
+  "Fiat 500 500 IV: нет списка в pl/de",
+  "Fiat 500 500 III: нет списка в pl/de",
+  "Fiat 600 600 II: нет списка в pl/de",
+  "Fiat Albea Albea II: нет списка в pl/de",
+  "Fiat Doblo Doblo V: нет списка в pl/de",
+  "Fiat Doblo Doblo IV: нет списка в pl/de",
+  "Fiat Doblo Doblo II: нет списка в pl/de",
+  "Fiat Ducato Ducato IV: нет списка в pl/de",
+  "Fiat Scudo Scudo II: нет списка в pl/de",
+  "Honda Civic Civic IX: нет списка в pl/de",
+  "Honda Civic Civic VIII: нет списка в pl/de",
+  "Honda Element Element I: нет списка в pl/de",
+  "Honda NSX NSX III: нет списка в pl/de",
+  "Honda NSX NSX II: нет списка в pl/de",
+  "Honda e e I: нет списка в pl/de",
+  "Land Rover Defender Defender III: нет списка в pl/de",
+  "Land Rover Range Rover Range Rover IV: нет списка в pl/de",
+  "Land Rover Range Rover Range Rover III: нет списка в pl/de",
+  "Land Rover Range Rover Evoque Range Rover Evoque II: нет списка в pl/de",
+  "Land Rover Range Rover Evoque Range Rover Evoque I: нет списка в pl/de",
+  "Land Rover Range Rover Sport Range Rover Sport II: нет списка в pl/de",
+  "Land Rover Range Rover Sport Range Rover Sport I: нет списка в pl/de",
+  "Lexus CT CT: нет списка в pl/de",
+  "Lexus ES ES VIII: нет списка в pl/de",
+  "Lexus ES ES VI: нет списка в pl/de",
+  "Lexus GS GS III: нет списка в pl/de",
+  "Lexus LM 7-miejscowy: нет списка в pl/de",
+  "Lexus LM 4-miejscowy: нет списка в pl/de",
+  "Lexus LX LX IV: нет списка в pl/de",
+  "Lexus LX LX III: нет списка в pl/de",
+  "Lexus RC RC: нет списка в pl/de",
+  "Mini Aceman Aceman I: нет списка в pl/de",
+  "Mini Cabrio F57: нет списка в pl/de",
+  "Mini Cabrio R57: нет списка в pl/de",
+  "Mini Clubman R55: нет списка в pl/de",
+  "Mini Cooper F56: нет списка в pl/de",
+  "Mini Cooper R56: нет списка в pl/de",
+  "Mini Countryman R60: нет списка в pl/de",
+  "Mini Coupe Coupe I: нет списка в pl/de",
+  "Mini Paceman Paceman: нет списка в pl/de",
+  "Mini Roadster Roadster I: нет списка в pl/de",
+  "Mitsubishi ASX ASX II: нет списка в pl/de",
+  "Mitsubishi Colt Colt VIII: нет списка в pl/de",
+  "Mitsubishi Colt Colt VII: нет списка в pl/de",
+  "Mitsubishi Galant Galant IX: нет списка в pl/de",
+  "Mitsubishi Grandis Grandis I: нет списка в pl/de",
+  "Mitsubishi L200 L200 VI: нет списка в pl/de",
+  "Mitsubishi Outlander Outlander IV: нет списка в pl/de",
+  "Mitsubishi i-MiEV i-MiEV I: нет списка в pl/de",
+  "Porsche 911 992: нет списка в pl/de",
+  "Porsche 911 991: нет списка в pl/de",
+  "Porsche 911 997: нет списка в pl/de",
+  "Porsche Boxster 981: нет списка в pl/de",
+  "Porsche Boxster 987: нет списка в pl/de",
+  "Porsche Cayenne Cayenne III: нет списка в pl/de",
+  "Porsche Cayenne Cayenne II: нет списка в pl/de",
+  "Porsche Cayenne Cayenne I: нет списка в pl/de",
+  "Porsche Cayman 981c: нет списка в pl/de",
+  "Porsche Macan Macan: нет списка в pl/de",
+  "Porsche Panamera Panamera III: нет списка в pl/de",
+  "Porsche Panamera Panamera II: нет списка в pl/de",
+  "Porsche Panamera Panamera I: нет списка в pl/de",
+  "Suzuki (SX4) S-Cross S-Cross II: нет списка в pl/de",
+  "Suzuki Across Across I: нет списка в pl/de",
+  "Suzuki Alto Alto VI: нет списка в pl/de",
+  "Suzuki Grand Vitara Grand Vitara II: нет списка в pl/de",
+  "Suzuki Jimny Jimny III: нет списка в pl/de",
+  "Suzuki SX4 SX4 I: нет списка в pl/de",
+  "Suzuki Splash Splash: нет списка в pl/de",
+  "Suzuki Swift Swift VI: нет списка в pl/de",
+  "Suzuki Swift Swift IV: нет списка в pl/de"
  ]
 }
