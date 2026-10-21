@@ -4,6 +4,7 @@ import { homedir } from "node:os";
 import { basename, dirname, extname, join, normalize, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { spawn, spawnSync } from "node:child_process";
+import { createHmac, timingSafeEqual } from "node:crypto";
 import { readPdfText } from "../tools/partslink24/report-extraction.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -18,6 +19,12 @@ const outputDir = resolve(process.env.PARTSLINK24_OUTPUT_DIR || join(homedir(), 
 const port = Number(process.env.PORT || 4174);
 const minRunGapMs = Number(process.env.PARTSLINK24_MIN_RUN_GAP_MS || 7000);
 const publicPartslinkPage = "https://belovn1999-rgb.github.io/ag-it-project/partslink24.html";
+// Only the public VIN page (and pages served by this server itself) may call
+// the API from a browser. The key is the real gate: until 21.10 anyone who knew
+// the tunnel URL could run checks on the company login and download any report,
+// because stored file names (Brand_VIN_LANG.pdf) are easy to guess.
+const allowedOrigins = new Set(["https://belovn1999-rgb.github.io"]);
+const signedLinkTtlSeconds = 12 * 60 * 60;
 let partslinkQueue = Promise.resolve();
 let lastRunFinishedAt = 0;
 
@@ -53,8 +60,13 @@ function isServablePath(filePath, repoRoot) {
 }
 
 export async function handlePartslink24Request(request, response) {
+  response.corsOrigin = allowedCorsOrigin(request.headers.origin);
   try {
     if (request.method === "OPTIONS") return sendNoContent(response);
+    if (request.method === "POST" && request.url?.startsWith("/api/partslink24/")) {
+      const denied = checkAccess(request);
+      if (denied) return sendJson(response, denied.status, { ok: false, error: denied.error });
+    }
     if (request.method === "POST" && request.url === "/api/partslink24/check-vin") {
       return handleVinCheck(request, response);
     }
@@ -89,7 +101,7 @@ async function handleVinCheck(request, response) {
   const { brand, language, vin } = payload;
 
   const result = await enqueuePartslinkRun(() => runPartslinkScript({ brand, language, vin, mode: "full" }));
-  if (!result.ok) return sendJson(response, 500, result);
+  if (!result.ok) return sendRunFailure(response, result);
 
   const pdfPaths = Array.isArray(result.pdfPaths) && result.pdfPaths.length
     ? result.pdfPaths
@@ -99,7 +111,7 @@ async function handleVinCheck(request, response) {
     const fileName = makeVinPdfDownloadName(brand, vin);
     return {
       fileName,
-      downloadUrl: `/api/partslink24/pdf/${encodeURIComponent(storedFileName)}?downloadName=${encodeURIComponent(fileName)}`
+      downloadUrl: `/api/partslink24/pdf/${encodeURIComponent(storedFileName)}?downloadName=${encodeURIComponent(fileName)}&${signPdfLink(storedFileName, process.env.PARTSLINK24_ACCESS_KEY)}`
     };
   });
   const firstFile = files[0] || {};
@@ -124,7 +136,7 @@ async function handleProductionDateCheck(request, response) {
   const { brand, language, vin } = payload;
 
   const result = await enqueuePartslinkRun(() => runPartslinkScript({ brand, language, vin, mode: "production-date" }));
-  if (!result.ok) return sendJson(response, 500, result);
+  if (!result.ok) return sendRunFailure(response, result);
   if (!result.productionDate) {
     return sendJson(response, 500, {
       ok: false,
@@ -305,6 +317,9 @@ function sendPdf(request, response) {
   const downloadName = requestedDownloadName || normalizeDownloadFileName(fileName) || fileName;
   const disposition = requestUrl.searchParams.get("preview") === "1" ? "inline" : "attachment";
 
+  if (!pdfLinkValid(fileName, requestUrl.searchParams.get("exp"), requestUrl.searchParams.get("sig"), process.env.PARTSLINK24_ACCESS_KEY)) {
+    return sendJson(response, 403, { ok: false, error: "Ссылка на PDF устарела — проверьте VIN ещё раз." });
+  }
   if (!filePath.startsWith(`${outputDir}/`) || extname(filePath).toLowerCase() !== ".pdf" || !existsSync(filePath)) {
     return sendJson(response, 404, { ok: false, error: "PDF не найден." });
   }
@@ -313,7 +328,7 @@ function sendPdf(request, response) {
     "content-type": "application/pdf",
     "content-disposition": `${disposition}; filename="${downloadName}"`,
     "content-length": statSync(filePath).size,
-    ...corsHeaders()
+    ...corsHeaders(response)
   });
   return createReadStream(filePath).pipe(response);
 }
@@ -324,6 +339,9 @@ function sendPdfText(request, response) {
   const fileName = basename(decodeURIComponent(encodedName));
   const filePath = resolve(outputDir, fileName);
 
+  if (!pdfLinkValid(fileName, requestUrl.searchParams.get("exp"), requestUrl.searchParams.get("sig"), process.env.PARTSLINK24_ACCESS_KEY)) {
+    return sendJson(response, 403, { ok: false, error: "Ссылка на PDF устарела — проверьте VIN ещё раз." });
+  }
   if (!filePath.startsWith(`${outputDir}/`) || extname(filePath).toLowerCase() !== ".pdf" || !existsSync(filePath)) {
     return sendJson(response, 404, { ok: false, error: "PDF не найден." });
   }
@@ -335,7 +353,7 @@ function sendPdfText(request, response) {
     "content-type": "text/plain; charset=utf-8",
     "content-length": Buffer.byteLength(text),
     "cache-control": "no-store",
-    ...corsHeaders()
+    ...corsHeaders(response)
   });
   return response.end(text);
 }
@@ -359,7 +377,7 @@ function sendStatic(request, response) {
     response.writeHead(302, {
       location: `${publicPartslinkPage}?api=${encodeURIComponent(apiBase)}`,
       "cache-control": "no-store",
-      ...corsHeaders()
+      ...corsHeaders(response)
     });
     return response.end();
   }
@@ -375,7 +393,7 @@ function sendStatic(request, response) {
     "content-type": type,
     "content-length": statSync(filePath).size,
     "cache-control": type.startsWith("text/html") ? "no-store" : "no-cache",
-    ...corsHeaders()
+    ...corsHeaders(response)
   });
   if (request.method === "HEAD") return response.end();
   return createReadStream(filePath).pipe(response);
@@ -455,25 +473,77 @@ function readTextFile(path) {
 }
 
 function sendNoContent(response) {
-  response.writeHead(204, corsHeaders());
+  response.writeHead(204, corsHeaders(response));
   response.end();
 }
 
 function sendJson(response, status, payload) {
   response.writeHead(status, {
     "content-type": "application/json; charset=utf-8",
-    ...corsHeaders()
+    ...corsHeaders(response)
   });
   response.end(JSON.stringify(payload, null, 2));
 }
 
-function corsHeaders() {
+function corsHeaders(response) {
+  if (!response.corsOrigin) return {};
   return {
-    "access-control-allow-origin": "*",
+    "access-control-allow-origin": response.corsOrigin,
     "access-control-allow-methods": "GET, POST, OPTIONS",
-    "access-control-allow-headers": "content-type",
-    "access-control-allow-private-network": "true"
+    "access-control-allow-headers": "content-type, x-vin-key",
+    vary: "origin"
   };
+}
+
+// The old "*" plus access-control-allow-private-network let any website opened
+// on this Mac drive 127.0.0.1:4174. Only the VIN page and local pages pass now.
+export function allowedCorsOrigin(origin) {
+  const value = String(origin || "");
+  if (allowedOrigins.has(value)) return value;
+  if (/^http:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(value)) return value;
+  return "";
+}
+
+export function checkAccess(request) {
+  const origin = request.headers.origin;
+  if (origin && !allowedCorsOrigin(origin)) return { status: 403, error: "Запрос с чужой страницы." };
+  const expected = process.env.PARTSLINK24_ACCESS_KEY || "";
+  if (!expected) return { status: 500, error: "На сервере не задан ключ доступа к проверке VIN." };
+  if (!accessKeyMatches(request.headers["x-vin-key"], expected)) return { status: 401, error: "Нужен ключ доступа к проверке VIN." };
+  return null;
+}
+
+export function accessKeyMatches(provided, expected) {
+  const left = Buffer.from(String(provided || ""));
+  const right = Buffer.from(String(expected || ""));
+  return right.length > 0 && left.length === right.length && timingSafeEqual(left, right);
+}
+
+// PDF links are opened by <a href> and <iframe>, which cannot send the key
+// header, so the server signs each link it hands out; a guessed file name alone
+// no longer downloads a client report.
+export function signPdfLink(fileName, key, now = Date.now()) {
+  const exp = Math.floor(now / 1000) + signedLinkTtlSeconds;
+  return `exp=${exp}&sig=${pdfLinkSignature(fileName, exp, key)}`;
+}
+
+export function pdfLinkValid(fileName, exp, sig, key, now = Date.now()) {
+  if (!key || !exp || !sig || !/^\d+$/.test(String(exp))) return false;
+  if (Number(exp) < Math.floor(now / 1000)) return false;
+  const expected = Buffer.from(pdfLinkSignature(fileName, Number(exp), key));
+  const provided = Buffer.from(String(sig));
+  return expected.length === provided.length && timingSafeEqual(expected, provided);
+}
+
+function pdfLinkSignature(fileName, exp, key) {
+  return createHmac("sha256", String(key)).update(`${fileName}:${exp}`).digest("hex");
+}
+
+// Robot output (stderr tail, Mac paths, screenshot location) stays in the
+// server log; the browser only gets the short reason the page translates.
+function sendRunFailure(response, result) {
+  if (result.details) process.stderr.write(`[partslink24-api] ${JSON.stringify(result.details).slice(0, 4000)}\n`);
+  return sendJson(response, 500, { ok: false, error: result.error || "PartsLink24 не вернул результаты проверки." });
 }
 
 function errorMessage(error) {

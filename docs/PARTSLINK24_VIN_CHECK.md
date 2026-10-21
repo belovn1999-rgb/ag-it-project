@@ -118,6 +118,13 @@ PARTSLINK24_DEFAULT_LANGUAGE=RU
 
 Файл `.env` должен быть закрыт через `.gitignore`.
 
+**Ключ доступа (с 21.10.2026).** Сервер проверки VIN принимает проверки только с ключом `PARTSLINK24_ACCESS_KEY`
+(лежит в `~/Library/Application Support/AUTOGOOD/partslink24.env`, в репозиторий не попадает): страница один раз
+спрашивает ключ и хранит его в браузере (`autogood-partslink24-access-key:v1`), неверный ключ — 401 и вопрос снова.
+Ссылки на PDF сервер подписывает (действуют 12 часов), запросы из браузера — только со страницы на
+`belovn1999-rgb.github.io` и с локальных адресов; подробности ошибок робота — только в журнале сервера.
+Скопировать ключ в буфер на Mac: `grep '^PARTSLINK24_ACCESS_KEY=' ~/Library/Application\ Support/AUTOGOOD/partslink24.env | cut -d= -f2 | tr -d '\n' | pbcopy`.
+
 ## Следующий технический шаг
 
 1. Подготовить Playwright-скрипт входа в partslink24.

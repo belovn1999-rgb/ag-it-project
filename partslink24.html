@@ -1335,7 +1335,10 @@
           },
           readyMany: "Данные получены, файлы готовы в блоке «Файл VIN».",
           readyOne: "Данные получены, файл готов в блоке «Файл VIN».",
-          httpsError: "GitHub-странице нужен HTTPS backend. Откройте ссылку с параметром ?api=адрес_backend или локальную страницу."
+          httpsError: "GitHub-странице нужен HTTPS backend. Откройте ссылку с параметром ?api=адрес_backend или локальную страницу.",
+          accessKeyPrompt: "Ключ доступа к проверке VIN (выдаёт владелец; вводится один раз на этом компьютере):",
+          accessKeyMissing: "Без ключа доступа проверка VIN не запускается.",
+          accessKeyWrong: "Неверный ключ доступа — нажмите «Проверить данные» и введите ключ ещё раз."
         },
         pl: {
           pageTitle: "AUTOGOOD Specyfikacja VIN",
@@ -1403,7 +1406,10 @@
           },
           readyMany: "Dane zostały pobrane. Pliki są gotowe w sekcji „Plik VIN”.",
           readyOne: "Dane zostały pobrane. Plik jest gotowy w sekcji „Plik VIN”.",
-          httpsError: "Strona GitHub wymaga backendu HTTPS. Otwórz link z parametrem ?api=adres_backendu albo stronę lokalną."
+          httpsError: "Strona GitHub wymaga backendu HTTPS. Otwórz link z parametrem ?api=adres_backendu albo stronę lokalną.",
+          accessKeyPrompt: "Klucz dostępu do weryfikacji VIN (od właściciela; wpisuje się raz na tym komputerze):",
+          accessKeyMissing: "Bez klucza dostępu weryfikacja VIN się nie uruchomi.",
+          accessKeyWrong: "Błędny klucz dostępu — kliknij „Sprawdź dane” i wpisz klucz jeszcze raz."
         }
       };
       let uiLanguage = "ru";
@@ -1560,6 +1566,30 @@
           return "";
         }
         return defaultPartslinkApiBase;
+      }
+
+      // Since 21.10 the VIN server takes checks only with an access key (anyone
+      // who knew the tunnel URL used to be able to run checks on the company
+      // login). The key is asked once and kept in this browser only.
+      const accessKeyStorageKey = "autogood-partslink24-access-key:v1";
+
+      function readAccessKey() {
+        try {
+          const stored = localStorage.getItem(accessKeyStorageKey);
+          if (stored) return stored;
+        } catch {}
+        const entered = String(window.prompt(uiText("accessKeyPrompt")) || "").trim();
+        if (!entered) return "";
+        try {
+          localStorage.setItem(accessKeyStorageKey, entered);
+        } catch {}
+        return entered;
+      }
+
+      function forgetAccessKey() {
+        try {
+          localStorage.removeItem(accessKeyStorageKey);
+        } catch {}
       }
 
       function makePdfFileName(brand, vin) {
@@ -2309,6 +2339,12 @@
         const payload = readPayload();
         if (!payload) return;
 
+        const accessKey = readAccessKey();
+        if (!accessKey) {
+          setStatusFromKey("accessKeyMissing", "error");
+          return;
+        }
+
         const controller = new AbortController();
         activeCheckController = controller;
         checkAbortReason = "";
@@ -2324,12 +2360,18 @@
           const apiBase = getPartslinkApiBase();
           const response = await fetch(`${apiBase}/api/partslink24/check-vin`, {
             method: "POST",
-            headers: { "content-type": "application/json" },
+            headers: { "content-type": "application/json", "x-vin-key": accessKey },
             body: JSON.stringify(payload),
             signal: controller.signal
           });
           const result = await response.json().catch(() => ({}));
           stopCheckProgress();
+
+          if (response.status === 401) {
+            forgetAccessKey();
+            setStatusFromKey("accessKeyWrong", "error");
+            return;
+          }
 
           if (!response.ok || !result.ok) {
             throw new Error(result.error || uiText("backendUnavailable"));
