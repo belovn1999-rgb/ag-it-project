@@ -16,6 +16,7 @@ sentence, no engine). Both languages naming at least one same line -> status
 DE names both show up in listings), so the page gets both.
 
     python3 tools/collect-trims-wiki.py            # writes data/model-trims-wiki.json
+    python3 tools/collect-trims-wiki.py --missing ["Toyota|Yaris Cross" …]   # only models with no rows yet
 Pages are cached in /tmp/wiki-mhev (tools/wiki_engines.py), one request a second.
 """
 import glob
@@ -367,7 +368,8 @@ def main():
         with open(os.path.join(ROOT, "data", "model-trims-wiki.json"), encoding="utf8") as handle:
             kept = json.load(handle)["rows"]
         have = {f"{r['brand']}|{r['model']}" for r in kept}
-        only = {key for key in page_models() if key not in have}
+        # Keys named with --missing (models added later, B61 item 4 2026-10-20): only those of them.
+        only = {key for key in page_models() if key not in have and (not only or key in only)}
     for key, spec in sorted(page_models().items()):
         brand, model = key.split("|", 1)
         if (brand, model) in done or (only and key not in only):

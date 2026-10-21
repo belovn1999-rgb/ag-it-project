@@ -136,12 +136,14 @@ def years(text):
 
 
 def children(page, path):
-    """Links one level below path with their <h2> name: [(slug, name)]."""
+    """Links one level below path with their <h2> name: [(slug, name)]. A child with one
+    engine links straight to that engine's page (Mazda CX-5 III .../iii/silnik-...-od-2026/,
+    checked 2026-10-20): it counts as that child."""
     out = []
-    pattern = r'<a href="/dane-techniczne/' + re.escape(path) + r'([^/"]+)/"([^>]*)>(.*?)</a>'
+    pattern = r'<a href="/dane-techniczne/' + re.escape(path) + r'([^/"]+)/(?:silnik-[^/"]+/)?"([^>]*)>(.*?)</a>'
     for match in re.finditer(pattern, page, re.S):
         title = re.search(r"<h2[^>]*>(.*?)</h2>", match.group(3), re.S)
-        if title and match.group(1) not in [o[0] for o in out]:
+        if title and match.group(1) not in [o[0] for o in out] and not match.group(1).startswith("silnik-"):
             out.append((match.group(1), clean(title.group(1))))
     return out
 
@@ -183,7 +185,7 @@ def engines_from_slugs(page, path):
     out = []
     for slug in dict.fromkeys(re.findall(r'href="/dane-techniczne/' + re.escape(path) + r'(silnik-[^/"]+)/"', page)):
         match = re.match(r"silnik-(benzynowy-lpg|benzynowy|diesla|elektryczny|hybrydowy)-(?:(\d+\.\d)-)?(.*?)-(\d+)km-"
-                         r"(?:od-(\d{4})|(\d{4})-(\d{4}))$", slug)
+                         r"(?:od-(\d{4})|(\d{4})-(\d{4})|(\d{4}))$", slug)
         if not match:
             continue
         fuel = SLUG_FUEL[match.group(1)]
@@ -193,8 +195,8 @@ def engines_from_slugs(page, path):
         hp = int(match.group(4))
         out.append({"slug": slug, "type": fuel, "text": f"{match.group(2) or ''} {name} {hp}KM".strip(),
                     "litres": match.group(2) or "", "name": name, "hp": hp, "kw": round(hp * 0.7355),
-                    "from": int(match.group(5) or match.group(6)),
-                    "to": int(match.group(7)) if match.group(7) else None})
+                    "from": int(match.group(5) or match.group(6) or match.group(8)),
+                    "to": int(match.group(7) or match.group(8)) if (match.group(7) or match.group(8)) else None})
     return out
 
 
@@ -223,13 +225,26 @@ def engine_details(page):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--engines", action="store_true", help="also read every engine page")
-    parser.add_argument("--cache", default="/tmp/autocentrum-pages")
+    parser.add_argument("--cache", default=os.path.expanduser("~/.cache/autogood/autocentrum-pages"))
     parser.add_argument("--out", default=OUT)
+    parser.add_argument("--reuse-engines", action="store_true",
+                        help="engine pages read in the last output are not read again")
+    parser.add_argument("--only", action="append", default=[],
+                        help='"Brand|Label": read only these models (a check run; use with a separate --out)')
     parser.add_argument("--keep-compared", action="store_true",
                         help="take our 65 models from the last output as they are (the page cache may be gone)")
     args = parser.parse_args()
     os.makedirs(args.cache, exist_ok=True)
     previous = json.load(open(args.out, encoding="utf8")) if os.path.exists(args.out) else {}
+    # --reuse-engines: an engine page read last time (same body path and slug) is not read
+    # again (the page cache may be gone; ~6 000 pages at 1 s each).
+    known = {}
+    for old_model in previous.get("models", []):
+        for old_gen in old_model.get("generations", []):
+            for old_body in old_gen.get("bodies", []):
+                for old_engine in old_body.get("engines", []):
+                    if "configs" in old_engine:
+                        known[old_body["path"] + old_engine["slug"]] = old_engine
 
     result = {"source": BASE, "since": SINCE, "collected": time.strftime("%Y-%m-%d"), "models": []}
     total_engines = 0
@@ -238,8 +253,11 @@ def main():
     with open(os.path.join(ROOT, "data", "model-list-autocentrum.json"), encoding="utf8") as handle:
         extra = json.load(handle)["models"]
     todo = [({"brand": b, "label": l}, paths) for (b, l), paths in MODELS.items()]
-    todo += [({"brand": m["brand"], "label": m["label"], "mobile": m["mobile"], "primary": True}, m["paths"]) for m in extra]
+    todo += [({"brand": m["brand"], "label": m["label"], "mobile": m["mobile"], "primary": True,
+               **({"bodies": m["bodies"]} if m.get("bodies") else {})}, m["paths"]) for m in extra]
     kept = {(m["brand"], m["label"]): m for m in previous.get("models", []) if not m.get("primary")}
+    if args.only:
+        todo = [item for item in todo if f"{item[0]['brand']}|{item[0]['label']}" in args.only]
     for head, paths in todo:
         brand, label = head["brand"], head["label"]
         if args.keep_compared and not head.get("primary") and (brand, label) in kept:
@@ -253,17 +271,30 @@ def main():
             # Or its page links the bodies' engines right away (BMW i8, VW ID. Buzz).
             spans = [(e["from"], e.get("to")) for e in engines(page, model_path + "/") if "from" in e]
             if not listed and not spans:
-                for start, single, end in re.findall(r'href="/dane-techniczne/' + re.escape(model_path) +
-                                                     r'/[^/"]+/silnik-[^"]*?-(?:od-(\d{4})|(\d{4})-(\d{4}))/"', page):
-                    spans.append((int(start or single), int(end) if end else None))
+                # Engines linked one level down, or right under the model: a model page that is its
+                # only engine's page (Opel Karl, Peugeot iOn) or lists engines with no generation
+                # (Mercedes Klasa X), checked 2026-10-20.
+                for start, single, end, alone in re.findall(r'href="/dane-techniczne/' + re.escape(model_path) +
+                                                            r'/(?:[^/"]+/)?silnik-[^"]*?-(?:od-(\d{4})|(\d{4})-(\d{4})|(\d{4}))/"',
+                                                            page):
+                    spans.append((int(start or single or alone), int(end or alone) if (end or alone) else None))
             if not listed and spans:
                 ends = [to for _from, to in spans]
                 listed = [("", f"I ({min(f for f, _to in spans)} - {'teraz' if None in ends else max(ends)})")]
             for gen_slug, gen_name in listed:
                 start, end = years(gen_name)
+                gen_path = f"{model_path}/{gen_slug}/" if gen_slug else f"{model_path}/"
+                # A generation dated "(0 - teraz)" (VW Crafter II, 2026-10-20): its engines' years.
+                if start is None and re.search(r"\(0\s*-\s*(\d{4}|teraz)\)", gen_name) and gen_slug:
+                    probe = fetch(gen_path, args.cache)
+                    spans = [e["from"] for e in engines(probe, gen_path) if e.get("from")]
+                    spans += [int(y) for y in re.findall(r'/silnik-[^"]*?-(?:od-|)((?:19|20)\d{2})(?:-\d{4})?/"', probe)]
+                    if spans:
+                        start = min(spans)
+                        end = None if "teraz" in gen_name else end
+                        gen_name = re.sub(r"\(0\s*-", f"({start} -", gen_name)
                 if start is None or (end is not None and end < SINCE):
                     continue
-                gen_path = f"{model_path}/{gen_slug}/" if gen_slug else f"{model_path}/"
                 gen_page = fetch(gen_path, args.cache) if gen_slug else page
                 gen = {"path": gen_path, "name": re.sub(r"\s*\(.*", "", gen_name), "from": start, "to": end,
                        "bodies": []}
@@ -276,6 +307,10 @@ def main():
                 bodies = bodies or [("", gen_name)]
                 for body_slug, body_name in bodies:
                     body_path = f"{gen_path}{body_slug}/" if body_slug else gen_path
+                    # "bodies" of a list entry: a regex the body path must match — a model that
+                    # autocentrum keeps as bodies of another (Toyota Yaris Cross: toyota/yaris/iv/cross/).
+                    if head.get("bodies") and not re.search(head["bodies"], body_path):
+                        continue
                     b_start, b_end = years(body_name)
                     body_page = fetch(body_path, args.cache) if body_slug else gen_page
                     shape = engine_details(body_page)
@@ -284,9 +319,15 @@ def main():
                             "engines": engines(body_page, body_path) or engines_from_slugs(body_page, body_path)}
                     if args.engines:
                         for engine in body["engines"]:
-                            engine.update(engine_details(fetch(body_path + engine["slug"] + "/", args.cache)))
+                            old = known.get(body_path + engine["slug"]) if args.reuse_engines else None
+                            if old:
+                                engine.update({k: v for k, v in old.items() if k not in engine})
+                            else:
+                                engine.update(engine_details(fetch(body_path + engine["slug"] + "/", args.cache)))
                     total_engines += len(body["engines"])
                     gen["bodies"].append(body)
+                if not gen["bodies"]:
+                    continue
                 model["generations"].append(gen)
                 print(f"{brand} {label} {gen['name']} {start}-{end or ''}: {len(gen['bodies'])} bodies, "
                       f"{sum(len(b['engines']) for b in gen['bodies'])} engines", flush=True)

@@ -1,5 +1,5 @@
 {
- "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA).",
+ "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA). 2026-10-20 (B61, item 4): 20 more models; \"bodies\" = a regex the autocentrum body path must match (a model kept as bodies of another: Yaris Cross, e-tron GT, Citroen DS3/DS4/DS5).",
  "models": [
   {
    "brand": "Audi",
@@ -31,7 +31,8 @@
    "mobile": "e-tron",
    "paths": [
     "audi/e-tron"
-   ]
+   ],
+   "bodies": "^(?!.*grand-tourer)"
   },
   {
    "brand": "Audi",
@@ -80,6 +81,15 @@
    "paths": [
     "audi/tt"
    ]
+  },
+  {
+   "brand": "Audi",
+   "label": "e-tron GT",
+   "mobile": "e-tron GT",
+   "paths": [
+    "audi/e-tron"
+   ],
+   "bodies": "grand-tourer"
   },
   {
    "brand": "BMW",
@@ -426,6 +436,22 @@
    "mobile": "Transit Custom",
    "paths": [
     "ford/transit-custom"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Bronco",
+   "mobile": "Bronco",
+   "paths": [
+    "ford/bronco"
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "F-150",
+   "mobile": "F 150",
+   "paths": [
+    "ford/seria-f"
    ]
   },
   {
@@ -813,6 +839,14 @@
    ]
   },
   {
+   "brand": "Peugeot",
+   "label": "iOn",
+   "mobile": "iOn",
+   "paths": [
+    "peugeot/ion"
+   ]
+  },
+  {
    "brand": "Renault",
    "label": "Arkana",
    "mobile": "Arkana",
@@ -954,6 +988,22 @@
    "mobile": "ZOE",
    "paths": [
     "renault/zoe"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Twizy",
+   "mobile": "Twizy",
+   "paths": [
+    "renault/twizy"
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Alpine A110",
+   "mobile": "Alpine A110",
+   "paths": [
+    "alpine/a110"
    ]
   },
   {
@@ -1212,6 +1262,23 @@
    "paths": [
     "toyota/verso-s"
    ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "GR86",
+   "mobile": "GR86",
+   "paths": [
+    "toyota/gr86"
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Yaris Cross",
+   "mobile": "Yaris Cross",
+   "paths": [
+    "toyota/yaris"
+   ],
+   "bodies": "/cross"
   },
   {
    "brand": "Volvo",
@@ -1503,6 +1570,14 @@
    ]
   },
   {
+   "brand": "Volkswagen",
+   "label": "ID. Polo",
+   "mobile": "ID. Polo",
+   "paths": [
+    "volkswagen/id.polo"
+   ]
+  },
+  {
    "brand": "Kia",
    "label": "Carens",
    "mobile": "Carens",
@@ -1701,6 +1776,14 @@
    "mobile": "XCeed",
    "paths": [
     "kia/xceed"
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Seltos",
+   "mobile": "Seltos",
+   "paths": [
+    "kia/seltos"
    ]
   },
   {
@@ -1905,6 +1988,14 @@
    ]
   },
   {
+   "brand": "Hyundai",
+   "label": "Staria",
+   "mobile": "STARIA",
+   "paths": [
+    "hyundai/staria"
+   ]
+  },
+  {
    "brand": "Opel",
    "label": "Adam",
    "mobile": "Adam",
@@ -2030,6 +2121,22 @@
    "mobile": "Zafira",
    "paths": [
     "opel/zafira"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Karl",
+   "mobile": "Karl",
+   "paths": [
+    "opel/karl"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Ampera",
+   "mobile": "Ampera",
+   "paths": [
+    "opel/ampera"
    ]
   },
   {
@@ -2305,6 +2412,14 @@
    ]
   },
   {
+   "brand": "Mazda",
+   "label": "CX-6e",
+   "mobile": "CX-6e",
+   "paths": [
+    "mazda/cx-6e"
+   ]
+  },
+  {
    "brand": "Nissan",
    "label": "370Z",
    "mobile": "370Z",
@@ -2505,6 +2620,22 @@
    ]
   },
   {
+   "brand": "Nissan",
+   "label": "Pixo",
+   "mobile": "Pixo",
+   "paths": [
+    "nissan/pixo"
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Cube",
+   "mobile": "Cube",
+   "paths": [
+    "nissan/cube"
+   ]
+  },
+  {
    "brand": "Citroen",
    "label": "Berlingo",
    "mobile": "Berlingo",
@@ -2695,6 +2826,41 @@
    "paths": [
     "citroen/xsara-picasso"
    ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C-Zero",
+   "mobile": "C-Zero",
+   "paths": [
+    "citroen/c-zero"
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "DS3",
+   "mobile": "DS3",
+   "paths": [
+    "ds/3"
+   ],
+   "bodies": "citroen"
+  },
+  {
+   "brand": "Citroen",
+   "label": "DS4",
+   "mobile": "DS4",
+   "paths": [
+    "ds/4"
+   ],
+   "bodies": "citroen|crossback"
+  },
+  {
+   "brand": "Citroen",
+   "label": "DS5",
+   "mobile": "DS5",
+   "paths": [
+    "ds/5"
+   ],
+   "bodies": "citroen"
   }
  ]
 }

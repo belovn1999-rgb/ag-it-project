@@ -184,13 +184,24 @@ DEFAULT_TYPE.update({
     ("Citroen", "C4 Cactus"): "hatchback", ("Citroen", "C4 X"): "limousine", ("Citroen", "C5"): "limousine",
     ("Citroen", "C5 X"): "limousine", ("Citroen", "C6"): "limousine",
 })
+# B61 item 4 (2026-10-20): models added later; single-engine pages name no body.
+VAN_MODELS |= {("Hyundai", "STARIA")}
+SUV_MODELS |= {("Toyota", "Yaris Cross"), ("Kia", "Seltos"), ("Mazda", "CX-6e"), ("Ford", "Bronco")}
+PICKUP_MODELS |= {("Ford", "F 150")}
+DEFAULT_TYPE.update({
+    ("Opel", "Karl"): "hatchback", ("Opel", "Ampera"): "hatchback", ("Nissan", "Pixo"): "hatchback",
+    ("Nissan", "Cube"): "van_minibus+hatchback", ("Peugeot", "iOn"): "hatchback", ("Citroen", "C-Zero"): "hatchback",
+    ("Citroen", "DS3"): "hatchback", ("Citroen", "DS4"): "hatchback", ("Citroen", "DS5"): "hatchback",
+    ("Renault", "Twizy"): "hatchback", ("Renault", "Alpine A110"): "coupe", ("Toyota", "GR86"): "coupe",
+    ("Volkswagen", "ID. Polo"): "hatchback", ("Audi", "e-tron GT"): "limousine",
+})
 # Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
 BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
             ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
             ("Peugeot", "Expert"), ("Peugeot", "Traveller"), ("Renault", "Master"), ("Toyota", "Proace (Verso)"), ("Toyota", "Hiace"),
             ("Volkswagen", "Crafter"), ("Volkswagen", "ID. Buzz"), ("Hyundai", "H-1"), ("Opel", "Movano"), ("Opel", "Vivaro"),
             ("Nissan", "Interstar"), ("Nissan", "Primastar"), ("Citroen", "Jumper"), ("Citroen", "Jumpy"), ("Citroen", "SpaceTourer"),
-            ("Kia", "PV5"), ("Kia", "Carnival")}
+            ("Kia", "PV5"), ("Kia", "Carnival"), ("Hyundai", "STARIA")}
 # Hatchbacks sold with 5 doors only (the rest: 3 or 5 unless the name says).
 FIVE_DOOR_HATCHES = {("Volkswagen", "Golf"), ("Volkswagen", "Polo"), ("Ford", "Focus"), ("Toyota", "Auris"), ("Volvo", "V40"),
                      ("Renault", "Megane"), ("Skoda", "Fabia"), ("Peugeot", "308"), ("BMW", "1")}

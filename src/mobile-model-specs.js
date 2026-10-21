@@ -86,13 +86,13 @@
       SQ5: ["Q5", "sq5"], SQ7: ["Q7", "sq7"], RSQ3: ["Q3", "rsq3"],
       S1: ["A1", "s1"], SQ2: ["Q2", "sq2"], S7: ["A7", "s7"], RS7: ["A7", "rs7"], S8: ["A8", "s8"],
       SQ8: ["Q8", "sq8"], RSQ8: ["Q8", "rsq8"], "TT RS": ["TT", "rs"], TTS: ["TT"], "Q4 e-tron": ["Q4"],
-      "Q8 e-tron": ["Q8"], "SQ8 e-tron": ["Q8"],
+      "Q8 e-tron": ["Q8"], "SQ8 e-tron": ["Q8"], "RS e-tron GT": ["e-tron GT"], "SQ6 e-tron": ["Q6 e-tron"],
     },
-    Ford: { "Grand C-Max": ["C-Max"], "Grand Tourneo": ["Tourneo Connect"] },
+    Ford: { "Grand C-Max": ["C-Max"], "Grand Tourneo": ["Tourneo Connect"], "Puma Gen-E": ["Puma"] },
     "Mercedes-Benz": {
       "CLA Shooting Brake": ["CLA"], "CLS Shooting Brake": ["CLS"], "B Electric Drive": ["B"], "AMG GT C": ["AMG GT"],
       "AMG GT R": ["AMG GT"], "AMG GT S": ["AMG GT"], "EQE SUV": ["EQE"], "EQS SUV": ["EQS"], eCitan: ["Citan"],
-      eVito: ["Vito"], eSprinter: ["Sprinter"],
+      eVito: ["Vito"], eSprinter: ["Sprinter"], EQT: ["T-Class"],
     },
     Peugeot: {
       "e-208": ["208"], "e-2008": ["2008"], "e-308": ["308"], "e-3008": ["3008"], "e-5008": ["5008"], "e-408": ["408"],
@@ -111,6 +111,7 @@
     },
     Volvo: {
       "V40 Cross Country": ["V40"], "V60 Cross Country": ["V60"], "S60 Cross Country": ["S60"], "V90 Cross Country": ["V90"],
+      EX40: ["XC40"], EC40: ["C40"],
     },
     // Stage 6 variant B (owner 2026-10-10).
     Kia: { "cee'd Sportswagon": ["cee'd / Ceed"], "Niro EV": ["Niro"] },
@@ -120,10 +121,10 @@
       "Mokka X": ["Mokka"], "Mokka-e": ["Mokka"], "Zafira Tourer": ["Zafira"], "Zafira Life": ["Zafira"], "Zafira Electric": ["Zafira"],
     },
     Mazda: { "2 Hybrid": ["2"], "6e": ["6"] },
-    Nissan: { "e-NV200": ["NV200"], "Qashqai+2": ["Qashqai"] },
+    Nissan: { "e-NV200": ["NV200"], "Qashqai+2": ["Qashqai"], NV300: ["Primastar"] },
     Citroen: {
       "ë-Berlingo": ["Berlingo"], "ë-C3": ["C3"], "ë-C3 Aircross": ["C3 Aircross"], "ë-C4": ["C4"], "ë-C4 X": ["C4 X"],
-      "ë-Spacetourer": ["SpaceTourer"],
+      "ë-Spacetourer": ["SpaceTourer"], "DS4 Crossback": ["DS4"],
     },
   };
   // Mercedes catalog models are "<class> <number>" (GLA 200, CLS 350): the class is the family.
