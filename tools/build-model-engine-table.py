@@ -470,6 +470,10 @@ def fuel_for(version):
     return fuel, ""
 
 
+AWD_NAME = re.compile(r"4x4|\bawd\b|\b4wd\b|quattro|4motion|xdrive|4matic|\ball4\b|allgrip|e-four|allrad|\b4xe\b|sh-awd|"
+                      r"alltrac|\b4x4\b", re.I)
+
+
 def page_gearbox(found):
     """Gearbox from the version's own page (tools/enrich-model-versions.py)."""
     text = f"{found.get('gearbox', '')} {found.get('transmission', '')}"
@@ -612,6 +616,37 @@ def main():
             ac = json.load(handle)
             for name, count in sorted(autocentrum.merge(rows, ac).items()):
                 print(f"   autocentrum: {name}: {count}")
+        # Doors and seats the table still lacks: from the version's own ultimatespecs page
+        # (tools/enrich-model-versions.py, B61 item 6 2026-10-21); what autocentrum gave stays.
+        filled = 0
+        for row in rows:
+            found = version_pages.get(row["Ссылка"], {})
+            for column, key in (("Двери", "doors"), ("Места", "seats")):
+                if not row.get(column) and found.get(key):
+                    row[column] = found[key]
+                    filled += 1
+        print(f"   двери и места со страниц версий: {filled}")
+        # Drive autocentrum's engine page does not state (B61 item 6, 2026-10-21): the version's own
+        # name ("4MATIC", "quattro", "4x4"), else the one drive every other version of that
+        # generation has (5 or more of them). Mixed generations (Transit, Sprinter) stay unknown:
+        # a wrong guess would grey out an option the model has.
+        by_gen = collections.defaultdict(list)
+        for row in rows:
+            by_gen[(row["Марка"], row["Модель"], row["Поколение"])].append(row)
+        named = inferred = 0
+        for row in rows:
+            if row["Привод"]:
+                continue
+            if AWD_NAME.search(f"{row['Версия']} {row['Кузов']}"):
+                row["Привод"], row["Привод: откуда"] = "полный", "из названия"
+                named += 1
+                continue
+            known = {other["Привод"] for other in by_gen[(row["Марка"], row["Модель"], row["Поколение"])] if other["Привод"]}
+            count = sum(1 for other in by_gen[(row["Марка"], row["Модель"], row["Поколение"])] if other["Привод"])
+            if len(known) == 1 and count >= 5:
+                row["Привод"], row["Привод: откуда"] = known.pop(), "как у остальных версий поколения (вывод)"
+                inferred += 1
+        print(f"   привод: из названия {named}, как у остальных версий поколения {inferred}")
         # Mild hybrids (since 2016): the makers' rules checked against both databases and Wikipedia
         # (tools/mild_hybrids.py). Only a confirmed one counts; the rest goes to docs/MODEL-MILD-HYBRIDS.md.
         # A diesel the source files under petrol (Kia Sportage "1.6 CRDi MHEV", Mercedes "220d EQ Boost",

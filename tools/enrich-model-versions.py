@@ -13,6 +13,7 @@ Crawl-delay 30 s (robots.txt): ~120 pages an hour. Saved every 10 pages;
 a rerun skips what is done, so it can be stopped and resumed any time.
 
     python3 tools/enrich-model-versions.py [--since 2015] [--limit N] [--cache DIR]
+    python3 tools/enrich-model-versions.py --since 1995   # 2026-10-21: every gap, doors and seats too
 """
 import argparse
 import csv
@@ -54,14 +55,18 @@ def details(page):
     gearbox = cell("Transmission Gearbox - Number of speeds")
     drive = cell("Drive wheels - Traction - Drivetrain")
     ld = re.search(r'"vehicleTransmission"\s*:\s*"([^"]*)"', page)
-    return {"gearbox": gearbox, "transmission": ld.group(1) if ld else "", "drive": drive}
+    # "5 doors", "5 seats" (B61 item 6, 2026-10-21): the doors and seats our table lacks.
+    doors = re.search(r"\d+", cell("Num. of Doors"))
+    seats = re.search(r"\d+", cell("Num. of Seats"))
+    return {"gearbox": gearbox, "transmission": ld.group(1) if ld else "", "drive": drive,
+            "doors": doors.group(0) if doors else "", "seats": seats.group(0) if seats else ""}
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--since", type=int, default=2015, help="only generations starting this year or later")
     parser.add_argument("--limit", type=int, default=0)
-    parser.add_argument("--cache", default="/tmp/ultimatespecs-versions")
+    parser.add_argument("--cache", default=os.path.expanduser("~/.cache/autogood/ultimatespecs-versions"))
     args = parser.parse_args()
     os.makedirs(args.cache, exist_ok=True)
     done = json.load(open(DETAILS, encoding="utf8")) if os.path.exists(DETAILS) else {}
@@ -74,10 +79,20 @@ def main():
         return int(match.group(1)) if match else 0
 
     todo, seen = [], set()
-    for row in sorted(rows, key=start, reverse=True):
+    # Versions with no gearbox first, then those with no doors or seats (read before 2026-10-21
+    # without them, or never read: their gearbox came from the name).
+    def wanted(row):
         url = row["Ссылка"]
-        # Rows from autocentrum.pl (tools/autocentrum.py) have no ultimatespecs page.
-        if row["Коробка"] or "ultimatespecs.com" not in url or url in seen or url in done or start(row) < args.since:
+        if "ultimatespecs.com" not in url or start(row) < args.since:
+            return 0  # rows from autocentrum.pl (tools/autocentrum.py) have no ultimatespecs page
+        if not row["Коробка"] and url not in done:
+            return 2
+        if (not row["Двери"] or not row["Места"]) and "doors" not in done.get(url, {}):
+            return 1
+        return 0
+    for row in sorted(rows, key=lambda r: (wanted(r), start(r)), reverse=True):
+        url = row["Ссылка"]
+        if not wanted(row) or url in seen:
             continue
         seen.add(url)
         todo.append(row)
