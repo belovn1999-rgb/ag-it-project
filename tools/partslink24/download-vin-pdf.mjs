@@ -251,11 +251,29 @@ async function openVehicle(page, brandConfig, vin) {
   // VIN usually resolves inside the brand catalogue. Retry there once instead
   // of failing the run; the general search is not reliable for every VIN.
   if (!brandFirst && await needsBrandCatalogue(page)) {
+    // The refusal is shown as a toast plus a dropdown under the search box, and
+    // both sit over the brand grid. Playwright waits for a tile to stop being
+    // covered, so the retry timed out on the click instead of opening the
+    // catalogue — clear the message first.
+    await dismissPartslinkMessage(page);
     await openBrandCatalogue(page, brandConfig);
     await searchVin(page, vin);
   }
 
   await waitForVehicleLoaded(page, vin);
+}
+
+async function dismissPartslinkMessage(page) {
+  // Escape closes the dropdown under the search box; the toast has its own ✕.
+  // Every step is best-effort: the retry must still run if the banner is gone.
+  await page.keyboard.press("Escape").catch(() => {});
+  const closeButton = page
+    .locator('[class*="close" i], [aria-label*="close" i], [aria-label*="закр" i], [aria-label*="zamkn" i]')
+    .first();
+  if (await closeButton.isVisible({ timeout: 1000 }).catch(() => false)) {
+    await closeButton.click({ timeout: 3000 }).catch(() => {});
+  }
+  await humanDelay();
 }
 
 async function openBrandCatalogue(page, brandConfig) {

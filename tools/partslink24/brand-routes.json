@@ -26,8 +26,12 @@
       "brandTile": "Bentley"
     },
     "BMW": {
-      "route": "general_vin_search",
+      "route": "brand_first_search",
       "brandTile": "BMW",
+      "notes": [
+        "Общий поиск VIN со стартовой страницы находит не каждый BMW (проверено 09.09.2026 на BMW i, VIN WBY…): сначала плитка BMW, потом VIN.",
+        "Рядом стоят BMW Classic, BMW Motorrad и BMW Motorrad Classic — нужна простая плитка BMW."
+      ],
       "sampleVin": "WBA31AA0905V40977",
       "sampleLanguage": "RU",
       "expectedKeywords": ["partslink24", "BMW"],
