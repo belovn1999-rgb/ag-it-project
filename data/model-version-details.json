@@ -288,6 +288,20 @@
 "seats": "4",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/114911/Audi-A5-(F5)-40-TDI-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114912/Audi-A5-(F5)-40-TDI-sport-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/114913/Audi-A5-(F5)-40-TDI-design-S-tronic.html": {
 "doors": "2",
 "drive": "FWD",
@@ -488,6 +502,48 @@
 "https://www.ultimatespecs.com/car-specs/Audi/115978/Audi-A4-(B9-2019)-Avant-50-TDI-Quattro.html": {
 "drive": "AWD",
 "gearbox": "8 speed Sequential Automatic",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115987/Audi-A5-(F5)-45-TDI-quattro-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115988/Audi-A5-(F5)-45-TDI-quattro-sport-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115989/Audi-A5-(F5)-45-TDI-quattro-design-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115990/Audi-A5-(F5)-50-TDI-quattro-Tiptronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"seats": "4",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115991/Audi-A5-(F5)-50-TDI-quattro-sport-Tiptronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"seats": "4",
+"transmission": "Sequential Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115992/Audi-A5-(F5)-50-TDI-quattro-design-Tiptronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"seats": "4",
 "transmission": "Sequential Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/116078/Audi-A4-(B9-2019)-Avant-RS4-29-TFSI-Quattro.html": {
@@ -8225,12 +8281,49 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
-"https://www.ultimatespecs.com/car-specs/Renault/107985/Renault-Grand-Scenic-4-dCi-130.html": {
+"https://www.ultimatespecs.com/car-specs/Renault/107980/Renault-Grand-Scenic-4-TCe-130.html": {
+"doors": "5",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/107981/Renault-Grand-Scenic-4-dCi-110.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/107982/Renault-Grand-Scenic-4-dCi-110-EDC.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/107985/Renault-Grand-Scenic-4-dCi-130.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/10799/Renault-Clio-3-Phase-2-Grand-Tour-20-Aniversario-12-75-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/10800/Renault-Clio-3-Phase-2-Grand-Tour-20-Aniversario-TCe-100-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/10801/Renault-Clio-3-Phase-2-Grand-Tour-20-Aniversario-dCi-85-eco2.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -8242,9 +8335,46 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/111429/Renault-Grand-Scenic-4-TCe-115.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/111432/Renault-Grand-Scenic-4-TCe-140.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/111435/Renault-Grand-Scenic-4-TCe-160.html": {
+"doors": "5",
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/111436/Renault-Grand-Scenic-4-TCe-140-EDC.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/111980/Renault-Grand-Scenic-4-dCi-110-Hybrid-Assist.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/111982/Renault-Grand-Scenic-4-dCi-160.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/112228/Renault-Captur-1-Phase-2-dCi-90.html": {
@@ -8267,6 +8397,13 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/114476/Renault-Grand-Scenic-4-Blue-dCi-120.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/115254/Renault-Kadjar-1-Phase-2-Energy-TCe-140-Life.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -8280,6 +8417,13 @@
 "https://www.ultimatespecs.com/car-specs/Renault/115579/Renault-Captur-1-Phase-2-TCe-150.html": {
 "drive": "FWD",
 "gearbox": "6 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/115767/Renault-Grand-Scenic-4-Blue-dCi-120-Auto.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/116252/Renault-Trafic-3-Phase-2-Grand-Passenger-dCi-120.html": {
@@ -8370,10 +8514,73 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/11975/Renault-Clio-3-Phase-2-Grand-Tour-Expression-TCe-100-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/11976/Renault-Clio-3-Phase-2-Grand-Tour-20-Anniversary-12-75-eco2.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11977/Renault-Clio-3-Phase-2-Grand-Tour-20-Anniversary-TCe-100-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11978/Renault-Clio-3-Phase-2-Grand-Tour-Exception-TCe-100-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11979/Renault-Clio-3-Phase-2-Grand-Tour-Authentique-dCi-65-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11980/Renault-Clio-3-Phase-2-Grand-Tour-Expression-dCi-65-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11981/Renault-Clio-3-Phase-2-Grand-Tour-Expression-dCi-85-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11982/Renault-Clio-3-Phase-2-Grand-Tour-20-Anniversary-dCi-85-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11983/Renault-Clio-3-Phase-2-Grand-Tour-Exception-dCi-85-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/11984/Renault-Clio-3-Phase-2-Grand-Tour-Exception-dCi-105-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -8412,9 +8619,32 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/125817/Renault-Grand-Scenic-4-TCe-115.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/125823/Renault-Grand-Scenic-4-TCe-160.html": {
+"doors": "5",
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/125825/Renault-Grand-Scenic-4-TCe-140.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/125826/Renault-Grand-Scenic-4-TCe-140-Auto.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/127413/Renault-Megane-4-Phase-2-TCe-115.html": {
@@ -8425,6 +8655,13 @@
 "https://www.ultimatespecs.com/car-specs/Renault/127417/Renault-Megane-4-Phase-2-Sport-Tourer-TCe-115.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/12744/Renault-Clio-3-Phase-2-Grand-Tour-Authentique-dCi-85-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/133756/Renault-Trafic-3-Phase-3-Passenger-L1H1-28t-Blue-dCi-130.html": {
@@ -8561,6 +8798,13 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/23917/Renault-Clio-3-Phase-2-Grand-Tour-Exception-dCi-105-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/23924/Renault-Clio-3-Phase-2-Grand-Tour-Authentique-12-75-eco2.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8575,7 +8819,28 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/23926/Renault-Clio-3-Phase-2-Grand-Tour-Expression-TCe-100-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/23927/Renault-Clio-3-Phase-2-Grand-Tour-20-Anniversary-12-75-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/23928/Renault-Clio-3-Phase-2-Grand-Tour-20-Anniversary-TCe-100-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/23929/Renault-Clio-3-Phase-2-Grand-Tour-Exception-TCe-100-eco2.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -8890,6 +9155,48 @@
 "seats": "7",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/24646/Renault-Clio-3-Phase-2-Grand-Tour-Authentique-dCi-75-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/24647/Renault-Clio-3-Phase-2-Grand-Tour-Authentique-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/24648/Renault-Clio-3-Phase-2-Grand-Tour-Expression-dCi-75-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/24649/Renault-Clio-3-Phase-2-Grand-Tour-Expression-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/24650/Renault-Clio-3-Phase-2-Grand-Tour-20-Anniversary-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/24651/Renault-Clio-3-Phase-2-Grand-Tour-Exception-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/24673/Renault-Megane-3-Phase-1-Emotion-dCi-110-eco2.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8960,6 +9267,27 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/25837/Renault-Clio-3-Phase-2-Grand-Tour-Dynamique-Tce-100.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/25838/Renault-Clio-3-Phase-2-Grand-Tour-Yahoo-dCi-75-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/25839/Renault-Clio-3-Phase-2-Grand-Tour-Dynamique-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/25840/Renault-Megane-3-Phase-1-Break-Sport-Tourer-Emotion-16-16v-110.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8971,6 +9299,20 @@
 "doors": "5",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/26073/Renault-Clio-3-Phase-2-Grand-Tour-Evolution-Tce-100.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/26074/Renault-Clio-3-Phase-2-Grand-Tour-Evolution-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -9716,6 +10058,48 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/58367/Renault-Clio-3-Phase-1-Grand-Tour-Dynamique-TCE-100HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/58381/Renault-Clio-3-Phase-1-Grand-Tour-Exception-16-16v-110HP-Automatic.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "4 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/58388/Renault-Clio-3-Phase-1-Grand-Tour-Authentique-15-dCi-70HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/58395/Renault-Clio-3-Phase-1-Grand-Tour-Authentique-15-dCi-85HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/58416/Renault-Clio-3-Phase-1-Grand-Tour-Dynamique-15-dCi-105HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/58689/Renault-Clio-3-Phase-1-Grand-Tour-Dynamique-15-dCi-85HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/59355/Renault-Megane-3-Phase-2-Coupe-Dynamique-Tce-130.html": {
 "doors": "3",
 "drive": "FWD",
@@ -9783,6 +10167,27 @@
 "doors": "5",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/60105/Renault-Clio-3-Phase-2-Grand-Tour-Yahoo-dCi-75-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/60106/Renault-Clio-3-Phase-2-Grand-Tour-Dynamique-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/60107/Renault-Clio-3-Phase-2-Grand-Tour-Business-dCi-90-eco2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -9892,6 +10297,13 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/61373/Renault-Clio-3-Phase-2-Grand-Tour-Yahoo-12-16v-75.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/61377/Renault-Clio-3-Phase-2-Grand-Tour-Dynamique-Tce-100.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -11782,6 +12194,20 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/105623/Volkswagen-CrossPolo-(6C)-12-TSI-90HP-BMT-DSG-7-Speeds.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/105624/Volkswagen-CrossPolo-(6C)-14-TDI-90HP-BMT-DSG-7-Speeds.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/105766/Volkswagen-Golf-7-20-TDI-CR-150HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -11933,7 +12359,63 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11102/Volkswagen-CrossPolo-(6R)-12-70HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11108/Volkswagen-CrossPolo-(6R)-14-85HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11109/Volkswagen-CrossPolo-(6R)-14-85HP-DSG-7-speed.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11110/Volkswagen-CrossPolo-(6R)-12-TSI-105HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11111/Volkswagen-CrossPolo-(6R)-12-TSI-105HP-DSG-7-speed.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/11112/Volkswagen-CrossPolo-(6R)-16-TDI-75HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11119/Volkswagen-CrossPolo-(6R)-16-TDI-90HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11120/Volkswagen-CrossPolo-(6R)-16-TDI-90HP-DSG-7-speed.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/11121/Volkswagen-CrossPolo-(6R)-16-TDI-105HP.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -11970,10 +12452,66 @@
 "gearbox": "5 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111623/Volkswagen-Tiguan-Allspace-20-TSI-180HP-DSG-4Motion.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/111624/Volkswagen-Tiguan-Allspace-20-TSI-220HP-DSG-4Motion.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/111956/Volkswagen-Polo-6-20-TSI-GTI.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/112472/Volkswagen-Tiguan-Allspace-20-TDI-150HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/112473/Volkswagen-Tiguan-Allspace-20-TDI-150HP-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/112478/Volkswagen-Tiguan-Allspace-20-TDI-150HP-4Motion.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/112479/Volkswagen-Tiguan-Allspace-20-TDI-150HP-DSG-4Motion.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/112480/Volkswagen-Tiguan-Allspace-20-TDI-190HP-DSG-4Motion.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/112481/Volkswagen-Tiguan-Allspace-20-TDI-240HP-DSG-4Motion.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/112829/Volkswagen-T-Roc-15-TSI-150HP.html": {
 "drive": "FWD",
@@ -12008,6 +12546,20 @@
 "https://www.ultimatespecs.com/car-specs/Volkswagen/116702/Volkswagen-Touran-2-20-TDI-150HP.html": {
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/117205/Volkswagen-Tiguan-Allspace-15-TSI-150HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/117206/Volkswagen-Tiguan-Allspace-15-TSI-150HP-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/117429/Volkswagen-Polo-6-15-TSI-150HP.html": {
@@ -12063,6 +12615,20 @@
 "https://www.ultimatespecs.com/car-specs/Volkswagen/118818/Volkswagen-Golf-8-15-TSI-130HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/119100/Volkswagen-Tiguan-Allspace-14-TSI-150HP-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/119101/Volkswagen-Tiguan-Allspace-14-TSI-150HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/119322/Volkswagen-T-Roc-Cabrio-10-TSI-115HP.html": {
@@ -13059,6 +13625,83 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154690/Volkswagen-Transporter-T52-LWB-High-Roof-20-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154691/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154692/Volkswagen-Transporter-T52-LWB-20-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154695/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-BMT-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154696/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154697/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-BMT-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154698/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154699/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154700/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154701/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154702/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-BiTDI-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154703/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-140HP-BMT-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
@@ -13073,10 +13716,80 @@
 "seats": "3",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154705/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-140HP-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154706/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-140HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154707/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-140HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154708/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-140HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154709/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-114HP-BMT-.html": {
 "doors": "4",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154710/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-102HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154711/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-84HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154712/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TDI-84HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154713/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TSI-204HP-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154714/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TSI-204HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154715/Volkswagen-Transporter-T52-LWB-Medium-High-Roof-20-TSI-204HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "3",
 "transmission": "Manual"
 },
@@ -13136,6 +13849,34 @@
 "seats": "3",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154740/Volkswagen-Transporter-T52-LWB-High-Roof-20-BiTDI-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154741/Volkswagen-Transporter-T52-LWB-High-Roof-20-BiTDI-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154742/Volkswagen-Transporter-T52-LWB-High-Roof-20-BiTDI-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154743/Volkswagen-Transporter-T52-LWB-High-Roof-20-BiTDI-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154744/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-140HP-BMT-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
@@ -13150,10 +13891,80 @@
 "seats": "3",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154746/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-140HP-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154747/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-140HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154748/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-140HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154749/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-140HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154750/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-114HP-BMT-.html": {
 "doors": "4",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154751/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-102HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154752/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-84HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154753/Volkswagen-Transporter-T52-LWB-High-Roof-20-TDI-84HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154754/Volkswagen-Transporter-T52-LWB-High-Roof-20-TSI-204HP-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154755/Volkswagen-Transporter-T52-LWB-High-Roof-20-TSI-204HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154756/Volkswagen-Transporter-T52-LWB-High-Roof-20-TSI-204HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "3",
 "transmission": "Manual"
 },
@@ -13178,6 +13989,62 @@
 "seats": "3",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154760/Volkswagen-Transporter-T52-LWB-20-BiTDI-BMT-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154761/Volkswagen-Transporter-T52-LWB-20-BiTDI-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154762/Volkswagen-Transporter-T52-LWB-20-BiTDI-BMT-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154763/Volkswagen-Transporter-T52-LWB-20-BiTDI-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154764/Volkswagen-Transporter-T52-LWB-20-BiTDI-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154765/Volkswagen-Transporter-T52-LWB-20-BiTDI-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154766/Volkswagen-Transporter-T52-LWB-20-BiTDI-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154767/Volkswagen-Transporter-T52-LWB-20-BiTDI-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154768/Volkswagen-Transporter-T52-LWB-20-TDI-140HP-BMT-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
@@ -13192,7 +14059,56 @@
 "seats": "3",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154770/Volkswagen-Transporter-T52-LWB-20-TDI-140HP-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154771/Volkswagen-Transporter-T52-LWB-20-TDI-140HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154772/Volkswagen-Transporter-T52-LWB-20-TDI-140HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154773/Volkswagen-Transporter-T52-LWB-20-TDI-140HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154774/Volkswagen-Transporter-T52-LWB-20-TDI-114HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154775/Volkswagen-Transporter-T52-LWB-20-TDI-102HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154776/Volkswagen-Transporter-T52-LWB-20-TDI-84HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154777/Volkswagen-Transporter-T52-LWB-20-TDI-84HP-.html": {
 "doors": "4",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -13217,6 +14133,27 @@
 "doors": "4",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154796/Volkswagen-Transporter-T52-LWB-20-TSI-204HP-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154797/Volkswagen-Transporter-T52-LWB-20-TSI-204HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "3",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154798/Volkswagen-Transporter-T52-LWB-20-TSI-204HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "3",
 "transmission": "Manual"
 },
@@ -13269,9 +14206,93 @@
 "seats": "6",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154898/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-BiTDI-BMT-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154899/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-BiTDI-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154900/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-BMT-4MOTION-DSG.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154901/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-BMT-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154902/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-BMT-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154903/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154904/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-BMT-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154905/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-BMT-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154906/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154907/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154916/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-140HP-BMT-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154917/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-140HP-BMT-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154918/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-140HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "6",
 "transmission": "Manual"
@@ -13283,9 +14304,37 @@
 "seats": "6",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154920/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-140HP-BMT-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154921/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-140HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/154922/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-140HP-BMT-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154923/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-140HP-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154924/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-140HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "6",
 "transmission": "Manual"
@@ -13346,6 +14395,41 @@
 "seats": "7",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154994/Volkswagen-Multivan-T52-LWB-20-BiTDI-BMT-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154995/Volkswagen-Multivan-T52-LWB-20-BiTDI-BMT-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "8",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154996/Volkswagen-Multivan-T52-LWB-20-BiTDI-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154997/Volkswagen-Multivan-T52-LWB-20-BiTDI-BMT.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "8",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/154999/Volkswagen-Multivan-T52-LWB-20-TDI-140HP-BMT-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/155013/Volkswagen-Multivan-T52-LWB-20-TSI-150HP.html": {
 "doors": "4",
 "drive": "FWD",
@@ -13402,11 +14486,109 @@
 "seats": "6",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155021/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-84HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155022/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-84HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155023/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-84HP-BMT-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155026/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TSI-204HP-4MOTION-DSG.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155027/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TSI-204HP-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155028/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TSI-204HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155029/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TSI-204HP-4MOTION-DSG.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155030/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TSI-204HP-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155031/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TSI-204HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155032/Volkswagen-Transporter-T52-Kombi-LWB-20-TSI-204HP-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155033/Volkswagen-Transporter-T52-Kombi-LWB-20-TSI-204HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155034/Volkswagen-Transporter-T52-Kombi-LWB-20-TSI-204HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/155072/Volkswagen-Multivan-T52-SWB-Comfortline-20-TDI-114HP-BlueMotion-.html": {
 "doors": "4",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
 "seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155077/Volkswagen-Multivan-T52-LWB-20-TSI-204HP-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155079/Volkswagen-Multivan-T52-LWB-20-TSI-204HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "8",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/155084/Volkswagen-Transporter-T52-Kombi-Rockton-20-TDI-140HP-Expedition-4MOTION.html": {
@@ -13423,9 +14605,58 @@
 "seats": "6",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155099/Volkswagen-Multivan-T52-LWB-20-BiTDI-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/155115/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-BiTDI-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155116/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-4MOTION-DSG.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155117/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155118/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-4MOTION-DSG-7-speed.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155119/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155176/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-BiTDI-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155177/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-BiTDI-.html": {
+"doors": "4",
+"drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "6",
 "transmission": "Manual"
@@ -13437,9 +14668,93 @@
 "seats": "6",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155179/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-140HP-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155180/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-140HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155181/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-102HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155182/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-TDI-84HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155183/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155184/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-BiTDI-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/155185/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-140HP-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155186/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-140HP-DSG.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155187/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-140HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155188/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-102HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155189/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-TDI-84HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155190/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155191/Volkswagen-Transporter-T52-Kombi-LWB-20-BiTDI-.html": {
+"doors": "4",
+"drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "6",
 "transmission": "Manual"
@@ -13448,6 +14763,34 @@
 "doors": "4",
 "drive": "AWD",
 "gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155193/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-140HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "6",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155194/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-140HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155195/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-102HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155196/Volkswagen-Transporter-T52-Kombi-LWB-20-TDI-84HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
 "seats": "6",
 "transmission": "Manual"
 },
@@ -13465,6 +14808,27 @@
 "seats": "6",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155211/Volkswagen-Transporter-T52-Kombi-LWB-High-Roof-20-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155212/Volkswagen-Transporter-T52-Kombi-LWB-Medium-High-Roof-20-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155213/Volkswagen-Transporter-T52-Kombi-LWB-20-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "6",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/155219/Volkswagen-Multivan-T52-SWB-Highline-20-TDI-4MOTION.html": {
 "doors": "5",
 "drive": "AWD",
@@ -13472,9 +14836,30 @@
 "seats": "7",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155223/Volkswagen-Multivan-T52-LWB-20-BiTDI-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/155225/Volkswagen-Multivan-T52-LWB-20-TDI-140HP-4MOTION.html": {
 "doors": "4",
 "drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "8",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155226/Volkswagen-Multivan-T52-LWB-20-TDI-140HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155227/Volkswagen-Multivan-T52-LWB-20-TDI-140HP.html": {
+"doors": "4",
+"drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "8",
 "transmission": "Manual"
@@ -13507,10 +14892,87 @@
 "seats": "5",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23698/Volkswagen-CrossPolo-(6R)--12-70HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23699/Volkswagen-CrossPolo-(6R)--14-85HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23700/Volkswagen-CrossPolo-(6R)--14-85HP-DSG-7-speed.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23701/Volkswagen-CrossPolo-(6R)--12-TSI-105HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23702/Volkswagen-CrossPolo-(6R)--12-TSI-105HP-DSG-7-speed.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23703/Volkswagen-CrossPolo-(6R)--12-TDI-75HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23704/Volkswagen-CrossPolo-(6R)--16-TDI-90HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23705/Volkswagen-CrossPolo-(6R)--16-TDI-90HP-DSG-7-speed.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23706/Volkswagen-CrossPolo-(6R)--16-TDI-105HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/23900/Volkswagen-Touran-2010-Edition-16-TDI-105HP-Bluemotion-Technology.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23918/Volkswagen-CrossTouran-2010-16-TDI-105HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/23919/Volkswagen-CrossTouran-2010-16-TDI-105HP-DSG-7-Speeds.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/24107/Volkswagen-Tiguan-Advance-14-TSI-150HP-BlueMotion-Technology-2WD.html": {
 "doors": "5",
@@ -13563,6 +15025,13 @@
 "seats": "4",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/25820/Volkswagen-Golf-6-Cabrio-Advance-14-TSI-160HP-DSG-7-vel.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/25821/Volkswagen-Golf-6-Cabrio-Advance-16-TDI-CR-BMT-105HP.html": {
 "doors": "2",
 "drive": "FWD",
@@ -13612,12 +15081,33 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/2833/Volkswagen-CrossTouran-14-16v-TSI-170.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Sequential",
+"seats": "5",
+"transmission": "Sequential"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/2834/Volkswagen-CrossTouran-16.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/40031/Volkswagen-Golf-6-Cabrio-Advance-14-TSI-122HP.html": {
 "doors": "2",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "4",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/40032/Volkswagen-Golf-6-Cabrio-Advance-14-TSI-122HP-DSG-7-vel.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/40033/Volkswagen-Golf-6-Cabrio-Advance-20-TDI-CR-BMT-140HP.html": {
 "doors": "2",
@@ -14047,12 +15537,26 @@
 "seats": "4",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/61618/Volkswagen-Golf-6-Cabrio-14-TSI-122HP-DSG-7-vel.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/61626/Volkswagen-Golf-6-Cabrio-14-TSI-160HP.html": {
 "doors": "2",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "4",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/61634/Volkswagen-Golf-6-Cabrio-14-TSI-160HP-DSG-7-vel.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/61642/Volkswagen-Golf-6-Cabrio-16-TDI-CR-BMT-105HP.html": {
 "doors": "2",
@@ -14182,6 +15686,13 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/62367/Volkswagen-CrossPolo-(6R)-16-TDI-90HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/62505/Volkswagen-Golf-6-Variant-Sport-20-TDI-140HP.html": {
 "doors": "5",
 "drive": "FWD",
@@ -14204,8 +15715,10 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/63414/Volkswagen-CrossTouran-2010-20-TDI-140HP-7-seats.html": {
+"doors": "5",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "7",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/63415/Volkswagen-Golf-7-14-TSI-122HP--Advance.html": {
@@ -14254,8 +15767,10 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/63772/Volkswagen-CrossTouran-2010-20-TDI-140HP.html": {
+"doors": "5",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/64519/Volkswagen-Golf-7-20-TDI-CR-150-HP-4Motion-Sport.html": {
@@ -14331,10 +15846,24 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/64948/Volkswagen-Multivan-T52-LWB-20-TDI-102HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "8",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/64956/Volkswagen-Multivan-T52-LWB-20-TDI-114HP-BMT.html": {
 "doors": "4",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "8",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/64963/Volkswagen-Multivan-T52-LWB-20-TDI-140HP-BMT.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "8",
 "transmission": "Manual"
 },
@@ -14344,6 +15873,27 @@
 "gearbox": "6 speed Manual",
 "seats": "8",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/64975/Volkswagen-Multivan-T52-LWB-20-BiTDI.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "8",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/64981/Volkswagen-Multivan-T52-LWB-20-BiTDI-4MOTION.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "8",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/64987/Volkswagen-Multivan-T52-LWB-20-TSI-204HP-DSG-7-speed.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "8",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/64999/Volkswagen-Multivan-T52-SWB-Highline-20-TDI-BMT-4MOTION.html": {
 "doors": "5",
@@ -14600,6 +16150,20 @@
 "gearbox": "5 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/71764/Volkswagen-CrossPolo-(6C)-12-TSI-90HP-BMT.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/71765/Volkswagen-CrossPolo-(6C)-14-TDI-90HP-BMT.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/71817/Volkswagen-Tiguan-CityScape-20-TDI-140HP-BMT-4Motion.html": {
 "doors": "5",
 "drive": "AWD",
@@ -14607,10 +16171,26 @@
 "seats": "5",
 "transmission": "Manual"
 },
-"https://www.ultimatespecs.com/car-specs/Volkswagen/71941/Volkswagen-Golf-Alltrack-20-TDI-150HP-4Motion-BMT.html": {
+"https://www.ultimatespecs.com/car-specs/Volkswagen/71940/Volkswagen-Golf-Alltrack-16-TDI-110HP-4Motion-BMT.html": {
+"doors": "5",
 "drive": "AWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/71941/Volkswagen-Golf-Alltrack-20-TDI-150HP-4Motion-BMT.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/71942/Volkswagen-Golf-Alltrack-20-TDI-184HP-4Motion-BMT-DSG-6-Speeds.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/72019/Volkswagen-Passat-B8-18-TSI-BMT-180HP-DSG7-Sport.html": {
 "drive": "FWD",
@@ -14676,6 +16256,13 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/72890/Volkswagen-Golf-Alltrack-18-TSI-180HP-4Motion-BMT-DSG-6-Speeds.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/72891/Volkswagen-Golf-7-Variant-12-TSI-110HP.html": {
 "drive": "FWD",
