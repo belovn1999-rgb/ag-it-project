@@ -393,6 +393,16 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
    делит его (`facelift_years()`: Galaxy III, Grand Cherokee IV, Tiida, DS 4 I). Комплектации — ADAC (66 моделей; нет в ADAC —
    американские Dodge, Chevrolet, Chrysler). Итог: таблица 24 653 версии, на странице 39 марок, 633 модели, 12 641 версия;
    комплектации у 566 моделей; мягких гибридов 1 344 версии.
+14. ✅ **Новые марки, волна 3 (решение владельца 22.10):** Ssangyong и KGM (одни данные под обеими марками mobile.de —
+   после 2023 модели продаются как KGM), Maserati, Tesla, Smart, Infiniti, Lancia, Cadillac, Isuzu, Abarth, Alpine (своя
+   марка, как у mobile.de; Renault «Alpine A110» остаётся), Leapmotor — 55 моделей. Подмодели: Infiniti EX30/35/37 → EX,
+   G35/37 → G, M30/35/37 → M; Abarth 500C / 500e / 595… / 695… → 500, Grande Punto → Punto Evo; KGM Torres EVX → Torres.
+   Мягкие гибриды — правила Maserati Ghibli / Levante GT Hybrid 2.0 330 PS (48 V, 2020–2024) и Lancia Ypsilon 1.0 FireFly
+   70 PS (12 V) / Ypsilon 2024 1.2 100 / 110 eDCT (48 V); у autocentrum этих версий нет (Ghibli / Levante — только V6, Ypsilon
+   — до 1.2 8v), правила сработают, когда версии появятся. У остальных марок волны 3 мягких гибридов в Европе нет (KGM
+   Torres / Actyon Hybrid и Infiniti Q50 Hybrid — полные, Leapmotor REEV — плагин). На autocentrum нет Polestar, Genesis,
+   Lynk & Co, XPENG, NIO, Zeekr, ORA, DFSK, BAIC. Комплектации — ADAC (37 моделей). Итог: таблица 25 235 версий, на странице
+   51 марка, 688 моделей, 13 111 версий; комплектации у 603 моделей.
 
 **Правила работы с ultimatespecs.com:**
 - `robots.txt`: **Crawl-delay: 30** — не чаще одной страницы в 30 с. Полная

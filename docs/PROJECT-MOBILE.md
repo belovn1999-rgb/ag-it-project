@@ -51,10 +51,10 @@ ParuVendu; **Polska** — otomoto; **Szwecja** — Blocket; **Białoruś** — a
   бюджет «na gotowo» для всех порталов (B73.2); аудиты 6/10 → 8/10 (B74),
   ★ / «Przejrzane» / «Wysłane klientowi», «Porównaj z Polską». Механизмы —
   `PROJECT-MONITORING.md`.
-- **Справочник моделей (B61):** 633 модели 39 марок (волна 2 новых марок — `PROJECT-MODELS.md` п. 13; 21.10: +20 пропущенных моделей,
+- **Справочник моделей (B61):** 688 моделей 51 марки (волны 2–3 новых марок — `PROJECT-MODELS.md` пп. 13–14; 21.10: +20 пропущенных моделей,
   16 новых поколений — `PROJECT-MODELS.md` п. 7; волна 1 новых марок — Fiat, Jeep, Honda,
   Suzuki, Land Rover, Dacia, Lexus, Porsche, Mitsubishi, Mini — п. 8), комплектации из Википедии
-  и каталога ADAC (у 566 из 633 моделей), мягкие гибриды MHEV — всегда льготный акциз.
+  и каталога ADAC (у 603 из 688 моделей), мягкие гибриды MHEV — всегда льготный акциз.
   Механизмы — `PROJECT-MODELS.md`.
 - **Фургоны (B75):** разделы фургонов на всех порталах Европы, фильтры (DMC,
   ładowność, L/H), акциз N1 — 0 %.
@@ -1138,6 +1138,7 @@ mobile.de и AutoScout24 показывают под каждой ценой «~
 
 | Дата | Агент | Изменение | Коммит |
 |---|---|---|---|
+| 10-22 | Claude | **B61, новые марки — волна 3** (`PROJECT-MODELS.md` п. 14): Ssangyong / KGM, Maserati, Tesla, Smart, Infiniti, Lancia, Cadillac, Isuzu, Abarth, Alpine, Leapmotor — 55 моделей (51 марка, 688 моделей на странице); подмодели Infiniti EX/G/M, Abarth 595/695 → 500, KGM Torres EVX; комплектации ADAC. `?v=b61-brands3-1022`. Проверено в браузере: марки и подмодели распознаются | этот коммит |
 | 10-22 | Claude | **B61, новые марки — волна 2** (`PROJECT-MODELS.md` п. 13): Alfa Romeo, Dodge, Chevrolet, MG, Subaru, Jaguar, Chrysler, BYD, DS, Jaecoo, Omoda — 91 модель (39 марок, 633 модели на странице); подмодели DS4 Crossback / B9 Tribeca / MG4 EV Urban; MHEV Alfa Tonale / Junior, Jaguar 2020+, DS Hybrid 48 V; комплектации ADAC. `?v=b61-brands2-1022`. Проверено в браузере: марки DS / JAECOO / OMODA / BYD распознаются, Tonale 160 и F-Pace D200 — MHEV | этот коммит |
 | 10-22 | Claude | **B61 — комплектации из ADAC** (`PROJECT-MODELS.md` п. 12): `tools/collect-trims-adac.py` — линии оснащения со страниц поколений ADAC Autokatalog для моделей без списков в Википедии (195 строк, 117 моделей); «Wersja» у 500 из 542 моделей (было 383). `?v=b61-adac-trims-1022` | этот коммит |
 | 10-22 | Claude | **B61 — мягкие гибриды «проверить» и годы рестайлинга вручную** (`PROJECT-MODELS.md` пп. 10–11): 33 сочетания MHEV разобраны (Audi B9/F5 с MY2018, Kia дизели 2020+, Tucson III 2019+, Land Rover ЕС, Volvo T5 — нет; опции — «бывает и без него»), «проверить» — 0, 1 321 версия; `data/model-facelifts-manual.json` — 49 годов и 22 «не было», у поколений с годом 113 → 158. `?v=b61-mhev-lifts-1022` | этот коммит |

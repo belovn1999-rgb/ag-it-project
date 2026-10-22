@@ -266,6 +266,23 @@ DEFAULT_TYPE.update({
     ("DS", "DS3"): "hatchback", ("DS", "DS4"): "hatchback", ("DS", "DS5"): "hatchback", ("DS", "DS9"): "limousine",
     ("DS", "Nº8"): "suv",
 })
+# B61 new brands, wave 3 (owner 2026-10-22).
+SUV_MODELS |= {(m, x) for m in ("Ssangyong", "KGM") for x in ("Actyon", "Korando", "REXTON", "Rexton", "Tivoli", "Torres", "Kyron", "XLV")} | {
+    ("Maserati", "Levante"), ("Tesla", "Model X"), ("Tesla", "Model Y"), ("Smart", "#3"), ("Infiniti", "EX"), ("Infiniti", "FX"),
+    ("Infiniti", "QX30"), ("Infiniti", "QX50"), ("Infiniti", "QX70"), ("Infiniti", "QX56"), ("Cadillac", "Escalade"),
+    ("Cadillac", "SRX"), ("Leapmotor", "C10"),
+}
+PICKUP_MODELS |= {("Ssangyong", "MUSSO"), ("KGM", "Musso"), ("Isuzu", "D-Max")}
+VAN_MODELS |= {("Ssangyong", "Rodius"), ("Lancia", "MUSA"), ("Lancia", "Voyager"), ("Lancia", "Phedra")}
+DEFAULT_TYPE.update({
+    ("Maserati", "Ghibli"): "limousine", ("Maserati", "Quattroporte"): "limousine", ("Maserati", "GranCabrio"): "cabrio",
+    ("Maserati", "Granturismo"): "coupe", ("Tesla", "Model 3"): "limousine", ("Tesla", "Model S"): "limousine",
+    ("Smart", "ForFour"): "hatchback", ("Smart", "ForTwo"): "hatchback", ("Infiniti", "G"): "limousine", ("Infiniti", "M"): "limousine",
+    ("Infiniti", "Q30"): "hatchback", ("Infiniti", "Q50"): "limousine", ("Infiniti", "Q60"): "coupe", ("Infiniti", "Q70"): "limousine",
+    ("Lancia", "Delta"): "hatchback", ("Lancia", "Ypsilon"): "hatchback", ("Lancia", "Thema"): "limousine",
+    ("Cadillac", "CTS"): "limousine", ("Cadillac", "BLS"): "limousine", ("Cadillac", "STS"): "limousine",
+    ("Abarth", "500"): "hatchback", ("Abarth", "Punto Evo"): "hatchback", ("Alpine", "A110"): "coupe",
+})
 # Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
 BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
             ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
@@ -282,7 +299,7 @@ SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "gr
                "zafira", "alhambra", "tarraco", "cx-9", "cx-80", "x-trail", "pathfinder", "grand c4", "berlingo",
                "evalia", "ev9", "ioniq 9", "discovery", "lodgy", "jogger", "freemont", "pilot", "odyssey", "ulysse", "grandis",
                "outlander", "doblo", "durango", "grand caravan", "journey", "captiva", "orlando", "tahoe", "suburban",
-               "pacifica", "voyager", "tribeca", "aspen", "tang")
+               "pacifica", "voyager", "tribeca", "aspen", "tang", "rodius", "rexton", "escalade", "musa", "phedra")
 # Seven-seaters whose name is also some other car's generation code ("C8" = Audi A6/A7 C8).
 SEVEN_SEAT_MODELS = {("Citroen", "C8")}
 

@@ -320,6 +320,14 @@ RULES = [
       None, "JLR F-PACE 2022 — «P250 P400 MHEV P400e PHEV P550 SVR»"),
     R("Jaguar", ["XE", "XF"], "diesel", [204], 2.0, A, 2020, 2024, "48V", "JLR technical data XE / XF 2023",
       None, "en: Jaguar XE — «Ingenium 2.0L engines with an additional 48 Volt belt alternator starter system»; JLR — «POWERTRAIN D200 MHEV»"),
+    # Wave 3 (2026-10-22): Maserati and Lancia; SsangYong / KGM, Tesla, Smart, Infiniti, Cadillac, Isuzu, Abarth, Alpine,
+    # Leapmotor — none in Europe (Torres / Actyon Hybrid, Q50 Hybrid full; Leapmotor REEV plug-in).
+    R("Maserati", ["Ghibli", "Levante"], "petrol", [330], 2.0, A, 2020, 2024, "48V", "de.wikipedia: Maserati Ghibli (M157) / Levante",
+      None, "de: Maserati Ghibli (Tipo M157) — «2,0 Liter-Ottomotor (GME T4) … überarbeitet mit Mildhybrid»; en: Levante — «eBooster 48V petrol MHEV»"),
+    R("Lancia", ["Ypsilon"], "petrol", [70], 1.0, M, 2020, None, "12V", "en.wikipedia: Lancia Ypsilon",
+      None, "en: Lancia Ypsilon — «coupled to a 12-volt BSG (belt-integrated starter generator) electric motor»"),
+    R("Lancia", ["Ypsilon"], "petrol", [100, 110], 1.2, A, 2024, None, "48V", "it.wikipedia: Lancia Ypsilon (2024)",
+      None, "it: Lancia Ypsilon (2024) — «1.2 T Gen-3, Turbo Hybrid, a 48V da 100 cv, accoppiato a una trasmissione a doppia frizione»"),
     R("DS", ["DS3", "DS3 Crossback", "DS4", "Nº4"], "petrol", [136, 145], 1.2, A, 2024, None, "48V", "de.wikipedia: DS 3 Crossback / DS 4",
       None, "de: DS 4 — «Ein Mild-Hybrid mit 6-Stufen-Doppelkupplungsgetriebe folgte 2024.»; de: DS 3 Crossback — Tabelle «MHEV 136 … 04/2024»"),
 ]

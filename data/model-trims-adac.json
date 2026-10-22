@@ -2,6 +2,70 @@
  "collected": "2026-10-22",
  "rows": [
   {
+   "brand": "Abarth",
+   "model": "500",
+   "label": "500",
+   "code": "500 II",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Linea Tursimo",
+    "Linea Competizione",
+    "Anniversario",
+    "Turismo"
+   ],
+   "sport": [],
+   "special": [
+    "Scorpionissima Launch Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/1generation-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Abarth",
+   "model": "500",
+   "label": "500",
+   "code": "500 I",
+   "phase": "весь выпуск",
+   "years": "2008–2023",
+   "trims": [
+    "Pista",
+    "Tursimo",
+    "Monster Energy Yamaha",
+    "Scorpioneoro",
+    "Edizione Turini blau",
+    "Edizione Turini weiß",
+    "Edizione Turini",
+    "Linea Tursimo",
+    "Linea",
+    "Linea Competizione",
+    "XSR Yamaha",
+    "Competizione",
+    "Essesse",
+    "Rivale",
+    "Anniversario",
+    "Tributo Rally",
+    "Biposto",
+    "Turismo"
+   ],
+   "sport": [],
+   "special": [
+    "Scorpionissima Launch Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/1generation-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Alfa Romeo",
    "model": "147",
    "label": "147",
@@ -274,9 +338,6 @@
     "Impression",
     "Junior",
     "Turismo",
-    "TwinAir Junior",
-    "TwinAir SBK",
-    "TwinAir Turismo",
     "SBK"
    ],
    "sport": [],
@@ -300,9 +361,6 @@
     "Junior",
     "Super",
     "Turismo",
-    "TwinAir Junior",
-    "TwinAir SBK",
-    "TwinAir Turismo",
     "SBK"
    ],
    "sport": [],
@@ -411,6 +469,68 @@
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alfa-romeo/tonale/965/",
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alfa-romeo/tonale/965-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Alpine",
+   "model": "A110",
+   "label": "A110",
+   "code": "A110",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "San Remo",
+    "R Turini",
+    "R Le Mans",
+    "R Ultime",
+    "R Ultime La Bleue"
+   ],
+   "sport": [
+    "GT",
+    "S",
+    "R"
+   ],
+   "special": [
+    "S Enstone Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alpine/a110/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Alpine",
+   "model": "A110",
+   "label": "A110",
+   "code": "A110",
+   "phase": "дорестайлинг",
+   "years": "2017–2023",
+   "trims": [
+    "Pure",
+    "Première Édition",
+    "Légende",
+    "Légende GT",
+    "GT Jean Rédélé",
+    "Tour de Corse",
+    "San Remo",
+    "R Le Mans"
+   ],
+   "sport": [
+    "S",
+    "GT",
+    "R"
+   ],
+   "special": [
+    "Color Edition",
+    "S Enstone Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alpine/a110/2generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -1373,6 +1493,59 @@
    "special": [],
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/byd/tang/2generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Cadillac",
+   "model": "BLS",
+   "label": "BLS",
+   "code": "BLS",
+   "phase": "весь выпуск",
+   "years": "2006–2010",
+   "trims": [
+    "Business",
+    "Elegance",
+    "Flexpower Business",
+    "Flexpower Elegance",
+    "Flexpower Sport",
+    "Flexpower Sport Luxury",
+    "Sport Luxury",
+    "TiD Business",
+    "TiD Elegance",
+    "TiD Sport",
+    "TiD Sport Luxury"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/cadillac/bls/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Cadillac",
+   "model": "Escalade",
+   "label": "Escalade",
+   "code": "Escalade III",
+   "phase": "весь выпуск",
+   "years": "2007–н. в.",
+   "trims": [
+    "Premium",
+    "Platinum",
+    "Premium ESV",
+    "Platinum ESV"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/cadillac/escalade/4generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -2972,6 +3145,131 @@
    "origin": "adac"
   },
   {
+   "brand": "Infiniti",
+   "model": "FX",
+   "label": "FX",
+   "code": "FX II",
+   "phase": "дорестайлинг",
+   "years": "2009–2012",
+   "trims": [
+    "GT Premium",
+    "S Premium"
+   ],
+   "sport": [
+    "GT",
+    "S"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/fx/s51/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Infiniti",
+   "model": "M",
+   "label": "M",
+   "code": "M III",
+   "phase": "весь выпуск",
+   "years": "2010–2013",
+   "trims": [
+    "GT Premium",
+    "S Premium"
+   ],
+   "sport": [
+    "GT",
+    "S"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/m/y51/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Infiniti",
+   "model": "Q30",
+   "label": "Q30",
+   "code": "Q30 I",
+   "phase": "весь выпуск",
+   "years": "2015–2020",
+   "trims": [
+    "Pure",
+    "Luxe",
+    "Premium",
+    "Premium Tech",
+    "Premium Tech Café Teak",
+    "Luxe Tech",
+    "Sport Tech"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [
+    "Premium City Black",
+    "City Black Edition",
+    "Premium Tech Gallery White",
+    "Sport City Black"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/q30/h15/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Infiniti",
+   "model": "Q70",
+   "label": "Q70",
+   "code": "Q70",
+   "phase": "рестайлинг",
+   "years": "2015–2018",
+   "trims": [
+    "Sport Tech",
+    "Premium",
+    "Premium Tech"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/q70/y51-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Isuzu",
+   "model": "D-Max",
+   "label": "D-Max",
+   "code": "D-Max III",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "L",
+    "LS",
+    "LSE",
+    "V-Cross"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/isuzu/d-max/3generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/isuzu/d-max/3generation-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/isuzu/d-max/3generation-facelift-2/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "JAECOO",
    "model": "5",
    "label": "5",
@@ -3382,6 +3680,151 @@
    "origin": "adac"
   },
   {
+   "brand": "KGM",
+   "model": "Actyon",
+   "label": "Actyon",
+   "code": "Actyon II",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Core",
+    "Bliss",
+    "Lux"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/actyon/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "KGM",
+   "model": "Korando",
+   "label": "Korando",
+   "code": "Korando V",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "Nomad",
+    "Nomad Plus",
+    "Core",
+    "Bliss",
+    "Lux",
+    "Essential"
+   ],
+   "sport": [],
+   "special": [
+    "Black"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/korando/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "KGM",
+   "model": "Musso",
+   "label": "Musso",
+   "code": "Musso II",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [
+    "Core",
+    "Bliss",
+    "Lux"
+   ],
+   "sport": [],
+   "special": [
+    "Black"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/musso/1generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/musso/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "KGM",
+   "model": "Rexton",
+   "label": "Rexton",
+   "code": "Rexton IV",
+   "phase": "рестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "Core",
+    "Bliss",
+    "Lux"
+   ],
+   "sport": [],
+   "special": [
+    "Black"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/rexton/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "KGM",
+   "model": "Tivoli",
+   "label": "Tivoli",
+   "code": "Tivoli",
+   "phase": "рестайлинг",
+   "years": "2019–н. в.",
+   "trims": [
+    "Nomad",
+    "Nomad Plus",
+    "Core",
+    "Bliss",
+    "Lux",
+    "Essential"
+   ],
+   "sport": [],
+   "special": [
+    "Black",
+    "Limited"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/tivoli/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "KGM",
+   "model": "Torres",
+   "label": "Torres",
+   "code": "Torres",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Nomad",
+    "Bliss",
+    "Forest",
+    "Lux",
+    "Essential",
+    "Core"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/torres/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Kia",
    "model": "EV2",
    "label": "EV2",
@@ -3669,6 +4112,150 @@
    "origin": "adac"
   },
   {
+   "brand": "Lancia",
+   "model": "Delta",
+   "label": "Delta",
+   "code": "Delta III",
+   "phase": "весь выпуск",
+   "years": "2008–н. в.",
+   "trims": [
+    "Argento",
+    "Oro",
+    "& Oro",
+    "Platino",
+    "Di Oro",
+    "Di Platino",
+    "Di Executive",
+    "Oro DFN",
+    "Twinturbo Oro",
+    "Twinturbo Platino",
+    "Twinturbo Executive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/delta/844/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Lancia",
+   "model": "MUSA",
+   "label": "MUSA",
+   "code": "Musa",
+   "phase": "весь выпуск",
+   "years": "2004–н. в.",
+   "trims": [
+    "Argento",
+    "Oro",
+    "Silver",
+    "Gold",
+    "Platinum",
+    "Platino",
+    "Platino Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/musa/350-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/musa/350/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Lancia",
+   "model": "Phedra",
+   "label": "Phedra",
+   "code": "Phedra I",
+   "phase": "весь выпуск",
+   "years": "2002–2010",
+   "trims": [
+    "Executive",
+    "Executive Comfortronic",
+    "Emblema",
+    "Emblema Comfortronic"
+   ],
+   "sport": [],
+   "special": [
+    "Limited Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/phedra/179/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Lancia",
+   "model": "Ypsilon",
+   "label": "Ypsilon",
+   "code": "Ypsilon IV",
+   "phase": "рестайлинг",
+   "years": "2015–н. в.",
+   "trims": [
+    "Gold"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/ypsilon/312/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Lancia",
+   "model": "Ypsilon",
+   "label": "Ypsilon",
+   "code": "Ypsilon IV",
+   "phase": "дорестайлинг",
+   "years": "2011–2015",
+   "trims": [
+    "Silver",
+    "Gold",
+    "S by MomoDesign",
+    "Platinum"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/ypsilon/312/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Lancia",
+   "model": "Ypsilon",
+   "label": "Ypsilon",
+   "code": "Ypsilon III",
+   "phase": "весь выпуск",
+   "years": "2003–2011",
+   "trims": [
+    "Argento",
+    "Momo",
+    "Oro",
+    "Platino",
+    "Sport Momo Design"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/ypsilon/843/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lancia/ypsilon/843-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Land Rover",
    "model": "Range Rover Evoque",
    "label": "Range Rover Evoque",
@@ -3775,6 +4362,33 @@
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/land-rover/range-rover-evoque/i/",
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/land-rover/range-rover-evoque/i-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Leapmotor",
+   "model": "C10",
+   "label": "C10",
+   "code": "C10",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Life",
+    "Design",
+    "BEV Pro Life",
+    "BEV Pro Design",
+    "BEV ProMax Design",
+    "REEV Style",
+    "REEV Life",
+    "REEV Design",
+    "BEV Pro Style"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/leapmotor/c10/1generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -4021,6 +4635,162 @@
    "special": [],
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mg/zs/3generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maserati",
+   "model": "Ghibli",
+   "label": "Ghibli",
+   "code": "Ghibli III",
+   "phase": "рестайлинг",
+   "years": "2017–н. в.",
+   "trims": [
+    "GranLusso",
+    "GranSport",
+    "GT Ultima",
+    "Modena",
+    "S GranLusso",
+    "S GranSport",
+    "S Modena",
+    "Modena Ultima",
+    "Trofeo",
+    "Ultima"
+   ],
+   "sport": [
+    "GT",
+    "S"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/ghibli/iii-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maserati",
+   "model": "Ghibli",
+   "label": "Ghibli",
+   "code": "Ghibli III",
+   "phase": "дорестайлинг",
+   "years": "2013–2017",
+   "trims": [],
+   "sport": [
+    "S"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/ghibli/iii/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maserati",
+   "model": "GranCabrio",
+   "label": "GranCabrio",
+   "code": "GranCabrio I",
+   "phase": "весь выпуск",
+   "years": "2011–н. в.",
+   "trims": [
+    "Trofeo",
+    "Folgore"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/grancabrio/2generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/grancabrio/2generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maserati",
+   "model": "Granturismo",
+   "label": "Granturismo",
+   "code": "Granturismo I",
+   "phase": "весь выпуск",
+   "years": "2007–н. в.",
+   "trims": [
+    "Modena",
+    "Trofeo",
+    "Folgore"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/granturismo/2generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/granturismo/2generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maserati",
+   "model": "Levante",
+   "label": "Levante",
+   "code": "Levante I",
+   "phase": "весь выпуск",
+   "years": "2016–н. в.",
+   "trims": [
+    "GT Ultima",
+    "GranLusso",
+    "GranSport",
+    "Modena",
+    "S GranLusso",
+    "S GranSport",
+    "Modena S",
+    "Modena Ultima",
+    "Trofeo",
+    "Ultima"
+   ],
+   "sport": [
+    "GT",
+    "S",
+    "GTS"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/levante/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maserati",
+   "model": "Quattroporte",
+   "label": "Quattroporte",
+   "code": "Quattroporte II",
+   "phase": "весь выпуск",
+   "years": "2013–н. в.",
+   "trims": [
+    "GranLusso",
+    "GranSport",
+    "S GranLusso",
+    "S GranSport",
+    "Modena",
+    "Modena Ultima",
+    "GTS GranLusso",
+    "GTS GranSport",
+    "Trofeo"
+   ],
+   "sport": [
+    "GT",
+    "S",
+    "GTS"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/quattroporte/vi-facelift/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -4290,15 +5060,15 @@
    "phase": "дорестайлинг",
    "years": "2018–2021",
    "trims": [
-    "EQ Boost",
-    "EQ Boost AMG Line",
+    "Boost",
+    "Boost AMG Line",
     "Avantgarde"
    ],
    "sport": [
     "AMG Line"
    ],
    "special": [
-    "EQ Boost Edition",
+    "Boost Edition",
     "Edition"
    ],
    "sources": [
@@ -6027,6 +6797,390 @@
    "origin": "adac"
   },
   {
+   "brand": "Smart",
+   "model": "#3",
+   "label": "#3",
+   "code": "#3 I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Pro",
+    "Pro+",
+    "Premium",
+    "Brabus"
+   ],
+   "sport": [],
+   "special": [
+    "Pro+ Black Collection",
+    "Keith Haring Edition",
+    "Anniversary"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/3/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Smart",
+   "model": "ForFour",
+   "label": "ForFour",
+   "code": "ForFour II",
+   "phase": "рестайлинг",
+   "years": "2020–2023",
+   "trims": [
+    "passion",
+    "pulse",
+    "prime"
+   ],
+   "sport": [],
+   "special": [
+    "edition one"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/forfour/453-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Smart",
+   "model": "ForFour",
+   "label": "ForFour",
+   "code": "ForFour II",
+   "phase": "дорестайлинг",
+   "years": "2014–2020",
+   "trims": [
+    "passion",
+    "perfect",
+    "prime",
+    "BRABUS Style",
+    "proxy",
+    "pulse"
+   ],
+   "sport": [],
+   "special": [
+    "edition one"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/forfour/453/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/forfour/453-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Smart",
+   "model": "ForTwo",
+   "label": "ForTwo",
+   "code": "ForTwo III",
+   "phase": "рестайлинг",
+   "years": "2020–2023",
+   "trims": [
+    "passion",
+    "pulse",
+    "prime"
+   ],
+   "sport": [],
+   "special": [
+    "pulse edition bluedawn",
+    "prime edition bluedawn",
+    "edition one"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/fortwo/453-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Smart",
+   "model": "ForTwo",
+   "label": "ForTwo",
+   "code": "ForTwo III",
+   "phase": "дорестайлинг",
+   "years": "2014–2020",
+   "trims": [
+    "passion",
+    "perfect",
+    "prime",
+    "BRABUS Style",
+    "proxy"
+   ],
+   "sport": [],
+   "special": [
+    "edition citybeam",
+    "edition one"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/fortwo/451-facelift-2/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/fortwo/453/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/fortwo/453-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Smart",
+   "model": "ForTwo",
+   "label": "ForTwo",
+   "code": "ForTwo II",
+   "phase": "рестайлинг",
+   "years": "2012–2014",
+   "trims": [
+    "pure",
+    "pulse",
+    "passion",
+    "BoConcept"
+   ],
+   "sport": [],
+   "special": [
+    "edition whiteshade",
+    "edition cityflame",
+    "edition citybeam",
+    "edition sharpred",
+    "edition iceshine"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/fortwo/451-facelift-2/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Smart",
+   "model": "ForTwo",
+   "label": "ForTwo",
+   "code": "ForTwo II",
+   "phase": "дорестайлинг",
+   "years": "2007–2012",
+   "trims": [
+    "pure",
+    "pulse",
+    "passion"
+   ],
+   "sport": [],
+   "special": [
+    "black&white limited",
+    "limited silver",
+    "edition limited two",
+    "edition limited three",
+    "edition highstyle",
+    "edition greystyle",
+    "edition",
+    "edition sharpred",
+    "edition iceshine"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/fortwo/451/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/smart/fortwo/451-facelift-2/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Ssangyong",
+   "model": "Korando",
+   "label": "Korando",
+   "code": "Korando V",
+   "phase": "весь выпуск",
+   "years": "2019–н. в.",
+   "trims": [
+    "Crystal",
+    "Amber",
+    "Quartz",
+    "Ruby",
+    "Onyx",
+    "Sapphire"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/korando/3generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Ssangyong",
+   "model": "MUSSO",
+   "label": "MUSSO",
+   "code": "Musso II",
+   "phase": "весь выпуск",
+   "years": "2018–н. в.",
+   "trims": [
+    "Crystal",
+    "Amber",
+    "Quartz",
+    "Sapphire"
+   ],
+   "sport": [],
+   "special": [
+    "Blackline"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/musso/3generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Ssangyong",
+   "model": "REXTON",
+   "label": "REXTON",
+   "code": "Rexton IV",
+   "phase": "рестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "Crystal",
+    "Amber",
+    "Quartz",
+    "Sapphire"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/rexton/2generation-facelift-2/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Ssangyong",
+   "model": "REXTON",
+   "label": "REXTON",
+   "code": "Rexton IV",
+   "phase": "дорестайлинг",
+   "years": "2017–2021",
+   "trims": [
+    "Crystal",
+    "Quartz",
+    "Sapphire"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/rexton/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Ssangyong",
+   "model": "Tivoli",
+   "label": "Tivoli",
+   "code": "Tivoli",
+   "phase": "рестайлинг",
+   "years": "2019–н. в.",
+   "trims": [
+    "e-XGi ISG Crystal",
+    "e-XGi Crystal",
+    "e-XGi Flow",
+    "e-XGi ISG Forward",
+    "e-XGi Forward",
+    "e-XGi ISG Sapphire",
+    "e-XGi Sapphire",
+    "ISG Forward",
+    "Forward",
+    "Sapphire",
+    "Crystal",
+    "Amber",
+    "Quartz",
+    "real",
+    "Fizz",
+    "Onyx"
+   ],
+   "sport": [],
+   "special": [
+    "Blackline"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/tivoli/1generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/tivoli/1generation-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/tivoli/1generation-facelift-2/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Ssangyong",
+   "model": "Tivoli",
+   "label": "Tivoli",
+   "code": "Tivoli",
+   "phase": "дорестайлинг",
+   "years": "2015–2019",
+   "trims": [
+    "e-XGi Crystal",
+    "e-XGi ISG Crystal",
+    "e-XGi real",
+    "e-XGi Flow",
+    "e-XGi Quartz",
+    "e-XGi ISG Quartz",
+    "e-XGi ISG Forward",
+    "e-XGi Forward",
+    "e-XGi Sapphire",
+    "e-XGi ISG Sapphire",
+    "Crystal",
+    "ISG Crystal",
+    "Quartz",
+    "ISG Quartz",
+    "ISG Forward",
+    "Forward",
+    "Sapphire",
+    "ISG Sapphire"
+   ],
+   "sport": [],
+   "special": [
+    "e-XGi Clever Edition",
+    "e-XGi ISG Clever Edition",
+    "e-XGi Black White",
+    "e-XGi ISG Black White",
+    "Black White",
+    "ISG Black White"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/tivoli/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Ssangyong",
+   "model": "Torres",
+   "label": "Torres",
+   "code": "Torres",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Amber",
+    "Quartz",
+    "Sapphire"
+   ],
+   "sport": [],
+   "special": [
+    "Forest Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/torres/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Subaru",
    "model": "BRZ",
    "label": "BRZ",
@@ -6552,6 +7706,129 @@
    "origin": "adac"
   },
   {
+   "brand": "Tesla",
+   "model": "Model 3",
+   "label": "Model 3",
+   "code": "Model 3",
+   "phase": "рестайлинг",
+   "years": "2020–н. в.",
+   "trims": [
+    "Plus",
+    "Maximale Reichweite",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-3/1generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-3/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Tesla",
+   "model": "Model 3",
+   "label": "Model 3",
+   "code": "Model 3",
+   "phase": "дорестайлинг",
+   "years": "2017–2020",
+   "trims": [
+    "Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-3/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Tesla",
+   "model": "Model S",
+   "label": "Model S",
+   "code": "Model S",
+   "phase": "рестайлинг",
+   "years": "2016–н. в.",
+   "trims": [
+    "Maximum",
+    "Plaid"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-s/1generation-facelift/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-s/1generation-facelift-2/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Tesla",
+   "model": "Model X",
+   "label": "Model X",
+   "code": "Model X",
+   "phase": "рестайлинг",
+   "years": "2021–н. в.",
+   "trims": [
+    "Plaid"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-x/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Tesla",
+   "model": "Model X",
+   "label": "Model X",
+   "code": "Model X",
+   "phase": "дорестайлинг",
+   "years": "2016–2021",
+   "trims": [
+    "Maximum"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-x/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Tesla",
+   "model": "Model Y",
+   "label": "Model Y",
+   "code": "Model Y I",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "Maximum",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [
+    "Maximum Launch Series"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-y/1generation/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-y/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Toyota",
    "model": "Corolla Cross",
    "label": "Corolla Cross",
@@ -6873,8 +8150,10 @@
   }
  ],
  "missing": [
+  "Abarth|Punto Evo: нет в ADAC",
   "Alfa Romeo|4C: нет в ADAC",
   "Audi|e-tron GT: в ADAC нет названий линий",
+  "Cadillac|STS: нет в ADAC",
   "Chevrolet|Avalanche: нет в ADAC",
   "Chevrolet|Impala: нет в ADAC",
   "Chevrolet|Malibu: нет в ADAC",
@@ -6902,6 +8181,16 @@
   "Honda|Element: нет в ADAC",
   "Honda|NSX: нет в ADAC",
   "Honda|e: нет в ADAC",
+  "Infiniti|EX: нет в ADAC",
+  "Infiniti|G: нет в ADAC",
+  "Infiniti|Q50: нет в ADAC",
+  "Infiniti|Q60: нет в ADAC",
+  "Infiniti|QX30: нет в ADAC",
+  "Infiniti|QX50: нет в ADAC",
+  "Infiniti|QX56: нет в ADAC",
+  "Infiniti|QX70: нет в ADAC",
+  "Lancia|Thema: нет в ADAC",
+  "Lancia|Voyager: нет в ADAC",
   "Lexus|LX: нет в ADAC",
   "MG|TF: нет в ADAC",
   "Mazda|CX-9: нет в ADAC",
@@ -6920,6 +8209,9 @@
   "Opel|Cascada: нет в ADAC",
   "Peugeot|iOn: нет в ADAC",
   "Renault|Megane E-TECH: нет в ADAC",
+  "Ssangyong|Kyron: нет в ADAC",
+  "Ssangyong|Rodius: нет в ADAC",
+  "Ssangyong|XLV: нет в ADAC",
   "Subaru|Tribeca: нет в ADAC",
   "Subaru|WRX STI: нет в ADAC",
   "Toyota|FJ: нет в ADAC",

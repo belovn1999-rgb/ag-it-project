@@ -36,6 +36,7 @@ MANUAL = {
     "DS|DS3": ["ds-automobiles/ds-3"], "DS|DS3 Crossback": ["ds-automobiles/ds-3"], "DS|DS4": ["ds-automobiles/ds-4"],
     "DS|DS5": ["ds-automobiles/ds-5"], "DS|DS7 (Crossback)": ["ds-automobiles/ds-7"], "DS|DS9": ["ds-automobiles/ds-9"],
     "DS|Nº8": ["ds-automobiles/n8"], "MG|HS": ["mg/hs-ehs"],
+    "Abarth|500": ["abarth/500-595-695"],  # wave 3
 }
 PHASE_RU = {"pre": "дорестайлинг", "fl": "рестайлинг", "fl2": "2-й рестайлинг", "upd": "обновление"}
 # Words of a version name that are not its trim: engine, power, gearbox, drive, body, fuel.
@@ -145,7 +146,8 @@ def trim_of(name, prefix_words):
     name = re.sub(r"(?<![\w-])(S[- ]tronic|Stop\s*&\s*Start|e-?DSC\d|e-?EAT\d|ETG\d?|EGS\d?|e-?HDi|FAP|e-?VTi|e-Boost|4Drive|"
                   r"E-REV|\d+-Volt-Mildhybrid|cod|extralang|Clean Diesel|2-Tronic|Multi-Mode-Automatik|e-4ORCE|EV\d{2,3}|iV|"
                   r"T[34]|T-Jet|e-\d{3,4}|eHybrid|OPF|Q2|TB|T\.Spark|M-Jet|MultiJet|JTDM?|Ibrida|VGT|\d+V-Hybrid|eDCT-?\d|TCT|Lineartronic|"
-                  r"ecomatic|E-Performance|EcoLogic|Hybrid\+|EHS)(?![\w-])", " ", name, flags=re.I)
+                  r"ecomatic|E-Performance|EcoLogic|Hybrid\+|EHS|twinamic|softouch|softip|mhd|EQ|Start&Stopp|TwinAir|D\.F\.N-System|"
+                  r"GDI-T|e-XDi\d*|MTA|Single Cab|Space Cab|Double Cab|Extended Cab|Crew Cab)(?![\w-])", " ", name, flags=re.I)
     words = name.split()
     while words and prefix_words and words[0].lower() in prefix_words:
         words = words[1:]

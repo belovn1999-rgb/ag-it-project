@@ -138,6 +138,15 @@
     DS: { "DS4 Crossback": ["DS4"] },
     Subaru: { "B9 Tribeca": ["Tribeca"] },
     MG: { "MG4 EV Urban": ["MG4"] },
+    // New brands, wave 3 (owner 2026-10-22).
+    Infiniti: {
+      EX30: ["EX"], EX35: ["EX"], EX37: ["EX"], G35: ["G"], G37: ["G"], M30: ["M"], M35: ["M"], M37: ["M"],
+    },
+    Abarth: {
+      "500C": ["500"], "500e": ["500"], 595: ["500"], "595C": ["500"], "595 Competizione": ["500"], "595 Turismo": ["500"],
+      695: ["500"], "695C": ["500"], "Grande Punto": ["Punto Evo"],
+    },
+    KGM: { "Torres EVX": ["Torres"] },
   };
   // Mercedes catalog models are "<class> <number>" (GLA 200, CLS 350): the class is the family.
   const MERCEDES_FAMILIES = ["CLA", "CLC", "CLE", "CLK", "CLS", "CL", "GLA", "GLB", "GLC", "GLE", "GLK", "GLS", "GL", "ML",

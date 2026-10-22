@@ -1,5 +1,5 @@
 {
- "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA). 2026-10-20 (B61, item 4): 20 more models; \"bodies\" = a regex the autocentrum body path must match (a model kept as bodies of another: Yaris Cross, e-tron GT, Citroen DS3/DS4/DS5). 2026-10-21 (B61, new brands wave 1, owner): Fiat, Jeep, Honda, Suzuki, Land Rover, Dacia, Lexus, Porsche, Mitsubishi, Mini — their models made since 2010 (Mini/Lexus keys are families: \"Cooper S Clubman\" -> Clubman, \"NX 300h\" -> NX). 2026-10-22 (B61, new brands wave 2, owner): Alfa Romeo, Dodge, Chevrolet, MG, Subaru, Jaguar, Chrysler, BYD, DS, Jaecoo, Omoda.",
+ "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA). 2026-10-20 (B61, item 4): 20 more models; \"bodies\" = a regex the autocentrum body path must match (a model kept as bodies of another: Yaris Cross, e-tron GT, Citroen DS3/DS4/DS5). 2026-10-21 (B61, new brands wave 1, owner): Fiat, Jeep, Honda, Suzuki, Land Rover, Dacia, Lexus, Porsche, Mitsubishi, Mini — their models made since 2010 (Mini/Lexus keys are families: \"Cooper S Clubman\" -> Clubman, \"NX 300h\" -> NX). 2026-10-22 (B61, new brands wave 2, owner): Alfa Romeo, Dodge, Chevrolet, MG, Subaru, Jaguar, Chrysler, BYD, DS, Jaecoo, Omoda. 2026-10-22 (B61, new brands wave 3, owner): Ssangyong / KGM (the same data under both makes), Maserati, Tesla, Smart, Infiniti, Lancia, Cadillac, Isuzu, Abarth, Alpine, Leapmotor.",
  "models": [
   {
    "brand": "Audi",
@@ -4562,6 +4562,447 @@
    "mobile": "9",
    "paths": [
     "omoda/9"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Actyon",
+   "mobile": "Actyon",
+   "paths": [
+    "ssangyong/actyon",
+    "ssangyong/actyon-sports"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Korando",
+   "mobile": "Korando",
+   "paths": [
+    "ssangyong/korando"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Musso",
+   "mobile": "MUSSO",
+   "paths": [
+    "ssangyong/musso"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Rexton",
+   "mobile": "REXTON",
+   "paths": [
+    "ssangyong/rexton"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Tivoli",
+   "mobile": "Tivoli",
+   "paths": [
+    "ssangyong/tivoli"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Torres",
+   "mobile": "Torres",
+   "paths": [
+    "ssangyong/torres"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Kyron",
+   "mobile": "Kyron",
+   "paths": [
+    "ssangyong/kyron"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Rodius",
+   "mobile": "Rodius",
+   "paths": [
+    "ssangyong/rodius"
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "XLV",
+   "mobile": "XLV",
+   "paths": [
+    "ssangyong/xlv"
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Actyon",
+   "mobile": "Actyon",
+   "paths": [
+    "ssangyong/actyon"
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Korando",
+   "mobile": "Korando",
+   "paths": [
+    "ssangyong/korando"
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Musso",
+   "mobile": "Musso",
+   "paths": [
+    "ssangyong/musso"
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Rexton",
+   "mobile": "Rexton",
+   "paths": [
+    "ssangyong/rexton"
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Tivoli",
+   "mobile": "Tivoli",
+   "paths": [
+    "ssangyong/tivoli"
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Torres",
+   "mobile": "Torres",
+   "paths": [
+    "ssangyong/torres"
+   ]
+  },
+  {
+   "brand": "Maserati",
+   "label": "Ghibli",
+   "mobile": "Ghibli",
+   "paths": [
+    "maserati/ghibli"
+   ]
+  },
+  {
+   "brand": "Maserati",
+   "label": "GranCabrio",
+   "mobile": "GranCabrio",
+   "paths": [
+    "maserati/gran-cabrio"
+   ]
+  },
+  {
+   "brand": "Maserati",
+   "label": "Granturismo",
+   "mobile": "Granturismo",
+   "paths": [
+    "maserati/granturismo"
+   ]
+  },
+  {
+   "brand": "Maserati",
+   "label": "Levante",
+   "mobile": "Levante",
+   "paths": [
+    "maserati/levante"
+   ]
+  },
+  {
+   "brand": "Maserati",
+   "label": "Quattroporte",
+   "mobile": "Quattroporte",
+   "paths": [
+    "maserati/quattroporte"
+   ]
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model 3",
+   "mobile": "Model 3",
+   "paths": [
+    "tesla/model-3"
+   ]
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model S",
+   "mobile": "Model S",
+   "paths": [
+    "tesla/model-s"
+   ]
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model X",
+   "mobile": "Model X",
+   "paths": [
+    "tesla/model-x"
+   ]
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model Y",
+   "mobile": "Model Y",
+   "paths": [
+    "tesla/model-y"
+   ]
+  },
+  {
+   "brand": "Smart",
+   "label": "#3",
+   "mobile": "#3",
+   "paths": [
+    "smart/3"
+   ]
+  },
+  {
+   "brand": "Smart",
+   "label": "ForFour",
+   "mobile": "ForFour",
+   "paths": [
+    "smart/forfour"
+   ]
+  },
+  {
+   "brand": "Smart",
+   "label": "ForTwo",
+   "mobile": "ForTwo",
+   "paths": [
+    "smart/fortwo"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "EX",
+   "mobile": "EX",
+   "paths": [
+    "infiniti/ex"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "FX",
+   "mobile": "FX",
+   "paths": [
+    "infiniti/fx"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "G",
+   "mobile": "G",
+   "paths": [
+    "infiniti/g"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "M",
+   "mobile": "M",
+   "paths": [
+    "infiniti/m"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q30",
+   "mobile": "Q30",
+   "paths": [
+    "infiniti/q30"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q50",
+   "mobile": "Q50",
+   "paths": [
+    "infiniti/q50"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q60",
+   "mobile": "Q60",
+   "paths": [
+    "infiniti/q60"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q70",
+   "mobile": "Q70",
+   "paths": [
+    "infiniti/q70"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "QX30",
+   "mobile": "QX30",
+   "paths": [
+    "infiniti/qx30"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "QX50",
+   "mobile": "QX50",
+   "paths": [
+    "infiniti/qx50"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "QX70",
+   "mobile": "QX70",
+   "paths": [
+    "infiniti/qx70"
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "QX56",
+   "mobile": "QX56",
+   "paths": [
+    "infiniti/qx"
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Delta",
+   "mobile": "Delta",
+   "paths": [
+    "lancia/delta"
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Musa",
+   "mobile": "MUSA",
+   "paths": [
+    "lancia/musa"
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Voyager",
+   "mobile": "Voyager",
+   "paths": [
+    "lancia/voyager"
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Ypsilon",
+   "mobile": "Ypsilon",
+   "paths": [
+    "lancia/ypsilon"
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Phedra",
+   "mobile": "Phedra",
+   "paths": [
+    "lancia/phedra"
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Thema",
+   "mobile": "Thema",
+   "paths": [
+    "lancia/thema"
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "label": "CTS",
+   "mobile": "CTS",
+   "paths": [
+    "cadillac/cts"
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "label": "Escalade",
+   "mobile": "Escalade",
+   "paths": [
+    "cadillac/escalade"
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "label": "SRX",
+   "mobile": "SRX",
+   "paths": [
+    "cadillac/srx"
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "label": "BLS",
+   "mobile": "BLS",
+   "paths": [
+    "cadillac/bls"
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "label": "STS",
+   "mobile": "STS",
+   "paths": [
+    "cadillac/sts"
+   ]
+  },
+  {
+   "brand": "Isuzu",
+   "label": "D-Max",
+   "mobile": "D-Max",
+   "paths": [
+    "isuzu/d-max"
+   ]
+  },
+  {
+   "brand": "Abarth",
+   "label": "500",
+   "mobile": "500",
+   "paths": [
+    "abarth/500"
+   ]
+  },
+  {
+   "brand": "Abarth",
+   "label": "Punto",
+   "mobile": "Punto Evo",
+   "paths": [
+    "abarth/punto"
+   ]
+  },
+  {
+   "brand": "Alpine",
+   "label": "A110",
+   "mobile": "A110",
+   "paths": [
+    "alpine/a110"
+   ]
+  },
+  {
+   "brand": "Leapmotor",
+   "label": "C10",
+   "mobile": "C10",
+   "paths": [
+    "leapmotor/c10"
    ]
   }
  ]
