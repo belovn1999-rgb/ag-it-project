@@ -850,7 +850,7 @@
 | Mercedes-Benz | CLE | CLE | весь выпуск | 2023–н. в. | Avantgarde Advanced, Avantgarde Advanced Plus, AMG Line Advanced, AMG Line Advanced Plus, AMG Line Premium, AMG Line Premium Plus | — | Edition Avantgarde, Edition AMG Line | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cle/236/) |
 | Mercedes-Benz | CLK | W209 | весь выпуск | 2002–2010 | Avantgarde, Elegance | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/clk-klasse/209/) |
 | Mercedes-Benz | CLS | C257 | рестайлинг | 2021–2023 | Avantgarde | AMG Line | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/257/) |
-| Mercedes-Benz | CLS | C257 | дорестайлинг | 2018–2021 | Boost, Boost AMG Line, Avantgarde | AMG Line | Boost Edition, Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/257/) |
+| Mercedes-Benz | CLS | C257 | дорестайлинг | 2018–2021 | Avantgarde | AMG Line | Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/257/) |
 | Mercedes-Benz | CLS | W218 | рестайлинг | 2014–2017 | PLUS | — | Final Edition, Final Edition PLUS | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/218-facelift/) |
 | Mercedes-Benz | CLS | W218 | дорестайлинг | 2011–2014 | PLUS | — | Edition PLUS | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/218/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/218-facelift/) |
 | Mercedes-Benz | CLS | W219 | весь выпуск | 2004–2011 | — | — | Edition PLUS | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/218/) |
