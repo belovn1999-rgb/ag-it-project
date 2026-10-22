@@ -92,7 +92,7 @@ html-to-image (панель цен и вывод «Анализа», листы 
 | 9.1 | Калькулятор PL | По макету §4: шапка, путь, «Данные», лист с итогом сверху, финальный расчёт, телефон | 1–2 дня | `livewire/calculator/page` + `partials/purchase-sheet`, `settlement-*` |
 | 9.2 | Калькулятор BY | Тот же каркас, итог € и $ | 1 день | `calculator/belarus`, `partials/by-sheet` |
 | 9.3 | Конструкторы PL и BY | Окно BY — `flux:modal`, гармошки — `flux:accordion`, поля и кнопки Flux | 1–2 дня | `calculator/konstruktor`, `partials/konstruktor-*`, `by-konstruktor` |
-| 9.4 | VIN Check | Папка истории (общая), загрузка PDF — `flux:file-upload`, язык — сегментом, значки Flux | 1 день | `livewire/vin/page` |
+| 9.4 | VIN Check | Папка истории (общая), загрузка PDF — `flux:file-upload`, язык — сегментом, значки Flux; подробно — [PLATFORM-VIN.md](PLATFORM-VIN.md) §9: три волны 9.4.1–9.4.3 (форма и состояние · результат как шапка «Карточки авто» · история и телефон), макет `design/flux-vin/` | 2 дня | `livewire/vin/page` |
 | 9.5 | Офферы | Список — `flux:table`, создание — карточки выбора, гармошки, дата, загрузка файла, плашки (не PDF и не страница клиента) | 1–2 дня | `livewire/offers/*` |
 | 9.6 | Поиск дилеры, стр. 1 | Форма: группы — `flux:accordion`, «таблетки» — `flux:checkbox.group`, подсказки марок — `flux:autocomplete`, порталы — `flux:switch`, папка избранного — общая | 2–3 дня | `livewire/dealers/form`, `components/dealers/{group,chips,combo,range,locale-switch,favorites-bar,searchbar}` |
 | 9.7 | Поиск дилеры, «Анализ» | Таблицы — `flux:table` с сортировкой, сегменты, вкладки, уведомления; блоки-картинки — только с проверкой картинки и PDF | 2–3 дня | `livewire/dealers/analysis*` |
@@ -113,6 +113,7 @@ html-to-image (панель цен и вывод «Анализа», листы 
 
 ## 7. Журнал
 
+- 2026-10-22 — VIN Check (9.4): словарь замен, 7 изменений раскладки на одобрение, волны 9.4.1–9.4.3, макет «было / стало» (`design/flux-vin/`) — `PLATFORM-VIN.md` §9; начинать после основы 9.0 (Claude).
 - 2026-10-22 — kickoff: разобрана «Карточка авто» Игоря (рецепт §2), обход всех разделов (§3), макет двух
   калькуляторов на Flux Pro (§4, `design/flux-calculator/`), план волн 9.0–9.9 (§5); скилл `design-system-unify`
   для других проектов (Claude).

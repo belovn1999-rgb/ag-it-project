@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VIN Check — макет Flux Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Onest', 'ui-sans-serif', 'system-ui'], mono: ['JetBrains Mono', 'ui-monospace', 'Menlo'] },
+  colors: { brand: '#1a5b80', ink: '#0f1b24', 'ink-soft': '#33434f', muted: '#4a5b68', line: '#e2e8f0', 'line-soft': '#e9eef2', control: '#cbd4db',
+    chip: '#edf1f4', soft: '#f8fafb', selected: '#eef5f9', good: '#17603a', 'good-soft': '#e2f3e8', info: '#123f59', 'info-soft': '#e4eef4',
+    fresh: '#7a4300', 'fresh-soft': '#fbeed8', highlight: '#ea7317', warn: '#8a5200', 'warn-soft': '#fcf0d4', 'warn-line': '#ecd29a',
+    danger: '#a32a1f', 'danger-soft': '#fbeae8' },
+  borderRadius: { card: '1rem', control: '0.625rem' },
+} } }
+</script>
+<style>
+  body { background: #f1f4f6; }
+  section.frame { background:#fff; }
+  .card { background:#fff; border:1px solid #e2e8f0; border-radius:1rem; box-shadow:0 1px 2px rgb(0 0 0 / .05); }
+  .card-old { background:#fff; border:1px solid #e2e8f0; border-radius:1rem; }
+  /* Flux: кнопки, поля, сегменты, вкладки, плашки — как компоненты Flux с акцентом = фирменный синий */
+  .fx-btn { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; height:2.5rem; padding:0 1rem; border-radius:.5rem; font-size:.875rem; font-weight:500;
+    background:#fff; color:#27272a; border:1px solid #e4e4e7; border-bottom-color:#d4d4d8cc; box-shadow:0 1px 2px rgb(0 0 0 / .05); white-space:nowrap; }
+  .fx-btn.primary { background:#1a5b80; color:#fff; border:1px solid rgb(0 0 0 / .1); box-shadow: inset 0 1px rgb(255 255 255 / .2); }
+  .fx-btn.ghost { background:transparent; border-color:transparent; box-shadow:none; color:#3f3f46; }
+  .fx-btn.icon { width:2.5rem; padding:0; }
+  .fx-btn.sm { height:2rem; padding:0 .75rem; font-size:.8125rem; }
+  .fx-btn.sm.icon { width:2rem; padding:0; }
+  .fx-btn.dis { opacity:.5; }
+  .fx-input { display:flex; align-items:center; height:2.5rem; border-radius:.5rem; background:#fff; border:1px solid #e4e4e7; border-bottom-color:#d4d4d8cc; box-shadow:0 1px 2px rgb(0 0 0 / .05); overflow:hidden; }
+  .fx-input .v { flex:1; min-width:0; padding:0 .75rem; font-size:1rem; color:#0f1b24; white-space:nowrap; overflow:hidden; }
+  .fx-input .v.ph { color:#a1a1aa; }
+  .fx-input .pre { height:100%; display:flex; align-items:center; padding:0 0 0 .75rem; color:#71717a; }
+  .fx-input .post { height:100%; display:flex; align-items:center; padding:0 .75rem; color:#71717a; }
+  .fx-label { font-size:.875rem; font-weight:500; color:#27272a; }
+  .fx-desc { font-size:.8125rem; color:#4a5b68; }
+  .seg { display:inline-flex; padding:4px; border-radius:.5rem; background:rgb(39 39 42 / .05); height:2.5rem; }
+  .seg span { display:flex; align-items:center; justify-content:center; padding:0 .875rem; border-radius:.375rem; font-size:.875rem; font-weight:500; color:#52525b; white-space:nowrap; gap:.375rem; }
+  .seg span.on { background:#fff; color:#18181b; box-shadow:0 1px 2px rgb(0 0 0 / .08), 0 0 0 1px rgb(0 0 0 / .04); }
+  .seg.sm { height:2rem; padding:3px; } .seg.sm span { padding:0 .625rem; font-size:.8125rem; }
+  .badge { display:inline-flex; align-items:center; gap:.25rem; border-radius:7px; padding:.2rem .6rem; font-size:13px; font-weight:500; white-space:nowrap; }
+  .callout { display:flex; gap:.75rem; border-radius:.75rem; padding:.875rem 1rem; font-size:.9rem; border:1px solid; }
+  .tile { display:flex; align-items:center; gap:.75rem; border-radius:.625rem; background:#f8fafb; padding:.8rem .9rem; }
+  .tile svg { flex-shrink:0; color:#1a5b80; }
+  .vinchip { border:1px solid #e2e8f0; background:#f8fafb; border-radius:.5rem; padding:.25rem .65rem; font-family:'JetBrains Mono', ui-monospace, monospace; font-size:14px; font-weight:600; letter-spacing:.04em; }
+  .nav a { display:flex; align-items:center; gap:.5rem; min-height:4rem; padding:0 .875rem; border-bottom:3px solid transparent; font-weight:500; color:#4a5b68; font-size:15px; }
+  .nav a.on { border-color:#1a5b80; color:#0f1b24; font-weight:600; }
+  .pdf { background:#525659; border-radius:.625rem; padding:22px; display:flex; justify-content:center; }
+  .pdf .page { background:#fff; width:100%; max-width:760px; box-shadow:0 2px 10px rgb(0 0 0 / .35); padding:34px 40px; font-size:12px; color:#333; }
+  .pdf .ln { height:8px; background:#e5e7eb; border-radius:3px; margin:9px 0; }
+  .frame-title { font: 600 13px/1.2 Onest, sans-serif; letter-spacing:.06em; text-transform:uppercase; color:#4a5b68; }
+  .note-tag { display:inline-flex; align-items:center; justify-content:center; width:22px; height:22px; border-radius:999px; background:#ea7317; color:#fff; font-size:12px; font-weight:700; flex-shrink:0; }
+  .spin { animation: none; }
+</style>
+</head>
+<body class="font-sans text-ink text-[15px] antialiased">
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5m-13.5-9L12 3m0 0 4.5 4.5M12 3v13.5"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z"/></symbol>
+    <symbol id="i-err" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+    <symbol id="i-engine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M5 21h10M7 11h6M15 9h2l2 2v6a2 2 0 0 1-4 0"/></symbol>
+    <symbol id="i-cube" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m21 7.5-9-5.25L3 7.5m18 0-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.006 5.404.434c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.29-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.434 2.082-5.005Z"/></symbol>
+    <symbol id="i-star-o" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 18 18 6M6 6l12 12"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m19.5 8.25-7.5 7.5-7.5-7.5"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></symbol>
+    <symbol id="i-load" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2.5" opacity=".2"/><path d="M21 12a9 9 0 0 0-9-9" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></symbol>
+    <symbol id="i-vin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8V6a2 2 0 0 1 2-2h2M16 4h2a2 2 0 0 1 2 2v2M20 16v2a2 2 0 0 1-2 2h-2M8 20H6a2 2 0 0 1-2-2v-2"/><path d="M8 9v6M11 9v6M14 9v6M17 9v6"/></symbol>
+    <symbol id="i-cog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></symbol>
+  </defs>
+</svg>
+
+<!-- ==================== БЫЛО, компьютер (живая страница 22.10 с результатом) ==================== -->
+<section id="before" class="frame w-[1440px] pb-10">
+  <header class="bg-white shadow-sm">
+    <div class="mx-auto flex max-w-[1360px] items-center gap-7 px-6">
+      <div class="flex min-h-16 items-center gap-2.5 font-bold"><span class="flex size-8 items-center justify-center rounded-lg bg-brand text-white text-sm">M</span>Mantexlab Tools</div>
+      <nav class="nav flex"><a>Поиск аукционы</a><a>Карточка авто</a><a>Поиск дилеры</a><a>Офферты</a><a>Калькулятор</a><a>Chrome</a><a>Осмотры</a><a class="on">VIN Check</a></nav>
+    </div>
+  </header>
+  <main class="mx-auto flex max-w-[1360px] flex-col gap-5 px-6 pt-7">
+    <div class="flex items-center gap-4">
+      <span class="inline-flex min-h-11 items-center gap-2 rounded-control border border-line bg-white px-3 text-[14px] font-semibold"><svg class="size-5 text-highlight"><use href="#i-folder"/></svg>История VIN <span class="inline-flex items-center gap-0.5 rounded-full bg-chip px-2 py-0.5 text-[12px] font-semibold text-ink-soft"><svg class="size-3 text-highlight"><use href="#i-star"/></svg>3</span><svg class="size-4 text-muted"><use href="#i-chev"/></svg></span>
+      <div class="flex-1"></div>
+      <span class="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-brand bg-selected px-2.5 text-[13px] font-semibold">RU</span>
+      <span class="-ml-3 flex min-h-11 min-w-11 items-center justify-center rounded-full border border-line px-2.5 text-[13px] text-ink-soft">PL</span>
+    </div>
+    <div class="flex flex-col gap-1">
+      <h1 class="text-[28px] font-bold leading-tight tracking-tight">VIN Check</h1>
+      <p class="text-[13px] text-muted">partslink24 проверяет один VIN за раз — следующие ждут в очереди в порядке нажатия.</p>
+    </div>
+    <p class="rounded-control border border-warn-line bg-warn-soft px-4 py-3 text-[14px] text-warn">Автоматическая проверка в partslink24 ждёт включения. Сейчас: скачайте отчёт в partslink24 и загрузите PDF — данные прочитаются сами.</p>
+    <section class="card-old flex flex-col gap-3 p-5">
+      <div class="grid items-end gap-4" style="grid-template-columns:auto 240px minmax(220px,1fr) auto auto">
+        <div class="flex flex-col gap-1.5"><span class="text-[13px] font-medium text-muted">1. Язык отчёта</span>
+          <div class="inline-flex gap-1 rounded-control bg-chip p-1"><span class="flex min-h-11 min-w-16 items-center justify-center rounded-[8px] bg-brand px-4 text-[15px] font-semibold text-white">RU</span><span class="flex min-h-11 min-w-16 items-center justify-center px-4 text-[15px] font-medium text-ink-soft">PL</span><span class="flex min-h-11 min-w-16 items-center justify-center px-4 text-[15px] font-medium text-ink-soft">ENG</span></div></div>
+        <div class="flex flex-col gap-1.5"><span class="text-[13px] font-medium text-muted">2. Марка авто</span><span class="flex min-h-11 items-center justify-between rounded-control border border-control px-3 text-[16px]">BMW <svg class="size-4"><use href="#i-chev"/></svg></span></div>
+        <div class="flex flex-col gap-1.5"><span class="flex justify-between text-[13px] font-medium text-muted"><span>3. VIN (17 символов)</span><span>17 / 17</span></span><span class="flex min-h-11 items-center rounded-control border border-control px-3 font-mono text-[16px] tracking-[0.06em]">WBA8E1105KAX12345</span></div>
+        <span class="inline-flex min-h-11 items-center gap-2 rounded-control bg-brand px-5 font-semibold text-white opacity-50"><svg class="size-[18px]"><use href="#i-search"/></svg>Проверить данные</span>
+        <div class="flex flex-col gap-1.5"><span class="text-[13px] font-medium text-muted">или</span><span class="inline-flex min-h-11 items-center gap-2 rounded-control border border-control px-4 font-medium"><svg class="size-[18px]"><use href="#i-up"/></svg>Загрузить PDF из partslink24</span></div>
+      </div>
+      <div class="border-t border-line-soft pt-3"><p class="text-[14px] text-good">Данные прочитаны из загруженного PDF.</p></div>
+    </section>
+    <div class="grid items-start gap-5" style="grid-template-columns:4fr 8fr">
+      <section class="card-old flex flex-col gap-2 p-5">
+        <div class="flex items-center justify-between"><h2 class="text-[12px] font-semibold uppercase tracking-[0.08em] text-muted">Результат</h2><span class="inline-flex size-11 items-center justify-center rounded-control border border-control text-ink-soft"><svg class="size-[18px]"><use href="#i-copy"/></svg></span></div>
+        <dl class="flex flex-col">
+          <div class="flex flex-col gap-1 border-b border-line-soft py-3"><dt class="text-[13px] text-muted">Марка и модель авто</dt><dd class="text-[20px] font-semibold leading-snug">BMW 318d</dd></div>
+          <div class="flex flex-col gap-1 border-b border-line-soft py-3"><dt class="text-[13px] text-muted">Дата производства</dt><dd class="text-[20px] font-semibold leading-snug">01.02.2021</dd></div>
+          <div class="flex flex-col gap-1 border-b border-line-soft py-3"><dt class="text-[13px] text-muted">Тип двигателя</dt><dd class="text-[20px] font-semibold leading-snug">Дизель + MHEV (мягкий гибрид)</dd></div>
+          <div class="flex flex-col gap-1 py-3"><dt class="text-[13px] text-muted">Объём двигателя</dt><dd class="text-[20px] font-semibold leading-snug">2000 cm³</dd></div>
+        </dl>
+        <p class="border-t border-line-soft pt-3 text-[13px] text-muted"><span class="font-mono">WBA8E1105KAX12345</span> · 22.10.2026 14:05 · Никита · из PDF</p>
+      </section>
+      <section class="card-old flex flex-col gap-3 p-5">
+        <div class="flex items-center justify-between"><h2 class="text-[12px] font-semibold uppercase tracking-[0.08em] text-muted">Файл VIN · <span class="normal-case tracking-normal">BMW_WBA8E1105KAX12345.pdf</span></h2>
+          <div class="flex gap-2"><span class="inline-flex size-11 items-center justify-center rounded-control border border-control text-ink-soft"><svg class="size-[18px]"><use href="#i-down"/></svg></span><span class="inline-flex size-11 items-center justify-center rounded-control border border-control text-ink-soft"><svg class="size-[18px]"><use href="#i-ext"/></svg></span></div></div>
+        <div class="pdf" style="height:560px"><div class="page"><div class="mb-4 flex justify-between text-[13px] font-semibold"><span>partslink24 · BMW</span><span class="font-mono">WBA8E1105KAX12345</span></div><div class="ln w-2/3"></div><div class="ln"></div><div class="ln w-5/6"></div><div class="ln w-1/2"></div><div class="ln"></div><div class="ln w-3/4"></div><div class="ln w-2/3"></div><div class="ln"></div><div class="ln w-5/6"></div><div class="ln w-1/2"></div><div class="ln w-3/4"></div><div class="ln"></div><div class="ln w-2/3"></div></div></div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<!-- ==================== СТАЛО, компьютер ==================== -->
+<section id="after" class="frame w-[1440px] pb-10">
+  <header class="bg-white shadow-sm">
+    <div class="mx-auto flex max-w-[1360px] items-center gap-7 px-6">
+      <div class="flex min-h-16 items-center gap-2.5 font-bold"><span class="flex size-8 items-center justify-center rounded-lg bg-brand text-white text-sm">M</span>Mantexlab Tools</div>
+      <nav class="nav flex"><a>Поиск аукционы</a><a>Карточка авто</a><a>Поиск дилеры</a><a>Офферты</a><a>Калькулятор</a><a>Chrome</a><a>Осмотры</a><a class="on">VIN Check</a></nav>
+    </div>
+  </header>
+  <main class="mx-auto flex max-w-[1360px] flex-col gap-5 px-6 pt-7">
+    <!-- 1. Шапка страницы: заголовок слева, действия справа — как «Карточка авто» и макет калькулятора -->
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+      <div class="flex flex-col gap-1">
+        <h1 class="text-[28px] font-bold leading-tight tracking-tight">VIN Check</h1>
+        <p class="text-[13px] text-muted">partslink24 проверяет один VIN за раз — следующие ждут в очереди в порядке нажатия.</p>
+      </div>
+      <div class="flex-1"></div>
+      <span class="fx-btn"><svg class="size-5 text-highlight"><use href="#i-folder"/></svg>История VIN <span class="badge bg-chip px-1.5 py-0 text-[12px] text-ink-soft"><svg class="size-3 text-highlight"><use href="#i-star"/></svg>3</span><svg class="size-4 text-zinc-400"><use href="#i-chev"/></svg></span>
+      <div class="seg sm"><span class="on">RU</span><span>PL</span></div>
+    </div>
+
+    <!-- 2. Заметка — flux:callout -->
+    <div class="callout border-warn-line bg-warn-soft text-warn"><svg class="mt-0.5 size-5 shrink-0"><use href="#i-warn"/></svg><span>Автоматическая проверка в partslink24 ждёт включения. Сейчас: скачайте отчёт в partslink24 и загрузите PDF — данные прочитаются сами.</span></div>
+
+    <!-- 3. Блок проверки: поля Flux одной строкой, ниже — загрузка PDF перетаскиванием и строка состояния -->
+    <section class="card flex flex-col gap-4 p-5">
+      <div class="flex items-baseline justify-between"><h2 class="text-lg font-semibold">Данные проверки</h2></div>
+      <div class="grid items-end gap-4" style="grid-template-columns:auto 260px minmax(240px,1fr) auto">
+        <div class="flex flex-col gap-2"><span class="fx-label">1. Язык отчёта</span><div class="seg"><span class="on">RU</span><span>PL</span><span>ENG</span></div></div>
+        <div class="flex flex-col gap-2"><span class="fx-label">2. Марка авто</span><div class="fx-input"><span class="v">BMW</span><span class="post"><svg class="size-4"><use href="#i-chev"/></svg></span></div></div>
+        <div class="flex flex-col gap-2"><span class="fx-label flex justify-between"><span>3. VIN (17 символов)</span><span class="badge bg-good-soft px-1.5 py-0 text-[12px] text-good">17 / 17</span></span><div class="fx-input"><span class="v font-mono tracking-[0.06em]">WBA8E1105KAX12345</span></div></div>
+        <span class="fx-btn primary dis h-10"><svg class="size-5"><use href="#i-search"/></svg>Проверить данные</span>
+      </div>
+      <!-- flux:file-upload — зона перетаскивания вместо кнопки «или» -->
+      <div class="flex items-center gap-4 rounded-[.75rem] border border-dashed border-control bg-soft px-4 py-3">
+        <span class="flex size-10 items-center justify-center rounded-lg bg-white text-brand shadow-sm ring-1 ring-line"><svg class="size-5"><use href="#i-up"/></svg></span>
+        <div class="flex flex-col"><span class="text-[14px] font-medium">Загрузить PDF из partslink24 <span class="font-normal text-muted">— или перетащите файл сюда</span></span><span class="fx-desc">Марка, VIN и язык прочитаются из файла сами.</span></div>
+        <div class="flex-1"></div><span class="fx-btn sm">Выбрать файл</span>
+      </div>
+      <!-- Строка состояния: итог — плашкой Flux, очередь — плашками -->
+      <div class="flex items-center justify-between gap-4 border-t border-line-soft pt-3">
+        <span class="flex items-center gap-2 text-[14px] text-good"><svg class="size-5"><use href="#i-ok"/></svg>Данные прочитаны из загруженного PDF.</span>
+        <span class="flex items-center gap-2 text-[13px] text-muted">Очередь проверок пуста</span>
+      </div>
+    </section>
+
+    <!-- 4. Две колонки, как утвердил владелец: результат слева (как шапка «Карточки авто»), PDF справа -->
+    <div class="grid items-start gap-5" style="grid-template-columns:4fr 8fr">
+      <section class="card flex flex-col gap-4 p-5">
+        <div class="flex items-center justify-between"><h2 class="text-lg font-semibold">Результат</h2><span class="flex gap-1.5"><span class="badge bg-info-soft text-info">из PDF</span></span></div>
+        <div class="flex flex-col gap-2.5">
+          <div class="text-[13px] text-muted">Марка и модель авто</div>
+          <div class="-mt-2 text-[28px] font-bold leading-[1.1] tracking-[-0.02em]">BMW 318d</div>
+          <div class="flex items-center gap-2"><span class="text-[13px] text-muted">VIN</span><span class="vinchip">WBA8E1105KAX12345</span><span class="fx-btn sm icon text-brand"><svg class="size-4"><use href="#i-copy"/></svg></span></div>
+        </div>
+        <dl class="flex flex-col gap-2.5">
+          <div class="tile"><svg class="size-5"><use href="#i-cal"/></svg><div><dt class="text-[12px] text-muted">Дата производства</dt><dd class="text-[18px] font-semibold leading-snug">01.02.2021</dd></div></div>
+          <div class="tile"><svg class="size-5"><use href="#i-engine"/></svg><div><dt class="text-[12px] text-muted">Тип двигателя</dt><dd class="text-[18px] font-semibold leading-snug">Дизель + MHEV (мягкий гибрид)</dd></div></div>
+          <div class="tile"><svg class="size-5"><use href="#i-cube"/></svg><div><dt class="text-[12px] text-muted">Объём двигателя</dt><dd class="text-[18px] font-semibold leading-snug">2000 cm³</dd></div></div>
+        </dl>
+        <span class="fx-btn w-full"><svg class="size-5 text-brand"><use href="#i-copy"/></svg>Скопировать VIN и дату производства</span>
+        <p class="flex items-center gap-1.5 border-t border-line-soft pt-3 text-[13px] text-muted"><svg class="size-4"><use href="#i-clock"/></svg>22.10.2026 14:05 · Никита</p>
+      </section>
+      <section class="card flex flex-col gap-3 p-5">
+        <div class="flex items-center justify-between gap-3">
+          <div class="flex min-w-0 items-baseline gap-2"><h2 class="text-lg font-semibold">Файл VIN</h2><span class="truncate text-[13px] text-muted">BMW_WBA8E1105KAX12345.pdf</span></div>
+          <div class="flex gap-2"><span class="fx-btn sm"><svg class="size-4 text-brand"><use href="#i-down"/></svg>Выгрузить файл</span><span class="fx-btn sm"><svg class="size-4 text-brand"><use href="#i-ext"/></svg>Открыть в новой вкладке</span></div>
+        </div>
+        <div class="pdf" style="height:600px"><div class="page"><div class="mb-4 flex justify-between text-[13px] font-semibold"><span>partslink24 · BMW</span><span class="font-mono">WBA8E1105KAX12345</span></div><div class="ln w-2/3"></div><div class="ln"></div><div class="ln w-5/6"></div><div class="ln w-1/2"></div><div class="ln"></div><div class="ln w-3/4"></div><div class="ln w-2/3"></div><div class="ln"></div><div class="ln w-5/6"></div><div class="ln w-1/2"></div><div class="ln w-3/4"></div><div class="ln"></div><div class="ln w-2/3"></div><div class="ln w-5/6"></div></div></div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<!-- ==================== СТАЛО — история и состояния ==================== -->
+<section id="states" class="frame w-[1440px] px-10 py-8">
+  <div class="grid gap-8" style="grid-template-columns:740px 1fr">
+    <div class="flex flex-col gap-3">
+      <div class="frame-title">Папка «История VIN» — flux:dropdown + flux:popover</div>
+      <span class="fx-btn self-start border-brand bg-selected"><svg class="size-5 text-highlight"><use href="#i-folder"/></svg>История VIN <span class="badge bg-white px-1.5 py-0 text-[12px] text-ink-soft"><svg class="size-3 text-highlight"><use href="#i-star"/></svg>3</span><svg class="size-4 rotate-180 text-zinc-400"><use href="#i-chev"/></svg></span>
+      <div class="card flex flex-col gap-3 p-3 shadow-lg">
+        <div class="seg sm self-start"><span class="on">Все <span class="text-muted">12</span></span><span><svg class="size-3.5 text-highlight"><use href="#i-star"/></svg>Избранные <span class="text-muted">3</span></span><span>Мои</span></div>
+        <div class="fx-input"><span class="pre"><svg class="size-4"><use href="#i-search"/></svg></span><span class="v ph">Поиск по VIN, марке или модели</span></div>
+        <ul class="flex flex-col">
+          <li class="flex items-center gap-1 rounded-lg bg-selected py-1"><span class="fx-btn ghost icon text-highlight"><svg class="size-5"><use href="#i-star"/></svg></span>
+            <div class="flex min-w-0 flex-1 items-center gap-3 px-1"><div class="flex min-w-0 flex-1 flex-col"><span class="font-semibold">BMW 318d</span><span class="font-mono text-[12px] text-ink-soft">WBA8E1105KAX12345</span><span class="truncate text-[13px] text-muted">01.02.2021 · Дизель + MHEV · 2000 cm³</span></div>
+            <div class="flex flex-col items-end gap-1 text-[12px] text-muted"><span>22.10.2026 14:05</span><span class="flex items-center gap-1.5">Никита <span class="badge bg-info-soft px-1.5 py-0 text-[11px] text-info">из PDF</span></span></div></div>
+            <span class="fx-btn ghost icon text-muted"><svg class="size-5"><use href="#i-x"/></svg></span></li>
+          <li class="flex items-center gap-1 border-t border-line-soft py-1"><span class="fx-btn ghost icon text-highlight"><svg class="size-5"><use href="#i-star"/></svg></span>
+            <div class="flex min-w-0 flex-1 items-center gap-3 px-1"><div class="flex min-w-0 flex-1 flex-col"><span class="font-semibold">Mercedes-Benz GLC 300 e</span><span class="font-mono text-[12px] text-ink-soft">W1N2539541F000001</span><span class="truncate text-[13px] text-muted">15.06.2022 (дата поставки) · Plug-in гибрид · 1991 cm³</span></div>
+            <div class="flex flex-col items-end gap-1 text-[12px] text-muted"><span>22.10.2026 11:40</span><span>Анна</span></div></div>
+            <span class="fx-btn ghost icon text-muted"><svg class="size-5"><use href="#i-x"/></svg></span></li>
+          <li class="flex items-center gap-1 border-t border-line-soft py-1"><span class="fx-btn ghost icon text-zinc-400"><svg class="size-5"><use href="#i-star-o"/></svg></span>
+            <div class="flex min-w-0 flex-1 items-center gap-3 px-1"><div class="flex min-w-0 flex-1 flex-col"><span class="font-semibold">Toyota RAV4</span><span class="font-mono text-[12px] text-ink-soft">JTMW43FV00D000002</span><span class="truncate text-[13px] text-muted">09.2020 · Бензин + HEV · 2487 cm³</span></div>
+            <div class="flex flex-col items-end gap-1 text-[12px] text-muted"><span>21.10.2026 17:22</span><span class="flex items-center gap-1.5">Никита <span class="badge bg-info-soft px-1.5 py-0 text-[11px] text-info">из PDF</span></span></div></div>
+            <span class="fx-btn ghost icon text-muted"><svg class="size-5"><use href="#i-x"/></svg></span></li>
+        </ul>
+        <span class="fx-btn w-full">Показать ещё</span>
+      </div>
+      <div class="frame-title mt-3">Удаление — окно flux:modal вместо окна браузера</div>
+      <div class="card flex w-[420px] flex-col gap-4 p-6 shadow-lg">
+        <div><div class="text-lg font-semibold">Удалить запись</div><p class="fx-desc mt-1 text-[14px]">Удалить VIN WBA8E1105KAX12345 из истории?</p></div>
+        <div class="flex justify-end gap-2"><span class="fx-btn ghost">Отменить</span><span class="fx-btn" style="background:#a32a1f;color:#fff;border-color:#0000">Удалить запись</span></div>
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-3">
+      <div class="frame-title">Строка состояния — свои проверки и общая очередь</div>
+      <div class="card flex flex-col gap-2 p-4">
+        <span class="fx-desc">В очереди</span>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <span class="flex items-center gap-2 text-[15px] font-medium text-info"><svg class="size-5"><use href="#i-clock"/></svg>В очереди: 2-е место <span class="text-muted font-normal">· перед вами 1 проверка · ≈ 1 мин</span></span>
+          <span class="fx-btn">Отменить</span>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 border-t border-line-soft pt-2 text-[13px] text-muted"><span class="font-semibold text-brand">Сейчас:</span><span class="badge bg-info-soft text-info">Audi · <span class="font-mono">WAUZZZ4M3RD0…</span> · Анна</span><span class="ml-2 font-semibold">Ждёт:</span><span class="badge bg-selected font-semibold text-ink ring-1 ring-brand/30">BMW · Вы</span></div>
+      </div>
+      <div class="card flex flex-col gap-2 p-4">
+        <span class="fx-desc">Идёт проверка</span>
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <span class="flex items-center gap-2 text-[15px] font-medium text-info"><svg class="size-5 text-brand"><use href="#i-load"/></svg>Проверяем данные и готовим файл VIN… 23 с</span>
+          <span class="fx-btn">Отменить</span>
+        </div>
+      </div>
+      <div class="card flex flex-col gap-2 p-4">
+        <span class="fx-desc">Ошибка — flux:callout</span>
+        <div class="callout border-[#e5c2be] bg-danger-soft text-danger"><svg class="mt-0.5 size-5 shrink-0"><use href="#i-err"/></svg><span>Не удалось проверить VIN: partslink24 не нашёл этот VIN</span></div>
+      </div>
+      <div class="card flex flex-col gap-2 p-4">
+        <span class="fx-desc">Перетаскивание PDF — зона подсвечивается</span>
+        <div class="flex items-center gap-4 rounded-[.75rem] border-2 border-dashed border-brand bg-selected px-4 py-3">
+          <span class="flex size-10 items-center justify-center rounded-lg bg-white text-brand shadow-sm ring-1 ring-line"><svg class="size-5"><use href="#i-up"/></svg></span>
+          <div class="flex flex-col"><span class="text-[14px] font-medium">Отпустите файл — прочитаем PDF</span><span class="fx-desc">BMW_WBA8E1105KAX12345.pdf · 412 КБ</span></div>
+        </div>
+      </div>
+      <div class="card flex flex-col gap-2 p-4">
+        <span class="fx-desc">До первой проверки — пустой результат одной строкой, без четырёх «—»</span>
+        <div class="flex items-center gap-3 rounded-[.75rem] border border-dashed border-line px-4 py-5 text-muted"><svg class="size-6"><use href="#i-doc"/></svg><span class="text-[14px]">После проверки здесь появятся марка и модель, дата производства, тип и объём двигателя.</span></div>
+      </div>
+      <div class="card flex flex-col gap-2 p-4">
+        <span class="fx-desc">Подсказка вместо всплывающего title — flux:tooltip; «Скопировано» — flux:toast</span>
+        <div class="flex items-center gap-3"><span class="fx-btn sm icon text-brand"><svg class="size-4"><use href="#i-copy"/></svg></span><span class="rounded-md bg-zinc-800 px-2 py-1 text-[12px] text-white">Скопировать VIN</span>
+          <div class="flex-1"></div><span class="flex items-center gap-2 rounded-xl border border-line bg-white px-4 py-3 text-[14px] shadow-lg"><svg class="size-5 text-good"><use href="#i-ok"/></svg>Скопировано: VIN и дата производства</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== Телефон: было / стало ==================== -->
+<section id="phone" class="frame flex w-[880px] gap-10 px-10 py-8">
+  <!-- БЫЛО -->
+  <div class="flex w-[375px] flex-col">
+    <div class="frame-title mb-3">Было · 375 px</div>
+    <div class="overflow-hidden rounded-[28px] border border-line bg-white shadow">
+      <div class="flex items-center justify-between px-4 py-3"><div class="flex items-center gap-2.5 font-bold"><span class="flex size-8 items-center justify-center rounded-lg bg-brand text-white text-sm">M</span>Mantexlab Tools</div><span class="flex size-11 items-center justify-center rounded-full bg-selected font-semibold">N</span></div>
+      <div class="flex gap-4 overflow-hidden border-t border-line-soft px-4 py-3 text-[14px] text-muted"><span>Поиск аукционы</span><span>Карточка авто</span><span>Поиск дилеры</span></div>
+      <div class="flex flex-col gap-4 px-4 pb-6 pt-4">
+        <div class="flex items-center gap-2"><span class="inline-flex min-h-11 items-center gap-2 rounded-control border border-line px-3 text-[14px] font-semibold"><svg class="size-5 text-highlight"><use href="#i-folder"/></svg>История VIN <span class="rounded-full bg-chip px-2 text-[12px]">★3</span></span><div class="flex-1"></div><span class="flex size-11 items-center justify-center rounded-full border border-brand bg-selected text-[13px] font-semibold">RU</span><span class="flex size-11 items-center justify-center rounded-full border border-line text-[13px]">PL</span></div>
+        <div><h1 class="text-[28px] font-bold">VIN Check</h1><p class="text-[13px] text-muted">partslink24 проверяет один VIN за раз — следующие ждут в очереди в порядке нажатия.</p></div>
+        <p class="rounded-control border border-warn-line bg-warn-soft px-4 py-3 text-[14px] text-warn">Автоматическая проверка в partslink24 ждёт включения. Сейчас: скачайте отчёт в partslink24 и загрузите PDF — данные прочитаются сами.</p>
+        <div class="card-old flex flex-col gap-4 p-5">
+          <div class="flex flex-col gap-1.5"><span class="text-[13px] text-muted">1. Язык отчёта</span><div class="inline-flex gap-1 self-start rounded-control bg-chip p-1"><span class="flex min-h-11 min-w-16 items-center justify-center rounded-[8px] bg-brand px-4 font-semibold text-white">RU</span><span class="flex min-h-11 min-w-16 items-center justify-center px-4">PL</span><span class="flex min-h-11 min-w-16 items-center justify-center px-4">ENG</span></div></div>
+          <div class="flex flex-col gap-1.5"><span class="text-[13px] text-muted">2. Марка авто</span><span class="flex min-h-11 items-center rounded-control border border-control px-3">BMW</span></div>
+          <div class="flex flex-col gap-1.5"><span class="flex justify-between text-[13px] text-muted"><span>3. VIN (17 символов)</span><span>17 / 17</span></span><span class="flex min-h-11 items-center rounded-control border border-control px-3 font-mono">WBA8E1105KAX12345</span></div>
+          <span class="flex min-h-11 items-center justify-center gap-2 rounded-control bg-brand font-semibold text-white opacity-50">Проверить данные</span>
+          <span class="text-[13px] text-muted">или</span>
+          <span class="flex min-h-11 items-center justify-center gap-2 rounded-control border border-control font-medium"><svg class="size-[18px]"><use href="#i-up"/></svg>Загрузить PDF из partslink24</span>
+          <p class="border-t border-line-soft pt-3 text-[14px] text-good">Данные прочитаны из загруженного PDF.</p>
+        </div>
+        <div class="card-old flex flex-col p-5"><div class="flex justify-between"><span class="text-[12px] font-semibold uppercase tracking-[0.08em] text-muted">Результат</span><span class="flex size-11 items-center justify-center rounded-control border border-control"><svg class="size-[18px]"><use href="#i-copy"/></svg></span></div>
+          <div class="border-b border-line-soft py-3"><div class="text-[13px] text-muted">Марка и модель авто</div><div class="text-[20px] font-semibold">BMW 318d</div></div>
+          <div class="border-b border-line-soft py-3"><div class="text-[13px] text-muted">Дата производства</div><div class="text-[20px] font-semibold">01.02.2021</div></div>
+          <div class="border-b border-line-soft py-3"><div class="text-[13px] text-muted">Тип двигателя</div><div class="text-[20px] font-semibold">Дизель + MHEV (мягкий гибрид)</div></div>
+          <div class="py-3"><div class="text-[13px] text-muted">Объём двигателя</div><div class="text-[20px] font-semibold">2000 cm³</div></div></div>
+        <div class="card-old flex flex-col gap-3 p-5"><span class="text-[12px] font-semibold uppercase tracking-[0.08em] text-muted">Файл VIN · …</span><div class="pdf" style="height:300px;padding:12px"><div class="page" style="padding:16px"><div class="ln"></div><div class="ln w-2/3"></div><div class="ln"></div><div class="ln w-1/2"></div></div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- СТАЛО -->
+  <div class="flex w-[375px] flex-col">
+    <div class="frame-title mb-3">Стало · 375 px</div>
+    <div class="relative overflow-hidden rounded-[28px] border border-line bg-white shadow">
+      <div class="flex items-center justify-between px-4 py-3"><div class="flex items-center gap-2.5 font-bold"><span class="flex size-8 items-center justify-center rounded-lg bg-brand text-white text-sm">M</span>Mantexlab Tools</div><span class="flex size-11 items-center justify-center rounded-full bg-selected font-semibold">N</span></div>
+      <div class="flex gap-4 overflow-hidden border-t border-line-soft px-4 py-3 text-[14px] text-muted"><span>Поиск аукционы</span><span>Карточка авто</span><span>Поиск дилеры</span></div>
+      <div class="flex flex-col gap-4 px-4 pb-24 pt-4">
+        <div class="flex flex-col gap-3">
+          <div class="flex items-start justify-between gap-3"><div><h1 class="text-[26px] font-bold leading-tight">VIN Check</h1><p class="text-[13px] text-muted">partslink24 проверяет один VIN за раз — следующие ждут в очереди в порядке нажатия.</p></div><div class="seg sm shrink-0"><span class="on">RU</span><span>PL</span></div></div>
+          <span class="fx-btn h-11 w-full justify-between"><span class="flex items-center gap-2"><svg class="size-5 text-highlight"><use href="#i-folder"/></svg>История VIN <span class="badge bg-chip px-1.5 py-0 text-[12px] text-ink-soft"><svg class="size-3 text-highlight"><use href="#i-star"/></svg>3</span></span><svg class="size-4 text-zinc-400"><use href="#i-chev"/></svg></span>
+        </div>
+        <div class="callout border-warn-line bg-warn-soft text-warn"><svg class="mt-0.5 size-5 shrink-0"><use href="#i-warn"/></svg><span class="text-[14px]">Автоматическая проверка в partslink24 ждёт включения. Сейчас: скачайте отчёт в partslink24 и загрузите PDF — данные прочитаются сами.</span></div>
+        <section class="card flex flex-col gap-4 p-4">
+          <h2 class="text-lg font-semibold">Данные проверки</h2>
+          <div class="flex flex-col gap-2"><span class="fx-label">1. Язык отчёта</span><div class="seg h-11 w-full"><span class="on flex-1">RU</span><span class="flex-1">PL</span><span class="flex-1">ENG</span></div></div>
+          <div class="flex flex-col gap-2"><span class="fx-label">2. Марка авто</span><div class="fx-input h-11"><span class="v">BMW</span><span class="post"><svg class="size-4"><use href="#i-chev"/></svg></span></div></div>
+          <div class="flex flex-col gap-2"><span class="fx-label flex justify-between"><span>3. VIN (17 символов)</span><span class="badge bg-good-soft px-1.5 py-0 text-[12px] text-good">17 / 17</span></span><div class="fx-input h-11"><span class="v font-mono tracking-[0.04em]">WBA8E1105KAX12345</span></div></div>
+          <span class="fx-btn primary dis h-11 w-full"><svg class="size-5"><use href="#i-search"/></svg>Проверить данные</span>
+          <div class="flex items-center gap-3 rounded-[.75rem] border border-dashed border-control bg-soft px-3 py-3"><span class="flex size-10 shrink-0 items-center justify-center rounded-lg bg-white text-brand ring-1 ring-line"><svg class="size-5"><use href="#i-up"/></svg></span><div class="flex flex-col"><span class="text-[14px] font-medium">Загрузить PDF из partslink24</span><span class="fx-desc">Марка, VIN и язык прочитаются из файла сами.</span></div></div>
+          <span class="flex items-center gap-2 border-t border-line-soft pt-3 text-[14px] text-good"><svg class="size-5"><use href="#i-ok"/></svg>Данные прочитаны из загруженного PDF.</span>
+        </section>
+        <section class="card flex flex-col gap-3 p-4">
+          <div class="flex items-center justify-between"><h2 class="text-lg font-semibold">Результат</h2><span class="badge bg-info-soft text-info">из PDF</span></div>
+          <div class="text-[13px] text-muted">Марка и модель авто</div>
+          <div class="-mt-2 text-[26px] font-bold leading-tight">BMW 318d</div>
+          <div class="flex items-center gap-2"><span class="vinchip text-[13px]">WBA8E1105KAX12345</span><span class="fx-btn sm icon h-11 w-11 text-brand"><svg class="size-4"><use href="#i-copy"/></svg></span></div>
+          <div class="tile"><svg class="size-5"><use href="#i-cal"/></svg><div><div class="text-[12px] text-muted">Дата производства</div><div class="text-[17px] font-semibold">01.02.2021</div></div></div>
+          <div class="tile"><svg class="size-5"><use href="#i-engine"/></svg><div><div class="text-[12px] text-muted">Тип двигателя</div><div class="text-[17px] font-semibold">Дизель + MHEV (мягкий гибрид)</div></div></div>
+          <div class="tile"><svg class="size-5"><use href="#i-cube"/></svg><div><div class="text-[12px] text-muted">Объём двигателя</div><div class="text-[17px] font-semibold">2000 cm³</div></div></div>
+          <p class="text-[13px] text-muted">22.10.2026 14:05 · Никита</p>
+        </section>
+        <section class="card flex flex-col gap-3 p-4">
+          <div class="flex items-baseline gap-2"><h2 class="text-lg font-semibold">Файл VIN</h2><span class="truncate text-[12px] text-muted">BMW_WBA8E1105KAX12345.pdf</span></div>
+          <div class="grid grid-cols-2 gap-2"><span class="fx-btn h-11"><svg class="size-4 text-brand"><use href="#i-ext"/></svg>Открыть PDF</span><span class="fx-btn h-11"><svg class="size-4 text-brand"><use href="#i-down"/></svg>Выгрузить</span></div>
+          <div class="pdf" style="height:300px;padding:12px"><div class="page" style="padding:16px"><div class="ln"></div><div class="ln w-2/3"></div><div class="ln"></div><div class="ln w-1/2"></div></div></div>
+        </section>
+      </div>
+      <!-- Нижняя полоса, как у «Карточки авто»: главное под пальцем -->
+      <div class="absolute inset-x-0 bottom-0 flex items-center gap-3 border-t border-line bg-white/95 px-4 py-3 shadow-[0_-4px_12px_rgb(0_0_0/0.06)]">
+        <div class="flex min-w-0 flex-col"><span class="text-[12px] text-muted">BMW 318d · 01.02.2021</span><span class="truncate font-mono text-[13px] font-semibold">WBA8E1105KAX12345</span></div>
+        <div class="flex-1"></div><span class="fx-btn primary h-11"><svg class="size-4"><use href="#i-copy"/></svg>Скопировать</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const s = location.hash.slice(1);
+  if (s) document.querySelectorAll('body > section').forEach(e => { if (e.id !== s) e.style.display = 'none'; });
+</script>
+</body>
+</html>
