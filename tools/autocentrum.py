@@ -335,9 +335,11 @@ def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label, o
 
 
 def facelift_years(ac_gen):
-    """Start years of the "… Facelifting" bodies, neighbours (±1) taken as one facelift."""
+    """Start years of the "… Facelifting" bodies, neighbours (±1) taken as one facelift. A facelift body that
+    starts with the generation (DS 4 I cut to its DS bodies, 2015) splits nothing."""
     out = []
-    for year in sorted({b["from"] for b in ac_gen["bodies"] if "facelifting" in b["name"].lower() and b["from"]}):
+    for year in sorted({b["from"] for b in ac_gen["bodies"] if "facelifting" in b["name"].lower() and b["from"]
+                        and b["from"] > (ac_gen.get("from") or 0)}):
         if not out or year - out[-1] > 1:
             out.append(year)
     return out

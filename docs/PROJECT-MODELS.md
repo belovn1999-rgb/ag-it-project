@@ -382,6 +382,17 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
    Style / Progressive / AMG Line, 911 — Carrera / Carrera S…); комплектации есть у **500 из 542 моделей** (было 383).
    Без списка — 42: нет в ADAC (F-150, Sequoia, Tacoma, Altima, Cascada, iOn, SLS AMG, Mini Cabrio / Coupé / Roadster…)
    или ADAC не называет линий (e-tron GT, Mercedes CL).
+13. ✅ **Новые марки, волна 2 (решение владельца 21–22.10):** Alfa Romeo, Dodge, Chevrolet, MG, Subaru, Jaguar, Chrysler,
+   BYD, DS, Jaecoo, Omoda — 91 модель из autocentrum.pl (сайт лежал 21.10 14:40 – 22.10 15:07 «Przerwa techniczna»;
+   запасной путь — `tools/crawl-ultimatespecs-models.py`, модели ultimatespecs в виде autocentrum, `data/ultimatespecs-primary.json`,
+   пока не понадобился). DS-брендовые DS3 / DS4 / DS5 — кузова без «(Citroen)» (`bodies: ^(?!.*citroen)`), Citroën DS3 / DS4 /
+   DS5 — с ним; подмодели DS4 Crossback (DS), B9 Tribeca, MG4 EV Urban; не взяты Corvette (у mobile.de своя марка), MG 6,
+   Town & Country, XK8 / XKR. Мягкие гибриды — 10 правил (Alfa Tonale 1.5, Junior Ibrida; Jaguar E-Pace / F-Pace / XE / XF
+   после рестайлинга 2020 по техданным JLR; DS 3 / DS 4 Hybrid 1.2 48 V с 2024; Subaru e-Boxer 118 V оставлен гибридом;
+   MG Hybrid+, Jaecoo / Omoda SHS, BYD DM-i — полные или плагин). Попутно: рестайлинг, совпадающий с началом поколения, не
+   делит его (`facelift_years()`: Galaxy III, Grand Cherokee IV, Tiida, DS 4 I). Комплектации — ADAC (66 моделей; нет в ADAC —
+   американские Dodge, Chevrolet, Chrysler). Итог: таблица 24 653 версии, на странице 39 марок, 633 модели, 12 641 версия;
+   комплектации у 566 моделей; мягких гибридов 1 344 версии.
 
 **Правила работы с ultimatespecs.com:**
 - `robots.txt`: **Crawl-delay: 30** — не чаще одной страницы в 30 с. Полная

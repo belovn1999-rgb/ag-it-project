@@ -32,6 +32,10 @@ BRAND_SLUG = {"Mercedes-Benz": "mercedes-benz", "Land Rover": "land-rover", "Vol
 MANUAL = {
     "Renault|Alpine A110": ["alpine/a110"], "Mercedes-Benz|ML": ["mercedes-benz/m-klasse"], "BMW|6": ["bmw/6er-reihe"],
     "BMW|7": ["bmw/7er-reihe"], "BMW|8": ["bmw/8er-reihe"], "Citroen|DS3": ["citroen/ds-3"], "Citroen|DS4": ["citroen/ds-4"],
+    # Wave 2 (2026-10-22): DS models are "DS Automobiles" at ADAC.
+    "DS|DS3": ["ds-automobiles/ds-3"], "DS|DS3 Crossback": ["ds-automobiles/ds-3"], "DS|DS4": ["ds-automobiles/ds-4"],
+    "DS|DS5": ["ds-automobiles/ds-5"], "DS|DS7 (Crossback)": ["ds-automobiles/ds-7"], "DS|DS9": ["ds-automobiles/ds-9"],
+    "DS|Nº8": ["ds-automobiles/n8"], "MG|HS": ["mg/hs-ehs"],
 }
 PHASE_RU = {"pre": "дорестайлинг", "fl": "рестайлинг", "fl2": "2-й рестайлинг", "upd": "обновление"}
 # Words of a version name that are not its trim: engine, power, gearbox, drive, body, fuel.
@@ -140,7 +144,8 @@ def trim_of(name, prefix_words):
     # Gearbox / engine words of two parts or with digits (Stellantis e-DSC6, Audi "S tronic", Cupra 4Drive).
     name = re.sub(r"(?<![\w-])(S[- ]tronic|Stop\s*&\s*Start|e-?DSC\d|e-?EAT\d|ETG\d?|EGS\d?|e-?HDi|FAP|e-?VTi|e-Boost|4Drive|"
                   r"E-REV|\d+-Volt-Mildhybrid|cod|extralang|Clean Diesel|2-Tronic|Multi-Mode-Automatik|e-4ORCE|EV\d{2,3}|iV|"
-                  r"T[34]|T-Jet|e-\d{3,4}|eHybrid|OPF)(?![\w-])", " ", name, flags=re.I)
+                  r"T[34]|T-Jet|e-\d{3,4}|eHybrid|OPF|Q2|TB|T\.Spark|M-Jet|MultiJet|JTDM?|Ibrida|VGT|\d+V-Hybrid|eDCT-?\d|TCT|Lineartronic|"
+                  r"ecomatic|E-Performance|EcoLogic|Hybrid\+|EHS)(?![\w-])", " ", name, flags=re.I)
     words = name.split()
     while words and prefix_words and words[0].lower() in prefix_words:
         words = words[1:]
