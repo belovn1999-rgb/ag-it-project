@@ -1,4 +1,18 @@
 {
+"https://www.ultimatespecs.com/car-specs/Audi/10318/Audi-A3-(8P)-Attraction-16-TDI-e-DPF.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/10319/Audi-A3-(8P)-Sportback-Attraction-16-TDI-e-DPF.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/10379/Audi-A4-(B8)-20-TFSI-Flexibel-Fuel-180HP.html": {
 "doors": "4",
 "drive": "FWD",
@@ -67,6 +81,13 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/106571/Audi-A5-(F5)-20-TDI-ultra-190HP.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/106630/Audi-A4-(B9)-20-TDI-122HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -76,6 +97,76 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106649/Audi-A5-(F5)-20-TDI-ultra-190HP-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106650/Audi-A5-(F5)-20-TDI-190HP-Quattro-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106651/Audi-A5-(F5)-30-TDI-218HP-Quattro-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106652/Audi-A5-(F5)-20-TFSI-190HP.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106653/Audi-A5-(F5)-20-TFSI-252HP-Quattro-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106654/Audi-A5-(F5)-S5-30-TFSI-354HP-Quattro-Tiptronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/106802/Audi-A5-(F5)-20-TFSI-190HP-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/107006/Audi-A5-(F5)-20-TDI-190HP-S-tronic-S-Line.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/107007/Audi-A5-(F5)-20-TFSI-252HP-Quattro-S-tronic-S-Line.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/107008/Audi-A5-(F5)-30-TDI-218HP-Quattro-S-tronic-S-Line.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/108399/Audi-Q5-(FY)-SQ5-30-TFSI.html": {
 "drive": "AWD",
@@ -92,10 +183,24 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/109937/Audi-A5-(F5)-30-TDI-272HP-Quattro.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/111363/Audi-A5-(F5)-Sportback-20-TDI-190HP-Ultra.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/111370/Audi-A5-(F5)-14-TFSI-150HP.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/112098/Audi-A4-(B9)-20-TFSI-MHEV-252HP.html": {
 "drive": "FWD",
@@ -106,6 +211,41 @@
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/112128/Audi-A5-(F5)-20-TFSI-MHEV-190HP.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/112129/Audi-A5-(F5)-20-TFSI-MHEV-190HP-Auto.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/112134/Audi-A5-(F5)-20-TFSI-MHEV-252HP.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/112137/Audi-A5-(F5)-20-TFSI-MHEV-252HP-Quattro.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/112810/Audi-A5-(F5)-30-TDI-286HP-Quattro.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "8 speed Sequential Automatic",
+"seats": "4",
+"transmission": "Sequential Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/112828/Audi-A4-(B9)-Avant-RS4-29-TFSI-Quattro.html": {
 "drive": "AWD",
@@ -125,6 +265,55 @@
 "https://www.ultimatespecs.com/car-specs/Audi/114901/Audi-A5-(F5)-Sportback-35-TDI-design.html": {
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114908/Audi-A5-(F5)-40-TFSI.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114909/Audi-A5-(F5)-40-TFSI-sport.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114910/Audi-A5-(F5)-40-TFSI-design.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114913/Audi-A5-(F5)-40-TDI-design-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114914/Audi-A5-(F5)-40-TDI-quattro-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114915/Audi-A5-(F5)-40-TDI-quattro-sport-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/114916/Audi-A5-(F5)-40-TDI-quattro-design-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/114917/Audi-A5-(F5)-Cabrio-40-TDI.html": {
@@ -187,6 +376,48 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/115047/Audi-A5-(F5)-35-TFSI-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115048/Audi-A5-(F5)-35-TFSI-sport-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115049/Audi-A5-(F5)-35-TFSI-design-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115053/Audi-A5-(F5)-40-TFSI-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115054/Audi-A5-(F5)-40-TFSI-sport-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115055/Audi-A5-(F5)-40-TFSI-design-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/115731/Audi-A4-(B9-2019)-30-TDI.html": {
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
@@ -195,6 +426,48 @@
 "https://www.ultimatespecs.com/car-specs/Audi/115734/Audi-A4-(B9-2019)-Avant-30-TDI.html": {
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115743/Audi-A5-(F5)-45-TFSI-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115744/Audi-A5-(F5)-45-TFSI-sport-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115745/Audi-A5-(F5)-45-TFSI-design-S-tronic.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115746/Audi-A5-(F5)-45-TFSI-quattro-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115747/Audi-A5-(F5)-45-TFSI-quattro-sport-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/115748/Audi-A5-(F5)-45-TFSI-quattro-design-S-tronic.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/115969/Audi-A4-(B9-2019)-45-TDI-Quattro.html": {
@@ -486,6 +759,83 @@
 "drive": "AWD",
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12888/Audi-A3-(8P)-Sportback-Attraction-20-TFSI.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12890/Audi-A3-(8P)-Sportback-Ambiente-20-TFSI.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12895/Audi-A3-(8P)-Sportback-Attraction-16-TDI-e-DPF.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12939/Audi-A3-(8P)-Cabrio-12-TFSI-Attraction.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12940/Audi-A3-(8P)-Cabrio-12-TFSI-Ambition.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12945/Audi-A3-(8P)-Cabrio-20-TFSI-Attraction.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12948/Audi-A3-(8P)-Cabrio-16-TDI-Attraction-DPF.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/12949/Audi-A3-(8P)-Cabrio-16-TDI-Ambition-DPF.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/13088/Audi-A3-(8P)-Attraction-20-TFSI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/13090/Audi-A3-(8P)-Ambiente-20-TFSI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/13095/Audi-A3-(8P)-Attraction-16-TDI-e-DPF.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/133496/Audi-A3-(8Y)-Sportback-RS3-quattro-Performance-Edition.html": {
 "drive": "AWD",
@@ -807,6 +1157,34 @@
 "gearbox": "6 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/145971/Audi-A6-(C9)-Avant-20-TDI-MHEV-quattro-S-tronic.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/145972/Audi-A6-(C9)-Avant-20-TDI-MHEV-S-tronic.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/145976/Audi-A6-(C9)-Avant-30-V6-TFSI-MHEV-quattro-S-tronic.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/145978/Audi-A6-(C9)-Avant-20-TFSI-S-tronic.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/149697/Audi-Q3-2026-20-TDI.html": {
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
@@ -885,6 +1263,20 @@
 "https://www.ultimatespecs.com/car-specs/Audi/153624/Audi-Q3-2026-20-TFSI-204HP-quattro.html": {
 "drive": "AWD",
 "gearbox": "7 speed Dualclutch Automatic",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/153643/Audi-A6-(C9)-Avant-20-TFSI-367HP-e-hybrid-quattro.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/153644/Audi-A6-(C9)-Avant-20-TFSI-299HP-e-hybrid-quattro.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/153647/Audi-A6-(C9)-20-TDI-MHEV-quattro.html": {
@@ -1243,6 +1635,20 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/26112/Audi-A3-(8P)-Cabrio-14-TFSI-Attraction.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/26113/Audi-A3-(8P)-Cabrio-14-TFSI-Ambition.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/26263/Audi-A4-(B8)-20-TFSI-Flexibel-Fuel-180HP-Quattro.html": {
 "doors": "4",
 "drive": "AWD",
@@ -1340,6 +1746,13 @@
 "gearbox": "6 speed Automatic",
 "seats": "",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/3794/Audi-A3-(8P)-18-TFSI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Audi/3884/Audi-A5-Coupe-S5-42-V8-Quattro.html": {
 "doors": "2",
@@ -1916,6 +2329,62 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/686/Audi-A3-(8P)-16.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/687/Audi-A3-(8P)-16-FSI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/688/Audi-A3-(8P)-20-FSI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/689/Audi-A3-(8P)-20-TFSI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/690/Audi-A3-(8P)-32-V6-Quattro.html": {
+"doors": "3",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/691/Audi-A3-(8P)-19-TDI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/692/Audi-A3-(8P)-20-TDI.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/693/Audi-A3-(8P)-20-TDI-170.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/69306/Audi-A4-(B8)-Avant-Restyling-20-TDI-150HP-CleanDiesel.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -2104,6 +2573,20 @@
 "drive": "AWD",
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/8155/Audi-A3-(8P)-Cabrio-16-TDI-Attraction.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/8156/Audi-A3-(8P)-Cabrio-16-TDI-Ambition.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/BMW/10552/BMW-E70-X5-xDrive35i.html": {
 "doors": "5",
@@ -2326,6 +2809,13 @@
 "gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/11062/BMW-E83-X3-xDrive35d.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/BMW/110769/BMW-G01-X3-xDrive20d.html": {
 "drive": "AWD",
@@ -3301,12 +3791,250 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/BMW/5085/BMW-E60-5-Series-530xd.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5086/BMW-E60-5-Series-530d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5087/BMW-E60-5-Series-525d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5088/BMW-E60-5-Series-520d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5090/BMW-E60-5-Series-550i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5091/BMW-E60-5-Series-540i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5092/BMW-E60-5-Series-530xi.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5093/BMW-E60-5-Series-530i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5094/BMW-E60-5-Series-525xi.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5095/BMW-E60-5-Series-525i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5096/BMW-E60-5-Series-523i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5097/BMW-E60-5-Series-535d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5098/BMW-E60-5-Series-530xd.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5099/BMW-E60-5-Series-530d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5100/BMW-E60-5-Series-530d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5101/BMW-E60-5-Series-525d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5102/BMW-E60-5-Series-520d.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5104/BMW-E60-5-Series-550i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5105/BMW-E60-5-Series-545i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5106/BMW-E60-5-Series-540i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5107/BMW-E60-5-Series-530xi.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5108/BMW-E60-5-Series-530i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5109/BMW-E60-5-Series-530i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5110/BMW-E60-5-Series-525xi.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5111/BMW-E60-5-Series-525i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5112/BMW-E60-5-Series-525i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5113/BMW-E60-5-Series-523i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5114/BMW-E60-5-Series-520i.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/BMW/51314/BMW-E92-3-Series-Coupe-M3.html": {
 "doors": "2",
 "drive": "RWD",
 "gearbox": "6 speed Manual",
 "seats": "4",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5146/BMW-E83-X3-20d.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5149/BMW-E83-X3-20i.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5151/BMW-E83-X3-30d.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5152/BMW-E83-X3-20d.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/5155/BMW-E83-X3-20i.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/BMW/53689/BMW-E61-5-Series-Touring-535d.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/BMW/59063/BMW-E90-3-Series-318d.html": {
 "doors": "4",
@@ -3837,6 +4565,13 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Ford/11879/Ford-C-MAX-Trend-16-TDCi-90HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Ford/11920/Ford-S-Max-20-TDCi-140HP.html": {
 "doors": "5",
 "drive": "FWD",
@@ -4029,6 +4764,27 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/138064/Ford-Kuga-Active-25-FHEV-CVT.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed CVT",
+"seats": "5",
+"transmission": "CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/138065/Ford-Kuga-Active-25-FHEV-AWD-CVT.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed CVT",
+"seats": "5",
+"transmission": "CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/138066/Ford-Kuga-Active-25-PHEV-CVT.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed CVT",
+"seats": "5",
+"transmission": "CVT"
 },
 "https://www.ultimatespecs.com/car-specs/Ford/14102/Ford-S-Max-Titanium-22-TDCi-200HP.html": {
 "doors": "5",
@@ -4913,6 +5669,48 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Ford/7328/Ford-C-MAX-20-TDCi.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/7331/Ford-C-MAX-16-TDCi-90.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/7332/Ford-C-MAX-20-16v.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/7333/Ford-C-MAX-18-16v-FlexiFuel.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/7334/Ford-C-MAX-18-16v.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/7335/Ford-C-MAX-16-16v.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Ford/73586/Ford-Mondeo-5-15-EcoBoost-160HP-Trend.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -4948,6 +5746,41 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Ford/819/Ford-Focus-2-20-TDCi-136.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/820/Ford-Focus-C-MAX-16i.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/822/Ford-Focus-C-MAX-16-Ti-VCT.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/823/Ford-Focus-C-MAX-20.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/824/Ford-Focus-C-MAX-16-TDCi-90.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/827/Ford-Focus-C-MAX-20-TDCi.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -5779,6 +6612,13 @@
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/155621/Mercedes-Benz-X540-GLC-EQ-400-EQ-Long-Range.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "2 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/213275/Mercedes-Benz-W204-Class-C-63-AMG-Performance-Plus.html": {
 "doors": "4",
@@ -7442,6 +8282,13 @@
 "gearbox": "6 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/116252/Renault-Trafic-3-Phase-2-Grand-Passenger-dCi-120.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "9",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/116429/Renault-Clio-5-TCe-100.html": {
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -7591,8 +8438,10 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/133758/Renault-Trafic-3-Phase-3-Grand-Passenger-L2H1-30t-Blue-dCi-130.html": {
+"doors": "4",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "9",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/134746/Renault-Clio-5-TCe-100-Bi-Fuel.html": {
@@ -7620,15 +8469,59 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/136998/Renault-Scenic-5-E-TECH-EV60.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/136999/Renault-Scenic-5-E-TECH-EV87.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/137864/Renault-Clio-2-Phase-2-3-Doors-30-V6-Sport.html": {
+"doors": "3",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "2",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/138513/Renault-Trafic-3-Phase-3-Combi-L1H1-20-Blue-dCi-110.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/138522/Renault-Trafic-3-Phase-3-Grand-Combi-L2H1-20-Blue-dCi-110.html": {
+"doors": "4",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "9",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/138524/Renault-Trafic-3-Phase-3-Grand-Combi-L2H1-20-Blue-dCi-150.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "9",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/138525/Renault-Trafic-3-Phase-3-Grand-Combi-L2H1-20-Blue-dCi-150-EDC.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "9",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/138528/Renault-Trafic-3-Phase-3-Grand-Combi-L2H1-20-Blue-dCi-170-EDC.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "9",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/142504/Renault-Captur-2024-Eco-G-100-(on-LPG).html": {
 "drive": "FWD",
@@ -8186,12 +9079,453 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/41531/Renault-Clio-2-Phase-1-3-Doors-14-RT.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/41533/Renault-Clio-2-Phase-1-3-Doors-14-Alize.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/41534/Renault-Clio-2-Phase-1-5-Doors-14-Alize.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/41535/Renault-Clio-2-Phase-1-3-Doors-14-RXE.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/41536/Renault-Clio-2-Phase-1-5-Doors-14-RXE.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/41537/Renault-Clio-2-Phase-1-3-Doors-16-Proact.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "4 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/41539/Renault-Clio-2-Phase-1-3-Doors-16-Si.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/41541/Renault-Clio-2-Phase-1-3-Doors-16-16v.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/43328/Renault-Clio-2-Phase-1-3-Doors-14-MTV.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/43337/Renault-Clio-2-Phase-1-5-Doors-14-MTV.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/43362/Renault-Clio-2-Phase-1-3-Doors-16-RXE.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "4 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/43370/Renault-Clio-2-Phase-1-5-Doors-16-RXE.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "4 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/43396/Renault-Clio-2-Phase-1-3-Doors-14-16v-Tech-Run.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/43406/Renault-Clio-2-Phase-1-5-Doors-14-16v-Tech-Run.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45360/Renault-Clio-2-Phase-2-3-Doors-12-16v-Expression.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45373/Renault-Clio-2-Phase-2-3-Doors-12-16v-Dynamique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45387/Renault-Clio-2-Phase-2-3-Doors-14-16v-Dynamique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45505/Renault-Clio-2-Phase-2-5-Doors-12-16v-Expression.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45518/Renault-Clio-2-Phase-2-5-Doors-12-16v-Dynamique.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45536/Renault-Clio-2-Phase-2-5-Doors-14-16v-Privilege.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45550/Renault-Clio-2-Phase-2-5-Doors-14-16v-Dynamique.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45551/Renault-Clio-2-Phase-1-3-Doors-12-16v-Alize.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45564/Renault-Clio-2-Phase-2-5-Doors-14-16v-Privilege-Proactiva.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "4 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45565/Renault-Clio-2-Phase-1-5-Doors-12-16v-Alize.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45579/Renault-Clio-2-Phase-1-3-Doors-12-16v-Tech-Far.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45606/Renault-Clio-2-Phase-1-5-Doors-12-16v-Tech-Far.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45679/Renault-Clio-2-Phase-2-3-Doors-16-16v.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45693/Renault-Clio-2-Phase-2-3-Doors-RS-20-16v-182HP-Renault-Sport.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45711/Renault-Clio-2-Phase-2-3-Doors-12-16v-Authentique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45734/Renault-Clio-2-Phase-2-3-Doors-12-16v-Dynamique-Quick-Shift.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45743/Renault-Clio-2-Phase-2-5-Doors-16-16v-Extreme.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45782/Renault-Clio-2-Phase-2-5-Doors-12-16v-Dynamique-Quickshift.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45793/Renault-Clio-2-Phase-2-5-Doors-12-16v-Privilege.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45877/Renault-Clio-2-Phase-2-3-Doors-14-16v-Extreme.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/45925/Renault-Clio-2-Phase-2-5-Doors-14-16v-Extreme.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/46933/Renault-Clio-2-Phase-2-3-Doors-12-16v-Expression-Alize.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/46972/Renault-Clio-2-Phase-2-5-Doors-12-16v-Expression-Alize.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/48819/Renault-Clio-2-Phase-2-3-Doors-12-16v-S.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/48859/Renault-Clio-2-Phase-2-5-Doors-12-16v-S.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49142/Renault-Clio-2-Phase-2-3-Doors-12-16v-Privilege.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49161/Renault-Clio-2-Phase-2-3-Doors-12-16v-Privilege-Quick-Shift.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49181/Renault-Clio-2-Phase-2-3-Doors-12-16v-Billabong.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49219/Renault-Clio-2-Phase-2-3-Doors-14-16v-Expression.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49274/Renault-Clio-2-Phase-2-3-Doors-14-16v-Billabong.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49373/Renault-Clio-2-Phase-2-5-Doors-12-16v-Privilege-Quick-Shift.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49393/Renault-Clio-2-Phase-2-5-Doors-12-16v-Billabong.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49413/Renault-Clio-2-Phase-2-5-Doors-14-16v-Expression.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/49419/Renault-Clio-3-Phase-1-3Doors--12-16v-Emotion-eco2.html": {
 "doors": "3",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
 "seats": "5",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49433/Renault-Clio-2-Phase-2-5-Doors-14-16v-Billabong.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49867/Renault-Clio-2-Phase-2-3-Doors-12-16v-Pack-Authentique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49886/Renault-Clio-2-Phase-2-3-Doors-12-16v-Pack-Dynamique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49905/Renault-Clio-2-Phase-2-3-Doors-14-16v-Pack-Dynamique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49946/Renault-Clio-2-Phase-2-3-Doors-12-16v-Confort-Expression.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49965/Renault-Clio-2-Phase-2-3-Doors-12-16v-Confort-Expression-Quickshift.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/49984/Renault-Clio-2-Phase-2-3-Doors-14-16v-Confort-Expression.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50003/Renault-Clio-2-Phase-2-3-Doors-12-16v-Luxe-Privilege.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50022/Renault-Clio-2-Phase-2-3-Doors-12-16v-Luxe-Privilege-Quickshift.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50262/Renault-Clio-2-Phase-2-5-Doors-12-16v-Pack-Authentique.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50281/Renault-Clio-2-Phase-2-5-Doors-12-16v-Pack-Dynamique.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50300/Renault-Clio-2-Phase-2-5-Doors-14-16v-Pack-Dynamique.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50357/Renault-Clio-2-Phase-2-5-Doors-12-16v-Confort-Expression-Quickshift.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50376/Renault-Clio-2-Phase-2-5-Doors-14-16v-Confort-Expression.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50395/Renault-Clio-2-Phase-2-5-Doors-12-16v-Luxe-Privilege.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/50414/Renault-Clio-2-Phase-2-5-Doors-12-16v-Luxe-Privilege-Quickshift.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/50844/Renault-Clio-3-Phase-1-3Doors--12-16v-Authentique-eco2.html": {
 "doors": "3",
@@ -8244,6 +9578,97 @@
 },
 "https://www.ultimatespecs.com/car-specs/Renault/52598/Renault-Clio-3-Phase-1-5Doors--12-16v-Rip-Curl-eco2.html": {
 "doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/52707/Renault-Clio-2-Campus-Storia-3doors-12-16v-75HP-Authentique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/52721/Renault-Clio-2-Campus-Storia-3doors-12-16v-75HP-Dynamique.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/52777/Renault-Clio-2-Campus-Storia-5doors-12-16v-75HP-Authentique.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/52791/Renault-Clio-2-Campus-Storia-5doors-12-16v-75HP-Dynamique.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/53424/Renault-Clio-2-Campus-Storia-3doors-12-16v-75HP-Techno.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/53466/Renault-Clio-2-Campus-Storia-5doors-12-16v-75HP-Techno.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/55505/Renault-Clio-2-Phase-2-3-Doors-12-16v-Extreme.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/55531/Renault-Clio-2-Phase-2-5-Doors-12-16v-Extreme.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/55709/Renault-Clio-2-Campus-Storia-3doors-12-16v-Community.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/55718/Renault-Clio-2-Phase-2-3-Doors-14-16v-Community.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/55745/Renault-Clio-2-Campus-Storia-5doors-12-16v-Community.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/55754/Renault-Clio-2-Phase-2-5-Doors-14-16v-Community.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/57273/Renault-Clio-2-Phase-2-3-Doors-RS-20-16v-Renault-Sport-Team.html": {
+"doors": "3",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
 "seats": "5",
@@ -8494,6 +9919,62 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/6426/Renault-Clio-2-Phase-1-5-Doors-16-16v-Initiale.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/6427/Renault-Clio-2-Phase-1-5-Doors-16-16v.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/6428/Renault-Clio-2-Phase-1-5-Doors-16-Si.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/6430/Renault-Clio-2-Phase-1-5-Doors-14-16v-RXE.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/6431/Renault-Clio-2-Phase-1-5-Doors-14-RT.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/6433/Renault-Clio-2-Phase-2-5-Doors-14-16v.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/6434/Renault-Clio-2-Phase-1-3-Doors-30-V6-Sport.html": {
+"doors": "3",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "2",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/6440/Renault-Clio-2-Phase-2-5-Doors-16-16v.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/65012/Renault-Trafic-3-Phase-1-dCi-90-Combi-9-SWB.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -8734,6 +10215,13 @@
 "https://www.ultimatespecs.com/car-specs/Renault/74762/Renault-Megane-4-Phase-1-15-dCi-110-Bose.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/978/Renault-Clio-2-Phase-2-5-Doors-12-16v-Confort-Expression.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/981/Renault-Clio-3-Phase-1-5Doors--12-16v-Confort-Dynamique.html": {
@@ -9008,7 +10496,21 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Skoda/12654/Skoda-Octavia-2-Tour-19-TDI.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Skoda/12672/Skoda-Octavia-2-Collection-16-MPI.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/12673/Skoda-Octavia-2-Collection-16-MPI-GLP.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
@@ -9241,6 +10743,20 @@
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/1768/Skoda-Octavia-2-20-TDI-140.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Skoda/1769/Skoda-Octavia-2-20-TDI-170-RS.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "",
 "transmission": "Manual"
 },
@@ -10376,10 +11892,26 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108724/Volkswagen-Golf-2017-Alltrack-18-TSI-DSG-6.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/108725/Volkswagen-Golf-2017-Alltrack-20-TDI-150HP.html": {
+"doors": "5",
 "drive": "AWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/108726/Volkswagen-Golf-2017-Alltrack-20-TDI-184HP-DSG-6.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/109796/Volkswagen-Golf-2017-GTI-Performance-20-TSI-245HP.html": {
 "drive": "FWD",
@@ -10533,9 +12065,18 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/119322/Volkswagen-T-Roc-Cabrio-10-TSI-115HP.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/119323/Volkswagen-T-Roc-Cabrio-15-TSI-150HP.html": {
+"doors": "2",
 "drive": "FWD",
 "gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
 "transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/119326/Volkswagen-Golf-8-10-TSI-110HP.html": {
@@ -10743,6 +12284,27 @@
 "gearbox": "5 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/128117/Volkswagen-Tiguan-Allspace-2022-15-TSI-150HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/128122/Volkswagen-Tiguan-Allspace-2022-15-TSI-150HP-Auto.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/128125/Volkswagen-Tiguan-Allspace-2022-20-TDI-150HP-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/1305/Volkswagen-Passat-B6-20-FSI.html": {
 "doors": "4",
 "drive": "FWD",
@@ -10809,9 +12371,25 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/134165/Volkswagen-T-Roc-2022-Cabriolet-10-TSI.html": {
+"doors": "2",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "4",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134166/Volkswagen-T-Roc-2022-Cabriolet-15-TSI-ACT.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134167/Volkswagen-T-Roc-2022-Cabriolet-15-TSI-ACT-DSG.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/134171/Volkswagen-T-Roc-2022-20-TDI.html": {
 "drive": "FWD",
@@ -10827,6 +12405,90 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134214/Volkswagen-Tiguan-Allspace-2022-20-TSI-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134215/Volkswagen-Tiguan-Allspace-2022-20-TDI-150HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134217/Volkswagen-Tiguan-Allspace-2022-20-TDI-150HP-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/134218/Volkswagen-Tiguan-Allspace-2022-20-TDI-200HP-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136911/Volkswagen-Passat-B9-Variant-20-TDI-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136913/Volkswagen-Passat-B9-Variant-20-TSI-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136917/Volkswagen-Passat-B9-Variant-15-eTSI-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136921/Volkswagen-Passat-B9-Variant-20-TSI-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136923/Volkswagen-Passat-B9-Variant-15-TSI-204HP-eHybrid-e-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136929/Volkswagen-Passat-B9-Variant-15-TSI-272HP-eHybrid-e-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136932/Volkswagen-Passat-B9-Variant-20-TDI-122HP-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/136935/Volkswagen-Passat-B9-Variant-20-TDI-150HP-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/138934/Volkswagen-Transporter-T7-Van-SWB-20-TDI-110HP.html": {
 "drive": "FWD",
@@ -10998,10 +12660,52 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140084/Volkswagen-Tiguan-Allspace-2022-20-TSI-245HP-OPF-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140086/Volkswagen-Tiguan-Allspace-2022-20-TDI-200HP-SCR-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140087/Volkswagen-Tiguan-Allspace-2022-20-TDI-150HP-SCR-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140088/Volkswagen-Tiguan-Allspace-2022-20-TSI-190HP-OPF-4MOTION-DSG.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140089/Volkswagen-Tiguan-Allspace-2022-15-TSI-OPF-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "7",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/14009/Volkswagen-Passat-B7-Variant-Highline-20-TDI-140HP-DSG6-BlueMotion-Technology.html": {
 "drive": "FWD",
 "gearbox": "6 speed Automatic",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140090/Volkswagen-Tiguan-Allspace-2022-15-TSI-OPF.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/14010/Volkswagen-Passat-B7-Variant-Highline-20-TDI-170HP-DSG6-BlueMotion-Technology.html": {
 "drive": "FWD",
@@ -11063,29 +12767,291 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
-"https://www.ultimatespecs.com/car-specs/Volkswagen/140420/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-20-TDI-110HP.html": {
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140415/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-20-TDI-170HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140416/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-20-TDI-170HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140417/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-20-TDI-150HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140418/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-20-TDI-150HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140419/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-20-TDI-150HP.html": {
+"doors": "4",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140420/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-20-TDI-110HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140421/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-25-eHybrid-CVT-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed CVT",
+"seats": "7",
+"transmission": "CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140422/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-20-TDI-170HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140423/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-20-TDI-170HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140424/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-20-TDI-150HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140425/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-20-TDI-150HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140426/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-20-TDI-150HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/140427/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-20-TDI-110HP.html": {
+"doors": "4",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140428/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-25-eHybrid-CVT-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed CVT",
+"seats": "7",
+"transmission": "CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140429/Volkswagen-Transporter-T7-Kombi-LWB-20-TDI-170HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140431/Volkswagen-Transporter-T7-Kombi-LWB-20-TDI-150HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140432/Volkswagen-Transporter-T7-Kombi-LWB-20-TDI-150HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140433/Volkswagen-Transporter-T7-Kombi-LWB-20-TDI-150HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/140434/Volkswagen-Transporter-T7-Kombi-LWB-20-TDI-110HP.html": {
+"doors": "4",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140436/Volkswagen-Transporter-T7-Kombi-LWB-25-eHybrid-CVT-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed CVT",
+"seats": "7",
+"transmission": "CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140437/Volkswagen-Transporter-T7-Kombi-SWB-20-TDI-170HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140438/Volkswagen-Transporter-T7-Kombi-SWB-20-TDI-170HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140439/Volkswagen-Transporter-T7-Kombi-SWB-20-TDI-150HP-4MOTION-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140440/Volkswagen-Transporter-T7-Kombi-SWB-20-TDI-150HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140441/Volkswagen-Transporter-T7-Kombi-SWB-20-TDI-150HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/140442/Volkswagen-Transporter-T7-Kombi-SWB-20-TDI-110HP.html": {
+"doors": "4",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140443/Volkswagen-Transporter-T7-Kombi-SWB-25-eHybrid-CVT-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed CVT",
+"seats": "7",
+"transmission": "CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141924/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-e-Kombi-210kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141925/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-e-Kombi-160kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141927/Volkswagen-Transporter-T7-Kombi-LWB-e-Kombi-210kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141928/Volkswagen-Transporter-T7-Kombi-LWB-e-Kombi-160kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141929/Volkswagen-Transporter-T7-Kombi-LWB-e-Kombi-100kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141930/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-e-Kombi-210kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141931/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-e-Kombi-160kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141932/Volkswagen-Transporter-T7-Kombi-SWB-PanAmericana-e-Kombi-100kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141933/Volkswagen-Transporter-T7-Kombi-SWB-e-Kombi-210kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141934/Volkswagen-Transporter-T7-Kombi-SWB-e-Kombi-160kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141935/Volkswagen-Transporter-T7-Kombi-SWB-e-Kombi-100kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/149640/Volkswagen-T-Roc-2022-Cabriolet-15-TSI-OPF-ACT-DSG.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "4",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/149641/Volkswagen-T-Roc-2022-Cabriolet-15-TSI-OPF-ACT.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/149642/Volkswagen-T-Roc-2022-Cabriolet-10-TSI-OPF.html": {
+"doors": "2",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "4",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/149648/Volkswagen-Polo-2022-20-TSI-GTI.html": {
@@ -11526,6 +13492,20 @@
 "gearbox": "6 speed Manual",
 "seats": "7",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155780/Volkswagen-Passat-B9-Variant-15-TSI-272HP-eHybrid-e-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/155782/Volkswagen-Passat-B9-Variant-15-TSI-204HP-eHybrid-e-DSG.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/23900/Volkswagen-Touran-2010-Edition-16-TDI-105HP-Bluemotion-Technology.html": {
 "drive": "FWD",
@@ -12933,6 +14913,83 @@
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Volvo/158930/Volvo-S60-R.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1691/Volvo-S60-24.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1692/Volvo-S60-24i.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1694/Volvo-S60-T5.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1695/Volvo-S60-T5.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1697/Volvo-S60-24-Bi-Fuel.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1698/Volvo-S60-24T.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1701/Volvo-S60-24D.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1702/Volvo-S60-D5.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1704/Volvo-S60-24D.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/1706/Volvo-S60-R-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volvo/25021/Volvo-V60-Kinetic-DRIVe.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -13050,6 +15107,27 @@
 "drive": "AWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/4709/Volvo-XC90-32.html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Sequential",
+"seats": "",
+"transmission": "Sequential"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/4710/Volvo-XC90-25T.html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/4718/Volvo-XC90-25T.html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Volvo/59705/Volvo-S60-II-Kinetic-D2.html": {
@@ -13288,5 +15366,33 @@
 "drive": "FWD",
 "gearbox": "8 speed Automatic",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/8049/Volvo-XC90-D5-Kinetic-(7-places).html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/8051/Volvo-XC90-D5-Momentum-(7-places).html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/8054/Volvo-XC90-D5-Summum-(7-places).html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/8059/Volvo-XC90-D5-R-Design-(7-places).html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
 }
 }

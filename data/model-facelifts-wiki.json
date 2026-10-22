@@ -1,0 +1,2498 @@
+{
+ "Audi|A3|8P": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2003,
+  "to": 2013,
+  "languages": {
+   "de": 2008,
+   "en": 2008,
+   "fr": 2008,
+   "it": 2008,
+   "nl": 2008,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Audi_A3",
+   "https://de.wikipedia.org/wiki/Audi_A3_8P",
+   "https://en.wikipedia.org/wiki/Audi_A3",
+   "https://fr.wikipedia.org/wiki/Audi_A3",
+   "https://it.wikipedia.org/wiki/Audi_A3",
+   "https://nl.wikipedia.org/wiki/Audi_A3"
+  ]
+ },
+ "Audi|Q4|Q4": {
+  "year": 2026,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "de": 2026,
+   "pl": 2026
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Audi_Q4_e-tron",
+   "https://de.wikipedia.org/wiki/Audi_Q4_e-tron"
+  ]
+ },
+ "Audi|Q8|Q8-e": {
+  "year": 2022,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2020,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "fr": 2023,
+   "nl": 2022,
+   "pl": 2022
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Audi_Q8_e-tron",
+   "https://de.wikipedia.org/wiki/Audi_Q8",
+   "https://fr.wikipedia.org/wiki/Audi_Q8",
+   "https://nl.wikipedia.org/wiki/Audi_Q8_e-tron"
+  ]
+ },
+ "BMW|1|E81/E87": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2013,
+  "languages": {
+   "de": 2007,
+   "en": 2007,
+   "fr": 2007,
+   "nl": 2007,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/BMW_1",
+   "https://de.wikipedia.org/wiki/BMW_E87",
+   "https://en.wikipedia.org/wiki/BMW_1_Series_%28E87%29",
+   "https://fr.wikipedia.org/wiki/BMW_E87",
+   "https://nl.wikipedia.org/wiki/BMW_1"
+  ]
+ },
+ "BMW|1|F40": {
+  "year": 2020,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2019,
+  "to": 2024,
+  "languages": {
+   "de": 2020,
+   "en": 2022
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/BMW_F40",
+   "https://en.wikipedia.org/wiki/BMW_1_Series_%28F52%29"
+  ]
+ },
+ "Citroen|C-Crosser|C-Crosser I": {
+  "year": 2009,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2012,
+  "languages": {
+   "fr": 2009
+  },
+  "sources": [
+   "https://fr.wikipedia.org/wiki/Citroen_C-Crosser"
+  ]
+ },
+ "Citroen|C1|C1 II": {
+  "year": 2018,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2014,
+  "to": 2021,
+  "languages": {
+   "de": 2018,
+   "fr": 2018
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Citroen_C1",
+   "https://fr.wikipedia.org/wiki/Citroen_C1"
+  ]
+ },
+ "Citroen|C3 Picasso|C3 Picasso I": {
+  "year": 2012,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2008,
+  "to": 2017,
+  "languages": {
+   "de": 2012,
+   "en": 2012,
+   "pl": 2010
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Citroen_C3_Picasso",
+   "https://de.wikipedia.org/wiki/Citroen_C3_Picasso",
+   "https://en.wikipedia.org/wiki/Citroen_C3_Picasso"
+  ]
+ },
+ "Citroen|C4 Picasso|C4 Picasso I": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2013,
+  "languages": {
+   "de": 2010,
+   "en": 2009,
+   "it": 2010
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Citroen_C4_Picasso",
+   "https://en.wikipedia.org/wiki/Citroen_C4_Picasso",
+   "https://it.wikipedia.org/wiki/Citroen_C4_Picasso"
+  ]
+ },
+ "Citroen|C5|C5 III": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2017,
+  "languages": {
+   "de": 2010,
+   "en": 2011,
+   "fr": 2008,
+   "it": 2013,
+   "nl": 2010,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Citroen_C5",
+   "https://de.wikipedia.org/wiki/Citroen_C5",
+   "https://en.wikipedia.org/wiki/Citroen_C5",
+   "https://fr.wikipedia.org/wiki/Citroen_C5",
+   "https://it.wikipedia.org/wiki/Citroen_C5",
+   "https://nl.wikipedia.org/wiki/Citroen_C5"
+  ]
+ },
+ "Citroen|C8|C8 I": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2002,
+  "to": 2014,
+  "languages": {
+   "de": 2008,
+   "en": 2008,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Citroen_C8",
+   "https://de.wikipedia.org/wiki/Citroen_C8",
+   "https://en.wikipedia.org/wiki/Citroen_C8"
+  ]
+ },
+ "Citroen|Grand C4 Picasso / SpaceTourer|Grand C4 Picasso I": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2013,
+  "languages": {
+   "en": 2007,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Citroen_Grand_C4_Picasso",
+   "https://en.wikipedia.org/wiki/Citroen_SpaceTourer"
+  ]
+ },
+ "Citroen|Jumper|Jumper II": {
+  "year": 2014,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2015,
+  "languages": {
+   "de": 2014,
+   "en": 2014,
+   "pl": 2006
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Citroen_Jumper",
+   "https://de.wikipedia.org/wiki/Citroen_Jumper",
+   "https://en.wikipedia.org/wiki/Citroen_Jumper"
+  ]
+ },
+ "Citroen|Jumpy|Jumpy II": {
+  "year": 2012,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2016,
+  "languages": {
+   "de": 2012,
+   "en": 2012,
+   "it": 2012,
+   "nl": 2012
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Citroen_Jumpy",
+   "https://en.wikipedia.org/wiki/Citroen_Jumpy",
+   "https://it.wikipedia.org/wiki/Citroen_Jumpy",
+   "https://nl.wikipedia.org/wiki/Citroen_Jumpy"
+  ]
+ },
+ "Citroen|Nemo|Nemo": {
+  "year": 2013,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2008,
+  "to": 2015,
+  "languages": {
+   "en": 2013
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Citroen_Nemo"
+  ]
+ },
+ "Cupra|Born|Born I": {
+  "year": 2026,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "de": 2026,
+   "fr": 2026
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Cupra_Born",
+   "https://fr.wikipedia.org/wiki/Cupra_Born"
+  ]
+ },
+ "Dacia|Logan|Logan I": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2008,
+   "en": 2009,
+   "it": 2008,
+   "nl": 2009,
+   "pl": 2006
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Dacia_Logan",
+   "https://de.wikipedia.org/wiki/Dacia_Logan",
+   "https://en.wikipedia.org/wiki/Dacia_Logan",
+   "https://it.wikipedia.org/wiki/Dacia_Logan",
+   "https://nl.wikipedia.org/wiki/Dacia_Logan"
+  ]
+ },
+ "Dacia|Logan|Logan III": {
+  "year": 2022,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "de": 2025,
+   "en": 2023,
+   "pl": 2022
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Dacia_Logan",
+   "https://de.wikipedia.org/wiki/Dacia_Logan",
+   "https://en.wikipedia.org/wiki/Dacia_Logan"
+  ]
+ },
+ "Dacia|Sandero|Sandero III": {
+  "year": 2022,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "de": 2025,
+   "en": 2023,
+   "fr": 2023,
+   "it": 2022,
+   "pl": 2022
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Dacia_Sandero",
+   "https://de.wikipedia.org/wiki/Dacia_Sandero",
+   "https://en.wikipedia.org/wiki/Dacia_Sandero",
+   "https://fr.wikipedia.org/wiki/Dacia_Sandero_III",
+   "https://it.wikipedia.org/wiki/Dacia_Sandero"
+  ]
+ },
+ "Fiat|500L|500L": {
+  "year": 2017,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2012,
+  "to": 2022,
+  "languages": {
+   "de": 2017,
+   "en": 2017,
+   "fr": 2017,
+   "pl": 2013
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_500L",
+   "https://de.wikipedia.org/wiki/Fiat_500L",
+   "https://en.wikipedia.org/wiki/Fiat_500L",
+   "https://fr.wikipedia.org/wiki/Fiat_500L"
+  ]
+ },
+ "Fiat|500|500 II": {
+  "year": 2015,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2023,
+  "languages": {
+   "de": 2015,
+   "en": 2016,
+   "fr": 2008,
+   "nl": 2015,
+   "pl": 2014
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_500_%282007%29",
+   "https://de.wikipedia.org/wiki/Fiat_500_%282007%29",
+   "https://en.wikipedia.org/wiki/Fiat_500_%282007%29",
+   "https://fr.wikipedia.org/wiki/Fiat_500_%282007%29",
+   "https://nl.wikipedia.org/wiki/Fiat_500_%282007%29"
+  ]
+ },
+ "Fiat|Bravo|Bravo II": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2015,
+  "languages": {
+   "en": 2007,
+   "fr": 2010,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Bravo",
+   "https://en.wikipedia.org/wiki/Fiat_Bravo_%282007%29",
+   "https://fr.wikipedia.org/wiki/Fiat_Bravo"
+  ]
+ },
+ "Fiat|Doblo|Doblo III": {
+  "year": 2015,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2010,
+  "to": 2016,
+  "languages": {
+   "de": 2015,
+   "en": 2015,
+   "fr": 2015,
+   "it": 2014,
+   "nl": 2015,
+   "pl": 2013
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Doblo",
+   "https://de.wikipedia.org/wiki/Fiat_Doblo",
+   "https://en.wikipedia.org/wiki/Fiat_Doblo",
+   "https://fr.wikipedia.org/wiki/Fiat_Doblo",
+   "https://it.wikipedia.org/wiki/Fiat_Doblo",
+   "https://nl.wikipedia.org/wiki/Fiat_Doblo"
+  ]
+ },
+ "Fiat|Ducato|Ducato III": {
+  "year": 2011,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2014,
+  "languages": {
+   "de": 2011,
+   "en": 2007,
+   "pl": 2011
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Ducato",
+   "https://de.wikipedia.org/wiki/Fiat_Ducato",
+   "https://en.wikipedia.org/wiki/Fiat_Ducato"
+  ]
+ },
+ "Fiat|Freemont|Freemont I": {
+  "year": 2012,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2011,
+  "to": 2016,
+  "languages": {
+   "fr": 2012
+  },
+  "sources": [
+   "https://fr.wikipedia.org/wiki/Fiat_Freemont"
+  ]
+ },
+ "Fiat|Idea|Idea I": {
+  "year": 2005,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2010,
+   "en": 2005,
+   "fr": 2010,
+   "it": 2005,
+   "pl": 2005
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Idea",
+   "https://de.wikipedia.org/wiki/Fiat_Idea",
+   "https://en.wikipedia.org/wiki/Fiat_Idea",
+   "https://fr.wikipedia.org/wiki/Fiat_Idea",
+   "https://it.wikipedia.org/wiki/Fiat_Idea"
+  ]
+ },
+ "Fiat|Panda|Panda II": {
+  "year": 2004,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2003,
+  "to": 2012,
+  "languages": {
+   "fr": 2009,
+   "pl": 2004
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Panda",
+   "https://fr.wikipedia.org/wiki/Fiat_Panda_II"
+  ]
+ },
+ "Fiat|Panda|Panda III": {
+  "year": 2024,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2012,
+  "to": null,
+  "languages": {
+   "de": 2024,
+   "nl": 2024,
+   "pl": 2016
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Panda",
+   "https://de.wikipedia.org/wiki/Fiat_Panda",
+   "https://nl.wikipedia.org/wiki/Fiat_Panda"
+  ]
+ },
+ "Fiat|Punto|Grande Punto": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2005,
+  "to": 2012,
+  "languages": {
+   "de": 2009,
+   "en": 2009,
+   "fr": 2008,
+   "it": 2009
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Fiat_Punto_%28Typ_199%29",
+   "https://en.wikipedia.org/wiki/Fiat_Punto",
+   "https://fr.wikipedia.org/wiki/Fiat_Punto_III",
+   "https://it.wikipedia.org/wiki/Fiat_Punto_%281999%29"
+  ]
+ },
+ "Fiat|Punto|Punto 2012": {
+  "year": 2014,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2012,
+  "to": 2018,
+  "languages": {
+   "en": 2014,
+   "nl": 2014
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Fiat_Punto",
+   "https://nl.wikipedia.org/wiki/Fiat_Punto"
+  ]
+ },
+ "Fiat|Qubo|Qubo": {
+  "year": 2016,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2009,
+  "to": 2019,
+  "languages": {
+   "de": 2016,
+   "en": 2013,
+   "fr": 2016,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Qubo",
+   "https://de.wikipedia.org/wiki/Fiat_Qubo",
+   "https://en.wikipedia.org/wiki/Fiat_Qubo",
+   "https://fr.wikipedia.org/wiki/Fiat_Qubo"
+  ]
+ },
+ "Fiat|Scudo|Scudo II": {
+  "year": 2012,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2016,
+  "languages": {
+   "en": 2012,
+   "pl": 2013
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Scudo",
+   "https://en.wikipedia.org/wiki/Fiat_Scudo"
+  ]
+ },
+ "Fiat|Sedici|Sedici I": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2014,
+  "languages": {
+   "de": 2009,
+   "en": 2009,
+   "fr": 2009,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Fiat_Sedici",
+   "https://de.wikipedia.org/wiki/Fiat_Sedici",
+   "https://en.wikipedia.org/wiki/Fiat_Sedici",
+   "https://fr.wikipedia.org/wiki/Fiat_Sedici"
+  ]
+ },
+ "Ford|EcoSport|EcoSport I": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2007,
+   "en": 2007,
+   "fr": 2007,
+   "it": 2007,
+   "nl": 2007,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_EcoSport",
+   "https://de.wikipedia.org/wiki/Ford_EcoSport",
+   "https://en.wikipedia.org/wiki/Ford_EcoSport",
+   "https://fr.wikipedia.org/wiki/Ford_EcoSport",
+   "https://it.wikipedia.org/wiki/Ford_EcoSport",
+   "https://nl.wikipedia.org/wiki/Ford_EcoSport"
+  ]
+ },
+ "Ford|Econoline|Econoline IV": {
+  "year": 1996,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 1992,
+  "to": 2014,
+  "languages": {
+   "en": 2008,
+   "pl": 1996
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Econoline",
+   "https://en.wikipedia.org/wiki/Ford_Econoline"
+  ]
+ },
+ "Ford|Edge|Edge I": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2015,
+  "languages": {
+   "de": 2010,
+   "en": 2011,
+   "fr": 2011,
+   "it": 2010,
+   "nl": 2010,
+   "pl": 2010
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Edge",
+   "https://de.wikipedia.org/wiki/Ford_Edge",
+   "https://en.wikipedia.org/wiki/Ford_Edge",
+   "https://fr.wikipedia.org/wiki/Ford_Edge",
+   "https://it.wikipedia.org/wiki/Ford_Edge",
+   "https://nl.wikipedia.org/wiki/Ford_Edge"
+  ]
+ },
+ "Ford|Escape|Escape III": {
+  "year": 2015,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2013,
+  "to": 2019,
+  "languages": {
+   "de": 2015,
+   "en": 2017,
+   "fr": 2016,
+   "pl": 2015
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Escape",
+   "https://de.wikipedia.org/wiki/Ford_Escape",
+   "https://en.wikipedia.org/wiki/Ford_Escape",
+   "https://fr.wikipedia.org/wiki/Ford_Escape"
+  ]
+ },
+ "Ford|Explorer|Explorer V": {
+  "year": 2011,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2010,
+  "to": 2016,
+  "languages": {
+   "de": 2015,
+   "en": 2011,
+   "fr": 2011,
+   "it": 2014,
+   "nl": 2011,
+   "pl": 2011
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Explorer",
+   "https://de.wikipedia.org/wiki/Ford_Explorer",
+   "https://en.wikipedia.org/wiki/Ford_Explorer",
+   "https://fr.wikipedia.org/wiki/Ford_Explorer",
+   "https://it.wikipedia.org/wiki/Ford_Explorer",
+   "https://nl.wikipedia.org/wiki/Ford_Explorer"
+  ]
+ },
+ "Ford|Fusion|Fusion I": {
+  "year": 2005,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2002,
+  "to": 2012,
+  "languages": {
+   "de": 2005,
+   "en": 2005,
+   "fr": 2005,
+   "pl": 2003
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Fusion_%28Europa%29",
+   "https://de.wikipedia.org/wiki/Ford_Fusion_%28Europa%29",
+   "https://en.wikipedia.org/wiki/Ford_Fusion_%28Europe%29",
+   "https://fr.wikipedia.org/wiki/Ford_Fusion_%28Europe%29"
+  ]
+ },
+ "Ford|Ka/Ka+|Ka/Ka+ III": {
+  "year": 2011,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2008,
+  "to": 2016,
+  "languages": {
+   "de": 2011,
+   "en": 2011
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Ford_Ka",
+   "https://en.wikipedia.org/wiki/Ford_Ka"
+  ]
+ },
+ "Ford|Kuga|Mk1": {
+  "year": 2010,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2012,
+  "languages": {
+   "en": 2010
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Ford_Kuga"
+  ]
+ },
+ "Ford|Mondeo|Mk4": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2014,
+  "languages": {
+   "de": 2010,
+   "en": 2010,
+   "fr": 2011,
+   "it": 2010,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Mondeo",
+   "https://de.wikipedia.org/wiki/Ford_Mondeo",
+   "https://en.wikipedia.org/wiki/Ford_Mondeo",
+   "https://fr.wikipedia.org/wiki/Ford_Mondeo",
+   "https://it.wikipedia.org/wiki/Ford_Mondeo"
+  ]
+ },
+ "Ford|Mustang Mach-E|Mustang Mach-E": {
+  "year": 2025,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "pl": 2025
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Mustang_Mach-E"
+  ]
+ },
+ "Ford|Mustang|Mustang V": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2014,
+  "languages": {
+   "de": 2010,
+   "en": 2005,
+   "fr": 2013,
+   "nl": 2010,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Mustang",
+   "https://de.wikipedia.org/wiki/Ford_Mustang",
+   "https://en.wikipedia.org/wiki/Ford_Mustang_%28fifth_generation%29",
+   "https://fr.wikipedia.org/wiki/Ford_Mustang",
+   "https://nl.wikipedia.org/wiki/Ford_Mustang"
+  ]
+ },
+ "Ford|Taurus|Taurus V": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2018,
+  "languages": {
+   "de": 2008,
+   "en": 2008,
+   "it": 2009,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Taurus",
+   "https://de.wikipedia.org/wiki/Ford_Taurus",
+   "https://en.wikipedia.org/wiki/Ford_Taurus",
+   "https://it.wikipedia.org/wiki/Ford_Taurus"
+  ]
+ },
+ "Ford|Tourneo Connect|Tourneo Connect I": {
+  "year": 2006,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2005,
+  "to": 2013,
+  "languages": {
+   "en": 2006,
+   "fr": 2009
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Ford_Tourneo_Connect",
+   "https://fr.wikipedia.org/wiki/Ford_Tourneo_Connect"
+  ]
+ },
+ "Ford|Tourneo Connect|Tourneo Connect II": {
+  "year": 2014,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2013,
+  "to": 2018,
+  "languages": {
+   "de": 2014,
+   "en": 2014,
+   "fr": 2016,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Tourneo_Connect",
+   "https://de.wikipedia.org/wiki/Ford_Tourneo_Connect",
+   "https://en.wikipedia.org/wiki/Ford_Tourneo_Connect",
+   "https://fr.wikipedia.org/wiki/Ford_Tourneo_Connect"
+  ]
+ },
+ "Ford|Tourneo Custom|Tourneo Custom I": {
+  "year": 2017,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2012,
+  "to": 2023,
+  "languages": {
+   "de": 2018,
+   "en": 2017,
+   "fr": 2017,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Tourneo_Custom",
+   "https://de.wikipedia.org/wiki/Ford_Tourneo_Custom",
+   "https://en.wikipedia.org/wiki/Ford_Tourneo_Custom",
+   "https://fr.wikipedia.org/wiki/Ford_Tourneo_Custom"
+  ]
+ },
+ "Ford|Transit Connect|Transit Connect II": {
+  "year": 2018,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2014,
+  "to": 2020,
+  "languages": {
+   "de": 2018,
+   "en": 2019,
+   "fr": 2016,
+   "it": 2018,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Transit_Connect",
+   "https://de.wikipedia.org/wiki/Ford_Transit_Connect",
+   "https://en.wikipedia.org/wiki/Ford_Transit_Connect",
+   "https://fr.wikipedia.org/wiki/Ford_Transit_Connect",
+   "https://it.wikipedia.org/wiki/Ford_Transit_Connect"
+  ]
+ },
+ "Ford|Transit Custom|Transit Custom I": {
+  "year": 2017,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2014,
+  "to": 2023,
+  "languages": {
+   "de": 2018,
+   "en": 2017,
+   "fr": 2017,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Ford_Transit_Custom",
+   "https://de.wikipedia.org/wiki/Ford_Transit_Custom",
+   "https://en.wikipedia.org/wiki/Ford_Transit_Custom",
+   "https://fr.wikipedia.org/wiki/Ford_Transit_Custom"
+  ]
+ },
+ "Ford|Transit|Transit VI": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2013,
+  "languages": {
+   "de": 2007,
+   "it": 2007,
+   "nl": 2007
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Ford_Transit",
+   "https://it.wikipedia.org/wiki/Ford_Transit",
+   "https://nl.wikipedia.org/wiki/Ford_Transit"
+  ]
+ },
+ "Honda|Jazz|Jazz III": {
+  "year": 2011,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2008,
+  "to": 2015,
+  "languages": {
+   "de": 2011,
+   "fr": 2014,
+   "it": 2011,
+   "pl": 2011
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Honda_Jazz",
+   "https://de.wikipedia.org/wiki/Honda_Jazz",
+   "https://fr.wikipedia.org/wiki/Honda_Jazz",
+   "https://it.wikipedia.org/wiki/Honda_Jazz"
+  ]
+ },
+ "Honda|Legend|Legend IV": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2012,
+  "languages": {
+   "de": 2008,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Honda_Legend",
+   "https://de.wikipedia.org/wiki/Honda_Legend"
+  ]
+ },
+ "Honda|NSX|NSX III": {
+  "year": 2018,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2016,
+  "to": 2022,
+  "languages": {
+   "de": 2018
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Honda_NSX_%282016%29"
+  ]
+ },
+ "Honda|Odyssey|Odyssey IV": {
+  "year": 2013,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2011,
+  "to": 2017,
+  "languages": {
+   "de": 2012,
+   "en": 2013,
+   "pl": 2013
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Honda_Odyssey",
+   "https://de.wikipedia.org/wiki/Honda_Odyssey_%28Nordamerika%29",
+   "https://en.wikipedia.org/wiki/Honda_Odyssey_%28international%29"
+  ]
+ },
+ "Honda|Pilot|Pilot II": {
+  "year": 2011,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2009,
+  "to": 2015,
+  "languages": {
+   "de": 2011,
+   "pl": 2011
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Honda_Pilot",
+   "https://de.wikipedia.org/wiki/Honda_Pilot"
+  ]
+ },
+ "Hyundai|H-1|H-1 II": {
+  "year": 2018,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2008,
+  "to": null,
+  "languages": {
+   "de": 2018,
+   "it": 2018,
+   "pl": 2018
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Hyundai_H-1",
+   "https://de.wikipedia.org/wiki/Hyundai_H-1",
+   "https://it.wikipedia.org/wiki/Hyundai_H-1"
+  ]
+ },
+ "Jeep|Cherokee|Cherokee IV": {
+  "year": 2011,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2008,
+  "to": 2013,
+  "languages": {
+   "nl": 2011
+  },
+  "sources": [
+   "https://nl.wikipedia.org/wiki/Jeep_Cherokee"
+  ]
+ },
+ "Jeep|Gladiator|Gladiator": {
+  "year": 2023,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "pl": 2023
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Jeep_Gladiator_%282018%29",
+   "https://de.wikipedia.org/wiki/Jeep_Gladiator_%28JT%29"
+  ]
+ },
+ "Jeep|Wrangler|Wrangler IV": {
+  "year": 2023,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2018,
+  "to": null,
+  "languages": {
+   "de": 2019,
+   "fr": 2023,
+   "pl": 2023
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Jeep_Wrangler",
+   "https://de.wikipedia.org/wiki/Jeep_Wrangler",
+   "https://fr.wikipedia.org/wiki/Jeep_Wrangler"
+  ]
+ },
+ "Kia|Carens|Carens III": {
+  "year": 2007,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2012,
+  "languages": {
+   "de": 2010,
+   "en": 2007,
+   "fr": 2009,
+   "pl": 2011
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Kia_Carens",
+   "https://de.wikipedia.org/wiki/Kia_Carens",
+   "https://en.wikipedia.org/wiki/Kia_Carens",
+   "https://fr.wikipedia.org/wiki/Kia_Carens"
+  ]
+ },
+ "Kia|Carnival|Carnival II": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2014,
+  "languages": {
+   "de": 2010,
+   "en": 2007,
+   "it": 2010,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Kia_Carnival",
+   "https://de.wikipedia.org/wiki/Kia_Carnival",
+   "https://en.wikipedia.org/wiki/Kia_Carnival",
+   "https://it.wikipedia.org/wiki/Kia_Carnival"
+  ]
+ },
+ "Kia|Soul|Soul III": {
+  "year": 2022,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2020,
+  "to": null,
+  "languages": {
+   "de": 2022,
+   "en": 2023,
+   "fr": 2022,
+   "pl": 2022
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Kia_Soul",
+   "https://de.wikipedia.org/wiki/Kia_Soul",
+   "https://en.wikipedia.org/wiki/Kia_Soul",
+   "https://fr.wikipedia.org/wiki/Kia_Soul"
+  ]
+ },
+ "Land Rover|Defender|Defender IV": {
+  "year": 2025,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2019,
+  "to": null,
+  "languages": {
+   "de": 2025
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Land_Rover_Defender_%28L663%29"
+  ]
+ },
+ "Land Rover|Discovery|Discovery IV": {
+  "year": 2012,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2010,
+  "to": 2016,
+  "languages": {
+   "de": 2013,
+   "en": 2012
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Land_Rover_Discovery",
+   "https://en.wikipedia.org/wiki/Land_Rover_Discovery"
+  ]
+ },
+ "Land Rover|Freelander|Freelander II": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2014,
+  "languages": {
+   "de": 2010,
+   "en": 2007,
+   "fr": 2010,
+   "it": 2011,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Land_Rover_Freelander",
+   "https://de.wikipedia.org/wiki/Land_Rover_Freelander",
+   "https://en.wikipedia.org/wiki/Land_Rover_Freelander",
+   "https://fr.wikipedia.org/wiki/Land_Rover_Freelander",
+   "https://it.wikipedia.org/wiki/Land_Rover_Freelander"
+  ]
+ },
+ "Land Rover|Range Rover Sport|Range Rover Sport I": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2005,
+  "to": 2013,
+  "languages": {
+   "en": 2009,
+   "fr": 2009,
+   "it": 2009,
+   "nl": 2009
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Land_Rover_Range_Rover_Sport",
+   "https://fr.wikipedia.org/wiki/Land_Rover_Range_Rover_Sport",
+   "https://it.wikipedia.org/wiki/Land_Rover_Range_Rover_Sport",
+   "https://nl.wikipedia.org/wiki/Land_Rover_Range_Rover_Sport"
+  ]
+ },
+ "Land Rover|Range Rover|Range Rover III": {
+  "year": 2010,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2001,
+  "to": 2012,
+  "languages": {
+   "it": 2010
+  },
+  "sources": [
+   "https://it.wikipedia.org/wiki/Land_Rover_Range_Rover"
+  ]
+ },
+ "Lexus|ES|ES V": {
+  "year": 2007,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2013,
+  "languages": {
+   "en": 2009,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Lexus_ES",
+   "https://en.wikipedia.org/wiki/Lexus_ES"
+  ]
+ },
+ "Lexus|IS|IS II": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2005,
+  "to": 2012,
+  "languages": {
+   "de": 2009,
+   "en": 2010,
+   "fr": 2010,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Lexus_IS",
+   "https://de.wikipedia.org/wiki/Lexus_IS",
+   "https://en.wikipedia.org/wiki/Lexus_IS",
+   "https://fr.wikipedia.org/wiki/Lexus_IS"
+  ]
+ },
+ "Mazda|3|Mazda 3 IV": {
+  "year": 2019,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2018,
+  "to": null,
+  "languages": {
+   "de": 2021,
+   "en": 2019
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Mazda_3",
+   "https://en.wikipedia.org/wiki/Mazda_3"
+  ]
+ },
+ "Mazda|5|Mazda 5 II": {
+  "year": 2012,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2010,
+  "to": 2015,
+  "languages": {
+   "de": 2013,
+   "en": 2012
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Mazda_5",
+   "https://en.wikipedia.org/wiki/Mazda_5"
+  ]
+ },
+ "Mazda|CX-30|CX-30 I": {
+  "year": 2021,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2019,
+  "to": null,
+  "languages": {
+   "de": 2021,
+   "pl": 2024
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mazda_CX-30",
+   "https://de.wikipedia.org/wiki/Mazda_CX-30"
+  ]
+ },
+ "Mazda|MPV|MPV III": {
+  "year": 2008,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2016,
+  "languages": {
+   "en": 2008
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Mazda_MPV"
+  ]
+ },
+ "Mazda|RX-8|RX-8 I": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2003,
+  "to": 2012,
+  "languages": {
+   "de": 2009,
+   "en": 2008,
+   "fr": 2008,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mazda_RX-8",
+   "https://de.wikipedia.org/wiki/Mazda_RX-8",
+   "https://en.wikipedia.org/wiki/Mazda_RX-8",
+   "https://fr.wikipedia.org/wiki/Mazda_RX-8"
+  ]
+ },
+ "Mercedes-Benz|A|W169": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2008,
+   "en": 2008,
+   "fr": 2008,
+   "nl": 2011,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mercedes-Benz_klasy_A",
+   "https://de.wikipedia.org/wiki/Mercedes-Benz_Baureihe_169",
+   "https://en.wikipedia.org/wiki/Mercedes-Benz_A",
+   "https://fr.wikipedia.org/wiki/Mercedes-Benz_W169",
+   "https://nl.wikipedia.org/wiki/Mercedes-Benz_A-Klasse"
+  ]
+ },
+ "Mercedes-Benz|CL|W216": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2013,
+  "languages": {
+   "en": 2010,
+   "pl": 2010
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mercedes-Benz_CL",
+   "https://en.wikipedia.org/wiki/Mercedes-Benz_CL"
+  ]
+ },
+ "Mercedes-Benz|Vito|W447": {
+  "year": 2016,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2014,
+  "to": null,
+  "languages": {
+   "en": 2024,
+   "fr": 2019,
+   "pl": 2016
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mercedes-Benz_Vito",
+   "https://en.wikipedia.org/wiki/Mercedes-Benz_Vito",
+   "https://fr.wikipedia.org/wiki/Mercedes-Benz_Vito"
+  ]
+ },
+ "Mini|Clubman|F54": {
+  "year": 2021,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2015,
+  "to": null,
+  "languages": {
+   "de": 2019,
+   "fr": 2021,
+   "it": 2021,
+   "pl": 2016
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mini_Clubman",
+   "https://de.wikipedia.org/wiki/Mini_Clubman",
+   "https://fr.wikipedia.org/wiki/Mini_Clubman",
+   "https://it.wikipedia.org/wiki/Mini_Clubman_%282007%29"
+  ]
+ },
+ "Mitsubishi|Colt|Colt VI": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2008,
+   "en": 2008,
+   "fr": 2008,
+   "it": 2008,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mitsubishi_Colt",
+   "https://de.wikipedia.org/wiki/Mitsubishi_Colt",
+   "https://en.wikipedia.org/wiki/Mitsubishi_Colt",
+   "https://fr.wikipedia.org/wiki/Mitsubishi_Colt",
+   "https://it.wikipedia.org/wiki/Mitsubishi_Colt"
+  ]
+ },
+ "Mitsubishi|Galant|Galant IX": {
+  "year": 2008,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2012,
+  "languages": {
+   "de": 2008,
+   "en": 2009
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Mitsubishi_Galant",
+   "https://en.wikipedia.org/wiki/Mitsubishi_Galant"
+  ]
+ },
+ "Mitsubishi|Outlander|Outlander II": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2012,
+  "languages": {
+   "de": 2010,
+   "en": 2008,
+   "fr": 2009,
+   "it": 2010,
+   "pl": 2010
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mitsubishi_Outlander",
+   "https://de.wikipedia.org/wiki/Mitsubishi_Outlander",
+   "https://en.wikipedia.org/wiki/Mitsubishi_Outlander",
+   "https://fr.wikipedia.org/wiki/Mitsubishi_Outlander_II",
+   "https://it.wikipedia.org/wiki/Mitsubishi_Outlander"
+  ]
+ },
+ "Mitsubishi|Pajero|Pajero IV": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2017,
+  "languages": {
+   "de": 2012,
+   "en": 2007,
+   "fr": 2007,
+   "pl": 2015
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Mitsubishi_Pajero",
+   "https://de.wikipedia.org/wiki/Mitsubishi_Pajero",
+   "https://en.wikipedia.org/wiki/Mitsubishi_Pajero",
+   "https://fr.wikipedia.org/wiki/Mitsubishi_Pajero"
+  ]
+ },
+ "Nissan|Altima|Altima IV": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2012,
+  "languages": {
+   "en": 2008,
+   "it": 2010,
+   "pl": 2010
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Nissan_Altima",
+   "https://en.wikipedia.org/wiki/Nissan_Altima",
+   "https://it.wikipedia.org/wiki/Nissan_Altima"
+  ]
+ },
+ "Nissan|Micra|Micra V": {
+  "year": 2020,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2017,
+  "to": 2023,
+  "languages": {
+   "de": 2020,
+   "en": 2019,
+   "fr": 2020
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Nissan_Micra",
+   "https://en.wikipedia.org/wiki/Nissan_Micra",
+   "https://fr.wikipedia.org/wiki/Nissan_Micra"
+  ]
+ },
+ "Nissan|Murano|Murano II": {
+  "year": 2009,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2008,
+  "to": 2015,
+  "languages": {
+   "de": 2010,
+   "en": 2009,
+   "fr": 2011
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Nissan_Murano",
+   "https://en.wikipedia.org/wiki/Nissan_Murano",
+   "https://fr.wikipedia.org/wiki/Nissan_Murano"
+  ]
+ },
+ "Nissan|Navara|Navara IV": {
+  "year": 2017,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2015,
+  "to": 2023,
+  "languages": {
+   "de": 2020,
+   "en": 2021,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Nissan_Navara",
+   "https://de.wikipedia.org/wiki/Nissan_Navara",
+   "https://en.wikipedia.org/wiki/Nissan_Navara"
+  ]
+ },
+ "Nissan|Primastar|Primastar I": {
+  "year": 2006,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2001,
+  "to": 2014,
+  "languages": {
+   "en": 2006,
+   "fr": 2006,
+   "pl": 2002
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Nissan_Primastar",
+   "https://en.wikipedia.org/wiki/Nissan_Primastar",
+   "https://fr.wikipedia.org/wiki/Nissan_Primastar"
+  ]
+ },
+ "Nissan|Primastar|Primastar II": {
+  "year": 2017,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2016,
+  "to": null,
+  "languages": {
+   "en": 2018,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Nissan_Primastar",
+   "https://en.wikipedia.org/wiki/Nissan_Primastar"
+  ]
+ },
+ "Nissan|Sentra|Sentra VI": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2012,
+  "languages": {
+   "en": 2010,
+   "it": 2010
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Nissan_Sentra",
+   "https://it.wikipedia.org/wiki/Nissan_Sentra"
+  ]
+ },
+ "Nissan|Skyline|V36": {
+  "year": 2010,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2014,
+  "languages": {
+   "en": 2010
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Nissan_Skyline"
+  ]
+ },
+ "Nissan|Titan|Titan I": {
+  "year": 2007,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2004,
+  "to": 2015,
+  "languages": {
+   "en": 2008,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Nissan_Titan",
+   "https://en.wikipedia.org/wiki/Nissan_Titan"
+  ]
+ },
+ "Nissan|X-Trail|X-Trail II": {
+  "year": 2010,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2014,
+  "languages": {
+   "de": 2010,
+   "en": 2010,
+   "it": 2011,
+   "pl": 2010
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Nissan_X-Trail",
+   "https://de.wikipedia.org/wiki/Nissan_X-Trail",
+   "https://en.wikipedia.org/wiki/Nissan_X-Trail",
+   "https://it.wikipedia.org/wiki/Nissan_X-Trail"
+  ]
+ },
+ "Opel|Agila|Agila B": {
+  "year": 2011,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2014,
+  "languages": {
+   "it": 2011
+  },
+  "sources": [
+   "https://it.wikipedia.org/wiki/Opel_Agila"
+  ]
+ },
+ "Opel|Astra|Astra H": {
+  "year": 2006,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2014,
+  "languages": {
+   "de": 2006,
+   "en": 2011,
+   "fr": 2007,
+   "pl": 2006
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Astra",
+   "https://de.wikipedia.org/wiki/Opel_Astra_H",
+   "https://en.wikipedia.org/wiki/Opel_Astra",
+   "https://fr.wikipedia.org/wiki/Opel_Astra"
+  ]
+ },
+ "Opel|Astra|Astra L": {
+  "year": 2026,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "de": 2026,
+   "en": 2026,
+   "fr": 2026,
+   "pl": 2022
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Astra",
+   "https://de.wikipedia.org/wiki/Opel_Astra_L",
+   "https://en.wikipedia.org/wiki/Opel_Astra",
+   "https://fr.wikipedia.org/wiki/Opel_Astra"
+  ]
+ },
+ "Opel|Combo|Combo D": {
+  "year": 2014,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2011,
+  "to": 2018,
+  "languages": {
+   "fr": 2014
+  },
+  "sources": [
+   "https://fr.wikipedia.org/wiki/Opel_Combo"
+  ]
+ },
+ "Opel|Combo|Combo E": {
+  "year": 2019,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2018,
+  "to": 2023,
+  "languages": {
+   "de": 2021,
+   "en": 2019,
+   "pl": 2019
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Combo",
+   "https://de.wikipedia.org/wiki/Opel_Combo",
+   "https://en.wikipedia.org/wiki/Opel_Combo"
+  ]
+ },
+ "Opel|Mokka|Mokka I": {
+  "year": 2016,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2012,
+  "to": 2019,
+  "languages": {
+   "de": 2016,
+   "en": 2016,
+   "fr": 2016,
+   "pl": 2016
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Mokka",
+   "https://de.wikipedia.org/wiki/Opel_Mokka_A",
+   "https://en.wikipedia.org/wiki/Opel_Mokka",
+   "https://fr.wikipedia.org/wiki/Opel_Mokka_A"
+  ]
+ },
+ "Opel|Mokka|Mokka II": {
+  "year": 2024,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2020,
+  "to": null,
+  "languages": {
+   "de": 2024,
+   "en": 2025,
+   "pl": 2024
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Mokka",
+   "https://de.wikipedia.org/wiki/Opel_Mokka_B",
+   "https://en.wikipedia.org/wiki/Opel_Mokka"
+  ]
+ },
+ "Opel|Movano|Movano III": {
+  "year": 2019,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2010,
+  "to": null,
+  "languages": {
+   "de": 2019,
+   "pl": 2022
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Movano",
+   "https://de.wikipedia.org/wiki/Opel_Movano"
+  ]
+ },
+ "Opel|Vivaro|Vivaro A": {
+  "year": 2006,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2001,
+  "to": 2014,
+  "languages": {
+   "de": 2006,
+   "en": 2006,
+   "it": 2002,
+   "pl": 2006
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Vivaro",
+   "https://de.wikipedia.org/wiki/Opel_Vivaro",
+   "https://en.wikipedia.org/wiki/Opel_Vivaro_B",
+   "https://it.wikipedia.org/wiki/Opel_Vivaro"
+  ]
+ },
+ "Opel|Vivaro|Vivaro B": {
+  "year": 2015,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2014,
+  "to": 2019,
+  "languages": {
+   "en": 2017,
+   "it": 2015
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Opel_Vivaro_C",
+   "https://it.wikipedia.org/wiki/Opel_Vivaro"
+  ]
+ },
+ "Opel|Vivaro|Vivaro C": {
+  "year": 2023,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2019,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "pl": 2023
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Vivaro",
+   "https://de.wikipedia.org/wiki/Opel_Vivaro"
+  ]
+ },
+ "Opel|Zafira|Zafira B": {
+  "year": 2007,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2005,
+  "to": 2014,
+  "languages": {
+   "de": 2007,
+   "en": 2009,
+   "fr": 2008,
+   "nl": 2007,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Opel_Zafira",
+   "https://de.wikipedia.org/wiki/Opel_Zafira",
+   "https://en.wikipedia.org/wiki/Opel_Zafira",
+   "https://fr.wikipedia.org/wiki/Opel_Zafira",
+   "https://nl.wikipedia.org/wiki/Opel_Zafira"
+  ]
+ },
+ "Peugeot|206|206": {
+  "year": 2003,
+  "status": "проверено",
+  "accepted": true,
+  "from": 1998,
+  "to": 2012,
+  "languages": {
+   "de": 2003,
+   "fr": 2003,
+   "nl": 2003,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Peugeot_206",
+   "https://de.wikipedia.org/wiki/Peugeot_206",
+   "https://fr.wikipedia.org/wiki/Peugeot_206",
+   "https://nl.wikipedia.org/wiki/Peugeot_206"
+  ]
+ },
+ "Peugeot|207|207": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2006,
+  "to": 2013,
+  "languages": {
+   "de": 2009,
+   "en": 2009,
+   "fr": 2009,
+   "pl": 2012
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Peugeot_207",
+   "https://de.wikipedia.org/wiki/Peugeot_207",
+   "https://en.wikipedia.org/wiki/Peugeot_207",
+   "https://fr.wikipedia.org/wiki/Peugeot_207"
+  ]
+ },
+ "Peugeot|307|307 II": {
+  "year": 2009,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2005,
+  "to": 2012,
+  "languages": {
+   "de": 2009
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Peugeot_307"
+  ]
+ },
+ "Peugeot|4007|4007 I": {
+  "year": 2009,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2012,
+  "languages": {
+   "fr": 2009
+  },
+  "sources": [
+   "https://fr.wikipedia.org/wiki/Peugeot_4007"
+  ]
+ },
+ "Peugeot|Bipper|Bipper": {
+  "year": 2013,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2009,
+  "to": 2016,
+  "languages": {
+   "en": 2013
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Peugeot_Bipper"
+  ]
+ },
+ "Peugeot|Boxer|Boxer II": {
+  "year": 2007,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2014,
+  "languages": {
+   "de": 2011,
+   "en": 2007
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Peugeot_Boxer",
+   "https://en.wikipedia.org/wiki/Peugeot_Boxer"
+  ]
+ },
+ "Peugeot|Boxer|Boxer III": {
+  "year": 2015,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2014,
+  "to": null,
+  "languages": {
+   "en": 2015
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Peugeot_Boxer"
+  ]
+ },
+ "Peugeot|Expert|Expert II": {
+  "year": 2012,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2016,
+  "languages": {
+   "de": 2012,
+   "en": 2012,
+   "nl": 2012,
+   "pl": 2011
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Peugeot_Expert",
+   "https://de.wikipedia.org/wiki/Peugeot_Expert",
+   "https://en.wikipedia.org/wiki/Peugeot_Expert",
+   "https://nl.wikipedia.org/wiki/Peugeot_Expert"
+  ]
+ },
+ "Peugeot|Partner|Partner III": {
+  "year": 2023,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2019,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "en": 2024,
+   "it": 2023,
+   "pl": 2023
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Peugeot_Partner",
+   "https://de.wikipedia.org/wiki/Peugeot_Partner",
+   "https://en.wikipedia.org/wiki/Peugeot_Partner",
+   "https://it.wikipedia.org/wiki/Peugeot_Partner"
+  ]
+ },
+ "Peugeot|Rifter|Rifter": {
+  "year": 2023,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2018,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "en": 2024,
+   "it": 2023,
+   "pl": 2023
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Peugeot_Rifter",
+   "https://de.wikipedia.org/wiki/Peugeot_Rifter",
+   "https://en.wikipedia.org/wiki/Peugeot_Rifter",
+   "https://it.wikipedia.org/wiki/Peugeot_Rifter"
+  ]
+ },
+ "Peugeot|Traveller|Traveller": {
+  "year": 2017,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2016,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "en": 2024,
+   "pl": 2017
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Peugeot_Traveller",
+   "https://de.wikipedia.org/wiki/Peugeot_Traveller",
+   "https://en.wikipedia.org/wiki/Peugeot_Traveller"
+  ]
+ },
+ "Porsche|Boxster|987": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2009,
+   "en": 2008,
+   "fr": 2005,
+   "it": 2009,
+   "pl": 2008
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Porsche_Boxster",
+   "https://de.wikipedia.org/wiki/Porsche_Boxster",
+   "https://en.wikipedia.org/wiki/Porsche_Boxster",
+   "https://fr.wikipedia.org/wiki/Porsche_Boxster",
+   "https://it.wikipedia.org/wiki/Porsche_Boxster"
+  ]
+ },
+ "Renault|Clio|Clio II": {
+  "year": 2001,
+  "status": "проверено",
+  "accepted": true,
+  "from": 1998,
+  "to": 2012,
+  "languages": {
+   "de": 2009,
+   "en": 2001,
+   "fr": 2001,
+   "nl": 2004,
+   "pl": 2001
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Renault_Clio",
+   "https://de.wikipedia.org/wiki/Renault_Clio_II",
+   "https://en.wikipedia.org/wiki/Renault_Clio",
+   "https://fr.wikipedia.org/wiki/Renault_Clio",
+   "https://nl.wikipedia.org/wiki/Renault_Clio"
+  ]
+ },
+ "Renault|Clio|Clio III": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2005,
+  "to": 2014,
+  "languages": {
+   "de": 2009,
+   "en": 2009,
+   "fr": 2009,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Renault_Clio",
+   "https://de.wikipedia.org/wiki/Renault_Clio_III",
+   "https://en.wikipedia.org/wiki/Renault_Clio",
+   "https://fr.wikipedia.org/wiki/Renault_Clio"
+  ]
+ },
+ "Renault|Laguna|Laguna III": {
+  "year": 2011,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2007,
+  "to": 2015,
+  "languages": {
+   "de": 2011,
+   "en": 2008,
+   "fr": 2011,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Renault_Laguna",
+   "https://de.wikipedia.org/wiki/Renault_Laguna_III",
+   "https://en.wikipedia.org/wiki/Renault_Laguna",
+   "https://fr.wikipedia.org/wiki/Renault_Laguna_III"
+  ]
+ },
+ "Renault|Master|Master IV": {
+  "year": 2019,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2010,
+  "to": 2026,
+  "languages": {
+   "de": 2019,
+   "en": 2019,
+   "fr": 2024,
+   "it": 2019,
+   "pl": 2014
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Renault_Master",
+   "https://de.wikipedia.org/wiki/Renault_Master",
+   "https://en.wikipedia.org/wiki/Renault_Master",
+   "https://fr.wikipedia.org/wiki/Renault_Master",
+   "https://it.wikipedia.org/wiki/Renault_Master"
+  ]
+ },
+ "Renault|Modus|Modus": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2008,
+   "en": 2007,
+   "fr": 2008,
+   "pl": 2005
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Renault_Modus",
+   "https://de.wikipedia.org/wiki/Renault_Modus",
+   "https://en.wikipedia.org/wiki/Renault_Modus",
+   "https://fr.wikipedia.org/wiki/Renault_Modus"
+  ]
+ },
+ "Renault|Scenic|Scénic IV": {
+  "year": 2017,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2016,
+  "to": 2022,
+  "languages": {
+   "de": 2020,
+   "fr": 2017
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Renault_Scenic",
+   "https://fr.wikipedia.org/wiki/Renault_Sc%C3%A9nic_IV"
+  ]
+ },
+ "Renault|Trafic|Trafic II": {
+  "year": 2006,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2001,
+  "to": 2014,
+  "languages": {
+   "de": 2006,
+   "en": 2006,
+   "fr": 2006,
+   "it": 2007,
+   "pl": 2004
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Renault_Trafic",
+   "https://de.wikipedia.org/wiki/Renault_Trafic",
+   "https://en.wikipedia.org/wiki/Renault_Trafic",
+   "https://fr.wikipedia.org/wiki/Renault_Trafic_II",
+   "https://it.wikipedia.org/wiki/Renault_Trafic"
+  ]
+ },
+ "Renault|Twizy|Twizy I": {
+  "year": 2014,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2013,
+  "to": 2019,
+  "languages": {
+   "de": 2014
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Renault_Twizy"
+  ]
+ },
+ "Renault|ZOE|ZOE I": {
+  "year": 2017,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2013,
+  "to": 2019,
+  "languages": {
+   "de": 2017,
+   "fr": 2017
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Renault_ZOE",
+   "https://fr.wikipedia.org/wiki/Renault_ZOE"
+  ]
+ },
+ "Seat|Altea|Altea": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2004,
+  "to": 2015,
+  "languages": {
+   "de": 2009,
+   "en": 2005,
+   "fr": 2009,
+   "nl": 2009,
+   "pl": 2007
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Seat_Altea",
+   "https://de.wikipedia.org/wiki/Seat_Altea",
+   "https://en.wikipedia.org/wiki/Seat_Altea",
+   "https://fr.wikipedia.org/wiki/Seat_Altea",
+   "https://nl.wikipedia.org/wiki/Seat_Altea"
+  ]
+ },
+ "Seat|Leon|Leon II": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2005,
+  "to": 2012,
+  "languages": {
+   "de": 2009,
+   "en": 2008,
+   "fr": 2009,
+   "it": 2009,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Seat_Leon",
+   "https://de.wikipedia.org/wiki/Seat_Leon_II",
+   "https://en.wikipedia.org/wiki/Seat_Leon",
+   "https://fr.wikipedia.org/wiki/Seat_Leon",
+   "https://it.wikipedia.org/wiki/Seat_Leon"
+  ]
+ },
+ "Seat|Leon|Leon IV": {
+  "year": 2024,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2020,
+  "to": null,
+  "languages": {
+   "de": 2024,
+   "en": 2024
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Seat_Leon_IV",
+   "https://en.wikipedia.org/wiki/Seat_Leon"
+  ]
+ },
+ "Seat|Mii|Mii": {
+  "year": 2016,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2011,
+  "to": 2018,
+  "languages": {
+   "fr": 2016
+  },
+  "sources": [
+   "https://fr.wikipedia.org/wiki/Seat_Mii"
+  ]
+ },
+ "Suzuki|Alto|Alto VI": {
+  "year": 2010,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2009,
+  "to": 2014,
+  "languages": {
+   "pl": 2010
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Suzuki_Alto_Lapin"
+  ]
+ },
+ "Suzuki|Celerio|Celerio I": {
+  "year": 2017,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2014,
+  "to": 2019,
+  "languages": {
+   "en": 2017
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Suzuki_Celerio"
+  ]
+ },
+ "Toyota|Camry|XV50 (вне ЕС)": {
+  "year": 2015,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2011,
+  "to": 2017,
+  "languages": {
+   "en": 2015
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Toyota_Camry"
+  ]
+ },
+ "Toyota|Hiace|Hiace V": {
+  "year": 2005,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2004,
+  "to": 2012,
+  "languages": {
+   "de": 2007,
+   "en": 2005
+  },
+  "sources": [
+   "https://de.wikipedia.org/wiki/Toyota_Hiace",
+   "https://en.wikipedia.org/wiki/Toyota_Hiace"
+  ]
+ },
+ "Toyota|Highlander|Highlander II": {
+  "year": 2010,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2007,
+  "to": 2013,
+  "languages": {
+   "en": 2010
+  },
+  "sources": [
+   "https://en.wikipedia.org/wiki/Toyota_Highlander"
+  ]
+ },
+ "Toyota|Land Cruiser|Land Cruiser VII": {
+  "year": 2018,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2017,
+  "to": 2024,
+  "languages": {
+   "it": 2018
+  },
+  "sources": [
+   "https://it.wikipedia.org/wiki/Toyota_Land_Cruiser_Prado"
+  ]
+ },
+ "Toyota|Previa|Previa III": {
+  "year": 2008,
+  "status": "проверено",
+  "accepted": false,
+  "from": 2006,
+  "to": 2019,
+  "languages": {
+   "de": 2016,
+   "en": 2008,
+   "fr": 2008,
+   "it": 2009,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Toyota_Previa",
+   "https://de.wikipedia.org/wiki/Toyota_Previa",
+   "https://en.wikipedia.org/wiki/Toyota_Previa",
+   "https://fr.wikipedia.org/wiki/Toyota_Previa",
+   "https://it.wikipedia.org/wiki/Toyota_Previa"
+  ]
+ },
+ "Toyota|Proace (Verso)|Proace II": {
+  "year": 2019,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2017,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "en": 2024,
+   "pl": 2019
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Toyota_Proace",
+   "https://de.wikipedia.org/wiki/Toyota_Proace",
+   "https://en.wikipedia.org/wiki/Toyota_Proace"
+  ]
+ },
+ "Toyota|Proace City|Proace City": {
+  "year": 2023,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2019,
+  "to": null,
+  "languages": {
+   "de": 2023,
+   "en": 2024,
+   "pl": 2023
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Toyota_Proace_City",
+   "https://de.wikipedia.org/wiki/Toyota_Proace_City",
+   "https://en.wikipedia.org/wiki/Toyota_Proace_City"
+  ]
+ },
+ "Toyota|Sequoia|Sequoia II": {
+  "year": 2015,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2008,
+  "to": 2017,
+  "languages": {
+   "pl": 2015
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Toyota_Sequoia"
+  ]
+ },
+ "Toyota|Sienna|Sienna III": {
+  "year": 2011,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2010,
+  "to": 2017,
+  "languages": {
+   "en": 2011,
+   "pl": 2015
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Toyota_Sienna",
+   "https://en.wikipedia.org/wiki/Toyota_Sienna"
+  ]
+ },
+ "Toyota|Yaris|XP9": {
+  "year": 2009,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2005,
+  "to": 2013,
+  "languages": {
+   "de": 2009,
+   "fr": 2006,
+   "it": 2008,
+   "pl": 2009
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Toyota_Yaris",
+   "https://de.wikipedia.org/wiki/Toyota_Yaris_%28XP9%29",
+   "https://fr.wikipedia.org/wiki/Toyota_Yaris",
+   "https://it.wikipedia.org/wiki/Toyota_Yaris"
+  ]
+ },
+ "Volkswagen|Beetle|Beetle": {
+  "year": 2013,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2011,
+  "to": 2016,
+  "languages": {
+   "pl": 2013
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Volkswagen_Beetle"
+  ]
+ },
+ "Volkswagen|CC|CC I": {
+  "year": 2012,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2008,
+  "to": 2017,
+  "languages": {
+   "de": 2012,
+   "pl": 2012
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Volkswagen_CC",
+   "https://de.wikipedia.org/wiki/Volkswagen_CC"
+  ]
+ },
+ "Volkswagen|Caddy|Caddy V": {
+  "year": 2026,
+  "status": "частично проверено",
+  "accepted": false,
+  "from": 2021,
+  "to": null,
+  "languages": {
+   "pl": 2026
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Volkswagen_Caddy"
+  ]
+ },
+ "Volvo|XC90|XC90 I": {
+  "year": 2006,
+  "status": "проверено",
+  "accepted": true,
+  "from": 2002,
+  "to": 2015,
+  "languages": {
+   "de": 2006,
+   "en": 2007,
+   "fr": 2006,
+   "nl": 2006,
+   "pl": 2006
+  },
+  "sources": [
+   "https://pl.wikipedia.org/wiki/Volvo_XC90",
+   "https://de.wikipedia.org/wiki/Volvo_XC90",
+   "https://en.wikipedia.org/wiki/Volvo_XC90",
+   "https://fr.wikipedia.org/wiki/Volvo_XC90",
+   "https://nl.wikipedia.org/wiki/Volvo_XC90"
+  ]
+ }
+}

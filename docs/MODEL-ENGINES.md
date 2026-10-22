@@ -1,12 +1,12 @@
 # Двигатели популярных моделей (с 2010)
 
-> Сгенерировано `tools/build-model-engine-table.py` 2026-10-21 из ultimatespecs.com (B61, этап 3,
+> Сгенерировано `tools/build-model-engine-table.py` 2026-10-22 из ultimatespecs.com (B61, этап 3,
 > `docs/PROJECT-MOBILE.md` §4.8). Полная таблица по версиям — `data/model-engines.csv`
 > (открывается в Excel), для фильтров — `data/model-filter-index.json`. Не править руками.
 > Строка = поколение и этап (дорестайлинг / рестайлинг): топливо → объём см³ (л) → мощности в л.с.
 > «Годы (проверено)» исправляют источник там, где он пишет «н. в.» про снятую модель.
-> Версий: 23700 (из них autocentrum.pl: 12733, `docs/MODEL-AUTOCENTRUM-CHECK.md`). Коробка не определена
-> у 387 версий (в CSV колонка «Коробка: откуда»).
+> Версий: 23713 (из них autocentrum.pl: 12746, `docs/MODEL-AUTOCENTRUM-CHECK.md`). Коробка не определена
+> у 206 версий (в CSV колонка «Коробка: откуда»).
 
 
 ## Audi

@@ -232,6 +232,9 @@ DEFAULT_TYPE.update({
     ("Mini", "Cooper"): "hatchback", ("Mini", "Clubman"): "estate", ("Mini", "Coupe"): "coupe", ("Mini", "Roadster"): "cabrio",
     ("Mini", "Cabrio"): "cabrio",
 })
+# Facelift years of long generations from Wikipedia (tools/collect-facelifts-wiki.py).
+FACELIFTS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "model-facelifts-wiki.json")
+FACELIFTS = json.load(open(FACELIFTS_PATH, encoding="utf8")) if os.path.exists(FACELIFTS_PATH) else {}
 # Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
 BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
             ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
@@ -393,6 +396,11 @@ def main():
             # Facelift year autocentrum gives where the versions cannot be split (tools/autocentrum.py).
             if row.get("Рестайлинг, год") and phase == "all" and gen["lift"] is None:
                 gen["lift"] = int(row["Рестайлинг, год"])
+            # Else Wikipedia's (tools/collect-facelifts-wiki.py, B61 2026-10-21): the year only, versions not split.
+            wiki_lift = FACELIFTS.get(f"{key}|{row['Поколение']}")
+            if wiki_lift and wiki_lift.get("accepted") and phase == "all" and gen["lift"] is None \
+                    and start < wiki_lift["year"] < (end or 2100):
+                gen["lift"] = wiki_lift["year"]
             types, doors_from, doors_to, seats_from, seats_to, sliding = body_of(row["Марка"], model, row["Кузов"])
             doors_from, doors_to, seats_from, seats_to = with_autocentrum(
                 types, (doors_from, doors_to), (seats_from, seats_to), row.get("Двери", ""), row.get("Места", ""))
