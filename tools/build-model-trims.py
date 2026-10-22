@@ -522,7 +522,15 @@ def main():
             commercial_rows = [{**r, "origin": "commercial"} for r in json.load(handle)["rows"] if (r["brand"], r["model"]) not in taken]
         own = {(r["brand"], r["model"]) for r in commercial_rows}
         wiki_rows = [r for r in wiki_rows if (r["brand"], r["model"]) not in own]
-    rows += wiki_rows + commercial_rows
+    # The models no Wikipedia lists trims for: the ADAC Autokatalog (German market; tools/collect-trims-adac.py,
+    # owner 2026-10-22) — only where none of the sources above has the model.
+    adac_path = os.path.join(ROOT, "data", "model-trims-adac.json")
+    adac_rows = []
+    if os.path.exists(adac_path):
+        with open(adac_path, encoding="utf8") as handle:
+            have = {(brand, model) for brand, model, _label in TRIMS} | {(r["brand"], r["model"]) for r in wiki_rows + commercial_rows}
+            adac_rows = [r for r in json.load(handle)["rows"] if (r["brand"], r["model"]) not in have]
+    rows += wiki_rows + commercial_rows + adac_rows
     with open(os.path.join(ROOT, "data", "model-trims.json"), "w", encoding="utf8") as handle:
         json.dump({"generatedAt": today, "market": "EU (PL/DE)", "rows": rows}, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
@@ -577,6 +585,21 @@ def main():
             trims_text = (", ".join(r["trims"]) or "—") + (f"<br><small>{r['note']}</small>" if r.get("note") else "")
             lines.append(f"| {r['brand']} | {r['label']} | {r['code']} | {r['phase']} | {r['years']} | {trims_text} | "
                          f"{', '.join(r['sport']) or '—'} | {', '.join(r['special']) or '—'} | {r['status']} | {src} |")
+        lines.append("")
+    if adac_rows:
+        lines += [
+            "", "## Модели без списков в Википедии — каталог ADAC (22.10)", "",
+            f"> {len(adac_rows)} строк по {len({(r['brand'], r['model']) for r in adac_rows})} моделям, собраны "
+            "`tools/collect-trims-adac.py` со страниц поколений ADAC Autokatalog: название версии без марки, модели,",
+            "> мотора, коробки, привода и кузова; версия — в фазу, куда попадает середина её продаж. Рынок Германии,",
+            "> один источник — «частично проверено».", "",
+            "| Марка | Модель | Поколение | Этап | Годы | Линейки | Спорт | Спецсерии | Источник |",
+            "|---|---|---|---|---|---|---|---|---|",
+        ]
+        for r in adac_rows:
+            src = ", ".join(f"[{i + 1}]({url})" for i, url in enumerate(r["sources"][:3])) or "—"
+            lines.append(f"| {r['brand']} | {r['label']} | {r['code']} | {r['phase']} | {r['years']} | {', '.join(r['trims']) or '—'} | "
+                         f"{', '.join(r['sport']) or '—'} | {', '.join(r['special']) or '—'} | {src} |")
         lines.append("")
     if wiki_rows:
         lines += [

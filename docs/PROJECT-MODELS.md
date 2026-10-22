@@ -369,6 +369,19 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
    (SDV6 / TDV6, Velar D300 до 09/2020). Новое в `mild_hybrids.py`: `mid_phase` (мягкий гибрид появился посреди фазы),
    `exclude` (названия, которые не он), правило «опция» с источником — отмечается «бывает и без него» (страница пишет
    «(bywa też bez)» у подсказки MHEV, акциз сам не снижается — решает объявление). Итог: 1 321 версия MHEV, «проверить» — 0.
+12. ✅ **Комплектации из каталога ADAC для моделей без списков в Википедии (решение владельца 22.10):**
+   `tools/collect-trims-adac.py` → `data/model-trims-adac.json`. Страница поколения ADAC Autokatalog
+   (`adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/<марка>/<модель>/<поколение>/`, robots.txt разрешает; список
+   поколений — из `sitemap-autokatalog.xml`; страница раз в 2 с, кэш `~/.cache/autogood/adac`) перечисляет все версии
+   рынка Германии с месяцами: «Kia Picanto 1.0 Vision AMT (05/24 - 07/25)». Комплектация — название без марки,
+   модели, мотора, мощности, коробки, привода, кузова и топлива (`NOT_TRIM` и словосочетания: e-DSC6, S tronic,
+   xDrive40, 4Drive, «(58 kWh)»…); версия — в фазу, куда попадает середина её продаж (ещё продаётся — первый месяц);
+   спорт и спецсерии — как у Википедии. Один источник — «частично проверено». Берётся только для моделей, у которых
+   нет ни ручного списка, ни Википедии, ни прайс-листов фургонов (`build-model-trims.py`). Итог: 195 строк по 117
+   моделям (Tucson — Select / Trend / Advantage / Prime / N Line, XCeed — Vision / Spirit / Platinum / GT-Line, GLA —
+   Style / Progressive / AMG Line, 911 — Carrera / Carrera S…); комплектации есть у **500 из 542 моделей** (было 383).
+   Без списка — 42: нет в ADAC (F-150, Sequoia, Tacoma, Altima, Cascada, iOn, SLS AMG, Mini Cabrio / Coupé / Roadster…)
+   или ADAC не называет линий (e-tron GT, Mercedes CL).
 
 **Правила работы с ultimatespecs.com:**
 - `robots.txt`: **Crawl-delay: 30** — не чаще одной страницы в 30 с. Полная
