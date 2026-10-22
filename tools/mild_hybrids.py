@@ -29,13 +29,16 @@ FULL_HYBRID_NAME = re.compile(r"(?<!mild )(?<!mild-)\b(f?hev|hsd|full hybrid|e-t
 M, A = "m", "a"
 
 
-def R(brand, models, fuel, powers, litres, gearbox, since, until, system, source, gens=None, wiki="", optional=False):
+def R(brand, models, fuel, powers, litres, gearbox, since, until, system, source, gens=None, wiki="", optional=False,
+      mid_phase=False, exclude=None):
     """One maker's statement. gens: our generation codes (None = any of the years); wiki: the de/en.wikipedia
     statement confirming it (a second, independent source); optional: the maker sold the same engine with and
-    without the mild hybrid, so only a version whose own name says it counts."""
+    without the mild hybrid: marked "бывает и без него" (the ad has to say it). mid_phase: the mild hybrid came in
+    the middle of a phase (Audi A4 B9 from model year 2018, Tucson III diesel from 04/2019), so a phase that ends
+    in the year it starts still has it. exclude: version names that are not it (Volvo T5, Land Rover SDV6)."""
     return {"brand": brand, "models": models, "fuel": fuel, "powers": powers, "litres": litres, "gearbox": gearbox,
             "since": since, "until": until, "system": system, "source": source, "gens": gens, "wiki": wiki,
-            "optional": optional}
+            "optional": optional, "mid_phase": mid_phase, "exclude": re.compile(exclude, re.I) if exclude else None}
 
 
 # Reviewed 2026-10-10 against de/en.wikipedia (tools/wiki_engines.py, docs/MODEL-MILD-HYBRIDS.md).
@@ -43,6 +46,9 @@ RULES = [
     # Audi
     R("Audi", ["A4", "A5"], "petrol", [150, 190, 204, 245, 265], 2.0, None, 2019, 2024, "12V", "Audi MediaCenter 2019",
       ["B9", "F5"], "de: Audi A4 B9 — «Alle Motoren, mit Ausnahme des S4 TDI und 50 TDI (48V) und 45 TDI, verfügen über ein 12-Volt-Mildhybrid-System»"),
+    R("Audi", ["A4", "A5"], "petrol", [190, 252], 2.0, None, 2018, 2019, "12V", "Audi MediaCenter 06/2017; it.motor1.com 10/2017",
+      ["B9", "F5"], "de: Audi A4 B9 — Motortabelle «CVKB / DEMA (MHEV)», «CYRB / DDWA (MHEV)», «Seit Mj 2018: MHEV / Mild-Hybrid»",
+      mid_phase=True),
     R("Audi", ["A4", "A5"], "diesel", [136, 163, 190, 204], 2.0, None, 2019, 2024, "12V", "Audi MediaCenter 2019",
       ["B9", "F5"], "de: Audi A4 B9 — 12-Volt-Mildhybrid für alle Motoren außer S4 TDI, 50 TDI, 45 TDI"),
     R("Audi", ["A4", "A5"], "diesel", [286, 341, 347], 3.0, None, 2019, 2024, "48V", "Audi MediaCenter 2019",
@@ -146,24 +152,42 @@ RULES = [
     R("Ford", ["Kuga"], "diesel", [150], 2.0, None, 2020, None, "48V", "Ford media 2019",
       None, "de: Ford Kuga — Tabelle 2.0 EcoBlue MHEV"),
     R("Ford", ["Transit Custom", "Tourneo Custom", "Transit"], "diesel", [130, 185], 2.0, None, 2019, 2023, "48V", "Ford media 2019",
-      None, "en: Ford Transit Custom — «An optional mild hybrid system was introduced to the EcoBlue engines in 2019»", optional=True),
+      None, "en: Ford Transit Custom — «An optional mild hybrid system was introduced to the EcoBlue engines in 2019»; Ford 23.09.2019 — "
+      "«EcoBlue Hybrid 48-volt mild-hybrid … offered as an option for front-wheel-drive and rear-wheel-drive Transit models»", optional=True),
     # Volvo
     R("Volvo", ["XC40", "XC60", "XC90", "S60", "V60", "S90", "V90"], None, [163, 197, 211, 235, 249, 250, 264, 300, 314], 2.0, A, 2019, None, "48V",
-      "Volvo Cars media 2019-2020", None, "de: Volvo XC40 / V60 / S90 / V90 — Tabellen B3 / B4 / B5 / B6 mit Mild-Hybrid"),
+      "Volvo Cars media 2019-2020", None, "de: Volvo XC40 / V60 / S90 / V90 — Tabellen B3 / B4 / B5 / B6 mit Mild-Hybrid",
+      exclude=r"\bT[2-8]\b(?!.*\bB[3-6]\b)"),  # T5 250 PS until 2020 is a plain turbo (de: Volvo V90 — T5 / B5 «, Mild-Hybrid»)
     # Hyundai / Kia
     R("Hyundai", ["i20", "Bayon", "Kona", "i30"], "petrol", [100, 120], 1.0, None, 2020, None, "48V", "Hyundai media 2020",
       None, "de: Hyundai i20 / Bayon — Tabelle «1.0 T-GDI 48V-Mild-Hybrid»"),
-    R("Kia", ["Rio", "Stonic", "Ceed", "XCeed", "ProCeed"], "petrol", [100, 120], 1.0, None, 2020, None, "48V", "Kia media 2020",
-      None, "", optional=True),
+    # Kia, checked 2026-10-22 (Kia press 2020, motor1): Stonic I 120 always 48 V after the 2020 facelift, Stonic 100 never;
+    # Rio 100 / 120 and Ceed family 1.0 120 / 1.5 160 both with and without it.
+    R("Kia", ["Stonic"], "petrol", [120], 1.0, None, 2020, None, "48V", "Kia Austria press 2020",
+      ["Stonic I"], "Kia Austria 2020 — «Die Topmotorisierung 1.0 T-GDI 120 … verfügt jetzt serienmäßig über ein 48-Volt-Mildhybridsystem»"),
+    R("Kia", ["Stonic"], "petrol", [120], 1.0, None, 2024, None, "48V", "Kia UK 2024", ["Stonic II"],
+      "Kia UK — MHEV nur GT-Line / GT-Line S", optional=True),
+    R("Kia", ["Rio"], "petrol", [100, 120], 1.0, None, 2020, None, "48V", "Kia press 26.05.2020",
+      None, "Kia 2020 — the MHEV «is offered on both 100 ps and 120 ps versions of the new engine»", optional=True),
+    R("Kia", ["Ceed", "XCeed", "ProCeed"], "petrol", [120], 1.0, A, 2020, None, "48V", "Kia press 25.11.2020",
+      None, "Kia DK 2020 — EcoDynamics+ «samme præstationer som ikke-mildhybridvarianter»", optional=True),
     R("Hyundai", ["i30"], "petrol", [160], 1.5, None, 2020, None, "48V", "Hyundai media 2020"),
-    R("Kia", ["Ceed", "XCeed", "ProCeed"], "petrol", [160], 1.5, None, 2021, None, "48V", "Kia media 2021"),
+    R("Kia", ["Ceed", "XCeed", "ProCeed"], "petrol", [160], 1.5, None, 2021, None, "48V", "Kia press 25.11.2020",
+      None, "Kia DK 2020 — «Den nye 1,5-liters EcoDynamics+ motor fås til alle fire modeller i kombination med en 7DCT»", optional=True),
     R("Hyundai", ["Tucson"], "petrol", [150, 180], 1.6, None, 2020, None, "48V", "Hyundai media 2020",
       ["Tucson IV"], "de: Hyundai Tucson — Tabelle «1.6 T-GDI 48V»"),
     R("Kia", ["Sportage"], "petrol", [150, 180], 1.6, None, 2021, None, "48V", "Kia media 2021",
       ["Sportage V"], "de: Kia Sportage — Tabelle «1.6 T-GDI 48V»"),
-    R("Hyundai", ["Tucson", "i30"], "diesel", [136, 185], None, None, 2018, None, "48V", "Hyundai media 2018-2020",
+    R("Hyundai", ["Tucson"], "diesel", [136], 1.6, None, 2019, None, "48V", "ADAC Autokatalog (Tucson 1.6 CRDi 04/19–)",
+      ["Tucson III"], "ADAC — «Tucson 1.6 CRDi … (04/19–11/19)» «Diesel (Mild-Hybrid)» (07/18–04/19 — «Diesel»)", mid_phase=True),
+    R("Hyundai", ["i30"], "diesel", [136], 1.6, None, 2020, None, "48V", "de.motor1.com 26.02.2020",
+      None, "motor1 2020 (i30 Facelift) — «der stärkere nun serienmäßig das 48-Volt-Mildhybrid-System erhält»"),
+    R("Hyundai", ["Tucson"], "diesel", [185], None, None, 2018, None, "48V", "Hyundai media 2018-2020",
       None, "de: Hyundai Tucson — Tabelle «1.6 CRDi 48V» (bis 2020 als Option)", optional=True),
-    R("Kia", ["Sportage", "Ceed", "XCeed", "ProCeed"], "diesel", [136, 185], None, None, 2018, None, "48V", "Kia media 2018-2020",
+    R("Kia", ["Sportage", "Ceed", "XCeed", "ProCeed"], "diesel", [115, 136], 1.6, None, 2020, None, "48V", "de.motor1.com 14.02.2020 / 28.04.2020",
+      ["Sportage IV", "Ceed III", "ProCeed", "XCeed"], "motor1 2020 — Sportage: Diesel «ab dem neuen Modelljahr alle mit einem Mildhybridsystem auf 48-Volt-Basis»; Ceed — "
+      "«ist ab sofort serienmäßig mit einem 48-Volt-Mildhybridsystem ausgestattet»", mid_phase=True),
+    R("Kia", ["Sportage"], "diesel", [185], None, None, 2018, None, "48V", "Kia media 2018-2020",
       None, "de: Kia Sportage — «Im Februar 2020 entfielen alle Motorvarianten, die … keine Mild-Hybride waren»; Tabelle «1.6 CRDi 48V»", optional=True),
     # Mazda
     R("Mazda", ["Mazda 3", "CX-30"], "petrol", [122, 150, 180, 186], 2.0, None, 2019, None, "24V", "Mazda media 2019",
@@ -243,11 +267,14 @@ RULES = [
       "JLR technical data MY22 (Range Rover)", None,
       "en: Ingenium engine family — «Both are considered to be mild hybrid»; en: Range Rover (L405) — «3.0 L Ingenium MHEV I6»"),
     R("Land Rover", ["Range Rover", "Range Rover Sport"], "diesel", [249, 300, 350], 3.0, None, 2020, None, "48V",
-      "JLR technical data MY22 (Range Rover)", None, "en: Ingenium engine family — AJ300D «2020–… MHEV»", optional=True),
+      "JLR technical data MY22 (Range Rover), Range Rover Sport 21.5MY", None,
+      "JLR MY22 — non-MHEV engines «EU5 & EU4», «N/A - Not Applicable to UK & EU»; de: Range Rover L460 — «Alle diese Varianten sind als "
+      "Mild-Hybrid ausgeführt»", mid_phase=True, exclude=r"\b[ST]DV[68]\b"),
     R("Land Rover", ["Range Rover Velar"], "petrol", [340, 400], 3.0, None, 2020, None, "48V", "JLR technical data MY22 (Velar)",
       None, "en: Range Rover Velar — «Mild hybrid (D200/P400)»"),
     R("Land Rover", ["Range Rover Velar"], "diesel", [204, 300], None, None, 2020, None, "48V", "JLR technical data MY22 (Velar)",
-      None, "en: Range Rover Velar — «Mild hybrid (D200/P400)»", optional=True),
+      None, "en: Range Rover Velar — «Mild hybrid (D200/P400)»; JLR MY22 — D200 / D300 without MHEV only «EU5» (outside the EU)",
+      mid_phase=True, exclude=r"\b[ST]DV[68]\b"),
     R("Land Rover", ["Defender"], "petrol", [400], 3.0, None, 2020, None, "48V", "JLR technical data 2023 (Defender)",
       None, "JLR Defender 2023 — «PETROL MHEV» P400 (P300 — «PETROL»)"),
     R("Land Rover", ["Defender"], "diesel", [200, 249, 300], 3.0, None, 2020, None, "48V", "JLR technical data 2023 (Defender)",
@@ -314,13 +341,16 @@ def rule_matches(rule, row):
         return False
     if rule["gens"] and row["Поколение"] not in rule["gens"]:
         return False
+    if rule["exclude"] and rule["exclude"].search(f"{row['Версия']} {row['Кузов']}"):
+        return False
     own_fuel = {"бензин": "petrol", "бензин/E85 (Flexible Fuel)": "petrol", "дизель": "diesel",
                 "гибрид": "petrol", "гибрид (дизель)": "diesel"}.get(row["Топливо"])
     if not own_fuel or (rule["fuel"] and own_fuel != rule["fuel"]):
         return False
     start, end = years_of(row["Годы (проверено)"])
     # A phase that ends in the year the mild hybrid starts (pre-facelift 2018-2019) is not it.
-    if start is None or start > (rule["until"] or 2100) or ((end or 2100) <= rule["since"] and start < rule["since"]):
+    if start is None or start > (rule["until"] or 2100) or (end or 2100) < rule["since"] or \
+            (not rule["mid_phase"] and (end or 2100) <= rule["since"] and start < rule["since"]):
         return False
     hp = int(row["Мощность, л.с."] or 0)
     if rule["powers"] and not any(abs(hp - p) <= 3 for p in rule["powers"]):
@@ -447,8 +477,12 @@ def classify(rows, ac):
         later = [rule["since"] for rule in RULES if not rules and rule["brand"] == row["Марка"]
                  and row["Модель"] in (rule["models"] or [row["Модель"]]) and rule["gens"] and row["Поколение"] in rule["gens"]
                  and rule["since"] > named_since]
+        maybe = False
         if (firm and (wiki or own or ac_says)) or (rules and explicit) or (own and ac_says):
             status = "подтверждено"
+        elif rules and wiki and all(rule["optional"] for rule in rules):
+            # The maker sold it both ways (2026-10-22): marked, the ad has to say it (no excise cut by itself).
+            status, maybe = "подтверждено, бывает и без него", True
         elif explicit and later:
             status = "проверить"
             sources.append(f"производитель: у поколения {row['Поколение']} мягкий гибрид только с {min(later)}")
@@ -460,7 +494,7 @@ def classify(rows, ac):
         since = max(min(years), start or 0) if years else named_since
         system = sorted({rule["system"] for rule in rules}) or (["48V"] if re.search(r"48 ?v|etsi|e-?tec", row["Версия"], re.I) else [])
         out[id(row)] = {"status": status, "since": since, "system": "/".join(system), "sources": sources,
-                        "applied": status != "проверить", "optional": False}
+                        "applied": status != "проверить", "optional": maybe}
     twin_check(rows, out)
     return out
 

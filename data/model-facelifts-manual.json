@@ -1,0 +1,363 @@
+{
+ "Audi|Q8|Q8-e": {
+  "year": 2023,
+  "source": "nl: Audi Q8 e-tron — «In november 2022 werd een facelift onthuld… De marktintroductie volgde in februari 2023.»",
+  "checked": "2026-10-22"
+ },
+ "BMW|1|F40": {
+  "year": null,
+  "source": "de: BMW F40 — Modellpflege 2020 nur technisch",
+  "checked": "2026-10-22"
+ },
+ "Citroen|C-Crosser|C-Crosser I": {
+  "year": null,
+  "source": "fr: Mitsubishi Outlander II — «la carrosserie n'a subi aucun changement»",
+  "checked": "2026-10-22"
+ },
+ "Citroen|C5|C5 III": {
+  "year": 2010,
+  "source": "de: Citroën C5 — «Im Oktober 2010 wurde der C5 leicht überarbeitet.»",
+  "checked": "2026-10-22"
+ },
+ "Citroen|Grand C4 Picasso / SpaceTourer|Grand C4 Picasso I": {
+  "year": 2010,
+  "source": "fr: Citroën C4 Picasso I — «restylés fin 2010 et dénommés Phase II»",
+  "checked": "2026-10-22"
+ },
+ "Citroen|Nemo|Nemo": {
+  "year": null,
+  "source": "de: Citroën Nemo — «2015 wurde die Produktion … eingestellt»",
+  "checked": "2026-10-22"
+ },
+ "Dacia|Logan|Logan I": {
+  "year": 2008,
+  "source": "de: Dacia Logan — «Im Juli 2008 kam eine überarbeitete Version der Logan Limousine auf den Markt.»",
+  "checked": "2026-10-22"
+ },
+ "Dacia|Logan|Logan III": {
+  "year": 2025,
+  "source": "de: Dacia Logan — «Eine überarbeitete Version des Logan präsentierte Dacia im Oktober 2025.» (06/2022 — nur das neue Logo)",
+  "checked": "2026-10-22"
+ },
+ "Dacia|Sandero|Sandero III": {
+  "year": 2025,
+  "source": "de: Dacia Sandero — «Eine Modellpflege der Baureihe wurde im Oktober 2025 vorgestellt.» (06/2022 — nur das neue Logo)",
+  "checked": "2026-10-22"
+ },
+ "Fiat|Bravo|Bravo II": {
+  "year": 2010,
+  "source": "fr: Fiat Bravo — «un léger restylage en janvier 2010»",
+  "checked": "2026-10-22"
+ },
+ "Fiat|Freemont|Freemont I": {
+  "year": null,
+  "source": "de: Fiat Freemont — 2011–2016, nur ein V6 2012",
+  "checked": "2026-10-22"
+ },
+ "Fiat|Idea|Idea I": {
+  "year": 2005,
+  "source": "fr: Fiat Idea — «Fiat a restylé discrètement son minispace fin 2005»",
+  "checked": "2026-10-22"
+ },
+ "Fiat|Panda|Panda II": {
+  "year": 2009,
+  "source": "it: Fiat Panda (2003) — «A ottobre 2009, FIAT ha presentato un ulteriore facelift»",
+  "checked": "2026-10-22"
+ },
+ "Fiat|Scudo|Scudo II": {
+  "year": 2013,
+  "source": "pl: Fiat Scudo — «W 2013 roku auto przeszło delikatną modernizację… nową atrapą chłodnicy»",
+  "checked": "2026-10-22"
+ },
+ "Ford|Econoline|Econoline IV": {
+  "year": 1996,
+  "source": "en: Ford E-Series — «For 1997, the Econoline underwent a revision of both its exterior and interior»",
+  "checked": "2026-10-22"
+ },
+ "Ford|Explorer|Explorer V": {
+  "year": 2015,
+  "source": "en: Ford Explorer — «The refreshed 2016 model year Ford Explorer debuted at the 2014 Los Angeles Auto Show»",
+  "checked": "2026-10-22"
+ },
+ "Ford|Kuga|Mk1": {
+  "year": null,
+  "source": "de: Ford Kuga — 2010 nur ein neuer 2.0 TDCi",
+  "checked": "2026-10-22"
+ },
+ "Ford|Mustang Mach-E|Mustang Mach-E": {
+  "year": null,
+  "source": "pl: Ford Mustang Mach-E — 2025 nur Farben, Felgen",
+  "checked": "2026-10-22"
+ },
+ "Ford|Taurus|Taurus V": {
+  "year": null,
+  "unclear": true,
+  "source": "de: Ford Taurus — Herbst 2012 Facelift gilt für das Modell 2010–2019, die Zeile mischt zwei Generationen",
+  "checked": "2026-10-22"
+ },
+ "Ford|Tourneo Connect|Tourneo Connect I": {
+  "year": 2009,
+  "source": "fr: Ford Transit Connect — «Le premier opus lancé en mars 2003 est restylé fin 2005 et 2009.»",
+  "checked": "2026-10-22"
+ },
+ "Ford|Tourneo Connect|Tourneo Connect II": {
+  "year": 2018,
+  "source": "fr: Ford Transit Connect — «En septembre 2018 … Transit/Tourneo Connect II phase 2 restylé est commercialisé»",
+  "checked": "2026-10-22"
+ },
+ "Ford|Transit|Transit VI": {
+  "year": null,
+  "source": "de: Ford Transit — «eine modernisierte Form des vorangehenden Modells»",
+  "checked": "2026-10-22"
+ },
+ "Honda|NSX|NSX III": {
+  "year": 2018,
+  "source": "de: Honda NSX (2016) — «Im August 2018 wurde eine überarbeitete Version des NSX präsentiert.»",
+  "checked": "2026-10-22"
+ },
+ "Jeep|Cherokee|Cherokee IV": {
+  "year": null,
+  "source": "nl: Jeep Cherokee — «Aan de buitenkant van de auto werd niets gewijzigd.»",
+  "checked": "2026-10-22"
+ },
+ "Kia|Carens|Carens III": {
+  "year": 2010,
+  "source": "de: Kia Carens — «Im Herbst 2010 wurde der Kompaktvan überarbeitet … neuen Kühlergrill»",
+  "checked": "2026-10-22"
+ },
+ "Kia|Carnival|Carnival II": {
+  "year": 2010,
+  "source": "de: Kia Carnival — «Im Frühjahr 2010 wurde das Fahrzeug überarbeitet»",
+  "checked": "2026-10-22"
+ },
+ "Land Rover|Defender|Defender IV": {
+  "year": 2025,
+  "source": "de: Land Rover Defender (L663) — «Eine leicht überarbeitete Version der Baureihe präsentierte der Hersteller im Mai 2025.»",
+  "checked": "2026-10-22"
+ },
+ "Land Rover|Discovery|Discovery IV": {
+  "year": 2013,
+  "source": "de: Land Rover Discovery — «Mit dem auf der IAA 2013 vorgestellten Facelift…»",
+  "checked": "2026-10-22"
+ },
+ "Land Rover|Range Rover|Range Rover III": {
+  "year": 2005,
+  "source": "en: Range Rover (L322) — «The Range Rover's exterior was updated in 2005 for the model year 2006»",
+  "checked": "2026-10-22"
+ },
+ "Lexus|ES|ES V": {
+  "year": 2009,
+  "source": "pl: Lexus ES — «W 2009 auto przeszło facelifting.»",
+  "checked": "2026-10-22"
+ },
+ "Lexus|IS|IS II": {
+  "year": 2009,
+  "source": "de: Lexus IS — «Im April 2009 wurde der IS erstmals modifiziert. Dabei wurden die Front neu gestaltet»",
+  "checked": "2026-10-22"
+ },
+ "Mazda|3|Mazda 3 IV": {
+  "year": null,
+  "source": "de: Mazda3 — 04/2023 nur Ausstattung",
+  "checked": "2026-10-22"
+ },
+ "Mazda|5|Mazda 5 II": {
+  "year": null,
+  "source": "de: Mazda5 — 02/2013 nur LED-Seitenblinker",
+  "checked": "2026-10-22"
+ },
+ "Mazda|CX-30|CX-30 I": {
+  "year": 2026,
+  "source": "de: Mazda CX-30 — «Im Juni 2026 wurde eine weitere Überarbeitung angekündigt. Neben leichten optischen Änderungen…»",
+  "checked": "2026-10-22"
+ },
+ "Mazda|MPV|MPV III": {
+  "year": 2008,
+  "source": "en: Mazda MPV — «In 2008, a facelifted version was introduced.»",
+  "checked": "2026-10-22"
+ },
+ "Mazda|RX-8|RX-8 I": {
+  "year": 2009,
+  "source": "de: Mazda RX-8 — «erhielt der RX-8 Anfang 2009 eine Modellpflege»",
+  "checked": "2026-10-22"
+ },
+ "Mercedes-Benz|Vito|W447": {
+  "year": 2020,
+  "source": "en: Mercedes-Benz Vito — «An updated version was shown in 2020, with mild styling updates.»",
+  "checked": "2026-10-22"
+ },
+ "Mitsubishi|Galant|Galant IX": {
+  "year": 2008,
+  "source": "de: Mitsubishi Galant — «Im Herbst 2008 erhielt der Galant ein Facelift.»",
+  "checked": "2026-10-22"
+ },
+ "Mitsubishi|Pajero|Pajero IV": {
+  "year": 2012,
+  "source": "de: Mitsubishi Pajero — «Im Juli 2012 bekam der Pajero ein leichtes Facelift.»",
+  "checked": "2026-10-22"
+ },
+ "Nissan|Murano|Murano II": {
+  "year": 2010,
+  "source": "de: Nissan Murano — «Im September 2010 wurde der Murano einem Facelift unterzogen»",
+  "checked": "2026-10-22"
+ },
+ "Nissan|Navara|Navara IV": {
+  "year": 2020,
+  "source": "de: Nissan Navara — «Im November 2020 präsentierte Nissan eine umfangreich überarbeitete Version des Navara.»",
+  "checked": "2026-10-22"
+ },
+ "Nissan|Primastar|Primastar II": {
+  "year": 2021,
+  "source": "pl: Nissan Primastar — «w lutym 2021 roku Nissan NV300 przeszedł obszerną restylizację»",
+  "checked": "2026-10-22"
+ },
+ "Nissan|Skyline|V36": {
+  "year": 2010,
+  "source": "ja: 日産・スカイラインセダン V36 — «2010年1月に行われたマイナーチェンジでは外装デザインが大幅に変更され»",
+  "checked": "2026-10-22"
+ },
+ "Nissan|Titan|Titan I": {
+  "year": 2007,
+  "source": "en: Nissan Titan — «with an intermediate refresh for MY 2008»",
+  "checked": "2026-10-22"
+ },
+ "Opel|Agila|Agila B": {
+  "year": null,
+  "source": "it: Opel Agila — 2011 «tutti a livello meccanico»",
+  "checked": "2026-10-22"
+ },
+ "Opel|Combo|Combo D": {
+  "year": null,
+  "source": "de: Opel Combo — ein Aussehen 2012–2018",
+  "checked": "2026-10-22"
+ },
+ "Opel|Combo|Combo E": {
+  "year": 2024,
+  "source": "de: Opel Combo — «Eine überarbeitete Version des Cargo debütierte im Oktober 2023 und des Life im Dezember 2023.»",
+  "checked": "2026-10-22"
+ },
+ "Opel|Movano|Movano III": {
+  "year": 2014,
+  "source": "de: Opel Movano — «Im Sommer 2014 bekam der Movano ein leichtes Facelift» (großes Facelift 05/2019)",
+  "checked": "2026-10-22"
+ },
+ "Opel|Vivaro|Vivaro B": {
+  "year": null,
+  "source": "it: Opel Vivaro — 2015 nur Motoren",
+  "checked": "2026-10-22"
+ },
+ "Opel|Zafira|Zafira B": {
+  "year": 2008,
+  "source": "de: Opel Zafira — «Ab Februar 2008 wurde sie von den Händlern angeboten.»",
+  "checked": "2026-10-22"
+ },
+ "Peugeot|307|307 II": {
+  "year": null,
+  "source": "en: Peugeot 307 — die Reihe selbst ist das Facelift 2005",
+  "checked": "2026-10-22"
+ },
+ "Peugeot|4007|4007 I": {
+  "year": null,
+  "source": "fr: Mitsubishi Outlander II — 2009 Karosserie unverändert",
+  "checked": "2026-10-22"
+ },
+ "Peugeot|Bipper|Bipper": {
+  "year": null,
+  "source": "de: Peugeot Bipper — Produktion bis 2014",
+  "checked": "2026-10-22"
+ },
+ "Peugeot|Boxer|Boxer II": {
+  "year": null,
+  "source": "de: Fiat Ducato — Ende 2011 «Karosserie nur unwesentlich verändert»",
+  "checked": "2026-10-22"
+ },
+ "Peugeot|Boxer|Boxer III": {
+  "year": 2024,
+  "source": "de: Fiat Ducato — «Im Oktober 2023 wurde eine Modellpflege für das Modelljahr 2024 angekündigt.»",
+  "checked": "2026-10-22"
+ },
+ "Peugeot|Traveller|Traveller": {
+  "year": 2024,
+  "source": "de: Peugeot Traveller — «Eine überarbeitete Version der Baureihe präsentierte Peugeot im November 2023. Sie wird seit April 2024 verkauft.»",
+  "checked": "2026-10-22"
+ },
+ "Porsche|Boxster|987": {
+  "year": 2009,
+  "source": "pl: Porsche Boxster — «W 2009 roku auto przeszło face lifting»",
+  "checked": "2026-10-22"
+ },
+ "Renault|Scenic|Scénic IV": {
+  "year": 2020,
+  "source": "fr: Renault Scénic IV — «En octobre 2020, Renault présente un léger restylage du Renault Scénic IV.»",
+  "checked": "2026-10-22"
+ },
+ "Renault|Twizy|Twizy I": {
+  "year": null,
+  "source": "de: Renault Twizy — keine Überarbeitung bis 09/2023",
+  "checked": "2026-10-22"
+ },
+ "Seat|Mii|Mii": {
+  "year": null,
+  "source": "en: Volkswagen Up — «it received no noticeable facelifts, unlike the Citigo»",
+  "checked": "2026-10-22"
+ },
+ "Suzuki|Alto|Alto VI": {
+  "year": null,
+  "source": "en: Suzuki Alto — 2014 durch Celerio ersetzt",
+  "checked": "2026-10-22"
+ },
+ "Suzuki|Celerio|Celerio I": {
+  "year": null,
+  "source": "en: Suzuki Celerio — 2017 nur Pakistan (Cultus)",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Camry|XV50 (вне ЕС)": {
+  "year": 2014,
+  "source": "en: Toyota Camry (XV50) — «a substantial mid-cycle restyling to the XV50 Camry at the 2014 New York International Auto Show»",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Hiace|Hiace V": {
+  "year": 2007,
+  "source": "de: Toyota HiAce — «Im August 2007 startete eine überarbeitete Version.»",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Highlander|Highlander II": {
+  "year": 2010,
+  "source": "en: Toyota Highlander — «In 2010, for the 2011 model year, Toyota made some changes to the Highlander»",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Land Cruiser|Land Cruiser VII": {
+  "year": null,
+  "source": "it: Toyota Land Cruiser Prado — die Reihe beginnt mit dem Facelift 09/2017; 2020 nur Leistung",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Previa|Previa III": {
+  "year": 2008,
+  "source": "en: Toyota Previa — «The first facelift of the model was launched in December 2008»",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Proace (Verso)|Proace II": {
+  "year": 2024,
+  "source": "de: Toyota Proace — «Eine überarbeitete Version… wurde im November 2023 vorgestellt. Sie kam im Juni 2024 in den Handel.»",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Sequoia|Sequoia II": {
+  "year": 2017,
+  "source": "en: Toyota Sequoia — «On February 9, 2017, Toyota unveiled a refreshed Sequoia for the 2018 model year»",
+  "checked": "2026-10-22"
+ },
+ "Toyota|Sienna|Sienna III": {
+  "year": 2014,
+  "source": "en: Toyota Sienna — «2014, for the 2015 model year: Minor refresh with new tail lights»",
+  "checked": "2026-10-22"
+ },
+ "Volkswagen|Beetle|Beetle": {
+  "year": 2016,
+  "source": "de: VW Beetle — «Im Frühjahr 2016 wurde der Beetle einem Facelift unterzogen.»",
+  "checked": "2026-10-22"
+ },
+ "Volkswagen|Caddy|Caddy V": {
+  "year": 2026,
+  "source": "de: VW Caddy (Typ SB) — «Im März 2026 wurde erstmals ein Facelift gezeigt.»",
+  "checked": "2026-10-22"
+ }
+}
