@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Калькулятор — макет Flux Pro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  fontFamily: { sans: ['Onest', 'ui-sans-serif', 'system-ui'] },
+  colors: { brand: '#1a5b80', ink: '#0f1b24', 'ink-soft': '#33434f', muted: '#4a5b68', line: '#e2e8f0', 'line-soft': '#e9eef2',
+    chip: '#edf1f4', soft: '#f8fafb', selected: '#eef5f9', good: '#17603a', 'good-soft': '#e2f3e8', info: '#123f59', 'info-soft': '#e4eef4',
+    fresh: '#7a4300', 'fresh-soft': '#fbeed8', highlight: '#ea7317' },
+  borderRadius: { card: '1rem' },
+} } }
+</script>
+<style>
+  body { background: #f1f4f6; }
+  .card { background: #fff; border: 1px solid #e2e8f0; border-radius: 1rem; box-shadow: 0 1px 2px rgb(0 0 0 / .05); }
+  /* Flux: кнопки, поля, сегменты, вкладки — как у компонентов Flux с акцентом = фирменный синий */
+  .fx-btn { display:inline-flex; align-items:center; gap:.5rem; height:2.5rem; padding:0 1rem; border-radius:.5rem; font-size:.875rem; font-weight:500;
+    background:#fff; color:#27272a; border:1px solid #e4e4e7; border-bottom-color:#d4d4d8cc; box-shadow:0 1px 2px rgb(0 0 0 / .05); white-space:nowrap; }
+  .fx-btn.primary { background:#1a5b80; color:#fff; border-color:#000/10; border:1px solid rgb(0 0 0 / .1); box-shadow: inset 0 1px rgb(255 255 255 / .2); }
+  .fx-btn.ghost { background:transparent; border-color:transparent; box-shadow:none; color:#3f3f46; }
+  .fx-btn.subtle { background:transparent; border-color:transparent; box-shadow:none; color:#1a5b80; padding:0 .5rem; }
+  .fx-btn.icon { width:2.5rem; padding:0; justify-content:center; }
+  .fx-btn.sm { height:2rem; padding:0 .75rem; font-size:.875rem; }
+  .fx-input { display:flex; align-items:center; height:2.5rem; border-radius:.5rem; background:#fff; border:1px solid #e4e4e7; border-bottom-color:#d4d4d8cc; box-shadow:0 1px 2px rgb(0 0 0 / .05); overflow:hidden; }
+  .fx-input input, .fx-input .v { flex:1; min-width:0; padding:0 .75rem; font-size:1rem; color:#0f1b24; background:transparent; outline:none; font-variant-numeric: tabular-nums; }
+  .fx-input .v.ph { color:#a1a1aa; }
+  .fx-input .sfx { height:100%; display:flex; align-items:center; padding:0 .75rem; background:#fafafa; border-left:1px solid #e4e4e7; color:#52525b; font-size:.875rem; font-weight:500; }
+  .fx-input .pre { height:100%; display:flex; align-items:center; padding:0 .25rem 0 .75rem; color:#71717a; }
+  .fx-label { font-size:.875rem; font-weight:500; color:#27272a; }
+  .fx-desc { font-size:.8125rem; color:#4a5b68; }
+  .seg { display:inline-flex; padding:4px; border-radius:.5rem; background:rgb(39 39 42 / .05); height:2.5rem; }
+  .seg span { display:flex; align-items:center; justify-content:center; padding:0 .875rem; border-radius:.375rem; font-size:.875rem; font-weight:500; color:#52525b; white-space:nowrap; }
+  .seg span.on { background:#fff; color:#18181b; box-shadow:0 1px 2px rgb(0 0 0 / .08), 0 0 0 1px rgb(0 0 0 / .04); }
+  .seg span.off { opacity:.45; }
+  .seg.sm { height:2rem; padding:3px; } .seg.sm span { padding:0 .625rem; font-size:.8125rem; }
+  .tabs { display:flex; gap:1.5rem; border-bottom:1px solid rgb(39 39 42 / .1); }
+  .tabs span { padding:.5rem 0 .625rem; font-size:.875rem; font-weight:500; color:#71717a; border-bottom:2px solid transparent; margin-bottom:-1px; }
+  .tabs span.on { color:#18181b; border-color:#18181b; }
+  .badge { display:inline-flex; align-items:center; gap:.25rem; border-radius:.375rem; padding:.125rem .5rem; font-size:.75rem; font-weight:500; }
+  .callout { display:flex; gap:.75rem; border-radius:.5rem; padding:.75rem 1rem; font-size:.875rem; }
+  .chk { width:1.125rem; height:1.125rem; border-radius:.3rem; border:1px solid #d4d4d8; background:#fff; box-shadow:0 1px 2px rgb(0 0 0 / .05); flex-shrink:0; margin-top:2px; display:flex; align-items:center; justify-content:center; }
+  .chk.on { background:#1a5b80; border-color:#1a5b80; }
+  .num { display:inline-flex; width:22px; height:22px; border-radius:999px; background:#1a5b80; color:#fff; font-size:12px; font-weight:600; align-items:center; justify-content:center; margin-right:.5rem; }
+  .row { display:flex; align-items:center; gap:.75rem; padding:.7rem 0; border-top:1px solid #e9eef2; }
+  .grip { color:#a1a1aa; font-size:14px; letter-spacing:-2px; width:12px; }
+  .frame-title { font: 600 13px/1.2 Onest, sans-serif; letter-spacing:.06em; text-transform:uppercase; color:#4a5b68; margin:0 0 10px 4px; }
+  .nav a { display:flex; align-items:center; gap:.5rem; min-height:4rem; padding:0 .875rem; border-bottom:3px solid transparent; font-weight:500; color:#4a5b68; font-size:15px; }
+  .nav a.on { border-color:#1a5b80; color:#0f1b24; font-weight:600; }
+</style>
+</head>
+<body class="font-sans text-ink text-[15px] antialiased">
+
+<!-- ==================== PL, компьютер ==================== -->
+<section id="pl" class="w-[1440px] bg-white pb-10">
+  <header class="bg-white shadow-sm">
+    <div class="mx-auto flex max-w-[1360px] items-center gap-7 px-6">
+      <div class="flex min-h-16 items-center gap-2.5 font-bold"><span class="flex size-8 items-center justify-center rounded-lg bg-brand text-white text-sm">M</span>Mantexlab Tools</div>
+      <nav class="nav flex">
+        <a>Поиск аукционы</a><a>Карточка авто</a><a>Поиск дилеры</a><a>Офферты</a><a class="on">Калькулятор</a><a>Chrome</a><a>Осмотры</a><a>VIN Check</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto flex max-w-[1360px] flex-col gap-5 px-6 pt-7">
+    <!-- 1. Шапка страницы — как у Игоря в «Поиске аукционы»: заголовок, вкладки, справа действия -->
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+      <h1 class="text-[28px] font-bold leading-tight tracking-tight">Калькулятор</h1>
+      <div class="seg"><span class="on">🇵🇱&nbsp; PL · Польша</span><span>🇧🇾&nbsp; BY · Беларусь</span></div>
+      <div class="flex-1"></div>
+      <span class="fx-btn"><svg class="size-5 text-highlight" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>История расчётов <span class="badge bg-chip text-ink-soft">6</span><svg class="size-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span>
+      <span class="fx-btn"><svg class="size-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></svg>Конструктор</span>
+      <span class="fx-btn primary"><svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M9 3v5h6"/></svg>Сохранить</span>
+    </div>
+
+    <!-- 2. Путь расчёта: вкладки режима + три вопроса сегментами Flux -->
+    <section class="card flex flex-col gap-4 px-5 pt-2 pb-5">
+      <div class="tabs"><span class="on">Расчёт закупки</span><span>Финальный расчёт</span></div>
+      <div class="flex flex-wrap items-end gap-x-8 gap-y-4">
+        <div class="flex flex-col gap-2"><span class="fx-label flex items-center"><span class="num">1</span>Откуда покупаем</span><div class="seg"><span>У продавца</span><span>Аукцион</span><span class="on">Дилер</span></div></div>
+        <div class="flex flex-col gap-2"><span class="fx-label flex items-center"><span class="num">2</span>Инвойс</span><div class="seg"><span class="on">VAT 23%</span><span>VAT Маржа</span></div></div>
+        <div class="flex flex-col gap-2"><span class="fx-label flex items-center"><span class="num">3</span>Комиссия</span><div class="seg"><span class="on">Стандарт</span><span>Финансирование</span><span>Напрямую</span></div></div>
+        <p class="fx-desc mb-2 max-w-[19rem]">Зарубежный дилер через фирму: авто netto, VAT 23% в конце. Недоступное в этом пути — серым.</p>
+      </div>
+    </section>
+
+    <!-- 3. Две колонки: «Данные» слева, лист расчёта справа (итог сверху, как цена в «Карточке авто») -->
+    <div class="grid grid-cols-[minmax(0,1fr)_560px] items-start gap-6">
+      <section class="card flex flex-col gap-5 p-6">
+        <div>
+          <h2 class="text-lg font-semibold">Данные</h2>
+          <p class="fx-desc">Ссылка заполнит цену, двигатель, доставку и осмотр.</p>
+        </div>
+        <div class="flex flex-col gap-2">
+          <span class="fx-label">Ссылка на объявление</span>
+          <div class="flex gap-2"><div class="fx-input flex-1"><span class="pre"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg></span><span class="v">https://suchen.mobile.de/fahrzeuge/details.html?id=41…</span></div><span class="fx-btn">Загрузить</span></div>
+          <div class="callout bg-good-soft text-good"><svg class="mt-0.5 size-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>
+            <div class="flex flex-col gap-0.5"><b>Найдено: BMW X5 xDrive30d M Sport</b><span>2021 · 98 400 км · дизель · 2 993 cm³ · Мюнхен</span><span>Цена 45 815 € brutto · 38 500 € netto · ДВС &gt;2000 см³ · транспорт и осмотр по индексу продавца</span>
+            <span class="mt-1.5"><span class="fx-btn sm"><svg class="size-4 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Оффер клиенту</span></span></div></div>
+        </div>
+        <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+          <label class="flex flex-col gap-2"><span class="fx-label">Цена автомобиля netto</span><div class="fx-input"><span class="v">38 500</span><span class="sfx">EUR</span></div></label>
+          <label class="flex flex-col gap-2"><span class="fx-label">Тип двигателя</span><div class="fx-input"><span class="v">ДВС &gt;2000 см³ — 18,6%</span><span class="pre pr-3"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m7 10 5 5 5-5"/></svg></span></div></label>
+          <label class="flex flex-col gap-2"><span class="fx-label">Инспекция специалиста netto</span><div class="fx-input"><span class="v ph">0</span><span class="sfx">PLN</span></div></label>
+          <label class="flex flex-col gap-2"><span class="fx-label">Транспорт на автовозе netto</span><div class="fx-input"><span class="v ph">0</span><span class="sfx">PLN</span></div></label>
+          <label class="flex flex-col gap-2"><span class="fx-label">Скидка продавца</span><div class="fx-input"><span class="v ph">0</span><span class="sfx">EUR</span></div></label>
+        </div>
+        <div class="flex flex-col gap-3 border-t border-line-soft pt-4">
+          <span class="fx-label">Дополнительно</span>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="flex gap-2.5"><span class="chk"></span><div><div class="fx-label">Регистрация</div><div class="fx-desc">600 zł netto</div></div></div>
+            <div class="flex gap-2.5"><span class="chk"></span><div><div class="fx-label">Пошлина 10%</div><div class="fx-desc">от цены авто netto</div></div></div>
+            <div class="flex gap-2.5"><span class="chk"></span><div><div class="fx-label">Комиссия немецкой фирмы</div><div class="fx-desc">в евро</div></div></div>
+          </div>
+          <span><span class="fx-btn subtle"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Свой расход</span></span>
+        </div>
+      </section>
+
+      <section class="card flex flex-col p-6">
+        <!-- Итог сверху — как цена в панели «Карточки авто» -->
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex flex-col gap-0.5">
+            <span class="text-[13px] text-muted">Итого «под ключ» · Дилер · VAT 23%</span>
+            <span class="text-[30px] font-bold leading-tight tracking-tight">221 900 zł</span>
+            <span class="text-[13px] text-muted">= 50 550 € · курс 4,39 zł</span>
+          </div>
+          <div class="flex gap-1"><span class="fx-btn ghost icon" title="Печать"><svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M7 14h10v7H7z"/></svg></span><span class="fx-btn ghost icon" title="Картинка"><svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span></div>
+        </div>
+        <div class="mt-4 flex flex-wrap items-end gap-3 border-t border-line-soft pt-4">
+          <div class="flex flex-col gap-1.5"><span class="fx-label">Курс EUR/PLN <span class="fx-desc font-normal">· Walutomat 4,37 + 0,02 · 22.10</span></span>
+            <div class="fx-input w-44"><span class="v font-semibold">4,39</span><span class="sfx !px-3">−</span><span class="sfx !px-3">+</span></div></div>
+          <div class="flex flex-col gap-1.5"><span class="fx-label">Язык листа</span><div class="seg"><span class="on">PL</span><span>RU</span><span>EN</span></div></div>
+        </div>
+
+        <h3 class="mt-5 text-[13px] font-semibold text-muted">Kalkulacja — Dealerzy VAT 23%</h3>
+        <div class="mt-1 flex flex-col">
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Cena pojazdu netto</div><div class="text-[12px] text-muted">38 500 EUR =</div></div><span class="font-semibold tabular-nums">169 000 PLN</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Oględziny specjalisty</div></div><span class="font-semibold tabular-nums">0 PLN</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Transport na lawecie</div></div><span class="font-semibold tabular-nums">0 PLN</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Akcyza</div><div class="text-[12px] text-muted">3,10% × 169 000 PLN</div></div><span class="font-semibold tabular-nums">5 250 PLN</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Prowizja firmy</div><div class="text-[12px] text-muted">1 829,27 PLN + (2% × 207 900 PLN)</div></div><span class="font-semibold tabular-nums">6 000 PLN</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Przegląd techniczny</div></div><span class="font-semibold tabular-nums">150 PLN</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">VAT 23%</div><div class="text-[12px] text-muted">23% × 180 400 PLN</div></div><span class="font-semibold tabular-nums">41 500 PLN</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="border-t border-line-soft pt-2"><span class="fx-btn subtle"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>Добавить позицию</span></div>
+        </div>
+        <div class="mt-3 flex items-baseline justify-between border-t-2 border-ink pt-3"><span class="text-lg font-bold">Razem</span><span class="text-2xl font-bold tabular-nums">221 900 PLN</span></div>
+        <div class="mt-4 flex h-3 overflow-hidden rounded-full"><span class="w-[76%] bg-brand"></span><span class="w-[19%] bg-[#5fa8d3]"></span><span class="w-[2.7%] bg-highlight"></span><span class="w-[2.4%] bg-[#17603a]"></span></div>
+        <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-[12px] text-muted"><span><i class="mr-1 inline-block size-2.5 rounded-sm bg-brand"></i>Cena pojazdu 76%</span><span><i class="mr-1 inline-block size-2.5 rounded-sm bg-[#5fa8d3]"></i>VAT 19%</span><span><i class="mr-1 inline-block size-2.5 rounded-sm bg-highlight"></i>Prowizja 2,7%</span><span><i class="mr-1 inline-block size-2.5 rounded-sm bg-good"></i>Akcyza 2,4%</span></div>
+        <ul class="mt-4 flex flex-col gap-1.5 text-[14px] text-ink-soft">
+          <li class="flex gap-2"><svg class="size-5 shrink-0 text-good" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>Oddajemy <b>70% uzyskanego rabatu</b> od sprzedawcy</li>
+          <li class="flex gap-2"><svg class="size-5 shrink-0 text-good" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><b>Wpłacamy kaucję</b> w wys. zagranicznego VAT-u</li>
+          <li class="flex gap-2"><svg class="size-5 shrink-0 text-good" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>Sprzedajemy <b>na Fakturę VAT 23%</b></li>
+        </ul>
+      </section>
+    </div>
+  </main>
+</section>
+
+<!-- ==================== BY, компьютер ==================== -->
+<section id="by" class="mt-10 w-[1440px] bg-white pb-10">
+  <main class="mx-auto flex max-w-[1360px] flex-col gap-5 px-6 pt-7">
+    <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+      <h1 class="text-[28px] font-bold leading-tight tracking-tight">Калькулятор</h1>
+      <div class="seg"><span>🇵🇱&nbsp; PL · Польша</span><span class="on">🇧🇾&nbsp; BY · Беларусь</span></div>
+      <div class="flex-1"></div>
+      <span class="fx-btn"><svg class="size-5 text-highlight" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>История расчётов <span class="badge bg-chip text-ink-soft">0</span><svg class="size-4 text-zinc-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></span>
+      <span class="fx-btn"><svg class="size-5 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>Конструктор BY</span>
+      <span class="fx-btn primary">Сохранить</span>
+    </div>
+    <section class="card flex flex-wrap items-end gap-x-8 gap-y-4 p-5">
+      <div class="flex flex-col gap-2"><span class="fx-label flex items-center"><span class="num">1</span>Источник</span><div class="seg"><span class="on">Аукцион</span><span>Дилер EU</span></div></div>
+      <div class="flex flex-col gap-2"><span class="fx-label flex items-center"><span class="num">2</span>Режим НДС</span><div class="seg"><span class="on">НДС</span><span>Маржа</span></div></div>
+      <div class="flex flex-col gap-2"><span class="fx-label flex items-center"><span class="num">3</span>Доставка в РБ</span><div class="seg"><span class="on">Автовоз</span><span>Транзиты</span></div></div>
+      <p class="fx-desc mb-2 max-w-[19rem]">Весь расчёт в €, итог и в $ по курсу НБРБ. Депозит НДС невозвратный и входит в итог.</p>
+    </section>
+    <div class="grid grid-cols-[minmax(0,1fr)_560px] items-start gap-6">
+      <section class="card flex flex-col gap-5 p-6">
+        <h2 class="text-lg font-semibold">Данные</h2>
+        <div class="grid grid-cols-2 gap-x-5 gap-y-4">
+          <label class="flex flex-col gap-2"><span class="fx-label">Цена автомобиля netto</span><div class="fx-input"><span class="v">38 500</span><span class="sfx">EUR</span></div></label>
+          <label class="flex flex-col gap-2"><span class="fx-label">Страна продавца (НДС)</span><div class="fx-input"><span class="v">🇩🇪 Германия — 19%</span><span class="pre pr-3"><svg class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="m7 10 5 5 5-5"/></svg></span></div></label>
+          <label class="flex flex-col gap-2"><span class="fx-label">Комиссия аукциона</span><div class="fx-input"><span class="v">450</span><span class="sfx">EUR</span></div></label>
+          <label class="flex flex-col gap-2"><span class="fx-label">Доставка до Варшавы</span><div class="fx-input"><span class="v">1 200</span><span class="sfx">EUR</span></div></label>
+        </div>
+        <div class="flex gap-2.5"><span class="chk"></span><div><div class="fx-label">Депозит НДС</div><div class="fx-desc">10% от НДС страны продавца (19%)</div></div></div>
+        <div class="flex flex-col gap-2 border-t border-line-soft pt-4">
+          <span class="fx-label">Комиссия <span class="fx-desc font-normal">· от цены авто и комиссии аукциона</span></span>
+          <div class="flex flex-wrap items-end gap-3"><div class="seg"><span class="on">200 € + 1%</span><span>250 € + 1%</span><span>300 € + 1%</span><span>350 € + 1%</span></div>
+            <div class="fx-input w-32"><span class="v ph">200</span><span class="sfx">EUR</span></div><div class="fx-input w-24"><span class="v ph">1</span><span class="sfx">%</span></div></div>
+        </div>
+        <div class="flex flex-col gap-3 border-t border-line-soft pt-4">
+          <span class="fx-label">Дополнительные расходы</span>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="flex gap-2.5"><span class="chk"></span><div><div class="fx-label">Акциз</div><div class="fx-desc">как в Польше, от цены авто</div></div></div>
+            <div class="flex gap-2.5"><span class="chk"></span><div><div class="fx-label">Регистрация</div><div class="fx-desc">200 €</div></div></div>
+            <div class="flex gap-2.5"><span class="chk"></span><div><div class="fx-label">Комиссия немецкой фирмы</div></div></div>
+          </div>
+          <span><span class="fx-btn subtle">+ Свой расход</span></span>
+        </div>
+      </section>
+      <section class="card flex flex-col p-6">
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex flex-col gap-0.5">
+            <span class="text-[13px] text-muted">Итого · Беларусь · Аукцион · НДС</span>
+            <span class="text-[30px] font-bold leading-tight tracking-tight">41 400 €</span>
+            <span class="text-[15px] font-semibold text-info">46 451 $ <span class="text-[13px] font-normal text-muted">· НБРБ 1 € = 1,1220 $ · 22.10</span></span>
+          </div>
+          <div class="flex gap-1"><span class="fx-btn ghost icon"><svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M7 9V3h10v6M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M7 14h10v7H7z"/></svg></span><span class="fx-btn ghost icon"><svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span></div>
+        </div>
+        <div class="mt-4 border-t border-line-soft pt-4"><div class="flex flex-col gap-1.5"><span class="fx-label">Курс EUR/USD</span><div class="fx-input w-44"><span class="v font-semibold">1,1220</span><span class="sfx">$</span></div></div></div>
+        <h3 class="mt-5 text-[13px] font-semibold text-muted">Расчёт — Беларусь · Аукцион · НДС</h3>
+        <div class="mt-1 flex flex-col">
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Цена автомобиля</div><div class="text-[12px] text-muted">Экспорт без VAT — цена netto</div></div><span class="font-semibold tabular-nums">38 500 €</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1 font-semibold">Комиссия аукциона</div><span class="font-semibold tabular-nums">450 €</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1 font-semibold">Доставка до Варшавы</div><span class="font-semibold tabular-nums">1 200 €</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1"><div class="font-semibold">Комиссия</div><div class="text-[12px] text-muted">200 € + 1% × 38 950 €</div></div><span class="font-semibold tabular-nums">590 €</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1 font-semibold">Экспорт</div><span class="font-semibold tabular-nums">60 €</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="row"><span class="grip">⋮⋮</span><div class="flex-1 font-semibold">Автовоз РБ</div><span class="font-semibold tabular-nums">600 €</span><span class="fx-btn ghost icon sm !w-8">⋯</span></div>
+          <div class="border-t border-line-soft pt-2"><span class="fx-btn subtle">+ Добавить позицию</span></div>
+        </div>
+        <div class="mt-3 flex items-baseline justify-between border-t-2 border-ink pt-3"><span class="text-lg font-bold">Итого</span><span class="text-2xl font-bold tabular-nums">41 400 €</span></div>
+        <div class="mt-1 text-right text-[13px] text-muted">= 46 451 $ · курс НБРБ 1 € = 1,1220 $</div>
+      </section>
+    </div>
+  </main>
+</section>
+
+<!-- ==================== PL, телефон 375 ==================== -->
+<section id="phone" class="relative mt-10 w-[375px] overflow-hidden bg-white" style="height:812px">
+  <div class="flex flex-col gap-4 px-4 pt-4 pb-24">
+    <div class="flex items-center gap-3"><h1 class="text-[24px] font-bold tracking-tight">Калькулятор</h1><div class="flex-1"></div><span class="fx-btn icon"><svg class="size-5 text-highlight" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></span></div>
+    <div class="seg w-full !h-11"><span class="on flex-1">🇵🇱 PL · Польша</span><span class="flex-1">🇧🇾 BY · Беларусь</span></div>
+    <section class="card flex flex-col gap-3 px-4 pt-1 pb-4">
+      <div class="tabs"><span class="on">Расчёт закупки</span><span>Финальный</span></div>
+      <span class="fx-label flex items-center"><span class="num">1</span>Откуда покупаем</span><div class="seg w-full !h-11"><span class="flex-1">Продавец</span><span class="flex-1">Аукцион</span><span class="on flex-1">Дилер</span></div>
+      <span class="fx-label flex items-center"><span class="num">2</span>Инвойс</span><div class="seg w-full !h-11"><span class="on flex-1">VAT 23%</span><span class="flex-1">VAT Маржа</span></div>
+      <span class="fx-label flex items-center"><span class="num">3</span>Комиссия</span><div class="seg w-full !h-11"><span class="on flex-1">Стандарт</span><span class="flex-1">Финанс.</span><span class="flex-1">Напрямую</span></div>
+    </section>
+    <section class="card flex flex-col gap-3 p-4">
+      <h2 class="text-lg font-semibold">Данные</h2>
+      <label class="flex flex-col gap-2"><span class="fx-label">Цена автомобиля netto</span><div class="fx-input !h-11"><span class="v">38 500</span><span class="sfx">EUR</span></div></label>
+      <label class="flex flex-col gap-2"><span class="fx-label">Тип двигателя</span><div class="fx-input !h-11"><span class="v">ДВС &gt;2000 см³ — 18,6%</span></div></label>
+    </section>
+  </div>
+  <!-- Нижняя полоса, как у «Карточки авто» на телефоне -->
+  <div class="absolute inset-x-0 bottom-0 flex items-center gap-3 border-t border-line bg-white/95 px-4 py-2.5 shadow-[0_-4px_16px_rgba(15,27,36,0.08)]">
+    <div class="flex min-w-0 flex-1 flex-col"><span class="text-[12px] text-muted">Итого · Дилер VAT 23%</span><span class="text-lg font-bold leading-tight">221 900 zł</span></div>
+    <span class="fx-btn primary !h-11">Сохранить</span>
+  </div>
+</section>
+<script>
+  const only = new URLSearchParams(location.search).get('s');
+  if (only) document.querySelectorAll('body > section').forEach(s => { if (s.id !== only) s.remove(); else s.classList.remove('mt-10'); });
+</script>
+</body>
+</html>
