@@ -134,6 +134,10 @@
     },
     Mitsubishi: { "Plug-in Hybrid Outlander": ["Outlander"] },
     Porsche: { 991: ["911"], 992: ["911"], 997: ["911"] },
+    // New brands, wave 2 (owner 2026-10-22).
+    DS: { "DS4 Crossback": ["DS4"] },
+    Subaru: { "B9 Tribeca": ["Tribeca"] },
+    MG: { "MG4 EV Urban": ["MG4"] },
   };
   // Mercedes catalog models are "<class> <number>" (GLA 200, CLS 350): the class is the family.
   const MERCEDES_FAMILIES = ["CLA", "CLC", "CLE", "CLK", "CLS", "CL", "GLA", "GLB", "GLC", "GLE", "GLK", "GLS", "GL", "ML",

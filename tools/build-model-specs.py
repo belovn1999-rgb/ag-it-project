@@ -237,6 +237,35 @@ FACELIFTS_PATH = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__
 FACELIFTS = json.load(open(FACELIFTS_PATH, encoding="utf8")) if os.path.exists(FACELIFTS_PATH) else {}
 FACELIFTS_MANUAL_PATH = FACELIFTS_PATH.replace("model-facelifts-wiki.json", "model-facelifts-manual.json")
 FACELIFTS_MANUAL = json.load(open(FACELIFTS_MANUAL_PATH, encoding="utf8")) if os.path.exists(FACELIFTS_MANUAL_PATH) else {}
+# B61 new brands, wave 2 (owner 2026-10-22): Alfa Romeo, Dodge, Chevrolet, MG, Subaru, Jaguar, Chrysler, BYD, DS, Jaecoo, Omoda.
+SUV_MODELS |= {
+    ("Alfa Romeo", "Stelvio"), ("Alfa Romeo", "Tonale"), ("Alfa Romeo", "Junior"), ("Dodge", "Durango"), ("Dodge", "Journey"),
+    ("Dodge", "Nitro"), ("Chevrolet", "Captiva"), ("Chevrolet", "Trailblazer"), ("Chevrolet", "Tahoe"), ("Chevrolet", "Suburban"),
+    ("Chevrolet", "Trax"), ("MG", "HS"), ("MG", "ZS"), ("Subaru", "Forester"), ("Subaru", "Outback"), ("Subaru", "Solterra"),
+    ("Subaru", "Tribeca"), ("Subaru", "XV"), ("Subaru", "Crosstrek"), ("Jaguar", "E-Pace"), ("Jaguar", "F-Pace"), ("Jaguar", "I-Pace"),
+    ("Chrysler", "Aspen"), ("BYD", "SEAL U"), ("BYD", "SEALION 7"), ("BYD", "ATTO 2"), ("BYD", "TANG"), ("DS", "DS3 Crossback"),
+    ("DS", "DS7 (Crossback)"), ("JAECOO", "7"), ("JAECOO", "5"), ("OMODA", "5"), ("OMODA", "9"),
+}
+VAN_MODELS |= {("Dodge", "Grand Caravan"), ("Chrysler", "Pacifica"), ("Chrysler", "Grand Voyager"), ("Chrysler", "Voyager"),
+               ("Chevrolet", "Orlando"), ("Subaru", "Trezia")}
+PICKUP_MODELS |= {("Dodge", "RAM"), ("Chevrolet", "Avalanche"), ("Chevrolet", "Silverado")}
+DEFAULT_TYPE.update({
+    ("Alfa Romeo", "Giulia"): "limousine", ("Alfa Romeo", "147"): "hatchback", ("Alfa Romeo", "159"): "limousine",
+    ("Alfa Romeo", "4C"): "coupe", ("Alfa Romeo", "Brera"): "coupe", ("Alfa Romeo", "Giulietta"): "hatchback",
+    ("Alfa Romeo", "GT"): "coupe", ("Alfa Romeo", "MiTo"): "hatchback", ("Dodge", "Avenger"): "limousine",
+    ("Dodge", "Challenger"): "coupe", ("Dodge", "Charger"): "limousine", ("Dodge", "Caliber"): "hatchback", ("Dodge", "Viper"): "coupe",
+    ("Chevrolet", "Aveo"): "hatchback", ("Chevrolet", "Camaro"): "coupe", ("Chevrolet", "Spark"): "hatchback",
+    ("Chevrolet", "Cruze"): "limousine", ("Chevrolet", "Epica"): "limousine", ("Chevrolet", "HHR"): "estate",
+    ("Chevrolet", "Impala"): "limousine", ("Chevrolet", "Malibu"): "limousine", ("Chevrolet", "Nubira"): "limousine",
+    ("Chevrolet", "Volt"): "hatchback", ("MG", "Cyberster"): "cabrio", ("MG", "MG3"): "hatchback", ("MG", "MG4"): "hatchback",
+    ("MG", "TF"): "cabrio", ("Subaru", "BRZ"): "coupe", ("Subaru", "Impreza"): "hatchback", ("Subaru", "Legacy"): "limousine",
+    ("Subaru", "Levorg"): "estate", ("Subaru", "WRX STI"): "limousine", ("Jaguar", "F-Type"): "coupe", ("Jaguar", "XE"): "limousine",
+    ("Jaguar", "XF"): "limousine", ("Jaguar", "XJ"): "limousine", ("Jaguar", "XK"): "coupe", ("Chrysler", "300C"): "limousine",
+    ("Chrysler", "PT Cruiser"): "hatchback", ("Chrysler", "Sebring"): "limousine", ("BYD", "DOLPHIN"): "hatchback",
+    ("BYD", "DOLPHIN SURF"): "hatchback", ("BYD", "SEAL"): "limousine", ("BYD", "SEAL 6"): "limousine",
+    ("DS", "DS3"): "hatchback", ("DS", "DS4"): "hatchback", ("DS", "DS5"): "hatchback", ("DS", "DS9"): "limousine",
+    ("DS", "Nº8"): "suv",
+})
 # Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
 BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
             ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
@@ -252,7 +281,8 @@ SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "gr
                "rifter", "tourneo connect", "caddy", "kangoo", "ex90", "eqb", "glb", "verso", "carens", "sorento", "santa fe",
                "zafira", "alhambra", "tarraco", "cx-9", "cx-80", "x-trail", "pathfinder", "grand c4", "berlingo",
                "evalia", "ev9", "ioniq 9", "discovery", "lodgy", "jogger", "freemont", "pilot", "odyssey", "ulysse", "grandis",
-               "outlander", "doblo")
+               "outlander", "doblo", "durango", "grand caravan", "journey", "captiva", "orlando", "tahoe", "suburban",
+               "pacifica", "voyager", "tribeca", "aspen", "tang")
 # Seven-seaters whose name is also some other car's generation code ("C8" = Audi A6/A7 C8).
 SEVEN_SEAT_MODELS = {("Citroen", "C8")}
 

@@ -1,5 +1,5 @@
 {
- "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA). 2026-10-20 (B61, item 4): 20 more models; \"bodies\" = a regex the autocentrum body path must match (a model kept as bodies of another: Yaris Cross, e-tron GT, Citroen DS3/DS4/DS5). 2026-10-21 (B61, new brands wave 1, owner): Fiat, Jeep, Honda, Suzuki, Land Rover, Dacia, Lexus, Porsche, Mitsubishi, Mini — their models made since 2010 (Mini/Lexus keys are families: \"Cooper S Clubman\" -> Clubman, \"NX 300h\" -> NX).",
+ "note": "B61 stage 6 (owner): variant A 2026-10-09 — the other models of the 10 pinned brands made since 2010; variant B 2026-10-10 — Kia, Hyundai, Opel, Seat, Cupra, Mazda, Nissan, Citroen (not Dacia). Data from autocentrum.pl only. label = name in our table, mobile = the page-1 model value the data is keyed by (BMW series and Mercedes classes are families: 218 -> 2, GLA 200 -> GLA). 2026-10-20 (B61, item 4): 20 more models; \"bodies\" = a regex the autocentrum body path must match (a model kept as bodies of another: Yaris Cross, e-tron GT, Citroen DS3/DS4/DS5). 2026-10-21 (B61, new brands wave 1, owner): Fiat, Jeep, Honda, Suzuki, Land Rover, Dacia, Lexus, Porsche, Mitsubishi, Mini — their models made since 2010 (Mini/Lexus keys are families: \"Cooper S Clubman\" -> Clubman, \"NX 300h\" -> NX). 2026-10-22 (B61, new brands wave 2, owner): Alfa Romeo, Dodge, Chevrolet, MG, Subaru, Jaguar, Chrysler, BYD, DS, Jaecoo, Omoda.",
  "models": [
   {
    "brand": "Audi",
@@ -3831,6 +3831,737 @@
    "mobile": "Aceman",
    "paths": [
     "mini/aceman"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Giulia",
+   "mobile": "Giulia",
+   "paths": [
+    "alfa-romeo/giulia"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Junior",
+   "mobile": "Junior",
+   "paths": [
+    "alfa-romeo/junior"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Stelvio",
+   "mobile": "Stelvio",
+   "paths": [
+    "alfa-romeo/stelvio"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Tonale",
+   "mobile": "Tonale",
+   "paths": [
+    "alfa-romeo/tonale"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "147",
+   "mobile": "147",
+   "paths": [
+    "alfa-romeo/147"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "159",
+   "mobile": "159",
+   "paths": [
+    "alfa-romeo/159"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "4C",
+   "mobile": "4C",
+   "paths": [
+    "alfa-romeo/4c"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Brera",
+   "mobile": "Brera",
+   "paths": [
+    "alfa-romeo/brera"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Giulietta",
+   "mobile": "Giulietta",
+   "paths": [
+    "alfa-romeo/giulietta-nuova"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "GT",
+   "mobile": "GT",
+   "paths": [
+    "alfa-romeo/gt"
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "MiTo",
+   "mobile": "MiTo",
+   "paths": [
+    "alfa-romeo/mito"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Avenger",
+   "mobile": "Avenger",
+   "paths": [
+    "dodge/avenger"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Grand Caravan",
+   "mobile": "Grand Caravan",
+   "paths": [
+    "dodge/caravan"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Challenger",
+   "mobile": "Challenger",
+   "paths": [
+    "dodge/challenger"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Charger",
+   "mobile": "Charger",
+   "paths": [
+    "dodge/charger"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Durango",
+   "mobile": "Durango",
+   "paths": [
+    "dodge/durango"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Journey",
+   "mobile": "Journey",
+   "paths": [
+    "dodge/journey"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Nitro",
+   "mobile": "Nitro",
+   "paths": [
+    "dodge/nitro"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "RAM",
+   "mobile": "RAM",
+   "paths": [
+    "dodge/ram"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Caliber",
+   "mobile": "Caliber",
+   "paths": [
+    "dodge/caliber"
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Viper",
+   "mobile": "Viper",
+   "paths": [
+    "dodge/viper"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Aveo",
+   "mobile": "Aveo",
+   "paths": [
+    "chevrolet/aveo"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Camaro",
+   "mobile": "Camaro",
+   "paths": [
+    "chevrolet/camaro"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Captiva",
+   "mobile": "Captiva",
+   "paths": [
+    "chevrolet/captiva"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Spark",
+   "mobile": "Spark",
+   "paths": [
+    "chevrolet/spark"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Trailblazer",
+   "mobile": "Trailblazer",
+   "paths": [
+    "chevrolet/trailblazer"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Avalanche",
+   "mobile": "Avalanche",
+   "paths": [
+    "chevrolet/avalanche"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Cruze",
+   "mobile": "Cruze",
+   "paths": [
+    "chevrolet/cruze"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Epica",
+   "mobile": "Epica",
+   "paths": [
+    "chevrolet/epica"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "HHR",
+   "mobile": "HHR",
+   "paths": [
+    "chevrolet/hhr"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Impala",
+   "mobile": "Impala",
+   "paths": [
+    "chevrolet/impala"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Malibu",
+   "mobile": "Malibu",
+   "paths": [
+    "chevrolet/malibu"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Nubira",
+   "mobile": "Nubira",
+   "paths": [
+    "chevrolet/nubira"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Orlando",
+   "mobile": "Orlando",
+   "paths": [
+    "chevrolet/orlando"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Silverado",
+   "mobile": "Silverado",
+   "paths": [
+    "chevrolet/silverado"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Suburban",
+   "mobile": "Suburban",
+   "paths": [
+    "chevrolet/suburban"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Tahoe",
+   "mobile": "Tahoe",
+   "paths": [
+    "chevrolet/tahoe"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Trax",
+   "mobile": "Trax",
+   "paths": [
+    "chevrolet/trax"
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Volt",
+   "mobile": "Volt",
+   "paths": [
+    "chevrolet/volt"
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "Cyberster",
+   "mobile": "Cyberster",
+   "paths": [
+    "mg/cyberster"
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "HS",
+   "mobile": "HS",
+   "paths": [
+    "mg/hs"
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "MG3",
+   "mobile": "MG3",
+   "paths": [
+    "mg/mg3"
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "MG4",
+   "mobile": "MG4",
+   "paths": [
+    "mg/mg4"
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "TF",
+   "mobile": "TF",
+   "paths": [
+    "mg/tf"
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "ZS",
+   "mobile": "ZS",
+   "paths": [
+    "mg/zs"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "BRZ",
+   "mobile": "BRZ",
+   "paths": [
+    "subaru/brz"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Forester",
+   "mobile": "Forester",
+   "paths": [
+    "subaru/forester"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Outback",
+   "mobile": "Outback",
+   "paths": [
+    "subaru/outback"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Solterra",
+   "mobile": "Solterra",
+   "paths": [
+    "subaru/solterra"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Impreza",
+   "mobile": "Impreza",
+   "paths": [
+    "subaru/impreza"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Legacy",
+   "mobile": "Legacy",
+   "paths": [
+    "subaru/legacy"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Levorg",
+   "mobile": "Levorg",
+   "paths": [
+    "subaru/levorg"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Trezia",
+   "mobile": "Trezia",
+   "paths": [
+    "subaru/trezia"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Tribeca",
+   "mobile": "Tribeca",
+   "paths": [
+    "subaru/tribeca"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "WRX STI",
+   "mobile": "WRX STI",
+   "paths": [
+    "subaru/wrx-sti"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "XV",
+   "mobile": "XV",
+   "paths": [
+    "subaru/xv"
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Crosstrek",
+   "mobile": "Crosstrek",
+   "paths": [
+    "subaru/crosstrek"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "E-Pace",
+   "mobile": "E-Pace",
+   "paths": [
+    "jaguar/e-pace"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "F-Pace",
+   "mobile": "F-Pace",
+   "paths": [
+    "jaguar/f-pace"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "F-Type",
+   "mobile": "F-Type",
+   "paths": [
+    "jaguar/f-type"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "I-Pace",
+   "mobile": "I-Pace",
+   "paths": [
+    "jaguar/i-pace"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XE",
+   "mobile": "XE",
+   "paths": [
+    "jaguar/xe"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XF",
+   "mobile": "XF",
+   "paths": [
+    "jaguar/xf"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XJ",
+   "mobile": "XJ",
+   "paths": [
+    "jaguar/xj"
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XK",
+   "mobile": "XK",
+   "paths": [
+    "jaguar/xk"
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Pacifica",
+   "mobile": "Pacifica",
+   "paths": [
+    "chrysler/pacifica"
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "300C",
+   "mobile": "300C",
+   "paths": [
+    "chrysler/300c"
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Aspen",
+   "mobile": "Aspen",
+   "paths": [
+    "chrysler/aspen"
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Grand Voyager",
+   "mobile": "Grand Voyager",
+   "paths": [
+    "chrysler/grand-voyager"
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "PT Cruiser",
+   "mobile": "PT Cruiser",
+   "paths": [
+    "chrysler/pt-cruiser"
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Sebring",
+   "mobile": "Sebring",
+   "paths": [
+    "chrysler/sebring"
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Voyager",
+   "mobile": "Voyager",
+   "paths": [
+    "chrysler/voyager"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Dolphin",
+   "mobile": "DOLPHIN",
+   "paths": [
+    "byd/dolphin"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Dolphin Surf",
+   "mobile": "DOLPHIN SURF",
+   "paths": [
+    "byd/dolphin-surf"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Seal",
+   "mobile": "SEAL",
+   "paths": [
+    "byd/seal"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Seal 6",
+   "mobile": "SEAL 6",
+   "paths": [
+    "byd/seal-6-dm-i"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Seal U",
+   "mobile": "SEAL U",
+   "paths": [
+    "byd/seal-u"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Sealion 7",
+   "mobile": "SEALION 7",
+   "paths": [
+    "byd/sealion-7"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Atto 2",
+   "mobile": "ATTO 2",
+   "paths": [
+    "byd/atto-2"
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Tang",
+   "mobile": "TANG",
+   "paths": [
+    "byd/tang"
+   ]
+  },
+  {
+   "brand": "DS",
+   "label": "DS3 Crossback",
+   "mobile": "DS3 Crossback",
+   "paths": [
+    "ds/3-crossback"
+   ]
+  },
+  {
+   "brand": "DS",
+   "label": "DS4",
+   "mobile": "DS4",
+   "paths": [
+    "ds/4"
+   ],
+   "bodies": "^(?!.*citroen)"
+  },
+  {
+   "brand": "DS",
+   "label": "DS7 (Crossback)",
+   "mobile": "DS7 (Crossback)",
+   "paths": [
+    "ds/7"
+   ]
+  },
+  {
+   "brand": "DS",
+   "label": "DS9",
+   "mobile": "DS9",
+   "paths": [
+    "ds/9"
+   ]
+  },
+  {
+   "brand": "DS",
+   "label": "Nº8",
+   "mobile": "Nº8",
+   "paths": [
+    "ds/n8"
+   ]
+  },
+  {
+   "brand": "DS",
+   "label": "DS3",
+   "mobile": "DS3",
+   "paths": [
+    "ds/3"
+   ],
+   "bodies": "^(?!.*citroen)"
+  },
+  {
+   "brand": "DS",
+   "label": "DS5",
+   "mobile": "DS5",
+   "paths": [
+    "ds/5"
+   ],
+   "bodies": "^(?!.*citroen)"
+  },
+  {
+   "brand": "JAECOO",
+   "label": "7",
+   "mobile": "7",
+   "paths": [
+    "jaecoo/7"
+   ]
+  },
+  {
+   "brand": "JAECOO",
+   "label": "5",
+   "mobile": "5",
+   "paths": [
+    "jaecoo/5"
+   ]
+  },
+  {
+   "brand": "OMODA",
+   "label": "5",
+   "mobile": "5",
+   "paths": [
+    "omoda/5"
+   ]
+  },
+  {
+   "brand": "OMODA",
+   "label": "9",
+   "mobile": "9",
+   "paths": [
+    "omoda/9"
    ]
   }
  ]

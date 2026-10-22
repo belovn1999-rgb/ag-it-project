@@ -614,8 +614,22 @@ def main():
     if os.path.exists(ac_path):
         with open(ac_path, encoding="utf8") as handle:
             ac = json.load(handle)
+            # Whole models from ultimatespecs in the same shape (tools/crawl-ultimatespecs-models.py, new brands
+            # while autocentrum.pl was down, 2026-10-22); a model autocentrum has wins.
+            us_path = os.path.join(ROOT, "data", "ultimatespecs-primary.json")
+            if os.path.exists(us_path):
+                have = {(m["brand"], m["label"]) for m in ac["models"]}
+                ac["models"] += [m for m in json.load(open(us_path, encoding="utf8"))["models"]
+                                 if (m["brand"], m["label"]) not in have and m["generations"]]
             for name, count in sorted(autocentrum.merge(rows, ac).items()):
                 print(f"   autocentrum: {name}: {count}")
+        # Gearbox and drive of the rows merge() made from ultimatespecs models: their version pages too.
+        for row in rows:
+            found = version_pages.get(row["Ссылка"])
+            if found and not row["Коробка"] and page_gearbox(found):
+                row["Коробка"], row["Коробка: откуда"] = page_gearbox(found), "со страницы версии"
+            if found and not row["Привод"] and page_drive(found):
+                row["Привод"], row["Привод: откуда"] = page_drive(found), "со страницы версии"
         # Doors and seats the table still lacks: from the version's own ultimatespecs page
         # (tools/enrich-model-versions.py, B61 item 6 2026-10-21); what autocentrum gave stays.
         filled = 0
