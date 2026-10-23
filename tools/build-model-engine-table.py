@@ -31,6 +31,7 @@ import os
 import re
 
 import autocentrum
+import confirm
 import mild_hybrids
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -690,6 +691,11 @@ def main():
             elif found:
                 row["Мягкий гибрид: источники"] = "проверить: " + " · ".join(found["sources"])
         write_mild_report(rows, decisions)
+    # How confirmed each value is: two sources agree, one source, a rule, worked out (tools/confirm.py, stage 16).
+    counts = confirm.confirm(rows, ac if os.path.exists(ac_path) else {})
+    confirm.write_report(rows, today)
+    for column, statuses in counts.items():
+        print(f"   {column}: " + ", ".join(f"{name} {count}" for name, count in statuses.most_common()))
 
     for row in rows:
         # Models only autocentrum covers (stage 6) are keyed by their page-1 model value.
