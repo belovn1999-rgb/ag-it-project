@@ -85,8 +85,8 @@ def main():
         url = row["Ссылка"]
         if "ultimatespecs.com" not in url or start(row) < args.since:
             return 0  # rows from autocentrum.pl (tools/autocentrum.py) have no ultimatespecs page
-        if not row["Коробка"] and url not in done:
-            return 2
+        if (not row["Коробка"] or not row["Привод"]) and url not in done:
+            return 2  # 2026-10-23: the drive too (wave 4 electric cars: "Dual Motor" names only some)
         if (not row["Двери"] or not row["Места"]) and "doors" not in done.get(url, {}):
             return 1
         return 0

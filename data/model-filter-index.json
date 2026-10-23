@@ -1,6 +1,6 @@
 {
  "source": "https://www.ultimatespecs.com",
- "generatedAt": "2026-10-22",
+ "generatedAt": "2026-10-23",
  "models": [
   {
    "brand": "Audi",
@@ -49545,6 +49545,1740 @@
       "electric": {
        "0": [
         231
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "model": "1",
+   "generations": [
+    {
+     "code": "Polestar 1",
+     "phase": "весь выпуск",
+     "years": "2019–2021",
+     "mobileModel": "1",
+     "bodies": [
+      "1 Polestar 1 Polestar 1 (ultimatespecs)"
+     ],
+     "engines": {
+      "plugin": {
+       "1969": [
+        609
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "model": "2",
+   "generations": [
+    {
+     "code": "Polestar 2",
+     "phase": "дорестайлинг",
+     "years": "2020–2023",
+     "mobileModel": "2",
+     "bodies": [
+      "2 Polestar 2 2 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        225,
+        231,
+        408,
+        476
+       ]
+      }
+     }
+    },
+    {
+     "code": "Polestar 2",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "2",
+     "bodies": [
+      "2 Polestar 2 2 Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        272,
+        299,
+        421,
+        476
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "model": "3",
+   "generations": [
+    {
+     "code": "Polestar 3",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "3",
+     "bodies": [
+      "3 Polestar 3 Polestar 3 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        299,
+        489,
+        517
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "model": "4",
+   "generations": [
+    {
+     "code": "Polestar 4",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "4",
+     "bodies": [
+      "4 Polestar 4 Polestar 4 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        272,
+        544
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "model": "G70",
+   "generations": [
+    {
+     "code": "G70",
+     "phase": "дорестайлинг",
+     "years": "2017–2020",
+     "mobileModel": "G70",
+     "bodies": [
+      "G70 G70 (HS) (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        256
+       ],
+       "3342": [
+        370
+       ]
+      }
+     }
+    },
+    {
+     "code": "G70",
+     "phase": "рестайлинг",
+     "years": "2020–н. в.",
+     "mobileModel": "G70",
+     "bodies": [
+      "G70 G70 Facelifting (ultimatespecs)",
+      "G70 G70 Shooting Brake Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "1998": [
+        197,
+        245,
+        252
+       ],
+       "3342": [
+        370
+       ]
+      },
+      "diesel": {
+       "2199": [
+        200,
+        202
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "model": "G80",
+   "generations": [
+    {
+     "code": "G80 (DH)",
+     "phase": "весь выпуск",
+     "years": "2016–2020",
+     "mobileModel": "G80",
+     "bodies": [
+      "G80 (DH) G80 (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "3342": [
+        370
+       ],
+       "3778": [
+        315
+       ],
+       "5038": [
+        426
+       ]
+      }
+     }
+    },
+    {
+     "code": "G80 (RG3)",
+     "phase": "дорестайлинг",
+     "years": "2020–2024",
+     "mobileModel": "G80",
+     "bodies": [
+      "G80 (RG3) G80 (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "2497": [
+        304
+       ],
+       "3470": [
+        380
+       ]
+      }
+     }
+    },
+    {
+     "code": "G80 (RG3)",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "G80",
+     "bodies": [
+      "G80 (RG3) G80 Electrified Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        370
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "model": "G90",
+   "generations": [
+    {
+     "code": "G90 (HI)",
+     "phase": "дорестайлинг",
+     "years": "2015–2019",
+     "mobileModel": "G90",
+     "bodies": [
+      "G90 (HI) G90 (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "3342": [
+        370
+       ],
+       "5038": [
+        426
+       ]
+      }
+     }
+    },
+    {
+     "code": "G90 (HI)",
+     "phase": "рестайлинг",
+     "years": "2019–2021",
+     "mobileModel": "G90",
+     "bodies": [
+      "G90 (HI) G90 Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "3342": [
+        370
+       ],
+       "5038": [
+        426
+       ]
+      }
+     }
+    },
+    {
+     "code": "G90 (RS4)",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "G90",
+     "bodies": [
+      "G90 (RS4) G90 LWB (ultimatespecs)",
+      "G90 (RS4) G90 SWB (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "3470": [
+        415
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV60",
+   "generations": [
+    {
+     "code": "GV60",
+     "phase": "дорестайлинг",
+     "years": "2021–2025",
+     "mobileModel": "GV60",
+     "bodies": [
+      "GV60 GV60 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        229,
+        318,
+        435,
+        490
+       ]
+      }
+     }
+    },
+    {
+     "code": "GV60",
+     "phase": "рестайлинг",
+     "years": "2025–н. в.",
+     "mobileModel": "GV60",
+     "bodies": [
+      "GV60 GV60 Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        650
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV70",
+   "generations": [
+    {
+     "code": "GV70 (JK1)",
+     "phase": "дорестайлинг",
+     "years": "2021–2024",
+     "mobileModel": "GV70",
+     "bodies": [
+      "GV70 (JK1) GV70 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        490
+       ]
+      },
+      "petrol": {
+       "2497": [
+        304
+       ]
+      },
+      "diesel": {
+       "2151": [
+        201,
+        210
+       ]
+      }
+     }
+    },
+    {
+     "code": "GV70 (JK1)",
+     "phase": "рестайлинг",
+     "years": "2024–н. в.",
+     "mobileModel": "GV70",
+     "bodies": [
+      "GV70 (JK1) GV70 Electrified Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        490
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV80",
+   "generations": [
+    {
+     "code": "GV80",
+     "phase": "дорестайлинг",
+     "years": "2020–2023",
+     "mobileModel": "GV80",
+     "bodies": [
+      "GV80 GV80 (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "2497": [
+        304
+       ],
+       "3470": [
+        380
+       ]
+      },
+      "diesel": {
+       "2996": [
+        277
+       ]
+      }
+     }
+    },
+    {
+     "code": "GV80",
+     "phase": "рестайлинг",
+     "years": "2023–н. в.",
+     "mobileModel": "GV80",
+     "bodies": [
+      "GV80 GV80 Coupe Facelifting (ultimatespecs)",
+      "GV80 GV80 Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "2497": [
+        304
+       ],
+       "3470": [
+        380,
+        415
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lynk&Co",
+   "model": "01",
+   "generations": [
+    {
+     "code": "Lynk & Co 01",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "01",
+     "bodies": [
+      "01 Lynk & Co 01 Lynk & Co 01 (ultimatespecs)"
+     ],
+     "engines": {
+      "plugin": {
+       "1477": [
+        261
+       ]
+      },
+      "petrol": {
+       "1477": [
+        197
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lynk&Co",
+   "model": "02",
+   "generations": [
+    {
+     "code": "Lynk & Co 02",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "02",
+     "bodies": [
+      "02 Lynk & Co 02 Lynk & Co 02 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        272
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lynk&Co",
+   "model": "08",
+   "generations": [
+    {
+     "code": "Lynk & Co 08",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "08",
+     "bodies": [
+      "08 Lynk & Co 08 Lynk & Co 08 (ultimatespecs)"
+     ],
+     "engines": {
+      "plugin": {
+       "1499": [
+        350
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "XPENG",
+   "model": "G6",
+   "generations": [
+    {
+     "code": "G6 (F30)",
+     "phase": "дорестайлинг",
+     "years": "2023–2025",
+     "mobileModel": "G6",
+     "bodies": [
+      "G6 (F30) G6 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        258,
+        286,
+        476
+       ]
+      }
+     }
+    },
+    {
+     "code": "G6 (F30)",
+     "phase": "рестайлинг",
+     "years": "2025–н. в.",
+     "mobileModel": "G6",
+     "bodies": [
+      "G6 (F30) G6 Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        296,
+        487
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "XPENG",
+   "model": "G9",
+   "generations": [
+    {
+     "code": "G9",
+     "phase": "дорестайлинг",
+     "years": "2022–2025",
+     "mobileModel": "G9",
+     "bodies": [
+      "G9 G9 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        313,
+        551
+       ]
+      }
+     }
+    },
+    {
+     "code": "G9",
+     "phase": "рестайлинг",
+     "years": "2025–н. в.",
+     "mobileModel": "G9",
+     "bodies": [
+      "G9 G9 Facelifting (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        351,
+        575
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "XPENG",
+   "model": "P7",
+   "generations": [
+    {
+     "code": "P7",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "P7",
+     "bodies": [
+      "P7 P7 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        276,
+        473
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "model": "ET5",
+   "generations": [
+    {
+     "code": "ET5",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "ET5",
+     "bodies": [
+      "ET5 ET5 (ultimatespecs)",
+      "ET5 ET5 Touring (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        490
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "model": "ET7",
+   "generations": [
+    {
+     "code": "ET7",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "ET7",
+     "bodies": [
+      "ET7 ET7 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        653
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "model": "EL6",
+   "generations": [
+    {
+     "code": "EL6",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "EL6",
+     "bodies": [
+      "EL6 EL6 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        490
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "model": "EL7",
+   "generations": [
+    {
+     "code": "EL7",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "EL7",
+     "bodies": [
+      "EL7 EL7 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        653
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "model": "EL8",
+   "generations": [
+    {
+     "code": "EL8",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "EL8",
+     "bodies": [
+      "EL8 EL8 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        653
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Zeekr",
+   "model": "X",
+   "generations": [
+    {
+     "code": "Zeekr X",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "X",
+     "bodies": [
+      "X Zeekr X Zeekr X (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        272,
+        428
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Zeekr",
+   "model": "7X",
+   "generations": [
+    {
+     "code": "Zeekr 7X",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "7X",
+     "bodies": [
+      "7X Zeekr 7X Zeekr 7X (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        422,
+        639
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "model": "Ora 03",
+   "generations": [
+    {
+     "code": "Ora 03",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Ora 03",
+     "bodies": [
+      "Ora 03 Ora 03 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        171
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "model": "Ora 07",
+   "generations": [
+    {
+     "code": "Ora 07",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Ora 07",
+     "bodies": [
+      "Ora 07 Ora 07 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204,
+        408
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "model": "Wey 03",
+   "generations": [
+    {
+     "code": "Wey 03",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Wey 03",
+     "bodies": [
+      "Wey 03 Wey 03 (ultimatespecs)"
+     ],
+     "engines": {
+      "plugin": {
+       "1998": [
+        442
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "model": "Wey 05",
+   "generations": [
+    {
+     "code": "Wey 05",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Wey 05",
+     "bodies": [
+      "Wey 05 Wey 05 (ultimatespecs)"
+     ],
+     "engines": {
+      "plugin": {
+       "1998": [
+        476
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "ORA",
+   "model": "Funky Cat",
+   "generations": [
+    {
+     "code": "Funky Cat",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Funky Cat",
+     "bodies": [
+      "Funky Cat Funky Cat (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        171
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Seres",
+   "model": "3",
+   "generations": [
+    {
+     "code": "Seres 3",
+     "phase": "весь выпуск",
+     "years": "2020–н. в.",
+     "mobileModel": "3",
+     "bodies": [
+      "3 Seres 3 Seres 3 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        163
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Seres",
+   "model": "5",
+   "generations": [
+    {
+     "code": "Seres 5",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "5",
+     "bodies": [
+      "5 Seres 5 Seres 5 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        300,
+        585,
+        646
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Seres 3",
+   "generations": [
+    {
+     "code": "Seres 3",
+     "phase": "весь выпуск",
+     "years": "2020–н. в.",
+     "mobileModel": "Seres 3",
+     "bodies": [
+      "Seres 3 Seres 3 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        163
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Seres 5",
+   "generations": [
+    {
+     "code": "Seres 5",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Seres 5",
+     "bodies": [
+      "Seres 5 Seres 5 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        300,
+        585,
+        646
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "INEOS",
+   "model": "Grenadier",
+   "generations": [
+    {
+     "code": "Grenadier",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "Grenadier",
+     "bodies": [
+      "Grenadier Grenadier (ultimatespecs)"
+     ],
+     "engines": {
+      "petrol": {
+       "2998": [
+        286
+       ]
+      },
+      "diesel": {
+       "2993": [
+        249
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Aiways",
+   "model": "U5",
+   "generations": [
+    {
+     "code": "U5",
+     "phase": "весь выпуск",
+     "years": "2020–н. в.",
+     "mobileModel": "U5",
+     "bodies": [
+      "U5 U5 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Lucid",
+   "model": "Air",
+   "generations": [
+    {
+     "code": "Air",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "Air",
+     "bodies": [
+      "Air Air (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        442,
+        487,
+        620,
+        819,
+        1126,
+        1235,
+        1251
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "model": "VF6",
+   "generations": [
+    {
+     "code": "VF 6",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "VF6",
+     "bodies": [
+      "VF6 VF 6 VF 6 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        174,
+        204
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "model": "VF7",
+   "generations": [
+    {
+     "code": "VF 7",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "VF7",
+     "bodies": [
+      "VF7 VF 7 VF 7 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204,
+        354
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "model": "VF8",
+   "generations": [
+    {
+     "code": "VF 8",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "VF8",
+     "bodies": [
+      "VF8 VF 8 VF 8 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        353,
+        408
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "model": "VF9",
+   "generations": [
+    {
+     "code": "VF 9",
+     "phase": "весь выпуск",
+     "years": "2022–н. в.",
+     "mobileModel": "VF9",
+     "bodies": [
+      "VF9 VF 9 VF 9 (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        408
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "model": "5",
+   "generations": [
+    {
+     "code": "5 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "5",
+     "bodies": [
+      "5 I Coupe (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        748,
+        884
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Fengon 5",
+   "generations": [
+    {
+     "code": "Fengon 5 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Fengon 5",
+     "bodies": [
+      "Fengon 5 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1500": [
+        137
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Fengon 500",
+   "generations": [
+    {
+     "code": "Fengon 500 I",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "Fengon 500",
+     "bodies": [
+      "Fengon 500 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1500": [
+        106
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Fengon 580",
+   "generations": [
+    {
+     "code": "Fengon 580 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Fengon 580",
+     "bodies": [
+      "Fengon 580 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1500": [
+        146
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Fengon 600",
+   "generations": [
+    {
+     "code": "Fengon 600 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Fengon 600",
+     "bodies": [
+      "Fengon 600 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1499": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Fengon 7",
+   "generations": [
+    {
+     "code": "Fengon 7 I",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "Fengon 7",
+     "bodies": [
+      "Fengon 7 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "2000": [
+        220
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "model": "Fengon E5",
+   "generations": [
+    {
+     "code": "Fengon E5 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "Fengon E5",
+     "bodies": [
+      "Fengon E5 I SUV (adac)"
+     ],
+     "engines": {
+      "plugin": {
+       "1498": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "model": "Beijing X35",
+   "generations": [
+    {
+     "code": "Beijing X35 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Beijing X35",
+     "bodies": [
+      "Beijing X35 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1498": [
+        136
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "model": "Beijing X55",
+   "generations": [
+    {
+     "code": "Beijing X55 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Beijing X55",
+     "bodies": [
+      "Beijing X55 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1498": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "model": "Beijing X75",
+   "generations": [
+    {
+     "code": "Beijing X75 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Beijing X75",
+     "bodies": [
+      "Beijing X75 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1498": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "model": "BJ30",
+   "generations": [
+    {
+     "code": "BJ30 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "BJ30",
+     "bodies": [
+      "BJ30 I SUV (adac)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1498": [
+        280
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "model": "BJ40",
+   "generations": [
+    {
+     "code": "BJ40 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "BJ40",
+     "bodies": [
+      "BJ40 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1967": [
+        234
+       ]
+      },
+      "diesel": {
+       "1968": [
+        162
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "model": "BJ60",
+   "generations": [
+    {
+     "code": "BJ60 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "BJ60",
+     "bodies": [
+      "BJ60 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1997": [
+        256
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "model": "HAVAL H6",
+   "generations": [
+    {
+     "code": "HAVAL H6 I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "HAVAL H6",
+     "bodies": [
+      "HAVAL H6 I SUV (adac)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1499": [
+        243
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "model": "HAVAL Jolion Pro",
+   "generations": [
+    {
+     "code": "HAVAL Jolion Pro I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "HAVAL Jolion Pro",
+     "bodies": [
+      "HAVAL Jolion Pro I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1499": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Zeekr",
+   "model": "9X",
+   "generations": [
+    {
+     "code": "9X I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "9X",
+     "bodies": [
+      "9X I SUV (adac)"
+     ],
+     "engines": {
+      "plugin": {
+       "2000": [
+        897
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Geely",
+   "model": "E5",
+   "generations": [
+    {
+     "code": "E5 I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "E5",
+     "bodies": [
+      "E5 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        218
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Geely",
+   "model": "Starray EM-i",
+   "generations": [
+    {
+     "code": "Starray EM-i I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "Starray EM-i",
+     "bodies": [
+      "Starray EM-i I SUV (adac)"
+     ],
+     "engines": {
+      "plugin": {
+       "1499": [
+        262
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Hongqi",
+   "model": "E-HS9",
+   "generations": [
+    {
+     "code": "E-HS9 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "E-HS9",
+     "bodies": [
+      "E-HS9 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        551
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Hongqi",
+   "model": "H9",
+   "generations": [
+    {
+     "code": "H9 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "H9",
+     "bodies": [
+      "H9 I Sedan (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1989": [
+        245
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Hongqi",
+   "model": "HS5",
+   "generations": [
+    {
+     "code": "HS5 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "HS5",
+     "bodies": [
+      "HS5 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1989": [
+        218
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "Mifa 9",
+   "generations": [
+    {
+     "code": "Mifa 9 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Mifa 9",
+     "bodies": [
+      "Mifa 9 I Van (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        245
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "Euniq 5",
+   "generations": [
+    {
+     "code": "Euniq 5 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Euniq 5",
+     "bodies": [
+      "Euniq 5 I Van (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "Euniq 6",
+   "generations": [
+    {
+     "code": "Euniq 6 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Euniq 6",
+     "bodies": [
+      "Euniq 6 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "T60 MAX",
+   "generations": [
+    {
+     "code": "T60 MAX I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "T60 MAX",
+     "bodies": [
+      "T60 MAX I Pickup (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1996": [
+        215
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "T90",
+   "generations": [
+    {
+     "code": "T90 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "T90",
+     "bodies": [
+      "T90 I Pickup (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "eTerron 9",
+   "generations": [
+    {
+     "code": "eTerron 9 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "eTerron 9",
+     "bodies": [
+      "eTerron 9 I Pickup (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        442
        ]
       }
      }

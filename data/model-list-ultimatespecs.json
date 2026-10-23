@@ -1,0 +1,418 @@
+{
+ "note": "B61 wave 4 (owner 2026-10-23): brands autocentrum.pl lacks, from ultimatespecs.com (tools/crawl-ultimatespecs-models.py)",
+ "models": [
+  {
+   "brand": "Polestar",
+   "label": "1",
+   "mobile": "1",
+   "direct": [
+    {
+     "url": "/car-specs/Polestar/M10770/1",
+     "name": "Polestar 1",
+     "from": 2019,
+     "to": 2021
+    }
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "label": "2",
+   "mobile": "2",
+   "brand_slug": "Polestar",
+   "pages": [
+    "Polestar-2"
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "label": "3",
+   "mobile": "3",
+   "direct": [
+    {
+     "url": "/car-specs/Polestar/M13016/3",
+     "name": "Polestar 3",
+     "from": 2024
+    }
+   ]
+  },
+  {
+   "brand": "Polestar",
+   "label": "4",
+   "mobile": "4",
+   "direct": [
+    {
+     "url": "/car-specs/Polestar/M13808/4",
+     "name": "Polestar 4",
+     "from": 2024
+    }
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "label": "G70",
+   "mobile": "G70",
+   "brand_slug": "Genesis",
+   "pages": [
+    "Genesis-G70"
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "label": "G80",
+   "mobile": "G80",
+   "brand_slug": "Genesis",
+   "pages": [
+    "Genesis-G80"
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "label": "G90",
+   "mobile": "G90",
+   "brand_slug": "Genesis",
+   "pages": [
+    "Genesis-G90"
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "label": "GV60",
+   "mobile": "GV60",
+   "brand_slug": "Genesis",
+   "pages": [
+    "Genesis-GV60"
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "label": "GV70",
+   "mobile": "GV70",
+   "brand_slug": "Genesis",
+   "pages": [
+    "Genesis-GV70"
+   ]
+  },
+  {
+   "brand": "Genesis",
+   "label": "GV80",
+   "mobile": "GV80",
+   "brand_slug": "Genesis",
+   "pages": [
+    "Genesis-GV80"
+   ]
+  },
+  {
+   "brand": "Lynk&Co",
+   "label": "01",
+   "mobile": "01",
+   "direct": [
+    {
+     "url": "/car-specs/Lynk---Co/M11665/01",
+     "name": "Lynk & Co 01"
+    }
+   ]
+  },
+  {
+   "brand": "Lynk&Co",
+   "label": "02",
+   "mobile": "02",
+   "direct": [
+    {
+     "url": "/car-specs/Lynk---Co/M14471/02",
+     "name": "Lynk & Co 02"
+    }
+   ]
+  },
+  {
+   "brand": "Lynk&Co",
+   "label": "08",
+   "mobile": "08",
+   "direct": [
+    {
+     "url": "/car-specs/Lynk---Co/M18244/08",
+     "name": "Lynk & Co 08"
+    }
+   ]
+  },
+  {
+   "brand": "XPENG",
+   "label": "G6",
+   "mobile": "G6",
+   "brand_slug": "XPeng",
+   "pages": [
+    "XPeng-G6"
+   ]
+  },
+  {
+   "brand": "XPENG",
+   "label": "G9",
+   "mobile": "G9",
+   "brand_slug": "XPeng",
+   "pages": [
+    "XPeng-G9"
+   ]
+  },
+  {
+   "brand": "XPENG",
+   "label": "P7",
+   "mobile": "P7",
+   "direct": [
+    {
+     "url": "/car-specs/XPeng/M13657/P7",
+     "name": "P7"
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "label": "ET5",
+   "mobile": "ET5",
+   "brand_slug": "NIO",
+   "pages": [
+    "NIO-ET5"
+   ]
+  },
+  {
+   "brand": "NIO",
+   "label": "ET7",
+   "mobile": "ET7",
+   "direct": [
+    {
+     "url": "/car-specs/NIO/M13002/ET7",
+     "name": "ET7"
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "label": "EL6",
+   "mobile": "EL6",
+   "direct": [
+    {
+     "url": "/car-specs/NIO/M13533/EL6",
+     "name": "EL6"
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "label": "EL7",
+   "mobile": "EL7",
+   "direct": [
+    {
+     "url": "/car-specs/NIO/M13003/EL7",
+     "name": "EL7"
+    }
+   ]
+  },
+  {
+   "brand": "NIO",
+   "label": "EL8",
+   "mobile": "EL8",
+   "direct": [
+    {
+     "url": "/car-specs/NIO/M14033/EL8",
+     "name": "EL8"
+    }
+   ]
+  },
+  {
+   "brand": "Zeekr",
+   "label": "X",
+   "mobile": "X",
+   "direct": [
+    {
+     "url": "/car-specs/ZEEKR/M13590/X",
+     "name": "Zeekr X"
+    }
+   ]
+  },
+  {
+   "brand": "Zeekr",
+   "label": "7X",
+   "mobile": "7X",
+   "direct": [
+    {
+     "url": "/car-specs/ZEEKR/M14936/7X",
+     "name": "Zeekr 7X"
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "label": "Ora 03",
+   "mobile": "Ora 03",
+   "direct": [
+    {
+     "url": "/car-specs/GWM/M13881/ORA-03",
+     "name": "Ora 03"
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "label": "Ora 07",
+   "mobile": "Ora 07",
+   "direct": [
+    {
+     "url": "/car-specs/GWM/M14041/ORA-07",
+     "name": "Ora 07"
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "label": "Wey 03",
+   "mobile": "Wey 03",
+   "direct": [
+    {
+     "url": "/car-specs/GWM/M13883/WEY-03",
+     "name": "Wey 03"
+    }
+   ]
+  },
+  {
+   "brand": "GWM",
+   "label": "Wey 05",
+   "mobile": "Wey 05",
+   "direct": [
+    {
+     "url": "/car-specs/GWM/M13882/WEY-05",
+     "name": "Wey 05"
+    }
+   ]
+  },
+  {
+   "brand": "ORA",
+   "label": "Funky Cat",
+   "mobile": "Funky Cat",
+   "direct": [
+    {
+     "url": "/car-specs/ORA/M13086/Funky-Cat",
+     "name": "Funky Cat"
+    }
+   ]
+  },
+  {
+   "brand": "Seres",
+   "label": "3",
+   "mobile": "3",
+   "direct": [
+    {
+     "url": "/car-specs/SERES/M13403/3",
+     "name": "Seres 3"
+    }
+   ]
+  },
+  {
+   "brand": "Seres",
+   "label": "5",
+   "mobile": "5",
+   "direct": [
+    {
+     "url": "/car-specs/SERES/M13232/5",
+     "name": "Seres 5"
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Seres 3",
+   "mobile": "Seres 3",
+   "direct": [
+    {
+     "url": "/car-specs/SERES/M13403/3",
+     "name": "Seres 3"
+    }
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Seres 5",
+   "mobile": "Seres 5",
+   "direct": [
+    {
+     "url": "/car-specs/SERES/M13232/5",
+     "name": "Seres 5"
+    }
+   ]
+  },
+  {
+   "brand": "INEOS",
+   "label": "Grenadier",
+   "mobile": "Grenadier",
+   "direct": [
+    {
+     "url": "/car-specs/Ineos/M13984/Grenadier",
+     "name": "Grenadier"
+    }
+   ]
+  },
+  {
+   "brand": "Aiways",
+   "label": "U5",
+   "mobile": "U5",
+   "direct": [
+    {
+     "url": "/car-specs/Aiways/M11205/U5",
+     "name": "U5"
+    }
+   ]
+  },
+  {
+   "brand": "Lucid",
+   "label": "Air",
+   "mobile": "Air",
+   "direct": [
+    {
+     "url": "/car-specs/Lucid/M13669/Air",
+     "name": "Air"
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "label": "VF6",
+   "mobile": "VF6",
+   "direct": [
+    {
+     "url": "/car-specs/VinFast/M13277/VF-6",
+     "name": "VF 6"
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "label": "VF7",
+   "mobile": "VF7",
+   "direct": [
+    {
+     "url": "/car-specs/VinFast/M13278/VF-7",
+     "name": "VF 7"
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "label": "VF8",
+   "mobile": "VF8",
+   "direct": [
+    {
+     "url": "/car-specs/VinFast/M13000/VF-8",
+     "name": "VF 8"
+    }
+   ]
+  },
+  {
+   "brand": "VinFast",
+   "label": "VF9",
+   "mobile": "VF9",
+   "direct": [
+    {
+     "url": "/car-specs/VinFast/M13001/VF-9",
+     "name": "VF 9"
+    }
+   ]
+  }
+ ]
+}

@@ -404,6 +404,31 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
    Lynk & Co, XPENG, NIO, Zeekr, ORA, DFSK, BAIC. Комплектации — ADAC (37 моделей). Итог: таблица 25 235 версий, на странице
    51 марка, 688 моделей, 13 111 версий; комплектации у 603 моделей. Исправлено вдогонку: у Mercedes CLS C257 «EQ Boost» —
    мягкий гибрид, не комплектация (было «Boost»); у BYD «Boost» — настоящая комплектация, остаётся.
+15. ✅ **Новые марки, волна 4 — то, чего нет на autocentrum (решение владельца 23.10):** 18 марок, 66 моделей из двух
+   других источников. **ultimatespecs.com** (`tools/crawl-ultimatespecs-models.py`, список — `data/model-list-ultimatespecs.json`
+   → `data/ultimatespecs-primary.json`, 39 моделей): Polestar 1–4, Genesis G70 / G80 / G90 / GV60 / GV70 / GV80, Lynk & Co 01 /
+   02 / 08, XPENG G6 / G9 / P7, NIO ET5 / ET7 / EL6 / EL7 / EL8, Zeekr X / 7X, GWM Ora 03 / Ora 07 / Wey 03 / Wey 05, ORA Funky
+   Cat, Seres 3 / 5 (и они же у DFSK — «Seres 3 / 5»), INEOS Grenadier, Aiways U5, Lucid Air, VinFast VF6–VF9. Модель с одним
+   поколением марка ultimatespecs даёт сразу страницей версий («direct»); кузов «2 (Facelift 2023)» — рестайлинг поколения;
+   «G80 (RG3) - 2021 New Model» — первая фаза «G80 (RG3)». **Каталог ADAC** (`tools/crawl-adac-models.py`, список —
+   `data/model-list-adac.json` → `data/adac-primary.json`, 27 моделей — нет и на ultimatespecs): Polestar 5, DFSK Fengon 5 /
+   500 / 580 / 600 / 7 / E5, BAIC Beijing X35 / X55 / X75 и BJ30 / BJ40 / BJ60, GWM HAVAL H6 / Jolion Pro, Zeekr 9X, Geely E5 /
+   Starray EM-i, Hongqi E-HS9 / H9 / HS5, Maxus Mifa 9 / Euniq 5 / Euniq 6 / T60 MAX / T90 / eTerron 9. Страница версии ADAC —
+   данные производителя («Herstellerangabe»): вид мотора, кВт / л. с., объём, топливо, коробка, привод, кузов, двери, места,
+   начало серии. Источники по старшинству: autocentrum → ultimatespecs → ADAC (`build-model-engine-table.py`). Мягкие гибриды:
+   ADAC пишет «Otto (Mild-Hybrid)» у BAIC BJ60 2.0T и Hongqi H9 2.0T — «одна база» (`mild_hybrids.py` принимает ADAC как
+   источник). Коробка и привод у всех 208 новых версий (у электро и гибридов — автомат, «Dual Motor» — полный, остальное — со
+   страниц версий ultimatespecs, 168 страниц). Подмодель: BAIC «X55» → Beijing X55. Комплектации — ADAC (37 моделей); из
+   названий ADAC убраны слова мотора и коробки («Single / Dual / Twin Motor», «DHT», «Turbo-Benziner», «Station»), заодно
+   чище стали Volvo EX90 / ES90, MG Cyberster, JAECOO 5 / 7. Википедия года рестайлинга у новых поколений не подтвердила.
+   Нет ни в одном источнике: DFSK Glory / EC31 / EC35 / K01 / Rich 6 / Forthing, BAIC BJ20 / Senova, XPENG X9, Voyah, JAC.
+   Исправлено попутно: объём «1997 cm3» читался как 19973 (теперь «cm³», как у autocentrum); кузов новых моделей подписан
+   своим источником, а не «(autocentrum)». Итог: таблица 25 443 версии, на странице 69 марок, 754 модели, 13 264 версии;
+   комплектации у 639 моделей.
+
+**Правила работы с каталогом ADAC (двигатели, с 23.10):** robots.txt разрешает каталог; одна страница в 2 с
+(`collect-trims-adac.py` `fetch()`), кэш `~/.cache/autogood/adac/pages`. Модель → страницы поколений из
+`sitemap-autokatalog.xml` («1generation», «…-facelift»), поколение → ссылки версий, версия → таблица «ключ | значение».
 
 **Правила работы с ultimatespecs.com:**
 - `robots.txt`: **Crawl-delay: 30** — не чаще одной страницы в 30 с. Полная

@@ -283,6 +283,25 @@ DEFAULT_TYPE.update({
     ("Cadillac", "CTS"): "limousine", ("Cadillac", "BLS"): "limousine", ("Cadillac", "STS"): "limousine",
     ("Abarth", "500"): "hatchback", ("Abarth", "Punto Evo"): "hatchback", ("Alpine", "A110"): "coupe",
 })
+# B61 new brands, wave 4 (owner 2026-10-23): what autocentrum.pl lacks, from ultimatespecs.
+SUV_MODELS |= {("Polestar", "3"), ("Polestar", "4"), ("Genesis", "GV60"), ("Genesis", "GV70"), ("Genesis", "GV80"),
+               ("Lynk&Co", "01"), ("Lynk&Co", "02"), ("Lynk&Co", "08"), ("XPENG", "G6"), ("XPENG", "G9"), ("NIO", "EL6"),
+               ("NIO", "EL7"), ("NIO", "EL8"), ("Zeekr", "X"), ("Zeekr", "7X"), ("GWM", "Wey 03"), ("GWM", "Wey 05"),
+               ("Seres", "3"), ("Seres", "5"), ("DFSK", "Seres 3"), ("DFSK", "Seres 5"), ("INEOS", "Grenadier"),
+               ("Aiways", "U5"), ("VinFast", "VF6"), ("VinFast", "VF7"), ("VinFast", "VF8"), ("VinFast", "VF9")} | {
+    # From the ADAC catalog (tools/crawl-adac-models.py).
+    ("DFSK", m) for m in ("Fengon 5", "Fengon 500", "Fengon 580", "Fengon 600", "Fengon 7", "Fengon E5")} | {
+    ("BAIC", m) for m in ("Beijing X35", "Beijing X55", "Beijing X75", "BJ30", "BJ40", "BJ60")} | {
+    ("GWM", "HAVAL H6"), ("GWM", "HAVAL Jolion Pro"), ("Zeekr", "9X"), ("Geely", "E5"), ("Geely", "Starray EM-i"),
+    ("Hongqi", "E-HS9"), ("Hongqi", "HS5"), ("Maxus", "Euniq 6")}
+VAN_MODELS |= {("Maxus", "Mifa 9"), ("Maxus", "Euniq 5")}
+PICKUP_MODELS |= {("Maxus", "T60 MAX"), ("Maxus", "T90"), ("Maxus", "eTerron 9")}
+DEFAULT_TYPE.update({
+    ("Polestar", "1"): "coupe", ("Polestar", "2"): "limousine", ("Genesis", "G70"): "limousine", ("Genesis", "G80"): "limousine",
+    ("Genesis", "G90"): "limousine", ("XPENG", "P7"): "limousine", ("NIO", "ET5"): "limousine", ("NIO", "ET7"): "limousine",
+    ("GWM", "Ora 03"): "hatchback", ("GWM", "Ora 07"): "limousine", ("ORA", "Funky Cat"): "hatchback", ("Lucid", "Air"): "limousine",
+    ("Polestar", "5"): "limousine", ("Hongqi", "H9"): "limousine",
+})
 # Vans that also come as 2-3 seat panel vans and 8-9 seat buses.
 BIG_VANS = {("Ford", "Transit"), ("Ford", "Transit Custom"), ("Ford", "Tourneo Custom"), ("Ford", "Econoline"), ("Mercedes-Benz", "Vito"),
             ("Mercedes-Benz", "V"), ("Mercedes-Benz", "Viano"), ("Mercedes-Benz", "Sprinter"), ("Mercedes-Benz", "EQV"), ("Peugeot", "Boxer"),
@@ -301,7 +320,9 @@ SEVEN_SEATS = ("q7", "x5", "xc90", "kodiaq", "5008", "s-max", "grand c max", "gr
                "outlander", "doblo", "durango", "grand caravan", "journey", "captiva", "orlando", "tahoe", "suburban",
                "pacifica", "voyager", "tribeca", "aspen", "tang", "rodius", "rexton", "escalade", "musa", "phedra")
 # Seven-seaters whose name is also some other car's generation code ("C8" = Audi A6/A7 C8).
-SEVEN_SEAT_MODELS = {("Citroen", "C8")}
+SEVEN_SEAT_MODELS = {("Citroen", "C8"), ("NIO", "EL8"), ("VinFast", "VF9"), ("Genesis", "GV80"), ("DFSK", "Fengon 600"),
+                     ("DFSK", "Fengon 7"), ("DFSK", "Fengon E5"), ("BAIC", "BJ60"), ("Hongqi", "E-HS9"), ("Maxus", "Mifa 9"),
+                     ("Zeekr", "9X")}
 
 
 def body_of(brand, model, name):
@@ -419,10 +440,14 @@ def main():
     with open(os.path.join(ROOT, "data", "model-generations.json"), encoding="utf8") as handle:
         generations = json.load(handle)
     label_to_model = {(m["brand"], m["label"]): m["model"] for m in generations["models"]}
-    # Models only autocentrum.pl covers (B61 stage 6): the catalog model they stand for.
-    with open(os.path.join(ROOT, "data", "autocentrum-models.json"), encoding="utf8") as handle:
-        label_to_model.update({(m["brand"], m["label"]): m["mobile"] for m in json.load(handle)["models"]
-                               if m.get("primary")})
+    # Models only autocentrum.pl covers (B61 stage 6) and, wave 4, only ultimatespecs or the ADAC catalog
+    # (tools/crawl-ultimatespecs-models.py, tools/crawl-adac-models.py): the catalog model they stand for.
+    for name in ("autocentrum-models.json", "ultimatespecs-primary.json", "adac-primary.json"):
+        path = os.path.join(ROOT, "data", name)
+        if os.path.exists(path):
+            with open(path, encoding="utf8") as handle:
+                label_to_model.update({(m["brand"], m["label"]): m["mobile"] for m in json.load(handle)["models"]
+                                       if m.get("primary") and (m["brand"], m["label"]) not in label_to_model})
 
     models = {}
     with open(os.path.join(ROOT, "data", "model-engines.csv"), encoding="utf-8-sig") as handle:

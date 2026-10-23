@@ -459,9 +459,15 @@ def classify(rows, ac):
             # The row is autocentrum's own: its name is the autocentrum statement.
             ac_says = ac_says or (("в названии", None, row["Версия"]) if own else None)
             own = False
-        if not (rules or own or ac_says):
+        adac = source == "adac" and row["Топливо: примечание"].startswith("мягкий гибрид")
+        if adac:
+            # ADAC gives the maker's data: "Motorart: Otto (Mild-Hybrid)" (tools/crawl-adac-models.py, 2026-10-23).
+            own = False
+        if not (rules or own or ac_says or adac):
             continue
         sources = []
+        if adac:
+            sources.append(f"ADAC (данные производителя): мягкий гибрид ({row['Ссылка']})")
         if own:
             sources.append("ultimatespecs: в названии версии")
         if ac_says:
@@ -471,7 +477,7 @@ def classify(rows, ac):
         wiki = [rule["wiki"] for rule in rules if rule["wiki"]]
         if wiki:
             sources.append("Википедия: " + " | ".join(dict.fromkeys(wiki)))
-        explicit = own or (ac_says and ac_says[0] == "в названии")
+        explicit = own or adac or (ac_says and ac_says[0] == "в названии")
         box = {"автомат": "a", "автомат (робот)": "a", "механика": "m"}.get(row["Коробка"], "")
         # A rule that needs the gearbox (eTSI: DSG only) is no proof for a version whose gearbox is unknown.
         firm = [rule for rule in rules if not rule["optional"] and (not rule["gearbox"] or box)]

@@ -147,6 +147,8 @@
       695: ["500"], "695C": ["500"], "Grande Punto": ["Punto Evo"],
     },
     KGM: { "Torres EVX": ["Torres"] },
+    // Wave 4 (owner 2026-10-23): mobile.de lists the BAIC X55 twice.
+    BAIC: { X55: ["Beijing X55"] },
   };
   // Mercedes catalog models are "<class> <number>" (GLA 200, CLS 350): the class is the family.
   const MERCEDES_FAMILIES = ["CLA", "CLC", "CLE", "CLK", "CLS", "CL", "GLA", "GLB", "GLC", "GLE", "GLK", "GLS", "GL", "ML",

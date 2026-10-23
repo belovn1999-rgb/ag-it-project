@@ -1,5 +1,5 @@
 {
- "generatedAt": "2026-10-22",
+ "generatedAt": "2026-10-23",
  "market": "EU (PL/DE)",
  "rows": [
   {
@@ -20528,6 +20528,27 @@
    "origin": "adac"
   },
   {
+   "brand": "Aiways",
+   "model": "U5",
+   "label": "U5",
+   "code": "U5",
+   "phase": "весь выпуск",
+   "years": "2020–н. в.",
+   "trims": [
+    "XCITE",
+    "Premium",
+    "PRIME"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/aiways/u5/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Alfa Romeo",
    "model": "147",
    "label": "147",
@@ -21213,6 +21234,25 @@
    ],
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/e-tron/ge/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "BAIC",
+   "model": "BJ60",
+   "label": "BJ60",
+   "code": "BJ60 I",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Flagship"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/baic/bj60/1generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -22807,6 +22847,26 @@
    "origin": "adac"
   },
   {
+   "brand": "DFSK",
+   "model": "Seres 5",
+   "label": "Seres 5",
+   "code": "Seres 5",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Premium",
+    "Flagship"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seres/5/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "DS",
    "model": "DS3",
    "label": "DS3",
@@ -23126,6 +23186,416 @@
    ],
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/600/365/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "GWM",
+   "model": "HAVAL H6",
+   "label": "HAVAL H6",
+   "code": "HAVAL H6 I",
+   "phase": "весь выпуск",
+   "years": "2026–н. в.",
+   "trims": [
+    "Premium",
+    "Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/haval-h6/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "GWM",
+   "model": "HAVAL Jolion Pro",
+   "label": "HAVAL Jolion Pro",
+   "code": "HAVAL Jolion Pro I",
+   "phase": "весь выпуск",
+   "years": "2026–н. в.",
+   "trims": [
+    "Premium",
+    "Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/haval-jolion-pro/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "GWM",
+   "model": "Ora 03",
+   "label": "Ora 03",
+   "code": "Ora 03",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Pro"
+   ],
+   "sport": [
+    "GT"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/ora-03/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "GWM",
+   "model": "Ora 07",
+   "label": "Ora 07",
+   "code": "Ora 07",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Pure",
+    "Pro"
+   ],
+   "sport": [
+    "GT"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/ora-07/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "GWM",
+   "model": "Wey 03",
+   "label": "Wey 03",
+   "code": "Wey 03",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Premium",
+    "Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/wey-03/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "GWM",
+   "model": "Wey 05",
+   "label": "Wey 05",
+   "code": "Wey 05",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Premium",
+    "Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/wey-05/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Geely",
+   "model": "E5",
+   "label": "E5",
+   "code": "E5 I",
+   "phase": "весь выпуск",
+   "years": "2026–н. в.",
+   "trims": [
+    "Pro",
+    "Pro+",
+    "Max+"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/geely/e5/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Geely",
+   "model": "Starray EM-i",
+   "label": "Starray EM-i",
+   "code": "Starray EM-i I",
+   "phase": "весь выпуск",
+   "years": "2026–н. в.",
+   "trims": [
+    "Pro",
+    "Pro+",
+    "Max+"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/geely/starray/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "G70",
+   "label": "G70",
+   "code": "G70",
+   "phase": "рестайлинг",
+   "years": "2020–н. в.",
+   "trims": [
+    "Premium",
+    "Plus Premium",
+    "Plus Luxus",
+    "Plus Sport",
+    "Luxus"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g70/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "G80",
+   "label": "G80",
+   "code": "G80 (RG3)",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Electrified Premium",
+    "Electrified Luxury",
+    "Electrified"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g80/2generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "G80",
+   "label": "G80",
+   "code": "G80 (RG3)",
+   "phase": "дорестайлинг",
+   "years": "2020–2024",
+   "trims": [
+    "Premium",
+    "Luxus"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g80/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "G90",
+   "label": "G90",
+   "code": "G90 (RS4)",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "eSC Luxury",
+    "eSC Luxury Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g90/2generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV60",
+   "label": "GV60",
+   "code": "GV60",
+   "phase": "рестайлинг",
+   "years": "2025–н. в.",
+   "trims": [
+    "Pure",
+    "Premium",
+    "Luxury",
+    "Sport Plus"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv60/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV60",
+   "label": "GV60",
+   "code": "GV60",
+   "phase": "дорестайлинг",
+   "years": "2021–2025",
+   "trims": [
+    "Premium",
+    "Sport Plus"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv60/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV70",
+   "label": "GV70",
+   "code": "GV70 (JK1)",
+   "phase": "рестайлинг",
+   "years": "2024–н. в.",
+   "trims": [
+    "Electrified Pure",
+    "Electrified Premium",
+    "Electrified Luxury",
+    "Electrified",
+    "Electrified Sport"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv70/1generation-facelift-2/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV70",
+   "label": "GV70",
+   "code": "GV70 (JK1)",
+   "phase": "дорестайлинг",
+   "years": "2021–2024",
+   "trims": [
+    "Premium",
+    "Luxus"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv70/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV80",
+   "label": "GV80",
+   "code": "GV80",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [
+    "Premium",
+    "Luxus",
+    "Luxus Plus"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv80/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Genesis",
+   "model": "GV80",
+   "label": "GV80",
+   "code": "GV80",
+   "phase": "дорестайлинг",
+   "years": "2020–2023",
+   "trims": [
+    "Premium",
+    "Luxus",
+    "Luxus Plus"
+   ],
+   "sport": [
+    "Sport"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv80/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Hongqi",
+   "model": "E-HS9",
+   "label": "E-HS9",
+   "code": "E-HS9 I",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Premium",
+    "Exclusive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hongqi/e-hs9/1generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -23607,6 +24077,30 @@
    "origin": "adac"
   },
   {
+   "brand": "INEOS",
+   "model": "Grenadier",
+   "label": "Grenadier",
+   "code": "Grenadier",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Trailmaster X"
+   ],
+   "sport": [],
+   "special": [
+    "Trailmaster Edition",
+    "Fieldmaster Edition",
+    "Black Edition",
+    "Arcane Works Detour Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ineos/grenadier/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Infiniti",
    "model": "FX",
    "label": "FX",
@@ -23739,8 +24233,8 @@
    "phase": "весь выпуск",
    "years": "2025–н. в.",
    "trims": [
-    "TGDI Select DHT",
-    "TGDI Exclusive DHT"
+    "TGDI Select",
+    "TGDI Exclusive"
    ],
    "sport": [],
    "special": [],
@@ -23759,8 +24253,8 @@
    "phase": "весь выпуск",
    "years": "2025–н. в.",
    "trims": [
-    "TGDI Select DHT",
-    "TGDI Exclusive DHT"
+    "TGDI Select",
+    "TGDI Exclusive"
    ],
    "sport": [],
    "special": [],
@@ -24958,6 +25452,69 @@
    "origin": "adac"
   },
   {
+   "brand": "Lucid",
+   "model": "Air",
+   "label": "Air",
+   "code": "Air",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Pure",
+    "Sapphire"
+   ],
+   "sport": [],
+   "special": [
+    "Dream Edition",
+    "Midnight Dream Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lucid/air/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Lynk&Co",
+   "model": "01",
+   "label": "01",
+   "code": "Lynk & Co 01",
+   "phase": "весь выпуск",
+   "years": "2021–н. в.",
+   "trims": [
+    "Core",
+    "More"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lynk--co/01/1generation-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Lynk&Co",
+   "model": "08",
+   "label": "08",
+   "code": "Lynk & Co 08",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [
+    "Core",
+    "More"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lynk--co/08/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "MG",
    "model": "Cyberster",
    "label": "Cyberster",
@@ -24965,7 +25522,6 @@
    "phase": "весь выпуск",
    "years": "2024–н. в.",
    "trims": [
-    "Single",
     "XPOWER"
    ],
    "sport": [],
@@ -25253,6 +25809,104 @@
    "special": [],
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/quattroporte/vi-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maxus",
+   "model": "Euniq 6",
+   "label": "Euniq 6",
+   "code": "Euniq 6 I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Limited"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/euniq-6/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maxus",
+   "model": "Mifa 9",
+   "label": "Mifa 9",
+   "code": "Mifa 9 I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Elite",
+    "Luxury",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/mifa-9/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maxus",
+   "model": "T60 MAX",
+   "label": "T60 MAX",
+   "code": "T60 MAX I",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [
+    "Luxury"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/t60-max/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maxus",
+   "model": "T90",
+   "label": "T90",
+   "code": "T90 I",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Elite"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/t90-ev/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Maxus",
+   "model": "eTerron 9",
+   "label": "eTerron 9",
+   "code": "eTerron 9 I",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [
+    "Luxury",
+    "Premium"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/eterron-9/1generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -26211,6 +26865,25 @@
    "origin": "adac"
   },
   {
+   "brand": "NIO",
+   "model": "EL8",
+   "label": "EL8",
+   "code": "EL8",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Executive"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nio/el8/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Nissan",
    "model": "370Z",
    "label": "370Z",
@@ -26423,6 +27096,27 @@
    "origin": "adac"
   },
   {
+   "brand": "ORA",
+   "model": "Funky Cat",
+   "label": "Funky Cat",
+   "code": "Funky Cat",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Pro"
+   ],
+   "sport": [
+    "GT"
+   ],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ora/funky-cat/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Opel",
    "model": "Agila",
    "label": "Agila",
@@ -26581,6 +27275,64 @@
    "special": [],
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/bipper/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Polestar",
+   "model": "2",
+   "label": "2",
+   "code": "Polestar 2",
+   "phase": "рестайлинг",
+   "years": "2023–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "BST edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/polestar/2/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Polestar",
+   "model": "2",
+   "label": "2",
+   "code": "Polestar 2",
+   "phase": "дорестайлинг",
+   "years": "2020–2023",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Launch Edition",
+    "BST edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/polestar/2/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Polestar",
+   "model": "5",
+   "label": "5",
+   "code": "5 I",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Launch Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/polestar/5/1generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -27161,6 +27913,26 @@
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/exeo/3r/",
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/exeo/3r-facelift/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Seres",
+   "model": "5",
+   "label": "5",
+   "code": "Seres 5",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [
+    "Premium",
+    "Flagship"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seres/5/1generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",
@@ -28425,6 +29197,44 @@
    "origin": "adac"
   },
   {
+   "brand": "VinFast",
+   "model": "VF8",
+   "label": "VF8",
+   "code": "VF 8",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vinfast/vf-8/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "VinFast",
+   "model": "VF9",
+   "label": "VF9",
+   "code": "VF 9",
+   "phase": "весь выпуск",
+   "years": "2022–н. в.",
+   "trims": [
+    "Plus"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vinfast/vf-9/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
    "brand": "Volkswagen",
    "model": "CC",
    "label": "CC",
@@ -28546,11 +29356,8 @@
    "phase": "весь выпуск",
    "years": "2025–н. в.",
    "trims": [
-    "Single Core",
-    "Single Plus",
-    "Single",
-    "Twin Plus",
-    "Twin"
+    "Core",
+    "Plus"
    ],
    "sport": [],
    "special": [],
@@ -28590,18 +29397,79 @@
    "phase": "весь выпуск",
    "years": "2022–н. в.",
    "trims": [
-    "Single Core",
-    "Single Plus",
+    "Core",
+    "Plus",
+    "Twin",
     "Twin Core",
-    "Twin Plus",
-    "Twin"
+    "Twin Plus"
    ],
    "sport": [],
    "special": [
-    "Twin Plus Executive Edition"
+    "Plus Executive Edition"
    ],
    "sources": [
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/ex90/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "XPENG",
+   "model": "P7",
+   "label": "P7",
+   "code": "P7",
+   "phase": "весь выпуск",
+   "years": "2023–н. в.",
+   "trims": [],
+   "sport": [],
+   "special": [
+    "Wing Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/xpeng/p7/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Zeekr",
+   "model": "7X",
+   "label": "7X",
+   "code": "Zeekr 7X",
+   "phase": "весь выпуск",
+   "years": "2025–н. в.",
+   "trims": [
+    "Core",
+    "Privilege"
+   ],
+   "sport": [],
+   "special": [
+    "Business Edition"
+   ],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/zeekr/7x/1generation/"
+   ],
+   "status": "частично проверено",
+   "note": "ADAC Autokatalog (рынок Германии)",
+   "origin": "adac"
+  },
+  {
+   "brand": "Zeekr",
+   "model": "X",
+   "label": "X",
+   "code": "Zeekr X",
+   "phase": "весь выпуск",
+   "years": "2024–н. в.",
+   "trims": [
+    "Core",
+    "Privilege"
+   ],
+   "sport": [],
+   "special": [],
+   "sources": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/zeekr/x/1generation/"
    ],
    "status": "частично проверено",
    "note": "ADAC Autokatalog (рынок Германии)",

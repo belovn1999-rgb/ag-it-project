@@ -288,15 +288,16 @@ BODY_WORDS = [(r"\bLimuzyna\b", "Sedan"), (r"\bKabriolet\b", "Cabrio"), (r"\bGra
 FACELIFT_STAGE = re.compile(r"^(рестайлинг|обновление)")
 
 
-def body_name(label, code, name, generation=""):
-    """'Limuzyna Facelifting' -> 'Corolla E170 Sedan Facelifting (autocentrum)'."""
+def body_name(label, code, name, generation="", source="autocentrum"):
+    """'Limuzyna Facelifting' -> 'Corolla E170 Sedan Facelifting (autocentrum)'; the source of a model
+    ultimatespecs or ADAC gave (wave 4) in its place."""
     text = name
     if label == "Klasa A" and re.search(r"w169|w176", generation, re.I):
         text = re.sub(r"\bLimuzyna\b", "Hatchback 5-door", re.sub(r"\bCoupe\b", "Hatchback 3-door", text))
     for pattern, word in BODY_WORDS:
         text = re.sub(pattern, word, text)
     prefix = code if code.lower().startswith(label.lower()) else f"{label} {code}"
-    return f"{prefix} {text} (autocentrum)"
+    return f"{prefix} {text} ({source})"
 
 
 def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label, only=None):
@@ -305,7 +306,7 @@ def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label, o
     fuel = AC_FUEL.get(engine["type"], "petrol")
     note = ""
     if fuel in ("hybrid", "hybrid_diesel") and MILD.search(engine["text"]):
-        fuel, note = ("petrol" if fuel == "hybrid" else "diesel"), "мягкий гибрид (MHEV) — autocentrum"
+        fuel, note = ("petrol" if fuel == "hybrid" else "diesel"), f"мягкий гибрид (MHEV) — {engine.get('source', 'autocentrum')}"
     cc = re.sub(r"\D", "", engine.get("Pojemność skokowa", "")) or (
         str(round(float(engine["litres"]) * 1000)) if engine.get("litres") else "")
     options = [only] if only else sorted({config_parts(c) for c in engine.get("configs", [])
@@ -316,7 +317,7 @@ def new_rows(template, ac_gen, body, engine, code, stage, years, brand, label, o
         row.update({
             "Марка": brand, "Модель": label, "Поколение": code, "Этап": stage,
             "Годы (источник)": f"{ac_gen['from']}–{ac_gen['to'] or 'н. в.'}", "Годы (проверено)": years,
-            "Кузов": body_name(label, code, body["name"], ac_gen["name"]),
+            "Кузов": body_name(label, code, body["name"], ac_gen["name"], engine.get("source", "autocentrum")),
             "Версия": re.sub(r"\s+", " ", f"{label} {re.sub(r'(?i)facelifting', '', body['name'])} "
                                          f"{engine.get('litres', '')} {engine['name']}").strip(),
             "Топливо": OUR_FUEL_TEXT[fuel], "Топливо: примечание": note,

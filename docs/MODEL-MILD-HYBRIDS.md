@@ -11,7 +11,7 @@
 мягкий гибрид был опцией (Ford EcoBlue Hybrid, Hyundai/Kia CRDi 48V до 2020, Kia 1.0 T-GDi), — только по названию
 версии. «Hybrydowe» у autocentrum без правила и без названия ничего не решает.
 
-Итого: 1344 версий отмечены мягким гибридом (445 сочетаний модель · поколение · мотор); проверить: 0 сочетаний.
+Итого: 1346 версий отмечены мягким гибридом (447 сочетаний модель · поколение · мотор); проверить: 0 сочетаний.
 
 **Тот же мотор и без мягкого гибрида** (проверка «двойников» по таблицам моторов de.wikipedia, одна таблица,
 та же мощность, объём и коробка): если обе версии продавались в годы нашей версии — «бывает и без него»,
@@ -464,6 +464,8 @@ de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взя�
 | Jaguar | XF | XF II | дизель | 2.0 | 204 | 2021 | 48V | автомат | XF Sedan 2.0 D | подтверждено | производитель: JLR technical data XE / XF 2023 · Википедия: en: Jaguar XE — «Ingenium 2.0L engines with an additional 48 Volt belt alternator starter system»; JLR — «POWERTRAIN D200 MHEV» |
 | DS | DS3 Crossback | DS3 Crossback | бензин | 1.2 | 136 | 2024 | 48V | автомат | DS3 Crossback Crossback Hybrid 136 (MHEV) | подтверждено | autocentrum: в названии (Hybrid 136 (MHEV) 136KM 100kW (od 2024)) · производитель: de.wikipedia: DS 3 Crossback / DS 4 · Википедия: de: DS 4 — «Ein Mild-Hybrid mit 6-Stufen-Doppelkupplungsgetriebe folgte 2024.»; de: DS 3 Crossback — Tabelle «MHEV 136 … 04/2024» |
 | DS | DS4 | DS4 II | бензин | 1.2 | 136 | 2024 | 48V | автомат | DS4 Hatchback HYBRID 136 | подтверждено | производитель: de.wikipedia: DS 3 Crossback / DS 4 · Википедия: de: DS 4 — «Ein Mild-Hybrid mit 6-Stufen-Doppelkupplungsgetriebe folgte 2024.»; de: DS 3 Crossback — Tabelle «MHEV 136 … 04/2024» |
+| BAIC | BJ60 | BJ60 I | бензин | 2.0 | 256 | 2024 |  | автомат | BJ60 SUV 2.0 2.0T Flagship 4x4 AT | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/baic/bj60/1generation/345094/) · autocentrum: в названии (2.0T Flagship 4x4 AT Mild-Hybrid) |
+| Hongqi | H9 | H9 I | бензин | 2.0 | 245 | 2025 |  | автомат | H9 Sedan 2.0 2.0T | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hongqi/h9/1generation/343947/) · autocentrum: в названии (2.0T Mild-Hybrid) |
 | Ford | Kuga | Mk3 | дизель | 2.0 | 150 | 2020 | 48V | механика | Kuga SUV 2.0 EcoBlue MHEV | подтверждено | autocentrum: в названии (2.0 EcoBlue MHEV 150KM 110kW (2019-2024)) · производитель: Ford media 2019 · Википедия: de: Ford Kuga — Tabelle 2.0 EcoBlue MHEV |
 | Mercedes-Benz | Klasa C | W206 | бензин | 2.0 | 476 | 2021 | 48V | автомат | Klasa C Limuzyna AMG 2.0 63S AMG | подтверждено | производитель: Mercedes media 2021-2023 · Википедия: de: Baureihe 206 — «Alle Vierzylinder-Ottomotoren … integrierten Startergenerator … 48-Volt»; 214 — «Benziner und Diesel sind als Mild-Hybrid…»; X 254 — «Alle sind elektrifiziert»; CLE — «Alle haben ein 48-Volt-Mildhybrid-System» |
 | Mercedes-Benz | Klasa E | W214 | дизель | 3.0 | 367 | 2023 | 48V | автомат | Klasa E Sedan 3.0 450d | подтверждено | производитель: Mercedes media 2021-2023 · Википедия: de: Baureihe 206 — «Alle Vierzylinder-Ottomotoren … integrierten Startergenerator … 48-Volt»; 214 — «Benziner und Diesel sind als Mild-Hybrid…»; X 254 — «Alle sind elektrifiziert»; CLE — «Alle haben ein 48-Volt-Mildhybrid-System» |

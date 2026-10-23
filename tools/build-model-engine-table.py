@@ -614,13 +614,14 @@ def main():
     if os.path.exists(ac_path):
         with open(ac_path, encoding="utf8") as handle:
             ac = json.load(handle)
-            # Whole models from ultimatespecs in the same shape (tools/crawl-ultimatespecs-models.py, new brands
-            # while autocentrum.pl was down, 2026-10-22); a model autocentrum has wins.
-            us_path = os.path.join(ROOT, "data", "ultimatespecs-primary.json")
-            if os.path.exists(us_path):
-                have = {(m["brand"], m["label"]) for m in ac["models"]}
-                ac["models"] += [m for m in json.load(open(us_path, encoding="utf8"))["models"]
-                                 if (m["brand"], m["label"]) not in have and m["generations"]]
+            # Whole models from ultimatespecs and the ADAC catalog in the same shape (tools/crawl-ultimatespecs-models.py,
+            # tools/crawl-adac-models.py: brands autocentrum.pl lacks, 2026-10-22/23); autocentrum wins, then ultimatespecs.
+            for extra in ("ultimatespecs-primary.json", "adac-primary.json"):
+                extra_path = os.path.join(ROOT, "data", extra)
+                if os.path.exists(extra_path):
+                    have = {(m["brand"], m["label"]) for m in ac["models"]}
+                    ac["models"] += [m for m in json.load(open(extra_path, encoding="utf8"))["models"]
+                                     if (m["brand"], m["label"]) not in have and m["generations"]]
             for name, count in sorted(autocentrum.merge(rows, ac).items()):
                 print(f"   autocentrum: {name}: {count}")
         # Gearbox and drive of the rows merge() made from ultimatespecs models: their version pages too.

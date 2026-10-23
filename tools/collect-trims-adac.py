@@ -37,6 +37,10 @@ MANUAL = {
     "DS|DS5": ["ds-automobiles/ds-5"], "DS|DS7 (Crossback)": ["ds-automobiles/ds-7"], "DS|DS9": ["ds-automobiles/ds-9"],
     "DS|Nº8": ["ds-automobiles/n8"], "MG|HS": ["mg/hs-ehs"],
     "Abarth|500": ["abarth/500-595-695"],  # wave 3
+    # Wave 4 (2026-10-23).
+    "Lynk&Co|01": ["lynk--co/01"], "Lynk&Co|02": ["lynk--co/02"], "Lynk&Co|08": ["lynk--co/08"],
+    "VinFast|VF6": ["vinfast/vf-6"], "VinFast|VF8": ["vinfast/vf-8"], "VinFast|VF9": ["vinfast/vf-9"],
+    "DFSK|Seres 3": ["seres/3"], "DFSK|Seres 5": ["seres/5"], "Geely|Starray EM-i": ["geely/starray"], "Maxus|T90": ["maxus/t90-ev"],
 }
 PHASE_RU = {"pre": "дорестайлинг", "fl": "рестайлинг", "fl2": "2-й рестайлинг", "upd": "обновление"}
 # Words of a version name that are not its trim: engine, power, gearbox, drive, body, fuel.
@@ -147,7 +151,10 @@ def trim_of(name, prefix_words):
                   r"E-REV|\d+-Volt-Mildhybrid|cod|extralang|Clean Diesel|2-Tronic|Multi-Mode-Automatik|e-4ORCE|EV\d{2,3}|iV|"
                   r"T[34]|T-Jet|e-\d{3,4}|eHybrid|OPF|Q2|TB|T\.Spark|M-Jet|MultiJet|JTDM?|Ibrida|VGT|\d+V-Hybrid|eDCT-?\d|TCT|Lineartronic|"
                   r"ecomatic|E-Performance|EcoLogic|Hybrid\+|EHS|twinamic|softouch|softip|mhd|EQ Boost|EQ|Start&Stopp|TwinAir|D\.F\.N-System|"
-                  r"GDI-T|e-XDi\d*|MTA|Single Cab|Space Cab|Double Cab|Extended Cab|Crew Cab)(?![\w-])", " ", name, flags=re.I)
+                  r"GDI-T|e-XDi\d*|MTA|Single Cab|Space Cab|Double Cab|Extended Cab|Crew Cab|"
+                  # Wave 4 (2026-10-23): electric motors, hybrid gearboxes, the Grenadier's body and engines.
+                  r"(?:Single|Dual|Twin|Rear|Front|Three|Tri) Motor|Performance Paket|\d?DHT(?: Pro)?|"
+                  r"Station|Turbo-(?:Benziner|Diesel))(?![\w-])", " ", name, flags=re.I)
     words = name.split()
     while words and prefix_words and words[0].lower() in prefix_words:
         words = words[1:]
@@ -179,7 +186,8 @@ def main():
                 text = fetch(f"{page}/{gen}/")
                 h1 = re.search(r"<h1[^>]*>(.*?)</h1>", text, re.S)
                 title = re.sub(r"<[^>]+>", "", h1.group(1)).strip() if h1 else ""
-                prefix = {w.lower() for w in (title.split() + brand.split() + model.split() + ["vw", "mercedes-benz", "mercedes"])}
+                prefix = {w.lower() for w in (title.split() + brand.replace("&", " & ").split() + model.split()
+                                              + ["vw", "mercedes-benz", "mercedes"])}
                 for name, start, end in versions(text):
                     trim = trim_of(name, prefix)
                     if trim:

@@ -1,4 +1,25 @@
 {
+"https://www.ultimatespecs.com/car-specs/Aiways/122618/Aiways-U5-Standard.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Auto CVT",
+"seats": "5",
+"transmission": "Auto CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Aiways/122620/Aiways-U5-Premium.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Auto CVT",
+"seats": "5",
+"transmission": "Auto CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Aiways/150758/Aiways-U5-PRIME.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/10318/Audi-A3-(8P)-Attraction-16-TDI-e-DPF.html": {
 "doors": "3",
 "drive": "FWD",
@@ -5850,6 +5871,629 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/GWM/138618/GWM-ORA-03-300-48kWh.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/GWM/138620/GWM-ORA-03-400-63kWh.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/GWM/138622/GWM-ORA-03-GT-63kWh.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/GWM/138623/GWM-WEY-05-20-PHEV-AWD-DCT.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "9 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/GWM/138625/GWM-WEY-03-20-PHEV-AWD-DCT.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "9 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/GWM/139511/GWM-ORA-07-408PS-GT-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/GWM/139513/GWM-ORA-07-204PS.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120011/Genesis-G70-(HS)-20T.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120013/Genesis-G70-(HS)-20T-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120015/Genesis-G70-(HS)-33T.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120017/Genesis-G70-(HS)-33T-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120018/Genesis-G80-2017-38.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120019/Genesis-G80-2017-38-HTRAC-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120020/Genesis-G80-2017-50.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120021/Genesis-G80-2017-33T.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120022/Genesis-G80-2017-33T-HTRAC-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120023/Genesis-G80-2017-38.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120024/Genesis-G80-2017-38-HTRAC-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120025/Genesis-G80-2017-50.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120026/Genesis-G80-2017-50-HTRAC-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120027/Genesis-G90-2016-33T.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120028/Genesis-G90-2016-33T-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120029/Genesis-G90-2016-50.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/120030/Genesis-G90-2016-50-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123858/Genesis-GV80-2021-25T-AWD.html": {
+"doors": "5",
+"drive": "4WD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123859/Genesis-GV80-2021-35T-AWD.html": {
+"doors": "5",
+"drive": "4WD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123860/Genesis-GV80-2021-25T-RWD.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123861/Genesis-G90-2020-33T.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123862/Genesis-G90-2020-33T-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123863/Genesis-G90-2020-50.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123864/Genesis-G90-2020-50-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123865/Genesis-G80-2021-25T.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123866/Genesis-G80-2021-25T-AWD.html": {
+"doors": "4",
+"drive": "4WD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123867/Genesis-G80-2021-35T.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123868/Genesis-G80-2021-35T-AWD.html": {
+"doors": "4",
+"drive": "4WD",
+"gearbox": "8 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/123888/Genesis-GV80-2021-30D-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/136428/Genesis-G70-2020-20T-245HP-Automatic.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/136429/Genesis-G70-Shooting-Brake-20T-245HP-Automatic.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/136860/Genesis-G90-LWB-35T-V6-e-S-C-AWD-Automatic-4-seat.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/136861/Genesis-G90-SWB-2021-35T-V6-e-S-C-AWD-Automatic-4-seat.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/137765/Genesis-GV60-RWD.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/137766/Genesis-GV60-318HP-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139049/Genesis-G70-2020-20T-197HP-Automatic.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139051/Genesis-G70-2020-20T-245HP-AWD-Automatic.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139059/Genesis-G70-2020-20T-252HP-Automatic.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139060/Genesis-G70-2020-20T-252HP-AWD-Automatic.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139061/Genesis-G70-2020-33T-370HP-Automatic.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139063/Genesis-G70-2020-33T-370HP-AWD-Automatic.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139115/Genesis-G70-2020-22D-200HP-Automatic.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139116/Genesis-G70-2020-22D-200HP-AWD-Automatic.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139117/Genesis-G70-2020-22-e-VGT-202HP-Automatic.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139118/Genesis-G70-2020-22-e-VGT-202HP-AWD-Automatic.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139119/Genesis-G70-Shooting-Brake-20T-245HP-AWD-Automatic.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139120/Genesis-G70-Shooting-Brake-20T-197HP-Automatic.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139121/Genesis-G70-Shooting-Brake-22D-200HP-Automatic.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139127/Genesis-G70-Shooting-Brake-22D-200HP-AWD-Automatic.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139182/Genesis-G90-LWB-35T-V6-e-S-C-AWD-Automatic-5-seat.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139195/Genesis-G90-SWB-2021-35T-V6-e-S-C-AWD-Automatic-5-seat.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139196/Genesis-G90-SWB-2021-35T-V6-e-S-C-Automatic-4-seat.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139197/Genesis-G90-SWB-2021-35T-V6-e-S-C-Automatic-5-seat.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139228/Genesis-GV60-Sport-Plus-490HP-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139229/Genesis-GV60-Performance-435HP-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139230/Genesis-GV70-25T-AWD-Automatic.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139231/Genesis-GV70-22D-210HP-AWD-Automatic.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139232/Genesis-GV70-22D-201HP-AWD-Automatic.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/139233/Genesis-GV70-Electrified-774-kWh-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/140984/Genesis-GV80-2024-25T-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Auto",
+"seats": "5",
+"transmission": "Auto"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/140985/Genesis-GV80-2024-35T-AWD-5-seats.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Auto",
+"seats": "5",
+"transmission": "Auto"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/140986/Genesis-GV80-2024-35T-AWD-7-seats.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Auto",
+"seats": "7",
+"transmission": "Auto"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/140987/Genesis-GV80-2024-Coupe-35T-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Auto",
+"seats": "5",
+"transmission": "Auto"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/140988/Genesis-GV80-2024-Coupe-35Te-SC-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/149527/Genesis-G80-Electrified-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/149530/Genesis-GV70-2025-Electrified-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Genesis/155841/Genesis-GV60-2025-GV60-Magma.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Ineos/139337/Ineos-Grenadier-30-Turbo-4x4-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Ineos/139338/Ineos-Grenadier-30-Turbo-Diesel-4x4-Auto.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Ineos/149500/Ineos-Grenadier-30-Turbo-Diesel-4x4-Auto-.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Ineos/149503/Ineos-Grenadier-30-Turbo-4x4-Auto-.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Lucid/137079/Lucid-Air-Dream-Edition-Performance-AWD-118-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lucid/138347/Lucid-Air-Touring-AWD-92-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lucid/138354/Lucid-Air-Pure-88-kWh.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lucid/138356/Lucid-Air-Grand-Touring-AWD-112-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lucid/138357/Lucid-Air-Pure-AWD-88-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lucid/138358/Lucid-Air-Sapphire-AWD-118-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lucid/139615/Lucid-Air-Sapphire-AWD-1234HP.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lynk---Co/125700/Lynk---Co-01-01-PHEV.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Lynk---Co/141509/Lynk---Co-02-66kWh.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Lynk---Co/174433/Lynk---Co-08-15TD-PHEV-3DHT.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "3 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Lynk---Co/296846/Lynk---Co-01-01-Hybrid.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "7 speed Dualclutch Automatic",
+"seats": "5",
+"transmission": "Dualclutch Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/10430/Mercedes-Benz-E-Class-Cabrio-(A207)-200-CGI-BlueEFFICIENCY.html": {
 "doors": "2",
 "drive": "RWD",
@@ -6957,6 +7601,111 @@
 "gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/133437/NIO-ET7-100-kWh-.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/133438/NIO-EL7-75-kWh-.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/133439/NIO-ET5-75-kWh-.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/133440/NIO-EL7-100-kWh-.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/133441/NIO-ET5-100-kWh-.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/133873/NIO-ET7-75-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/136299/NIO-ET5-Touring-Standard-Range-75-kWh-i4WD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/136301/NIO-ET5-Touring-Long-Range-100-kWh-i4WD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/136302/NIO-ET5-Touring-Ultra-Long-Range-150-kWh-i4WD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/136304/NIO-EL6-Standard-Range-75-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/136306/NIO-EL6-Long-Range-100-kWh.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/139486/NIO-EL8-Long-Range.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "6",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/NIO/139488/NIO-EL8-Standard-Range.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "6",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ORA/133454/ORA-Funky-Cat-300-48-kWh.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ORA/133489/ORA-Funky-Cat-GT-63-kWh.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
 },
 "https://www.ultimatespecs.com/car-specs/Peugeot/10256/Peugeot-308-3p-Confort-16-VTi-120.html": {
 "doors": "3",
@@ -8246,6 +8995,118 @@
 "gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/119441/Polestar-1-T8R.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/127026/Polestar-2-78kWh-Dual-Motor.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Auto CVT",
+"seats": "5",
+"transmission": "Auto CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/127027/Polestar-2-78kWh-Single-Motor.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Auto CVT",
+"seats": "5",
+"transmission": "Auto CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/127028/Polestar-2-63kWh-Single-Motor.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Auto CVT",
+"seats": "5",
+"transmission": "Auto CVT"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/133481/Polestar-3-Long-Range-Dual-Motor-.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/133482/Polestar-3-Long-Range-Dual-Motor-Performance.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/133483/Polestar-2-78kWh-Dual-Motor-Performance.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/134411/Polestar-2-(Facelift-2023)-Standard-Range-Single-Motor-69-kWh.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/134412/Polestar-2-(Facelift-2023)-Long-Range-Single-Motor-82-kWh.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/134413/Polestar-2-(Facelift-2023)-Long-Range-Dual-Motor-82-kWh.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/134414/Polestar-2-(Facelift-2023)-Long-Range-Dual-Motor-Performance-82-kWh.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/134981/Polestar-2-(Facelift-2023)-BST-edition-230.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/138191/Polestar-4-Long-Range-Dual-Motor.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/138192/Polestar-4-Long-Range-Single-Motor.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/139452/Polestar-3-Long-Range-Single-Motor.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Polestar/139459/Polestar-2-(Facelift-2023)-Standard-Range-Single-Motor-70-kWh.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/106282/Renault-Kadjar-1-Phase-1-TCe-130-X-Mod.html": {
 "drive": "FWD",
@@ -10657,6 +11518,41 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/SERES/134345/SERES-5-80-kWh-300HP-2WD.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/SERES/134346/SERES-5-80-kWh-585HP-4WD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/SERES/134347/SERES-5-90-kWh-585HP-4WD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/SERES/135291/SERES-3-536-kWh-163HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/SERES/139433/SERES-5-80-kWh-646HP-4WD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
 "https://www.ultimatespecs.com/car-specs/Skoda/10171/Skoda-Fabia-II-12-TSI-105HP-Style.html": {
 "doors": "",
 "drive": "FWD",
@@ -12184,6 +13080,90 @@
 "seats": "",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/VinFast/133429/VinFast-VF-8-Eco-82-kWh-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/133430/VinFast-VF-8-Eco-877-kWh-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/133431/VinFast-VF-8-Plus-82-kWh-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/133432/VinFast-VF-8-Plus-877-kWh-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/133433/VinFast-VF-9-Eco-92-kWh-AWD.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/133434/VinFast-VF-9-Eco-123-kWh-AWD.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/133435/VinFast-VF-9-Plus-92-kWh-AWD.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/133436/VinFast-VF-9-Plus-123-kWh-AWD.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/134578/VinFast-VF-6-Eco-FWD.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/134580/VinFast-VF-6-Plus-FWD.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/134582/VinFast-VF-7-Eco-FWD.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/VinFast/134584/VinFast-VF-7-Plus-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/105335/Volkswagen-Tiguan-2016-20-TDI-150HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -13438,6 +14418,13 @@
 "seats": "7",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Volkswagen/140430/Volkswagen-Transporter-T7-Kombi-LWB-20-TDI-170HP-Auto.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "8 speed Automatic",
+"seats": "7",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volkswagen/140431/Volkswagen-Transporter-T7-Kombi-LWB-20-TDI-150HP-4MOTION-Auto.html": {
 "doors": "4",
 "drive": "AWD",
@@ -13530,6 +14517,13 @@
 "transmission": "Reduction Gear"
 },
 "https://www.ultimatespecs.com/car-specs/Volkswagen/141925/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-e-Kombi-160kW.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "7",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Volkswagen/141926/Volkswagen-Transporter-T7-Kombi-LWB-PanAmericana-e-Kombi-100kW.html": {
 "doors": "4",
 "drive": "FWD",
 "gearbox": "1 speed Reduction Gear",
@@ -16981,5 +17975,152 @@
 "gearbox": "6 speed Manual",
 "seats": "",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/137005/XPeng-P7-Long-Range-.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/137006/XPeng-G9-2023-Standard-Range-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/137007/XPeng-G9-2023-Long-Range-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/137008/XPeng-G9-2023-Performance-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/137009/XPeng-P7-Wing-Edition-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/137010/XPeng-P7-Performance-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/138258/XPeng-P7-Standard-Range-.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/138259/XPeng-G6-2024-Standard-Range.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/138260/XPeng-G6-2024-Long-Range.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/138261/XPeng-G6-2024-Performance-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/150302/XPeng-G9-2026-Performance-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/150303/XPeng-G9-2026-Long-Range-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/150304/XPeng-G9-2026-Standard-Range-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/150305/XPeng-G6-2026-Performance-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/XPeng/150306/XPeng-G6-2026-Long-Range-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ZEEKR/136677/ZEEKR-X-Long-Range-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ZEEKR/136678/ZEEKR-X-Dual-Motor-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ZEEKR/144575/ZEEKR-7X-RWD-Long-Range-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ZEEKR/144576/ZEEKR-7X-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ZEEKR/144577/ZEEKR-7X-RWD-Core-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/ZEEKR/155787/ZEEKR-X-Core-.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "1 speed Reduction Gear",
+"seats": "5",
+"transmission": "Reduction Gear"
 }
 }

@@ -1,0 +1,221 @@
+{
+ "note": "B61 wave 4 (owner 2026-10-23): models neither autocentrum.pl nor ultimatespecs.com has, from the ADAC Autokatalog (tools/crawl-adac-models.py)",
+ "models": [
+  {
+   "brand": "Polestar",
+   "label": "5",
+   "mobile": "5",
+   "adac": [
+    "polestar/5"
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Fengon 5",
+   "mobile": "Fengon 5",
+   "adac": [
+    "dfsk/fengon-5"
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Fengon 500",
+   "mobile": "Fengon 500",
+   "adac": [
+    "dfsk/fengon-500"
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Fengon 580",
+   "mobile": "Fengon 580",
+   "adac": [
+    "dfsk/fengon-580"
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Fengon 600",
+   "mobile": "Fengon 600",
+   "adac": [
+    "dfsk/fengon-600"
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Fengon 7",
+   "mobile": "Fengon 7",
+   "adac": [
+    "dfsk/fengon-7"
+   ]
+  },
+  {
+   "brand": "DFSK",
+   "label": "Fengon E5",
+   "mobile": "Fengon E5",
+   "adac": [
+    "dfsk/fengon-e5"
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "label": "Beijing X35",
+   "mobile": "Beijing X35",
+   "adac": [
+    "baic/beijing-x35"
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "label": "Beijing X55",
+   "mobile": "Beijing X55",
+   "adac": [
+    "baic/beijing-x55"
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "label": "Beijing X75",
+   "mobile": "Beijing X75",
+   "adac": [
+    "baic/beijing-x75"
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "label": "BJ30",
+   "mobile": "BJ30",
+   "adac": [
+    "baic/bj30"
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "label": "BJ40",
+   "mobile": "BJ40",
+   "adac": [
+    "baic/bj40"
+   ]
+  },
+  {
+   "brand": "BAIC",
+   "label": "BJ60",
+   "mobile": "BJ60",
+   "adac": [
+    "baic/bj60"
+   ]
+  },
+  {
+   "brand": "GWM",
+   "label": "HAVAL H6",
+   "mobile": "HAVAL H6",
+   "adac": [
+    "gwm/haval-h6"
+   ]
+  },
+  {
+   "brand": "GWM",
+   "label": "HAVAL Jolion Pro",
+   "mobile": "HAVAL Jolion Pro",
+   "adac": [
+    "gwm/haval-jolion-pro"
+   ]
+  },
+  {
+   "brand": "Zeekr",
+   "label": "9X",
+   "mobile": "9X",
+   "adac": [
+    "zeekr/9x"
+   ]
+  },
+  {
+   "brand": "Geely",
+   "label": "E5",
+   "mobile": "E5",
+   "adac": [
+    "geely/e5"
+   ]
+  },
+  {
+   "brand": "Geely",
+   "label": "Starray EM-i",
+   "mobile": "Starray EM-i",
+   "adac": [
+    "geely/starray"
+   ]
+  },
+  {
+   "brand": "Hongqi",
+   "label": "E-HS9",
+   "mobile": "E-HS9",
+   "adac": [
+    "hongqi/e-hs9"
+   ]
+  },
+  {
+   "brand": "Hongqi",
+   "label": "H9",
+   "mobile": "H9",
+   "adac": [
+    "hongqi/h9"
+   ]
+  },
+  {
+   "brand": "Hongqi",
+   "label": "HS5",
+   "mobile": "HS5",
+   "adac": [
+    "hongqi/hs5"
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "Mifa 9",
+   "mobile": "Mifa 9",
+   "adac": [
+    "maxus/mifa-9"
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "Euniq 5",
+   "mobile": "Euniq 5",
+   "adac": [
+    "maxus/euniq-5"
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "Euniq 6",
+   "mobile": "Euniq 6",
+   "adac": [
+    "maxus/euniq-6"
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "T60 MAX",
+   "mobile": "T60 MAX",
+   "adac": [
+    "maxus/t60-max"
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "T90",
+   "mobile": "T90",
+   "adac": [
+    "maxus/t90-ev"
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "eTerron 9",
+   "mobile": "eTerron 9",
+   "adac": [
+    "maxus/eterron-9"
+   ]
+  }
+ ]
+}

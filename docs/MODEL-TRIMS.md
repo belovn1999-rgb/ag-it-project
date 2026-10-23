@@ -1,10 +1,10 @@
 # Комплектации популярных моделей (рынок ЕС, с 2010)
 
-> Сгенерировано `tools/build-model-trims.py` 2026-10-22. Данные — `data/model-trims.json`.
+> Сгенерировано `tools/build-model-trims.py` 2026-10-23. Данные — `data/model-trims.json`.
 > Источники: польская и немецкая Википедия (разделы «Wersje wyposażeniowe», «Linie stylistyczne»,
 > «Ausstattungslinien»), страницы производителей, прессы и польских каталогов. B61, этап 5
 > (`docs/PROJECT-MOBILE.md` §4.8). Названия — как в объявлениях и у дилеров (PL/DE).
-> Строк: 1161 — проверено: 267, частично проверено: 888, проверить: 6
+> Строк: 1203 — проверено: 267, частично проверено: 930, проверить: 6
 > («проверить» — по знанию, источник не найден; перед подстановкой в фильтр проверить).
 
 Колонки: **линейки** — основные комплектации; **спорт** — спортивные модели и версии,
@@ -638,7 +638,7 @@
 
 ## Модели без списков в Википедии — каталог ADAC (22.10)
 
-> 336 строк по 220 моделям, собраны `tools/collect-trims-adac.py` со страниц поколений ADAC Autokatalog: название версии без марки, модели,
+> 378 строк по 257 моделям, собраны `tools/collect-trims-adac.py` со страниц поколений ADAC Autokatalog: название версии без марки, модели,
 > мотора, коробки, привода и кузова; версия — в фазу, куда попадает середина её продаж. Рынок Германии,
 > один источник — «частично проверено».
 
@@ -646,6 +646,7 @@
 |---|---|---|---|---|---|---|---|---|
 | Abarth | 500 | 500 II | весь выпуск | 2023–н. в. | Linea Tursimo, Linea Competizione, Anniversario, Turismo | — | Scorpionissima Launch Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/1generation-facelift/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/2generation/) |
 | Abarth | 500 | 500 I | весь выпуск | 2008–2023 | Pista, Tursimo, Monster Energy Yamaha, Scorpioneoro, Edizione Turini blau, Edizione Turini weiß, Edizione Turini, Linea Tursimo, Linea, Linea Competizione, XSR Yamaha, Competizione, Essesse, Rivale, Anniversario, Tributo Rally, Biposto, Turismo | — | Scorpionissima Launch Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/1generation-facelift/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/abarth/500-595-695/2generation/) |
+| Aiways | U5 | U5 | весь выпуск | 2020–н. в. | XCITE, Premium, PRIME | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/aiways/u5/1generation/) |
 | Alfa Romeo | 147 | 147 | весь выпуск | 2000–2010 | Impression, Progression, Sportiva, Distinctive, TI, Distinctive Easy Speed, Distinctive Selespeed, Eleganza, Collezione, AMICA, Corse, TS, TS Quadrifoglio Verde, Quadrifoglio Verde, Moving, TS Veloce, Veloce, Shape, Edizione Cup | — | Black Line | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alfa-romeo/147/937-facelift/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alfa-romeo/147/937-facelift-2/), [3](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alfa-romeo/147/937/) |
 | Alfa Romeo | 159 | 159 | весь выпуск | 2005–2011 | Impression, Progression, Distinctive, JTS Impression, JTS Progression, JTS Distinctive, JTS Progression Selespeed, JTS Distinctive Selespeed, JTS Ti, JTS Ti Selespeed, JTS Progression Q-Tronic, JTS Distinctive Q-Tronic, JTS Ti Q-Tronic, Progression Q-Tronic, Distinctive Q-Tronic, Ti, Ti Q-Tronic | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alfa-romeo/159/939/) |
 | Alfa Romeo | Brera | Brera | весь выпуск | 2005–2010 | JTS, JTS Selespeed, JTS Italia Independent, JTS Italia Independent Selespeed, TBi, TBi Italia Independent, JTS Q-Tronic, JTS Italia Independent Q-Tronic, Italia Independent, Q-Tronic, Italia Independent Q-Tronic | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/alfa-romeo/brera/939-facelift/) |
@@ -672,6 +673,7 @@
 | Audi | R8 | R8 I | рестайлинг | 2012–2015 | plus, LMX | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/r8/42-facelift/) |
 | Audi | R8 | R8 I | дорестайлинг | 2006–2012 | R-tronic, GT R-tronic | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/r8/42/) |
 | Audi | e-tron | e-tron | дорестайлинг | 2019–2024 | advanced | S line | S line black edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/e-tron/ge/) |
+| BAIC | BJ60 | BJ60 I | весь выпуск | 2024–н. в. | Flagship | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/baic/bj60/1generation/) |
 | BMW | 6 | F06-F12-F13 | рестайлинг | 2013–2018 | Design Pure Experience, M Sportpaket, Design Pure Excellence | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/6er-reihe/f06-f12-f13-facelift/) |
 | BMW | 6 | E63-64 | весь выпуск | 2003–2010 | Sport-Automatic, SMG | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/6er-reihe/e63-e64-facelift/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/6er-reihe/e63-e64/) |
 | BMW | 7 | G70 | рестайлинг | 2026–н. в. | Design Pure Excellence Sport, M Sportpaket Sport, M Sportpaket Pro Sport, Design Pure Excellence, M Sportpaket, M Sportpaket Pro | — | Design Pure Excellence BMW Individual Premiere Collection, M Sportpaket BMW Individual Premiere Collection, M Sportpaket Pro BMW Individual Premiere Collection | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/7er-reihe/g70/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/7er-reihe/g70-facelift/) |
@@ -742,6 +744,7 @@
 | Cupra | Born | Born I | весь выпуск | 2021–н. в. | VZ, Endurance | — | Edition Dynamic | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/cupra/born/1generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/cupra/born/1generation-facelift/) |
 | Cupra | Raval | Raval I | весь выпуск | 2026–н. в. | Plus, Endurance, Endurance CUSTOM by ABT, VZ, VZ CUSTOM by ABT | — | Endurance Edition Dynamic, Endurance Edition Dynamic Plus, Endurance Edition Dynamic Plus Plasma, VZ Edition Extreme | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/cupra/raval/1generation/) |
 | Cupra | Tavascan | Tavascan I | весь выпуск | 2024–н. в. | Endurance, VZ, Edge | — | Endurance Black Edition, VZ Black Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/cupra/tavascan/1generation/) |
+| DFSK | Seres 5 | Seres 5 | весь выпуск | 2023–н. в. | Premium, Flagship | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seres/5/1generation/) |
 | DS | DS3 | DS3 | рестайлинг | 2016–2020 | Crossback Chic, Crossback So Chic, Crossback Line, Crossback La Première | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ds-automobiles/ds-3/2generation/) |
 | DS | DS3 Crossback | DS3 Crossback | рестайлинг | 2023–н. в. | Pallas, DS Line, Maison Safrah Lavoine, Étoile, Bastille, Line, Line+, Rivoli, Esprit De Yoyage, Opera, Édition France, Jules Verne | — | Collection Antoine de Saint Exupéry | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ds-automobiles/ds-3/2generation-facelift/) |
 | DS | DS3 Crossback | DS3 Crossback | дорестайлинг | 2019–2023 | Chic, Montmartre, So Chic, Bastille, Line, Toits De Paris, Faubourg, Line+, Ines De La Fressange Paris, Rivoli, La Première, Louvre, Opera | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ds-automobiles/ds-3/2generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ds-automobiles/ds-3/2generation-facelift/) |
@@ -754,6 +757,25 @@
 | Dodge | Nitro | Nitro I | весь выпуск | 2007–н. в. | R/T, SE, SXT | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/dodge/nitro/1generation/) |
 | Dodge | Viper | Viper III | весь выпуск | 2002–2017 | SRT-10 | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/dodge/viper/1generation/) |
 | Fiat | 600 | 600 II | весь выпуск | 2023–н. в. | Pop, Icon, La Prima, Street | Sport | Business Edition, 125-Jahre-Edition, Sonderedition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/600/365/) |
+| GWM | HAVAL H6 | HAVAL H6 I | весь выпуск | 2026–н. в. | Premium, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/haval-h6/1generation/) |
+| GWM | HAVAL Jolion Pro | HAVAL Jolion Pro I | весь выпуск | 2026–н. в. | Premium, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/haval-jolion-pro/1generation/) |
+| GWM | Ora 03 | Ora 03 | весь выпуск | 2024–н. в. | Pro | GT | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/ora-03/1generation/) |
+| GWM | Ora 07 | Ora 07 | весь выпуск | 2024–н. в. | Pure, Pro | GT | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/ora-07/1generation/) |
+| GWM | Wey 03 | Wey 03 | весь выпуск | 2024–н. в. | Premium, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/wey-03/1generation/) |
+| GWM | Wey 05 | Wey 05 | весь выпуск | 2024–н. в. | Premium, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/gwm/wey-05/1generation/) |
+| Geely | E5 | E5 I | весь выпуск | 2026–н. в. | Pro, Pro+, Max+ | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/geely/e5/1generation/) |
+| Geely | Starray EM-i | Starray EM-i I | весь выпуск | 2026–н. в. | Pro, Pro+, Max+ | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/geely/starray/1generation/) |
+| Genesis | G70 | G70 | рестайлинг | 2020–н. в. | Premium, Plus Premium, Plus Luxus, Plus Sport, Luxus | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g70/1generation-facelift/) |
+| Genesis | G80 | G80 (RG3) | рестайлинг | 2024–н. в. | Electrified Premium, Electrified Luxury, Electrified | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g80/2generation-facelift/) |
+| Genesis | G80 | G80 (RG3) | дорестайлинг | 2020–2024 | Premium, Luxus | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g80/2generation/) |
+| Genesis | G90 | G90 (RS4) | весь выпуск | 2021–н. в. | eSC Luxury, eSC Luxury Plus | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/g90/2generation/) |
+| Genesis | GV60 | GV60 | рестайлинг | 2025–н. в. | Pure, Premium, Luxury, Sport Plus | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv60/1generation-facelift/) |
+| Genesis | GV60 | GV60 | дорестайлинг | 2021–2025 | Premium, Sport Plus | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv60/1generation/) |
+| Genesis | GV70 | GV70 (JK1) | рестайлинг | 2024–н. в. | Electrified Pure, Electrified Premium, Electrified Luxury, Electrified, Electrified Sport | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv70/1generation-facelift-2/) |
+| Genesis | GV70 | GV70 (JK1) | дорестайлинг | 2021–2024 | Premium, Luxus | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv70/1generation-facelift/) |
+| Genesis | GV80 | GV80 | рестайлинг | 2023–н. в. | Premium, Luxus, Luxus Plus | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv80/1generation/) |
+| Genesis | GV80 | GV80 | дорестайлинг | 2020–2023 | Premium, Luxus, Luxus Plus | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/genesis/gv80/1generation/) |
+| Hongqi | E-HS9 | E-HS9 I | весь выпуск | 2024–н. в. | Premium, Exclusive | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hongqi/e-hs9/1generation/) |
 | Hyundai | Accent | Accent III | весь выпуск | 2006–2011 | GL, GLS | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/accent/3generation/) |
 | Hyundai | BAYON | Bayon I | рестайлинг | 2024–2026 | Select, Trend, Prime | — | Blackline | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/bayon/1generation-facelift/) |
 | Hyundai | BAYON | Bayon I | дорестайлинг | 2021–2024 | Pure, Select, Connect & Go, Trend, Intro, Prime | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/bayon/1generation/) |
@@ -773,13 +795,14 @@
 | Hyundai | TUCSON | Tucson III | рестайлинг | 2018–2020 | Passion, Trend, Style, Passion Plus, Pure, Select, Advantage, Advantage+, Premium | N Line | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/tucson/2generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/tucson/2generation-facelift/) |
 | Hyundai | TUCSON | Tucson III | дорестайлинг | 2015–2018 | Classic, Trend, Advantage, Passion, Style, Passion Plus, Premium, Jahre, Pure, Select | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/tucson/2generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/tucson/2generation-facelift/) |
 | Hyundai | TUCSON | Tucson I | рестайлинг | 2008–2010 | GLS | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/tucson/1generation/) |
+| INEOS | Grenadier | Grenadier | весь выпуск | 2022–н. в. | Trailmaster X | — | Trailmaster Edition, Fieldmaster Edition, Black Edition, Arcane Works Detour Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ineos/grenadier/1generation/) |
 | Infiniti | FX | FX II | дорестайлинг | 2009–2012 | GT Premium, S Premium | GT, S | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/fx/s51/) |
 | Infiniti | M | M III | весь выпуск | 2010–2013 | GT Premium, S Premium | GT, S | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/m/y51/) |
 | Infiniti | Q30 | Q30 I | весь выпуск | 2015–2020 | Pure, Luxe, Premium, Premium Tech, Premium Tech Café Teak, Luxe Tech, Sport Tech | Sport | Premium City Black, City Black Edition, Premium Tech Gallery White, Sport City Black | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/q30/h15/) |
 | Infiniti | Q70 | Q70 | рестайлинг | 2015–2018 | Sport Tech, Premium, Premium Tech | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/infiniti/q70/y51-facelift/) |
 | Isuzu | D-Max | D-Max III | весь выпуск | 2020–н. в. | L, LS, LSE, V-Cross | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/isuzu/d-max/3generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/isuzu/d-max/3generation-facelift/), [3](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/isuzu/d-max/3generation-facelift-2/) |
-| JAECOO | 5 | 5 I | весь выпуск | 2025–н. в. | TGDI Select DHT, TGDI Exclusive DHT | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaecoo/5/1generation/) |
-| JAECOO | 7 | 7 I | весь выпуск | 2025–н. в. | TGDI Select DHT, TGDI Exclusive DHT | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaecoo/7/1generation/) |
+| JAECOO | 5 | 5 I | весь выпуск | 2025–н. в. | TGDI Select, TGDI Exclusive | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaecoo/5/1generation/) |
+| JAECOO | 7 | 7 I | весь выпуск | 2025–н. в. | TGDI Select, TGDI Exclusive | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaecoo/7/1generation/) |
 | Jaguar | E-Pace | E-Pace | рестайлинг | 2020–н. в. | SE, Chequered Flag, HSE, R-Dynamic, R-Dynamic S, R-Dynamic SE, R-Dynamic HSE | S, Sport | R-Dynamic Black | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaguar/e-pace/x540/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaguar/e-pace/x540-facelift/) |
 | Jaguar | E-Pace | E-Pace | дорестайлинг | 2017–2020 | SE, Chequered Flag, HSE, R-Dynamic, R-Dynamic S, R-Dynamic SE, R-Dynamic HSE | S | First Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaguar/e-pace/x540/) |
 | Jaguar | F-Pace | F-Pace | рестайлинг | 2020–н. в. | SE, HSE, R-Dynamic S, R-Dynamic SE, R-Dynamic HSE | S, Sport | R-Dynamic Black, R-Dynamic S Anniversary Edition, R-Dynamic SE Anniversary Edition, R-Dynamic HSE Anniversary Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jaguar/f-pace/x761-facelift/) |
@@ -827,7 +850,10 @@
 | Lexus | LM | 4-miejscowy | весь выпуск | 2023–н. в. | Executive, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lexus/lm/2generation/) |
 | Lexus | RC | RC | рестайлинг | 2018–н. в. | Luxury, F Sport | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lexus/rc/xc1/) |
 | Lexus | RC | RC | дорестайлинг | 2014–2018 | Luxury, F Sport | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lexus/rc/xc1/) |
-| MG | Cyberster | Cyberster I | весь выпуск | 2024–н. в. | Single, XPOWER | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mg/cyberster/1generation/) |
+| Lucid | Air | Air | весь выпуск | 2022–н. в. | Pure, Sapphire | — | Dream Edition, Midnight Dream Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lucid/air/1generation/) |
+| Lynk&Co | 01 | Lynk & Co 01 | весь выпуск | 2021–н. в. | Core, More | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lynk--co/01/1generation-facelift/) |
+| Lynk&Co | 08 | Lynk & Co 08 | весь выпуск | 2025–н. в. | Core, More | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/lynk--co/08/1generation/) |
+| MG | Cyberster | Cyberster I | весь выпуск | 2024–н. в. | XPOWER | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mg/cyberster/1generation/) |
 | MG | HS | HS II | весь выпуск | 2025–н. в. | Comfort, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mg/hs-ehs/2generation/) |
 | MG | HS | HS I | рестайлинг | 2025–2025 | Comfort, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mg/hs-ehs/2generation/) |
 | MG | HS | HS I | дорестайлинг | 2024–2025 | Comfort, Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mg/hs-ehs/1generation-facelift/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mg/hs-ehs/2generation/) |
@@ -840,6 +866,11 @@
 | Maserati | Granturismo | Granturismo I | весь выпуск | 2007–н. в. | Modena, Trofeo, Folgore | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/granturismo/2generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/granturismo/2generation-facelift/) |
 | Maserati | Levante | Levante I | весь выпуск | 2016–н. в. | GT Ultima, GranLusso, GranSport, Modena, S GranLusso, S GranSport, Modena S, Modena Ultima, Trofeo, Ultima | GT, S, GTS | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/levante/1generation/) |
 | Maserati | Quattroporte | Quattroporte II | весь выпуск | 2013–н. в. | GranLusso, GranSport, S GranLusso, S GranSport, Modena, Modena Ultima, GTS GranLusso, GTS GranSport, Trofeo | GT, S, GTS | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/quattroporte/vi-facelift/) |
+| Maxus | Euniq 6 | Euniq 6 I | весь выпуск | 2023–н. в. | — | — | Limited | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/euniq-6/1generation/) |
+| Maxus | Mifa 9 | Mifa 9 I | весь выпуск | 2023–н. в. | Elite, Luxury, Premium | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/mifa-9/1generation/) |
+| Maxus | T60 MAX | T60 MAX I | весь выпуск | 2025–н. в. | Luxury | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/t60-max/1generation/) |
+| Maxus | T90 | T90 I | весь выпуск | 2023–н. в. | Elite | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/t90-ev/1generation/) |
+| Maxus | eTerron 9 | eTerron 9 I | весь выпуск | 2025–н. в. | Luxury, Premium | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maxus/eterron-9/1generation/) |
 | Mazda | 5 | Mazda 5 II | весь выпуск | 2010–2015 | Active, Active Plus, CD Active, CD Active Plus, Prime-Line, Center-Line, Kenko, Sendo, Sports-Line, Center-Line Activematic, Kenko Activematic, Sendo Activematic, Sports-Line Activematic, DISI i-stop Center-Line, DISI i-stop Kenko, DISI i-stop Sendo, DISI i-stop Sports-Line, CD Prime-Line, CD Center-Line, CD Kenko, CD Sendo, CD Sports-Line | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mazda/5/cr-facelift/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mazda/5/cw-facelift/) |
 | Mazda | 5 | Mazda 5 I | весь выпуск | 2005–2010 | Comfort, Exclusive, Top, CD Comfort, CD Exclusive, CD Top, Active, Active Plus, CD Active, CD Active Plus | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mazda/5/cr/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mazda/5/cr-facelift/) |
 | Mazda | CX-6e | CX-6e I | весь выпуск | 2026–н. в. | Takumi, Takumi Plus | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mazda/cx-6e/1generation/) |
@@ -879,6 +910,7 @@
 | Mini | Paceman | Paceman | рестайлинг | 2014–2017 | Cooper | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mini/paceman/r61/) |
 | Mini | Paceman | Paceman | дорестайлинг | 2012–2014 | Cooper, Cooper S, Cooper SD | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mini/paceman/r61/) |
 | Mitsubishi | Grandis | Grandis I | весь выпуск | 2003–2011 | Inform, Invite, Motion, Intense, DI-D Invite, DI-D Jahre, DI-D Intense, DI-D Inform | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mitsubishi/grandis/1generation/) |
+| NIO | EL8 | EL8 | весь выпуск | 2024–н. в. | Executive | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nio/el8/1generation/) |
 | Nissan | 370Z | 370Z | рестайлинг | 2012–2020 | — | — | GT-Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/370z/z34/) |
 | Nissan | 370Z | 370Z | дорестайлинг | 2009–2012 | Pack | — | GT-Edition, Black Edition, Nürburgring Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/370z/z34/) |
 | Nissan | Ariya | Ariya | весь выпуск | 2022–н. в. | Advance Pack, Evolve Pack, Evolve+ Pack | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/ariya/fe0e/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/ariya/fe0e-facelift/) |
@@ -889,6 +921,7 @@
 | Nissan | Tiida | Tiida | весь выпуск | 2010–2012 | Visia, Acenta, Tekna | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/tiida/c11/) |
 | OMODA | 5 | 5 I | весь выпуск | 2024–н. в. | Exclusive | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/omoda/5/1generation/) |
 | OMODA | 9 | 9 I | весь выпуск | 2025–н. в. | TGDI Exclusive | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/omoda/9/1generation/) |
+| ORA | Funky Cat | Funky Cat | весь выпуск | 2023–н. в. | Pro | GT | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ora/funky-cat/1generation/) |
 | Opel | Agila | Agila B | весь выпуск | 2007–2014 | — | — | Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/agila/b/) |
 | Opel | Ampera | Ampera I | весь выпуск | 2011–2014 | — | — | Komfort Edition, ePionier Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/ampera/1generation/) |
 | Peugeot | 107 | 107 | рестайлинг | 2008–2013 | Urban Move, Access, Active, Envy, Style | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/107/1generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/107/1generation-facelift-2/) |
@@ -896,6 +929,9 @@
 | Peugeot | 408 | P54 | весь выпуск | 2023–2025 | Allure, Allure Pack, Allure Business, GT Exclusive | GT | First Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/408/1generation/) |
 | Peugeot | 807 | 807 | весь выпуск | 2009–2014 | Family, Tendance, Prémium, Style, Active, Premium, Allure, Bi-Turbo Tendance, Bi-Turbo Prémium, Bi-Turbo Platinum | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/807/1generation-facelift/) |
 | Peugeot | Bipper | Bipper | весь выпуск | 2009–2016 | Tepee Active, Tepee, Tepee Outdoor | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/bipper/1generation/) |
+| Polestar | 2 | Polestar 2 | рестайлинг | 2023–н. в. | — | — | BST edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/polestar/2/1generation/) |
+| Polestar | 2 | Polestar 2 | дорестайлинг | 2020–2023 | — | — | Launch Edition, BST edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/polestar/2/1generation/) |
+| Polestar | 5 | 5 I | весь выпуск | 2025–н. в. | — | — | Launch Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/polestar/5/1generation/) |
 | Porsche | 911 | 992 | рестайлинг | 2024–н. в. | Carrera, Carrera S | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/porsche/911/992-facelift/) |
 | Porsche | 911 | 992 | дорестайлинг | 2019–2024 | Carrera, Carrera S | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/porsche/911/992/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/porsche/911/992-facelift/) |
 | Porsche | 911 | 991 | рестайлинг | 2015–2019 | Carrera, Carrera S | — | Carrera Black Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/porsche/911/991/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/porsche/911/991-facelift/), [3](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/porsche/911/992/) |
@@ -921,6 +957,7 @@
 | Renault | ZOE | ZOE I | весь выпуск | 2013–2019 | Life, Zen, Intens, Z.E. Life, Z.E. Intens, Z.E. Cargo | — | Z.E. Limited, Z.E. Bose Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/zoe/1generation/) |
 | Seat | Exeo | Exeo | рестайлинг | 2012–2013 | Reference, Style, Ecomotive Reference, Ecomotive Style | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/exeo/3r-facelift/) |
 | Seat | Exeo | Exeo | дорестайлинг | 2009–2012 | Reference, Style, Ecomotive Reference, Ecomotive Style | Sport | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/exeo/3r/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/exeo/3r-facelift/) |
+| Seres | 5 | Seres 5 | весь выпуск | 2023–н. в. | Premium, Flagship | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seres/5/1generation/) |
 | Skoda | Elroq | Elroq | весь выпуск | 2024–н. в. | Essence, Selection, Sportline, Tour | — | First Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/skoda/elroq/1generation/) |
 | Skoda | Enyaq | Enyaq | рестайлинг | 2024–н. в. | Sportline, Essence, Selection | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/skoda/enyaq/1generation/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/skoda/enyaq/1generation-facelift/) |
 | Skoda | Enyaq | Enyaq | дорестайлинг | 2020–2024 | Sportline, L&K | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/skoda/enyaq/1generation/) |
@@ -972,14 +1009,19 @@
 | Toyota | Supra | Supra V | весь выпуск | 2019–н. в. | GR Supra Pure, GR Supra, GR Supra Dynamic, GR Supra Lightweight, GR Supra Legend, GR Supra Lightweight Evolution | — | GR Supra Final Edition, GR Supra Fuji Speedway Limited Edition, GR Supra Jarama Racetrack Edition, GR Supra Edition, GR Supra GT4 Edition Tribute, GR Supra Moonstone Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/supra/a90/) |
 | Toyota | Verso-S | Verso-S I | весь выпуск | 2011–2013 | Cool, Life, Life Multidrive S, Club, Club Multidrive S, Life MMT, Club MMT | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/verso-s/xp12/) |
 | Toyota | bZ4X | bZ4X I | весь выпуск | 2022–н. в. | Comfort, Team Deutschland, Teamplayer, Lounge, Comfort-Paket, Comfort- und Technik-Paket, Comfort- und Technik-Paket mit Panorama-Glasdach | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/bz4x/eam1/), [2](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/bz4x/eam1-facelift/) |
+| VinFast | VF8 | VF 8 | весь выпуск | 2022–н. в. | Plus | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vinfast/vf-8/1generation/) |
+| VinFast | VF9 | VF 9 | весь выпуск | 2022–н. в. | Plus | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vinfast/vf-9/1generation/) |
 | Volkswagen | CC | CC I | весь выпуск | 2012–2017 | BMT, BlueTDI SCR | — | BMT Dynamic Black | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/cc/1generation-facelift/) |
 | Volkswagen | CC | CC I | весь выпуск | 2008–2011 | Passat CC, Passat CC Individual, Passat CC Exclusive, Passat CC BMT, Passat CC BMT Exclusive, Passat CC BlueTDI, Passat CC BlueTDI Individual | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/cc/1generation/) |
 | Volkswagen | Fox | Fox | весь выпуск | 2004–2011 | Fresh, Refresh, Style | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/fox/1generation/) |
 | Volkswagen | Phaeton | Phaeton I | весь выпуск | 2002–2016 | — | — | Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/phaeton/1generation-facelift/) |
 | Volkswagen | Tayron | Tayron | весь выпуск | 2024–н. в. | Life, Style, SCR Life, SCR Style, SCR R-Line, Elegance, SCR Elegance | R-Line | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/tayron/1generation/) |
-| Volvo | ES90 | ES90 I | весь выпуск | 2025–н. в. | Single Core, Single Plus, Single, Twin Plus, Twin | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/es90/1generation/) |
+| Volvo | ES90 | ES90 I | весь выпуск | 2025–н. в. | Core, Plus | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/es90/1generation/) |
 | Volvo | EX60 | EX60 | весь выпуск | 2026–н. в. | P6 Plus, P6, Plus | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/ex60/1generation/) |
-| Volvo | EX90 | EX90 I | весь выпуск | 2022–н. в. | Single Core, Single Plus, Twin Core, Twin Plus, Twin | — | Twin Plus Executive Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/ex90/1generation/) |
+| Volvo | EX90 | EX90 I | весь выпуск | 2022–н. в. | Core, Plus, Twin, Twin Core, Twin Plus | — | Plus Executive Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/ex90/1generation/) |
+| XPENG | P7 | P7 | весь выпуск | 2023–н. в. | — | — | Wing Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/xpeng/p7/1generation/) |
+| Zeekr | 7X | Zeekr 7X | весь выпуск | 2025–н. в. | Core, Privilege | — | Business Edition | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/zeekr/7x/1generation/) |
+| Zeekr | X | Zeekr X | весь выпуск | 2024–н. в. | Core, Privilege | — | — | [1](https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/zeekr/x/1generation/) |
 
 
 ## Новые модели — из Википедии (этап 6, 10-10)
