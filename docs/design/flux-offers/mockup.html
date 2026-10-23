@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Макет: страница оффера для клиента на деталях «Карточки авто»</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<style>
+/* Макет «стало»: те же меры, что у «Карточки авто» (/c/ и /cars) — токены app.css платформы. */
+:root { --brand:#1a5b80; --ink:#0f1b24; --ink-soft:#33434f; --muted:#4a5b68; --line:#e2e8f0; --line-soft:#e9eef2; --control:#cbd4db; --chip:#edf1f4; --surface:#f8fafb; --good:#17603a; --good-soft:#e2f3e8; --info:#123f59; --info-soft:#e4eef4; --warn:#8a5200; --warn-soft:#fcf0d4; --warn-line:#ecd29a; --danger:#a32a1f; --danger-soft:#fbeae8; }
+* { box-sizing: border-box; }
+body { margin:0; background:#fff; color:var(--ink); font:15px/1.5 'Onest', system-ui, sans-serif; -webkit-font-smoothing:antialiased; }
+p { margin:0; }
+.bar { background:#fff; box-shadow:0 1px 2px rgba(15,27,36,.08); }
+.bar-in { max-width:1360px; margin:0 auto; min-height:56px; padding:0 24px; display:flex; align-items:center; gap:10px; }
+.logo { width:32px; height:32px; border-radius:8px; background:var(--brand); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; }
+.firm { font-weight:700; font-size:16px; }
+.bar-right { margin-left:auto; display:flex; align-items:center; gap:14px; }
+.date { font-size:13px; color:var(--muted); }
+main { max-width:1360px; margin:0 auto; padding:28px 24px 48px; display:flex; flex-direction:column; gap:20px; }
+.card { background:#fff; border:1px solid var(--line); border-radius:16px; padding:20px; }
+.card h2 { margin:0; font-size:18px; font-weight:600; }
+.head { display:grid; grid-template-columns:1fr 1fr; gap:32px; padding:22px 24px; }
+.title { display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; }
+h1 { margin:0; font-size:30px; line-height:1.1; letter-spacing:-.02em; font-weight:700; }
+.sub { font-size:18px; color:var(--ink-soft); }
+.vin { display:flex; align-items:center; gap:8px; margin-top:10px; font-size:13px; color:var(--muted); }
+.vinbox { font-family:ui-monospace,'SF Mono',Menlo,monospace; font-weight:600; font-size:14px; letter-spacing:.04em; color:var(--ink); border:1px solid var(--line); background:var(--surface); border-radius:8px; padding:4px 10px; }
+.icobtn { width:32px; height:32px; border:1px solid var(--control); border-radius:8px; background:#fff; color:var(--brand); display:inline-flex; align-items:center; justify-content:center; }
+.badges { display:flex; flex-wrap:wrap; gap:8px; margin-top:14px; }
+.b { display:inline-flex; align-items:center; gap:5px; border-radius:7px; padding:4px 10px; font-size:13px; font-weight:500; background:var(--chip); color:var(--ink-soft); }
+.b.info { background:var(--info-soft); color:var(--info); } .b.good { background:var(--good-soft); color:var(--good); } .b.warn { background:var(--warn-soft); color:var(--warn); }
+.meta { margin-top:12px; font-size:13px; color:var(--muted); }
+.facts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; align-content:start; margin:0; }
+.fact { display:flex; align-items:center; gap:10px; background:var(--surface); border-radius:10px; padding:10px 12px; }
+.fact svg { flex-shrink:0; color:var(--brand); }
+.fact dt { font-size:12px; color:var(--muted); } .fact dd { margin:0; font-size:15px; font-weight:600; line-height:1.35; }
+.grid-main { display:grid; grid-template-columns:minmax(0,1fr) 400px; gap:20px 24px; align-items:start; }
+.two { display:grid; grid-template-columns:1fr 1fr; gap:20px; align-items:start; }
+.gal { padding:14px; }
+.photo { aspect-ratio:3/2; border-radius:10px; background:linear-gradient(135deg,#4f7398,#3d5f84); position:relative; }
+.count { position:absolute; right:10px; bottom:10px; background:rgba(15,27,36,.72); color:#fff; font-size:12px; font-weight:600; border-radius:999px; padding:2px 9px; }
+.thumbs { display:flex; gap:8px; margin-top:10px; }
+.thumbs span { width:96px; height:64px; border-radius:8px; background:#46698f; }
+.thumbs span:first-child { outline:2px solid var(--brand); outline-offset:2px; }
+.price { display:flex; flex-direction:column; gap:14px; }
+.cap { font-size:13px; color:var(--muted); }
+.sum { font-size:30px; font-weight:700; line-height:1.15; letter-spacing:-.01em; font-variant-numeric:tabular-nums; }
+.inf { font-size:13px; font-weight:500; color:var(--info); }
+.rows { border-top:1px solid var(--line-soft); padding-top:12px; display:flex; flex-direction:column; gap:8px; font-size:14px; }
+.row { display:flex; justify-content:space-between; gap:12px; } .row b { text-align:right; font-variant-numeric:tabular-nums; }
+.note { font-size:12px; color:var(--muted); border-top:1px solid var(--line-soft); padding-top:12px; }
+.btns { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.btn { height:40px; border-radius:8px; display:inline-flex; align-items:center; justify-content:center; gap:8px; font-size:14px; font-weight:500; border:1px solid #e5e5e5; background:#fff; color:#27272a; box-shadow:0 1px 2px rgba(0,0,0,.05); padding:0 14px; white-space:nowrap; }
+.btn.pri { background:var(--brand); border-color:var(--brand); color:#fff; }
+.bhead { display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:14px; }
+.small { font-size:13px; color:var(--muted); }
+.chips { display:flex; flex-wrap:wrap; gap:8px; }
+.chip { background:var(--info-soft); color:var(--info); border-radius:7px; padding:6px 11px; font-size:14px; font-weight:500; }
+.lvl { display:flex; align-items:center; gap:10px; margin-bottom:12px; font-size:14px; font-weight:600; color:var(--good); }
+.dots { display:flex; gap:3px; } .dots i { width:12px; height:6px; border-radius:3px; background:var(--line); } .dots i.on { background:#2e9a5a; }
+.acc { margin-top:12px; border-top:1px solid var(--line-soft); padding-top:10px; display:flex; justify-content:space-between; font-size:14px; font-weight:500; color:var(--ink-soft); }
+.state { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px; }
+.state .b { padding:8px 10px; font-size:14px; border-radius:10px; }
+.scale { display:flex; height:10px; border-radius:5px; overflow:hidden; margin:6px 0 10px; position:relative; }
+.scale i { flex:1; } .pin { position:absolute; top:-4px; width:18px; height:18px; border-radius:50%; background:#fff; border:4px solid #2e7d4f; left:47%; }
+.leg { display:flex; flex-direction:column; gap:4px; font-size:13px; } .leg div { display:flex; justify-content:space-between; } .leg span::before { content:''; display:inline-block; width:10px; height:10px; border-radius:2px; margin-right:8px; background:var(--c); }
+.verdict { font-size:18px; font-weight:600; color:var(--good); margin:-4px 0 10px; }
+.lst { list-style:none; margin:4px 0 10px; padding:0; display:flex; flex-direction:column; gap:6px; font-size:14px; }
+.lst li { display:flex; gap:8px; } .lst li::before { content:''; flex-shrink:0; width:8px; height:8px; margin-top:7px; border-radius:50%; background:var(--d); }
+.lbl { font-size:13px; font-weight:600; color:var(--ink-soft); }
+.steps { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+.steps li { display:grid; grid-template-columns:28px 1fr; gap:10px; font-size:13px; color:var(--ink-soft); }
+.steps .n { width:26px; height:26px; border-radius:50%; color:#fff; font-size:12px; font-weight:700; display:flex; align-items:center; justify-content:center; background:var(--c); }
+.steps b { display:block; font-size:14px; color:var(--ink); } .steps .ph { display:block; font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--c); }
+.pay { display:inline-block; margin-top:5px; font-size:12px; font-weight:600; border-radius:7px; padding:2px 8px; background:var(--warn-soft); color:var(--warn); }
+.pay.good { background:var(--good-soft); color:var(--good); }
+.callout { display:flex; gap:10px; align-items:flex-start; border:1px solid var(--warn-line); background:var(--warn-soft); color:var(--warn); border-radius:10px; padding:10px 12px; font-size:13px; font-weight:500; }
+.calc .crow { display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid var(--line-soft); font-size:14px; } .calc .crow small { display:block; font-size:12px; color:var(--muted); } .calc .crow b { font-variant-numeric:tabular-nums; white-space:nowrap; }
+.total { display:flex; justify-content:space-between; align-items:baseline; padding:12px 0 10px; border-top:2px solid var(--ink); margin-top:-1px; font-size:18px; font-weight:700; } .total b { font-size:24px; font-variant-numeric:tabular-nums; }
+.shares { display:flex; height:8px; border-radius:4px; overflow:hidden; margin:4px 0 8px; }
+.sl { display:flex; flex-wrap:wrap; gap:4px 12px; font-size:12px; color:var(--muted); } .sl span::before { content:''; display:inline-block; width:8px; height:8px; border-radius:2px; margin-right:5px; background:var(--c); }
+.side { display:flex; flex-direction:column; gap:20px; }
+.who { display:flex; gap:12px; align-items:center; margin-bottom:10px; }
+.ava { width:40px; height:40px; border-radius:50%; background:var(--info-soft); color:var(--brand); font-weight:700; display:flex; align-items:center; justify-content:center; }
+.mobbar { display:none; }
+@media (max-width: 1023px) {
+  .head, .grid-main, .two { grid-template-columns:1fr; }
+}
+@media (max-width: 640px) {
+  .bar-in { padding:0 16px; } main { padding:20px 16px 96px; gap:16px; }
+  .head { padding:20px 16px; gap:20px; } h1 { font-size:26px; }
+  .facts { grid-template-columns:1fr 1fr; } .fact { padding:10px; gap:8px; } .fact dd { font-size:14px; }
+  .date { display:none; }
+  .btn { height:44px; } .icobtn { width:44px; height:44px; }
+  .state { grid-template-columns:1fr; }
+  .thumbs span { width:72px; height:52px; }
+  .mobbar { display:flex; position:fixed; inset:auto 0 0 0; z-index:20; align-items:center; gap:12px; border-top:1px solid var(--line); background:rgba(255,255,255,.96); padding:10px 16px; box-shadow:0 -4px 16px rgba(15,27,36,.08); }
+  .mobbar .cap { font-size:12px; } .mobbar .s { font-size:18px; font-weight:700; }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-road" viewBox="0 0 24 24"><path d="M4 20 8 4M20 20 16 4M12 4v3M12 11v3M12 18v2"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M5 21h10M7 11h6M15 9h2l2 2v6a2 2 0 0 1-4 0"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
+  <symbol id="i-axle" viewBox="0 0 24 24"><circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/><path d="M8 7h8M8 17h8M12 7v10"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 21h14"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3 2 21h20L12 3zM12 10v5M12 18h.01"/></symbol>
+</svg>
+<div class="bar"><div class="bar-in">
+  <span class="logo">AN</span><span class="firm">Auto Nowak Import</span>
+  <div class="bar-right"><span class="date">Oferta z dnia 23.10.2026</span>
+    <span class="btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-down"/></svg>Pobierz PDF</span></div>
+</div></div>
+<main>
+  <header class="card head">
+    <div>
+      <div class="title"><h1>Volkswagen Golf</h1><span class="sub">1.5 TSI Life · VIII generacja, przed liftingiem (2020–2024)</span></div>
+      <div class="vin">VIN <span class="vinbox">WVWZZZCDZMW012345</span><span class="icobtn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-copy"/></svg></span></div>
+      <div class="badges"><span class="b info">Auto od dealera</span><span class="b">Niemcy</span></div>
+      <p class="meta">Kolor: czarny metalik · Wnętrze: skórzana, czarny · Przegląd: do 05/2027</p>
+    </div>
+    <dl class="facts">
+      <div class="fact"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-cal"/></svg><div><dt>Pierwsza rejestracja</dt><dd>05/2021</dd></div></div>
+      <div class="fact"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-road"/></svg><div><dt>Przebieg</dt><dd>43 000 km</dd></div></div>
+      <div class="fact"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-fuel"/></svg><div><dt>Silnik</dt><dd>1,5 l · benzyna MHEV</dd></div></div>
+      <div class="fact"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-bolt"/></svg><div><dt>Moc</dt><dd>150 KM (110 kW)</dd></div></div>
+      <div class="fact"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-gear"/></svg><div><dt>Skrzynia</dt><dd>automatyczna</dd></div></div>
+      <div class="fact"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-axle"/></svg><div><dt>Napęd · nadwozie</dt><dd>hatchback</dd></div></div>
+    </dl>
+  </header>
+
+  <div class="grid-main">
+    <div class="card gal"><div class="photo"><span class="count">1 / 3</span></div><div class="thumbs"><span></span><span></span><span></span></div></div>
+    <section class="card price">
+      <div><div class="cap">Cena na gotowo w Polsce*</div><div class="sum">96 150 zł</div><div class="inf">Bezpośrednio od sprzedawcy</div></div>
+      <div class="rows"><div class="row"><span>Cena w ogłoszeniu</span><b>19 900 € brutto</b></div><div class="row"><span>Potencjał negocjacji</span><b>2–3%<br><span style="font-weight:500;color:var(--muted)">ok. 400–600 € mniej</span></b></div></div>
+      <p class="note">*Obejmuje transport, oględziny, akcyzę, obsługę zakupu, przegląd techniczny i tłumaczenie dokumentów.</p>
+      <div class="btns"><span class="btn pri"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg>Zadzwoń</span><span class="btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mail"/></svg>Napisz</span></div>
+    </section>
+  </div>
+
+  <div class="two">
+    <section class="card"><div class="bhead"><h2>Stan</h2><span class="b">Wg ogłoszenia</span></div>
+      <div class="state"><span class="b">Bezwypadkowość — sprawdzimy</span><span class="b good">✓ Książka serwisowa</span></div>
+      <p class="small">Sprawdzimy na miejscu: grubość lakieru, jazdę próbną, historię serwisową.</p></section>
+    <section class="card"><div class="bhead"><h2>Wyposażenie — najważniejsze</h2><span class="small">6 pozycji</span></div>
+      <div class="lvl">Wyposażenie 3/10 — podstawowe <span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+      <div class="chips"><span class="chip">Dach panoramiczny</span><span class="chip">Reflektory LED</span><span class="chip">Kamera cofania</span><span class="chip">Nawigacja</span><span class="chip">Podgrzewane fotele</span><span class="chip">Apple CarPlay / Android Auto</span></div>
+      <div class="acc"><span>Pokaż całe wyposażenie</span><span>⌄</span></div></section>
+  </div>
+
+  <div class="two">
+    <section class="card"><div class="bhead"><h2>Cena na tle rynku</h2></div>
+      <div class="scale"><i style="background:#1f7a46"></i><i style="background:#6fb486"></i><i style="background:#cfd7de"></i><i style="background:#e8b46a"></i><i style="background:#c8644f"></i><span class="pin"></span></div>
+      <div class="row small" style="margin-bottom:10px"><b style="color:var(--good)">to auto 19 900 €</b><span>uczciwa cena 19 000–21 000 €</span></div>
+      <div class="leg"><div><span style="--c:#1f7a46">Bardzo dobra cena</span><b>15 000–17 000 €</b></div><div><span style="--c:#6fb486"><b>Dobra cena</b> · to auto</span><b>17 000–19 000 €</b></div><div><span style="--c:#cfd7de">Uczciwa cena</span><b>19 000–21 000 €</b></div><div><span style="--c:#e8b46a">Podwyższona cena</span><b>21 000–23 000 €</b></div><div><span style="--c:#c8644f">Wysoka cena</span><b>23 000–25 000 €</b></div></div>
+      <p class="small" style="margin-top:10px">Skala cen portalu · stan na 22.10.2026</p></section>
+    <section class="card"><div class="bhead"><h2>Ocena</h2></div>
+      <p class="verdict">Rekomendujemy do dalszego sprawdzenia*</p>
+      <div class="lbl">Plusy</div>
+      <ul class="lst" style="--d:#2e9a5a"><li>Dobra cena na tle rynku (wg portalu)</li><li>Atrakcyjny przebieg: 43 000 km</li><li>Udokumentowana historia serwisowa</li></ul>
+      <div class="lbl">Ryzyka i do wiadomości</div>
+      <ul class="lst"><li style="--d:#c98a1a">Sprzedawca nie podał, czy auto jest bezwypadkowe — sprawdzimy</li><li style="--d:#94a3b8">Faktura VAT marża</li></ul>
+      <p class="small" style="font-size:12px">*Przed zakupem przeprowadzimy diagnostykę i jazdę próbną, sprawdzimy dokumenty i historię auta.</p></section>
+  </div>
+
+  <div class="two">
+    <section class="card"><div class="bhead"><h2>Co dalej: od pierwszej rozmowy do odbioru kluczyków</h2></div>
+      <ol class="steps">
+        <li style="--c:#2e9a5a"><span class="n">1</span><div><b>Rozmowa</b>Omawiamy ofertę auta i wszystkie szczegóły importu.</div></li>
+        <li style="--c:#2e9a5a"><span class="n">2</span><div><b>Sprawdzenie informacji</b>Dzwonimy do sprzedawcy: dostępność, ogólny stan, VIN i historia serwisowa, prosimy o dodatkowe zdjęcia.</div></li>
+        <li style="--c:#1a5b80"><span class="n">3</span><div><span class="ph">Rozpoczęcie prac</span><b>Umowa i depozyt</b>Podpisujemy umowę zdalnie lub w naszym biurze. Pan wpłaca depozyt 2000 zł na oględziny auta.<br><span class="pay">Płatność 1 · depozyt 2000 zł</span></div></li>
+        <li style="--c:#1a5b80"><span class="n">4</span><div><b>Rezerwacja auta</b>Uzgadniamy termin oględzin z naszym rzeczoznawcą. Jeśli sprzedawca na to pozwala, rezerwujemy auto.</div></li>
+        <li style="--c:#1a5b80"><span class="n">5</span><div><b>Oględziny</b>Nasz specjalista sprawdza auto na miejscu: lakier, diagnostyka, jazda próbna, nadwozie, wnętrze i elektronika.<br><span class="pay good">Pana decyzja: kupujemy?</span></div></li>
+        <li style="--c:#7b4fc2"><span class="n">6</span><div><span class="ph">Zakup</span><b>Negocjacje i umowa</b>Negocjujemy cenę i warunki zakupu — 70% wynegocjowanego rabatu zostaje dla Pana.</div></li>
+        <li style="--c:#7b4fc2"><span class="n">7</span><div><b>Płatność za auto</b>Pan przelewa za auto w euro bezpośrednio do sprzedawcy.<br><span class="pay">Płatność 2 · cena auta</span></div></li>
+        <li style="--c:#d0682a"><span class="n">8</span><div><span class="ph">Dostawa</span><b>Transport i kontrola</b>Przywozimy auto lawetą na nasz plac — w transporcie jest w pełni ubezpieczone.</div></li>
+        <li style="--c:#b38a12"><span class="n">9</span><div><span class="ph">Dokumenty i odbiór</span><b>Dokumenty</b>Przegląd techniczny i tłumaczenia, pomoc w akcyzie, komplet dokumentów do rejestracji.<br><span class="pay">Płatność 3 · rozliczenie końcowe</span></div></li>
+        <li style="--c:#b38a12"><span class="n">10</span><div><b>Odbiór auta</b>Jeśli trzeba, dodatkowe prace (serwis, polerowanie) i dowóz pod Pana adres.</div></li>
+      </ol>
+      <div class="callout" style="margin-top:14px;background:var(--info-soft);border-color:#c9dbe7;color:var(--info)">Zwykle około 2–3 tygodni od umowy do odbioru auta.</div></section>
+    <div class="side">
+      <section class="card calc"><div class="bhead" style="margin-bottom:4px"><h2>Koszt na gotowo</h2><span class="b">Zakup bezpośredni</span></div>
+        <div class="crow"><span>Cena auta<small>19 900 € brutto × 4,32 zł</small></span><b>85 968 zł</b></div>
+        <div class="crow"><span>Transport do Polski<small>laweta, ubezpieczony · z VAT</small></span><b>3 321 zł</b></div>
+        <div class="crow"><span>Oględziny przed zakupem<small>rzeczoznawca u sprzedawcy · z VAT</small></span><b>1 845 zł</b></div>
+        <div class="crow"><span>Akcyza 1,55%<small>hybryda do 2,0 l</small></span><b>1 333 zł</b></div>
+        <div class="crow"><span>Obsługa zakupu<small>1 829,27 zł + 1% ceny auta, netto + VAT</small></span><b>3 307 zł</b></div>
+        <div class="crow"><span>Przegląd techniczny</span><b>150 zł</b></div>
+        <div class="crow" style="border-bottom:0"><span>Tłumaczenie dokumentów</span><b>250 zł</b></div>
+        <div class="total"><span>Razem na gotowo</span><b>96 150 zł</b></div>
+        <div class="shares"><i style="flex:89.4;background:#1a5b80"></i><i style="flex:3;background:#d0682a"></i><i style="flex:1.6;background:#5fa8d3"></i><i style="flex:2.8;background:#7b4fc2"></i><i style="flex:2.8;background:#2e9a5a"></i><i style="flex:.4;background:#94a3b8"></i></div>
+        <div class="sl"><span style="--c:#1a5b80">Pojazd 89,4%</span><span style="--c:#d0682a">Podatki 3%</span><span style="--c:#5fa8d3">Oględziny 1,6%</span><span style="--c:#7b4fc2">Transport 2,8%</span><span style="--c:#2e9a5a">Prowizja 2,8%</span><span style="--c:#94a3b8">Pozostałe 0,4%</span></div>
+        <p class="small" style="font-size:12px;margin-top:10px">Kurs EUR 4,32 zł z dnia 22.10.2026. Kwoty są aktualne na dzień przygotowania oferty i nie zmieniają się automatycznie.</p></section>
+      <section class="card"><div class="bhead" style="margin-bottom:6px"><h2>Potencjał negocjacji*</h2></div>
+        <div style="display:flex;align-items:baseline;gap:8px"><span class="sum" style="font-size:26px;color:var(--brand)">2–3%</span><span class="small">ok. 400–600 € mniej</span></div>
+        <p class="small" style="margin-top:6px">Podstawa: w sprzedaży 41 dni</p>
+        <p class="small" style="font-size:12px;margin-top:6px">*Wartości orientacyjne, ostateczna decyzja zawsze należy do sprzedawcy.</p></section>
+      <section class="card"><div class="who"><span class="ava">J</span><div><b>Jan Kowalski</b><div class="small">Pana opiekun</div></div></div>
+        <p class="small" style="color:var(--ink-soft)">Auto Nowak Import · ul. Polna 5, 00-001 Warszawa</p>
+        <div class="btns" style="margin-top:12px"><span class="btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg>+48 600 100 200</span><span class="btn"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-mail"/></svg>E-mail</span></div></section>
+    </div>
+  </div>
+
+  <div class="callout"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><use href="#i-warn"/></svg>Dane pochodzą z ogłoszenia sprzedawcy i mogą zawierać błędy. Sprawdzimy je przed zakupem.</div>
+</main>
+<div class="mobbar"><div style="flex:1;min-width:0"><div class="cap">Cena na gotowo</div><div class="s">96 150 zł</div></div><span class="btn pri"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><use href="#i-phone"/></svg>Zadzwoń</span></div>
+</body>
+</html>
