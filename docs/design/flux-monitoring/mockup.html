@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>
+    Mantexlab Tools
+</title>
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-400-normal-9AYXx_QC.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-400-normal-BTdD9fLi.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-400-normal-DN_ZkHKd.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-500-normal-2-RsuwM3.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-500-normal-CJRUgmys.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-500-normal-BOsNMgOh.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-600-normal-DM19Lk_j.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-600-normal-BZYKVyuq.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-600-normal-DJ0mJiNR.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-700-normal-DMkYZIUB.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-700-normal-3rOSeAdn.woff2" type="font/woff2" crossorigin="anonymous" />
+<link rel="preload" as="font" href="http://127.0.0.1:8157/build/assets/onest-700-normal-DSjWcyFb.woff2" type="font/woff2" crossorigin="anonymous" />
+<style>
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/build/assets/onest-400-normal-9AYXx_QC.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/build/assets/onest-400-normal-RaMPE1jb.woff") format("woff");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/build/assets/onest-400-normal-BTdD9fLi.woff2") format("woff2");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/build/assets/onest-400-normal-BQq8x-Ju.woff") format("woff");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/build/assets/onest-400-normal-DN_ZkHKd.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/build/assets/onest-400-normal-n6Pl0Elk.woff") format("woff");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/build/assets/onest-500-normal-2-RsuwM3.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/build/assets/onest-500-normal-CVP923du.woff") format("woff");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/build/assets/onest-500-normal-CJRUgmys.woff2") format("woff2");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/build/assets/onest-500-normal-BMFE-GJD.woff") format("woff");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/build/assets/onest-500-normal-BOsNMgOh.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/build/assets/onest-500-normal-BG_GNqt_.woff") format("woff");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/build/assets/onest-600-normal-DM19Lk_j.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/build/assets/onest-600-normal-D88KJsY0.woff") format("woff");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/build/assets/onest-600-normal-BZYKVyuq.woff2") format("woff2");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/build/assets/onest-600-normal-DXk93W_-.woff") format("woff");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/build/assets/onest-600-normal-DJ0mJiNR.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/build/assets/onest-600-normal-HzGxiJ8N.woff") format("woff");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/build/assets/onest-700-normal-DMkYZIUB.woff2") format("woff2");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/build/assets/onest-700-normal-HOulLaZS.woff") format("woff");
+  unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/build/assets/onest-700-normal-3rOSeAdn.woff2") format("woff2");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/build/assets/onest-700-normal-BYHfPO1G.woff") format("woff");
+  unicode-range: U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/build/assets/onest-700-normal-DSjWcyFb.woff2") format("woff2");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+@font-face {
+  font-family: "Onest";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/build/assets/onest-700-normal-CIZyApB7.woff") format("woff");
+  unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+
+:root {
+  --font-onest: "Onest";
+}
+
+.font-onest {
+  font-family: var(--font-onest);
+}
+</style>
+<link rel="preload" as="style" href="../css/out/mock.css" /><link rel="modulepreload" as="script" href="http://127.0.0.1:8157/build/assets/app-CRLzSxS-.js" /><link rel="stylesheet" href="../css/out/mock.css" data-navigate-track="reload" /><script type="module" src="http://127.0.0.1:8157/build/assets/app-CRLzSxS-.js" data-navigate-track="reload"></script>
+    <style>.mock-img { width: 100%; height: auto; }</style>
+</head>
+<body class="min-h-screen bg-page text-[15px] leading-normal text-ink antialiased">
+<img src="img/nav-1440.png" alt="" class="mock-img hidden sm:block">
+<img src="img/nav-375.png" alt="" class="mock-img sm:hidden">
+<main class="mx-auto flex w-full max-w-[1360px] flex-col gap-5 px-4 pt-5 sm:px-6 sm:pt-7 pb-12">
+
+    <div class="flex flex-col gap-3">
+            <nav aria-label="Путь" class="flex flex-wrap gap-2 text-caption text-muted"><a href="#" class="text-brand hover:underline">Поиск дилеры</a><span>/</span><a href="#" class="text-brand hover:underline">Skoda Octavia</a><span>/</span><span>Мониторинг</span></nav>
+        <div class="flex flex-wrap items-center gap-x-4 gap-y-3">
+        <h1 class="text-[28px] font-bold leading-tight tracking-tight">Skoda Octavia</h1>
+        
+                    <div class="hidden flex-1 sm:block"></div>
+            <div class="flex w-full flex-wrap gap-2 sm:w-auto [&>*]:max-sm:flex-1"><div
+    class="contents"
+    x-data="{ confirmText: '', confirmAction: null }"
+    x-on:platform-confirm="confirmText = $event.detail.text; confirmAction = $event.detail.action; $el.querySelector('[data-flux-popover]')?.hidePopover(); $nextTick(() => $flux.modal('platform-confirm-a4a0a67ade').show())"
+>
+    <ui-dropdown position="bottom end" class="max-sm:w-full" data-flux-dropdown>
+    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-4 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    min-h-11 font-semibold max-sm:w-full" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target" data-folder-button="data-folder-button">
+        <span><span class="inline-flex items-center gap-2">
+                <svg class="shrink-0 [:where(&amp;)]:size-6 size-5 text-highlight" aria-hidden="true" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 0 1 4.5 9.75h15A2.25 2.25 0 0 1 21.75 12v.75m-8.69-6.44-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z"/>
+</svg>
+
+                        Все подборки
+                                    <span class="inline-flex items-center gap-0.5 rounded-full bg-chip px-2 py-0.5 text-[12px] font-semibold text-ink-soft">
+                                                3
+                    </span>
+                            </span></span>
+        
+        
+                    
+                        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+    </button>
+
+        <div
+    class="[:where(&amp;)]:min-w-48 [:where(&amp;)]:p-4 [:where(&amp;)]:min-w-48 [:where(&amp;)]:p-4 rounded-lg [:where(&amp;)]:shadow-xs border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700 not-data-open:hidden flex max-w-[calc(100vw-2rem)] flex-col gap-2 rounded-card! p-3! shadow-lg!" style="width: 36rem;" aria-label="Все подборки"
+    popover="manual"
+    data-flux-popover
+    tabindex="-1"
+>
+    
+</div>
+</ui-dropdown>
+
+    <ui-modal data-test="platform-confirm" data-flux-modal>
+    
+    <dialog
+        wire:ignore.self 
+        class="p-6 [:where(&amp;)]:max-w-xl [:where(&amp;)]:min-w-xs shadow-lg rounded-xl bg-white dark:bg-zinc-800 ring ring-black/5 dark:ring-zinc-700 shadow-lg rounded-xl w-[min(26rem,calc(100vw-2rem))]"
+         data-modal="platform-confirm-a4a0a67ade"                                 x-data="fluxModal('platform-confirm-a4a0a67ade', null)"
+                x-on:modal-show.document="handleShow($event)"
+        x-on:modal-close.document="handleClose($event)"
+    >
+                    <div class="flex flex-col gap-4">
+            <div class="font-medium [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white text-base [&amp;:has(+[data-flux-subheading])]:mb-2 [[data-flux-subheading]+&amp;]:mt-2" data-flux-heading>Подтвердите</div>
+            <p class="text-ink-soft" x-text="confirmText"></p>
+            <div class="flex justify-end gap-2">
+                <ui-close data-flux-modal-close >
+    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-4 pe-4 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        Отмена
+    </button>
+</ui-close>
+                <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-4 pe-4 inline-flex  bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-500 text-white  shadow-[inset_0px_1px_var(--color-red-500),inset_0px_2px_--theme(--color-white/.15)] dark:shadow-none [[data-flux-button-group]_&amp;]:border-e [:is([data-flux-button-group]&gt;&amp;:last-child,_[data-flux-button-group]_:last-child&gt;&amp;)]:border-e-0 [[data-flux-button-group]_&amp;]:border-red-600 dark:[[data-flux-button-group]_&amp;]:border-red-900/25    min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target" x-on:click="confirmAction && confirmAction(); confirmAction = null; $flux.modal('platform-confirm-a4a0a67ade').close()" data-test="platform-confirm-yes">
+        Удалить
+    </button>
+            </div>
+        </div>
+
+                            <div class="absolute top-0 end-0 mt-4 me-4">
+                    <ui-close data-flux-modal-close >
+    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 w-8 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       text-zinc-400! hover:text-zinc-800! dark:text-zinc-500! dark:hover:text-white!" data-flux-button="data-flux-button" aria-label="Close modal">
+        <svg class="shrink-0 [:where(&amp;)]:size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22Z"/>
+</svg>
+    </button>
+</ui-close>
+                </div>
+                        </dialog>
+</ui-modal>
+</div>
+            <ui-radio-group class="block flex p-1 rounded-lg bg-zinc-800/5 dark:bg-white/10 h-8 py-[3px] px-[3px] -my-px h-[calc(2rem+2px)] max-sm:w-auto! max-sm:flex-none!" aria-label="Язык раздела" x-on:change="$el.value && $wire.setSectionLocale($el.value)" data-test="locale-switch"  data-flux-radio-group-segmented>
+        <ui-radio class="flex whitespace-nowrap flex-1 justify-center items-center gap-2 rounded-md data-checked:shadow-xs text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:hover:text-white dark:text-white/70 data-checked:text-zinc-800 dark:data-checked:text-white data-checked:bg-white dark:data-checked:bg-white/20 [&amp;[disabled]]:opacity-50 dark:[&amp;[disabled]]:opacity-75 [&amp;[disabled]]:cursor-default [&amp;[disabled]]:pointer-events-none px-3 text-sm min-w-11" value="ru" checked="checked" data-flux-control data-flux-radio-segmented tabindex="-1">
+    
+    RU
+
+    </ui-radio>
+            <ui-radio class="flex whitespace-nowrap flex-1 justify-center items-center gap-2 rounded-md data-checked:shadow-xs text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:hover:text-white dark:text-white/70 data-checked:text-zinc-800 dark:data-checked:text-white data-checked:bg-white dark:data-checked:bg-white/20 [&amp;[disabled]]:opacity-50 dark:[&amp;[disabled]]:opacity-75 [&amp;[disabled]]:cursor-default [&amp;[disabled]]:pointer-events-none px-3 text-sm min-w-11" value="pl" data-flux-control data-flux-radio-segmented tabindex="-1">
+    
+    PL
+
+    </ui-radio>
+    </ui-radio-group></div>
+            </div>
+</div>
+    <p class="-mt-3 text-ink-soft">Klient: kombi, automat, do 95 000 zł na gotowo</p>
+    <nav aria-label="Разделы подборки" class="-mx-4 overflow-x-auto px-4 [scrollbar-width:none] sm:mx-0 sm:px-0" data-test="dealers-tabs">
+    <ul class="flex min-w-max gap-1 border-b border-line">
+                                <li>
+                                    <a href="http://127.0.0.1:8157/dealers/2?analiza=1" wire:navigate class="flex min-h-11 items-center gap-2 border-b-2 px-3 -mb-px group/tab border-transparent hover:border-control">
+                        <span  class="flex items-center gap-2 text-sm font-semibold text-ink text-[15px]! font-medium! text-ink-soft! group-hover/tab:text-ink!">
+    <span class="inline-flex size-[22px] shrink-0 items-center justify-center rounded-full bg-brand text-[12px] text-white" aria-hidden="true">1</span>
+    <span class="min-w-0">Поиск и анализ</span>
+</span>
+                    </a>
+                            </li>
+                                <li>
+                                    <span aria-current="page" class="flex min-h-11 items-center gap-2 border-b-2 px-3 -mb-px border-brand">
+                        <span  class="flex items-center gap-2 text-sm font-semibold text-ink text-[15px]! font-medium! font-semibold!">
+    <span class="inline-flex size-[22px] shrink-0 items-center justify-center rounded-full bg-brand text-[12px] text-white" aria-hidden="true">2</span>
+    <span class="min-w-0">Мониторинг</span>
+</span>
+                    </span>
+                            </li>
+            </ul>
+</nav>
+
+    <div class="grid grid-cols-1 gap-5 lg:grid-cols-[minmax(0,1fr)_400px] lg:gap-x-6">
+        <div class="flex min-w-0 flex-col gap-5">
+            
+            <section class="flex min-w-0 flex-col gap-4 rounded-card border border-line bg-white p-5">
+        <div class="flex flex-wrap items-start gap-x-6 gap-y-3">
+                    <dl class="flex gap-6">
+                        <div><dt class="text-caption text-muted">Марка</dt><dd class="text-[22px] font-bold leading-tight">Skoda</dd></div>
+                        <div><dt class="text-caption text-muted">Модель</dt><dd class="text-[22px] font-bold leading-tight">Octavia</dd></div>
+                    </dl>
+                    <div class="flex-1"></div>
+                    <div class="flex gap-2 max-sm:w-full [&>*]:max-sm:flex-1">
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-2 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    pointer-coarse:min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M2 4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4Zm10.5 5.707a.5.5 0 0 0-.146-.353l-1-1a.5.5 0 0 0-.708 0L9.354 9.646a.5.5 0 0 1-.708 0L6.354 7.354a.5.5 0 0 0-.708 0l-2 2a.5.5 0 0 0-.146.353V12a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V9.707ZM12 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z" clip-rule="evenodd"/>
+</svg>
+
+                
+                    
+            
+            <span>Копировать данные</span>
+    </button>
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-2 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    pointer-coarse:min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5v.793c.026.009.051.02.076.032L7.674 8.51c.206.1.446.1.652 0l6.598-3.185A.755.755 0 0 1 15 5.293V4.5A1.5 1.5 0 0 0 13.5 3h-11Z"/>
+  <path d="M15 6.954 8.978 9.86a2.25 2.25 0 0 1-1.956 0L1 6.954V11.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V6.954Z"/>
+</svg>
+
+                
+                    
+            
+            <span>E-mail</span>
+    </button>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-1.5">
+                    <div class="grid max-w-md grid-cols-2 gap-3">
+                        <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 block *:data-flux-label:mb-3 [&amp;&gt;[data-flux-label]:has(+[data-flux-description])]:mb-2 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mt-0 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mb-3 [&amp;&gt;[data-flux-description]:first-child:has(+*)]:mb-3 [&amp;&gt;*:not([data-flux-label])+[data-flux-description]]:mt-3" data-flux-field>
+    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Бюджет клиента от
+
+    
+    
+    </ui-label>
+        <div class="w-full flex *:data-flux-input:grow [&amp;&gt;[data-flux-input]:last-child:not(:first-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;[data-flux-input]:not(:first-child):not(:last-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;[data-flux-input]:has(+[data-flux-input-group-suffix])&gt;[data-flux-group-target]:not([data-invalid])]:border-e-0 [&amp;&gt;*:last-child:not(:first-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:not(:first-child):not(:last-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:has(+[data-flux-input-group-suffix])&gt;[data-flux-group-target]:not([data-invalid])]:border-e-0 [&amp;&gt;[data-flux-group-target]:last-child:not(:first-child)]:border-s-0 [&amp;&gt;[data-flux-group-target]:not(:first-child):not(:last-child)]:border-s-0 [&amp;&gt;[data-flux-group-target]:has(+[data-flux-input-group-suffix])]:border-e-0 [&amp;&gt;[data-flux-group-target]:not(:first-child):not(:last-child)]:rounded-none [&amp;&gt;[data-flux-group-target]:first-child:not(:last-child)]:rounded-e-none [&amp;&gt;[data-flux-group-target]:last-child:not(:first-child)]:rounded-s-none [&amp;&gt;*:not(:first-child):not(:last-child):not(:only-child)&gt;[data-flux-group-target]]:rounded-none [&amp;&gt;*:first-child:not(:last-child)&gt;[data-flux-group-target]]:rounded-e-none [&amp;&gt;*:last-child:not(:first-child)&gt;[data-flux-group-target]]:rounded-s-none [&amp;&gt;*:not(:first-child):not(:last-child):not(:only-child)&gt;[data-flux-input]&gt;[data-flux-group-target]]:rounded-none [&amp;&gt;*:first-child:not(:last-child)&gt;[data-flux-input]&gt;[data-flux-group-target]]:rounded-e-none [&amp;&gt;*:last-child:not(:first-child)&gt;[data-flux-input]&gt;[data-flux-group-target]]:rounded-s-none [&amp;&gt;*:not(:first-child):not(:last-child):not(:only-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]]:rounded-none [&amp;&gt;*:first-child:not(:last-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]]:rounded-e-none [&amp;&gt;*:last-child:not(:first-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]]:rounded-s-none [&amp;&gt;*:last-child:not(:first-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:not(:first-child):not(:last-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:has(+[data-flux-input-group-suffix])&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]:not([data-invalid])]:border-e-0" data-flux-input-group>
+        <div class="w-full relative block group/input" data-flux-input>
+            
+            <input
+                type="text"
+                
+                class="w-full border block disabled:shadow-none dark:shadow-none appearance-none text-base sm:text-sm rounded-lg py-2 h-10 leading-[1.375rem] ps-3 pe-3 bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 disabled:text-zinc-500 placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:text-zinc-300 dark:disabled:text-zinc-400 dark:placeholder-zinc-400 dark:disabled:placeholder-zinc-500 shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5 data-invalid:shadow-none data-invalid:border-red-500 dark:data-invalid:border-red-500 disabled:data-invalid:border-red-500 dark:disabled:data-invalid:border-red-500 tabular-nums" inputmode="decimal" autocomplete="off" placeholder="—"
+                                                                                                                data-flux-control
+                data-flux-group-target
+                                            >
+
+                    </div>
+        <div class="flex items-center px-4 whitespace-nowrap text-zinc-800 dark:text-zinc-200 bg-zinc-800/5 dark:bg-white/20 border-zinc-200 dark:border-white/10 border-e border-t border-b shadow-xs text-base sm:text-sm rounded-e-lg min-w-12 justify-center font-semibold" data-flux-input-group-suffix>
+    zł
+</div>
+    </div>
+</ui-field>
+                        <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 block *:data-flux-label:mb-3 [&amp;&gt;[data-flux-label]:has(+[data-flux-description])]:mb-2 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mt-0 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mb-3 [&amp;&gt;[data-flux-description]:first-child:has(+*)]:mb-3 [&amp;&gt;*:not([data-flux-label])+[data-flux-description]]:mt-3" data-flux-field>
+    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    до
+
+    
+    
+    </ui-label>
+        <div class="w-full flex *:data-flux-input:grow [&amp;&gt;[data-flux-input]:last-child:not(:first-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;[data-flux-input]:not(:first-child):not(:last-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;[data-flux-input]:has(+[data-flux-input-group-suffix])&gt;[data-flux-group-target]:not([data-invalid])]:border-e-0 [&amp;&gt;*:last-child:not(:first-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:not(:first-child):not(:last-child)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:has(+[data-flux-input-group-suffix])&gt;[data-flux-group-target]:not([data-invalid])]:border-e-0 [&amp;&gt;[data-flux-group-target]:last-child:not(:first-child)]:border-s-0 [&amp;&gt;[data-flux-group-target]:not(:first-child):not(:last-child)]:border-s-0 [&amp;&gt;[data-flux-group-target]:has(+[data-flux-input-group-suffix])]:border-e-0 [&amp;&gt;[data-flux-group-target]:not(:first-child):not(:last-child)]:rounded-none [&amp;&gt;[data-flux-group-target]:first-child:not(:last-child)]:rounded-e-none [&amp;&gt;[data-flux-group-target]:last-child:not(:first-child)]:rounded-s-none [&amp;&gt;*:not(:first-child):not(:last-child):not(:only-child)&gt;[data-flux-group-target]]:rounded-none [&amp;&gt;*:first-child:not(:last-child)&gt;[data-flux-group-target]]:rounded-e-none [&amp;&gt;*:last-child:not(:first-child)&gt;[data-flux-group-target]]:rounded-s-none [&amp;&gt;*:not(:first-child):not(:last-child):not(:only-child)&gt;[data-flux-input]&gt;[data-flux-group-target]]:rounded-none [&amp;&gt;*:first-child:not(:last-child)&gt;[data-flux-input]&gt;[data-flux-group-target]]:rounded-e-none [&amp;&gt;*:last-child:not(:first-child)&gt;[data-flux-input]&gt;[data-flux-group-target]]:rounded-s-none [&amp;&gt;*:not(:first-child):not(:last-child):not(:only-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]]:rounded-none [&amp;&gt;*:first-child:not(:last-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]]:rounded-e-none [&amp;&gt;*:last-child:not(:first-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]]:rounded-s-none [&amp;&gt;*:last-child:not(:first-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:not(:first-child):not(:last-child)&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]:not([data-invalid])]:border-s-0 [&amp;&gt;*:has(+[data-flux-input-group-suffix])&gt;:is([data-flux-tooltip],ui-time-picker-trigger)&gt;[data-flux-group-target]:not([data-invalid])]:border-e-0" data-flux-input-group>
+        <div class="w-full relative block group/input" data-flux-input>
+            
+            <input
+                type="text"
+                
+                class="w-full border block disabled:shadow-none dark:shadow-none appearance-none text-base sm:text-sm rounded-lg py-2 h-10 leading-[1.375rem] ps-3 pe-3 bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 disabled:text-zinc-500 placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:text-zinc-300 dark:disabled:text-zinc-400 dark:placeholder-zinc-400 dark:disabled:placeholder-zinc-500 shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5 data-invalid:shadow-none data-invalid:border-red-500 dark:data-invalid:border-red-500 disabled:data-invalid:border-red-500 dark:disabled:data-invalid:border-red-500 tabular-nums" inputmode="decimal" autocomplete="off" placeholder="—"
+                                                                                                                data-flux-control
+                data-flux-group-target
+                                            >
+
+                    </div>
+        <div class="flex items-center px-4 whitespace-nowrap text-zinc-800 dark:text-zinc-200 bg-zinc-800/5 dark:bg-white/20 border-zinc-200 dark:border-white/10 border-e border-t border-b shadow-xs text-base sm:text-sm rounded-e-lg min-w-12 justify-center font-semibold" data-flux-input-group-suffix>
+    zł
+</div>
+    </div>
+</ui-field>
+                    </div>
+                    <span class="text-caption text-muted">Акциз 3,1 % — по объёму и топливу из «Поиска»</span>
+                </div>
+                <div class="flex flex-wrap gap-2 border-t border-line-soft pt-4">
+                    <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line bg-chip px-3.5 text-sm"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4 text-muted" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
+</svg>
+
+        <span class="text-muted">Год</span> <b>2019–2022</b></a>
+                    <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-line bg-chip px-3.5 text-sm"><svg
+    class="shrink-0 [:where(&amp;)]:size-6 size-4 text-muted"
+    data-flux-icon
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+    data-slot="icon"
+>
+    <line x1="3" x2="15" y1="22" y2="22" />
+    <line x1="4" x2="14" y1="9" y2="9" />
+    <path d="M14 22V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v18" />
+    <path d="M14 13h2a2 2 0 0 1 2 2v2a2 2 0 0 0 2 2a2 2 0 0 0 2-2V9.83a2 2 0 0 0-.59-1.42L18 5" />
+</svg>
+<span class="text-muted">Двигатель</span> <b>дизель</b></a>
+                    <a href="#" class="inline-flex min-h-10 flex-wrap items-center gap-1.5 rounded-[20px] border border-line bg-chip px-3.5 py-1.5 text-sm"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4 text-muted" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z"/>
+</svg>
+
+        <span class="text-muted">Рынки</span> <svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect y="0" width="12" height="2.667" fill="#000"/><rect y="2.667" width="12" height="2.667" fill="#dd0000"/><rect y="5.333" width="12" height="2.667" fill="#ffce00"/></svg><svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect y="0" width="12" height="4" fill="#fff"/><rect y="4" width="12" height="4" fill="#dc143c"/></svg><svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect y="0" width="12" height="2.667" fill="#ae1c28"/><rect y="2.667" width="12" height="2.667" fill="#fff"/><rect y="5.333" width="12" height="2.667" fill="#21468b"/></svg><svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect x="0" width="4" height="8" fill="#000"/><rect x="4" width="4" height="8" fill="#fdda24"/><rect x="8" width="4" height="8" fill="#ef3340"/></svg> <b>Германия, Польша, Нидерланды, Бельгия</b></a>
+                                            <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-dashed border-control px-3.5 text-sm text-muted hover:border-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg>
+
+        Пробег <span class="font-medium text-brand">любой — задать</span></a>
+                                            <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-dashed border-control px-3.5 text-sm text-muted hover:border-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg>
+
+        Цена объявления <span class="font-medium text-brand">любой — задать</span></a>
+                                            <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-dashed border-control px-3.5 text-sm text-muted hover:border-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg>
+
+        Коробка <span class="font-medium text-brand">любой — задать</span></a>
+                                            <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-dashed border-control px-3.5 text-sm text-muted hover:border-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg>
+
+        Кузов <span class="font-medium text-brand">любой — задать</span></a>
+                                            <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-dashed border-control px-3.5 text-sm text-muted hover:border-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg>
+
+        Состояние <span class="font-medium text-brand">любой — задать</span></a>
+                                            <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-dashed border-control px-3.5 text-sm text-muted hover:border-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg>
+
+        Продавец <span class="font-medium text-brand">любой — задать</span></a>
+                                            <a href="#" class="inline-flex min-h-10 items-center gap-1.5 rounded-full border border-dashed border-control px-3.5 text-sm text-muted hover:border-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
+</svg>
+
+        НДС <span class="font-medium text-brand">любой — задать</span></a>
+                                    </div>
+                <div class="flex flex-wrap items-center gap-x-4 gap-y-3 border-t border-line-soft pt-4">
+                    <span class="text-sm font-semibold">Способ покупки</span>
+                    <ui-radio-group class="block flex p-1 rounded-lg bg-zinc-800/5 dark:bg-white/10 h-10 p-1"  data-flux-radio-group-segmented>
+        <ui-radio class="flex whitespace-nowrap flex-1 justify-center items-center gap-2 rounded-md data-checked:shadow-xs text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:hover:text-white dark:text-white/70 data-checked:text-zinc-800 dark:data-checked:text-white data-checked:bg-white dark:data-checked:bg-white/20 [&amp;[disabled]]:opacity-50 dark:[&amp;[disabled]]:opacity-75 [&amp;[disabled]]:cursor-default [&amp;[disabled]]:pointer-events-none px-4" value="direct" checked="checked" data-flux-control data-flux-radio-segmented tabindex="-1">
+    
+    Напрямую
+
+    </ui-radio>
+                        <ui-radio class="flex whitespace-nowrap flex-1 justify-center items-center gap-2 rounded-md data-checked:shadow-xs text-sm font-medium text-zinc-600 hover:text-zinc-800 dark:hover:text-white dark:text-white/70 data-checked:text-zinc-800 dark:data-checked:text-white data-checked:bg-white dark:data-checked:bg-white/20 [&amp;[disabled]]:opacity-50 dark:[&amp;[disabled]]:opacity-75 [&amp;[disabled]]:cursor-default [&amp;[disabled]]:pointer-events-none px-4" value="firm" data-flux-control data-flux-radio-segmented tabindex="-1">
+    
+    Через фирму
+
+    </ui-radio>
+    </ui-radio-group>
+                    <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 grid gap-x-3 gap-y-1.5 has-[[data-flux-label]~[data-flux-control]]:grid-cols-[1fr_auto] has-[[data-flux-control]~[data-flux-label]]:grid-cols-[auto_1fr] [&amp;&gt;[data-flux-control]~[data-flux-description]]:row-start-2 [&amp;&gt;[data-flux-control]~[data-flux-description]]:col-start-2 [&amp;&gt;[data-flux-control]~[data-flux-error]]:col-span-2 [&amp;&gt;[data-flux-control]~[data-flux-error]]:mt-1 [&amp;&gt;[data-flux-label]~[data-flux-control]]:row-start-1 [&amp;&gt;[data-flux-label]~[data-flux-control]]:col-start-2" data-flux-field>
+    <ui-checkbox class="flex size-[1.125rem] rounded-[.3rem] mt-px outline-offset-2" label="только НДС к вычету"  data-flux-control data-flux-checkbox>
+        <div class="shrink-0 size-[1.125rem] rounded-[.3rem] flex justify-center items-center text-sm text-zinc-700 dark:text-zinc-800 shadow-xs [ui-checkbox[disabled]_&amp;]:opacity-75 [ui-checkbox[data-checked][disabled]_&amp;]:opacity-50 [ui-checkbox[disabled]_&amp;]:shadow-none [ui-checkbox[data-checked]_&amp;]:shadow-none [ui-checkbox[data-indeterminate]_&amp;]:shadow-none [ui-checkbox[data-checked]:not([data-indeterminate])_&amp;&gt;svg:first-child]:block [ui-checkbox[data-indeterminate]_&amp;&gt;svg:last-child]:block border border-zinc-300 dark:border-white/10 [ui-checkbox[disabled]_&amp;]:border-zinc-200 dark:[ui-checkbox[disabled]_&amp;]:border-white/5 [ui-checkbox[data-checked]_&amp;]:border-transparent [ui-checkbox[data-indeterminate]_&amp;]:border-transparent [ui-checkbox[disabled][data-checked]_&amp;]:border-transparent [ui-checkbox[disabled][data-indeterminate]_&amp;]:border-transparent [print-color-adjust:exact] bg-white dark:bg-white/10 [ui-checkbox[data-checked]_&amp;]:bg-[var(--color-accent)] hover:[ui-checkbox[data-checked]_&amp;]:bg-(--color-accent) focus:[ui-checkbox[data-checked]_&amp;]:bg-(--color-accent) [ui-checkbox[data-indeterminate]_&amp;]:bg-[var(--color-accent)] hover:[ui-checkbox[data-indeterminate]_&amp;]:bg-(--color-accent) focus:[ui-checkbox[data-indeterminate]_&amp;]:bg-(--color-accent)" data-flux-checkbox-indicator>
+    <svg class="shrink-0 [:where(&amp;)]:size-4 hidden text-[var(--color-accent-foreground)]" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M12.416 3.376a.75.75 0 0 1 .208 1.04l-5 7.5a.75.75 0 0 1-1.154.114l-3-3a.75.75 0 0 1 1.06-1.06l2.353 2.353 4.493-6.74a.75.75 0 0 1 1.04-.207Z" clip-rule="evenodd"/>
+</svg>
+
+            <svg class="shrink-0 [:where(&amp;)]:size-4 hidden text-[var(--color-accent-foreground)]" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3.75 7.25a.75.75 0 0 0 0 1.5h8.5a.75.75 0 0 0 0-1.5h-8.5Z"/>
+</svg>
+
+        </div>
+    </ui-checkbox>
+
+                    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    только НДС к вычету
+
+    
+    
+    </ui-label>
+        
+        
+                    <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
+    </div>
+</ui-field>
+
+                </div>
+</section>
+
+            <ui-disclosure-group class="block rounded-card border border-line bg-white px-5" data-flux-accordion-heading>
+    <ui-disclosure
+    class="block pt-4 first:pt-0 pb-4 last:pb-0 border-b last:border-b-0 border-zinc-800/10 dark:border-white/10"
+    x-data="{ open: false }"
+    x-model.self="open"
+        data-flux-accordion-item
+>
+            <button type="button" class="group/accordion-heading flex items-center w-full text-start text-sm font-medium justify-between [&amp;&gt;svg]:ms-6 text-zinc-800 dark:text-white cursor-pointer min-h-14 text-lg! font-semibold!"  data-flux-accordion-heading>
+    <span class="flex-1"><span class="flex items-center gap-2"><svg class="shrink-0 [:where(&amp;)]:size-6 size-5 text-muted" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/>
+</svg>
+
+        Страны и порталы</span></span>
+
+            <svg class="shrink-0 [:where(&amp;)]:size-5 text-zinc-300 dark:text-zinc-400 group-hover/accordion-heading:text-zinc-800 dark:group-hover/accordion-heading:text-white hidden group-data-open/accordion-heading:block text-zinc-800! dark:text-white!" aria-hidden="true" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M9.47 6.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 8.06l-3.72 3.72a.75.75 0 0 1-1.06-1.06l4.25-4.25Z" clip-rule="evenodd"/>
+</svg>
+
+                <svg class="shrink-0 [:where(&amp;)]:size-5 text-zinc-300 dark:text-zinc-400 group-hover/accordion-heading:text-zinc-800 dark:group-hover/accordion-heading:text-white block group-data-open/accordion-heading:hidden" aria-hidden="true" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+
+            </button>
+    </ui-disclosure>
+</ui-disclosure-group>
+        </div>
+
+        
+        <section class="flex min-w-0 flex-col gap-4 rounded-card border border-line bg-white p-5 self-start lg:sticky lg:top-5">
+        <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 grid gap-x-3 gap-y-1.5 has-[[data-flux-label]~[data-flux-control]]:grid-cols-[1fr_auto] has-[[data-flux-control]~[data-flux-label]]:grid-cols-[auto_1fr] [&amp;&gt;[data-flux-control]~[data-flux-description]]:row-start-2 [&amp;&gt;[data-flux-control]~[data-flux-description]]:col-start-2 [&amp;&gt;[data-flux-control]~[data-flux-error]]:col-span-2 [&amp;&gt;[data-flux-control]~[data-flux-error]]:mt-1 [&amp;&gt;[data-flux-label]~[data-flux-control]]:row-start-1 [&amp;&gt;[data-flux-label]~[data-flux-control]]:col-start-2" data-flux-field>
+    <ui-switch class="group h-5 w-8 min-w-8 relative inline-flex items-center outline-offset-2 rounded-full transition bg-zinc-800/15 [&amp;[disabled]]:opacity-50 dark:bg-transparent dark:border dark:border-white/20 dark:[&amp;[disabled]]:border-white/10 data-loading:opacity-50 data-loading:pointer-events-none dark:data-loading:border-white/10 [print-color-adjust:exact] data-checked:bg-(--color-accent) data-checked:border-0" label="Мониторинг включён"   checked data-checked  data-flux-control data-flux-switch>
+            <span class="size-3.5 rounded-full transition translate-x-[0.1875rem] dark:translate-x-[0.125rem] rtl:-translate-x-[0.1875rem] dark:rtl:-translate-x-[0.125rem] bg-white group-data-checked:translate-x-[0.9375rem] rtl:group-data-checked:-translate-x-[0.9375rem] dark:group-data-checked:translate-x-[0.9375rem] dark:rtl:group-data-checked:-translate-x-[0.9375rem] group-data-checked:bg-(--color-accent-foreground)"></span>
+        </ui-switch>
+
+                    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Мониторинг включён
+
+    
+    
+    </ui-label>
+        
+        
+                    <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
+    </div>
+</ui-field>
+
+            <div class="grid grid-cols-2 gap-3">
+                <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 block *:data-flux-label:mb-3 [&amp;&gt;[data-flux-label]:has(+[data-flux-description])]:mb-2 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mt-0 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mb-3 [&amp;&gt;[data-flux-description]:first-child:has(+*)]:mb-3 [&amp;&gt;*:not([data-flux-label])+[data-flux-description]]:mt-3" data-flux-field>
+    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Частота
+
+    
+    
+    </ui-label>
+        
+        
+        <select
+    class="appearance-none [:where(&amp;)]:w-full ps-3 pe-10 block h-10 py-2 text-base sm:text-sm leading-[1.375rem] rounded-lg shadow-xs border bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 dark:text-zinc-300 disabled:text-zinc-500 dark:disabled:text-zinc-400 has-[option.placeholder:checked]:text-zinc-400 dark:has-[option.placeholder:checked]:text-zinc-400 dark:[&amp;_option]:bg-zinc-700 dark:[&amp;_option]:text-white disabled:shadow-none border border-zinc-200 border-b-zinc-300/80 dark:border-white/10" label="Частота"
+                data-flux-control
+    data-flux-select-native
+    data-flux-group-target
+>
+    
+    <option
+    selected="selected"
+        >каждый день</option>
+</select>
+
+        
+                <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
+    </div>
+</ui-field>
+                <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 block *:data-flux-label:mb-3 [&amp;&gt;[data-flux-label]:has(+[data-flux-description])]:mb-2 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mt-0 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mb-3 [&amp;&gt;[data-flux-description]:first-child:has(+*)]:mb-3 [&amp;&gt;*:not([data-flux-label])+[data-flux-description]]:mt-3" data-flux-field>
+    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Время
+
+    
+    
+    </ui-label>
+        
+        
+        <ui-time-picker
+        class="block min-w-0 border-0 p-0 bg-transparent" label="Время"
+        data-flux-control
+        data-flux-time-picker
+                                 value="09:30"         label="Время"
+    >
+        <ui-time-picker-trigger>
+                    <button type="button" class="group/select-button cursor-default py-2 overflow-hidden flex items-center shadow-xs bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] disabled:shadow-none h-10 text-base sm:text-sm rounded-lg px-3 block w-full border border-zinc-200 border-b-zinc-300/80 dark:border-white/10"  data-flux-group-target data-flux-time-picker-button>
+    <svg class="shrink-0 [:where(&amp;)]:size-5 me-2 text-zinc-300 [[disabled]_&]:text-zinc-200! dark:text-white/60 dark:[[disabled]_&]:text-white/40!" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16Zm.75-13a.75.75 0 0 0-1.5 0v5c0 .414.336.75.75.75h4a.75.75 0 0 0 0-1.5h-3.25V5Z" clip-rule="evenodd"/>
+</svg>
+
+        
+            <ui-selected-time x-ignore wire:ignore class="truncate flex gap-2 text-start flex-1 text-zinc-700 [[disabled]_&]:text-zinc-500 dark:text-zinc-300 dark:[[disabled]_&]:text-zinc-400">
+    <template name="placeholder">
+        <span class="text-zinc-400 [[disabled]_&]:text-zinc-400/70 dark:text-zinc-400 dark:[[disabled]_&]:text-zinc-500" data-flux-time-picker-placeholder>
+            Select a time
+        </span>
+    </template>
+
+    <template name="time">
+        <div dir="auto" class="truncate"><slot></slot></div>
+    </template>
+</ui-selected-time>    
+    
+    <svg class="shrink-0 [:where(&amp;)]:size-5 ms-2 -me-1 text-zinc-300 [[data-flux-time-picker-button]:hover_&]:text-zinc-800 [[disabled]_&]:text-zinc-200! dark:text-white/60 dark:[[data-flux-time-picker-button]:hover_&]:text-white dark:[[disabled]_&]:text-white/40!" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+
+        </button>
+                </ui-time-picker-trigger>
+
+        <ui-time-picker-options popover="manual" tabindex="-1" wire:ignore class="[:where(&amp;)]:min-w-48 [:where(&amp;)]:max-h-[20rem] p-[.3125rem] scroll-py-[.3125rem] overscroll-y-none rounded-lg shadow-xs border border-zinc-200 dark:border-zinc-600 bg-white dark:bg-zinc-700">
+            <template name="option">
+                <button type="button" tabindex="-1" class="w-full px-1 py-1.5 rounded-lg flex items-center justify-start gap-2 text-sm text-zinc-800 dark:text-white data-active:bg-zinc-100 dark:data-active:bg-zinc-600 disabled:text-zinc-400 disabled:pointer-events-none disabled:cursor-default [[readonly]_&]:pointer-events-none [[readonly]_&]:cursor-default [[readonly]_&]:bg-transparent">
+                    <div class="w-6 shrink-0" data-checked>
+                        <svg class="shrink-0 [:where(&amp;)]:size-5 hidden [ui-time-picker-options>[data-selected]_&]:block" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 0 1 .143 1.052l-8 10.5a.75.75 0 0 1-1.127.075l-4.5-4.5a.75.75 0 0 1 1.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 0 1 1.05-.143Z" clip-rule="evenodd"/>
+</svg>
+
+                            </div>
+                    
+                    <div dir="ltr" class="tabular-nums">
+                        <slot></slot>
+                    </div>
+                </button>
+            </template>
+        </ui-time-picker-options>
+    </ui-time-picker>
+
+        
+                <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
+    </div>
+</ui-field>
+            </div>
+            <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-2 pe-3 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-white       self-start pointer-coarse:min-h-11" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"/>
+</svg>
+
+                
+                    
+            
+            <span>Добавить время</span>
+    </button>
+            <div class="flex flex-col gap-2 border-t border-line-soft pt-4">
+                <ui-field class="min-w-0 [&amp;:not(:has([data-flux-field])):has([data-flux-control][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-radio-group][disabled])&gt;[data-flux-label]]:opacity-50 [&amp;:has(&gt;[data-flux-checkbox-group][disabled])&gt;[data-flux-label]]:opacity-50 block *:data-flux-label:mb-3 [&amp;&gt;[data-flux-label]:has(+[data-flux-description])]:mb-2 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mt-0 [&amp;&gt;[data-flux-label]+[data-flux-description]]:mb-3 [&amp;&gt;[data-flux-description]:first-child:has(+*)]:mb-3 [&amp;&gt;*:not([data-flux-label])+[data-flux-description]]:mt-3" data-flux-field>
+    <ui-label class="inline-flex items-center text-sm font-medium  [:where(&amp;)]:text-zinc-800 [:where(&amp;)]:dark:text-white [&amp;:has([data-flux-label-trailing])]:flex" data-flux-label>
+    Утреннее письмо
+
+    
+    
+    </ui-label>
+        
+        
+        <div class="w-full relative block group/input" data-flux-input>
+                            <div class="pointer-events-none absolute top-0 bottom-0 border-s border-transparent flex items-center justify-center text-xs text-zinc-400/75 dark:text-white/60 ps-3 start-0">
+                    <svg class="shrink-0 [:where(&amp;)]:size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3 4a2 2 0 0 0-2 2v1.161l8.441 4.221a1.25 1.25 0 0 0 1.118 0L19 7.162V6a2 2 0 0 0-2-2H3Z"/>
+  <path d="m19 8.839-7.77 3.885a2.75 2.75 0 0 1-2.46 0L1 8.839V14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.839Z"/>
+</svg>
+
+                        </div>
+            
+            <input
+                type="text"
+                
+                class="w-full border block disabled:shadow-none dark:shadow-none appearance-none text-base sm:text-sm rounded-lg py-2 h-10 leading-[1.375rem] ps-10 pe-3 bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 disabled:text-zinc-500 placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:text-zinc-300 dark:disabled:text-zinc-400 dark:placeholder-zinc-400 dark:disabled:placeholder-zinc-500 shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5 data-invalid:shadow-none data-invalid:border-red-500 dark:data-invalid:border-red-500 disabled:data-invalid:border-red-500 dark:disabled:data-invalid:border-red-500" label="Утреннее письмо" value="dealers-design@zrok.test"
+                                                                                                                data-flux-control
+                data-flux-group-target
+                                            >
+
+                    </div>
+
+        
+                <div role="alert" aria-live="polite" aria-atomic="true" class="mt-3 text-sm font-medium text-red-500 dark:text-red-400 hidden" data-flux-error>
+    </div>
+</ui-field>
+                <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-2 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    self-start pointer-coarse:min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z"/>
+</svg>
+
+                
+                    
+            
+            <span>Отправить тестовое письмо</span>
+    </button>
+            </div>
+            <dl><div class="flex min-w-0 items-center gap-3 rounded-control bg-surface-soft px-3 py-2.5">
+    <svg class="shrink-0 [:where(&amp;)]:size-6 size-5 shrink-0 text-brand" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+</svg>
+
+            <div class="flex min-w-0 flex-col">
+        <dt class="text-[12px] text-muted">Следующий мониторинг</dt>
+        <dd class="break-words font-semibold leading-snug text-ink hyphens-auto text-[15px]">завтра в 09:30</dd>
+    </div>
+</div>
+</dl>
+            <div class="@container p-2 flex border rounded-xl border-(--callout-border) bg-(--callout-background) [&amp;_[data-slot=heading]]:text-(--callout-heading) [&amp;_[data-slot=text]]:text-(--callout-text) [--callout-border:var(--color-zinc-200)] dark:[--callout-border:color-mix(in_oklab,var(--color-white),transparent_95%)] [--callout-background:var(--color-white)] dark:[--callout-background:color-mix(in_oklab,var(--color-zinc-400),transparent_90%)] [--callout-heading:var(--color-zinc-800)] dark:[--callout-heading:var(--color-zinc-200)] [--callout-text:var(--color-zinc-500)] dark:[--callout-text:var(--color-zinc-300)] [--callout-icon:var(--color-zinc-400)] dark:[--callout-icon:var(--color-zinc-400)] rounded-control!" style="--callout-border: var(--color-warn-line); --callout-background: var(--color-warn-soft); --callout-heading: var(--color-warn); --callout-text: var(--color-warn); --callout-icon: var(--color-warn);" data-tone="warn" data-flux-callout>
+            <div class="ps-2 py-2 pe-0 flex items-baseline">
+            <svg class="shrink-0 [:where(&amp;)]:size-5 inline-block size-5 text-[var(--callout-icon)] dark:text-[var(--callout-icon)]" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M8.485 2.495c.673-1.167 2.357-1.167 3.03 0l6.28 10.875c.673 1.167-.17 2.625-1.516 2.625H3.72c-1.347 0-2.189-1.458-1.515-2.625L8.485 2.495ZM10 5a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 10 5Zm0 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/>
+</svg>
+
+                </div>
+    
+    <div class="ps-2 flex-1 ">
+        <div class="flex-1 py-2 pe-3 @md:pe-4 flex flex-col justify-center gap-2" data-slot="content">
+            
+            
+            <div class="text-sm" data-slot="text">
+    Почта сервера ещё не настроена: письма не уходят, а только записываются в журнал сервера. Нужны данные почтового ящика (SMTP) в настройках сервера — их вносит администратор.
+</div>
+        </div>
+
+            </div>
+
+    </div>
+            <p class="text-caption text-muted">Мониторинг с 19.10.2026 · 5 дней · сохранено мониторингов: 6</p>
+</section>
+    </div>
+
+    
+    <section class="flex min-w-0 flex-col gap-4 rounded-card border border-line bg-white p-5">
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-3">
+            <h2 class="text-lg font-semibold leading-snug">Статистика</h2>
+            <div class="flex-1"></div>
+            <div class="flex gap-2 max-sm:w-full max-sm:flex-col">
+                <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-3 pe-4 inline-flex  bg-[var(--color-accent)] hover:bg-[color-mix(in_oklab,_var(--color-accent),_transparent_10%)] text-[var(--color-accent-foreground)] border border-black/10 dark:border-0 shadow-[inset_0px_1px_--theme(--color-white/.2)] [[data-flux-button-group]_&amp;]:border-e-0 [:is([data-flux-button-group]&gt;&amp;:last-child,_[data-flux-button-group]_:last-child&gt;&amp;)]:border-e-[1px] dark:[:is([data-flux-button-group]&gt;&amp;:last-child,_[data-flux-button-group]_:last-child&gt;&amp;)]:border-e-0 [:is([data-flux-button-group]&gt;&amp;:not(:first-child),_[data-flux-button-group]_:not(:first-child)&gt;&amp;)]:border-s-[1px]! [:is([data-flux-button-group]&gt;&amp;:not(:first-child),_[data-flux-button-group]_:not(:first-child)&gt;&amp;)]:border-s-[color-mix(in_srgb,var(--color-accent-foreground),transparent_85%)]    min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M13.836 2.477a.75.75 0 0 1 .75.75v3.182a.75.75 0 0 1-.75.75h-3.182a.75.75 0 0 1 0-1.5h1.37l-.84-.841a4.5 4.5 0 0 0-7.08.932.75.75 0 0 1-1.3-.75 6 6 0 0 1 9.44-1.242l.842.84V3.227a.75.75 0 0 1 .75-.75Zm-.911 7.5A.75.75 0 0 1 13.199 11a6 6 0 0 1-9.44 1.241l-.84-.84v1.371a.75.75 0 0 1-1.5 0V9.591a.75.75 0 0 1 .75-.75H5.35a.75.75 0 0 1 0 1.5H3.98l.841.841a4.5 4.5 0 0 0 7.08-.932.75.75 0 0 1 1.025-.273Z" clip-rule="evenodd"/>
+</svg>
+
+                
+                    
+            
+            <span>Запустить мониторинг</span>
+    </button>
+                <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-4 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <span>Анализ рынка</span>
+        
+        
+                    
+                        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M2 8a.75.75 0 0 1 .75-.75h8.69L8.22 4.03a.75.75 0 0 1 1.06-1.06l4.5 4.5a.75.75 0 0 1 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06-1.06l3.22-3.22H2.75A.75.75 0 0 1 2 8Z" clip-rule="evenodd"/>
+</svg>
+    </button>
+            </div>
+        </div>
+        <ui-disclosure-group class="block rounded-control border border-line-soft bg-surface-soft px-3" data-flux-accordion-heading>
+    <ui-disclosure
+    class="block pt-4 first:pt-0 pb-4 last:pb-0 border-b last:border-b-0 border-zinc-800/10 dark:border-white/10"
+    x-data="{ open: false }"
+    x-model.self="open"
+        data-flux-accordion-item
+>
+            <button type="button" class="group/accordion-heading flex items-center w-full text-start text-sm font-medium justify-between [&amp;&gt;svg]:ms-6 text-zinc-800 dark:text-white cursor-pointer"  data-flux-accordion-heading>
+    <span class="flex-1"><span class="flex items-center gap-2"><svg class="shrink-0 [:where(&amp;)]:size-6 size-5 text-info" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+</svg>
+
+        Как работает мониторинг</span></span>
+
+            <svg class="shrink-0 [:where(&amp;)]:size-5 text-zinc-300 dark:text-zinc-400 group-hover/accordion-heading:text-zinc-800 dark:group-hover/accordion-heading:text-white hidden group-data-open/accordion-heading:block text-zinc-800! dark:text-white!" aria-hidden="true" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M9.47 6.47a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 1 1-1.06 1.06L10 8.06l-3.72 3.72a.75.75 0 0 1-1.06-1.06l4.25-4.25Z" clip-rule="evenodd"/>
+</svg>
+
+                <svg class="shrink-0 [:where(&amp;)]:size-5 text-zinc-300 dark:text-zinc-400 group-hover/accordion-heading:text-zinc-800 dark:group-hover/accordion-heading:text-white block group-data-open/accordion-heading:hidden" aria-hidden="true" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+
+            </button>
+    </ui-disclosure>
+</ui-disclosure-group>
+        <div class="@container p-2 flex border rounded-xl border-(--callout-border) bg-(--callout-background) [&amp;_[data-slot=heading]]:text-(--callout-heading) [&amp;_[data-slot=text]]:text-(--callout-text) [--callout-border:var(--color-zinc-200)] dark:[--callout-border:color-mix(in_oklab,var(--color-white),transparent_95%)] [--callout-background:var(--color-white)] dark:[--callout-background:color-mix(in_oklab,var(--color-zinc-400),transparent_90%)] [--callout-heading:var(--color-zinc-800)] dark:[--callout-heading:var(--color-zinc-200)] [--callout-text:var(--color-zinc-500)] dark:[--callout-text:var(--color-zinc-300)] [--callout-icon:var(--color-zinc-400)] dark:[--callout-icon:var(--color-zinc-400)] rounded-control!" style="--callout-border: var(--color-info-soft); --callout-background: var(--color-info-soft); --callout-heading: var(--color-info); --callout-text: var(--color-info); --callout-icon: var(--color-info);" data-tone="info" data-flux-callout>
+            <div class="ps-2 py-2 pe-0 flex items-baseline">
+            <svg class="shrink-0 [:where(&amp;)]:size-5 inline-block size-5 text-[var(--callout-icon)] dark:text-[var(--callout-icon)]" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M16.555 5.412a8.028 8.028 0 0 0-3.503-2.81 14.899 14.899 0 0 1 1.663 4.472 8.547 8.547 0 0 0 1.84-1.662ZM13.326 7.825a13.43 13.43 0 0 0-2.413-5.773 8.087 8.087 0 0 0-1.826 0 13.43 13.43 0 0 0-2.413 5.773A8.473 8.473 0 0 0 10 8.5c1.18 0 2.304-.24 3.326-.675ZM6.514 9.376A9.98 9.98 0 0 0 10 10c1.226 0 2.4-.22 3.486-.624a13.54 13.54 0 0 1-.351 3.759A13.54 13.54 0 0 1 10 13.5c-1.079 0-2.128-.127-3.134-.366a13.538 13.538 0 0 1-.352-3.758ZM5.285 7.074a14.9 14.9 0 0 1 1.663-4.471 8.028 8.028 0 0 0-3.503 2.81c.529.638 1.149 1.199 1.84 1.66ZM17.334 6.798a7.973 7.973 0 0 1 .614 4.115 13.47 13.47 0 0 1-3.178 1.72 15.093 15.093 0 0 0 .174-3.939 10.043 10.043 0 0 0 2.39-1.896ZM2.666 6.798a10.042 10.042 0 0 0 2.39 1.896 15.196 15.196 0 0 0 .174 3.94 13.472 13.472 0 0 1-3.178-1.72 7.973 7.973 0 0 1 .615-4.115ZM10 15c.898 0 1.778-.079 2.633-.23a13.473 13.473 0 0 1-1.72 3.178 8.099 8.099 0 0 1-1.826 0 13.47 13.47 0 0 1-1.72-3.178c.855.151 1.735.23 2.633.23ZM14.357 14.357a14.912 14.912 0 0 1-1.305 3.04 8.027 8.027 0 0 0 4.345-4.345c-.953.542-1.971.981-3.04 1.305ZM6.948 17.397a8.027 8.027 0 0 1-4.345-4.345c.953.542 1.971.981 3.04 1.305a14.912 14.912 0 0 0 1.305 3.04Z"/>
+</svg>
+
+                </div>
+    
+    <div class="ps-2 flex-1 ">
+        <div class="flex-1 py-2 pe-3 @md:pe-4 flex flex-col justify-center gap-2" data-slot="content">
+            
+            
+            <div class="text-sm" data-slot="text">
+    В проверке нет mobile.de: их читает ваш браузер — кнопка «Прочитать» рядом, прочитанное сегодня войдёт в проверку.
+</div>
+        </div>
+
+                    <div class="py-2 self-start flex items-center gap-2" data-slot="actions">
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-3 pe-2 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    pointer-coarse:min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <span>Прочитать mobile.de</span>
+        
+        
+                    
+                        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M6.22 8.72a.75.75 0 0 0 1.06 1.06l5.22-5.22v1.69a.75.75 0 0 0 1.5 0v-3.5a.75.75 0 0 0-.75-.75h-3.5a.75.75 0 0 0 0 1.5h1.69L6.22 8.72Z"/>
+  <path d="M3.5 6.75c0-.69.56-1.25 1.25-1.25H7A.75.75 0 0 0 7 4H4.75A2.75 2.75 0 0 0 2 6.75v4.5A2.75 2.75 0 0 0 4.75 14h4.5A2.75 2.75 0 0 0 12 11.25V9a.75.75 0 0 0-1.5 0v2.25c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-4.5Z"/>
+</svg>
+    </button>
+                    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-3 pe-3 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       text-brand! pointer-coarse:min-h-11" data-flux-button="data-flux-button">
+        Установить расширение
+    </button>
+                </div>
+            </div>
+            </div>
+
+    </div>
+        <div class="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-3">
+                            <button type="button" class="flex min-w-0 flex-col items-start gap-1.5 rounded-control border p-3 text-left sm:p-4 col-span-2 lg:col-span-1 border-brand bg-selected ring-1 ring-brand">
+                    <span class="flex items-center gap-2 text-caption text-muted">
+                        <span class="flex size-7 items-center justify-center rounded-full bg-brand text-white"><svg class="shrink-0 [:where(&amp;)]:size-4 size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3.5 2A1.5 1.5 0 0 0 2 3.5v2A1.5 1.5 0 0 0 3.5 7h2A1.5 1.5 0 0 0 7 5.5v-2A1.5 1.5 0 0 0 5.5 2h-2ZM3.5 9A1.5 1.5 0 0 0 2 10.5v2A1.5 1.5 0 0 0 3.5 14h2A1.5 1.5 0 0 0 7 12.5v-2A1.5 1.5 0 0 0 5.5 9h-2ZM9 3.5A1.5 1.5 0 0 1 10.5 2h2A1.5 1.5 0 0 1 14 3.5v2A1.5 1.5 0 0 1 12.5 7h-2A1.5 1.5 0 0 1 9 5.5v-2ZM10.5 9A1.5 1.5 0 0 0 9 10.5v2a1.5 1.5 0 0 0 1.5 1.5h2a1.5 1.5 0 0 0 1.5-1.5v-2A1.5 1.5 0 0 0 12.5 9h-2Z"/>
+</svg>
+
+        </span>                        Все порталы
+                    </span>
+                                            <span class="text-xl font-bold leading-tight tabular-nums sm:text-2xl">105 авто</span>
+                                                                <span class="flex flex-wrap gap-1"><div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-fresh-soft! text-fresh! py-0!" data-tone="fresh">
+        +2 новых
+    </div>
+<div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-chip! text-muted! py-0!" data-tone="muted">
+        −3 исчезло
+    </div>
+<div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-good-soft! text-good! py-0!" data-tone="good">
+        3 подешевели
+    </div>
+</span>
+                                        <span class="text-caption text-muted">от 65 000 zł · медиана 107 350 zł</span>
+                </button>
+                            <button type="button" class="flex min-w-0 flex-col items-start gap-1.5 rounded-control border p-3 text-left sm:p-4 border-line bg-white hover:border-control">
+                    <span class="flex items-center gap-2 text-caption text-muted">
+                        <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #e8600f"
+    title="mobile.de"
+    aria-label="mobile.de"
+>m</span>
+                        mobile.de
+                    </span>
+                                            <div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-warn-soft! text-warn!" data-tone="warn">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-badge-icon="data-flux-badge-icon" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M6.701 2.25c.577-1 2.02-1 2.598 0l5.196 9a1.5 1.5 0 0 1-1.299 2.25H2.804a1.5 1.5 0 0 1-1.3-2.25l5.197-9ZM8 4a.75.75 0 0 1 .75.75v3a.75.75 0 1 1-1.5 0v-3A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 0 0-2 1 1 0 0 0 0 2Z" clip-rule="evenodd"/>
+</svg>
+
+            
+    Нет ответа
+    </div>
+                                                            <span class="text-caption text-muted">mobile.de сегодня не читался: его читает расширение — кнопка «Прочитать mobile.de».</span>
+                </button>
+                            <button type="button" class="flex min-w-0 flex-col items-start gap-1.5 rounded-control border p-3 text-left sm:p-4 border-line bg-white hover:border-control">
+                    <span class="flex items-center gap-2 text-caption text-muted">
+                        <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #f3a712"
+    title="AutoScout24 (Германия)"
+    aria-label="AutoScout24 (Германия)"
+>AS</span>
+                        AutoScout24 (Германия)
+                    </span>
+                                            <span class="text-xl font-bold leading-tight tabular-nums sm:text-2xl">39 авто</span>
+                                                                <span class="flex flex-wrap gap-1"><div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-fresh-soft! text-fresh! py-0!" data-tone="fresh">
+        +1 новое
+    </div>
+<div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-chip! text-muted! py-0!" data-tone="muted">
+        −2 исчезло
+    </div>
+</span>
+                                        <span class="text-caption text-muted">от 72 550 zł</span>
+                </button>
+                            <button type="button" class="flex min-w-0 flex-col items-start gap-1.5 rounded-control border p-3 text-left sm:p-4 border-line bg-white hover:border-control">
+                    <span class="flex items-center gap-2 text-caption text-muted">
+                        <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #2a5bd7"
+    title="otomoto.pl"
+    aria-label="otomoto.pl"
+>o</span>
+                        otomoto.pl
+                    </span>
+                                            <span class="text-xl font-bold leading-tight tabular-nums sm:text-2xl">30 авто</span>
+                                                                <span class="flex flex-wrap gap-1"><div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-chip! text-muted! py-0!" data-tone="muted">
+        −1 исчезло
+    </div>
+</span>
+                                        <span class="text-caption text-muted">от 65 000 zł</span>
+                </button>
+                            <button type="button" class="flex min-w-0 flex-col items-start gap-1.5 rounded-control border p-3 text-left sm:p-4 border-line bg-white hover:border-control">
+                    <span class="flex items-center gap-2 text-caption text-muted">
+                        <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #f3a712"
+    title="AutoScout24 (Нидерланды)"
+    aria-label="AutoScout24 (Нидерланды)"
+>AS</span>
+                        AutoScout24 (Нидерланды)
+                    </span>
+                                            <span class="text-xl font-bold leading-tight tabular-nums sm:text-2xl">15 авто</span>
+                                                                <span class="flex flex-wrap gap-1"><div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-good-soft! text-good! py-0!" data-tone="good">
+        1 подешевело
+    </div>
+</span>
+                                        <span class="text-caption text-muted">от 99 050 zł</span>
+                </button>
+                            <button type="button" class="flex min-w-0 flex-col items-start gap-1.5 rounded-control border p-3 text-left sm:p-4 border-line bg-white hover:border-control">
+                    <span class="flex items-center gap-2 text-caption text-muted">
+                        <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #1e6fd0"
+    title="Marktplaats"
+    aria-label="Marktplaats"
+>M</span>
+                        Marktplaats
+                    </span>
+                                            <span class="text-xl font-bold leading-tight tabular-nums sm:text-2xl">9 авто</span>
+                                                                <span class="flex flex-wrap gap-1"><div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-good-soft! text-good! py-0!" data-tone="good">
+        2 подешевели
+    </div>
+</span>
+                                        <span class="text-caption text-muted">от 87 050 zł</span>
+                </button>
+                            <button type="button" class="flex min-w-0 flex-col items-start gap-1.5 rounded-control border p-3 text-left sm:p-4 border-line bg-white hover:border-control">
+                    <span class="flex items-center gap-2 text-caption text-muted">
+                        <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #f3a712"
+    title="AutoScout24 (Бельгия)"
+    aria-label="AutoScout24 (Бельгия)"
+>AS</span>
+                        AutoScout24 (Бельгия)
+                    </span>
+                                            <span class="text-xl font-bold leading-tight tabular-nums sm:text-2xl">12 авто</span>
+                                                                <span class="flex flex-wrap gap-1"><div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-fresh-soft! text-fresh! py-0!" data-tone="fresh">
+        +1 новое
+    </div>
+</span>
+                                        <span class="text-caption text-muted">от 91 900 zł</span>
+                </button>
+                    </div>
+</section>
+
+    
+    <section class="flex min-w-0 flex-col gap-4 rounded-card border border-line bg-white p-5">
+        <h2 class="text-lg font-semibold leading-snug">Список авто</h2>
+        <ui-tab-group class="block"  data-flux-tab-group>
+    <div class="relative ">
+        <div class="absolute inset-x-0 bottom-0 h-px bg-zinc-800/10 dark:bg-white/20"></div>
+
+        <ui-tabs-scroll-area class="relative flex overflow-auto   ">
+            <div class="min-w-full flex-none">
+                <ui-tabs class="flex gap-4 h-10 border-b border-transparent" data-flux-tabs>
+                    <button type="button" class="flex whitespace-nowrap gap-2 items-center px-2 -mb-px border-b-[2px] border-transparent text-sm font-medium text-zinc-400 dark:text-white/50 data-selected:border-(--color-accent-content) data-selected:text-(--color-accent-content) hover:data-selected:text-(--color-accent-content) hover:text-zinc-800 dark:hover:text-white [&amp;[disabled]]:opacity-50 dark:[&amp;[disabled]]:opacity-75 [&amp;[disabled]]:cursor-default [&amp;[disabled]]:pointer-events-none" data-flux-tab="data-flux-tab" data-selected="data-selected" selected="selected" name="list" wire:key="list">
+        Объявления
+    </button>
+                <button type="button" class="flex whitespace-nowrap gap-2 items-center px-2 -mb-px border-b-[2px] border-transparent text-sm font-medium text-zinc-400 dark:text-white/50 data-selected:border-(--color-accent-content) data-selected:text-(--color-accent-content) hover:data-selected:text-(--color-accent-content) hover:text-zinc-800 dark:hover:text-white [&amp;[disabled]]:opacity-50 dark:[&amp;[disabled]]:opacity-75 [&amp;[disabled]]:cursor-default [&amp;[disabled]]:pointer-events-none" data-flux-tab="data-flux-tab" name="history" wire:key="history">
+        История цен
+    </button>
+                <button type="button" class="flex whitespace-nowrap gap-2 items-center px-2 -mb-px border-b-[2px] border-transparent text-sm font-medium text-zinc-400 dark:text-white/50 data-selected:border-(--color-accent-content) data-selected:text-(--color-accent-content) hover:data-selected:text-(--color-accent-content) hover:text-zinc-800 dark:hover:text-white [&amp;[disabled]]:opacity-50 dark:[&amp;[disabled]]:opacity-75 [&amp;[disabled]]:cursor-default [&amp;[disabled]]:pointer-events-none" data-flux-tab="data-flux-tab" name="market" wire:key="market">
+        Рынок в выбранный день
+    </button>
+                </ui-tabs>
+            </div>
+        </ui-tabs-scroll-area>
+    </div>
+</ui-tab-group>
+        <div class="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none]">
+                            <button
+    type="button"
+    role="tab"
+    aria-selected="false"
+    class="cursor-pointer whitespace-nowrap rounded-full border font-medium min-h-9 px-3.5 text-sm border-control bg-white text-ink hover:border-muted shrink-0 pointer-coarse:min-h-11"
+>★ Избранное <span class="ml-1 rounded-full px-1.5 text-[12px] tabular-nums bg-chip text-ink-soft">0</span></button>
+                            <button
+    type="button"
+    role="tab"
+    aria-selected="true"
+    class="cursor-pointer whitespace-nowrap rounded-full border font-medium min-h-9 px-3.5 text-sm border-ink bg-ink text-white shrink-0 pointer-coarse:min-h-11"
+>Новые <span class="ml-1 rounded-full px-1.5 text-[12px] tabular-nums bg-white/20">2</span></button>
+                            <button
+    type="button"
+    role="tab"
+    aria-selected="false"
+    class="cursor-pointer whitespace-nowrap rounded-full border font-medium min-h-9 px-3.5 text-sm border-control bg-white text-ink hover:border-muted shrink-0 pointer-coarse:min-h-11"
+>Исчезли <span class="ml-1 rounded-full px-1.5 text-[12px] tabular-nums bg-chip text-ink-soft">3</span></button>
+                            <button
+    type="button"
+    role="tab"
+    aria-selected="false"
+    class="cursor-pointer whitespace-nowrap rounded-full border font-medium min-h-9 px-3.5 text-sm border-control bg-white text-ink hover:border-muted shrink-0 pointer-coarse:min-h-11"
+>Актуальные <span class="ml-1 rounded-full px-1.5 text-[12px] tabular-nums bg-chip text-ink-soft">105</span></button>
+                            <button
+    type="button"
+    role="tab"
+    aria-selected="false"
+    class="cursor-pointer whitespace-nowrap rounded-full border font-medium min-h-9 px-3.5 text-sm border-control bg-white text-ink hover:border-muted shrink-0 pointer-coarse:min-h-11"
+>Около фильтров <span class="ml-1 rounded-full px-1.5 text-[12px] tabular-nums bg-chip text-ink-soft">2</span></button>
+                            <button
+    type="button"
+    role="tab"
+    aria-selected="false"
+    class="cursor-pointer whitespace-nowrap rounded-full border font-medium min-h-9 px-3.5 text-sm border-control bg-white text-ink hover:border-muted shrink-0 pointer-coarse:min-h-11"
+>Просмотренные <span class="ml-1 rounded-full px-1.5 text-[12px] tabular-nums bg-chip text-ink-soft">0</span></button>
+                            <button
+    type="button"
+    role="tab"
+    aria-selected="false"
+    class="cursor-pointer whitespace-nowrap rounded-full border font-medium min-h-9 px-3.5 text-sm border-control bg-white text-ink hover:border-muted shrink-0 pointer-coarse:min-h-11"
+>Отправлены клиенту <span class="ml-1 rounded-full px-1.5 text-[12px] tabular-nums bg-chip text-ink-soft">0</span></button>
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-2 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    shrink-0 rounded-full! pointer-coarse:min-h-11" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target" disabled="disabled">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm4 3.5a.75.75 0 0 1 .75.75v2.69l.72-.72a.75.75 0 1 1 1.06 1.06l-2 2a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 0 1 1.06-1.06l.72.72V6.25A.75.75 0 0 1 8 5.5Z" clip-rule="evenodd"/>
+</svg>
+
+                
+                    
+            
+            <span>PDF для клиента · 0</span>
+    </button>
+        </div>
+        <div class="flex flex-col gap-2">
+            <span class="text-caption font-semibold text-ink">Ликвидность рынка</span>
+            <dl class="grid gap-2 sm:grid-cols-3">
+                <div class="flex min-w-0 items-center gap-3 rounded-control bg-surface-soft px-3 py-2.5">
+    <svg class="shrink-0 [:where(&amp;)]:size-6 size-5 shrink-0 text-brand" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+</svg>
+
+            <div class="flex min-w-0 flex-col">
+        <dt class="text-[12px] text-muted">медиана</dt>
+        <dd class="break-words font-semibold leading-snug text-ink hyphens-auto text-[15px]">≥ 5 дней в продаже</dd>
+    </div>
+</div>
+                <div class="flex min-w-0 items-center gap-3 rounded-control bg-surface-soft px-3 py-2.5">
+    <svg class="shrink-0 [:where(&amp;)]:size-6 size-5 shrink-0 text-brand" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6 9 12.75l4.286-4.286a11.948 11.948 0 0 1 4.306 6.43l.776 2.898m0 0 3.182-5.511m-3.182 5.51-5.511-3.181"/>
+</svg>
+
+            <div class="flex min-w-0 flex-col">
+        <dt class="text-[12px] text-muted">со снижением цены</dt>
+        <dd class="break-words font-semibold leading-snug text-ink hyphens-auto text-[15px]">25 из 105 (24 %)</dd>
+    </div>
+</div>
+                <div class="flex min-w-0 items-center gap-3 rounded-control bg-surface-soft px-3 py-2.5">
+    <svg class="shrink-0 [:where(&amp;)]:size-6 size-5 shrink-0 text-brand" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"/>
+</svg>
+
+            <div class="flex min-w-0 flex-col">
+        <dt class="text-[12px] text-muted">исчезло за последние 7 дней</dt>
+        <dd class="break-words font-semibold leading-snug text-ink hyphens-auto text-[15px]">19</dd>
+    </div>
+</div>
+            </dl>
+        </div>
+        <div class="flex flex-wrap items-center gap-3">
+            <div class="w-full sm:w-96"><div class="w-full relative block group/input" data-flux-input>
+                            <div class="pointer-events-none absolute top-0 bottom-0 border-s border-transparent flex items-center justify-center text-xs text-zinc-400/75 dark:text-white/60 ps-3 start-0">
+                    <svg class="shrink-0 [:where(&amp;)]:size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z" clip-rule="evenodd"/>
+</svg>
+
+                        </div>
+            
+            <input
+                type="text"
+                
+                class="w-full border block disabled:shadow-none dark:shadow-none appearance-none text-base sm:text-sm rounded-lg py-2 h-10 leading-[1.375rem] ps-10 pe-3 bg-white dark:bg-white/10 dark:disabled:bg-white/[7%] text-zinc-700 disabled:text-zinc-500 placeholder-zinc-400 disabled:placeholder-zinc-400/70 dark:text-zinc-300 dark:disabled:text-zinc-400 dark:placeholder-zinc-400 dark:disabled:placeholder-zinc-500 shadow-xs border-zinc-200 border-b-zinc-300/80 disabled:border-b-zinc-200 dark:border-white/10 dark:disabled:border-white/5 data-invalid:shadow-none data-invalid:border-red-500 dark:data-invalid:border-red-500 disabled:data-invalid:border-red-500 dark:disabled:data-invalid:border-red-500" placeholder="Поиск в предложениях: версия, город, топливо…"
+                                                                                                                data-flux-control
+                data-flux-group-target
+                                            >
+
+                    </div>
+</div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2 text-caption">
+            <span class="font-semibold">У всех объявлений:</span>
+                            <div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-chip! text-ink-soft!" data-tone="neutral">
+        Топливо Дизель
+    </div>
+                            <div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-chip! text-ink-soft!" data-tone="neutral">
+        Мощность 150 л. с.
+    </div>
+                            <div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-chip! text-ink-soft!" data-tone="neutral">
+        Коробка АКПП
+    </div>
+                            <div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-chip! text-ink-soft!" data-tone="neutral">
+        Продавец Дилер
+    </div>
+                        <span class="text-muted">Медиана «под ключ»: <b class="text-ink">107 350 zł</b> (105 авто)</span>
+        </div>
+        <div class="max-lg:hidden">
+            <div class="flex flex-col  " >
+    
+
+    <ui-table-scroll-area class="overflow-auto">
+        <table class="[:where(&amp;)]:min-w-full table-fixed border-separate border-spacing-0 isolate text-zinc-800 whitespace-nowrap [&amp;_dialog]:whitespace-normal [&amp;_[popover]]:whitespace-normal  tabular-nums" data-flux-table>
+            <thead class="" data-flux-columns>
+    <tr >
+        <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20 group/end-align   **:data-flux-table-sortable:last:me-0 w-10 ps-3!" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">#</div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20    **:data-flux-table-sortable:last:me-0 w-20" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end"><span class="sr-only">Фото</span></div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20    **:data-flux-table-sortable:last:me-0 w-64" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">Объявление</div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20 group/end-align group/sortable  **:data-flux-table-sortable:last:me-0 w-16" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">
+            <button type="button" class="flex items-center gap-1 -my-1 -ms-2 -me-2 px-2 py-1 [text-align:inherit] [text-indent:inherit] [text-shadow:inherit] [text-transform:inherit] [word-spacing:inherit] in-[.group\/end-align]:flex-row-reverse in-[.group\/end-align]:-me-2 in-[.group\/end-align]:-ms-8" data-flux-table-sortable>
+    <div>Год</div>
+
+    <div class="rounded-sm text-zinc-400 group-hover/sortable:text-zinc-800 dark:group-hover/sortable:text-white">
+                    <div class="opacity-0 group-hover/sortable:opacity-100">
+                <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+
+                    </div>
+            </div>
+</button>
+        </div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20 group/end-align group/sortable  **:data-flux-table-sortable:last:me-0 w-28" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">
+            <button type="button" class="flex items-center gap-1 -my-1 -ms-2 -me-2 px-2 py-1 [text-align:inherit] [text-indent:inherit] [text-shadow:inherit] [text-transform:inherit] [word-spacing:inherit] in-[.group\/end-align]:flex-row-reverse in-[.group\/end-align]:-me-2 in-[.group\/end-align]:-ms-8" data-flux-table-sortable>
+    <div>Пробег</div>
+
+    <div class="rounded-sm text-zinc-400 group-hover/sortable:text-zinc-800 dark:group-hover/sortable:text-white">
+                    <div class="opacity-0 group-hover/sortable:opacity-100">
+                <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+
+                    </div>
+            </div>
+</button>
+        </div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20 group/end-align group/sortable  **:data-flux-table-sortable:last:me-0 w-40" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">
+            <button type="button" class="flex items-center gap-1 -my-1 -ms-2 -me-2 px-2 py-1 [text-align:inherit] [text-indent:inherit] [text-shadow:inherit] [text-transform:inherit] [word-spacing:inherit] in-[.group\/end-align]:flex-row-reverse in-[.group\/end-align]:-me-2 in-[.group\/end-align]:-ms-8" data-flux-table-sortable>
+    <div>Цена «под ключ»</div>
+
+    <div class="rounded-sm text-zinc-400 group-hover/sortable:text-zinc-800 dark:group-hover/sortable:text-white">
+                                    <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M11.78 9.78a.75.75 0 0 1-1.06 0L8 7.06 5.28 9.78a.75.75 0 0 1-1.06-1.06l3.25-3.25a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd"/>
+</svg>
+
+                                </div>
+</button>
+        </div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20 group/end-align group/sortable  **:data-flux-table-sortable:last:me-0 w-28" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">
+            <button type="button" class="flex items-center gap-1 -my-1 -ms-2 -me-2 px-2 py-1 [text-align:inherit] [text-indent:inherit] [text-shadow:inherit] [text-transform:inherit] [word-spacing:inherit] in-[.group\/end-align]:flex-row-reverse in-[.group\/end-align]:-me-2 in-[.group\/end-align]:-ms-8" data-flux-table-sortable>
+    <div>От медианы</div>
+
+    <div class="rounded-sm text-zinc-400 group-hover/sortable:text-zinc-800 dark:group-hover/sortable:text-white">
+                    <div class="opacity-0 group-hover/sortable:opacity-100">
+                <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+
+                    </div>
+            </div>
+</button>
+        </div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20    **:data-flux-table-sortable:last:me-0 w-24" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">На рынке</div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20    **:data-flux-table-sortable:last:me-0 w-36" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">Город</div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20  group/sortable  **:data-flux-table-sortable:last:me-0 w-20" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end">
+            <button type="button" class="flex items-center gap-1 -my-1 -ms-2 -me-2 px-2 py-1 [text-align:inherit] [text-indent:inherit] [text-shadow:inherit] [text-transform:inherit] [word-spacing:inherit] in-[.group\/end-align]:flex-row-reverse in-[.group\/end-align]:-me-2 in-[.group\/end-align]:-ms-8" data-flux-table-sortable>
+    <div>Портал</div>
+
+    <div class="rounded-sm text-zinc-400 group-hover/sortable:text-zinc-800 dark:group-hover/sortable:text-white">
+                    <div class="opacity-0 group-hover/sortable:opacity-100">
+                <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd"/>
+</svg>
+
+                    </div>
+            </div>
+</button>
+        </div>
+    </th>
+                    <th class="py-3 px-3 first:ps-0 last:pe-0 text-start text-sm font-medium text-zinc-800 dark:text-white border-b border-zinc-800/10 dark:border-white/20    **:data-flux-table-sortable:last:me-0 w-44 pe-3!" data-flux-column>
+            <div class="flex in-[.group\/center-align]:justify-center in-[.group\/end-align]:justify-end"><span class="sr-only">Действия</span></div>
+    </th>
+    </tr>
+</thead>
+                <tbody  data-flux-rows>
+    <tr  class="[&>td:first-child]:shadow-[inset_3px_0_0_var(--color-highlight)]" data-flux-row>
+    <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 ps-3! align-top font-semibold text-fresh!" data-flux-cell>
+    1
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="flex h-12 w-16 items-center justify-center rounded-control bg-chip text-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+</svg>
+
+        </span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top whitespace-normal" data-flux-cell>
+    <a href="#" class="font-semibold text-ink hover:text-brand">Skoda Octavia 2.0 TDI SCR DSG Style</a>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    2020
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    156 000 км
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="flex flex-col items-end"><b class="text-[17px] text-ink">91 900 zł</b><span class="text-[12px] text-muted">18 290 € · брутто</span></span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="flex flex-col items-end"><b class="text-danger">+2 %</b><span class="text-[12px] text-muted">26 похожих</span></span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    с сегодня
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="inline-flex items-center gap-1.5"><svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect x="0" width="4" height="8" fill="#000"/><rect x="4" width="4" height="8" fill="#fdda24"/><rect x="8" width="4" height="8" fill="#ef3340"/></svg>Liège · BE</span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #f3a712"
+    title="AutoScout24 (Бельгия)"
+    aria-label="AutoScout24 (Бельгия)"
+>AS</span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 pe-3! align-top" data-flux-cell>
+    <span class="flex items-center justify-end gap-1">
+                                    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-2 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm1 5.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm0 3a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/>
+</svg>
+
+                
+                    
+            
+            <span>Оффер</span>
+    </button>
+                                    <ui-dropdown position="bottom start"  data-flux-dropdown>
+    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 w-8 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM8.5 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM15.5 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
+</svg>
+    </button>
+</ui-dropdown>
+                                    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 w-8 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       text-muted!" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/>
+</svg>
+    </button>
+                                </span>
+</td>
+</tr>
+                                            <tr  class="[&>td:first-child]:shadow-[inset_3px_0_0_var(--color-highlight)]" data-flux-row>
+    <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 ps-3! align-top font-semibold text-fresh!" data-flux-cell>
+    2
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="flex h-12 w-16 items-center justify-center rounded-control bg-chip text-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+</svg>
+
+        </span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top whitespace-normal" data-flux-cell>
+    <a href="#" class="font-semibold text-ink hover:text-brand">Skoda Octavia Combi 2.0 TDI DSG Style</a>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    2022
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    96 000 км
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="flex flex-col items-end"><b class="text-[17px] text-ink">134 800 zł</b><span class="text-[12px] text-muted">27 590 € · брутто</span><div data-flux-badge="data-flux-badge" class="inline-flex items-center font-medium whitespace-nowrap  [print-color-adjust:exact] text-sm py-1 **:data-flux-badge-icon:me-1.5 rounded-md px-2 text-zinc-700 [&amp;_button]:text-zinc-700! dark:text-zinc-200 dark:[&amp;_button]:text-zinc-200! bg-zinc-400/15 dark:bg-zinc-400/40 [&amp;:is(button)]:hover:bg-zinc-400/25 dark:[button]:hover:bg-zinc-400/50 rounded-[7px]! px-2.5! py-[3px]! text-[13px]! leading-snug bg-info-soft! text-info! mt-0.5 py-0!" data-tone="info">
+        НДС к вычету
+    </div>
+</span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm text-end [&amp;&gt;*]:ms-auto text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="flex flex-col items-end"><b class="text-danger">+19 %</b><span class="text-[12px] text-muted">16 похожих</span></span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    с сегодня
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span class="inline-flex items-center gap-1.5"><svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect y="0" width="12" height="2.667" fill="#000"/><rect y="2.667" width="12" height="2.667" fill="#dd0000"/><rect y="5.333" width="12" height="2.667" fill="#ffce00"/></svg>Hannover · DE</span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 align-top" data-flux-cell>
+    <span
+    class="inline-flex shrink-0 items-center justify-center rounded-full font-bold text-white size-7 text-[11px]"
+    style="background: #f3a712"
+    title="AutoScout24 (Германия)"
+    aria-label="AutoScout24 (Германия)"
+>AS</span>
+</td>
+                            <td class="[:where(&amp;)]:py-3 [:where(&amp;)]:px-3 first:ps-0 last:pe-0 text-sm  text-zinc-500 dark:text-zinc-300  not-in-[tr:first-child]:border-t border-zinc-800/10 dark:border-white/20 pe-3! align-top" data-flux-cell>
+    <span class="flex items-center justify-end gap-1">
+                                    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 ps-2 pe-3 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm1 5.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm0 3a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/>
+</svg>
+
+                
+                    
+            
+            <span>Оффер</span>
+    </button>
+                                    <ui-dropdown position="bottom start"  data-flux-dropdown>
+    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 w-8 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM8.5 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM15.5 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
+</svg>
+    </button>
+</ui-dropdown>
+                                    <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-8 text-sm rounded-md gap-2 w-8 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       text-muted!" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/>
+</svg>
+    </button>
+                                </span>
+</td>
+</tr>
+</tbody>
+        </table>
+    </ui-table-scroll-area>
+
+    
+
+    </div>
+        </div>
+        <ul class="flex flex-col gap-2 lg:hidden">
+                            <li class="flex flex-col gap-2 rounded-control border border-line-soft p-3 shadow-[inset_3px_0_0_var(--color-highlight)]">
+                    <div class="flex gap-3">
+                        <span class="flex h-14 w-20 shrink-0 items-center justify-center rounded-control bg-chip text-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+</svg>
+
+        </span>
+                        <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+                            <a href="#" class="font-semibold leading-snug">Skoda Octavia 2.0 TDI SCR DSG Style</a>
+                            <span class="text-caption text-muted">2020 · 156 000 км · <span class="inline-flex items-center gap-1 align-middle"><svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect x="0" width="4" height="8" fill="#000"/><rect x="4" width="4" height="8" fill="#fdda24"/><rect x="8" width="4" height="8" fill="#ef3340"/></svg>Liège · BE</span></span>
+                        </div>
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 w-10 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       size-11! text-muted!" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/>
+</svg>
+    </button>
+                    </div>
+                    <div class="flex flex-wrap items-end gap-x-3 gap-y-1">
+                        <span class="flex flex-col"><b class="text-lg tabular-nums">91 900 zł</b><span class="text-[12px] text-muted">18 290 € · брутто</span></span>
+                        <b class="text-danger">+2 %</b>
+                        <span class="text-caption text-muted">с сегодня</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-3 pe-4 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    min-h-11 flex-1" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm1 5.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm0 3a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/>
+</svg>
+
+                
+                    
+            
+            <span>Оффер</span>
+    </button>
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 w-10 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       size-11!" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM8.5 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM15.5 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
+</svg>
+    </button>
+                    </div>
+                </li>
+                            <li class="flex flex-col gap-2 rounded-control border border-line-soft p-3 shadow-[inset_3px_0_0_var(--color-highlight)]">
+                    <div class="flex gap-3">
+                        <span class="flex h-14 w-20 shrink-0 items-center justify-center rounded-control bg-chip text-muted"><svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+</svg>
+
+        </span>
+                        <div class="flex min-w-0 flex-1 flex-col gap-0.5">
+                            <a href="#" class="font-semibold leading-snug">Skoda Octavia Combi 2.0 TDI DSG Style</a>
+                            <span class="text-caption text-muted">2022 · 96 000 км · <span class="inline-flex items-center gap-1 align-middle"><svg class="za-flag" viewBox="0 0 12 8" width="16" height="11" aria-hidden="true"><rect y="0" width="12" height="2.667" fill="#000"/><rect y="2.667" width="12" height="2.667" fill="#dd0000"/><rect y="5.333" width="12" height="2.667" fill="#ffce00"/></svg>Hannover · DE</span></span>
+                        </div>
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 w-10 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       size-11! text-muted!" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-6 size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"/>
+</svg>
+    </button>
+                    </div>
+                    <div class="flex flex-wrap items-end gap-x-3 gap-y-1">
+                        <span class="flex flex-col"><b class="text-lg tabular-nums">134 800 zł</b><span class="text-[12px] text-muted">27 590 € · брутто · НДС к вычету</span></span>
+                        <b class="text-danger">+19 %</b>
+                        <span class="text-caption text-muted">с сегодня</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 ps-3 pe-4 inline-flex  bg-white hover:bg-zinc-50 dark:bg-zinc-700 dark:hover:bg-zinc-600/75 text-zinc-800 dark:text-white border border-zinc-200 hover:border-zinc-200 disabled:border-zinc-200 border-b-zinc-300/80 dark:border-zinc-600 dark:hover:border-zinc-600 dark:disabled:border-zinc-600 shadow-xs [[data-flux-button-group]_&amp;]:border-s-0 [:is([data-flux-button-group]&gt;&amp;:first-child,_[data-flux-button-group]_:first-child&gt;&amp;)]:border-s-[1px]    min-h-11 flex-1" data-flux-button="data-flux-button" data-flux-group-target="data-flux-group-target">
+        <svg class="shrink-0 [:where(&amp;)]:size-4" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path fill-rule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm1 5.75A.75.75 0 0 1 5.75 7h4.5a.75.75 0 0 1 0 1.5h-4.5A.75.75 0 0 1 5 7.75Zm0 3a.75.75 0 0 1 .75-.75h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd"/>
+</svg>
+
+                
+                    
+            
+            <span>Оффер</span>
+    </button>
+                        <button type="button" class="relative items-center font-medium justify-center whitespace-nowrap disabled:opacity-50 dark:disabled:opacity-50 disabled:cursor-default disabled:pointer-events-none disabled:shadow-none justify-center h-10 text-sm rounded-lg gap-2 w-10 inline-flex  bg-transparent hover:bg-zinc-800/5 dark:hover:bg-white/15 text-zinc-800 dark:text-white       size-11!" data-flux-button="data-flux-button">
+        <svg class="shrink-0 [:where(&amp;)]:size-5" data-flux-icon xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" data-slot="icon">
+  <path d="M3 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM8.5 10a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM15.5 8.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/>
+</svg>
+    </button>
+                    </div>
+                </li>
+                    </ul>
+</section>
+</main>
+<script src="http://127.0.0.1:8157/flux/flux.js?id=505e8a75" data-navigate-once></script>
+</body>
+</html>
