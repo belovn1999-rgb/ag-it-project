@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""How confirmed each value of the engine table is (B61 stage 16, owner 2026-10-23).
+"""How confirmed each value of the engine table is (B61 stages 16, 17 and 20, owner 2026-10-23).
 
 "Confirmed" = two independent sources agree (owner): autocentrum.pl, ultimatespecs.com, the ADAC catalog,
 Wikipedia (the facelift years of tools/collect-facelifts-wiki.py and the hand-checked
@@ -15,18 +15,29 @@ Per row, five columns (tools/build-model-engine-table.py calls confirm() after t
   autocentrum's "Facelifting" bodies, Wikipedia), or no facelift at all (Wikipedia by hand + autocentrum);
 - "Подтверждение: коробка", "Подтверждение: привод" — where the value came from, plus autocentrum's options for
   that engine when the row is not autocentrum's own.
-docs/MODEL-CONFIRMATION.md sums it up by field, source and brand. Nothing on the page changes.
+Stage 17 (2026-10-24): the ADAC catalog is the third source (tools/adac_check.py, data/adac-versions.json) for
+the engine, the years, the facelift, an automatic and all-wheel drive; the row's ADAC twin goes to "ADAC: версия".
+Stage 20: "Рынок" = "нет в Польше и Германии" for a generation only ultimatespecs has, of a model autocentrum or ADAC
+knows (or one we call "вне ЕС"); tools/build-model-specs.py leaves its versions out of the page's engines.
+docs/MODEL-CONFIRMATION.md sums it up by field, source and brand.
 """
 import collections
 import json
 import os
 import re
 
+import adac_check
 import autocentrum
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 COLUMNS = ["Подтверждение: мотор", "Подтверждение: годы", "Подтверждение: фаза", "Подтверждение: коробка",
            "Подтверждение: привод"]
+# Stage 17 (2026-10-24): the ADAC twin of the row ("BMW 118i Steptronic 2015-03…2017-06"), the evidence by hand.
+ADAC_COLUMN = "ADAC: версия"
+# Stage 20 (2026-10-24, owner 2026-10-23: versions not for Europe go under the line, stay in the table): a
+# generation only ultimatespecs has, of a model autocentrum.pl (Poland) or ADAC (Germany) knows.
+MARKET_COLUMN = "Рынок"
+NOT_HERE = "нет в Польше и Германии"
 # Where a gearbox / drive came from ("Коробка: откуда", "Привод: откуда") -> the source that states it
 # (None: the row's own source, its version name).
 STATED = {"autocentrum": "autocentrum", "autocentrum (у двигателя одна коробка)": "autocentrum",
@@ -83,9 +94,10 @@ def _same_years(a, b):
 def confirm(rows, ac):
     """Fill COLUMNS in every row (rows edited in place); returns {column: Counter of statuses}."""
     for row in rows:
-        for column in COLUMNS:
+        for column in COLUMNS + [ADAC_COLUMN, MARKET_COLUMN]:
             row[column] = ""
     gens = autocentrum.our_generations(rows)
+    adac_rows, adac_gens = adac_check.evidence(rows)
     found = set()                              # id(row): autocentrum has its engine
     options = collections.defaultdict(set)     # id(row): autocentrum's (gearbox, drive) for its engine
     ac_gens = collections.defaultdict(list)    # (brand, label, code): autocentrum generations matching ours
@@ -131,6 +143,9 @@ def confirm(rows, ac):
             if matched and "autocentrum" not in spans:
                 closest = min(matched, key=lambda g: abs(g["from"] - gen["from"]))
                 spans["autocentrum"] = (closest["from"], closest["to"])
+            adac = adac_gens.get((brand, label, code))
+            if adac and "adac" not in spans:
+                spans["adac"] = adac["span"]
             agree = set()
             for a in spans:
                 for b in spans:
@@ -143,6 +158,8 @@ def confirm(rows, ac):
             known, wiki_lift = wiki_year(items[0])
             if not lifts and known and wiki_lift:
                 lifts = [wiki_lift]  # the year only Wikipedia gives (the page shows it, the versions stay one phase)
+            if not lifts and adac and adac["lifts"]:
+                lifts = adac["lifts"][:1]  # ADAC's facelift page inside a generation we keep whole
             if lifts:
                 lift = lifts[0]
                 said = set()
@@ -157,21 +174,27 @@ def confirm(rows, ac):
                     said.add("autocentrum")
                 if known and wiki_lift and abs(wiki_lift - lift) <= 1:
                     said.add("Википедия")
-                for source in ("adac",):
-                    if any(LIFT_STAGES.match(r["Этап"]) for r in by_source.get(source, [])):
-                        said.add(source)
+                if any(LIFT_STAGES.match(r["Этап"]) for r in by_source.get("adac", [])) or \
+                        (adac and any(abs(year - lift) <= 1 for year in adac["lifts"])):
+                    said.add("adac")
                 phase = _status(said, "вывод: год рестайлинга без источника")
                 if not split:
                     phase += " (год есть, версии не разделены)"
-            elif known and wiki_lift is None:
-                said = {"Википедия"} | ({"autocentrum"} if matched and not any(
-                    autocentrum.facelift_years(g) for g in matched) else set())
+            elif (known and wiki_lift is None) or adac:
+                # No facelift: Wikipedia by hand, ADAC (its generation has no facelift page), autocentrum (none
+                # of its bodies is "Facelifting") — autocentrum alone is no statement.
+                said = ({"Википедия"} if known else set()) | ({"adac"} if adac else set())
+                if said and matched and not any(autocentrum.facelift_years(g) for g in matched):
+                    said.add("autocentrum")
                 phase = _status(said) + " (без рестайлинга)"
             else:
                 phase = "нет данных о рестайлинге"
             for row in items:
                 row["Подтверждение: годы"], row["Подтверждение: фаза"] = years, phase
 
+    # Models autocentrum or ADAC know (a generation of them missing there says something).
+    known_models = {(b, l) for (b, l, _c) in list(ac_gens) + list(adac_gens)}
+    known_models |= {(r["Марка"], r["Модель"]) for r in rows if r.get("Источник") in ("autocentrum", "adac")}
     # Engine, gearbox, drive: per row.
     by_gen = collections.defaultdict(lambda: collections.defaultdict(list))
     for row in rows:
@@ -183,7 +206,26 @@ def confirm(rows, ac):
             engine.add("autocentrum")
         if source == "autocentrum" and _twin(row, by_gen[(row["Марка"], row["Модель"], row["Поколение"])]["ultimatespecs"]):
             engine.add("ultimatespecs")
+        adac = adac_rows.get(id(row), {})
+        if source != "adac" and adac.get("twins"):
+            engine.add("adac")
+            twin = adac["twins"][0]
+            row[ADAC_COLUMN] = f"{twin[0]} · {twin[1]} · {twin[2]} kW · {twin[4]}–{twin[5] or ''}"
         row["Подтверждение: мотор"] = _status(engine)
+        key = (row["Марка"], row["Модель"], row["Поколение"])
+        start, end = autocentrum.our_years(row["Годы (проверено)"])
+        gen_known = key in ac_gens or key in adac_gens or any(by_gen[key][s] for s in ("autocentrum", "adac"))
+        model_known = (row["Марка"], row["Модель"]) in known_models
+        # A generation of a model they know that neither has (Genesis G80 DH), or one our table already calls
+        # "вне ЕС" (Toyota Camry XV40 / XV50). Before 2011 the sources' cut-offs (autocentrum from 2010, ADAC
+        # versions on sale in 2009) say nothing.
+        # Only whole generations: ADAC and autocentrum both miss single special versions sold here (Golf GTI
+        # Clubsport 2024, RS3 Performance Edition) — a version missing there stays "одна база". A generation
+        # started from 2023 may simply not be in the sources yet (Scénic V E-Tech, GLC EQ).
+        gen_from = gens.get((row["Марка"], row["Модель"]), {}).get(row["Поколение"], {}).get("from") or 0
+        missing_gen = not gen_known and model_known and (end or 2026) >= 2011 and gen_from < 2023
+        if (engine == {"ultimatespecs"} and missing_gen) or "вне ЕС" in row["Поколение"]:
+            row[MARKET_COLUMN] = NOT_HERE
         their = options.get(id(row), set()) if source != "autocentrum" else set()
         for column, value, origin, codes, index in (
                 ("Подтверждение: коробка", row["Коробка"], row["Коробка: откуда"], autocentrum.OUR_GEARBOX, 0),
@@ -196,6 +238,8 @@ def confirm(rows, ac):
                 stated.add(STATED[origin] or source)
             if codes.get(value) and any(option[index] == codes[value] for option in their):
                 stated.add("autocentrum")
+            if source != "adac" and codes.get(value) in adac.get("gearbox" if index == 0 else "drive", set()):
+                stated.add("adac")
             if stated:
                 row[column] = _status(stated)
             elif origin in RULES:
@@ -242,6 +286,26 @@ def write_report(rows, today):
     lines += ["", "**Фаза (дорест / рест)** подробно — источники года рестайлинга или «без рестайлинга»:", "",
               "| Чем подтверждено | Версий |", "|---|---:|"]
     lines += [f"| {name} | {count} |" for name, count in phase.most_common()]
+    adac_twins = sum(bool(row.get(ADAC_COLUMN)) for row in rows)
+    not_here = [row for row in rows if row.get(MARKET_COLUMN) == NOT_HERE]
+    lines += ["", "## Каталог ADAC (этап 17)", "",
+              f"Версий, у которых в ADAC (рынок Германии, данные производителя) нашлась та же версия — тот же вид топлива, "
+              f"мощность ± 3 л. с., объём ± 0,1 л, в продаже в те же годы: **{share(adac_twins, total)}**; пара — в колонке "
+              f"«{ADAC_COLUMN}» (`data/model-engines.csv`). Страницы поколений — `data/adac-versions.json` "
+              "(`tools/collect-adac-versions.py`).", "",
+              "## Нет в Польше и Германии (этап 20)", "",
+              f"Поколения только с ultimatespecs у моделей, которые autocentrum (Польша) или ADAC (Германия) знают, и "
+              f"поколения «вне ЕС»: **{share(len(not_here), total)}** версий (колонка «{MARKET_COLUMN}»). Отдельную "
+              "редкую версию, которой нет в обоих (Golf GTI Clubsport 2024, RS3 Performance Edition), так не помечаем — "
+              "она «одна база». В таблице остаются; "
+              "на странице и платформе их моторы не считаются существующими — уходят под черту обычным шрифтом "
+              "(решение владельца 23.10).", "", "| Марка | Версий | Например |", "|---|---:|---|"]
+    by_brand_not = collections.defaultdict(list)
+    for row in not_here:
+        by_brand_not[row["Марка"]].append(row)
+    for brand, brand_rows in sorted(by_brand_not.items(), key=lambda item: -len(item[1]))[:25]:
+        sample = "; ".join(dict.fromkeys(f"{r['Модель']} {r['Поколение']}: {r['Версия'][:40]}" for r in brand_rows[:40]))
+        lines.append(f"| {brand} | {len(brand_rows)} | {sample[:160]} |")
     lines += ["", "## По источнику строки", "", "| Источник строки | Версий | Мотор подтверждён | Годы подтверждены |",
               "|---|---:|---:|---:|"]
     by_source = collections.defaultdict(list)

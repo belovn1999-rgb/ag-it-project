@@ -1,6 +1,6 @@
 # Комплектации популярных моделей (рынок ЕС, с 2010)
 
-> Сгенерировано `tools/build-model-trims.py` 2026-10-23. Данные — `data/model-trims.json`.
+> Сгенерировано `tools/build-model-trims.py` 2026-10-24. Данные — `data/model-trims.json`.
 > Источники: польская и немецкая Википедия (разделы «Wersje wyposażeniowe», «Linie stylistyczne»,
 > «Ausstattungslinien»), страницы производителей, прессы и польских каталогов. B61, этап 5
 > (`docs/PROJECT-MOBILE.md` §4.8). Названия — как в объявлениях и у дилеров (PL/DE).

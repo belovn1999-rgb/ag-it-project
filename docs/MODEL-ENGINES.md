@@ -1,6 +1,6 @@
 # Двигатели популярных моделей (с 2010)
 
-> Сгенерировано `tools/build-model-engine-table.py` 2026-10-23 из ultimatespecs.com (B61, этап 3,
+> Сгенерировано `tools/build-model-engine-table.py` 2026-10-24 из ultimatespecs.com (B61, этап 3,
 > `docs/PROJECT-MOBILE.md` §4.8). Полная таблица по версиям — `data/model-engines.csv`
 > (открывается в Excel), для фильтров — `data/model-filter-index.json`. Не править руками.
 > Строка = поколение и этап (дорестайлинг / рестайлинг): топливо → объём см³ (л) → мощности в л.с.

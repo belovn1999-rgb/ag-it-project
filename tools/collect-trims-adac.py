@@ -41,6 +41,23 @@ MANUAL = {
     "Lynk&Co|01": ["lynk--co/01"], "Lynk&Co|02": ["lynk--co/02"], "Lynk&Co|08": ["lynk--co/08"],
     "VinFast|VF6": ["vinfast/vf-6"], "VinFast|VF8": ["vinfast/vf-8"], "VinFast|VF9": ["vinfast/vf-9"],
     "DFSK|Seres 3": ["seres/3"], "DFSK|Seres 5": ["seres/5"], "Geely|Starray EM-i": ["geely/starray"], "Maxus|T90": ["maxus/t90-ev"],
+    # B61 stage 17 (2026-10-24): models ADAC names its own way (several of ours on one page, or the reverse).
+    "BMW|1": ["bmw/1er-reihe"], "BMW|2": ["bmw/2er-reihe", "bmw/2er-reihe-active-gran-tourer", "bmw/2er-reihe-gran-coupe"],
+    "BMW|3": ["bmw/3er-reihe"], "BMW|4": ["bmw/4er-reihe"], "BMW|5": ["bmw/5er-reihe"],
+    "Volvo|S40": ["volvo/s40-v40-v50"], "Volvo|V40": ["volvo/s40-v40-v50"], "Volvo|V50": ["volvo/s40-v40-v50"],
+    "Volvo|S60": ["volvo/s60-v60"], "Volvo|V60": ["volvo/s60-v60"], "Volvo|V70": ["volvo/s70-v70-xc70"],
+    "Volvo|XC70": ["volvo/s70-v70-xc70"], "Volvo|S90": ["volvo/s90-v90"], "Volvo|V90": ["volvo/s90-v90"],
+    "Volkswagen|ID.3": ["vw/id3"], "Volkswagen|ID.4": ["vw/id4"], "Volkswagen|ID.5": ["vw/id5"], "Volkswagen|ID.7": ["vw/id7"],
+    "Volkswagen|Caddy": ["vw-nutzfahrzeuge/caddy"], "Volkswagen|Crafter": ["vw-nutzfahrzeuge/crafter"],
+    "Volkswagen|Amarok": ["vw-nutzfahrzeuge/amarok"], "Volkswagen|ID. Buzz": ["vw-nutzfahrzeuge/id-buzz"],
+    "Volkswagen|T6": ["vw-nutzfahrzeuge/transporter"],
+    "Mini|Cooper": ["mini/mini"], "Mini|Cabrio": ["mini/mini"], "Mini|Coupe": ["mini/mini"], "Mini|Roadster": ["mini/mini"],
+    "Toyota|RAV 4": ["toyota/rav4"], "Toyota|GT86": ["toyota/gt86-gr86"], "Toyota|GR86": ["toyota/gt86-gr86"],
+    "Toyota|Land Cruiser": ["toyota/land-cruiser-j8-j10-j20", "toyota/land-cruiser-j7-j9-j12-j15-j25"],
+    "Kia|cee'd / Ceed": ["kia/ceed"], "Kia|pro cee'd / ProCeed": ["kia/ceed"],
+    "Citroen|Grand C4 Picasso / SpaceTourer": ["citroen/c4-picasso", "citroen/c4-spacetourer"], "Citroen|DS5": ["ds-automobiles/ds-5"],
+    "Audi|Q4": ["audi/q4-e-tron"], "Mercedes-Benz|T-Class": ["mercedes-benz/t-klasse"], "Hyundai|Grand Santa Fe": ["hyundai/santa-fe"],
+    "Hyundai|ix35": ["hyundai/tucson"], "Ford|Ka/Ka+": ["ford/ka"], "Renault|Megane E-TECH": ["renault/megane"],
 }
 PHASE_RU = {"pre": "дорестайлинг", "fl": "рестайлинг", "fl2": "2-й рестайлинг", "upd": "обновление"}
 # Words of a version name that are not its trim: engine, power, gearbox, drive, body, fuel.

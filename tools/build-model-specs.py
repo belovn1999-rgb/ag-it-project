@@ -491,6 +491,10 @@ def main():
             # The portals file a mild hybrid under petrol / diesel (owner 2026-10-11): so do the page's lists.
             if mild:
                 fuel = {"hybrid_petrol": "petrol", "hybrid_diesel": "diesel"}.get(fuel, fuel)
+            # A version neither Poland (autocentrum) nor Germany (ADAC) sells is not an engine of the page's lists:
+            # it goes under the line with the other values; the generation and the table keep it (owner 2026-10-23).
+            if row.get("Рынок") == "нет в Польше и Германии":
+                continue
             entry["versions"].add((gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
                                    int(row["Мощность, кВт"] or 0), GEARBOX.get(row["Коробка"], ""),
                                    DRIVE.get(row["Привод"], ""), mild, token(row["Марка"], row["Версия"])))
