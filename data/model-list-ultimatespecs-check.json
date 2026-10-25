@@ -1,0 +1,6357 @@
+{
+ "note": "B61 second-source check (owner 2026-10-25): ultimatespecs pages of the models we have from autocentrum.pl or ADAC only (tools/plan-ultimatespecs-check.py)",
+ "models": [
+  {
+   "brand": "Volkswagen",
+   "label": "Amarok",
+   "mobile": "Amarok",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Amarok"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Arteon",
+   "mobile": "Arteon",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Arteon"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Beetle",
+   "mobile": "Beetle",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Beetle"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "CC",
+   "mobile": "CC",
+   "brand_slug": "Volkswagen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volkswagen/M5876/CC",
+     "name": "CC"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Caddy",
+   "mobile": "Caddy",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Caddy"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "mobile": "Crafter",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Crafter"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Eos",
+   "mobile": "Eos",
+   "brand_slug": "Volkswagen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volkswagen/M338/Eos",
+     "name": "Eos"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Fox",
+   "mobile": "Fox",
+   "brand_slug": "Volkswagen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volkswagen/M322/Fox",
+     "name": "Fox"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID. Buzz",
+   "mobile": "ID. Buzz",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-IDBuzz"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.3",
+   "mobile": "ID.3",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-ID3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.4",
+   "mobile": "ID.4",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-ID4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.5",
+   "mobile": "ID.5",
+   "brand_slug": "Volkswagen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volkswagen/M12620/ID5",
+     "name": "ID.5"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "ID.7",
+   "mobile": "ID.7",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-ID7"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Jetta",
+   "mobile": "Jetta",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Jetta"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Phaeton",
+   "mobile": "Phaeton",
+   "brand_slug": "Volkswagen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volkswagen/M331/Phaeton",
+     "name": "Phaeton"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Scirocco",
+   "mobile": "Scirocco",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Scirocco"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Sharan",
+   "mobile": "Sharan",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Sharan"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "T-Cross",
+   "mobile": "T-Cross",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-T-Cross"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Taigo",
+   "mobile": "Taigo",
+   "brand_slug": "Volkswagen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volkswagen/M12346/Taigo",
+     "name": "Taigo"
+    }
+   ]
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Tayron",
+   "mobile": "Tayron",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Tayron"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Touareg",
+   "mobile": "Touareg",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Touareg"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "up!",
+   "mobile": "up!",
+   "brand_slug": "Volkswagen",
+   "pages": [
+    "Volkswagen-Up!"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "A1",
+   "mobile": "A1",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-A1"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "A7",
+   "mobile": "A7",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-A7"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "A8",
+   "mobile": "A8",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-A8"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "Q2",
+   "mobile": "Q2",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-Q2"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "Q4",
+   "mobile": "Q4",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-Q4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "Q8",
+   "mobile": "Q8",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-Q8"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "R8",
+   "mobile": "R8",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-R8"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "TT",
+   "mobile": "TT",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-TT"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Audi",
+   "label": "e-tron GT",
+   "mobile": "e-tron GT",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-e-tron-GT"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 2",
+   "mobile": "2",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-2-Series"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 6",
+   "mobile": "6",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-6-Series"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 7",
+   "mobile": "7",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-7-Series"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 8",
+   "mobile": "8",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-8-series"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "X2",
+   "mobile": "X2",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-X2"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "X4",
+   "mobile": "X4",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-X4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "X6",
+   "mobile": "X6",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-X6"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "X7",
+   "mobile": "X7",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-X7"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "XM",
+   "mobile": "XM",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-XM"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "Z4",
+   "mobile": "Z4",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-Z4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "i3",
+   "mobile": "i3",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-i3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "i4",
+   "mobile": "i4",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-i4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "i5",
+   "mobile": "i5",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-i5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "i7",
+   "mobile": "i7",
+   "brand_slug": "BMW",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BMW/M13362/i7",
+     "name": "i7"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "iX",
+   "mobile": "iX",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-iX"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "BMW",
+   "label": "iX1",
+   "mobile": "iX1",
+   "brand_slug": "BMW",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BMW/M13363/iX1",
+     "name": "iX1"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "iX2",
+   "mobile": "iX2",
+   "brand_slug": "BMW",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BMW/M13365/iX2",
+     "name": "iX2"
+    }
+   ]
+  },
+  {
+   "brand": "BMW",
+   "label": "iX3",
+   "mobile": "iX3",
+   "brand_slug": "BMW",
+   "pages": [
+    "BMW-iX3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "AMG GT",
+   "mobile": "AMG GT",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-AMG-GT"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "CLE",
+   "mobile": "CLE",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-CLE-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "CLK",
+   "mobile": "CLK",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-CLK"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "CLS",
+   "mobile": "CLS",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-CLS-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Citan",
+   "mobile": "Citan",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-Citan"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQA",
+   "mobile": "EQA",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-EQA"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQB",
+   "mobile": "EQB",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-EQB"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQE",
+   "mobile": "EQE",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mercedes-Benz/M13688/EQE-(V295)",
+     "name": "EQE"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQS",
+   "mobile": "EQS",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-EQS"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQV",
+   "mobile": "EQV",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-EQV"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLA",
+   "mobile": "GLA",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-GLA"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLB",
+   "mobile": "GLB",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-GLB"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLK",
+   "mobile": "GLK",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-GLK-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLS",
+   "mobile": "GLS",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-GLS"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa B",
+   "mobile": "B",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-B-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa CL",
+   "mobile": "CL",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-CL-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa G",
+   "mobile": "G",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-G-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa GL",
+   "mobile": "GL",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-GL-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa M (ML)",
+   "mobile": "ML",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-M-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa R",
+   "mobile": "R",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mercedes-Benz/M352/R-Class-(W251)",
+     "name": "Klasa R"
+    },
+    {
+     "url": "/car-specs/Mercedes-Benz/M6962/R-Class-(W251-2010)",
+     "name": "Klasa R"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa T",
+   "mobile": "T-Class",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-T-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa V",
+   "mobile": "V",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-V-Class---Viano"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa X",
+   "mobile": "X",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mercedes-Benz/M9545/X-Class",
+     "name": "Klasa X"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "SL",
+   "mobile": "SL",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-SL-Class"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "SLC",
+   "mobile": "SLC",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mercedes-Benz/M8571/SLC-(R173)",
+     "name": "SLC"
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "SLK",
+   "mobile": "SLK",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-SLK"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Sprinter",
+   "mobile": "Sprinter",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-Sprinter"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Viano",
+   "mobile": "Viano",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-V-Class---Viano"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Vito",
+   "mobile": "Vito",
+   "brand_slug": "Mercedes-Benz",
+   "pages": [
+    "Mercedes-Benz-Vito"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Skoda",
+   "label": "Citigo",
+   "mobile": "Citigo",
+   "brand_slug": "Skoda",
+   "pages": [
+    "Skoda-Citigo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Skoda",
+   "label": "Elroq",
+   "mobile": "Elroq",
+   "brand_slug": "Skoda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Skoda/M14506/Elroq",
+     "name": "Elroq"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Enyaq",
+   "mobile": "Enyaq",
+   "brand_slug": "Skoda",
+   "pages": [
+    "Skoda-Enyaq"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Skoda",
+   "label": "Epiq",
+   "mobile": "Epiq",
+   "brand_slug": "Skoda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Skoda/M27139/Epiq",
+     "name": "Epiq"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Rapid",
+   "mobile": "Rapid",
+   "brand_slug": "Skoda",
+   "pages": [
+    "Skoda-Rapid"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Skoda",
+   "label": "Roomster",
+   "mobile": "Roomster",
+   "brand_slug": "Skoda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Skoda/M404/Roomster",
+     "name": "Roomster"
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "label": "Scala",
+   "mobile": "Scala",
+   "brand_slug": "Skoda",
+   "pages": [
+    "Skoda-Scala"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Skoda",
+   "label": "Yeti",
+   "mobile": "Yeti",
+   "brand_slug": "Skoda",
+   "pages": [
+    "Skoda-Yeti"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Aygo",
+   "mobile": "Aygo (X)",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Aygo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Corolla Cross",
+   "mobile": "Corolla Cross",
+   "brand_slug": "Toyota",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Toyota/M13071/Corolla-Cross",
+     "name": "Corolla Cross"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "FJ Cruiser",
+   "mobile": "FJ",
+   "brand_slug": "Toyota",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Toyota/M4398/FJ-Cruiser-",
+     "name": "FJ Cruiser"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "GR86",
+   "mobile": "GR86",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-GT86-GR86"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "GT86",
+   "mobile": "GT86",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-GT86-GR86"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Highlander",
+   "mobile": "Highlander",
+   "brand_slug": "Toyota",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Toyota/M11213/Highlander",
+     "name": "Highlander"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Hilux",
+   "mobile": "Hilux",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Hilux"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "IQ",
+   "mobile": "IQ",
+   "brand_slug": "Toyota",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Toyota/M1437/iQ",
+     "name": "IQ"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Land Cruiser",
+   "mobile": "Land Cruiser",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Land-Cruiser"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Matrix",
+   "mobile": "Matrix",
+   "brand_slug": "Toyota",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Toyota/M3092/Matrix",
+     "name": "Matrix"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "Previa",
+   "mobile": "Previa",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Previa"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Prius",
+   "mobile": "Prius",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Prius"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Proace",
+   "mobile": "Proace (Verso)",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Proace"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Proace City",
+   "mobile": "Proace City",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-ProAce-City"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Sienna",
+   "mobile": "Sienna",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Sienna"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Supra",
+   "mobile": "Supra",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Supra"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Urban Cruiser",
+   "mobile": "Urban Cruiser",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Urban-Cruiser"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Verso",
+   "mobile": "Verso",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-Verso"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Toyota",
+   "label": "Yaris Cross",
+   "mobile": "Yaris Cross",
+   "brand_slug": "Toyota",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Toyota/M11883/Yaris-Cross",
+     "name": "Yaris Cross"
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "label": "bZ4X",
+   "mobile": "bZ4X",
+   "brand_slug": "Toyota",
+   "pages": [
+    "Toyota-bZ4X"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "B-Max",
+   "mobile": "B-Max",
+   "brand_slug": "Ford",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ford/M6359/B-MAX",
+     "name": "B-Max"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Bronco",
+   "mobile": "Bronco",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Bronco"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Capri",
+   "mobile": "Capri",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Capri"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Crown Victoria",
+   "mobile": "Crown",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Crown-Victoria"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "EcoSport",
+   "mobile": "EcoSport",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-EcoSport"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Edge",
+   "mobile": "Edge",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Edge"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Escape",
+   "mobile": "Escape",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Escape"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Explorer",
+   "mobile": "Explorer",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Explorer"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "F-150",
+   "mobile": "F 150",
+   "brand_slug": "Ford",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ford/M9184/F-150",
+     "name": "F-150"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Fusion",
+   "mobile": "Fusion",
+   "brand_slug": "Ford",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ford/M250/Fusion",
+     "name": "Fusion"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Galaxy",
+   "mobile": "Galaxy",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Galaxy"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Mustang",
+   "mobile": "Mustang",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Mustang"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Mustang Mach-E",
+   "mobile": "Mustang Mach-E",
+   "brand_slug": "Ford",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ford/M10563/Mustang-Mach-E",
+     "name": "Mustang Mach-E"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Puma",
+   "mobile": "Puma",
+   "brand_slug": "Ford",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ford/M1195/Puma",
+     "name": "Puma"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Ranger",
+   "mobile": "Ranger",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Ranger"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Taurus",
+   "mobile": "Taurus",
+   "brand_slug": "Ford",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ford/M703/Taurus-III",
+     "name": "Taurus"
+    },
+    {
+     "url": "/car-specs/Ford/M704/Taurus-IV",
+     "name": "Taurus"
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Connect",
+   "mobile": "Tourneo Connect",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Tourneo-Connect"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Courier",
+   "mobile": "Tourneo Courier",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Tourneo-Courier"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "mobile": "Tourneo Custom",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Tourneo-Custom"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit",
+   "mobile": "Transit",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Transit"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Connect",
+   "mobile": "Transit Connect",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Transit-Connect"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Courier",
+   "mobile": "Transit Courier",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Transit-Courier"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "mobile": "Transit Custom",
+   "brand_slug": "Ford",
+   "pages": [
+    "Ford-Transit-Custom"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Arkana",
+   "mobile": "Arkana",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Arkana"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Austral",
+   "mobile": "Austral",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Austral"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Espace",
+   "mobile": "Espace",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Espace"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Fluence",
+   "mobile": "Fluence",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Fluence"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Kangoo",
+   "mobile": "Kangoo",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Kangoo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Koleos",
+   "mobile": "Koleos",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Koleos"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Laguna",
+   "mobile": "Laguna",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Laguna"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Latitude",
+   "mobile": "Latitude",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Latitude"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "mobile": "Master",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Master"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Megane E-TECH",
+   "mobile": "Megane E-TECH",
+   "brand_slug": "Renault",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Renault/M12662/Megane-E-Tech",
+     "name": "Megane E-TECH"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Modus",
+   "mobile": "Modus",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Modus"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Rafale",
+   "mobile": "Rafale",
+   "brand_slug": "Renault",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Renault/M13819/Rafale",
+     "name": "Rafale"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Symbioz",
+   "mobile": "Symbioz",
+   "brand_slug": "Renault",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Renault/M13827/Symbioz",
+     "name": "Symbioz"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Talisman",
+   "mobile": "Talisman",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Talisman"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Twingo",
+   "mobile": "Twingo",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Twingo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Renault",
+   "label": "Twizy",
+   "mobile": "Twizy",
+   "brand_slug": "Renault",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Renault/M9194/Twizy",
+     "name": "Twizy"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "Wind",
+   "mobile": "Wind",
+   "brand_slug": "Renault",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Renault/M1470/Wind",
+     "name": "Wind"
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "label": "ZOE",
+   "mobile": "ZOE",
+   "brand_slug": "Renault",
+   "pages": [
+    "Renault-Zoe"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "107",
+   "mobile": "107",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M268/107",
+     "name": "107"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "108",
+   "mobile": "108",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M7250/108",
+     "name": "108"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "206",
+   "mobile": "206",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-206"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "207",
+   "mobile": "207",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-207"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "307",
+   "mobile": "307",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-307"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "4007",
+   "mobile": "4007",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M1473/4007",
+     "name": "4007"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "407",
+   "mobile": "407",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-407"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "408",
+   "mobile": "408",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-408"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "807",
+   "mobile": "807",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M275/807",
+     "name": "807"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Bipper",
+   "mobile": "Bipper",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M1353/Bipper",
+     "name": "Bipper"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "mobile": "Boxer",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-Boxer"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Expert",
+   "mobile": "Expert",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-Expert"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Partner",
+   "mobile": "Partner",
+   "brand_slug": "Peugeot",
+   "pages": [
+    "Peugeot-Partner"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Peugeot",
+   "label": "RCZ",
+   "mobile": "RCZ",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M1359/RCZ",
+     "name": "RCZ"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Rifter",
+   "mobile": "Rifter",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M10221/Rifter",
+     "name": "Rifter"
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "label": "iOn",
+   "mobile": "iOn",
+   "brand_slug": "Peugeot",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Peugeot/M9237/Ion",
+     "name": "iOn"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "C30",
+   "mobile": "C30",
+   "brand_slug": "Volvo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volvo/M297/C30",
+     "name": "C30"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "C40",
+   "mobile": "C40",
+   "brand_slug": "Volvo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volvo/M11903/C40",
+     "name": "C40"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "C70",
+   "mobile": "C70",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-C70"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "ES90",
+   "mobile": "ES90",
+   "brand_slug": "Volvo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volvo/M15018/ES90",
+     "name": "ES90"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX30",
+   "mobile": "EX30",
+   "brand_slug": "Volvo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volvo/M13353/EX30",
+     "name": "EX30"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX60",
+   "mobile": "EX60",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-EX60"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX90",
+   "mobile": "EX90",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-EX90"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "S40",
+   "mobile": "S40",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-S40"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "S80",
+   "mobile": "S80",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-S80"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "S90",
+   "mobile": "S90",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-S90---V90"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "V50",
+   "mobile": "V50",
+   "brand_slug": "Volvo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Volvo/M726/V50",
+     "name": "V50"
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "label": "V70",
+   "mobile": "V70",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-V70"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "V90",
+   "mobile": "V90",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-S90---V90"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Volvo",
+   "label": "XC70",
+   "mobile": "XC70",
+   "brand_slug": "Volvo",
+   "pages": [
+    "Volvo-XC70"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Carens",
+   "mobile": "Carens",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Carens"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Carnival",
+   "mobile": "Carnival",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Carnival---Sedona"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Ceed",
+   "mobile": "cee'd / Ceed",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Ceed"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "EV2",
+   "mobile": "EV2",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M16196/EV2",
+     "name": "EV2"
+    }
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV3",
+   "mobile": "EV3",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M13820/EV3",
+     "name": "EV3"
+    }
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV4",
+   "mobile": "EV4",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-EV4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "EV5",
+   "mobile": "EV5",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M15515/EV5",
+     "name": "EV5"
+    }
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "EV6",
+   "mobile": "EV6",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-EV6"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "EV9",
+   "mobile": "EV9",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M13559/EV9",
+     "name": "EV9"
+    }
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Magentis",
+   "mobile": "Magentis",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Optima---Magentis"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Niro",
+   "mobile": "Niro",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Niro"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Opirus",
+   "mobile": "Opirus",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M657/Opirus",
+     "name": "Opirus"
+    }
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Optima",
+   "mobile": "Optima",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Optima---Magentis"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "PV5",
+   "mobile": "PV5",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-PV5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Picanto",
+   "mobile": "Picanto",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Picanto"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "ProCeed",
+   "mobile": "pro cee'd / ProCeed",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-ProCeed"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Rio",
+   "mobile": "Rio",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Rio"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Seltos",
+   "mobile": "Seltos",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M10852/Seltos",
+     "name": "Seltos"
+    }
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Sorento",
+   "mobile": "Sorento",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Sorento"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Soul",
+   "mobile": "Soul",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Soul"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Sportage",
+   "mobile": "Sportage",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Sportage"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Stinger",
+   "mobile": "Stinger",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M9143/Stinger",
+     "name": "Stinger"
+    }
+   ]
+  },
+  {
+   "brand": "Kia",
+   "label": "Stonic",
+   "mobile": "Stonic",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Stonic"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "Venga",
+   "mobile": "Venga",
+   "brand_slug": "Kia",
+   "pages": [
+    "Kia-Venga"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Kia",
+   "label": "XCeed",
+   "mobile": "XCeed",
+   "brand_slug": "Kia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Kia/M10411/XCeed",
+     "name": "XCeed"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Accent",
+   "mobile": "Accent",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Accent"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Bayon",
+   "mobile": "BAYON",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Bayon"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Elantra",
+   "mobile": "Elantra",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Elantra"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Grand Santa Fe",
+   "mobile": "Grand Santa Fe",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M7518/Grand-Santa-Fe",
+     "name": "Grand Santa Fe"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Grandeur",
+   "mobile": "Grandeur",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M678/Grandeur-IV",
+     "name": "Grandeur"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "H-1",
+   "mobile": "H-1",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M688/H-1",
+     "name": "H-1"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Inster",
+   "mobile": "INSTER",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Inster"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq",
+   "mobile": "IONIQ",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Ioniq"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 3",
+   "mobile": "IONIQ 3",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M27234/Ioniq-3",
+     "name": "Ioniq 3"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 5",
+   "mobile": "IONIQ 5",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Ioniq-5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 6",
+   "mobile": "IONIQ 6",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Ioniq-6"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Ioniq 9",
+   "mobile": "IONIQ 9",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M15396/Ioniq-9",
+     "name": "Ioniq 9"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Kona",
+   "mobile": "KONA",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Kona"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Matrix",
+   "mobile": "Matrix",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Matrix"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Santa Fe",
+   "mobile": "SANTA FE",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Santa-Fe"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Sonata",
+   "mobile": "SONATA",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Sonata"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Staria",
+   "mobile": "STARIA",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M13202/Staria",
+     "name": "Staria"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Tucson",
+   "mobile": "TUCSON",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-Tucson"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Veloster",
+   "mobile": "Veloster",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M3621/Veloster",
+     "name": "Veloster"
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i10",
+   "mobile": "i10",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-i10"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i20",
+   "mobile": "i20",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-i20"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i30",
+   "mobile": "i30",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-i30"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i40",
+   "mobile": "i40",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-i40"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "ix20",
+   "mobile": "ix20",
+   "brand_slug": "Hyundai",
+   "pages": [
+    "Hyundai-ix20"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Hyundai",
+   "label": "ix35",
+   "mobile": "ix35",
+   "brand_slug": "Hyundai",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Hyundai/M1416/ix35",
+     "name": "ix35"
+    }
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Adam",
+   "mobile": "Adam",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Adam"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Agila",
+   "mobile": "Agila",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Agila"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Antara",
+   "mobile": "Antara",
+   "brand_slug": "Opel",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Opel/M532/Antara",
+     "name": "Antara"
+    }
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Astra",
+   "mobile": "Astra",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Astra"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Combo",
+   "mobile": "Combo",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Combo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Corsa",
+   "mobile": "Corsa",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Corsa"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Crossland",
+   "mobile": "Crossland (X)",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Crossland"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Frontera",
+   "mobile": "Frontera",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Frontera"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Grandland",
+   "mobile": "Grandland (X)",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Grandland"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Insignia",
+   "mobile": "Insignia",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Insignia"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Karl",
+   "mobile": "Karl",
+   "brand_slug": "Opel",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Opel/M8327/Karl",
+     "name": "Karl"
+    }
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Meriva",
+   "mobile": "Meriva",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Meriva"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Mokka",
+   "mobile": "Mokka",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Mokka"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "mobile": "Movano",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Movano"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Vivaro",
+   "mobile": "Vivaro",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Vivaro"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Opel",
+   "label": "Zafira",
+   "mobile": "Zafira",
+   "brand_slug": "Opel",
+   "pages": [
+    "Opel-Zafira"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Alhambra",
+   "mobile": "Alhambra",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Alhambra"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Altea",
+   "mobile": "Altea",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Altea"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Arona",
+   "mobile": "Arona",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Arona"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Ateca",
+   "mobile": "Ateca",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Ateca"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Exeo",
+   "mobile": "Exeo",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Exeo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Ibiza",
+   "mobile": "Ibiza",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Ibiza"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Leon",
+   "mobile": "Leon",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Leon"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Seat",
+   "label": "Mii",
+   "mobile": "Mii",
+   "brand_slug": "Seat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Seat/M3635/Mii",
+     "name": "Mii"
+    }
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Tarraco",
+   "mobile": "Tarraco",
+   "brand_slug": "Seat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Seat/M10233/Tarraco",
+     "name": "Tarraco"
+    }
+   ]
+  },
+  {
+   "brand": "Seat",
+   "label": "Toledo",
+   "mobile": "Toledo",
+   "brand_slug": "Seat",
+   "pages": [
+    "Seat-Toledo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cupra",
+   "label": "Ateca",
+   "mobile": "Ateca",
+   "brand_slug": "Cupra",
+   "pages": [
+    "Cupra-Ateca"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cupra",
+   "label": "Born",
+   "mobile": "Born",
+   "brand_slug": "Cupra",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Cupra/M11971/Born",
+     "name": "Born"
+    }
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Formentor",
+   "mobile": "Formentor",
+   "brand_slug": "Cupra",
+   "pages": [
+    "Cupra-Formentor"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cupra",
+   "label": "Leon",
+   "mobile": "Leon",
+   "brand_slug": "Cupra",
+   "pages": [
+    "Cupra-Leon"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cupra",
+   "label": "Tavascan",
+   "mobile": "Tavascan",
+   "brand_slug": "Cupra",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Cupra/M13443/Tavascan",
+     "name": "Tavascan"
+    }
+   ]
+  },
+  {
+   "brand": "Cupra",
+   "label": "Terramar",
+   "mobile": "Terramar",
+   "brand_slug": "Cupra",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Cupra/M13982/Terramar",
+     "name": "Terramar"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-3",
+   "mobile": "CX-3",
+   "brand_slug": "Mazda",
+   "pages": [
+    "Mazda-CX-3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-30",
+   "mobile": "CX-30",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M10446/CX-30",
+     "name": "CX-30"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-5",
+   "mobile": "CX-5",
+   "brand_slug": "Mazda",
+   "pages": [
+    "Mazda-CX-5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-6e",
+   "mobile": "CX-6e",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M16193/CX-6e",
+     "name": "CX-6e"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-7",
+   "mobile": "CX-7",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M1248/CX-7",
+     "name": "CX-7"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "CX-9",
+   "mobile": "CX-9",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M7732/CX-9",
+     "name": "CX-9"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "MPV",
+   "mobile": "MPV",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M1250/MPV-I",
+     "name": "MPV"
+    },
+    {
+     "url": "/car-specs/Mazda/M1251/MPV-II",
+     "name": "MPV"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "MX-30",
+   "mobile": "MX-30",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M10544/MX-30",
+     "name": "MX-30"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "MX-5",
+   "mobile": "MX-5",
+   "brand_slug": "Mazda",
+   "pages": [
+    "Mazda-MX-5---Miata"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 2",
+   "mobile": "2",
+   "brand_slug": "Mazda",
+   "pages": [
+    "Mazda-2"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 3",
+   "mobile": "3",
+   "brand_slug": "Mazda",
+   "pages": [
+    "Mazda-3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 5",
+   "mobile": "5",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M259/5",
+     "name": "Mazda 5"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 6",
+   "mobile": "6",
+   "brand_slug": "Mazda",
+   "pages": [
+    "Mazda-6"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mazda",
+   "label": "Premacy",
+   "mobile": "Premacy",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M1257/Premacy",
+     "name": "Premacy"
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "label": "RX-8",
+   "mobile": "RX-8",
+   "brand_slug": "Mazda",
+   "pages": [
+    "Mazda-RX-8"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mazda",
+   "label": "Tribute",
+   "mobile": "Tribute",
+   "brand_slug": "Mazda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mazda/M1261/Tribute-I",
+     "name": "Tribute"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Altima",
+   "mobile": "Altima",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M4643/Altima-L32",
+     "name": "Altima"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Ariya",
+   "mobile": "Ariya",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M12649/Ariya",
+     "name": "Ariya"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Cube",
+   "mobile": "Cube",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M1398/Cube",
+     "name": "Cube"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Evalia",
+   "mobile": "Evalia",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M3614/Evalia---NV200",
+     "name": "Evalia"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "GT-R",
+   "mobile": "GT-R",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M1504/GT-R",
+     "name": "GT-R"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Interstar",
+   "mobile": "Interstar",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Interstar"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Juke",
+   "mobile": "Juke",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Juke"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Leaf",
+   "mobile": "Leaf",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Leaf"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Micra",
+   "mobile": "Micra",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Micra"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Murano",
+   "mobile": "Murano",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Murano"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "NV200",
+   "mobile": "NV200",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M3614/Evalia---NV200",
+     "name": "NV200"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Navara",
+   "mobile": "Navara",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M8440/Navara-(NP300)",
+     "name": "Navara"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Note",
+   "mobile": "Note",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Note"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Pathfinder",
+   "mobile": "Pathfinder",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Pathfinder"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Pixo",
+   "mobile": "Pixo",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M3475/Pixo",
+     "name": "Pixo"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Primastar",
+   "mobile": "Primastar",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Primastar"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Pulsar",
+   "mobile": "Pulsar",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Pulsar"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Qashqai",
+   "mobile": "Qashqai",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Qashqai"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Skyline",
+   "mobile": "Skyline",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Skyline"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "Tiida",
+   "mobile": "Tiida",
+   "brand_slug": "Nissan",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Nissan/M6209/Tiida",
+     "name": "Tiida"
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "label": "Townstar",
+   "mobile": "Townstar",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-Townstar"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Nissan",
+   "label": "X-Trail",
+   "mobile": "X-Trail",
+   "brand_slug": "Nissan",
+   "pages": [
+    "Nissan-X-Trail"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "Berlingo",
+   "mobile": "Berlingo",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-Berlingo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C-Crosser",
+   "mobile": "C-Crosser",
+   "brand_slug": "Citroen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Citroen/M1479/C-Crosser",
+     "name": "C-Crosser"
+    }
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C-Zero",
+   "mobile": "C-Zero",
+   "brand_slug": "Citroen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Citroen/M15716/C-Zero",
+     "name": "C-Zero"
+    }
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C1",
+   "mobile": "C1",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C1"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C3",
+   "mobile": "C3",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C3 Aircross",
+   "mobile": "C3 Aircross",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C3-Aircross"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4",
+   "mobile": "C4",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 Cactus",
+   "mobile": "C4 Cactus",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C4-Cactus"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 Picasso",
+   "mobile": "C4 Picasso",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C4-Picasso"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 SpaceTourer",
+   "mobile": "C4 SpaceTourer",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C4-SpaceTourer"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C4 X",
+   "mobile": "C4 X",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C4-X"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C5",
+   "mobile": "C5",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C5 Aircross",
+   "mobile": "C5 Aircross",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C5-AirCross"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C5 X",
+   "mobile": "C5 X",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C5-X"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "C6",
+   "mobile": "C6",
+   "brand_slug": "Citroen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Citroen/M231/C6",
+     "name": "C6"
+    }
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "C8",
+   "mobile": "C8",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-C8"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "DS3",
+   "mobile": "DS3",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-DS3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "DS4",
+   "mobile": "DS4",
+   "brand_slug": "Citroen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Citroen/M3605/DS4",
+     "name": "DS4"
+    }
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "DS5",
+   "mobile": "DS5",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-DS5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "Grand C4 Picasso",
+   "mobile": "Grand C4 Picasso / SpaceTourer",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-Spacetourer"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumper",
+   "mobile": "Jumper",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-Jumper"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumpy",
+   "mobile": "Jumpy",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-Jumpy"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Citroen",
+   "label": "Nemo",
+   "mobile": "Nemo",
+   "brand_slug": "Citroen",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Citroen/M1426/Nemo",
+     "name": "Nemo"
+    }
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "label": "SpaceTourer",
+   "mobile": "SpaceTourer",
+   "brand_slug": "Citroen",
+   "pages": [
+    "Citroen-Spacetourer"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "500",
+   "mobile": "500",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-500"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "500L",
+   "mobile": "500L",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-500L"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "500X",
+   "mobile": "500X",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-500X"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "600",
+   "mobile": "600",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M13367/600-(FH1-364-365)",
+     "name": "600"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Bravo",
+   "mobile": "Bravo",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Bravo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Croma",
+   "mobile": "Croma",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Croma"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Ducato",
+   "mobile": "Ducato",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Ducato"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Fiorino",
+   "mobile": "Fiorino",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Fiorino"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Freemont",
+   "mobile": "Freemont",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M3612/Freemont",
+     "name": "Freemont"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Fullback",
+   "mobile": "Fullback",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M8887/Fullback",
+     "name": "Fullback"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Grande Panda",
+   "mobile": "Grande Panda",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M15042/Grande-Panda",
+     "name": "Grande Panda"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Idea",
+   "mobile": "Idea",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M237/Idea",
+     "name": "Idea"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Linea",
+   "mobile": "Linea",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M1348/Linea",
+     "name": "Linea"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Multipla",
+   "mobile": "Multipla",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M6001/Multipla",
+     "name": "Multipla"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Panda",
+   "mobile": "Panda",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Panda"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Punto",
+   "mobile": "Punto",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Punto"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Qubo",
+   "mobile": "Qubo",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M9186/Qubo",
+     "name": "Qubo"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Scudo",
+   "mobile": "Scudo",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Scudo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Sedici",
+   "mobile": "Sedici",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M1367/Sedici",
+     "name": "Sedici"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Seicento",
+   "mobile": "Seicento",
+   "brand_slug": "Fiat",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Fiat/M5997/Seicento",
+     "name": "Seicento"
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "label": "Tipo",
+   "mobile": "Tipo",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Tipo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Fiat",
+   "label": "Ulysse",
+   "mobile": "Ulysse",
+   "brand_slug": "Fiat",
+   "pages": [
+    "Fiat-Ulysse"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dacia",
+   "label": "Bigster",
+   "mobile": "Bigster",
+   "brand_slug": "Dacia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Dacia/M15262/Bigster",
+     "name": "Bigster"
+    }
+   ]
+  },
+  {
+   "brand": "Dacia",
+   "label": "Dokker",
+   "mobile": "Dokker",
+   "brand_slug": "Dacia",
+   "pages": [
+    "Dacia-Dokker"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dacia",
+   "label": "Duster",
+   "mobile": "Duster",
+   "brand_slug": "Dacia",
+   "pages": [
+    "Dacia-Duster"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dacia",
+   "label": "Jogger",
+   "mobile": "Jogger",
+   "brand_slug": "Dacia",
+   "pages": [
+    "Dacia-Jogger"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dacia",
+   "label": "Lodgy",
+   "mobile": "Lodgy",
+   "brand_slug": "Dacia",
+   "pages": [
+    "Dacia-Lodgy"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dacia",
+   "label": "Logan",
+   "mobile": "Logan",
+   "brand_slug": "Dacia",
+   "pages": [
+    "Dacia-Logan"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dacia",
+   "label": "Sandero",
+   "mobile": "Sandero",
+   "brand_slug": "Dacia",
+   "pages": [
+    "Dacia-Sandero"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dacia",
+   "label": "Spring",
+   "mobile": "Spring",
+   "brand_slug": "Dacia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Dacia/M11740/Spring",
+     "name": "Spring"
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Across",
+   "mobile": "Across",
+   "brand_slug": "Suzuki",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Suzuki/M11013/Across",
+     "name": "Across"
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Alto",
+   "mobile": "Alto",
+   "brand_slug": "Suzuki",
+   "pages": [
+    "Suzuki-Alto"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Baleno",
+   "mobile": "Baleno",
+   "brand_slug": "Suzuki",
+   "pages": [
+    "Suzuki-Baleno"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Celerio",
+   "mobile": "Celerio",
+   "brand_slug": "Suzuki",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Suzuki/M7340/Celerio",
+     "name": "Celerio"
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Grand Vitara",
+   "mobile": "Grand Vitara",
+   "brand_slug": "Suzuki",
+   "pages": [
+    "Suzuki-Grand-Vitara"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Ignis",
+   "mobile": "Ignis",
+   "brand_slug": "Suzuki",
+   "pages": [
+    "Suzuki-Ignis"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Jimny",
+   "mobile": "Jimny",
+   "brand_slug": "Suzuki",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Suzuki/M985/Jimny",
+     "name": "Jimny"
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Kizashi",
+   "mobile": "Kizashi",
+   "brand_slug": "Suzuki",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Suzuki/M1492/Kizashi",
+     "name": "Kizashi"
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Splash",
+   "mobile": "Splash",
+   "brand_slug": "Suzuki",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Suzuki/M3514/Splash",
+     "name": "Splash"
+    }
+   ]
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Swace",
+   "mobile": "Swace",
+   "brand_slug": "Suzuki",
+   "pages": [
+    "Suzuki-Swace"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Swift",
+   "mobile": "Swift",
+   "brand_slug": "Suzuki",
+   "pages": [
+    "Suzuki-Swift"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Suzuki",
+   "label": "Vitara",
+   "mobile": "Vitara",
+   "brand_slug": "Suzuki",
+   "pages": [
+    "Suzuki-Vitara"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "Accord",
+   "mobile": "Accord",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-Accord"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "CR-V",
+   "mobile": "CR-V",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-CR-V"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "CR-Z",
+   "mobile": "CR-Z",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M5630/CR-Z",
+     "name": "CR-Z"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "City",
+   "mobile": "City",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M1321/City-I",
+     "name": "City"
+    },
+    {
+     "url": "/car-specs/Honda/M5532/City-V",
+     "name": "City"
+    },
+    {
+     "url": "/car-specs/Honda/M5939/City-II",
+     "name": "City"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Civic",
+   "mobile": "Civic",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-Civic"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "Element",
+   "mobile": "Element",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M4654/Element",
+     "name": "Element"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "HR-V",
+   "mobile": "HR-V",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-HR-V"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "Insight",
+   "mobile": "Insight",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M4682/Insight",
+     "name": "Insight"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Jazz",
+   "mobile": "Jazz",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-Jazz"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "Legend",
+   "mobile": "Legend",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M1322/Legend-I",
+     "name": "Legend"
+    },
+    {
+     "url": "/car-specs/Honda/M1323/Legend-II",
+     "name": "Legend"
+    },
+    {
+     "url": "/car-specs/Honda/M1324/Legend-III",
+     "name": "Legend"
+    },
+    {
+     "url": "/car-specs/Honda/M1325/Legend-IV",
+     "name": "Legend"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "NSX",
+   "mobile": "NSX",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M1329/NSX",
+     "name": "NSX"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "Odyssey",
+   "mobile": "Odyssey",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-Odyssey"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "Pilot",
+   "mobile": "Pilot",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-Pilot"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "Prelude",
+   "mobile": "Prelude",
+   "brand_slug": "Honda",
+   "pages": [
+    "Honda-Prelude"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Honda",
+   "label": "ZR-V",
+   "mobile": "ZR-V",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M13573/ZR-V",
+     "name": "ZR-V"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "e",
+   "mobile": "e",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M10543/e",
+     "name": "e"
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "label": "e:Ny1",
+   "mobile": "e:Ny1",
+   "brand_slug": "Honda",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Honda/M13366/eNy1",
+     "name": "e:Ny1"
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Avenger",
+   "mobile": "Avenger",
+   "brand_slug": "Jeep",
+   "pages": [
+    "Jeep-Avenger"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jeep",
+   "label": "Cherokee",
+   "mobile": "Cherokee",
+   "brand_slug": "Jeep",
+   "pages": [
+    "Jeep-Cherokee"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jeep",
+   "label": "Commander",
+   "mobile": "Commander",
+   "brand_slug": "Jeep",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Jeep/M937/Commander",
+     "name": "Commander"
+    }
+   ]
+  },
+  {
+   "brand": "Jeep",
+   "label": "Compass",
+   "mobile": "Compass",
+   "brand_slug": "Jeep",
+   "pages": [
+    "Jeep-Compass"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jeep",
+   "label": "Grand Cherokee",
+   "mobile": "Grand Cherokee",
+   "brand_slug": "Jeep",
+   "pages": [
+    "Jeep-Grand-Cherokee"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jeep",
+   "label": "Renegade",
+   "mobile": "Renegade",
+   "brand_slug": "Jeep",
+   "pages": [
+    "Jeep-Renegade"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jeep",
+   "label": "Wrangler",
+   "mobile": "Wrangler",
+   "brand_slug": "Jeep",
+   "pages": [
+    "Jeep-Wrangler"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Defender",
+   "mobile": "Defender",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Defender"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Discovery",
+   "mobile": "Discovery",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Discovery"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Discovery Sport",
+   "mobile": "Discovery Sport",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Discovery-Sport"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Freelander",
+   "mobile": "Freelander",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Freelander"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover",
+   "mobile": "Range Rover",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Range-Rover"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover Evoque",
+   "mobile": "Range Rover Evoque",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Evoque"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover Sport",
+   "mobile": "Range Rover Sport",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Range-Rover-Sport"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover Velar",
+   "mobile": "Range Rover Velar",
+   "brand_slug": "Land-Rover",
+   "pages": [
+    "Land-Rover-Range-Rover-Velar"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mini",
+   "label": "Aceman",
+   "mobile": "Aceman",
+   "brand_slug": "Mini",
+   "pages": [
+    "Mini-Aceman"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mini",
+   "label": "Cabrio",
+   "mobile": "Cabrio",
+   "brand_slug": "Mini",
+   "pages": [
+    "Mini-Mini-Cabrio"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mini",
+   "label": "Clubman",
+   "mobile": "Clubman",
+   "brand_slug": "Mini",
+   "pages": [
+    "Mini-Clubman"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mini",
+   "label": "Cooper",
+   "mobile": "Cooper",
+   "brand_slug": "Mini",
+   "pages": [
+    "Mini-Mini"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mini",
+   "label": "Countryman",
+   "mobile": "Countryman",
+   "brand_slug": "Mini",
+   "pages": [
+    "Mini-Countryman"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mini",
+   "label": "Coupe",
+   "mobile": "Coupe",
+   "brand_slug": "Mini",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mini/M3619/Coupe",
+     "name": "Coupe"
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Paceman",
+   "mobile": "Paceman",
+   "brand_slug": "Mini",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mini/M6372/Paceman",
+     "name": "Paceman"
+    }
+   ]
+  },
+  {
+   "brand": "Mini",
+   "label": "Roadster",
+   "mobile": "Roadster",
+   "brand_slug": "Mini",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mini/M5851/Roadster",
+     "name": "Roadster"
+    }
+   ]
+  },
+  {
+   "brand": "Porsche",
+   "label": "911",
+   "mobile": "911",
+   "brand_slug": "Porsche",
+   "pages": [
+    "Porsche-911"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Porsche",
+   "label": "Boxster",
+   "mobile": "Boxster",
+   "brand_slug": "Porsche",
+   "pages": [
+    "Porsche-Boxster"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Porsche",
+   "label": "Cayenne",
+   "mobile": "Cayenne",
+   "brand_slug": "Porsche",
+   "pages": [
+    "Porsche-Cayenne"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Porsche",
+   "label": "Cayman",
+   "mobile": "Cayman",
+   "brand_slug": "Porsche",
+   "pages": [
+    "Porsche-Cayman"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Porsche",
+   "label": "Macan",
+   "mobile": "Macan",
+   "brand_slug": "Porsche",
+   "pages": [
+    "Porsche-Macan"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Porsche",
+   "label": "Panamera",
+   "mobile": "Panamera",
+   "brand_slug": "Porsche",
+   "pages": [
+    "Porsche-Panamera"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Porsche",
+   "label": "Taycan",
+   "mobile": "Taycan",
+   "brand_slug": "Porsche",
+   "pages": [
+    "Porsche-Taycan"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "CT",
+   "mobile": "CT",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-CT"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "ES",
+   "mobile": "ES",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-ES"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "GS",
+   "mobile": "GS",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-GS"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "IS",
+   "mobile": "IS",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-IS"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "LBX",
+   "mobile": "LBX",
+   "brand_slug": "Lexus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Lexus/M13569/LBX",
+     "name": "LBX"
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "LC",
+   "mobile": "LC",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-LC"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "LM",
+   "mobile": "LM",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-LM"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "LS",
+   "mobile": "LS",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-LS"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "NX",
+   "mobile": "NX",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-NX"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "RC",
+   "mobile": "RC",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-RC"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "RX",
+   "mobile": "RX",
+   "brand_slug": "Lexus",
+   "pages": [
+    "Lexus-RX"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lexus",
+   "label": "RZ",
+   "mobile": "RZ",
+   "brand_slug": "Lexus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Lexus/M13285/RZ",
+     "name": "RZ"
+    }
+   ]
+  },
+  {
+   "brand": "Lexus",
+   "label": "UX",
+   "mobile": "UX",
+   "brand_slug": "Lexus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Lexus/M10595/UX",
+     "name": "UX"
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "ASX",
+   "mobile": "ASX",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-ASX"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Colt",
+   "mobile": "Colt",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-Colt"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Eclipse Cross",
+   "mobile": "Eclipse Cross",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-Eclipse-Cross"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Galant",
+   "mobile": "Galant",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-Galant"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Grandis",
+   "mobile": "Grandis",
+   "brand_slug": "Mitsubishi",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mitsubishi/M440/Grandis",
+     "name": "Grandis"
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "L200",
+   "mobile": "L200",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-L200"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Lancer",
+   "mobile": "Lancer",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-Lancer"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Outlander",
+   "mobile": "Outlander",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-Outlander"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Pajero",
+   "mobile": "Pajero",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-Pajero"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "Space Star",
+   "mobile": "Space Star",
+   "brand_slug": "Mitsubishi",
+   "pages": [
+    "Mitsubishi-Mirage---Space-Star"
+   ],
+   "direct": [
+    {
+     "url": "/car-specs/Mitsubishi/M1165/Space-Star",
+     "name": "Space Star"
+    }
+   ]
+  },
+  {
+   "brand": "Mitsubishi",
+   "label": "i-MiEV",
+   "mobile": "i-MiEV",
+   "brand_slug": "Mitsubishi",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Mitsubishi/M7691/i-MiEV",
+     "name": "i-MiEV"
+    }
+   ]
+  },
+  {
+   "brand": "Abarth",
+   "label": "500",
+   "mobile": "500",
+   "brand_slug": "Abarth",
+   "pages": [
+    "Abarth-500"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Abarth",
+   "label": "Punto",
+   "mobile": "Punto Evo",
+   "brand_slug": "Abarth",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Abarth/M1442/Punto-Evo",
+     "name": "Punto"
+    }
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "147",
+   "mobile": "147",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Alfa-Romeo/M264/147",
+     "name": "147"
+    }
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "159",
+   "mobile": "159",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Alfa-Romeo/M288/159",
+     "name": "159"
+    }
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "4C",
+   "mobile": "4C",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Alfa-Romeo/M6714/4C",
+     "name": "4C"
+    }
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Brera",
+   "mobile": "Brera",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Alfa-Romeo/M289/Brera",
+     "name": "Brera"
+    }
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "GT",
+   "mobile": "GT",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Alfa-Romeo/M265/GT",
+     "name": "GT"
+    }
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Giulia",
+   "mobile": "Giulia",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [
+    "Alfa-Romeo-Giulia"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Giulietta",
+   "mobile": "Giulietta",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [
+    "Alfa-Romeo-Giulietta"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Junior",
+   "mobile": "Junior",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [
+    "Alfa-Romeo-Junior"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "MiTo",
+   "mobile": "MiTo",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Alfa-Romeo/M1365/MiTo",
+     "name": "MiTo"
+    }
+   ]
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Stelvio",
+   "mobile": "Stelvio",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [
+    "Alfa-Romeo-Stelvio"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Alfa Romeo",
+   "label": "Tonale",
+   "mobile": "Tonale",
+   "brand_slug": "Alfa-Romeo",
+   "pages": [
+    "Alfa-Romeo-Tonale"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Alpine",
+   "label": "A110",
+   "mobile": "A110",
+   "brand_slug": "Alpine",
+   "pages": [
+    "Alpine-A110"
+   ],
+   "direct": [
+    {
+     "url": "/car-specs/Alpine/M1732/A110",
+     "name": "A110"
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Atto 2",
+   "mobile": "ATTO 2",
+   "brand_slug": "BYD",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BYD/M15173/Atto-2",
+     "name": "Atto 2"
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Dolphin",
+   "mobile": "DOLPHIN",
+   "brand_slug": "BYD",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BYD/M13422/Dolphin",
+     "name": "Dolphin"
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Dolphin Surf",
+   "mobile": "DOLPHIN SURF",
+   "brand_slug": "BYD",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BYD/M15541/Dolphin-Surf-(EQE)",
+     "name": "Dolphin Surf"
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Seal",
+   "mobile": "SEAL",
+   "brand_slug": "BYD",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BYD/M13423/Seal",
+     "name": "Seal"
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Seal U",
+   "mobile": "SEAL U",
+   "brand_slug": "BYD",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BYD/M13614/Seal-U",
+     "name": "Seal U"
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Sealion 7",
+   "mobile": "SEALION 7",
+   "brand_slug": "BYD",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/BYD/M15572/Sealion-7",
+     "name": "Sealion 7"
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "label": "Tang",
+   "mobile": "TANG",
+   "brand_slug": "BYD",
+   "pages": [
+    "BYD-Tang-(EU-Market)"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cadillac",
+   "label": "BLS",
+   "mobile": "BLS",
+   "brand_slug": "Cadillac",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Cadillac/M4366/BLS",
+     "name": "BLS"
+    }
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "label": "CTS",
+   "mobile": "CTS",
+   "brand_slug": "Cadillac",
+   "pages": [
+    "Cadillac-CTS"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cadillac",
+   "label": "Escalade",
+   "mobile": "Escalade",
+   "brand_slug": "Cadillac",
+   "pages": [
+    "Cadillac-Escalade"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cadillac",
+   "label": "SRX",
+   "mobile": "SRX",
+   "brand_slug": "Cadillac",
+   "pages": [
+    "Cadillac-SRX"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Cadillac",
+   "label": "STS",
+   "mobile": "STS",
+   "brand_slug": "Cadillac",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Cadillac/M4199/STS",
+     "name": "STS"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Aveo",
+   "mobile": "Aveo",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Aveo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Camaro",
+   "mobile": "Camaro",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Camaro"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Captiva",
+   "mobile": "Captiva",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M739/Captiva",
+     "name": "Captiva"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Cruze",
+   "mobile": "Cruze",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M1357/Cruze",
+     "name": "Cruze"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Epica",
+   "mobile": "Epica",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M743/Epica",
+     "name": "Epica"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "HHR",
+   "mobile": "HHR",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M6237/HHR",
+     "name": "HHR"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Impala",
+   "mobile": "Impala",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Impala"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Malibu",
+   "mobile": "Malibu",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Malibu"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Nubira",
+   "mobile": "Nubira",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Nubira"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Orlando",
+   "mobile": "Orlando",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M3495/Orlando",
+     "name": "Orlando"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Spark",
+   "mobile": "Spark",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M1405/Spark",
+     "name": "Spark"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Suburban",
+   "mobile": "Suburban",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Suburban"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Tahoe",
+   "mobile": "Tahoe",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Tahoe"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Trailblazer",
+   "mobile": "Trailblazer",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M756/Trailblazer",
+     "name": "Trailblazer"
+    }
+   ]
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Trax",
+   "mobile": "Trax",
+   "brand_slug": "Chevrolet",
+   "pages": [
+    "Chevrolet-Trax"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chevrolet",
+   "label": "Volt",
+   "mobile": "Volt",
+   "brand_slug": "Chevrolet",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chevrolet/M4477/Volt",
+     "name": "Volt"
+    }
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Grand Voyager",
+   "mobile": "Grand Voyager",
+   "brand_slug": "Chrysler",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chrysler/M3555/Grand-Voyager",
+     "name": "Grand Voyager"
+    }
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "PT Cruiser",
+   "mobile": "PT Cruiser",
+   "brand_slug": "Chrysler",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Chrysler/M3557/PT-Cruiser",
+     "name": "PT Cruiser"
+    }
+   ]
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Pacifica",
+   "mobile": "Pacifica",
+   "brand_slug": "Chrysler",
+   "pages": [
+    "Chrysler-Pacifica"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Sebring",
+   "mobile": "Sebring",
+   "brand_slug": "Chrysler",
+   "pages": [
+    "Chrysler-Sebring"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Chrysler",
+   "label": "Voyager",
+   "mobile": "Voyager",
+   "brand_slug": "Chrysler",
+   "pages": [
+    "Chrysler-Voyager"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "DS",
+   "label": "DS3",
+   "mobile": "DS3",
+   "brand_slug": "DS",
+   "pages": [
+    "DS-DS-3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "DS",
+   "label": "DS4",
+   "mobile": "DS4",
+   "brand_slug": "DS",
+   "pages": [
+    "DS-DS-4"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "DS",
+   "label": "DS7 (Crossback)",
+   "mobile": "DS7 (Crossback)",
+   "brand_slug": "DS",
+   "pages": [
+    "DS-DS-7"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "DS",
+   "label": "DS9",
+   "mobile": "DS9",
+   "brand_slug": "DS",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/DS/M11290/DS-9",
+     "name": "DS9"
+    }
+   ]
+  },
+  {
+   "brand": "DS",
+   "label": "Nº8",
+   "mobile": "Nº8",
+   "brand_slug": "DS",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/DS/M14646/N°8",
+     "name": "Nº8"
+    }
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Avenger",
+   "mobile": "Avenger",
+   "brand_slug": "Dodge",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Dodge/M3525/Avenger",
+     "name": "Avenger"
+    }
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Caliber",
+   "mobile": "Caliber",
+   "brand_slug": "Dodge",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Dodge/M421/Caliber",
+     "name": "Caliber"
+    }
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Challenger",
+   "mobile": "Challenger",
+   "brand_slug": "Dodge",
+   "pages": [
+    "Dodge-Challenger"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dodge",
+   "label": "Charger",
+   "mobile": "Charger",
+   "brand_slug": "Dodge",
+   "pages": [
+    "Dodge-Charger"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dodge",
+   "label": "Durango",
+   "mobile": "Durango",
+   "brand_slug": "Dodge",
+   "pages": [
+    "Dodge-Durango"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dodge",
+   "label": "Grand Caravan",
+   "mobile": "Grand Caravan",
+   "brand_slug": "Dodge",
+   "pages": [
+    "Dodge-Caravan---Grand-Caravan"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Dodge",
+   "label": "Journey",
+   "mobile": "Journey",
+   "brand_slug": "Dodge",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Dodge/M3520/Journey",
+     "name": "Journey"
+    }
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Nitro",
+   "mobile": "Nitro",
+   "brand_slug": "Dodge",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Dodge/M3521/Nitro",
+     "name": "Nitro"
+    }
+   ]
+  },
+  {
+   "brand": "Dodge",
+   "label": "Viper",
+   "mobile": "Viper",
+   "brand_slug": "Dodge",
+   "pages": [
+    "Dodge-Viper"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Infiniti",
+   "label": "EX",
+   "mobile": "EX",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M1396/EX",
+     "name": "EX"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "FX",
+   "mobile": "FX",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M1393/FX-II",
+     "name": "FX"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "G",
+   "mobile": "G",
+   "brand_slug": "Infiniti",
+   "pages": [
+    "Infiniti-G"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Infiniti",
+   "label": "M",
+   "mobile": "M",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M1501/M",
+     "name": "M"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q30",
+   "mobile": "Q30",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M8241/Q30",
+     "name": "Q30"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q50",
+   "mobile": "Q50",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M6879/Q50",
+     "name": "Q50"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q60",
+   "mobile": "Q60",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M7429/Q60",
+     "name": "Q60"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "Q70",
+   "mobile": "Q70",
+   "brand_slug": "Infiniti",
+   "pages": [
+    "Infiniti-Q70"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Infiniti",
+   "label": "QX30",
+   "mobile": "QX30",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M9037/QX30",
+     "name": "QX30"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "QX50",
+   "mobile": "QX50",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M7431/QX50",
+     "name": "QX50"
+    }
+   ]
+  },
+  {
+   "brand": "Infiniti",
+   "label": "QX70",
+   "mobile": "QX70",
+   "brand_slug": "Infiniti",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Infiniti/M7432/QX70",
+     "name": "QX70"
+    }
+   ]
+  },
+  {
+   "brand": "Isuzu",
+   "label": "D-Max",
+   "mobile": "D-Max",
+   "brand_slug": "Isuzu",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Isuzu/M1424/D-Max",
+     "name": "D-Max"
+    }
+   ]
+  },
+  {
+   "brand": "JAECOO",
+   "label": "5",
+   "mobile": "5",
+   "brand_slug": "Jaecoo",
+   "pages": [
+    "Jaecoo-5---J5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "JAECOO",
+   "label": "7",
+   "mobile": "7",
+   "brand_slug": "Jaecoo",
+   "pages": [
+    "Jaecoo-7---J7"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jaguar",
+   "label": "E-Pace",
+   "mobile": "E-Pace",
+   "brand_slug": "Jaguar",
+   "pages": [
+    "Jaguar-E-Pace"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jaguar",
+   "label": "F-Pace",
+   "mobile": "F-Pace",
+   "brand_slug": "Jaguar",
+   "pages": [
+    "Jaguar-F-Pace"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jaguar",
+   "label": "F-Type",
+   "mobile": "F-Type",
+   "brand_slug": "Jaguar",
+   "pages": [
+    "Jaguar-F-Type"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jaguar",
+   "label": "I-Pace",
+   "mobile": "I-Pace",
+   "brand_slug": "Jaguar",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Jaguar/M9885/I-Pace",
+     "name": "I-Pace"
+    }
+   ]
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XE",
+   "mobile": "XE",
+   "brand_slug": "Jaguar",
+   "pages": [
+    "Jaguar-XE"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XF",
+   "mobile": "XF",
+   "brand_slug": "Jaguar",
+   "pages": [
+    "Jaguar-XF"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XJ",
+   "mobile": "XJ",
+   "brand_slug": "Jaguar",
+   "pages": [
+    "Jaguar-XJ"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Jaguar",
+   "label": "XK",
+   "mobile": "XK",
+   "brand_slug": "Jaguar",
+   "pages": [
+    "Jaguar-XK"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "KGM",
+   "label": "Actyon",
+   "mobile": "Actyon",
+   "brand_slug": "KGM",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/KGM/M15165/Actyon",
+     "name": "Actyon"
+    }
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Korando",
+   "mobile": "Korando",
+   "brand_slug": "KGM",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/KGM/M15151/Korando-(CW)",
+     "name": "Korando"
+    }
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Musso",
+   "mobile": "Musso",
+   "brand_slug": "KGM",
+   "pages": [
+    "KGM-Musso"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "KGM",
+   "label": "Rexton",
+   "mobile": "Rexton",
+   "brand_slug": "KGM",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/KGM/M15145/Rexton-(YK)",
+     "name": "Rexton"
+    }
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Tivoli",
+   "mobile": "Tivoli",
+   "brand_slug": "KGM",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/KGM/M15160/Tivoli-(XK)",
+     "name": "Tivoli"
+    }
+   ]
+  },
+  {
+   "brand": "KGM",
+   "label": "Torres",
+   "mobile": "Torres",
+   "brand_slug": "KGM",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/KGM/M7004/Torres",
+     "name": "Torres"
+    }
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Delta",
+   "mobile": "Delta",
+   "brand_slug": "Lancia",
+   "pages": [
+    "Lancia-Delta"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lancia",
+   "label": "Musa",
+   "mobile": "MUSA",
+   "brand_slug": "Lancia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Lancia/M445/Musa",
+     "name": "Musa"
+    }
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Phedra",
+   "mobile": "Phedra",
+   "brand_slug": "Lancia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Lancia/M447/Phedra",
+     "name": "Phedra"
+    }
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Thema",
+   "mobile": "Thema",
+   "brand_slug": "Lancia",
+   "pages": [
+    "Lancia-Thema"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Lancia",
+   "label": "Voyager",
+   "mobile": "Voyager",
+   "brand_slug": "Lancia",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Lancia/M5849/Voyager",
+     "name": "Voyager"
+    }
+   ]
+  },
+  {
+   "brand": "Lancia",
+   "label": "Ypsilon",
+   "mobile": "Ypsilon",
+   "brand_slug": "Lancia",
+   "pages": [
+    "Lancia-Ypsilon"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Leapmotor",
+   "label": "C10",
+   "mobile": "C10",
+   "brand_slug": "Leapmotor",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Leapmotor/M14510/C10",
+     "name": "C10"
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "Cyberster",
+   "mobile": "Cyberster",
+   "brand_slug": "MG",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/MG/M14038/Cyberster",
+     "name": "Cyberster"
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "HS",
+   "mobile": "HS",
+   "brand_slug": "MG",
+   "pages": [
+    "MG-HS-EHS"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "MG",
+   "label": "MG3",
+   "mobile": "MG3",
+   "brand_slug": "MG",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/MG/M13782/3",
+     "name": "MG3"
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "TF",
+   "mobile": "TF",
+   "brand_slug": "MG",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/MG/M1127/TF",
+     "name": "TF"
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "label": "ZS",
+   "mobile": "ZS",
+   "brand_slug": "MG",
+   "pages": [
+    "MG-ZS",
+    "MG-ZS-(crossover)"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Maserati",
+   "label": "Ghibli",
+   "mobile": "Ghibli",
+   "brand_slug": "Maserati",
+   "pages": [
+    "Maserati-Ghibli"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Maserati",
+   "label": "GranCabrio",
+   "mobile": "GranCabrio",
+   "brand_slug": "Maserati",
+   "pages": [
+    "Maserati-GranCabrio"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Maserati",
+   "label": "Granturismo",
+   "mobile": "Granturismo",
+   "brand_slug": "Maserati",
+   "pages": [
+    "Maserati-GranTurismo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Maserati",
+   "label": "Levante",
+   "mobile": "Levante",
+   "brand_slug": "Maserati",
+   "pages": [
+    "Maserati-Levante"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Maserati",
+   "label": "Quattroporte",
+   "mobile": "Quattroporte",
+   "brand_slug": "Maserati",
+   "pages": [
+    "Maserati-Quattroporte"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Maxus",
+   "label": "Euniq 5",
+   "mobile": "Euniq 5",
+   "brand_slug": "Maxus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Maxus/M14121/Euniq-5",
+     "name": "Euniq 5"
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "Euniq 6",
+   "mobile": "Euniq 6",
+   "brand_slug": "Maxus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Maxus/M14122/Euniq-6",
+     "name": "Euniq 6"
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "Mifa 9",
+   "mobile": "Mifa 9",
+   "brand_slug": "Maxus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Maxus/M13151/Mifa-9",
+     "name": "Mifa 9"
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "T60 MAX",
+   "mobile": "T60 MAX",
+   "brand_slug": "Maxus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Maxus/M15179/T60-MAX",
+     "name": "T60 MAX"
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "T90",
+   "mobile": "T90",
+   "brand_slug": "Maxus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Maxus/M13386/T90",
+     "name": "T90"
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "label": "eTerron 9",
+   "mobile": "eTerron 9",
+   "brand_slug": "Maxus",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Maxus/M15180/eTERRON-9",
+     "name": "eTerron 9"
+    }
+   ]
+  },
+  {
+   "brand": "OMODA",
+   "label": "5",
+   "mobile": "5",
+   "brand_slug": "Omoda",
+   "pages": [
+    "Omoda-5---C5"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Smart",
+   "label": "#3",
+   "mobile": "#3",
+   "brand_slug": "Smart",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Smart/M13653/3",
+     "name": "#3"
+    }
+   ]
+  },
+  {
+   "brand": "Smart",
+   "label": "ForFour",
+   "mobile": "ForFour",
+   "brand_slug": "Smart",
+   "pages": [
+    "Smart-ForFour"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Smart",
+   "label": "ForTwo",
+   "mobile": "ForTwo",
+   "brand_slug": "Smart",
+   "pages": [
+    "Smart-ForTwo"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Actyon",
+   "mobile": "Actyon",
+   "brand_slug": "Ssangyong",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ssangyong/M952/Actyon",
+     "name": "Actyon"
+    }
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Korando",
+   "mobile": "Korando",
+   "brand_slug": "Ssangyong",
+   "pages": [
+    "Ssangyong-Korando"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Kyron",
+   "mobile": "Kyron",
+   "brand_slug": "Ssangyong",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ssangyong/M954/Kyron",
+     "name": "Kyron"
+    }
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Musso",
+   "mobile": "MUSSO",
+   "brand_slug": "Ssangyong",
+   "pages": [
+    "Ssangyong-Musso"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Rexton",
+   "mobile": "REXTON",
+   "brand_slug": "Ssangyong",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ssangyong/M956/Rexton-I",
+     "name": "Rexton"
+    },
+    {
+     "url": "/car-specs/Ssangyong/M957/Rexton-II",
+     "name": "Rexton"
+    }
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Rodius",
+   "mobile": "Rodius",
+   "brand_slug": "Ssangyong",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ssangyong/M958/Rodius",
+     "name": "Rodius"
+    }
+   ]
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Tivoli",
+   "mobile": "Tivoli",
+   "brand_slug": "Ssangyong",
+   "pages": [
+    "Ssangyong-Tivoli"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Torres",
+   "mobile": "Torres",
+   "brand_slug": "Ssangyong",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Ssangyong/M13673/Torres",
+     "name": "Torres"
+    }
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "BRZ",
+   "mobile": "BRZ",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-BRZ"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Subaru",
+   "label": "Crosstrek",
+   "mobile": "Crosstrek",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-Crosstrek---XV"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Subaru",
+   "label": "Forester",
+   "mobile": "Forester",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-Forester"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Subaru",
+   "label": "Impreza",
+   "mobile": "Impreza",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-Impreza"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Subaru",
+   "label": "Legacy",
+   "mobile": "Legacy",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-Legacy"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Subaru",
+   "label": "Levorg",
+   "mobile": "Levorg",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-Levorg"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Subaru",
+   "label": "Outback",
+   "mobile": "Outback",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-Outback"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Subaru",
+   "label": "Trezia",
+   "mobile": "Trezia",
+   "brand_slug": "Subaru",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Subaru/M3607/Trezia",
+     "name": "Trezia"
+    }
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "Tribeca",
+   "mobile": "Tribeca",
+   "brand_slug": "Subaru",
+   "pages": [],
+   "direct": [
+    {
+     "url": "/car-specs/Subaru/M400/Tribeca",
+     "name": "Tribeca"
+    }
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "label": "XV",
+   "mobile": "XV",
+   "brand_slug": "Subaru",
+   "pages": [
+    "Subaru-Crosstrek---XV"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model 3",
+   "mobile": "Model 3",
+   "brand_slug": "Tesla",
+   "pages": [
+    "Tesla-Model-3"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model S",
+   "mobile": "Model S",
+   "brand_slug": "Tesla",
+   "pages": [
+    "Tesla-Model-S"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model X",
+   "mobile": "Model X",
+   "brand_slug": "Tesla",
+   "pages": [
+    "Tesla-Model-X"
+   ],
+   "direct": []
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model Y",
+   "mobile": "Model Y",
+   "brand_slug": "Tesla",
+   "pages": [
+    "Tesla-Model-Y"
+   ],
+   "direct": []
+  }
+ ]
+}

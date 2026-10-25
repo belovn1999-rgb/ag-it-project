@@ -91,6 +91,27 @@ def _same_years(a, b):
     return abs(a[0] - b[0]) <= 1 and abs(end_a - end_b) <= 1
 
 
+def _evidence(models, gens, source):
+    """(found {id(row)}, options {id(row): {(gearbox, drive)}}, generations {(brand, label, code): [their gens]}) of one
+    database in autocentrum's shape, compared with our rows of the other sources (tools/autocentrum.py engine_found)."""
+    found, options, their_gens = set(), collections.defaultdict(set), collections.defaultdict(list)
+    for model in models:
+        key = (model["brand"], model["label"])
+        for gen_of_theirs in autocentrum.group_body_level(model["generations"]):
+            matched = autocentrum.match_gens(gen_of_theirs, gens.get(key, {}))
+            for gen in matched:
+                their_gens[(*key, gen["code"])].append(gen_of_theirs)
+            ours = [item for gen in matched for item in gen["rows"] if item["src"].get("Источник") != source]
+            for body in gen_of_theirs["bodies"]:
+                for engine in body["engines"]:
+                    if engine.get("to") and engine["to"] < autocentrum.SINCE:
+                        continue
+                    for item in autocentrum.engine_found(engine, ours, model["brand"]):
+                        found.add(id(item["src"]))
+                        options[id(item["src"])] |= {autocentrum.config_parts(c) for c in engine.get("configs", [])}
+    return found, options, their_gens
+
+
 def confirm(rows, ac):
     """Fill COLUMNS in every row (rows edited in place); returns {column: Counter of statuses}."""
     for row in rows:
@@ -98,25 +119,13 @@ def confirm(rows, ac):
             row[column] = ""
     gens = autocentrum.our_generations(rows)
     adac_rows, adac_gens = adac_check.evidence(rows)
-    found = set()                              # id(row): autocentrum has its engine
-    options = collections.defaultdict(set)     # id(row): autocentrum's (gearbox, drive) for its engine
-    ac_gens = collections.defaultdict(list)    # (brand, label, code): autocentrum generations matching ours
-    for model in ac.get("models", []):
-        if model.get("source") in ("ultimatespecs", "adac"):
-            continue  # the extra models build-model-engine-table.py put in the same list are not autocentrum's
-        key = (model["brand"], model["label"])
-        for ac_gen in autocentrum.group_body_level(model["generations"]):
-            matched = autocentrum.match_gens(ac_gen, gens.get(key, {}))
-            for gen in matched:
-                ac_gens[(*key, gen["code"])].append(ac_gen)
-            ours = [item for gen in matched for item in gen["rows"] if item["src"].get("Источник") != "autocentrum"]
-            for body in ac_gen["bodies"]:
-                for engine in body["engines"]:
-                    if engine.get("to") and engine["to"] < autocentrum.SINCE:
-                        continue
-                    for item in autocentrum.engine_found(engine, ours, model["brand"]):
-                        found.add(id(item["src"]))
-                        options[id(item["src"])] |= {autocentrum.config_parts(c) for c in engine.get("configs", [])}
+    # autocentrum: its engines found in our rows of other sources, their gearbox / drive options, its generations.
+    autocentrum_models = [m for m in ac.get("models", []) if m.get("source") not in ("ultimatespecs", "adac")]
+    found, options, ac_gens = _evidence(autocentrum_models, gens, "autocentrum")
+    # ultimatespecs read again for the models we have from autocentrum or ADAC only (owner 2026-10-25,
+    # tools/crawl-ultimatespecs-models.py --check): the same comparison, for the rows of the other sources.
+    us_models = _load("ultimatespecs-check.json").get("models", [])
+    us_found, us_options, us_gens = _evidence(us_models, gens, "ultimatespecs")
 
     wiki = {key: value["year"] for key, value in _load("model-facelifts-wiki.json").items() if value.get("accepted")}
     manual = {key: value["year"] for key, value in _load("model-facelifts-manual.json").items()}
@@ -137,15 +146,22 @@ def confirm(rows, ac):
             by_source = collections.defaultdict(list)
             for row in items:
                 by_source[row.get("Источник", "ultimatespecs")].append(row)
+            adac_years = adac_gens.get((brand, label, code))
+            # ADAC's added rows carry our phase's years: its own span is the generation pages' (below).
             matched = ac_gens.get((brand, label, code), [])
             # Years: what each database gives the generation.
-            spans = {source: span for source, source_rows in by_source.items() if (span := _years(source_rows))}
+            spans = {source: span for source, source_rows in by_source.items()
+                     if (span := _years(source_rows)) and not (source == "adac" and adac_years)}
             if matched and "autocentrum" not in spans:
                 closest = min(matched, key=lambda g: abs(g["from"] - gen["from"]))
                 spans["autocentrum"] = (closest["from"], closest["to"])
             adac = adac_gens.get((brand, label, code))
             if adac and "adac" not in spans:
                 spans["adac"] = adac["span"]
+            us_matched = us_gens.get((brand, label, code), [])
+            if us_matched and "ultimatespecs" not in spans:
+                closest = min(us_matched, key=lambda g: abs(g["from"] - gen["from"]))
+                spans["ultimatespecs"] = (closest["from"], closest["to"])
             agree = set()
             for a in spans:
                 for b in spans:
@@ -169,6 +185,8 @@ def confirm(rows, ac):
                         if LIFT_STAGES.match(row["Этап"]) else None
                     if start and abs(start - lift) <= 1:
                         said.add("ultimatespecs")
+                if any(abs(year - lift) <= 1 for g in us_matched for year in autocentrum.facelift_years(g)):
+                    said.add("ultimatespecs")
                 if any(abs(year - lift) <= 1 for g in matched for year in autocentrum.facelift_years(g)) or \
                         any(abs(int(r["Рестайлинг, год"] or 0) - lift) <= 1 for r in by_source.get("autocentrum", [])):
                     said.add("autocentrum")
@@ -204,6 +222,8 @@ def confirm(rows, ac):
         engine = {source}
         if source != "autocentrum" and id(row) in found:
             engine.add("autocentrum")
+        if source != "ultimatespecs" and id(row) in us_found:
+            engine.add("ultimatespecs")
         if source == "autocentrum" and _twin(row, by_gen[(row["Марка"], row["Модель"], row["Поколение"])]["ultimatespecs"]):
             engine.add("ultimatespecs")
         adac = adac_rows.get(id(row), {})
@@ -214,7 +234,8 @@ def confirm(rows, ac):
         row["Подтверждение: мотор"] = _status(engine)
         key = (row["Марка"], row["Модель"], row["Поколение"])
         start, end = autocentrum.our_years(row["Годы (проверено)"])
-        gen_known = key in ac_gens or key in adac_gens or any(by_gen[key][s] for s in ("autocentrum", "adac"))
+        gen_known = key in ac_gens or key in adac_gens or key in us_gens or \
+            any(by_gen[key][s] for s in ("autocentrum", "adac"))
         model_known = (row["Марка"], row["Модель"]) in known_models
         # A generation of a model they know that neither has (Genesis G80 DH), or one our table already calls
         # "вне ЕС" (Toyota Camry XV40 / XV50). Before 2011 the sources' cut-offs (autocentrum from 2010, ADAC
@@ -238,6 +259,9 @@ def confirm(rows, ac):
                 stated.add(STATED[origin] or source)
             if codes.get(value) and any(option[index] == codes[value] for option in their):
                 stated.add("autocentrum")
+            if source != "ultimatespecs" and codes.get(value) and \
+                    any(option[index] == codes[value] for option in us_options.get(id(row), set())):
+                stated.add("ultimatespecs")
             if source != "adac" and codes.get(value) in adac.get("gearbox" if index == 0 else "drive", set()):
                 stated.add("adac")
             if stated:

@@ -41,6 +41,20 @@ def R(brand, models, fuel, powers, litres, gearbox, since, until, system, source
             "optional": optional, "mid_phase": mid_phase, "exclude": re.compile(exclude, re.I) if exclude else None}
 
 
+def _adac_auto():
+    import adac_check
+    return adac_check.AUTO
+
+
+class _LazyAuto:
+    def search(self, text):
+        return _adac_auto().search(text)
+
+
+ADAC_AUTO = _LazyAuto()
+# What an ADAC version name says of a mild hybrid. Not "ISG": at Kia and Hyundai it is Idle Stop & Go.
+ADAC_MILD = re.compile(r"mild[- ]?hybrid|\bm-?hev\b|\bmhev\b|\b48 ?v\b|\be-?tsi\b|\be-tec\b|eq[- ]?boost", re.I)
+
 # Reviewed 2026-10-10 against de/en.wikipedia (tools/wiki_engines.py, docs/MODEL-MILD-HYBRIDS.md).
 RULES = [
     # Audi
@@ -330,6 +344,11 @@ RULES = [
       None, "it: Lancia Ypsilon (2024) — «1.2 T Gen-3, Turbo Hybrid, a 48V da 100 cv, accoppiato a una trasmissione a doppia frizione»"),
     R("DS", ["DS3", "DS3 Crossback", "DS4", "Nº4"], "petrol", [136, 145], 1.2, A, 2024, None, "48V", "de.wikipedia: DS 3 Crossback / DS 4",
       None, "de: DS 4 — «Ein Mild-Hybrid mit 6-Stufen-Doppelkupplungsgetriebe folgte 2024.»; de: DS 3 Crossback — Tabelle «MHEV 136 … 04/2024»"),
+    # Stage 19 (2026-10-25): what ADAC names "MHEV plus" and our table had not (tools/adac_check.py).
+    R("Audi", ["Q5"], "petrol", [204, 272, 367], None, A, 2024, None, "48V", "ADAC Autokatalog: Audi Q5 2.0 TFSI MHEV plus",
+      ["GU"], "de: Audi Q5 GU — «Sie sind alle als Mild-Hybrid ausgeführt» (48-Volt-Mildhybrid)"),
+    R("Audi", ["Q5"], "diesel", [204], 2.0, A, 2024, None, "48V", "ADAC Autokatalog: Audi Q5 2.0 TDI MHEV plus",
+      ["GU"], "de: Audi Q5 GU — «Sie sind alle als Mild-Hybrid ausgeführt» (48-Volt-Mildhybrid)"),
 ]
 # A plug-in (or a full hybrid) autocentrum files under "Hybrydowe" is never a mild hybrid (A8 60 TFSI e, GLA 250 e).
 PLUGIN_NAME = re.compile(r"plug-?in|\bphev\b|\btfsi ?e\b|\b4xe\b|\brecharge\b|\bt8\b", re.I)
@@ -441,9 +460,12 @@ def ac_evidence(rows, ac):
     return out
 
 
-def classify(rows, ac):
-    """id(row) -> decision dict for every row a rule or a database points at."""
+def classify(rows, ac, adac_rows=None):
+    """id(row) -> decision dict for every row a rule or a database points at. adac_rows: tools/adac_check.py
+    evidence — an ADAC twin whose name says it ("2.0 TFSI MHEV plus", "2.8 D-4D Mild-Hybrid") with the row's
+    gearbox counts as that database's explicit statement (a manual row is not the "DSG mHEV" twin, Octavia IV)."""
     evidence = ac_evidence(rows, ac)
+    adac_rows = adac_rows or {}
     out = {}
     for row in rows:
         # Mild hybrids exist since 2016 (owner); plug-ins and electric cars have their own excise already.
@@ -460,6 +482,16 @@ def classify(rows, ac):
             ac_says = ac_says or (("в названии", None, row["Версия"]) if own else None)
             own = False
         adac = source == "adac" and row["Топливо: примечание"].startswith("мягкий гибрид")
+        adac_mixed = False
+        if source != "adac":
+            box = {"автомат": "a", "автомат (робот)": "a", "механика": "m"}.get(row["Коробка"], "")
+            fitting = [t for t in adac_rows.get(id(row), {}).get("twins", [])
+                       if not ADAC_AUTO.search(t[0]) or box == "a"]
+            named = [t for t in fitting if ADAC_MILD.search(t[0]) and not FULL_HYBRID_NAME.search(t[0])]
+            if named:
+                ac_says = ac_says or ("ADAC: в названии", None, named[0][0])
+                # The same engine in ADAC also without it (Transit 2.0 EcoBlue, Stonic 1.0 T-GDI, Corsa 1.2 Turbo).
+                adac_mixed = len(named) < len(fitting)
         if adac:
             # ADAC gives the maker's data: "Motorart: Otto (Mild-Hybrid)" (tools/crawl-adac-models.py, 2026-10-23).
             own = False
@@ -471,13 +503,13 @@ def classify(rows, ac):
         if own:
             sources.append("ultimatespecs: в названии версии")
         if ac_says:
-            sources.append(f"autocentrum: {ac_says[0]} ({ac_says[2]})")
+            sources.append(f"{ac_says[0]} ({ac_says[2]})" if ac_says[0].startswith("ADAC") else f"autocentrum: {ac_says[0]} ({ac_says[2]})")
         if rules:
             sources.append("производитель: " + "; ".join(rule["source"] for rule in rules))
         wiki = [rule["wiki"] for rule in rules if rule["wiki"]]
         if wiki:
             sources.append("Википедия: " + " | ".join(dict.fromkeys(wiki)))
-        explicit = own or adac or (ac_says and ac_says[0] == "в названии")
+        explicit = own or adac or (ac_says and ac_says[0] in ("в названии", "ADAC: в названии"))
         box = {"автомат": "a", "автомат (робот)": "a", "механика": "m"}.get(row["Коробка"], "")
         # A rule that needs the gearbox (eTSI: DSG only) is no proof for a version whose gearbox is unknown.
         firm = [rule for rule in rules if not rule["optional"] and (not rule["gearbox"] or box)]
@@ -492,7 +524,12 @@ def classify(rows, ac):
                  and row["Модель"] in (rule["models"] or [row["Модель"]]) and rule["gens"] and row["Поколение"] in rule["gens"]
                  and rule["since"] > named_since]
         maybe = False
-        if (firm and (wiki or own or ac_says)) or (rules and explicit) or (own and ac_says):
+        adac_named = bool(ac_says and ac_says[0] == "ADAC: в названии")
+        if adac_named and ((rules and all(rule["optional"] for rule in rules)) or adac_mixed):
+            # Sold both ways (a maker's optional rule, or ADAC lists the engine with and without it): the ad
+            # has to say it, no lower excise by itself.
+            status, maybe = ("подтверждено, бывает и без него" if rules and wiki else "одна база, бывает и без него"), True
+        elif (firm and (wiki or own or ac_says)) or (rules and explicit) or (own and ac_says):
             status = "подтверждено"
         elif rules and wiki and all(rule["optional"] for rule in rules):
             # The maker sold it both ways (2026-10-22): marked, the ad has to say it (no excise cut by itself).

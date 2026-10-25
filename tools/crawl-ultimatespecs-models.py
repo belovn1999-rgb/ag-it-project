@@ -14,6 +14,9 @@ split), gearbox and drive from the version name only (the version pages can fill
 tools/enrich-model-versions.py). robots.txt: Crawl-delay 30 — one page every 30 s, cached.
 
     python3 tools/crawl-ultimatespecs-models.py [--offline]
+    python3 tools/crawl-ultimatespecs-models.py --check [--offline]   # second-source check (owner 2026-10-25):
+        the models of data/model-list-ultimatespecs-check.json (tools/plan-ultimatespecs-check.py) into
+        data/ultimatespecs-check.json, not merged as rows — tools/confirm.py compares our rows with them.
 """
 import argparse
 import importlib.util
@@ -25,6 +28,8 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIST = os.path.join(ROOT, "data", "model-list-ultimatespecs.json")
 OUT = os.path.join(ROOT, "data", "ultimatespecs-primary.json")
+CHECK_LIST = os.path.join(ROOT, "data", "model-list-ultimatespecs-check.json")
+CHECK_OUT = os.path.join(ROOT, "data", "ultimatespecs-check.json")
 SINCE = 2010
 
 
@@ -144,16 +149,20 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--cache", default=os.path.expanduser("~/.cache/autogood/ultimatespecs"))
     parser.add_argument("--offline", action="store_true", help="build from the cache, fetch nothing")
+    parser.add_argument("--check", action="store_true", help="the second-source check list and file")
     args = parser.parse_args()
     os.makedirs(args.cache, exist_ok=True)
-    entries = json.load(open(LIST, encoding="utf8"))["models"]
+    out_path = CHECK_OUT if args.check else OUT
+    entries = json.load(open(CHECK_LIST if args.check else LIST, encoding="utf8"))["models"]
     models = []
     for entry in entries:
         model = model_of(entry, args.cache, args.offline)
+        if args.check:
+            model.update({"primary": False, "source": "ultimatespecs-check"})
         models.append(model)
         engines = sum(len(b["engines"]) for g in model["generations"] for b in g["bodies"])
         print(f"{entry['brand']} {entry['label']}: {len(model['generations'])} generations, {engines} engines", flush=True)
-        with open(OUT, "w", encoding="utf8") as handle:
+        with open(out_path, "w", encoding="utf8") as handle:
             json.dump({"source": "https://www.ultimatespecs.com/car-specs", "since": SINCE, "models": models},
                       handle, ensure_ascii=False, separators=(",", ":"))
             handle.write("\n")

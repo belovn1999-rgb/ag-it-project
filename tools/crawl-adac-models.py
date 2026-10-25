@@ -38,7 +38,8 @@ KIND = [(r"plug-?in", "Hybrydowe plug-in"), (r"^elektro", "Elektryczne"), (r"die
         (r"hybrid", "Hybrydowe"), (r"diesel", "Diesla")]
 FUEL = [(r"autogas|lpg", "Benzynowe LPG"), (r"erdgas|cng", "Benzynowe CNG")]
 BODY = {"SUV": "SUV", "Limousine": "Sedan", "Stufenheck": "Sedan", "Schrägheck": "Hatchback", "Kombi": "Kombi",
-        "Coupe": "Coupe", "Cabrio": "Cabrio", "Van": "Van", "Pick-Up": "Pickup", "Kleinbus": "Van", "Kastenwagen": "Van"}
+        "Coupe": "Coupe", "Cabrio": "Cabrio", "Van": "Van", "Pick-Up": "Pickup", "Kleinbus": "Van", "Kastenwagen": "Van",
+        "Geländewagen": "SUV", "Bus": "Van", "Transporter": "Van", "Hochdach-Kombi": "Van", "Roadster": "Cabrio"}
 
 
 def specs(page):

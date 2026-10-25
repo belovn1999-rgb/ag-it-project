@@ -30,6 +30,7 @@ import json
 import os
 import re
 
+import adac_check
 import autocentrum
 import confirm
 import mild_hybrids
@@ -554,6 +555,32 @@ def drive_for(brand, model, code, version):
     return "передний", "по правилу"
 
 
+def add_adac_extra(rows):
+    """The new versions only the ADAC catalog has (data/adac-extra.json) as rows of their generation: a facelift page's
+    version joins the latest facelift phase, the others the first phase or the whole run (template = a row there)."""
+    path = os.path.join(ROOT, "data", "adac-extra.json")
+    if not os.path.exists(path):
+        return 0
+    gens = autocentrum.our_generations(rows)
+    added = 0
+    for item in json.load(open(path, encoding="utf8"))["versions"]:
+        gen = gens.get((item["brand"], item["label"]), {}).get(item["code"])
+        if not gen:
+            continue
+        groups = list(autocentrum.phase_groups(gen["rows"]).items())
+        lift = item["facelift"]
+        same = [g for g in groups if bool(autocentrum.FACELIFT_STAGE.match(g[0][1])) == lift] or groups
+        pick = max if lift else min
+        (code, stage, years, _mobile), template = pick(same, key=lambda g: autocentrum.our_years(g[0][2])[0] or 0)
+        start, end = autocentrum.our_years(years)
+        body = {"name": item["body"] + (" Facelifting" if lift else ""), "doors": item["doors"], "seats": ""}
+        made = autocentrum.new_rows(template, {"from": start, "to": end, "name": code}, body, item["engine"], code,
+                                    stage, years, item["brand"], item["label"])
+        rows.extend(made)
+        added += len(made)
+    return added
+
+
 def main():
     with open(os.path.join(ROOT, "data", "model-engines.json"), encoding="utf8") as handle:
         source = json.load(handle)
@@ -632,6 +659,8 @@ def main():
                 row["Коробка"], row["Коробка: откуда"] = page_gearbox(found), "со страницы версии"
             if found and not row["Привод"] and page_drive(found):
                 row["Привод"], row["Привод: откуда"] = page_drive(found), "со страницы версии"
+        # New versions only ADAC has (2023+, tools/collect-adac-extra.py, B61 stage 19): rows of their generation.
+        print(f"   ADAC: новых версий добавлено {add_adac_extra(rows)}")
         # Doors and seats the table still lacks: from the version's own ultimatespecs page
         # (tools/enrich-model-versions.py, B61 item 6 2026-10-21); what autocentrum gave stays.
         filled = 0
@@ -672,18 +701,19 @@ def main():
                 row["Топливо"] = "дизель" if row["Топливо"] == "бензин" else "гибрид (дизель)"
                 row["Топливо: примечание"] = (row["Топливо: примечание"] + "; " if row["Топливо: примечание"] else "") + \
                     "дизель по названию версии (в источнике бензин)"
-        decisions = mild_hybrids.classify(rows, ac)
+        decisions = mild_hybrids.classify(rows, ac, adac_check.evidence(rows)[0])
         for row in rows:
             found = decisions.get(id(row))
             row["Мягкий гибрид с"], row["Мягкий гибрид: источники"] = "", ""
             if found and found["applied"]:
                 system = f" {found['system']}" if found["system"] else ""
                 optional = "; бывает и без него — смотреть объявление" if found["optional"] else ""
+                status = found["status"].replace(", бывает и без него", "") if optional else found["status"]
                 # A confirmed mild hybrid the source files under "Hybrydowe" (Suzuki SHVS, BMW 223i, CX-60 e-Skyactiv D)
                 # is petrol / diesel in the filters: portals list it so (owner 2026-10-11).
                 if row["Топливо"] in ("гибрид", "гибрид (дизель)") and not mild_hybrids.FULL_HYBRID_NAME.search(row["Версия"]):
                     row["Топливо"] = "дизель" if row["Топливо"] == "гибрид (дизель)" else "бензин"
-                row["Топливо: примечание"] = f"мягкий гибрид (MHEV{system}) — {found['status']}{optional}"
+                row["Топливо: примечание"] = f"мягкий гибрид (MHEV{system}) — {status}{optional}"
                 row["Мягкий гибрид с"] = str(found["since"])
                 row["Мягкий гибрид: источники"] = " · ".join(found["sources"])
             elif row["Топливо: примечание"].startswith("мягкий"):

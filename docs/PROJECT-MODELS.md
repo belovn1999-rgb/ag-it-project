@@ -481,8 +481,26 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
     2021–2022. Сводка и список — `docs/MODEL-COVERAGE.md`. Выгрузка (владелец, из терминала):
     `ssh -i ~/.ssh/autogood_site zrok@159.195.5.15 'cd /home/zrok/app/platform && php8.4' < platform/tools/portals/export-listings.php > listings.csv`
     (скрипт `platform/tools/portals/export-listings.php` платформы — только SELECT по `portal_search_listings` / `portal_listings` / `portal_searches.filters`).
-19. ⬜ Исправления по объёму рынка: сначала модели с большим числом объявлений — деление дорест / рест (месяцы ADAC),
-    догадки коробки и привода → подтверждённые, спорное — вручную по источнику.
+19. ✅ Исправления по проверке на объявлениях (25.10). (1) **Новые версии из ADAC:** `tools/collect-adac-extra.py` —
+    версии ADAC с 2019 года, которых нет у ultimatespecs и autocentrum в той же фазе (тот же вид топлива, кВт, объём из
+    названия, год продажи), только где поколение ADAC и наше начинаются в один год (± 1); по странице версии на мотор —
+    объём, коробка, привод, кузов, двери, места → `data/adac-extra.json`, `build-model-engine-table.py` добавляет их строками
+    своего поколения (рестайлинг — к фазе рестайлинга), источник «adac»: **424 мотора** (2 847 версий ADAC; Mercedes 58, VW 34,
+    Audi 26, Hyundai 25…), таблица 25 867 версий, на странице 13 610. (2) **Мягкие гибриды по ADAC:** название версии ADAC
+    («2.0 TFSI MHEV plus», «2.8 D-4D Mild-Hybrid») с той же коробкой — прямое указание базы (`mild_hybrids.classify`,
+    не «ISG» — у Kia это старт-стоп); если ADAC даёт тот же мотор и без него — «бывает и без него» (акциз сам не
+    снижается): Kia Stonic 1.0 T-GDI, Ceed III 1.5 T-GDI, Opel Corsa F 1.2 Turbo, Ford Transit 2.0 EcoBlue, Land Cruiser
+    250; правило Audi Q5 GU (все моторы — мягкие гибриды, de.wikipedia) — «подтверждено»; Q7 III 2026 — одна база;
+    Octavia IV 1.5 TSI с механикой — не мягкий гибрид (у ADAC mHEV только с DSG). Итого 16 версий стали MHEV, ни одна не
+    потеряла. (3) Повторный замер: **98.2 %** объявлений находят версию (было 97,7 %; otomoto 98,5 %, AutoScout24 DE
+    98,1 %); мерило владельца ≥ 98 % на этой выборке выполнено; плагин-гибриды тоже бывают с мощностью только ДВС.
+    Остались единичные (A6 C8 45 TDI 245 л. с. 2021–2022, C-HR+ электро, BMW 520d G60 140 кВт) — `docs/MODEL-COVERAGE.md`.
+    (4) **Перепроверка всего справочника по ultimatespecs** (просьба владельца 25.10): доступ есть, Crawl-delay 30 с;
+    `tools/plan-ultimatespecs-check.py` нашёл страницы 572 из 650 моделей, которые у нас только с autocentrum или ADAC
+    (`data/model-list-ultimatespecs-check.json`; нет на сайте — BAIC, DFSK, американские Chevrolet / Dodge / Nissan,
+    новые китайские), `crawl-ultimatespecs-models.py --check` читает их в `data/ultimatespecs-check.json` (около суток,
+    отдельным процессом, журнал `~/.cache/autogood/ultimatespecs-check.log`), `confirm.py` уже берёт его третьим
+    источником — подтверждения вырастут после прогона.
 20. ✅ Пометка «нет в Польше и Германии» (24.10): колонка «Рынок» — у поколения, которое есть только у ultimatespecs,
     хотя модель знают autocentrum или ADAC (Genesis G80 DH 2016–2020), и у поколений «вне ЕС» нашей разметки (Toyota
     Camry XV40 / XV50) — 34 версии; их моторы на странице и платформе не считаются существующими — уходят под черту
