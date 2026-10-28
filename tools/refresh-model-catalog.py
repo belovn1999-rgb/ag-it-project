@@ -11,7 +11,8 @@ Steps (run in this order; --only / --skip by name):
   autocentrum   tools/crawl-autocentrum.py --engines --keep-compared   (1 s a page)
   ultimatespecs tools/generate-model-generations.py + generate-model-engines.py — the 65 compared models;
                 tools/crawl-ultimatespecs-models.py — new brands (wave 4) and --check — the second source (30 s a page)
-  adac          tools/collect-adac-versions.py, crawl-adac-models.py, collect-adac-extra.py, collect-trims-adac.py (2 s)
+  adac          tools/collect-adac-versions.py, crawl-adac-models.py, collect-adac-extra.py, collect-adac-details.py,
+                collect-trims-adac.py (2 s)
   build         tools/build-model-engine-table.py --offline, build-model-trims.py, build-model-specs.py
   report        tools/catalog-changes.py
   platform      <platform>/platform/tools/portals/build-catalogs.mjs <this repo> (only with --platform)
@@ -37,7 +38,7 @@ STEPS = {
         ["tools/crawl-ultimatespecs-models.py", "--check"],
     ],
     "adac": [["tools/collect-adac-versions.py"], ["tools/crawl-adac-models.py"], ["tools/collect-adac-extra.py"],
-             ["tools/collect-trims-adac.py"]],
+             ["tools/collect-adac-details.py"], ["tools/collect-trims-adac.py"]],
     "build": [["tools/build-model-engine-table.py", "--offline"], ["tools/build-model-trims.py"],
               ["tools/build-model-specs.py"]],
     "report": [["tools/catalog-changes.py"]],

@@ -6,7 +6,8 @@ months on sale overlap it are its ADAC generation; for each of our rows the ADAC
 family, power (3 KM / 2 kW; a mild hybrid's boost up to 25 KM with the same displacement) and displacement
 (the "1.5" of the name, 0.15 l) on sale in its years are its ADAC twins. evidence() returns:
 - per row: the twins (engine confirmed), the gearbox ADAC states (an automatic word in the name; manual where
-  the same power is also sold with an automatic word; electric — automatic), all-wheel drive in the name;
+  the same power is also sold with an automatic word; electric — automatic), all-wheel drive in the name, and
+  the gearbox and drive of the twins' version pages (data/adac-details.json, tools/collect-adac-details.py);
 - per generation: ADAC's first and last year, the facelift years (first month of a facelift page inside it).
 """
 import collections
@@ -64,6 +65,18 @@ def _overlap(a_from, a_to, b_from, b_to):
     return min(a_to or 2026, b_to or 2026) - max(a_from, b_from) + 1
 
 
+DRIVE_WORDS = (("vorderrad", "f"), ("hinterrad", "r"), ("allrad", "4"))
+_details = {}
+
+
+def details():
+    """{"<generation page>|<version name>": {"gearbox", "drive", …}} of data/adac-details.json."""
+    if not _details:
+        path = os.path.join(ROOT, "data", "adac-details.json")
+        _details.update(json.load(open(path, encoding="utf8"))["versions"] if os.path.exists(path) else {"": {}})
+    return _details
+
+
 def load():
     path = os.path.join(ROOT, "data", "adac-versions.json")
     return json.load(open(path, encoding="utf8"))["models"] if os.path.exists(path) else {}
@@ -105,11 +118,12 @@ def evidence(rows, models=None):
             for item in gen["rows"]:
                 row = item["src"]
                 # A generation ADAC splits too: a facelift row against the facelift pages, the rest against the base.
+                # Each version carries its generation page (the version page holds gearbox and drive, below).
                 if both:
                     lift = FACELIFT_STAGE.match(row["Этап"]) is not None
-                    versions = [v for p in mine if p["facelift"] == lift for v in p["versions"]]
+                    versions = [[*v, p["page"]] for p in mine if p["facelift"] == lift for v in p["versions"]]
                 else:
-                    versions = [v for p in mine for v in p["versions"]]
+                    versions = [[*v, p["page"]] for p in mine for v in p["versions"]]
                 row_ev[id(row)] = _row(row, item, versions)
     return row_ev, gen_ev
 
@@ -148,6 +162,15 @@ def _row(row, item, versions):
             gearbox.add("a")
         if AWD.search(twin[0]):
             drive.add("4")
+        # The twin's version page (tools/collect-adac-details.py): "Getriebeart", "Antriebsart".
+        page = details().get(f"{twin[6]}|{twin[0]}") if len(twin) > 6 else None
+        if page:
+            box = page["gearbox"].lower()
+            if box:
+                gearbox.add("m" if "schalt" in box and "automat" not in box else "a")
+            side = next((code for word, code in DRIVE_WORDS if word in page["drive"].lower()), None)
+            if side:
+                drive.add(side)
     # A twin with no automatic word is the manual one when the same power is also sold with an automatic word.
     if any(AUTO.search(t[0]) for t in twins) and any(not AUTO.search(t[0]) for t in twins) and family in ("p", "d"):
         gearbox.add("m")
