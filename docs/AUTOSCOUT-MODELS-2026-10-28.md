@@ -10,6 +10,22 @@
 - Оценка на все популярные марки: из 173 моделей с другим названием (без «Other») не читаются ≈ 90 % — **≈ 155 моделей, ≈ 9 % формы**. Из 43 сломанных в выборке рабочий адрес подтверждён живым запросом у 37; у Niro EV, ë-C4, cee'd Sportswagon — базовая модель (`niro`, `c4`, `ceed`) с фильтром топлива или кузова (адреса `e-niro`, `e-c4-electric`, `ceed-sw` дают смешанную выдачу или 404); T5 и T7 — только с годами подборки.
 - Что видит менеджер: у таких подборок в «Анализе» и «Мониторинге» AutoScout24 всех стран (DE, NL, BE, AT, FR, LU) — «Błąd czytania», статистика без этого портала; машины не теряются с других порталов.
 
+## Исправлено — задача платформы 3а.30 (28.10, `53886ea`)
+
+- Таблица `platform/resources/data/portals/autoscout24.json` (`Catalog::autoScoutModel`): **151 модель** формы 36 марок → адрес AutoScout24,
+  топливо или кузов из названия — фильтром, если в форме не выбраны; 91 — с пометкой «шире выбранного» (группа или базовая модель: BMW Gran Turismo
+  → серия, M340i → `3er`, Mini Countryman C / S (Cooper) → Countryman, Caddy Maxi → `caddy`). Ключи — адрес марки AutoScout24 и `Units::plainSlug` модели.
+- Каждый адрес таблицы проверен живым запросом 28.10 (127 адресов, 0 ответов 404, выдача той модели по правилу проверки сборщика).
+- **VW T5 / T7**: у AutoScout24 группы «T5 (alle)», «T6 (alle)», «T7» отдают одну семью автобусов, модель решают годы. Было «T6 (alle)» для всех —
+  с годами T5 выдача «2 из 20», с годами T7 — «6 из 20», проверка модели бракует (подборки T5 / T7 не читались). Теперь T5 → «T5 (alle)»
+  (с годами T5 — 18 из 20), T7 → «T7» (15 из 20). Без годов T5 / T7 по-прежнему могут не пройти проверку.
+- Исправлено попутно: Renault Grand Scenic (`grand-scenic` отдаёт Scenic вперемешку) → `scenic`; BMW ActiveHybrid 3 / 5 / X6 → серия + гибрид.
+- Без адреса (у AutoScout24 таких моделей нет или он отдаёт «Sonstige»): 19 — BYD ETP 3, Fiat Siena, Honda Aerodeck, Kia Borrego, Kia Mini,
+  Mazda Bongo / Millenia / Protege / RX-6, Mercedes 290, MG Montego, Nissan 240 SX, Opel Cavalier / Nova, Renault Alpine A110 / A310 / V6,
+  Subaru Baja, Toyota FCV — читаются с ответом «AutoScout24 не знает эту модель», как раньше.
+- Тест `AutoScoutLinkTest` «каждая модель формы популярных марок — адрес, который AutoScout24 знает» (образец
+  `tests/Fixtures/autoscout24-models-2026-10-28.json`): новая модель справочника с незнакомым AutoScout24 адресом — тест падает.
+
 ## Почему ломается (виды)
 
 1. **Электро / гибрид — отдельной моделью у mobile.de** (e-308, e-3008, Astra Electric, Combo Electric, Niro EV, ë-C4, ë-Berlingo, Scenic E-TECH, MG4 EV Urban, 2 Hybrid, Plug-in Hybrid Outlander): у AutoScout24 — базовая модель, вид топлива — фильтром.
