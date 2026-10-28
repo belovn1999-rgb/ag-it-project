@@ -82,12 +82,21 @@ def _same(item, version, family, litres):
     return abs(item["hp"] - version[3]) <= 3 or abs(item["kw"] - version[2]) <= 2 or (hybrid and abs(item["hp"] - version[3]) <= 25)
 
 
-def version_path(page, name, catalog_page):
-    """The ADAC version page of a version name on a generation page (the cached generation page links it)."""
-    text = C.A.fetch(f"{catalog_page}/")
-    for path, link_name in C.version_links(text, page.rsplit("/", 1)[0]):
-        if re.sub(r"\s*\(.*?\)\s*$", "", link_name).strip() == name:
-            return path
+DATES = re.compile(r"\s*\((?:(\d{2})/(\d{2})\s*-\s*\d{2}/\d{2}|ab (\d{2})/(\d{2}))\)\s*$")
+
+
+def version_path(page, versions):
+    """The ADAC version page of one of these versions on a generation page (the cached generation page links it):
+    by name and first month — one name can be sold with another power in other years (A6 C8 "45 TDI quattro
+    tiptronic" 231 PS from 2018, 245 PS from 2020; 28.10 the name alone gave the 231 PS page)."""
+    links = C.version_links(C.A.fetch(f"{page}/"), page.rsplit("/", 1)[0])
+    for version in versions:
+        month = f"{version[4][5:7]}/{version[4][2:4]}"
+        for path, link_name in links:
+            dates = DATES.search(link_name)
+            if DATES.sub("", link_name).strip() == version[0] and dates and \
+                    month in (f"{dates.group(1)}/{dates.group(2)}", f"{dates.group(3)}/{dates.group(4)}"):
+                return path
     return None
 
 
@@ -100,11 +109,12 @@ def main():
     extra, skipped = [], 0
     for (brand, label, code, family, kw, litres), found in todo.items():
         version = found["versions"][0]
-        path = version_path(found["page"], version[0], found["page"])
+        path = version_path(found["page"], found["versions"])
         page = C.A.fetch(path) if path and not args.offline else (C._cached(path) if path else "")
         data = C.specs(page) if page else {}
         engine = C.engine_of(path, version[0], data, label) if data.get("Motorart") else None
-        if not engine or not engine["hp"]:
+        # The page must be this engine's (the power of the versions it stands for).
+        if not engine or not engine["hp"] or abs(engine["kw"] - kw) > 2:
             skipped += 1
             continue
         engine.pop("series_from", None)
