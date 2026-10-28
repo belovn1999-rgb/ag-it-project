@@ -157,6 +157,9 @@ def _row(row, item, versions):
                 (hybrid and ((same_litres and diff <= 25) or (shared and diff <= 60))):
             twins.append(version)
     gearbox, drive = set(), set()
+    # What the version pages alone say (the names say "quattro" of one twin, not of the engine): for the rows
+    # where ADAC's page states another gearbox or drive than ours (tools/confirm.py, "ADAC: другое").
+    page_gearbox, page_drive, page_text = set(), set(), ""
     for twin in twins:
         if family == "ev" or AUTO.search(twin[0]):
             gearbox.add("a")
@@ -167,14 +170,18 @@ def _row(row, item, versions):
         if page:
             box = page["gearbox"].lower()
             if box:
-                gearbox.add("m" if "schalt" in box and "automat" not in box else "a")
+                page_gearbox.add("m" if "schalt" in box and "automat" not in box else "a")
             side = next((code for word, code in DRIVE_WORDS if word in page["drive"].lower()), None)
             if side:
-                drive.add(side)
+                page_drive.add(side)
+            page_text = page_text or f"{twin[0]}: {page['gearbox']} · {page['drive']}"
+    gearbox |= page_gearbox
+    drive |= page_drive
     # A twin with no automatic word is the manual one when the same power is also sold with an automatic word.
     if any(AUTO.search(t[0]) for t in twins) and any(not AUTO.search(t[0]) for t in twins) and family in ("p", "d"):
         gearbox.add("m")
-    return {"twins": twins, "gearbox": gearbox, "drive": drive}
+    return {"twins": twins, "gearbox": gearbox, "drive": drive, "page_gearbox": page_gearbox, "page_drive": page_drive,
+            "page_text": page_text}
 
 
 def summary(row_ev, gen_ev, rows):
