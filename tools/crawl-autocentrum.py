@@ -23,6 +23,8 @@ import re
 import subprocess
 import time
 
+import cache_age  # stage 21: re-read stale list pages (tools/cache_age.py)
+
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128 Safari/537.36"
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "data", "autocentrum-models.json")
@@ -108,6 +110,8 @@ _last = [0.0]
 def fetch(path, cache):
     """path like 'bmw/seria-3/g20-g21/' -> page text (cached)."""
     name = os.path.join(cache, re.sub(r"[^A-Za-z0-9._-]+", "_", path.strip("/")) + ".html")
+    if "silnik-" not in path:   # model, generation and body pages; an engine page does not change (stage 21)
+        cache_age.begin(name)
     for _attempt in range(3):
         if os.path.exists(name) and os.path.getsize(name) > 20000:
             break
@@ -116,6 +120,7 @@ def fetch(path, cache):
             time.sleep(wait)
         subprocess.run(["curl", "-s", "-L", "--max-time", "60", "-A", UA, "-o", name, BASE + path], check=False)
         _last[0] = time.time()
+    cache_age.finish(name, 20000)
     if not (os.path.exists(name) and os.path.getsize(name) > 20000):
         print(f"  ! not loaded: {path}", flush=True)
         return ""

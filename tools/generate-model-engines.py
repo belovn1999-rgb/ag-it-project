@@ -22,6 +22,8 @@ import subprocess
 import sys
 import time
 
+import cache_age  # stage 21: re-read stale list pages (tools/cache_age.py)
+
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128 Safari/537.36"
 CRAWL_DELAY = 30
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -51,6 +53,8 @@ _last_fetch = [0.0]
 def cached_page(cache, url, offline):
     name = re.sub(r"[^A-Za-z0-9._-]+", "_", url.split("/car-specs/", 1)[1]) + ".html"
     path = os.path.join(cache, name)
+    if not offline:
+        cache_age.begin(path)   # a body page of a refresh (stage 21)
     if not (os.path.exists(path) and os.path.getsize(path) > 10000):
         if offline:
             return None
@@ -63,7 +67,8 @@ def cached_page(cache, url, offline):
             _last_fetch[0] = time.time()
             if os.path.exists(path) and os.path.getsize(path) > 10000:
                 break
-        else:
+        cache_age.finish(path, 10000)
+        if not (os.path.exists(path) and os.path.getsize(path) > 10000):
             return None
     with open(path, encoding="utf8", errors="ignore") as handle:
         return handle.read()

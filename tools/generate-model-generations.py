@@ -19,6 +19,8 @@ import re
 import subprocess
 import time
 
+import cache_age  # stage 21: re-read stale list pages (tools/cache_age.py)
+
 BASE = "https://www.ultimatespecs.com/car-specs"
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128 Safari/537.36"
 CRAWL_DELAY = 30
@@ -109,6 +111,13 @@ _last_fetch = [0.0]
 
 def page(cache, brand, slug):
     path = os.path.join(cache, f"model_{slug}.html")
+    if cache_age.begin(path):   # a refresh (stage 21): read again, the old copy back if the site is silent
+        try:
+            subprocess.run(["curl", "-s", "--max-time", "60", "-A", UA, "-o", path, f"{BASE}/{brand}-models/{slug}"],
+                           check=False)
+        finally:
+            _last_fetch[0] = time.time()
+            cache_age.finish(path, 10000)
     if not (os.path.exists(path) and os.path.getsize(path) > 10000):
         wait = CRAWL_DELAY - (time.time() - _last_fetch[0])
         if wait > 0:

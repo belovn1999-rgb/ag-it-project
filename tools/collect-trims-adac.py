@@ -21,6 +21,8 @@ import sys
 import time
 import unicodedata
 
+import cache_age  # stage 21: re-read stale list pages (tools/cache_age.py)
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, "data", "model-trims-adac.json")
 CACHE = os.path.expanduser("~/.cache/autogood/adac")
@@ -95,6 +97,8 @@ def slug(text):
 def fetch(path):
     os.makedirs(os.path.join(CACHE, "pages"), exist_ok=True)
     name = os.path.join(CACHE, "pages", re.sub(r"[^A-Za-z0-9._-]+", "_", path.strip("/")) + ".html")
+    if not re.search(r"/\d+/?$", path):   # a generation page; a version page does not change (stage 21)
+        cache_age.begin(name)
     for _attempt in range(3):
         if os.path.exists(name) and os.path.getsize(name) > 50000:
             break
@@ -103,6 +107,7 @@ def fetch(path):
             time.sleep(wait)
         subprocess.run(["curl", "-s", "-L", "--max-time", "60", "-A", UA, "-o", name, BASE + path], check=False)
         _last[0] = time.time()
+    cache_age.finish(name, 50000)
     if not (os.path.exists(name) and os.path.getsize(name) > 50000):
         return ""
     return open(name, encoding="utf8", errors="ignore").read()

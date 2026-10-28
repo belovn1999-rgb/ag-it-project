@@ -27,6 +27,8 @@ import subprocess
 import sys
 import time
 
+import cache_age  # stage 21: re-read stale list pages (tools/cache_age.py)
+
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIST = os.path.join(ROOT, "data", "model-list-ultimatespecs.json")
 OUT = os.path.join(ROOT, "data", "ultimatespecs-primary.json")
@@ -117,6 +119,8 @@ def model_page(cache, brand_slug, slug, offline):
     """The model page (cached as tools/generate-model-generations.py does): three tries, one request per 30 s;
     a site that does not answer leaves the model out instead of stopping the run (Mercedes SLK, 25.10)."""
     path = os.path.join(cache, f"model_{slug}.html")
+    if not offline:
+        cache_age.begin(path)   # a refresh (stage 21)
     for _attempt in range(3):
         if os.path.exists(path) and os.path.getsize(path) > 10000:
             break
@@ -129,8 +133,11 @@ def model_page(cache, brand_slug, slug, offline):
                         f"{G.BASE}/{brand_slug}-models/{slug}"], check=False)
         G._last_fetch[0] = time.time()
     else:
-        print(f"   no answer: {brand_slug} {slug}", flush=True)
-        return ""
+        cache_age.finish(path, 10000)
+        if not (os.path.exists(path) and os.path.getsize(path) > 10000):
+            print(f"   no answer: {brand_slug} {slug}", flush=True)
+            return ""
+    cache_age.finish(path, 10000)
     with open(path, encoding="utf8", errors="ignore") as handle:
         return handle.read()
 
