@@ -23,7 +23,9 @@ import importlib.util
 import json
 import os
 import re
+import subprocess
 import sys
+import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIST = os.path.join(ROOT, "data", "model-list-ultimatespecs.json")
@@ -111,13 +113,34 @@ def direct_of(entry, item, cache, offline):
             "bodies": [body_of(url, item.get("body") or name, first, item.get("to"), engines)]}
 
 
+def model_page(cache, brand_slug, slug, offline):
+    """The model page (cached as tools/generate-model-generations.py does): three tries, one request per 30 s;
+    a site that does not answer leaves the model out instead of stopping the run (Mercedes SLK, 25.10)."""
+    path = os.path.join(cache, f"model_{slug}.html")
+    for _attempt in range(3):
+        if os.path.exists(path) and os.path.getsize(path) > 10000:
+            break
+        if offline:
+            return ""
+        wait = 30 - (time.time() - G._last_fetch[0])
+        if wait > 0:
+            time.sleep(wait)
+        subprocess.run(["curl", "-s", "--max-time", "60", "-A", G.UA, "-o", path,
+                        f"{G.BASE}/{brand_slug}-models/{slug}"], check=False)
+        G._last_fetch[0] = time.time()
+    else:
+        print(f"   no answer: {brand_slug} {slug}", flush=True)
+        return ""
+    with open(path, encoding="utf8", errors="ignore") as handle:
+        return handle.read()
+
+
 def model_of(entry, cache, offline):
     gens = {}
     for slug in entry.get("pages", []):
-        path = os.path.join(cache, f"model_{slug}.html")
-        if offline and not os.path.exists(path):
+        source = model_page(cache, entry["brand_slug"], slug, offline)
+        if not source:
             continue
-        source = G.page(cache, entry["brand_slug"], slug)
         for gen in sorted(G.generations(source), key=lambda item: item["from"]):  # a facelift after its base
             if (gen["to"] or 2100) < SINCE:
                 continue
