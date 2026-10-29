@@ -40,13 +40,17 @@ MARKET_COLUMN = "Рынок"
 # 2026-10-28: the gearbox / drive of the row is not confirmed and the ADAC twin's version page states another one
 # (data/adac-details.json) — a value to check by hand, not changed by itself.
 DIFF_COLUMN = "ADAC: другое"
+# Owner 2026-10-29: where ours is only worked out (a name, a sibling version, a rule) and every ADAC version of the
+# engine states one other value, the row takes ADAC's; the value it had goes to this column.
+FIXED_COLUMN = "ADAC: исправлено"
+FROM_ADAC = "ADAC: все версии мотора"
 CODE_WORDS = {"m": "механика", "a": "автомат", "f": "передний", "r": "задний", "4": "полный"}
 DIFF_SCOPE = re.compile(r"^(коробка|привод) — у ADAC (.+?) \((все|прочитано \d+ из) (\d+) версий")
 NOT_HERE = "нет в Польше и Германии"
 # Where a gearbox / drive came from ("Коробка: откуда", "Привод: откуда") -> the source that states it
 # (None: the row's own source, its version name).
 STATED = {"autocentrum": "autocentrum", "autocentrum (у двигателя одна коробка)": "autocentrum",
-          "со страницы версии": "ultimatespecs", "ultimatespecs": "ultimatespecs", "adac": "adac",
+          "со страницы версии": "ultimatespecs", "ultimatespecs": "ultimatespecs", "adac": "adac", FROM_ADAC: "adac",
           "из названия": None, "из названия (4x2/2WD)": None, "из названия (sDrive)": None}
 RULES = {"по правилу (гибрид/электро)": "электро и гибрид — автомат", "по правилу (модель только 4x4)": "модель только 4x4"}
 LIFT_STAGES = re.compile(r"^(рестайлинг|обновление)")
@@ -120,7 +124,7 @@ def _evidence(models, gens, source):
 def confirm(rows, ac):
     """Fill COLUMNS in every row (rows edited in place); returns {column: Counter of statuses}."""
     for row in rows:
-        for column in COLUMNS + [ADAC_COLUMN, MARKET_COLUMN, DIFF_COLUMN]:
+        for column in COLUMNS + [ADAC_COLUMN, MARKET_COLUMN, DIFF_COLUMN, FIXED_COLUMN]:
             row[column] = ""
     gens = autocentrum.our_generations(rows)
     adac_rows, adac_gens = adac_check.evidence(rows)
@@ -253,31 +257,44 @@ def confirm(rows, ac):
         if (engine == {"ultimatespecs"} and missing_gen) or "вне ЕС" in row["Поколение"]:
             row[MARKET_COLUMN] = NOT_HERE
         their = options.get(id(row), set()) if source != "autocentrum" else set()
-        for column, value, origin, codes, index in (
-                ("Подтверждение: коробка", row["Коробка"], row["Коробка: откуда"], autocentrum.OUR_GEARBOX, 0),
-                ("Подтверждение: привод", row["Привод"], row["Привод: откуда"], autocentrum.OUR_DRIVE, 1)):
+        for column, field, codes, index in (("Подтверждение: коробка", "Коробка", autocentrum.OUR_GEARBOX, 0),
+                                            ("Подтверждение: привод", "Привод", autocentrum.OUR_DRIVE, 1)):
+            value, origin = row[field], row[f"{field}: откуда"]
             if not value:
                 row[column] = "нет"
                 continue
-            stated = set()
-            if origin in STATED:
-                stated.add(STATED[origin] or source)
-            if codes.get(value) and any(option[index] == codes[value] for option in their):
-                stated.add("autocentrum")
-            if source != "ultimatespecs" and codes.get(value) and \
-                    any(option[index] == codes[value] for option in us_options.get(id(row), set())):
-                stated.add("ultimatespecs")
-            if source != "adac" and codes.get(value) in adac.get("gearbox" if index == 0 else "drive", set()):
-                stated.add("adac")
+
+            def stated_by(value, origin):
+                stated = set()
+                if origin in STATED:
+                    stated.add(STATED[origin] or source)
+                if codes.get(value) and any(option[index] == codes[value] for option in their):
+                    stated.add("autocentrum")
+                if source != "ultimatespecs" and codes.get(value) and \
+                        any(option[index] == codes[value] for option in us_options.get(id(row), set())):
+                    stated.add("ultimatespecs")
+                if source != "adac" and codes.get(value) in adac.get("gearbox" if index == 0 else "drive", set()):
+                    stated.add("adac")
+                return stated
+            stated = stated_by(value, origin)
             page = adac.get("page_gearbox" if index == 0 else "page_drive")
             if source != "adac" and page and codes.get(value) not in page and len(stated) < 2:
                 said = "коробка" if index == 0 else "привод"
                 # Every ADAC version of the engine read and none like ours — likely our error; else one of several.
                 total, read = adac.get("pages_all", 0), adac.get("pages_read", 0)
-                scope = f"все {total} версий" if read >= total else f"прочитано {read} из {total} версий"
-                says = " / ".join(CODE_WORDS[code] for code in sorted(page))
-                row[DIFF_COLUMN] = "; ".join(filter(None, [
-                    row[DIFF_COLUMN], f"{said} — у ADAC {says} ({scope}; {adac['page_text']})"]))
+                if not stated and len(page) == 1 and read >= total:
+                    # Ours only worked out, every ADAC version says one other value: ADAC's (owner 2026-10-29).
+                    value, origin = CODE_WORDS[next(iter(page))], FROM_ADAC
+                    row[FIXED_COLUMN] = "; ".join(filter(None, [
+                        row[FIXED_COLUMN], f"{said}: было {row[field]} ({row[f'{field}: откуда']}), у ADAC все {total} "
+                                           f"версий — {value} ({adac['page_text']})"]))
+                    row[field], row[f"{field}: откуда"] = value, origin
+                    stated = stated_by(value, origin)
+                else:
+                    scope = f"все {total} версий" if read >= total else f"прочитано {read} из {total} версий"
+                    says = " / ".join(CODE_WORDS[code] for code in sorted(page))
+                    row[DIFF_COLUMN] = "; ".join(filter(None, [
+                        row[DIFF_COLUMN], f"{said} — у ADAC {says} ({scope}; {adac['page_text']})"]))
             if stated:
                 row[column] = _status(stated)
             elif origin in RULES:
@@ -360,12 +377,29 @@ def write_report(rows, today):
             group["kind"] = group["kind"] or ("наше выведено" if kind(status) in ("вывод", "правило", "нет") else status)
             group["sample"] = group["sample"] or row["Версия"][:40]
     inferred = sum(g["rows"] for g in groups.values() if g["kind"] == "наше выведено")
+    fixed = [row for row in rows if row.get(FIXED_COLUMN)]
+    fixed_groups = collections.defaultdict(list)
+    for row in fixed:
+        for part in row[FIXED_COLUMN].split("; "):
+            what, rest = part.split(": было ", 1)
+            ours, says = rest.split(" (", 1)[0], rest.rsplit(" версий — ", 1)[1].split(" (", 1)[0]
+            fixed_groups[(row["Марка"], row["Модель"], row["Поколение"], what, ours, says)].append(row)
+    lines += ["", "## Исправлено по ADAC", "",
+              f"Наше значение коробки или привода было только выведено (по названию, соседней версии, правилу), а все "
+              f"версии ADAC с тем же мотором называют одно другое — ставится значение ADAC (решение владельца 29.10): "
+              f"**{len(fixed)}** версий, прежнее значение — в колонке «{FIXED_COLUMN}», «откуда» — «{FROM_ADAC}». "
+              "ADAC — рынок Германии.", "",
+              "| Марка · модель · поколение | Что | Было | Стало | Версий | Например |", "|---|---|---|---|---:|---|"]
+    for (brand, model, generation, what, ours, says), group_rows in sorted(fixed_groups.items(), key=lambda i: -len(i[1])):
+        lines.append(f"| {brand} {model} {generation} | {what} | {ours} | {says} | {len(group_rows)} | "
+                     f"{group_rows[0]['Версия'][:40]} |")
     lines += ["", "## ADAC говорит другое (проверить)", "",
               f"Коробка или привод версии не подтверждены вторым источником, а все прочитанные версии ADAC с тем же "
               f"мотором (страницы версий, `data/adac-details.json`) называют другое: **{share(len(differ), total)}** "
-              f"версий, колонка «{DIFF_COLUMN}». Наше значение только выведено (по названию, соседней версии, правилу) "
-              f"у {inferred} — это почти наверняка наши ошибки; у остальных его называет один источник, и тогда это "
-              "бывает разница рынков (ADAC — Германия) или версия, которой ADAC не перечисляет. Сами не меняются.", "",
+              f"версий, колонка «{DIFF_COLUMN}». Наше значение называет один источник — это бывает его ошибка, "
+              "разница рынков (ADAC — Германия) или версия, которой ADAC не перечисляет; сами не меняются"
+              + (f" (наше только выведено ещё у {inferred}: у ADAC не одно значение или прочитаны не все версии)"
+                 if inferred else "") + ".", "",
               "| Марка · модель · поколение | Что | У нас | У ADAC | Версий ADAC | Наших версий | Откуда наше | Например |",
               "|---|---|---|---|---:|---:|---|---|"]
     order = sorted(groups.items(), key=lambda item: (item[1]["kind"] != "наше выведено", -item[1]["most"], -item[1]["rows"]))
