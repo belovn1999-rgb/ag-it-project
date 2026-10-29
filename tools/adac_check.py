@@ -175,13 +175,14 @@ def _row(row, item, versions):
             if side:
                 page_drive.add(side)
             page_text = page_text or f"{twin[0]}: {page['gearbox']} · {page['drive']}"
+    names = {f"{t[6]}|{t[0]}" for t in twins if len(t) > 6}
     gearbox |= page_gearbox
     drive |= page_drive
     # A twin with no automatic word is the manual one when the same power is also sold with an automatic word.
     if any(AUTO.search(t[0]) for t in twins) and any(not AUTO.search(t[0]) for t in twins) and family in ("p", "d"):
         gearbox.add("m")
     return {"twins": twins, "gearbox": gearbox, "drive": drive, "page_gearbox": page_gearbox, "page_drive": page_drive,
-            "page_text": page_text}
+            "page_text": page_text, "pages_read": sum(name in details() for name in names), "pages_all": len(names)}
 
 
 def summary(row_ev, gen_ev, rows):

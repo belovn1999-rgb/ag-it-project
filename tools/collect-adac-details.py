@@ -10,7 +10,10 @@ body, doors and seats. Written to data/adac-details.json by "<generation page>|<
 tools/adac_check.py adds them to the gearbox and drive ADAC states. One page every 2 s (the version pages are
 cached in ~/.cache/autogood/adac/pages and never read again); progress is saved every 25 pages.
 
-    python3 tools/collect-adac-details.py [--offline] [--limit N]
+    python3 tools/collect-adac-details.py [--offline] [--limit N] [--flagged]
+
+--flagged (2026-10-29): every twin of the rows in "ADAC: другое" (tools/confirm.py) — one twin's page says another
+gearbox or drive; all of them tell an error of ours (every ADAC version of the engine) from an engine sold both ways.
 """
 import argparse
 import csv
@@ -88,10 +91,14 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--offline", action="store_true", help="only pages already in the cache")
     parser.add_argument("--limit", type=int, default=0, help="read at most N new pages")
+    parser.add_argument("--flagged", action="store_true", help="all twins of the rows in \"ADAC: другое\"")
     args = parser.parse_args()
     rows = list(csv.DictReader(open(os.path.join(ROOT, "data", "model-engines.csv"), encoding="utf-8-sig"), delimiter=";"))
     row_ev, _gen_ev = adac_check.evidence(rows)
-    chosen = choose(rows, row_ev)
+    if args.flagged:
+        chosen = {key(t): t for row in rows if row.get("ADAC: другое") for t in row_ev.get(id(row), {}).get("twins", [])}
+    else:
+        chosen = choose(rows, row_ev)
     found = json.load(open(OUT, encoding="utf8"))["versions"] if os.path.exists(OUT) else {}
     links_of, fetched, missing = {}, 0, 0
     todo = [k for k in chosen if k not in found]

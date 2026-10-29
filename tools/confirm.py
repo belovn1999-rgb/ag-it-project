@@ -270,7 +270,10 @@ def confirm(rows, ac):
             page = adac.get("page_gearbox" if index == 0 else "page_drive")
             if source != "adac" and page and codes.get(value) not in page and len(stated) < 2:
                 said = "коробка" if index == 0 else "привод"
-                row[DIFF_COLUMN] = "; ".join(filter(None, [row[DIFF_COLUMN], f"{said} — {adac['page_text']}"]))
+                # Every ADAC version of the engine read and none like ours — likely our error; else one of several.
+                total, read = adac.get("pages_all", 0), adac.get("pages_read", 0)
+                scope = f"все {total} версий ADAC" if read >= total else f"прочитано {read} из {total} версий ADAC"
+                row[DIFF_COLUMN] = "; ".join(filter(None, [row[DIFF_COLUMN], f"{said} ({scope}) — {adac['page_text']}"]))
             if stated:
                 row[column] = _status(stated)
             elif origin in RULES:
