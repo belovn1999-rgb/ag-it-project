@@ -96,7 +96,7 @@ def main():
               for r in mild_came[:100]]
     lines += [f"- перестал: {r['Марка']} {r['Модель']} {r['Поколение']} · {r['Версия'][:50]}" for r in mild_went[:100]]
     with open(OUT, "w", encoding="utf8") as handle:
-        handle.write("\n".join(lines) + "\n")
+        handle.write("\n".join(lines).rstrip() + "\n")
     print(f"models +{len(models_new)} -{len(models_lost)}, generations +{len(gens_new)} -{len(gens_lost)}, "
           f"engines +{len(eng_new)} -{len(eng_lost)}, mild +{len(mild_came)} -{len(mild_went)} -> {OUT}")
 
