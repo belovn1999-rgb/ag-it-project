@@ -40,6 +40,8 @@ MARKET_COLUMN = "Рынок"
 # 2026-10-28: the gearbox / drive of the row is not confirmed and the ADAC twin's version page states another one
 # (data/adac-details.json) — a value to check by hand, not changed by itself.
 DIFF_COLUMN = "ADAC: другое"
+CODE_WORDS = {"m": "механика", "a": "автомат", "f": "передний", "r": "задний", "4": "полный"}
+DIFF_SCOPE = re.compile(r"^(коробка|привод) — у ADAC (.+?) \((все|прочитано \d+ из) (\d+) версий")
 NOT_HERE = "нет в Польше и Германии"
 # Where a gearbox / drive came from ("Коробка: откуда", "Привод: откуда") -> the source that states it
 # (None: the row's own source, its version name).
@@ -272,8 +274,10 @@ def confirm(rows, ac):
                 said = "коробка" if index == 0 else "привод"
                 # Every ADAC version of the engine read and none like ours — likely our error; else one of several.
                 total, read = adac.get("pages_all", 0), adac.get("pages_read", 0)
-                scope = f"все {total} версий ADAC" if read >= total else f"прочитано {read} из {total} версий ADAC"
-                row[DIFF_COLUMN] = "; ".join(filter(None, [row[DIFF_COLUMN], f"{said} ({scope}) — {adac['page_text']}"]))
+                scope = f"все {total} версий" if read >= total else f"прочитано {read} из {total} версий"
+                says = " / ".join(CODE_WORDS[code] for code in sorted(page))
+                row[DIFF_COLUMN] = "; ".join(filter(None, [
+                    row[DIFF_COLUMN], f"{said} — у ADAC {says} ({scope}; {adac['page_text']})"]))
             if stated:
                 row[column] = _status(stated)
             elif origin in RULES:
@@ -341,19 +345,35 @@ def write_report(rows, today):
         sample = "; ".join(dict.fromkeys(f"{r['Модель']} {r['Поколение']}: {r['Версия'][:40]}" for r in brand_rows[:40]))
         lines.append(f"| {brand} | {len(brand_rows)} | {sample[:160]} |")
     differ = [row for row in rows if row.get(DIFF_COLUMN)]
-    lines += ["", "## ADAC говорит другое (проверить)", "",
-              f"Коробка или привод версии не подтверждены вторым источником, а страница её пары в ADAC "
-              f"(`data/adac-details.json`) называет другие: **{share(len(differ), total)}** версий, колонка "
-              f"«{DIFF_COLUMN}». Сами не меняются: пара ADAC — одна из версий с тем же мотором, у мотора бывает "
-              "и механика, и автомат, и передний, и полный привод.", "",
-              "| Марка | Версий | Например |", "|---|---:|---|"]
-    by_brand_diff = collections.defaultdict(list)
+    # One line a generation and a disagreement; ours only inferred (by the name, a sibling version, a rule) first —
+    # those are most likely our errors; one source against ADAC can be the market (ADAC is Germany's) or a version
+    # ADAC does not list (Mégane III dCi 110 before the facelift: EDC only).
+    groups = collections.defaultdict(lambda: {"rows": 0, "most": 0, "kind": "", "sample": ""})
     for row in differ:
-        by_brand_diff[row["Марка"]].append(row)
-    for brand, brand_rows in sorted(by_brand_diff.items(), key=lambda item: -len(item[1]))[:25]:
-        sample = "; ".join(dict.fromkeys(f"{r['Модель']} {r['Поколение']} {r['Версия'][:30]} ({r['Коробка']}, {r['Привод']})"
-                                         for r in brand_rows[:6]))
-        lines.append(f"| {brand} | {len(brand_rows)} | {sample[:220]} |")
+        for match in DIFF_SCOPE.finditer(row[DIFF_COLUMN]):
+            what, says, _scope, count = match.groups()
+            ours = row["Коробка" if what == "коробка" else "Привод"]
+            status = row["Подтверждение: коробка" if what == "коробка" else "Подтверждение: привод"]
+            group = groups[(row["Марка"], row["Модель"], row["Поколение"], what, ours, says)]
+            group["rows"] += 1
+            group["most"] = max(group["most"], int(count))
+            group["kind"] = group["kind"] or ("наше выведено" if kind(status) in ("вывод", "правило", "нет") else status)
+            group["sample"] = group["sample"] or row["Версия"][:40]
+    inferred = sum(g["rows"] for g in groups.values() if g["kind"] == "наше выведено")
+    lines += ["", "## ADAC говорит другое (проверить)", "",
+              f"Коробка или привод версии не подтверждены вторым источником, а все прочитанные версии ADAC с тем же "
+              f"мотором (страницы версий, `data/adac-details.json`) называют другое: **{share(len(differ), total)}** "
+              f"версий, колонка «{DIFF_COLUMN}». Наше значение только выведено (по названию, соседней версии, правилу) "
+              f"у {inferred} — это почти наверняка наши ошибки; у остальных его называет один источник, и тогда это "
+              "бывает разница рынков (ADAC — Германия) или версия, которой ADAC не перечисляет. Сами не меняются.", "",
+              "| Марка · модель · поколение | Что | У нас | У ADAC | Версий ADAC | Наших версий | Откуда наше | Например |",
+              "|---|---|---|---|---:|---:|---|---|"]
+    order = sorted(groups.items(), key=lambda item: (item[1]["kind"] != "наше выведено", -item[1]["most"], -item[1]["rows"]))
+    for (brand, model, generation, what, ours, says), group in order[:80]:
+        lines.append(f"| {brand} {model} {generation} | {what} | {ours or '—'} | {says} | {group['most']} | {group['rows']} | "
+                     f"{group['kind']} | {group['sample']} |")
+    if len(order) > 80:
+        lines.append(f"| … ещё {len(order) - 80} | | | | | | | |")
     lines += ["", "## По источнику строки", "", "| Источник строки | Версий | Мотор подтверждён | Годы подтверждены |",
               "|---|---:|---:|---:|"]
     by_source = collections.defaultdict(list)
