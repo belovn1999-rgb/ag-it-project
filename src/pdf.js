@@ -8,7 +8,7 @@ const pdfPreviewPrint = $("pdfPreviewPrint");
 // Export contract (Belarus): DOCX template → converter. The Polish contract is
 // drawn in the browser straight onto its PDF template (src/order-contract-pdf.js).
 const templateUrl = "./contract-pdf-work/templates/Umowa_Zamowienia_Pojazdu_AG_template_signed.docx?v=20260909-1";
-const orderPdfTemplateUrl = "./contract-pdf-work/templates/Umowa_Zamowienia_Pojazdu_AG_wzor.pdf?v=20261015-1";
+const orderPdfTemplateUrl = "./contract-pdf-work/templates/Umowa_Zamowienia_Pojazdu_AG_wzor.pdf?v=pkt20-20261031-1";
 const orderPdfFontUrl = "./assets/fonts/Carlito-Regular.ttf?v=20261015-1";
 const defaultPdfConverterUrl = "/api/convert-docx-to-pdf";
 const contractHistoryLimit = 20;

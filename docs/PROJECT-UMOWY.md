@@ -65,6 +65,8 @@
 
 Из `~/cloude/umowa-zamowienia/HANDOFF-zamiana-umowy-zamowienia.md` §6, 2026-10-12 (CONFIRMED): вариант 3 — «leasing lub płatność odroczona»; согласия любым способом (пп. 8–9); «zachować zaliczkę / zadatek» без отдельного пункта о задатке; нет раздела об odstąpieniu; RODO мелким. Любая правка текста — только с согласия владельца, правится в Writer, затем новый экспорт PDF и замер (§2).
 
+2026-10-31 (CONFIRMED, владелец): п. 20 Warunki — «Do zawarcia umowy zakupu albo złożenia wiążącej oferty na aukcji każda ze Stron może zakończyć Umowę…» (было «Do chwili akceptacji pojazdu (pkt 8)»); заголовок п. 20 «Zakończenie Umowy przed akceptacją pojazdu» не менялся. Исходник — `~/cloude/umowa-zamowienia/Umowa_Zamowienia_Pojazdu_AUTOGOOD_v6_pkt20.docx` (из `~/Desktop/AG_inne docs/WZÓR_Umowa_Zamowienia_Pojazdu_AUTOGOOD.docx`). Как менять текст стр. 2: правка DOCX → экспорт LibreOffice → в шаблоне заменить только содержимое стр. 2 (стр. 1, флажки и поля формы остаются, замер не нужен); стр. 1 — новый замер (§2).
+
 ## 6. Распознавание данных клиента («Rozpoznaj dane»)
 
 Правила владельца (повторены 2026-10-15, CONFIRMED) — одинаковы для 01, 03 (`pdf.html`) и 02 (`umowa-sprzedazy.html`), в каком бы порядке, регистре и с какими подписями ни пришёл текст:
@@ -103,6 +105,7 @@
 
 ## 8. Журнал
 
+- 2026-10-31 — договор 01, п. 20 Warunki: «Do zawarcia umowy zakupu albo złożenia wiążącej oferty na aukcji» вместо «Do chwili akceptacji pojazdu (pkt 8)» (решение владельца); в шаблоне заменена только стр. 2, стр. 1 и поля формы прежние (§5) (Claude).
 - 2026-10-16 — договор 01: в «PESEL/NIP:» лишнее зачёркивается (физлицо — NIP, фирма — PESEL), в PDF и на странице (§2 п. 7) (Claude).
 - 2026-10-16 — правило владельца: 10 цифр (NIP) → фирма, 11 (PESEL) → физлицо — в «Rozpoznaj dane» и при ручном вводе номера в 01/03 и 02 (§6 п. 5) (Claude).
 - 2026-10-15 — «Rozpoznaj dane» (01/03 и 02): новое имя клиента очищает прежние поля клиента, чтобы не оставались телефон и e-mail предыдущего (§6 п. 6) (Claude).
