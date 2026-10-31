@@ -65,7 +65,7 @@
 
 Из `~/cloude/umowa-zamowienia/HANDOFF-zamiana-umowy-zamowienia.md` §6, 2026-10-12 (CONFIRMED): вариант 3 — «leasing lub płatność odroczona»; согласия любым способом (пп. 8–9); «zachować zaliczkę / zadatek» без отдельного пункта о задатке; нет раздела об odstąpieniu; RODO мелким. Любая правка текста — только с согласия владельца, правится в Writer, затем новый экспорт PDF и замер (§2).
 
-2026-10-31 (CONFIRMED, владелец): п. 20 Warunki — «Do zawarcia umowy zakupu albo złożenia wiążącej oferty na aukcji każda ze Stron może zakończyć Umowę…» (было «Do chwili akceptacji pojazdu (pkt 8)»); заголовок п. 20 «Zakończenie Umowy przed akceptacją pojazdu» не менялся. Исходник — `~/cloude/umowa-zamowienia/Umowa_Zamowienia_Pojazdu_AUTOGOOD_v6_pkt20.docx` (из `~/Desktop/AG_inne docs/WZÓR_Umowa_Zamowienia_Pojazdu_AUTOGOOD.docx`). Как менять текст стр. 2: правка DOCX → экспорт LibreOffice → в шаблоне заменить только содержимое стр. 2 (стр. 1, флажки и поля формы остаются, замер не нужен); стр. 1 — новый замер (§2).
+2026-10-31 (CONFIRMED, владелец): п. 20 Warunki — «Do zawarcia umowy zakupu albo złożenia wiążącej oferty na aukcji każda ze Stron może zakończyć Umowę…» (было «Do chwili akceptacji pojazdu (pkt 8)»); заголовок п. 20 — «Zakończenie Umowy przed zakupem pojazdu» (было «… przed akceptacją pojazdu», владелец в тот же день). Исходник — `~/cloude/umowa-zamowienia/Umowa_Zamowienia_Pojazdu_AUTOGOOD_v6_pkt20.docx` (из `~/Desktop/AG_inne docs/WZÓR_Umowa_Zamowienia_Pojazdu_AUTOGOOD.docx`). Как менять текст стр. 2: правка DOCX → экспорт LibreOffice → в шаблоне заменить только содержимое стр. 2 (стр. 1, флажки и поля формы остаются, замер не нужен); стр. 1 — новый замер (§2).
 
 2026-10-31 (CONFIRMED, владелец): логотип в шапке стр. 1 — векторный (знак AG + «AUTOGOOD», из `~/Downloads/all/logo-ag-black-opt.svg`) вместо JPEG 488×119, на том же месте (428,4 / 29,4 – 538,8 / 46,2 pt); замер стр. 1 не меняется.
 
@@ -107,6 +107,7 @@
 
 ## 8. Журнал
 
+- 2026-10-31 — договор 01: заголовок п. 20 — «Zakończenie Umowy przed zakupem pojazdu» (владелец), стр. 2 шаблона пересобрана (§5) (Claude).
 - 2026-10-31 — договор 01: логотип в шапке — вектор вместо JPEG (чёткий при увеличении и печати), место прежнее; шаблон 313 → 230 КБ (§5) (Claude).
 - 2026-10-31 — договор 01, п. 20 Warunki: «Do zawarcia umowy zakupu albo złożenia wiążącej oferty na aukcji» вместо «Do chwili akceptacji pojazdu (pkt 8)» (решение владельца); в шаблоне заменена только стр. 2, стр. 1 и поля формы прежние (§5) (Claude).
 - 2026-10-16 — договор 01: в «PESEL/NIP:» лишнее зачёркивается (физлицо — NIP, фирма — PESEL), в PDF и на странице (§2 п. 7) (Claude).
