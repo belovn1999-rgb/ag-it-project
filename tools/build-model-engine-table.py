@@ -33,6 +33,7 @@ import re
 import adac_check
 import autocentrum
 import confirm
+import seats
 import mild_hybrids
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -726,6 +727,12 @@ def main():
     confirm.write_report(rows, today)
     for column, statuses in counts.items():
         print(f"   {column}: " + ", ".join(f"{name} {count}" for name, count in statuses.most_common()))
+    # Seven seats (2026-11-02; its columns last): the third row the sources name — ADAC's "Sitzanzahl maximal",
+    # ultimatespecs' "5-7 seats" — next to the base count ("5/7"); tools/seats.py,
+    # docs/MODEL-SEATS.md.
+    for name, count in sorted(seats.apply(rows).items()):
+        print(f"   места: {name}: {count}")
+    seats.write_report(rows, today)
 
     for row in rows:
         # Models only autocentrum covers (stage 6) are keyed by their page-1 model value.

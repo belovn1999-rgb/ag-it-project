@@ -7,12 +7,14 @@ src/model-specs/index.js (brands, files, versions); per model:
 window.AUTOGOOD_MODEL_SPECS_LOADED["<brand>"]["<brand>|<model>"] =
   gens:     [code, phase, from, to|null, mobileModel, liftYear|null] newest first
             phase: pre | fl | fl2 | upd | all
-  versions: [gen index, fuel, cm3, hp, kW, gearbox, drive, mild, token]
+  versions: [gen index, fuel, cm3, hp, kW, gearbox, drive, mild, token, seats]
             fuel: petrol diesel hybrid_petrol hybrid_diesel plugin electric
                   (CNG/LPG/E85 count as petrol), gearbox a|m|"" (unknown),
             drive f|r|4|"" (unknown: stage-6 engine page without options), mild = year the mild hybrid starts (0 = none), token = BMW/Mercedes/Audi model
             number from the version name ("320", "m340", "220", "s3") for
-            sub-models such as "320" or "C 220"; duplicates merged.
+            sub-models such as "320" or "C 220"; duplicates merged; seats = the counts
+            its bodies can have, "5/7" (a third row at extra cost), "7", "" unknown
+            (column "Места", tools/seats.py, 2026-11-02; last, so readers by index keep working).
   trims:    [from, to|null, lines[], sport[], editions[]]
   bodies:   [gen index, types[], doors from, doors to, seats from, seats to, sliding 0|1]
             doors and seats from autocentrum.pl where data/model-engines.csv has them
@@ -456,7 +458,7 @@ def main():
             if model is None:
                 continue
             key = f"{row['Марка']}|{model}"
-            entry = models.setdefault(key, {"gens": {}, "versions": set(), "bodies": set()})
+            entry = models.setdefault(key, {"gens": {}, "versions": {}, "bodies": set()})
             start, end = years(row["Годы (проверено)"])
             phase_text = row["Этап"]
             body_lift = re.match(r"рестайлинг \((\d{4})\)", phase_text)
@@ -495,9 +497,11 @@ def main():
             # it goes under the line with the other values; the generation and the table keep it (owner 2026-10-23).
             if row.get("Рынок") == "нет в Польше и Германии":
                 continue
-            entry["versions"].add((gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
-                                   int(row["Мощность, кВт"] or 0), GEARBOX.get(row["Коробка"], ""),
-                                   DRIVE.get(row["Привод"], ""), mild, token(row["Марка"], row["Версия"])))
+            version = (gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
+                       int(row["Мощность, кВт"] or 0), GEARBOX.get(row["Коробка"], ""),
+                       DRIVE.get(row["Привод"], ""), mild, token(row["Марка"], row["Версия"]))
+            # The same engine in several bodies (Tiguan and Tiguan Allspace, Land Cruiser 3- and 5-door): all counts.
+            entry["versions"].setdefault(version, set()).update(int(v) for v in row.get("Места", "").split("/") if v)
 
     with open(os.path.join(ROOT, "data", "model-trims.json"), encoding="utf8") as handle:
         trims = json.load(handle)["rows"]
@@ -507,7 +511,7 @@ def main():
         gens = sorted(entry["gens"].values(), key=lambda g: (g["from"] or 0, g["to"] or 9999), reverse=True)
         index = {(g["code"], g["from"], g["to"]): i for i, g in enumerate(gens)}
         versions = sorted(
-            [index[v[0]], *v[1:]] for v in entry["versions"]
+            [index[v[0]], *v[1:], "/".join(map(str, sorted(seats)))] for v, seats in entry["versions"].items()
         )
         brand, model = key.split("|", 1)
         names = {model.lower(), brand.lower(), "golf", "passat", "polo", "tiguan", "t-roc", "q3", "multivan", "s-class"}

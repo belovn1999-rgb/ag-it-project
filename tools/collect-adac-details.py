@@ -14,6 +14,8 @@ cached in ~/.cache/autogood/adac/pages and never read again); progress is saved 
 
 --flagged (2026-10-29): every twin of the rows in "ADAC: другое" (tools/confirm.py) — one twin's page says another
 gearbox or drive; all of them tell an error of ours (every ADAC version of the engine) from an engine sold both ways.
+--reparse (2026-11-02, seats): the pages already read, again from the cache (no request) — "Sitzanzahl maximal"
+(the third row an option costs: Kodiaq 5, up to 7) was not kept before; tools/seats.py.
 """
 import argparse
 import csv
@@ -74,10 +76,13 @@ def version_path(twin, links):
 
 def details(page):
     data = C.specs(page)
+    # An empty cell has no line of its own: specs() then pairs the label with the next label ("Federung vorne").
+    seats_max = data.get("Sitzanzahl maximal", "")
     return {"gearbox": data.get("Getriebeart", ""), "gears": data.get("Anzahl Gänge", ""),
             "drive": data.get("Antriebsart", ""), "kind": data.get("Motorart", ""),
             "cc": C.number(data.get("Hubraum (Verbrennungsmotor)")) or None, "body": data.get("Karosserie", ""),
-            "doors": data.get("Türanzahl", ""), "seats": data.get("Sitzanzahl", "")}
+            "doors": data.get("Türanzahl", ""), "seats": data.get("Sitzanzahl", ""),
+            "seats_max": seats_max if re.fullmatch(r"\d{1,2}", seats_max) else ""}
 
 
 def save(found):
@@ -92,7 +97,19 @@ def main():
     parser.add_argument("--offline", action="store_true", help="only pages already in the cache")
     parser.add_argument("--limit", type=int, default=0, help="read at most N new pages")
     parser.add_argument("--flagged", action="store_true", help="all twins of the rows in \"ADAC: другое\"")
+    parser.add_argument("--reparse", action="store_true", help="the pages already read, again from the cache")
     args = parser.parse_args()
+    if args.reparse:
+        found = json.load(open(OUT, encoding="utf8"))["versions"]
+        cached = 0
+        for name, item in found.items():
+            page = C._cached(item["path"])
+            if page:
+                item.update(details(page))
+                cached += 1
+        save(found)
+        print(f"DONE reparsed={cached} of {len(found)}", flush=True)
+        return
     rows = list(csv.DictReader(open(os.path.join(ROOT, "data", "model-engines.csv"), encoding="utf-8-sig"), delimiter=";"))
     row_ev, _gen_ev = adac_check.evidence(rows)
     if args.flagged:

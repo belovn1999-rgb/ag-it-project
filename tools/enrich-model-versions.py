@@ -14,6 +14,7 @@ a rerun skips what is done, so it can be stopped and resumed any time.
 
     python3 tools/enrich-model-versions.py [--since 2015] [--limit N] [--cache DIR]
     python3 tools/enrich-model-versions.py --since 1995   # 2026-10-21: every gap, doors and seats too
+    python3 tools/enrich-model-versions.py --reparse      # 2026-11-02: the pages read, again from the cache
 """
 import argparse
 import csv
@@ -57,9 +58,10 @@ def details(page):
     ld = re.search(r'"vehicleTransmission"\s*:\s*"([^"]*)"', page)
     # "5 doors", "5 seats" (B61 item 6, 2026-10-21): the doors and seats our table lacks.
     doors = re.search(r"\d+", cell("Num. of Doors"))
-    seats = re.search(r"\d+", cell("Num. of Seats"))
+    # "5-7 seats" (Grand Scénic, B61 2026-11-02): both counts, "5/7" as autocentrum's "3/5" doors.
+    seats = re.findall(r"\d+", cell("Num. of Seats"))
     return {"gearbox": gearbox, "transmission": ld.group(1) if ld else "", "drive": drive,
-            "doors": doors.group(0) if doors else "", "seats": seats.group(0) if seats else ""}
+            "doors": doors.group(0) if doors else "", "seats": "/".join(seats)}
 
 
 def main():
@@ -67,9 +69,25 @@ def main():
     parser.add_argument("--since", type=int, default=2015, help="only generations starting this year or later")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--cache", default=os.path.expanduser("~/.cache/autogood/ultimatespecs-versions"))
+    parser.add_argument("--reparse", action="store_true", help="the pages already read, again from the cache")
     args = parser.parse_args()
     os.makedirs(args.cache, exist_ok=True)
     done = json.load(open(DETAILS, encoding="utf8")) if os.path.exists(DETAILS) else {}
+    if args.reparse:
+        cached = 0
+        for url, item in done.items():
+            path = os.path.join(args.cache, re.sub(r"[^A-Za-z0-9._-]+", "_", url.split("/car-specs/", 1)[1]))
+            if os.path.exists(path) and os.path.getsize(path) > 10000:
+                page = open(path, encoding="utf8", errors="ignore").read()
+                # A page read before 2026-10-21 kept no doors or seats: the rows' gaps are filled as they were.
+                fresh = details(page)
+                item.update({key: fresh[key] for key in item if key in fresh})
+                cached += 1
+        with open(DETAILS, "w", encoding="utf8") as handle:
+            json.dump(done, handle, ensure_ascii=False, indent=0, sort_keys=True)
+            handle.write("\n")
+        print(f"DONE reparsed={cached} of {len(done)}", flush=True)
+        return
 
     with open(os.path.join(ROOT, "data", "model-engines.csv"), encoding="utf-8-sig") as handle:
         rows = list(csv.DictReader(handle, delimiter=";"))
