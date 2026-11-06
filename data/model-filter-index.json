@@ -3304,6 +3304,9 @@
      ],
      "engines": {
       "petrol": {
+       "998": [
+        155
+       ],
        "999": [
         95,
         100,
@@ -5377,6 +5380,7 @@
      "bodies": [
       "2017 C117 CLA",
       "2017 X117 CLA Shooting Brake",
+      "CLA C117 Coupe Facelifting (adac)",
       "CLA C117 Coupe Facelifting (autocentrum)",
       "CLA C117 Shooting Brake Facelifting (autocentrum)"
      ],
@@ -5399,6 +5403,7 @@
        ],
        "2143": [
         136,
+        170,
         177
        ]
       }
@@ -6015,7 +6020,8 @@
      "mobileModel": "208",
      "bodies": [
       "208 3-door (Facelift 2015)",
-      "208 5-door (Facelift 2015)"
+      "208 5-door (Facelift 2015)",
+      "208 I Hatchback Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
@@ -6023,6 +6029,7 @@
         68
        ],
        "1199": [
+        68,
         82,
         110
        ],
@@ -10063,7 +10070,8 @@
         150,
         190,
         197,
-        235
+        235,
+        240
        ]
       }
      }
@@ -10167,8 +10175,7 @@
      "years": "2024–н. в.",
      "mobileModel": "XC90",
      "bodies": [
-      "XC90 2025",
-      "XC90 II SUV Facelifting (adac)"
+      "XC90 2025"
      ],
      "engines": {
       "plugin": {
@@ -10178,8 +10185,7 @@
       },
       "petrol": {
        "1969": [
-        250,
-        326
+        250
        ]
       }
      }
@@ -10218,7 +10224,8 @@
      "years": "2015–2019",
      "mobileModel": "XC90",
      "bodies": [
-      "XC90 II"
+      "XC90 II",
+      "XC90 II SUV (adac)"
      ],
      "engines": {
       "plugin": {
@@ -10231,14 +10238,16 @@
         250,
         254,
         310,
-        321
+        321,
+        326
        ]
       },
       "diesel": {
        "1969": [
         190,
         224,
-        235
+        235,
+        240
        ]
       }
      }
@@ -10307,7 +10316,8 @@
       "petrol": {
        "1498": [
         116,
-        150
+        150,
+        160
        ],
        "1984": [
         204,
@@ -10662,6 +10672,7 @@
       "Passat B8 Alltrack",
       "Passat B8 Alltrack (autocentrum)",
       "Passat B8 Limousine (autocentrum)",
+      "Passat B8 Sedan (adac)",
       "Passat B8 Variant",
       "Passat B8 Variant (autocentrum)"
      ],
@@ -10681,6 +10692,7 @@
        ],
        "1984": [
         220,
+        272,
         280
        ]
       },
@@ -10817,14 +10829,16 @@
      "years": "2021–н. в.",
      "mobileModel": "Polo",
      "bodies": [
-      "Polo 2022"
+      "Polo 2022",
+      "Polo VI Hatchback Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
        "999": [
         80,
         95,
-        110
+        110,
+        115
        ],
        "1984": [
         207
@@ -11054,7 +11068,8 @@
       },
       "hybrid": {
        "1498": [
-        136
+        136,
+        170
        ]
       }
      }
@@ -12383,12 +12398,14 @@
      "years": "2019–н. в.",
      "mobileModel": "R8",
      "bodies": [
+      "R8 II Coupe Facelifting (adac)",
       "R8 II Coupe Facelifting (autocentrum)",
       "R8 II Spyder Facelifting (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "5204": [
+        540,
         570,
         620
        ]
@@ -12587,12 +12604,14 @@
      "years": "2024–н. в.",
      "mobileModel": "e-tron GT",
      "bodies": [
+      "e-tron GT Coupe Facelifting (adac)",
       "e-tron GT Grand Tourer RS Facelifting (autocentrum)",
       "e-tron GT Grand Tourer-S Facelifting (autocentrum)"
      ],
      "engines": {
       "electric": {
        "0": [
+        503,
         591,
         925
        ]
@@ -13087,6 +13106,7 @@
      "mobileModel": "7",
      "bodies": [
       "Seria 7 G11-G12 M Lang (autocentrum)",
+      "Seria 7 G11-G12 Sedan (adac)",
       "Seria 7 G11-G12 Sedan (autocentrum)",
       "Seria 7 G11-G12 Sedan L (autocentrum)"
      ],
@@ -13110,6 +13130,11 @@
        ]
       },
       "hybrid": {
+       "1998": [
+        326
+       ]
+      },
+      "plugin": {
        "1998": [
         326
        ]
@@ -14261,6 +14286,7 @@
      "years": "2017–2022",
      "mobileModel": "EcoSport",
      "bodies": [
+      "EcoSport II SUV Facelifting (adac)",
       "EcoSport II SUV Facelifting (autocentrum)"
      ],
      "engines": {
@@ -14278,6 +14304,7 @@
        "1499": [
         95,
         100,
+        120,
         125
        ]
       }
@@ -15322,7 +15349,9 @@
         120
        ],
        "1499": [
-        75
+        75,
+        100,
+        120
        ],
        "1600": [
         75,
@@ -15475,7 +15504,10 @@
       "diesel": {
        "1995": [
         105,
-        150
+        130,
+        150,
+        170,
+        185
        ],
        "2198": [
         125,
@@ -15686,7 +15718,8 @@
        ],
        "1499": [
         75,
-        100
+        100,
+        120
        ]
       }
      }
@@ -15747,6 +15780,7 @@
      "years": "2014–2018",
      "mobileModel": "Transit Courier",
      "bodies": [
+      "Transit Courier I Kleintransporter Facelifting (adac)",
       "Transit Courier I Van (autocentrum)"
      ],
      "engines": {
@@ -15758,6 +15792,9 @@
       "diesel": {
        "1498": [
         75
+       ],
+       "1499": [
+        100
        ],
        "1560": [
         95
@@ -15813,16 +15850,28 @@
      "years": "2014–2023",
      "mobileModel": "Transit Custom",
      "bodies": [
-      "Transit Custom I I (autocentrum)"
+      "Transit Custom I I (autocentrum)",
+      "Transit Custom I Van Facelifting (adac)"
      ],
      "engines": {
       "diesel": {
+       "1995": [
+        105,
+        130,
+        170,
+        185
+       ],
        "2187": [
         100,
         125
        ],
        "2198": [
         155
+       ]
+      },
+      "plugin": {
+       "998": [
+        126
        ]
       }
      }
@@ -16728,7 +16777,8 @@
      "mobileModel": "GLA",
      "bodies": [
       "GLA I Off-Roader Facelifting (autocentrum)",
-      "GLA I Off-Roader Facelifting AMG (autocentrum)"
+      "GLA I Off-Roader Facelifting AMG (autocentrum)",
+      "GLA I SUV Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
@@ -16748,6 +16798,7 @@
        ],
        "2143": [
         136,
+        170,
         177
        ]
       }
@@ -17053,7 +17104,8 @@
      "mobileModel": "B",
      "bodies": [
       "Klasa B W247 Sports Tourer Facelifting (autocentrum)",
-      "Klasa B W247 Sports Tourer Plug-In Facelifting (autocentrum)"
+      "Klasa B W247 Sports Tourer Plug-In Facelifting (autocentrum)",
+      "Klasa B W247 Van Facelifting (adac)"
      ],
      "engines": {
       "hybrid": {
@@ -17063,7 +17115,9 @@
       },
       "petrol": {
        "1332": [
-        163
+        150,
+        163,
+        177
        ],
        "1991": [
         190,
@@ -17072,6 +17126,7 @@
       },
       "diesel": {
        "1950": [
+        116,
         150,
         190
        ]
@@ -17085,7 +17140,8 @@
      "mobileModel": "B",
      "bodies": [
       "Klasa B W247 Sports Tourer (autocentrum)",
-      "Klasa B W247 Sports Tourer Plug-In (autocentrum)"
+      "Klasa B W247 Sports Tourer Plug-In (autocentrum)",
+      "Klasa B W247 Van (adac)"
      ],
      "engines": {
       "hybrid": {
@@ -17112,6 +17168,11 @@
        "1950": [
         150,
         190
+       ]
+      },
+      "plugin": {
+       "1332": [
+        218
        ]
       }
      }
@@ -17858,6 +17919,7 @@
      "years": "2015–2016",
      "mobileModel": "SLC",
      "bodies": [
+      "SLC Cabrio (adac)",
       "SLC Roadster (autocentrum)",
       "SLC Roadster AMG (autocentrum)"
      ],
@@ -19808,7 +19870,8 @@
       "Master IV Furgon FWD (autocentrum)",
       "Master IV Furgon tylny napęd (autocentrum)",
       "Master IV Podwójna kabina podwozie (autocentrum)",
-      "Master IV Pojedyncza kabina podwozie (autocentrum)"
+      "Master IV Pojedyncza kabina podwozie (autocentrum)",
+      "Master IV Van Facelifting (adac)"
      ],
      "engines": {
       "diesel": {
@@ -19820,6 +19883,13 @@
         100,
         165,
         170
+       ],
+       "2299": [
+        110,
+        130,
+        135,
+        145,
+        180
        ],
        "2300": [
         100,
@@ -20328,12 +20398,14 @@
      "mobileModel": "Citigo",
      "bodies": [
       "Citigo Hatchback 3-door Facelifting (autocentrum)",
-      "Citigo Hatchback 5-door Facelifting (autocentrum)"
+      "Citigo Hatchback 5-door Facelifting (autocentrum)",
+      "Citigo Hatchback Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
        "999": [
         60,
+        68,
         75
        ]
       }
@@ -22249,14 +22321,18 @@
      "years": "2022–н. в.",
      "mobileModel": "EX90",
      "bodies": [
-      "EX90 I I (autocentrum)"
+      "EX90 I I (autocentrum)",
+      "EX90 I SUV (adac)"
      ],
      "engines": {
       "electric": {
        "0": [
         279,
+        333,
         408,
-        517
+        456,
+        517,
+        680
        ]
       }
      }
@@ -23064,11 +23140,13 @@
       "Caddy IV Furgon (autocentrum)",
       "Caddy IV Furgon Maxi (autocentrum)",
       "Caddy IV Kombi (autocentrum)",
-      "Caddy IV Kombi Maxi (autocentrum)"
+      "Caddy IV Kombi Maxi (autocentrum)",
+      "Caddy IV Van (adac)"
      ],
      "engines": {
       "petrol": {
        "999": [
+        84,
         102
        ],
        "1197": [
@@ -23959,13 +24037,15 @@
      "years": "2022–2026",
      "mobileModel": "Taigo",
      "bodies": [
-      "Taigo Crossover (autocentrum)"
+      "Taigo Crossover (autocentrum)",
+      "Taigo SUV (adac)"
      ],
      "engines": {
       "petrol": {
        "999": [
         95,
-        110
+        110,
+        115
        ],
        "1498": [
         150
@@ -24928,6 +25008,7 @@
       "Optima II Kombi Facelifting (autocentrum)",
       "Optima II Kombi GT Facelifting (autocentrum)",
       "Optima II Kombi PHEV Facelifting (autocentrum)",
+      "Optima II Sedan Facelifting (adac)",
       "Optima II Sedan Facelifting (autocentrum)",
       "Optima II Sedan GT Facelifting (autocentrum)"
      ],
@@ -24951,6 +25032,11 @@
       "diesel": {
        "1598": [
         136
+       ]
+      },
+      "plugin": {
+       "1999": [
+        205
        ]
       }
      }
@@ -25221,6 +25307,9 @@
        ],
        "1353": [
         140
+       ],
+       "1368": [
+        100
        ],
        "1482": [
         160
@@ -25607,12 +25696,14 @@
      "years": "2014–2016",
      "mobileModel": "Soul",
      "bodies": [
-      "Soul II II (autocentrum)"
+      "Soul II II (autocentrum)",
+      "Soul II SUV Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
        "1591": [
-        132
+        132,
+        204
        ]
       },
       "diesel": {
@@ -26097,7 +26188,8 @@
         204
        ],
        "1598": [
-        150
+        150,
+        180
        ]
       },
       "plugin": {
@@ -26253,12 +26345,14 @@
      "years": "2021–2024",
      "mobileModel": "BAYON",
      "bodies": [
+      "Bayon I SUV (adac)",
       "Bayon I SUV (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "998": [
-        100
+        100,
+        120
        ],
        "1197": [
         84
@@ -26736,13 +26830,15 @@
      "years": "2020–2023",
      "mobileModel": "i20",
      "bodies": [
+      "i20 III Hatchback (adac)",
       "i20 III Hatchback (autocentrum)",
       "i20 III Hatchback N (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "998": [
-        100
+        100,
+        120
        ],
        "1197": [
         84
@@ -27207,6 +27303,7 @@
      "mobileModel": "IONIQ",
      "bodies": [
       "Ioniq Electric (autocentrum)",
+      "Ioniq Hatchback (adac)",
       "Ioniq Hatchback (autocentrum)",
       "Ioniq Plug-in (autocentrum)"
      ],
@@ -27219,6 +27316,11 @@
       "electric": {
        "0": [
         120
+       ]
+      },
+      "plugin": {
+       "1580": [
+        141
        ]
       }
      }
@@ -27511,6 +27613,8 @@
         120
        ],
        "1598": [
+        170,
+        180,
         198
        ]
       },
@@ -28263,12 +28367,14 @@
      "mobileModel": "Astra",
      "bodies": [
       "Astra K GTC (autocentrum)",
+      "Astra K Hatchback (adac)",
       "Astra K Hatchback 5-door (autocentrum)",
       "Astra K Sports Tourer (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "999": [
+        90,
         105
        ],
        "1362": [
@@ -28548,6 +28654,7 @@
        "1499": [
         76,
         102,
+        130,
         131
        ],
        "1598": [
@@ -29410,7 +29517,9 @@
       "Movano III Furgon L2H2 FWD (autocentrum)",
       "Movano III Furgon L3H2 FWD (autocentrum)",
       "Movano III Furgon L3H2 RWD SRW-DRW (autocentrum)",
-      "Movano III Furgon L4H2 RWD (autocentrum)"
+      "Movano III Furgon L4H2 RWD (autocentrum)",
+      "Movano III Van (adac)",
+      "Movano III Van Facelifting (adac)"
      ],
      "engines": {
       "diesel": {
@@ -29418,6 +29527,15 @@
         100,
         125,
         146
+       ],
+       "2299": [
+        110,
+        131,
+        136,
+        150,
+        163,
+        170,
+        180
        ]
       }
      }
@@ -29491,7 +29609,8 @@
         177
        ],
        "2184": [
-        150
+        150,
+        180
        ]
       }
      }
@@ -29509,16 +29628,19 @@
       "Vivaro B Furgon Long H2 2,9t (autocentrum)",
       "Vivaro B Kombi Extra Long H1 2,9t (autocentrum)",
       "Vivaro B Kombi Long H1 2,7t (autocentrum)",
-      "Vivaro B Kombi Long H1 2,9t (autocentrum)"
+      "Vivaro B Kombi Long H1 2,9t (autocentrum)",
+      "Vivaro B Van (adac)"
      ],
      "engines": {
       "diesel": {
        "1598": [
         90,
+        95,
         115,
         120,
         125,
-        140
+        140,
+        145
        ]
       }
      }
@@ -29953,13 +30075,15 @@
      "years": "2021–н. в.",
      "mobileModel": "Arona",
      "bodies": [
-      "Arona Crossover Facelifting (autocentrum)"
+      "Arona Crossover Facelifting (autocentrum)",
+      "Arona SUV Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
        "999": [
         95,
-        110
+        110,
+        115
        ],
        "1498": [
         150
@@ -30197,7 +30321,8 @@
       "diesel": {
        "1598": [
         80,
-        95
+        95,
+        115
        ]
       }
      }
@@ -30550,6 +30675,7 @@
       "petrol": {
        "999": [
         60,
+        68,
         75
        ]
       }
@@ -31185,6 +31311,7 @@
      "years": "2016–2018",
      "mobileModel": "3",
      "bodies": [
+      "Mazda 3 III Hatchback Facelifting (adac)",
       "Mazda 3 III Hatchback Facelifting (autocentrum)",
       "Mazda 3 III Sedan Facelifting (autocentrum)"
      ],
@@ -31201,6 +31328,9 @@
       "diesel": {
        "1499": [
         105
+       ],
+       "2191": [
+        150
        ]
       }
      }
@@ -35020,10 +35150,19 @@
      "years": "2023–н. в.",
      "mobileModel": "Jumper",
      "bodies": [
-      "Jumper III Furgon Facelifting (autocentrum)"
+      "Jumper III Furgon Facelifting (autocentrum)",
+      "Jumper III Van Facelifting (adac)"
      ],
      "engines": {
       "diesel": {
+       "1997": [
+        163
+       ],
+       "2179": [
+        120,
+        140,
+        165
+       ],
        "2184": [
         120,
         140,
@@ -35306,6 +35445,7 @@
      "years": "2010–2012",
      "mobileModel": "C-Zero",
      "bodies": [
+      "C-Zero I Hatchback (adac)",
       "C-Zero I I (autocentrum)"
      ],
      "engines": {
@@ -35519,6 +35659,7 @@
      "bodies": [
       "500 III 3+1 (autocentrum)",
       "500 III Cabrio (autocentrum)",
+      "500 III Hatchback (adac)",
       "500 III Hatchback (autocentrum)"
      ],
      "engines": {
@@ -35528,6 +35669,11 @@
        ],
        "23800": [
         95
+       ]
+      },
+      "petrol": {
+       "999": [
+        65
        ]
       }
      }
@@ -35611,7 +35757,8 @@
        "1199": [
         100,
         110,
-        136
+        136,
+        145
        ]
       },
       "electric": {
@@ -35725,7 +35872,8 @@
      "mobileModel": "Doblo",
      "bodies": [
       "Doblo III Cargo (autocentrum)",
-      "Doblo III Van (autocentrum)"
+      "Doblo III Van (autocentrum)",
+      "Doblo III Van Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
@@ -35740,7 +35888,9 @@
        ],
        "1598": [
         90,
-        105
+        95,
+        105,
+        120
        ],
        "1956": [
         135
@@ -36405,6 +36555,7 @@
      "years": "2016–2018",
      "mobileModel": "Fullback",
      "bodies": [
+      "Fullback Pickup (adac)",
       "Fullback Podwójna kabina (autocentrum)",
       "Fullback Przedłużona kabina (autocentrum)"
      ],
@@ -36412,6 +36563,7 @@
       "diesel": {
        "2442": [
         150,
+        154,
         180
        ]
       }
@@ -37110,6 +37262,7 @@
      "years": "2016–2023",
      "mobileModel": "Grand Cherokee",
      "bodies": [
+      "Grand Cherokee IV SUV Facelifting (adac)",
       "Grand Cherokee IV Terenowy Facelifting (autocentrum)",
       "Grand Cherokee IV Terenowy Facelifting 2016 (autocentrum)"
      ],
@@ -37120,6 +37273,9 @@
        ],
        "5654": [
         352
+       ],
+       "6166": [
+        710
        ],
        "6417": [
         468
@@ -39250,6 +39406,7 @@
      "years": "2021–н. в.",
      "mobileModel": "Discovery",
      "bodies": [
+      "Discovery V SUV Facelifting (adac)",
       "Discovery V Terenowy Facelifting (autocentrum)"
      ],
      "engines": {
@@ -39265,6 +39422,9 @@
        "2996": [
         249,
         300
+       ],
+       "2997": [
+        350
        ]
       }
      }
@@ -39766,6 +39926,7 @@
      "years": "2017–2022",
      "mobileModel": "Range Rover Sport",
      "bodies": [
+      "Range Rover Sport II SUV Facelifting (adac)",
       "Range Rover Sport II SUV Facelifting (autocentrum)"
      ],
      "engines": {
@@ -39803,6 +39964,11 @@
        ]
       },
       "hybrid": {
+       "1997": [
+        404
+       ]
+      },
+      "plugin": {
        "1997": [
         404
        ]
@@ -40116,6 +40282,7 @@
      "years": "2017–2021",
      "mobileModel": "Duster",
      "bodies": [
+      "Duster II SUV (adac)",
       "Duster II SUV (autocentrum)"
      ],
      "engines": {
@@ -40132,6 +40299,7 @@
         150
        ],
        "1598": [
+        109,
         115
        ]
       },
@@ -40704,6 +40872,7 @@
      "mobileModel": "Dokker",
      "bodies": [
       "Dokker Mikrovan Facelifting (autocentrum)",
+      "Dokker Van Facelifting (adac)",
       "Dokker Van Facelifting (autocentrum)"
      ],
      "engines": {
@@ -40717,7 +40886,9 @@
        ],
        "1598": [
         100,
-        102
+        102,
+        107,
+        109
        ]
       },
       "lpg": {
@@ -43491,28 +43662,22 @@
      "bodies": [
       "Cabrio F57 Cabrio Cooper S Facelifting (autocentrum)",
       "Cabrio F57 Cabrio Facelifting (autocentrum)",
-      "Cabrio F57 Cabrio Facelifting II (autocentrum)",
-      "Cabrio F57 Hatchback Facelifting (adac)"
+      "Cabrio F57 Cabrio Facelifting II (autocentrum)"
      ],
      "engines": {
       "petrol": {
        "1499": [
-        75,
         102,
         136
        ],
        "1998": [
         178,
-        192,
         231
        ]
       },
       "diesel": {
        "1496": [
         116
-       ],
-       "1995": [
-        170
        ]
       }
      }
@@ -48089,7 +48254,8 @@
      "years": "2024–н. в.",
      "mobileModel": "5",
      "bodies": [
-      "5 I I (autocentrum)"
+      "5 I I (autocentrum)",
+      "5 I SUV (adac)"
      ],
      "engines": {
       "petrol": {
@@ -48100,6 +48266,11 @@
       "hybrid": {
        "1499": [
         224
+       ]
+      },
+      "electric": {
+       "0": [
+        211
        ]
       }
      }
@@ -48288,12 +48459,14 @@
      "mobileModel": "MUSSO",
      "bodies": [
       "Musso II Grand (autocentrum)",
-      "Musso II Pickup (autocentrum)"
+      "Musso II Pickup (autocentrum)",
+      "Musso II Pickup Facelifting (adac)"
      ],
      "engines": {
       "diesel": {
        "2157": [
-        181
+        181,
+        202
        ]
       }
      }
@@ -48888,6 +49061,7 @@
      "years": "2023–н. в.",
      "mobileModel": "Torres",
      "bodies": [
+      "Torres SUV (adac)",
       "Torres SUV (autocentrum)",
       "Torres SUV EVX (autocentrum)"
      ],
@@ -48900,6 +49074,11 @@
       "electric": {
        "0": [
         207
+       ]
+      },
+      "hybrid": {
+       "1498": [
+        204
        ]
       }
      }
@@ -49058,15 +49237,19 @@
      "years": "2013–н. в.",
      "mobileModel": "Quattroporte",
      "bodies": [
-      "Quattroporte II II (autocentrum)"
+      "Quattroporte II II (autocentrum)",
+      "Quattroporte II Sedan Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
        "2979": [
-        410
+        350,
+        410,
+        430
        ],
        "3799": [
-        530
+        530,
+        580
        ]
       },
       "diesel": {
@@ -49104,6 +49287,7 @@
      "years": "2020–н. в.",
      "mobileModel": "Model 3",
      "bodies": [
+      "Model 3 Sedan Facelifting (adac)",
       "Model 3 Sedan Facelifting (autocentrum)",
       "Model 3 Sedan Facelifting 2023 (autocentrum)"
      ],
@@ -49111,6 +49295,7 @@
       "electric": {
        "0": [
         283,
+        320,
         325,
         441,
         498,
@@ -49125,13 +49310,16 @@
      "years": "2017–2020",
      "mobileModel": "Model 3",
      "bodies": [
+      "Model 3 Sedan (adac)",
       "Model 3 Sedan (autocentrum)"
      ],
      "engines": {
       "electric": {
        "0": [
         261,
-        302
+        302,
+        306,
+        460
        ]
       }
      }
@@ -49165,6 +49353,7 @@
         605,
         611,
         670,
+        700,
         789,
         1020
        ]
@@ -49226,11 +49415,14 @@
        "0": [
         259,
         329,
+        333,
         417,
         422,
         463,
         503,
-        611
+        525,
+        611,
+        772
        ]
       }
      }
@@ -51317,13 +51509,16 @@
      "years": "2024–н. в.",
      "mobileModel": "X",
      "bodies": [
+      "X Zeekr X SUV (adac)",
       "X Zeekr X Zeekr X (ultimatespecs)"
      ],
      "engines": {
       "electric": {
        "0": [
         272,
-        428
+        340,
+        428,
+        496
        ]
       }
      }

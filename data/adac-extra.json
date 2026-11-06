@@ -1,6 +1,6 @@
 {
  "source": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/",
- "generatedAt": "2026-10-29",
+ "generatedAt": "2026-11-06",
  "since": 2019,
  "versions": [
   {
@@ -397,6 +397,34 @@
   },
   {
    "brand": "Ford",
+   "label": "Fiesta",
+   "code": "Mk8",
+   "facelift": false,
+   "page": "ford/fiesta/viii",
+   "body": "Hatchback",
+   "doors": "3",
+   "engine": {
+    "slug": "313050",
+    "type": "Hybrydowe",
+    "text": "1.0 EcoBoost Hybrid Start/Stopp Titanium (3-Türer) Mild-Hybrid",
+    "litres": "1.0",
+    "name": "1.0 EcoBoost Hybrid Start/Stopp Titanium (3-Türer)",
+    "hp": 155,
+    "kw": 114,
+    "from": 2020,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "998 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/fiesta/viii/313050/",
+    "source": "adac"
+   },
+   "adac_versions": 26
+  },
+  {
+   "brand": "Ford",
    "label": "Kuga",
    "code": "Mk2",
    "facelift": true,
@@ -656,24 +684,24 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "300184",
+    "slug": "289529",
     "type": "Hybrydowe",
-    "text": "E 350 9G-TRONIC Mild-Hybrid",
+    "text": "E 350 EQ Boost 9G-TRONIC Mild-Hybrid",
     "litres": "2.0",
-    "name": "E 350 9G-TRONIC",
+    "name": "E 350 EQ Boost 9G-TRONIC",
     "hp": 313,
     "kw": 230,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: tylny"
     ],
     "Pojemność skokowa": "1991 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/e-klasse/213-238/300184/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/e-klasse/213-238/289529/",
     "source": "adac"
    },
-   "adac_versions": 2
+   "adac_versions": 3
   },
   {
    "brand": "Mercedes-Benz",
@@ -796,24 +824,24 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "298495",
+    "slug": "290001",
     "type": "Hybrydowe",
     "text": "S 450 9G-TRONIC Mild-Hybrid",
     "litres": "3.0",
     "name": "S 450 9G-TRONIC",
     "hp": 388,
     "kw": 286,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: tylny"
     ],
     "Pojemność skokowa": "2999 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/s-klasse/217-222-facelift/298495/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/s-klasse/217-222-facelift/290001/",
     "source": "adac"
    },
-   "adac_versions": 12
+   "adac_versions": 24
   },
   {
    "brand": "Mercedes-Benz",
@@ -824,24 +852,24 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "302317",
+    "slug": "295350",
     "type": "Hybrydowe plug-in",
     "text": "S 560 e lang 9G-TRONIC",
     "litres": "3.0",
     "name": "S 560 e lang 9G-TRONIC",
     "hp": 490,
     "kw": 360,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: tylny"
     ],
     "Pojemność skokowa": "2996 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/s-klasse/217-222-facelift/302317/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/s-klasse/217-222-facelift/295350/",
     "source": "adac"
    },
-   "adac_versions": 3
+   "adac_versions": 6
   },
   {
    "brand": "Mercedes-Benz",
@@ -901,6 +929,34 @@
   },
   {
    "brand": "Mercedes-Benz",
+   "label": "CLA",
+   "code": "C117",
+   "facelift": true,
+   "page": "mercedes-benz/cla/117-facelift",
+   "body": "Coupe",
+   "doors": "4",
+   "engine": {
+    "slug": "290558",
+    "type": "Diesla",
+    "text": "Coupé 220 d 7G-DCT",
+    "litres": "2.1",
+    "name": "Coupé 220 d 7G-DCT",
+    "hp": 170,
+    "kw": 125,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2143 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cla/117-facelift/290558/",
+    "source": "adac"
+   },
+   "adac_versions": 8
+  },
+  {
+   "brand": "Mercedes-Benz",
    "label": "GLC",
    "code": "X540 (электро)",
    "facelift": false,
@@ -957,6 +1013,34 @@
   },
   {
    "brand": "Peugeot",
+   "label": "208",
+   "code": "208 I",
+   "facelift": true,
+   "page": "peugeot/208/1generation-facelift",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "289498",
+    "type": "Benzynowe",
+    "text": "1.2 PureTech 68 Active (5-Türer)",
+    "litres": "1.2",
+    "name": "1.2 PureTech 68 Active (5-Türer)",
+    "hp": 68,
+    "kw": 50,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1199 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/208/1generation-facelift/289498/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Peugeot",
    "label": "2008",
    "code": "2008 I",
    "facelift": true,
@@ -964,24 +1048,24 @@
    "body": "SUV",
    "doors": "5",
    "engine": {
-    "slug": "302673",
+    "slug": "289525",
     "type": "Diesla",
     "text": "1.5 BlueHDi 120 Allure EAT6",
     "litres": "1.5",
     "name": "1.5 BlueHDi 120 Allure EAT6",
     "hp": 120,
     "kw": 88,
-    "from": 2019,
+    "from": 2018,
     "to": 2019,
     "configs": [
      "automatyczna napęd: przedni"
     ],
     "Pojemność skokowa": "1499 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/2008/1generation-facelift/302673/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/2008/1generation-facelift/289525/",
     "source": "adac"
    },
-   "adac_versions": 3
+   "adac_versions": 5
   },
   {
    "brand": "Peugeot",
@@ -1636,21 +1720,49 @@
    "body": "SUV",
    "doors": "5",
    "engine": {
-    "slug": "298339",
+    "slug": "296510",
     "type": "Benzynowe",
-    "text": "T6 Polestar Performance Momentum Pro AWD Geartronic",
+    "text": "T6 Polestar Performance Momentum AWD Geartronic",
     "litres": "2.0",
-    "name": "T6 Polestar Performance Momentum Pro AWD Geartronic",
+    "name": "T6 Polestar Performance Momentum AWD Geartronic",
     "hp": 326,
     "kw": 240,
-    "from": 2019,
+    "from": 2018,
     "to": 2019,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "1969 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc60/2generation/298339/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc60/2generation/296510/",
+    "source": "adac"
+   },
+   "adac_versions": 6
+  },
+  {
+   "brand": "Volvo",
+   "label": "XC60",
+   "code": "XC60 II",
+   "facelift": false,
+   "page": "volvo/xc60/2generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "296525",
+    "type": "Diesla",
+    "text": "D5 Polestar Performance Momentum AWD Geartronic",
+    "litres": "2.0",
+    "name": "D5 Polestar Performance Momentum AWD Geartronic",
+    "hp": 240,
+    "kw": 177,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "1969 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc60/2generation/296525/",
     "source": "adac"
    },
    "adac_versions": 3
@@ -1687,26 +1799,54 @@
    "brand": "Volvo",
    "label": "XC90",
    "code": "XC90 II",
-   "facelift": true,
-   "page": "volvo/xc90/2generation-facelift",
+   "facelift": false,
+   "page": "volvo/xc90/2generation",
    "body": "SUV",
    "doors": "5",
    "engine": {
-    "slug": "298180",
+    "slug": "296534",
     "type": "Benzynowe",
-    "text": "T6 Polestar Performance Momentum Pro AWD Geartronic",
+    "text": "T6 Polestar Performance Momentum AWD Geartronic",
     "litres": "2.0",
-    "name": "T6 Polestar Performance Momentum Pro AWD Geartronic",
+    "name": "T6 Polestar Performance Momentum AWD Geartronic",
     "hp": 326,
     "kw": 240,
-    "from": 2019,
+    "from": 2018,
     "to": 2019,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "1969 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc90/2generation-facelift/298180/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc90/2generation/296534/",
+    "source": "adac"
+   },
+   "adac_versions": 6
+  },
+  {
+   "brand": "Volvo",
+   "label": "XC90",
+   "code": "XC90 II",
+   "facelift": false,
+   "page": "volvo/xc90/2generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "296540",
+    "type": "Diesla",
+    "text": "D5 Polestar Performance Momentum AWD Geartronic",
+    "litres": "2.0",
+    "name": "D5 Polestar Performance Momentum AWD Geartronic",
+    "hp": 240,
+    "kw": 177,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "1969 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc90/2generation/296540/",
     "source": "adac"
    },
    "adac_versions": 3
@@ -1738,6 +1878,34 @@
     "source": "adac"
    },
    "adac_versions": 1
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Golf",
+   "code": "Golf VIII",
+   "facelift": true,
+   "page": "vw/golf/viii-facelift",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "353325",
+    "type": "Hybrydowe",
+    "text": "1.5 eTSI Life DSG Mild-Hybrid",
+    "litres": "1.5",
+    "name": "1.5 eTSI Life DSG",
+    "hp": 160,
+    "kw": 118,
+    "from": 2026,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1498 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/golf/viii-facelift/353325/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Volkswagen",
@@ -1853,6 +2021,62 @@
   },
   {
    "brand": "Volkswagen",
+   "label": "Golf",
+   "code": "Golf VIII",
+   "facelift": true,
+   "page": "vw/golf/viii-facelift",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "340770",
+    "type": "Benzynowe",
+    "text": "1.5 TSI ENERGY",
+    "litres": "1.5",
+    "name": "1.5 TSI ENERGY",
+    "hp": 150,
+    "kw": 110,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1498 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/golf/viii-facelift/340770/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Passat",
+   "code": "B8",
+   "facelift": false,
+   "page": "vw/passat/b8",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "296203",
+    "type": "Benzynowe",
+    "text": "2.0 TSI OPF Highline 4MOTION DSG (7-Gang)",
+    "litres": "2.0",
+    "name": "2.0 TSI OPF Highline 4MOTION DSG (7-Gang)",
+    "hp": 272,
+    "kw": 200,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "1984 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/passat/b8/296203/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Volkswagen",
    "label": "Passat",
    "code": "B8",
    "facelift": true,
@@ -1909,6 +2133,34 @@
   },
   {
    "brand": "Volkswagen",
+   "label": "Polo",
+   "code": "Polo VI",
+   "facelift": true,
+   "page": "vw/polo/vi-facelift",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "340414",
+    "type": "Benzynowe",
+    "text": "1.0 TSI OPF Life DSG",
+    "litres": "1.0",
+    "name": "1.0 TSI OPF Life DSG",
+    "hp": 115,
+    "kw": 85,
+    "from": 2024,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/polo/vi-facelift/340414/",
+    "source": "adac"
+   },
+   "adac_versions": 11
+  },
+  {
+   "brand": "Volkswagen",
    "label": "T-Roc",
    "code": "T-Roc I",
    "facelift": false,
@@ -1962,6 +2214,34 @@
     "source": "adac"
    },
    "adac_versions": 3
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "T-Roc",
+   "code": "T-Roc II",
+   "facelift": false,
+   "page": "vw/t-roc/2generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "351887",
+    "type": "Hybrydowe",
+    "text": "1.5 Hybrid Style",
+    "litres": "1.5",
+    "name": "1.5 Hybrid Style",
+    "hp": 170,
+    "kw": 125,
+    "from": 2026,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1498 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/t-roc/2generation/351887/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Volkswagen",
@@ -2140,24 +2420,24 @@
    "body": "Hatchback",
    "doors": "5",
    "engine": {
-    "slug": "300283",
+    "slug": "291922",
     "type": "Hybrydowe Diesla",
     "text": "Sportback 45 TDI quattro tiptronic Mild-Hybrid",
     "litres": "3.0",
     "name": "Sportback 45 TDI quattro tiptronic",
     "hp": 231,
     "kw": 170,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "2967 cm³",
     "Liczba miejsc": "4",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/a7/4k/300283/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/a7/4k/291922/",
     "source": "adac"
    },
-   "adac_versions": 1
+   "adac_versions": 2
   },
   {
    "brand": "Audi",
@@ -2413,6 +2693,34 @@
   },
   {
    "brand": "Audi",
+   "label": "R8",
+   "code": "R8 II",
+   "facelift": true,
+   "page": "audi/r8/4s-facelift",
+   "body": "Coupe",
+   "doors": "2",
+   "engine": {
+    "slug": "308101",
+    "type": "Benzynowe",
+    "text": "Coupé 5.2 FSI V10 RWD S tronic",
+    "litres": "5.2",
+    "name": "Coupé 5.2 FSI V10 RWD S tronic",
+    "hp": 540,
+    "kw": 397,
+    "from": 2020,
+    "to": 2021,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "5204 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/r8/4s-facelift/308101/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Audi",
    "label": "TT",
    "code": "8S",
    "facelift": true,
@@ -2420,24 +2728,24 @@
    "body": "Coupe",
    "doors": "3",
    "engine": {
-    "slug": "300312",
+    "slug": "296240",
     "type": "Benzynowe",
     "text": "Coupé 40 TFSI S tronic",
     "litres": "2.0",
     "name": "Coupé 40 TFSI S tronic",
     "hp": 197,
     "kw": 145,
-    "from": 2019,
+    "from": 2018,
     "to": 2023,
     "configs": [
      "automatyczna napęd: przedni"
     ],
     "Pojemność skokowa": "1984 cm³",
     "Liczba miejsc": "4",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/tt/8s-facelift/300312/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/tt/8s-facelift/296240/",
     "source": "adac"
    },
-   "adac_versions": 2
+   "adac_versions": 3
   },
   {
    "brand": "Audi",
@@ -2455,7 +2763,7 @@
     "name": "Coupé 45 TFSI",
     "hp": 245,
     "kw": 180,
-    "from": 2019,
+    "from": 2018,
     "to": 2023,
     "configs": [
      "manualna napęd: przedni"
@@ -2465,7 +2773,35 @@
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/tt/8s-facelift/300313/",
     "source": "adac"
    },
-   "adac_versions": 5
+   "adac_versions": 8
+  },
+  {
+   "brand": "Audi",
+   "label": "e-tron GT",
+   "code": "e-tron GT",
+   "facelift": true,
+   "page": "audi/e-tron-gt/fw-facelift",
+   "body": "Coupe",
+   "doors": "4",
+   "engine": {
+    "slug": "340318",
+    "type": "Elektryczne",
+    "text": "quattro",
+    "litres": "",
+    "name": "quattro",
+    "hp": 503,
+    "kw": 370,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "4",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/e-tron-gt/fw-facelift/340318/",
+    "source": "adac"
+   },
+   "adac_versions": 1
   },
   {
    "brand": "BMW",
@@ -2504,24 +2840,52 @@
    "body": "Van",
    "doors": "5",
    "engine": {
-    "slug": "300522",
+    "slug": "287111",
     "type": "Hybrydowe plug-in",
-    "text": "225xe Active Tourer Steptronic",
+    "text": "225xe iPerformance Active Tourer Steptronic",
     "litres": "1.5",
-    "name": "225xe Active Tourer Steptronic",
+    "name": "225xe iPerformance Active Tourer Steptronic",
     "hp": 224,
     "kw": 165,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "1499 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/2er-reihe-active-gran-tourer/f45-f46-facelift/300522/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/2er-reihe-active-gran-tourer/f45-f46-facelift/287111/",
     "source": "adac"
    },
-   "adac_versions": 5
+   "adac_versions": 10
+  },
+  {
+   "brand": "BMW",
+   "label": "Seria 7",
+   "code": "G11-G12",
+   "facelift": false,
+   "page": "bmw/7er-reihe/g11-g12",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "291446",
+    "type": "Hybrydowe plug-in",
+    "text": "740e iPerformance Steptronic",
+    "litres": "2.0",
+    "name": "740e iPerformance Steptronic",
+    "hp": 326,
+    "kw": 240,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1998 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/7er-reihe/g11-g12/291446/",
+    "source": "adac"
+   },
+   "adac_versions": 9
   },
   {
    "brand": "BMW",
@@ -2728,24 +3092,24 @@
    "body": "Coupe",
    "doors": "3",
    "engine": {
-    "slug": "300567",
+    "slug": "285096",
     "type": "Hybrydowe plug-in",
     "text": "Coupé",
     "litres": "1.5",
     "name": "Coupé",
     "hp": 374,
     "kw": 275,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "1499 cm³",
     "Liczba miejsc": "4",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/i8/i08-facelift/300567/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/i8/i08-facelift/285096/",
     "source": "adac"
    },
-   "adac_versions": 2
+   "adac_versions": 3
   },
   {
    "brand": "BMW",
@@ -2830,6 +3194,34 @@
     "source": "adac"
    },
    "adac_versions": 3
+  },
+  {
+   "brand": "Ford",
+   "label": "EcoSport",
+   "code": "EcoSport II",
+   "facelift": true,
+   "page": "ford/ecosport/1generation-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "310368",
+    "type": "Diesla",
+    "text": "1.5 EcoBlue Titanium",
+    "litres": "1.5",
+    "name": "1.5 EcoBlue Titanium",
+    "hp": 120,
+    "kw": 88,
+    "from": 2019,
+    "to": 2020,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1499 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/ecosport/1generation-facelift/310368/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Ford",
@@ -2973,6 +3365,62 @@
   },
   {
    "brand": "Ford",
+   "label": "Tourneo Connect",
+   "code": "Tourneo Connect II",
+   "facelift": true,
+   "page": "ford/tourneo-connect/2generation-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "311530",
+    "type": "Diesla",
+    "text": "205 1.5 EcoBlue Ambiente",
+    "litres": "1.5",
+    "name": "205 1.5 EcoBlue Ambiente",
+    "hp": 100,
+    "kw": 74,
+    "from": 2019,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1499 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-connect/2generation-facelift/311530/",
+    "source": "adac"
+   },
+   "adac_versions": 28
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Connect",
+   "code": "Tourneo Connect II",
+   "facelift": true,
+   "page": "ford/tourneo-connect/2generation-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "311536",
+    "type": "Diesla",
+    "text": "205 1.5 EcoBlue Trend",
+    "litres": "1.5",
+    "name": "205 1.5 EcoBlue Trend",
+    "hp": 120,
+    "kw": 88,
+    "from": 2019,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1499 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-connect/2generation-facelift/311536/",
+    "source": "adac"
+   },
+   "adac_versions": 26
+  },
+  {
+   "brand": "Ford",
    "label": "Tourneo Custom",
    "code": "Tourneo Custom I",
    "facelift": true,
@@ -2980,24 +3428,24 @@
    "body": "Van",
    "doors": "5",
    "engine": {
-    "slug": "305279",
+    "slug": "293432",
     "type": "Diesla",
-    "text": "320 L1 2.0 TDCi Ambiente",
+    "text": "310 L1 2.0 TDCi Trend",
     "litres": "2.0",
-    "name": "320 L1 2.0 TDCi Ambiente",
+    "name": "310 L1 2.0 TDCi Trend",
     "hp": 105,
     "kw": 77,
-    "from": 2019,
+    "from": 2018,
     "to": 2023,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1995 cm³",
     "Liczba miejsc": "8",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/305279/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/293432/",
     "source": "adac"
    },
-   "adac_versions": 5
+   "adac_versions": 10
   },
   {
    "brand": "Ford",
@@ -3036,6 +3484,34 @@
    "body": "Van",
    "doors": "5",
    "engine": {
+    "slug": "293433",
+    "type": "Diesla",
+    "text": "310 L1 2.0 TDCi Trend",
+    "litres": "2.0",
+    "name": "310 L1 2.0 TDCi Trend",
+    "hp": 130,
+    "kw": 96,
+    "from": 2018,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "8",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/293433/",
+    "source": "adac"
+   },
+   "adac_versions": 63
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "facelift": true,
+   "page": "ford/tourneo-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
     "slug": "324212",
     "type": "Diesla",
     "text": "320 L1 2.0 EcoBlue Trend",
@@ -3054,6 +3530,62 @@
     "source": "adac"
    },
    "adac_versions": 27
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "facelift": true,
+   "page": "ford/tourneo-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "293435",
+    "type": "Diesla",
+    "text": "310 L1 2.0 TDCi Trend",
+    "litres": "2.0",
+    "name": "310 L1 2.0 TDCi Trend",
+    "hp": 170,
+    "kw": 125,
+    "from": 2018,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "8",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/293435/",
+    "source": "adac"
+   },
+   "adac_versions": 36
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "facelift": true,
+   "page": "ford/tourneo-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "305287",
+    "type": "Diesla",
+    "text": "320 L1 2.0 TDCi Trend",
+    "litres": "2.0",
+    "name": "320 L1 2.0 TDCi Trend",
+    "hp": 185,
+    "kw": 136,
+    "from": 2019,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "8",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/305287/",
+    "source": "adac"
+   },
+   "adac_versions": 49
   },
   {
    "brand": "Ford",
@@ -3166,6 +3698,202 @@
     "source": "adac"
    },
    "adac_versions": 31
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Connect",
+   "code": "Transit Connect II",
+   "facelift": true,
+   "page": "ford/transit-connect/2generation-facelift",
+   "body": "Kleintransporter",
+   "doors": "4",
+   "engine": {
+    "slug": "318912",
+    "type": "Diesla",
+    "text": "Kastenwagen 220 L1 1.5 EcoBlue Limited",
+    "litres": "1.5",
+    "name": "Kastenwagen 220 L1 1.5 EcoBlue Limited",
+    "hp": 120,
+    "kw": 88,
+    "from": 2021,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1499 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-connect/2generation-facelift/318912/",
+    "source": "adac"
+   },
+   "adac_versions": 33
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Courier",
+   "code": "Transit Courier I",
+   "facelift": true,
+   "page": "ford/transit-courier/1generation-facelift",
+   "body": "Kleintransporter",
+   "doors": "3",
+   "engine": {
+    "slug": "307345",
+    "type": "Diesla",
+    "text": "Kastenwagen 1.5 TDCi Basis",
+    "litres": "1.5",
+    "name": "Kastenwagen 1.5 TDCi Basis",
+    "hp": 100,
+    "kw": 74,
+    "from": 2018,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1499 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-courier/1generation-facelift/307345/",
+    "source": "adac"
+   },
+   "adac_versions": 8
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "facelift": true,
+   "page": "ford/transit-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "307832",
+    "type": "Hybrydowe plug-in",
+    "text": "Kastenwagen 340 L1 1.0 EcoBoost PHEV Automatik",
+    "litres": "1.0",
+    "name": "Kastenwagen 340 L1 1.0 EcoBoost PHEV Automatik",
+    "hp": 126,
+    "kw": 92,
+    "from": 2019,
+    "to": 2023,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "998 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/307832/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "facelift": true,
+   "page": "ford/transit-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "307796",
+    "type": "Diesla",
+    "text": "Kastenwagen 280 L1 2.0 TDCi",
+    "litres": "2.0",
+    "name": "Kastenwagen 280 L1 2.0 TDCi",
+    "hp": 105,
+    "kw": 77,
+    "from": 2018,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/307796/",
+    "source": "adac"
+   },
+   "adac_versions": 10
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "facelift": true,
+   "page": "ford/transit-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "307802",
+    "type": "Diesla",
+    "text": "Kastenwagen 280 L1 2.0 TDCi",
+    "litres": "2.0",
+    "name": "Kastenwagen 280 L1 2.0 TDCi",
+    "hp": 130,
+    "kw": 96,
+    "from": 2018,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/307802/",
+    "source": "adac"
+   },
+   "adac_versions": 57
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "facelift": true,
+   "page": "ford/transit-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "319013",
+    "type": "Diesla",
+    "text": "Kastenwagen 340 L1 2.0 TDCi",
+    "litres": "2.0",
+    "name": "Kastenwagen 340 L1 2.0 TDCi",
+    "hp": 170,
+    "kw": 125,
+    "from": 2018,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/319013/",
+    "source": "adac"
+   },
+   "adac_versions": 48
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "facelift": true,
+   "page": "ford/transit-custom/1generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "307800",
+    "type": "Diesla",
+    "text": "Kastenwagen 290 L1 2.0 TDCi Sport",
+    "litres": "2.0",
+    "name": "Kastenwagen 290 L1 2.0 TDCi Sport",
+    "hp": 185,
+    "kw": 136,
+    "from": 2018,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/307800/",
+    "source": "adac"
+   },
+   "adac_versions": 11
   },
   {
    "brand": "Mercedes-Benz",
@@ -3646,6 +4374,34 @@
   {
    "brand": "Mercedes-Benz",
    "label": "GLA",
+   "code": "GLA I",
+   "facelift": true,
+   "page": "mercedes-benz/gla/156-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "290790",
+    "type": "Diesla",
+    "text": "220 d 7G-DCT",
+    "litres": "2.1",
+    "name": "220 d 7G-DCT",
+    "hp": 170,
+    "kw": 125,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2143 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/gla/156-facelift/290790/",
+    "source": "adac"
+   },
+   "adac_versions": 10
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "GLA",
    "code": "GLA II",
    "facelift": false,
    "page": "mercedes-benz/gla/247",
@@ -4065,6 +4821,118 @@
   },
   {
    "brand": "Mercedes-Benz",
+   "label": "Klasa B",
+   "code": "W247",
+   "facelift": false,
+   "page": "mercedes-benz/b-klasse/247",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "312904",
+    "type": "Hybrydowe plug-in",
+    "text": "B 250 e 8G-DCT",
+    "litres": "1.3",
+    "name": "B 250 e 8G-DCT",
+    "hp": 218,
+    "kw": 160,
+    "from": 2020,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1332 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/b-klasse/247/312904/",
+    "source": "adac"
+   },
+   "adac_versions": 27
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa B",
+   "code": "W247",
+   "facelift": true,
+   "page": "mercedes-benz/b-klasse/247-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "326476",
+    "type": "Hybrydowe",
+    "text": "B 180 7G-DCT Mild-Hybrid",
+    "litres": "1.3",
+    "name": "B 180 7G-DCT",
+    "hp": 150,
+    "kw": 110,
+    "from": 2022,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1332 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/b-klasse/247-facelift/326476/",
+    "source": "adac"
+   },
+   "adac_versions": 21
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa B",
+   "code": "W247",
+   "facelift": true,
+   "page": "mercedes-benz/b-klasse/247-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "326479",
+    "type": "Hybrydowe",
+    "text": "B 200 7G-DCT Mild-Hybrid",
+    "litres": "1.3",
+    "name": "B 200 7G-DCT",
+    "hp": 177,
+    "kw": 130,
+    "from": 2022,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1332 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/b-klasse/247-facelift/326479/",
+    "source": "adac"
+   },
+   "adac_versions": 21
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Klasa B",
+   "code": "W247",
+   "facelift": true,
+   "page": "mercedes-benz/b-klasse/247-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "331530",
+    "type": "Diesla",
+    "text": "B 180 d 8G-DCT",
+    "litres": "1.9",
+    "name": "B 180 d 8G-DCT",
+    "hp": 116,
+    "kw": 85,
+    "from": 2024,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1950 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/b-klasse/247-facelift/331530/",
+    "source": "adac"
+   },
+   "adac_versions": 14
+  },
+  {
+   "brand": "Mercedes-Benz",
    "label": "Klasa G",
    "code": "W465",
    "facelift": false,
@@ -4233,6 +5101,34 @@
   },
   {
    "brand": "Mercedes-Benz",
+   "label": "SLC",
+   "code": "SLC",
+   "facelift": false,
+   "page": "mercedes-benz/slc/172",
+   "body": "Cabrio",
+   "doors": "2",
+   "engine": {
+    "slug": "291968",
+    "type": "Benzynowe",
+    "text": "180",
+    "litres": "1.6",
+    "name": "180",
+    "hp": 156,
+    "kw": 115,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1595 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/slc/172/291968/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Mercedes-Benz",
    "label": "Vito",
    "code": "W447",
    "facelift": true,
@@ -4324,24 +5220,24 @@
    "body": "Hatchback",
    "doors": "3",
    "engine": {
-    "slug": "298790",
+    "slug": "288561",
     "type": "Benzynowe",
-    "text": "1.0 VTi 72 Stop&Start Access (3-Türer)",
+    "text": "1.0 VTi 72 Access (3-Türer)",
     "litres": "1.0",
-    "name": "1.0 VTi 72 Stop&Start Access (3-Türer)",
+    "name": "1.0 VTi 72 Access (3-Türer)",
     "hp": 72,
     "kw": 53,
-    "from": 2019,
+    "from": 2018,
     "to": 2022,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "998 cm³",
     "Liczba miejsc": "4",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/108/1generation/298790/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/108/1generation/288561/",
     "source": "adac"
    },
-   "adac_versions": 16
+   "adac_versions": 36
   },
   {
    "brand": "Peugeot",
@@ -4464,24 +5360,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "321729",
+    "slug": "308241",
     "type": "Diesla",
-    "text": "Kastenwagen L1H1 328 2.2 BlueHDi 120 Premium",
+    "text": "Kastenwagen L1H1 328 2.2 BlueHDi 120 Pro",
     "litres": "2.2",
-    "name": "Kastenwagen L1H1 328 2.2 BlueHDi 120 Premium",
+    "name": "Kastenwagen L1H1 328 2.2 BlueHDi 120 Pro",
     "hp": 120,
     "kw": 88,
-    "from": 2021,
+    "from": 2018,
     "to": null,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "2179 cm³",
     "Liczba miejsc": "3",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/321729/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/308241/",
     "source": "adac"
    },
-   "adac_versions": 12
+   "adac_versions": 24
   },
   {
    "brand": "Peugeot",
@@ -4492,24 +5388,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "321728",
+    "slug": "308242",
     "type": "Diesla",
-    "text": "Kastenwagen L1H1 330 2.2 BlueHDi 140 Premium",
+    "text": "Kastenwagen L1H1 330 2.2 BlueHDi 140 Pro",
     "litres": "2.2",
-    "name": "Kastenwagen L1H1 330 2.2 BlueHDi 140 Premium",
+    "name": "Kastenwagen L1H1 330 2.2 BlueHDi 140 Pro",
     "hp": 140,
     "kw": 103,
-    "from": 2021,
+    "from": 2018,
     "to": null,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "2179 cm³",
     "Liczba miejsc": "3",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/321728/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/308242/",
     "source": "adac"
    },
-   "adac_versions": 50
+   "adac_versions": 78
   },
   {
    "brand": "Peugeot",
@@ -4520,24 +5416,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "325820",
+    "slug": "308243",
     "type": "Diesla",
-    "text": "Kastenwagen L1H1 333 2.2 BlueHDi 165 Premium",
+    "text": "Kastenwagen L1H1 333 2.2 BlueHDi 165 Pro",
     "litres": "2.2",
-    "name": "Kastenwagen L1H1 333 2.2 BlueHDi 165 Premium",
+    "name": "Kastenwagen L1H1 333 2.2 BlueHDi 165 Pro",
     "hp": 165,
     "kw": 121,
-    "from": 2021,
+    "from": 2018,
     "to": 2024,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "2179 cm³",
     "Liczba miejsc": "3",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/325820/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/308243/",
     "source": "adac"
    },
-   "adac_versions": 19
+   "adac_versions": 36
   },
   {
    "brand": "Peugeot",
@@ -4622,6 +5518,146 @@
     "source": "adac"
    },
    "adac_versions": 2
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "code": "Master IV",
+   "facelift": true,
+   "page": "renault/master/iii-facelift-2",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306095",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,8t Blue dCi 135 Ecoline",
+    "litres": "2.3",
+    "name": "Kastenwagen L1H1 2,8t Blue dCi 135 Ecoline",
+    "hp": 135,
+    "kw": 99,
+    "from": 2019,
+    "to": 2024,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift-2/306095/",
+    "source": "adac"
+   },
+   "adac_versions": 13
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "code": "Master IV",
+   "facelift": true,
+   "page": "renault/master/iii-facelift-2",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306097",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,8t ENERGY Blue dCi 180",
+    "litres": "2.3",
+    "name": "Kastenwagen L1H1 2,8t ENERGY Blue dCi 180",
+    "hp": 180,
+    "kw": 132,
+    "from": 2019,
+    "to": 2024,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift-2/306097/",
+    "source": "adac"
+   },
+   "adac_versions": 28
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "code": "Master IV",
+   "facelift": true,
+   "page": "renault/master/iii-facelift-2",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306100",
+    "type": "Diesla",
+    "text": "Kastenwagen L3H2 3,3t Blue dCi 130 (Heckantrieb)",
+    "litres": "2.3",
+    "name": "Kastenwagen L3H2 3,3t Blue dCi 130 (Heckantrieb)",
+    "hp": 130,
+    "kw": 96,
+    "from": 2016,
+    "to": 2024,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift-2/306100/",
+    "source": "adac"
+   },
+   "adac_versions": 27
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "code": "Master IV",
+   "facelift": true,
+   "page": "renault/master/iii-facelift-2",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306096",
+    "type": "Diesla",
+    "text": "Kastenwagen L3H2 3,5t ENERGY Blue dCi 145 (Heckantrieb)",
+    "litres": "2.3",
+    "name": "Kastenwagen L3H2 3,5t ENERGY Blue dCi 145 (Heckantrieb)",
+    "hp": 145,
+    "kw": 107,
+    "from": 2016,
+    "to": 2024,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift-2/306096/",
+    "source": "adac"
+   },
+   "adac_versions": 31
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "code": "Master IV",
+   "facelift": true,
+   "page": "renault/master/iii-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "349144",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,8t Ecoline dCi 110",
+    "litres": "2.3",
+    "name": "Kastenwagen L1H1 2,8t Ecoline dCi 110",
+    "hp": 110,
+    "kw": 81,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift/349144/",
+    "source": "adac"
+   },
+   "adac_versions": 11
   },
   {
    "brand": "Renault",
@@ -4846,6 +5882,34 @@
     "source": "adac"
    },
    "adac_versions": 2
+  },
+  {
+   "brand": "Skoda",
+   "label": "Citigo",
+   "code": "Citigo",
+   "facelift": true,
+   "page": "skoda/citigo/1generation-facelift",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "295452",
+    "type": "Benzynowe CNG",
+    "text": "1.0 G-TEC Active (5-Türer)",
+    "litres": "1.0",
+    "name": "1.0 G-TEC Active (5-Türer)",
+    "hp": 68,
+    "kw": 50,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "4",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/skoda/citigo/1generation-facelift/295452/",
+    "source": "adac"
+   },
+   "adac_versions": 6
   },
   {
    "brand": "Skoda",
@@ -5136,24 +6200,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "304483",
+    "slug": "293955",
     "type": "Diesla",
     "text": "Verso compact 1.5 D-4D Shuttle",
     "litres": "1.5",
     "name": "Verso compact 1.5 D-4D Shuttle",
     "hp": 120,
     "kw": 88,
-    "from": 2019,
+    "from": 2018,
     "to": 2022,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1499 cm³",
     "Liczba miejsc": "6",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/proace/v/304483/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/proace/v/293955/",
     "source": "adac"
    },
-   "adac_versions": 17
+   "adac_versions": 26
   },
   {
    "brand": "Toyota",
@@ -5381,56 +6445,84 @@
   },
   {
    "brand": "Volvo",
-   "label": "S90",
-   "code": "S90 II",
+   "label": "EX90",
+   "code": "EX90 I",
    "facelift": false,
-   "page": "volvo/s90-v90/2generation",
-   "body": "Sedan",
-   "doors": "4",
+   "page": "volvo/ex90/1generation",
+   "body": "SUV",
+   "doors": "5",
    "engine": {
-    "slug": "298275",
-    "type": "Benzynowe",
-    "text": "T6 Polestar Performance Momentum Pro AWD Automatik",
-    "litres": "2.0",
-    "name": "T6 Polestar Performance Momentum Pro AWD Automatik",
-    "hp": 326,
-    "kw": 240,
-    "from": 2019,
-    "to": 2020,
+    "slug": "350394",
+    "type": "Elektryczne",
+    "text": "Single Motor Core (7-Sitzer)",
+    "litres": "",
+    "name": "Single Motor Core (7-Sitzer)",
+    "hp": 333,
+    "kw": 245,
+    "from": 2025,
+    "to": null,
     "configs": [
-     "automatyczna napęd: 4x4"
+     "automatyczna napęd: tylny"
     ],
-    "Pojemność skokowa": "1969 cm³",
-    "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/298275/",
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "7",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/ex90/1generation/350394/",
     "source": "adac"
    },
-   "adac_versions": 2
+   "adac_versions": 3
   },
   {
    "brand": "Volvo",
-   "label": "S90",
-   "code": "S90 II",
+   "label": "EX90",
+   "code": "EX90 I",
    "facelift": false,
-   "page": "volvo/s90-v90/2generation",
-   "body": "Sedan",
-   "doors": "4",
+   "page": "volvo/ex90/1generation",
+   "body": "SUV",
+   "doors": "5",
    "engine": {
-    "slug": "298278",
-    "type": "Diesla",
-    "text": "D4 Polestar Performance Momentum Pro Automatik",
-    "litres": "2.0",
-    "name": "D4 Polestar Performance Momentum Pro Automatik",
-    "hp": 200,
-    "kw": 147,
-    "from": 2019,
-    "to": 2019,
+    "slug": "350393",
+    "type": "Elektryczne",
+    "text": "Twin Motor Core AWD (7-Sitzer)",
+    "litres": "",
+    "name": "Twin Motor Core AWD (7-Sitzer)",
+    "hp": 456,
+    "kw": 335,
+    "from": 2025,
+    "to": null,
     "configs": [
-     "automatyczna napęd: przedni"
+     "automatyczna napęd: 4x4"
     ],
-    "Pojemność skokowa": "1969 cm³",
-    "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/298278/",
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "7",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/ex90/1generation/350393/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX90",
+   "code": "EX90 I",
+   "facelift": false,
+   "page": "volvo/ex90/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "344731",
+    "type": "Elektryczne",
+    "text": "Twin Performance Ultra AWD (6/7-Sitzer)",
+    "litres": "",
+    "name": "Twin Performance Ultra AWD (6/7-Sitzer)",
+    "hp": 680,
+    "kw": 500,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "6",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/ex90/1generation/344731/",
     "source": "adac"
    },
    "adac_versions": 1
@@ -5444,24 +6536,80 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "298280",
-    "type": "Diesla",
-    "text": "D5 Polestar Performance Momentum Pro AWD Automatik",
+    "slug": "295599",
+    "type": "Benzynowe",
+    "text": "T6 Polestar Performance Momentum AWD Automatik",
     "litres": "2.0",
-    "name": "D5 Polestar Performance Momentum Pro AWD Automatik",
-    "hp": 240,
-    "kw": 177,
-    "from": 2019,
+    "name": "T6 Polestar Performance Momentum AWD Automatik",
+    "hp": 326,
+    "kw": 240,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "1969 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/298280/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/295599/",
     "source": "adac"
    },
-   "adac_versions": 6
+   "adac_versions": 5
+  },
+  {
+   "brand": "Volvo",
+   "label": "S90",
+   "code": "S90 II",
+   "facelift": false,
+   "page": "volvo/s90-v90/2generation",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "295605",
+    "type": "Diesla",
+    "text": "D4 Polestar Performance Momentum Automatik",
+    "litres": "2.0",
+    "name": "D4 Polestar Performance Momentum Automatik",
+    "hp": 200,
+    "kw": 147,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1969 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/295605/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Volvo",
+   "label": "S90",
+   "code": "S90 II",
+   "facelift": false,
+   "page": "volvo/s90-v90/2generation",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "295608",
+    "type": "Diesla",
+    "text": "D5 Polestar Performance Momentum AWD Automatik",
+    "litres": "2.0",
+    "name": "D5 Polestar Performance Momentum AWD Automatik",
+    "hp": 240,
+    "kw": 177,
+    "from": 2018,
+    "to": 2020,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "1969 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/295608/",
+    "source": "adac"
+   },
+   "adac_versions": 9
   },
   {
    "brand": "Volvo",
@@ -5500,24 +6648,24 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "298275",
+    "slug": "295599",
     "type": "Benzynowe",
-    "text": "S90 T6 Polestar Performance Momentum Pro AWD Automatik",
+    "text": "S90 T6 Polestar Performance Momentum AWD Automatik",
     "litres": "2.0",
-    "name": "S90 T6 Polestar Performance Momentum Pro AWD Automatik",
+    "name": "S90 T6 Polestar Performance Momentum AWD Automatik",
     "hp": 326,
     "kw": 240,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "1969 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/298275/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/295599/",
     "source": "adac"
    },
-   "adac_versions": 2
+   "adac_versions": 5
   },
   {
    "brand": "Volvo",
@@ -5528,24 +6676,24 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "298278",
+    "slug": "295605",
     "type": "Diesla",
-    "text": "S90 D4 Polestar Performance Momentum Pro Automatik",
+    "text": "S90 D4 Polestar Performance Momentum Automatik",
     "litres": "2.0",
-    "name": "S90 D4 Polestar Performance Momentum Pro Automatik",
+    "name": "S90 D4 Polestar Performance Momentum Automatik",
     "hp": 200,
     "kw": 147,
-    "from": 2019,
+    "from": 2018,
     "to": 2019,
     "configs": [
      "automatyczna napęd: przedni"
     ],
     "Pojemność skokowa": "1969 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/298278/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/295605/",
     "source": "adac"
    },
-   "adac_versions": 1
+   "adac_versions": 4
   },
   {
    "brand": "Volvo",
@@ -5556,24 +6704,24 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "298280",
+    "slug": "295608",
     "type": "Diesla",
-    "text": "S90 D5 Polestar Performance Momentum Pro AWD Automatik",
+    "text": "S90 D5 Polestar Performance Momentum AWD Automatik",
     "litres": "2.0",
-    "name": "S90 D5 Polestar Performance Momentum Pro AWD Automatik",
+    "name": "S90 D5 Polestar Performance Momentum AWD Automatik",
     "hp": 240,
     "kw": 177,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "1969 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/298280/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/295608/",
     "source": "adac"
    },
-   "adac_versions": 6
+   "adac_versions": 9
   },
   {
    "brand": "Volvo",
@@ -5686,6 +6834,34 @@
     "source": "adac"
    },
    "adac_versions": 3
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Caddy",
+   "code": "Caddy IV",
+   "facelift": false,
+   "page": "vw-nutzfahrzeuge/caddy/iv",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "331264",
+    "type": "Benzynowe",
+    "text": "1.0 TSI BMT Conceptline",
+    "litres": "1.0",
+    "name": "1.0 TSI BMT Conceptline",
+    "hp": 84,
+    "kw": 62,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/caddy/iv/331264/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Volkswagen",
@@ -6053,6 +7229,34 @@
   },
   {
    "brand": "Volkswagen",
+   "label": "Taigo",
+   "code": "Taigo",
+   "facelift": false,
+   "page": "vw/taigo/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "340421",
+    "type": "Benzynowe",
+    "text": "1.0 TSI OPF Life",
+    "litres": "1.0",
+    "name": "1.0 TSI OPF Life",
+    "hp": 115,
+    "kw": 85,
+    "from": 2024,
+    "to": null,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw/taigo/1generation/340421/",
+    "source": "adac"
+   },
+   "adac_versions": 20
+  },
+  {
+   "brand": "Volkswagen",
    "label": "Tayron",
    "code": "Tayron",
    "facelift": false,
@@ -6277,6 +7481,34 @@
   },
   {
    "brand": "Kia",
+   "label": "Optima",
+   "code": "Optima II",
+   "facelift": true,
+   "page": "kia/optima/jf-facelift",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "296372",
+    "type": "Hybrydowe plug-in",
+    "text": "2.0 GDI Plugin-Hybrid Attract",
+    "litres": "2.0",
+    "name": "2.0 GDI Plugin-Hybrid Attract",
+    "hp": 205,
+    "kw": 151,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1999 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/optima/jf-facelift/296372/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Kia",
    "label": "Picanto",
    "code": "Picanto III",
    "facelift": true,
@@ -6340,6 +7572,34 @@
    "body": "Hatchback",
    "doors": "5",
    "engine": {
+    "slug": "291859",
+    "type": "Benzynowe",
+    "text": "Ceed 1.4 Attract",
+    "litres": "1.4",
+    "name": "Ceed 1.4 Attract",
+    "hp": 100,
+    "kw": 73,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1368 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/ceed/cd/291859/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Kia",
+   "label": "ProCeed",
+   "code": "ProCeed",
+   "facelift": false,
+   "page": "kia/ceed/cd",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
     "slug": "304801",
     "type": "Benzynowe",
     "text": "Ceed 1.0 T-GDI Attract",
@@ -6368,24 +7628,24 @@
    "body": "Hatchback",
    "doors": "5",
    "engine": {
-    "slug": "304817",
+    "slug": "291864",
     "type": "Diesla",
     "text": "Ceed 1.6 CRDi Edition 7",
     "litres": "1.6",
     "name": "Ceed 1.6 CRDi Edition 7",
     "hp": 115,
     "kw": 85,
-    "from": 2019,
+    "from": 2018,
     "to": 2021,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1598 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/ceed/cd/304817/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/ceed/cd/291864/",
     "source": "adac"
    },
-   "adac_versions": 4
+   "adac_versions": 5
   },
   {
    "brand": "Kia",
@@ -6414,6 +7674,90 @@
     "source": "adac"
    },
    "adac_versions": 1
+  },
+  {
+   "brand": "Kia",
+   "label": "Soul",
+   "code": "Soul II",
+   "facelift": true,
+   "page": "kia/soul/ps-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "282136",
+    "type": "Benzynowe",
+    "text": "1.6 GDI Iconic²",
+    "litres": "1.6",
+    "name": "1.6 GDI Iconic²",
+    "hp": 132,
+    "kw": 97,
+    "from": 2017,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1591 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/soul/ps-facelift/282136/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Kia",
+   "label": "Soul",
+   "code": "Soul II",
+   "facelift": true,
+   "page": "kia/soul/ps-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "264814",
+    "type": "Benzynowe",
+    "text": "1.6 T-GDI Turbo DCT",
+    "litres": "1.6",
+    "name": "1.6 T-GDI Turbo DCT",
+    "hp": 204,
+    "kw": 150,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1591 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/soul/ps-facelift/264814/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Kia",
+   "label": "Soul",
+   "code": "Soul II",
+   "facelift": true,
+   "page": "kia/soul/ps-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "282137",
+    "type": "Diesla",
+    "text": "1.6 CRDi Iconic²",
+    "litres": "1.6",
+    "name": "1.6 CRDi Iconic²",
+    "hp": 136,
+    "kw": 100,
+    "from": 2017,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1582 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/soul/ps-facelift/282137/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Kia",
@@ -6452,24 +7796,24 @@
    "body": "SUV",
    "doors": "5",
    "engine": {
-    "slug": "301679",
+    "slug": "291965",
     "type": "Diesla",
     "text": "1.6 CRDi Spirit",
     "litres": "1.6",
     "name": "1.6 CRDi Spirit",
     "hp": 136,
     "kw": 100,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1598 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/stonic/yb/301679/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/stonic/yb/291965/",
     "source": "adac"
    },
-   "adac_versions": 2
+   "adac_versions": 4
   },
   {
    "brand": "Kia",
@@ -6585,6 +7929,34 @@
   },
   {
    "brand": "Kia",
+   "label": "XCeed",
+   "code": "XCeed",
+   "facelift": true,
+   "page": "kia/xceed/cd-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "341274",
+    "type": "Benzynowe",
+    "text": "1.6 T-GDI GT-Line DCT7",
+    "litres": "1.6",
+    "name": "1.6 T-GDI GT-Line DCT7",
+    "hp": 180,
+    "kw": 132,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/xceed/cd-facelift/341274/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Kia",
    "label": "Seltos",
    "code": "Seltos I",
    "facelift": false,
@@ -6607,6 +7979,34 @@
     "Pojemność skokowa": "1580 cm³",
     "Liczba miejsc": "5",
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/seltos/2generation/350763/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Bayon",
+   "code": "Bayon I",
+   "facelift": false,
+   "page": "hyundai/bayon/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "320024",
+    "type": "Hybrydowe",
+    "text": "1.0 T-GDI 48-Volt-Mildhybrid Trend iMT Mild-Hybrid",
+    "litres": "1.0",
+    "name": "1.0 T-GDI 48-Volt-Mildhybrid Trend iMT",
+    "hp": 120,
+    "kw": 88,
+    "from": 2021,
+    "to": 2024,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "998 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/bayon/1generation/320024/",
     "source": "adac"
    },
    "adac_versions": 4
@@ -6722,6 +8122,34 @@
     "source": "adac"
    },
    "adac_versions": 1
+  },
+  {
+   "brand": "Hyundai",
+   "label": "i20",
+   "code": "i20 III",
+   "facelift": false,
+   "page": "hyundai/i20/3generation",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "314046",
+    "type": "Hybrydowe",
+    "text": "1.0 T-GDI 48V-Hybrid Trend iMT Mild-Hybrid",
+    "litres": "1.0",
+    "name": "1.0 T-GDI 48V-Hybrid Trend iMT",
+    "hp": 120,
+    "kw": 88,
+    "from": 2020,
+    "to": 2024,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "998 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/i20/3generation/314046/",
+    "source": "adac"
+   },
+   "adac_versions": 7
   },
   {
    "brand": "Hyundai",
@@ -6893,6 +8321,34 @@
   },
   {
    "brand": "Hyundai",
+   "label": "Ioniq",
+   "code": "Ioniq",
+   "facelift": false,
+   "page": "hyundai/ioniq/1generation",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "294075",
+    "type": "Hybrydowe plug-in",
+    "text": "PlugIn-Hybrid Trend",
+    "litres": "1.6",
+    "name": "PlugIn-Hybrid Trend",
+    "hp": 141,
+    "kw": 104,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1580 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/ioniq/1generation/294075/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Hyundai",
    "label": "Ioniq 6",
    "code": "Ioniq 6",
    "facelift": true,
@@ -7012,6 +8468,34 @@
    "body": "SUV",
    "doors": "5",
    "engine": {
+    "slug": "342827",
+    "type": "Benzynowe",
+    "text": "1.6 T-GDI N Line DCT",
+    "litres": "1.6",
+    "name": "1.6 T-GDI N Line DCT",
+    "hp": 180,
+    "kw": 132,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/kona/2generation/342827/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Kona",
+   "code": "Kona II",
+   "facelift": false,
+   "page": "hyundai/kona/2generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
     "slug": "336782",
     "type": "Benzynowe",
     "text": "1.0 T-GDI Select",
@@ -7033,6 +8517,34 @@
   },
   {
    "brand": "Hyundai",
+   "label": "Kona",
+   "code": "Kona II",
+   "facelift": false,
+   "page": "hyundai/kona/2generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "336791",
+    "type": "Benzynowe",
+    "text": "1.6 T-GDI N Line DCT",
+    "litres": "1.6",
+    "name": "1.6 T-GDI N Line DCT",
+    "hp": 170,
+    "kw": 125,
+    "from": 2024,
+    "to": 2025,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/kona/2generation/336791/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Hyundai",
    "label": "Santa Fe",
    "code": "Santa Fe IV",
    "facelift": false,
@@ -7040,24 +8552,24 @@
    "body": "SUV",
    "doors": "5",
    "engine": {
-    "slug": "301311",
+    "slug": "293151",
     "type": "Benzynowe",
     "text": "2.4 GDI Select 4WD Automatik",
     "litres": "2.4",
     "name": "2.4 GDI Select 4WD Automatik",
     "hp": 185,
     "kw": 136,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "2359 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/santa-fe/4generation/301311/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/santa-fe/4generation/293151/",
     "source": "adac"
    },
-   "adac_versions": 6
+   "adac_versions": 12
   },
   {
    "brand": "Hyundai",
@@ -7398,6 +8910,34 @@
   {
    "brand": "Opel",
    "label": "Astra",
+   "code": "Astra K",
+   "facelift": false,
+   "page": "opel/astra/k",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "291723",
+    "type": "Benzynowe",
+    "text": "1.0 ECOTEC DI Turbo Start&Stop Selection",
+    "litres": "1.0",
+    "name": "1.0 ECOTEC DI Turbo Start&Stop Selection",
+    "hp": 90,
+    "kw": 66,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/astra/k/291723/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Opel",
+   "label": "Astra",
    "code": "Astra L",
    "facelift": false,
    "page": "opel/astra/l",
@@ -7509,6 +9049,34 @@
   },
   {
    "brand": "Opel",
+   "label": "Combo",
+   "code": "Combo E",
+   "facelift": true,
+   "page": "opel/combo/e-facelift",
+   "body": "Kleintransporter",
+   "doors": "4",
+   "engine": {
+    "slug": "352796",
+    "type": "Diesla",
+    "text": "Cargo L1H1 1.5 Diesel Start/Stop Start",
+    "litres": "1.5",
+    "name": "Cargo L1H1 1.5 Diesel Start/Stop Start",
+    "hp": 130,
+    "kw": 96,
+    "from": 2024,
+    "to": null,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1499 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/combo/e-facelift/352796/",
+    "source": "adac"
+   },
+   "adac_versions": 24
+  },
+  {
+   "brand": "Opel",
    "label": "Mokka",
    "code": "Mokka II",
    "facelift": true,
@@ -7534,6 +9102,258 @@
     "source": "adac"
    },
    "adac_versions": 4
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "code": "Movano III",
+   "facelift": true,
+   "page": "opel/movano/b-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306568",
+    "type": "Diesla",
+    "text": "Cargo L1H1 2,8t 2.3 Diesel",
+    "litres": "2.3",
+    "name": "Cargo L1H1 2,8t 2.3 Diesel",
+    "hp": 136,
+    "kw": 100,
+    "from": 2019,
+    "to": 2021,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306568/",
+    "source": "adac"
+   },
+   "adac_versions": 19
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "code": "Movano III",
+   "facelift": true,
+   "page": "opel/movano/b-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306571",
+    "type": "Diesla",
+    "text": "Cargo L1H1 2,8t 2.3 Diesel",
+    "litres": "2.3",
+    "name": "Cargo L1H1 2,8t 2.3 Diesel",
+    "hp": 150,
+    "kw": 110,
+    "from": 2019,
+    "to": 2021,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306571/",
+    "source": "adac"
+   },
+   "adac_versions": 38
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "code": "Movano III",
+   "facelift": true,
+   "page": "opel/movano/b-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306572",
+    "type": "Diesla",
+    "text": "Cargo L1H1 2,8t 2.3 Diesel",
+    "litres": "2.3",
+    "name": "Cargo L1H1 2,8t 2.3 Diesel",
+    "hp": 180,
+    "kw": 132,
+    "from": 2019,
+    "to": 2021,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306572/",
+    "source": "adac"
+   },
+   "adac_versions": 38
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "code": "Movano III",
+   "facelift": true,
+   "page": "opel/movano/b-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306604",
+    "type": "Diesla",
+    "text": "Cargo L3H2 3,5t 2.3 Diesel (Heckantrieb)",
+    "litres": "2.3",
+    "name": "Cargo L3H2 3,5t 2.3 Diesel (Heckantrieb)",
+    "hp": 131,
+    "kw": 96,
+    "from": 2016,
+    "to": 2021,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306604/",
+    "source": "adac"
+   },
+   "adac_versions": 37
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "code": "Movano III",
+   "facelift": true,
+   "page": "opel/movano/b-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306606",
+    "type": "Diesla",
+    "text": "Cargo L3H2 3,5t 2.3 Diesel (Heckantrieb)",
+    "litres": "2.3",
+    "name": "Cargo L3H2 3,5t 2.3 Diesel (Heckantrieb)",
+    "hp": 163,
+    "kw": 120,
+    "from": 2014,
+    "to": 2021,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306606/",
+    "source": "adac"
+   },
+   "adac_versions": 29
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "code": "Movano III",
+   "facelift": false,
+   "page": "opel/movano/b",
+   "body": "Van",
+   "doors": "3",
+   "engine": {
+    "slug": "329122",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,8t 2.3 CDTI DPF",
+    "litres": "2.3",
+    "name": "Kastenwagen L1H1 2,8t 2.3 CDTI DPF",
+    "hp": 110,
+    "kw": 81,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b/329122/",
+    "source": "adac"
+   },
+   "adac_versions": 20
+  },
+  {
+   "brand": "Opel",
+   "label": "Movano",
+   "code": "Movano III",
+   "facelift": false,
+   "page": "opel/movano/b",
+   "body": "Van",
+   "doors": "3",
+   "engine": {
+    "slug": "329126",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,8t 2.3 BiTurbo CDTI DPF Start&Stop",
+    "litres": "2.3",
+    "name": "Kastenwagen L1H1 2,8t 2.3 BiTurbo CDTI DPF Start&Stop",
+    "hp": 170,
+    "kw": 125,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b/329126/",
+    "source": "adac"
+   },
+   "adac_versions": 20
+  },
+  {
+   "brand": "Opel",
+   "label": "Vivaro",
+   "code": "Vivaro B",
+   "facelift": false,
+   "page": "opel/vivaro/b",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "311227",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,7t 1.6 Diesel",
+    "litres": "1.6",
+    "name": "Kastenwagen L1H1 2,7t 1.6 Diesel",
+    "hp": 95,
+    "kw": 70,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/vivaro/b/311227/",
+    "source": "adac"
+   },
+   "adac_versions": 14
+  },
+  {
+   "brand": "Opel",
+   "label": "Vivaro",
+   "code": "Vivaro B",
+   "facelift": false,
+   "page": "opel/vivaro/b",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "311235",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,7t 1.6 BiTurbo Diesel Start/Stop",
+    "litres": "1.6",
+    "name": "Kastenwagen L1H1 2,7t 1.6 BiTurbo Diesel Start/Stop",
+    "hp": 145,
+    "kw": 107,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/vivaro/b/311235/",
+    "source": "adac"
+   },
+   "adac_versions": 9
   },
   {
    "brand": "Opel",
@@ -7564,6 +9384,34 @@
    "adac_versions": 8
   },
   {
+   "brand": "Opel",
+   "label": "Vivaro",
+   "code": "Vivaro C",
+   "facelift": true,
+   "page": "opel/vivaro/c-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "344325",
+    "type": "Diesla",
+    "text": "Cargo M 2.2 Diesel Automatik",
+    "litres": "2.2",
+    "name": "Cargo M 2.2 Diesel Automatik",
+    "hp": 180,
+    "kw": 132,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2184 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/vivaro/c-facelift/344325/",
+    "source": "adac"
+   },
+   "adac_versions": 6
+  },
+  {
    "brand": "Seat",
    "label": "Arona",
    "code": "Arona",
@@ -7590,6 +9438,34 @@
     "source": "adac"
    },
    "adac_versions": 18
+  },
+  {
+   "brand": "Seat",
+   "label": "Arona",
+   "code": "Arona",
+   "facelift": true,
+   "page": "seat/arona/kj-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "333163",
+    "type": "Benzynowe",
+    "text": "1.0 TSI Style",
+    "litres": "1.0",
+    "name": "1.0 TSI Style",
+    "hp": 115,
+    "kw": 85,
+    "from": 2024,
+    "to": null,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/arona/kj-facelift/333163/",
+    "source": "adac"
+   },
+   "adac_versions": 28
   },
   {
    "brand": "Seat",
@@ -7628,21 +9504,49 @@
    "body": "Hatchback",
    "doors": "5",
    "engine": {
-    "slug": "302446",
+    "slug": "292798",
     "type": "Diesla",
     "text": "1.6 TDI Style",
     "litres": "1.6",
     "name": "1.6 TDI Style",
     "hp": 95,
     "kw": 70,
-    "from": 2019,
+    "from": 2018,
     "to": 2020,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1598 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/ibiza/kj/302446/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/ibiza/kj/292798/",
+    "source": "adac"
+   },
+   "adac_versions": 12
+  },
+  {
+   "brand": "Seat",
+   "label": "Ibiza",
+   "code": "Ibiza V",
+   "facelift": false,
+   "page": "seat/ibiza/kj",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "292800",
+    "type": "Diesla",
+    "text": "1.6 TDI Style",
+    "litres": "1.6",
+    "name": "1.6 TDI Style",
+    "hp": 115,
+    "kw": 85,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/ibiza/kj/292800/",
     "source": "adac"
    },
    "adac_versions": 4
@@ -7811,6 +9715,34 @@
     "Pojemność skokowa": "999 cm³",
     "Liczba miejsc": "4",
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/mii/aa/297107/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Seat",
+   "label": "Mii",
+   "code": "Mii",
+   "facelift": false,
+   "page": "seat/mii/aa",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "295226",
+    "type": "Benzynowe CNG",
+    "text": "1.0 Ecofuel Start&Stop Style (5-Türer)",
+    "litres": "1.0",
+    "name": "1.0 Ecofuel Start&Stop Style (5-Türer)",
+    "hp": 68,
+    "kw": 50,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "4",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/seat/mii/aa/295226/",
     "source": "adac"
    },
    "adac_versions": 3
@@ -8010,6 +9942,34 @@
     "source": "adac"
    },
    "adac_versions": 2
+  },
+  {
+   "brand": "Mazda",
+   "label": "Mazda 3",
+   "code": "Mazda 3 III",
+   "facelift": true,
+   "page": "mazda/3/bm-facelift",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "266503",
+    "type": "Diesla",
+    "text": "SKYACTIV-D 150 Exclusive-Line",
+    "litres": "2.2",
+    "name": "SKYACTIV-D 150 Exclusive-Line",
+    "hp": 150,
+    "kw": 110,
+    "from": 2017,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2191 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mazda/3/bm-facelift/266503/",
+    "source": "adac"
+   },
+   "adac_versions": 4
   },
   {
    "brand": "Mazda",
@@ -8741,6 +10701,118 @@
   },
   {
    "brand": "Citroen",
+   "label": "Jumper",
+   "code": "Jumper III",
+   "facelift": true,
+   "page": "citroen/jumper/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "308036",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 28 2.2 BlueHDi Control",
+    "litres": "2.2",
+    "name": "Kastenwagen L1H1 28 2.2 BlueHDi Control",
+    "hp": 120,
+    "kw": 88,
+    "from": 2019,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2179 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumper/2generation-facelift/308036/",
+    "source": "adac"
+   },
+   "adac_versions": 13
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumper",
+   "code": "Jumper III",
+   "facelift": true,
+   "page": "citroen/jumper/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "308037",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 30 2.2 BlueHDi Control",
+    "litres": "2.2",
+    "name": "Kastenwagen L1H1 30 2.2 BlueHDi Control",
+    "hp": 140,
+    "kw": 103,
+    "from": 2019,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2179 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumper/2generation-facelift/308037/",
+    "source": "adac"
+   },
+   "adac_versions": 32
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumper",
+   "code": "Jumper III",
+   "facelift": true,
+   "page": "citroen/jumper/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "308038",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 33 2.2 BlueHDi Control",
+    "litres": "2.0",
+    "name": "Kastenwagen L1H1 33 2.2 BlueHDi Control",
+    "hp": 163,
+    "kw": 121,
+    "from": 2019,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1997 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumper/2generation-facelift/308038/",
+    "source": "adac"
+   },
+   "adac_versions": 18
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumper",
+   "code": "Jumper III",
+   "facelift": true,
+   "page": "citroen/jumper/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "327547",
+    "type": "Diesla",
+    "text": "Kastenwagen L2H1 33 BlueHDi 165",
+    "litres": "2.2",
+    "name": "Kastenwagen L2H1 33 BlueHDi 165",
+    "hp": 165,
+    "kw": 121,
+    "from": 2022,
+    "to": 2024,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2179 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumper/2generation-facelift/327547/",
+    "source": "adac"
+   },
+   "adac_versions": 12
+  },
+  {
+   "brand": "Citroen",
    "label": "SpaceTourer",
    "code": "SpaceTourer",
    "facelift": true,
@@ -8796,6 +10868,62 @@
    "adac_versions": 2
   },
   {
+   "brand": "Citroen",
+   "label": "C-Zero",
+   "code": "C-Zero I",
+   "facelift": false,
+   "page": "citroen/c-zero/1generation",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "261846",
+    "type": "Elektryczne",
+    "text": "EV",
+    "litres": "",
+    "name": "EV",
+    "hp": 67,
+    "kw": 49,
+    "from": 2016,
+    "to": 2020,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "4",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/c-zero/1generation/261846/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Fiat",
+   "label": "500",
+   "code": "500 III",
+   "facelift": false,
+   "page": "fiat/500/f1a",
+   "body": "Hatchback",
+   "doors": "3",
+   "engine": {
+    "slug": "347004",
+    "type": "Hybrydowe",
+    "text": "Hybrid 1.0 Firefly Pop Mild-Hybrid",
+    "litres": "1.0",
+    "name": "Hybrid 1.0 Firefly Pop",
+    "hp": 65,
+    "kw": 48,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "999 cm³",
+    "Liczba miejsc": "4",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/500/f1a/347004/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
    "brand": "Fiat",
    "label": "600",
    "code": "600 II",
@@ -8825,6 +10953,118 @@
   },
   {
    "brand": "Fiat",
+   "label": "600",
+   "code": "600 II",
+   "facelift": false,
+   "page": "fiat/600/365",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "344791",
+    "type": "Hybrydowe",
+    "text": "1.2 T3 Hybrid Pop DCT Mild-Hybrid",
+    "litres": "1.2",
+    "name": "1.2 T3 Hybrid Pop DCT",
+    "hp": 145,
+    "kw": 107,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1199 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/600/365/344791/",
+    "source": "adac"
+   },
+   "adac_versions": 6
+  },
+  {
+   "brand": "Fiat",
+   "label": "Doblo",
+   "code": "Doblo III",
+   "facelift": true,
+   "page": "fiat/doblo/263-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "294438",
+    "type": "Benzynowe",
+    "text": "Doblò Kombi 1.4 T-Jet 16V Easy",
+    "litres": "1.4",
+    "name": "Doblò Kombi 1.4 T-Jet 16V Easy",
+    "hp": 120,
+    "kw": 88,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1368 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/294438/",
+    "source": "adac"
+   },
+   "adac_versions": 6
+  },
+  {
+   "brand": "Fiat",
+   "label": "Doblo",
+   "code": "Doblo III",
+   "facelift": true,
+   "page": "fiat/doblo/263-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "294445",
+    "type": "Diesla",
+    "text": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "litres": "1.6",
+    "name": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "hp": 95,
+    "kw": 70,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/294445/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Fiat",
+   "label": "Doblo",
+   "code": "Doblo III",
+   "facelift": true,
+   "page": "fiat/doblo/263-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "294447",
+    "type": "Diesla",
+    "text": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "litres": "1.6",
+    "name": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "hp": 120,
+    "kw": 88,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/294447/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
+   "brand": "Fiat",
    "label": "500L",
    "code": "500L",
    "facelift": true,
@@ -8832,24 +11072,24 @@
    "body": "Van",
    "doors": "5",
    "engine": {
-    "slug": "298577",
+    "slug": "294239",
     "type": "Diesla",
-    "text": "Urban 1.3 Multijet 16V Start&Stopp 120th Anniversary Dualogic",
+    "text": "Urban 1.3 Multijet 16V Start&Stopp Dualogic",
     "litres": "1.2",
-    "name": "Urban 1.3 Multijet 16V Start&Stopp 120th Anniversary Dualogic",
+    "name": "Urban 1.3 Multijet 16V Start&Stopp Dualogic",
     "hp": 95,
     "kw": 70,
-    "from": 2019,
+    "from": 2018,
     "to": 2019,
     "configs": [
      "automatyczna napęd: przedni"
     ],
     "Pojemność skokowa": "1248 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/500l/199-facelift/298577/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/500l/199-facelift/294239/",
     "source": "adac"
    },
-   "adac_versions": 1
+   "adac_versions": 2
   },
   {
    "brand": "Fiat",
@@ -8944,6 +11184,34 @@
    "body": "Van",
    "doors": "4",
    "engine": {
+    "slug": "299997",
+    "type": "Diesla",
+    "text": "Kombi 1.3 Multijet 16V",
+    "litres": "1.2",
+    "name": "Kombi 1.3 Multijet 16V",
+    "hp": 95,
+    "kw": 70,
+    "from": 2019,
+    "to": 2024,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1248 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/299997/",
+    "source": "adac"
+   },
+   "adac_versions": 6
+  },
+  {
+   "brand": "Fiat",
+   "label": "Fiorino",
+   "code": "Fiorino IV",
+   "facelift": true,
+   "page": "fiat/fiorino/225-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
     "slug": "299999",
     "type": "Benzynowe CNG",
     "text": "Kombi 1.4 8V Natural Power (Erdgasbetrieb)",
@@ -8962,6 +11230,34 @@
     "source": "adac"
    },
    "adac_versions": 2
+  },
+  {
+   "brand": "Fiat",
+   "label": "Fullback",
+   "code": "Fullback",
+   "facelift": false,
+   "page": "fiat/fullback/kt0t",
+   "body": "Pickup",
+   "doors": "2",
+   "engine": {
+    "slug": "268859",
+    "type": "Diesla",
+    "text": "Extended Cab 2.4 TD SX Silver 4x4",
+    "litres": "2.4",
+    "name": "Extended Cab 2.4 TD SX Silver 4x4",
+    "hp": 154,
+    "kw": 113,
+    "from": 2017,
+    "to": 2020,
+    "configs": [
+     "manualna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "2442 cm³",
+    "Liczba miejsc": "4",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fullback/kt0t/268859/",
+    "source": "adac"
+   },
+   "adac_versions": 11
   },
   {
    "brand": "Jeep",
@@ -9018,6 +11314,34 @@
     "source": "adac"
    },
    "adac_versions": 3
+  },
+  {
+   "brand": "Jeep",
+   "label": "Grand Cherokee",
+   "code": "Grand Cherokee IV",
+   "facelift": true,
+   "page": "jeep/grand-cherokee/wk2-facelift-2",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "296862",
+    "type": "Benzynowe",
+    "text": "6.2 V8 Trackhawk Automatik",
+    "litres": "6.2",
+    "name": "6.2 V8 Trackhawk Automatik",
+    "hp": 710,
+    "kw": 522,
+    "from": 2019,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "6166 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/jeep/grand-cherokee/wk2-facelift-2/296862/",
+    "source": "adac"
+   },
+   "adac_versions": 1
   },
   {
    "brand": "Jeep",
@@ -9301,6 +11625,34 @@
   },
   {
    "brand": "Land Rover",
+   "label": "Discovery",
+   "code": "Discovery V",
+   "facelift": true,
+   "page": "land-rover/discovery/v-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "351154",
+    "type": "Hybrydowe Diesla",
+    "text": "D350 S AWD Automatik Mild-Hybrid",
+    "litres": "3.0",
+    "name": "D350 S AWD Automatik",
+    "hp": 350,
+    "kw": 257,
+    "from": 2024,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "2997 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/land-rover/discovery/v-facelift/351154/",
+    "source": "adac"
+   },
+   "adac_versions": 9
+  },
+  {
+   "brand": "Land Rover",
    "label": "Discovery Sport",
    "code": "Discovery Sport",
    "facelift": true,
@@ -9442,6 +11794,34 @@
   {
    "brand": "Land Rover",
    "label": "Range Rover Sport",
+   "code": "Range Rover Sport II",
+   "facelift": true,
+   "page": "land-rover/range-rover-sport/ii-facelift",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "290723",
+    "type": "Hybrydowe plug-in",
+    "text": "P400e Plug-in-Hybrid SE Automatik",
+    "litres": "2.0",
+    "name": "P400e Plug-in-Hybrid SE Automatik",
+    "hp": 404,
+    "kw": 297,
+    "from": 2018,
+    "to": 2022,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "1997 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/land-rover/range-rover-sport/ii-facelift/290723/",
+    "source": "adac"
+   },
+   "adac_versions": 13
+  },
+  {
+   "brand": "Land Rover",
+   "label": "Range Rover Sport",
    "code": "Range Rover Sport III",
    "facelift": false,
    "page": "land-rover/range-rover-sport/iii",
@@ -9578,6 +11958,34 @@
     "source": "adac"
    },
    "adac_versions": 24
+  },
+  {
+   "brand": "Dacia",
+   "label": "Duster",
+   "code": "Duster II",
+   "facelift": false,
+   "page": "dacia/duster/2generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "295448",
+    "type": "Benzynowe",
+    "text": "SCe 115 LPG Comfort 2WD (Autogasbetrieb)",
+    "litres": "1.6",
+    "name": "SCe 115 LPG Comfort 2WD (Autogasbetrieb)",
+    "hp": 109,
+    "kw": 80,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/dacia/duster/2generation/295448/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Dacia",
@@ -9774,6 +12182,62 @@
     "source": "adac"
    },
    "adac_versions": 1
+  },
+  {
+   "brand": "Dacia",
+   "label": "Dokker",
+   "code": "Dokker",
+   "facelift": true,
+   "page": "dacia/dokker/1generation-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "293881",
+    "type": "Benzynowe",
+    "text": "SCe 100 LPG Start&Stop Essential (Autogasbetrieb)",
+    "litres": "1.6",
+    "name": "SCe 100 LPG Start&Stop Essential (Autogasbetrieb)",
+    "hp": 107,
+    "kw": 79,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/dacia/dokker/1generation-facelift/293881/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Dacia",
+   "label": "Dokker",
+   "code": "Dokker",
+   "facelift": true,
+   "page": "dacia/dokker/1generation-facelift",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "293882",
+    "type": "Benzynowe",
+    "text": "SCe 100 LPG Start&Stop Essential (Benzinbetrieb)",
+    "litres": "1.6",
+    "name": "SCe 100 LPG Start&Stop Essential (Benzinbetrieb)",
+    "hp": 109,
+    "kw": 80,
+    "from": 2018,
+    "to": 2019,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/dacia/dokker/1generation-facelift/293882/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Lexus",
@@ -10355,90 +12819,6 @@
     "Pojemność skokowa": "1499 cm³",
     "Liczba miejsc": "4",
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mini/mini/j01-f65-f66-f67/351741/",
-    "source": "adac"
-   },
-   "adac_versions": 2
-  },
-  {
-   "brand": "Mini",
-   "label": "Cabrio",
-   "code": "F57",
-   "facelift": true,
-   "page": "mini/mini/f55-f56-f57-facelift",
-   "body": "Hatchback",
-   "doors": "3",
-   "engine": {
-    "slug": "301465",
-    "type": "Benzynowe",
-    "text": "3-Türer One First",
-    "litres": "1.5",
-    "name": "3-Türer One First",
-    "hp": 75,
-    "kw": 55,
-    "from": 2019,
-    "to": 2022,
-    "configs": [
-     "manualna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1499 cm³",
-    "Liczba miejsc": "4",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mini/mini/f55-f56-f57-facelift/301465/",
-    "source": "adac"
-   },
-   "adac_versions": 4
-  },
-  {
-   "brand": "Mini",
-   "label": "Cabrio",
-   "code": "F57",
-   "facelift": true,
-   "page": "mini/mini/f55-f56-f57-facelift",
-   "body": "Hatchback",
-   "doors": "3",
-   "engine": {
-    "slug": "301474",
-    "type": "Benzynowe",
-    "text": "3-Türer Cooper S",
-    "litres": "2.0",
-    "name": "3-Türer Cooper S",
-    "hp": 192,
-    "kw": 141,
-    "from": 2019,
-    "to": 2020,
-    "configs": [
-     "manualna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1998 cm³",
-    "Liczba miejsc": "4",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mini/mini/f55-f56-f57-facelift/301474/",
-    "source": "adac"
-   },
-   "adac_versions": 10
-  },
-  {
-   "brand": "Mini",
-   "label": "Cabrio",
-   "code": "F57",
-   "facelift": true,
-   "page": "mini/mini/f55-f56-f57-facelift",
-   "body": "Hatchback",
-   "doors": "3",
-   "engine": {
-    "slug": "297682",
-    "type": "Diesla",
-    "text": "3-Türer Cooper SD 60 Years Steptronic",
-    "litres": "2.0",
-    "name": "3-Türer Cooper SD 60 Years Steptronic",
-    "hp": 170,
-    "kw": 125,
-    "from": 2019,
-    "to": 2019,
-    "configs": [
-     "automatyczna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1995 cm³",
-    "Liczba miejsc": "4",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mini/mini/f55-f56-f57-facelift/297682/",
     "source": "adac"
    },
    "adac_versions": 2
@@ -11173,6 +13553,34 @@
   },
   {
    "brand": "OMODA",
+   "label": "5",
+   "code": "5 I",
+   "facelift": false,
+   "page": "omoda/5/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "333027",
+    "type": "Elektryczne",
+    "text": "EV Exclusive",
+    "litres": "",
+    "name": "EV Exclusive",
+    "hp": 211,
+    "kw": 155,
+    "from": 2026,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/omoda/5/1generation/333027/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "OMODA",
    "label": "9",
    "code": "9 I",
    "facelift": false,
@@ -11198,6 +13606,34 @@
     "source": "adac"
    },
    "adac_versions": 1
+  },
+  {
+   "brand": "Ssangyong",
+   "label": "Musso",
+   "code": "Musso II",
+   "facelift": true,
+   "page": "ssangyong/musso/3generation-facelift",
+   "body": "Pickup",
+   "doors": "4",
+   "engine": {
+    "slug": "325954",
+    "type": "Diesla",
+    "text": "2.2 Diesel Crystal 2WD",
+    "litres": "2.2",
+    "name": "2.2 Diesel Crystal 2WD",
+    "hp": 202,
+    "kw": 149,
+    "from": 2022,
+    "to": 2025,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2157 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ssangyong/musso/3generation-facelift/325954/",
+    "source": "adac"
+   },
+   "adac_versions": 9
   },
   {
    "brand": "KGM",
@@ -11226,6 +13662,34 @@
     "source": "adac"
    },
    "adac_versions": 1
+  },
+  {
+   "brand": "KGM",
+   "label": "Torres",
+   "code": "Torres",
+   "facelift": false,
+   "page": "kgm/torres/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "350081",
+    "type": "Hybrydowe",
+    "text": "1.5 GDI-T Hybrid Nomad 2WD Automatik",
+    "litres": "1.5",
+    "name": "1.5 GDI-T Hybrid Nomad 2WD Automatik",
+    "hp": 204,
+    "kw": 150,
+    "from": 2025,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1498 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kgm/torres/1generation/350081/",
+    "source": "adac"
+   },
+   "adac_versions": 5
   },
   {
    "brand": "Maserati",
@@ -11264,24 +13728,24 @@
    "body": "Sedan",
    "doors": "4",
    "engine": {
-    "slug": "305408",
+    "slug": "293578",
     "type": "Benzynowe",
     "text": "S Q4 Automatik",
     "litres": "3.0",
     "name": "S Q4 Automatik",
     "hp": 430,
     "kw": 316,
-    "from": 2019,
+    "from": 2018,
     "to": 2024,
     "configs": [
      "automatyczna napęd: 4x4"
     ],
     "Pojemność skokowa": "2979 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/ghibli/iii-facelift/305408/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/ghibli/iii-facelift/293578/",
     "source": "adac"
    },
-   "adac_versions": 9
+   "adac_versions": 12
   },
   {
    "brand": "Maserati",
@@ -11396,6 +13860,174 @@
    "adac_versions": 2
   },
   {
+   "brand": "Maserati",
+   "label": "Quattroporte",
+   "code": "Quattroporte II",
+   "facelift": true,
+   "page": "maserati/quattroporte/vi-facelift",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "321416",
+    "type": "Benzynowe",
+    "text": "GT Automatik",
+    "litres": "3.0",
+    "name": "GT Automatik",
+    "hp": 350,
+    "kw": 257,
+    "from": 2021,
+    "to": 2022,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2979 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/quattroporte/vi-facelift/321416/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Maserati",
+   "label": "Quattroporte",
+   "code": "Quattroporte II",
+   "facelift": true,
+   "page": "maserati/quattroporte/vi-facelift",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "293605",
+    "type": "Benzynowe",
+    "text": "S Q4 Automatik",
+    "litres": "3.0",
+    "name": "S Q4 Automatik",
+    "hp": 430,
+    "kw": 316,
+    "from": 2018,
+    "to": 2024,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "2979 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/quattroporte/vi-facelift/293605/",
+    "source": "adac"
+   },
+   "adac_versions": 11
+  },
+  {
+   "brand": "Maserati",
+   "label": "Quattroporte",
+   "code": "Quattroporte II",
+   "facelift": true,
+   "page": "maserati/quattroporte/vi-facelift",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "319681",
+    "type": "Benzynowe",
+    "text": "Trofeo Automatik",
+    "litres": "3.8",
+    "name": "Trofeo Automatik",
+    "hp": 580,
+    "kw": 427,
+    "from": 2020,
+    "to": 2023,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "3799 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/quattroporte/vi-facelift/319681/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model 3",
+   "code": "Model 3",
+   "facelift": false,
+   "page": "tesla/model-3/1generation",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "298771",
+    "type": "Elektryczne",
+    "text": "Standard Range Plus",
+    "litres": "",
+    "name": "Standard Range Plus",
+    "hp": 306,
+    "kw": 225,
+    "from": 2019,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-3/1generation/298771/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model 3",
+   "code": "Model 3",
+   "facelift": false,
+   "page": "tesla/model-3/1generation",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "282173",
+    "type": "Elektryczne",
+    "text": "Performance AWD",
+    "litres": "",
+    "name": "Performance AWD",
+    "hp": 460,
+    "kw": 338,
+    "from": 2019,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-3/1generation/282173/",
+    "source": "adac"
+   },
+   "adac_versions": 5
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model 3",
+   "code": "Model 3",
+   "facelift": true,
+   "page": "tesla/model-3/1generation-facelift",
+   "body": "Sedan",
+   "doors": "4",
+   "engine": {
+    "slug": "347730",
+    "type": "Elektryczne",
+    "text": "Premium",
+    "litres": "",
+    "name": "Premium",
+    "hp": 320,
+    "kw": 235,
+    "from": 2024,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-3/1generation-facelift/347730/",
+    "source": "adac"
+   },
+   "adac_versions": 3
+  },
+  {
    "brand": "Tesla",
    "label": "Model S",
    "code": "Model S",
@@ -11439,7 +14071,7 @@
     "name": "Standard Range",
     "hp": 428,
     "kw": 315,
-    "from": 2019,
+    "from": 2016,
     "to": 2019,
     "configs": [
      "automatyczna napęd: 4x4"
@@ -11449,7 +14081,7 @@
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-s/1generation-facelift/297820/",
     "source": "adac"
    },
-   "adac_versions": 1
+   "adac_versions": 3
   },
   {
    "brand": "Tesla",
@@ -11475,6 +14107,34 @@
     "Pojemność skokowa": "",
     "Liczba miejsc": "5",
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-s/1generation-facelift/297818/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model S",
+   "code": "Model S",
+   "facelift": true,
+   "page": "tesla/model-s/1generation-facelift",
+   "body": "Hatchback",
+   "doors": "5",
+   "engine": {
+    "slug": "261294",
+    "type": "Elektryczne",
+    "text": "P100D",
+    "litres": "",
+    "name": "P100D",
+    "hp": 700,
+    "kw": 515,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-s/1generation-facelift/261294/",
     "source": "adac"
    },
    "adac_versions": 1
@@ -11544,6 +14204,34 @@
    "body": "SUV",
    "doors": "5",
    "engine": {
+    "slug": "254883",
+    "type": "Elektryczne",
+    "text": "75D",
+    "litres": "",
+    "name": "75D",
+    "hp": 333,
+    "kw": 245,
+    "from": 2016,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-x/1generation/254883/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model X",
+   "code": "Model X",
+   "facelift": false,
+   "page": "tesla/model-x/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
     "slug": "298963",
     "type": "Elektryczne",
     "text": "Standard Range",
@@ -11572,6 +14260,34 @@
    "body": "SUV",
    "doors": "5",
    "engine": {
+    "slug": "268176",
+    "type": "Elektryczne",
+    "text": "100D",
+    "litres": "",
+    "name": "100D",
+    "hp": 525,
+    "kw": 386,
+    "from": 2017,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-x/1generation/268176/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model X",
+   "code": "Model X",
+   "facelift": false,
+   "page": "tesla/model-x/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
     "slug": "297817",
     "type": "Elektryczne",
     "text": "Performance",
@@ -11587,6 +14303,34 @@
     "Pojemność skokowa": "",
     "Liczba miejsc": "5",
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-x/1generation/297817/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Tesla",
+   "label": "Model X",
+   "code": "Model X",
+   "facelift": false,
+   "page": "tesla/model-x/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "261295",
+    "type": "Elektryczne",
+    "text": "P100D",
+    "litres": "",
+    "name": "P100D",
+    "hp": 772,
+    "kw": 568,
+    "from": 2017,
+    "to": 2019,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/tesla/model-x/1generation/261295/",
     "source": "adac"
    },
    "adac_versions": 1
@@ -12203,6 +14947,62 @@
     "Pojemność skokowa": "",
     "Liczba miejsc": "5",
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/xpeng/g6/1generation-facelift/347717/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Zeekr",
+   "label": "X",
+   "code": "Zeekr X",
+   "facelift": false,
+   "page": "zeekr/x/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "350823",
+    "type": "Elektryczne",
+    "text": "Long Range",
+    "litres": "",
+    "name": "Long Range",
+    "hp": 340,
+    "kw": 250,
+    "from": 2026,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: tylny"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/zeekr/x/1generation/350823/",
+    "source": "adac"
+   },
+   "adac_versions": 1
+  },
+  {
+   "brand": "Zeekr",
+   "label": "X",
+   "code": "Zeekr X",
+   "facelift": false,
+   "page": "zeekr/x/1generation",
+   "body": "SUV",
+   "doors": "5",
+   "engine": {
+    "slug": "350824",
+    "type": "Elektryczne",
+    "text": "Privilege AWD",
+    "litres": "",
+    "name": "Privilege AWD",
+    "hp": 496,
+    "kw": 365,
+    "from": 2026,
+    "to": null,
+    "configs": [
+     "automatyczna napęd: 4x4"
+    ],
+    "Pojemność skokowa": "",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/zeekr/x/1generation/350824/",
     "source": "adac"
    },
    "adac_versions": 1

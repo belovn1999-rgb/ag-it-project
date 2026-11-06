@@ -72,7 +72,7 @@
 | Volkswagen | T6 | T7 Multivan | 2021–2024 | 6/7/8 | autocentrum + ultimatespecs |  |
 | Volkswagen | T6 | T5 Transporter | 2003–2012 | 5/6/7/9 | autocentrum + ultimatespecs |  |
 | Volkswagen | Touran | Touran I | 2003–2013 | 5/7 | adac + ultimatespecs |  |
-| Volvo | EX90 | EX90 I | 2022–2022 | 6/7 | adac + autocentrum |  |
+| Volvo | EX90 | EX90 I | 2022–2025 | 6/7 | adac + autocentrum |  |
 | Volvo | XC90 | XC90 II | 2014–2024 | 5/7 | adac + ultimatespecs |  |
 | Volvo | XC90 | XC90 I | 2002–2014 | 5/7 | adac + ultimatespecs |  |
 
@@ -114,8 +114,8 @@
 | Dodge | Durango | Durango III | 2011–2011 | 7 | autocentrum |  |
 | Dodge | Grand Caravan | Grand Caravan V | 2007–2011 | 5/7 | autocentrum |  |
 | Fiat | 500L | 500L | 2012–2014 | 5/7 | autocentrum |  |
+| Fiat | Doblo | Doblo III | 2010–2018 | 3/5/7 | adac | Doblo Van 1.3 Multijet II 16v, Doblo Van 1.6 Multijet 16v, Doblo Cargo 1.3 Multijet II 16v, Doblo Cargo 1.6 Multijet 16v |
 | Fiat | Doblo | Doblo IV | 2015–2015 | 5/7 | adac |  |
-| Fiat | Doblo | Doblo III | 2010–2011 | 3/5/7 | adac | Doblo Van 1.3 Multijet II 16v, Doblo Van 1.6 Multijet 16v, Doblo Cargo 1.3 Multijet II 16v, Doblo Cargo 1.6 Multijet 16v |
 | Fiat | Doblo | Doblo II | 2006–2009 | 7 | adac | Doblo II 1.4, Doblo II 1.6 CNG, Doblo II 1.6 Natural Power, Doblo II 1.3 D |
 | Fiat | Ducato | Ducato IV | 2021–2021 | 6 | autocentrum |  |
 | Fiat | Ducato | Ducato III | 2007–2007 | 6/9 | autocentrum |  |
@@ -149,7 +149,7 @@
 | Lancia | Phedra | Phedra I | 2002–2002 | 8 | autocentrum |  |
 | Lancia | Voyager | Voyager | 2011–2015 | 7 | autocentrum |  |
 | Land Rover | Defender | Defender IV | 2019–2026 | 5/8 | adac | Defender 130 3.0 P, Defender 130 3.0 P, Defender 130 3.0 D, Defender 130 3.0 D … |
-| Land Rover | Discovery | Discovery V | 2016–2021 | 5/7 | adac |  |
+| Land Rover | Discovery | Discovery V | 2016–2024 | 5/7 | adac |  |
 | Land Rover | Discovery Sport | Discovery Sport | 2014–2024 | 5/7 | adac | Discovery Sport SUV 1.5 P270e Dynamic S AWD Automatik, Discovery Sport SUV 1.5 P300e AWD Automatik |
 | Land Rover | Range Rover | Range Rover V | 2021–2026 | 5/7 | adac |  |
 | Land Rover | Range Rover Sport | Range Rover Sport II | 2013–2020 | 5/7 | adac | Range Rover Sport SUV 2.0 L Si4, Range Rover Sport SUV 2.0 L SD4, Range Rover Sport SUV 3.0 D350, Range Rover Sport SUV 3.0 L SDV6 … |
@@ -197,7 +197,7 @@
 | Skoda | Kodiaq | Kodiaq II | 2024–2024 | 5/7 | adac |  |
 | Ssangyong | REXTON | Rexton IV | 2017–2021 | 5/7 | adac |  |
 | Ssangyong | Rodius | Rodius II | 2013–2018 | 7 | autocentrum |  |
-| Tesla | Model S | Model S | 2019–2023 | 5/7 | adac |  |
+| Tesla | Model S | Model S | 2016–2023 | 5/7 | adac |  |
 | Tesla | Model Y | Model Y I | 2020–2024 | 5/7 | adac |  |
 | Toyota | Hiace | Hiace V | 2004–2004 | 8 | autocentrum |  |
 | Toyota | Land Cruiser | Land Cruiser VIII | 2024–2024 | 5/7 | adac |  |
@@ -241,7 +241,7 @@
 | Ford | Ranger | Ranger IV | 2010–2010 |  |  |  |
 | Ford | Tourneo Connect | Tourneo Connect I | 2005–2010 |  |  |  |
 | Ford | Transit | Transit VII | 2014–2014 |  |  |  |
-| Ford | Transit Custom | Transit Custom I | 2014–2014 |  |  |  |
+| Ford | Transit Custom | Transit Custom I | 2014–2019 |  |  |  |
 | Honda | Odyssey | Odyssey IV | 2011–2011 |  |  |  |
 | Hyundai | SANTA FE | Santa Fe III | 2012–2016 |  |  |  |
 | Hyundai | SANTA FE | Santa Fe II | 2006–2010 |  |  |  |

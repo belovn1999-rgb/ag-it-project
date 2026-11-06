@@ -3,7 +3,8 @@
 the platform's listings missed mostly 2024-2026 versions — Audi A3 8Y facelift, A6 45 TDI 245 PS, BMW 330e LCI).
 
 Only where the ADAC generation (its page with the facelift pages) and ours start in the same year (± 1, exactly one
-of ours) and the version came out in 2019 or later (2023 at first; 2019 since the listings check 25.10); "ours" are the rows of ultimatespecs and autocentrum, so the list
+of ours; or, if none, the one of ours that runs in ADAC's first year — 06.11) and the version is on sale in 2019 or later
+(came out — 2023 at first, 2019 since the listings check 25.10; on sale — since 06.11); "ours" are the rows of ultimatespecs and autocentrum, so the list
 does not shrink with the rows it adds. One ADAC version page per new engine (fuel, kW, displacement) gives the maker's
 data — engine kind, cm³, gearbox, drive, body, doors, seats (tools/crawl-adac-models.py engine_of()). Written to
 data/adac-extra.json; tools/build-model-engine-table.py adds them as rows of that generation (source "adac", the facelift
@@ -16,6 +17,7 @@ import collections
 import csv
 import datetime
 import importlib.util
+import itertools
 import json
 import os
 import re
@@ -46,15 +48,29 @@ def missing(rows):
         groups = collections.defaultdict(list)
         for page in pages:
             groups[re.sub(r"-facelift(-\d+)?$", "", page["page"])].append(page)
+        spans = {base: adac_check._span([v for p in group for v in p["versions"]]) for base, group in groups.items()}
+        claimed = {code for start, _end in spans.values() for code, g in model_gens.items() if abs(g["from"] - start) <= 1}
         for base, group in groups.items():
-            start, _end = adac_check._span([v for p in group for v in p["versions"]])
+            start, end = spans[base]
             matched = [(code, g) for code, g in model_gens.items() if abs(g["from"] - start) <= 1]
+            if not matched:
+                # 2026-11-06: ADAC lists only the later versions of a long generation (Transit Custom I 2012-2023:
+                # ADAC from 2016) — the one generation of ours, no other ADAC page's, that runs in ADAC's first
+                # year and ends with it (not a newer generation ADAC files under the old name: GLB 2026, Jumpy III).
+                matched = [(code, g) for code, g in model_gens.items()
+                           if code not in claimed and _runs(g, start, end)]
             if len(matched) != 1:
                 continue
             code, gen = matched[0]
             for page in group:
                 for version in page["versions"]:
-                    if int(version[4][:4]) < SINCE:
+                    # On sale in SINCE or later (2026-11-06; was: came out then) — Transit Custom 2.0 EcoBlue 105 PS
+                    # 2018-2023 is in the listings of 2020-2022.
+                    if (int(version[5][:4]) if version[5] else 2100) < SINCE:
+                        continue
+                    # One ADAC page for several bodies (MINI F55/F56/F57): a Cabrio of ours takes only its own versions
+                    # ("3-Türer One D" is the hatch, 06.11).
+                    if "cabrio" in label.lower() and "cabrio" not in version[0].lower():
                         continue
                     family = adac_check.adac_family(version[1])
                     litres = adac_check.LITRES.search(version[0])
@@ -66,6 +82,15 @@ def missing(rows):
                     key = (brand, label, code, family, version[2], litres.group(1) if litres else "")
                     out.setdefault(key, {"page": page["page"], "facelift": page["facelift"], "versions": []})["versions"].append(version)
     return out
+
+
+def _runs(gen, start, end):
+    ends = [autocentrum.our_years(r["src"]["Годы (проверено)"])[1] for r in gen["rows"]]
+    ours = None if any(e is None for e in ends) else max(ends)
+    # Within 6 years of our start: "Crafter I 2006–н. в." of ours is not the Crafter II ADAC starts in 2017.
+    if not gen["from"] < start <= min(ours or 2100, gen["from"] + 6):
+        return False
+    return (ours is None) if end is None else (ours is None or end <= ours + 1)
 
 
 def _in_years(item, year):
@@ -85,19 +110,20 @@ def _same(item, version, family, litres):
 DATES = re.compile(r"\s*\((?:(\d{2})/(\d{2})\s*-\s*\d{2}/\d{2}|ab (\d{2})/(\d{2}))\)\s*$")
 
 
-def version_path(page, versions):
-    """The ADAC version page of one of these versions on a generation page (the cached generation page links it):
+def version_paths(page, versions):
+    """The ADAC version pages (in order) of one of these versions on a generation page (the cached generation page links it):
     by name and first month — one name can be sold with another power in other years (A6 C8 "45 TDI quattro
     tiptronic" 231 PS from 2018, 245 PS from 2020; 28.10 the name alone gave the 231 PS page)."""
     links = C.version_links(C.A.fetch(f"{page}/"), page.rsplit("/", 1)[0])
+    seen = set()
     for version in versions:
         month = f"{version[4][5:7]}/{version[4][2:4]}"
         for path, link_name in links:
             dates = DATES.search(link_name)
-            if DATES.sub("", link_name).strip() == version[0] and dates and \
+            if path not in seen and DATES.sub("", link_name).strip() == version[0] and dates and \
                     month in (f"{dates.group(1)}/{dates.group(2)}", f"{dates.group(3)}/{dates.group(4)}"):
-                return path
-    return None
+                seen.add(path)
+                yield path
 
 
 def main():
@@ -109,10 +135,15 @@ def main():
     extra, skipped = [], 0
     for (brand, label, code, family, kw, litres), found in todo.items():
         version = found["versions"][0]
-        path = version_path(found["page"], found["versions"])
-        page = C.A.fetch(path) if path and not args.offline else (C._cached(path) if path else "")
-        data = C.specs(page) if page else {}
-        engine = C.engine_of(path, version[0], data, label) if data.get("Motorart") else None
+        engine = None
+        # One name and month can stand for two powers (Transit Custom "Kastenwagen 280 L1 2.0 TDCi" 01/18: 105 and
+        # 130 PS, 06.11) — the first page with this power.
+        for path in itertools.islice(version_paths(found["page"], found["versions"]), 6):
+            page = C._cached(path) if args.offline else C.A.fetch(path)
+            data = C.specs(page) if page else {}
+            engine = C.engine_of(path, version[0], data, label) if data.get("Motorart") else None
+            if engine and engine["hp"] and abs(engine["kw"] - kw) <= 2:
+                break
         # The page must be this engine's (the power of the versions it stands for).
         if not engine or not engine["hp"] or abs(engine["kw"] - kw) > 2:
             skipped += 1
