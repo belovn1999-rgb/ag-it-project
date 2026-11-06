@@ -44,6 +44,19 @@ DIFF_COLUMN = "ADAC: другое"
 # engine states one other value, the row takes ADAC's; the value it had goes to this column.
 FIXED_COLUMN = "ADAC: исправлено"
 FROM_ADAC = "ADAC: все версии мотора"
+# Owner 2026-11-06: one source states ours, every ADAC version of the engine another, and no other version of the
+# generation in our table has ours confirmed, at most 3 rows have it at all, the name does not say it (4x4, Twin,
+# RWD, DSG…) — ours is the source's slip (Audi A1 "задний", BMW X5 E70 "механика"): ADAC's value.
+ODD_ROWS = 3
+DIFF_PARTS = re.compile(r"; (?=(?:коробка|привод) — у ADAC)")
+ODD_NAME = {"Привод": re.compile(r"4x4|4x2|4motion|quattro|xdrive|sdrive|4matic|awd|rwd|fwd|2wd|4wd|all4|allgrip|"
+                                 r"alltrack|allroad|cross country|scout|4drive|e-four|twin|dual motor|\bed4\b", re.I),
+            "Коробка": re.compile(r"dsg|s tronic|tiptronic|steptronic|cvt|automat|edc|powershift|eat\d|tct|dct|"
+                                  r"g-tronic|7g|9g|multitronic|xtronic|hybrid|electric|elektryczny|kwh", re.I)}
+# Checked by hand 2026-11-06 — ours is right or both are sold: kept, "ADAC: другое" stays.
+ODD_KEEP = {("Nissan", "X-Trail II", "X-Trail II 2.0"), ("Skoda", "Octavia I", "Octavia Kombi 1.6 MPI"),
+            ("Skoda", "Octavia I", "Octavia Hatchback 1.6 MPI"), ("Jeep", "Compass I", "Compass SUV 2013 2.0")}
+ODD_KEEP_MAKES = {"Genesis"}
 CODE_WORDS = {"m": "механика", "a": "автомат", "f": "передний", "r": "задний", "4": "полный"}
 DIFF_SCOPE = re.compile(r"^(коробка|привод) — у ADAC (.+?) \((все|прочитано \d+ из) (\d+) версий")
 NOT_HERE = "нет в Польше и Германии"
@@ -301,8 +314,47 @@ def confirm(rows, ac):
                 row[column] = "правило: " + RULES[origin]
             else:
                 row[column] = "вывод: " + (origin or "без пометки")
+    _odd_values(rows)
     counts = {column: collections.Counter(row[column].split(":")[0].split(" (")[0] for row in rows) for column in COLUMNS}
     return counts
+
+
+def _odd_values(rows):
+    """ADAC's gearbox / drive where ours is a lone, unconfirmed value of the generation (owner 2026-11-06)."""
+    by_gen = collections.defaultdict(list)
+    for row in rows:
+        by_gen[(row["Марка"], row["Модель"], row["Поколение"])].append(row)
+    changes = []
+    for row in rows:
+        if not row.get(DIFF_COLUMN) or row["Марка"] in ODD_KEEP_MAKES or \
+                (row["Марка"], row["Поколение"], row["Версия"]) in ODD_KEEP:
+            continue
+        for part in DIFF_PARTS.split(row[DIFF_COLUMN]):
+            found = DIFF_SCOPE.match(part)
+            if not found or found.group(3) != "все":
+                continue
+            field = "Коробка" if found.group(1) == "коробка" else "Привод"
+            column = "Подтверждение: " + found.group(1)
+            if not row[column].startswith("одна база") or ODD_NAME[field].search(row["Версия"]):
+                continue
+            same = [o for o in by_gen[(row["Марка"], row["Модель"], row["Поколение"])]
+                    if o is not row and o[field] == row[field]]
+            if len(same) > ODD_ROWS or any(o[column].startswith("подтверждено") for o in same):
+                continue
+            # "полный / задний" (Isuzu D-Max, Ford S-Max): the base drive, all-wheel is a version of its own.
+            says = [w for w in found.group(2).split(" / ") if w != "полный"] or ["полный"]
+            if len(says) != 1:
+                continue
+            changes.append((row, field, column, part, says[0]))
+    for row, field, column, part, value in changes:
+        found = DIFF_SCOPE.match(part)
+        page_text = part.split("версий; ", 1)[1].rsplit(")", 1)[0] if "версий; " in part else ""
+        row[FIXED_COLUMN] = "; ".join(filter(None, [
+            row[FIXED_COLUMN], f"{found.group(1)}: было {row[field]} ({row[f'{field}: откуда']}, одна база, в поколении "
+                               f"больше нигде), у ADAC все {found.group(4)} версий — {value} ({page_text})"]))
+        row[field], row[f"{field}: откуда"] = value, FROM_ADAC
+        row[column] = _status({"adac"})
+        row[DIFF_COLUMN] = "; ".join(p for p in DIFF_PARTS.split(row[DIFF_COLUMN]) if p != part)
 
 
 def write_report(rows, today):
@@ -388,7 +440,9 @@ def write_report(rows, today):
               f"Наше значение коробки или привода было только выведено (по названию, соседней версии, правилу), а все "
               f"версии ADAC с тем же мотором называют одно другое — ставится значение ADAC (решение владельца 29.10): "
               f"**{len(fixed)}** версий, прежнее значение — в колонке «{FIXED_COLUMN}», «откуда» — «{FROM_ADAC}». "
-              "ADAC — рынок Германии.", "",
+              "С 06.11 (решение владельца) — и там, где наше называет один источник, а в поколении такое значение больше "
+              f"нигде не подтверждено (не больше {ODD_ROWS} версий, название его не говорит): Audi A1 «задний», BMW X5 E70 "
+              "«механика». ADAC — рынок Германии.", "",
               "| Марка · модель · поколение | Что | Было | Стало | Версий | Например |", "|---|---|---|---|---:|---|"]
     for (brand, model, generation, what, ours, says), group_rows in sorted(fixed_groups.items(), key=lambda i: -len(i[1])):
         lines.append(f"| {brand} {model} {generation} | {what} | {ours} | {says} | {len(group_rows)} | "

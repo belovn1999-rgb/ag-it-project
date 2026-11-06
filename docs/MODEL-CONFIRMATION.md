@@ -1,6 +1,6 @@
 # Справочник моделей — насколько подтверждены данные
 
-Сгенерировано `tools/confirm.py` (2026-11-02) из `data/model-engines.csv`. Этап B61 п. 16 (`docs/PROJECT-MODELS.md`). **Подтверждено** — два независимых источника согласны (решение владельца 23.10): autocentrum.pl, ultimatespecs.com, каталог ADAC, Википедия. **Одна база** — значение есть только в одном источнике. **Правило** — электро и гибрид всегда с автоматом, модель только 4x4. **Вывод** — значение вычислено («механика, раз есть такая же с автоматом», «привод как у модели»). На странице пока ничего не меняется.
+Сгенерировано `tools/confirm.py` (2026-11-06) из `data/model-engines.csv`. Этап B61 п. 16 (`docs/PROJECT-MODELS.md`). **Подтверждено** — два независимых источника согласны (решение владельца 23.10): autocentrum.pl, ultimatespecs.com, каталог ADAC, Википедия. **Одна база** — значение есть только в одном источнике. **Правило** — электро и гибрид всегда с автоматом, модель только 4x4. **Вывод** — значение вычислено («механика, раз есть такая же с автоматом», «привод как у модели»). На странице пока ничего не меняется.
 
 Версий в таблице: 25884.
 
@@ -54,7 +54,7 @@
 
 ## Исправлено по ADAC
 
-Наше значение коробки или привода было только выведено (по названию, соседней версии, правилу), а все версии ADAC с тем же мотором называют одно другое — ставится значение ADAC (решение владельца 29.10): **66** версий, прежнее значение — в колонке «ADAC: исправлено», «откуда» — «ADAC: все версии мотора». ADAC — рынок Германии.
+Наше значение коробки или привода было только выведено (по названию, соседней версии, правилу), а все версии ADAC с тем же мотором называют одно другое — ставится значение ADAC (решение владельца 29.10): **133** версий, прежнее значение — в колонке «ADAC: исправлено», «откуда» — «ADAC: все версии мотора». С 06.11 (решение владельца) — и там, где наше называет один источник, а в поколении такое значение больше нигде не подтверждено (не больше 3 версий, название его не говорит): Audi A1 «задний», BMW X5 E70 «механика». ADAC — рынок Германии.
 
 | Марка · модель · поколение | Что | Было | Стало | Версий | Например |
 |---|---|---|---|---:|---|
@@ -63,60 +63,96 @@
 | BMW Seria 5 F10 | коробка | механика | автомат | 9 | F10 550i |
 | Mercedes-Benz CLA C178 | привод | передний | задний | 5 | CLA Coupe 200 EQ |
 | Audi A3 8V | коробка | механика | автомат | 4 | A3 2.0 TFSI 190HP |
+| BMW X6 E71 | коробка | механика | автомат | 4 | X6 Crossover xDrive35i |
+| Kia Rio Rio III | привод | полный | передний | 4 | Rio Hatchback 3d 1.4 DOHC CVVT |
+| Seat Leon Leon III | привод | задний | передний | 4 | Leon SC 1.2 TSI |
+| BMW X5 E70 | коробка | механика | автомат | 4 | X5 SUV xDrive35i |
 | Audi Q3 F3 | коробка | механика | автомат | 3 | Q3 40 TFSI Quattro |
 | BMW Seria 4 G22 | коробка | механика | автомат | 3 | 420i Gran Coupe |
+| Mercedes-Benz Sprinter Sprinter III | привод | передний | задний | 3 | Sprinter Furgon 516 CDI |
+| MG MG4 MG4 I | привод | передний | задний | 3 | MG4 I 51kWh |
 | Volvo S60 S60 II | привод | полный | передний | 3 | S60 Sedan 1.5 T3 DRIVE-E |
+| Mercedes-Benz GLC X253 | привод | задний | полный | 2 | GLC 200 d |
 | Volvo S60 S60 III | привод | передний | полный | 2 | S60 T8 Polestar Engineered |
+| Audi A1 A1 I | привод | задний | передний | 2 | A1 Sportback 5d 1.6 TDI |
+| BMW i3 G28 | привод | передний | задний | 2 | i3 Hatchback i3 Elektryczny |
+| Mercedes-Benz SLK R172 | привод | полный | задний | 2 | SLK Roadster 200 |
+| Subaru XV XV II | коробка | механика | автомат | 2 | XV Crossover 1.6 i |
 | Audi A6 C7 | привод | передний | полный | 2 | A6 Avant 3.0 TFSI |
 | Volvo V40 V40 II | привод | полный | передний | 2 | V40 Hatchback 1.6 T3 |
+| Volvo V60 V60 I | привод | задний | передний | 2 | V60 Kombi 2.0 D2 DRIVE-E |
 | Volvo V60 V60 I | привод | полный | передний | 2 | V60 Kombi 2.0 D4 DRIVE-E |
 | Audi A5 F5 | коробка | механика | автомат | 1 | A5 Coupe 50 TDI quattro |
 | Audi Q7 4L | коробка | механика | автомат | 1 | Q7 3.6 FSI Quattro |
 | BMW X3 F25 | коробка | механика | автомат | 1 | F25 X3 xDrive35i |
+| Mercedes-Benz GLC X253 Coupé (C253) | привод | задний | полный | 1 | GLC Coupe 200 d |
 | Mercedes-Benz GLE V167 | коробка | механика | автомат | 1 | GLE 450 4MATIC |
 | Volvo V60 V60 II | привод | передний | полный | 1 | V60 T8 Polestar Engineered |
 | Volvo XC90 XC90 I | коробка | механика | автомат | 1 | XC90 D5 |
+| Audi A8 D3 | коробка | механика | автомат | 1 | A8 Sedan 3.2 i V6 24V FSI quattro |
+| Ford Fusion Fusion I | коробка | автомат | механика | 1 | Fusion I 1.4 Duratorq TDCi |
+| Ford Ranger Ranger V | привод | передний | полный | 1 | Ranger Podwójna kabina 2019 2.0 EcoBlue |
+| Mercedes-Benz Citan W415 | привод | задний | передний | 1 | Citan Furgon Ekstradługi 1.5 109 CDI |
+| Mercedes-Benz GLA GLA I | привод | задний | передний | 1 | GLA Off-roader 1.6 200 |
+| Renault Espace Espace IV | привод | задний | передний | 1 | Espace Van 2.0 dCi |
+| Renault Kangoo Kangoo II | привод | полный | передний | 1 | Kangoo Mikrovan 1.5 dCi |
+| Toyota Verso Verso | привод | полный | передний | 1 | Verso Minivan 1.8 Valvematic |
+| Volvo ES90 ES90 I | привод | передний | задний | 1 | ES90 I Single Motor 88kWh |
+| Volkswagen Phaeton Phaeton I | коробка | механика | автомат | 1 | Phaeton I 3.2 V6 |
+| Kia Ceed Ceed II | привод | полный | передний | 1 | Ceed Hatchback 5d 1.0 T-GDI |
+| Hyundai H-1 H-1 II | привод | передний | задний | 1 | H-1 Wagon 2.5 CRDi |
+| Seat Ibiza Ibiza IV | привод | задний | передний | 1 | Ibiza SportCoupe 1.4 TSI |
+| Cupra Leon Leon II | привод | полный | передний | 1 | Leon Sportstourer 2.0 TDI |
+| Mazda CX-7 CX-7 | привод | передний | полный | 1 | CX-7 SUV 2.2 MZR-CD |
+| Mazda CX-7 CX-7 | коробка | автомат | механика | 1 | CX-7 SUV 2.3 |
+| Nissan GT-R GT-R | коробка | механика | автомат | 1 | GT-R Coupe 3.8 |
+| Nissan Primastar Primastar I | коробка | автомат | механика | 1 | Primastar I 2.0 dCi |
+| Citroen Berlingo Berlingo I | привод | полный | передний | 1 | Berlingo I 1.6 HDi |
+| Land Rover Range Rover Sport Range Rover Sport I | коробка | механика | автомат | 1 | Range Rover Sport I 3.0 TDV6 |
+| Porsche Cayenne Cayenne II | привод | задний | полный | 1 | Cayenne SUV 4.8 S V8 |
+| Mitsubishi L200 L200 IV | привод | передний | полный | 1 | L200 Double Cab 2.5 DOHC |
+| Mitsubishi Outlander Outlander II | привод | передний | полный | 1 | Outlander II 2.2 TC-SST |
+| Chevrolet Captiva Captiva I | привод | передний | полный | 1 | Captiva I 3.2 L |
+| Smart ForTwo ForTwo II | привод | передний | задний | 1 | ForTwo Coupe 1.0 |
+| Infiniti M M III | привод | полный | задний | 1 | M III 3.0 d V6 |
+| Isuzu D-Max D-Max III | привод | передний | задний | 1 | D-Max Single Cab 1.9 ddi |
+| BMW X3 G01 | коробка | механика | автомат | 1 | X3 SUV 2.0 20d |
+| Ford C-Max Mk2 | привод | задний | передний | 1 | C-Max Grand C-MAX 1.6 TDCi |
+| Ford S-Max Mk2 | привод | задний | передний | 1 | S-Max I 2.0 EcoBlue |
+| Renault Megane Mégane IV | привод | задний | передний | 1 | Megane Hatchback 5d 1.3 TCe 140 FAP |
+| Volvo V40 V40 II | привод | задний | передний | 1 | V40 Hatchback 1.6 T2 |
 | Volvo XC60 XC60 I | привод | полный | передний | 1 | XC60 SUV 2.0 T5 |
 
 ## ADAC говорит другое (проверить)
 
-Коробка или привод версии не подтверждены вторым источником, а все прочитанные версии ADAC с тем же мотором (страницы версий, `data/adac-details.json`) называют другое: **527 (2 %)** версий, колонка «ADAC: другое». Наше значение называет один источник — это бывает его ошибка, разница рынков (ADAC — Германия) или версия, которой ADAC не перечисляет; сами не меняются.
+Коробка или привод версии не подтверждены вторым источником, а все прочитанные версии ADAC с тем же мотором (страницы версий, `data/adac-details.json`) называют другое: **464 (2 %)** версий, колонка «ADAC: другое». Наше значение называет один источник — это бывает его ошибка, разница рынков (ADAC — Германия) или версия, которой ADAC не перечисляет; сами не меняются.
 
 | Марка · модель · поколение | Что | У нас | У ADAC | Версий ADAC | Наших версий | Откуда наше | Например |
 |---|---|---|---|---:|---:|---|---|
 | Volkswagen Golf Golf VI | привод | полный | передний | 54 | 1 | одна база: autocentrum | Golf Variant 1.6 TDI-CR DPF |
 | Mercedes-Benz Klasa V W447 | коробка | механика | автомат | 53 | 1 | одна база: autocentrum | Klasa V Ekstra Długi 250 BlueTEC |
 | Volkswagen Polo Polo V | привод | полный | передний | 48 | 14 | одна база: autocentrum | Polo Hatchback 3d 1.2 TSI |
-| Mercedes-Benz Sprinter Sprinter III | привод | передний | задний | 36 | 3 | одна база: autocentrum | Sprinter Furgon 516 CDI |
 | Mercedes-Benz Sprinter Sprinter III | привод | полный | задний | 30 | 13 | одна база: autocentrum | Sprinter Furgon 2.1 316 CDI |
 | Ssangyong Rexton Rexton IV | привод | передний | полный / задний | 24 | 2 | одна база: autocentrum | Rexton SUV 2.2 Diesel |
-| Volvo V60 V60 I | привод | задний | передний | 24 | 2 | одна база: autocentrum | V60 Kombi 2.0 D2 DRIVE-E |
 | Skoda Yeti Yeti | привод | полный | передний | 24 | 1 | одна база: autocentrum | Yeti Outdoor 1.4 TSI |
 | Opel Astra Astra K | коробка | автомат | механика | 24 | 1 | одна база: autocentrum | Astra Hatchback 5d 1.4 Turbo |
 | Ford Fiesta Mk7 | коробка | автомат | механика | 23 | 2 | одна база: autocentrum | Fiesta Hatchback 5d 1.0 EcoBoost |
 | Volvo V40 V40 II | привод | полный | передний | 22 | 32 | одна база: ultimatespecs | V40 Cross Country D3 Kinetic |
-| Kia Rio Rio III | привод | полный | передний | 22 | 4 | одна база: autocentrum | Rio Hatchback 3d 1.4 DOHC CVVT |
 | Volvo V60 V60 I | привод | полный | передний | 20 | 4 | одна база: autocentrum | V60 Cross Country 2.0 T5 |
 | Land Rover Freelander Freelander II | привод | передний | полный | 20 | 1 | одна база: autocentrum | Freelander II 2.2 eD4 |
 | Renault Twingo Twingo III | привод | передний | задний | 19 | 4 | одна база: autocentrum | Twingo GT 0.9 tce |
 | Toyota Yaris XP21 | привод | полный | передний | 19 | 3 | одна база: autocentrum | Yaris Cross 1.5 Hybrid Dynamic Force |
 | Volkswagen Sharan Sharan I | коробка | автомат | механика | 18 | 1 | одна база: autocentrum | Sharan I 2.0 i |
 | Skoda Rapid Rapid II | коробка | механика | автомат | 16 | 3 | одна база: autocentrum | Rapid Spaceback 1.4 TSI |
-| Nissan Primastar Primastar I | коробка | автомат | механика | 16 | 1 | одна база: autocentrum | Primastar I 2.0 dCi |
-| Isuzu D-Max D-Max III | привод | передний | полный / задний | 16 | 1 | одна база: autocentrum | D-Max Single Cab 1.9 ddi |
 | Subaru Legacy Legacy V | коробка | механика | автомат | 15 | 2 | одна база: autocentrum | Legacy Sedan 2.5 i |
 | Skoda Octavia Octavia III | привод | полный | передний | 14 | 4 | одна база: autocentrum | Octavia Liftback 1.6 TDI |
 | Ford Focus Mk2 | коробка | автомат | механика | 14 | 2 | одна база: ultimatespecs | Focus 1.6 TDCi 109HP CVT Ghia Sedan |
-| Mercedes-Benz GLA GLA I | привод | задний | передний | 14 | 1 | одна база: autocentrum | GLA Off-roader 1.6 200 |
 | Seat Alhambra Alhambra II | привод | полный | передний | 14 | 1 | одна база: autocentrum | Alhambra Van 2.0 TDI |
 | Ford Kuga Mk3 | коробка | механика | автомат | 14 | 1 | одна база: autocentrum | Kuga SUV 2.0 EcoBlue |
-| Ford S-Max Mk2 | привод | задний | полный / передний | 14 | 1 | одна база: autocentrum | S-Max I 2.0 EcoBlue |
 | Smart ForTwo ForTwo II | коробка | механика | автомат | 13 | 12 | одна база: autocentrum | ForTwo Cabrio 1.0 |
 | Skoda Roomster Roomster | коробка | автомат | механика | 13 | 1 | одна база: autocentrum | Roomster Mikrovan 1.6 TDI CR DPF |
 | Toyota RAV 4 XA40 | привод | передний | полный | 13 | 1 | одна база: autocentrum | RAV 4 MPV 2.0 Valvematic |
-| Volvo V40 V40 II | привод | задний | передний | 13 | 1 | одна база: autocentrum | V40 Hatchback 1.6 T2 |
 | Suzuki Vitara Vitara III | коробка | механика | автомат | 12 | 4 | одна база: autocentrum | Vitara SUV 2024 1.5 Strong Hybrid |
-| Ford Ranger Ranger V | привод | передний | полный | 12 | 1 | одна база: autocentrum | Ranger Podwójna kabina 2019 2.0 EcoBlue |
 | Mercedes-Benz GLB GLB | привод | передний | полный / задний | 12 | 1 | одна база: autocentrum | GLB SUV 2.0 220d |
 | Opel Zafira Zafira C | коробка | механика | автомат | 12 | 1 | одна база: autocentrum | Zafira Tourer 1.6 Turbo |
 | Audi A4 B8 | привод | передний | полный | 12 | 1 | одна база: autocentrum | A4 Limousine 3.0 TDI |
@@ -133,12 +169,10 @@
 | Fiat Punto Punto 2012 | коробка | автомат | механика | 10 | 1 | одна база: autocentrum | Punto Hatchback 5d 0.9 TwinAir 8v |
 | BMW X1 U11 | привод | полный | передний | 10 | 1 | одна база: autocentrum | X1 Crossover 2.0 20d |
 | Mercedes-Benz CLA C118 | коробка | механика | автомат | 10 | 1 | одна база: autocentrum | CLA Coupe 2.0 200d |
-| Renault Megane Mégane IV | привод | задний | передний | 10 | 1 | одна база: autocentrum | Megane Hatchback 5d 1.3 TCe 140 FAP |
 | Volkswagen Passat B7 | привод | полный | передний | 10 | 1 | одна база: autocentrum | Passat Alltrack 2.0 TSI |
 | Volvo S80 S80 II | коробка | автомат | механика | 9 | 1 | одна база: autocentrum | S80 Sedan 2.0 F |
 | Volvo V90 V90 II | привод | полный | передний | 9 | 1 | одна база: autocentrum | V90 Kombi 2.0 D3 |
 | Ford C-Max Mk2 | коробка | автомат | механика | 9 | 1 | одна база: autocentrum | C-Max Minivan 1.6 TDCi |
-| Ford C-Max Mk2 | привод | задний | передний | 9 | 1 | одна база: autocentrum | C-Max Grand C-MAX 1.6 TDCi |
 | Toyota Auris E15 | коробка | автомат | механика | 9 | 1 | одна база: autocentrum | Auris Hatchback 2.0 D-4D |
 | Volvo XC60 XC60 I | коробка | механика | автомат | 9 | 1 | одна база: autocentrum | XC60 SUV 2.0 T5 DRIVE-E |
 | Ford Kuga Mk2 | коробка | автомат | механика | 8 | 5 | одна база: autocentrum | Kuga 2.0 TDCi 120HP 4x2 Titanium |
@@ -148,23 +182,34 @@
 | Alfa Romeo Giulia Giulia II | коробка | механика | автомат | 8 | 2 | одна база: autocentrum | Giulia Sedan 2.2 JtdM-2 |
 | BMW Seria 5 E60 | привод | полный | задний | 8 | 2 | одна база: autocentrum | Seria 5 Sedan 535i |
 | Mercedes-Benz GLB GLB | привод | передний | полный | 8 | 1 | одна база: autocentrum | GLB SUV 2.0 220d |
-| Toyota Verso Verso | привод | полный | передний | 8 | 1 | одна база: autocentrum | Verso Minivan 1.8 Valvematic |
 | Opel Corsa Corsa D | коробка | автомат | механика | 8 | 1 | одна база: autocentrum | Corsa Hatchback 3d 1.7 CDTI ECOTEC |
 | Mercedes-Benz Klasa C W204 | коробка | механика | автомат | 8 | 1 | одна база: autocentrum | Klasa C Limuzyna 3.0 350 CDI BlueEFFICIE |
-| Mercedes-Benz SLK R172 | привод | полный | задний | 7 | 2 | одна база: autocentrum | SLK Roadster 200 |
 | Volkswagen Caddy Caddy III | коробка | автомат | механика | 7 | 2 | одна база: autocentrum | Caddy Kombi Maxi 2.0 TDI |
 | Seat Ibiza Ibiza IV | коробка | автомат | механика | 7 | 2 | одна база: autocentrum | Ibiza Hatchback 5d 1.0 MPI |
 | Mazda Mazda 2 Mazda 2 II | коробка | автомат | механика | 7 | 2 | одна база: autocentrum | Mazda 2 Hatchback 5d 1.3 MZR |
 | Audi A3 8V | привод | полный | передний | 7 | 2 | одна база: autocentrum | A3 Sportback 5d 1.6 TDI clean diesel |
 | Toyota RAV 4 XA50 | коробка | автомат | механика | 7 | 2 | одна база: autocentrum | RAV 4 SUV 2.0 Dual VVT-iE |
-| Renault Kangoo Kangoo II | привод | полный | передний | 7 | 1 | одна база: autocentrum | Kangoo Mikrovan 1.5 dCi |
 | Volvo EX30 EX30 I | привод | задний | полный | 7 | 1 | одна база: autocentrum | EX30 I 69kWh Twin |
 | Citroen C3 Aircross C3 Aircross I | коробка | механика | автомат | 7 | 1 | одна база: autocentrum | C3 Aircross Crossover 1.6 BlueHDI |
 | KGM Rexton Rexton IV | привод | передний | полный | 7 | 1 | одна база: autocentrum | Rexton SUV 2.2 diesel |
 | Genesis GV80 GV80 | привод | задний | полный | 7 | 1 | одна база: ultimatespecs | GV80 GV80 2.5 GV80 2.5T RWD |
 | Peugeot 2008 2008 I | коробка | автомат | механика | 7 | 1 | одна база: autocentrum | 2008 SUV 1.6 BlueHDi |
 | Volvo S60 S60 II | привод | полный | передний | 7 | 1 | одна база: autocentrum | S60 Cross Country 2.0 T5 |
-| … ещё 161 | | | | | | | |
+| Seat Leon Leon III | привод | полный | передний | 6 | 10 | одна база: autocentrum | Leon ST 2.0 TDI |
+| Mazda Mazda 6 Mazda 6 III | привод | полный | передний | 6 | 3 | одна база: autocentrum | Mazda 6 Sport Kombi 2018 2.2 Skyactiv-D |
+| Skoda Superb Superb II | коробка | автомат | механика | 6 | 3 | одна база: autocentrum | Superb Sedan 1.6 TDI CR DPF |
+| Audi A4 B9 | коробка | механика | автомат | 6 | 2 | одна база: autocentrum | A4 Allroad 40 TDI quattro |
+| Skoda Yeti Yeti | коробка | автомат | механика | 6 | 2 | одна база: autocentrum | Yeti Minivan 1.8 TSI |
+| Volkswagen Arteon Arteon | коробка | механика | автомат | 6 | 2 | одна база: autocentrum | Arteon Fastback 2.0 TDI |
+| Seat Alhambra Alhambra I | коробка | автомат | механика | 6 | 2 | одна база: autocentrum | Alhambra Minivan 2.0 i |
+| Mercedes-Benz CLA C178 | привод | задний | полный / передний | 6 | 2 | одна база: autocentrum | CLA Saloon 1.5 200 Mild Hybrid |
+| Peugeot 308 308 I | коробка | автомат | механика | 6 | 2 | одна база: autocentrum | 308 SW 2.0 HDi FAP |
+| Opel Insignia Insignia I | коробка | автомат | механика | 6 | 1 | одна база: autocentrum | Insignia Sedan 2.0 CDTI ECOTEC |
+| Citroen C5 Aircross C5 Aircross I | коробка | механика | автомат | 6 | 1 | одна база: autocentrum | C5 Aircross SUV 1.5 BlueHDi |
+| Alfa Romeo Giulia Giulia II | привод | задний | полный | 6 | 1 | одна база: autocentrum | Giulia Sedan 2.0 Turbo |
+| Chevrolet Epica Epica I | коробка | автомат | механика | 6 | 1 | одна база: autocentrum | Epica I 2.0 24v |
+| Ssangyong Rexton Rexton IV | привод | передний | полный | 6 | 1 | одна база: autocentrum | Rexton SUV 2.2 diesel |
+| … ещё 120 | | | | | | | |
 
 ## По источнику строки
 
