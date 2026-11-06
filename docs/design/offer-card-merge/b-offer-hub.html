@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вариант B — оффер главный, карточка внутри</title>
+<link rel="stylesheet" href="merge.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-road" viewBox="0 0 24 24"><path d="M4 20 8 4M20 20 16 4M12 4v3M12 11v3M12 18v2"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M5 21h10M7 11h6M15 9h2l2 2v6a2 2 0 0 1-4 0"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
+  <symbol id="i-axle" viewBox="0 0 24 24"><circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/><path d="M8 7h8M8 17h8M12 7v10"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3M4 5v4h4M4 13a8 8 0 0 0 14.9 3M20 19v-4h-4"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-3-7z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+</svg>
+
+<div class="variant"><b>Вариант B · «Оффер — главная, карточка внутри»</b><span>менеджер работает в оффере, как сейчас; карточка машины — вкладка «Машина» внутри оффера и общий архив; проверка — у каждого оффера своя</span></div>
+
+<div class="nav"><div class="nav-in">
+  <span class="mk">MT</span><span class="prod">Mantexlab Tools</span>
+  <span class="hide-m">CRM</span><span class="hide-m">Szukaj</span><span class="hide-m">Карточки авто</span><span class="on">Офферы</span><span class="hide-m">Kalkulator</span><span class="hide-m">VIN Check</span>
+  <div class="right"><span class="lang">RU</span><span class="ava">АМ</span></div>
+</div></div>
+
+<main>
+  <div class="crumbs"><a>Офферы</a><svg class="i s"><use href="#i-chev"/></svg><span>Škoda Octavia Combi · Pan Jan Przykładowy</span></div>
+
+  <header class="card" style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:space-between">
+    <div>
+      <div class="title"><h1>Škoda Octavia Combi</h1><span class="sub">для Pan Jan Przykładowy</span></div>
+      <div class="badges" style="margin-top:8px"><span class="b">Черновик</span><span class="b">PL</span><span class="b">через фирму · VAT 23 %</span><span class="b info">Из объявления · mobile.de</span><span class="b good"><svg class="i s"><use href="#i-shield"/></svg>Проверка этого оффера: 5 из 7</span></div>
+    </div>
+    <div class="btns hide-m" style="grid-template-columns:auto auto auto"><span class="btn">Скачать PDF</span><span class="btn">Отправить e-mail</span><span class="btn pri"><svg class="i s"><use href="#i-send"/></svg>Отметить отправленным</span></div>
+  </header>
+
+  <div class="grid-main flow" style="grid-template-columns:minmax(0,1fr) 460px">
+    <div class="col">
+      <section class="card o2">
+        <div class="bhead"><h2>Лист для клиента</h2><span class="small">так увидит клиент · страница по ссылке и PDF</span></div>
+        <div class="sheet"><div class="pg" style="font-size:13px">
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:12px"><b>Auto Nowak Import</b><span class="tiny">Oferta dla: Pan Jan Przykładowy · 06.11.2026</span></div>
+          <div class="two" style="grid-template-columns:1.2fr 1fr;gap:14px">
+            <div class="ph" style="aspect-ratio:3/2"></div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <b style="font-size:17px">Škoda Octavia Combi 2.0 TDI Style</b>
+              <span class="tiny">03.2021 · 89 000 km · Diesel 2,0 · 150 KM · DSG</span>
+              <span class="tiny">Cena na gotowo w Polsce*</span>
+              <span style="font-size:24px;font-weight:700">96 450 zł</span>
+              <span class="tiny">przez firmę · faktura VAT 23% · cena w ogłoszeniu 21 900 €</span>
+              <span class="btn pri sm" style="align-self:flex-start;margin-top:4px">Zadzwoń</span>
+            </div>
+          </div>
+          <div class="three" style="margin-top:12px">
+            <div class="f6">Co wiemy z ogłoszenia<b>bezwypadkowy · książka serwisowa · 1 właściciel</b></div>
+            <div class="f6">Wyposażenie<b>6/10 · nawigacja, kamera, ACC</b></div>
+            <div class="f6 good">Cena na tle rynku<b>3 % poniżej mediany</b></div>
+          </div>
+          <div class="tiny" style="margin-top:10px">Nie podano: liczba miejsc, kolor wnętrza, przegląd — sprawdzimy na oględzinach · Ocena · Proces · Kalkulacja · Kontakt</div>
+        </div></div>
+      </section>
+    </div>
+
+    <aside class="col">
+      <section class="card o1" style="padding-top:8px">
+        <div class="tabs"><span class="tab on">Машина</span><span class="tab">Проверка <span class="n">5/7</span></span><span class="tab">Клиент</span><span class="tab">Расчёт</span><span class="tab hide-m">Лист</span></div>
+        <div style="padding-top:14px;display:flex;flex-direction:column;gap:12px">
+          <div class="vin" style="margin-top:0">VIN <span class="vinbox">TESTVIN0000000001</span><span class="icobtn"><svg class="i s"><use href="#i-copy"/></svg></span><span class="b info hide-m" style="margin-left:auto">карточка машины</span></div>
+          <dl class="facts" style="grid-template-columns:1fr 1fr">
+            <div class="fact"><svg class="i"><use href="#i-cal"/></svg><div><dt>Регистрация</dt><dd>03.2021</dd></div></div>
+            <div class="fact"><svg class="i"><use href="#i-road"/></svg><div><dt>Пробег</dt><dd>89 000 км</dd></div></div>
+            <div class="fact"><svg class="i"><use href="#i-fuel"/></svg><div><dt>Двигатель</dt><dd>Дизель 2,0 л</dd></div></div>
+            <div class="fact"><svg class="i"><use href="#i-gear"/></svg><div><dt>Коробка</dt><dd>Автомат (DSG)</dd></div></div>
+          </dl>
+          <div class="unknown"><b>Не найдено на странице:</b><span class="b">места</span><span class="b">цвет салона</span><span class="b">техосмотр</span></div>
+          <div class="sheet" style="padding:12px">
+            <div class="bhead" style="margin-bottom:8px"><b>Место и продавец</b><span class="lock"><svg class="i s"><use href="#i-lock"/></svg>только вам</span></div>
+            <div class="kv"><span>Где</span><b>Германия, 12345 Musterstadt</b><span>Продавец</span><b>Autohaus Muster GmbH · дилер</b><span>Отзывы</span><b>★ 4,6 · 87</b></div>
+          </div>
+          <div class="opt"><span>Показать клиенту ссылку на объявление</span><span class="sw"></span></div>
+          <div class="opt"><span>Показать клиенту продавца</span><span class="sw"></span></div>
+          <div class="opt"><span>Показать клиенту порталы</span><span class="sw"></span></div>
+          <div class="btns wrap"><span class="btn sm"><svg class="i s"><use href="#i-refresh"/></svg>Перечитать объявление</span><span class="btn sm"><svg class="i s"><use href="#i-ext"/></svg>Открыть объявление</span></div>
+          <div class="callout"><span>У этой машины ещё 1 оффер: <b>Pani Anna Testowa</b> · черновик. Проверку там делают заново.</span></div>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card hide-m">
+    <div class="bhead"><h2>Где тогда живут карточки</h2><span class="small">Офферы → «Архив объявлений»: одна строка на машину</span></div>
+    <div class="olist">
+      <div class="orow" style="grid-template-columns:1.4fr 1fr 1fr auto"><b>Škoda Octavia Combi · TESTVIN0000000001</b><span class="tiny">mobile.de · прочитано 05.11</span><span class="tiny">2 оффера · Pan Jan Przykładowy, Pani Anna Testowa</span><span class="btn sm">Новый оффер</span></div>
+      <div class="orow" style="grid-template-columns:1.4fr 1fr 1fr auto"><b>VW Passat Variant · TESTVIN0000000002</b><span class="tiny">AutoScout24 · прочитано 04.11</span><span class="tiny">офферов нет</span><span class="btn sm">Новый оффер</span></div>
+    </div>
+  </section>
+</main>
+
+<div class="mbar"><div class="t"><span class="tiny">Под ключ · Pan Jan Przykładowy</span><b>96 450 zł</b></div><span class="btn pri">Отметить отправленным</span></div>
+</body>
+</html>

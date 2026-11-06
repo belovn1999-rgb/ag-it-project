@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Вариант A — карточка главная, оффер — выдача клиенту</title>
+<link rel="stylesheet" href="merge.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-road" viewBox="0 0 24 24"><path d="M4 20 8 4M20 20 16 4M12 4v3M12 11v3M12 18v2"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16M5 21h10M7 11h6M15 9h2l2 2v6a2 2 0 0 1-4 0"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M5 19l2-2M17 7l2-2"/></symbol>
+  <symbol id="i-axle" viewBox="0 0 24 24"><circle cx="6" cy="7" r="2"/><circle cx="18" cy="7" r="2"/><circle cx="6" cy="17" r="2"/><circle cx="18" cy="17" r="2"/><path d="M8 7h8M8 17h8M12 7v10"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.9-3M4 5v4h4M4 13a8 8 0 0 0 14.9 3M20 19v-4h-4"/></symbol>
+  <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></symbol>
+  <symbol id="i-send" viewBox="0 0 24 24"><path d="M4 12 20 4l-6 16-3-7z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+</svg>
+
+<div class="variant rec"><b>Вариант A · «Карточка — главная, оффер — выдача клиенту»</b><span>рекомендация · одна страница машины (данные + проверка); оффер — отдельная выдача для каждого клиента</span></div>
+
+<div class="nav"><div class="nav-in">
+  <span class="mk">MT</span><span class="prod">Mantexlab Tools</span>
+  <span class="hide-m">CRM</span><span class="hide-m">Szukaj</span><span class="on">Карточки авто</span><span class="hide-m">Офферы</span><span class="hide-m">Kalkulator</span><span class="hide-m">VIN Check</span>
+  <div class="right"><span class="lang">RU</span><span class="ava">АМ</span></div>
+</div></div>
+
+<main>
+  <div class="crumbs"><a>Карточки авто</a><svg class="i s"><use href="#i-chev"/></svg><span>Объявления дилеров</span><svg class="i s"><use href="#i-chev"/></svg><span>Škoda Octavia Combi</span></div>
+
+  <header class="card head">
+    <div>
+      <div class="title"><h1>Škoda Octavia Combi</h1><span class="sub">2.0 TDI Style · IV, до рестайлинга</span></div>
+      <div class="vin">VIN <span class="vinbox">TESTVIN0000000001</span><span class="icobtn"><svg class="i s"><use href="#i-copy"/></svg></span></div>
+      <div class="badges">
+        <span class="b good"><svg class="i s"><use href="#i-shield"/></svg>Проверено · 05.11</span>
+        <span class="b info">Объявление дилера</span>
+        <span class="b">Германия · Musterstadt</span>
+        <span class="b good">НДС к вычету</span>
+        <span class="b fresh">2 оффера</span>
+      </div>
+      <p class="small" style="margin-top:10px">Прочитано расширением 05.11 в 10:42 · объявление на портале 35 дней · одна карточка на машину (склейка по VIN)</p>
+    </div>
+    <dl class="facts">
+      <div class="fact"><svg class="i"><use href="#i-cal"/></svg><div><dt>Первая регистрация</dt><dd>03.2021</dd></div></div>
+      <div class="fact"><svg class="i"><use href="#i-road"/></svg><div><dt>Пробег</dt><dd>89 000 км</dd></div></div>
+      <div class="fact"><svg class="i"><use href="#i-fuel"/></svg><div><dt>Двигатель</dt><dd>Дизель 2,0 л</dd></div></div>
+      <div class="fact"><svg class="i"><use href="#i-bolt"/></svg><div><dt>Мощность</dt><dd>110 кВт · 150 л. с.</dd></div></div>
+      <div class="fact"><svg class="i"><use href="#i-gear"/></svg><div><dt>Коробка</dt><dd>Автомат (DSG)</dd></div></div>
+      <div class="fact"><svg class="i"><use href="#i-axle"/></svg><div><dt>Привод · кузов</dt><dd>Передний · универсал</dd></div></div>
+    </dl>
+  </header>
+
+  <div class="grid-main flow">
+    <div class="col">
+      <div class="card gal o1"><div class="photo"><span class="count">1 / 24</span></div><div class="thumbs"><span></span><span></span><span></span><span></span><span></span><span></span><span class="hide-m"></span></div></div>
+
+      <!-- ПРОВЕРКА — один блок вместо «Ocena» оффера и «Не найдено на странице» черновика -->
+      <section class="card o3">
+        <div class="bhead"><h2>Проверка машины</h2><span class="small">проверил: Анна М. · 05.11 · <a style="color:var(--brand)">история</a></span></div>
+        <div class="verdict"><svg class="i"><use href="#i-shield"/></svg>Рекомендуем к дальнейшей проверке<span class="r">5 ✓ · 1 ! · 1 ?</span></div>
+        <div class="lines">
+          <div class="line"><span class="dot ok">✓</span><span>Без ДТП — по словам продавца</span><span class="src">объявление</span></div>
+          <div class="line"><span class="dot ok">✓</span><span>Сервисная книжка, последнее ТО 02.2026 на 84 000 км</span><span class="src">объявление</span></div>
+          <div class="line"><span class="dot ok">✓</span><span>Один владелец · гарантия продавца 12 мес.</span><span class="src">объявление</span></div>
+          <div class="line"><span class="dot ok">✓</span><span>Пробег 17 800 км в год — обычный</span><span class="src">расчёт</span></div>
+          <div class="line"><span class="dot warn">!</span><span>Мелкие царапины на заднем бампере<q>kleine Kratzer am Heckstoßfänger</q></span><span class="src">описание</span></div>
+          <div class="line"><span class="dot q">?</span><span>Техосмотр — продавец не указал, проверим на осмотре</span><span class="src">нет данных</span></div>
+          <div class="line"><span class="dot ok">✓</span><span>Продажа от фирмы, не «komis» · только вам</span><span class="src"><svg class="i s"><use href="#i-lock"/></svg></span></div>
+        </div>
+        <div class="unknown" style="margin-top:10px"><b>Не найдено на странице:</b><span class="b">места</span><span class="b">цвет салона</span><span class="b">техосмотр</span><span class="tiny">— в оффере будет «nie podano — sprawdzimy»</span></div>
+        <div class="three" style="margin-top:14px">
+          <div class="sheet market" style="padding:12px"><div class="small"><b style="color:var(--ink)">Рынок</b> · 14 похожих · DE</div><div class="bar"><span class="med" style="left:55%"></span><span class="pin" style="left:44%"></span></div><div class="scale"><span>20 400 €</span><span>медиана 22 600 €</span><span>25 900 €</span></div><div class="b good" style="align-self:flex-start">на 3 % ниже медианы</div></div>
+          <div class="sheet" style="padding:12px"><div class="small"><b style="color:var(--ink)">Торг</b> · 35 дней в продаже</div><div class="sum m" style="margin-top:6px">2–3 %</div><div class="small">≈ 450–650 € · цена снижена 2×</div></div>
+          <div class="sheet" style="padding:12px"><div class="small"><b style="color:var(--ink)">В Польше</b> · otomoto, 23 шт.</div><div class="sum m" style="margin-top:6px">101 900 zł</div><div class="small">медиана · у нас ≈ 5 450 zł дешевле</div></div>
+        </div>
+        <div class="btns wrap" style="margin-top:14px;grid-template-columns:auto auto 1fr"><span class="btn sm"><svg class="i s"><use href="#i-refresh"/></svg>Перечитать объявление</span><span class="btn sm">История цены (Carvago)</span><span></span></div>
+      </section>
+
+      <div class="two o4">
+        <section class="card">
+          <div class="bhead"><h2>Состояние</h2><span class="b">по объявлению</span></div>
+          <div class="facts6">
+            <div class="f6 good">ДТП<b>не было</b></div><div class="f6 good">Сервис<b>книжка</b></div><div class="f6">Владельцев<b>1</b></div>
+            <div class="f6 good">Гарантия<b>12 мес.</b></div><div class="f6 unk">Техосмотр<b>не указан</b></div><div class="f6 good">Повреждения<b>нет</b></div>
+          </div>
+        </section>
+        <section class="card">
+          <div class="bhead"><h2>Комплектация</h2><span class="small">31 опция</span></div>
+          <div class="lvl">6/10 — хорошая <span class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i></span></div>
+          <div class="chips"><span class="chip">Навигация</span><span class="chip">Камера заднего вида</span><span class="chip">LED-фары</span><span class="chip">Адаптивный круиз</span><span class="chip">Подогрев сидений</span><span class="chip">Фаркоп</span></div>
+          <div class="acc" style="margin-top:10px"><span>Комфорт · 9</span><span>›</span></div><div class="acc"><span>Безопасность и ассистенты · 8</span><span>›</span></div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ПАНЕЛЬ СПРАВА: цена, место и продавец (только сотруднику), офферы по машине -->
+    <aside class="col">
+      <section class="card panel o2">
+        <div><div class="cap">Цена в объявлении</div><div class="sum">21 900 € <span style="font-size:15px;font-weight:500;color:var(--muted)">брутто</span></div><div class="inf">НДС 19 % к вычету · нетто 18 403 €</div></div>
+        <div class="rows">
+          <div class="row"><span class="k">Под ключ в Польше, ориентир</span><b>≈ 96 450 zł</b></div>
+          <div class="row"><span class="k">Способ</span><b>через фирму, VAT 23 %</b></div>
+          <div class="row"><span class="k">Курс</span><b>4,27 zł за €</b></div>
+        </div>
+        <span class="btn pri w"><svg class="i s"><use href="#i-plus"/></svg>Подготовить оффер клиенту</span>
+        <div class="note">Клиент видит только оффер: ссылку на объявление, продавца и порталы вы включаете в оффере сами (по умолчанию скрыты).</div>
+      </section>
+
+      <section class="card o5">
+        <div class="bhead"><h2>Место и продавец</h2><span class="lock"><svg class="i s"><use href="#i-lock"/></svg>только вам</span></div>
+        <div class="kv"><span>Где</span><b>Германия, 12345 Musterstadt</b><span>Продавец</span><b>Autohaus Muster GmbH · дилер</b><span>Отзывы</span><b>★ 4,6 · 87 · 94 % рекомендуют</b><span>Портал</span><b>mobile.de · №&nbsp;000000001</b></div>
+        <div class="btns" style="margin-top:12px"><span class="btn sm"><svg class="i s"><use href="#i-ext"/></svg>Открыть объявление</span><span class="btn sm"><svg class="i s"><use href="#i-pin"/></svg>Тариф доставки</span></div>
+      </section>
+
+      <section class="card o6">
+        <div class="bhead"><h2>Офферы по этой машине</h2><span class="small">2</span></div>
+        <div class="olist">
+          <div class="orow"><b>Pan Jan Przykładowy</b><span class="p">96 450 zł</span><span class="tiny">PL · через фирму · отправлен 05.11</span><span class="b good" style="justify-self:end">открыт 2×</span></div>
+          <div class="orow"><b>Pani Anna Testowa</b><span class="p">98 100 zł</span><span class="tiny">PL · напрямую · черновик</span><span class="b" style="justify-self:end">черновик</span></div>
+        </div>
+        <p class="note" style="margin-top:10px">Каждый оффер — свой снимок для одного клиента: способ, расчёт, тексты, «что показать». Карточка общая.</p>
+      </section>
+    </aside>
+  </div>
+
+  <section class="card hide-m">
+    <div class="bhead"><h2>Что откроется по «Подготовить оффер»</h2><span class="small">редактор оффера — как сейчас, данные машины и проверка берутся из карточки</span></div>
+    <div class="two" style="grid-template-columns:1.3fr 1fr">
+      <div class="sheet"><div class="pg"><div style="display:flex;gap:12px"><div class="ph" style="width:180px;height:110px"></div><div><b style="font-size:15px">Škoda Octavia Combi 2.0 TDI Style</b><div class="tiny">03.2021 · 89 000 km · Diesel · DSG</div><div style="margin-top:8px;font-size:20px;font-weight:700">96 450 zł</div><div class="tiny">Cena na gotowo w Polsce · przez firmę, faktura VAT 23%</div></div></div><div class="tiny" style="margin-top:10px">Stan · Wyposażenie 6/10 · Cena na tle rynku · Ocena · Co dalej · Kontakt — лист клиента по ссылке, PDF и письмо — как сейчас</div></div></div>
+      <div class="col" style="gap:8px">
+        <div class="opt"><span>Клиент · обращение и имя</span><span class="small">в оффере</span></div>
+        <div class="opt"><span>Способ покупки и расчёт «под ключ»</span><span class="small">в оффере</span></div>
+        <div class="opt"><span>Требования клиента (O6), альтернативы</span><span class="small">в оффере</span></div>
+        <div class="opt"><span>Показать клиенту: ссылку · продавца · порталы</span><span class="small">в оффере, выкл.</span></div>
+        <div class="opt"><span>Фото, VIN, оснащение, проверка, рынок</span><span class="small"><b style="color:var(--brand)">из карточки</b></span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="mbar"><div class="t"><span class="tiny">Под ключ, ориентир</span><b>≈ 96 450 zł</b></div><span class="btn pri">Подготовить оффер</span></div>
+</body>
+</html>
