@@ -1,6 +1,6 @@
 # Справочник моделей — 7 мест (третий ряд)
 
-Сгенерировано `tools/seats.py` (2026-11-06) из `data/model-engines.csv`. B61, решение владельца 02.11 (кнопка «7 miejsc» формы сайта). Колонка «Места» — числа мест версии: «5/7» — третий ряд за доплату, «7» — всегда семь. Источники: каталог ADAC («Sitzanzahl / Sitzanzahl maximal» страницы версии, «(7-Sitzer)» в названии), ultimatespecs (страница и название версии), autocentrum (число мест мотора). **Подтверждено** — два источника называют третий ряд у поколения, один из них — у этой версии.
+Сгенерировано `tools/seats.py` (2026-11-07) из `data/model-engines.csv`. B61, решение владельца 02.11 (кнопка «7 miejsc» формы сайта). Колонка «Места» — числа мест версии: «5/7» — третий ряд за доплату, «7» — всегда семь. Источники: каталог ADAC («Sitzanzahl / Sitzanzahl maximal» страницы версии, «(7-Sitzer)» в названии), ultimatespecs (страница и название версии), autocentrum (число мест мотора). **Подтверждено** — два источника называют третий ряд у поколения, один из них — у этой версии.
 
 | Итог | поколений |
 |---|---|
@@ -99,7 +99,7 @@
 | Citroen | Berlingo | Berlingo I | 1996–2005 | 5/7 | adac | Berlingo I 1.6 16V, Berlingo I 1.6 HDi, Berlingo I 1.6 HDi, Berlingo I 1.6 HDi |
 | Citroen | C-Crosser | C-Crosser I | 2007–2007 | 5/7 | adac |  |
 | Citroen | C3 Aircross | C3 Aircross II | 2024–2024 | 5/7 | adac | C3 Aircross Crossover 1.2 Turbo |
-| Citroen | C4 SpaceTourer | C4 SpaceTourer | 2018–2018 | 7 | autocentrum |  |
+| Citroen | Grand C4 Picasso / SpaceTourer | Grand C4 SpaceTourer | 2018–2018 | 7 | autocentrum |  |
 | Citroen | Grand C4 Picasso / SpaceTourer | Grand C4 Picasso II | 2013–2016 | 5/7 | autocentrum |  |
 | Citroen | Grand C4 Picasso / SpaceTourer | Grand C4 Picasso I | 2006–2010 | 7 | autocentrum |  |
 | Citroen | Jumper | Jumper II | 2004–2006 | 8 | autocentrum |  |

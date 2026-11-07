@@ -481,6 +481,14 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
     2021–2022. Сводка и список — `docs/MODEL-COVERAGE.md`. Выгрузка (владелец, из терминала):
     `ssh -i ~/.ssh/autogood_site zrok@159.195.5.15 'cd /home/zrok/app/platform && php8.4' < platform/tools/portals/export-listings.php > listings.csv`
     (скрипт `platform/tools/portals/export-listings.php` платформы — только SELECT по `portal_search_listings` / `portal_listings` / `portal_searches.filters`).
+    **Замер 07.11** (новая выгрузка владельца, 1 955 объявлений, 1 811 годных): **99,8 %** находят свою версию
+    (AutoScout24 DE 99,9 %, otomoto 99,3 %, остальные порталы — 100 %). Скрипт сверки теперь считает как распознавание
+    платформы (plug-in до +70 % к мощности ДВС, версия и поколение прошлого года для машин, зарегистрированных через год
+    после конца выпуска). Добавлено поколение Citroën Grand C4 SpaceTourer 2018–2021 — у autocentrum это кузов «Grand»
+    модели C4 SpaceTourer, правило `BODY_MODELS` в `tools/build-model-engine-table.py` переносит его к модели mobile.de
+    «Grand C4 Picasso / SpaceTourer»; на платформе названия «Grand C4 SpaceTourer», «Grand C4 Picasso» находят её
+    (доска 3а.68, `65f44f5f`, не выложено). Не нашлись 3 объявления с мощностью, которой у модели нет ни в одном
+    источнике (BMW 5 2024 140 кВт бензин, Sportage 2023 110 кВт дизель, Octavia 2021 143 кВт дизель) — `docs/MODEL-COVERAGE.md`.
 19. ✅ Исправления по проверке на объявлениях (25.10). (1) **Новые версии из ADAC:** `tools/collect-adac-extra.py` —
     версии ADAC с 2019 года, которых нет у ultimatespecs и autocentrum в той же фазе (тот же вид топлива, кВт, объём из
     названия, год продажи), только где поколение ADAC и наше начинаются в один год (± 1); по странице версии на мотор —

@@ -428,6 +428,12 @@ FUEL_RU = {
     "flex": "бензин/E85 (Flexible Fuel)",
 }
 FUEL_CODE = {text: code for code, text in FUEL_RU.items()}
+# (brand, autocentrum model, body name part) → (model, mobile.de model, generation): a body autocentrum files under
+# another model (2026-11-07).
+BODY_MODELS = {
+    ("Citroen", "C4 SpaceTourer", "SpaceTourer Grand"): ("Grand C4 Picasso", "Grand C4 Picasso / SpaceTourer",
+                                                         "Grand C4 SpaceTourer"),
+}
 AUTO = re.compile(
     r"\b(auto(?![- ]?start)|aut|automatic|automatik|s[ -]?tronic|tiptronic|multitronic|dsg|steptronic|dkg|"
     r"powershift|eat\d|e-eat\d|edc|x-?tronic|cvt|e-cvt|multidrive|geartronic|g-?tronic|\d+g-?(tronic|dct)|"
@@ -653,6 +659,16 @@ def main():
                                      if (m["brand"], m["label"]) not in have and m["generations"]]
             for name, count in sorted(autocentrum.merge(rows, ac).items()):
                 print(f"   autocentrum: {name}: {count}")
+        # A body autocentrum files under another model (2026-11-07, the listings check: Grand C4 SpaceTourer 2018-2022,
+        # the renamed Grand C4 Picasso II, is the "Grand" body of its C4 SpaceTourer; mobile.de keeps it in
+        # "Grand C4 Picasso / SpaceTourer") — the rows go to that model as its own generation.
+        moved = 0
+        for row in rows:
+            for (brand, model, body), (label, mobile, code) in BODY_MODELS.items():
+                if row["Марка"] == brand and row["Модель"] == model and body in row["Кузов"]:
+                    row["Модель"], row["Модель mobile.de"], row["Поколение"], row["Этап"] = label, mobile, code, "весь выпуск"
+                    moved += 1
+        print(f"   кузова к своей модели: {moved}")
         # Gearbox and drive of the rows merge() made from ultimatespecs models: their version pages too.
         for row in rows:
             found = version_pages.get(row["Ссылка"])

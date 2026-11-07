@@ -1,6 +1,6 @@
 {
  "source": "https://www.ultimatespecs.com",
- "generatedAt": "2026-11-06",
+ "generatedAt": "2026-11-07",
  "models": [
   {
    "brand": "Audi",
@@ -34719,8 +34719,37 @@
      "years": "2018–2021",
      "mobileModel": "C4 SpaceTourer",
      "bodies": [
-      "C4 SpaceTourer Grand (autocentrum)",
       "C4 SpaceTourer Van (autocentrum)"
+     ],
+     "engines": {
+      "petrol": {
+       "1199": [
+        131
+       ]
+      },
+      "diesel": {
+       "1499": [
+        131
+       ],
+       "1997": [
+        163
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "model": "Grand C4 Picasso / SpaceTourer",
+   "generations": [
+    {
+     "code": "Grand C4 SpaceTourer",
+     "phase": "весь выпуск",
+     "years": "2018–2021",
+     "mobileModel": "Grand C4 Picasso / SpaceTourer",
+     "bodies": [
+      "C4 SpaceTourer Grand (autocentrum)"
      ],
      "engines": {
       "petrol": {
@@ -34741,13 +34770,7 @@
        ]
       }
      }
-    }
-   ]
-  },
-  {
-   "brand": "Citroen",
-   "model": "Grand C4 Picasso / SpaceTourer",
-   "generations": [
+    },
     {
      "code": "Grand C4 Picasso II",
      "phase": "рестайлинг",
