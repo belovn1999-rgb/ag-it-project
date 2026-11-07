@@ -15,13 +15,21 @@ a rerun skips what is done, so it can be stopped and resumed any time.
     python3 tools/enrich-model-versions.py [--since 2015] [--limit N] [--cache DIR]
     python3 tools/enrich-model-versions.py --since 1995   # 2026-10-21: every gap, doors and seats too
     python3 tools/enrich-model-versions.py --reparse      # 2026-11-02: the pages read, again from the cache
+    python3 tools/enrich-model-versions.py --check        # 2026-11-07: pages of the second-source check (below)
+
+--check: the versions of data/ultimatespecs-check.json (ultimatespecs read again for the models we have from
+autocentrum or ADAC only) whose list gives no gearbox or drive, where our row has that value from one source only —
+one page per row (a version named like our drive: "4Motion" for all-wheel, none of those words for front / rear).
+tools/confirm.py then counts what the page states as the second source.
 """
 import argparse
+import collections
 import csv
 import json
 import os
 import re
 import subprocess
+import sys
 import time
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128 Safari/537.36"
@@ -70,6 +78,7 @@ def main():
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--cache", default=os.path.expanduser("~/.cache/autogood/ultimatespecs-versions"))
     parser.add_argument("--reparse", action="store_true", help="the pages already read, again from the cache")
+    parser.add_argument("--check", action="store_true", help="pages of the ultimatespecs second-source check")
     args = parser.parse_args()
     os.makedirs(args.cache, exist_ok=True)
     done = json.load(open(DETAILS, encoding="utf8")) if os.path.exists(DETAILS) else {}
@@ -91,6 +100,9 @@ def main():
 
     with open(os.path.join(ROOT, "data", "model-engines.csv"), encoding="utf-8-sig") as handle:
         rows = list(csv.DictReader(handle, delimiter=";"))
+    if args.check:
+        read_pages(check_pages(rows, done), done, args)
+        return
 
     def start(row):
         match = re.match(r"(\d{4})", row["Годы (проверено)"])
@@ -128,6 +140,54 @@ def main():
                 handle.write("\n")
             print(f"[{number}/{len(todo)}] {row['Марка']} {row['Модель']} {row['Поколение']}: "
                   f"{done.get(row['Ссылка'], {}).get('gearbox', '?')}", flush=True)
+    print("DONE", flush=True)
+
+
+
+def check_pages(rows, done):
+    """[(url, label)] — one ultimatespecs-check version page per row whose gearbox or drive one source states."""
+    sys.path.insert(0, os.path.join(ROOT, "tools"))
+    import autocentrum  # noqa: E402
+    awd = re.compile(r"\b(4motion|quattro|xdrive|4matic|4x4|awd|4wd|all4|allgrip|4drive|e-four|q4|all-wheel)\b", re.I)
+    lone = {id(r) for r in rows if r["Подтверждение: коробка"].startswith("одна")
+            or r["Подтверждение: привод"].startswith("одна")}
+    gens = autocentrum.our_generations(rows)
+    path = os.path.join(ROOT, "data", "ultimatespecs-check.json")
+    models = json.load(open(path, encoding="utf8"))["models"] if os.path.exists(path) else []
+    chosen, newest = {}, collections.defaultdict(int)
+    for model in models:
+        key = (model["brand"], model["label"])
+        for theirs in autocentrum.group_body_level(model["generations"]):
+            ours = [item for gen in autocentrum.match_gens(theirs, gens.get(key, {})) for item in gen["rows"]
+                    if item["src"].get("Источник") != "ultimatespecs" and id(item["src"]) in lone]
+            for body in theirs["bodies"]:
+                for engine in body["engines"]:
+                    if not engine.get("url") or engine.get("configs") or (engine.get("to") and engine["to"] < autocentrum.SINCE):
+                        continue
+                    for item in autocentrum.engine_found(engine, ours, model["brand"]):
+                        row = item["src"]
+                        if (row["Привод"] == "полный") != bool(awd.search(engine.get("name", ""))):
+                            continue
+                        if id(row) not in chosen or engine["url"] in done:
+                            chosen[id(row)] = (engine["url"], f"{row['Марка']} {row['Модель']} {row['Поколение']}")
+                            newest[engine["url"]] = max(newest[engine["url"]], theirs.get("from") or 0)
+    pages = {url: label for url, label in chosen.values() if url not in done}
+    return sorted(pages.items(), key=lambda item: -newest[item[0]])
+
+
+def read_pages(todo, done, args):
+    if args.limit:
+        todo = todo[:args.limit]
+    print(f"to read: {len(todo)} pages (~{len(todo) * 30 // 60} min)", flush=True)
+    for number, (url, label) in enumerate(todo, 1):
+        page = fetch(url, args.cache)
+        if page:
+            done[url] = details(page)
+        if number % 10 == 0 or number == len(todo):
+            with open(DETAILS, "w", encoding="utf8") as handle:
+                json.dump(done, handle, ensure_ascii=False, indent=0, sort_keys=True)
+                handle.write("\n")
+            print(f"[{number}/{len(todo)}] {label}: {done.get(url, {}).get('drive', '?')}", flush=True)
     print("DONE", flush=True)
 
 

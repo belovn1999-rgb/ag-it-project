@@ -134,6 +134,36 @@ def _evidence(models, gens, source):
     return found, options, their_gens
 
 
+# 2026-11-07: the check's version lists carry no gearbox or drive ("configs": []). The version's own page, when read
+# (tools/enrich-model-versions.py --check), states both; else the name, only where it says so ("4Motion", "xDrive",
+# "Automatic", "DSG"). A name without such a word says nothing (not "manual", not "front").
+US_AUTO = re.compile(r"\b(automatic|auto|aut\.?|dsg|s ?tronic|tiptronic|steptronic|multitronic|powershift|edc|eat\d|"
+                     r"dct|cvt|xtronic|7g-tronic|9g-tronic|g-tronic|pdk|geartronic|e-cvt)\b", re.I)
+US_AWD = re.compile(r"\b(4motion|quattro|xdrive|4matic|4x4|awd|4wd|all4|allgrip|4drive|e-four|q4|all-wheel)\b", re.I)
+
+
+def _with_configs(models, pages):
+    for model in models:
+        for gen in model["generations"]:
+            for body in gen["bodies"]:
+                for engine in body["engines"]:
+                    if engine.get("configs"):
+                        continue
+                    page = pages.get(engine.get("url", ""))
+                    if page:
+                        box = (page.get("transmission") or page.get("gearbox") or "").lower()
+                        gearbox = "manualna" if box.endswith("manual") else "automatyczna" if box else ""
+                        drive = {"FWD": "FWD", "RWD": "RWD", "AWD": "AWD", "4WD": "AWD"}.get(page.get("drive", ""), "")
+                    else:
+                        name = engine.get("name") or engine.get("text") or ""
+                        gearbox = "automatyczna" if US_AUTO.search(name) else ""
+                        drive = "AWD" if US_AWD.search(name) else ""
+                    if gearbox or drive:
+                        # In autocentrum's words (autocentrum.config_parts): a part not stated stays "".
+                        engine["configs"] = [f"{gearbox or '-'} {drive}".strip()]
+    return models
+
+
 def confirm(rows, ac):
     """Fill COLUMNS in every row (rows edited in place); returns {column: Counter of statuses}."""
     for row in rows:
@@ -146,7 +176,7 @@ def confirm(rows, ac):
     found, options, ac_gens = _evidence(autocentrum_models, gens, "autocentrum")
     # ultimatespecs read again for the models we have from autocentrum or ADAC only (owner 2026-10-25,
     # tools/crawl-ultimatespecs-models.py --check): the same comparison, for the rows of the other sources.
-    us_models = _load("ultimatespecs-check.json").get("models", [])
+    us_models = _with_configs(_load("ultimatespecs-check.json").get("models", []), _load("model-version-details.json"))
     us_found, us_options, us_gens = _evidence(us_models, gens, "ultimatespecs")
 
     wiki = {key: value["year"] for key, value in _load("model-facelifts-wiki.json").items() if value.get("accepted")}
