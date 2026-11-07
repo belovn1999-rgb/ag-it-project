@@ -1,5 +1,5 @@
 {
-"generatedAt": "2026-11-02",
+"generatedAt": "2026-11-07",
 "source": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/",
 "versions": {
 "abarth/500-595-695/1generation-facelift|Abarth 595": {
@@ -5774,6 +5774,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"audi/e-tron-gt/fw-facelift|Audi e-tron GT quattro": {
+"body": "Coupe",
+"cc": null,
+"doors": "4",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "2",
+"kind": "Elektro",
+"path": "audi/e-tron-gt/fw-facelift/340318/",
+"seats": "4",
+"seats_max": ""
+},
 "audi/e-tron/ge|Audi e-tron 50 quattro": {
 "body": "SUV",
 "cc": null,
@@ -7211,6 +7223,18 @@
 "gears": "6",
 "kind": "Otto",
 "path": "audi/r8/42/224542/",
+"seats": "2",
+"seats_max": ""
+},
+"audi/r8/4s-facelift|Audi R8 Coupé 5.2 FSI V10 RWD S tronic": {
+"body": "Coupe",
+"cc": 5204,
+"doors": "2",
+"drive": "Hinterrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto",
+"path": "audi/r8/4s-facelift/308101/",
 "seats": "2",
 "seats_max": ""
 },
@@ -14903,6 +14927,18 @@
 "gears": "8",
 "kind": "Diesel",
 "path": "bmw/7er-reihe/g11-g12/248304/",
+"seats": "5",
+"seats_max": ""
+},
+"bmw/7er-reihe/g11-g12|BMW 740e iPerformance Steptronic": {
+"body": "Stufenheck",
+"cc": 1998,
+"doors": "4",
+"drive": "Hinterrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "PlugIn-Hybrid",
+"path": "bmw/7er-reihe/g11-g12/248297/",
 "seats": "5",
 "seats_max": ""
 },
@@ -23414,6 +23450,18 @@
 "seats": "3",
 "seats_max": ""
 },
+"citroen/jumper/2generation-facelift|Citroen Jumper Kastenwagen L2H1 33 BlueHDi 165": {
+"body": "Transporter",
+"cc": 2179,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "citroen/jumper/2generation-facelift/327547/",
+"seats": "3",
+"seats_max": ""
+},
 "citroen/jumpy/2generation|Citroen Jumpy Kastenwagen 27 L1H1 HDi 120": {
 "body": "Transporter",
 "cc": 1997,
@@ -24218,6 +24266,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"cupra/raval/1generation|CUPRA Raval (37 kWh)": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "cupra/raval/1generation/350703/",
+"seats": "5",
+"seats_max": ""
+},
 "cupra/raval/1generation|CUPRA Raval (37 kWh) Plus": {
 "body": "Schrägheck",
 "cc": null,
@@ -24251,6 +24311,18 @@
 "gears": "1",
 "kind": "Elektro",
 "path": "cupra/raval/1generation/351142/",
+"seats": "5",
+"seats_max": ""
+},
+"cupra/tavascan/1generation|CUPRA Tavascan (58 kWh)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "cupra/tavascan/1generation/350985/",
 "seats": "5",
 "seats_max": ""
 },
@@ -24383,6 +24455,18 @@
 "gears": "6",
 "kind": "Diesel",
 "path": "dacia/dokker/1generation-facelift/293886/",
+"seats": "5",
+"seats_max": ""
+},
+"dacia/dokker/1generation-facelift|Dacia Dokker SCe 100 LPG Start&Stop Essential (Autogasbetrieb)": {
+"body": "Hochdach-Kombi",
+"cc": 1598,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "5",
+"kind": "Gas",
+"path": "dacia/dokker/1generation-facelift/293881/",
 "seats": "5",
 "seats_max": ""
 },
@@ -24914,6 +24998,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"dacia/duster/2generation|Dacia Duster SCe 115 LPG Comfort 2WD (Autogasbetrieb)": {
+"body": "SUV",
+"cc": 1598,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "5",
+"kind": "Gas",
+"path": "dacia/duster/2generation/285145/",
+"seats": "5",
+"seats_max": ""
+},
 "dacia/duster/2generation|Dacia Duster TCe 100 Access 2WD": {
 "body": "SUV",
 "cc": 999,
@@ -25070,6 +25166,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"dacia/duster/3generation|Dacia Duster Eco-G 100 Essential (Benzinbetrieb)": {
+"body": "SUV",
+"cc": 999,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Gas",
+"path": "dacia/duster/3generation/332531/",
+"seats": "5",
+"seats_max": ""
+},
 "dacia/duster/3generation|Dacia Duster TCe 130 Expression": {
 "body": "SUV",
 "cc": 1199,
@@ -25127,6 +25235,18 @@
 "gears": "6",
 "kind": "Gas",
 "path": "dacia/jogger/1generation/322604/",
+"seats": "5",
+"seats_max": ""
+},
+"dacia/jogger/1generation|Dacia Jogger TCe 100 ECO-G Essential (5-Sitzer) (Benzinbetrieb)": {
+"body": "Van",
+"cc": 999,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Gas",
+"path": "dacia/jogger/1generation/322605/",
 "seats": "5",
 "seats_max": ""
 },
@@ -26582,6 +26702,18 @@
 "seats": "4",
 "seats_max": ""
 },
+"fiat/500/f1a|Fiat 500 Hybrid 1.0 Firefly Pop": {
+"body": "Schrägheck",
+"cc": 999,
+"doors": "3",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Otto (Mild-Hybrid)",
+"path": "fiat/500/f1a/347004/",
+"seats": "4",
+"seats_max": ""
+},
 "fiat/500l/199|Fiat 500L 0.9 TwinAir Natural Power Easy (Benzinbetrieb)": {
 "body": "Van",
 "cc": 875,
@@ -27527,6 +27659,18 @@
 "gears": "6",
 "kind": "Diesel",
 "path": "fiat/fullback/kt0t/259617/",
+"seats": "4",
+"seats_max": ""
+},
+"fiat/fullback/kt0t|Fiat Fullback Extended Cab 2.4 TD SX Basis 4x4": {
+"body": "Pick-Up",
+"cc": 2442,
+"doors": "2",
+"drive": "Allrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "fiat/fullback/kt0t/259613/",
 "seats": "4",
 "seats_max": ""
 },
@@ -28778,6 +28922,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"ford/capri/4generation|Ford Capri Standard Range (52 kWh) Style": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "ford/capri/4generation/339512/",
+"seats": "5",
+"seats_max": ""
+},
 "ford/capri/4generation|Ford Capri Standard Range (58 kWh) Style": {
 "body": "SUV",
 "cc": null,
@@ -28835,6 +28991,18 @@
 "gears": "6",
 "kind": "Diesel",
 "path": "ford/ecosport/1generation-facelift/312204/",
+"seats": "5",
+"seats_max": ""
+},
+"ford/ecosport/1generation-facelift|Ford EcoSport 1.5 EcoBlue Titanium": {
+"body": "SUV",
+"cc": 1499,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "ford/ecosport/1generation-facelift/310370/",
 "seats": "5",
 "seats_max": ""
 },
@@ -29459,6 +29627,18 @@
 "gears": "6",
 "kind": "Otto",
 "path": "ford/fiesta/viii/290041/",
+"seats": "5",
+"seats_max": ""
+},
+"ford/fiesta/viii|Ford Fiesta 1.1 Start/Stopp Trend (3-Türer)": {
+"body": "Schrägheck",
+"cc": 1084,
+"doors": "3",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "5",
+"kind": "Otto",
+"path": "ford/fiesta/viii/310332/",
 "seats": "5",
 "seats_max": ""
 },
@@ -33050,6 +33230,30 @@
 "seats": "2",
 "seats_max": ""
 },
+"ford/transit-custom/1generation|Ford Transit Custom Kastenwagen 270 L1 2.0 TDCi": {
+"body": "Transporter",
+"cc": 1995,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "ford/transit-custom/1generation/328991/",
+"seats": "3",
+"seats_max": ""
+},
+"ford/transit-custom/1generation|Ford Transit Custom Kastenwagen 270 L1 2.0 TDCi Trend": {
+"body": "Transporter",
+"cc": 1995,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "ford/transit-custom/1generation/328992/",
+"seats": "3",
+"seats_max": ""
+},
 "ford/transit-custom/2generation|Ford Transit Custom Kastenwagen 280 L1 2.0 EcoBlue Trend": {
 "body": "Transporter",
 "cc": 1996,
@@ -35786,6 +35990,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"hyundai/ioniq-6/1generation-facelift|Hyundai IONIQ 6 (63 kWh)": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "4",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "hyundai/ioniq-6/1generation-facelift/348385/",
+"seats": "5",
+"seats_max": ""
+},
 "hyundai/ioniq-6/1generation-facelift|Hyundai IONIQ 6 (84 kWh) CENTRIQ": {
 "body": "Schrägheck",
 "cc": null,
@@ -35858,6 +36074,30 @@
 "seats": "7",
 "seats_max": ""
 },
+"hyundai/ioniq-9/1generation|Hyundai IONIQ 9 CENTRIQ AWD (7-Sitzer)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "hyundai/ioniq-9/1generation/351914/",
+"seats": "7",
+"seats_max": ""
+},
+"hyundai/ioniq-9/1generation|Hyundai IONIQ 9 Performance UNIQ AWD (7-Sitzer)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "hyundai/ioniq-9/1generation/337753/",
+"seats": "7",
+"seats_max": ""
+},
 "hyundai/ioniq/1generation|Hyundai IONIQ Hybrid Trend": {
 "body": "Schrägheck",
 "cc": 1580,
@@ -35867,6 +36107,18 @@
 "gears": "6",
 "kind": "Voll-Hybrid",
 "path": "hyundai/ioniq/1generation/294072/",
+"seats": "5",
+"seats_max": ""
+},
+"hyundai/ioniq/1generation|Hyundai IONIQ PlugIn-Hybrid Trend": {
+"body": "Schrägheck",
+"cc": 1580,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "6",
+"kind": "PlugIn-Hybrid",
+"path": "hyundai/ioniq/1generation/259954/",
 "seats": "5",
 "seats_max": ""
 },
@@ -36311,6 +36563,18 @@
 "gears": "6",
 "kind": "Voll-Hybrid",
 "path": "hyundai/santa-fe/5generation/344365/",
+"seats": "5",
+"seats_max": ""
+},
+"hyundai/santa-fe/5generation|Hyundai Santa Fe 1.6 T-GDI Plug-in-Hybrid Signature 4WD Automatik (5-Sitzer)": {
+"body": "SUV",
+"cc": 1598,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "6",
+"kind": "PlugIn-Hybrid",
+"path": "hyundai/santa-fe/5generation/346768/",
 "seats": "5",
 "seats_max": ""
 },
@@ -37331,6 +37595,18 @@
 "gears": "9",
 "kind": "Otto (Mild-Hybrid)",
 "path": "jaguar/e-pace/x540-facelift/317049/",
+"seats": "5",
+"seats_max": ""
+},
+"jaguar/e-pace/x540-facelift|Jaguar E-Pace P300e R-Dynamic S AWD Automatik": {
+"body": "SUV",
+"cc": 1498,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "PlugIn-Hybrid",
+"path": "jaguar/e-pace/x540-facelift/317046/",
 "seats": "5",
 "seats_max": ""
 },
@@ -38750,6 +39026,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"jeep/grand-cherokee/wk2-facelift-2|Jeep Grand Cherokee 6.2 V8 Trackhawk Automatik": {
+"body": "SUV",
+"cc": 6166,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "Otto",
+"path": "jeep/grand-cherokee/wk2-facelift-2/288687/",
+"seats": "5",
+"seats_max": ""
+},
 "jeep/grand-cherokee/wk2-facelift|Jeep Grand Cherokee 3.0 V6 MultiJet Laredo Automatik": {
 "body": "SUV",
 "cc": 2987,
@@ -39275,6 +39563,18 @@
 "gears": "6",
 "kind": "Otto",
 "path": "kgm/tivoli/1generation/350189/",
+"seats": "5",
+"seats_max": ""
+},
+"kgm/torres/1generation|KGM Torres 1.5 GDI-T Hybrid Nomad 2WD Automatik": {
+"body": "SUV",
+"cc": 1498,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automatikgetriebe",
+"gears": "6",
+"kind": "Voll-Hybrid",
+"path": "kgm/torres/1generation/350081/",
 "seats": "5",
 "seats_max": ""
 },
@@ -39914,6 +40214,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"kia/ev4/sz1e-ct1|Kia EV4 (81,4 kWh) Earth AWD": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "kia/ev4/sz1e-ct1/351722/",
+"seats": "5",
+"seats_max": ""
+},
 "kia/ev5/ov1|Kia EV5 (81,4 kWh) Air": {
 "body": "SUV",
 "cc": null,
@@ -39996,6 +40308,18 @@
 "kind": "Elektro",
 "path": "kia/ev6/cv/322010/",
 "seats": "5",
+"seats_max": ""
+},
+"kia/ev9/mv1|Kia EV9 (76,1 kWh) Air": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "kia/ev9/mv1/337959/",
+"seats": "7",
 "seats_max": ""
 },
 "kia/ev9/mv1|Kia EV9 (99,8 kWh) Air": {
@@ -40151,6 +40475,18 @@
 "gears": "5",
 "kind": "Otto",
 "path": "kia/opirus/ld-facelift/207616/",
+"seats": "5",
+"seats_max": ""
+},
+"kia/optima/jf-facelift|Kia Optima 2.0 GDI Plugin-Hybrid Attract": {
+"body": "Stufenheck",
+"cc": 1999,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Automatikgetriebe",
+"gears": "6",
+"kind": "PlugIn-Hybrid",
+"path": "kia/optima/jf-facelift/296372/",
 "seats": "5",
 "seats_max": ""
 },
@@ -42122,6 +42458,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"kia/stonic/yb|Kia Stonic 1.6 CRDi Spirit": {
+"body": "SUV",
+"cc": 1598,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "kia/stonic/yb/291965/",
+"seats": "5",
+"seats_max": ""
+},
 "kia/stonic/yb|Kia Stonic 1.6 CRDi Vision": {
 "body": "SUV",
 "cc": 1598,
@@ -42299,6 +42647,18 @@
 "gears": "6",
 "kind": "PlugIn-Hybrid",
 "path": "kia/xceed/cd-facelift/325936/",
+"seats": "5",
+"seats_max": ""
+},
+"kia/xceed/cd-facelift|Kia XCeed 1.6 T-GDI GT-Line DCT7": {
+"body": "SUV",
+"cc": 1598,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto",
+"path": "kia/xceed/cd-facelift/341272/",
 "seats": "5",
 "seats_max": ""
 },
@@ -43394,6 +43754,18 @@
 "seats": "5",
 "seats_max": "7"
 },
+"land-rover/discovery/v-facelift|Land Rover Discovery D350 S AWD Automatik": {
+"body": "Geländewagen",
+"cc": 2997,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "Diesel (Mild-Hybrid)",
+"path": "land-rover/discovery/v-facelift/351154/",
+"seats": "5",
+"seats_max": "7"
+},
 "land-rover/discovery/v-facelift|Land Rover Discovery P300 AWD Automatik": {
 "body": "Geländewagen",
 "cc": 1997,
@@ -44197,6 +44569,18 @@
 "path": "land-rover/range-rover-sport/ii-facelift/299089/",
 "seats": "5",
 "seats_max": "7"
+},
+"land-rover/range-rover-sport/ii-facelift|Land Rover Range Rover Sport P400e Plug-in-Hybrid SE Automatik": {
+"body": "SUV",
+"cc": 1997,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "PlugIn-Hybrid",
+"path": "land-rover/range-rover-sport/ii-facelift/283846/",
+"seats": "5",
+"seats_max": ""
 },
 "land-rover/range-rover-sport/iii|Land Rover Range Rover Sport D250 S Automatik": {
 "body": "SUV",
@@ -45386,6 +45770,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"maserati/quattroporte/vi-facelift|Maserati Quattroporte Automatik": {
+"body": "Stufenheck",
+"cc": 2979,
+"doors": "4",
+"drive": "Hinterrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "Otto",
+"path": "maserati/quattroporte/vi-facelift/283974/",
+"seats": "5",
+"seats_max": ""
+},
 "maserati/quattroporte/vi-facelift|Maserati Quattroporte Diesel Automatik": {
 "body": "Stufenheck",
 "cc": 2987,
@@ -45431,6 +45827,18 @@
 "gears": "8",
 "kind": "Otto",
 "path": "maserati/quattroporte/vi-facelift/259965/",
+"seats": "5",
+"seats_max": ""
+},
+"maserati/quattroporte/vi-facelift|Maserati Quattroporte Trofeo Automatik": {
+"body": "Stufenheck",
+"cc": 3799,
+"doors": "4",
+"drive": "Hinterrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "Otto",
+"path": "maserati/quattroporte/vi-facelift/319681/",
 "seats": "5",
 "seats_max": ""
 },
@@ -45971,6 +46379,18 @@
 "gears": "6",
 "kind": "Diesel",
 "path": "mazda/3/bm-facelift/266502/",
+"seats": "5",
+"seats_max": ""
+},
+"mazda/3/bm-facelift|Mazda 3 SKYACTIV-D 150 Exclusive-Line": {
+"body": "Schrägheck",
+"cc": 2191,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "mazda/3/bm-facelift/266503/",
 "seats": "5",
 "seats_max": ""
 },
@@ -49658,6 +50078,42 @@
 "seats": "5",
 "seats_max": ""
 },
+"mercedes-benz/b-klasse/247-facelift|Mercedes-Benz B 180 7G-DCT": {
+"body": "Van",
+"cc": 1332,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto (Mild-Hybrid)",
+"path": "mercedes-benz/b-klasse/247-facelift/326476/",
+"seats": "5",
+"seats_max": ""
+},
+"mercedes-benz/b-klasse/247-facelift|Mercedes-Benz B 180 d 8G-DCT": {
+"body": "Van",
+"cc": 1950,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "8",
+"kind": "Diesel",
+"path": "mercedes-benz/b-klasse/247-facelift/326488/",
+"seats": "5",
+"seats_max": ""
+},
+"mercedes-benz/b-klasse/247-facelift|Mercedes-Benz B 200 7G-DCT": {
+"body": "Van",
+"cc": 1332,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto (Mild-Hybrid)",
+"path": "mercedes-benz/b-klasse/247-facelift/326479/",
+"seats": "5",
+"seats_max": ""
+},
 "mercedes-benz/b-klasse/247-facelift|Mercedes-Benz B 200 d 8G-DCT": {
 "body": "Van",
 "cc": 1950,
@@ -49859,6 +50315,18 @@
 "gears": "7",
 "kind": "Otto",
 "path": "mercedes-benz/b-klasse/247/296779/",
+"seats": "5",
+"seats_max": ""
+},
+"mercedes-benz/b-klasse/247|Mercedes-Benz B 250 e 8G-DCT": {
+"body": "Van",
+"cc": 1332,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "8",
+"kind": "PlugIn-Hybrid",
+"path": "mercedes-benz/b-klasse/247/312904/",
 "seats": "5",
 "seats_max": ""
 },
@@ -51422,6 +51890,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"mercedes-benz/cla/117-facelift|Mercedes-Benz CLA Coupé 180 d": {
+"body": "Coupe",
+"cc": 1461,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "mercedes-benz/cla/117-facelift/254940/",
+"seats": "5",
+"seats_max": ""
+},
 "mercedes-benz/cla/117-facelift|Mercedes-Benz CLA Coupé 180 d 7G-DCT": {
 "body": "Coupe",
 "cc": 1461,
@@ -51458,6 +51938,30 @@
 "seats": "5",
 "seats_max": ""
 },
+"mercedes-benz/cla/117-facelift|Mercedes-Benz CLA Coupé 200 d": {
+"body": "Coupe",
+"cc": 2143,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "mercedes-benz/cla/117-facelift/254946/",
+"seats": "5",
+"seats_max": ""
+},
+"mercedes-benz/cla/117-facelift|Mercedes-Benz CLA Coupé 200 d 7G-DCT": {
+"body": "Coupe",
+"cc": 2143,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Diesel",
+"path": "mercedes-benz/cla/117-facelift/254947/",
+"seats": "5",
+"seats_max": ""
+},
 "mercedes-benz/cla/117-facelift|Mercedes-Benz CLA Coupé 220 4MATIC 7G-DCT": {
 "body": "Coupe",
 "cc": 1991,
@@ -51467,6 +51971,18 @@
 "gears": "7",
 "kind": "Otto",
 "path": "mercedes-benz/cla/117-facelift/254962/",
+"seats": "5",
+"seats_max": ""
+},
+"mercedes-benz/cla/117-facelift|Mercedes-Benz CLA Coupé 220 d 4MATIC 7G-DCT": {
+"body": "Coupe",
+"cc": 2143,
+"doors": "4",
+"drive": "Allrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Diesel",
+"path": "mercedes-benz/cla/117-facelift/254956/",
 "seats": "5",
 "seats_max": ""
 },
@@ -51503,6 +52019,18 @@
 "gears": "6",
 "kind": "Otto",
 "path": "mercedes-benz/cla/117-facelift/254937/",
+"seats": "5",
+"seats_max": ""
+},
+"mercedes-benz/cla/117-facelift|Mercedes-Benz CLA Coupé 250 Sport 4MATIC 7G-DCT": {
+"body": "Coupe",
+"cc": 1991,
+"doors": "4",
+"drive": "Allrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto",
+"path": "mercedes-benz/cla/117-facelift/254939/",
 "seats": "5",
 "seats_max": ""
 },
@@ -61034,6 +61562,18 @@
 "seats": "5",
 "seats_max": "4"
 },
+"mini/countryman/u25|MINI Countryman C Essential Trim Steptronic (DKG)": {
+"body": "SUV",
+"cc": 1499,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto (Mild-Hybrid)",
+"path": "mini/countryman/u25/329570/",
+"seats": "5",
+"seats_max": ""
+},
 "mini/countryman/u25|MINI Countryman D Essential Trim Steptronic (DKG)": {
 "body": "SUV",
 "cc": 1995,
@@ -61043,6 +61583,18 @@
 "gears": "7",
 "kind": "Diesel (Mild-Hybrid)",
 "path": "mini/countryman/u25/333616/",
+"seats": "5",
+"seats_max": ""
+},
+"mini/countryman/u25|MINI Countryman One Essential Trim Steptronic (DKG)": {
+"body": "SUV",
+"cc": 1499,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto (Mild-Hybrid)",
+"path": "mini/countryman/u25/349382/",
 "seats": "5",
 "seats_max": ""
 },
@@ -61271,6 +61823,18 @@
 "gears": "7",
 "kind": "Otto",
 "path": "mini/mini/j01-f65-f66-f67/332612/",
+"seats": "4",
+"seats_max": ""
+},
+"mini/mini/j01-f65-f66-f67|MINI Cooper One Essential Trim Steptronic (DKG)": {
+"body": "Schrägheck",
+"cc": 1499,
+"doors": "3",
+"drive": "Vorderrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto",
+"path": "mini/mini/j01-f65-f66-f67/351741/",
 "seats": "4",
 "seats_max": ""
 },
@@ -63216,6 +63780,42 @@
 "kind": "Otto",
 "path": "nissan/370z/z34/221388/",
 "seats": "2",
+"seats_max": ""
+},
+"nissan/ariya/fe0e|Nissan Ariya (63 kWh) (OBC 7,4 kW)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "nissan/ariya/fe0e/320045/",
+"seats": "5",
+"seats_max": ""
+},
+"nissan/ariya/fe0e|Nissan Ariya (87 kWh) (OBC 22 kW)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "nissan/ariya/fe0e/325741/",
+"seats": "5",
+"seats_max": ""
+},
+"nissan/ariya/fe0e|Nissan Ariya (87 kWh) Evolve+ Pack e-4ORCE (OBC 22 kW)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "nissan/ariya/fe0e/327765/",
+"seats": "5",
 "seats_max": ""
 },
 "nissan/ariya/fe0e|Nissan Ariya (87 kWh) e-4ORCE (OBC 22 kW)": {
@@ -66119,6 +66719,18 @@
 "gears": "1",
 "kind": "Otto (Mild-Hybrid)",
 "path": "nissan/x-trail/t33/326221/",
+"seats": "5",
+"seats_max": ""
+},
+"omoda/5/1generation|Omoda 5 EV Exclusive": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "omoda/5/1generation/333027/",
 "seats": "5",
 "seats_max": ""
 },
@@ -73166,6 +73778,18 @@
 "seats": "3",
 "seats_max": ""
 },
+"opel/movano/b|Opel Movano Kastenwagen L1H1 2,8t 2.3 CDTI DPF Easytronic": {
+"body": "Transporter",
+"cc": 2299,
+"doors": "3",
+"drive": "Vorderrad",
+"gearbox": "Automatisiertes Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "opel/movano/b/338741/",
+"seats": "3",
+"seats_max": ""
+},
 "opel/vivaro/b|Opel Vivaro Kastenwagen L1H1 2,7t 1.6 BiTurbo Diesel Start/Stop": {
 "body": "Bus",
 "cc": 1598,
@@ -74327,6 +74951,18 @@
 "gears": "6",
 "kind": "Otto",
 "path": "peugeot/208/1generation-facelift/246822/",
+"seats": "5",
+"seats_max": ""
+},
+"peugeot/208/1generation-facelift|Peugeot 208 1.2 PureTech 68 Access (3-Türer)": {
+"body": "Schrägheck",
+"cc": 1199,
+"doors": "3",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "5",
+"kind": "Otto",
+"path": "peugeot/208/1generation-facelift/279206/",
 "seats": "5",
 "seats_max": ""
 },
@@ -81278,6 +81914,18 @@
 "seats": "3",
 "seats_max": ""
 },
+"renault/master/iv|Renault Master Kastenwagen L2H2 3,3t Blue dCi 130 Advance": {
+"body": "Transporter",
+"cc": 1997,
+"doors": "4",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "renault/master/iv/336008/",
+"seats": "3",
+"seats_max": ""
+},
 "renault/master/iv|Renault Master Kastenwagen L2H2 3,3t Blue dCi 150 Advance": {
 "body": "Transporter",
 "cc": 1997,
@@ -86282,6 +86930,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"seat/ibiza/kj|SEAT Ibiza 1.6 TDI Style": {
+"body": "Schrägheck",
+"cc": 1598,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "5",
+"kind": "Diesel",
+"path": "seat/ibiza/kj/284275/",
+"seats": "5",
+"seats_max": ""
+},
 "seat/leon/1p|SEAT Leon 1.4 Reference": {
 "body": "Schrägheck",
 "cc": 1390,
@@ -87167,6 +87827,18 @@
 "gears": "5",
 "kind": "Otto",
 "path": "seat/mii/aa/277931/",
+"seats": "4",
+"seats_max": ""
+},
+"seat/mii/aa|SEAT Mii 1.0 Ecofuel Start&Stop Reference (Erdgasbetrieb) (3-Türer)": {
+"body": "Schrägheck",
+"cc": 999,
+"doors": "3",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "5",
+"kind": "Gas",
+"path": "seat/mii/aa/234593/",
 "seats": "4",
 "seats_max": ""
 },
@@ -89027,6 +89699,18 @@
 "gears": "5",
 "kind": "Otto",
 "path": "skoda/citigo/1generation-facelift/277383/",
+"seats": "4",
+"seats_max": ""
+},
+"skoda/citigo/1generation-facelift|Skoda Citigo 1.0 G-TEC Active (Erdgasbetrieb) (3-Türer)": {
+"body": "Schrägheck",
+"cc": 999,
+"doors": "3",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "5",
+"kind": "Gas",
+"path": "skoda/citigo/1generation-facelift/277367/",
 "seats": "4",
 "seats_max": ""
 },
@@ -95534,6 +96218,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"ssangyong/musso/3generation-facelift|SsangYong Musso 2.2 Diesel Crystal 2WD": {
+"body": "Pick-Up",
+"cc": 2157,
+"doors": "4",
+"drive": "Hinterrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Diesel",
+"path": "ssangyong/musso/3generation-facelift/325954/",
+"seats": "5",
+"seats_max": ""
+},
 "ssangyong/rexton/2generation-facelift-2|SsangYong Rexton e-XDI 220 Amber 4WD Automatik (5-Sitzer)": {
 "body": "Geländewagen",
 "cc": 2157,
@@ -97850,6 +98546,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"tesla/model-3/1generation-facelift|Tesla Model 3 Premium": {
+"body": "Stufenheck",
+"cc": null,
+"doors": "4",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "tesla/model-3/1generation-facelift/347730/",
+"seats": "5",
+"seats_max": ""
+},
 "tesla/model-3/1generation-facelift|Tesla Model 3 Premium AWD": {
 "body": "Stufenheck",
 "cc": null,
@@ -97859,6 +98567,30 @@
 "gears": "1",
 "kind": "Elektro",
 "path": "tesla/model-3/1generation-facelift/347731/",
+"seats": "5",
+"seats_max": ""
+},
+"tesla/model-3/1generation|Tesla Model 3 Performance AWD": {
+"body": "Stufenheck",
+"cc": null,
+"doors": "4",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "tesla/model-3/1generation/282173/",
+"seats": "5",
+"seats_max": ""
+},
+"tesla/model-3/1generation|Tesla Model 3 Standard Range Plus": {
+"body": "Stufenheck",
+"cc": null,
+"doors": "4",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "tesla/model-3/1generation/298771/",
 "seats": "5",
 "seats_max": ""
 },
@@ -97895,6 +98627,18 @@
 "gears": "1",
 "kind": "Elektro",
 "path": "tesla/model-s/1generation-facelift/297818/",
+"seats": "5",
+"seats_max": "7"
+},
+"tesla/model-s/1generation-facelift|Tesla Model S P100D": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "tesla/model-s/1generation-facelift/261294/",
 "seats": "5",
 "seats_max": "7"
 },
@@ -97979,6 +98723,42 @@
 "gears": "1",
 "kind": "Elektro",
 "path": "tesla/model-x/1generation-facelift/319086/",
+"seats": "5",
+"seats_max": "7"
+},
+"tesla/model-x/1generation|Tesla Model X 60D": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "tesla/model-x/1generation/259960/",
+"seats": "5",
+"seats_max": "7"
+},
+"tesla/model-x/1generation|Tesla Model X 90D": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "tesla/model-x/1generation/254884/",
+"seats": "5",
+"seats_max": "7"
+},
+"tesla/model-x/1generation|Tesla Model X P90D": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "tesla/model-x/1generation/254885/",
 "seats": "5",
 "seats_max": "7"
 },
@@ -101774,6 +102554,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"volvo/ex90/1generation|Volvo EX90 Single Motor Core (7-Sitzer)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "volvo/ex90/1generation/350394/",
+"seats": "7",
+"seats_max": ""
+},
 "volvo/ex90/1generation|Volvo EX90 Twin Motor Core AWD (6/7-Sitzer)": {
 "body": "SUV",
 "cc": null,
@@ -101785,6 +102577,18 @@
 "path": "volvo/ex90/1generation/329863/",
 "seats": "6",
 "seats_max": "7"
+},
+"volvo/ex90/1generation|Volvo EX90 Twin Motor Core AWD (7-Sitzer)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "volvo/ex90/1generation/350393/",
+"seats": "7",
+"seats_max": ""
 },
 "volvo/ex90/1generation|Volvo EX90 Twin Motor Plus AWD (6/7-Sitzer)": {
 "body": "SUV",
@@ -101831,6 +102635,18 @@
 "gears": "1",
 "kind": "Elektro",
 "path": "volvo/ex90/1generation/329865/",
+"seats": "6",
+"seats_max": "7"
+},
+"volvo/ex90/1generation|Volvo EX90 Twin Performance Ultra AWD (6/7-Sitzer)": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "volvo/ex90/1generation/344731/",
 "seats": "6",
 "seats_max": "7"
 },
@@ -107390,6 +108206,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"volvo/xc60/2generation|Volvo XC60 D5 Polestar Performance Momentum AWD Geartronic": {
+"body": "SUV",
+"cc": 1969,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "Diesel",
+"path": "volvo/xc60/2generation/296525/",
+"seats": "5",
+"seats_max": ""
+},
 "volvo/xc60/2generation|Volvo XC60 T4 Momentum Geartronic": {
 "body": "SUV",
 "cc": 1969,
@@ -107726,6 +108554,18 @@
 "seats": "5",
 "seats_max": "7"
 },
+"volvo/xc90/2generation|Volvo XC90 D5 Polestar Performance Momentum AWD Geartronic": {
+"body": "SUV",
+"cc": 1969,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "Diesel",
+"path": "volvo/xc90/2generation/296540/",
+"seats": "5",
+"seats_max": "7"
+},
 "volvo/xc90/2generation|Volvo XC90 T5 Polestar Performance Momentum AWD Geartronic": {
 "body": "SUV",
 "cc": 1969,
@@ -107759,6 +108599,18 @@
 "gears": "8",
 "kind": "Otto",
 "path": "volvo/xc90/2generation/283882/",
+"seats": "5",
+"seats_max": "7"
+},
+"volvo/xc90/2generation|Volvo XC90 T6 Polestar Performance Momentum AWD Geartronic": {
+"body": "SUV",
+"cc": 1969,
+"doors": "5",
+"drive": "Allrad",
+"gearbox": "Automatikgetriebe",
+"gears": "8",
+"kind": "Otto",
+"path": "volvo/xc90/2generation/296534/",
 "seats": "5",
 "seats_max": "7"
 },
@@ -109322,6 +110174,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"vw/golf/viii-facelift|VW Golf 1.5 TSI Life": {
+"body": "Schrägheck",
+"cc": 1498,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Schaltgetriebe",
+"gears": "6",
+"kind": "Otto",
+"path": "vw/golf/viii-facelift/332971/",
+"seats": "5",
+"seats_max": ""
+},
 "vw/golf/viii-facelift|VW Golf 1.5 TSI Trend": {
 "body": "Schrägheck",
 "cc": 1498,
@@ -110426,6 +111290,30 @@
 "seats": "5",
 "seats_max": ""
 },
+"vw/id-polo/1generation|VW ID. Polo (37 kWh) Life": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "vw/id-polo/1generation/350932/",
+"seats": "5",
+"seats_max": ""
+},
+"vw/id-polo/1generation|VW ID. Polo (37 kWh) Trend": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "vw/id-polo/1generation/350931/",
+"seats": "5",
+"seats_max": ""
+},
 "vw/id-polo/1generation|VW ID. Polo (52 kWh) Life": {
 "body": "Schrägheck",
 "cc": null,
@@ -110438,6 +111326,18 @@
 "seats": "5",
 "seats_max": ""
 },
+"vw/id3/1generation-facelift-2|VW ID.3 Neo (58 kWh) Life": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "5",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "vw/id3/1generation-facelift-2/350740/",
+"seats": "5",
+"seats_max": ""
+},
 "vw/id3/1generation-facelift|VW ID.3 Pro": {
 "body": "Schrägheck",
 "cc": null,
@@ -110447,6 +111347,18 @@
 "gears": "1",
 "kind": "Elektro",
 "path": "vw/id3/1generation-facelift/326861/",
+"seats": "5",
+"seats_max": ""
+},
+"vw/id3/1generation-facelift|VW ID.3 Pro S (5-Sitzer)": {
+"body": "Schrägheck",
+"cc": null,
+"doors": "5",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "vw/id3/1generation-facelift/335151/",
 "seats": "5",
 "seats_max": ""
 },
@@ -111611,6 +112523,18 @@
 "gears": "6",
 "kind": "Otto",
 "path": "vw/passat/b8/245066/",
+"seats": "5",
+"seats_max": ""
+},
+"vw/passat/b8|VW Passat 2.0 TSI OPF Highline 4MOTION DSG (7-Gang)": {
+"body": "Stufenheck",
+"cc": 1984,
+"doors": "4",
+"drive": "Allrad",
+"gearbox": "Automat. Schaltgetriebe (Doppelkupplung)",
+"gears": "7",
+"kind": "Otto",
+"path": "vw/passat/b8/296203/",
 "seats": "5",
 "seats_max": ""
 },
@@ -114503,6 +115427,18 @@
 "gears": "1",
 "kind": "Voll-Hybrid",
 "path": "vw/t-roc/2generation/353314/",
+"seats": "5",
+"seats_max": ""
+},
+"vw/t-roc/2generation|VW T-Roc 1.5 Hybrid Style": {
+"body": "SUV",
+"cc": 1498,
+"doors": "5",
+"drive": "Vorderrad",
+"gearbox": "Automatikgetriebe",
+"gears": "1",
+"kind": "Voll-Hybrid",
+"path": "vw/t-roc/2generation/353315/",
 "seats": "5",
 "seats_max": ""
 },
@@ -117887,6 +118823,18 @@
 "gears": "1",
 "kind": "Elektro",
 "path": "zeekr/x/1generation/350822/",
+"seats": "5",
+"seats_max": ""
+},
+"zeekr/x/1generation|ZEEKR X Long Range": {
+"body": "SUV",
+"cc": null,
+"doors": "5",
+"drive": "Hinterrad",
+"gearbox": "Reduktionsgetriebe",
+"gears": "1",
+"kind": "Elektro",
+"path": "zeekr/x/1generation/350823/",
 "seats": "5",
 "seats_max": ""
 },
