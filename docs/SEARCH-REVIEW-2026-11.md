@@ -69,5 +69,5 @@
 продавца (№13)? страница «Перенос из старой программы» ещё нужна (№11)?
 
 Другое: ветки, которые в задании названы невлитыми, уже в `main` — `search-narrow-wide`, `telegram-bot-t0`,
-`avby-extension`, `proto-narrow-1105`; не в `main` — `search-haggle`, `proto-haggle-1105`, `proto-home-steps-1105`. В
+`avby-extension`, `proto-narrow-1105`; не в `main` — `search-haggle`, `proto-haggle-1105`, `proto-home-steps-1105` (после 3а.71 — ветки `search-home-steps` — прототип лишний). В
 `PLATFORM-SEARCH.md` две секции «4з» (Telegram и несколько поисков) и порядок 4б / 4г / 4д / 4в.
