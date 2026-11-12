@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8"><link rel="stylesheet" href="tg.css"><title>Подборки, ссылка, VIN</title></head>
+<body>
+<h1>Остальные экраны бота: Подборки (Т1), ссылка объявления (Т2), VIN (Т4)</h1>
+<div class="lead">Пример: машины, VIN и цифры придуманы. Во всех трёх — одно сообщение бота, которое само меняется по ходу работы (без лишних сообщений).</div>
+<div class="page">
+
+<!-- T1 -->
+<div class="col">
+  <div class="cap">Т1 — «🔎 Подборки»</div>
+  <div class="sub">Все подборки менеджера одной панелью: вкл / выкл, «Проверить сейчас», сводка одной подборки.</div>
+  <div class="phone">
+    <div class="bar"><div class="ava">MT</div><div><div class="bn">Mantexlab Tools</div><div class="bs">бот</div></div></div>
+    <div class="chat">
+      <div class="msg me">🔎 Подборки<span class="t">12:10</span><div style="clear:both"></div></div>
+      <div class="msg">
+        <b>Ваши подборки</b> · 5
+        <div class="blk">▶️ <b>Skoda Kodiaq 2.0 TDI 4x4</b> — 07:30 · в списке 47</div>
+        <div>▶️ <b>BMW X5 G05 30d</b> — 09:30 · в списке 23</div>
+        <div>▶️ <b>Toyota RAV4 2.5 Hybrid</b> — 07:30 · в списке 31</div>
+        <div>⚠️ <b>VW Tiguan Allspace 2.0 TDI</b> — 09:30 · проверка не удалась</div>
+        <div class="g">⏸ Hyundai Santa Fe IV — мониторинг выключен</div>
+        <span class="t">12:10</span><div style="clear:both"></div>
+      </div>
+      <div class="kb">
+        <div class="r"><div class="k">Kodiaq</div><div class="k">X5</div><div class="k">RAV4</div></div>
+        <div class="r"><div class="k">Tiguan ⚠</div><div class="k">Santa Fe ⏸</div><div class="k">🔄 Проверить все</div></div>
+      </div>
+      <div class="note">нажали «X5» — та же панель меняется</div>
+      <div class="msg">
+        <b>BMW X5 G05 30d</b> · <a>мониторинг</a><br>
+        Последняя проверка 08.11 09:31 · 7 порталов<br>
+        в списке 23 · 1 подешевело · медиана <b>256 900 zł под ключ</b><br>
+        <span class="g">Следующая проверка: завтра 09:30</span>
+        <span class="t">12:11</span><div style="clear:both"></div>
+      </div>
+      <div class="kb">
+        <div class="r"><div class="k">📊 Сводка</div><div class="k">🔄 Проверить сейчас</div></div>
+        <div class="r"><div class="k">🕘 Время: 09:30</div><div class="k">⏸ Выключить</div></div>
+        <div class="r"><div class="k">← Все подборки</div><div class="k u">Открыть на сайте</div></div>
+      </div>
+      <div class="note">нажали «🔄 Проверить сейчас»</div>
+      <div class="msg">
+        <b>BMW X5 G05 30d</b> — проверяю…<br>
+        порталы: 4 из 7 · mobile.de ждёт расширение на компьютере
+        <span class="t">12:11</span><div style="clear:both"></div>
+      </div>
+      <div class="note">через 1–3 минуты то же сообщение — сводкой этой проверки</div>
+    </div>
+    <div class="reply"><div>📊 Сводка</div><div>🔎 Подборки</div><div>❓ Помощь</div></div>
+  </div>
+  <div class="foot">«⏸ Выключить» спрашивает «Точно выключить мониторинг X5?» [Да] [Нет]. «🕘 Время» — кнопки 07:30 · 09:30 · 12:00 · 18:00.</div>
+</div>
+
+<!-- T2 -->
+<div class="col">
+  <div class="cap">Т2 — Ссылка объявления</div>
+  <div class="sub">Менеджер присылает ссылку любого портала. Бот читает машину и предлагает, что сделать.</div>
+  <div class="phone">
+    <div class="bar"><div class="ava">MT</div><div><div class="bn">Mantexlab Tools</div><div class="bs">бот</div></div></div>
+    <div class="chat">
+      <div class="msg me"><a>https://www.otomoto.pl/osobowe/oferta/toyota-rav4-…</a><span class="t">14:02</span><div style="clear:both"></div></div>
+      <div class="msg">
+        <b>Toyota RAV4 2.5 Hybrid AWD Executive</b><br>
+        2021 · 54 000 km · hybryda · 222 KM · otomoto<br>
+        Цена продавца <b>129 900 zł</b> · ≈ <b>134 300 zł под ключ</b>
+        <span class="t">14:02</span><div style="clear:both"></div>
+      </div>
+      <div class="kb">
+        <div class="r"><div class="k">📝 Оффер</div><div class="k">🧮 Калькулятор</div></div>
+        <div class="r"><div class="k">🔎 Подборка по этой машине</div></div>
+      </div>
+      <div class="note">нажали «📝 Оффер»</div>
+      <div class="msg"><b>📝 Черновик оффера готов</b><br>Toyota RAV4 2.5 Hybrid · 2021<br><b>134 300 zł под ключ</b> · язык PL<span class="t">14:03</span><div style="clear:both"></div></div>
+      <div class="kb"><div class="r"><div class="k u">Открыть редактор</div><div class="k">📄 PDF</div></div></div>
+      <div class="note">нажали «📄 PDF» — файл в чат, клиенту пересылаете сами</div>
+      <div class="msg">📄 <b>Oferta_Toyota_RAV4_2021.pdf</b><br><span class="g">2 страницы · 410 KB</span><span class="t">14:03</span><div style="clear:both"></div></div>
+      <div class="day">ссылка mobile.de или av.by</div>
+      <div class="msg">
+        <b>mobile.de</b> сервер не читает — объявление прочитает расширение на компьютере.<br>
+        Черновик оффера уже создан, данные дополнятся сами.
+        <span class="t">14:05</span><div style="clear:both"></div>
+      </div>
+      <div class="kb"><div class="r"><div class="k u">Открыть оффер</div><div class="k u">🧮 Калькулятор</div></div></div>
+    </div>
+    <div class="reply"><div>📊 Сводка</div><div>🔎 Подборки</div><div>❓ Помощь</div></div>
+  </div>
+  <div class="foot">Ссылка отчёта Macadam / DEKRA — «📝 Оффер с аукциона». Бот ничего не отправляет клиенту сам.</div>
+</div>
+
+<!-- T4 -->
+<div class="col">
+  <div class="cap">Т4 — VIN</div>
+  <div class="sub">Менеджер присылает VIN текстом (17 знаков). Бот ставит проверку в общую очередь VIN Check.</div>
+  <div class="phone">
+    <div class="bar"><div class="ava">MT</div><div><div class="bn">Mantexlab Tools</div><div class="bs">бот</div></div></div>
+    <div class="chat">
+      <div class="msg me">WBA18CX080LT12345<span class="t">16:20</span><div style="clear:both"></div></div>
+      <div class="msg">
+        🔎 <b>VIN WBA18CX080LT12345</b> · BMW<br>
+        В очереди, вы 2-й · проверка займёт 20–60 с
+        <span class="t">16:20</span><div style="clear:both"></div>
+      </div>
+      <div class="kb"><div class="r"><div class="k">✕ Отменить</div></div></div>
+      <div class="note">через минуту то же сообщение меняется на результат</div>
+      <div class="msg">
+        <span class="ok">✅ Проверено</span> · VIN WBA18CX080LT12345<br>
+        <b>BMW X5 xDrive30d (G05)</b><br>
+        Дизель · 2 993 см³ · выпуск 03.2020<br>
+        <span class="g">Проверено по VIN · partslink24</span>
+        <span class="t">16:21</span><div style="clear:both"></div>
+      </div>
+      <div class="kb">
+        <div class="r"><div class="k">📄 PDF отчёта</div><div class="k u">🧮 Калькулятор</div></div>
+        <div class="r"><div class="k u">Открыть в VIN Check</div></div>
+      </div>
+      <div class="day">если что-то не так</div>
+      <div class="msg">
+        <span class="warn">⚠️ Робот VIN Check на паузе</span> — нужен вход в partslink24.<br>
+        Проверка встала в очередь и пройдёт, когда робот вернётся.
+        <span class="t">16:25</span><div style="clear:both"></div>
+      </div>
+      <div class="msg">
+        <span class="warn">VIN «WBA18CX08OLT1234» — 16 знаков</span>, нужно 17; буквы O, I, Q в VIN не бывает.
+        <span class="t">16:26</span><div style="clear:both"></div>
+      </div>
+    </div>
+    <div class="reply"><div>📊 Сводка</div><div>🔎 Подборки</div><div>❓ Помощь</div></div>
+  </div>
+  <div class="foot">Проверка та же, что на сайте: одна за раз, дневной предел робота, история VIN Check. PDF — только менеджеру.</div>
+</div>
+
+</div>
+</body></html>
