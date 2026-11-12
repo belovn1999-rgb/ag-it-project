@@ -1,6 +1,6 @@
 # Справочник моделей — 7 мест (третий ряд)
 
-Сгенерировано `tools/seats.py` (2026-11-07) из `data/model-engines.csv`. B61, решение владельца 02.11 (кнопка «7 miejsc» формы сайта). Колонка «Места» — числа мест версии: «5/7» — третий ряд за доплату, «7» — всегда семь. Источники: каталог ADAC («Sitzanzahl / Sitzanzahl maximal» страницы версии, «(7-Sitzer)» в названии), ultimatespecs (страница и название версии), autocentrum (число мест мотора). **Подтверждено** — два источника называют третий ряд у поколения, один из них — у этой версии.
+Сгенерировано `tools/seats.py` (2026-11-12) из `data/model-engines.csv`. B61, решение владельца 02.11 (кнопка «7 miejsc» формы сайта). Колонка «Места» — числа мест версии: «5/7» — третий ряд за доплату, «7» — всегда семь. Источники: каталог ADAC («Sitzanzahl / Sitzanzahl maximal» страницы версии, «(7-Sitzer)» в названии), ultimatespecs (страница и название версии), autocentrum (число мест мотора). **Подтверждено** — два источника называют третий ряд у поколения, один из них — у этой версии.
 
 | Итог | поколений |
 |---|---|
@@ -59,7 +59,7 @@
 | Peugeot | Traveller | Traveller | 2016–2020 | 5/6/8/9 | adac + autocentrum |  |
 | Renault | Espace | Espace IV | 2002–2012 | 6/7 | adac + autocentrum |  |
 | Renault | Kangoo | Kangoo II | 2011–2019 | 4/5/7 | adac + autocentrum |  |
-| Renault | Master | Master IV | 2010–2010 | 3/6/7/8 | adac + autocentrum | Master Pojedyncza kabina podwozie 2.3 dCi, Master Pojedyncza kabina podwozie 2.3 dCi |
+| Renault | Master | Master IV | 2010–2016 | 3/6/7/8 | adac + autocentrum | Master Pojedyncza kabina podwozie 2.3 dCi, Master Pojedyncza kabina podwozie 2.3 dCi, Master Van 2.3 Kastenwagen L3H2 3,3t Blue dCi 130 (Heckantrieb) |
 | Renault | Scenic | Scénic III | 2009–2015 | 5/7 | adac + ultimatespecs |  |
 | Renault | Trafic | Trafic III | 2013–2023 | 3/6/8/9 | adac + ultimatespecs | Traffic Combi 2.0 Blue dCi 110, Traffic Combi 2.0 Blue dCi 150, Traffic Combi 2.0 Blue dCi 150 EDC, Traffic Combi 2.0 Blue dCi 170 EDC … |
 | Seat | Alhambra | Alhambra II | 2010–2016 | 5/7 | adac + autocentrum |  |

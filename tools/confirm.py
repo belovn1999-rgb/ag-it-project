@@ -28,6 +28,7 @@ import re
 
 import adac_check
 import autocentrum
+import register_check
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 COLUMNS = ["Подтверждение: мотор", "Подтверждение: годы", "Подтверждение: фаза", "Подтверждение: коробка",
@@ -60,6 +61,7 @@ ODD_KEEP_MAKES = {"Genesis"}
 CODE_WORDS = {"m": "механика", "a": "автомат", "f": "передний", "r": "задний", "4": "полный"}
 DIFF_SCOPE = re.compile(r"^(коробка|привод) — у ADAC (.+?) \((все|прочитано \d+ из) (\d+) версий")
 NOT_HERE = "нет в Польше и Германии"
+NO_EPA = "_без EPA: "  # a work field: the status without EPA, for ADAC's corrections (not written)
 # Where a gearbox / drive came from ("Коробка: откуда", "Привод: откуда") -> the source that states it
 # (None: the row's own source, its version name).
 STATED = {"autocentrum": "autocentrum", "autocentrum (у двигателя одна коробка)": "autocentrum",
@@ -178,6 +180,9 @@ def confirm(rows, ac):
     # tools/crawl-ultimatespecs-models.py --check): the same comparison, for the rows of the other sources.
     us_models = _with_configs(_load("ultimatespecs-check.json").get("models", []), _load("model-version-details.json"))
     us_found, us_options, us_gens = _evidence(us_models, gens, "ultimatespecs")
+    # Official registers (stage 27): the EU's new-car register for the engine, the US EPA for gearbox and drive.
+    eea = register_check.eea_engines(rows)
+    epa = register_check.epa_options(rows)
 
     wiki = {key: value["year"] for key, value in _load("model-facelifts-wiki.json").items() if value.get("accepted")}
     manual = {key: value["year"] for key, value in _load("model-facelifts-manual.json").items()}
@@ -283,6 +288,8 @@ def confirm(rows, ac):
             engine.add("adac")
             twin = adac["twins"][0]
             row[ADAC_COLUMN] = f"{twin[0]} · {twin[1]} · {twin[2]} kW · {twin[4]}–{twin[5] or ''}"
+        if id(row) in eea:
+            engine.add("EEA")
         row["Подтверждение: мотор"] = _status(engine)
         key = (row["Марка"], row["Модель"], row["Поколение"])
         start, end = autocentrum.our_years(row["Годы (проверено)"])
@@ -297,7 +304,7 @@ def confirm(rows, ac):
         # started from 2023 may simply not be in the sources yet (Scénic V E-Tech, GLC EQ).
         gen_from = gens.get((row["Марка"], row["Модель"]), {}).get(row["Поколение"], {}).get("from") or 0
         missing_gen = not gen_known and model_known and (end or 2026) >= 2011 and gen_from < 2023
-        if (engine == {"ultimatespecs"} and missing_gen) or "вне ЕС" in row["Поколение"]:
+        if ((engine == {"ultimatespecs"} and missing_gen) or "вне ЕС" in row["Поколение"]) and id(row) not in eea:
             row[MARKET_COLUMN] = NOT_HERE
         their = options.get(id(row), set()) if source != "autocentrum" else set()
         for column, field, codes, index in (("Подтверждение: коробка", "Коробка", autocentrum.OUR_GEARBOX, 0),
@@ -318,14 +325,19 @@ def confirm(rows, ac):
                     stated.add("ultimatespecs")
                 if source != "adac" and codes.get(value) in adac.get("gearbox" if index == 0 else "drive", set()):
                     stated.add("adac")
+                # EPA only when all its US versions say one value, ours (the US sells fewer variants: an A3 1.8
+                # TFSI there is automatic only, so another value of EPA is no contradiction).
+                if codes.get(value) and epa.get(id(row), (set(), set()))[index] == {codes[value]}:
+                    stated.add("EPA")
                 return stated
             stated = stated_by(value, origin)
             page = adac.get("page_gearbox" if index == 0 else "page_drive")
-            if source != "adac" and page and codes.get(value) not in page and len(stated) < 2:
+            # ADAC's corrections are decided without EPA: a US-only variant must not keep a European error.
+            if source != "adac" and page and codes.get(value) not in page and len(stated - {"EPA"}) < 2:
                 said = "коробка" if index == 0 else "привод"
                 # Every ADAC version of the engine read and none like ours — likely our error; else one of several.
                 total, read = adac.get("pages_all", 0), adac.get("pages_read", 0)
-                if not stated and len(page) == 1 and read >= total:
+                if not stated - {"EPA"} and len(page) == 1 and read >= total:
                     # Ours only worked out, every ADAC version says one other value: ADAC's (owner 2026-10-29).
                     value, origin = CODE_WORDS[next(iter(page))], FROM_ADAC
                     row[FIXED_COLUMN] = "; ".join(filter(None, [
@@ -338,6 +350,7 @@ def confirm(rows, ac):
                     says = " / ".join(CODE_WORDS[code] for code in sorted(page))
                     row[DIFF_COLUMN] = "; ".join(filter(None, [
                         row[DIFF_COLUMN], f"{said} — у ADAC {says} ({scope}; {adac['page_text']})"]))
+            row[NO_EPA + column] = _status(stated - {"EPA"}) if stated - {"EPA"} else "нет"
             if stated:
                 row[column] = _status(stated)
             elif origin in RULES:
@@ -345,6 +358,9 @@ def confirm(rows, ac):
             else:
                 row[column] = "вывод: " + (origin or "без пометки")
     _odd_values(rows)
+    for row in rows:
+        for column in ("Подтверждение: коробка", "Подтверждение: привод"):
+            row.pop(NO_EPA + column, None)
     counts = {column: collections.Counter(row[column].split(":")[0].split(" (")[0] for row in rows) for column in COLUMNS}
     return counts
 
@@ -365,11 +381,11 @@ def _odd_values(rows):
                 continue
             field = "Коробка" if found.group(1) == "коробка" else "Привод"
             column = "Подтверждение: " + found.group(1)
-            if not row[column].startswith("одна база") or ODD_NAME[field].search(row["Версия"]):
+            if not row.get(NO_EPA + column, row[column]).startswith("одна база") or ODD_NAME[field].search(row["Версия"]):
                 continue
             same = [o for o in by_gen[(row["Марка"], row["Модель"], row["Поколение"])]
                     if o is not row and o[field] == row[field]]
-            if len(same) > ODD_ROWS or any(o[column].startswith("подтверждено") for o in same):
+            if len(same) > ODD_ROWS or any(o.get(NO_EPA + column, o[column]).startswith("подтверждено") for o in same):
                 continue
             # "полный / задний" (Isuzu D-Max, Ford S-Max): the base drive, all-wheel is a version of its own.
             says = [w for w in found.group(2).split(" / ") if w != "полный"] or ["полный"]
@@ -385,6 +401,80 @@ def _odd_values(rows):
         row[field], row[f"{field}: откуда"] = value, FROM_ADAC
         row[column] = _status({"adac"})
         row[DIFF_COLUMN] = "; ".join(p for p in DIFF_PARTS.split(row[DIFF_COLUMN]) if p != part)
+
+
+def _registers_section(rows, share):
+    """Stage 27: the EU's new-car register (EEA) and the US EPA — what they confirm and what to check by hand."""
+    total = len(rows)
+    eea_rows = sum("EEA" in row["Подтверждение: мотор"] for row in rows)
+    epa_box = sum("EPA" in row["Подтверждение: коробка"] for row in rows)
+    epa_drive = sum("EPA" in row["Подтверждение: привод"] for row in rows)
+    eea = register_check._load("eea-registrations.json")
+    years = eea.get("years", [])
+    lines = ["", "## Официальные реестры (этап 27)", "",
+             f"**EEA** — реестр ЕС новых легковых машин (CO2 monitoring, {min(years, default='')}–{max(years, default='')}): "
+             "каждая машина, зарегистрированная новой в стране ЕС, с маркой, названием, топливом, см³ и кВт "
+             "(`data/eea-registrations.json`, `tools/eea_import.py`; строка одной страны и одного года не берётся — "
+             f"это ошибки ввода). Мотор версии есть в реестре в её годы (см³ ± 30, кВт ± 2): **{share(eea_rows, total)}** "
+             "версий; такая версия продавалась в ЕС и с пометки «нет в Польше и Германии» снимается.",
+             "",
+             "**EPA** — реестр США (fueleconomy.gov, все версии с 2000 года): коробка и привод "
+             "(`data/epa-vehicles.json`, `tools/epa_import.py`). Подтверждает, только когда все версии США той модели, "
+             "объёма, топлива и лет говорят одно и то же — наше; другое значение США ошибкой не считается (в США "
+             f"продают меньше вариантов: A3 1.8 TFSI там только автомат). Коробка: **{share(epa_box, total)}**, "
+             f"привод: **{share(epa_drive, total)}** версий. На исправления по ADAC EPA не влияет.", ""]
+    epa = register_check.epa_options(rows)
+    gearbox_codes, drive_codes = autocentrum.OUR_GEARBOX, autocentrum.OUR_DRIVE
+    doubt = collections.defaultdict(list)
+    for row in rows:
+        options = epa.get(id(row))
+        if not options:
+            continue
+        for field, codes, index, column in (("Коробка", gearbox_codes, 0, "Подтверждение: коробка"),
+                                            ("Привод", drive_codes, 1, "Подтверждение: привод")):
+            said = options[index]
+            if len(said) == 1 and codes.get(row[field]) and codes[row[field]] not in said and \
+                    not row[column].startswith("подтверждено"):
+                words = {v: k for k, v in codes.items() if k != "автомат (робот)"}
+                doubt[(row["Марка"], row["Модель"], row["Поколение"], field.lower(), row[field],
+                       words[next(iter(said))])].append(row)
+    lines += ["### США говорят другое, а наше не подтверждено (проверить)", "",
+              f"Наше значение — один источник или вывод, а все версии США того же мотора — другое: "
+              f"**{sum(len(v) for v in doubt.values())}** версий. Часто это разница рынков, но бывает и наша ошибка "
+              "(Audi RS3 «передний» — RS3 всегда полный).", "",
+              "| Марка · модель · поколение | Что | У нас | В США | Версий | Например |", "|---|---|---|---|---:|---|"]
+    for (brand, model, generation, what, ours, says), group in sorted(doubt.items(), key=lambda i: -len(i[1]))[:60]:
+        lines.append(f"| {brand} {model} {generation} | {what} | {ours} | {says} | {len(group)} | "
+                     f"{group[0]['Версия'][:40]} |")
+    mild = register_check.eea_mild(rows)
+    missed = collections.defaultdict(list)
+    extra = collections.defaultdict(list)
+    for row in rows:
+        counts = mild.get(id(row))
+        if not counts:
+            continue
+        plain, hybrid = counts
+        if not row["Мягкий гибрид с"] and hybrid >= 3 and plain < 3:
+            missed[(row["Марка"], row["Модель"], row["Поколение"])].append(row)
+        elif row["Мягкий гибрид с"] and plain >= 3 and hybrid < 3:
+            extra[(row["Марка"], row["Модель"], row["Поколение"])].append(row)
+    lines += ["", "### Мягкий гибрид по реестру ЕС (проверить)", "",
+              "Реестр ЕС пишет гибриды отдельно (fuel mode H), мягкие тоже — чаще 48 В; 12-вольтовые страны часто пишут "
+              "как обычный бензин / дизель. Сами не меняются: от этого зависит акциз.", "",
+              f"Реестр — гибрид (в 3 странах и больше), у нас не мягкий гибрид: **{sum(len(v) for v in missed.values())}** "
+              f"версий; у нас мягкий гибрид, реестр — обычный: **{sum(len(v) for v in extra.values())}** версий.", "",
+              "| Что | Марка · модель · поколение | Версий | Например |", "|---|---|---:|---|"]
+    for title, groups in (("реестр — гибрид, у нас нет", missed), ("у нас MHEV, реестр — обычный", extra)):
+        for (brand, model, generation), group in sorted(groups.items(), key=lambda i: -len(i[1]))[:30]:
+            lines.append(f"| {title} | {brand} {model} {generation} | {len(group)} | {group[0]['Версия'][:40]} |")
+    lost = [item for item in eea.get("unmatched", []) if item[2] >= 10]
+    lines += ["", "### В реестре ЕС, а у нас такой модели нет", "",
+              f"Названия наших марок, зарегистрированные новыми в 10 странах и больше, которые не легли ни на одну "
+              f"нашу модель: **{len(lost)}** (часть — версии под своим названием: GR Yaris, John Cooper Works, кемперы).", "",
+              "| Марка | Название в реестре | Стран | Годы |", "|---|---|---:|---|"]
+    for make, name, countries, first, last in lost[:80]:
+        lines.append(f"| {make} | {name} | {countries} | {first}–{last} |")
+    return lines
 
 
 def write_report(rows, today):
@@ -403,7 +493,7 @@ def write_report(rows, today):
         "",
         f"Сгенерировано `tools/confirm.py` ({today}) из `data/model-engines.csv`. Этап B61 п. 16 "
         "(`docs/PROJECT-MODELS.md`). **Подтверждено** — два независимых источника согласны (решение владельца "
-        "23.10): autocentrum.pl, ultimatespecs.com, каталог ADAC, Википедия. **Одна база** — значение есть только "
+        "23.10): autocentrum.pl, ultimatespecs.com, каталог ADAC, Википедия, реестр ЕС новых машин (EEA), реестр США (EPA). **Одна база** — значение есть только "
         "в одном источнике. **Правило** — электро и гибрид всегда с автоматом, модель только 4x4. **Вывод** — значение "
         "вычислено («механика, раз есть такая же с автоматом», «привод как у модели»). На странице пока ничего не меняется.",
         "",
@@ -492,6 +582,7 @@ def write_report(rows, today):
                      f"{group['kind']} | {group['sample']} |")
     if len(order) > 80:
         lines.append(f"| … ещё {len(order) - 80} | | | | | | | |")
+    lines += _registers_section(rows, share)
     lines += ["", "## По источнику строки", "", "| Источник строки | Версий | Мотор подтверждён | Годы подтверждены |",
               "|---|---:|---:|---:|"]
     by_source = collections.defaultdict(list)
