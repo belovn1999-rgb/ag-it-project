@@ -14,7 +14,9 @@ window.AUTOGOOD_MODEL_SPECS_LOADED["<brand>"]["<brand>|<model>"] =
             number from the version name ("320", "m340", "220", "s3") for
             sub-models such as "320" or "C 220"; duplicates merged; seats = the counts
             its bodies can have, "5/7" (a third row at extra cost), "7", "" unknown
-            (column "Места", tools/seats.py, 2026-11-02; last, so readers by index keep working).
+            (column "Места", tools/seats.py, 2026-11-02; last, so readers by index keep working);
+            from, to|null = the years of the version itself ("Годы версии", tools/version_years.py, stage 28,
+            2026-11-12): readers take them with a year's slack, a car is registered after it is built.
   trims:    [from, to|null, lines[], sport[], editions[]]
   bodies:   [gen index, types[], doors from, doors to, seats from, seats to, sliding 0|1]
             doors and seats from autocentrum.pl where data/model-engines.csv has them
@@ -495,13 +497,21 @@ def main():
                 fuel = {"hybrid_petrol": "petrol", "hybrid_diesel": "diesel"}.get(fuel, fuel)
             # A version neither Poland (autocentrum) nor Germany (ADAC) sells is not an engine of the page's lists:
             # it goes under the line with the other values; the generation and the table keep it (owner 2026-10-23).
-            if row.get("Рынок") == "нет в Польше и Германии":
+            if row.get("Рынок", "").startswith("нет"):  # or a hand check: not sold in the EU / in that phase
                 continue
             version = (gen_key, fuel, int(row["Объём, см³"] or 0), int(row["Мощность, л.с."] or 0),
                        int(row["Мощность, кВт"] or 0), GEARBOX.get(row["Коробка"], ""),
                        DRIVE.get(row["Привод"], ""), mild, token(row["Марка"], row["Версия"]))
             # The same engine in several bodies (Tiguan and Tiguan Allspace, Land Cruiser 3- and 5-door): all counts.
-            entry["versions"].setdefault(version, set()).update(int(v) for v in row.get("Места", "").split("/") if v)
+            found = entry["versions"].setdefault(version, [set(), None, None, False])
+            found[0].update(int(v) for v in row.get("Места", "").split("/") if v)
+            # Years of the version itself (stage 28, tools/version_years.py): the widest of its rows.
+            v_from, v_to = years(row.get("Годы версии") or row["Годы (проверено)"])
+            if v_from:
+                found[1] = v_from if found[1] is None else min(found[1], v_from)
+            found[3] = found[3] or v_to is None
+            if v_to:
+                found[2] = v_to if found[2] is None else max(found[2], v_to)
 
     with open(os.path.join(ROOT, "data", "model-trims.json"), encoding="utf8") as handle:
         trims = json.load(handle)["rows"]
@@ -511,7 +521,8 @@ def main():
         gens = sorted(entry["gens"].values(), key=lambda g: (g["from"] or 0, g["to"] or 9999), reverse=True)
         index = {(g["code"], g["from"], g["to"]): i for i, g in enumerate(gens)}
         versions = sorted(
-            [index[v[0]], *v[1:], "/".join(map(str, sorted(seats)))] for v, seats in entry["versions"].items()
+            [index[v[0]], *v[1:], "/".join(map(str, sorted(seats))), v_from, None if open_end else v_to]
+            for v, (seats, v_from, v_to, open_end) in entry["versions"].items()
         )
         brand, model = key.split("|", 1)
         names = {model.lower(), brand.lower(), "golf", "passat", "polo", "tiguan", "t-roc", "q3", "multivan", "s-class"}

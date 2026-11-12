@@ -1,4 +1,18 @@
 {
+"https://www.ultimatespecs.com/car-specs/Abarth/62986/Abarth-500-14-16v-T-JET-135HP-.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Abarth/62997/Abarth-500-14-16v-T-JET-140HP-Sequential.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Aiways/122618/Aiways-U5-Standard.html": {
 "doors": "5",
 "drive": "FWD",
@@ -4966,6 +4980,20 @@
 "seats": "5",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Cadillac/36063/Cadillac-CTS-II-US-Spec-Sport-Wagon-36.html": {
+"doors": "5",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Cadillac/36064/Cadillac-CTS-II-US-Spec-Sport-Wagon-36-AWD.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Chevrolet/11021/Chevrolet-Cruze-16-L.html": {
 "doors": "4",
 "drive": "FWD",
@@ -5057,6 +5085,13 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Citroen/105572/Citroen-Berlingo-II-Multispace-VTi-100.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Citroen/107311/Citroen-C4-Picasso-2017-PureTech-110-S-S.html": {
 "doors": "5",
 "drive": "FWD",
@@ -5083,6 +5118,20 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Citroen/12359/Citroen-Berlingo-II-Combi-SX-Multispace-16-HDi-90.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Citroen/12360/Citroen-Berlingo-II-Combi-SX-Multispace-16-HDi-75.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Citroen/125857/Citroen-C4-III-PureTech-100.html": {
@@ -5246,10 +5295,24 @@
 "seats": "5",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Citroen/72486/Citroen-Berlingo-II-Multispace-Feel-VTi-120.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Citroen/72529/Citroen-DS3-2014-PureTech-110-S-S-Desire.html": {
 "doors": "3",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Citroen/73489/Citroen-C5-II-BlueHDi-150-S-S-Feel.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -5351,6 +5414,34 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Dacia/11512/Dacia-Sandero-Ambiance-12-16v-75HP.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Dacia/11513/Dacia-Sandero-Ambiance-16-90HP.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Dacia/11517/Dacia-Sandero-Ambiance-15-dCi-70HP.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Dacia/11520/Dacia-Sandero-Laureate-15-dCi-85HP.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Dacia/115954/Dacia-Lodgy-TCe-130-5-seats.html": {
 "doors": "5",
 "drive": "FWD",
@@ -5376,6 +5467,13 @@
 "doors": "5",
 "drive": "AWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Dacia/59438/Dacia-Sandero-Ambiance-Music-15-dCi-75HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -5495,6 +5593,13 @@
 "doors": "5",
 "drive": "AWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Fiat/107704/Fiat-Fiorino-Combi-2016-13-MultiJet-80HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -7880,6 +7985,20 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Honda/62580/Honda-Accord-8-Facelift-22-i-DTEC-Comfort.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Honda/62634/Honda-Accord-8-Facelift-22-i-DTEC-180-Luxury.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Honda/63107/Honda-Civic-9-18-i-VTEC-Executive.html": {
 "doors": "5",
 "drive": "FWD",
@@ -7999,6 +8118,27 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Hyundai/12140/Hyundai-i20-(PB)-3-doors-12i.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Hyundai/12145/Hyundai-i20-(PB)-14-CRDi-75.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Hyundai/12155/Hyundai-i20-(PB)-14-CRDi-90.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Hyundai/123828/Hyundai-Santa-Fe-(TM)-22-CRDi-193HP-2WD.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8076,6 +8216,13 @@
 "seats": "",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Hyundai/142193/Hyundai-Matrix-2008-16-LPG-(on-LPG).html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Hyundai/23772/Hyundai-ix20-14-CRDi-77HP-Classic.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8102,6 +8249,13 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Hyundai/35132/Hyundai-i20-(PB)-3-doors-16i.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Hyundai/59141/Hyundai-i30-II-14-CRDI-90HP-City.html": {
@@ -8552,6 +8706,13 @@
 "seats": "7",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Lancia/68094/Lancia-Delta-III-16-Multijet-105HP-Silver.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Lancia/68274/Lancia-Voyager-28-CRD-178HP-S.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8874,6 +9035,13 @@
 "seats": "5",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Maserati/11197/Maserati-Quatroporte-V-2008-.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Maserati/127076/Maserati-Ghibli-2021-38-V8-Trofeo.html": {
 "doors": "4",
 "drive": "RWD",
@@ -8943,6 +9111,48 @@
 "gearbox": "8 speed Automatic",
 "seats": "5",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/10193/Mazda-6-II-4p-Active-18-120HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/10195/Mazda-6-II-4p-Style-20-155HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/10198/Mazda-6-II-4p-Sportive-25-170HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/10199/Mazda-6-II-4p-Active-22-CRTD-129HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/10203/Mazda-6-II-4p-Sportive-22-CRTD-163HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/10204/Mazda-6-II-4p-Sportive-22-CRTD-180HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Mazda/108177/Mazda-3-2017-SKYACTIV-D-15-105HP.html": {
 "doors": "5",
@@ -10948,6 +11158,20 @@
 "seats": "6",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Opel/13277/Opel-Insignia-4-doors-Cosmo-18-16v-140HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Opel/13287/Opel-Insignia-4-doors-OPC-28-V6-Turbo-325HP-4x4.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Opel/136563/Opel-Movano-B-2010-L1H1-Van-23-CDTI-130HP-28t.html": {
 "doors": "3",
 "drive": "FWD",
@@ -11030,6 +11254,27 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Opel/26583/Opel-Insignia-4-doors-20-CDTI-110HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Opel/26585/Opel-Insignia-4-doors-20-CDTI-130HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Opel/40928/Opel-Insignia-4-doors-OPC-28-V6-Turbo.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Opel/59628/Opel-Combo-D-Tour-Excellence-16-CDTI-90HP-Easytronic.html": {
@@ -15592,6 +15837,13 @@
 "seats": "4",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Seat/59246/Seat-Ibiza-6J-20-TDI-CR-143HP-FR.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Seat/60897/Seat-Exeo-Sport-20-TDI-CR-170HP.html": {
 "doors": "4",
 "drive": "FWD",
@@ -15641,6 +15893,13 @@
 "seats": "4",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Seat/72782/Seat-Ibiza-6P-10-75HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Seat/73349/Seat-Alhambra-2016-20-TDI-150HP.html": {
 "doors": "5",
 "drive": "FWD",
@@ -15662,10 +15921,24 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Seat/73721/Seat-Ibiza-SC-(6P)-18-TSI-192HP-CUPRA.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Seat/74279/Seat-Toledo-IV-14-TDI-90HP.html": {
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Seat/74730/Seat-Ibiza-6P-14-Eco-TSI-ACT-150HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -16608,6 +16881,13 @@
 "gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Subaru/11431/Subaru-Forester-III-20-Classic.html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "speed",
+"seats": "",
+"transmission": ""
 },
 "https://www.ultimatespecs.com/car-specs/Subaru/134627/Subaru-BRZ-2-24-D-4S.html": {
 "doors": "2",

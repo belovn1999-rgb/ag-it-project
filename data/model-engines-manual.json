@@ -1,0 +1,234 @@
+{
+ "about": "Corrections checked by hand against independent sources (B61 stage 28, hand check of 100 versions 2026-11-12, docs/PROJECT-MODELS.md item 27). Each fix: rows matching every field of 'match' (Версия / Кузов by substring, others exactly) get 'set'; tools/manual_fixes.py, applied after the confirmation, marks the changed fields 'ручная проверка'.",
+ "fixes": [
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Klasa E",
+    "Поколение": "W212",
+    "Версия": "200 NGT",
+    "Объём, см³": "2143"
+   },
+   "set": {
+    "Объём, см³": "1796"
+   },
+   "why": "E 200 NGT — бензиново-газовый M271 1,8 л, не 2,1",
+   "source": [
+    "https://www.auto-motor-und-sport.de/fahrbericht/mercedes-e-200-ngt-ohne-umstaende-ohne-umgewoehnung/",
+    "https://www.thecarspec.net/car-detail/mercedes-benz-e-class-w212-e-200-ngt-blueefficiency-163-hp-5g-tronic-2011"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Sprinter",
+    "Поколение": "Sprinter III",
+    "Версия": "NGT",
+    "Объём, см³": "2143"
+   },
+   "set": {
+    "Объём, см³": "1796"
+   },
+   "why": "Sprinter 316 NGT — тот же газовый M271 1,8 л",
+   "source": [
+    "https://en.wikipedia.org/wiki/Mercedes-Benz_Sprinter"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "GLC",
+    "Поколение": "X253",
+    "Версия": "300 de",
+    "Объём, см³": "1991"
+   },
+   "set": {
+    "Объём, см³": "1950"
+   },
+   "why": "GLC 300 de — дизельный OM654 1950 см³ с мотором-генератором",
+   "source": [
+    "https://www.topgear.com/car-reviews/mercedes-benz/glc-300de-4matic-amg-line-5dr-9g-tronic/spec-0",
+    "https://www.parkers.co.uk/mercedes-benz/glc-class/coupe-2016/glc-300de-4matic-amg-line-9g-tronic-5d/specs/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Renault",
+    "Модель": "Talisman",
+    "Объём, см³": "1561"
+   },
+   "set": {
+    "Объём, см³": "1461"
+   },
+   "why": "1.5 dCi (K9K) — 1461 см³",
+   "source": [
+    "https://autodata1.com/en/car/renault/talisman/talisman-estate-15-energy-dci-110-hp",
+    "https://www.auto-abc.eu/Renault-Talisman/v23295-2016"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Seat",
+    "Модель": "Alhambra",
+    "Поколение": "Alhambra I",
+    "Этап": "рестайлинг",
+    "Версия": "1.9 TDI",
+    "Мощность, л.с.": "110"
+   },
+   "set": {
+    "Объём, см³": "1896",
+    "Рынок": "нет в продаже (ручная проверка)"
+   },
+   "why": "1.9 TDI 110 л. с. — только до рестайлинга 2000 г.; после — 90 / 115 / 130 / 150 л. с.",
+   "source": [
+    "https://en.wikipedia.org/wiki/Volkswagen_Sharan",
+    "https://www.auto-data.net/en/seat-alhambra-i-7m-facelift-2000-1.9-tdi-115hp-tiptronic-28353"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Genesis",
+    "Модель": "GV80",
+    "Поколение": "GV80",
+    "Этап": "дорестайлинг",
+    "Версия": "3.5T"
+   },
+   "set": {
+    "Рынок": "нет в ЕС (ручная проверка)"
+   },
+   "why": "в Европе GV80 до рестайлинга — только 2.5T и 3.0D",
+   "source": [
+    "https://de.motor1.com/news/505235/genesis-g80-gv80-2021-europa/",
+    "https://www.parkers.co.uk/genesis/gv80/suv/review/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volvo",
+    "Модель": "XC60",
+    "Поколение": "XC60 I",
+    "Топливо": "дизель",
+    "Объём, см³": "1969"
+   },
+   "set": {
+    "Привод": "передний"
+   },
+   "why": "четырёхцилиндровые дизели Drive-E (D3 / D4 1969 см³) — только передний; полный — у 2,4 л",
+   "source": [
+    "https://www.angurten.de/is/technische-daten/Volvo-XC60-20+D4+%28181+PS%29-133-kW-181-PS-1191-13648.html",
+    "https://www.auto-data.net/en/volvo-xc60-i-2013-facelift-2.4-d4-181hp-awd-21798"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Subaru",
+    "Модель": "Legacy",
+    "Поколение": "Legacy V",
+    "Версия": "2.5 i"
+   },
+   "set": {
+    "Коробка": "автомат"
+   },
+   "why": "в ЕС Legacy V 2.5i — только вариатор Lineartronic",
+   "source": [
+    "https://www.parkers.co.uk/subaru/legacy/review/",
+    "https://cms.carkeys.co.uk/car-reviews/subaru-legacy-tourer-25i-se-lineartronic-2011"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mini",
+    "Модель": "Countryman",
+    "Поколение": "R60",
+    "Топливо": "дизель",
+    "Объём, см³": "1598",
+    "Коробка": "автомат"
+   },
+   "set": {
+    "Объём, см³": "1995"
+   },
+   "why": "Cooper D с автоматом — дизель 2,0 (1995 см³, те же 112 л. с.); 1.6 D — только механика",
+   "source": [
+    "https://www.auto-data.net/en/mini-countryman-r60-facelift-2014-cooper-d-1.6-112hp-all4-21624",
+    "https://www.auto-data.net/en/mini-countryman-r60-facelift-2014-cooper-d-2.0-112hp-all4-automatic-21625"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Isuzu",
+    "Модель": "D-Max",
+    "Привод": "передний"
+   },
+   "set": {
+    "Привод": "задний"
+   },
+   "why": "у пикапа D-Max вариант 4x2 — задний привод",
+   "source": [
+    "https://en.wikipedia.org/wiki/Isuzu_D-Max",
+    "https://salsac.rivervale.co.uk/van-leasing/isuzu/d-max/d-max-diesel/19-single-cab-4x2-2019"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volkswagen",
+    "Модель": "Crafter",
+    "Поколение": "Crafter I",
+    "Привод": ""
+   },
+   "set": {
+    "Привод": "задний"
+   },
+   "why": "Crafter I (на базе Sprinter) — задний привод; 4MOTION указан в названии",
+   "source": [
+    "https://en.wikipedia.org/wiki/Volkswagen_Crafter",
+    "https://www.parkers.co.uk/vans/reviews/volkswagen/crafter/2006"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Citan",
+    "Привод": "задний"
+   },
+   "set": {
+    "Привод": "передний"
+   },
+   "why": "Citan (на базе Kangoo) — только передний привод",
+   "source": [
+    "https://en.wikipedia.org/wiki/Mercedes-Benz_Citan"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volkswagen",
+    "Модель": "Crafter",
+    "Поколение": "Crafter I",
+    "Объём, см³": "2459"
+   },
+   "set": {
+    "Годы версии": "2006–2011"
+   },
+   "why": "2.5 TDI — до 07/2011, потом 2.0 TDI",
+   "source": [
+    "https://en.wikipedia.org/wiki/Volkswagen_Crafter",
+    "https://www.parkers.co.uk/vans/reviews/volkswagen/crafter/2006"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Klasa E",
+    "Поколение": "W212",
+    "Версия": "200 NGT"
+   },
+   "set": {
+    "Годы версии": "2011–2015"
+   },
+   "why": "E 200 NGT продавался 03/2011–2015",
+   "source": [
+    "https://www.auto-motor-und-sport.de/fahrbericht/mercedes-e-200-ngt-ohne-umstaende-ohne-umgewoehnung/",
+    "https://www.thecarspec.net/car-detail/mercedes-benz-e-class-w212-e-200-ngt-blueefficiency-163-hp-5g-tronic-2011"
+   ]
+  }
+ ]
+}

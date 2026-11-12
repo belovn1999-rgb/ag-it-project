@@ -35,6 +35,8 @@ import autocentrum
 import confirm
 import seats
 import mild_hybrids
+import manual_fixes
+import version_years
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -553,6 +555,9 @@ def drive_for(brand, model, code, version):
     if re.search(r"\bs ?drive(\d+[a-z]*)?\b", version["name"], re.I):
         front = model == "X1" and code != "E84"
         return ("передний" if front else "задний"), "из названия (sDrive)"
+    # Every Audi RS is a quattro (the hand check 2026-11-12: A3 8Y RS3 "S tronic" was given front drive by the rule below).
+    if brand == "Audi" and re.search(r"\bRS ?Q?\d", version["name"]):
+        return "полный", "по правилу (Audi RS — всегда quattro)"
     if (brand, model) in ALWAYS_AWD:
         return "полный", "по правилу (модель только 4x4)"
     if (brand, model, code) in REAR_DRIVE or (brand, model, None) in REAR_DRIVE:
@@ -740,6 +745,12 @@ def main():
         write_mild_report(rows, decisions)
     # How confirmed each value is: two sources agree, one source, a rule, worked out (tools/confirm.py, stage 16).
     counts = confirm.confirm(rows, ac if os.path.exists(ac_path) else {})
+    # Years of the version itself, not of its generation (stage 28, tools/version_years.py), then the corrections
+    # checked by hand (data/model-engines-manual.json, tools/manual_fixes.py): they win over the sources.
+    for name, count in sorted(version_years.apply(rows).items()):
+        print(f"   годы версии: {name}: {count}")
+    for name, count in manual_fixes.apply(rows).items():
+        print(f"   ручная проверка: {count} — {name}")
     confirm.write_report(rows, today)
     for column, statuses in counts.items():
         print(f"   {column}: " + ", ".join(f"{name} {count}" for name, count in statuses.most_common()))

@@ -233,9 +233,13 @@
       const narrowed = versions.filter((row) => row[8] === found.token);
       if (narrowed.length) versions = narrowed;
     }
+    const inGens = versions.filter((row) => genIndexes.has(row[0]));
+    // Years of the engine itself (10, 11 = from, to; B61 stage 28), with a year's slack: a car is registered
+    // after it is built. They only narrow: no engine in those years -> the generation's engines stay.
+    const inVersionYears = inGens.filter((row) => row[10] == null || overlaps(row[10] - 1, row[11] == null ? null : row[11] + 1));
     return {
       spec, found, gens, maxYear, yearFrom, yearTo, overlaps,
-      versions: versions.filter((row) => genIndexes.has(row[0])),
+      versions: inVersionYears.length ? inVersionYears : inGens,
       hasYears: Boolean(yearFrom || yearTo),
     };
   }
