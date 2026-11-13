@@ -280,6 +280,42 @@ NEW_GENERATIONS = {
     ("Toyota", "RAV 4", "VI"): "XA60",
     ("Volkswagen", "T-Roc", "II"): "T-Roc II",
 }
+# Generations autocentrum dates wrong where ADAC and ultimatespecs agree on other years (B61 stage 33, 2026-11-13):
+# (brand, label, autocentrum name) -> new "from" / "to"; "split" — (name, from, body names) a generation of its own. Applied in merge() only, so tools/confirm.py still
+# weighs autocentrum's own years.
+GENERATION_FIXES = {
+    # Sprinter 906 ran to 2018 (ADAC 04/2006–05/2018, ultimatespecs "NCV3 (BR 906)" 2006–2018), the 907 / 910 from
+    # 2018 (ultimatespecs "VS30 (BR 907 / 910)" 2018–, ADAC 907-910 from 2019): autocentrum's "IV" holds only the
+    # 907's 2023 facelift engines, the 2018–2023 ones come from ADAC (tools/collect-adac-extra.py).
+    ("Mercedes-Benz", "Sprinter", "III"): {"to": 2018},
+    ("Mercedes-Benz", "Sprinter", "IV"): {"from": 2018},
+    # Crafter I (2E) 2006–2016, Crafter II (SY / SZ) from 2017 (ADAC "ii" 03/2017–, ultimatespecs "2nd Gen. (Type
+    # SY/SZ)" 2016–): autocentrum files both under "I"; the e-Crafter (2018) is the Crafter II's.
+    ("Volkswagen", "Crafter", "I"): {"to": 2016, "split": ("II", 2017, ["e-Crafter"])},
+}
+
+
+def fix_generations(models):
+    """GENERATION_FIXES on autocentrum-shaped models (in place). Returns the number of generations changed."""
+    changed = 0
+    for model in models:
+        for gen in list(model["generations"]):
+            fix = GENERATION_FIXES.get((model["brand"], model["label"], gen["name"]))
+            if not fix:
+                continue
+            for key in ("from", "to"):
+                if key in fix:
+                    gen[key] = fix[key]
+            if "split" in fix:
+                name, start, bodies = fix["split"]
+                moved = [b for b in gen["bodies"] if b["name"] in bodies]
+                gen["bodies"] = [b for b in gen["bodies"] if b["name"] not in bodies]
+                model["generations"].append({**gen, "name": name, "from": start, "to": None, "bodies": moved,
+                                             "path": gen["path"].rstrip("/") + f"-{name.lower()}/"})
+            changed += 1
+    return changed
+
+
 OUR_FUEL_TEXT = {"petrol": "бензин", "lpg": "газ (LPG)", "diesel": "дизель", "electric": "электро",
                  "hybrid": "гибрид", "hybrid_diesel": "гибрид (дизель)", "plugin": "плагин-гибрид"}
 # Polish body words -> the words tools/build-model-specs.py body_of() reads.
@@ -405,6 +441,7 @@ def merge(rows, ac):
         row.setdefault("Двери", "")
         row.setdefault("Места", "")
     models = ac["models"]
+    stats["поколения: годы исправлены (GENERATION_FIXES)"] += fix_generations(models)
 
     # 1. Facelift years. A generation whose facelift bodies carry no year ("2008 Facelift",
     #    "A4 (B8) Restyling") is split at autocentrum's year; one with no facelift bodies at all

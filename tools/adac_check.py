@@ -89,23 +89,59 @@ def evidence(rows, models=None):
     # Our model -> its ADAC pages: by the page-1 value or the label (the keys are the page's "Brand|Model").
     row_ev, gen_ev = {}, {}
     for (brand, label), model_gens in gens.items():
-        first_row = next(iter(model_gens.values()))["rows"][0]["src"]
-        pages = models.get(f"{brand}|{first_row['Модель mobile.de']}") or models.get(f"{brand}|{label}")
+        # The model's ADAC pages: by any of its page-1 values (VW "T5" / "T6" / "T7" are one model of ours, stage 33)
+        # or the label (the keys are the page's "Brand|Model").
+        mobiles = dict.fromkeys(item["src"]["Модель mobile.de"] for gen in model_gens.values() for item in gen["rows"])
+        pages = next((models[key] for key in [f"{brand}|{m}" for m in mobiles] + [f"{brand}|{label}"] if key in models), None)
         if not pages:
             continue
         # A page several of our models share (Volvo s60-v60, Mini): only the versions naming this model, if any do.
         label_word = re.compile(rf"(?<![\w-]){re.escape(label)}(?![\w-])", re.I)
+        spans = {}
+        for page in pages:
+            versions = page["versions"]
+            named = [v for v in versions if label_word.search(v[0])]
+            if named and len(named) < len(versions) and not label.isdigit():
+                versions = named
+                spans[page["page"]] = (versions, *_span(versions))
+            elif page.get("first"):
+                # The page's whole run, its versions before 2009 too (tools/collect-adac-versions.py, stage 33).
+                last = _year(page["last"]) if page.get("last") else None
+                spans[page["page"]] = (versions, _year(page["first"]), None if last is None or last >= 2025 else last)
+            else:
+                spans[page["page"]] = (versions, *_span(versions))
+        # Stage 33: a page whose address names a generation of ours ("clio/ii-facelift-3", "transporter/t5",
+        # "3er-reihe/e90-e91-e92-e93") belongs to that one only — by years alone the long Clio II (1998–2012) took the
+        # Clio III pages, the Astra H the Astra J ones.
+        # A page names none of them, or none of the named fits by years (sources number generations differently):
+        # by years, as before.
+        def fits(page, gen):
+            _versions, start, end = spans[page["page"]]
+            # The page belongs to this generation: most of its years inside ours (or ours inside it).
+            shorter = min((end or 2026) - start + 1, (gen["to"] or 2026) - gen["from"] + 1)
+            return _overlap(start, end, gen["from"], gen["to"]) / max(shorter, 1) >= 0.6
+
+        # A generation number ("7generation", "iii") counts only where ADAC numbers the generations as we do. Shifted:
+        # a numbered page misses the generation it names by years and fits another one of ours — Mitsubishi Colt
+        # ("7generation" 2023 is our Colt VIII), Renault Master ("iii-facelift" 2014 — our Master IV), Ford Transit,
+        # Hyundai Tucson. There numbered pages go by years alone; chassis codes ("g42", "t5", "e90") always count.
+        shifted = any(
+            not fits(page, gen) and any(fits(page, other) and not _named(page["page"], their)
+                                        for their, other in model_gens.items())
+            for page in pages if _numbered(page["page"])
+            for code, gen in model_gens.items() if _named(page["page"], code))
+        owners = {}
+        for page in pages:
+            fit = [code for code, gen in model_gens.items() if fits(page, gen)]
+            trusted = not (shifted and _numbered(page["page"]))
+            owners[page["page"]] = [code for code in fit if trusted and _named(page["page"], code)] or fit
         for code, gen in model_gens.items():
+            if (brand, code) in OTHER_CAR:
+                continue
             mine = []
             for page in pages:
-                versions = page["versions"]
-                named = [v for v in versions if label_word.search(v[0])]
-                if named and len(named) < len(versions) and not label.isdigit():
-                    versions = named
-                start, end = _span(versions)
-                # The page belongs to this generation: most of its years inside ours (or ours inside it).
-                shorter = min((end or 2026) - start + 1, (gen["to"] or 2026) - gen["from"] + 1)
-                if _overlap(start, end, gen["from"], gen["to"]) / max(shorter, 1) >= 0.6:
+                if code in owners[page["page"]]:
+                    versions, start, end = spans[page["page"]]
                     mine.append({**page, "versions": versions, "from": start, "to": end})
             if not mine:
                 continue
@@ -126,6 +162,38 @@ def evidence(rows, models=None):
                     versions = [[*v, p["page"]] for p in mine for v in p["versions"]]
                 row_ev[id(row)] = _row(row, item, versions)
     return row_ev, gen_ev
+
+
+# Our generations that ADAC's pages of the same model show another car of (B61 stage 33): the T7 Transporter (2024, built
+# on the Ford Transit Custom) is not the T7 Multivan (2021, MQB) ADAC lists under "transporter/t7".
+OTHER_CAR = {("Volkswagen", "T7 Transporter")}
+ROMAN = {"1": "i", "2": "ii", "3": "iii", "4": "iv", "5": "v", "6": "vi", "7": "vii", "8": "viii", "9": "ix", "10": "x"}
+
+
+def _tokens(text):
+    """Generation codes of a name: "Clio II" -> {"ii"}, "E81/E87" -> {"e81", "e87"}, "1generation" -> {"i"}."""
+    out = set()
+    for token in re.split(r"[^a-z0-9]+", text.lower()):
+        number = re.fullmatch(r"(\d+)generation", token)
+        if number:
+            token = ROMAN.get(number.group(1), token)
+        if token and token not in ("facelift", "generation"):
+            out.add(token)
+    return out
+
+
+def _numbered(page):
+    """The page's address names its generation by number ("2generation", "iii-facelift"), not by a chassis code."""
+    base = re.sub(r"-facelift(-\d+)?$", "", page.rsplit("/", 1)[-1])
+    return bool(_tokens(base) & set(ROMAN.values()))
+
+
+def _named(page, code):
+    """The ADAC page's address names our generation: a code of the page ("ii", "h", "t5", "e90", "f20") is a word
+    of our generation's name. Numbers alone ("906", "5f", "507") name no generation of ours."""
+    base = re.sub(r"-facelift(-\d+)?$", "", page.rsplit("/", 1)[-1])
+    theirs = {t for t in _tokens(base) if not t.isdigit() and not re.fullmatch(r"\d+[a-z]?", t)}
+    return bool(theirs & _tokens(code))
 
 
 def _row(row, item, versions):

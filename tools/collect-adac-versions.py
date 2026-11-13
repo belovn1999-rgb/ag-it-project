@@ -82,9 +82,13 @@ def main():
                 else:
                     page = A.fetch(path)
                 pages += 1
-                found = [v for v in versions(page) if not v[5] or int(v[5][:4]) >= SINCE]
+                every = versions(page)
+                found = [v for v in every if not v[5] or int(v[5][:4]) >= SINCE]
                 if found:
-                    gens.append({"page": f"{model_page}/{gen}", "facelift": "facelift" in gen, "versions": found})
+                    # The page's whole run, older versions too (stage 33): which of our generations it is.
+                    gens.append({"page": f"{model_page}/{gen}", "facelift": "facelift" in gen, "versions": found,
+                                 "first": min(v[4] for v in every),
+                                 "last": None if any(v[5] is None for v in every) else max(v[5] for v in every)})
         if gens:
             models[key] = gens
         print(f"{key}: {len(gens)} generations, {sum(len(g['versions']) for g in gens)} versions", flush=True)

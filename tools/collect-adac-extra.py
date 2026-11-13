@@ -4,7 +4,7 @@ the platform's listings missed mostly 2024-2026 versions — Audi A3 8Y facelift
 
 Only where the ADAC generation (its page with the facelift pages) and ours start in the same year (± 1, exactly one
 of ours; or, if none, the one of ours that runs in ADAC's first year — 06.11) and the version is on sale in 2019 or later
-(came out — 2023 at first, 2019 since the listings check 25.10; on sale — since 06.11); "ours" are the rows of ultimatespecs and autocentrum, so the list
+(came out — 2023 at first, 2019 since the listings check 25.10; on sale — since 06.11; vans since 2010, 13.11); "ours" are the rows of ultimatespecs and autocentrum, so the list
 does not shrink with the rows it adds. One ADAC version page per new engine (fuel, kW, displacement) gives the maker's
 data — engine kind, cm³, gearbox, drive, body, doors, seats (tools/crawl-adac-models.py engine_of()). Written to
 data/adac-extra.json; tools/build-model-engine-table.py adds them as rows of that generation (source "adac", the facelift
@@ -30,6 +30,16 @@ import autocentrum  # noqa: E402
 
 OUT = os.path.join(ROOT, "data", "adac-extra.json")
 SINCE = 2019
+# Vans (B61 stage 33, 2026-11-13): autocentrum lists few of their engines (Crafter I only the 2006 2.5 TDI, not the
+# 2011 2.0 TDI; Sprinter III nothing after 2014) and they sell for long — ADAC's versions on sale since 2010
+# (33 engines, Boxer II, Crafter I, Sprinter III, Combo D …).
+VANS = {"T6 (Multivan, Transporter)", "Caddy", "Crafter", "Sprinter", "Vito", "Citan", "Klasa V", "Viano", "Ducato",
+        "Talento", "Doblo", "Scudo", "Fiorino", "Vivaro", "Movano", "Combo", "Zafira Life", "Transit", "Transit Custom",
+        "Transit Connect", "Transit Courier", "Tourneo Connect", "Tourneo Custom", "Tourneo Courier", "Kangoo", "Master",
+        "Trafic", "Express", "Proace", "Proace City", "Proace Max", "Hiace", "Partner", "Boxer", "Expert", "Bipper",
+        "Rifter", "Traveller", "Berlingo", "Jumpy", "Jumper", "SpaceTourer", "Nemo", "NV200", "NV300", "NV400",
+        "Interstar", "Primastar", "Townstar", "Dokker", "H350", "H-1", "Daily"}
+VANS_SINCE = 2010
 _spec = importlib.util.spec_from_file_location("crawl_adac", os.path.join(ROOT, "tools", "crawl-adac-models.py"))
 C = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(C)   # A (fetch, BASE, CACHE), specs(), engine_of()
@@ -66,7 +76,7 @@ def missing(rows):
                 for version in page["versions"]:
                     # On sale in SINCE or later (2026-11-06; was: came out then) — Transit Custom 2.0 EcoBlue 105 PS
                     # 2018-2023 is in the listings of 2020-2022.
-                    if (int(version[5][:4]) if version[5] else 2100) < SINCE:
+                    if (int(version[5][:4]) if version[5] else 2100) < (VANS_SINCE if label in VANS else SINCE):
                         continue
                     # One ADAC page for several bodies (MINI F55/F56/F57): a Cabrio of ours takes only its own versions
                     # ("3-Türer One D" is the hatch, 06.11).
@@ -168,6 +178,7 @@ def main():
         print(f"{brand} {label} {code}: {engine['type']} {engine['name']} {engine['hp']} PS {engine['from']}", flush=True)
     with open(OUT, "w", encoding="utf8") as handle:
         json.dump({"source": C.A.BASE, "generatedAt": datetime.date.today().isoformat(), "since": SINCE,
+                   "vans_since": VANS_SINCE,
                    "versions": extra}, handle, ensure_ascii=False, indent=1)
         handle.write("\n")
     print(f"new engines={len(extra)} (ADAC versions {sum(e['adac_versions'] for e in extra)}) skipped={skipped}")

@@ -4,9 +4,9 @@
 
 | Итог | поколений |
 |---|---|
-| подтверждено | 63 |
-| одна база | 146 |
-| нет источника | 62 |
+| подтверждено | 65 |
+| одна база | 144 |
+| нет источника | 64 |
 
 ## Третий ряд — подтверждено двумя источниками
 
@@ -27,7 +27,7 @@
 | Ford | Tourneo Custom | Tourneo Custom II | 2023–2024 | 8/9 | adac + autocentrum |  |
 | Ford | Tourneo Custom | Tourneo Custom I | 2012–2022 | 8/9 | adac + autocentrum |  |
 | Genesis | GV80 | GV80 | 2020–2024 | 5/6/7 | adac + ultimatespecs |  |
-| Hyundai | H-1 | H-1 II | 2008–2008 | 6/8 | adac + autocentrum |  |
+| Hyundai | H-1 | H-1 II | 2008–2011 | 3/6/8 | adac + autocentrum |  |
 | Hyundai | IONIQ 9 | Ioniq 9 I | 2025–2025 | 6/7 | adac + autocentrum |  |
 | Hyundai | STARIA | Staria I | 2024–2024 | 7/9 | adac + autocentrum |  |
 | Kia | Carnival | Carnival II | 2006–2010 | 7 | adac + autocentrum |  |
@@ -69,8 +69,10 @@
 | Toyota | Highlander | Highlander III | 2020–2020 | 7 | adac + autocentrum |  |
 | Toyota | Proace (Verso) | Proace II | 2017–2020 | 6/8 | adac + autocentrum | Proace Furgon Medium 2.0 D-4D, Proace Furgon Medium 2.0 D-4D, Proace Furgon Long 2.0 D-4D, Proace Furgon Long 2.0 D-4D |
 | VinFast | VF9 | VF 9 | 2022–2022 | 7 | adac + ultimatespecs |  |
-| Volkswagen | T6 | T7 Multivan | 2021–2024 | 6/7/8 | autocentrum + ultimatespecs |  |
-| Volkswagen | T6 | T5 Transporter | 2003–2012 | 5/6/7/9 | autocentrum + ultimatespecs |  |
+| Volkswagen | T6 | T7 Multivan | 2021–2024 | 6/7/8 | adac + autocentrum + ultimatespecs |  |
+| Volkswagen | T6 | T6 | 2015–2016 | 7/8 | adac + ultimatespecs | T6 Long 2.0 TDI 84HP |
+| Volkswagen | T6 | T5 Multivan | 2009–2014 | 3/4/6/7/8 | adac + ultimatespecs |  |
+| Volkswagen | T6 | T5 Transporter | 2003–2012 | 5/6/7/9 | adac + autocentrum + ultimatespecs |  |
 | Volkswagen | Touran | Touran I | 2003–2013 | 5/7 | adac + ultimatespecs |  |
 | Volvo | EX90 | EX90 I | 2022–2025 | 6/7 | adac + autocentrum |  |
 | Volvo | XC90 | XC90 II | 2014–2024 | 5/7 | adac + ultimatespecs |  |
@@ -82,7 +84,6 @@
 |---|---|---|---|---|---|---|
 | BAIC | BJ60 | BJ60 I | 2024–2024 | 7 | adac |  |
 | BMW | 2 | F22-F23-F45-F46 | 2015–2020 | 5/7 | autocentrum |  |
-| BMW | X5 | G65 | 2026–2026 | 5/7 | adac | X5 SUV 3.0 50e xDrive Steptronic |
 | BMW | X5 | G05 | 2018–2025 | 5/7 | adac | X5 xDrive50e, X5 xDrive50e M-pack, X5 xDrive45e |
 | BMW | X5 | E70 | 2006–2012 | 5/7 | adac |  |
 | BMW | X7 | X7 | 2018–2022 | 7 | adac |  |
@@ -97,7 +98,6 @@
 | Chrysler | Voyager | Voyager V | 2005–2005 | 7 | autocentrum |  |
 | Citroen | Berlingo | Berlingo III | 2018–2024 | 2/5/7 | adac | Berlingo Osobowy M 1.2 PureTech, Berlingo Osobowy M 1.5 BlueHDi, Berlingo Van M 1.5 BlueHDi, Berlingo Van XL 1.5 BlueHDi … |
 | Citroen | Berlingo | Berlingo II | 2008–2016 | 5/7 | adac | Berlingo Combi 2015 1.6 VTi, Berlingo Combi 2015 1.6 BlueHDi, Berlingo Combi 2015 1.6 BlueHDi, Berlingo Van Long 2015 1.6 BlueHDi … |
-| Citroen | Berlingo | Berlingo I | 1996–2005 | 5/7 | adac | Berlingo I 1.6 16V, Berlingo I 1.6 HDi, Berlingo I 1.6 HDi, Berlingo I 1.6 HDi |
 | Citroen | C-Crosser | C-Crosser I | 2007–2007 | 5/7 | adac |  |
 | Citroen | C3 Aircross | C3 Aircross II | 2024–2024 | 5/7 | adac | C3 Aircross Crossover 1.2 Turbo |
 | Citroen | Grand C4 Picasso / SpaceTourer | Grand C4 SpaceTourer | 2018–2018 | 7 | autocentrum |  |
@@ -115,7 +115,7 @@
 | Dodge | Durango | Durango III | 2011–2011 | 7 | autocentrum |  |
 | Dodge | Grand Caravan | Grand Caravan V | 2007–2011 | 5/7 | autocentrum |  |
 | Fiat | 500L | 500L | 2012–2014 | 5/7 | autocentrum |  |
-| Fiat | Doblo | Doblo III | 2010–2018 | 3/5/7 | adac | Doblo Van 1.3 Multijet II 16v, Doblo Van 1.6 Multijet 16v, Doblo Cargo 1.3 Multijet II 16v, Doblo Cargo 1.6 Multijet 16v |
+| Fiat | Doblo | Doblo III | 2010–2017 | 3/5/7 | adac | Doblo Van 1.3 Multijet II 16v, Doblo Van 1.6 Multijet 16v, Doblo Cargo 1.3 Multijet II 16v, Doblo Cargo 1.6 Multijet 16v |
 | Fiat | Doblo | Doblo IV | 2015–2015 | 5/7 | adac |  |
 | Fiat | Doblo | Doblo II | 2006–2009 | 7 | adac | Doblo II 1.4, Doblo II 1.6 CNG, Doblo II 1.6 Natural Power, Doblo II 1.3 D |
 | Fiat | Ducato | Ducato IV | 2021–2021 | 6 | autocentrum |  |
@@ -135,6 +135,7 @@
 | Ford | Transit | Transit VI | 2009–2009 | 8 | autocentrum |  |
 | Ford | Transit Custom | Transit Custom II | 2024–2024 | 9 | autocentrum |  |
 | Honda | CR-V | CR-V V | 2018–2022 | 5/7 | adac | CR-V SUV 2.0 i mmd, CR-V SUV 2.0 i mmd, CR-V SUV 2.0 i-MMD, CR-V SUV 2.0 i-MMD |
+| Honda | FR-V | FR-V I | 2007–2007 | 6 | adac |  |
 | Honda | Odyssey | Odyssey III | 2004–2004 | 7 | autocentrum |  |
 | Honda | Pilot | Pilot II | 2009–2009 | 7 | autocentrum |  |
 | Hongqi | E-HS9 | E-HS9 I | 2024–2024 | 7 | adac |  |
@@ -173,7 +174,7 @@
 | Mitsubishi | Outlander | Outlander II | 2006–2010 | 5/7 | adac | Outlander II 2.0 DID DOHC |
 | Nissan | Evalia | Evalia I | 2013–2015 | 7 | autocentrum |  |
 | Nissan | NV300 | NV300 I | 2016–2019 | 6/9 | adac |  |
-| Nissan | Primastar | Primastar I | 2001–2003 | 6/9 | adac |  |
+| Nissan | Primastar | Primastar I | 2001–2006 | 6/9 | adac |  |
 | Nissan | Qashqai | Qashqai I | 2009–2011 | 5/7 | autocentrum |  |
 | Nissan | Quest | Quest III | 2004–2004 | 7 | autocentrum |  |
 | Nissan | X-Trail | X-Trail IV | 2022–2022 | 5/7 | adac |  |
@@ -186,10 +187,10 @@
 | Opel | Vivaro | Vivaro B | 2014–2014 | 6/9 | autocentrum |  |
 | Opel | Vivaro | Vivaro A | 2011–2011 | 6/9 | autocentrum |  |
 | Opel | Zafira | Zafira C | 2011–2019 | 5/7 | adac |  |
+| Opel | Zafira Life | Zafira Life I | 2019–2025 | 5/8/9 | adac |  |
 | Peugeot | 5008 | 5008 II | 2016–2023 | 5/7 | adac |  |
 | Peugeot | Boxer | Boxer II | 2006–2006 | 6/8 | autocentrum |  |
 | Peugeot | Partner | Partner II | 2008–2016 | 3/5/7 | adac | Partner Furgon L1 2015 1.6 VTi, Partner Furgon L1 2015 1.6 BlueHDi, Partner Furgon L1 2015 1.6 BlueHDi, Partner Furgon L2 2015 1.6 BlueHDi … |
-| Peugeot | Partner | Partner I | 1996–2005 | 5/7 | adac | Partner I 1.6 HDi |
 | Peugeot | Rifter | Rifter | 2018–2021 | 5/7 | adac |  |
 | Renault | Espace | Espace VI | 2024–2025 | 5/7 | adac |  |
 | Renault | Espace | Espace V | 2014–2022 | 5/7 | adac |  |
@@ -220,11 +221,10 @@
 | Volkswagen | Sharan | Sharan II | 2010–2018 | 5/7 | adac |  |
 | Volkswagen | Sharan | Sharan I | 1995–2005 | 5/6/7 | adac |  |
 | Volkswagen | T6 | T7 Transporter | 2025–2025 | 6/7 | ultimatespecs |  |
-| Volkswagen | T6 | T6 | 2015–2016 | 7/8 | ultimatespecs |  |
-| Volkswagen | T6 | T5 Multivan | 2009–2014 | 3/4/6/7/8 | ultimatespecs |  |
 | Volkswagen | Tayron | Tayron | 2024–2025 | 5/7 | adac |  |
 | Volkswagen | Tiguan | Tiguan II | 2017–2024 | 5/7 | ultimatespecs |  |
 | Volkswagen | Touran | Touran II | 2015–2020 | 5/7 | adac |  |
+| XPENG | X9 | X9 I | 2026–2026 | 7 | adac |  |
 | Zeekr | 9X | 9X I | 2026–2026 | 6 | adac |  |
 
 ## Нет источника (страница догадывается по названию модели — таблица оставлена как есть)
@@ -233,7 +233,9 @@
 |---|---|---|---|---|---|---|
 | BAIC | Beijing X55 | Beijing X55 I | 2023–2023 |  |  |  |
 | BAIC | Beijing X75 | Beijing X75 I | 2024–2024 |  |  |  |
+| BMW | X5 | G65 | 2026–2026 |  |  |  |
 | Chevrolet | Tahoe | GMT900 | 2007–2007 |  |  |  |
+| Citroen | Berlingo | Berlingo I | 2000–2005 |  |  |  |
 | Citroen | Jumper | Jumper III | 2014–2023 |  |  |  |
 | Dodge | Journey | Journey I | 2008–2008 |  |  |  |
 | Fiat | Doblo | Doblo V | 2022–2023 |  |  |  |
@@ -273,7 +275,6 @@
 | Nissan | X-Trail | X-Trail II | 2007–2007 |  |  |  |
 | Opel | Movano | Movano II | 2003–2009 |  |  |  |
 | Opel | Zafira | Zafira D | 2019–2024 |  |  |  |
-| Opel | Zafira Life | Zafira Life I | 2019–2025 |  |  |  |
 | Peugeot | Boxer | Boxer III | 2014–2014 |  |  |  |
 | Peugeot | Expert | Expert II | 2007–2011 |  |  |  |
 | Renault | Kangoo | Kangoo III | 2021–2023 |  |  |  |
@@ -290,6 +291,7 @@
 | Toyota | Proace (Verso) | Proace I | 2013–2013 |  |  |  |
 | Toyota | Verso-S | Verso-S I | 2011–2011 |  |  |  |
 | Volkswagen | Amarok | Amarok I | 2012–2013 |  |  |  |
-| Volkswagen | Crafter | Crafter I | 2006–2018 |  |  |  |
+| Volkswagen | Crafter | Crafter II | 2017–2023 |  |  |  |
+| Volkswagen | Crafter | Crafter I | 2006–2014 |  |  |  |
 | Volkswagen | T6 | T6.1 Transporter | 2019–2021 |  |  |  |
 | Volkswagen | T6 | T6.1 Multivan | 2019–2021 |  |  |  |

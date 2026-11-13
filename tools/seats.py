@@ -35,6 +35,9 @@ COUPE = re.compile(r"\bcoup[eé]\b", re.I)
 # 500L Living, 2 Gran Tourer, Grand C-Max) lends it to no other body.
 LONG = re.compile(r"allspace|\bgrand\b|gran tourer|\w ?\+(?= ?2\b|\s|\(|$)|\bmcv\b|\bliving\b|\bxl\b|\blwb\b|\blong\b|\bmaxi\b|"
                   r"\b7[- ]?(seats?|seater|sitzer|places|miejsc)", re.I)
+# ADAC lists VW's T5 / T6 / T7 only as the Multivan (6-7 seats): its seats are not the Transporter's (a panel van's 3,
+# a Kombi's 9) — a twin or page naming a passenger van says nothing of a row whose body names none (B61 stage 33).
+PASSENGER_VAN = re.compile(r"multivan|caravelle|california", re.I)
 SEATS_NAME = re.compile(r"\b(\d)[ -]?(?:seats?|seater|places)\b", re.I)
 _spec = importlib.util.spec_from_file_location("model_specs", os.path.join(ROOT, "tools", "build-model-specs.py"))
 SPECS = importlib.util.module_from_spec(_spec)
@@ -59,10 +62,12 @@ def page_models():
     return out
 
 
-def _adac(row_ev):
+def _adac(row_ev, body=""):
     """ADAC's counts of the row's twins: (base counts, all counts, "what it says") — pages read and seat names."""
     base, every, said = set(), set(), []
     for twin in row_ev.get("twins", []) if row_ev else []:
+        if PASSENGER_VAN.search(twin[0]) and not PASSENGER_VAN.search(body):
+            continue
         name = SITZER.search(twin[0])
         if name and 2 <= int(name.group(1)) <= 9:
             base.add(int(name.group(1)))
@@ -91,10 +96,14 @@ def evidence(rows, row_ev, gen_ev):
             for version in page["versions"]:
                 adac_pages[page["page"]] |= {int(n) for n in SITZER.findall(version[0]) if 2 <= int(n) <= 9}
     own, gen = {}, collections.defaultdict(lambda: collections.defaultdict(set))
+    # Generations whose bodies name a passenger van (VW "T5 Multivan", "T6 Transporter / Multivan / Caravelle").
+    passenger = {(r["Марка"], r["Модель"], r["Поколение"]) for r in rows if PASSENGER_VAN.search(r["Кузов"])}
+    multivan_pages = {page["page"] for pages in adac_check.load().values() for page in pages
+                      if page["versions"] and all(PASSENGER_VAN.search(v[0]) for v in page["versions"])}
     for row in rows:
         key = (row["Марка"], row["Модель"], row["Поколение"])
         found = {}
-        base, every, said = _adac(row_ev.get(id(row)))
+        base, every, said = _adac(row_ev.get(id(row)), row["Кузов"])
         if every:
             found["adac"] = (base, every, said)
         page = versions.get(row["Ссылка"], {})
@@ -108,6 +117,8 @@ def evidence(rows, row_ev, gen_ev):
         for source, (_b, seats, _s) in found.items():
             gen[key][source] |= seats
         for page_name in (gen_ev.get(key) or {}).get("pages", []):
+            if page_name in multivan_pages and key not in passenger:
+                continue
             gen[key]["adac"] |= adac_pages.get(page_name, set())
             adac_read[key] |= read.get(page_name, set())
     return own, gen, adac_read

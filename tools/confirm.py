@@ -56,7 +56,9 @@ ODD_NAME = {"Привод": re.compile(r"4x4|4x2|4motion|quattro|xdrive|sdrive|4
                                   r"g-tronic|7g|9g|multitronic|xtronic|hybrid|electric|elektryczny|kwh", re.I)}
 # Checked by hand 2026-11-06 — ours is right or both are sold: kept, "ADAC: другое" stays.
 ODD_KEEP = {("Nissan", "X-Trail II", "X-Trail II 2.0"), ("Skoda", "Octavia I", "Octavia Kombi 1.6 MPI"),
-            ("Skoda", "Octavia I", "Octavia Hatchback 1.6 MPI"), ("Jeep", "Compass I", "Compass SUV 2013 2.0")}
+            ("Skoda", "Octavia I", "Octavia Hatchback 1.6 MPI"), ("Jeep", "Compass I", "Compass SUV 2013 2.0"),
+            # 2026-11-13 (stage 33): the Combi 4x4 1.9 TDI 101 PS was sold; ADAC lists only the front-drive Tour.
+            ("Skoda", "Octavia I", "Octavia Kombi 1.9 TDI")}
 ODD_KEEP_MAKES = {"Genesis"}
 CODE_WORDS = {"m": "механика", "a": "автомат", "f": "передний", "r": "задний", "4": "полный"}
 DIFF_SCOPE = re.compile(r"^(коробка|привод) — у ADAC (.+?) \((все|прочитано \d+ из) (\d+) версий")
@@ -108,6 +110,23 @@ def _years(rows):
     if not spans:
         return None
     return min(s for s, _e in spans), (None if any(e is None or e >= 2025 for _s, e in spans) else max(e for _s, e in spans))
+
+
+# Stage 33: a phase of the same generation a database lists apart ("Leon 3" and "Leon 3 2017").
+PHASE_TAIL = re.compile(r"\s*(?:\(?\d{4}\)?|facelift|restyling|phase \d|lci)$", re.I)
+
+
+def _their_span(matched, gen):
+    """The years another database gives our generation: its closest generation, together with the phases of it it
+    lists as generations of their own (ultimatespecs "Leon 3" 2013–2016 + "Leon 3 2017" 2016–2020); a neighbour of
+    another name (Astra H + Astra J) stays apart."""
+    closest = min(matched, key=lambda g: abs(g["from"] - gen["from"]))
+    base = PHASE_TAIL.sub("", str(closest.get("name") or ""))
+    group = [g for g in matched if base and PHASE_TAIL.sub("", str(g.get("name") or "")) == base]
+    # Only around a generation of that very name ("Leon 3"): "Mondeo 2007" and "Mondeo 2014" are two generations.
+    if not any(str(g.get("name") or "") == base for g in group):
+        group = [closest]
+    return min(g["from"] for g in group), (None if any(g["to"] is None for g in group) else max(g["to"] for g in group))
 
 
 def _same_years(a, b):
@@ -207,18 +226,20 @@ def confirm(rows, ac):
             # ADAC's added rows carry our phase's years: its own span is the generation pages' (below).
             matched = ac_gens.get((brand, label, code), [])
             # Years: what each database gives the generation.
+            # A model whose autocentrum years we corrected (autocentrum.GENERATION_FIXES, stage 33): its rows carry our
+            # years, autocentrum's own are its generation's (Sprinter III 2006–2023 there) — not a second voice for ours.
+            fixed = (brand, label) in {(b, m) for b, m, _name in autocentrum.GENERATION_FIXES}
             spans = {source: span for source, source_rows in by_source.items()
-                     if (span := _years(source_rows)) and not (source == "adac" and adac_years)}
+                     if (span := _years(source_rows)) and not (source == "adac" and adac_years)
+                     and not (source == "autocentrum" and fixed)}
             if matched and "autocentrum" not in spans:
-                closest = min(matched, key=lambda g: abs(g["from"] - gen["from"]))
-                spans["autocentrum"] = (closest["from"], closest["to"])
+                spans["autocentrum"] = _their_span(matched, gen)
             adac = adac_gens.get((brand, label, code))
             if adac and "adac" not in spans:
                 spans["adac"] = adac["span"]
             us_matched = us_gens.get((brand, label, code), [])
             if us_matched and "ultimatespecs" not in spans:
-                closest = min(us_matched, key=lambda g: abs(g["from"] - gen["from"]))
-                spans["ultimatespecs"] = (closest["from"], closest["to"])
+                spans["ultimatespecs"] = _their_span(us_matched, gen)
             agree = set()
             for a in spans:
                 for b in spans:

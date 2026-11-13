@@ -15498,6 +15498,7 @@
      "bodies": [
       "Tourneo Custom I L1 (autocentrum)",
       "Tourneo Custom I L2 (autocentrum)",
+      "Tourneo Custom I Van (adac)",
       "Tourneo Custom I Van Facelifting (adac)"
      ],
      "engines": {
@@ -15510,6 +15511,7 @@
         185
        ],
        "2198": [
+        100,
         125,
         155
        ]
@@ -15699,7 +15701,8 @@
      "bodies": [
       "Transit Connect II Kleintransporter Facelifting (adac)",
       "Transit Connect II Kombi (autocentrum)",
-      "Transit Connect II VAN (autocentrum)"
+      "Transit Connect II VAN (autocentrum)",
+      "Transit Connect II Van (adac)"
      ],
      "engines": {
       "petrol": {
@@ -15720,6 +15723,10 @@
         75,
         100,
         120
+       ],
+       "1560": [
+        95,
+        116
        ]
       }
      }
@@ -15851,6 +15858,7 @@
      "mobileModel": "Transit Custom",
      "bodies": [
       "Transit Custom I I (autocentrum)",
+      "Transit Custom I Van (adac)",
       "Transit Custom I Van Facelifting (adac)"
      ],
      "engines": {
@@ -18041,13 +18049,14 @@
     {
      "code": "Sprinter IV",
      "phase": "весь выпуск",
-     "years": "2023–н. в.",
+     "years": "2018–н. в.",
      "mobileModel": "Sprinter",
      "bodies": [
       "Sprinter IV Furgon Długi (autocentrum)",
       "Sprinter IV Furgon Ekstra Długi (autocentrum)",
       "Sprinter IV Furgon Standardowy (autocentrum)",
       "Sprinter IV Tourer (autocentrum)",
+      "Sprinter IV Van (adac)",
       "Sprinter IV e-Furgon Długi (autocentrum)",
       "Sprinter IV e-Furgon Standardowy (autocentrum)"
      ],
@@ -18058,6 +18067,10 @@
         150,
         170,
         190
+       ],
+       "2143": [
+        143,
+        163
        ]
       },
       "electric": {
@@ -18070,10 +18083,11 @@
     {
      "code": "Sprinter III",
      "phase": "рестайлинг",
-     "years": "2014–2023",
+     "years": "2014–2018",
      "mobileModel": "Sprinter",
      "bodies": [
-      "Sprinter III Furgon Facelifting (autocentrum)"
+      "Sprinter III Furgon Facelifting (autocentrum)",
+      "Sprinter III Van Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
@@ -18084,12 +18098,17 @@
       "diesel": {
        "2143": [
         95,
+        114,
         129,
+        143,
         163,
         165
        ],
        "2200": [
         129
+       ],
+       "2987": [
+        190
        ]
       }
      }
@@ -18824,10 +18843,16 @@
       "Boxer II Podwozie pojedyncza kabina (autocentrum)",
       "Boxer II Skrzynia podwójna kabina (autocentrum)",
       "Boxer II Skrzynia pojedyncza kabina (autocentrum)",
+      "Boxer II Van (adac)",
       "Boxer II Van Facelifting (adac)"
      ],
      "engines": {
       "diesel": {
+       "1997": [
+        110,
+        130,
+        160
+       ],
        "2179": [
         120,
         140,
@@ -18836,9 +18861,18 @@
        "2184": [
         180
        ],
+       "2198": [
+        110,
+        130,
+        150
+       ],
        "2200": [
         100,
         120
+       ],
+       "2999": [
+        145,
+        177
        ],
        "3000": [
         157
@@ -18970,10 +19004,14 @@
       "Partner II Furgon L2 Facelifting (autocentrum)",
       "Partner II Furgon L2 Facelifting 2015 (autocentrum)",
       "Partner II Tepee Facelifting (autocentrum)",
-      "Partner II Tepee Facelifting 2015 (autocentrum)"
+      "Partner II Tepee Facelifting 2015 (autocentrum)",
+      "Partner II Van Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
+       "1199": [
+        110
+       ],
        "1587": [
         98,
         120
@@ -19591,6 +19629,7 @@
       "Kangoo II Express Z.E. (autocentrum)",
       "Kangoo II Grand (autocentrum)",
       "Kangoo II Mikrovan (autocentrum)",
+      "Kangoo II Van (adac)",
       "Kangoo II Z.E. (autocentrum)",
       "Kangoo II Z.E. Maxi (autocentrum)",
       "Kangoo II Z.E. Maxi Combi (autocentrum)"
@@ -19602,6 +19641,7 @@
        ],
        "1598": [
         90,
+        98,
         105
        ]
       },
@@ -19885,6 +19925,7 @@
         110,
         130,
         135,
+        136,
         145,
         180
        ],
@@ -23183,7 +23224,8 @@
       "Caddy III Furgon Facelifting (autocentrum)",
       "Caddy III Furgon Maxi Facelifting (autocentrum)",
       "Caddy III Kombi Facelifting (autocentrum)",
-      "Caddy III Kombi Maxi Facelifting (autocentrum)"
+      "Caddy III Kombi Maxi Facelifting (autocentrum)",
+      "Caddy III Van Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
@@ -23192,6 +23234,7 @@
         104
        ],
        "1598": [
+        98,
         102
        ],
        "1984": [
@@ -23348,7 +23391,7 @@
     {
      "code": "Crafter I",
      "phase": "весь выпуск",
-     "years": "2006–н. в.",
+     "years": "2006–2016",
      "mobileModel": "Crafter",
      "bodies": [
       "Crafter I Furgon długi rozstaw osi (autocentrum)",
@@ -23364,7 +23407,33 @@
       "Crafter I Skrzyniowy podwójna kabina średni rozstaw osi (autocentrum)",
       "Crafter I Skrzyniowy pojedyncza kabina długi rozstaw osi (autocentrum)",
       "Crafter I Skrzyniowy pojedyncza kabina średni rozstaw osi (autocentrum)",
-      "Crafter I e-Crafter (autocentrum)"
+      "Crafter I Van Facelifting (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1968": [
+        109,
+        114,
+        136,
+        163
+       ],
+       "2459": [
+        88,
+        109,
+        136,
+        164
+       ]
+      }
+     }
+    },
+    {
+     "code": "Crafter II",
+     "phase": "весь выпуск",
+     "years": "2017–н. в.",
+     "mobileModel": "Crafter",
+     "bodies": [
+      "Crafter II Van (adac)",
+      "Crafter II e-Crafter (autocentrum)"
      ],
      "engines": {
       "electric": {
@@ -23373,11 +23442,12 @@
        ]
       },
       "diesel": {
-       "2459": [
-        88,
-        109,
-        136,
-        164
+       "1968": [
+        102,
+        122,
+        140,
+        163,
+        177
        ]
       }
      }
@@ -26640,12 +26710,15 @@
      "years": "2008–н. в.",
      "mobileModel": "H-1",
      "bodies": [
+      "H-1 II Van (adac)",
       "H-1 II Van (autocentrum)",
       "H-1 II Wagon (autocentrum)"
      ],
      "engines": {
       "diesel": {
        "2497": [
+        110,
+        116,
         136,
         170
        ]
@@ -28667,6 +28740,7 @@
      "years": "2011–2018",
      "mobileModel": "Combo",
      "bodies": [
+      "Combo D Kleintransporter (adac)",
       "Combo D Tour (autocentrum)",
       "Combo D Van L1 (autocentrum)",
       "Combo D Van L2 (autocentrum)"
@@ -28680,11 +28754,14 @@
       },
       "diesel": {
        "1248": [
-        90
+        90,
+        95
        ],
        "1598": [
         90,
-        105
+        100,
+        105,
+        120
        ],
        "1956": [
         135
@@ -33138,7 +33215,8 @@
      "years": "2001–2014",
      "mobileModel": "Primastar",
      "bodies": [
-      "Primastar I I (autocentrum)"
+      "Primastar I I (autocentrum)",
+      "Primastar I Van Facelifting (adac)"
      ],
      "engines": {
       "petrol": {
@@ -33155,6 +33233,7 @@
         115
        ],
        "2464": [
+        146,
         150
        ]
       }
@@ -33767,6 +33846,7 @@
      "bodies": [
       "Berlingo II Combi Facelifting (autocentrum)",
       "Berlingo II Combi Facelifting 2015 (autocentrum)",
+      "Berlingo II Van Facelifting (adac)",
       "Berlingo II Van Facelifting (autocentrum)",
       "Berlingo II Van Facelifting 2015 (autocentrum)",
       "Berlingo II Van Long Facelifting (autocentrum)",
@@ -33774,6 +33854,9 @@
      ],
      "engines": {
       "petrol": {
+       "1199": [
+        110
+       ],
        "1598": [
         95,
         98,
@@ -33799,6 +33882,7 @@
      "mobileModel": "Berlingo",
      "bodies": [
       "Berlingo II Combi (autocentrum)",
+      "Berlingo II Van (adac)",
       "Berlingo II Van (autocentrum)"
      ],
      "engines": {
@@ -33807,6 +33891,7 @@
         75
        ],
        "1587": [
+        90,
         95,
         110
        ],
@@ -35306,7 +35391,8 @@
      "mobileModel": "Jumpy",
      "bodies": [
       "Jumpy II Combi (autocentrum)",
-      "Jumpy II Furgon (autocentrum)"
+      "Jumpy II Furgon (autocentrum)",
+      "Jumpy II Van (adac)"
      ],
      "engines": {
       "diesel": {
@@ -35315,8 +35401,14 @@
        ],
        "1997": [
         122,
+        128,
         138,
         163
+       ]
+      },
+      "petrol": {
+       "1997": [
+        140
        ]
       }
      }
@@ -40927,6 +41019,7 @@
      "mobileModel": "Dokker",
      "bodies": [
       "Dokker Mikrovan (autocentrum)",
+      "Dokker Van (adac)",
       "Dokker Van (autocentrum)"
      ],
      "engines": {
@@ -40935,6 +41028,7 @@
         115
        ],
        "1598": [
+        80,
         84,
         102
        ]

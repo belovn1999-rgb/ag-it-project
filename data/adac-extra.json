@@ -1,7 +1,8 @@
 {
  "source": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/",
- "generatedAt": "2026-11-06",
+ "generatedAt": "2026-11-13",
  "since": 2019,
+ "vans_since": 2010,
  "versions": [
   {
    "brand": "Audi",
@@ -3423,29 +3424,113 @@
    "brand": "Ford",
    "label": "Tourneo Custom",
    "code": "Tourneo Custom I",
-   "facelift": true,
-   "page": "ford/tourneo-custom/1generation-facelift",
+   "facelift": false,
+   "page": "ford/tourneo-custom/1generation",
    "body": "Van",
    "doors": "5",
    "engine": {
-    "slug": "293432",
+    "slug": "234011",
+    "type": "Diesla",
+    "text": "300 L1 2.2 TDCi Trend",
+    "litres": "2.2",
+    "name": "300 L1 2.2 TDCi Trend",
+    "hp": 100,
+    "kw": 74,
+    "from": 2012,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2198 cm³",
+    "Liczba miejsc": "8",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation/234011/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "facelift": false,
+   "page": "ford/tourneo-custom/1generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "257253",
     "type": "Diesla",
     "text": "310 L1 2.0 TDCi Trend",
     "litres": "2.0",
     "name": "310 L1 2.0 TDCi Trend",
     "hp": 105,
     "kw": 77,
-    "from": 2018,
+    "from": 2016,
     "to": 2023,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1995 cm³",
     "Liczba miejsc": "8",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/293432/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation/257253/",
     "source": "adac"
    },
-   "adac_versions": 10
+   "adac_versions": 16
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "facelift": false,
+   "page": "ford/tourneo-custom/1generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "257254",
+    "type": "Diesla",
+    "text": "310 L1 2.0 TDCi Trend",
+    "litres": "2.0",
+    "name": "310 L1 2.0 TDCi Trend",
+    "hp": 130,
+    "kw": 96,
+    "from": 2016,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "8",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation/257254/",
+    "source": "adac"
+   },
+   "adac_versions": 92
+  },
+  {
+   "brand": "Ford",
+   "label": "Tourneo Custom",
+   "code": "Tourneo Custom I",
+   "facelift": false,
+   "page": "ford/tourneo-custom/1generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "283167",
+    "type": "Diesla",
+    "text": "290 L1 2.0 TDCi Sport",
+    "litres": "2.0",
+    "name": "290 L1 2.0 TDCi Sport",
+    "hp": 170,
+    "kw": 125,
+    "from": 2016,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "8",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation/283167/",
+    "source": "adac"
+   },
+   "adac_versions": 70
   },
   {
    "brand": "Ford",
@@ -3484,34 +3569,6 @@
    "body": "Van",
    "doors": "5",
    "engine": {
-    "slug": "293433",
-    "type": "Diesla",
-    "text": "310 L1 2.0 TDCi Trend",
-    "litres": "2.0",
-    "name": "310 L1 2.0 TDCi Trend",
-    "hp": 130,
-    "kw": 96,
-    "from": 2018,
-    "to": 2023,
-    "configs": [
-     "manualna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1995 cm³",
-    "Liczba miejsc": "8",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/293433/",
-    "source": "adac"
-   },
-   "adac_versions": 63
-  },
-  {
-   "brand": "Ford",
-   "label": "Tourneo Custom",
-   "code": "Tourneo Custom I",
-   "facelift": true,
-   "page": "ford/tourneo-custom/1generation-facelift",
-   "body": "Van",
-   "doors": "5",
-   "engine": {
     "slug": "324212",
     "type": "Diesla",
     "text": "320 L1 2.0 EcoBlue Trend",
@@ -3530,34 +3587,6 @@
     "source": "adac"
    },
    "adac_versions": 27
-  },
-  {
-   "brand": "Ford",
-   "label": "Tourneo Custom",
-   "code": "Tourneo Custom I",
-   "facelift": true,
-   "page": "ford/tourneo-custom/1generation-facelift",
-   "body": "Van",
-   "doors": "5",
-   "engine": {
-    "slug": "293435",
-    "type": "Diesla",
-    "text": "310 L1 2.0 TDCi Trend",
-    "litres": "2.0",
-    "name": "310 L1 2.0 TDCi Trend",
-    "hp": 170,
-    "kw": 125,
-    "from": 2018,
-    "to": 2023,
-    "configs": [
-     "manualna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1995 cm³",
-    "Liczba miejsc": "8",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/tourneo-custom/1generation-facelift/293435/",
-    "source": "adac"
-   },
-   "adac_versions": 36
   },
   {
    "brand": "Ford",
@@ -3614,6 +3643,62 @@
     "source": "adac"
    },
    "adac_versions": 8
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Connect",
+   "code": "Transit Connect II",
+   "facelift": false,
+   "page": "ford/transit-connect/2generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "242224",
+    "type": "Diesla",
+    "text": "Kombi 220 L1 1.6 TDCi",
+    "litres": "1.6",
+    "name": "Kombi 220 L1 1.6 TDCi",
+    "hp": 95,
+    "kw": 70,
+    "from": 2013,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1560 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-connect/2generation/242224/",
+    "source": "adac"
+   },
+   "adac_versions": 16
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Connect",
+   "code": "Transit Connect II",
+   "facelift": false,
+   "page": "ford/transit-connect/2generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "249945",
+    "type": "Diesla",
+    "text": "Kombi 220 L1 1.6 TDCi Trend",
+    "litres": "1.6",
+    "name": "Kombi 220 L1 1.6 TDCi Trend",
+    "hp": 116,
+    "kw": 85,
+    "from": 2015,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1560 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-connect/2generation/249945/",
+    "source": "adac"
+   },
+   "adac_versions": 2
   },
   {
    "brand": "Ford",
@@ -3759,6 +3844,90 @@
    "brand": "Ford",
    "label": "Transit Custom",
    "code": "Transit Custom I",
+   "facelift": false,
+   "page": "ford/transit-custom/1generation",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "328991",
+    "type": "Diesla",
+    "text": "Kastenwagen 270 L1 2.0 TDCi",
+    "litres": "2.0",
+    "name": "Kastenwagen 270 L1 2.0 TDCi",
+    "hp": 105,
+    "kw": 77,
+    "from": 2016,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation/328991/",
+    "source": "adac"
+   },
+   "adac_versions": 20
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "facelift": false,
+   "page": "ford/transit-custom/1generation",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "328993",
+    "type": "Diesla",
+    "text": "Kastenwagen 270 L1 2.0 TDCi",
+    "litres": "2.0",
+    "name": "Kastenwagen 270 L1 2.0 TDCi",
+    "hp": 130,
+    "kw": 96,
+    "from": 2016,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation/328993/",
+    "source": "adac"
+   },
+   "adac_versions": 78
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
+   "facelift": false,
+   "page": "ford/transit-custom/1generation",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "328995",
+    "type": "Diesla",
+    "text": "Kastenwagen 270 L1 2.0 TDCi Trend",
+    "litres": "2.0",
+    "name": "Kastenwagen 270 L1 2.0 TDCi Trend",
+    "hp": 170,
+    "kw": 125,
+    "from": 2016,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1995 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation/328995/",
+    "source": "adac"
+   },
+   "adac_versions": 64
+  },
+  {
+   "brand": "Ford",
+   "label": "Transit Custom",
+   "code": "Transit Custom I",
    "facelift": true,
    "page": "ford/transit-custom/1generation-facelift",
    "body": "Van",
@@ -3782,90 +3951,6 @@
     "source": "adac"
    },
    "adac_versions": 3
-  },
-  {
-   "brand": "Ford",
-   "label": "Transit Custom",
-   "code": "Transit Custom I",
-   "facelift": true,
-   "page": "ford/transit-custom/1generation-facelift",
-   "body": "Van",
-   "doors": "4",
-   "engine": {
-    "slug": "307796",
-    "type": "Diesla",
-    "text": "Kastenwagen 280 L1 2.0 TDCi",
-    "litres": "2.0",
-    "name": "Kastenwagen 280 L1 2.0 TDCi",
-    "hp": 105,
-    "kw": 77,
-    "from": 2018,
-    "to": 2023,
-    "configs": [
-     "manualna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1995 cm³",
-    "Liczba miejsc": "3",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/307796/",
-    "source": "adac"
-   },
-   "adac_versions": 10
-  },
-  {
-   "brand": "Ford",
-   "label": "Transit Custom",
-   "code": "Transit Custom I",
-   "facelift": true,
-   "page": "ford/transit-custom/1generation-facelift",
-   "body": "Van",
-   "doors": "4",
-   "engine": {
-    "slug": "307802",
-    "type": "Diesla",
-    "text": "Kastenwagen 280 L1 2.0 TDCi",
-    "litres": "2.0",
-    "name": "Kastenwagen 280 L1 2.0 TDCi",
-    "hp": 130,
-    "kw": 96,
-    "from": 2018,
-    "to": 2023,
-    "configs": [
-     "manualna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1995 cm³",
-    "Liczba miejsc": "3",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/307802/",
-    "source": "adac"
-   },
-   "adac_versions": 57
-  },
-  {
-   "brand": "Ford",
-   "label": "Transit Custom",
-   "code": "Transit Custom I",
-   "facelift": true,
-   "page": "ford/transit-custom/1generation-facelift",
-   "body": "Van",
-   "doors": "4",
-   "engine": {
-    "slug": "319013",
-    "type": "Diesla",
-    "text": "Kastenwagen 340 L1 2.0 TDCi",
-    "litres": "2.0",
-    "name": "Kastenwagen 340 L1 2.0 TDCi",
-    "hp": 170,
-    "kw": 125,
-    "from": 2018,
-    "to": 2023,
-    "configs": [
-     "manualna napęd: przedni"
-    ],
-    "Pojemność skokowa": "1995 cm³",
-    "Liczba miejsc": "3",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/ford/transit-custom/1generation-facelift/319013/",
-    "source": "adac"
-   },
-   "adac_versions": 48
   },
   {
    "brand": "Ford",
@@ -5129,6 +5214,146 @@
   },
   {
    "brand": "Mercedes-Benz",
+   "label": "Sprinter",
+   "code": "Sprinter III",
+   "facelift": true,
+   "page": "mercedes-benz/sprinter/906-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "332136",
+    "type": "Diesla",
+    "text": "Kastenwagen kurz 3,0t 211 CDI WORKER",
+    "litres": "2.1",
+    "name": "Kastenwagen kurz 3,0t 211 CDI WORKER",
+    "hp": 114,
+    "kw": 84,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2143 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/906-facelift/332136/",
+    "source": "adac"
+   },
+   "adac_versions": 32
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Sprinter",
+   "code": "Sprinter III",
+   "facelift": true,
+   "page": "mercedes-benz/sprinter/906-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "332138",
+    "type": "Diesla",
+    "text": "Kastenwagen kurz 3,0t 214 CDI WORKER",
+    "litres": "2.1",
+    "name": "Kastenwagen kurz 3,0t 214 CDI WORKER",
+    "hp": 143,
+    "kw": 105,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2143 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/906-facelift/332138/",
+    "source": "adac"
+   },
+   "adac_versions": 38
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Sprinter",
+   "code": "Sprinter III",
+   "facelift": true,
+   "page": "mercedes-benz/sprinter/906-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "332132",
+    "type": "Diesla",
+    "text": "Kastenwagen kurz 3,0t 219 CDI",
+    "litres": "3.0",
+    "name": "Kastenwagen kurz 3,0t 219 CDI",
+    "hp": 190,
+    "kw": 140,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2987 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/906-facelift/332132/",
+    "source": "adac"
+   },
+   "adac_versions": 24
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Sprinter",
+   "code": "Sprinter IV",
+   "facelift": false,
+   "page": "mercedes-benz/sprinter/907-910",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306860",
+    "type": "Diesla",
+    "text": "Kastenwagen Kompakt Normaldach 3,0t 214 CDI (Vorderradantrieb)",
+    "litres": "2.1",
+    "name": "Kastenwagen Kompakt Normaldach 3,0t 214 CDI (Vorderradantrieb)",
+    "hp": 143,
+    "kw": 105,
+    "from": 2019,
+    "to": 2021,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2143 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/907-910/306860/",
+    "source": "adac"
+   },
+   "adac_versions": 46
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "Sprinter",
+   "code": "Sprinter IV",
+   "facelift": false,
+   "page": "mercedes-benz/sprinter/907-910",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "306850",
+    "type": "Diesla",
+    "text": "Kastenwagen Kompakt Normaldach 3,5t 316 CDI (Hinterradantrieb)",
+    "litres": "2.1",
+    "name": "Kastenwagen Kompakt Normaldach 3,5t 316 CDI (Hinterradantrieb)",
+    "hp": 163,
+    "kw": 120,
+    "from": 2019,
+    "to": 2021,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2143 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/sprinter/907-910/306850/",
+    "source": "adac"
+   },
+   "adac_versions": 22
+  },
+  {
+   "brand": "Mercedes-Benz",
    "label": "Vito",
    "code": "W447",
    "facelift": true,
@@ -5360,6 +5585,62 @@
    "body": "Van",
    "doors": "4",
    "engine": {
+    "slug": "311079",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 328 2.2 HDi FAP Standard",
+    "litres": "2.2",
+    "name": "Kastenwagen L1H1 328 2.2 HDi FAP Standard",
+    "hp": 110,
+    "kw": 81,
+    "from": 2013,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2198 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/311079/",
+    "source": "adac"
+   },
+   "adac_versions": 24
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": true,
+   "page": "peugeot/boxer/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "310915",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 328 2.0 BlueHDi Standard",
+    "litres": "2.0",
+    "name": "Kastenwagen L1H1 328 2.0 BlueHDi Standard",
+    "hp": 110,
+    "kw": 81,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1997 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/310915/",
+    "source": "adac"
+   },
+   "adac_versions": 23
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": true,
+   "page": "peugeot/boxer/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
     "slug": "308241",
     "type": "Diesla",
     "text": "Kastenwagen L1H1 328 2.2 BlueHDi 120 Pro",
@@ -5378,6 +5659,62 @@
     "source": "adac"
    },
    "adac_versions": 24
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": true,
+   "page": "peugeot/boxer/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "311094",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 330 2.2 HDi FAP Komfort",
+    "litres": "2.2",
+    "name": "Kastenwagen L1H1 330 2.2 HDi FAP Komfort",
+    "hp": 130,
+    "kw": 96,
+    "from": 2013,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2198 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/311094/",
+    "source": "adac"
+   },
+   "adac_versions": 56
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": true,
+   "page": "peugeot/boxer/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "310992",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 330 2.0 BlueHDi Komfort",
+    "litres": "2.0",
+    "name": "Kastenwagen L1H1 330 2.0 BlueHDi Komfort",
+    "hp": 130,
+    "kw": 96,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1997 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/310992/",
+    "source": "adac"
+   },
+   "adac_versions": 67
   },
   {
    "brand": "Peugeot",
@@ -5416,6 +5753,62 @@
    "body": "Van",
    "doors": "4",
    "engine": {
+    "slug": "311054",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 333 2.2 HDi FAP Komfort",
+    "litres": "2.2",
+    "name": "Kastenwagen L1H1 333 2.2 HDi FAP Komfort",
+    "hp": 150,
+    "kw": 110,
+    "from": 2013,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2198 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/311054/",
+    "source": "adac"
+   },
+   "adac_versions": 24
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": true,
+   "page": "peugeot/boxer/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "310994",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 333 2.0 BlueHDi Komfort",
+    "litres": "2.0",
+    "name": "Kastenwagen L1H1 333 2.0 BlueHDi Komfort",
+    "hp": 160,
+    "kw": 118,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1997 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/310994/",
+    "source": "adac"
+   },
+   "adac_versions": 42
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": true,
+   "page": "peugeot/boxer/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
     "slug": "308243",
     "type": "Diesla",
     "text": "Kastenwagen L1H1 333 2.2 BlueHDi 165 Pro",
@@ -5434,6 +5827,62 @@
     "source": "adac"
    },
    "adac_versions": 36
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": true,
+   "page": "peugeot/boxer/2generation-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "311057",
+    "type": "Diesla",
+    "text": "Kastenwagen L2H1 333 3.0 HDi FAP Komfort",
+    "litres": "3.0",
+    "name": "Kastenwagen L2H1 333 3.0 HDi FAP Komfort",
+    "hp": 177,
+    "kw": 130,
+    "from": 2013,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2999 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation-facelift/311057/",
+    "source": "adac"
+   },
+   "adac_versions": 22
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Boxer",
+   "code": "Boxer II",
+   "facelift": false,
+   "page": "peugeot/boxer/2generation",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "326017",
+    "type": "Diesla",
+    "text": "Kastenwagen L2H2 435 3.0 HDi FAP",
+    "litres": "3.0",
+    "name": "Kastenwagen L2H2 435 3.0 HDi FAP",
+    "hp": 145,
+    "kw": 107,
+    "from": 2010,
+    "to": 2013,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2999 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/boxer/2generation/326017/",
+    "source": "adac"
+   },
+   "adac_versions": 5
   },
   {
    "brand": "Peugeot",
@@ -5462,6 +5911,34 @@
     "source": "adac"
    },
    "adac_versions": 32
+  },
+  {
+   "brand": "Peugeot",
+   "label": "Partner",
+   "code": "Partner II",
+   "facelift": true,
+   "page": "peugeot/partner/2generation-facelift-2",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "259596",
+    "type": "Benzynowe",
+    "text": "Tepee PureTech 110 Stop&Start Active",
+    "litres": "1.2",
+    "name": "Tepee PureTech 110 Stop&Start Active",
+    "hp": 110,
+    "kw": 81,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1199 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/peugeot/partner/2generation-facelift-2/259596/",
+    "source": "adac"
+   },
+   "adac_versions": 3
   },
   {
    "brand": "Peugeot",
@@ -5518,6 +5995,34 @@
     "source": "adac"
    },
    "adac_versions": 2
+  },
+  {
+   "brand": "Renault",
+   "label": "Kangoo",
+   "code": "Kangoo II",
+   "facelift": false,
+   "page": "renault/kangoo/ii",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "221606",
+    "type": "Benzynowe",
+    "text": "1.6 16V 105 LPG Expression (Autogasbetrieb)",
+    "litres": "1.6",
+    "name": "1.6 16V 105 LPG Expression (Autogasbetrieb)",
+    "hp": 98,
+    "kw": 72,
+    "from": 2009,
+    "to": 2010,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/kangoo/ii/221606/",
+    "source": "adac"
+   },
+   "adac_versions": 3
   },
   {
    "brand": "Renault",
@@ -5640,24 +6145,52 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "349144",
+    "slug": "349255",
     "type": "Diesla",
     "text": "Kastenwagen L1H1 2,8t Ecoline dCi 110",
     "litres": "2.3",
     "name": "Kastenwagen L1H1 2,8t Ecoline dCi 110",
     "hp": 110,
     "kw": 81,
-    "from": 2016,
+    "from": 2014,
     "to": 2019,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "2299 cm³",
     "Liczba miejsc": "3",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift/349144/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift/349255/",
     "source": "adac"
    },
-   "adac_versions": 11
+   "adac_versions": 22
+  },
+  {
+   "brand": "Renault",
+   "label": "Master",
+   "code": "Master IV",
+   "facelift": true,
+   "page": "renault/master/iii-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "349276",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,8t ENERGY dCi 135",
+    "litres": "2.3",
+    "name": "Kastenwagen L1H1 2,8t ENERGY dCi 135",
+    "hp": 136,
+    "kw": 100,
+    "from": 2014,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2299 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/renault/master/iii-facelift/349276/",
+    "source": "adac"
+   },
+   "adac_versions": 22
   },
   {
    "brand": "Renault",
@@ -6838,6 +7371,34 @@
   {
    "brand": "Volkswagen",
    "label": "Caddy",
+   "code": "Caddy III",
+   "facelift": true,
+   "page": "vw-nutzfahrzeuge/caddy/iii-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "228955",
+    "type": "Benzynowe",
+    "text": "1.6 BiFuel Startline (Autogasbetrieb)",
+    "litres": "1.6",
+    "name": "1.6 BiFuel Startline (Autogasbetrieb)",
+    "hp": 98,
+    "kw": 72,
+    "from": 2011,
+    "to": 2015,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/caddy/iii-facelift/228955/",
+    "source": "adac"
+   },
+   "adac_versions": 15
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Caddy",
    "code": "Caddy IV",
    "facelift": false,
    "page": "vw-nutzfahrzeuge/caddy/iv",
@@ -6918,6 +7479,258 @@
     "source": "adac"
    },
    "adac_versions": 4
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter I",
+   "facelift": true,
+   "page": "vw-nutzfahrzeuge/crafter/i-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "228994",
+    "type": "Diesla",
+    "text": "30 Kombi kurz 2.0 TDI",
+    "litres": "2.0",
+    "name": "30 Kombi kurz 2.0 TDI",
+    "hp": 109,
+    "kw": 80,
+    "from": 2011,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/i-facelift/228994/",
+    "source": "adac"
+   },
+   "adac_versions": 22
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter I",
+   "facelift": true,
+   "page": "vw-nutzfahrzeuge/crafter/i-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "242192",
+    "type": "Diesla",
+    "text": "30 Kombi kurz 2.0 TDI",
+    "litres": "2.0",
+    "name": "30 Kombi kurz 2.0 TDI",
+    "hp": 114,
+    "kw": 84,
+    "from": 2014,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/i-facelift/242192/",
+    "source": "adac"
+   },
+   "adac_versions": 10
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter I",
+   "facelift": true,
+   "page": "vw-nutzfahrzeuge/crafter/i-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "228995",
+    "type": "Diesla",
+    "text": "30 Kombi kurz 2.0 TDI",
+    "litres": "2.0",
+    "name": "30 Kombi kurz 2.0 TDI",
+    "hp": 136,
+    "kw": 100,
+    "from": 2011,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/i-facelift/228995/",
+    "source": "adac"
+   },
+   "adac_versions": 22
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter I",
+   "facelift": true,
+   "page": "vw-nutzfahrzeuge/crafter/i-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "228997",
+    "type": "Diesla",
+    "text": "30 Kombi kurz 2.0 TDI",
+    "litres": "2.0",
+    "name": "30 Kombi kurz 2.0 TDI",
+    "hp": 163,
+    "kw": 120,
+    "from": 2011,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/i-facelift/228997/",
+    "source": "adac"
+   },
+   "adac_versions": 21
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter II",
+   "facelift": false,
+   "page": "vw-nutzfahrzeuge/crafter/ii",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "305487",
+    "type": "Diesla",
+    "text": "35 Kastenwagen Normaldach mittellang 2.0 TDI BMT",
+    "litres": "2.0",
+    "name": "35 Kastenwagen Normaldach mittellang 2.0 TDI BMT",
+    "hp": 140,
+    "kw": 103,
+    "from": 2017,
+    "to": null,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/ii/305487/",
+    "source": "adac"
+   },
+   "adac_versions": 70
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter II",
+   "facelift": false,
+   "page": "vw-nutzfahrzeuge/crafter/ii",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "329261",
+    "type": "Diesla",
+    "text": "35 Kastenwagen Normaldach mittellang 2.0 TDI BMT (Heckantrieb)",
+    "litres": "2.0",
+    "name": "35 Kastenwagen Normaldach mittellang 2.0 TDI BMT (Heckantrieb)",
+    "hp": 163,
+    "kw": 120,
+    "from": 2023,
+    "to": null,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/ii/329261/",
+    "source": "adac"
+   },
+   "adac_versions": 46
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter II",
+   "facelift": false,
+   "page": "vw-nutzfahrzeuge/crafter/ii",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "305490",
+    "type": "Diesla",
+    "text": "35 Kastenwagen Normaldach mittellang 2.0 TDI BMT",
+    "litres": "2.0",
+    "name": "35 Kastenwagen Normaldach mittellang 2.0 TDI BMT",
+    "hp": 177,
+    "kw": 130,
+    "from": 2017,
+    "to": null,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/ii/305490/",
+    "source": "adac"
+   },
+   "adac_versions": 143
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter II",
+   "facelift": false,
+   "page": "vw-nutzfahrzeuge/crafter/ii",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "305475",
+    "type": "Diesla",
+    "text": "30 Kastenwagen Normaldach mittellang 2.0 TDI BMT",
+    "litres": "2.0",
+    "name": "30 Kastenwagen Normaldach mittellang 2.0 TDI BMT",
+    "hp": 102,
+    "kw": 75,
+    "from": 2017,
+    "to": 2023,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/ii/305475/",
+    "source": "adac"
+   },
+   "adac_versions": 22
+  },
+  {
+   "brand": "Volkswagen",
+   "label": "Crafter",
+   "code": "Crafter II",
+   "facelift": false,
+   "page": "vw-nutzfahrzeuge/crafter/ii",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "305751",
+    "type": "Diesla",
+    "text": "50 Kastenwagen Normaldach mittellang 2.0 TDI BMT (Heckantrieb/Zwillingsbereifung)",
+    "litres": "2.0",
+    "name": "50 Kastenwagen Normaldach mittellang 2.0 TDI BMT (Heckantrieb/Zwillingsbereifung)",
+    "hp": 122,
+    "kw": 90,
+    "from": 2017,
+    "to": 2022,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "1968 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/vw-nutzfahrzeuge/crafter/ii/305751/",
+    "source": "adac"
+   },
+   "adac_versions": 24
   },
   {
    "brand": "Volkswagen",
@@ -8041,6 +8854,62 @@
   },
   {
    "brand": "Hyundai",
+   "label": "H-1",
+   "code": "H-1 II",
+   "facelift": false,
+   "page": "hyundai/h-1/2generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "309328",
+    "type": "Diesla",
+    "text": "Cargo 2.5 CRDi Flügeltür (3-Sitzer)",
+    "litres": "2.5",
+    "name": "Cargo 2.5 CRDi Flügeltür (3-Sitzer)",
+    "hp": 110,
+    "kw": 81,
+    "from": 2008,
+    "to": 2011,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2497 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/h-1/2generation/309328/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Hyundai",
+   "label": "H-1",
+   "code": "H-1 II",
+   "facelift": false,
+   "page": "hyundai/h-1/2generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "309312",
+    "type": "Diesla",
+    "text": "Cargo 2.5 CRDi DPF Flügeltür (3-Sitzer)",
+    "litres": "2.5",
+    "name": "Cargo 2.5 CRDi DPF Flügeltür (3-Sitzer)",
+    "hp": 116,
+    "kw": 85,
+    "from": 2011,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: tylny"
+    ],
+    "Pojemność skokowa": "2497 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hyundai/h-1/2generation/309312/",
+    "source": "adac"
+   },
+   "adac_versions": 4
+  },
+  {
+   "brand": "Hyundai",
    "label": "i10",
    "code": "i10 III",
    "facelift": true,
@@ -9077,6 +9946,90 @@
   },
   {
    "brand": "Opel",
+   "label": "Combo",
+   "code": "Combo D",
+   "facelift": false,
+   "page": "opel/combo/d",
+   "body": "Kleintransporter",
+   "doors": "3",
+   "engine": {
+    "slug": "311917",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,2t 1.3 CDTI",
+    "litres": "1.2",
+    "name": "Kastenwagen L1H1 2,2t 1.3 CDTI",
+    "hp": 95,
+    "kw": 70,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1248 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/combo/d/311917/",
+    "source": "adac"
+   },
+   "adac_versions": 24
+  },
+  {
+   "brand": "Opel",
+   "label": "Combo",
+   "code": "Combo D",
+   "facelift": false,
+   "page": "opel/combo/d",
+   "body": "Kleintransporter",
+   "doors": "3",
+   "engine": {
+    "slug": "311921",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,2t 1.6 CDTI",
+    "litres": "1.6",
+    "name": "Kastenwagen L1H1 2,2t 1.6 CDTI",
+    "hp": 100,
+    "kw": 74,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/combo/d/311921/",
+    "source": "adac"
+   },
+   "adac_versions": 48
+  },
+  {
+   "brand": "Opel",
+   "label": "Combo",
+   "code": "Combo D",
+   "facelift": false,
+   "page": "opel/combo/d",
+   "body": "Kleintransporter",
+   "doors": "3",
+   "engine": {
+    "slug": "311929",
+    "type": "Diesla",
+    "text": "Kastenwagen L1H1 2,2t 1.6 CDTI",
+    "litres": "1.6",
+    "name": "Kastenwagen L1H1 2,2t 1.6 CDTI",
+    "hp": 120,
+    "kw": 88,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "2",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/combo/d/311929/",
+    "source": "adac"
+   },
+   "adac_versions": 48
+  },
+  {
+   "brand": "Opel",
    "label": "Mokka",
    "code": "Mokka II",
    "facelift": true,
@@ -9119,7 +10072,7 @@
     "name": "Cargo L1H1 2,8t 2.3 Diesel",
     "hp": 136,
     "kw": 100,
-    "from": 2019,
+    "from": 2014,
     "to": 2021,
     "configs": [
      "manualna napęd: przedni"
@@ -9129,7 +10082,7 @@
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306568/",
     "source": "adac"
    },
-   "adac_versions": 19
+   "adac_versions": 31
   },
   {
    "brand": "Opel",
@@ -9147,7 +10100,7 @@
     "name": "Cargo L1H1 2,8t 2.3 Diesel",
     "hp": 150,
     "kw": 110,
-    "from": 2019,
+    "from": 2012,
     "to": 2021,
     "configs": [
      "manualna napęd: przedni"
@@ -9157,7 +10110,7 @@
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306571/",
     "source": "adac"
    },
-   "adac_versions": 38
+   "adac_versions": 50
   },
   {
    "brand": "Opel",
@@ -9241,7 +10194,7 @@
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b-facelift/306606/",
     "source": "adac"
    },
-   "adac_versions": 29
+   "adac_versions": 41
   },
   {
    "brand": "Opel",
@@ -9259,7 +10212,7 @@
     "name": "Kastenwagen L1H1 2,8t 2.3 CDTI DPF",
     "hp": 110,
     "kw": 81,
-    "from": 2016,
+    "from": 2014,
     "to": 2019,
     "configs": [
      "manualna napęd: przedni"
@@ -9269,7 +10222,7 @@
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/opel/movano/b/329122/",
     "source": "adac"
    },
-   "adac_versions": 20
+   "adac_versions": 44
   },
   {
    "brand": "Opel",
@@ -10309,6 +11262,34 @@
   },
   {
    "brand": "Nissan",
+   "label": "Primastar",
+   "code": "Primastar I",
+   "facelift": true,
+   "page": "nissan/primastar/4-f4-j4-facelift",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "208020",
+    "type": "Diesla",
+    "text": "Kombi lang 2.5 dCi 150 DPF Comfort (9-Sitzer)",
+    "litres": "2.5",
+    "name": "Kombi lang 2.5 dCi 150 DPF Comfort (9-Sitzer)",
+    "hp": 146,
+    "kw": 107,
+    "from": 2006,
+    "to": 2012,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "2464 cm³",
+    "Liczba miejsc": "9",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/nissan/primastar/4-f4-j4-facelift/208020/",
+    "source": "adac"
+   },
+   "adac_versions": 8
+  },
+  {
+   "brand": "Nissan",
    "label": "Qashqai",
    "code": "Qashqai III",
    "facelift": false,
@@ -10418,6 +11399,62 @@
     "source": "adac"
    },
    "adac_versions": 36
+  },
+  {
+   "brand": "Citroen",
+   "label": "Berlingo",
+   "code": "Berlingo II",
+   "facelift": false,
+   "page": "citroen/berlingo/2generation",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "213774",
+    "type": "Benzynowe",
+    "text": "Kombi 1.6 16V Advance",
+    "litres": "1.6",
+    "name": "Kombi 1.6 16V Advance",
+    "hp": 90,
+    "kw": 66,
+    "from": 2008,
+    "to": 2012,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1587 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/berlingo/2generation/213774/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Citroen",
+   "label": "Berlingo",
+   "code": "Berlingo II",
+   "facelift": true,
+   "page": "citroen/berlingo/2generation-facelift-2",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "254783",
+    "type": "Benzynowe",
+    "text": "Multispace PureTech 110 Stop&Start Selection",
+    "litres": "1.2",
+    "name": "Multispace PureTech 110 Stop&Start Selection",
+    "hp": 110,
+    "kw": 81,
+    "from": 2016,
+    "to": 2018,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1199 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/berlingo/2generation-facelift-2/254783/",
+    "source": "adac"
+   },
+   "adac_versions": 3
   },
   {
    "brand": "Citroen",
@@ -10813,6 +11850,62 @@
   },
   {
    "brand": "Citroen",
+   "label": "Jumpy",
+   "code": "Jumpy II",
+   "facelift": false,
+   "page": "citroen/jumpy/2generation",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "308848",
+    "type": "Benzynowe",
+    "text": "Kastenwagen 27 L1H1 2.0 16V",
+    "litres": "2.0",
+    "name": "Kastenwagen 27 L1H1 2.0 16V",
+    "hp": 140,
+    "kw": 103,
+    "from": 2007,
+    "to": 2011,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1997 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumpy/2generation/308848/",
+    "source": "adac"
+   },
+   "adac_versions": 2
+  },
+  {
+   "brand": "Citroen",
+   "label": "Jumpy",
+   "code": "Jumpy II",
+   "facelift": false,
+   "page": "citroen/jumpy/2generation",
+   "body": "Van",
+   "doors": "4",
+   "engine": {
+    "slug": "308822",
+    "type": "Diesla",
+    "text": "Kastenwagen 27 L1H1 HDi 125 FAP",
+    "litres": "2.0",
+    "name": "Kastenwagen 27 L1H1 HDi 125 FAP",
+    "hp": 128,
+    "kw": 94,
+    "from": 2011,
+    "to": 2016,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1997 cm³",
+    "Liczba miejsc": "3",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/jumpy/2generation/308822/",
+    "source": "adac"
+   },
+   "adac_versions": 13
+  },
+  {
+   "brand": "Citroen",
    "label": "SpaceTourer",
    "code": "SpaceTourer",
    "facelift": true,
@@ -10995,7 +12088,7 @@
     "name": "Doblò Kombi 1.4 T-Jet 16V Easy",
     "hp": 120,
     "kw": 88,
-    "from": 2018,
+    "from": 2017,
     "to": 2019,
     "configs": [
      "manualna napęd: przedni"
@@ -11005,7 +12098,7 @@
     "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/294438/",
     "source": "adac"
    },
-   "adac_versions": 6
+   "adac_versions": 7
   },
   {
    "brand": "Fiat",
@@ -11016,24 +12109,24 @@
    "body": "Van",
    "doors": "5",
    "engine": {
-    "slug": "294445",
+    "slug": "250250",
     "type": "Diesla",
-    "text": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "text": "Doblò Kombi 1.6 Multijet 16V Pop",
     "litres": "1.6",
-    "name": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "name": "Doblò Kombi 1.6 Multijet 16V Pop",
     "hp": 95,
     "kw": 70,
-    "from": 2018,
+    "from": 2015,
     "to": 2019,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1598 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/294445/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/250250/",
     "source": "adac"
    },
-   "adac_versions": 3
+   "adac_versions": 11
   },
   {
    "brand": "Fiat",
@@ -11044,24 +12137,24 @@
    "body": "Van",
    "doors": "5",
    "engine": {
-    "slug": "294447",
+    "slug": "250254",
     "type": "Diesla",
-    "text": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "text": "Doblò Kombi 1.6 Multijet 16V Lounge",
     "litres": "1.6",
-    "name": "Doblò Kombi 1.6 Multijet 16V Start&Stopp Lounge",
+    "name": "Doblò Kombi 1.6 Multijet 16V Lounge",
     "hp": 120,
     "kw": 88,
-    "from": 2018,
+    "from": 2015,
     "to": 2019,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1598 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/294447/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/doblo/263-facelift/250254/",
     "source": "adac"
    },
-   "adac_versions": 3
+   "adac_versions": 9
   },
   {
    "brand": "Fiat",
@@ -11128,24 +12221,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "299993",
+    "slug": "258230",
     "type": "Benzynowe",
     "text": "Kombi 1.4 8V",
     "litres": "1.4",
     "name": "Kombi 1.4 8V",
     "hp": 77,
     "kw": 57,
-    "from": 2019,
+    "from": 2016,
     "to": 2020,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1368 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/299993/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/258230/",
     "source": "adac"
    },
-   "adac_versions": 4
+   "adac_versions": 8
   },
   {
    "brand": "Fiat",
@@ -11156,24 +12249,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "299995",
+    "slug": "258232",
     "type": "Diesla",
     "text": "Kombi 1.3 Multijet 16V",
     "litres": "1.2",
     "name": "Kombi 1.3 Multijet 16V",
     "hp": 80,
     "kw": 59,
-    "from": 2019,
+    "from": 2016,
     "to": 2024,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1248 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/299995/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/258232/",
     "source": "adac"
    },
-   "adac_versions": 6
+   "adac_versions": 15
   },
   {
    "brand": "Fiat",
@@ -11184,24 +12277,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "299997",
+    "slug": "258236",
     "type": "Diesla",
     "text": "Kombi 1.3 Multijet 16V",
     "litres": "1.2",
     "name": "Kombi 1.3 Multijet 16V",
     "hp": 95,
     "kw": 70,
-    "from": 2019,
+    "from": 2016,
     "to": 2024,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1248 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/299997/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/258236/",
     "source": "adac"
    },
-   "adac_versions": 6
+   "adac_versions": 12
   },
   {
    "brand": "Fiat",
@@ -11212,24 +12305,24 @@
    "body": "Van",
    "doors": "4",
    "engine": {
-    "slug": "299999",
+    "slug": "258239",
     "type": "Benzynowe CNG",
     "text": "Kombi 1.4 8V Natural Power (Erdgasbetrieb)",
     "litres": "1.4",
     "name": "Kombi 1.4 8V Natural Power (Erdgasbetrieb)",
     "hp": 70,
     "kw": 51,
-    "from": 2019,
+    "from": 2016,
     "to": 2020,
     "configs": [
      "manualna napęd: przedni"
     ],
     "Pojemność skokowa": "1368 cm³",
     "Liczba miejsc": "5",
-    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/299999/",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/fiorino/225-facelift/258239/",
     "source": "adac"
    },
-   "adac_versions": 2
+   "adac_versions": 4
   },
   {
    "brand": "Fiat",
@@ -12182,6 +13275,34 @@
     "source": "adac"
    },
    "adac_versions": 1
+  },
+  {
+   "brand": "Dacia",
+   "label": "Dokker",
+   "code": "Dokker",
+   "facelift": false,
+   "page": "dacia/dokker/1generation",
+   "body": "Van",
+   "doors": "5",
+   "engine": {
+    "slug": "239820",
+    "type": "Benzynowe",
+    "text": "1.6 MPI LPG 85 Ambiance (Autogasbetrieb)",
+    "litres": "1.6",
+    "name": "1.6 MPI LPG 85 Ambiance (Autogasbetrieb)",
+    "hp": 80,
+    "kw": 59,
+    "from": 2014,
+    "to": 2015,
+    "configs": [
+     "manualna napęd: przedni"
+    ],
+    "Pojemność skokowa": "1598 cm³",
+    "Liczba miejsc": "5",
+    "url": "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/dacia/dokker/1generation/239820/",
+    "source": "adac"
+   },
+   "adac_versions": 3
   },
   {
    "brand": "Dacia",
