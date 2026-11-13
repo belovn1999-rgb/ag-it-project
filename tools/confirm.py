@@ -451,8 +451,8 @@ def _registers_section(rows, share):
     extra = collections.defaultdict(list)
     for row in rows:
         counts = mild.get(id(row))
-        if not counts:
-            continue
+        if not counts or "мягкий гибрид" in row.get("Ручная проверка", ""):
+            continue  # checked by hand (data/model-engines-manual.json, stage 29)
         plain, hybrid = counts
         if not row["Мягкий гибрид с"] and hybrid >= 3 and plain < 3:
             missed[(row["Марка"], row["Модель"], row["Поколение"])].append(row)

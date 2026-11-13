@@ -229,6 +229,1048 @@
     "https://www.auto-motor-und-sport.de/fahrbericht/mercedes-e-200-ngt-ohne-umstaende-ohne-umgewoehnung/",
     "https://www.thecarspec.net/car-detail/mercedes-benz-e-class-w212-e-200-ngt-blueefficiency-163-hp-5g-tronic-2011"
    ]
+  },
+  {
+   "match": {
+    "Марка": "Fiat",
+    "Модель": "Ducato",
+    "Поколение": "Ducato IV",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2287"
+   },
+   "set": {
+    "Объём, см³": "2184",
+    "Годы версии": "2021–н. в."
+   },
+   "why": "Ducato с рестайлинга 2021 — 2.2 Multijet3 (2184 см³), не 2.3",
+   "source": [
+    "https://www.smmt.co.uk/2021/06/new-ducato-launched-with-advanced-diesel-engine-in-vehicle-and-safety-technology/",
+    "https://parkers.co.uk/vans-pickups/news/2021/new-fiat-ducato",
+    "реестр ЕС EEA: Ducato 2184 см³ 103 / 118 / 132 кВт с 2021–2022"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Fiat",
+    "Модель": "Ducato",
+    "Поколение": "Ducato IV",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2298"
+   },
+   "set": {
+    "Объём, см³": "2184",
+    "Годы версии": "2021–н. в."
+   },
+   "why": "Ducato с рестайлинга 2021 — 2.2 Multijet3 (2184 см³), не 2.3",
+   "source": [
+    "https://www.smmt.co.uk/2021/06/new-ducato-launched-with-advanced-diesel-engine-in-vehicle-and-safety-technology/",
+    "https://parkers.co.uk/vans-pickups/news/2021/new-fiat-ducato",
+    "реестр ЕС EEA: Ducato 2184 см³ 103 / 118 / 132 кВт с 2021–2022"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Fiat",
+    "Модель": "Ducato",
+    "Поколение": "Ducato IV",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Мощность, л.с.": "177"
+   },
+   "set": {
+    "Мощность, л.с.": "180",
+    "Мощность, кВт": "132"
+   },
+   "why": "старший мотор Ducato с 2021 — 180 л. с. (132 кВт)",
+   "source": [
+    "https://www.smmt.co.uk/2021/06/new-ducato-launched-with-advanced-diesel-engine-in-vehicle-and-safety-technology/",
+    "https://parkers.co.uk/vans-pickups/news/2021/new-fiat-ducato",
+    "реестр ЕС EEA: Ducato 2184 см³ 103 / 118 / 132 кВт с 2021–2022"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Audi",
+    "Модель": "A4",
+    "Поколение": "B9",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1968",
+    "Мощность, кВт": "140"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: A4 40 TDI 140 кВт (190 л. с.) — обычный дизель; 12 В пришли с 40 TDI 150 кВт (204 л. с.) с 08/2020",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/a4/b9-facelift-2/299753/",
+    "https://www.audi.com/de/der-audi-a4-grosses-upgrade-fuer-den-bestseller-2019-11884/die-fakten-11887",
+    "https://www.autoexpress.co.uk/audi/a4/105491/new-2019-audi-a4-on-the-way-with-a6-and-a8-tech"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Audi",
+    "Модель": "A5",
+    "Поколение": "F5",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1968",
+    "Мощность, кВт": "140"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: A5 40 TDI 140 кВт — обычный дизель; 12 В — у 40 TDI 150 кВт с 08/2020",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/a5/f5-facelift/305323/",
+    "https://www.audi.com/de/der-audi-a4-grosses-upgrade-fuer-den-bestseller-2019-11884/die-fakten-11887"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Audi",
+    "Модель": "A5",
+    "Поколение": "F5",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1968",
+    "Мощность, кВт": "140"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: A5 F5 до рестайлинга 2.0 TDI 190 л. с. — без мягкого гибрида",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/audi/a5/f5/299878/",
+    "https://www.autoexpress.co.uk/audi/a4/105491/new-2019-audi-a4-on-the-way-with-a6-and-a8-tech"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "Seria 1",
+    "Поколение": "F70",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1995",
+    "Мощность, кВт": "120"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2024,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: 120d F70 — 48 В с начала выпуска",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/1er-reihe/f70/335713/",
+    "https://wiki.krisyotam.com/content/wikipedia_en_all_nopic_2026-03/BMW_1_Series_(F70)"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X3",
+    "Поколение": "G01",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2993",
+    "Мощность, кВт": "240"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: X3 M40d 240 кВт (326 л. с.) — обычный; 48 В — у M40d 250 кВт с 07/2020",
+   "source": [
+    "https://www.automotiveworld.com/news-releases/bmw-model-revision-measures-for-summer-2020/",
+    "https://auto-data.net/en/bmw-x3-g01-m40d-340hp-mild-hybrid-xdrive-steptronic-40610"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X5",
+    "Поколение": "G05",
+    "Этап": "дорестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "2998",
+    "Мощность, кВт": "250"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: X5 40i 250 кВт (340 л. с.) — обычный; 48 В — у 40i 245 кВт с 12/2020",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x5/g05-f95/300495/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x5/g05-f95/316009/",
+    "https://www.press.bmwgroup.com/italy/article/attachment/T0328301IT/475164"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Klasa S",
+    "Поколение": "W223",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2925",
+    "Мощность, кВт": "210"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: S 350 d 210 кВт — обычный; мотор-генератор — у S 350 d после 04/2023 с другой мощностью",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/s-klasse/223/315319/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/s-klasse/223/330633/",
+    "https://www.angurten.de/is/technische-daten/Mercedes-S-Klasse-S+350+d+%28286+PS%29-210-kW-286-PS-2085-18633.html"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Klasa S",
+    "Поколение": "W223",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2925",
+    "Мощность, кВт": "243"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: S 400 d 243 кВт — обычный дизель",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/s-klasse/223/315323/",
+    "https://www.angurten.de/is/technische-daten/Mercedes-S-Klasse-S+400+d+4MATIC+%28330+PS%29-243-kW-330-PS-2085-18635.html"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Klasa S",
+    "Поколение": "W223",
+    "Этап": "дорестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "5980",
+    "Мощность, кВт": "450"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: Maybach S 680 V12 — без мотор-генератора",
+   "source": [
+    "https://www.automoli.com/au/vehicles/mercedes-benz/klasa-s/maybach-s-class-z223-7982/",
+    "https://media.mercedes-benz.it/download/125aa765-e6ba-476c-8368-bc06ef9657ca/td_mercedes-maybachs680_saloon_z223_en.docx"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "GLE",
+    "Поколение": "V167 Coupé (C167)",
+    "Этап": "дорестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "3982",
+    "Мощность, кВт": "420"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: GLE 63 Coupé 420 кВт — 48 В EQ Boost",
+   "source": [
+    "https://www.topgear.com/car-news/la-auto-show-2019/mercedes-amg-gls-and-gle-63-have-gone-hybrid",
+    "https://www.iol.co.za/motoring/latest-launches/mercedes-amg-reveals-new-gle-and-gls-63-models-with-eq-boost-37700516",
+    "https://www.motorshow.me/editorial/11162/2021-mercedes-amg-gle-63-s-4matic-coupe-english/en"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "GLE",
+    "Поколение": "V167",
+    "Этап": "дорестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "3982",
+    "Мощность, кВт": "360"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2019,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: GLE 580 — 48 В мотор-генератор с начала выпуска",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/gle/167/308967/",
+    "https://mbpassion.de/2019/06/der-neue-v8-mit-48-v-isg-im-gle-580-4matic/",
+    "https://www.auto-data.net/en/mercedes-benz-gle-suv-v167-gle-580-v8-489hp-eq-boost-4matic-g-tronic-38979"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "GLE",
+    "Поколение": "V167",
+    "Этап": "дорестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "3982",
+    "Мощность, кВт": "420"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: GLE 63 420 кВт — 48 В EQ Boost",
+   "source": [
+    "https://www.topgear.com/car-news/la-auto-show-2019/mercedes-amg-gls-and-gle-63-have-gone-hybrid",
+    "https://www.iol.co.za/motoring/latest-launches/mercedes-amg-reveals-new-gle-and-gls-63-models-with-eq-boost-37700516"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "Seria 2",
+    "Поколение": "F74",
+    "Этап": "весь выпуск",
+    "Топливо": "дизель",
+    "Объём, см³": "1995",
+    "Мощность, кВт": "120"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2025,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: 220d F74 — 48 В",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/2er-reihe-gran-coupe/f74/337191/",
+    "https://www.press.bmwgroup.com/portugal/article/attachment/T0445725PT/623519"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "Seria 6",
+    "Поколение": "G32",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "2998",
+    "Мощность, кВт": "245"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: 640i GT после рестайлинга 245 кВт — 48 В",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/6er-reihe-gt/g32-facelift/312548/",
+    "https://www.auto-data.net/en/bmw-6-series-gran-turismo-g32-lci-facelift-2020-640i-333hp-mild-hybrid-steptronic-40141"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "Seria 6",
+    "Поколение": "G32",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2993",
+    "Мощность, кВт": "250"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: 640d GT после рестайлинга 250 кВт — 48 В",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/6er-reihe-gt/g32-facelift/312561/",
+    "https://www.thecarspec.net/car-detail/bmw-6-series-gran-turismo-g32-lci-facelift-2020-640d-340-hp-mhev-xdrive-steptronic-2020-280-bmw"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "Seria 7",
+    "Поколение": "G11-G12",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2993",
+    "Мощность, кВт": "210"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: 730d после рестайлинга 210 кВт — новый дизель с 48 В",
+   "source": [
+    "https://www.automotiveworld.com/news-releases/bmw-model-revision-measures-for-summer-2020/",
+    "https://www.auto-motor-und-sport.de/neuheiten/bmw-neuer-sechszylinder-dieselmotor-5er-7er-mild-hybrid/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "Seria 7",
+    "Поколение": "G11-G12",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2993",
+    "Мощность, кВт": "250"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: 740d после рестайлинга 250 кВт — новый дизель с 48 В",
+   "source": [
+    "https://www.automotiveworld.com/news-releases/bmw-model-revision-measures-for-summer-2020/",
+    "https://www.auto-motor-und-sport.de/neuheiten/bmw-neuer-sechszylinder-dieselmotor-5er-7er-mild-hybrid/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X4",
+    "Поколение": "G02",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2993",
+    "Мощность, кВт": "240"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: X4 M40d 240 кВт — обычный; 48 В — у M40d 250 кВт с 07/2020",
+   "source": [
+    "https://www.automotiveworld.com/news-releases/bmw-model-revision-measures-for-summer-2020/",
+    "https://auto-data.net/en/bmw-x3-g01-m40d-340hp-mild-hybrid-xdrive-steptronic-40610"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X6",
+    "Поколение": "G06",
+    "Этап": "дорестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "2998",
+    "Мощность, кВт": "250"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: X6 40i 250 кВт — обычный; 48 В — у 40i 245 кВт с 12/2020",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x6/g06-f96/301803/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x6/g06-f96/316014/",
+    "https://www.press.bmwgroup.com/italy/article/attachment/T0328301IT/475164"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X7",
+    "Поколение": "X7",
+    "Этап": "дорестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "2998",
+    "Мощность, кВт": "245"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: X7 40i 245 кВт — 48 В (250 кВт был обычным)",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x7/g07/316030/",
+    "https://www.autoplenum.de/auto/bmw/x7/suv-2018/mild-hybrid-xdrive40i-333-ps"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "AMG GT",
+    "Поколение": "C190",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "2999",
+    "Мощность, кВт": "270"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2018,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: AMG GT 43 4-дверный — 48 В EQ Boost",
+   "source": [
+    "https://gtspirit.com/2018/09/18/mercedes-amg-gt-43-gt-53-models-revealed/",
+    "https://paultan.org/2018/09/18/mercedes-amg-gt-43-4-door-coupe-entry-level-gt/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "AMG GT",
+    "Поколение": "C190",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "2999",
+    "Мощность, кВт": "320"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2018,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: AMG GT 53 4-дверный — 48 В EQ Boost",
+   "source": [
+    "https://gtspirit.com/2018/09/18/mercedes-amg-gt-43-gt-53-models-revealed/",
+    "https://paultan.org/2021/06/15/mercedes-amg-gt-4-door-coupe-facelift-revealed-with-minor-aesthetic-kit-upgrades-v8-models-coming-later"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "CLS",
+    "Поколение": "C257",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1993",
+    "Мощность, кВт": "195"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2021,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: CLS 300 d после рестайлинга 195 кВт — 48 В мотор-генератор",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/cls/257-facelift/320489/",
+    "https://www.autozeitung.de/mercedes-cls-facelift-2021-preis-motoren-199364.html"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "GLS",
+    "Поколение": "X167",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "2999",
+    "Мощность, кВт": "280"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2023,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: GLS 450 после рестайлинга — 48 В мотор-генератор",
+   "source": [
+    "https://paultan.org/2023/04/04/2023-mercedes-benz-gls-facelift-debuts",
+    "https://www.autoexpress.co.uk/mercedes/gls/356586/mercedes-gls-facelift-gets-new-hybrid-technology-2023"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "GLS",
+    "Поколение": "X167",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2989",
+    "Мощность, кВт": "230"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2023,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: GLS 350 d после рестайлинга — 48 В мотор-генератор",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mercedes-benz/gls/167-facelift/328133/",
+    "https://paultan.org/2023/04/04/2023-mercedes-benz-gls-facelift-debuts"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Toyota",
+    "Модель": "Hilux",
+    "Поколение": "Hilux VIII",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2755",
+    "Мощность, кВт": "150"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2024,
+     "system": "48V",
+     "optional": true
+    }
+   },
+   "why": "мягкий гибрид: Hilux 2.8 150 кВт с 2024 — и обычный D-4D, и «Hybrid 48V» той же мощности",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hilux/an1p-facelift/337882/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/toyota/hilux/an1p-facelift/339574/",
+    "https://www.completecar.ie/car-news/article/14005/Toyota-Hilux-Hybrid-48v-launched",
+    "https://www.auto-swiat.pl/wiadomosci/aktualnosci/toyota-hilux-mild-hybrid-48v-ceny-wyposazenie-wyprzedaz-2024-jest-nowy-cennik/25kq7rz"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volvo",
+    "Модель": "S90",
+    "Поколение": "S90 II",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "1969",
+    "Мощность, кВт": "155"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: S90 B4 бензин — всегда 48 В",
+   "source": [
+    "https://www.autoexpress.co.uk/volvo/109210/upgraded-volvo-s90-and-v90-get-mild-hybrid-power",
+    "https://www.auto-motor-und-sport.de/neuheiten/volvo-60er-und-90er-baureihen-benziner-ab-sommer-2020/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volvo",
+    "Модель": "V90",
+    "Поколение": "V90 II",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "1969",
+    "Мощность, кВт": "155"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: V90 B4 бензин — всегда 48 В",
+   "source": [
+    "https://www.autoexpress.co.uk/volvo/109210/upgraded-volvo-s90-and-v90-get-mild-hybrid-power",
+    "https://www.auto-motor-und-sport.de/neuheiten/volvo-60er-und-90er-baureihen-benziner-ab-sommer-2020/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Kia",
+    "Модель": "Stonic",
+    "Поколение": "Stonic II",
+    "Этап": "весь выпуск",
+    "Топливо": "бензин",
+    "Объём, см³": "998",
+    "Мощность, кВт": "85"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2025,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: Stonic 1.0 115 л. с. — 48 В (100 л. с. — обычный)",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/stonic/yb-facelift/345054/",
+    "https://press.kia.com/content/dam/kiapress/DE/Germany/pressemappen/stonic/25_07/Kia_Stonic_MJ25_Pressemappe_07-25.pdf",
+    "https://www.kia.com/ie/about-kia/news-and-events/the-new-kia-stonic-breaks-cover-with-a-bold-new-look.html"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mazda",
+    "Модель": "CX-3",
+    "Поколение": "CX-3",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "1998",
+    "Мощность, кВт": "89"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: CX-3 2.0 121 л. с. — обычный; M Hybrid был только у Mazda3 и CX-30",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mazda/cx-3/dj1-facelift/318664/",
+    "https://de.motor1.com/news/442507/mazda-cx-3-2021-motoren/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Citroen",
+    "Модель": "C4 X",
+    "Поколение": "C4 X",
+    "Этап": "весь выпуск",
+    "Топливо": "бензин",
+    "Объём, см³": "1199",
+    "Мощность, кВт": "100"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2024,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: C4 X 1.2 Hybrid 136 — Stellantis 48 В",
+   "source": [
+    "https://www.automotiveworld.com/news-releases/citroen-c4-and-c4-x-embrace-48v-hybrid-technology-simplicity-smoothness-and-reduced-consumption/",
+    "https://it.motor1.com/news/709340/citroen-c4-x-mild-hybrid-48v/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Fiat",
+    "Модель": "Panda",
+    "Поколение": "Panda III",
+    "Этап": "весь выпуск",
+    "Топливо": "бензин",
+    "Объём, см³": "964",
+    "Мощность, кВт": "48"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: Panda 0.9 TwinAir — обычный; мягкий гибрид Panda — 1.0 FireFly",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/fiat/panda/312/310632/",
+    "https://it.motor1.com/news/396445/fiat-panda-mild-hybrid-punto-per-punto/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Subaru",
+    "Модель": "Crosstrek",
+    "Поколение": "Crosstrek I",
+    "Этап": "весь выпуск",
+    "Топливо": "бензин",
+    "Объём, см³": "1995",
+    "Мощность, кВт": "100"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2023,
+     "system": "",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: Crosstrek e-Boxer — мягкий гибрид Subaru (около 118 В)",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/subaru/crosstrek/1generation/331306/",
+    "https://www.subaru.eu/media/subaru-launches-all-new-crosstrek-in-europe"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BAIC",
+    "Модель": "BJ60",
+    "Поколение": "BJ60 I",
+    "Этап": "весь выпуск",
+    "Топливо": "бензин",
+    "Объём, см³": "1997",
+    "Мощность, кВт": "188"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2024,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: BAIC BJ60 — 48 В стартер-генератор",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/baic/bj60/1generation/345094/",
+    "https://www.diariomotor.com/noticia/baic-bj60-detalles/",
+    "https://autokatalog.pl/baic/bj60/i/dane-techniczne"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volvo",
+    "Модель": "V60",
+    "Поколение": "V60 I",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "2400",
+    "Мощность, кВт": "120"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: V60 D4 2.4 — обычный; «гибрид» реестра — плагин D5 Twin Engine с тем же дизелем",
+   "source": [
+    "https://en.wikipedia.org/wiki/Volvo_V60",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s60-v60/2generation-facelift/236079/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X3",
+    "Поколение": "G01",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "1998",
+    "Мощность, кВт": "185"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2021,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: X3 30i после рестайлинга 185 кВт — 48 В с 08/2021",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x3/g01-f97-facelift/320931/",
+    "https://www.carbuyer.co.uk/bmw/x3/303295/2021-bmw-x3-suv-gets-a-sharp-new-look-and-mild-hybrid-tech"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volvo",
+    "Модель": "XC40",
+    "Поколение": "XC40 I",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1969",
+    "Мощность, кВт": "118"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: XC40 D3 — обычный дизель",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc40/1generation/",
+    "https://www.fleetnews.co.uk/news/manufacturer-news/2020/08/20/volvo-drops-diesel-on-xc40-and-introduces-new-plug-in-hybrids"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volvo",
+    "Модель": "XC40",
+    "Поколение": "XC40 I",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1969",
+    "Мощность, кВт": "147"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: XC40 D4 — обычный дизель",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/xc40/1generation/298324/",
+    "https://www.fleetnews.co.uk/news/manufacturer-news/2020/08/20/volvo-drops-diesel-on-xc40-and-introduces-new-plug-in-hybrids"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X4",
+    "Поколение": "G02",
+    "Этап": "рестайлинг",
+    "Топливо": "бензин",
+    "Объём, см³": "1998",
+    "Мощность, кВт": "185"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2021,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: X4 30i после рестайлинга 185 кВт — 48 В с 08/2021",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x4/g02-f98-facelift/320956/",
+    "https://www.carbuyer.co.uk/bmw/x3/303295/2021-bmw-x3-suv-gets-a-sharp-new-look-and-mild-hybrid-tech"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Mercedes-Benz",
+    "Модель": "Vito",
+    "Поколение": "W447",
+    "Этап": "весь выпуск",
+    "Топливо": "бензин",
+    "Объём, см³": "1999",
+    "Мощность, кВт": "170"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2024,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: Vito 124 бензин 170 кВт — мотор M254 с 48 В",
+   "source": [
+    "https://www.autoflotte.de/downloadfile/3527107/90013_2024_30_06_M_071-073_MB_Sprinter_und_Vito_35840_print.pdf",
+    "https://www.auto-data.net/en/mercedes-benz-vito-w447-facelift-2023-crew-van-long-124-231hp-mild-hybrid-9g-tronic-55941"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Volvo",
+    "Модель": "S90",
+    "Поколение": "S90 II",
+    "Этап": "дорестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1969",
+    "Мощность, кВт": "147"
+   },
+   "set": {
+    "Мягкий гибрид": null
+   },
+   "why": "не мягкий гибрид: S90 D4 — обычный; B4 / B5 с 48 В заменили его в 2020",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/volvo/s90-v90/2generation/",
+    "https://www.autoexpress.co.uk/volvo/109210/upgraded-volvo-s90-and-v90-get-mild-hybrid-power"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Kia",
+    "Модель": "ProCeed",
+    "Поколение": "ProCeed",
+    "Этап": "рестайлинг",
+    "Топливо": "дизель",
+    "Объём, см³": "1598",
+    "Мощность, кВт": "100"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: ProCeed 1.6 CRDi 48V — 48 В с 07/2020",
+   "source": [
+    "https://prod2-press.kia.com/eu/en/home/media-resouces/press-releases/2020/Kias_new_intelligent_Manual_Transmission_for_Ceed_model_family.html",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/kia/ceed/cd-facelift/321620/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "Citroen",
+    "Модель": "C3",
+    "Поколение": "C3 IV",
+    "Этап": "весь выпуск",
+    "Топливо": "бензин",
+    "Объём, см³": "1199",
+    "Мощность, кВт": "81"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2024,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: C3 IV Hybrid 110 — Stellantis 48 В",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/citroen/c3/4generation/341105/",
+    "https://www.autoexpress.co.uk/citroen/c3/366430/new-citroen-c3-hybrid-now-available-latest-model-supermini-range",
+    "https://www.diariomotor.com/noticia/citroen-c3-hybrid-110-motor-2025/"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X5",
+    "Поколение": "G05",
+    "Топливо": "бензин",
+    "Объём, см³": "2998",
+    "Мощность, кВт": "245"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: X5 40i 245 кВт (333 л. с.) — 48 В с 12/2020 (250 кВт был обычным)",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x5/g05-f95/300495/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x5/g05-f95/316009/",
+    "https://www.press.bmwgroup.com/italy/article/attachment/T0328301IT/475164"
+   ]
+  },
+  {
+   "match": {
+    "Марка": "BMW",
+    "Модель": "X6",
+    "Поколение": "G06",
+    "Топливо": "бензин",
+    "Объём, см³": "2998",
+    "Мощность, кВт": "245"
+   },
+   "set": {
+    "Мягкий гибрид": {
+     "since": 2020,
+     "system": "48V",
+     "optional": false
+    }
+   },
+   "why": "мягкий гибрид: X6 40i 245 кВт (333 л. с.) — 48 В с 12/2020 (250 кВт был обычным)",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x6/g06-f96/301803/",
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x6/g06-f96/316014/",
+    "https://www.press.bmwgroup.com/italy/article/attachment/T0328301IT/475164"
+   ]
   }
  ]
 }

@@ -11,7 +11,7 @@
 мягкий гибрид был опцией (Ford EcoBlue Hybrid, Hyundai/Kia CRDi 48V до 2020, Kia 1.0 T-GDi), — только по названию
 версии. «Hybrydowe» у autocentrum без правила и без названия ничего не решает.
 
-Итого: 1478 версий отмечены мягким гибридом (564 сочетаний модель · поколение · мотор); проверить: 0 сочетаний.
+Итого: 1489 версий отмечены мягким гибридом (568 сочетаний модель · поколение · мотор); проверить: 0 сочетаний.
 
 **Тот же мотор и без мягкого гибрида** (проверка «двойников» по таблицам моторов de.wikipedia, одна таблица,
 та же мощность, объём и коробка): если обе версии продавались в годы нашей версии — «бывает и без него»,
@@ -473,6 +473,10 @@ de.wikipedia (взято 2022); Volvo B5 вместо T5 — с 03/2020 (взя�
 | DS | DS4 | DS4 II | бензин | 1.2 | 136 | 2024 | 48V | автомат | DS4 Hatchback HYBRID 136 | подтверждено | производитель: de.wikipedia: DS 3 Crossback / DS 4 · Википедия: de: DS 4 — «Ein Mild-Hybrid mit 6-Stufen-Doppelkupplungsgetriebe folgte 2024.»; de: DS 3 Crossback — Tabelle «MHEV 136 … 04/2024» |
 | BAIC | BJ60 | BJ60 I | бензин | 2.0 | 256 | 2024 |  | автомат | BJ60 SUV 2.0 2.0T Flagship 4x4 AT | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/baic/bj60/1generation/345094/) · autocentrum: в названии (2.0T Flagship 4x4 AT Mild-Hybrid) |
 | Hongqi | H9 | H9 I | бензин | 2.0 | 245 | 2025 |  | автомат | H9 Sedan 2.0 2.0T | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/hongqi/h9/1generation/343947/) · autocentrum: в названии (2.0T Mild-Hybrid) |
+| Maserati | Grecale | Grecale I | бензин | 2.0 | 301 | 2022 |  | автомат | Grecale SUV 2.0 Automatik | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/grecale/1generation/340246/) · autocentrum: в названии (Automatik Mild-Hybrid) |
+| Maserati | Grecale | Grecale I | бензин | 2.0 | 330 | 2022 |  | автомат | Grecale SUV 2.0 Modena Automatik | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/grecale/1generation/324064/) · autocentrum: в названии (Modena Automatik Mild-Hybrid) |
+| Maserati | Grecale | Grecale I | бензин | 2.0 | 250 | 2026 |  | автомат | Grecale SUV 2.0 250 Automatik | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/grecale/1generation-facelift/352211/) · autocentrum: в названии (250 Automatik Mild-Hybrid) |
+| Maserati | Grecale | Grecale I | бензин | 3.0 | 390 | 2026 |  | автомат | Grecale SUV 3.0 Modena V6 Automatik | одна база, прямо в названии | ADAC (данные производителя): мягкий гибрид (https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/maserati/grecale/1generation-facelift/352216/) · autocentrum: в названии (Modena V6 Automatik Mild-Hybrid) |
 | Audi | Q5 | GU | бензин | 2.0 | 272 | 2025 | 48V | автомат | Q5 Sportback 2.0 TFSI | подтверждено | ADAC: в названии (Audi Q5 2.0 TFSI MHEV plus quattro S tronic) · производитель: ADAC Autokatalog: Audi Q5 2.0 TFSI MHEV plus · Википедия: de: Audi Q5 GU — «Sie sind alle als Mild-Hybrid ausgeführt» (48-Volt-Mildhybrid) |
 | Audi | Q7 | Q7 III | дизель | 3.0 | 299 | 2026 |  | автомат | Q7 III 3.0 50 tdi | одна база, прямо в названии | ADAC: в названии (Audi Q7 3.0 TDI MHEV plus quattro tiptronic (5-Sitzer)) |
 | Ford | Kuga | Mk3 | дизель | 2.0 | 150 | 2020 | 48V | механика | Kuga SUV 2.0 EcoBlue MHEV | подтверждено | autocentrum: в названии (2.0 EcoBlue MHEV 150KM 110kW (2019-2024)) · производитель: Ford media 2019 · Википедия: de: Ford Kuga — Tabelle 2.0 EcoBlue MHEV |

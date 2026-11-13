@@ -216,6 +216,447 @@
    "adac": [
     "maxus/eterron-9"
    ]
+  },
+  {
+   "brand": "Alpine",
+   "label": "A290",
+   "mobile": "A290",
+   "adac": [
+    "alpine/a290"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Alpine",
+   "label": "A390",
+   "mobile": "A390",
+   "adac": [
+    "alpine/a390"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "BYD",
+   "label": "ATTO 3",
+   "mobile": "ATTO 3",
+   "adac": [
+    "byd/atto-3"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "BYD",
+   "label": "HAN",
+   "mobile": "HAN",
+   "adac": [
+    "byd/han"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "BYD",
+   "label": "ETP 3",
+   "mobile": "ETP 3",
+   "adac": [
+    "byd/etp3"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Cadillac",
+   "label": "LYRIQ",
+   "mobile": "LYRIQ",
+   "adac": [
+    "cadillac/lyriq"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Cadillac",
+   "label": "OPTIQ",
+   "mobile": "OPTIQ",
+   "adac": [
+    "cadillac/optiq"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Cadillac",
+   "label": "VISTIQ",
+   "mobile": "VISTIQ",
+   "adac": [
+    "cadillac/vistiq"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Cadillac",
+   "label": "XT5",
+   "mobile": "XT5",
+   "adac": [
+    "cadillac/xt5"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Citroen",
+   "label": "AMI",
+   "mobile": "AMI",
+   "adac": [
+    "citroen/ami"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Citroen",
+   "label": "C2",
+   "mobile": "C2",
+   "adac": [
+    "citroen/c2"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Fiat",
+   "label": "Talento",
+   "mobile": "Talento",
+   "adac": [
+    "fiat/talento"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Fiat",
+   "label": "Topolino",
+   "mobile": "Topolino",
+   "adac": [
+    "fiat/topolino"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Ford",
+   "label": "GT",
+   "mobile": "GT",
+   "adac": [
+    "ford/gt"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Honda",
+   "label": "FR-V",
+   "mobile": "FR-V",
+   "adac": [
+    "honda/fr-v"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Hyundai",
+   "label": "Getz",
+   "mobile": "Getz",
+   "adac": [
+    "hyundai/getz"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Hyundai",
+   "label": "H350",
+   "mobile": "H350",
+   "adac": [
+    "hyundai/h350"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Hyundai",
+   "label": "NEXO",
+   "mobile": "NEXO",
+   "adac": [
+    "hyundai/nexo"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "KGM",
+   "label": "Torres EVX",
+   "mobile": "Torres EVX",
+   "adac": [
+    "kgm/torres-evx"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Leapmotor",
+   "label": "B05",
+   "mobile": "B05",
+   "adac": [
+    "leapmotor/b05"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Leapmotor",
+   "label": "B10",
+   "mobile": "B10",
+   "adac": [
+    "leapmotor/b10"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Leapmotor",
+   "label": "T03",
+   "mobile": "T03",
+   "adac": [
+    "leapmotor/t03"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "MG",
+   "label": "MG5",
+   "mobile": "MG5",
+   "adac": [
+    "mg/mg5"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "MG",
+   "label": "Marvel R",
+   "mobile": "Marvel R",
+   "adac": [
+    "mg/marvel-r"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "MG",
+   "label": "S5",
+   "mobile": "S5",
+   "adac": [
+    "mg/mgs5"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Maserati",
+   "label": "Grecale",
+   "mobile": "Grecale",
+   "adac": [
+    "maserati/grecale"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Maserati",
+   "label": "MC20",
+   "mobile": "MC20",
+   "adac": [
+    "maserati/mc20"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Maxus",
+   "label": "Deliver 7",
+   "mobile": "Deliver 7",
+   "adac": [
+    "maxus/deliver-7"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Maxus",
+   "label": "Deliver 9",
+   "mobile": "Deliver 9",
+   "adac": [
+    "maxus/deliver-9"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Mazda",
+   "label": "2 Hybrid",
+   "mobile": "2 Hybrid",
+   "adac": [
+    "mazda/2-hybrid"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Mazda",
+   "label": "BT-50",
+   "mobile": "BT-50",
+   "adac": [
+    "mazda/bt-50"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQC",
+   "mobile": "EQC",
+   "adac": [
+    "mercedes-benz/eqc"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "label": "EQT",
+   "mobile": "EQT",
+   "adac": [
+    "mercedes-benz/eqt"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Nissan",
+   "label": "NV250",
+   "mobile": "NV250",
+   "adac": [
+    "nissan/nv250"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Nissan",
+   "label": "NV300",
+   "mobile": "NV300",
+   "adac": [
+    "nissan/nv300"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Opel",
+   "label": "Zafira Life",
+   "mobile": "Zafira Life",
+   "adac": [
+    "opel/zafira-life"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Peugeot",
+   "label": "4008",
+   "mobile": "4008",
+   "adac": [
+    "peugeot/4008"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Renault",
+   "label": "Alaskan",
+   "mobile": "Alaskan",
+   "adac": [
+    "renault/alaskan"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Renault",
+   "label": "R 4",
+   "mobile": "R 4",
+   "adac": [
+    "renault/r4"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Renault",
+   "label": "R 5",
+   "mobile": "R 5",
+   "adac": [
+    "renault/r5"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Smart",
+   "label": "#1",
+   "mobile": "#1",
+   "adac": [
+    "smart/1"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Smart",
+   "label": "#5",
+   "mobile": "#5",
+   "adac": [
+    "smart/5"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Subaru",
+   "label": "Justy",
+   "mobile": "Justy",
+   "adac": [
+    "subaru/justy"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Tesla",
+   "label": "Roadster",
+   "mobile": "Roadster",
+   "adac": [
+    "tesla/roadster"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Toyota",
+   "label": "Mirai",
+   "mobile": "Mirai",
+   "adac": [
+    "toyota/mirai"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Toyota",
+   "label": "Proace Max",
+   "mobile": "Proace Max",
+   "adac": [
+    "toyota/proace-max"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Volvo",
+   "label": "EC40",
+   "mobile": "EC40",
+   "adac": [
+    "volvo/ec40"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Volvo",
+   "label": "EX40",
+   "mobile": "EX40",
+   "adac": [
+    "volvo/ex40"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "XPENG",
+   "label": "X9",
+   "mobile": "X9",
+   "adac": [
+    "xpeng/x9"
+   ],
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
   }
  ]
 }

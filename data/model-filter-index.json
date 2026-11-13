@@ -1,6 +1,6 @@
 {
  "source": "https://www.ultimatespecs.com",
- "generatedAt": "2026-11-12",
+ "generatedAt": "2026-11-13",
  "models": [
   {
    "brand": "Audi",
@@ -35988,14 +35988,11 @@
        ]
       },
       "diesel": {
-       "2287": [
+       "2184": [
         120,
         140,
         160,
-        177
-       ],
-       "2298": [
-        140
+        180
        ]
       }
      }
@@ -52539,6 +52536,1177 @@
       "electric": {
        "0": [
         442
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Alpine",
+   "model": "A290",
+   "generations": [
+    {
+     "code": "A290 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "A290",
+     "bodies": [
+      "A290 I Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        177,
+        218
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Alpine",
+   "model": "A390",
+   "generations": [
+    {
+     "code": "A390 I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "A390",
+     "bodies": [
+      "A390 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        400,
+        470
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "model": "ATTO 3",
+   "generations": [
+    {
+     "code": "ATTO 3 I",
+     "phase": "дорестайлинг",
+     "years": "2023–2026",
+     "mobileModel": "ATTO 3",
+     "bodies": [
+      "ATTO 3 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204
+       ]
+      }
+     }
+    },
+    {
+     "code": "ATTO 3 I",
+     "phase": "рестайлинг",
+     "years": "2026–н. в.",
+     "mobileModel": "ATTO 3",
+     "bodies": [
+      "ATTO 3 I SUV Facelifting (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        313,
+        449
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "model": "HAN",
+   "generations": [
+    {
+     "code": "HAN I",
+     "phase": "весь выпуск",
+     "years": "2023–2025",
+     "mobileModel": "HAN",
+     "bodies": [
+      "HAN I Sedan (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        517
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "BYD",
+   "model": "ETP 3",
+   "generations": [
+    {
+     "code": "ETP 3 I",
+     "phase": "весь выпуск",
+     "years": "2023–2024",
+     "mobileModel": "ETP 3",
+     "bodies": [
+      "ETP 3 I Kleintransporter (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        136
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "model": "LYRIQ",
+   "generations": [
+    {
+     "code": "LYRIQ I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "LYRIQ",
+     "bodies": [
+      "LYRIQ I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        528
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "model": "OPTIQ",
+   "generations": [
+    {
+     "code": "OPTIQ I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "OPTIQ",
+     "bodies": [
+      "OPTIQ I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        304
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "model": "VISTIQ",
+   "generations": [
+    {
+     "code": "VISTIQ I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "VISTIQ",
+     "bodies": [
+      "VISTIQ I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        615
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Cadillac",
+   "model": "XT5",
+   "generations": [
+    {
+     "code": "XT5 I",
+     "phase": "весь выпуск",
+     "years": "2016–2018",
+     "mobileModel": "XT5",
+     "bodies": [
+      "XT5 I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "3649": [
+        314
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Citroen",
+   "model": "AMI",
+   "generations": [
+    {
+     "code": "AMI I",
+     "phase": "дорестайлинг",
+     "years": "2024–2025",
+     "mobileModel": "AMI",
+     "bodies": [
+      "AMI I Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        8
+       ]
+      }
+     }
+    },
+    {
+     "code": "AMI I",
+     "phase": "рестайлинг",
+     "years": "2025–н. в.",
+     "mobileModel": "AMI",
+     "bodies": [
+      "AMI I Hatchback Facelifting (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        8
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Talento",
+   "generations": [
+    {
+     "code": "296",
+     "phase": "весь выпуск",
+     "years": "2016–2021",
+     "mobileModel": "Talento",
+     "bodies": [
+      "Talento 296 Van (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1598": [
+        95,
+        120,
+        125,
+        145
+       ],
+       "1997": [
+        120,
+        145,
+        170
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Fiat",
+   "model": "Topolino",
+   "generations": [
+    {
+     "code": "Topolino I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "Topolino",
+     "bodies": [
+      "Topolino I Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        8
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Ford",
+   "model": "GT",
+   "generations": [
+    {
+     "code": "ii",
+     "phase": "весь выпуск",
+     "years": "2016–2022",
+     "mobileModel": "GT",
+     "bodies": [
+      "GT ii Coupe (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "3497": [
+        656,
+        669
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Honda",
+   "model": "FR-V",
+   "generations": [
+    {
+     "code": "FR-V I",
+     "phase": "весь выпуск",
+     "years": "2007–2010",
+     "mobileModel": "FR-V",
+     "bodies": [
+      "FR-V I Van Facelifting (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1799": [
+        140
+       ]
+      },
+      "diesel": {
+       "2204": [
+        140
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Leapmotor",
+   "model": "B10",
+   "generations": [
+    {
+     "code": "B10 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "B10",
+     "bodies": [
+      "B10 I SUV (adac)"
+     ],
+     "engines": {
+      "plugin": {
+       "1499": [
+        218
+       ]
+      },
+      "electric": {
+       "0": [
+        218
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Leapmotor",
+   "model": "T03",
+   "generations": [
+    {
+     "code": "T03 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "T03",
+     "bodies": [
+      "T03 I Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        95
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "model": "MG5",
+   "generations": [
+    {
+     "code": "MG5 I",
+     "phase": "весь выпуск",
+     "years": "2022–2025",
+     "mobileModel": "MG5",
+     "bodies": [
+      "MG5 I Kombi (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        156,
+        177
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "model": "Marvel R",
+   "generations": [
+    {
+     "code": "Marvel R I",
+     "phase": "весь выпуск",
+     "years": "2021–2025",
+     "mobileModel": "Marvel R",
+     "bodies": [
+      "Marvel R I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        180,
+        288
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "model": "S5",
+   "generations": [
+    {
+     "code": "S5 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "S5",
+     "bodies": [
+      "S5 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        170,
+        231
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maserati",
+   "model": "Grecale",
+   "generations": [
+    {
+     "code": "Grecale I",
+     "phase": "дорестайлинг",
+     "years": "2022–2026",
+     "mobileModel": "Grecale",
+     "bodies": [
+      "Grecale I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1995": [
+        301,
+        330
+       ],
+       "3000": [
+        530
+       ]
+      },
+      "electric": {
+       "0": [
+        558
+       ]
+      }
+     }
+    },
+    {
+     "code": "Grecale I",
+     "phase": "рестайлинг",
+     "years": "2026–н. в.",
+     "mobileModel": "Grecale",
+     "bodies": [
+      "Grecale I SUV Facelifting (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1995": [
+        250,
+        301,
+        330
+       ],
+       "3000": [
+        390,
+        530
+       ]
+      },
+      "electric": {
+       "0": [
+        558
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maserati",
+   "model": "MC20",
+   "generations": [
+    {
+     "code": "MC20 I",
+     "phase": "весь выпуск",
+     "years": "2021–2025",
+     "mobileModel": "MC20",
+     "bodies": [
+      "MC20 I Coupe (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "3000": [
+        630
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "Deliver 7",
+   "generations": [
+    {
+     "code": "Deliver 7 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "Deliver 7",
+     "bodies": [
+      "Deliver 7 I Van (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1996": [
+        148
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Maxus",
+   "model": "Deliver 9",
+   "generations": [
+    {
+     "code": "Deliver 9 I",
+     "phase": "весь выпуск",
+     "years": "2020–н. в.",
+     "mobileModel": "Deliver 9",
+     "bodies": [
+      "Deliver 9 I Van (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1996": [
+        148,
+        161
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mazda",
+   "model": "2 Hybrid",
+   "generations": [
+    {
+     "code": "zv",
+     "phase": "весь выпуск",
+     "years": "2022–2023",
+     "mobileModel": "2 Hybrid",
+     "bodies": [
+      "2 Hybrid zv Hatchback (adac)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1490": [
+        116
+       ]
+      }
+     }
+    },
+    {
+     "code": "zv-facelift",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "2 Hybrid",
+     "bodies": [
+      "2 Hybrid zv-facelift Hatchback Facelifting (adac)"
+     ],
+     "engines": {
+      "hybrid": {
+       "1490": [
+        116
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "EQC",
+   "generations": [
+    {
+     "code": "293",
+     "phase": "весь выпуск",
+     "years": "2019–2023",
+     "mobileModel": "EQC",
+     "bodies": [
+      "EQC 293 SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        408
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Mercedes-Benz",
+   "model": "EQT",
+   "generations": [
+    {
+     "code": "420",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "EQT",
+     "bodies": [
+      "EQT 420 Van (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        122
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "model": "NV250",
+   "generations": [
+    {
+     "code": "w",
+     "phase": "весь выпуск",
+     "years": "2019–2022",
+     "mobileModel": "NV250",
+     "bodies": [
+      "NV250 w Kleintransporter (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1461": [
+        80,
+        95,
+        115
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Nissan",
+   "model": "NV300",
+   "generations": [
+    {
+     "code": "4-j4",
+     "phase": "весь выпуск",
+     "years": "2016–2021",
+     "mobileModel": "NV300",
+     "bodies": [
+      "NV300 4-j4 Van (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1598": [
+        121,
+        125,
+        145
+       ],
+       "1997": [
+        120,
+        145,
+        170
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Opel",
+   "model": "Zafira Life",
+   "generations": [
+    {
+     "code": "v",
+     "phase": "весь выпуск",
+     "years": "2019–2022",
+     "mobileModel": "Zafira Life",
+     "bodies": [
+      "Zafira Life v Van (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1499": [
+        102,
+        120
+       ],
+       "1997": [
+        122,
+        145,
+        150,
+        177
+       ]
+      }
+     }
+    },
+    {
+     "code": "v-facelift",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Zafira Life",
+     "bodies": [
+      "Zafira Life v-facelift Van Facelifting (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        136
+       ]
+      },
+      "diesel": {
+       "1997": [
+        177
+       ],
+       "2184": [
+        180
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Peugeot",
+   "model": "4008",
+   "generations": [
+    {
+     "code": "4008 I",
+     "phase": "весь выпуск",
+     "years": "2012–2015",
+     "mobileModel": "4008",
+     "bodies": [
+      "4008 I SUV (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "1560": [
+        115
+       ],
+       "1798": [
+        150
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "Alaskan",
+   "generations": [
+    {
+     "code": "Alaskan I",
+     "phase": "весь выпуск",
+     "years": "2017–2021",
+     "mobileModel": "Alaskan",
+     "bodies": [
+      "Alaskan I Pickup (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "2298": [
+        163,
+        190
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "R 4",
+   "generations": [
+    {
+     "code": "R 4 I",
+     "phase": "рестайлинг",
+     "years": "2067–н. в.",
+     "mobileModel": "R 4",
+     "bodies": [
+      "R 4 I Hatchback Facelifting (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "845": [
+        25,
+        29,
+        34
+       ],
+       "1108": [
+        34
+       ]
+      }
+     }
+    },
+    {
+     "code": "R 4 I",
+     "phase": "дорестайлинг",
+     "years": "2062–2067",
+     "mobileModel": "R 4",
+     "bodies": [
+      "R 4 I Hatchback (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "845": [
+        25
+       ]
+      }
+     }
+    },
+    {
+     "code": "R 4 II",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "R 4",
+     "bodies": [
+      "R 4 II SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        122,
+        150
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Renault",
+   "model": "R 5",
+   "generations": [
+    {
+     "code": "ii-facelift",
+     "phase": "весь выпуск",
+     "years": "2087–н. в.",
+     "mobileModel": "R 5",
+     "bodies": [
+      "R 5 ii-facelift Hatchback Facelifting (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "1100": [
+        45
+       ],
+       "1397": [
+        58,
+        60,
+        67,
+        115
+       ],
+       "1721": [
+        74,
+        87,
+        95
+       ]
+      },
+      "diesel": {
+       "1585": [
+        55
+       ]
+      }
+     }
+    },
+    {
+     "code": "ii",
+     "phase": "весь выпуск",
+     "years": "2085–2087",
+     "mobileModel": "R 5",
+     "bodies": [
+      "R 5 ii Hatchback (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "956": [
+        42
+       ],
+       "1100": [
+        45
+       ],
+       "1108": [
+        45
+       ],
+       "1397": [
+        58,
+        60,
+        67,
+        71,
+        115
+       ]
+      },
+      "diesel": {
+       "1585": [
+        55
+       ]
+      }
+     }
+    },
+    {
+     "code": "iii",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "R 5",
+     "bodies": [
+      "R 5 iii Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        122,
+        150
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Smart",
+   "model": "#1",
+   "generations": [
+    {
+     "code": "#1 I",
+     "phase": "весь выпуск",
+     "years": "2023–н. в.",
+     "mobileModel": "#1",
+     "bodies": [
+      "#1 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        272,
+        368,
+        428
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Smart",
+   "model": "#5",
+   "generations": [
+    {
+     "code": "#5 I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "#5",
+     "bodies": [
+      "#5 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        340,
+        363,
+        588,
+        646
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "Mirai",
+   "generations": [
+    {
+     "code": "ad2",
+     "phase": "весь выпуск",
+     "years": "2021–н. в.",
+     "mobileModel": "Mirai",
+     "bodies": [
+      "Mirai ad2 Sedan (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "0": [
+        182
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Toyota",
+   "model": "Proace Max",
+   "generations": [
+    {
+     "code": "t",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "Proace Max",
+     "bodies": [
+      "Proace Max t Van (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "2184": [
+        120,
+        140,
+        180
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "EC40",
+   "generations": [
+    {
+     "code": "EC40 I",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "EC40",
+     "bodies": [
+      "EC40 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        238,
+        252,
+        408,
+        442
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Volvo",
+   "model": "EX40",
+   "generations": [
+    {
+     "code": "EX40 I",
+     "phase": "дорестайлинг",
+     "years": "2024–2026",
+     "mobileModel": "EX40",
+     "bodies": [
+      "EX40 I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        238,
+        252,
+        408,
+        442
+       ]
+      }
+     }
+    },
+    {
+     "code": "EX40 I",
+     "phase": "рестайлинг",
+     "years": "2026–н. в.",
+     "mobileModel": "EX40",
+     "bodies": [
+      "EX40 I SUV Facelifting (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        238,
+        252,
+        442
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "XPENG",
+   "model": "X9",
+   "generations": [
+    {
+     "code": "X9 I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "X9",
+     "bodies": [
+      "X9 I Van (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        320,
+        503
        ]
       }
      }

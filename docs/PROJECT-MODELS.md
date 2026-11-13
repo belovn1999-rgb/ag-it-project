@@ -730,6 +730,35 @@ GLE; T6 и Trafic — 2–9 мест и сдвижная дверь). На ст�
     Countryman R60 Cooper D с автоматом — 2,0 л, D-Max 4x2 — задний, Crafter I — задний и 2.5 TDI до 2011, Citan —
     передний; правило «Audi RS — всегда quattro» (A3 8Y RS3 был «передний»).
 
+29. ✅ Новые модели из ADAC и мягкие гибриды по реестру ЕС (13.11, «выкладывай и работай дальше по плану»).
+    (1) 49 моделей, которые есть в реестре ЕС или в каталоге mobile.de, но не было у нас, — в `data/model-list-adac.json`
+    и прочитаны `tools/crawl-adac-models.py`: у 40 есть данные (Alpine A290 / A390, BYD ATTO 3 / HAN / ETP 3, Cadillac
+    LYRIQ / OPTIQ / VISTIQ / XT5, Citroën AMI, Fiat Talento / Topolino, Ford GT, Honda FR-V, Leapmotor B10 / T03, MG MG5 /
+    Marvel R / S5, Maserati Grecale / MC20, Maxus Deliver 7 / 9, Mazda 2 Hybrid, Mercedes EQC / EQT, Nissan NV250 / NV300,
+    Opel Zafira Life, Peugeot 4008, Renault Alaskan / R 4 / R 5, Smart #1 / #5, Toyota Mirai / Proace Max, Volvo EC40 /
+    EX40, XPENG X9); у 9 в ADAC нет версий с 2010 (Citroën C2, Hyundai Getz / H350 / NEXO, KGM Torres EVX, Leapmotor B05,
+    Mazda BT-50, Subaru Justy, Tesla Roadster). Справочник — 794 модели, 26 535 версий. Модели, у которых уже был
+    переход к семейству (EX40 → XC40, EQT → T-Class, NV300 → Primastar, «2 Hybrid» → 2), теперь находят свои данные
+    напрямую. (2) Ducato IV после рестайлинга 2021 — дизель 2.2 Multijet3 2184 см³ вместо 2.3, старший — 180 л. с.
+    (132 кВт), годы мотора 2021–н. в. (SMMT, Parkers, реестр ЕС). (3) **Мягкий гибрид: реестр ЕС расходился с нами в
+    47 группах версий** — каждая проверена по двум независимым источникам (ADAC по версии и мощности + пресс-релиз
+    производителя, auto-motor-und-sport, Autocar, Википедия…), поправки — в `data/model-engines-manual.json` (ключ
+    «Мягкий гибрид», `tools/manual_fixes.py`), проверенные строки не попадают в список «проверить» `docs/MODEL-CONFIRMATION.md`.
+    Главный вывод: мягкий гибрид обычно приходил с новой мощностью, а у нас его ставили и старой. **Сняли (акциз выше, как
+    у обычного мотора):** Audi A4 / A5 40 TDI 140 кВт и A5 F5 2.0 TDI 190 л. с. до рестайлинга (12 В — только у 40 TDI
+    150 кВт с 08/2020), BMW X3 / X4 M40d 240 кВт, X5 / X6 40i 250 кВт, Mercedes S 350 d 210 кВт, S 400 d, Maybach S 680,
+    Mazda CX-3 2.0, Panda 0.9 TwinAir, Volvo XC40 D3 / D4, S90 D4, V60 D4 2.4. **Поставили (акциз ниже):** BMW 640i / 640d GT,
+    730d / 740d после рестайлинга (с 07/2020), X5 / X6 / X7 40i 245 кВт (с 12/2020), Mercedes GLE 580 и GLE 63 (EQ Boost),
+    AMG GT 43 / 53 4-дверный, CLS 300 d после рестайлинга, GLS 450 / 350 d после рестайлинга, Vito 124 бензин 2024, Kia
+    Stonic 1.0 115 л. с. 2025, Citroën C4 X 1.2 Hybrid, Subaru Crosstrek e-Boxer; X3 / X4 30i — с 2021 вместо 2023;
+    Hilux 2.8 2024 — «бывает и без него». Подтвердили наше: BMW 120d / 220d, Volvo S90 / V90 B4, BAIC BJ60, ProCeed
+    1.6 CRDi 48V, C3 IV Hybrid. Всего: снят у 52 версий, поставлен у 28, год или «бывает и без него» — у 6.
+    **Не тронуты, источники спорят — ждут решения владельца:** Audi SQ8 4.0 TFSI (у нас мягкий; ADAC и реестр — обычный,
+    британские объявления — «48V»), Mercedes CLS 350 299 л. с. (у нас обычный; мотор M264 с 48 В, реестр — гибрид, но Auto
+    Zeitung пишет «без электропомощи»), Mercedes V 300 бензин 2024 (у нас обычный; реестр и mbpassion — M254 с 48 В,
+    ADAC — «Otto»). (4) Не хватает в справочнике, есть в форме mobile.de: Audi A6 e-tron / S6 e-tron (ADAC держит их
+    внутри A6), MG EHS и OMODA 5 EV (электро и плагин — внутри HS и 5, перехода к семейству нет) — следующим шагом.
+
 **Правила работы с каталогом ADAC (двигатели, с 23.10):** robots.txt разрешает каталог; одна страница в 2 с
 (`collect-trims-adac.py` `fetch()`), кэш `~/.cache/autogood/adac/pages`. Модель → страницы поколений из
 `sitemap-autokatalog.xml` («1generation», «…-facelift»), поколение → ссылки версий, версия → таблица «ключ | значение».

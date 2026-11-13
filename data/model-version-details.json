@@ -2501,6 +2501,13 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Audi/63708/Audi-TT-(8J)-RS-25-TFSI-Quattro.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Audi/63710/Audi-A3-(8V)-Sportback-Attraction-20-TDI-170HP.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -2957,6 +2964,13 @@
 "drive": "FWD",
 "gearbox": "5 speed Manual",
 "seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Audi/9631/Audi-TT-(8J)-Roadster-20-TFSI-quattro.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "2",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/BMW/10552/BMW-E70-X5-xDrive35i.html": {
@@ -5582,6 +5596,13 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Fiat/10569/Fiat-Bravo-2-19-Dynamic-120HP-Multijet.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Fiat/106786/Fiat-Fullback-Double-Cab-SX-24-154HP-4x4-Euro-6.html": {
 "doors": "4",
 "drive": "AWD",
@@ -5685,6 +5706,13 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Fiat/9952/Fiat-500-by-Diesel-12-69HP.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Ford/10090/Ford-Fiesta-7-3-doors-Trend-16-TDCi-95HP-DPF.html": {
@@ -5997,6 +6025,20 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/11809/Ford-Galaxy-II-20-TDCi-140HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/11810/Ford-Galaxy-II-20-TDCi-163HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Ford/118199/Ford-Fiesta-8-10-EcoBoost-125HP-ST-Line.html": {
@@ -6345,6 +6387,20 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/14105/Ford-Galaxy-II-Titanium-16-EcoBoost-160HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Ford/14106/Ford-Galaxy-II-Titanium-22-TDCi-200HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "7",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Ford/145963/Ford-Kuga-2024-15-EcoBoost-186HP.html": {
@@ -8097,6 +8153,34 @@
 "seats": "",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Hyundai/10946/Hyundai-i30-14-GL-FDu-Classic.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Hyundai/11034/Hyundai-i30-16-CRDi-GL-FDu-Classic-WGT-90HP.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Hyundai/11036/Hyundai-i30-16-CRDi-GLS-FDu-Style-VGT-128HP.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Hyundai/11048/Hyundai-i30-16-GLS-FDu-Style.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Hyundai/112615/Hyundai-i30-III-N.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8349,6 +8433,13 @@
 "seats": "7",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Hyundai/9669/Hyundai-i10-PA-11-Classic.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Ineos/139337/Ineos-Grenadier-30-Turbo-4x4-Auto.html": {
 "doors": "4",
 "drive": "AWD",
@@ -8376,6 +8467,13 @@
 "gearbox": "8 speed Automatic",
 "seats": "5",
 "transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Infiniti/10680/Infiniti-G-IV-G37.html": {
+"doors": "",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Infiniti/13446/Infiniti-M-30d.html": {
 "doors": "",
@@ -8482,6 +8580,20 @@
 "seats": "5",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Jaguar/11778/Jaguar-XK-(II)-50-V8-Convertible.html": {
+"doors": "2",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jaguar/11780/Jaguar-XK-(II)-50-V8-SC-Convertible.html": {
+"doors": "2",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Jaguar/11781/Jaguar-XJ-(X351)-30-V6-Diesel-Luxury.html": {
 "doors": "4",
 "drive": "RWD",
@@ -8503,11 +8615,60 @@
 "seats": "2",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Jaguar/143470/Jaguar-XF-(X250)-2011-50-V8-XFR-S.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jaguar/143477/Jaguar-XF-(X250)-2011-30-V6-S-C-AWD.html": {
+"doors": "4",
+"drive": "AWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jaguar/143478/Jaguar-XF-(X250)-2011-30-V6-S-C.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jaguar/143495/Jaguar-XF-(X250)-50-V8-XFR.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jaguar/25961/Jaguar-XF-(X250)-2011-22-Diesel.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Jaguar/62542/Jaguar-F-Type-Convertible--V8-S.html": {
 "doors": "2",
 "drive": "RWD",
 "gearbox": "8 speed Automatic",
 "seats": "2",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jaguar/69039/Jaguar-XF-(X250)-2011-20-Turbo.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jaguar/69044/Jaguar-XF-(X250)-2011-22-Diesel.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "8 speed Automatic",
+"seats": "5",
 "transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Jaguar/72882/Jaguar-XJ-(X351-2016)-30-Supercharged-340HP-AWD.html": {
@@ -8558,6 +8719,13 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "seats": "5",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Jeep/60223/Jeep-Compass-2011-20-Sport-4x2-156HP-.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Jeep/67962/Jeep-Cherokee-KL-20-Diesel-140HP-Limited-4x4-Active-Drive.html": {
 "doors": "5",
@@ -8622,6 +8790,13 @@
 "seats": "",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Kia/13460/Kia-Carnival-II-22-CRDi-VGT-Active.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Kia/141868/Kia-Stonic-2021-10-T-GDI-120-48V-Mild-Hybrid.html": {
 "doors": "5",
 "drive": "FWD",
@@ -8631,6 +8806,13 @@
 },
 "https://www.ultimatespecs.com/car-specs/Kia/142501/Kia-Picanto-2025-12.html": {
 "doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Kia/26428/Kia-Pro-Ceed-14-CVVT-Basic.html": {
+"doors": "3",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
 "seats": "5",
@@ -9035,6 +9217,13 @@
 "seats": "5",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Maserati/11194/Maserati-GranTurismo-S.html": {
+"doors": "2",
+"drive": "RWD",
+"gearbox": "6 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Maserati/11197/Maserati-Quatroporte-V-2008-.html": {
 "doors": "4",
 "drive": "RWD",
@@ -9180,6 +9369,20 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/11545/Mazda-2-(DE)-3-doors-Sportive-15-103HP.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mazda/11551/Mazda-2-(DE)-3-doors-Style-13-86HP.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Mazda/11573/Mazda-3-II-5p-Active-16-105HP.html": {
@@ -9930,6 +10133,34 @@
 "gearbox": "9 speed Automatic",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/12728/Mercedes-Benz-CL-(C216)-500-BlueEFFICIENCY.html": {
+"doors": "2",
+"drive": "RWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/12729/Mercedes-Benz-CL-(C216)-500-4MATIC-BlueEFFICIENCY.html": {
+"doors": "2",
+"drive": "AWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/12730/Mercedes-Benz-CL-(C216)-600.html": {
+"doors": "2",
+"drive": "RWD",
+"gearbox": "5 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/12731/Mercedes-Benz-CL-(C216)-63-AMG.html": {
+"doors": "2",
+"drive": "RWD",
+"gearbox": "7 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/127315/Mercedes-Benz-E-Class-(W213-2021)-300-d-4MATIC.html": {
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
@@ -9938,6 +10169,13 @@
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/127316/Mercedes-Benz-E-Class-Estate-(W213-2021)-300-d-4MATIC.html": {
 "drive": "AWD",
 "gearbox": "9 speed Automatic",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/12732/Mercedes-Benz-CL-(C216)-65-AMG.html": {
+"doors": "2",
+"drive": "RWD",
+"gearbox": "5 speed Automatic",
+"seats": "4",
 "transmission": "Automatic"
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/127355/Mercedes-Benz-W223-Class-S-450.html": {
@@ -10244,6 +10482,34 @@
 "drive": "AWD",
 "gearbox": "6 speed Manual",
 "seats": "3/6",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/154390/Mercedes-Benz-Sprinter-2014-L1H1-Kombi-319-CDI-35t-.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "9",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/154432/Mercedes-Benz-Sprinter-2006-L1H1-Kombi-216-CDI--319t.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "9",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/154450/Mercedes-Benz-Sprinter-2006-L1H1-Kombi-213-CDI--319t.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "9",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mercedes-Benz/154485/Mercedes-Benz-Sprinter-2006-L2H1-Kombi-216--30t.html": {
+"doors": "4",
+"drive": "RWD",
+"gearbox": "6 speed Manual",
+"seats": "9",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Mercedes-Benz/155621/Mercedes-Benz-X540-GLC-EQ-400-EQ-Long-Range.html": {
@@ -10668,6 +10934,41 @@
 "seats": "4",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Mini/10616/Mini-Clubman-(R55)-One.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mini/10618/Mini-Clubman-(R55)-Cooper.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mini/10622/Mini-Clubman-(R55)-Cooper-S.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mini/10624/Mini-Clubman-(R55)-Cooper-D.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mini/10626/Mini-Clubman-(R55)-John-Cooper-Works.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Mini/10651/Mini-Mini-Cabrio-R57-One.html": {
 "doors": "",
 "drive": "FWD",
@@ -10683,6 +10984,13 @@
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Mini/10657/Mini-Mini-Cabrio-R57-John-Cooper-Works.html": {
+"doors": "",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Mini/10976/Mini-Clubman-(R55)-One-D.html": {
 "doors": "",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -10758,6 +11066,13 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "seats": "4",
 "transmission": "Dualclutch Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Mini/24954/Mini-Clubman-(R55)-Cooper-SD.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Mini/26192/Mini-Coupe-John-Cooper-Works.html": {
 "doors": "3",
@@ -10885,6 +11200,13 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Mitsubishi/9542/Mitsubishi-Lancer-IX-Sportback-15-MIVEC-Invite.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/NIO/133437/NIO-ET7-100-kWh-.html": {
 "doors": "4",
 "drive": "AWD",
@@ -10975,6 +11297,20 @@
 "gearbox": "1 speed Reduction Gear",
 "seats": "6",
 "transmission": "Reduction Gear"
+},
+"https://www.ultimatespecs.com/car-specs/Nissan/10722/Nissan-Qashqai-(J10)-4x2-16-Acenta.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Nissan/11538/Nissan-Qashqai-(J10)-Acenta-15-dCi-(109HP)-DPF-4x2.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Nissan/133837/Nissan-X-Trail-2023-15-VC-T-e-Power.html": {
 "doors": "5",
@@ -12056,6 +12392,27 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Peugeot/133622/Peugeot-Boxer-(X250)-L2H1-330-22-HDi-100HP.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/133623/Peugeot-Boxer-(X250)-L2H1-330-22-HDi-120HP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/133628/Peugeot-Boxer-(X250)-L3H2-440-30-HDi-FAP-.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "3",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Peugeot/136344/Peugeot-2008-II-(2023)-12-PureTech-100.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -12200,6 +12557,27 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Peugeot/25512/Peugeot-207-3p-Access-14i-75.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/25518/Peugeot-207-3p-Allure-16-THP-155.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/25519/Peugeot-207-3p-Access-14-HDi-70-FAP.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Peugeot/26388/Peugeot-508-SW-Allure-20-HDi-163.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -12302,6 +12680,13 @@
 "doors": "5",
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Peugeot/65272/Peugeot-Expert-2-Tepee-Active-HDi-160.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -13091,6 +13476,13 @@
 "seats": "4",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/10000/Renault-Laguna-3-Phase-2-Celsium-dCi-130-FAP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/10078/Renault-Koleos-1-Phase-1-Dynamique-20dCi-150cv-4x2.html": {
 "doors": "5",
 "drive": "FWD",
@@ -13539,6 +13931,13 @@
 "gearbox": "7 speed Dualclutch Automatic",
 "transmission": "Dualclutch Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/12100/Renault-Twingo-2-Phase-1-Dynamique-12-16v-75HP-Quickshift-eco2.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Automatic",
+"seats": "4",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/12109/Renault-Grand-Modus-Dynamique-12-16v-75HP-eco2.html": {
 "doors": "5",
 "drive": "FWD",
@@ -13725,6 +14124,13 @@
 "seats": "5",
 "transmission": "Reduction Gear"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/137859/Renault-Laguna-3-Coupe-Phase-2-20T-205.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/137864/Renault-Clio-2-Phase-2-3-Doors-30-V6-Sport.html": {
 "doors": "3",
 "drive": "RWD",
@@ -13794,6 +14200,13 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/23852/Renault-Twingo-2-Phase-1-Authentique-15-dCi-75HP-eco2.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/23857/Renault-Latitude-Initiale-dCi-175.html": {
@@ -14263,6 +14676,13 @@
 "drive": "FWD",
 "gearbox": "6 speed Manual",
 "seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/25807/Renault-Twingo-2-Phase-1-Gordini-RS-16-16v-130.html": {
+"doors": "3",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
+"seats": "4",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/25822/Renault-Megane-3-Phase-1-Emotion-16-16v-110.html": {
@@ -15343,6 +15763,20 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Renault/61379/Renault-Laguna-3-Coupe-Phase-2-Emotion-Plus-dCi-110-eco2.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/61395/Renault-Laguna-3-Coupe-Phase-2-Monaco-GP-dCi-180.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Renault/61422/Renault-Megane-3-Phase-2-Authentique-16-16v-110.html": {
 "doors": "5",
 "drive": "FWD",
@@ -15361,6 +15795,13 @@
 "doors": "5",
 "drive": "FWD",
 "gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/61646/Renault-Kangoo-2-Phase-1-Combi-Dynamique-All-Road-dCi-90HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "5 speed Manual",
 "seats": "5",
 "transmission": "Manual"
 },
@@ -15661,6 +16102,13 @@
 "https://www.ultimatespecs.com/car-specs/Renault/73923/Renault-Captur-1-Phase-1-dCi-90-Ecoleader-Premium.html": {
 "drive": "FWD",
 "gearbox": "5 speed Manual",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Renault/74111/Renault-Kangoo-2-Phase-2-Combi-Energy-Tce-115HP.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Renault/74270/Renault-Megane-4-Phase-1-12-TCe-130.html": {
@@ -16812,6 +17260,34 @@
 "seats": "4",
 "transmission": "Automatic"
 },
+"https://www.ultimatespecs.com/car-specs/Smart/12089/Smart-Fortwo-Cabrio-(W451-2011)-cabrio-BRABUS.html": {
+"doors": "",
+"drive": "RWD",
+"gearbox": "5 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Smart/12093/Smart-Fortwo-Cabrio-(W451-2011)-cabrio-52-mhd-passion.html": {
+"doors": "",
+"drive": "RWD",
+"gearbox": "5 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Smart/12094/Smart-Fortwo-Cabrio-(W451-2011)-cabrio-62-passion.html": {
+"doors": "",
+"drive": "RWD",
+"gearbox": "5 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
+"https://www.ultimatespecs.com/car-specs/Smart/8151/Smart-Fortwo-Cabrio-(W451-2011)-cabrio-40-cdi-passion.html": {
+"doors": "",
+"drive": "RWD",
+"gearbox": "5 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Ssangyong/13210/Ssangyong-Kyron-200Xdi.html": {
 "doors": "",
 "drive": "RWD",
@@ -16889,6 +17365,20 @@
 "seats": "",
 "transmission": ""
 },
+"https://www.ultimatespecs.com/car-specs/Subaru/11435/Subaru-Forester-III-Boxer-Diesel-Limited.html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Subaru/11438/Subaru-Impreza-III-20R-Classic.html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "speed",
+"seats": "",
+"transmission": ""
+},
 "https://www.ultimatespecs.com/car-specs/Subaru/134627/Subaru-BRZ-2-24-D-4S.html": {
 "doors": "2",
 "drive": "RWD",
@@ -16910,6 +17400,13 @@
 "seats": "5",
 "transmission": "CVT"
 },
+"https://www.ultimatespecs.com/car-specs/Subaru/13771/Subaru-Impreza-III-WRX-STI-Hatchback-Sport.html": {
+"doors": "",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Subaru/138166/Subaru-XV-2-2021-20-e-Boxer-AWD-Lineartronic.html": {
 "doors": "5",
 "drive": "AWD",
@@ -16922,6 +17419,13 @@
 "drive": "RWD",
 "gearbox": "6 speed Manual",
 "seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Subaru/62893/Subaru-Impreza-III-20-Boxer-Diesel.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/Suzuki/113286/Suzuki-Swift-6-14-Boosterjet-Sport.html": {
@@ -22723,6 +23227,13 @@
 "seats": "5",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volvo/35757/Volvo-S80L-25T.html": {
+"doors": "4",
+"drive": "FWD",
+"gearbox": "6 speed Automatic",
+"seats": "",
+"transmission": "Automatic"
+},
 "https://www.ultimatespecs.com/car-specs/Volvo/4709/Volvo-XC90-32.html": {
 "doors": "",
 "drive": "AWD",
@@ -22946,6 +23457,27 @@
 "gearbox": "6 speed Manual",
 "transmission": "Manual"
 },
+"https://www.ultimatespecs.com/car-specs/Volvo/67873/Volvo-V70-III-Restyling-D4-Kinetic.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/67881/Volvo-XC70-II-Restyling-D4-Kinetic.html": {
+"doors": "5",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/69955/Volvo-XC70-II-Restyling-D4-AWD--Momentum.html": {
+"doors": "5",
+"drive": "AWD",
+"gearbox": "6 speed Manual",
+"seats": "5",
+"transmission": "Manual"
+},
 "https://www.ultimatespecs.com/car-specs/Volvo/72293/Volvo-S60-II-Restyling-D2-Summum.html": {
 "drive": "FWD",
 "gearbox": "6 speed Manual",
@@ -23014,6 +23546,27 @@
 "drive": "AWD",
 "gearbox": "6 speed Manual",
 "seats": "",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/8142/Volvo-C70-II-T5.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/9769/Volvo-C70-II-Facelift-D3.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
+"transmission": "Manual"
+},
+"https://www.ultimatespecs.com/car-specs/Volvo/9771/Volvo-C70-II-Facelift-D4.html": {
+"doors": "2",
+"drive": "FWD",
+"gearbox": "6 speed Manual",
+"seats": "4",
 "transmission": "Manual"
 },
 "https://www.ultimatespecs.com/car-specs/XPeng/137005/XPeng-P7-Long-Range-.html": {
