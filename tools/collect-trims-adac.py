@@ -11,6 +11,7 @@ market) -> "частично проверено". robots.txt allows the catalog;
     python3 tools/collect-trims-adac.py "Kia|XCeed"     # prints, writes nothing
 """
 import collections
+import datetime
 import glob
 import html
 import json
@@ -145,8 +146,13 @@ def pages_of(key, catalog):
 
 
 def month_year(text):
+    """"08/23" -> 2023.58; "01/85" -> 1985.0, not 2085 (stage 31, 2026-11-13)."""
     match = re.match(r"(\d{2})/(\d{2})", text)
-    return 2000 + int(match.group(2)) + (int(match.group(1)) - 1) / 12 if match else None
+    if not match:
+        return None
+    yy = int(match.group(2))
+    year = 2000 + yy if 2000 + yy <= datetime.date.today().year + 1 else 1900 + yy
+    return year + (int(match.group(1)) - 1) / 12
 
 
 def versions(text):

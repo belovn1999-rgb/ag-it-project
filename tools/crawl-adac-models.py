@@ -14,6 +14,7 @@ robots.txt allows the catalog; one page every 2 s (tools/collect-trims-adac.py),
 """
 import argparse
 import collections
+import datetime
 import html
 import importlib.util
 import json
@@ -25,6 +26,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIST = os.path.join(ROOT, "data", "model-list-adac.json")
 OUT = os.path.join(ROOT, "data", "adac-primary.json")
 SINCE = 2010
+CODE = "code:"  # a generation page named by a series code, numbered after the crawl
 
 _spec = importlib.util.spec_from_file_location("adac_trims", os.path.join(ROOT, "tools", "collect-trims-adac.py"))
 A = importlib.util.module_from_spec(_spec)
@@ -59,8 +61,13 @@ def number(text):
 
 
 def year(text):
+    """"08/23" -> 2023, "01/85" -> 1985 (stage 31, 2026-11-13: "85" was read as 2085, so the 1960s Renault 4 and the
+    1980s Super 5 passed the 2010 cut as "on sale now")."""
     match = re.match(r"(\d{2})/(\d{2})", text or "")
-    return 2000 + int(match.group(2)) if match else None
+    if not match:
+        return None
+    yy = int(match.group(2))
+    return 2000 + yy if 2000 + yy <= datetime.date.today().year + 1 else 1900 + yy
 
 
 def version_links(page, model_path):
@@ -115,13 +122,20 @@ def model_of(entry, catalog, offline):
             # "gens": only these generation pages (Opel Ampera-e is "opel/ampera" 2generation; 1generation is the Ampera).
             if entry.get("gens") and gen_slug not in entry["gens"]:
                 continue
-            number = re.match(r"(\d+)generation", gen_slug)
+            # "v-facelift" joins "v" as its facelift phase, as "2generation-facelift" joins "2generation".
+            slug = re.sub(r"-facelift$", "", gen_slug)
+            number = re.match(r"(\d+)generation", slug)
             facelift = "facelift" in gen_slug
             n = int(number.group(1)) if number else None
             if n and entry.get("gens"):
                 # Counted within the chosen pages: the Ampera-e is ADAC's 2nd "Ampera" but our model's first generation.
                 n = sorted({int(m.group(1)) for m in (re.match(r"(\d+)generation", g) for g in entry["gens"]) if m}).index(n) + 1
-            base = ROMAN.get(n, str(n)) if n else gen_slug
+            # Some pages carry a series code instead of a number ("296", "4-j4", "ad2", "v"): "names" in the list names
+            # them, a Roman slug with an "i" ("ii", "iii") is upper-cased (a lone "v" is the Zafira Life's code, not a
+            # fifth generation), the rest are numbered by start year below (stage 31).
+            base = (entry.get("names") or {}).get(slug) or (ROMAN.get(n, str(n)) if n else
+                                                             slug.upper() if re.fullmatch(r"[ivx]*i[ivx]*", slug) else
+                                                             CODE + slug)
             page = A.fetch(f"{model_path}/{gen_slug}/") if not offline else _cached(f"{model_path}/{gen_slug}/")
             bodies = collections.OrderedDict()
             for path, name in version_links(page or "", model_path):
@@ -147,6 +161,14 @@ def model_of(entry, catalog, offline):
                 group["bodies"].append({"path": f"{A.BASE}{model_path}/{gen_slug}/{body}/",
                                         "name": body + (" Facelifting" if facelift else ""), "from": first,
                                         "to": last, "doors": doors, "seats": "", "engines": engines})
+    taken = {g["name"] for g in gens.values() if not g["name"].startswith(CODE)}
+    rank = 0
+    for group in sorted(gens.values(), key=lambda g: g["from"] or 0):
+        rank += 1
+        if group["name"].startswith(CODE):
+            name = ROMAN.get(rank, str(rank))
+            group["name"] = name if name not in taken else group["name"][len(CODE):].upper()
+            group["path"] = group["path"].rsplit(":", 1)[0] + ":" + group["name"]
     return {"brand": entry["brand"], "label": entry["label"], "mobile": entry["mobile"], "primary": True,
             "source": "adac", "generations": list(gens.values())}
 

@@ -52828,12 +52828,12 @@
    "model": "Talento",
    "generations": [
     {
-     "code": "296",
+     "code": "Talento II",
      "phase": "весь выпуск",
      "years": "2016–2021",
      "mobileModel": "Talento",
      "bodies": [
-      "Talento 296 Van (adac)"
+      "Talento II Van (adac)"
      ],
      "engines": {
       "diesel": {
@@ -52880,12 +52880,12 @@
    "model": "GT",
    "generations": [
     {
-     "code": "ii",
+     "code": "GT II",
      "phase": "весь выпуск",
      "years": "2016–2022",
      "mobileModel": "GT",
      "bodies": [
-      "GT ii Coupe (adac)"
+      "GT II Coupe (adac)"
      ],
      "engines": {
       "petrol": {
@@ -53277,12 +53277,12 @@
    "model": "2 Hybrid",
    "generations": [
     {
-     "code": "zv",
-     "phase": "весь выпуск",
-     "years": "2022–2023",
+     "code": "2 Hybrid I",
+     "phase": "дорестайлинг",
+     "years": "2022–2024",
      "mobileModel": "2 Hybrid",
      "bodies": [
-      "2 Hybrid zv Hatchback (adac)"
+      "2 Hybrid I Hatchback (adac)"
      ],
      "engines": {
       "hybrid": {
@@ -53293,12 +53293,12 @@
      }
     },
     {
-     "code": "zv-facelift",
-     "phase": "весь выпуск",
+     "code": "2 Hybrid I",
+     "phase": "рестайлинг",
      "years": "2024–н. в.",
      "mobileModel": "2 Hybrid",
      "bodies": [
-      "2 Hybrid zv-facelift Hatchback Facelifting (adac)"
+      "2 Hybrid I Hatchback Facelifting (adac)"
      ],
      "engines": {
       "hybrid": {
@@ -53315,12 +53315,12 @@
    "model": "EQC",
    "generations": [
     {
-     "code": "293",
+     "code": "N293",
      "phase": "весь выпуск",
      "years": "2019–2023",
      "mobileModel": "EQC",
      "bodies": [
-      "EQC 293 SUV (adac)"
+      "EQC N293 SUV (adac)"
      ],
      "engines": {
       "electric": {
@@ -53337,12 +53337,12 @@
    "model": "EQT",
    "generations": [
     {
-     "code": "420",
+     "code": "W420",
      "phase": "весь выпуск",
      "years": "2023–н. в.",
      "mobileModel": "EQT",
      "bodies": [
-      "EQT 420 Van (adac)"
+      "EQT W420 Van (adac)"
      ],
      "engines": {
       "electric": {
@@ -53359,12 +53359,12 @@
    "model": "NV250",
    "generations": [
     {
-     "code": "w",
+     "code": "NV250 I",
      "phase": "весь выпуск",
      "years": "2019–2022",
      "mobileModel": "NV250",
      "bodies": [
-      "NV250 w Kleintransporter (adac)"
+      "NV250 I Kleintransporter (adac)"
      ],
      "engines": {
       "diesel": {
@@ -53383,12 +53383,12 @@
    "model": "NV300",
    "generations": [
     {
-     "code": "4-j4",
+     "code": "NV300 I",
      "phase": "весь выпуск",
      "years": "2016–2021",
      "mobileModel": "NV300",
      "bodies": [
-      "NV300 4-j4 Van (adac)"
+      "NV300 I Van (adac)"
      ],
      "engines": {
       "diesel": {
@@ -53412,12 +53412,12 @@
    "model": "Zafira Life",
    "generations": [
     {
-     "code": "v",
-     "phase": "весь выпуск",
-     "years": "2019–2022",
+     "code": "Zafira Life I",
+     "phase": "дорестайлинг",
+     "years": "2019–2024",
      "mobileModel": "Zafira Life",
      "bodies": [
-      "Zafira Life v Van (adac)"
+      "Zafira Life I Van (adac)"
      ],
      "engines": {
       "diesel": {
@@ -53435,12 +53435,12 @@
      }
     },
     {
-     "code": "v-facelift",
-     "phase": "весь выпуск",
+     "code": "Zafira Life I",
+     "phase": "рестайлинг",
      "years": "2024–н. в.",
      "mobileModel": "Zafira Life",
      "bodies": [
-      "Zafira Life v-facelift Van Facelifting (adac)"
+      "Zafira Life I Van Facelifting (adac)"
      ],
      "engines": {
       "electric": {
@@ -53513,43 +53513,6 @@
    "model": "R 4",
    "generations": [
     {
-     "code": "R 4 I",
-     "phase": "рестайлинг",
-     "years": "2067–н. в.",
-     "mobileModel": "R 4",
-     "bodies": [
-      "R 4 I Hatchback Facelifting (adac)"
-     ],
-     "engines": {
-      "petrol": {
-       "845": [
-        25,
-        29,
-        34
-       ],
-       "1108": [
-        34
-       ]
-      }
-     }
-    },
-    {
-     "code": "R 4 I",
-     "phase": "дорестайлинг",
-     "years": "2062–2067",
-     "mobileModel": "R 4",
-     "bodies": [
-      "R 4 I Hatchback (adac)"
-     ],
-     "engines": {
-      "petrol": {
-       "845": [
-        25
-       ]
-      }
-     }
-    },
-    {
      "code": "R 4 II",
      "phase": "весь выпуск",
      "years": "2025–н. в.",
@@ -53573,78 +53536,12 @@
    "model": "R 5",
    "generations": [
     {
-     "code": "ii-facelift",
-     "phase": "весь выпуск",
-     "years": "2087–н. в.",
-     "mobileModel": "R 5",
-     "bodies": [
-      "R 5 ii-facelift Hatchback Facelifting (adac)"
-     ],
-     "engines": {
-      "petrol": {
-       "1100": [
-        45
-       ],
-       "1397": [
-        58,
-        60,
-        67,
-        115
-       ],
-       "1721": [
-        74,
-        87,
-        95
-       ]
-      },
-      "diesel": {
-       "1585": [
-        55
-       ]
-      }
-     }
-    },
-    {
-     "code": "ii",
-     "phase": "весь выпуск",
-     "years": "2085–2087",
-     "mobileModel": "R 5",
-     "bodies": [
-      "R 5 ii Hatchback (adac)"
-     ],
-     "engines": {
-      "petrol": {
-       "956": [
-        42
-       ],
-       "1100": [
-        45
-       ],
-       "1108": [
-        45
-       ],
-       "1397": [
-        58,
-        60,
-        67,
-        71,
-        115
-       ]
-      },
-      "diesel": {
-       "1585": [
-        55
-       ]
-      }
-     }
-    },
-    {
-     "code": "iii",
+     "code": "R 5 III",
      "phase": "весь выпуск",
      "years": "2025–н. в.",
      "mobileModel": "R 5",
      "bodies": [
-      "R 5 iii Hatchback (adac)"
+      "R 5 III Hatchback (adac)"
      ],
      "engines": {
       "electric": {
@@ -53711,12 +53608,12 @@
    "model": "Mirai",
    "generations": [
     {
-     "code": "ad2",
+     "code": "Mirai II",
      "phase": "весь выпуск",
      "years": "2021–н. в.",
      "mobileModel": "Mirai",
      "bodies": [
-      "Mirai ad2 Sedan (adac)"
+      "Mirai II Sedan (adac)"
      ],
      "engines": {
       "petrol": {
@@ -53733,12 +53630,12 @@
    "model": "Proace Max",
    "generations": [
     {
-     "code": "t",
+     "code": "Proace Max I",
      "phase": "весь выпуск",
      "years": "2024–н. в.",
      "mobileModel": "Proace Max",
      "bodies": [
-      "Proace Max t Van (adac)"
+      "Proace Max I Van (adac)"
      ],
      "engines": {
       "diesel": {

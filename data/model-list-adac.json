@@ -323,7 +323,10 @@
    "adac": [
     "fiat/talento"
    ],
-   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours; names (stage 31, 2026-11-13): the 2016 Talento (type 296) is the second, after the 1989-1994 Ducato-based one",
+   "names": {
+    "296": "II"
+   }
   },
   {
    "brand": "Fiat",
@@ -503,7 +506,10 @@
    "adac": [
     "mercedes-benz/eqc"
    ],
-   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours; names (stage 31, 2026-11-13): Mercedes generations are named by series code (N293)",
+   "names": {
+    "293": "N293"
+   }
   },
   {
    "brand": "Mercedes-Benz",
@@ -512,7 +518,10 @@
    "adac": [
     "mercedes-benz/eqt"
    ],
-   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours; names (stage 31, 2026-11-13): Mercedes generations are named by series code (T-Class / Citan W420)",
+   "names": {
+    "420": "W420"
+   }
   },
   {
    "brand": "Nissan",
@@ -620,7 +629,10 @@
    "adac": [
     "toyota/mirai"
    ],
-   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+   "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours; names (stage 31, 2026-11-13): ADAC lists only the second Mirai (2020-)",
+   "names": {
+    "ad2": "II"
+   }
   },
   {
    "brand": "Toyota",

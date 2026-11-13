@@ -6,7 +6,7 @@
 |---|---|
 | подтверждено | 63 |
 | одна база | 143 |
-| нет источника | 63 |
+| нет источника | 62 |
 
 ## Третий ряд — подтверждено двумя источниками
 
@@ -270,8 +270,7 @@
 | Nissan | X-Trail | X-Trail II | 2007–2007 |  |  |  |
 | Opel | Movano | Movano II | 2003–2009 |  |  |  |
 | Opel | Zafira | Zafira D | 2019–2024 |  |  |  |
-| Opel | Zafira Life | v-facelift | 2024–2025 |  |  |  |
-| Opel | Zafira Life | v | 2019–2020 |  |  |  |
+| Opel | Zafira Life | Zafira Life I | 2019–2025 |  |  |  |
 | Peugeot | Boxer | Boxer III | 2014–2014 |  |  |  |
 | Peugeot | Expert | Expert II | 2007–2011 |  |  |  |
 | Renault | Kangoo | Kangoo III | 2021–2023 |  |  |  |
