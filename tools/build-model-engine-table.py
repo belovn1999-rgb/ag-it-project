@@ -708,6 +708,14 @@ def main():
                 row["Привод"], row["Привод: откуда"] = "полный", "из названия"
                 named += 1
                 continue
+            # "RWD" / "FWD" in the name (stage 30, 2026-11-13: Audi A6 e-tron "Avant RWD" sat empty — its generation has
+            # quattro versions too, so the rule below could not decide).
+            two = re.search(r"\b(rwd|fwd)\b", row["Версия"], re.I)
+            if two:
+                row["Привод"] = "задний" if two.group(1).lower() == "rwd" else "передний"
+                row["Привод: откуда"] = "из названия"
+                named += 1
+                continue
             known = {other["Привод"] for other in by_gen[(row["Марка"], row["Модель"], row["Поколение"])] if other["Привод"]}
             count = sum(1 for other in by_gen[(row["Марка"], row["Модель"], row["Поколение"])] if other["Привод"])
             if len(known) == 1 and count >= 5:

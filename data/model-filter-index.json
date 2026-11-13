@@ -51943,6 +51943,32 @@
    ]
   },
   {
+   "brand": "Audi",
+   "model": "A6 e-tron",
+   "generations": [
+    {
+     "code": "Type C9 e-tron",
+     "phase": "весь выпуск",
+     "years": "2024–н. в.",
+     "mobileModel": "A6 e-tron",
+     "bodies": [
+      "A6 e-tron Type C9 e-tron A6 e-tron Avant (ultimatespecs)",
+      "A6 e-tron Type C9 e-tron A6 e-tron Sportback (ultimatespecs)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        326,
+        381,
+        462,
+        551
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
    "brand": "Polestar",
    "model": "5",
    "generations": [
@@ -52900,6 +52926,110 @@
    ]
   },
   {
+   "brand": "Hyundai",
+   "model": "H350",
+   "generations": [
+    {
+     "code": "H350 I",
+     "phase": "весь выпуск",
+     "years": "2016–2019",
+     "mobileModel": "H350",
+     "bodies": [
+      "H350 I Van (adac)"
+     ],
+     "engines": {
+      "diesel": {
+       "2497": [
+        170
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Hyundai",
+   "model": "NEXO",
+   "generations": [
+    {
+     "code": "NEXO I",
+     "phase": "весь выпуск",
+     "years": "2018–2024",
+     "mobileModel": "NEXO",
+     "bodies": [
+      "NEXO I SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "0": [
+        163
+       ]
+      }
+     }
+    },
+    {
+     "code": "NEXO II",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "NEXO",
+     "bodies": [
+      "NEXO II SUV (adac)"
+     ],
+     "engines": {
+      "petrol": {
+       "0": [
+        204
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "KGM",
+   "model": "Torres EVX",
+   "generations": [
+    {
+     "code": "Torres EVX I",
+     "phase": "весь выпуск",
+     "years": "2025–н. в.",
+     "mobileModel": "Torres EVX",
+     "bodies": [
+      "Torres EVX I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        207
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Leapmotor",
+   "model": "B05",
+   "generations": [
+    {
+     "code": "B05 I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "B05",
+     "bodies": [
+      "B05 I Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        218
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
    "brand": "Leapmotor",
    "model": "B10",
    "generations": [
@@ -53707,6 +53837,159 @@
        "0": [
         320,
         503
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "model": "S6 EV",
+   "generations": [
+    {
+     "code": "S6 EV I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "S6 EV",
+     "bodies": [
+      "S6 EV I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        244,
+        361
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "MG",
+   "model": "S9",
+   "generations": [
+    {
+     "code": "S9 I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "S9",
+     "bodies": [
+      "S9 I SUV (adac)"
+     ],
+     "engines": {
+      "plugin": {
+       "1496": [
+        299
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Opel",
+   "model": "Ampera-e",
+   "generations": [
+    {
+     "code": "Ampera-e I",
+     "phase": "весь выпуск",
+     "years": "2017–2019",
+     "mobileModel": "Ampera-e",
+     "bodies": [
+      "Ampera-e I Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Opel",
+   "model": "Rocks-e",
+   "generations": [
+    {
+     "code": "Rocks-e I",
+     "phase": "дорестайлинг",
+     "years": "2021–2025",
+     "mobileModel": "Rocks-e",
+     "bodies": [
+      "Rocks-e I Hatchback (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        8
+       ]
+      }
+     }
+    },
+    {
+     "code": "Rocks-e I",
+     "phase": "рестайлинг",
+     "years": "2025–н. в.",
+     "mobileModel": "Rocks-e",
+     "bodies": [
+      "Rocks-e I Hatchback Facelifting (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        8
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Subaru",
+   "model": "UNCHARTED",
+   "generations": [
+    {
+     "code": "Uncharted I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "UNCHARTED",
+     "bodies": [
+      "Uncharted I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        167,
+        224,
+        343
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "brand": "Skoda",
+   "model": "Peaq",
+   "generations": [
+    {
+     "code": "Peaq I",
+     "phase": "весь выпуск",
+     "years": "2026–н. в.",
+     "mobileModel": "Peaq",
+     "bodies": [
+      "Peaq I SUV (adac)"
+     ],
+     "engines": {
+      "electric": {
+       "0": [
+        204,
+        286,
+        299
        ]
       }
      }

@@ -1271,6 +1271,23 @@
     "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/bmw/x6/g06-f96/316014/",
     "https://www.press.bmwgroup.com/italy/article/attachment/T0328301IT/475164"
    ]
+  },
+  {
+   "match": {
+    "Марка": "Mitsubishi",
+    "Модель": "Outlander",
+    "Поколение": "Outlander II",
+    "Версия": "Outlander II 2.2 TC-SST",
+    "Объём, см³": "2179"
+   },
+   "set": {
+    "Привод": "полный"
+   },
+   "why": "2.2 DI-D с коробкой TC-SST (2010–2012) — только полный привод; у ADAC своя страница «2.2 DI-D Motion 4WD TC-SST»",
+   "source": [
+    "https://www.adac.de/rund-ums-fahrzeug/autokatalog/marken-modelle/mitsubishi/outlander/2generation-facelift/281938",
+    "https://www.auto-data.net/en/mitsubishi-outlander-ii-facelift-2009-2.2-di-d-156hp-tc-sst-4wd-42195"
+   ]
   }
  ]
 }

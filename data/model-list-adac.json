@@ -657,6 +657,63 @@
     "xpeng/x9"
    ],
    "why": "B61 stage 29 (2026-11-12): in the EU register (EEA) or the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "MG",
+   "label": "S6 EV",
+   "mobile": "S6 EV",
+   "adac": [
+    "mg/mgs6"
+   ],
+   "why": "B61 stage 30 (2026-11-13): in the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "MG",
+   "label": "S9",
+   "mobile": "S9",
+   "adac": [
+    "mg/mgs9"
+   ],
+   "why": "B61 stage 30 (2026-11-13): in the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Opel",
+   "label": "Ampera-e",
+   "mobile": "Ampera-e",
+   "adac": [
+    "opel/ampera"
+   ],
+   "why": "B61 stage 30 (2026-11-13): in the mobile.de catalog, not in ours",
+   "gens": [
+    "2generation"
+   ]
+  },
+  {
+   "brand": "Opel",
+   "label": "Rocks-e",
+   "mobile": "Rocks-e",
+   "adac": [
+    "opel/rocks-electric"
+   ],
+   "why": "B61 stage 30 (2026-11-13): in the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Subaru",
+   "label": "Uncharted",
+   "mobile": "UNCHARTED",
+   "adac": [
+    "subaru/uncharted"
+   ],
+   "why": "B61 stage 30 (2026-11-13): in the mobile.de catalog, not in ours"
+  },
+  {
+   "brand": "Skoda",
+   "label": "Peaq",
+   "mobile": "Peaq",
+   "adac": [
+    "skoda/peaq"
+   ],
+   "why": "B61 stage 30 (2026-11-13): in the mobile.de catalog, not in ours"
   }
  ]
 }

@@ -87,6 +87,7 @@
       S1: ["A1", "s1"], SQ2: ["Q2", "sq2"], S7: ["A7", "s7"], RS7: ["A7", "rs7"], S8: ["A8", "s8"],
       SQ8: ["Q8", "sq8"], RSQ8: ["Q8", "rsq8"], "TT RS": ["TT", "rs"], TTS: ["TT"], "Q4 e-tron": ["Q4"],
       "Q8 e-tron": ["Q8"], "SQ8 e-tron": ["Q8"], "RS e-tron GT": ["e-tron GT"], "SQ6 e-tron": ["Q6 e-tron"],
+      "S6 e-tron": ["A6 e-tron", "s6"],
     },
     Ford: { "Grand C-Max": ["C-Max"], "Grand Tourneo": ["Tourneo Connect"], "Puma Gen-E": ["Puma"] },
     "Mercedes-Benz": {
@@ -137,7 +138,9 @@
     // New brands, wave 2 (owner 2026-10-22).
     DS: { "DS4 Crossback": ["DS4"] },
     Subaru: { "B9 Tribeca": ["Tribeca"] },
-    MG: { "MG4 EV Urban": ["MG4"] },
+    // EHS and 5 EV: the plug-in / electric of HS and 5 (B61 stage 30, 2026-11-13).
+    MG: { "MG4 EV Urban": ["MG4"], EHS: ["HS"] },
+    OMODA: { "5 EV": ["5"] },
     // New brands, wave 3 (owner 2026-10-22).
     Infiniti: {
       EX30: ["EX"], EX35: ["EX"], EX37: ["EX"], G35: ["G"], G37: ["G"], M30: ["M"], M35: ["M"], M37: ["M"],

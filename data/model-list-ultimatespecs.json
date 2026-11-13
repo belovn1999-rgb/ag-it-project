@@ -413,6 +413,16 @@
      "name": "VF 9"
     }
    ]
+  },
+  {
+   "brand": "Audi",
+   "label": "A6 e-tron",
+   "mobile": "A6 e-tron",
+   "brand_slug": "Audi",
+   "pages": [
+    "Audi-A6-e-tron"
+   ],
+   "why": "B61 stage 30 (2026-11-13): in the mobile.de catalog, not in autocentrum or ADAC"
   }
  ]
 }

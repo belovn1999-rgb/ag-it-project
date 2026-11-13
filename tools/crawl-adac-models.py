@@ -3,7 +3,7 @@
 2026-10-23: brands neither autocentrum.pl nor ultimatespecs.com has — DFSK, BAIC, GWM Haval, Polestar 5 …).
 
 data/model-list-adac.json names the models (brand, label, mobile = the page-1 model value, adac = the catalog's
-model pages, "dfsk/fengon-5"). The sitemap gives a model's generation pages ("1generation", "2generation-facelift"),
+model pages, "dfsk/fengon-5"; "gens" — only these generation pages). The sitemap gives a model's generation pages ("1generation", "2generation-facelift"),
 a generation page the versions ("DFSK Fengon 5 1.5T CVT (08/23 - 07/26)"), a version page the data: engine kind,
 kW / PS, cm3, fuel, gearbox, drive, body, doors, seats, model start and end. Written to data/adac-primary.json as
 "primary" models, so tools/autocentrum.py merge() builds their rows as for autocentrum (the version page's gearbox
@@ -68,7 +68,9 @@ def version_links(page, model_path):
     out = {}
     for path, name in re.findall(r'href="/rund-ums-fahrzeug/autokatalog/marken-modelle/(' + re.escape(model_path)
                                  + r'/[^"/]+/\d+/)"[^>]*>(.*?)</a>', page, re.S):
-        name = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", name))).strip()
+        name = re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", name)))
+        # Control characters and soft hyphens inside words ("Schiebet\x00ür", Hyundai H350) break the CSV.
+        name = re.sub(r"[\x00-\x1f\x7f\xad]", "", name).strip()
         if 5 <= len(name) <= 160 and path not in out:
             out[path] = name
     return list(out.items())
@@ -110,9 +112,16 @@ def model_of(entry, catalog, offline):
     gens = collections.OrderedDict()
     for model_path in entry["adac"]:
         for gen_slug in catalog.get(model_path, []):
+            # "gens": only these generation pages (Opel Ampera-e is "opel/ampera" 2generation; 1generation is the Ampera).
+            if entry.get("gens") and gen_slug not in entry["gens"]:
+                continue
             number = re.match(r"(\d+)generation", gen_slug)
             facelift = "facelift" in gen_slug
-            base = ROMAN.get(int(number.group(1)), number.group(1)) if number else gen_slug
+            n = int(number.group(1)) if number else None
+            if n and entry.get("gens"):
+                # Counted within the chosen pages: the Ampera-e is ADAC's 2nd "Ampera" but our model's first generation.
+                n = sorted({int(m.group(1)) for m in (re.match(r"(\d+)generation", g) for g in entry["gens"]) if m}).index(n) + 1
+            base = ROMAN.get(n, str(n)) if n else gen_slug
             page = A.fetch(f"{model_path}/{gen_slug}/") if not offline else _cached(f"{model_path}/{gen_slug}/")
             bodies = collections.OrderedDict()
             for path, name in version_links(page or "", model_path):
