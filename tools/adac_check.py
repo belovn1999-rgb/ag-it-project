@@ -181,8 +181,18 @@ def _row(row, item, versions):
     # A twin with no automatic word is the manual one when the same power is also sold with an automatic word.
     if any(AUTO.search(t[0]) for t in twins) and any(not AUTO.search(t[0]) for t in twins) and family in ("p", "d"):
         gearbox.add("m")
+    # The engine's first year at ADAC (stage 31, tools/version_years.py): only twins of the same kW (±1) and the same
+    # litres in the name (an electric car: the kW) — the loose rules above would take a neighbour engine's year
+    # (Peugeot 2008 1.5 BlueHDi 102 PS against the 1.6 BlueHDi 100 PS of 2016).
+    strict = []
+    for twin in twins:
+        litres = LITRES.search(twin[0])
+        same = family == "ev" or bool(litres and item["litres"] and abs(float(litres.group(1)) - item["litres"]) < 0.05)
+        if same and abs(twin[2] - item["kw"]) <= 1 and _year(twin[4]):
+            strict.append(_year(twin[4]))
     return {"twins": twins, "gearbox": gearbox, "drive": drive, "page_gearbox": page_gearbox, "page_drive": page_drive,
-            "page_text": page_text, "pages_read": sum(name in details() for name in names), "pages_all": len(names)}
+            "page_text": page_text, "pages_read": sum(name in details() for name in names), "pages_all": len(names),
+            "first": min(strict) if strict else None}
 
 
 def summary(row_ev, gen_ev, rows):

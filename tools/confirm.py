@@ -288,6 +288,8 @@ def confirm(rows, ac):
             engine.add("adac")
             twin = adac["twins"][0]
             row[ADAC_COLUMN] = f"{twin[0]} · {twin[1]} · {twin[2]} kW · {twin[4]}–{twin[5] or ''}"
+        # The engine's own first year at ADAC, for tools/version_years.py (not a column: it pops it).
+        row["_adac_first"] = adac.get("first")
         if id(row) in eea:
             engine.add("EEA")
         row["Подтверждение: мотор"] = _status(engine)
