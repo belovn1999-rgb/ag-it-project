@@ -60,8 +60,14 @@ MANUAL = {
     "Kia|cee'd / Ceed": ["kia/ceed"], "Kia|pro cee'd / ProCeed": ["kia/ceed"],
     "Citroen|Grand C4 Picasso / SpaceTourer": ["citroen/c4-picasso", "citroen/c4-spacetourer"], "Citroen|DS5": ["ds-automobiles/ds-5"],
     "Audi|Q4": ["audi/q4-e-tron"], "Mercedes-Benz|T-Class": ["mercedes-benz/t-klasse"], "Hyundai|Grand Santa Fe": ["hyundai/santa-fe"],
-    "Hyundai|ix35": ["hyundai/tucson"], "Ford|Ka/Ka+": ["ford/ka"], "Renault|Megane E-TECH": ["renault/megane"],
+    "Hyundai|ix35": ["hyundai/tucson"], "Ford|Ka/Ka+": ["ford/ka"],
+    # Stage 32 (2026-11-13): "page#gen,gen" — only those generation pages (the electric Mégane shares its years with the
+    # Mégane IV facelift, petrol and plug-in); the Renault 4 / 5 of today are "r4" / "r5" at ADAC.
+    "Renault|Megane E-TECH": ["renault/megane#v,v-facelift"], "Renault|R 4": ["renault/r4#2generation"],
+    "Renault|R 5": ["renault/r5#iii"],
 }
+# ADAC's page lists one body only (the Mini page: the 3-door): its lines are not those of these models (stage 32).
+SKIP = {"Mini|Cabrio", "Mini|Coupe", "Mini|Roadster"}
 PHASE_RU = {"pre": "дорестайлинг", "fl": "рестайлинг", "fl2": "2-й рестайлинг", "upd": "обновление"}
 # Words of a version name that are not its trim: engine, power, gearbox, drive, body, fuel.
 NOT_TRIM = re.compile(
@@ -159,7 +165,9 @@ def versions(text):
     """[(name, from, to)] of a generation page: "Kia Picanto 1.0 Vision AMT (05/24 - 07/25)", "(ab 07/25)"."""
     out = []
     links = re.findall(r'href="/rund-ums-fahrzeug/autokatalog/marken-modelle/[^"]+/\d+/"[^>]*>(.*?)</a>', text, re.S)
-    for name in dict.fromkeys(re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", n))).strip() for n in links):
+    # Control characters and soft hyphens out ("Schiebet\x00ür", stage 32).
+    for name in dict.fromkeys(re.sub(r"\s+", " ", re.sub(r"[\x00-\x1f\u00ad]", "", html.unescape(re.sub(r"<[^>]+>", " ", n)))).strip()
+                              for n in links):
         if not 5 <= len(name) <= 160:
             continue
         dates = re.search(r"\((?:(\d{2}/\d{2})\s*-\s*(\d{2}/\d{2})|ab (\d{2}/\d{2}))\)\s*$", name)
@@ -182,7 +190,16 @@ def trim_of(name, prefix_words):
                   r"GDI-T|e-XDi\d*|MTA|Single Cab|Space Cab|Double Cab|Extended Cab|Crew Cab|"
                   # Wave 4 (2026-10-23): electric motors, hybrid gearboxes, the Grenadier's body and engines.
                   r"(?:Single|Dual|Twin|Rear|Front|Three|Tri) Motor|Performance Paket|\d?DHT(?: Pro)?|"
-                  r"Station|Turbo-(?:Benziner|Diesel))(?![\w-])", " ", name, flags=re.I)
+                  r"Station|Turbo-(?:Benziner|Diesel)|"
+                  # Stage 32 (2026-11-13): an electric car's battery and charging (Renault "Comfort Range", "optimum
+                  # charge", "ER"; Volvo "P5" / "P8" — the motor, not the line).
+                  r"(?:urban|comfort|long|extended|standard|max(?:imum)?|pro) range|(?:standard|boost|optimum|fast|quick) charge|"
+                  r"ER|P\d{1,2}|"
+                  # Body and engine words of vans and the new Chinese brands (stage 32): "mit Schiebetür", "teilverglast",
+                  # Fiat "Ecojet Twin", Maxus "N1", Leapmotor "BEV ProMax".
+                  r"mit Schiebet(?:ü|ue)r(?:en)?|(?:teil|voll)?verglast|Ecojet|Twin Turbo|N1|BEV|Pro ?Max|i-CTDi)(?![\w-])",
+                  " ", name, flags=re.I)
+    name = re.sub(r"(?<![\w-])EU-(?=\w)|(?<=\w)-Paket\b", "", name)  # Leapmotor "EU-Life", Hyundai "Prime-Paket"
     words = name.split()
     while words and prefix_words and words[0].lower() in prefix_words:
         words = words[1:]
@@ -201,7 +218,7 @@ def main():
     covered = {f"{r['brand']}|{r['model']}" for r in json.load(open(trims_path, encoding="utf8"))["rows"]
                if r.get("origin") != "adac"} if os.path.exists(trims_path) else set()
     for key, spec in sorted(specs.items()):
-        if key in covered or (spec.get("trims") and not os.path.exists(trims_path)) or (only and key not in only):
+        if key in SKIP or key in covered or (spec.get("trims") and not os.path.exists(trims_path)) or (only and key not in only):
             continue
         pages = pages_of(key, catalog)
         if not pages:
@@ -210,7 +227,8 @@ def main():
         brand, model = key.split("|", 1)
         found = []
         for page in pages:
-            for gen in catalog[page]:
+            page, _, only_gens = page.partition("#")
+            for gen in (only_gens.split(",") if only_gens else catalog.get(page, [])):
                 text = fetch(f"{page}/{gen}/")
                 h1 = re.search(r"<h1[^>]*>(.*?)</h1>", text, re.S)
                 title = re.sub(r"<[^>]+>", "", h1.group(1)).strip() if h1 else ""

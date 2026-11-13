@@ -5,7 +5,7 @@
 | Итог | поколений |
 |---|---|
 | подтверждено | 63 |
-| одна база | 143 |
+| одна база | 146 |
 | нет источника | 62 |
 
 ## Третий ряд — подтверждено двумя источниками
@@ -88,6 +88,7 @@
 | BMW | X7 | X7 | 2018–2022 | 7 | adac |  |
 | BYD | TANG | Tang I | 2024–2024 | 7 | adac |  |
 | Cadillac | Escalade | Escalade III | 2007–2007 | 8 | autocentrum |  |
+| Cadillac | VISTIQ | VISTIQ I | 2025–2026 | 6/7 | adac |  |
 | Chevrolet | Captiva | Captiva I | 2006–2009 | 5/7 | adac |  |
 | Chevrolet | Suburban | GMT900 | 2007–2007 | 8 | autocentrum |  |
 | Chrysler | Aspen | Aspen I | 2007–2007 | 8 | autocentrum |  |
@@ -171,6 +172,7 @@
 | Mercedes-Benz | Vito | W639 | 2003–2011 | 6/9 | autocentrum |  |
 | Mitsubishi | Outlander | Outlander II | 2006–2010 | 5/7 | adac | Outlander II 2.0 DID DOHC |
 | Nissan | Evalia | Evalia I | 2013–2015 | 7 | autocentrum |  |
+| Nissan | NV300 | NV300 I | 2016–2019 | 6/9 | adac |  |
 | Nissan | Primastar | Primastar I | 2001–2003 | 6/9 | adac |  |
 | Nissan | Qashqai | Qashqai I | 2009–2011 | 5/7 | autocentrum |  |
 | Nissan | Quest | Quest III | 2004–2004 | 7 | autocentrum |  |
@@ -195,6 +197,7 @@
 | Renault | Scenic | Scénic IV | 2016–2021 | 5/7 | ultimatespecs |  |
 | Seat | Tarraco | Tarraco | 2018–2022 | 5/7 | adac |  |
 | Skoda | Kodiaq | Kodiaq II | 2024–2024 | 5/7 | adac |  |
+| Skoda | Peaq | Peaq I | 2026–2026 | 5/7 | adac |  |
 | Ssangyong | REXTON | Rexton IV | 2017–2021 | 5/7 | adac |  |
 | Ssangyong | Rodius | Rodius II | 2013–2018 | 7 | autocentrum |  |
 | Tesla | Model S | Model S | 2016–2023 | 5/7 | adac |  |

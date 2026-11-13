@@ -72,7 +72,9 @@ def main():
             continue
         gens = []
         for model_page in model_pages:
-            for gen in catalog.get(model_page, []):
+            # "page#gen,gen": only those generation pages (stage 32, collect-trims-adac.py MANUAL).
+            model_page, _, only_gens = model_page.partition("#")
+            for gen in (only_gens.split(",") if only_gens else catalog.get(model_page, [])):
                 path = f"{model_page}/{gen}/"
                 if args.offline:
                     name = os.path.join(A.CACHE, "pages", re.sub(r"[^A-Za-z0-9._-]+", "_", path.strip("/")) + ".html")
