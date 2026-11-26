@@ -24,6 +24,22 @@ report body only recognised artefacts are removed, and unknown text is kept.
 Document and damage images on mixed logistics pages are retained. The image
 beneath the video player is retained; only the player controls are removed.
 
+A report printed from a narrow browser window has a different shape: the
+logistics column stands beside the title, the gallery runs two photos wide in
+the left half of three pages, and the car's fields ("Build year" down to "Car
+location") sit on pages of their own after the gallery, below the bid, VAT and
+offer blocks. It is recognised by a first page without "Build year" while a
+later page before the first section has it. Such a report is laid out anew
+(owner's choice 2026-11-26, variant B): the title and the main photo across the
+full width open page 1, the other photos follow four to a row on as many pages
+as they need, then one page of fields from "Build year" to "Car location", then
+the report sections unchanged. Everything above "Build year" on the fields page
+and every other row on the pages before the first section is dropped. If any
+step of this layout fails, the report falls back to the ordinary cleaning.
+
+The icon printed just left of a removed counter or notice ("Total Pictures",
+"No images were taken") is removed with it.
+
 No single unrecognised detail withholds the file. A page that cannot be
 parsed, or whose rules throw, is copied verbatim from the original and listed
 for review; the cover falls back to removing its auction block without the

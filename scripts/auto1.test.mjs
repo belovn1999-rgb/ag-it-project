@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { tokenize, moveRecord, serialize } from '../src/auto1-engine.mjs';
-import { textRows, validateOutputText, makeCover, planPage, splitTitle, basicCover } from '../src/auto1-rules.mjs';
+import { textRows, validateOutputText, makeCover, makeNarrow, planPage, splitTitle, basicCover } from '../src/auto1-rules.mjs';
 
 test('operator-like text inside strings and arrays remains literal', () => {
   assert.deepEqual(tokenize('% comment\n[(q Q Do) 20 (nested \\(text\\)) <5144>] TJ /Image Do'),
@@ -192,4 +192,59 @@ test('a table border stays while the browser card edge running into both margins
   const page = sheet([word('Brake disc condition', 48, 610, 110), word('>50%', 250, 610, 30)]);
   const plan = planPage(12, model([tableBottom, cardEdge]), page, rebuiltCover, 4);
   assert.deepEqual(plan.records, [tableBottom]);
+});
+
+// Real coordinates of a report printed from a narrow window (Mercedes C 180):
+// logistics beside the title, the gallery two photos wide, the fields on their
+// own pages after the gallery.
+const narrowReport = () => {
+  const W = 594.96, H = 841.92;
+  const page = (items) => ({ rows: textRows({ items }), text: items.map((i) => i.str).join('\n') });
+  const data = [
+    page([word('Delivery to my address', 43.5, 763.2, 115, 9.7), word('24H AUCTION', 290.5, 753.4, 65, 9.7), word('0 1 : 1 9 : 1', 468.4, 751.9, 51, 14.2),
+      word('Mercedes-Benz C-Klasse C 180', 263.5, 714.4, 239, 16.5), word('AMG Line', 263.5, 694.2, 76, 16.5),
+      word('start after:', 43.5, 455.7, 55, 9.7)]),
+    page([word('Minimum bid:', 46, 105, 60), word('€26,063', 210, 105, 60)]),
+    page([word('VAT deductible (19%)', 67, 617, 110), word('Stock number:', 45, 555, 70), word('AS11825', 188, 555, 50),
+      word('Build year:', 45, 523, 55), word('2023', 188, 523, 25), word('Door count:', 45, 39, 55), word('2', 188, 39, 6)]),
+    page([word('CO2 Emissions:', 45, 824.9, 80), word('184g/km', 188, 824.9, 45), word('Car location', 41.3, 762.6, 66), word('DE, Zülpich', 41.3, 744.6, 55)]),
+    page([word('MAIN CAR DETAILS', 37, 812, 136)]),
+  ];
+  const image = (x, y, w, h) => ({ kind: 'image', box: [x, y, x + w, y + h], matrix: [w, 0, 0, h, x, y], clips: [], style: {}, body: '/Im Do' });
+  const text = (row) => ({ kind: 'text', anchor: [row.x, row.y], box: [row.x, row.y, row.x, row.y], matrix: [1, 0, 0, 1, 0, 0], clips: [], style: {}, textStyle: {}, body: '' });
+  const models = data.map((d) => ({ records: d.rows.map(text), resources: {}, width: W, height: H }));
+  models[0].records.push(image(263.2, 481.2, 262.5, 196.5), image(267, 379.9, 123.7, 92.3), image(399, 379.9, 123, 92.3));
+  models[1].records.push(image(49, 735, 123, 92), image(181, 735, 123, 92), image(49, 634, 123, 92), image(181, 634, 123, 92), image(181, 550, 123, 69));
+  return { models, data };
+};
+
+test('a narrow-window report gets the title and photos first, then one page of fields', () => {
+  const { models, data } = narrowReport();
+  const narrow = makeNarrow(models, data, 'Mercedes-Benz C-Klasse C 180 AMG Line', 4);
+  assert.deepEqual(narrow.pages.map((p) => p.reason), ['narrow-photos', 'narrow-fields']);
+  assert.deepEqual(narrow.pages[0].requiredRows, ['Mercedes-Benz C-Klasse C 180', 'AMG Line']);
+  const images = narrow.pages[0].records.filter((r) => r.kind === 'image');
+  assert.equal(images.length, 8, 'every photo of the gallery pages is kept');
+  assert.ok(Math.abs(images[0].matrix[0] - 510) < .01 && Math.abs(images[0].matrix[4] - 42.5) < .01, 'the main photo spans the full width');
+  assert.deepEqual(images.slice(1, 5).map((r) => Math.round(r.matrix[4] * 10) / 10), [42.5, 171.5, 300.5, 429.5], 'four photos to a row');
+  const fields = narrow.pages[1].requiredRows;
+  for (const t of ['Build year:', '2023', 'Door count:', 'CO2 Emissions:', 'Car location', 'DE, Zülpich']) assert.ok(fields.includes(t), t);
+  assert.ok(!fields.some((t) => /AS11825|Stock number|VAT deductible|Minimum bid|€/.test(t)), 'nothing from the bid and offer block survives');
+  const build = narrow.pages[1].records.find((r) => r.anchor[1] === 523);
+  assert.ok(Math.abs(build.matrix[5] + 523 - (841.92 - 50)) < .01, 'fields start at the top of their page');
+});
+
+test('a report with the fields on its first page is not taken for a narrow one', () => {
+  const { models, data } = narrowReport();
+  data[0] = { ...data[0], rows: [...data[0].rows, ...textRows({ items: [word('Build year:', 262.8, 562.2, 55)] })] };
+  assert.throws(() => makeNarrow(models, data, 'Mercedes-Benz C-Klasse C 180 AMG Line', 4));
+});
+
+test('the icon printed beside a removed photo notice goes with it', () => {
+  const photo = { kind: 'image', box: [37.5, 490.2, 487.5, 827.7], style: {} };
+  const icon = { kind: 'path', box: [47, 493.7, 62.5, 509.2], style: { rg: '0 0 0 rg' } };
+  const page = sheet([word('No images were taken. The damage did not meet our minimum severity threshold.', 69.7, 497.7, 346, 9),
+    word('Damages', 281.8, 467.7, 47)]);
+  const plan = planPage(9, model([photo, icon]), page, rebuiltCover, 4);
+  assert.deepEqual(plan.records, [photo]);
 });
